@@ -1,0 +1,52 @@
+From 3720356dd73ffcfa066c455bde930024f54801b4 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Sun, 9 Aug 2020 17:34:08 +0530
+Subject: [PATCH 358/408] Use a standard delete confirmation for deleting
+ annotations fromthe browse tool
+
+---
+ src/calibre/gui2/library/annotations.py | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
+
+diff --git a/src/calibre/gui2/library/annotations.py b/src/calibre/gui2/library/annotations.py
+index 682e52679b..f63bae7d12 100644
+--- a/src/calibre/gui2/library/annotations.py
++++ b/src/calibre/gui2/library/annotations.py
+@@ -7,16 +7,15 @@ from textwrap import fill
+ 
+ from PyQt5.Qt import (
+     QApplication, QCheckBox, QComboBox, QCursor, QDateTime, QFont, QHBoxLayout,
+-    QIcon, QLabel, QPalette, QPlainTextEdit, QSize, QSplitter, Qt,
+-    QTextBrowser, QTimer, QToolButton, QTreeWidget, QTreeWidgetItem, QVBoxLayout,
+-    QWidget, pyqtSignal
++    QIcon, QLabel, QPalette, QPlainTextEdit, QSize, QSplitter, Qt, QTextBrowser,
++    QTimer, QToolButton, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget,
++    pyqtSignal
+ )
+ 
+ from calibre import prepare_string_for_xml
+ from calibre.ebooks.metadata import authors_to_string, fmt_sidx
+-from calibre.gui2 import (
+-    Application, config, error_dialog, gprefs, question_dialog
+-)
++from calibre.gui2 import Application, config, error_dialog, gprefs
++from calibre.gui2.dialogs.confirm_delete import confirm
+ from calibre.gui2.viewer.widgets import ResultsDelegate, SearchBox
+ from calibre.gui2.widgets2 import Dialog
+ 
+@@ -570,10 +569,10 @@ class AnnotationsBrowser(Dialog):
+         self.delete_annotations(ids)
+ 
+     def delete_annotations(self, ids):
+-        if question_dialog(self, _('Are you sure?'), ngettext(
++        if confirm(ngettext(
+             'Are you sure you want to <b>permanently</b> delete this annotation?',
+             'Are you sure you want to <b>permanently</b> delete these {} annotations?',
+-            len(ids)).format(len(ids))
++            len(ids)).format(len(ids)), 'delete-annotation-from-browse', parent=self
+         ):
+             db = current_db()
+             db.delete_annotations(ids)
+-- 
+2.28.0
+

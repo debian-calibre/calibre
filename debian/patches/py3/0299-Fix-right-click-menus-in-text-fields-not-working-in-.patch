@@ -1,0 +1,25 @@
+From 46929c19a4b2c8f7ef6580ed6dff96f3efec231a Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Mon, 3 Aug 2020 23:24:36 +0530
+Subject: [PATCH 299/408] Fix right click menus in text fields not working in
+ desktop viewer
+
+---
+ src/calibre/gui2/viewer/web_view.py | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/src/calibre/gui2/viewer/web_view.py b/src/calibre/gui2/viewer/web_view.py
+index c87a2f51fb..6b59864f60 100644
+--- a/src/calibre/gui2/viewer/web_view.py
++++ b/src/calibre/gui2/viewer/web_view.py
+@@ -694,7 +694,3 @@ class WebView(RestartingWebEngineView):
+ 
+     def generic_action(self, which, data):
+         self.execute_when_ready('generic_action', which, data)
+-
+-    def contextMenuEvent(self, ev):
+-        ev.accept()
+-        self.trigger_shortcut('show_chrome')
+-- 
+2.28.0
+

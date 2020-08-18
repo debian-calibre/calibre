@@ -1,0 +1,129 @@
+From f05c98fdfff05162b0fd281d245156334d357e55 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Mon, 3 Aug 2020 17:38:08 +0530
+Subject: [PATCH 294/408] Get the editor panel properly positioned
+
+---
+ src/pyj/read_book/highlights.pyj    | 29 ++++++++++++++++++-----------
+ src/pyj/read_book/selection_bar.pyj |  9 +++++++--
+ 2 files changed, 25 insertions(+), 13 deletions(-)
+
+diff --git a/src/pyj/read_book/highlights.pyj b/src/pyj/read_book/highlights.pyj
+index b7514c3931..09e4c6a5c6 100644
+--- a/src/pyj/read_book/highlights.pyj
++++ b/src/pyj/read_book/highlights.pyj
+@@ -10,7 +10,10 @@ from book_list.theme import get_color
+ from dom import unique_id
+ from widgets import create_button
+ 
+-ICON_SIZE = '3ex'
++ICON_SIZE_VAL = 3
++ICON_SIZE_UNIT = 'ex'
++ICON_SIZE = f'{ICON_SIZE_VAL}{ICON_SIZE_UNIT}'
++
+ builtin_colors_light = {
+     'yellow': '#ffeb6b',
+     'green': '#c0ed72',
+@@ -56,8 +59,9 @@ class HighlightStyle:
+         self.key = f'type:{style.type} kind:{style.kind} which: {style.which} bg: {style["background-color"]}'
+ 
+     def make_swatch(self, container, is_dark):
+-        s = container.style
+-        s.width = s.height = s.minimumWidth = s.minimumHeight = ICON_SIZE
++        style = container.style
++        style.width = style.height = style.minimumWidth = style.minimumHeight = ICON_SIZE
++        s = self.style
+         bg = None
+         if s.type is 'builtin':
+             if s.kind is 'color':
+@@ -65,8 +69,9 @@ class HighlightStyle:
+         if bg is None and s['background-color']:
+             bg = s['background-color']
+         if bg:
+-            s.backgroundColor = bg
+-            s.borderRadius = '4px'
++            style.backgroundColor = bg
++            br = ICON_SIZE_VAL / 4
++            style.borderRadius = f'{br}{ICON_SIZE_UNIT}'
+ 
+     def highlight_shade(self, is_dark):
+         s = self.style
+@@ -117,7 +122,7 @@ class EditNotesAndColors:  # {{{
+         self.is_dark_theme = is_dark_theme
+ 
+         def separator():
+-            return E.hr(style='max-width: 80em; width: 80vw; border-top: solid 1px; margin: auto; margin-top: 2ex; margin-bottom: 2ex')
++            return E.hr(style='width: 100%; border-top: solid 1px; margin: auto; margin-top: 2ex; margin-bottom: 2ex')
+ 
+         def finish():
+             close_editor(True)
+@@ -133,13 +138,13 @@ class EditNotesAndColors:  # {{{
+                 finish()
+ 
+         c = E.div(
+-            style=f'background: {get_color("window-background")}; margin: auto; padding: 1rem',
++            style=f'background: {get_color("window-background")}; margin: auto; text-align: center; padding: 2rem;',
+             onclick=def(ev): ev.stopPropagation();,
+             id=unique_id(),
+             E.h3(_('Add notes for this highlight')),
+             E.textarea(
+                 current_notes or '',
+-                rows='10', spellcheck='true', style='resize: none; width: 80vw; max-width: 80em; margin: 1ex',
++                rows='10', spellcheck='true', style='resize: none; width: 90%; margin: 1ex',
+                 onkeydown=handle_keypress,
+             ),
+             E.div(
+@@ -152,10 +157,10 @@ class EditNotesAndColors:  # {{{
+             E.h3(_('Choose the color for this highlight'), style='margin-bottom: 2ex'),
+             E.div(
+                 class_='color-block',
+-                style=f'display: flex; flex-wrap: wrap; max-width: calc({ICON_SIZE} * 8); margin: auto',
++                style=f'display: flex; flex-wrap: wrap; max-width: calc({ICON_SIZE} * 10); margin: auto',
+             ),
+             E.div(
+-                style='max-width: 80em; width: 80vw; margin: auto; margin-top: 2ex; display: flex; justify-content: space-between; align-items: center',
++                style='width: 100%; margin: auto; margin-top: 2ex; display: flex; justify-content: space-between; align-items: center',
+                 E.div(
+                     E.label(_('New color:'), ' ', E.input(type='color', onchange=self.add_custom_color))
+                 ),
+@@ -167,7 +172,7 @@ class EditNotesAndColors:  # {{{
+             separator(),
+ 
+             E.div(
+-                style='max-width: 80em; width: 80vw; margin: auto; display: flex; justify-content: space-between',
++                style='width: 100%; margin: auto; display: flex; justify-content: space-between',
+                 create_button(_('Cancel'), 'close', abort, _('Abort') + ' [Esc]'),
+                 create_button(_('Finish'), 'check', finish, _('Finish editing highlight') + ' [Ctrl+Enter]', True),
+             )
+@@ -175,6 +180,8 @@ class EditNotesAndColors:  # {{{
+         )
+         self.container_id = c.id
+         container.appendChild(c)
++        container.style.maxWidth = '50rem'
++        container.style.width = '90%'
+         self.seen_colors = {}
+         custom_highlight_styles = get_session_data().get('custom_highlight_styles')
+         for raw in custom_highlight_styles:
+diff --git a/src/pyj/read_book/selection_bar.pyj b/src/pyj/read_book/selection_bar.pyj
+index 846b86e509..b9719446b3 100644
+--- a/src/pyj/read_book/selection_bar.pyj
++++ b/src/pyj/read_book/selection_bar.pyj
+@@ -234,8 +234,13 @@ class SelectionBar:
+             style='position: absolute; border: solid 1px currentColor; border-radius: 5px;'
+             'left: 0; top: 0; display: flex; flex-direction: column;'
+         ))
+-        container.appendChild(E.div(id=self.editor_id))
+-        container.lastChild.addEventListener('click', self.editor_container_clicked, {'passive': False})
++
++        editor_div = E.div(id=self.editor_id, style='pointer-events: auto')
++        container.appendChild(E.div(
++            editor_div,
++        style='width: 100%; height: 100%; position: absolute; display: flex;'
++        'align-items: center; justify-content: center; pointer-events: none'))
++        editor_div.addEventListener('click', self.editor_container_clicked, {'passive': False})
+ 
+     # bar and handles markup {{{
+ 
+-- 
+2.28.0
+

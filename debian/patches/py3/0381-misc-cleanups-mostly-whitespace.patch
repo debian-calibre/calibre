@@ -1,0 +1,69 @@
+From 084d31a1aaf2999ec0fdc157d9dfde6ad2de3581 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 13 Aug 2020 19:58:26 +0530
+Subject: [PATCH 381/408] misc cleanups, mostly whitespace
+
+---
+ src/pyj/read_book/flow_mode.pyj | 7 ++-----
+ src/pyj/read_book/viewport.pyj  | 6 +++---
+ 2 files changed, 5 insertions(+), 8 deletions(-)
+
+diff --git a/src/pyj/read_book/flow_mode.pyj b/src/pyj/read_book/flow_mode.pyj
+index f600479db4..bb1abd4e75 100644
+--- a/src/pyj/read_book/flow_mode.pyj
++++ b/src/pyj/read_book/flow_mode.pyj
+@@ -250,10 +250,7 @@ def layout(is_single_page):
+     # scroll viewport needs to know if we're in vertical mode,
+     # since that will cause scrolling to happen left and right
+     scroll_viewport.initialize_on_layout(body_style)
+-
+-    document.documentElement.style.overflow = 'hidden'
+-    if scroll_viewport.vertical_writing_mode:
+-        document.documentElement.style.overflow = 'visible'
++    document.documentElement.style.overflow = 'visible' if scroll_viewport.vertical_writing_mode else 'hidden'
+ 
+ def auto_scroll_resume():
+     scroll_animator.wait = False
+@@ -578,7 +575,7 @@ anchor_funcs = {
+         # as the value that the scroll viewport returns is negated
+         if scroll_viewport.vertical_writing_mode and scroll_viewport.rtl:
+             pos = -pos
+-        
++
+         if pos < scroll_viewport.block_pos():
+             return -1
+         if pos <= scroll_viewport.block_pos() + scroll_viewport.block_size():
+diff --git a/src/pyj/read_book/viewport.pyj b/src/pyj/read_book/viewport.pyj
+index 36cd9af34b..c50a7b8537 100644
+--- a/src/pyj/read_book/viewport.pyj
++++ b/src/pyj/read_book/viewport.pyj
+@@ -72,7 +72,7 @@ class ScrollViewport:
+         else:
+             window.scrollTo(x, y)
+ 
+-    def scroll_to_in_inline_direction(self, pos):        
++    def scroll_to_in_inline_direction(self, pos):
+         # Lines flow vertically, so inline is vertical.
+         if self.vertical_writing_mode:
+             self.scroll_to(0, pos)
+@@ -214,7 +214,7 @@ class ScrollViewport:
+         if self.horizontal_writing_mode:
+             return rect.width
+         return rect.height
+-        
++
+     def rect_block_size(self, rect):
+         # The block is vertical in horizontal writing, so use height
+         if self.horizontal_writing_mode:
+@@ -241,7 +241,7 @@ class ScrollViewport:
+         if self.horizontal_writing_mode:
+             return self.viewport_to_document(inline, block)
+         return self.viewport_to_document(block, inline)
+-    
++
+     def element_from_point(self, doc, x, y):
+         if self.rtl:
+             return doc.elementFromPoint(-x, y)
+-- 
+2.28.0
+

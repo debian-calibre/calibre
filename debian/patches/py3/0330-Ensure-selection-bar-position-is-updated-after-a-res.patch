@@ -1,0 +1,29 @@
+From 8f1a846794210f0e5ef878b4114f87ef0fa30a25 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Fri, 7 Aug 2020 09:26:30 +0530
+Subject: [PATCH 330/408] Ensure selection bar position is updated after a
+ resize
+
+---
+ src/pyj/read_book/iframe.pyj | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/src/pyj/read_book/iframe.pyj b/src/pyj/read_book/iframe.pyj
+index f951686470..265689daca 100644
+--- a/src/pyj/read_book/iframe.pyj
++++ b/src/pyj/read_book/iframe.pyj
+@@ -551,6 +551,11 @@ class IframeBoss:
+             paged_resize_done()
+         self.update_cfi()
+         self.update_toc_position()
++        sel = window.getSelection()
++        if sel and not sel.isCollapsed:
++            # update_selection_position has probably already been called by
++            # no_latency_onscroll but make sure
++            self.send_message('update_selection_position', selection_extents=selection_extents(current_layout_mode() is 'flow', True))
+ 
+     def received_window_size(self, data):
+         scroll_viewport.update_window_size(data.width, data.height)
+-- 
+2.28.0
+

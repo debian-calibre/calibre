@@ -1,0 +1,76 @@
+From cef6d69a2c919bcaf2c7bdbdd801c31c9b5c6294 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Sat, 8 Aug 2020 09:57:33 +0530
+Subject: [PATCH 340/408] Fix scrollbar not visible in footnote popup
+
+---
+ src/pyj/read_book/footnotes.pyj |  5 ++++-
+ src/pyj/read_book/settings.pyj  | 21 +++++++++++----------
+ 2 files changed, 15 insertions(+), 11 deletions(-)
+
+diff --git a/src/pyj/read_book/footnotes.pyj b/src/pyj/read_book/footnotes.pyj
+index 5a4d593e11..d32c7e8d06 100644
+--- a/src/pyj/read_book/footnotes.pyj
++++ b/src/pyj/read_book/footnotes.pyj
+@@ -242,9 +242,12 @@ class PopupIframeBoss:
+         if not self.comm.encrypted_communications:
+             window.setTimeout(self.content_loaded, 2)
+             return
++        # this is the loading styles used to suppress scrollbars during load
++        # added in unserialize_html
++        document.head.removeChild(document.head.firstChild)
+         document.body.classList.add('calibre-footnote-container')
+         set_color_scheme_class()
+-        apply_settings()
++        apply_settings(True)
+         self.comm.send_message('content_loaded', height=document.documentElement.scrollHeight + 25)
+ 
+ 
+diff --git a/src/pyj/read_book/settings.pyj b/src/pyj/read_book/settings.pyj
+index 9f960fbeab..17f4af2427 100644
+--- a/src/pyj/read_book/settings.pyj
++++ b/src/pyj/read_book/settings.pyj
+@@ -56,7 +56,7 @@ def make_selection_background_opaque(selbg):
+ styles_id = 'calibre-color-scheme-style-overrides'
+ 
+ 
+-def apply_colors():
++def apply_colors(is_content_popup):
+     for elem in (document.documentElement, document.body):
+         elem.style.color = opts.color_scheme.foreground
+         # set background color to transparent so that the users background
+@@ -88,13 +88,14 @@ def apply_colors():
+     selbg = make_selection_background_opaque(selbg)
+     text += f'\n::selection {{ background-color: {selbg}; color: {selfg} }}'
+     text += f'\n::selection:window-inactive {{ background-color: {selbg}; color: {selfg} }}'
+-    # In Chrome when content overflows in RTL and vertical layouts on the left side,
+-    # it is not displayed properly when scrolling unless overflow:visible is set,
+-    # but this causes scrollbars to appear.
+-    # Force disable scrollbars in Chrome, Safari, and Firefox to address this side effect.
+-    text += '\nhtml::-webkit-scrollbar, body::-webkit-scrollbar { display: none !important }'
+-    # for firefox: https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-width
+-    text += '\nhtml, body { scrollbar-width: none !important }'
++    if not is_content_popup:
++        # In Chrome when content overflows in RTL and vertical layouts on the left side,
++        # it is not displayed properly when scrolling unless overflow:visible is set,
++        # but this causes scrollbars to appear.
++        # Force disable scrollbars in Chrome, Safari, and Firefox to address this side effect.
++        text += '\nhtml::-webkit-scrollbar, body::-webkit-scrollbar { display: none !important }'
++        # for firefox: https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-width
++        text += '\nhtml, body { scrollbar-width: none !important }'
+ 
+     ss.textContent = text
+ 
+@@ -136,7 +137,7 @@ def apply_stylesheet():
+     style.textContent = opts.user_stylesheet
+ 
+ 
+-def apply_settings():
++def apply_settings(is_content_popup):
+     apply_font_size()
+-    apply_colors()
++    apply_colors(is_content_popup)
+     apply_stylesheet()
+-- 
+2.28.0
+

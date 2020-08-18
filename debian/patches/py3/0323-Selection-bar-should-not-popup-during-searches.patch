@@ -1,0 +1,81 @@
+From f5295d36a52ac47ce482b22fcb95fed16f5b3852 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 6 Aug 2020 12:23:55 +0530
+Subject: [PATCH 323/408] Selection bar should not popup during searches
+
+---
+ src/pyj/read_book/iframe.pyj        | 6 +++++-
+ src/pyj/read_book/selection_bar.pyj | 2 +-
+ src/pyj/read_book/view.pyj          | 3 ++-
+ 3 files changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/src/pyj/read_book/iframe.pyj b/src/pyj/read_book/iframe.pyj
+index 2d417021f9..f951686470 100644
+--- a/src/pyj/read_book/iframe.pyj
++++ b/src/pyj/read_book/iframe.pyj
+@@ -112,6 +112,7 @@ class IframeBoss:
+     def __init__(self):
+         window.navigator.epubReadingSystem = EPUBReadingSystem()
+         self.last_cfi = None
++        self.last_search_at = -1001
+         self.reference_mode_enabled = False
+         self.replace_history_on_next_cfi_update = True
+         self.blob_url_map = {}
+@@ -528,9 +529,10 @@ class IframeBoss:
+         if not collapsed:
+             text = sel.toString()
+             annot_id = highlight_associated_with_selection(sel, annot_id_uuid_map)
++        by_search = window.performance.now() - self.last_search_at < 1000
+         self.send_message(
+             'selectionchange', text=text, empty=v'!!collapsed', annot_id=annot_id,
+-            drag_mouse_position=drag_mouse_position,
++            drag_mouse_position=drag_mouse_position, selection_change_caused_by_search=by_search,
+             selection_extents=selection_extents(current_layout_mode() is 'flow', True))
+ 
+     def onresize_stage2(self):
+@@ -680,6 +682,7 @@ class IframeBoss:
+             self.scroll_to_ref(refnum)
+ 
+     def find(self, data, from_load):
++        self.last_search_at = window.performance.now()
+         if data.searched_in_spine:
+             window.getSelection().removeAllRanges()
+         if window.find(data.text, False, data.backwards, from_load and data.backwards):
+@@ -693,6 +696,7 @@ class IframeBoss:
+                 self.send_message('find_in_spine', text=data.text, backwards=data.backwards, searched_in_spine=data.searched_in_spine)
+ 
+     def show_search_result(self, data, from_load):
++        self.last_search_at = window.performance.now()
+         if select_search_result(data.search_result):
+             self.ensure_selection_visible()
+         else:
+diff --git a/src/pyj/read_book/selection_bar.pyj b/src/pyj/read_book/selection_bar.pyj
+index e0561220e3..7f9ef3d2dd 100644
+--- a/src/pyj/read_book/selection_bar.pyj
++++ b/src/pyj/read_book/selection_bar.pyj
+@@ -548,7 +548,7 @@ class SelectionBar:
+         self.right_handle.style.display = 'none'
+         self.editor.style.display = 'none'
+ 
+-        if not cs or cs.empty or jstype(cs.drag_mouse_position.x) is 'number':
++        if not cs or cs.empty or jstype(cs.drag_mouse_position.x) is 'number' or cs.selection_change_caused_by_search:
+             return self.hide()
+ 
+         if not cs.start.onscreen and not cs.end.onscreen:
+diff --git a/src/pyj/read_book/view.pyj b/src/pyj/read_book/view.pyj
+index a7239efa44..53b3fb2094 100644
+--- a/src/pyj/read_book/view.pyj
++++ b/src/pyj/read_book/view.pyj
+@@ -536,7 +536,8 @@ class View:
+         self.currently_showing.selection = {
+             'text': data.text, 'empty': data.empty, 'start': data.selection_extents.start,
+             'end': data.selection_extents.end, 'annot_id': data.annot_id,
+-            'drag_mouse_position': data.drag_mouse_position
++            'drag_mouse_position': data.drag_mouse_position,
++            'selection_change_caused_by_search': data.selection_change_caused_by_search
+         }
+         if ui_operations.selection_changed:
+             ui_operations.selection_changed(self.currently_showing.selection.text)
+-- 
+2.28.0
+

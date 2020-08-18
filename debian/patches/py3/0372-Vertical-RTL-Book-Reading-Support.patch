@@ -1,0 +1,1997 @@
+From beb05647c66b51f883012d21afb71af1c27645c1 Mon Sep 17 00:00:00 2001
+From: "Mark W. Gabby-Li" <mark@gabby.li>
+Date: Tue, 11 Aug 2020 22:36:58 -0700
+Subject: [PATCH 372/408] Vertical RTL Book Reading Support
+
+Added a variety of functions to viewport to allow working based on block and inline direction rather than X and Y.
+
+Changed paged mode and flow mode to be based on block and inline directions, making them agnostic to writing direction.
+
+Added jump_to_cfi function to flow mode code, and use this in iframe. This fixes some issues with CFI jumping in flow mode.
+
+Use self.jump_to_cfi in iframe so that it is based on the current mode.
+
+Removed a redundant self.onscroll call that was causing CFIs to be queried twice on load, doubling the time they took.
+
+Fixed some bugs related to scrolling in flow mode related to a decorator not working with keyword arguments, by removing the keyword arguments.
+
+Fixed some bugs with flow mode visibility anchor function.
+
+CFI changes:
+ Renamed some functions and variables to clarify meaning.
+
+ Remove use of exceptions, since they were causing CFI calculation to run about six times more slowly in benchmarks. (Worst-case went from ~6 to ~1 second.)
+
+ Remove forward flag and allow text offset to be equal to node length, and correct for this by adding a flag to the decoded CFI to indicate this.
+
+ Added comments clarifying the results of decoding a CFI.
+
+ Fix bugs in the point (now decode_with_range) function and simplified it.
+
+ Added new functions that get CFI position from decoded CFIs, to replace places where this was being done in slightly different ways.
+
+ Fixed some issues with cfi.pyj's scroll_to that were exposed by vertical writing support, mainly caching and using span's parent to create the start and end ranges, which causes re-creating the range to succeed. Also, don't store the span's bounding rect, since it's not needed anymore.
+
+ Rewrote at_current to do a simplified scan of the viewport in the inline and then block direction.
+---
+ src/calibre/ebooks/epub/cfi/parse.py |   3 +
+ src/calibre/srv/render_book.py       |  16 +
+ src/pyj/read_book/cfi.pyj            | 454 +++++++++++++++++----------
+ src/pyj/read_book/flow_mode.pyj      | 186 +++++++----
+ src/pyj/read_book/iframe.pyj         |  10 +-
+ src/pyj/read_book/paged_mode.pyj     | 279 ++++++++--------
+ src/pyj/read_book/viewport.pyj       | 205 +++++++++++-
+ 7 files changed, 797 insertions(+), 356 deletions(-)
+
+diff --git a/src/calibre/ebooks/epub/cfi/parse.py b/src/calibre/ebooks/epub/cfi/parse.py
+index 548710d646..b3a283b583 100644
+--- a/src/calibre/ebooks/epub/cfi/parse.py
++++ b/src/calibre/ebooks/epub/cfi/parse.py
+@@ -57,6 +57,9 @@ class Parser(object):
+     def parse_epubcfi(self, raw):
+         ' Parse a full epubcfi of the form epubcfi(path [ , path , path ]) '
+         null = {}, {}, {}, raw
++        if not raw:
++            return null
++
+         if not raw.startswith('epubcfi('):
+             return null
+         raw = raw[len('epubcfi('):]
+diff --git a/src/calibre/srv/render_book.py b/src/calibre/srv/render_book.py
+index 24f44afe33..5a0e1aa3b1 100644
+--- a/src/calibre/srv/render_book.py
++++ b/src/calibre/srv/render_book.py
+@@ -136,11 +136,15 @@ absolute_font_sizes = {
+     'medium': '1rem',
+     'large': '1.125rem', 'x-large': '1.5rem', 'xx-large': '2rem', 'xxx-large': '2.55rem'
+ }
++nonstandard_writing_mode_property_names = ('-webkit-writing-mode', '-epub-writing-mode')
+ 
+ 
+ def transform_declaration(decl):
+     decl = StyleDeclaration(decl)
+     changed = False
++    nonstandard_writing_mode_props = {}
++    standard_writing_mode_props = {}
++    
+     for prop, parent_prop in tuple(decl):
+         if prop.name in page_break_properties:
+             changed = True
+@@ -162,6 +166,18 @@ def transform_declaration(decl):
+                 changed = True
+                 l = convert_fontsize(l, unit)
+                 decl.change_property(prop, parent_prop, unicode_type(l) + 'rem')
++        elif prop.name in nonstandard_writing_mode_property_names:
++            nonstandard_writing_mode_props[prop.value] = prop.priority
++        elif prop.name == 'writing-mode':
++            standard_writing_mode_props[prop.value] = True
++
++    # Add standard writing-mode properties if they don't exist so that
++    # all of the browsers supported by the viewer work in vertical modes
++    for value, priority in nonstandard_writing_mode_props.items():
++        if value not in standard_writing_mode_props:
++            decl.set_property('writing-mode', value, priority)
++            changed = True
++
+     return changed
+ 
+ 
+diff --git a/src/pyj/read_book/cfi.pyj b/src/pyj/read_book/cfi.pyj
+index 05f38ddba4..caf5f13818 100644
+--- a/src/pyj/read_book/cfi.pyj
++++ b/src/pyj/read_book/cfi.pyj
+@@ -21,7 +21,7 @@ from __python__ import hash_literals
+ #    scroll_to(cfi): which scrolls the browser to a point corresponding to the
+ #                    given cfi, and returns the x and y co-ordinates of the point.
+ 
+-from read_book.viewport import scroll_viewport
++from read_book.viewport import scroll_viewport, rem_size
+ 
+ # CFI escaping {{{
+ escape_pat = /[\[\],^();~@!-]/g
+@@ -52,11 +52,6 @@ def get_current_time(target): # {{{
+     return fstr(target.currentTime or 0)
+ # }}}
+ 
+-def window_scroll_pos(w):  # {{{
+-    w = w or window
+-    return w.pageXOffset, w.pageYOffset
+-# }}}
+-
+ # Convert point to character offset {{{
+ def range_has_point(range_, x, y):
+     rects = range_.getClientRects()
+@@ -102,7 +97,7 @@ def find_offset_for_point(x, y, node, cdoc):
+ 
+     # The point must be after the last bit of text/in the padding/border, we dont know
+     # how to get a good point in this case
+-    raise ValueError(str.format("Point ({}, {}) is in the padding/border of the node, so cannot calculate offset", x, y))
++    return None, None
+ 
+ # }}}
+ 
+@@ -279,7 +274,7 @@ def node_for_path_step(parent, target, assertion):
+     return node_at_index(parent.childNodes, target, 0, not is_element)[0]
+ 
+ 
+-def node_for_text_offset(nodes, offset, forward, first_node):
++def node_for_text_offset(nodes, offset, first_node):
+     last_text_node = None
+     seen_first = False
+     for i in range(nodes.length):
+@@ -291,17 +286,30 @@ def node_for_text_offset(nodes, offset, forward, first_node):
+                 continue
+         if is_text_node(node):
+             l = node.nodeValue.length
+-            if offset < l or (not forward and offset is l):
++            if offset <= l:
+                 return node, offset, True
+             last_text_node = node
+             offset -= l
+         elif node.nodeType is Node.ELEMENT_NODE and node.dataset.calibreRangeWrapper:
+-            qn, offset, ok = node_for_text_offset(unwrapped_nodes(node), offset, forward)
++            qn, offset, ok = node_for_text_offset(unwrapped_nodes(node), offset)
+             if ok:
+                 return qn, offset, True
+     return last_text_node, offset, False
+ 
+-
++# Based on a CFI string, returns a decoded CFI, with members:
++#
++#  node: The node to which the CFI refers.
++#  time: If the CFI refers to a video or sound, this is the time within such to which it refers.
++#  x, y: If the CFI defines a spacial offset (technically only valid for images and videos),
++#        these are the X and Y percentages from the top-left of the image or video.
++#        Note that Calibre has a fallback to set CFIs with spacial offset on the HTML document,
++#        and interprets them as a position within the Calibre-rendered document.
++#  forward: This is set to True if the CFI had a side bias of 'a' (meaning 'after').
++#  offset: When the CFI refers to a text node, this is the offset (zero-based index) of the character
++#          the CFI refers to. The position is defined as being before the specified character,
++#          i.e. an offset of 0 is before the first character and an offset equal to number of characters
++#          in the text is after the last character.
++#  error: If there was a problem decoding the CFI, this is set to a string describing the error.
+ def decode(cfi, doc):
+     doc = doc or window.document
+     simple_node_regex = ///
+@@ -341,7 +349,7 @@ def decode(cfi, doc):
+         print(error)
+         return None
+ 
+-    point = {}
++    decoded = {}
+     error = None
+     offset = None
+ 
+@@ -354,14 +362,14 @@ def decode(cfi, doc):
+     r = cfi.match(/^~(-?\d+(\.\d+)?)/)
+     if r:
+         # Temporal offset
+-        point.time = r[1] - 0 # Coerce to number
++        decoded.time = r[1] - 0 # Coerce to number
+         cfi = cfi.substr(r[0].length)
+ 
+     r = cfi.match(/^@(-?\d+(\.\d+)?):(-?\d+(\.\d+)?)/)
+     if r:
+         # Spatial offset
+-        point.x = r[1] - 0 # Coerce to number
+-        point.y = r[3] - 0 # Coerce to number
++        decoded.x = r[1] - 0 # Coerce to number
++        decoded.y = r[3] - 0 # Coerce to number
+         cfi = cfi.substr(r[0].length)
+ 
+     r = cfi.match(/^\[([^\]]+)\]/)
+@@ -372,7 +380,7 @@ def decode(cfi, doc):
+         if r:
+             if r.index > 0 and assertion[r.index - 1] is not '^':
+                 assertion = assertion.substr(0, r.index)
+-                point.forward = (r[1] is 'a')
++                decoded.forward = (r[1] is 'a')
+             assertion = unescape_from_cfi(assertion)
+             # TODO: Handle text assertion
+ 
+@@ -381,21 +389,21 @@ def decode(cfi, doc):
+         orig_offset = offset
+         if node.parentNode?.nodeType is Node.ELEMENT_NODE and node.parentNode.dataset.calibreRangeWrapper:
+             node = node.parentNode
+-        node, offset, ok = node_for_text_offset(node.parentNode.childNodes, offset, point.forward, node)
++        node, offset, ok = node_for_text_offset(node.parentNode.childNodes, offset, node)
+         if not ok:
+             error = "Offset out of range: " + orig_offset
+-        point.offset = offset
++        decoded.offset = offset
+ 
+-    point.node = node
++    decoded.node = node
+     if error:
+-        point.error = error
++        decoded.error = error
+     else if cfi.length > 0:
+-        point.error = "Undecoded CFI: " + cfi
++        decoded.error = "Undecoded CFI: " + cfi
+ 
+-    if point.error:
+-        print(point.error)
++    if decoded.error:
++        print(decoded.error)
+ 
+-    return point
++    return decoded
+ # }}}
+ 
+ def cfi_sort_key(cfi): # {{{
+@@ -536,85 +544,169 @@ def at(x, y, doc):  # {{{
+         # caretRangeFromPoint does weird things when the point falls in the
+         # padding of the element
+         target, offset = find_offset_for_point(x, y, target, cdoc)
++        if target is None:
++            return None
+ 
+     return encode(doc, target, offset, tail)
+ # }}}
+ 
+-def point(cfi, doc):  # {{{
++# Like decode(), but tries to construct a range from the CFI's character offset and include it in
++# the return value.
++#
++# If the CFI defines a character offset, there are three cases:
++# Case 1. If the offset is 0 and the text node's length is zero,
++#         the range is set to None. This is a failure case, but
++#         later code will try to use the node's bounding box.
++# Case 2. Otherwise, if the offset is equal to the length of the range,
++#         then a range from the previous to the last character is created,
++#         and use_range_end_pos is set. This is the special case.
++# Case 3. Otherwise, the range is set start at the offset and end at one character past the offset.
++# 
++# In cases 2 and 3, the range is then checked to verify that bounding information can be obtained.
++# If not, no range is returned.
++# 
++# If the CFI does not define a character offset, then the spacial offset is set in the return value.
++#
++# Includes everything that the decode() function does, in addition to:
++# range: A text range, as desribed above.
++# use_range_end_pos: If this is True, a position calculated from the range should
++#                    use the position after the last character in the range.
++#                    (This is set if the offset is equal to the length of the text in the node.)
++def decode_with_range(cfi, doc):  # {{{
+     doc = doc or window.document
+-    r = decode(cfi, doc)
+-    if not r:
++    decoded = decode(cfi, doc)
++    if not decoded:
+         return None
+-    node = r.node
++    node = decoded.node
+     ndoc = node.ownerDocument
+     if not ndoc:
+         print(str.format("CFI node has no owner document: {} {}", cfi, node))
+         return None
+ 
+-    x = None
+-    y = None
+     range_ = None
++    position_at_end_of_range = None
+ 
+-    if jstype(r.offset) is "number":
+-        # Character offset
+-        range_ = ndoc.createRange()
+-        if r.forward:
+-            try_list = [{'start':0, 'end':0, 'a':0.5}, {'start':0, 'end':1, 'a':1}, {'start':-1, 'end':0, 'a':0}]
+-        else:
+-            try_list = [{'start':0, 'end':0, 'a':0.5}, {'start':-1, 'end':0, 'a':0}, {'start':0, 'end':1, 'a':1}]
+-        a = None
++    if jstype(decoded.offset) is "number":
++        # We can only create a meaningful range if the node length is
++        # positive and nonzero.
+         node_len = node.nodeValue.length if node.nodeValue else 0
+-        offset = r.offset
+-        if not offset:
+-            range_.setStart(node, 0)
+-            range_.setEnd(node, 0)
+-        else:
+-            rects = v'[]'
+-            for v'var i = 0; i < 2; i++':
+-                # Try reducing the offset by 1 if we get no match as if it refers to the position after the
+-                # last character we wont get a match with getClientRects
+-                offset = r.offset - i
+-                if offset < 0:
+-                    offset = 0
+-                k = 0
+-                while not rects?.length and k < try_list.length:
+-                    t = try_list[k]
+-                    k += 1
+-                    start_offset = offset + t.start
+-                    end_offset = offset + t.end
+-                    a = t.a
+-                    if start_offset < 0 or end_offset >= node_len:
+-                        continue
+-                    range_.setStart(node, start_offset)
+-                    range_.setEnd(node, end_offset)
+-                    rects = range_.getClientRects()
+-
+-            if not rects?.length:
+-                print(str.format("Could not find caret position for {} : rects: {} offset: {}", cfi, rects, r.offset))
+-                return None
++        if node_len:
++            range_ = ndoc.createRange()
+ 
+-    else:
+-        x, y = r.x, r.y
++            # Check for special case: End of range offset, after the last character
++            offset = decoded.offset
++            position_at_end_of_range = False
++            if offset == node_len:
++                offset -= 1
++                position_at_end_of_range = True
++
++            range_.setStart(node, offset)
++            range_.setEnd(node, offset + 1)
++            rect = range_.getBoundingClientRect()
++
++            if not rect:
++                print(str.format("Could not find caret position for {} (offset: {})", cfi, decoded.offset))
++                range_ = None
++
++    # Augment decoded with range, if found
++    decoded.range = range_
++    decoded.use_range_end_pos = position_at_end_of_range
+ 
+-    return {'x':x, 'y':y, 'node':r.node, 'time':r.time, 'range':range_, 'a':a}
++    return decoded
+ 
+ # }}}
+ 
++# It's only valid to call this if you have a decoded CFI with a range included.
++# Call decoded_to_document_position if you're not sure.
++def decoded_range_to_document_position(decoded):
++    # Character offset
++    # Get the bounding rect of the range, in (real) viewport space
++    rect = decoded.range.getBoundingClientRect()
++
++    # Now, get the viewport-space position (vs_pos) we want to scroll to
++    # This is a little complicated.
++    # The box we are using is a character's bounding box.
++    # First, the inline direction.
++    # We want to use the beginning of the box per the ePub CFI spec,
++    # which states character offset CFIs refer to the beginning of the
++    # character, which would be in the inline direction.
++    inline_vs_pos = scroll_viewport.rect_inline_start(rect)
++    #  Unless the flag is set to use the end of the range:
++    #  (because ranges indices may not exceed the range,
++    #   but CFI offets are allowed to be one past the end.)
++    if decoded.use_range_end_pos:
++        inline_vs_pos = scroll_viewport.rect_inline_end(rect)
++
++    # Next, the block direction.
++    # If the CFI specifies a side bias, we should respect that.
++    # Otherwise, we want to use the block start.
++    if decoded.forward:
++        block_vs_pos = scroll_viewport.rect_block_end(rect)
++    else:
++        block_vs_pos = scroll_viewport.rect_block_start(rect)
++
++    # Now, we need to convert these to document X and Y coordinates.
++    return scroll_viewport.viewport_to_document_inline_block(inline_vs_pos, block_vs_pos, decoded.node.ownerDocument)
++
++# This will work on a decoded CFI that refers to a node or node with spacial offset.
++# It will ignore any ranges, so call decoded_to_document_position unless you're sure the decoded CFI has no range.
++def decoded_node_or_spacial_offset_to_document_position(decoded):
++    node = decoded.node
++    rect = node.getBoundingClientRect()
++    percentx, percenty = decoded.x, decoded.y
++    # If we have a spacial offset, base the CFI position on the offset into the object
++    if jstype(percentx) is 'number' and node.offsetWidth and jstype(percenty) is 'number' and node.offsetHeight:
++        viewx = rect.left + (percentx*node.offsetWidth)/100
++        viewy = rect.top + (percenty*node.offsetHeight)/100
++        doc_left, doc_top = scroll_viewport.viewport_to_document(viewx, viewy, node.ownerDocument)
++        return doc_left, doc_top
++    # Otherwise, base it on the inline and block start and end, along with side bias:
++    else:
++        if decoded.forward:
++            block_vs_pos = scroll_viewport.rect_block_end(rect)
++        else:
++            block_vs_pos = scroll_viewport.rect_block_start(rect)
++
++        inline_vs_pos = scroll_viewport.rect_inline_start(rect)
++        return scroll_viewport.viewport_to_document_inline_block(inline_vs_pos, block_vs_pos, node.ownerDocument)
++
++# This will take a decoded CFI and return a document position.
++#
++def decoded_to_document_position(decoded):
++    node = decoded.node
++    if decoded.range is not None:
++        return decoded_range_to_document_position(decoded)
++    else if node is not None and node.getBoundingClientRect:
++        return decoded_node_or_spacial_offset_to_document_position(decoded)
++    # No range, so we can't use that, and no node, so any spacial offset is meaningless
++    else:
++        return None, None
++
+ def scroll_to(cfi, callback, doc):  # {{{
+-    doc = doc or window.doc
+-    point_ = point(cfi, doc)
+-    if not point_:
+-        print("No point found for cfi: " + cfi)
++    decoded = decode_with_range(cfi, doc)
++    if not decoded:
++        print("No information found for cfi: " + cfi)
+         return
+-    if jstype(point_.time) is 'number':
+-        set_current_time(point_.node, point_.time)
++    if jstype(decoded.time) is 'number':
++        set_current_time(decoded.node, decoded.time)
+ 
+-    if point_.range is not None:
++    if decoded.range is not None:
+         # Character offset
+-        r = point_.range
+-        so, eo, sc, ec = r.startOffset, r.endOffset, r.startContainer, r.endContainer
+-        node = r.startContainer
+-        ndoc = node.ownerDocument
++        r = decoded.range
++        so, eo = r.startOffset, r.endOffset
++        original_node = r.startContainer
++
++        # Save the node index and its parent so we can get the node back
++        # after removing the span and normalizing the parent.
++        node_parent = original_node.parentNode
++        original_node_index = 0
++        for child_node in node_parent.childNodes:
++            if child_node is original_node:
++                break
++            else:
++                ++original_node_index
++
++        ndoc = original_node.ownerDocument
+         span = ndoc.createElement('span')
+         span.setAttribute('style', 'border-width: 0; padding: 0; margin: 0')
+         r.surroundContents(span)
+@@ -622,15 +714,6 @@ def scroll_to(cfi, callback, doc):  # {{{
+         fn = def():
+             # Remove the span and get the new position now that scrolling
+             # has (hopefully) completed
+-            #
+-            # In WebKit, the boundingrect of the span is wrong in some
+-            # situations, whereas in IE resetting the range causes it to
+-            # loose bounding info. So we use the range's rects unless they
+-            # are absent, in which case we use the span's rect
+-            #
+-            rect = span.getBoundingClientRect()
+-
+-            # Remove the span we inserted
+             p = span.parentNode
+             for node in span.childNodes:
+                 span.removeChild(node)
+@@ -642,7 +725,7 @@ def scroll_to(cfi, callback, doc):  # {{{
+             offset = so
+             while offset > -1:
+                 try:
+-                    r.setStart(sc, offset)
++                    decoded.range.setStart(node_parent.childNodes[original_node_index], offset)
+                     break
+                 except:
+                     offset -= 1
+@@ -650,36 +733,49 @@ def scroll_to(cfi, callback, doc):  # {{{
+             offset = eo
+             while offset > -1:
+                 try:
+-                    r.setEnd(ec, offset)
++                    decoded.range.setEnd(node_parent.childNodes[original_node_index], offset)
+                     break
+                 except:
+                     offset -= 1
+ 
+-            rects = r.getClientRects()
+-            if rects.length > 0:
+-                rect = rects[0]
++            doc_x, doc_y = decoded_range_to_document_position(decoded)
++
++            # Abort if CFI position is invalid
++            if doc_x is None or doc_y is None:
++                return
++
++            # Since this position will be used for the upper-left of the viewport,
++            # in RTL mode, we need to offset it by the viewport width so the
++            # position will be on the right side of the viewport,
++            # from where we start reading.
++            # (Note that adding moves left in RTL mode because of the viewport X
++            #  coordinate reversal in RTL mode.)
++            if scroll_viewport.rtl:
++                doc_x += scroll_viewport.width()
+ 
+-            x = (point_.a*rect.left + (1-point_.a)*rect.right)
+-            y = (rect.top + rect.bottom)/2
+-            x, y = scroll_viewport.viewport_to_document(x, y, ndoc)
+             if callback:
+-                callback(x, y)
++                callback(doc_x, doc_y)
+     else:
+-        node = point_.node
++        node = decoded.node
+         scroll_viewport.scroll_into_view(node)
+ 
+         fn = def():
+-            r = node.getBoundingClientRect()
+-            # Start of element is right side in RTL, so be sure to get that side in RTL mode
+-            x, y = scroll_viewport.viewport_to_document(
+-                r.left if scroll_viewport.ltr else r.right, r.top, node.ownerDocument)
+-            if jstype(point_.x) is 'number' and node.offsetWidth:
+-                x += (point_.x*node.offsetWidth)/100
+-            if jstype(point_.y) is 'number' and node.offsetHeight:
+-                y += (point_.y*node.offsetHeight)/100
+-            scroll_viewport.scroll_to(x, y)
++            doc_x, doc_y = decoded_node_or_spacial_offset_to_document_position(decoded)
++
++            # Abort if CFI position is invalid
++            if doc_x is None or doc_y is None:
++                return
++
++            # Since this position will be used for the upper-left of the viewport,
++            # in RTL mode, we need to offset it by the viewport width so the
++            # position will be on the right side of the viewport,
++            # from where we start reading.
++            # (Note that adding moves left in RTL mode because of the viewport X
++            #  coordinate reversal in RTL mode.)
++            if scroll_viewport.rtl:
++                doc_x += scroll_viewport.width()
+             if callback:
+-                callback(x, y)
++                callback(doc_x, doc_y)
+ 
+     setTimeout(fn, 10)
+ 
+@@ -694,74 +790,108 @@ def at_point(ox, oy):  # {{{
+     def dist(p1, p2):
+         Math.sqrt(Math.pow(p1[0]-p2[0], 2), Math.pow(p1[1]-p2[1], 2))
+ 
+-    try:
+-        cfi = at(ox, oy)
+-        p = point(cfi)
+-    except Exception:
+-        cfi = None
++    cfi = at(ox, oy)
++    if cfi is None:
++        return None
+ 
+-    if not p:
++    decoded = decode_with_range(cfi)
++    if not decoded:
+         return None
+ 
+     if cfi:
+-        if p.range is not None:
+-            r = p.range
+-            rect = r.getClientRects()[0]
+-
+-            x = (p.a*rect.left + (1-p.a)*rect.right)
+-            y = (rect.top + rect.bottom)/2
+-            x, y = scroll_viewport.viewport_to_document(x, y, r.startContainer.ownerDocument)
+-        else:
+-            node = p.node
+-            r = node.getBoundingClientRect()
+-            # Start of element is right side in RTL, so be sure to get that side in RTL mode
+-            x, y = scroll_viewport.viewport_to_document(
+-                r.left if scroll_viewport.ltr else r.right, r.top, node.ownerDocument)
+-            if jstype(p.x) is 'number' and node.offsetWidth:
+-                x += (p.x*node.offsetWidth)/100
+-            if jstype(p.y) is 'number' and node.offsetHeight:
+-                y += (p.y*node.offsetHeight)/100
+-
+-        if dist(scroll_viewport.viewport_to_document(ox, oy), v'[x, y]') > 50:
++        cfix, cfiy = decoded_to_document_position(decoded)
++        if cfix is None or cfiy is None or dist(scroll_viewport.viewport_to_document(ox, oy), v'[cfix, cfiy]') > 50:
+             cfi = None
+ 
+     return cfi
+ # }}}
+ 
+ def at_current():  # {{{
+-    winx, winy = window_scroll_pos()
+-    winw, winh = scroll_viewport.width(), scroll_viewport.height()
+-    winw = max(winw, 400)
+-    winh = max(winh, 600)
+-    deltay = Math.floor(winh/50)
+-    deltax = Math.floor(winw/25)
+-    miny = max(-winy, -winh)
+-    maxy = winh
+-    minx = max(-winx, -winw)
+-    maxx = winw
+-
+-    def x_loop(cury):
+-        for direction in v'[-1, 1]':
+-            delta = deltax * direction
+-            curx = 0
+-            while not ((direction < 0 and curx < minx) or (direction > 0 and curx > maxx)):
+-                cfi = at_point(curx, cury)
+-                if cfi:
+-                    return cfi
+-                curx += delta
+-
+-    for direction in v'[-1, 1]':
+-        delta = deltay * direction
+-        cury = 0
+-        while not( (direction < 0 and cury < miny) or (direction > 0 and cury > maxy) ):
+-            cfi = x_loop(cury, -1)
++    wini, winb = scroll_viewport.inline_size(), scroll_viewport.block_size()
++
++    # We subtract one because the the actual position query for CFI elements is relative to the
++    # viewport, and the viewport coordinates actually go from 0 to the size - 1.
++    # If we don't do this, the first line of queries will always fail in those cases where we
++    # start at the right of the viewport because they'll be outside the viewport
++    wini -= 1
++    winb -= 1
++
++    # Don't let the deltas go below 10 or above 30, to prevent perverse cases where
++    # we don't loop at all, loop too many times, or skip elements because we're
++    # looping too fast.
++    deltai = min(max(Math.ceil(rem_size() / 2), 5), 30)
++    deltab = min(max(Math.ceil(rem_size() / 2), 5), 30)
++
++    # i.e. English, Hebrew:
++    if scroll_viewport.horizontal_writing_mode:
++        # Horizontal languages always start at the top
++        startb = 0
++        endb = winb
++        if scroll_viewport.ltr:
++            # i.e. English: we scan from the left margin to the right margin
++            starti = 0
++            endi = wini
++        else:
++            # i.e. Hebrew: we scan from the right margin to the left margin
++            starti = wini
++            endi = 0
++            deltai = -deltai
++    # i.e. Japanese, Mongolian script, traditional Chinese
++    else:
++        # These languages are only top-to-bottom
++        starti = 0
++        endi = winb
++        # i.e. Japanese: To the next line is from the right margin to the left margin
++        if scroll_viewport.rtl:
++            startb = winb
++            endb = 0
++            deltab = -deltab
++        # i.e. Mongolian: To the next line is from the left margin to the right margin
++        else:
++            startb = 0
++            endb = winb
++
++    # print(f'{starti} {deltai} {endi} {startb} {deltab} {endb}')
++    # Find the bounds
++    up_boundb = max(startb, endb)
++    up_boundi = max(starti, endi)
++    low_boundb = min(startb, endb)
++    low_boundi = min(starti, endi)
++
++
++    # In horizontal mode, X is the inline and Y is the block,
++    # but it's reversed for vertical modes, so reverse the lookup.
++    def at_point_vertical_mode(i, b):
++        return at_point(b, i)
++
++    at_point_conditional = at_point
++    if scroll_viewport.vertical_writing_mode:
++        at_point_conditional = at_point_vertical_mode
++
++    def i_loop(curb):
++        curi = starti
++        # The value will be either heading toward the lower or the upper bound,
++        # so just check for exceeding either bound
++        while low_boundi <= curi <= up_boundi:
++            cfi = at_point_conditional(curi, curb)
+             if cfi:
++                # print(f'found CFI at {curi}, {curb} {cfi}\n\t{starti} {deltai} {endi} {startb} {deltab} {endb}')
+                 return cfi
+-            cury += delta
++            curi += deltai
++
++    curb = startb
++    while low_boundb <= curb <= up_boundb:
++        cfi = i_loop(curb)
++        if cfi:
++            break
++        curb += deltab
++
++    if cfi:
++        return cfi
+ 
+     # Use a spatial offset on the html element, since we could not find a
+     # normal CFI
+-    x, y = window_scroll_pos()
++    x, y = scroll_viewport.x() + (0 if scroll_viewport.ltr else scroll_viewport.width()), scroll_viewport.y()
+     de = document.documentElement
+     rect = de.getBoundingClientRect()
+     px = (x*100)/rect.width
+diff --git a/src/pyj/read_book/flow_mode.pyj b/src/pyj/read_book/flow_mode.pyj
+index 0840002aa6..f600479db4 100644
+--- a/src/pyj/read_book/flow_mode.pyj
++++ b/src/pyj/read_book/flow_mode.pyj
+@@ -2,15 +2,33 @@
+ # License: GPL v3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
+ from __python__ import bound_methods, hash_literals
+ 
++# Notes about flow mode scrolling:
++#  All the math in flow mode is based on the block and inline directions.
++#  Inline is "the direction lines of text go."
++#  In horizontal scripts such as English and Hebrew, the inline is horizontal
++#  and the block is vertical.
++#  In vertical languages such as Japanese and Mongolian, the inline is vertical
++#  and block is horizontal.
++#  Regardless of language, flow mode scrolls in the block direction.
++#
++#  In vertical RTL books, the block position scrolls from right to left. |<------|
++#  This means that the viewport positions become negative as you scroll.
++#  This is hidden from flow mode by the viewport, which transparently
++#  negates any inline coordinates sent in to the viewport_to_document* functions
++#  and the various scroll_to/scroll_by functions, as well as the reported X position.
++#
++#  The result of all this is that flow mode's math can safely pretend that
++#  things scroll in the positive block direction.
++
+ from dom import set_css
++from read_book.cfi import scroll_to as cfi_scroll_to
+ from read_book.globals import current_spine_item, get_boss, rtl_page_progression, ltr_page_progression
+ from read_book.settings import opts
+-from read_book.viewport import line_height, scroll_viewport
+-from utils import document_height
++from read_book.viewport import line_height, rem_size, scroll_viewport
+ 
+ 
+ def flow_to_scroll_fraction(frac, on_initial_load):
+-    scroll_viewport.scroll_to(0, document_height() * frac)
++    scroll_viewport.scroll_to_in_block_direction(scroll_viewport.document_block_size() * frac)
+ 
+ 
+ small_scroll_events = v'[]'
+@@ -31,7 +49,7 @@ def dispatch_small_scrolls():
+         for x in small_scroll_events:
+             amt += x.amt
+         clear_small_scrolls()
+-        get_boss().report_human_scroll(amt / document_height())
++        get_boss().report_human_scroll(amt / scroll_viewport.document_block_size())
+ 
+ 
+ def add_small_scroll(amt):
+@@ -45,7 +63,7 @@ def report_human_scroll(amt):
+     if amt > 0:
+         if is_large_scroll:
+             clear_small_scrolls()
+-            get_boss().report_human_scroll(amt / document_height())
++            get_boss().report_human_scroll(amt / scroll_viewport.document_block_size())
+         else:
+             add_small_scroll(amt)
+     elif amt is 0 or is_large_scroll:
+@@ -56,13 +74,13 @@ last_change_spine_item_request = {}
+ 
+ 
+ def _check_for_scroll_end(func, obj, args, report):
+-    before = window.pageYOffset
++    before = scroll_viewport.block_pos()
+     should_flip_progression_direction = func.apply(obj, args)
+ 
+     now = window.performance.now()
+     scroll_animator.sync(now)
+ 
+-    if window.pageYOffset is before:
++    if scroll_viewport.block_pos() is before:
+         csi = current_spine_item()
+         if last_change_spine_item_request.name is csi.name and now - last_change_spine_item_request.at < 2000:
+             return False
+@@ -74,7 +92,7 @@ def _check_for_scroll_end(func, obj, args, report):
+         get_boss().send_message('next_spine_item', previous=go_to_previous_page)
+         return False
+     if report:
+-        report_human_scroll(window.pageYOffset - before)
++        report_human_scroll(scroll_viewport.block_pos() - before)
+     return True
+ 
+ 
+@@ -89,45 +107,63 @@ def check_for_scroll_end_and_report(func):
+ 
+ 
+ @check_for_scroll_end_and_report
+-def scroll_by(y):
+-    window.scrollBy(0, y)
++def scroll_by_and_check_next_page(y):
++    scroll_viewport.scroll_by_in_block_direction(y)
+     # This indicates to check_for_scroll_end_and_report that it should not
+     # flip the page progression direction.
+     return False
+ 
+ def flow_onwheel(evt):
+-    dx = dy = 0
++    di = db = 0
+     WheelEvent = window.WheelEvent
++    # Y deltas always scroll in the previous and next page direction,
++    # regardless of writing direction, since doing otherwise would
++    # make mouse wheels mostly useless for scrolling in books written
++    # vertically.
+     if evt.deltaY:
+         if evt.deltaMode is WheelEvent.DOM_DELTA_PIXEL:
+-            dy = evt.deltaY
++            db = evt.deltaY
+         elif evt.deltaMode is WheelEvent.DOM_DELTA_LINE:
+-            dy = line_height() * evt.deltaY
++            db = line_height() * evt.deltaY
+         if evt.deltaMode is WheelEvent.DOM_DELTA_PAGE:
+-            dy = (scroll_viewport.height() - 30) * evt.deltaY
++            db = (scroll_viewport.block_size() - 30) * evt.deltaY
++    # X deltas scroll horizontally in both horizontal and vertical books.
++    # It's more natural in both cases.
+     if evt.deltaX:
+         if evt.deltaMode is WheelEvent.DOM_DELTA_PIXEL:
+             dx = evt.deltaX
+         elif evt.deltaMode is WheelEvent.DOM_DELTA_LINE:
+-            dx = 15 * evt.deltaX
++            dx = line_height() * evt.deltaX
+         else:
+-            dx = (scroll_viewport.width() - 30) * evt.deltaX
+-    if dx:
+-        window.scrollBy(dx, 0)
+-    elif Math.abs(dy) >= 1:
+-        scroll_by(dy)
++            dx = (scroll_viewport.block_size() - 30) * evt.deltaX
++
++        if scroll_viewport.horizontal_writing_mode:
++            di = dx
++        else:
++            # Left goes forward, so make sure left is positive and right is negative,
++            # which is the opposite of what the wheel sends.
++            if scroll_viewport.rtl:
++                db = -dx
++            # Right goes forward, so the sign is correct.
++            else:
++                db = dx
++    if di:
++        scroll_viewport.scroll_by_in_inline_direction(di)
++    elif Math.abs(db) >= 1:
++        scroll_by_and_check_next_page(db)
+ 
+ @check_for_scroll_end
+ def goto_boundary(dir):
+-    scroll_viewport.scroll_to(scroll_viewport.x(), 0 if dir is DIRECTION.Up else document_height())
++    position = 0 if dir is DIRECTION.Up else scroll_viewport.document_block_size()
++    scroll_viewport.scroll_to_in_block_direction(position)
+     get_boss().report_human_scroll()
+     return False
+ 
+ 
+ @check_for_scroll_end_and_report
+ def scroll_by_page(direction, flip_if_rtl_page_progression):
+-    h = scroll_viewport.height() - 10
+-    window.scrollBy(0, h * direction)
++    b = scroll_viewport.block_size() - 10
++    scroll_viewport.scroll_by_in_block_direction(b * direction)
+ 
+     # Let check_for_scroll_end_and_report know whether or not it should flip
+     # the progression direction.
+@@ -179,10 +215,10 @@ def handle_shortcut(sc_name, evt):
+         goto_boundary(DIRECTION.Down)
+         return True
+     if sc_name is 'left':
+-        window.scrollBy(-15 if ltr_page_progression() else 15, 0)
++        scroll_by_and_check_next_page(-15 if ltr_page_progression() else 15, 0)
+         return True
+     if sc_name is 'right':
+-        window.scrollBy(15 if ltr_page_progression() else -15, 0)
++        scroll_by_and_check_next_page(15 if ltr_page_progression() else -15, 0)
+         return True
+     if sc_name is 'start_of_book':
+         get_boss().send_message('goto_doc_boundary', start=True)
+@@ -191,10 +227,10 @@ def handle_shortcut(sc_name, evt):
+         get_boss().send_message('goto_doc_boundary', start=False)
+         return True
+     if sc_name is 'pageup':
+-        scroll_by_page(-1, flip_if_rtl_page_progression=False)
++        scroll_by_page(-1, False)
+         return True
+     if sc_name is 'pagedown':
+-        scroll_by_page(1, flip_if_rtl_page_progression=False)
++        scroll_by_page(1, False)
+         return True
+     if sc_name is 'toggle_autoscroll':
+         toggle_autoscroll()
+@@ -208,10 +244,16 @@ def handle_shortcut(sc_name, evt):
+ 
+ def layout(is_single_page):
+     line_height(True)
++    rem_size(True)
+     set_css(document.body, margin='0', border_width='0', padding='0')
+-    # flow mode does not care about RTL vs LTR
+-    scroll_viewport.initialize_on_layout({'direction': 'ltr'})
++    body_style = window.getComputedStyle(document.body)
++    # scroll viewport needs to know if we're in vertical mode,
++    # since that will cause scrolling to happen left and right
++    scroll_viewport.initialize_on_layout(body_style)
+ 
++    document.documentElement.style.overflow = 'hidden'
++    if scroll_viewport.vertical_writing_mode:
++        document.documentElement.style.overflow = 'visible'
+ 
+ def auto_scroll_resume():
+     scroll_animator.wait = False
+@@ -232,7 +274,7 @@ def cancel_scroll():
+ 
+ 
+ def is_scroll_end(pos):
+-    return not (0 <= pos <= document_height() - window.innerHeight)
++    return not (0 <= pos <= scroll_viewport.document_block_size() - scroll_viewport.block_size())
+ 
+ 
+ DIRECTION = {'Up': -1, 'up': -1, 'Down': 1, 'down': 1, 'UP': -1, 'DOWN': 1}
+@@ -269,7 +311,7 @@ class ScrollAnimator:
+             self.auto = auto
+             self.direction = direction
+             self.start_time = now
+-            self.start_offset = window.pageYOffset
++            self.start_offset = scroll_viewport.block_pos()
+             self.csi_idx = current_spine_item().index
+             self.animation_id = window.requestAnimationFrame(self.auto_scroll if auto else self.smooth_scroll)
+ 
+@@ -282,8 +324,8 @@ class ScrollAnimator:
+         scroll_target = self.start_offset
+         scroll_target += Math.trunc(self.direction * progress * duration * line_height() * opts.lines_per_sec_smooth) / 1000
+ 
+-        window.scrollTo(0, scroll_target)
+-        amt = window.pageYOffset - self.start_offset
++        scroll_viewport.scroll_to_in_block_direction(scroll_target)
++        amt = scroll_viewport.block_pos() - self.start_offset
+ 
+         if is_scroll_end(scroll_target) and (not opts.scroll_stop_boundaries or (abs(amt) < 3 and duration is self.DURATION)):
+             # "Turn the page" if stop at boundaries option is false or
+@@ -305,7 +347,7 @@ class ScrollAnimator:
+         scroll_target = self.start_offset
+         scroll_target += Math.trunc(self.direction * elapsed * line_height() * opts.lines_per_sec_auto) / 1000
+ 
+-        window.scrollTo(0, scroll_target)
++        scroll_viewport.scroll_to_in_block_direction(scroll_target)
+         scroll_finished = is_scroll_end(scroll_target)
+ 
+         # report every second
+@@ -324,7 +366,7 @@ class ScrollAnimator:
+         get_boss().send_message('next_spine_item', previous=self.direction is DIRECTION.Up)
+ 
+     def report(self):
+-        amt = window.pageYOffset - self.start_offset
++        amt = scroll_viewport.block_pos() - self.start_offset
+         if abs(amt) > 0 and self.csi_idx is current_spine_item().index:
+             report_human_scroll(amt)
+ 
+@@ -333,7 +375,7 @@ class ScrollAnimator:
+             self.report()
+             self.csi_idx = current_spine_item().index
+             self.start_time = ts or window.performance.now()
+-            self.start_offset = window.pageYOffset
++            self.start_offset = scroll_viewport.block_pos()
+         else:
+             self.resume()
+ 
+@@ -440,7 +482,7 @@ class DragScroller:
+         progress = max(0, min(1, (ts - self.start_time) / duration)) # max/min to account for jitter
+         scroll_target = self.start_offset
+         scroll_target += Math.trunc(self.direction * progress * duration * line_height() * opts.lines_per_sec_smooth * self.speed_factor) / 1000
+-        window.scrollTo(0, scroll_target)
++        scroll_viewport.scroll_to_in_block_direction(scroll_target)
+ 
+         if progress < 1:
+             self.animation_id = window.requestAnimationFrame(self.smooth_scroll)
+@@ -456,7 +498,7 @@ class DragScroller:
+             self.direction = direction
+             self.speed_factor = speed_factor
+             self.start_time = now
+-            self.start_offset = window.pageYOffset
++            self.start_offset = scroll_viewport.block_pos()
+             self.animation_id = window.requestAnimationFrame(self.smooth_scroll)
+ 
+     def stop(self):
+@@ -487,15 +529,31 @@ def handle_gesture(gesture):
+             delta = gesture.points[-2] - gesture.points[-1]
+             if Math.abs(delta) >= 1:
+                 if gesture.axis is 'vertical':
+-                    scroll_by(delta)
++                    # Vertical writing scrolls left and right,
++                    # so doing a vertical flick shouldn't change pages.
++                    if scroll_viewport.vertical_writing_mode:
++                        scroll_viewport.scroll_by(delta, 0)
++                    # However, it might change pages in horizontal writing
++                    else:
++                        scroll_by_and_check_next_page(delta)
+                 else:
+-                    window.scrollBy(delta, 0)
++                    # A horizontal flick should check for new pages in
++                    # vertical modes, since they flow left and right.
++                    if scroll_viewport.vertical_writing_mode:
++                        scroll_by_and_check_next_page(delta)
++                    # In horizontal modes, just move by the delta.
++                    else:
++                        scroll_viewport.scroll_by(delta, 0)
+         if not gesture.active and not gesture.is_held:
+             flick_animator.start(gesture)
+     elif gesture.type is 'prev-page':
+-        scroll_by_page(-1, flip_if_rtl_page_progression=False)
++        # should flip = False - previous is previous whether RTL or LTR.
++        # flipping of this command is handled higher up
++        scroll_by_page(-1, False)
+     elif gesture.type is 'next-page':
+-        scroll_by_page(1, flip_if_rtl_page_progression=False)
++        # should flip = False - next is next whether RTL or LTR.
++        # flipping of this command is handled higher up
++        scroll_by_page(1, False)
+ 
+ 
+ anchor_funcs = {
+@@ -503,22 +561,28 @@ anchor_funcs = {
+         if not elem:
+             return 0, 0
+         br = elem.getBoundingClientRect()
+-        # Elements start on the right side in RTL mode,
+-        # so be sure to return that side if in RTL.
+-        x, y = scroll_viewport.viewport_to_document(
+-            br.left if scroll_viewport.ltr else br.right,
+-            br.top, elem.ownerDocument)
+-        return y, x
++
++        # Start of object in the scrolling direction
++        return scroll_viewport.viewport_to_document_block(
++            scroll_viewport.rect_block_start(br), elem.ownerDocument)
+     ,
+     'visibility': def visibility(pos):
+-        y, x = pos
+-        if y < window.pageYOffset:
++        x, y = pos
++
++        if jstype(x) is 'number':
++            pos = x
++        if jstype(y) is 'number' and scroll_viewport.horizontal_writing_mode:
++            pos = y
++
++        # Have to negate X if in RTL for the math to be correct,
++        # as the value that the scroll viewport returns is negated
++        if scroll_viewport.vertical_writing_mode and scroll_viewport.rtl:
++            pos = -pos
++        
++        if pos < scroll_viewport.block_pos():
+             return -1
+-        if y < window.pageYOffset + scroll_viewport.height():
+-            if x < window.pageXOffset:
+-                return -1
+-            if x < window.pageXOffset + scroll_viewport.width():
+-                return 0
++        if pos <= scroll_viewport.block_pos() + scroll_viewport.block_size():
++            return 0
+         return 1
+     ,
+     'cmp': def cmp(a, b):
+@@ -551,3 +615,15 @@ def ensure_selection_visible():
+             p.scrollIntoView()
+             return
+         p = p.parentNode
++
++def jump_to_cfi(cfi):
++    # Jump to the position indicated by the specified conformal fragment
++    # indicator.
++    cfi_scroll_to(cfi, def(x, y):
++        # block is vertical if text is horizontal
++        if scroll_viewport.horizontal_writing_mode:
++            scroll_viewport.scroll_to_in_block_direction(y)
++        # block is horizontal if text is vertical
++        else:
++            scroll_viewport.scroll_to_in_block_direction(x)
++    )
+diff --git a/src/pyj/read_book/iframe.pyj b/src/pyj/read_book/iframe.pyj
+index e5f014f2f5..181bc76591 100644
+--- a/src/pyj/read_book/iframe.pyj
++++ b/src/pyj/read_book/iframe.pyj
+@@ -24,7 +24,8 @@ from read_book.flow_mode import (
+     handle_shortcut as flow_handle_shortcut, layout as flow_layout,
+     scroll_by_page as flow_scroll_by_page,
+     scroll_to_extend_annotation as flow_annotation_scroll,
+-    start_drag_scroll as start_drag_scroll_flow
++    start_drag_scroll as start_drag_scroll_flow,
++    jump_to_cfi as flow_jump_to_cfi
+ )
+ from read_book.footnotes import is_footnote_link
+ from read_book.globals import (
+@@ -237,7 +238,7 @@ class IframeBoss:
+             self.handle_navigation_shortcut = flow_handle_shortcut
+             self._handle_gesture = flow_handle_gesture
+             self.to_scroll_fraction = flow_to_scroll_fraction
+-            self.jump_to_cfi = scroll_to_cfi
++            self.jump_to_cfi = flow_jump_to_cfi
+             self.anchor_funcs = flow_anchor_funcs
+             self.auto_scroll_action = flow_auto_scroll_action
+             self.scroll_to_extend_annotation = flow_annotation_scroll
+@@ -361,7 +362,7 @@ class IframeBoss:
+             if self.last_cfi:
+                 cfi = self.last_cfi[len('epubcfi(/'):-1].partition('/')[2]
+                 if cfi:
+-                    paged_jump_to_cfi('/' + cfi)
++                    self.jump_to_cfi('/' + cfi)
+             self.update_cfi()
+             self.update_toc_position()
+ 
+@@ -442,7 +443,6 @@ class IframeBoss:
+                 si = spine[i]
+                 if si:
+                     self.length_before += files[si]?.length or 0
+-        self.onscroll()
+         self.send_message('content_loaded', progress_frac=self.calculate_progress_frac(), file_progress_frac=progress_frac())
+         self.last_cfi = None
+         self.auto_scroll_action('resume')
+@@ -547,7 +547,7 @@ class IframeBoss:
+         if self.last_cfi:
+             cfi = self.last_cfi[len('epubcfi(/'):-1].partition('/')[2]
+             if cfi:
+-                paged_jump_to_cfi('/' + cfi)
++                self.jump_to_cfi('/' + cfi)
+         if current_layout_mode() is not 'flow':
+             paged_resize_done()
+         self.update_cfi()
+diff --git a/src/pyj/read_book/paged_mode.pyj b/src/pyj/read_book/paged_mode.pyj
+index 6fb157d972..7604bace5e 100644
+--- a/src/pyj/read_book/paged_mode.pyj
++++ b/src/pyj/read_book/paged_mode.pyj
+@@ -1,5 +1,26 @@
+ # vim:fileencoding=utf-8
+ # License: GPL v3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
++
++# Notes of paged mode scrolling:
++#  All the math in paged mode is based on the block and inline directions.
++#  Inline is "the direction lines of text go."
++#  In horizontal scripts such as English and Hebrew, the inline is horizontal
++#  and the block is vertical.
++#  In vertical languages such as Japanese and Mongolian, the inline is vertical
++#  and block is horizontal.
++#  Regardless of language, paged mode scrolls by column in the inline direction,
++#  because by the CSS spec, columns are laid out in the inline direction.
++#
++#  In horizontal RTL books, such as Hebrew, the inline direction goes right to left.
++#  |<------|
++#  This means that the column positions become negative as you scroll.
++#  This is hidden from paged mode by the viewport, which transparently
++#  negates any inline coordinates sent in to the viewport_to_document* functions
++#  and the various scroll_to/scroll_by functions, as well as the reported X position.
++#
++#  The result of all this is that paged mode's math can safely pretend that
++#  things scroll in the positive inline direction.
++
+ from __python__ import hash_literals
+ 
+ import traceback
+@@ -13,9 +34,9 @@ from read_book.cfi import (
+ )
+ from read_book.globals import current_spine_item, get_boss, rtl_page_progression
+ from read_book.settings import opts
+-from read_book.viewport import scroll_viewport, line_height
++from read_book.viewport import scroll_viewport, line_height, rem_size
+ from utils import (
+-    document_height, document_width, get_elem_data, set_elem_data
++    get_elem_data, set_elem_data
+ )
+ 
+ 
+@@ -54,65 +75,76 @@ def in_paged_mode():
+     return _in_paged_mode
+ 
+ 
+-col_width = screen_width = screen_height = cols_per_screen = gap = col_and_gap = number_of_cols = last_scrolled_to_column = 0
++col_size = screen_inline = screen_block = cols_per_screen = gap = col_and_gap = number_of_cols = last_scrolled_to_column = 0
+ is_full_screen_layout = False
+ 
+ 
+ def reset_paged_mode_globals():
+-    nonlocal _in_paged_mode, col_width, col_and_gap, screen_height, gap, screen_width, is_full_screen_layout, cols_per_screen, number_of_cols, last_scrolled_to_column
++    nonlocal _in_paged_mode, col_size, col_and_gap, screen_block, gap, screen_inline, is_full_screen_layout, cols_per_screen, number_of_cols, last_scrolled_to_column
+     scroll_viewport.reset_globals()
+-    col_width = screen_width = screen_height = cols_per_screen = gap = col_and_gap = number_of_cols = last_scrolled_to_column = 0
++    col_size = screen_inline = screen_block = cols_per_screen = gap = col_and_gap = number_of_cols = last_scrolled_to_column = 0
+     is_full_screen_layout = _in_paged_mode = False
+     resize_manager.reset()
+ 
+-def column_at(xpos):
+-    # Return the (zero-based) number of the column that contains xpos
+-    sw = scroll_viewport.paged_content_width()
+-    if xpos >= sw - col_and_gap:
+-        xpos = sw - col_width + 10
+-    return (xpos + gap) // col_and_gap
++def column_at(pos):
++    # Return the (zero-based) number of the column that contains pos
++    si = scroll_viewport.paged_content_inline_size()
++    if pos >= si - col_and_gap:
++        pos = si - col_size + 10
++    return (pos + gap) // col_and_gap
+ 
+ def fit_images():
+-    # Ensure no images are wider than the available width in a column. Note
++    # Ensure no images are wider than the available size of a column. Note
+     # that this method use getBoundingClientRect() which means it will
+     # force a relayout if the render tree is dirty.
+-    images = v'[]'
+-    vimages = v'[]'
++    inline_limited_images = v'[]'
++    block_limited_images = v'[]'
+     img_tags = document.getElementsByTagName('img')
+     bounding_rects = v'[]'
+     for img_tag in img_tags:
+         bounding_rects.push(img_tag.getBoundingClientRect())
+-    maxh = screen_height
++    maxb = screen_block
+     for i in range(img_tags.length):
+         img = img_tags[i]
+         br = bounding_rects[i]
+-        previously_limited = get_elem_data(img, 'width-limited', False)
++        previously_limited = get_elem_data(img, 'inline-limited', False)
+         data = get_elem_data(img, 'img-data', None)
+         if data is None:
+             data = {'left':br.left, 'right':br.right, 'height':br.height, 'display': img.style.display}
+             set_elem_data(img, 'img-data', data)
+-        left = scroll_viewport.viewport_to_document(br.left, 0, img.ownerDocument)[0]
+-        col = column_at(left) * col_and_gap
+-        rleft = left - col
+-        width  = br.right - br.left
+-        rright = rleft + width
+-        if previously_limited or rright > col_width:
+-            images.push(v'[img, col_width - rleft]')
+-        previously_limited = get_elem_data(img, 'height-limited', False)
+-        if previously_limited or br.height > maxh or (br.height is maxh and br.width > col_width):
+-            vimages.push(img)
++
++        # Get start of image bounding box in the column direction (inline)
++        image_start = scroll_viewport.viewport_to_document_inline(scroll_viewport.rect_inline_start(br), img.ownerDocument)
++        col_start = column_at(image_start) * col_and_gap
++        # Get inline distance from the start of the column to the start of the image bounding box
++        column_start_to_image_start = image_start - col_start
++        image_block_size = scroll_viewport.rect_block_size(br)
++        image_inline_size = scroll_viewport.rect_inline_size(br)
++        # Get the inline distance from the start of the column to the end of the image
++        image_inline_end = column_start_to_image_start + image_inline_size
++        # If the end of the image goes past the column, add it to the list of inline_limited_images
++        if previously_limited or image_inline_end > col_size:
++            inline_limited_images.push(v'[img, col_size - column_start_to_image_start]')
++        previously_limited = get_elem_data(img, 'block-limited', False)
++        if previously_limited or image_block_size > maxb or (image_block_size is maxb and image_inline_size > col_size):
++            block_limited_images.push(img)
+         if previously_limited:
+             set_css(img, break_before='auto', display=data.display)
+         set_css(img, break_inside='avoid')
+ 
+-    for img_tag, max_width in images:
+-        img_tag.style.setProperty('max-width', max_width+'px')
+-        set_elem_data(img_tag, 'width-limited', True)
++    for img_tag, max_inline_size in inline_limited_images:
++        if scroll_viewport.vertical_writing_mode:
++            img_tag.style.setProperty('max-height', max_inline_size+'px')
++        else:
++            img_tag.style.setProperty('max-width', max_inline_size+'px')
++        set_elem_data(img_tag, 'inline-limited', True)
+ 
+-    for img_tag in vimages:
+-        data = get_elem_data(img_tag, 'img-data', None)
+-        set_css(img_tag, break_before='always', max_height='100vh')
+-        set_elem_data(img, 'height-limited', True)
++    for img_tag in block_limited_images:
++        if scroll_viewport.vertical_writing_mode:
++            set_css(img_tag, break_before='always', max_width='100vw')
++        else:
++            set_css(img_tag, break_before='always', max_height='100vh')
++        set_elem_data(img_tag, 'block-limited', True)
+ 
+ 
+ def cps_by_em_size():
+@@ -143,7 +175,7 @@ def calc_columns_per_screen():
+     except:
+         cps = 0
+     if not cps:
+-        cps = int(Math.floor(scroll_viewport.width() / (35 * cps_by_em_size())))
++        cps = int(Math.floor(scroll_viewport.inline_size() / (35 * cps_by_em_size())))
+     cps = max(1, min(cps or 1, 20))
+     return cps
+ 
+@@ -157,13 +189,10 @@ def will_columns_per_screen_change():
+     return calc_columns_per_screen() != cols_per_screen
+ 
+ 
+-def current_page_width():
+-    return col_width
+-
+-
+ def layout(is_single_page, on_resize):
+-    nonlocal _in_paged_mode, col_width, col_and_gap, screen_height, gap, screen_width, is_full_screen_layout, cols_per_screen, number_of_cols
++    nonlocal _in_paged_mode, col_size, col_and_gap, screen_block, gap, screen_inline, is_full_screen_layout, cols_per_screen, number_of_cols
+     line_height(True)
++    rem_size(True)
+     body_style = window.getComputedStyle(document.body)
+     scroll_viewport.initialize_on_layout(body_style)
+     first_layout = not _in_paged_mode
+@@ -172,7 +201,8 @@ def layout(is_single_page, on_resize):
+         handle_rtl_body(body_style)
+         # Check if the current document is a full screen layout like
+         # cover, if so we treat it specially.
+-        single_screen = (document_height() < scroll_viewport.height() + 75)
++        # (The inline size is the column direction, so it's the appropriate thing to check to make sure we don't have multiple columns)
++        single_screen = (scroll_viewport.document_inline_size() < scroll_viewport.inline_size() + 75)
+         first_layout = True
+         svgs = document.getElementsByTagName('svg')
+         has_svg = svgs.length > 0
+@@ -196,24 +226,24 @@ def layout(is_single_page, on_resize):
+                 create_page_div()
+ 
+     n = cols_per_screen = cps
+-    # Calculate the column width so that cols_per_screen columns fit exactly in
+-    # the window width, with their separator margins
+-    ww = col_width = screen_width = scroll_viewport.width()
+-    sm = opts.margin_left + opts.margin_right
+-    gap = sm
++    # Calculate the column size so that cols_per_screen columns fit exactly in
++    # the window inline dimension, with their separator margins
++    wi = col_size = screen_inline = scroll_viewport.inline_size()
++    margin_size = opts.margin_left + opts.margin_right if scroll_viewport.horizontal_writing_mode else opts.margin_top + opts.margin_bottom
++    gap = margin_size
+     if n > 1:
+-        # Adjust the side margin so that the window width satisfies
+-        # col_width * n + (n-1) * 2 * side_margin = window_width
+-        gap += ((ww + sm) % n)  # Ensure ww + gap is a multiple of n
+-        col_width = ((ww + gap) // n) - gap
++        # Adjust the margin so that the window inline dimension satisfies
++        # col_size * n + (n-1) * 2 * margin = window_inline
++        gap += ((wi + margin_size) % n)  # Ensure wi + gap is a multiple of n
++        col_size = ((wi + gap) // n) - gap
+ 
+-    screen_height = scroll_viewport.height()
+-    col_and_gap = col_width + gap
++    screen_block = scroll_viewport.block_size()
++    col_and_gap = col_size + gap
+ 
+-    set_css(document.body, column_gap=gap + 'px', column_width=col_width + 'px', column_rule='0px inset blue',
++    set_css(document.body, column_gap=gap + 'px', column_width=col_size + 'px', column_rule='0px inset blue',
+         min_width='0', max_width='none', min_height='0', max_height='100vh', column_fill='auto',
+         margin='0', border_width='0', padding='0', box_sizing='content-box',
+-        width=screen_width + 'px', height=screen_height + 'px', overflow_wrap='break-word'
++        width=scroll_viewport.width() + 'px', height=scroll_viewport.height() + 'px', overflow_wrap='break-word'
+     )
+     # Without this, webkit bleeds the margin of the first block(s) of body
+     # above the columns, which causes them to effectively be added to the
+@@ -240,67 +270,68 @@ def layout(is_single_page, on_resize):
+         # with height=100% overflow the first column
+         is_full_screen_layout = is_single_page
+         if not is_full_screen_layout:
+-            has_no_more_than_two_columns = (scroll_viewport.paged_content_width() < 2*ww + 10)
++            has_no_more_than_two_columns = (scroll_viewport.paged_content_inline_size() < 2*wi + 10)
+             if has_no_more_than_two_columns and single_screen:
+-                if only_img and imgs.length and imgs[0].getBoundingClientRect().left < ww:
++                if only_img and imgs.length and imgs[0].getBoundingClientRect().left < wi:
+                     is_full_screen_layout = True
+-                if has_svg and svgs.length == 1 and svgs[0].getBoundingClientRect().left < ww:
++                if has_svg and svgs.length == 1 and svgs[0].getBoundingClientRect().left < wi:
+                     is_full_screen_layout = True
+ 
+-    # Some browser engine, WebKit at least, adjust column widths to please
+-    # themselves, unless the container width is an exact multiple, so we check
+-    # for that and manually set the container widths.
+-    def check_column_widths():
++    # Some browser engine, WebKit at least, adjust column sizes to please
++    # themselves, unless the container size is an exact multiple, so we check
++    # for that and manually set the container sizes.
++    def check_column_sizes():
+         nonlocal number_of_cols
+-        ncols = number_of_cols = (scroll_viewport.paged_content_width() + gap) / col_and_gap
++        ncols = number_of_cols = (scroll_viewport.paged_content_inline_size() + gap) / col_and_gap
+         if ncols is not Math.floor(ncols):
+             n = number_of_cols = Math.floor(ncols)
+-            dw = n*col_width + (n-1)*gap
+-            data = {'col_width':col_width, 'gap':gap, 'scrollWidth':scroll_viewport.paged_content_width(), 'ncols':ncols, 'desired_width':dw}
++            dw = n*col_size + (n-1)*gap
++            data = {'col_size':col_size, 'gap':gap, 'scrollWidth':scroll_viewport.paged_content_inline_size(), 'ncols':ncols, 'desired_inline_size':dis}
+             return data
+ 
+-    data = check_column_widths()
++    data = check_column_sizes()
+     if data:
+-        dw = data.desired_width
++        dis = data.desired_inline_size
+         for elem in document.documentElement, document.body:
+-            set_css(elem, max_width=dw + 'px', min_width=dw + 'px')
+-    data = check_column_widths()
++            set_css(elem, max_width=dis + 'px', min_width=dis + 'px')
++            if scroll_viewport.vertical_writing_mode:
++                set_css(elem, max_height=dis + 'px', min_height=dis + 'px')
++    data = check_column_sizes()
+     if data:
+-        print('WARNING: column layout broken, probably because there is some non-reflowable content in the book that is wider than the column width', data)
++        print('WARNING: column layout broken, probably because there is some non-reflowable content in the book whose inline size is greater than the column size', data)
+ 
+     _in_paged_mode = True
+     fit_images()
+     return gap
+ 
+ def current_scroll_offset():
+-    return scroll_viewport.x()
++    return scroll_viewport.inline_pos()
+ 
+ 
+-def scroll_to_offset(x):
+-    scroll_viewport.scroll_to(x, 0)
++def scroll_to_offset(offset):
++    scroll_viewport.scroll_to_in_inline_direction(offset)
+ 
+ 
+ def scroll_to_column(number, notify=False, duration=1000):
+     nonlocal last_scrolled_to_column
+     last_scrolled_to_column = number
+     pos = number * col_and_gap
+-    limit = scroll_viewport.paged_content_width() - screen_width
++    limit = scroll_viewport.paged_content_inline_size() - scroll_viewport.inline_size()
+     pos = min(pos, limit)
+     scroll_to_offset(pos)
+ 
+ 
+-def scroll_to_xpos(xpos, notify=False, duration=1000):
++def scroll_to_pos(pos, notify=False, duration=1000):
+     nonlocal last_scrolled_to_column
+-    # Scroll so that the column containing xpos is the left most column in
+-    # the viewport
+-    if jstype(xpos) is not 'number':
+-        print(xpos, 'is not a number, cannot scroll to it!')
++    # Scroll to the column containing pos
++    if jstype(pos) is not 'number':
++        print(pos, 'is not a number, cannot scroll to it!')
+         return
+     if is_full_screen_layout:
+         scroll_to_offset(0)
+         last_scrolled_to_column = 0
+         return
+-    scroll_to_column(column_at(xpos), notify=notify, duration=duration)
++    scroll_to_column(column_at(pos), notify=notify, duration=duration)
+ 
+ 
+ def scroll_to_previous_position():
+@@ -315,8 +346,8 @@ def scroll_to_fraction(frac, on_initial_load):
+     # Scroll to the position represented by frac (number between 0 and 1)
+     if on_initial_load and frac is 1 and is_return() and scroll_to_previous_position():
+         return
+-    xpos = Math.floor(scroll_viewport.paged_content_width() * frac)
+-    scroll_to_xpos(xpos)
++    pos = Math.floor(scroll_viewport.paged_content_inline_size() * frac)
++    scroll_to_pos(pos)
+ 
+ 
+ def column_boundaries():
+@@ -326,7 +357,7 @@ def column_boundaries():
+     return l, l + cols_per_screen
+ 
+ def current_column_location():
+-    # The location of the left edge of the left most column currently
++    # The location of the starting edge of the first column currently
+     # visible in the viewport
+     if is_full_screen_layout:
+         return 0
+@@ -346,10 +377,10 @@ def next_screen_location():
+     if is_full_screen_layout:
+         return -1
+     cc = current_column_location()
+-    ans = cc + screen_width
++    ans = cc + screen_inline
+     if cols_per_screen > 1 and 0 < number_of_cols_left() < cols_per_screen:
+         return -1  # Only blank, dummy pages left
+-    limit = scroll_viewport.paged_content_width() - scroll_viewport.width()
++    limit = scroll_viewport.paged_content_inline_size() - scroll_viewport.inline_size()
+     if limit < col_and_gap:
+         return -1
+     if ans > limit:
+@@ -363,7 +394,7 @@ def previous_screen_location():
+     if is_full_screen_layout:
+         return -1
+     cc = current_column_location()
+-    ans = cc - screen_width
++    ans = cc - screen_inline
+     if ans < 0:
+         # We ignore small scrolls (less than 15px) when going to previous
+         # screen
+@@ -379,8 +410,8 @@ def next_col_location():
+         return -1
+     cc = current_column_location()
+     ans = cc + col_and_gap
+-    limit = scroll_viewport.paged_content_width() - scroll_viewport.width()
+-    # print(f'cc={cc} col_and_gap={col_and_gap} ans={ans} limit={limit} content_width={scroll_viewport.paged_content_width()} vw={scroll_viewport.width()} current_scroll_offset={current_scroll_offset()}')
++    limit = scroll_viewport.paged_content_inline_size() - scroll_viewport.inline_size()
++    # print(f'cc={cc} col_and_gap={col_and_gap} ans={ans} limit={limit} content_inline_size={scroll_viewport.paged_content_inline_size()} inline={scroll_viewport.inline_size()} current_scroll_offset={current_scroll_offset()}')
+     if ans > limit:
+         ans = limit if Math.ceil(current_scroll_offset()) < limit else -1
+     return ans
+@@ -400,9 +431,7 @@ def previous_col_location():
+ 
+ 
+ def jump_to_anchor(name):
+-    # Jump to the element identified by anchor name. Ensures that the left
+-    # most column in the viewport is the column containing the start of the
+-    # element and that the scroll position is at the start of the column.
++    # Jump to the element identified by anchor name.
+     elem = document.getElementById(name)
+     if not elem:
+         elems = document.getElementsByName(name)
+@@ -429,13 +458,19 @@ def scroll_to_elem(elem):
+             # elem.scrollIntoView(). However, in some cases it gives
+             # inaccurate results, so we prefer the bounding client rect,
+             # when possible.
+-            # Columns start on the right side in RTL mode, so get that instead here...
+-            pos = elem.scrollLeft if scroll_viewport.ltr else elem.scrollRight
++            
++            # In horizontal writing, the inline start position depends on the direction
++            if scroll_viewport.horizontal_writing_mode:
++                inline_start = elem.scrollLeft if scroll_viewport.ltr else elem.scrollRight
++            # In vertical writing, the inline start position is always the top since
++            # vertical text only flows top-to-bottom
++            else:
++                inline_start = elem.scrollTop
+         else:
+-            # and here.
+-            pos = br.left if scroll_viewport.ltr else br.right
+-        scroll_to_xpos(scroll_viewport.viewport_to_document(
+-            pos+2, elem.scrollTop, elem.ownerDocument)[0])
++            # If we can use the rect, just use the simpler viewport helper function
++            inline_start = scroll_viewport.rect_inline_start(br)
++
++        scroll_to_pos(scroll_viewport.viewport_to_document_inline(inline_start+2, elem.ownerDocument))
+ 
+ def snap_to_selection():
+     # Ensure that the viewport is positioned at the start of the column
+@@ -444,25 +479,22 @@ def snap_to_selection():
+         sel = window.getSelection()
+         r = sel.getRangeAt(0).getBoundingClientRect()
+         node = sel.anchorNode
+-        # In RTL mode, the "start" of selection is on the right side.
+-        pos = scroll_viewport.viewport_to_document(
+-            r.left if scroll_viewport.ltr else r.right,
+-            r.top, doc=node.ownerDocument)[0]
++        # Columns are in the inline direction, so get the beginning of the element in the inline
++        pos = scroll_viewport.viewport_to_document_inline(
++            scroll_viewport.rect_inline_start(r), doc=node.ownerDocument)
+ 
+         # Ensure we are scrolled to the column containing the start of the
+         # selection
+-        scroll_to_xpos(pos+5)
++        scroll_to_pos(pos+5)
+ 
+ def jump_to_cfi(cfi):
+     # Jump to the position indicated by the specified conformal fragment
+-    # indicator. When in paged mode, the
+-    # scroll is performed so that the column containing the position
+-    # pointed to by the cfi is the left most column in the viewport
++    # indicator.
+     cfi_scroll_to(cfi, def(x, y):
+-        if in_paged_mode():
+-            scroll_to_xpos(x)
++        if scroll_viewport.horizontal_writing_mode:
++            scroll_to_pos(x)
+         else:
+-            scroll_viewport.scroll_to(0, y)
++            scroll_to_pos(y)
+     )
+ 
+ def current_cfi():
+@@ -472,7 +504,7 @@ def current_cfi():
+     if in_paged_mode():
+         for cnum in range(cols_per_screen):
+             left = cnum * (col_and_gap + gap)
+-            right = left + col_width
++            right = left + col_size
+             top, bottom = 0, scroll_viewport.height()
+             midx = (right - left) // 2
+             deltax = (right - left) // 24
+@@ -510,14 +542,15 @@ def current_cfi():
+ def progress_frac(frac):
+     # The current scroll position as a fraction between 0 and 1
+     if in_paged_mode():
+-        limit = scroll_viewport.paged_content_width() - scroll_viewport.width()
++        limit = scroll_viewport.paged_content_inline_size() - scroll_viewport.inline_size()
+         if limit <= 0:
+             return 0.0
+         return current_scroll_offset() / limit
+-    limit = document_height() - scroll_viewport.height()
++    # In flow mode, we scroll in the block direction, so use that
++    limit = scroll_viewport.document_block_size() - scroll_viewport.block_size()
+     if limit <= 0:
+         return 0.0
+-    return Math.max(0, Math.min(window.pageYOffset / limit, 1))
++    return Math.max(0, Math.min(scroll_viewport.block_pos() / limit, 1))
+ 
+ 
+ def next_spine_item(backward):
+@@ -570,13 +603,13 @@ class HandleWheel:
+     def do_scroll(self, backward):
+         self.reset()
+         if opts.paged_wheel_scrolls_by_screen:
+-            x = previous_screen_location() if backward else next_screen_location()
++            pos = previous_screen_location() if backward else next_screen_location()
+         else:
+-            x = previous_col_location() if backward else next_col_location()
+-        if x is -1:
++            pos = previous_col_location() if backward else next_col_location()
++        if pos is -1:
+             next_spine_item(backward)
+         else:
+-            scroll_to_xpos(x)
++            scroll_to_pos(pos)
+ 
+ 
+ wheel_handler = HandleWheel()
+@@ -603,14 +636,14 @@ def scroll_by_page(backward, by_screen, flip_if_rtl_page_progression):
+             get_boss().report_human_scroll(scrolled_frac)
+         else:
+             get_boss().report_human_scroll()
+-        scroll_to_xpos(pos)
++        scroll_to_pos(pos)
+ 
+ 
+ def scroll_to_extend_annotation(backward):
+     pos = previous_col_location() if backward else next_col_location()
+     if pos is -1:
+         return False
+-    scroll_to_xpos(pos)
++    scroll_to_pos(pos)
+     return True
+ 
+ 
+@@ -627,7 +660,7 @@ def handle_shortcut(sc_name, evt):
+         return True
+     if sc_name is 'end_of_file':
+         get_boss().report_human_scroll()
+-        scroll_to_offset(document_width())
++        scroll_to_offset(scroll_viewport.document_inline_size())
+         return True
+     if sc_name is 'left':
+         scroll_by_page(backward=True, by_screen=False, flip_if_rtl_page_progression=True)
+@@ -676,11 +709,9 @@ anchor_funcs = {
+         if not elem:
+             return 0
+         br = elem.getBoundingClientRect()
+-        # In RTL mode, the start of something is on the right side.
+-        x = scroll_viewport.viewport_to_document(
+-            br.left if scroll_viewport.ltr else br.right,
+-            br.top, elem.ownerDocument)[0]
+-        return column_at(x)
++        pos = scroll_viewport.viewport_to_document_inline(
++            scroll_viewport.rect_inline_start(br))
++        return column_at(pos)
+     ,
+     'visibility': def visibility(pos):
+         first = column_at(current_scroll_offset() + 10)
+@@ -716,7 +747,7 @@ class ResizeManager:
+             'width': scroll_viewport.width(), 'height': scroll_viewport.height(), 'column': last_scrolled_to_column}}
+         if self.is_inverse_transition(transition):
+             if transition.after.column is not self.last_transition.before.column:
+-                self.scroll_to_column(transition.after.column)
++                scroll_to_column(transition.after.column)
+                 transition.after.column = last_scrolled_to_column
+         self.last_transition = transition
+ 
+@@ -766,7 +797,7 @@ class DragScroller:
+     def do_one_page_turn(self):
+         pos = previous_col_location() if self.backward else next_col_location()
+         if pos >= 0:
+-            scroll_to_xpos(pos)
++            scroll_to_pos(pos)
+             self.timer_id = window.setTimeout(self.do_one_page_turn.bind(self), self.INTERVAL * 2)
+         else:
+             self.stop()
+diff --git a/src/pyj/read_book/viewport.pyj b/src/pyj/read_book/viewport.pyj
+index 696c7fd5b2..36cd9af34b 100644
+--- a/src/pyj/read_book/viewport.pyj
++++ b/src/pyj/read_book/viewport.pyj
+@@ -5,7 +5,7 @@ from __python__ import bound_methods, hash_literals
+ FUNCTIONS = 'x y scroll_to scroll_into_view reset_globals __reset_transforms'.split(' ')
+ 
+ from read_book.globals import get_boss, viewport_mode_changer
+-from utils import is_ios
++from utils import document_height, document_width, is_ios
+ 
+ class ScrollViewport:
+ 
+@@ -17,6 +17,8 @@ class ScrollViewport:
+         # code into thinking that it's always scrolling in positive X.
+         self.rtl = False
+         self.ltr = True
++        self.vertical_writing_mode = False
++        self.horizontal_writing_mode = True
+ 
+     def set_mode(self, mode):
+         prefix = ('flow' if mode is 'flow' else 'paged') + '_'
+@@ -24,12 +26,27 @@ class ScrollViewport:
+             self[attr] = self[prefix + attr]
+ 
+     def initialize_on_layout(self, body_style):
++        self.horizontal_writing_mode = True
++        self.vertical_writing_mode = False
++        self.ltr = True
++        self.rtl = False
+         if body_style.direction is "rtl":
+             self.rtl = True
+             self.ltr = False
++
++        css_vertical_rl = body_style.getPropertyValue("writing-mode") is "vertical-rl"
++        if css_vertical_rl:
++            self.vertical_writing_mode = True
++            self.horizontal_writing_mode = False
++            self.rtl = True
++            self.ltr = False
+         else:
+-            self.rtl = False
+-            self.ltr = True
++            css_vertical_lr = body_style.getPropertyValue("writing-mode") is "vertical-lr"
++            if css_vertical_lr:
++                self.vertical_writing_mode = True
++                self.horizontal_writing_mode = False
++                self.ltr = True
++                self.rtl = False
+ 
+     def flow_x(self):
+         if self.rtl:
+@@ -39,8 +56,15 @@ class ScrollViewport:
+     def flow_y(self):
+         return window.pageYOffset
+ 
+-    def paged_y(self):
+-        return 0
++    def inline_pos(self):
++        if self.vertical_writing_mode:
++            return self.y()
++        return self.x()
++
++    def block_pos(self):
++        if self.horizontal_writing_mode:
++            return self.y()
++        return self.x()
+ 
+     def flow_scroll_to(self, x, y):
+         if self.rtl:
+@@ -48,18 +72,71 @@ class ScrollViewport:
+         else:
+             window.scrollTo(x, y)
+ 
++    def scroll_to_in_inline_direction(self, pos):        
++        # Lines flow vertically, so inline is vertical.
++        if self.vertical_writing_mode:
++            self.scroll_to(0, pos)
++        else:
++            self.scroll_to(pos, 0)
++
++    def scroll_to_in_block_direction(self, pos):
++        # In horizontal modes, the block direction is vertical.
++        if self.horizontal_writing_mode:
++            self.scroll_to(0, pos)
++        # In vertical modes, the block direction is horizontal.
++        else:
++            self.scroll_to(pos, 0)
++
+     def flow_scroll_into_view(self, elem):
+         elem.scrollIntoView()
+ 
++    def scroll_by(self, x, y):
++        if self.ltr:
++            window.scrollBy(x, y)
++        # Swap inline direction if in RTL mode.
++        else:
++            window.scrollBy(-x,y)
++
++    def scroll_by_in_inline_direction(self, offset):
++        # Same logic as scroll_to_in_inline_direction
++        if self.vertical_writing_mode:
++            self.scroll_by(0, offset)
++        else:
++            self.scroll_by(offset, 0)
++
++    def scroll_by_in_block_direction(self, offset):
++        # Same logic as scroll_to_in_block_direction
++        if self.horizontal_writing_mode:
++            self.scroll_by(0, offset)
++        else:
++            self.scroll_by(offset, 0)
++
+     def flow_reset_globals(self):
+         pass
+ 
+     def flow___reset_transforms(self):
+         pass
+ 
+-    def paged_content_width(self):
++    def paged_content_inline_size(self):
++        if self.horizontal_writing_mode:
++            return document.documentElement.scrollWidth
++        return document.documentElement.scrollHeight
++
++    def paged_content_block_size(self):
++        if self.horizontal_writing_mode:
++            return document.documentElement.scrollHeight
+         return document.documentElement.scrollWidth
+ 
++    def inline_size(self):
++        if self.horizontal_writing_mode:
++            return self.width()
++        return self.height()
++
++    def block_size(self):
++        if self.horizontal_writing_mode:
++            return self.height()
++        return self.width()
++
+     def update_window_size(self, w, h):
+         self.window_width_from_parent = w
+         self.window_height_from_parent = h
+@@ -70,6 +147,16 @@ class ScrollViewport:
+     def height(self):
+         return window.innerHeight
+ 
++    def document_inline_size(self):
++        if self.horizontal_writing_mode:
++            return document_width()
++        return document_height()
++
++    def document_block_size(self):
++        if self.horizontal_writing_mode:
++            return document_height()
++        return document_width()
++
+     # Assure that the viewport position returned is corrected for the RTL
+     # mode of ScrollViewport.
+     def viewport_to_document(self, x, y, doc):
+@@ -94,6 +181,72 @@ class ScrollViewport:
+             return -x, y
+         return x, y
+ 
++    def rect_inline_start(self, rect):
++        # Lines start on the left in LTR mode, right in RTL mode
++        if self.horizontal_writing_mode:
++            return rect.left if self.ltr else rect.right
++        # Only top-to-bottom vertical writing is supported
++        return rect.top
++
++    def rect_inline_end(self, rect):
++        # Lines end on the right in LTR mode, left in RTL mode
++        if self.horizontal_writing_mode:
++            return rect.right if self.ltr else rect.left
++        # In top-to-bottom (the only vertical mode supported), bottom:
++        return rect.bottom
++
++    def rect_block_start(self, rect):
++        # Block flows top to bottom in horizontal modes
++        if self.horizontal_writing_mode:
++            return rect.top
++        # Block flows either left or right in vertical modes
++        return rect.left if self.ltr else rect.right
++
++    def rect_block_end(self, rect):
++        # Block flows top to bottom in horizontal modes
++        if self.horizontal_writing_mode:
++            return rect.bottom
++        # Block flows either left or right in vertical modes
++        return rect.right if self.ltr else rect.left
++
++    def rect_inline_size(self, rect):
++        # Lines go horizontally in horizontal writing, so use width
++        if self.horizontal_writing_mode:
++            return rect.width
++        return rect.height
++        
++    def rect_block_size(self, rect):
++        # The block is vertical in horizontal writing, so use height
++        if self.horizontal_writing_mode:
++            return rect.height
++        return rect.width
++
++    # Returns document inline coordinate (1 value) at viewport inline coordinate
++    def viewport_to_document_inline(self, pos, doc):
++        # Lines flow horizontally in horizontal mode
++        if self.horizontal_writing_mode:
++            return self.viewport_to_document(pos, 0, doc)[0]
++        # Inline is vertical in vertical mode
++        return self.viewport_to_document(0, pos, doc)[1]
++
++    # Returns document block coordinate (1 value) at viewport block coordinate
++    def viewport_to_document_block(self, pos, doc):
++        # Block is vertical in horizontal mode
++        if self.horizontal_writing_mode:
++            return self.viewport_to_document(0, pos, doc)[1]
++        # Horizontal in vertical mode
++        return self.viewport_to_document(pos, 0, doc)[0]
++
++    def viewport_to_document_inline_block(self, inline, block):
++        if self.horizontal_writing_mode:
++            return self.viewport_to_document(inline, block)
++        return self.viewport_to_document(block, inline)
++    
++    def element_from_point(self, doc, x, y):
++        if self.rtl:
++            return doc.elementFromPoint(-x, y)
++        return doc.elementFromPoint(x, y)
++
+ class IOSScrollViewport(ScrollViewport):
+ 
+     def width(self):
+@@ -102,15 +255,19 @@ class IOSScrollViewport(ScrollViewport):
+     def height(self):
+         return self.window_height_from_parent or window.innerHeight
+ 
+-    def _scroll_implementation(self, x):
+-        if x is 0:
++    def _scroll_implementation(self, x, y):
++        if x is 0 and y is 0:
+             document.documentElement.style.transform = 'none'
+         else:
+             x *= -1
+-            document.documentElement.style.transform = f'translateX({x}px)'
++            y *= -1
++            document.documentElement.style.transform = f'translateX({x}px) translateY({y}px)'
+ 
+     def paged_scroll_to(self, x, y):
+-        self._scroll_implementation(x)
++        if self.ltr:
++            self._scroll_implementation(x, y)
++        else:
++            self._scroll_implementation(-x, y)
+         boss = get_boss()
+         if boss:
+             boss.onscroll()
+@@ -127,6 +284,17 @@ class IOSScrollViewport(ScrollViewport):
+             ans *= -1
+         return ans
+ 
++    def paged_y(self):
++        raw = document.documentElement.style.transform
++        if not raw or raw is 'none':
++            return 0
++        raw = raw[raw.lastIndexOf('(') + 1:]
++        ans = parseInt(raw)
++        if isNaN(ans):
++            return 0
++        ans *= -1
++        return ans
++
+     def paged_scroll_into_view(self, elem):
+         left = elem.offsetLeft
+         if left is None:
+@@ -158,6 +326,23 @@ for attr in FUNCTIONS:
+         scroll_viewport['paged_' + attr] = scroll_viewport[attr]
+ viewport_mode_changer(scroll_viewport.set_mode)
+ 
++def rem_size(reset):
++    if reset:
++        rem_size.ans = None
++        return
++    if not rem_size.ans:
++        d = document.createElement('span')
++        d.style.position = 'absolute'
++        d.style.visibility = 'hidden'
++        d.style.width = '1rem'
++        d.style.fontSize = '1rem'
++        d.style.paddingTop = d.style.paddingBottom = d.style.paddingLeft = d.style.paddingRight = '0'
++        d.style.marginTop = d.style.marginBottom = d.style.marginLeft = d.style.marginRight = '0'
++        d.style.borderStyle = 'none'
++        document.body.appendChild(d)
++        rem_size.ans = d.clientWidth
++        document.body.removeChild(d)
++    return rem_size.ans
+ 
+ def line_height(reset):
+     if reset:
+-- 
+2.28.0
+

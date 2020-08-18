@@ -1,0 +1,29 @@
+From 2f6e5807cc194d3e2f0a31f61f657275ab22da4c Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Sun, 9 Aug 2020 11:23:23 +0530
+Subject: [PATCH 354/408] Use Yes/No for confirm_delete dialogs
+
+---
+ src/calibre/gui2/dialogs/confirm_delete.py | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/src/calibre/gui2/dialogs/confirm_delete.py b/src/calibre/gui2/dialogs/confirm_delete.py
+index 93ac5c1425..4d77934735 100644
+--- a/src/calibre/gui2/dialogs/confirm_delete.py
++++ b/src/calibre/gui2/dialogs/confirm_delete.py
+@@ -40,9 +40,10 @@ class Dialog(QDialog):
+         a.stateChanged.connect(self.toggle)
+         l.addWidget(a)
+ 
+-        buttons = QDialogButtonBox.Ok
+         if show_cancel_button:
+-            buttons |= QDialogButtonBox.Cancel
++            buttons = QDialogButtonBox.Yes | QDialogButtonBox.No
++        else:
++            buttons = QDialogButtonBox.Ok
+         self.buttonBox = bb = QDialogButtonBox(buttons, self)
+         bb.setObjectName("buttonBox")
+         bb.setFocus(Qt.OtherFocusReason)
+-- 
+2.28.0
+

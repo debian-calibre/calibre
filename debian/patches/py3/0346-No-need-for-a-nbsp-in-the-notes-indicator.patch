@@ -1,0 +1,25 @@
+From 390fe87cbd645b39e4c8bac5ba70ec1471f3fc5c Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Sat, 8 Aug 2020 12:04:06 +0530
+Subject: [PATCH 346/408] No need for a nbsp in the notes indicator
+
+---
+ src/pyj/read_book/settings.pyj | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/pyj/read_book/settings.pyj b/src/pyj/read_book/settings.pyj
+index eef232eb34..9c2e98751c 100644
+--- a/src/pyj/read_book/settings.pyj
++++ b/src/pyj/read_book/settings.pyj
+@@ -100,7 +100,7 @@ def apply_colors(is_content_popup):
+         # show a dot after highlights that have notes
+         text += '''\n\n
+         .crw-has-dot::after {
+-            content: "\xa0";\
++            content: "";\
+             vertical-align: text-top;\
+             background-color: currentColor !important;\
+             text-decoration: none !important;\
+-- 
+2.28.0
+

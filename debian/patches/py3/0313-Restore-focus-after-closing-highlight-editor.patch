@@ -1,0 +1,32 @@
+From 82248b37b9c130a7dac740e7493b475b85c966e2 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Wed, 5 Aug 2020 19:41:11 +0530
+Subject: [PATCH 313/408] Restore focus after closing highlight editor
+
+---
+ src/pyj/read_book/selection_bar.pyj | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/pyj/read_book/selection_bar.pyj b/src/pyj/read_book/selection_bar.pyj
+index c89483f5fe..f6dadf161e 100644
+--- a/src/pyj/read_book/selection_bar.pyj
++++ b/src/pyj/read_book/selection_bar.pyj
+@@ -670,6 +670,7 @@ class SelectionBar:
+         if not apply_changes:
+             self.state = WAITING
+             self.update_position()
++            self.container.focus()
+             return
+         ed = self.current_editor
+         self.current_editor = None
+@@ -681,6 +682,7 @@ class SelectionBar:
+         self.state = WAITING
+         self.update_position()
+         get_session_data().set('highlight_style', self.current_highlight_style.style)
++        self.container.focus()
+ 
+     def editor_container_clicked(self, ev):
+         ev.stopPropagation(), ev.preventDefault()
+-- 
+2.28.0
+

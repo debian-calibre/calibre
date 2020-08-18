@@ -1,0 +1,72 @@
+From cd97d4549d6929b310c6bdea3bc9fd61ac28f6da Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Sat, 8 Aug 2020 22:04:27 +0530
+Subject: [PATCH 349/408] Restore triple-click to select paragraphs
+
+---
+ src/pyj/read_book/iframe.pyj        | 10 ++++++++++
+ src/pyj/read_book/selection_bar.pyj |  6 ++++++
+ 2 files changed, 16 insertions(+)
+
+diff --git a/src/pyj/read_book/iframe.pyj b/src/pyj/read_book/iframe.pyj
+index cab7b04923..cf0f35e90d 100644
+--- a/src/pyj/read_book/iframe.pyj
++++ b/src/pyj/read_book/iframe.pyj
+@@ -180,6 +180,7 @@ class IframeBoss:
+         window.addEventListener('keydown', self.onkeydown, {'passive': False})
+         window.addEventListener('mousemove', self.onmousemove, {'passive': True})
+         window.addEventListener('mouseup', self.onmouseup, {'passive': True})
++        window.addEventListener('dblclick', self.ondoubleclick, {'passive': True})
+         document.documentElement.addEventListener('contextmenu', self.oncontextmenu, {'passive': False})
+         document.addEventListener('selectionchange', self.onselectionchange)
+         self.color_scheme = data.color_scheme
+@@ -592,6 +593,9 @@ class IframeBoss:
+         # ensure selection bar is updated
+         self.onselectionchange()
+ 
++    def ondoubleclick(self, evt):
++        self.send_message('annotations', type='double-click')
++
+     def onkeydown(self, evt):
+         if current_layout_mode() is not 'flow' and evt.key is 'Tab':
+             # Prevent the TAB key from shifting focus as it causes partial scrolling
+@@ -724,6 +728,12 @@ class IframeBoss:
+             set_selection_style(data.style)
+         elif data.type is 'trigger-shortcut':
+             self.on_handle_navigation_shortcut(data)
++        elif data.type is 'extend-to-paragraph':
++            sel = window.getSelection()
++            sel.modify('extend', 'forward', 'paragraphboundary')
++            end_node, end_offset = sel.focusNode, sel.focusOffset
++            sel.modify('extend', 'backward', 'paragraphboundary')
++            sel.setBaseAndExtent(sel.focusNode, sel.focusOffset, end_node, end_offset)
+         elif data.type is 'edit-highlight':
+             crw_ = {v: k for k, v in Object.entries(annot_id_uuid_map)}[data.uuid]
+             if crw_ and select_crw(crw_):
+diff --git a/src/pyj/read_book/selection_bar.pyj b/src/pyj/read_book/selection_bar.pyj
+index ae918ff05f..aece659dc9 100644
+--- a/src/pyj/read_book/selection_bar.pyj
++++ b/src/pyj/read_book/selection_bar.pyj
+@@ -405,6 +405,10 @@ class SelectionBar:
+         if self.state is EDITING:
+             self.hide_editor(True)
+         if self.state is WAITING:
++            now = window.performance.now()
++            if self.last_double_click_at and now - self.last_double_click_at < 500:
++                self.send_message('extend-to-paragraph')
++                return
+             for x in (self.bar, self.left_handle, self.right_handle):
+                 if near_element(x, ev.clientX, ev.clientY):
+                     return
+@@ -783,6 +787,8 @@ class SelectionBar:
+         elif msg.type is 'edit-highlight':
+             if self.state is WAITING:
+                 self.create_highlight()
++        elif msg.type is 'double-click':
++            self.last_double_click_at = window.performance.now()
+         else:
+             print('Ignoring annotations message with unknown type:', msg.type)
+ 
+-- 
+2.28.0
+

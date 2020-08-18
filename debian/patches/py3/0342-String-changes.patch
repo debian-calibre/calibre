@@ -1,0 +1,25 @@
+From 5cb0c0249b8a074304407089850fd7b0f8bd0e8b Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Sat, 8 Aug 2020 10:20:07 +0530
+Subject: [PATCH 342/408] String changes
+
+---
+ src/calibre/gui2/viewer/highlights.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/calibre/gui2/viewer/highlights.py b/src/calibre/gui2/viewer/highlights.py
+index 507adc9aa5..1d1d4139af 100644
+--- a/src/calibre/gui2/viewer/highlights.py
++++ b/src/calibre/gui2/viewer/highlights.py
+@@ -288,7 +288,7 @@ class HighlightsPanel(QWidget):
+             return b
+ 
+         self.edit_button = button('edit_input.png', _('Edit'), _('Edit the selected highlight'), self.edit_highlight)
+-        self.remove_button = button('trash.png', _('Remove'), _('Remove the selected highlights'), self.remove_highlight)
++        self.remove_button = button('trash.png', _('Delete'), _('Delete the selected highlights'), self.remove_highlight)
+         self.export_button = button('save.png', _('Export'), _('Export all highlights'), self.export)
+         h.addWidget(self.edit_button), h.addWidget(self.remove_button), h.addWidget(self.export_button)
+ 
+-- 
+2.28.0
+

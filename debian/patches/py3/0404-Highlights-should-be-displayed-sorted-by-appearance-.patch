@@ -1,0 +1,25 @@
+From d28798a97ef6d1d549fc8bd371339a495ba28934 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Mon, 17 Aug 2020 21:31:44 +0530
+Subject: [PATCH 404/408] Highlights should be displayed sorted by appearance
+ order
+
+---
+ src/pyj/read_book/annotations.pyj | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/pyj/read_book/annotations.pyj b/src/pyj/read_book/annotations.pyj
+index 12364ddef2..f1102db45e 100644
+--- a/src/pyj/read_book/annotations.pyj
++++ b/src/pyj/read_book/annotations.pyj
+@@ -163,6 +163,7 @@ class AnnotationsManager:  # {{{
+ 
+     def all_highlights(self):
+         ans = [h for h in Object.values(self.highlights) if not h.removed].as_array()
++        sort_annot_list(ans, highlight_get_cfi)
+         return ans
+ 
+     def merge_highlights(self, highlights):
+-- 
+2.28.0
+

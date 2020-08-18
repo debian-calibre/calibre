@@ -1,0 +1,259 @@
+From f807d0b3c1f042b69d155d97896fd71724617854 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 6 Aug 2020 09:51:14 +0530
+Subject: [PATCH 319/408] Allow editing highlight notes from annotations
+ browser
+
+---
+ src/calibre/db/annotations.py           | 14 +++++++
+ src/calibre/db/backend.py               | 38 +++++++++++-------
+ src/calibre/db/cache.py                 |  4 ++
+ src/calibre/gui2/library/annotations.py | 53 +++++++++++++++++++++----
+ 4 files changed, 87 insertions(+), 22 deletions(-)
+
+diff --git a/src/calibre/db/annotations.py b/src/calibre/db/annotations.py
+index e0c912743f..e054c49a7d 100644
+--- a/src/calibre/db/annotations.py
++++ b/src/calibre/db/annotations.py
+@@ -98,3 +98,17 @@ def merge_annotations(annots, annots_map, merge_last_read=True):
+         if not b:
+             continue
+         changed, annots_map[annot_type] = merge_annots_with_identical_field(a or [], b, field=field)
++
++
++def annot_db_data(annot):
++    aid = text = None
++    atype = annot['type'].lower()
++    if atype == 'bookmark':
++        aid = text = annot['title']
++    elif atype == 'highlight':
++        aid = annot['uuid']
++        text = annot.get('highlighted_text') or ''
++        notes = annot.get('notes') or ''
++        if notes:
++            text += '\n\x1f\n' + notes
++    return aid, text
+diff --git a/src/calibre/db/backend.py b/src/calibre/db/backend.py
+index 413696fa05..d23c5a9856 100644
+--- a/src/calibre/db/backend.py
++++ b/src/calibre/db/backend.py
+@@ -19,6 +19,7 @@ from calibre.constants import (iswindows, filesystem_encoding,
+         preferred_encoding)
+ from calibre.ptempfile import PersistentTemporaryFile, TemporaryFile
+ from calibre.db import SPOOL_SIZE
++from calibre.db.annotations import annot_db_data
+ from calibre.db.schema_upgrades import SchemaUpgrade
+ from calibre.db.delete_service import delete_service
+ from calibre.db.errors import NoSuchFormat
+@@ -27,7 +28,7 @@ from calibre.ebooks.metadata import title_sort, author_to_author_sort
+ from calibre.utils import pickle_binary_string, unpickle_binary_string
+ from calibre.utils.icu import sort_key
+ from calibre.utils.config import to_json, from_json, prefs, tweaks
+-from calibre.utils.date import utcfromtimestamp, parse_date
++from calibre.utils.date import utcfromtimestamp, parse_date, utcnow, EPOCH
+ from calibre.utils.filenames import (
+     is_case_sensitive, samefile, hardlink_file, ascii_filename,
+     WindowsAtomicFolderMove, atomic_rename, remove_dir_if_empty,
+@@ -301,15 +302,8 @@ def save_annotations_for_book(cursor, book_id, fmt, annots_list, user_type='loca
+     fmt = fmt.upper()
+     for annot, timestamp_in_secs in annots_list:
+         atype = annot['type'].lower()
+-        if atype == 'bookmark':
+-            aid = text = annot['title']
+-        elif atype == 'highlight':
+-            aid = annot['uuid']
+-            text = annot.get('highlighted_text') or ''
+-            notes = annot.get('notes') or ''
+-            if notes:
+-                text += '\n\x1f\n' + notes
+-        else:
++        aid, text = annot_db_data(annot)
++        if aid is None:
+             continue
+         data.append((book_id, fmt, user_type, user, timestamp_in_secs, aid, atype, json.dumps(annot), text))
+     cursor.execute('INSERT OR IGNORE INTO annotations_dirtied (book) VALUES (?)', (book_id,))
+@@ -1835,9 +1829,11 @@ class DB(object):
+                 yield {'format': fmt, 'user_type': user_type, 'user': user, 'annotation': annot}
+ 
+     def delete_annotations(self, annot_ids):
+-        from calibre.utils.date import utcnow
+         replacements = []
+         removals = []
++        now = utcnow()
++        ts = now.isoformat()
++        timestamp = (now - EPOCH).total_seconds()
+         for annot_id in annot_ids:
+             for (raw_annot_data, annot_type) in self.execute(
+                 'SELECT annot_data, annot_type FROM annotations WHERE id=?', (annot_id,)
+@@ -1847,18 +1843,32 @@ class DB(object):
+                 except Exception:
+                     removals.append((annot_id,))
+                     continue
+-                new_annot = {'removed': True, 'timestamp': utcnow().isoformat(), 'type': annot_type}
++                now = utcnow()
++                new_annot = {'removed': True, 'timestamp': ts, 'type': annot_type}
+                 uuid = annot_data.get('uuid')
+                 if uuid is not None:
+                     new_annot['uuid'] = uuid
+                 else:
+                     new_annot['title'] = annot_data['title']
+-                replacements.append((json.dumps(new_annot), annot_id))
++                replacements.append((json.dumps(new_annot), timestamp, annot_id))
+         if replacements:
+-            self.executemany('UPDATE annotations SET annot_data=?, searchable_text="" WHERE id=?', replacements)
++            self.executemany('UPDATE annotations SET annot_data=?, timestamp=?, searchable_text="" WHERE id=?', replacements)
+         if removals:
+             self.executemany('DELETE FROM annotations WHERE id=?', removals)
+ 
++    def update_annotations(self, annot_id_map):
++        now = utcnow()
++        ts = now.isoformat()
++        timestamp = (now - EPOCH).total_seconds()
++        with self.conn:
++            for annot_id, annot in annot_id_map.items():
++                atype = annot['type']
++                aid, text = annot_db_data(annot)
++                if aid is not None:
++                    annot['timestamp'] = ts
++                    self.execute('UPDATE annotations SET annot_data=?, timestamp=?, annot_type=?, searchable_text=?, annot_id=? WHERE id=?',
++                        (json.dumps(annot), timestamp, atype, text, aid, annot_id))
++
+     def all_annotations(self, restrict_to_user=None, limit=None, annotation_type=None, ignore_removed=False):
+         ls = json.loads
+         q = 'SELECT id, book, format, user_type, user, annot_data FROM annotations'
+diff --git a/src/calibre/db/cache.py b/src/calibre/db/cache.py
+index 0d7f098227..3de85edde9 100644
+--- a/src/calibre/db/cache.py
++++ b/src/calibre/db/cache.py
+@@ -2337,6 +2337,10 @@ class Cache(object):
+     def delete_annotations(self, annot_ids):
+         self.backend.delete_annotations(annot_ids)
+ 
++    @write_api
++    def update_annotations(self, annot_id_map):
++        self.backend.update_annotations(annot_id_map)
++
+     @write_api
+     def restore_annotations(self, book_id, annotations):
+         from calibre.utils.iso8601 import parse_iso8601
+diff --git a/src/calibre/gui2/library/annotations.py b/src/calibre/gui2/library/annotations.py
+index de7d1d46f7..c4a232672d 100644
+--- a/src/calibre/gui2/library/annotations.py
++++ b/src/calibre/gui2/library/annotations.py
+@@ -7,8 +7,9 @@ from textwrap import fill
+ 
+ from PyQt5.Qt import (
+     QApplication, QCheckBox, QComboBox, QCursor, QDateTime, QFont, QHBoxLayout,
+-    QIcon, QLabel, QPalette, QPushButton, QSize, QSplitter, Qt, QTextBrowser, QTimer,
+-    QToolButton, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget, pyqtSignal
++    QIcon, QInputDialog, QLabel, QPalette, QPushButton, QSize, QSplitter, Qt,
++    QTextBrowser, QTimer, QToolButton, QTreeWidget, QTreeWidgetItem, QVBoxLayout,
++    QWidget, pyqtSignal
+ )
+ 
+ from calibre import prepare_string_for_xml
+@@ -348,6 +349,7 @@ class DetailsPanel(QWidget):
+ 
+     open_annotation = pyqtSignal(object, object, object)
+     show_book = pyqtSignal(object, object)
++    edit_annotation = pyqtSignal(object, object)
+     delete_annotation = pyqtSignal(object)
+ 
+     def __init__(self, parent):
+@@ -371,6 +373,10 @@ class DetailsPanel(QWidget):
+ 
+         h = QHBoxLayout()
+         l.addLayout(h)
++        self.edit_button = ob = QPushButton(QIcon(I('edit_input.png')), _('Edit'), self)
++        ob.setToolTip(_('Edit the notes if any for this highlight'))
++        ob.clicked.connect(self.edit_result)
++        h.addWidget(ob)
+         self.delete_button = ob = QPushButton(QIcon(I('trash.png')), _('Delete'), self)
+         ob.setToolTip(_('Delete this annotation'))
+         ob.clicked.connect(self.delete_result)
+@@ -388,6 +394,11 @@ class DetailsPanel(QWidget):
+             r = self.current_result
+             self.delete_annotation.emit(r['id'])
+ 
++    def edit_result(self):
++        if self.current_result is not None:
++            r = self.current_result
++            self.edit_annotation.emit(r['id'], r['annotation'])
++
+     def show_in_library(self):
+         if self.current_result is not None:
+             self.show_book.emit(self.current_result['book_id'], self.current_result['format'])
+@@ -395,16 +406,24 @@ class DetailsPanel(QWidget):
+     def sizeHint(self):
+         return QSize(450, 600)
+ 
++    def set_controls_visibility(self, visible):
++        self.text_browser.setVisible(visible)
++        self.open_button.setVisible(visible)
++        self.library_button.setVisible(visible)
++        self.delete_button.setVisible(visible)
++        self.edit_button.setVisible(visible)
++
++    def update_notes(self, annot):
++        if self.current_result:
++            self.current_result['annotation'] = annot
++            self.show_result(self.current_result)
++
+     def show_result(self, result_or_none):
+         self.current_result = r = result_or_none
+         if r is None:
+-            self.text_browser.setVisible(False)
+-            self.open_button.setVisible(False)
+-            self.library_button.setVisible(False)
++            self.set_controls_visibility(False)
+             return
+-        self.text_browser.setVisible(True)
+-        self.open_button.setVisible(True)
+-        self.library_button.setVisible(True)
++        self.set_controls_visibility(True)
+         db = current_db()
+         book_id = r['book_id']
+         title, authors = db.field_for('title', book_id), db.field_for('authors', book_id)
+@@ -427,7 +446,9 @@ class DetailsPanel(QWidget):
+ 
+         if annot['type'] == 'bookmark':
+             p(annot['title'])
++            self.edit_button.setEnabled(False)
+         elif annot['type'] == 'highlight':
++            self.edit_button.setEnabled(True)
+             p(annot['highlighted_text'])
+             notes = annot.get('notes')
+             if notes:
+@@ -509,6 +530,7 @@ class AnnotationsBrowser(Dialog):
+         dp.open_annotation.connect(self.do_open_annotation)
+         dp.show_book.connect(self.show_book)
+         dp.delete_annotation.connect(self.delete_annotation)
++        dp.edit_annotation.connect(self.edit_annotation)
+         bp.current_result_changed.connect(dp.show_result)
+ 
+         h = QHBoxLayout()
+@@ -538,6 +560,21 @@ class AnnotationsBrowser(Dialog):
+     def delete_annotation(self, annot_id):
+         self.delete_annotations(frozenset({annot_id}))
+ 
++    def edit_annotation(self, annot_id, annot):
++        if annot.get('type') != 'highlight':
++            return error_dialog(self, _('Cannot edit'), _(
++                'Editing is only supported for the notes associated with highlights'), show=True)
++        notes = annot.get('notes')
++        notes, ok = QInputDialog.getMultiLineText(self, _('Edit notes for highlight'), '', notes)
++        if ok:
++            if notes and notes.strip():
++                annot['notes'] = notes.strip()
++            else:
++                annot.pop('notes', None)
++            db = current_db()
++            db.update_annotations({annot_id: annot})
++            self.details_panel.update_notes(annot)
++
+     def show_dialog(self):
+         if self.parent() is None:
+             self.browse_panel.effective_query_changed()
+-- 
+2.28.0
+

@@ -1,0 +1,148 @@
+From 007e587629602916d36fabeeb0d77a97a96df2a4 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Mon, 17 Aug 2020 21:15:33 +0530
+Subject: [PATCH 401/408] Implement editing of notes
+
+---
+ src/pyj/modals.pyj               | 44 ++++++++++++++++++++++++++++----
+ src/pyj/read_book/highlights.pyj | 29 +++++++++++++++++----
+ 2 files changed, 63 insertions(+), 10 deletions(-)
+
+diff --git a/src/pyj/modals.pyj b/src/pyj/modals.pyj
+index 84587acb08..cbad8eb0c3 100644
+--- a/src/pyj/modals.pyj
++++ b/src/pyj/modals.pyj
+@@ -7,7 +7,7 @@ from gettext import gettext as _
+ 
+ from ajax import ajax, ajax_send
+ from book_list.theme import get_color, get_font_size
+-from dom import add_extra_css, build_rule, clear, set_css, svgicon
++from dom import add_extra_css, build_rule, clear, set_css, svgicon, unique_id
+ from popups import MODAL_Z_INDEX
+ from utils import safe_set_inner_html
+ from widgets import create_button
+@@ -21,9 +21,6 @@ add_extra_css(def():
+         color=get_color('dialog-foreground') + ' !important',
+         background_color=get_color('dialog-background') + ' !important'
+     )
+-    style += build_rule(
+-        '#modal-container a.dialog-simple-link:hover', color='red !important'
+-    )
+     style += build_rule(
+         '.button-box', display='flex', justify_content='flex-end', padding='1rem 0rem', overflow='hidden'
+     )
+@@ -149,7 +146,7 @@ class ModalContainer:
+ 
+ def create_simple_dialog_markup(title, msg, details, icon, prefix, parent):
+     details = details or ''
+-    show_details = E.a(class_='dialog-simple-link', style='cursor:pointer; color: blue; padding-top:1em; display:inline-block; margin-left: auto', _('Show details'))
++    show_details = E.a(class_='blue-link', style='padding-top:1em; display:inline-block; margin-left: auto', _('Show details'))
+     show_details.addEventListener('click', def():
+         show_details.style.display = 'none'
+         show_details.nextSibling.style.display = 'block'
+@@ -202,6 +199,43 @@ def create_custom_dialog(title, content_generator_func, on_close=None, onkeydown
+     show_modal(create_func, on_close=on_close, onkeydown=onkeydown)
+ 
+ 
++def get_text_dialog(title, callback, initial_text=None, msg=None, rows=12):
++    called = {}
++    cid = unique_id()
++
++    def keyaction(ok, close_modal):
++        if called.done:
++            return
++        called.done = True
++        text = document.getElementById(cid).value or ''
++        if close_modal:
++            close_modal()
++        callback(ok, text)
++
++    def on_keydown(event, close_modal):
++        if event.altKey or event.ctrlKey or event.metaKey or event.shiftKey:
++            return
++        if event.key is 'Escape' or event.key is 'Esc':
++            event.preventDefault(), event.stopPropagation()
++            keyaction(False, close_modal)
++
++    create_custom_dialog(
++        title, def(parent, close_modal):
++            parent.appendChild(E.div(
++                E.textarea(initial_text or '', placeholder=msg or '', id=cid, rows=rows + '', style='min-width: min(40rem, 60vw)'),
++                E.div(class_='button-box',
++                    create_button(_('OK'), 'check', keyaction.bind(None, True, close_modal), highlight=True),
++                    '\xa0',
++                    create_button(_('Cancel'), 'close', keyaction.bind(None, False, close_modal))
++                ),
++            ))
++            window.setTimeout(def(): parent.querySelector('textarea').focus();, 10)
++        ,
++        on_close=keyaction.bind(None, False, None),
++        onkeydown=on_keydown
++    )
++
++
+ def question_dialog(title, msg, callback, yes_text=None, no_text=None):
+     yes_text = yes_text or _('Yes')
+     no_text = no_text or _('No')
+diff --git a/src/pyj/read_book/highlights.pyj b/src/pyj/read_book/highlights.pyj
+index d2a16db424..db38ca6499 100644
+--- a/src/pyj/read_book/highlights.pyj
++++ b/src/pyj/read_book/highlights.pyj
+@@ -8,8 +8,8 @@ from gettext import gettext as _
+ from book_list.globals import get_session_data
+ from book_list.theme import get_color
+ from complete import create_search_bar
+-from dom import add_extra_css, build_rule, svgicon, unique_id
+-from modals import error_dialog, question_dialog, warning_dialog
++from dom import add_extra_css, build_rule, clear, svgicon, unique_id
++from modals import error_dialog, get_text_dialog, question_dialog, warning_dialog
+ from widgets import create_button
+ 
+ ICON_SIZE_VAL = 3
+@@ -621,21 +621,40 @@ def remove_highlight(annot_id, view, ev):
+     )
+ 
+ 
++def edit_notes(annot_id, notes, view, ev):
++    entry = ev.currentTarget.closest('.highlight')
++    get_text_dialog(_('Notes'), def(ok, text):
++        print(11111111, ok, text)
++        if not ok:
++            return
++        text = text or ''
++        nc = entry.querySelector('.notes')
++        clear(nc)
++        view.set_notes_for_highlight(annot_id, text)
++        render_notes(text, nc)
++    , initial_text=notes or None)
++
++
+ def highlight_entry(h, onclick, view):
+ 
+     def action(func, ev):
+         ev.stopPropagation(), ev.preventDefault()
+         onclick(func)
+ 
++    def button(text, func):
++        return E.a(text, class_='blue-link', onclick=func)
++
+     ans = E.div(
+         class_='highlight',
+         onclick=highlight_entry_clicked,
+         E.div(class_='title', h.highlighted_text),
+         E.div(
+             class_='actions',
+-            E.a(class_='blue-link', _('Show in text'), onclick=action.bind(None, show_in_text.bind(None, h.uuid))),
+-            '\xa0\xa0',
+-            E.a(class_='blue-link', _('Remove highlight'), onclick=remove_highlight.bind(None, h.uuid, view)),
++            button(_('Show in text'), action.bind(None, show_in_text.bind(None, h.uuid))),
++            E.span('\xa0'),
++            button(_('Edit notes'), edit_notes.bind(None, h.uuid, h.notes, view)),
++            E.span('\xa0'),
++            button(_('Remove highlight'), remove_highlight.bind(None, h.uuid, view)),
+         ),
+         E.div(class_='notes')
+     )
+-- 
+2.28.0
+

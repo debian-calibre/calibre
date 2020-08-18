@@ -1,0 +1,25 @@
+From e94e84c36d7aa572edec13177c1b830aceaa1b29 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Mon, 17 Aug 2020 19:38:13 +0530
+Subject: [PATCH 398/408] Fix changing annot not updating in IndexedDB
+
+---
+ src/pyj/read_book/ui.pyj | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/pyj/read_book/ui.pyj b/src/pyj/read_book/ui.pyj
+index c6802d8ee0..c5f655e31a 100644
+--- a/src/pyj/read_book/ui.pyj
++++ b/src/pyj/read_book/ui.pyj
+@@ -220,7 +220,7 @@ class ReadUI:
+         library_id = self.base_url_data.library_id
+         book_id = self.base_url_data.book_id
+         fmt = self.base_url_data.fmt
+-        self.db.update_annotations_data_from_key(library_id, book_id, fmt, amap)
++        self.db.update_annotations_data_from_key(library_id, book_id, fmt, {'annotations_map': amap})
+ 
+     @property
+     def url_data(self):
+-- 
+2.28.0
+

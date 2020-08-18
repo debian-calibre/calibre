@@ -1,0 +1,27 @@
+From 5d1adeb23ed21cd1797ed203d783d25b9ba00b45 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Wed, 5 Aug 2020 20:08:16 +0530
+Subject: [PATCH 315/408] The copy shortcut should work when selection bar is
+ visible
+
+---
+ src/pyj/read_book/selection_bar.pyj | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/src/pyj/read_book/selection_bar.pyj b/src/pyj/read_book/selection_bar.pyj
+index 5f915bb470..e0561220e3 100644
+--- a/src/pyj/read_book/selection_bar.pyj
++++ b/src/pyj/read_book/selection_bar.pyj
+@@ -471,6 +471,9 @@ class SelectionBar:
+         if ev.key is 'Escape':
+             self.clear_selection()
+             return
++        if ev.key and ev.key.toLowerCase() is 'c' and ev.ctrlKey:
++            self.copy_to_clipboard()
++            return
+         sc_name = shortcut_for_key_event(ev, self.view.keyboard_shortcut_map)
+         if sc_name is 'show_chrome':
+             self.clear_selection()
+-- 
+2.28.0
+

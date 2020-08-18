@@ -1,0 +1,24 @@
+From 84976035a2db02f21527f5637fb094547c3a1d7c Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Sat, 8 Aug 2020 09:05:33 +0530
+Subject: [PATCH 337/408] Fix delete selected button not working
+
+---
+ src/calibre/gui2/library/annotations.py | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/calibre/gui2/library/annotations.py b/src/calibre/gui2/library/annotations.py
+index 5a5e42f003..7b33c4c8fd 100644
+--- a/src/calibre/gui2/library/annotations.py
++++ b/src/calibre/gui2/library/annotations.py
+@@ -577,6 +577,7 @@ class AnnotationsBrowser(Dialog):
+         if not ids:
+             return error_dialog(self, _('No selected annotations'), _(
+                 'No annotations have been selected'), show=True)
++        self.delete_annotations(ids)
+ 
+     def delete_annotations(self, ids):
+         if question_dialog(self, _('Are you sure?'), ngettext(
+-- 
+2.28.0
+

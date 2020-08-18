@@ -1,0 +1,74 @@
+From 7b0cac5c102ac1059a32714995bc5cd84c14e111 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Sat, 8 Aug 2020 15:31:27 +0530
+Subject: [PATCH 347/408] Viewer: Auto-hide the mouse cursor when unused. Can
+ be turned off via a preference in the Miscellaneous section of the viewer
+ preferences
+
+---
+ src/calibre/gui2/viewer/ui.py    | 24 ++++++++++++++++++++++++
+ src/pyj/read_book/prefs/misc.pyj |  2 ++
+ 2 files changed, 26 insertions(+)
+
+diff --git a/src/calibre/gui2/viewer/ui.py b/src/calibre/gui2/viewer/ui.py
+index 80cb0374f5..fa19ab05c7 100644
+--- a/src/calibre/gui2/viewer/ui.py
++++ b/src/calibre/gui2/viewer/ui.py
+@@ -196,6 +196,7 @@ class EbookViewer(MainWindow):
+         self.highlights_widget.web_action.connect(self.web_view.generic_action)
+         if continue_reading:
+             self.continue_reading()
++        self.setup_mouse_auto_hide()
+ 
+     def shortcuts_changed(self, smap):
+         rmap = defaultdict(list)
+@@ -675,3 +676,26 @@ class EbookViewer(MainWindow):
+         self.shutdown_done = True
+         return MainWindow.closeEvent(self, ev)
+     # }}}
++
++    # Auto-hide mouse cursor  {{{
++    def setup_mouse_auto_hide(self):
++        QApplication.instance().installEventFilter(self)
++        self.cursor_hidden = False
++        self.hide_cursor_timer = t = QTimer(self)
++        t.setSingleShot(True), t.setInterval(3000)
++        t.timeout.connect(self.hide_cursor)
++        t.start()
++
++    def eventFilter(self, obj, ev):
++        if ev.type() == ev.MouseMove:
++            if self.cursor_hidden:
++                self.cursor_hidden = False
++                QApplication.instance().restoreOverrideCursor()
++            self.hide_cursor_timer.start()
++        return False
++
++    def hide_cursor(self):
++        if get_session_pref('auto_hide_mouse', True):
++            self.cursor_hidden = True
++            QApplication.instance().setOverrideCursor(Qt.BlankCursor)
++    # }}}
+diff --git a/src/pyj/read_book/prefs/misc.pyj b/src/pyj/read_book/prefs/misc.pyj
+index 3dda433e39..c547ec1ad1 100644
+--- a/src/pyj/read_book/prefs/misc.pyj
++++ b/src/pyj/read_book/prefs/misc.pyj
+@@ -21,6 +21,7 @@ DEFAULTS = {
+     'save_annotations_in_ebook': True,
+     'sync_annots_user': '',
+     'singleinstance': False,
++    'auto_hide_mouse': True,
+ }
+ 
+ 
+@@ -72,6 +73,7 @@ def create_misc_panel(container, apply_func, cancel_func):
+     container.append(sync_annots)
+     container.append(cb('singleinstance', _('Allow only a single instance of the viewer (needs restart)')))
+     container.append(cb('hide_tooltips', _('Hide mouse-over tooltips in the book text')))
++    container.append(cb('auto_hide_mouse', _('Auto hide the mouse cursor when unused for a few seconds')))
+ 
+     container.appendChild(create_button_box(restore_defaults, apply_func, cancel_func))
+ 
+-- 
+2.28.0
+

@@ -1,0 +1,34 @@
+From 5f7ab6b164e9eb201da93c531dbfa6c40aeaeca9 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Fri, 14 Aug 2020 08:54:45 +0530
+Subject: [PATCH 387/408] brackets for clarity
+
+---
+ src/pyj/read_book/paged_mode.pyj | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/pyj/read_book/paged_mode.pyj b/src/pyj/read_book/paged_mode.pyj
+index 96749bdaa5..ce0591c6b0 100644
+--- a/src/pyj/read_book/paged_mode.pyj
++++ b/src/pyj/read_book/paged_mode.pyj
+@@ -203,7 +203,7 @@ def layout(is_single_page, on_resize):
+         handle_rtl_body(body_style)
+         # Check if the current document is a full screen layout like
+         # cover, if so we treat it specially.
+-        single_screen = (scroll_viewport.document_block_size() < scroll_viewport.block_size() + 75)
++        single_screen = scroll_viewport.document_block_size() < (scroll_viewport.block_size() + 75)
+         first_layout = True
+         svgs = document.getElementsByTagName('svg')
+         has_svg = svgs.length > 0
+@@ -230,7 +230,7 @@ def layout(is_single_page, on_resize):
+     # Calculate the column size so that cols_per_screen columns fit exactly in
+     # the window inline dimension, with their separator margins
+     wi = col_size = screen_inline = scroll_viewport.inline_size()
+-    margin_size = opts.margin_left + opts.margin_right if scroll_viewport.horizontal_writing_mode else opts.margin_top + opts.margin_bottom
++    margin_size = (opts.margin_left + opts.margin_right) if scroll_viewport.horizontal_writing_mode else (opts.margin_top + opts.margin_bottom)
+     gap = margin_size
+     if n > 1:
+         # Adjust the margin so that the window inline dimension satisfies
+-- 
+2.28.0
+

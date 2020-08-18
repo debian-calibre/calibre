@@ -1,0 +1,48 @@
+From 75a12d7661247e3fa53b401762896a60521d5700 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 13 Aug 2020 09:21:40 +0530
+Subject: [PATCH 375/408] Allow for offsets larger than text length in
+ decode_with_range()
+
+This can happen if the book is edited, for example. And rather than fail
+in such cases, better to use a close but not perfect match.
+---
+ src/pyj/read_book/cfi.pyj | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/src/pyj/read_book/cfi.pyj b/src/pyj/read_book/cfi.pyj
+index 54214787bb..461577f0ac 100644
+--- a/src/pyj/read_book/cfi.pyj
++++ b/src/pyj/read_book/cfi.pyj
+@@ -550,14 +550,14 @@ def at(x, y, doc):  # {{{
+     return encode(doc, target, offset, tail)
+ # }}}
+ 
+-# Like decode(), but tries to construct a range from the CFI's character offset and include it in
+-# the return value.
++# Wrapper for decode(), tries to construct a range from the CFI's
++# character offset and include it in the return value.
+ #
+ # If the CFI defines a character offset, there are three cases:
+ # Case 1. If the offset is 0 and the text node's length is zero,
+ #         the range is set to None. This is a failure case, but
+ #         later code will try to use the node's bounding box.
+-# Case 2. Otherwise, if the offset is equal to the length of the range,
++# Case 2. Otherwise, if the offset is >= the length of the range,
+ #         then a range from the previous to the last character is created,
+ #         and use_range_end_pos is set. This is the special case.
+ # Case 3. Otherwise, the range is set start at the offset and end at one character past the offset.
+@@ -596,8 +596,8 @@ def decode_with_range(cfi, doc):  # {{{
+             # Check for special case: End of range offset, after the last character
+             offset = decoded.offset
+             position_at_end_of_range = False
+-            if offset == node_len:
+-                offset -= 1
++            if offset >= node_len:
++                offset = node_len - 1
+                 position_at_end_of_range = True
+ 
+             range_.setStart(node, offset)
+-- 
+2.28.0
+

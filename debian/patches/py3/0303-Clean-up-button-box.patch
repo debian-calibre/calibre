@@ -1,0 +1,78 @@
+From 3e89e98c1a5b8111d53bb0aff2dd57bccc89080a Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Tue, 4 Aug 2020 13:08:31 +0530
+Subject: [PATCH 303/408] Clean up button box
+
+---
+ src/pyj/read_book/highlights.pyj    | 27 +++++++++++++--------------
+ src/pyj/read_book/selection_bar.pyj |  2 +-
+ 2 files changed, 14 insertions(+), 15 deletions(-)
+
+diff --git a/src/pyj/read_book/highlights.pyj b/src/pyj/read_book/highlights.pyj
+index cd35f6f4f4..c73e13c935 100644
+--- a/src/pyj/read_book/highlights.pyj
++++ b/src/pyj/read_book/highlights.pyj
+@@ -137,6 +137,13 @@ class EditNotesAndColors:  # {{{
+ 
+         remove_button = create_button(_('Remove style'), 'trash', self.remove_custom_color, _('Remove this custom highlight style'))
+         remove_button.classList.add('remove-custom-color')
++        apply_button = create_button(
++            _('Apply') if self.annot_id else _('Create'),
++            'check', finish,
++            (_('Finish editing highlight') if self.annot_id else _('Create highlight')) + ' [Ctrl+Enter]',
++            True
++        )
++        apply_button.style.marginLeft = apply_button.style.marginTop = 'auto'
+ 
+         c = E.div(
+             style=f'background: {get_color("window-background")}; margin: auto; text-align: center; padding: 1ex;',
+@@ -154,18 +161,11 @@ class EditNotesAndColors:  # {{{
+                 style=f'display: flex; flex-wrap: wrap; width: 100%; justify-content: center',
+             ),
+             E.div(
+-                style='width: 100%; display: flex; justify-content: space-between',
+-                E.div(
+-                    create_button(_('Cancel'), 'close', abort, _('Abort') + ' [Esc]'),
+-                    E.span('\xa0'),
+-                    remove_button
+-                ),
+-                create_button(
+-                    _('Apply') if self.annot_id else _('Create'),
+-                    'check', finish,
+-                    (_('Finish editing highlight') if self.annot_id else _('Create highlight')) + ' [Ctrl+Enter]', True),
+-            )
+-
++                style='width: 100%; display: flex; flex-wrap: wrap',
++                create_button(_('Cancel'), 'close', abort, _('Abort') + ' [Esc]'),
++                E.span('\xa0'),
++                remove_button, apply_button
++            ),
+         )
+         self.container_id = c.id
+         container.appendChild(c)
+@@ -186,8 +186,7 @@ class EditNotesAndColors:  # {{{
+     def set_visibility_of_remove_button(self):
+         c = self.container
+         item = c.querySelector('.current-swatch.custom-style')
+-        visibility = 'unset' if item else 'hidden'
+-        c.querySelector('.remove-custom-color').style.visibility = visibility
++        c.querySelector('.remove-custom-color').style.display = 'block' if item else 'none'
+ 
+     def add_color(self, hs, at_start):
+         if self.seen_colors[hs.key]:
+diff --git a/src/pyj/read_book/selection_bar.pyj b/src/pyj/read_book/selection_bar.pyj
+index 87d7211aa3..3fd00cc64a 100644
+--- a/src/pyj/read_book/selection_bar.pyj
++++ b/src/pyj/read_book/selection_bar.pyj
+@@ -743,7 +743,7 @@ class SelectionBar:
+                     _('Failed to apply highlighting, try adjusting extent of highlight')
+                 )
+             self.annotations_manager.add_highlight(msg, self.current_highlight_style.style, notes)
+-        if msg.type is 'edit-highlight':
++        elif msg.type is 'edit-highlight':
+             if self.state is WAITING:
+                 self.create_highlight()
+         else:
+-- 
+2.28.0
+

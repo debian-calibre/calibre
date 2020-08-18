@@ -1,0 +1,41 @@
+From dc6b7c2342954efce584dc2771e7aad08e4bc84c Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 13 Aug 2020 13:54:48 +0530
+Subject: [PATCH 379/408] Adjust limits used for at_current() loop
+
+---
+ src/pyj/read_book/cfi.pyj | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
+
+diff --git a/src/pyj/read_book/cfi.pyj b/src/pyj/read_book/cfi.pyj
+index 02d60d64b1..c0f6c8ad46 100644
+--- a/src/pyj/read_book/cfi.pyj
++++ b/src/pyj/read_book/cfi.pyj
+@@ -821,20 +821,16 @@ def at_point(x, y):  # {{{
+ # }}}
+ 
+ def at_current():  # {{{
+-    wini, winb = scroll_viewport.inline_size(), scroll_viewport.block_size()
+-
+-    # We subtract one because the the actual position query for CFI elements is relative to the
++    # We subtract one because the actual position query for CFI elements is relative to the
+     # viewport, and the viewport coordinates actually go from 0 to the size - 1.
+     # If we don't do this, the first line of queries will always fail in those cases where we
+     # start at the right of the viewport because they'll be outside the viewport
+-    wini -= 1
+-    winb -= 1
++    wini, winb = scroll_viewport.inline_size() - 1, scroll_viewport.block_size() - 1
+ 
+-    # Don't let the deltas go below 10 or above 30, to prevent perverse cases where
++    # Don't let the deltas go too small or too large, to prevent perverse cases where
+     # we don't loop at all, loop too many times, or skip elements because we're
+     # looping too fast.
+-    deltai = min(max(Math.ceil(rem_size() / 2), 5), 30)
+-    deltab = min(max(Math.ceil(rem_size() / 2), 5), 30)
++    deltai = deltab = max(8, min(Math.ceil(rem_size() / 2), 32))
+ 
+     # i.e. English, Hebrew:
+     if scroll_viewport.horizontal_writing_mode:
+-- 
+2.28.0
+

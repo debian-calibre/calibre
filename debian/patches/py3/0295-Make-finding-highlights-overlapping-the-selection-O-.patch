@@ -1,0 +1,61 @@
+From d1d63c669b0e83c008acfbeb7de254e2f0ec96b7 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Mon, 3 Aug 2020 19:22:03 +0530
+Subject: [PATCH 295/408] Make finding highlights overlapping the selection
+ O(n) in the size of the selection rather than the number of existing
+ highlights
+
+---
+ src/pyj/range_utils.pyj | 30 +++++++++++++++++++++++-------
+ 1 file changed, 23 insertions(+), 7 deletions(-)
+
+diff --git a/src/pyj/range_utils.pyj b/src/pyj/range_utils.pyj
+index 4676327f42..d4ffd48131 100644
+--- a/src/pyj/range_utils.pyj
++++ b/src/pyj/range_utils.pyj
+@@ -28,6 +28,26 @@ def text_nodes_in_range(r):
+     return ans
+ 
+ 
++def first_annot_in_range(r, annot_id_uuid_map):
++    parent = r.commonAncestorContainer
++    doc = parent.ownerDocument or document
++    iterator = doc.createNodeIterator(parent)
++    in_range = False
++    while True:
++        node = iterator.nextNode()
++        if not node:
++            break
++        if not in_range and node.isSameNode(r.startContainer):
++            in_range = True
++        if in_range:
++            if node.dataset and node.dataset.calibreRangeWrapper:
++                annot_id = annot_id_uuid_map[node.dataset.calibreRangeWrapper]
++                if annot_id:
++                    return annot_id
++            if node.isSameNode(r.endContainer):
++                break
++
++
+ def remove(node):
+     if node.parentNode:
+         node.parentNode.removeChild(node)
+@@ -174,12 +194,8 @@ def highlight_associated_with_selection(sel, annot_id_uuid_map):
+         if annot_id:
+             return annot_id
+ 
+-        all_wrappers = document.querySelectorAll('span[data-calibre-range-wrapper]')
+         for v'var i = 0; i < sel.rangeCount; i++':
+             r = sel.getRangeAt(i)
+-            for v'var x = 0; x < all_wrappers.length; x++':
+-                wrapper = all_wrappers[x]
+-                if r.intersectsNode(wrapper):
+-                    annot_id = annot_id_uuid_map[wrapper.dataset.calibreRangeWrapper]
+-                    if annot_id:
+-                        return annot_id
++            annot_id = first_annot_in_range(r, annot_id_uuid_map)
++            if annot_id:
++                return annot_id
+-- 
+2.28.0
+

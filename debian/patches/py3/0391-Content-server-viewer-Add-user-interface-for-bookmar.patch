@@ -1,0 +1,291 @@
+From af37e523b64922eeb43da339b62b4bbd9aad8daf Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Sun, 16 Aug 2020 09:04:58 +0530
+Subject: [PATCH 391/408] Content server viewer: Add user interface for
+ bookmarking
+
+---
+ src/pyj/read_book/annotations.pyj | 35 +++++++++++++++++++++
+ src/pyj/read_book/bookmarks.pyj   | 51 +++++++++++++++++++++++++++++++
+ src/pyj/read_book/overlay.pyj     |  8 +++--
+ src/pyj/read_book/shortcuts.pyj   | 24 +++++++--------
+ src/pyj/read_book/ui.pyj          | 10 ++++--
+ src/pyj/read_book/view.pyj        | 14 +++++++--
+ 6 files changed, 124 insertions(+), 18 deletions(-)
+ create mode 100644 src/pyj/read_book/bookmarks.pyj
+
+diff --git a/src/pyj/read_book/annotations.pyj b/src/pyj/read_book/annotations.pyj
+index baed12a360..26febdb198 100644
+--- a/src/pyj/read_book/annotations.pyj
++++ b/src/pyj/read_book/annotations.pyj
+@@ -2,6 +2,7 @@
+ # License: GPL v3 Copyright: 2020, Kovid Goyal <kovid at kovidgoyal.net>
+ from __python__ import bound_methods, hash_literals
+ 
++from gettext import gettext as _
+ from read_book.cfi import create_cfi_cmp, cfi_sort_key
+ from read_book.globals import ui_operations
+ 
+@@ -85,6 +86,7 @@ def merge_annotation_maps(a, b):
+         b_items = b[field] or v'[]'
+         if not a_items.length:
+             ans[field] = b_items
++            updated = True
+             continue
+         if not b_items.length:
+             ans[field] = a_items
+@@ -102,6 +104,39 @@ class AnnotationsManager:  # {{{
+     def __init__(self, view):
+         self.view = view
+         self.set_highlights()
++        self.set_bookmarks()
++
++    def set_bookmarks(self, bookmarks):
++        bookmarks = bookmarks or v'[]'
++        self.bookmarks = list(bookmarks)
++
++    def all_bookmarks(self):
++        return self.bookmarks
++
++    def add_bookmark(self, title, cfi):
++        if not title or not cfi:
++            return
++        self.bookmarks = [b for b in self.bookmarks if b.title is not title]
++        self.bookmarks.push({
++            'type': 'bookmark',
++            'timestamp': Date().toISOString(),
++            'pos_type': 'epubcfi',
++            'pos': cfi,
++            'title': title,
++        })
++        sort_annot_list(self.bookmarks, bookmark_get_cfi)
++        if ui_operations.bookmarks_changed:
++            ui_operations.bookmarks_changed(self.bookmarks.as_array())
++
++    def default_bookmark_title(self):
++        all_titles = {bm.title:True for bm in self.bookmarks if not bm.removed}
++        base_default_title = _('Bookmark')
++        c = 0
++        while True:
++            c += 1
++            default_title = f'{base_default_title} #{c}'
++            if not all_titles[default_title]:
++                return default_title
+ 
+     def set_highlights(self, highlights):
+         highlights = highlights or v'[]'
+diff --git a/src/pyj/read_book/bookmarks.pyj b/src/pyj/read_book/bookmarks.pyj
+new file mode 100644
+index 0000000000..53a4b13389
+--- /dev/null
++++ b/src/pyj/read_book/bookmarks.pyj
+@@ -0,0 +1,51 @@
++# vim:fileencoding=utf-8
++# License: GPL v3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
++from __python__ import bound_methods, hash_literals
++
++from elementmaker import E
++from gettext import gettext as _
++
++from book_list.item_list import build_list, create_item
++from dom import ensure_id, set_css
++from widgets import create_button
++
++
++def goto_cfi(cfi, view):
++    view.goto_cfi(cfi)
++
++
++def create_bookmarks_list(annotations_manager, onclick):
++    bookmarks = sorted(annotations_manager.all_bookmarks(), key=def(x): return x.title.toLowerCase();)
++    items = []
++    for bookmark in bookmarks:
++        if not bookmark.removed:
++            items.push(create_item(bookmark.title, data=bookmark.pos, action=onclick.bind(None, goto_cfi.bind(None, bookmark.pos))))
++    c = E.div(style='margin-top: 1ex')
++    build_list(c, items)
++    return c
++
++
++def create_new_bookmark(annotations_manager, data):
++    title = window.prompt(_('Enter title for bookmark:'), data.selected_text or annotations_manager.default_bookmark_title())
++    if not title:
++        return False
++    cfi = data.cfi
++    if data.selection_bounds?.start:
++        cfi = data.selection_bounds.start
++    annotations_manager.add_bookmark(title, cfi)
++    return True
++
++
++def new_bookmark(container_id, annotations_manager, data, onclick, ev):
++    if create_new_bookmark(annotations_manager, data):
++        onclick(def(): pass;)
++
++
++def create_bookmarks_panel(annotations_manager, data, book, container, onclick):
++    set_css(container, display='flex', flex_direction='column')
++    container.appendChild(E.div(style='margin: 1rem'))
++    container = container.lastChild
++    container_id = ensure_id(container)
++    button = create_button(_('New bookmark'), 'plus', new_bookmark.bind(None, container_id, annotations_manager, data, onclick))
++    container.appendChild(E.div(button))
++    container.appendChild(E.div(create_bookmarks_list(annotations_manager, onclick)))
+diff --git a/src/pyj/read_book/overlay.pyj b/src/pyj/read_book/overlay.pyj
+index be94ed7dc5..9f2534fe96 100644
+--- a/src/pyj/read_book/overlay.pyj
++++ b/src/pyj/read_book/overlay.pyj
+@@ -18,6 +18,7 @@ from dom import (
+     add_extra_css, build_rule, clear, ensure_id, set_css, svgicon, unique_id
+ )
+ from modals import error_dialog
++from read_book.bookmarks import create_bookmarks_panel
+ from read_book.globals import runtime, ui_operations
+ from read_book.goto import create_goto_panel, create_location_overlay
+ from read_book.open_book import create_open_book
+@@ -271,8 +272,7 @@ class MainOverlay:  # {{{
+         bookmarks_action = ac(_('Bookmarks'), None, self.overlay.show_bookmarks, 'bookmark')
+         toc_actions = E.ul(ac(_('Table of Contents'), None, self.overlay.show_toc, 'toc'))
+ 
+-        if runtime.is_standalone_viewer:
+-            toc_actions.appendChild(bookmarks_action)
++        toc_actions.appendChild(bookmarks_action)
+         toc_actions.appendChild(ac(_('Reference mode'), _('Toggle the Reference mode'), self.overlay.toggle_reference_mode, 'reference-mode'))
+ 
+         actions_div = E.div( # actions
+@@ -665,6 +665,10 @@ class Overlay:
+         if runtime.is_standalone_viewer:
+             ui_operations.toggle_bookmarks()
+             return
++        def do_it(action, data):
++            self.panels.push(TOCOverlay(self, create_bookmarks_panel.bind(None, self.view.annotations_manager, data), _('Bookmarks')))
++            self.show_current_panel()
++        self.view.get_current_cfi('show-bookmarks', do_it)
+ 
+     def show_goto(self):
+         self.hide_current_panel()
+diff --git a/src/pyj/read_book/shortcuts.pyj b/src/pyj/read_book/shortcuts.pyj
+index fa943efaad..dd7e0a41b2 100644
+--- a/src/pyj/read_book/shortcuts.pyj
++++ b/src/pyj/read_book/shortcuts.pyj
+@@ -262,6 +262,18 @@ def shortcuts_definition():
+         _('Toggle the Reference mode')
+     ),
+ 
++    'toggle_bookmarks': desc(
++        v"['Ctrl+b']",
++        'ui',
++        _('Show/hide bookmarks'),
++    ),
++
++    'new_bookmark': desc(
++        v"['Ctrl+Alt+b']",
++        'ui',
++        _('Create a new bookmark'),
++    ),
++
+     'metadata': desc(
+         v"['Ctrl+n', 'Ctrl+e']",
+         'ui',
+@@ -346,18 +358,6 @@ def shortcuts_group_desc():
+ def add_standalone_viewer_shortcuts():
+     ismacos = 'macos' in window.navigator.userAgent
+     sc = shortcuts_definition()
+-    sc['toggle_bookmarks'] = desc(
+-        v"['Ctrl+b']",
+-        'ui',
+-        _('Show/hide bookmarks'),
+-    )
+-
+-    sc['new_bookmark'] = desc(
+-        v"['Ctrl+Alt+b']",
+-        'ui',
+-        _('Create a new bookmark'),
+-    )
+-
+     sc['toggle_inspector'] = desc(
+         v"['Ctrl+i']",
+         'ui',
+diff --git a/src/pyj/read_book/ui.pyj b/src/pyj/read_book/ui.pyj
+index c711c1ceda..131916deb7 100644
+--- a/src/pyj/read_book/ui.pyj
++++ b/src/pyj/read_book/ui.pyj
+@@ -76,6 +76,7 @@ class ReadUI:
+         ui_operations.toggle_toc = self.toggle_toc.bind(self)
+         ui_operations.toggle_full_screen = self.toggle_full_screen.bind(self)
+         ui_operations.highlights_changed = self.highlights_changed.bind(self)
++        ui_operations.bookmarks_changed = self.bookmarks_changed.bind(self)
+         ui_operations.annotations_synced = self.annotations_synced.bind(self)
+         ui_operations.wait_for_messages_from = self.wait_for_messages_from.bind(self)
+         ui_operations.stop_waiting_for_messages_from = self.stop_waiting_for_messages_from.bind(self)
+@@ -209,14 +210,19 @@ class ReadUI:
+     def update_color_scheme(self):
+         self.view.update_color_scheme()
+ 
+-    def highlights_changed(self, highlights):
+-        amap = {'highlight': highlights}
++    def annots_changed(self, amap):
+         library_id = self.base_url_data.library_id
+         book_id = self.base_url_data.book_id
+         fmt = self.base_url_data.fmt
+         self.db.update_annotations_data_from_key(library_id, book_id, fmt, {'annotations_map': amap})
+         ajax_send(f'book-update-annotations/{library_id}/{book_id}/{fmt}', amap, def (): pass;)
+ 
++    def highlights_changed(self, highlights):
++        self.annots_changed({'highlight': highlights})
++
++    def bookmarks_changed(self, bookmarks):
++        self.annots_changed({'bookmark': bookmarks})
++
+     def annotations_synced(self, amap):
+         library_id = self.base_url_data.library_id
+         book_id = self.base_url_data.book_id
+diff --git a/src/pyj/read_book/view.pyj b/src/pyj/read_book/view.pyj
+index 21cdfa0e87..092b08168f 100644
+--- a/src/pyj/read_book/view.pyj
++++ b/src/pyj/read_book/view.pyj
+@@ -14,6 +14,7 @@ from dom import add_extra_css, build_rule, clear, set_css, svgicon, unique_id
+ from iframe_comm import IframeWrapper
+ from modals import error_dialog, warning_dialog
+ from read_book.annotations import AnnotationsManager
++from read_book.bookmarks import create_new_bookmark
+ from read_book.content_popup import ContentPopupOverlay
+ from read_book.globals import (
+     current_book, rtl_page_progression, runtime, set_current_spine_item,
+@@ -447,7 +448,10 @@ class View:
+         elif data.name is 'toggle_toc':
+             ui_operations.toggle_toc()
+         elif data.name is 'toggle_bookmarks':
+-            ui_operations.toggle_bookmarks()
++            if ui_operations.toggle_bookmarks:
++                ui_operations.toggle_bookmarks()
++            else:
++                self.overlay.show_bookmarks()
+         elif data.name is 'toggle_highlights':
+             ui_operations.toggle_highlights()
+         elif data.name is 'new_bookmark':
+@@ -545,7 +549,12 @@ class View:
+         self.selection_bar.update_position()
+ 
+     def new_bookmark(self):
+-        self.get_current_cfi('new-bookmark', ui_operations.new_bookmark)
++        if ui_operations.new_bookmark:
++            self.get_current_cfi('new-bookmark', ui_operations.new_bookmark)
++        else:
++            self.get_current_cfi('new-bookmark', def (req_id, data):
++                create_new_bookmark(self.annotations_manager, data)
++            )
+ 
+     def update_selection_position(self, data):
+         sel = self.currently_showing.selection
+@@ -833,6 +842,7 @@ class View:
+             else:
+                 if unkey and book.annotations_map[unkey]:
+                     hl = book.annotations_map[unkey].highlight
++                    self.annotations_manager.set_bookmarks(book.annotations_map[unkey].bookmark or v'[]')
+             self.annotations_manager.set_highlights(hl or v'[]')
+             if runtime.is_standalone_viewer:
+                 add_book_to_recently_viewed(book)
+-- 
+2.28.0
+

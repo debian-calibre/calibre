@@ -1,0 +1,47 @@
+From 8d93163ee9b5315386dded93d7890aeefb8aceb6 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Wed, 5 Aug 2020 09:23:14 +0530
+Subject: [PATCH 309/408] DRYer
+
+---
+ src/pyj/read_book/prefs/colors.pyj | 3 +++
+ src/pyj/read_book/view.pyj         | 2 --
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/src/pyj/read_book/prefs/colors.pyj b/src/pyj/read_book/prefs/colors.pyj
+index f3a922ebaa..bd17db19bf 100644
+--- a/src/pyj/read_book/prefs/colors.pyj
++++ b/src/pyj/read_book/prefs/colors.pyj
+@@ -6,6 +6,7 @@ from elementmaker import E
+ from gettext import gettext as _
+ 
+ from book_list.globals import get_session_data
++from book_list.theme import cached_color_to_rgba
+ from dom import (
+     add_extra_css, build_rule, clear, set_css, set_radio_group_value, svgicon,
+     unique_id
+@@ -54,6 +55,8 @@ def resolve_color_scheme(current_color_scheme):
+         for sn in default_color_schemes:
+             ans = default_color_schemes[sn]
+             break
++    rgba = cached_color_to_rgba(ans.background)
++    ans.is_dark_theme = max(rgba[0], rgba[1], rgba[2]) < 115
+     return ans
+ 
+ def change_current_color(ev):
+diff --git a/src/pyj/read_book/view.pyj b/src/pyj/read_book/view.pyj
+index a8199b50c9..94ccd78582 100644
+--- a/src/pyj/read_book/view.pyj
++++ b/src/pyj/read_book/view.pyj
+@@ -752,8 +752,6 @@ class View:
+         # so we dont want the body background color to bleed through
+         iframe.parentNode.style.backgroundColor = ans.background
+         iframe.parentNode.parentNode.style.backgroundColor = ans.background
+-        rgba = cached_color_to_rgba(ans.background)
+-        ans.is_dark_theme = max(rgba[0], rgba[1], rgba[2]) < 115
+         return ans
+ 
+     def on_resize(self):
+-- 
+2.28.0
+

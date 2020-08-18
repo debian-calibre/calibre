@@ -1,0 +1,30 @@
+From b39161886e70b6ccf2e0e48bfdfc9042c2751ef4 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Sat, 8 Aug 2020 11:42:21 +0530
+Subject: [PATCH 345/408] Fix quick highlight icon in preferences not same as
+ in selection bar
+
+---
+ src/pyj/read_book/prefs/selection.pyj | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/src/pyj/read_book/prefs/selection.pyj b/src/pyj/read_book/prefs/selection.pyj
+index 41e7ea9641..8076bc3319 100644
+--- a/src/pyj/read_book/prefs/selection.pyj
++++ b/src/pyj/read_book/prefs/selection.pyj
+@@ -98,7 +98,11 @@ def build_action_table(container, is_current):
+                 E.span(_('Add'), class_='simple-link', onclick=add_action.bind(None, action_name)),
+             )
+         buttons.style.paddingLeft = '2rem'
+-        table.appendChild(E.tr(E.td(style='padding: 1ex', svgicon(ac.icon)), E.td(ac.text), buttons))
++        if ac.icon_function:
++            icon = ac.icon_function('#add8ff')
++        else:
++            icon = svgicon(ac.icon)
++        table.appendChild(E.tr(E.td(style='padding: 1ex', icon), E.td(ac.text), buttons))
+ 
+ 
+ def update_action_tables():
+-- 
+2.28.0
+

@@ -1,0 +1,151 @@
+From 3067b8462a8c5df41f56d5d7196aa57fb2ce9fee Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Wed, 5 Aug 2020 20:02:29 +0530
+Subject: [PATCH 314/408] Allow adding a search in book button to the selection
+ bar
+
+Also have the keyboard shortcuts to run a search work when the selection
+bar is visible.
+---
+ imgsrc/srv/binoculars.svg           |  1 +
+ src/calibre/gui2/viewer/ui.py       | 13 +++++--------
+ src/calibre/gui2/viewer/web_view.py |  4 ++--
+ src/pyj/read_book/selection_bar.pyj |  9 ++++++++-
+ src/pyj/read_book/view.pyj          |  7 +++++--
+ src/pyj/viewer-main.pyj             |  4 ++--
+ 6 files changed, 23 insertions(+), 15 deletions(-)
+ create mode 100644 imgsrc/srv/binoculars.svg
+
+diff --git a/imgsrc/srv/binoculars.svg b/imgsrc/srv/binoculars.svg
+new file mode 100644
+index 0000000000..36fce414f0
+--- /dev/null
++++ b/imgsrc/srv/binoculars.svg
+@@ -0,0 +1 @@
++<svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M704 320v768q0 26-19 45t-45 19v576q0 26-19 45t-45 19h-512q-26 0-45-19t-19-45v-512l249-873q7-23 31-23h424zm320 0v704h-256v-704h256zm768 896v512q0 26-19 45t-45 19h-512q-26 0-45-19t-19-45v-576q-26 0-45-19t-19-45v-768h424q24 0 31 23zm-1056-1184v224h-352v-224q0-14 9-23t23-9h288q14 0 23 9t9 23zm672 0v224h-352v-224q0-14 9-23t23-9h288q14 0 23 9t9 23z"/></svg>
+\ No newline at end of file
+diff --git a/src/calibre/gui2/viewer/ui.py b/src/calibre/gui2/viewer/ui.py
+index d4a7e53796..80cb0374f5 100644
+--- a/src/calibre/gui2/viewer/ui.py
++++ b/src/calibre/gui2/viewer/ui.py
+@@ -290,8 +290,11 @@ class EbookViewer(MainWindow):
+     def toggle_toc(self):
+         self.toc_dock.setVisible(not self.toc_dock.isVisible())
+ 
+-    def show_search(self):
+-        self.web_view.get_current_cfi(self.show_search_with_current_selection)
++    def show_search(self, text):
++        self.search_dock.setVisible(True)
++        self.search_dock.activateWindow()
++        self.search_dock.raise_()
++        self.search_widget.focus_input(text)
+ 
+     def search_results_count_changed(self, num=-1):
+         if num < 0:
+@@ -304,12 +307,6 @@ class EbookViewer(MainWindow):
+             tt = _('Search :: {} matches').format(num)
+         self.search_dock.setWindowTitle(tt)
+ 
+-    def show_search_with_current_selection(self, pos_data):
+-        self.search_dock.setVisible(True)
+-        self.search_dock.activateWindow()
+-        self.search_dock.raise_()
+-        self.search_widget.focus_input(pos_data.get('selected_text'))
+-
+     def start_search(self, search_query):
+         name = self.web_view.current_content_file
+         if name:
+diff --git a/src/calibre/gui2/viewer/web_view.py b/src/calibre/gui2/viewer/web_view.py
+index 6b59864f60..36d82bbab0 100644
+--- a/src/calibre/gui2/viewer/web_view.py
++++ b/src/calibre/gui2/viewer/web_view.py
+@@ -241,7 +241,7 @@ class ViewerBridge(Bridge):
+     new_bookmark = from_js()
+     toggle_inspector = from_js()
+     toggle_lookup = from_js(object)
+-    show_search = from_js()
++    show_search = from_js(object)
+     search_result_not_found = from_js(object)
+     find_next = from_js(object)
+     quit = from_js()
+@@ -431,7 +431,7 @@ class WebView(RestartingWebEngineView):
+     cfi_changed = pyqtSignal(object)
+     reload_book = pyqtSignal()
+     toggle_toc = pyqtSignal()
+-    show_search = pyqtSignal()
++    show_search = pyqtSignal(object)
+     search_result_not_found = pyqtSignal(object)
+     find_next = pyqtSignal(object)
+     toggle_bookmarks = pyqtSignal()
+diff --git a/src/pyj/read_book/selection_bar.pyj b/src/pyj/read_book/selection_bar.pyj
+index f6dadf161e..5f915bb470 100644
+--- a/src/pyj/read_book/selection_bar.pyj
++++ b/src/pyj/read_book/selection_bar.pyj
+@@ -168,7 +168,8 @@ def all_actions():
+             'lookup': a('library', _('Lookup/search selected word'), 'lookup'),
+             'quick_highlight': a('highlight', _('Quick highlight in current color'), 'quick_highlight'),
+             'highlight': a('highlight', _('Highlight selection'), 'create_highlight'),
+-            'search_net': a('search', _('Search for selection on the net'), 'internet_search'),
++            'search': a('search', _('Search for selection in the book'), 'book_search'),
++            'search_net': a('binoculars', _('Search for selection on the net'), 'internet_search'),
+             'remove_highlight': a('trash', _('Remove this highlight'), 'remove_highlight', True),
+             'clear': a('close', _('Clear selection'), 'clear_selection'),
+         }
+@@ -475,6 +476,8 @@ class SelectionBar:
+             self.clear_selection()
+         elif sc_name in ('up', 'down', 'pageup', 'pagedown', 'left', 'right'):
+             self.send_message('trigger-shortcut', name=sc_name)
++        elif sc_name is 'start_search':
++            self.book_search()
+     # }}}
+ 
+     # drag scroll {{{
+@@ -699,6 +702,10 @@ class SelectionBar:
+         else:
+             self.view.overlay.show_word_actions(self.view.currently_showing.selection.text)
+ 
++    def book_search(self):
++        self.view.show_search()
++        self.clear_selection()
++
+     def internet_search(self):
+         text = self.view.currently_showing.selection.text
+         if text:
+diff --git a/src/pyj/read_book/view.pyj b/src/pyj/read_book/view.pyj
+index 0ed8bccb2a..a7239efa44 100644
+--- a/src/pyj/read_book/view.pyj
++++ b/src/pyj/read_book/view.pyj
+@@ -655,10 +655,13 @@ class View:
+ 
+     def show_search(self):
+         self.hide_overlays()
++        text = self.currently_showing.selection.text
+         if runtime.is_standalone_viewer:
+-            ui_operations.show_search()
++            ui_operations.show_search(text or '')
+         else:
+-            self.search_overlay.show()
++            if text:
++                self.search_overlay.set_text(text)
++            self.search_overlay.show(text)
+ 
+     def show_content_popup(self):
+         self.hide_overlays()
+diff --git a/src/pyj/viewer-main.pyj b/src/pyj/viewer-main.pyj
+index 64a45b77cd..f021905480 100644
+--- a/src/pyj/viewer-main.pyj
++++ b/src/pyj/viewer-main.pyj
+@@ -329,8 +329,8 @@ if window is window.top:
+         to_python.toggle_inspector()
+     ui_operations.content_file_changed = def(name):
+         to_python.content_file_changed(name)
+-    ui_operations.show_search = def():
+-        to_python.show_search()
++    ui_operations.show_search = def(text):
++        to_python.show_search(text)
+     ui_operations.find_next = def(previous):
+         to_python.find_next(previous)
+     ui_operations.reset_interface = def():
+-- 
+2.28.0
+

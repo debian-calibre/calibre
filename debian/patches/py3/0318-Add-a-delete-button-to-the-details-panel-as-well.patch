@@ -1,0 +1,77 @@
+From bbc9a90a29e327db004536fd6fb71ad0bb0b7708 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Wed, 5 Aug 2020 23:37:43 +0530
+Subject: [PATCH 318/408] Add a delete button to the details panel as well
+
+---
+ src/calibre/gui2/library/annotations.py | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/src/calibre/gui2/library/annotations.py b/src/calibre/gui2/library/annotations.py
+index a88f1a6a59..de7d1d46f7 100644
+--- a/src/calibre/gui2/library/annotations.py
++++ b/src/calibre/gui2/library/annotations.py
+@@ -348,6 +348,7 @@ class DetailsPanel(QWidget):
+ 
+     open_annotation = pyqtSignal(object, object, object)
+     show_book = pyqtSignal(object, object)
++    delete_annotation = pyqtSignal(object)
+ 
+     def __init__(self, parent):
+         QWidget.__init__(self, parent)
+@@ -368,6 +369,13 @@ class DetailsPanel(QWidget):
+         lb.clicked.connect(self.show_in_library)
+         h.addWidget(lb)
+ 
++        h = QHBoxLayout()
++        l.addLayout(h)
++        self.delete_button = ob = QPushButton(QIcon(I('trash.png')), _('Delete'), self)
++        ob.setToolTip(_('Delete this annotation'))
++        ob.clicked.connect(self.delete_result)
++        h.addWidget(ob)
++
+         self.show_result(None)
+ 
+     def open_result(self):
+@@ -375,6 +383,11 @@ class DetailsPanel(QWidget):
+             r = self.current_result
+             self.open_annotation.emit(r['book_id'], r['format'], r['annotation'])
+ 
++    def delete_result(self):
++        if self.current_result is not None:
++            r = self.current_result
++            self.delete_annotation.emit(r['id'])
++
+     def show_in_library(self):
+         if self.current_result is not None:
+             self.show_book.emit(self.current_result['book_id'], self.current_result['format'])
+@@ -495,6 +508,7 @@ class AnnotationsBrowser(Dialog):
+         s.addWidget(dp)
+         dp.open_annotation.connect(self.do_open_annotation)
+         dp.show_book.connect(self.show_book)
++        dp.delete_annotation.connect(self.delete_annotation)
+         bp.current_result_changed.connect(dp.show_result)
+ 
+         h = QHBoxLayout()
+@@ -510,6 +524,8 @@ class AnnotationsBrowser(Dialog):
+         if not ids:
+             return error_dialog(self, _('No selected annotations'), _(
+                 'No annotations have been selected'), show=True)
++
++    def delete_annotations(self, ids):
+         if question_dialog(self, _('Are you sure?'), ngettext(
+             'Are you sure you want to <b>permanently</b> delete this annotation?',
+             'Are you sure you want to <b>permanently</b> delete these {} annotations?',
+@@ -519,6 +535,9 @@ class AnnotationsBrowser(Dialog):
+             db.delete_annotations(ids)
+             self.browse_panel.refresh()
+ 
++    def delete_annotation(self, annot_id):
++        self.delete_annotations(frozenset({annot_id}))
++
+     def show_dialog(self):
+         if self.parent() is None:
+             self.browse_panel.effective_query_changed()
+-- 
+2.28.0
+

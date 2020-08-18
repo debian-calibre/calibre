@@ -1,0 +1,31 @@
+From 137f4f98e00e1204b52a6cf81dacec0f65ce6d12 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 6 Aug 2020 11:33:34 +0530
+Subject: [PATCH 321/408] Preserve scrollbar value
+
+---
+ src/calibre/gui2/library/annotations.py | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/src/calibre/gui2/library/annotations.py b/src/calibre/gui2/library/annotations.py
+index d5d66186a5..90ee7f5d8f 100644
+--- a/src/calibre/gui2/library/annotations.py
++++ b/src/calibre/gui2/library/annotations.py
+@@ -318,8 +318,14 @@ class BrowsePanel(QWidget):
+         self.do_find()
+ 
+     def refresh(self):
++        vbar = self.results_list.verticalScrollBar()
++        if vbar:
++            vpos = vbar.value()
+         self.current_query = None
+         self.do_find()
++        vbar = self.results_list.verticalScrollBar()
++        if vbar:
++            vbar.setValue(vpos)
+ 
+     def show_next(self):
+         self.do_find()
+-- 
+2.28.0
+

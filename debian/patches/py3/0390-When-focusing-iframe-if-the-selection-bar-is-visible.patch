@@ -1,0 +1,69 @@
+From bdfafde420e45a9c60f4caa8f3bcfc56870a4e06 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Sat, 15 Aug 2020 10:15:59 +0530
+Subject: [PATCH 390/408] When focusing iframe if the selection bar is visible
+ focus that instead
+
+---
+ src/pyj/read_book/selection_bar.pyj | 9 ++++++---
+ src/pyj/read_book/view.pyj          | 5 ++++-
+ 2 files changed, 10 insertions(+), 4 deletions(-)
+
+diff --git a/src/pyj/read_book/selection_bar.pyj b/src/pyj/read_book/selection_bar.pyj
+index 90f8c7e774..f013b89bc9 100644
+--- a/src/pyj/read_book/selection_bar.pyj
++++ b/src/pyj/read_book/selection_bar.pyj
+@@ -546,12 +546,15 @@ class SelectionBar:
+             if sd.get('show_selection_bar'):
+                 self.container.style.display = 'block'
+                 self.state = WAITING
+-                self.container.focus()
++                self.focus()
+ 
+     @property
+     def is_visible(self):
+         return self.container.style.display is not 'none'
+ 
++    def focus(self):
++        self.container.focus()
++
+     def update_position(self, dragged_handle):
+         container = self.container
+         cs = self.view.currently_showing.selection
+@@ -718,7 +721,7 @@ class SelectionBar:
+         if not apply_changes:
+             self.state = WAITING
+             self.update_position()
+-            self.container.focus()
++            self.focus()
+             return
+         ed = self.current_editor
+         self.current_editor = None
+@@ -731,7 +734,7 @@ class SelectionBar:
+         self.state = WAITING
+         self.update_position()
+         get_session_data().set('highlight_style', self.current_highlight_style.style)
+-        self.container.focus()
++        self.focus()
+ 
+     def editor_container_clicked(self, ev):
+         ev.stopPropagation(), ev.preventDefault()
+diff --git a/src/pyj/read_book/view.pyj b/src/pyj/read_book/view.pyj
+index b133893c0c..21cdfa0e87 100644
+--- a/src/pyj/read_book/view.pyj
++++ b/src/pyj/read_book/view.pyj
+@@ -630,7 +630,10 @@ class View:
+         self.focus_iframe()
+ 
+     def focus_iframe(self):
+-        self.iframe.contentWindow.focus()
++        if self.selection_bar.is_visible:
++            self.selection_bar.focus()
++        else:
++            self.iframe.contentWindow.focus()
+ 
+     def show_chrome(self, data):
+         elements = {}
+-- 
+2.28.0
+

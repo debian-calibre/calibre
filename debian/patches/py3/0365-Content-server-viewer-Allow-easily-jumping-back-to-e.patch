@@ -1,0 +1,122 @@
+From 04f8f6bad36efcfb0033538a439ce09ea5690126 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Mon, 10 Aug 2020 22:08:31 +0530
+Subject: [PATCH 365/408] Content server viewer: Allow easily jumping back to
+ either the book details page or the book list page for the current book.
+ Fixes #1890483
+
+---
+ src/pyj/read_book/goto.pyj    |  6 +++++-
+ src/pyj/read_book/overlay.pyj | 15 +++++++++++----
+ src/pyj/read_book/view.pyj    |  8 ++++++++
+ 3 files changed, 24 insertions(+), 5 deletions(-)
+
+diff --git a/src/pyj/read_book/goto.pyj b/src/pyj/read_book/goto.pyj
+index 2bb6fdda63..d686bc12b6 100644
+--- a/src/pyj/read_book/goto.pyj
++++ b/src/pyj/read_book/goto.pyj
+@@ -8,7 +8,7 @@ from gettext import gettext as _
+ from book_list.item_list import build_list, create_item
+ from dom import ensure_id, set_css
+ from modals import error_dialog
+-from read_book.globals import current_book, ui_operations
++from read_book.globals import current_book, runtime, ui_operations
+ from read_book.prefs.head_foot import format_pos
+ from read_book.toc import get_border_nodes, get_toc_maps
+ from widgets import create_button
+@@ -33,6 +33,10 @@ def create_goto_list(onclick, current_position_data):
+     items.push(create_item(_('Metadata'), subtitle=_('Details about this book'), action=onclick.bind(None, def(view):
+         view.overlay.show_metadata()
+     )))
++    if not runtime.is_standalone_viewer:
++        items.push(create_item(_('Book page in library'), subtitle=_('The page for this book in the calibre library'), action=onclick.bind(None, def(view):
++            view.open_book_page()
++        )))
+     items.push(create_item(_('Location'), subtitle=location_text, action=onclick.bind(None, def(view): view.overlay.show_ask_for_location();)))
+     for l in landmarks:
+         items.push(create_item(l.title, action=onclick.bind(None, l.dest, l.frag)))
+diff --git a/src/pyj/read_book/overlay.pyj b/src/pyj/read_book/overlay.pyj
+index 2acfaa4b7a..5d2489c240 100644
+--- a/src/pyj/read_book/overlay.pyj
++++ b/src/pyj/read_book/overlay.pyj
+@@ -13,7 +13,7 @@ from book_list.library_data import (
+ )
+ from book_list.router import home
+ from book_list.theme import get_color
+-from book_list.ui import query_as_href
++from book_list.ui import query_as_href, show_panel
+ from dom import add_extra_css, build_rule, clear, set_css, svgicon, unique_id
+ from modals import error_dialog
+ from read_book.globals import runtime, ui_operations
+@@ -255,18 +255,16 @@ class MainOverlay:  # {{{
+         sync_action = ac(_('Sync'), _('Get last read position and annotations from the server'), self.overlay.sync_book, 'cloud-download')
+         delete_action = ac(_('Delete'), _('Delete this book from local storage'), self.overlay.delete_book, 'trash')
+         reload_action = ac(_('Reload'), _('Reload this book from the {}').format( _('computer') if runtime.is_standalone_viewer else _('server')), self.overlay.reload_book, 'refresh')
+-        home_action = ac(_('Home'), _('Return to the home page'), def(): home();, 'home')
+         back_action = ac(_('Back'), None, self.back, 'arrow-left')
+         forward_action = ac(_('Forward'), None, self.forward, 'arrow-right')
++        nav_actions = E.ul(back_action, forward_action)
+         if runtime.is_standalone_viewer:
+             reload_actions = E.ul(
+                 ac(_('Open book'), _('Open a book'), self.overlay.open_book, 'book'),
+                 reload_action
+             )
+-            nav_actions = E.ul(back_action, forward_action)
+         else:
+             reload_actions = E.ul(sync_action, delete_action, reload_action)
+-            nav_actions = E.ul(home_action, back_action, forward_action)
+ 
+         bookmarks_action = ac(_('Bookmarks'), None, self.overlay.show_bookmarks, 'bookmark')
+         toc_actions = E.ul(ac(_('Table of Contents'), None, self.overlay.show_toc, 'toc'))
+@@ -294,6 +292,10 @@ class MainOverlay:  # {{{
+ 
+             class_=MAIN_OVERLAY_ACTIONS_CLASS
+         )
++        if not runtime.is_standalone_viewer:
++            home_action = ac(_('Home'), _('Return to the home page'), def(): home();, 'home')
++            library_action = ac(_('Library'), _('Return to the library page'), self.overlay.show_library, 'library')
++            actions_div.insertBefore(E.ul(home_action, library_action), actions_div.firstChild)
+         full_screen_actions = []
+         if runtime.is_standalone_viewer:
+             text = _('Exit full screen') if runtime.viewer_in_full_screen else _('Enter full screen')
+@@ -742,6 +744,11 @@ class Overlay:
+         self.panels.push(PrefsOverlay(self))
+         self.show_current_panel()
+ 
++    def show_library(self):
++        self.hide_current_panel()
++        book = self.view.book
++        show_panel('book_list', {'library_id': book.key[0], 'book_id': book.key[1] + ''}, replace=False)
++
+     def show_font_size_chooser(self):
+         self.hide_current_panel()
+         self.panels.push(FontSizeOverlay(self))
+diff --git a/src/pyj/read_book/view.pyj b/src/pyj/read_book/view.pyj
+index 53b3fb2094..3f07b6b5db 100644
+--- a/src/pyj/read_book/view.pyj
++++ b/src/pyj/read_book/view.pyj
+@@ -9,6 +9,7 @@ import read_book.iframe  # noqa
+ from ajax import ajax_send
+ from book_list.globals import get_session_data
+ from book_list.theme import cached_color_to_rgba, get_color, set_ui_colors
++from book_list.ui import query_as_href
+ from dom import add_extra_css, build_rule, clear, set_css, svgicon, unique_id
+ from iframe_comm import IframeWrapper
+ from modals import error_dialog, warning_dialog
+@@ -798,6 +799,13 @@ class View:
+                 cfi =  '/' + rest
+         return name, cfi
+ 
++    def open_book_page(self):
++        # Open the page for the current book in a new tab
++        if self.book and self.book.key:
++            window.open(query_as_href({
++                'library_id': self.book.key[0], 'book_id': self.book.key[1] + '', 'close_action': 'book_list',
++            }, 'book_details'))
++
+     def display_book(self, book, initial_position, is_redisplay):
+         self.hide_overlays()
+         self.iframe.focus()
+-- 
+2.28.0
+
