@@ -1,0 +1,26 @@
+From 8b1a72a4bf66c8eb59b5454714b515b26268363f Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Wed, 19 Aug 2020 08:46:31 +0530
+Subject: [PATCH 413/416] Fix building of certgen module with openssl 1.1.1 on
+ windows
+
+---
+ setup/extensions.json | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/setup/extensions.json b/setup/extensions.json
+index bc802d9565..9b6ceec152 100644
+--- a/setup/extensions.json
++++ b/setup/extensions.json
+@@ -32,7 +32,7 @@
+         "name": "certgen",
+         "sources": "calibre/utils/certgen.c",
+         "libraries": "crypto",
+-        "windows_libraries": "libeay32",
++        "windows_libraries": "libcrypto",
+         "inc_dirs": "!openssl_inc_dirs",
+         "lib_dirs": "!openssl_lib_dirs"
+     },
+-- 
+2.28.0
+

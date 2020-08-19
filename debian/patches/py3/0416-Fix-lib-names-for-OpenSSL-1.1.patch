@@ -1,0 +1,39 @@
+From 3c61f40cac3a8efb1fc85468eac79562155c0da7 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Wed, 19 Aug 2020 11:44:00 +0530
+Subject: [PATCH 416/416] Fix lib names for OpenSSL 1.1
+
+---
+ bypy/linux/__main__.py | 2 +-
+ bypy/macos/__main__.py | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/bypy/linux/__main__.py b/bypy/linux/__main__.py
+index 14874815fa..f78397f902 100644
+--- a/bypy/linux/__main__.py
++++ b/bypy/linux/__main__.py
+@@ -44,7 +44,7 @@ def binary_includes():
+              ' gobject-2.0 glib-2.0 gthread-2.0 gmodule-2.0 gio-2.0 dbus-glib-1').split()
+         )) + [
+             get_dll_path('podofo', 3), get_dll_path('bz2', 2), j(PREFIX, 'lib', 'libunrar.so'),
+-            get_dll_path('ssl', 3), get_dll_path('crypto', 3), get_dll_path('python' + py_ver, 2),
++            get_dll_path('ssl', 2), get_dll_path('crypto', 2), get_dll_path('python' + py_ver, 2),
+             # We dont include libstdc++.so as the OpenGL dlls on the target
+             # computer fail to load in the QPA xcb plugin if they were compiled
+             # with a newer version of gcc than the one on the build computer.
+diff --git a/bypy/macos/__main__.py b/bypy/macos/__main__.py
+index 6c52858396..78534c0c94 100644
+--- a/bypy/macos/__main__.py
++++ b/bypy/macos/__main__.py
+@@ -496,7 +496,7 @@ class Freeze(object):
+             'usb-1.0.0', 'mtp.9', 'chm.0', 'sqlite3.0', 'hunspell-1.7.0',
+             'icudata.67', 'icui18n.67', 'icuio.67', 'icuuc.67', 'hyphen.0',
+             'xslt.1', 'exslt.0', 'xml2.2', 'z.1', 'unrar', 'lzma.5',
+-            'crypto.1.0.0', 'ssl.1.0.0', 'iconv.2',  # 'ltdl.7'
++            'crypto.1.1', 'ssl.1.1', 'iconv.2',  # 'ltdl.7'
+         ):
+             print('\nAdding', x)
+             x = 'lib%s.dylib' % x
+-- 
+2.28.0
+
