@@ -1,0 +1,37 @@
+From 1bd2eee820cc213c12218f6692e4f1ab351087ab Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 20 Aug 2020 09:21:27 +0530
+Subject: [PATCH 421/422] When creating range wrappers, normalize parent nodes
+ to ensure there are no empty text nodes, as these mess up CFI calculations
+
+---
+ src/pyj/range_utils.pyj | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/src/pyj/range_utils.pyj b/src/pyj/range_utils.pyj
+index b0c5463bb4..803d608543 100644
+--- a/src/pyj/range_utils.pyj
++++ b/src/pyj/range_utils.pyj
+@@ -104,6 +104,8 @@ def create_wrapper_function(wrapper_elem, r, intersecting_wrappers, process_wrap
+         current_range = (node.ownerDocument or document).createRange()
+         current_wrapper = wrapper_elem.cloneNode()
+         current_range.selectNodeContents(node)
++        # adjust start and end in case the current node is one of the
++        # boundaries of the original range
+         if node.isSameNode(start_node):
+             current_range.setStart(node, start_offset)
+             start_node = current_wrapper
+@@ -116,6 +118,10 @@ def create_wrapper_function(wrapper_elem, r, intersecting_wrappers, process_wrap
+         if crw:
+             intersecting_wrappers[crw] = True
+         current_range.surroundContents(current_wrapper)
++        # remove any empty text nodes created by surroundContents() on either
++        # side of the wrapper. This happens for instance on Chrome when
++        # wrapping all text inside <i>some text</i>
++        current_range.commonAncestorContainer.normalize()
+         if process_wrapper:
+             process_wrapper(current_wrapper)
+         all_wrappers.push(current_wrapper)
+-- 
+2.28.0
+

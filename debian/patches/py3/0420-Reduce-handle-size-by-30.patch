@@ -1,0 +1,27 @@
+From 3a804039f3c4846f5c70dd1fb666d9af31971b21 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 20 Aug 2020 08:47:00 +0530
+Subject: [PATCH 420/422] Reduce handle size by 30%
+
+---
+ src/pyj/read_book/selection_bar.pyj | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/pyj/read_book/selection_bar.pyj b/src/pyj/read_book/selection_bar.pyj
+index c9cf0b44be..de80c621df 100644
+--- a/src/pyj/read_book/selection_bar.pyj
++++ b/src/pyj/read_book/selection_bar.pyj
+@@ -647,8 +647,8 @@ class SelectionBar:
+     def place_single_handle(self, handle_height, handle, boundary, is_left):
+         s = handle.style
+         s.display = 'block' if boundary.onscreen else 'none'
+-        height = handle_height * 3
+-        width = handle_height * 2
++        height = handle_height * 2
++        width = int(height * 2 / 3)
+         s.width = f'{width}px'
+         s.height = f'{height}px'
+         bottom = boundary.y + boundary.height
+-- 
+2.28.0
+
