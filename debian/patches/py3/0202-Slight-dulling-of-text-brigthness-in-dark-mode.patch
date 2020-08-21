@@ -1,18 +1,18 @@
-From 9ea423d93959dd818b308fc2636a8f3b4c35d1da Mon Sep 17 00:00:00 2001
+From e565dd8b769cd2f531fcf139d7ad3dec4da10f84 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Thu, 16 Jul 2020 16:39:57 +0530
-Subject: [PATCH 202/284] Slight dulling of text brigthness in dark mode
+Subject: [PATCH 202/423] Slight dulling of text brigthness in dark mode
 
 ---
- src/calibre/gui2/palette.py    |    2 +-
- src/pyj/read_book/settings.pyj |    2 +-
+ src/calibre/gui2/palette.py    | 2 +-
+ src/pyj/read_book/settings.pyj | 2 +-
  2 files changed, 2 insertions(+), 2 deletions(-)
 
-Index: b/src/calibre/gui2/palette.py
-===================================================================
+diff --git a/src/calibre/gui2/palette.py b/src/calibre/gui2/palette.py
+index 951969de4a..24684dfbf8 100644
 --- a/src/calibre/gui2/palette.py
 +++ b/src/calibre/gui2/palette.py
-@@ -8,7 +8,7 @@ from calibre.constants import dark_link_
+@@ -8,7 +8,7 @@ from calibre.constants import dark_link_color
  
  dark_link_color = QColor(dark_link_color)
  dark_color = QColor(45,45,45)
@@ -21,8 +21,8 @@ Index: b/src/calibre/gui2/palette.py
  
  
  def dark_palette():
-Index: b/src/pyj/read_book/settings.pyj
-===================================================================
+diff --git a/src/pyj/read_book/settings.pyj b/src/pyj/read_book/settings.pyj
+index ab846cb196..df48046d78 100644
 --- a/src/pyj/read_book/settings.pyj
 +++ b/src/pyj/read_book/settings.pyj
 @@ -43,7 +43,7 @@ def apply_font_size():
@@ -34,3 +34,6 @@ Index: b/src/pyj/read_book/settings.pyj
  
  
  styles_id = 'calibre-color-scheme-style-overrides'
+-- 
+2.28.0
+

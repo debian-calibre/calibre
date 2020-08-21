@@ -1,7 +1,7 @@
-From 7c58248563969a91262beae0627510beba09e933 Mon Sep 17 00:00:00 2001
+From 725e64b856cfa15aec587056e3c6f1ab64a36d6d Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Mon, 18 Nov 2019 14:03:58 +0530
-Subject: [PATCH 006/284] Remove py3 conditionals
+Subject: [PATCH 006/423] Remove py3 conditionals
 
 ---
  manual/conf.py                           |    3 +-
@@ -267,7 +267,7 @@ index 2474973b2a..ca9097cbd4 100644
          "name": "certgen",
          "sources": "calibre/utils/certgen.c",
 diff --git a/setup/translations.py b/setup/translations.py
-index 81623bc1bc..0c4b833cfb 100644
+index 5c21dd6f83..60049c7a4d 100644
 --- a/setup/translations.py
 +++ b/setup/translations.py
 @@ -11,7 +11,7 @@ from collections import defaultdict
@@ -279,7 +279,7 @@ index 81623bc1bc..0c4b833cfb 100644
  from setup.parallel_build import parallel_check_output
  from polyglot.builtins import codepoint_to_chr, iteritems, range
  is_ci = os.environ.get('CI', '').lower() == 'true'
-@@ -597,7 +597,7 @@ class Translations(POT):  # {{{
+@@ -602,7 +602,7 @@ class Translations(POT):  # {{{
              lang_names = {}
              for l in dl:
                  translator = translator_for_lang(l)['translator']
@@ -546,7 +546,7 @@ index 65155fb3db..b8528b743e 100644
  
  relpath = os.path.relpath
 diff --git a/src/calibre/constants.py b/src/calibre/constants.py
-index fe7df90cdd..a526dfeee8 100644
+index 13ae140a53..36ad777c8a 100644
 --- a/src/calibre/constants.py
 +++ b/src/calibre/constants.py
 @@ -150,9 +150,7 @@ def cache_dir():
@@ -1032,7 +1032,7 @@ index 1d9de79a3a..5382529bb3 100644
  object_map = [
      None,  # 00
 diff --git a/src/calibre/ebooks/metadata/book/base.py b/src/calibre/ebooks/metadata/book/base.py
-index 0821a664a6..d6ff6a7b55 100644
+index a33e2ad91b..2aa0b082b1 100644
 --- a/src/calibre/ebooks/metadata/book/base.py
 +++ b/src/calibre/ebooks/metadata/book/base.py
 @@ -9,7 +9,7 @@ __docformat__ = 'restructuredtext en'
@@ -1044,7 +1044,7 @@ index 0821a664a6..d6ff6a7b55 100644
  from calibre.ebooks.metadata.book import (SC_COPYABLE_FIELDS,
          SC_FIELDS_COPY_NOT_NULL, STANDARD_METADATA_FIELDS,
          TOP_LEVEL_IDENTIFIERS, ALL_METADATA_FIELDS)
-@@ -797,13 +797,7 @@ class Metadata(object):
+@@ -810,13 +810,7 @@ class Metadata(object):
              ans[i] = '<tr><td><b>%s</b></td><td>%s</td></tr>'%x
          return '<table>%s</table>'%'\n'.join(ans)
  
@@ -1060,7 +1060,7 @@ index 0821a664a6..d6ff6a7b55 100644
      def __nonzero__(self):
          return bool(self.title or self.author or self.comments or self.tags)
 diff --git a/src/calibre/ebooks/metadata/opf2.py b/src/calibre/ebooks/metadata/opf2.py
-index 0225be63dd..7ebfbfdc07 100644
+index 792cb1c550..4876196882 100644
 --- a/src/calibre/ebooks/metadata/opf2.py
 +++ b/src/calibre/ebooks/metadata/opf2.py
 @@ -13,7 +13,7 @@ import re, sys, unittest, functools, os, uuid, glob, io, json, copy

@@ -1,7 +1,7 @@
-From da50d638711de36ea993694c5301fc45ed2ff760 Mon Sep 17 00:00:00 2001
+From 252c770c67e9870280a6408a5710005f032de3f9 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Sun, 17 Nov 2019 15:27:24 +0530
-Subject: [PATCH 002/284] Change shebangs to python from python2
+Subject: [PATCH 002/423] Change shebangs to python from python2
 
 Also remove a few other miscellaneous references to python2
 ---
@@ -1632,7 +1632,7 @@ index 5aab1a3772..6d480d4804 100644
  # License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
  
 diff --git a/manual/build.py b/manual/build.py
-index 4c94a61bab..4434a32180 100755
+index 740b329d01..7d0a41cd46 100755
 --- a/manual/build.py
 +++ b/manual/build.py
 @@ -1,4 +1,4 @@
@@ -1652,7 +1652,7 @@ index 9b7f7e3490..c9a0307deb 100644
  
  from __future__ import print_function
 diff --git a/manual/epub.py b/manual/epub.py
-index e3e36f91ad..317565f85d 100644
+index 0473be6e07..24f28c85b5 100644
 --- a/manual/epub.py
 +++ b/manual/epub.py
 @@ -1,4 +1,4 @@
@@ -3332,7 +3332,7 @@ index b81e9eca10..8d3a20bd14 100644
  __license__ = 'GPL v3'
  __copyright__ = '2010, matek09, matek09@gmail.com'
 diff --git a/recipes/espn.recipe b/recipes/espn.recipe
-index e29a88b9cb..d9fc17a458 100644
+index a6081a30a1..b15d57b65e 100644
 --- a/recipes/espn.recipe
 +++ b/recipes/espn.recipe
 @@ -1,4 +1,4 @@
@@ -4582,7 +4582,7 @@ index 6dc3c75c97..eb4150062c 100644
  __license__ = 'GPL v3'
  __copyright__ = '2009, Darko Miletic <darko.miletic at gmail.com>'
 diff --git a/recipes/latimes.recipe b/recipes/latimes.recipe
-index da7d2afc1d..462e033a75 100644
+index 67bb754bf2..2aa71a8351 100644
 --- a/recipes/latimes.recipe
 +++ b/recipes/latimes.recipe
 @@ -1,4 +1,4 @@
@@ -6242,7 +6242,7 @@ index 18e2015d9e..2e187a1765 100644
  from calibre.web.feeds.news import BasicNewsRecipe
  
 diff --git a/recipes/science_news.recipe b/recipes/science_news.recipe
-index df1217a083..b53af220c9 100644
+index e39bc95ff1..dd594d8c4a 100644
 --- a/recipes/science_news.recipe
 +++ b/recipes/science_news.recipe
 @@ -1,4 +1,4 @@
@@ -7322,7 +7322,7 @@ index e9cf3d2438..a983eea9b6 100644
  
  __license__ = 'GPL v3'
 diff --git a/resources/default_tweaks.py b/resources/default_tweaks.py
-index efb88cfcb3..65d8855e6f 100644
+index d07a09297a..d3232c4b31 100644
 --- a/resources/default_tweaks.py
 +++ b/resources/default_tweaks.py
 @@ -1,4 +1,4 @@
@@ -7569,7 +7569,7 @@ index 1fc075250f..10f28f7001 100644
  # License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
  
 diff --git a/setup/translations.py b/setup/translations.py
-index 8528112613..d986b9a4a1 100644
+index 8ffbeea684..52c1ad3df3 100644
 --- a/setup/translations.py
 +++ b/setup/translations.py
 @@ -1,4 +1,4 @@
@@ -7619,7 +7619,7 @@ index dc9ccb3866..cf53cd4110 100644
  # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
  
 diff --git a/src/calibre/constants.py b/src/calibre/constants.py
-index 40756e1804..ab72677603 100644
+index 6a60c3d501..29819155d8 100644
 --- a/src/calibre/constants.py
 +++ b/src/calibre/constants.py
 @@ -1,4 +1,4 @@
@@ -8289,7 +8289,7 @@ index 807de729ec..078ddb1bf4 100644
  
  from __future__ import absolute_import, division, print_function, unicode_literals
 diff --git a/src/calibre/devices/kobo/driver.py b/src/calibre/devices/kobo/driver.py
-index 3b704aae78..aeff7d4d88 100644
+index 3aa657b8c7..0a3bee19ba 100644
 --- a/src/calibre/devices/kobo/driver.py
 +++ b/src/calibre/devices/kobo/driver.py
 @@ -1,4 +1,4 @@
@@ -8499,7 +8499,7 @@ index 807de729ec..078ddb1bf4 100644
  
  from __future__ import absolute_import, division, print_function, unicode_literals
 diff --git a/src/calibre/devices/smart_device_app/driver.py b/src/calibre/devices/smart_device_app/driver.py
-index 39e61cdd00..b6abf365ab 100644
+index 4e762c9dce..0266d551d1 100644
 --- a/src/calibre/devices/smart_device_app/driver.py
 +++ b/src/calibre/devices/smart_device_app/driver.py
 @@ -1,4 +1,4 @@
@@ -8829,7 +8829,7 @@ index 038376aff3..57bfd7d760 100644
  from __future__ import absolute_import, division, print_function, unicode_literals
  
 diff --git a/src/calibre/ebooks/docx/block_styles.py b/src/calibre/ebooks/docx/block_styles.py
-index fdd61add54..4e196e819d 100644
+index 77c73508a0..96ae080c05 100644
 --- a/src/calibre/ebooks/docx/block_styles.py
 +++ b/src/calibre/ebooks/docx/block_styles.py
 @@ -1,4 +1,4 @@
@@ -8969,7 +8969,7 @@ index e30fb5429d..6271692433 100644
  from __future__ import absolute_import, division, print_function, unicode_literals
  
 diff --git a/src/calibre/ebooks/docx/styles.py b/src/calibre/ebooks/docx/styles.py
-index bf2eb930f1..cf9288c040 100644
+index 46059b3941..d3f0f8db5f 100644
 --- a/src/calibre/ebooks/docx/styles.py
 +++ b/src/calibre/ebooks/docx/styles.py
 @@ -1,4 +1,4 @@
@@ -9269,7 +9269,7 @@ index 84e8039ab5..59aedfd267 100644
  from __future__ import absolute_import, division, print_function, unicode_literals
  
 diff --git a/src/calibre/ebooks/metadata/book/base.py b/src/calibre/ebooks/metadata/book/base.py
-index b8f85dc05b..8908cae003 100644
+index ecf924ac9b..f6534ad564 100644
 --- a/src/calibre/ebooks/metadata/book/base.py
 +++ b/src/calibre/ebooks/metadata/book/base.py
 @@ -1,4 +1,4 @@
@@ -9409,7 +9409,7 @@ index 53fec9359f..0cd6c68b13 100644
  # License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
  
 diff --git a/src/calibre/ebooks/metadata/opf2.py b/src/calibre/ebooks/metadata/opf2.py
-index 9aeee85ed7..70dfd4af12 100644
+index aaa4734851..8d2f8a3012 100644
 --- a/src/calibre/ebooks/metadata/opf2.py
 +++ b/src/calibre/ebooks/metadata/opf2.py
 @@ -1,4 +1,4 @@
@@ -9419,7 +9419,7 @@ index 9aeee85ed7..70dfd4af12 100644
  __license__   = 'GPL v3'
  __copyright__ = '2008, Kovid Goyal kovid@kovidgoyal.net'
 diff --git a/src/calibre/ebooks/metadata/opf3.py b/src/calibre/ebooks/metadata/opf3.py
-index 509f45b669..baed7232d9 100644
+index e181d2fdfd..9885b8ab12 100644
 --- a/src/calibre/ebooks/metadata/opf3.py
 +++ b/src/calibre/ebooks/metadata/opf3.py
 @@ -1,4 +1,4 @@
@@ -11212,7 +11212,7 @@ index 07a039eb4a..8d62f67c86 100644
  from __future__ import absolute_import, division, print_function, unicode_literals
  
 diff --git a/src/calibre/gui2/actions/show_quickview.py b/src/calibre/gui2/actions/show_quickview.py
-index d98b15c080..72ea24783e 100644
+index 4e9e0e681e..f404207a3c 100644
 --- a/src/calibre/gui2/actions/show_quickview.py
 +++ b/src/calibre/gui2/actions/show_quickview.py
 @@ -1,4 +1,4 @@
@@ -11412,7 +11412,7 @@ index d51fe442e9..f3f1977868 100644
  # License: GPLv3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
  
 diff --git a/src/calibre/gui2/comments_editor.py b/src/calibre/gui2/comments_editor.py
-index 7d07fd92ae..f9f155f88b 100644
+index 5dfd612d5a..3660dbeafd 100644
 --- a/src/calibre/gui2/comments_editor.py
 +++ b/src/calibre/gui2/comments_editor.py
 @@ -1,4 +1,4 @@
@@ -11963,7 +11963,7 @@ index 463bdf43b3..35e46b3324 100644
  from __future__ import absolute_import, division, print_function, unicode_literals
  
 diff --git a/src/calibre/gui2/dialogs/metadata_bulk.py b/src/calibre/gui2/dialogs/metadata_bulk.py
-index 61fbfa51bb..469b0bfcd2 100644
+index 264d25bac0..1682178417 100644
 --- a/src/calibre/gui2/dialogs/metadata_bulk.py
 +++ b/src/calibre/gui2/dialogs/metadata_bulk.py
 @@ -1,4 +1,4 @@
@@ -12003,7 +12003,7 @@ index 311ad5838f..a86fb31b24 100644
  
  __license__   = 'GPL v3'
 diff --git a/src/calibre/gui2/dialogs/quickview.py b/src/calibre/gui2/dialogs/quickview.py
-index c82c60a07e..eded0a27a3 100644
+index 04a6aa604c..5e740d9c6d 100644
 --- a/src/calibre/gui2/dialogs/quickview.py
 +++ b/src/calibre/gui2/dialogs/quickview.py
 @@ -1,4 +1,4 @@
@@ -12043,7 +12043,7 @@ index 414a7824e9..6bd57a4ecf 100644
  from __future__ import absolute_import, division, print_function, unicode_literals
  
 diff --git a/src/calibre/gui2/dialogs/smartdevice.py b/src/calibre/gui2/dialogs/smartdevice.py
-index db82ebd475..e304983d23 100644
+index c4cb88ebc9..9b303fa20e 100644
 --- a/src/calibre/gui2/dialogs/smartdevice.py
 +++ b/src/calibre/gui2/dialogs/smartdevice.py
 @@ -1,4 +1,4 @@
@@ -12253,7 +12253,7 @@ index a18910d8bc..04667c88b0 100644
  from __future__ import absolute_import, division, print_function, unicode_literals
  
 diff --git a/src/calibre/gui2/library/delegates.py b/src/calibre/gui2/library/delegates.py
-index 9b86fe9f9c..4635516aa1 100644
+index 4d40fa0856..32f4fbe985 100644
 --- a/src/calibre/gui2/library/delegates.py
 +++ b/src/calibre/gui2/library/delegates.py
 @@ -1,4 +1,4 @@
@@ -12273,7 +12273,7 @@ index 2d713f73be..6922617486 100644
  from __future__ import absolute_import, division, print_function, unicode_literals
  
 diff --git a/src/calibre/gui2/library/views.py b/src/calibre/gui2/library/views.py
-index 8d77c646ee..9bb0ad43a1 100644
+index e3887aad7b..dc687aaf7a 100644
 --- a/src/calibre/gui2/library/views.py
 +++ b/src/calibre/gui2/library/views.py
 @@ -1,4 +1,4 @@
@@ -12373,7 +12373,7 @@ index ce0785599e..8c8f927dde 100644
  from __future__ import absolute_import, division, print_function, unicode_literals
  
 diff --git a/src/calibre/gui2/metadata/single_download.py b/src/calibre/gui2/metadata/single_download.py
-index d5ccd375fd..d963c5b7b0 100644
+index 52f18a418e..9961cd3e02 100644
 --- a/src/calibre/gui2/metadata/single_download.py
 +++ b/src/calibre/gui2/metadata/single_download.py
 @@ -1,4 +1,4 @@
@@ -12473,7 +12473,7 @@ index cf5891c081..b8236ed252 100644
  from __future__ import absolute_import, division, print_function, unicode_literals
  
 diff --git a/src/calibre/gui2/preferences/create_custom_column.py b/src/calibre/gui2/preferences/create_custom_column.py
-index ed5e7d9cc6..51d8c12974 100644
+index f981758f0e..f1cbcf61a0 100644
 --- a/src/calibre/gui2/preferences/create_custom_column.py
 +++ b/src/calibre/gui2/preferences/create_custom_column.py
 @@ -1,4 +1,4 @@
@@ -12673,7 +12673,7 @@ index ba7f72f6f7..15d8e22af8 100644
  from __future__ import absolute_import, division, print_function, unicode_literals
  
 diff --git a/src/calibre/gui2/preferences/toolbar.py b/src/calibre/gui2/preferences/toolbar.py
-index 4104f3a506..524b17b48b 100644
+index cf0b6bb57b..c5df6a3d0b 100644
 --- a/src/calibre/gui2/preferences/toolbar.py
 +++ b/src/calibre/gui2/preferences/toolbar.py
 @@ -1,4 +1,4 @@
@@ -12993,7 +12993,7 @@ index b9be2e5224..61e9b32182 100644
  # License: GPLv3 Copyright: 2013, Kovid Goyal <kovid at kovidgoyal.net>
  
 diff --git a/src/calibre/gui2/tools.py b/src/calibre/gui2/tools.py
-index c9f1c47bdd..c2406f70a3 100644
+index efb2d4df2d..e26f457d45 100644
 --- a/src/calibre/gui2/tools.py
 +++ b/src/calibre/gui2/tools.py
 @@ -1,4 +1,4 @@
@@ -13003,7 +13003,7 @@ index c9f1c47bdd..c2406f70a3 100644
  
  __license__   = 'GPL v3'
 diff --git a/src/calibre/gui2/tweak_book/__init__.py b/src/calibre/gui2/tweak_book/__init__.py
-index 65c7a6901c..4833e480d5 100644
+index 67b5b5a7d1..4be9703b36 100644
 --- a/src/calibre/gui2/tweak_book/__init__.py
 +++ b/src/calibre/gui2/tweak_book/__init__.py
 @@ -1,4 +1,4 @@
@@ -13013,7 +13013,7 @@ index 65c7a6901c..4833e480d5 100644
  from __future__ import absolute_import, division, print_function, unicode_literals
  
 diff --git a/src/calibre/gui2/tweak_book/boss.py b/src/calibre/gui2/tweak_book/boss.py
-index c93f11f64a..9e605164d2 100644
+index 6d26417bbe..9c1e3eee2e 100644
 --- a/src/calibre/gui2/tweak_book/boss.py
 +++ b/src/calibre/gui2/tweak_book/boss.py
 @@ -1,4 +1,4 @@
@@ -13463,7 +13463,7 @@ index 3dd6e95039..022959e176 100644
  from __future__ import absolute_import, division, print_function, unicode_literals
  
 diff --git a/src/calibre/gui2/tweak_book/preferences.py b/src/calibre/gui2/tweak_book/preferences.py
-index 79af4714f8..cd7192fb1a 100644
+index a9bb6f5be7..d0ea175009 100644
 --- a/src/calibre/gui2/tweak_book/preferences.py
 +++ b/src/calibre/gui2/tweak_book/preferences.py
 @@ -1,4 +1,4 @@
@@ -13473,7 +13473,7 @@ index 79af4714f8..cd7192fb1a 100644
  from __future__ import absolute_import, division, print_function, unicode_literals
  
 diff --git a/src/calibre/gui2/tweak_book/preview.py b/src/calibre/gui2/tweak_book/preview.py
-index e6804113ef..dc17eaad2e 100644
+index 37aac8e50f..e18d2846a7 100644
 --- a/src/calibre/gui2/tweak_book/preview.py
 +++ b/src/calibre/gui2/tweak_book/preview.py
 @@ -1,4 +1,4 @@
@@ -14783,7 +14783,7 @@ index d7280f2051..204573a989 100644
  from __future__ import absolute_import, division, print_function, unicode_literals
  
 diff --git a/src/calibre/utils/formatter_functions.py b/src/calibre/utils/formatter_functions.py
-index 16b4b65d16..59c07eaf76 100644
+index ba6c1f05e0..115509db05 100644
 --- a/src/calibre/utils/formatter_functions.py
 +++ b/src/calibre/utils/formatter_functions.py
 @@ -1,4 +1,4 @@
