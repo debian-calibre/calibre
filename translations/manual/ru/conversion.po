@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-23 07:53+0530\n"
-"PO-Revision-Date: 2020-05-22 03:28+0000\n"
-"Last-Translator: ashed <craysy@gmail.com>\n"
+"POT-Creation-Date: 2020-07-31 08:42+0530\n"
+"PO-Revision-Date: 2020-07-31 03:13+0000\n"
+"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Russian (http://www.transifex.com/calibre/calibre/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1444,18 +1444,42 @@ msgid ""
 "instead of 1::"
 msgstr "Вы даже можете использовать JavaScript внутри шаблонов верхнего и нижнего колонтитула, например, следующий шаблон приведет к тому, что номера страниц будут начинаться с 4 вместо 1::"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:883
+#: ../../home/kovid/work/calibre/manual/conversion.rst:884
+msgid ""
+"In addition there are some more variables you can use in the headers and "
+"footers, documented below:"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:887
+msgid ""
+"``_TOTAL_PAGES_`` - total number of pages in the PDF file, useful for "
+"implementing a progress counter, for example."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:889
+msgid ""
+"``_TOP_LEVEL_SECTION_PAGES_`` - total number of pages in the current top "
+"level section"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:891
+msgid ""
+"``_TOP_LEVEL_SECTION_PAGENUM_`` - the page number of the current page within"
+" the current top level section"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:894
 msgid ""
 "When adding headers and footers make sure you set the page top and bottom "
 "margins to large enough values, under the :guilabel:`PDF Output` section of "
 "the conversion dialog."
 msgstr "При добавлении верхних и нижних колонтитулов убедитесь, что для верхних и нижних полей страницы установлены достаточно большие значения в разделе :guilabel:`PDF Output` диалога конвертации."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:888
+#: ../../home/kovid/work/calibre/manual/conversion.rst:899
 msgid "Printable Table of Contents"
 msgstr "Оглавление для печати"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:890
+#: ../../home/kovid/work/calibre/manual/conversion.rst:901
 msgid ""
 "You can also insert a printable Table of Contents at the end of the PDF that"
 " lists the page numbers for every section. This is very useful if you intend"
@@ -1464,19 +1488,19 @@ msgid ""
 " default."
 msgstr "Вы также можете вставить печатное оглавление в конец PDF-файла, в котором перечислены номера страниц для каждого раздела. Это очень полезно, если вы собираетесь распечатать PDF на бумаге. Если вы хотите использовать PDF на электронном устройстве, PDF Outline предоставляет эту функцию и создается по умолчанию."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:895
+#: ../../home/kovid/work/calibre/manual/conversion.rst:906
 msgid ""
 "You can customize the look of the generated Table of contents by using the "
 "Extra CSS conversion setting under the Look & feel part of the conversion "
-"dialog. The default css used is listed below, simply copy it and make "
+"dialog. The default CSS used is listed below, simply copy it and make "
 "whatever changes you like."
-msgstr "Вы можете настроить внешний вид сгенерированного оглавления с помощью параметра «Дополнительное преобразование CSS» в разделе «Внешний вид» диалогового окна конвертации. Используемый css по умолчанию приведен ниже, просто скопируйте его и внесите все необходимые изменения."
+msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:915
+#: ../../home/kovid/work/calibre/manual/conversion.rst:926
 msgid "Custom page margins for individual HTML files"
 msgstr "Пользовательские поля страницы для отдельных файлов HTML"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:917
+#: ../../home/kovid/work/calibre/manual/conversion.rst:928
 msgid ""
 "If you are converting an EPUB or AZW3 file with multiple individual HTML "
 "files inside it and you want to change the page margins for a particular "
@@ -1484,7 +1508,7 @@ msgid ""
 "calibre editor:"
 msgstr "Если вы конвертируете файл EPUB или AZW3 с несколькими отдельными файлами HTML внутри него и хотите изменить поля страницы для определённого файла HTML, вы можете добавить следующий блок стилей в файл HTML с помощью редактора calibre:"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:934
+#: ../../home/kovid/work/calibre/manual/conversion.rst:945
 msgid ""
 "Then, in the PDF output section of the conversion dialog, turn on the option"
 " to :guilabel:`Use page margins from the document being converted`. Now all "

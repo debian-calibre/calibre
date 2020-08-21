@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-15 08:00+0530\n"
-"PO-Revision-Date: 2020-05-17 14:12+0000\n"
+"POT-Creation-Date: 2020-07-31 08:42+0530\n"
+"PO-Revision-Date: 2020-07-31 08:04+0000\n"
 "Last-Translator: Jellby <jellby@yahoo.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/calibre/calibre/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -1447,18 +1447,42 @@ msgid ""
 "instead of 1::"
 msgstr "Puede incluso utilizar código JavaScript dentro de las plantillas de encabezado y pie de página, por ejemplo, la siguiente plantilla hará que los números de página comiencen por4 en lugar de 1::"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:883
+#: ../../home/kovid/work/calibre/manual/conversion.rst:884
+msgid ""
+"In addition there are some more variables you can use in the headers and "
+"footers, documented below:"
+msgstr "Además hay otras variables que puede usar en encabezados y pies de página, descritas a continuación:"
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:887
+msgid ""
+"``_TOTAL_PAGES_`` - total number of pages in the PDF file, useful for "
+"implementing a progress counter, for example."
+msgstr "``_TOTAL_PAGES_`` - número total de páginas en el archivo PDF, útil para incluir un marcador de progreso, por ejemplo."
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:889
+msgid ""
+"``_TOP_LEVEL_SECTION_PAGES_`` - total number of pages in the current top "
+"level section"
+msgstr "``_TOP_LEVEL_SECTION_PAGES_`` - número total de páginas en la sección de mayor nivel actual"
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:891
+msgid ""
+"``_TOP_LEVEL_SECTION_PAGENUM_`` - the page number of the current page within"
+" the current top level section"
+msgstr "``_TOP_LEVEL_SECTION_PAGENUM_`` - el número de página de la página actual dentro de la sección de mayor nivel actual"
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:894
 msgid ""
 "When adding headers and footers make sure you set the page top and bottom "
 "margins to large enough values, under the :guilabel:`PDF Output` section of "
 "the conversion dialog."
 msgstr "Si añade encabezados y pies de página, asegúrese de que establece los márgenes superior e inferior con una dimensión suficiente, en la sección :guilabel:`Salida` del cuadro de diálogo de conversión."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:888
+#: ../../home/kovid/work/calibre/manual/conversion.rst:899
 msgid "Printable Table of Contents"
 msgstr "Índice imprimible"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:890
+#: ../../home/kovid/work/calibre/manual/conversion.rst:901
 msgid ""
 "You can also insert a printable Table of Contents at the end of the PDF that"
 " lists the page numbers for every section. This is very useful if you intend"
@@ -1467,19 +1491,19 @@ msgid ""
 " default."
 msgstr "También puede incluir un índice imprimible al final del PDF que muestra los números de página de cada sección. Esto es muy útil si va a imprir el PDF en papel. Si va a usar el PDF en un dispositivo electrónico, el Esquema del PDF cumple esta función y se genera de manera predeterminada."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:895
+#: ../../home/kovid/work/calibre/manual/conversion.rst:906
 msgid ""
 "You can customize the look of the generated Table of contents by using the "
 "Extra CSS conversion setting under the Look & feel part of the conversion "
-"dialog. The default css used is listed below, simply copy it and make "
+"dialog. The default CSS used is listed below, simply copy it and make "
 "whatever changes you like."
 msgstr "Se puede personalizar el aspecto de los índices generados usando la opción :guilabel:`CSS adicional` en la sección Apariencia del cuadro de diálogo de conversión. El código CSS usado de manera predeterminada se muestra debajo, cópielo y modifíquelo a su gusto."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:915
+#: ../../home/kovid/work/calibre/manual/conversion.rst:926
 msgid "Custom page margins for individual HTML files"
 msgstr "Márgenes de página específicos para archivos HTML individuales"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:917
+#: ../../home/kovid/work/calibre/manual/conversion.rst:928
 msgid ""
 "If you are converting an EPUB or AZW3 file with multiple individual HTML "
 "files inside it and you want to change the page margins for a particular "
@@ -1487,7 +1511,7 @@ msgid ""
 "calibre editor:"
 msgstr "Si está convirtiendo un archivo EPUB o AZW3 que contiene varios archivos HTML y quiere cambiar los márgenes de página de un archivo HTML concreto, puede añadir el siguiente bloque de estilo al archivo HTML usando el editor de calibre:"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:934
+#: ../../home/kovid/work/calibre/manual/conversion.rst:945
 msgid ""
 "Then, in the PDF output section of the conversion dialog, turn on the option"
 " to :guilabel:`Use page margins from the document being converted`. Now all "

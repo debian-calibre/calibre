@@ -113,6 +113,10 @@ class POT(Command):  # {{{
                 ans.append('')
         pot = self.pot_header() + '\n\n' + '\n'.join(ans)
         dest = self.j(self.TRANSLATIONS, 'iso_639', 'iso_639_3.pot')
+        try:
+            os.makedirs(os.path.dirname(dest))
+        except OSError:
+            pass
         with open(dest, 'wb') as f:
             f.write(pot.encode('utf-8'))
         self.upload_pot(resource='iso639')
@@ -133,7 +137,7 @@ class POT(Command):  # {{{
     def get_user_manual_docs(self):
         self.info('Generating translation templates for user_manual')
         base = tempfile.mkdtemp()
-        subprocess.check_call(['calibre-debug', self.j(self.d(self.SRC), 'manual', 'build.py'), 'gettext', base])
+        subprocess.check_call([sys.executable, self.j(self.d(self.SRC), 'manual', 'build.py'), 'gettext', base])
         tbase = self.j(self.TRANSLATIONS, 'manual')
         for x in os.listdir(base):
             if not x.endswith('.pot'):
@@ -210,7 +214,8 @@ class POT(Command):  # {{{
     def run(self, opts):
         require_git_master()
         self.get_iso639_strings()
-        self.get_website_strings()
+        if not is_ci:
+            self.get_website_strings()
         self.get_content_server_strings()
         self.get_user_manual_docs()
         files = self.source_files()

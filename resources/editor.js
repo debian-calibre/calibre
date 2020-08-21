@@ -3572,7 +3572,7 @@ define_str_func("format", (function() {
         });
 
         function render_markup(markup) {
-            var ρσ_unpack, key, transformer, format_spec, lkey, nvalue, object, ans;
+            var ρσ_unpack, key, transformer, format_spec, ends_with_equal, lkey, nvalue, object, ans;
             ρσ_unpack = parse_markup(markup);
 ρσ_unpack = ρσ_unpack_asarray(3, ρσ_unpack);
             key = ρσ_unpack[0];
@@ -3580,6 +3580,10 @@ define_str_func("format", (function() {
             format_spec = ρσ_unpack[2];
             if (transformer && ['a', 'r', 's'].indexOf(transformer) === -1) {
                 throw new ValueError("Unknown conversion specifier: " + transformer);
+            }
+            ends_with_equal = key.endsWith("=");
+            if (ends_with_equal) {
+                key = key.slice(0, -1);
             }
             lkey = key.length && split(key, /[.\[]/, 1)[0];
             if (lkey) {
@@ -3613,6 +3617,9 @@ define_str_func("format", (function() {
             ans = "" + object;
             if (format_spec) {
                 ans = apply_formatting(ans, format_spec);
+            }
+            if (ends_with_equal) {
+                ans = "" + ρσ_str.format("{}", key) + "=" + ρσ_str.format("{}", ans) + "";
             }
             return ans;
         };
