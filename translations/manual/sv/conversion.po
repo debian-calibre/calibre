@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-05 08:22+0530\n"
-"PO-Revision-Date: 2020-06-12 04:29+0000\n"
+"POT-Creation-Date: 2020-07-31 08:42+0530\n"
+"PO-Revision-Date: 2020-07-31 06:13+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan.nyberg.karl@gmail.com>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -1447,18 +1447,42 @@ msgid ""
 "instead of 1::"
 msgstr "Du kan till och med använda JavaScript i sidhuvud- och sidfotsmallarna, till exempel kommer följande mall att leda till att sidnummer börjar vid 4 istället för 1::"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:883
+#: ../../home/kovid/work/calibre/manual/conversion.rst:884
+msgid ""
+"In addition there are some more variables you can use in the headers and "
+"footers, documented below:"
+msgstr "Dessutom finns det några fler variabler du kan använda i sidhuvud och sidfot, dokumenterade nedan:"
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:887
+msgid ""
+"``_TOTAL_PAGES_`` - total number of pages in the PDF file, useful for "
+"implementing a progress counter, for example."
+msgstr "``_TOTAL_PAGES_`` - totalt antal sidor i PDF-filen, till exempel användbar för att implementera en framstegsräknare."
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:889
+msgid ""
+"``_TOP_LEVEL_SECTION_PAGES_`` - total number of pages in the current top "
+"level section"
+msgstr "``_TOP_LEVEL_SECTION_PAGES_`` - totalt antal sidor i det aktuella toppnivåavsnittet"
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:891
+msgid ""
+"``_TOP_LEVEL_SECTION_PAGENUM_`` - the page number of the current page within"
+" the current top level section"
+msgstr "``_TOP_LEVEL_SECTION_PAGENUM_`` - sidnumret för den aktuella sidan inom det aktuella toppnivåavsnittet"
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:894
 msgid ""
 "When adding headers and footers make sure you set the page top and bottom "
 "margins to large enough values, under the :guilabel:`PDF Output` section of "
 "the conversion dialog."
 msgstr "När du lägger till sidhuvud och sidfot, se till att du ställer in sidans övre och nedre marginaler till tillräckligt stora värden under avsnittet :guilabel:`PDF-utdataformat` i konverteringsdialogrutan."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:888
+#: ../../home/kovid/work/calibre/manual/conversion.rst:899
 msgid "Printable Table of Contents"
 msgstr "Utskrivbar/tryckbar innehållsförteckning"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:890
+#: ../../home/kovid/work/calibre/manual/conversion.rst:901
 msgid ""
 "You can also insert a printable Table of Contents at the end of the PDF that"
 " lists the page numbers for every section. This is very useful if you intend"
@@ -1467,19 +1491,19 @@ msgid ""
 " default."
 msgstr "Du kan också infoga en utskrift/tryckbar innehållsförteckning i slutet av PDF som listar sidnummer för varje avsnitt. Detta är mycket användbart om du tänker skriva ut PDF till papper. Om du vill använda PDF på en elektronisk produkt, ger PDF Outline denna funktionalitet och är genererad som standard."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:895
+#: ../../home/kovid/work/calibre/manual/conversion.rst:906
 msgid ""
 "You can customize the look of the generated Table of contents by using the "
 "Extra CSS conversion setting under the Look & feel part of the conversion "
-"dialog. The default css used is listed below, simply copy it and make "
+"dialog. The default CSS used is listed below, simply copy it and make "
 "whatever changes you like."
-msgstr "Du kan anpassa utseendet på den genererade Innehållsförteckningen med hjälp av extra CSS-konverteringsinställningen under Utseende och känsla delen av konverteringsdialogen. Standard css som används är listade nedan, helt enkelt kopiera den och gör de ändringar du vill."
+msgstr "Du kan anpassa utseendet på den genererade Innehållsförteckningen med hjälp av extra CSS-konverteringsinställningen under Utseende och känsla delen av konverteringsdialogen. Standard CSS som används är listade nedan, helt enkelt kopiera den och gör de ändringar du vill."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:915
+#: ../../home/kovid/work/calibre/manual/conversion.rst:926
 msgid "Custom page margins for individual HTML files"
 msgstr "Anpassade sidmarginaler för enskilda HTML-filer"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:917
+#: ../../home/kovid/work/calibre/manual/conversion.rst:928
 msgid ""
 "If you are converting an EPUB or AZW3 file with multiple individual HTML "
 "files inside it and you want to change the page margins for a particular "
@@ -1487,7 +1511,7 @@ msgid ""
 "calibre editor:"
 msgstr "Om du konverterar en EPUB- eller AZW3-fil med flera enskilda HTML-filer inuti den och du vill ändra sidmarginalerna för en viss HTML-fil kan du lägga till följande formatblock i HTML-filen med calibres redigerare:"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:934
+#: ../../home/kovid/work/calibre/manual/conversion.rst:945
 msgid ""
 "Then, in the PDF output section of the conversion dialog, turn on the option"
 " to :guilabel:`Use page margins from the document being converted`. Now all "

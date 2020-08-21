@@ -587,7 +587,7 @@ class Ui_Form(object):
 "<ul>\n"
 "<li><b>Automatic</b>: Adjust the user interface if a high resolution monitor is detected. Will respect Qt environment variables controlling high DPI behavior. So if you use the environment variable QT_AUTO_SCREEN_SCALE_FACTOR then it will be used instead of this setting.</li>\n"
 "\n"
-"<li><b>On</b>: Same as \"Automatic\", but ignores Qt environment variables controlling high dpi behavior.</li>\n"
+"<li><b>On</b>: Same as \"Automatic\", but ignores Qt environment variables controlling high DPI behavior.</li>\n"
 "\n"
 "<li><b>Off</b>: Do not adjust the user interface, regardless of Qt environment variables.</li>\n"
 "</ul>"))

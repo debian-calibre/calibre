@@ -3572,7 +3572,7 @@ define_str_func("format", (function() {
         });
 
         function render_markup(markup) {
-            var ρσ_unpack, key, transformer, format_spec, lkey, nvalue, object, ans;
+            var ρσ_unpack, key, transformer, format_spec, ends_with_equal, lkey, nvalue, object, ans;
             ρσ_unpack = parse_markup(markup);
 ρσ_unpack = ρσ_unpack_asarray(3, ρσ_unpack);
             key = ρσ_unpack[0];
@@ -3580,6 +3580,10 @@ define_str_func("format", (function() {
             format_spec = ρσ_unpack[2];
             if (transformer && ['a', 'r', 's'].indexOf(transformer) === -1) {
                 throw new ValueError("Unknown conversion specifier: " + transformer);
+            }
+            ends_with_equal = key.endsWith("=");
+            if (ends_with_equal) {
+                key = key.slice(0, -1);
             }
             lkey = key.length && split(key, /[.\[]/, 1)[0];
             if (lkey) {
@@ -3613,6 +3617,9 @@ define_str_func("format", (function() {
             ans = "" + object;
             if (format_spec) {
                 ans = apply_formatting(ans, format_spec);
+            }
+            if (ends_with_equal) {
+                ans = "" + ρσ_str.format("{}", key) + "=" + ρσ_str.format("{}", ans) + "";
             }
             return ans;
         };
@@ -9499,12 +9506,39 @@ return this.__repr__();
             });
             return ρσ_anonfunc;
         })());
+        function enable_escape_key(container, action) {
+            container.setAttribute("tabindex", "0");
+            container.addEventListener("keydown", (function() {
+                var ρσ_anonfunc = function (ev) {
+                    if (ev.key === "Escape") {
+                        [ev.stopPropagation(), ev.preventDefault()];
+                        action();
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["ev"]},
+                    __module__ : {value: "widgets"}
+                });
+                return ρσ_anonfunc;
+            })(), (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["passive"] = false;
+                return ρσ_d;
+            }).call(this));
+            container.focus();
+        };
+        if (!enable_escape_key.__argnames__) Object.defineProperties(enable_escape_key, {
+            __argnames__ : {value: ["container", "action"]},
+            __module__ : {value: "widgets"}
+        });
+
         ρσ_modules.widgets.create_button = create_button;
         ρσ_modules.widgets.create_spinner = create_spinner;
         ρσ_modules.widgets.Breadcrumbs = Breadcrumbs;
         ρσ_modules.widgets.create_tree = create_tree;
         ρσ_modules.widgets.find_text_in_tree = find_text_in_tree;
         ρσ_modules.widgets.scroll_tree_item_into_view = scroll_tree_item_into_view;
+        ρσ_modules.widgets.enable_escape_key = enable_escape_key;
     })();
 
     (function(){
@@ -25846,6 +25880,7 @@ return this.__repr__();
         var safe_set_inner_html = ρσ_modules.utils.safe_set_inner_html;
 
         var create_button = ρσ_modules.widgets.create_button;
+        var enable_escape_key = ρσ_modules.widgets.enable_escape_key;
 
         state = (function(){
             var ρσ_d = Object.create(null);
@@ -26095,6 +26130,7 @@ return this.__repr__();
             state.in_progress = true;
             state.container_id = container_id;
             state.fake_send = false;
+            enable_escape_key(container, on_close);
             return upload_files_widget(container, files_chosen);
         };
         if (!add_books_panel.__argnames__) Object.defineProperties(add_books_panel, {
@@ -28750,6 +28786,7 @@ return this.__repr__();
 
         var create_button = ρσ_modules.widgets.create_button;
         var create_spinner = ρσ_modules.widgets.create_spinner;
+        var enable_escape_key = ρσ_modules.widgets.enable_escape_key;
 
         CLASS_NAME = "book-list-container";
         ITEM_CLASS_NAME = "book-list-item";
@@ -29307,6 +29344,7 @@ return this.__repr__();
             }
             container.appendChild(E.div());
             create_item_list(container.lastChild, items, _("Change how the list of books is sorted"));
+            enable_escape_key(container, close_action);
         };
         if (!create_sort_panel.__argnames__) Object.defineProperties(create_sort_panel, {
             __argnames__ : {value: ["container_id"]},
@@ -29482,6 +29520,7 @@ return this.__repr__();
             }
             container.appendChild(E.div());
             create_item_list(container.lastChild, items);
+            enable_escape_key(container, back);
         };
         if (!create_more_actions_panel.__argnames__) Object.defineProperties(create_more_actions_panel, {
             __argnames__ : {value: ["container_id"]},
