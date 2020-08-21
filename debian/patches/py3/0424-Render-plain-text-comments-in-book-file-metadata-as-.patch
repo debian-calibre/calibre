@@ -1,0 +1,27 @@
+From 3cd2e45d808ff47b9a877e8c327951618238db8d Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Fri, 21 Aug 2020 07:22:55 +0530
+Subject: [PATCH 424/425] Render plain text comments in book file metadata as
+ HTML
+
+---
+ src/pyj/book_list/book_details.pyj | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/src/pyj/book_list/book_details.pyj b/src/pyj/book_list/book_details.pyj
+index 74eb559b7a..f9ede2ba8b 100644
+--- a/src/pyj/book_list/book_details.pyj
++++ b/src/pyj/book_list/book_details.pyj
+@@ -318,6 +318,9 @@ def render_metadata(mi, table, book_id, iframe_css):  # {{{
+                     add_row(name, val)
+                     return
+                 val = E.span(val).outerHTML
++            else:
++                if field is 'comments' and '<' not in val:
++                    val = '\n'.join(['<p class="description">{}</p>'.format(x.pyreplace('\n', '<br>')) for x in val.split('\n\n')])
+             if hp is 'side':
+                 add_row(name, val, is_html=True)
+                 return
+-- 
+2.28.0
+
