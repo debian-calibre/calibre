@@ -1,0 +1,183 @@
+From 7289cb1b4f819874395f73570c6e4db0610d5ddb Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Sat, 22 Aug 2020 13:43:14 +0530
+Subject: [PATCH 426/428] Get multiprocessing to work
+
+Some calibre plugins apparently use multiprocessing. In python 3.8
+multiprocessing on macOS was changed to use spawn instead of fork. So
+those plugins broke. This fixes multiprocessing+spawn by monkeypatching
+the stdlib to use calibre-debug as the python interpreter
+---
+ src/calibre/debug.py      | 32 +++++++++--------------------
+ src/calibre/startup.py    | 43 ++++++++++++++++++++++++++++++++++++++-
+ src/calibre/test_build.py | 17 ++++++++++++++++
+ 3 files changed, 69 insertions(+), 23 deletions(-)
+
+diff --git a/src/calibre/debug.py b/src/calibre/debug.py
+index 4454e7b720..2df21b883a 100644
+--- a/src/calibre/debug.py
++++ b/src/calibre/debug.py
+@@ -11,29 +11,10 @@ import sys, os, functools
+ from calibre.utils.config import OptionParser
+ from calibre.constants import iswindows
+ from calibre import prints
++from calibre.startup import get_debug_executable
+ from polyglot.builtins import exec_path, raw_input, unicode_type, getcwd
+ 
+ 
+-def get_debug_executable():
+-    exe_name = 'calibre-debug' + ('.exe' if iswindows else '')
+-    if hasattr(sys, 'frameworks_dir'):
+-        base = os.path.dirname(sys.frameworks_dir)
+-        return [os.path.join(base, 'MacOS', exe_name)]
+-    if getattr(sys, 'run_local', None):
+-        return [sys.run_local, exe_name]
+-    nearby = os.path.join(os.path.dirname(os.path.abspath(sys.executable)), exe_name)
+-    if getattr(sys, 'frozen', False):
+-        return [nearby]
+-    exloc = getattr(sys, 'executables_location', None)
+-    if exloc:
+-        ans = os.path.join(exloc, exe_name)
+-        if os.path.exists(ans):
+-            return [ans]
+-    if os.path.exists(nearby):
+-        return [nearby]
+-    return [exe_name]
+-
+-
+ def run_calibre_debug(*args, **kw):
+     import subprocess
+     creationflags = 0
+@@ -127,6 +108,8 @@ Everything after the -- is passed to the script.
+         'calibre-debug --diff file1 file2'))
+     parser.add_option('--default-programs', default=None, choices=['register', 'unregister'],
+                           help=_('(Un)register calibre from Windows Default Programs.') + ' --default-programs=(register|unregister)')
++    parser.add_option('--fix-multiprocessing', default=False, action='store_true',
++        help=_('For internal use'))
+ 
+     return parser
+ 
+@@ -269,9 +252,13 @@ def inspect_mobi(path):
+ 
+ def main(args=sys.argv):
+     from calibre.constants import debug
+-    debug()
+ 
+     opts, args = option_parser().parse_args(args)
++    if opts.fix_multiprocessing:
++        sys.argv = [sys.argv[0], '--multiprocessing-fork']
++        exec(args[-1])
++        return
++    debug()
+     if opts.gui:
+         from calibre.gui_launch import calibre
+         calibre(['calibre'] + args[1:])
+@@ -308,7 +295,8 @@ def main(args=sys.argv):
+         f = explode if opts.explode_book else implode
+         f(a1, a2)
+     elif opts.test_build:
+-        from calibre.test_build import test
++        from calibre.test_build import test, test_multiprocessing
++        test_multiprocessing()
+         test()
+     elif opts.shutdown_running_calibre:
+         from calibre.gui2.main import shutdown_other
+diff --git a/src/calibre/startup.py b/src/calibre/startup.py
+index ede9fbae4d..a924576e5b 100644
+--- a/src/calibre/startup.py
++++ b/src/calibre/startup.py
+@@ -7,7 +7,7 @@ __docformat__ = 'restructuredtext en'
+ Perform various initialization tasks.
+ '''
+ 
+-import locale, sys
++import locale, sys, os
+ 
+ # Default translation is NOOP
+ from polyglot.builtins import builtins, unicode_type
+@@ -26,6 +26,27 @@ from calibre.constants import iswindows, preferred_encoding, plugins, isosx, isl
+ _run_once = False
+ winutil = winutilerror = None
+ 
++
++def get_debug_executable():
++    exe_name = 'calibre-debug' + ('.exe' if iswindows else '')
++    if hasattr(sys, 'frameworks_dir'):
++        base = os.path.dirname(sys.frameworks_dir)
++        return [os.path.join(base, 'MacOS', exe_name)]
++    if getattr(sys, 'run_local', None):
++        return [sys.run_local, exe_name]
++    nearby = os.path.join(os.path.dirname(os.path.abspath(sys.executable)), exe_name)
++    if getattr(sys, 'frozen', False):
++        return [nearby]
++    exloc = getattr(sys, 'executables_location', None)
++    if exloc:
++        ans = os.path.join(exloc, exe_name)
++        if os.path.exists(ans):
++            return [ans]
++    if os.path.exists(nearby):
++        return [nearby]
++    return [exe_name]
++
++
+ if not _run_once:
+     _run_once = True
+     from importlib.machinery import ModuleSpec
+@@ -102,6 +123,26 @@ if not _run_once:
+                     import traceback
+                     traceback.print_exc()
+ 
++    #
++    # Fix multiprocessing
++    from multiprocessing import spawn, util
++
++    def get_command_line(**kwds):
++        prog = 'from multiprocessing.spawn import spawn_main; spawn_main(%s)'
++        prog %= ', '.join('%s=%r' % item for item in kwds.items())
++        return get_debug_executable() + ['--fix-multiprocessing', '--', prog]
++    spawn.get_command_line = get_command_line
++    orig_spawn_passfds = util.spawnv_passfds
++
++    def spawnv_passfds(path, args, passfds):
++        try:
++            idx = args.index('-c')
++        except ValueError:
++            return orig_spawn_passfds(args[0], args, passfds)
++        patched_args = get_debug_executable() + ['--fix-multiprocessing', '--'] + args[idx + 1:]
++        return orig_spawn_passfds(patched_args[0], patched_args, passfds)
++    util.spawnv_passfds = spawnv_passfds
++
+     #
+     # Setup resources
+     import calibre.utils.resources as resources
+diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
+index febb944120..df7ee0234f 100644
+--- a/src/calibre/test_build.py
++++ b/src/calibre/test_build.py
+@@ -340,6 +340,23 @@ class BuildTest(unittest.TestCase):
+                 raise AssertionError('Mozilla CA certs not loaded')
+ 
+ 
++def test_multiprocessing():
++    from multiprocessing import get_context
++    for stype in ('spawn', 'forkserver'):
++        ctx = get_context(stype)
++        q = ctx.Queue()
++        arg = 'hello'
++        p = ctx.Process(target=q.put, args=(arg,))
++        p.start()
++        try:
++            x = q.get(timeout=2)
++        except Exception:
++            raise SystemExit(f'Failed to get response from worker process with spawn_type: {stype}')
++        if x != arg:
++            raise SystemExit(f'{x!r} != {arg!r} with spawn_type: {stype}')
++        p.join()
++
++
+ def find_tests():
+     ans = unittest.defaultTestLoader.loadTestsFromTestCase(BuildTest)
+     from calibre.utils.icu_test import find_tests
+-- 
+2.28.0
+
