@@ -1,4 +1,4 @@
 # -*- mode: makefile-gmake -*-
 
 %:
-	$(MAKE) -f debian/rules calibre_auto_$@
+	$(MAKE) MAKEFLAGS= -f debian/rules calibre_auto_$@
