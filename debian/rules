@@ -54,19 +54,19 @@ override_dh_auto_install:
 	mkdir -p  debian/tmp/usr/share/mime/packages
 	mkdir -p  debian/tmp/usr/share/zsh/vendor-completions
 	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C XDG_DATA_DIRS=$(CURDIR)/debian/tmp/usr/share CALIBRE_CONFIG_DIRECTORY=debian/tmp/config $(SETUP) install --root=debian/tmp/usr
-
+#
 #	# not needed
 	rm debian/tmp/usr/share/calibre/calibre-portable.*
 	rm debian/tmp/usr/lib/python*/site-packages/init_calibre.py
 	rmdir debian/tmp/usr/share/desktop-directories
-
+#
 #	# do not ship a copy of fonts-liberation
 	rm -r debian/tmp/usr/share/calibre/fonts/liberation/
 	ln -s /usr/share/fonts/truetype/liberation/ debian/tmp/usr/share/calibre/fonts/liberation
-
+#
 #	# fix executable permissions
 	find debian/tmp/usr/lib/calibre/calibre -type f -executable | xargs --no-run-if-empty chmod a-x
-
+#
 #	# fix "env python3" style hashbangs
 	find debian/tmp -type f | xargs sed -i '1 { /^#!.*python/ s_^.*$$_#!/usr/bin/python3_ }'
 
