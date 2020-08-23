@@ -19,7 +19,7 @@ endif
 %:
 	dh $@ --buildsystem=makefile
 
-.PHONY: get-orig-source test
+.PHONY: test
 
 DEB_DH_GENCONTROL_ARGS = -- -Vpyqt:Version=$(shell dpkg-query -f'$${Version}' -W python3-pyqt5)
 
