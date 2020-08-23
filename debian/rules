@@ -19,7 +19,7 @@ endif
 %:
 	dh $@ --buildsystem=makefile
 
-.PHONY: test
+.PHONY: calibre_auto_test
 
 DEB_DH_GENCONTROL_ARGS = -- -Vpyqt:Version=$(shell dpkg-query -f'$${Version}' -W python3-pyqt5)
 
@@ -36,11 +36,11 @@ override_dh_auto_build:
 	@echo 'blhc: ignore-line-regexp: \tCompiling form /.+\.ui'
 	[ -d build ] || $(SETUP) build
 
-# Invoke "test" target with automatic "HOME" and "XDG_*" variables.
+# Invoke "calibre_auto_test" target with automatic "HOME" and "XDG_*" variables.
 override_dh_auto_test:
-	dh_auto_test -O--buildsystem=makefile -- -f debian/rules
+	dh_auto_test -O--buildsystem=makefile -- -f debian/calibre-builder.mak
 
-test:
+calibre_auto_test:
 	LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC xvfb-run $(SETUP) test $(TEST_FLAGS)
 
 override_dh_install:
