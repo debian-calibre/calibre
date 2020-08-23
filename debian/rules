@@ -19,7 +19,7 @@ endif
 %:
 	dh $@ --buildsystem=makefile
 
-.PHONY: calibre_auto_test
+.PHONY: calibre_auto_test calibre_auto_install
 
 DEB_DH_GENCONTROL_ARGS = -- -Vpyqt:Version=$(shell dpkg-query -f'$${Version}' -W python3-pyqt5)
 
@@ -49,6 +49,9 @@ override_dh_install:
 	dh_install
 
 override_dh_auto_install:
+	dh_auto_install -O--buildsystem=makefile -- -f debian/calibre-builder.mak
+
+calibre_auto_install:
 	mkdir -p  debian/tmp/usr/share/icons/hicolor
 	mkdir -p  debian/tmp/usr/share/applications
 	mkdir -p  debian/tmp/usr/share/mime/packages
