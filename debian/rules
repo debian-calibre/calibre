@@ -58,6 +58,7 @@ override_dh_auto_install:
 #	# not needed
 	rm debian/tmp/usr/share/calibre/calibre-portable.*
 	rm debian/tmp/usr/lib/python*/site-packages/init_calibre.py
+	rmdir debian/tmp/usr/share/desktop-directories
 
 #	# do not ship a copy of fonts-liberation
 	rm -r debian/tmp/usr/share/calibre/fonts/liberation/
