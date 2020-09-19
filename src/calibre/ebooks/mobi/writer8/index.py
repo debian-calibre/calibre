@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 from polyglot.builtins import map
 
 __license__   = 'GPL v3'
@@ -129,7 +129,7 @@ class Index(object):  # {{{
                 shifts = mask_to_bit_shifts[mask]
                 ans |= mask & (nentries << shifts)
             if len(cbs) != cls.control_byte_count:
-                raise ValueError('The entry %r is invalid'%[lead_text, tags])
+                raise ValueError('The entry {!r} is invalid'.format([lead_text, tags]))
             control_bytes.append(cbs)
         return control_bytes
 

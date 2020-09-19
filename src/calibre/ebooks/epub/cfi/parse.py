@@ -1,14 +1,12 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__ = 'GPL v3'
 __copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
 
-import regex, sys
+import regex
 from polyglot.builtins import map, zip
-
-is_narrow_build = sys.maxunicode < 0x10ffff
 
 
 class Parser(object):
@@ -21,10 +19,7 @@ class Parser(object):
     def __init__(self):
         # All allowed unicode characters + escaped special characters
         special_char = r'[\[\](),;=^]'
-        if is_narrow_build:
-            unescaped_char = '[[\t\n\r -\ud7ff\ue000-\ufffd]--%s]' % special_char
-        else:
-            unescaped_char = '[[\t\n\r -\ud7ff\ue000-\ufffd\U00010000-\U0010ffff]--%s]' % special_char
+        unescaped_char = '[[\t\n\r -\ud7ff\ue000-\ufffd\U00010000-\U0010ffff]--%s]' % special_char
         escaped_char = r'\^' + special_char
         chars = r'(?:%s|(?:%s))+' % (unescaped_char, escaped_char)
         chars_no_space = chars.replace('0020', '0021')
@@ -62,6 +57,9 @@ class Parser(object):
     def parse_epubcfi(self, raw):
         ' Parse a full epubcfi of the form epubcfi(path [ , path , path ]) '
         null = {}, {}, {}, raw
+        if not raw:
+            return null
+
         if not raw.startswith('epubcfi('):
             return null
         raw = raw[len('epubcfi('):]
@@ -196,7 +194,7 @@ def cfi_sort_key(cfi, only_path=True):
         return (), (0, (0, 0), 0)
     if not pcfi:
         import sys
-        print('Failed to parse CFI: %r' % pcfi, file=sys.stderr)
+        print('Failed to parse CFI: %r' % cfi, file=sys.stderr)
         return (), (0, (0, 0), 0)
     steps = get_steps(pcfi)
     step_nums = tuple(s.get('num', 0) for s in steps)

@@ -8,16 +8,17 @@ from gettext import gettext as _
 import read_book.iframe  # noqa
 from ajax import ajax_send
 from book_list.globals import get_session_data
-from book_list.theme import cached_color_to_rgba, get_color
+from book_list.theme import cached_color_to_rgba, get_color, set_ui_colors
+from book_list.ui import query_as_href
 from dom import add_extra_css, build_rule, clear, set_css, svgicon, unique_id
 from iframe_comm import IframeWrapper
 from modals import error_dialog, warning_dialog
+from read_book.annotations import AnnotationsManager
+from read_book.bookmarks import create_new_bookmark
 from read_book.content_popup import ContentPopupOverlay
-from read_book.create_annotation import (
-    AnnotationsManager, CreateAnnotation, ViewAnnotation
-)
 from read_book.globals import (
-    current_book, runtime, set_current_spine_item, ui_operations
+    current_book, is_dark_theme, rtl_page_progression, runtime,
+    set_current_spine_item, ui_operations
 )
 from read_book.goto import get_next_section
 from read_book.open_book import add_book_to_recently_viewed
@@ -32,13 +33,15 @@ from read_book.prefs.scrolling import (
 from read_book.resources import load_resources
 from read_book.scrollbar import BookScrollbar
 from read_book.search import SearchOverlay, find_in_spine
+from read_book.selection_bar import SelectionBar
 from read_book.shortcuts import create_shortcut_map
 from read_book.timers import Timers
 from read_book.toc import get_current_toc_nodes, update_visible_toc_nodes
 from read_book.touch import set_left_margin_handler, set_right_margin_handler
 from session import get_device_uuid, get_interface_data
 from utils import (
-    html_escape, is_ios, parse_url_params, safe_set_inner_html, username_key
+    default_context_menu_should_be_allowed, html_escape, is_ios, parse_url_params,
+    safe_set_inner_html, username_key
 )
 from viewer.constants import READER_BACKGROUND_URL
 
@@ -50,7 +53,7 @@ add_extra_css(def():
     ans += build_rule(sel + ':hover > .not-arrow', display='none')
     ans += build_rule(sel + ':active > .not-arrow', display='none')
     ans += build_rule(sel + ':hover > .arrow', display='block')
-    ans += build_rule(sel + ':active > .arrow', color=get_color('window-hover-foreground'), display='block', transform='scale(2)')
+    ans += build_rule(sel + ':active > .arrow', display='block', transform='scale(2)')
     return ans
 )
 
@@ -93,7 +96,7 @@ def show_controls_help():
             E.input(style='background: transparent; border-width: 0; outline: none', readonly='readonly'),
         ))
         div = container.lastChild.firstChild
-        safe_set_inner_html(div, _('Welcome to the <b>calibre viewer</b>!'))
+        safe_set_inner_html(div, _('Welcome to the <b>calibre E-book viewer</b>!'))
         div = div.nextSibling
         safe_set_inner_html(div, _('Use the <b>PageUp/PageDn</b> or <b>Arrow keys</b> to turn pages'))
         div = div.nextSibling
@@ -108,6 +111,19 @@ def show_controls_help():
     def msg(txt):
         return set_css(E.div(txt), padding='1ex 1em', text_align='center', margin='auto')
 
+    left_msg = msg(_('Tap to turn back'))
+    left_width = '25vw'
+    right_msg = msg(_('Tap to turn page'))
+    right_width = '75vw'
+    if rtl_page_progression():
+        left_msg, right_msg = right_msg, left_msg
+        left_width, right_width = right_width, left_width
+
+    # Clear it out if this is not the first time it's created.
+    # Needed to correctly show it again in a different page progression direction.
+    if container.firstChild:
+        container.removeChild(container.firstChild)
+
     container.appendChild(E.div(
         style=f'overflow: hidden; width: 100vw; height: 100vh; text-align: center; font-size: 1.3rem; font-weight: bold; background: {get_color("window-background")};' +
                 'display:flex; flex-direction: column; align-items: stretch',
@@ -118,12 +134,12 @@ def show_controls_help():
         E.div(
             style="display: flex; align-items: stretch; flex-grow: 10",
             E.div(
-                msg(_('Tap to turn back')),
-                style='width: 25vw; display:flex; align-items: center; border-right: solid 2px currentColor',
+                left_msg,
+                style=f'width: {left_width}; display:flex; align-items: center; border-right: solid 2px currentColor',
             ),
             E.div(
-                msg(_('Tap to turn page')),
-                style='width: 75vw; display:flex; align-items: center',
+                right_msg,
+                style=f'width: {right_width}; display:flex; align-items: center',
             )
         )
     ))
@@ -189,6 +205,7 @@ class View:
         self.loaded_resources = {}
         self.current_progress_frac = self.current_file_progress_frac = 0
         self.current_toc_node = self.current_toc_toplevel_node = None
+        self.current_toc_family = v'[]'
         self.report_cfi_callbacks = {}
         self.get_cfi_counter = 0
         self.show_loading_callback_timer = None
@@ -209,7 +226,8 @@ class View:
         container.appendChild(
             E.div(style='max-height: 100vh; width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: stretch',  # container for horizontally aligned panels
                 oncontextmenu=def (ev):
-                    ev.preventDefault()
+                    if not default_context_menu_should_be_allowed(ev):
+                        ev.preventDefault()
                 ,
 
                 E.div(style='max-height: 100vh; display: flex; flex-direction: column; align-items: stretch; flex-grow:2',  # container for iframe and any other panels in the same column
@@ -222,12 +240,11 @@ class View:
                         ),
                         right_margin,
                         self.book_scrollbar.create(),
+                        E.div(style='position: absolute; top:0; left:0; width: 100%; height: 100%; display:none;', id='book-selection-bar-overlay'),  # selection bar overlay
                         E.div(style='position: absolute; top:0; left:0; width: 100%; pointer-events:none; display:none', id='book-search-overlay'),  # search overlay
                         E.div(style='position: absolute; top:0; left:0; width: 100%; height: 100%; display:none', id='book-content-popup-overlay'),  # content popup overlay
                         E.div(style='position: absolute; top:0; left:0; width: 100%; height: 100%; overflow: auto; display:none', id='book-overlay'),  # main overlay
                         E.div(style='position: absolute; top:0; left:0; width: 100%; height: 100%; display:none', id='controls-help-overlay'),  # controls help overlay
-                        E.div(style='position: absolute; top:0; left:0; width: 100%; height: 100%; display:none; overflow: hidden', id=CreateAnnotation.container_id, tabindex='0'),  # create annotation overlay
-                        E.div(style='position: absolute; top:0; left:0; width: 100%; height: 100%; pointer-events:none; display:none; z-index: 4000', id=ViewAnnotation.container_id),  # view annotation overlay
                     )
                 ),
                 E.div(
@@ -247,11 +264,11 @@ class View:
             'content_loaded': self.on_content_loaded,
             'error': self.on_iframe_error,
             'find_in_spine': self.on_find_in_spine,
+            'invisible_text': self.on_invisible_text,
             'goto_doc_boundary': def(data): self.goto_doc_boundary(data.start);,
             'handle_keypress': self.on_handle_keypress,
             'handle_shortcut': self.on_handle_shortcut,
             'human_scroll': self.on_human_scroll,
-            'lookup_word': self.on_lookup_word,
             'next_section': self.on_next_section,
             'next_spine_item': self.on_next_spine_item,
             'print': self.on_print,
@@ -261,6 +278,7 @@ class View:
             'request_size': self.on_request_size,
             'scroll_to_anchor': self.on_scroll_to_anchor,
             'selectionchange': self.on_selection_change,
+            'update_selection_position': self.update_selection_position,
             'columns_per_screen_changed': self.on_columns_per_screen_changed,
             'show_chrome': self.show_chrome,
             'show_footnote': self.on_show_footnote,
@@ -273,8 +291,7 @@ class View:
             ,
             'annotations': self.on_annotations_message,
             'copy_text_to_clipboard': def(data):
-                if ui_operations.copy_selection:
-                    ui_operations.copy_selection(data.text)
+                ui_operations.copy_selection(data.text)
             ,
             'view_image': def(data):
                 if ui_operations.view_image:
@@ -282,22 +299,23 @@ class View:
             ,
         }
         entry_point = None if runtime.is_standalone_viewer else 'read_book.iframe'
+        self.current_color_scheme = resolve_color_scheme()
         if runtime.is_standalone_viewer:
             document.documentElement.addEventListener('keydown', self.handle_keypress, {'passive': False})
-        self.current_color_scheme = resolve_color_scheme()
+            set_ui_colors(self.current_color_scheme.is_dark_theme)
+        is_dark_theme(self.current_color_scheme.is_dark_theme)
         self.iframe_wrapper = IframeWrapper(
             handlers, document.getElementById(iframe_id), entry_point, _('Bootstrapping book reader...'),
             f'{runtime.FAKE_PROTOCOL}://{runtime.SANDBOX_HOST}/book/__index__')
         self.search_overlay = SearchOverlay(self)
         self.content_popup_overlay = ContentPopupOverlay(self)
         self.overlay = Overlay(self)
+        self.selection_bar = SelectionBar(self)
         self.processing_spine_item_display = False
         self.pending_load = None
-        self.currently_showing = {}
+        self.currently_showing = {'selection': {'empty': True}}
         self.book_scrollbar.apply_visibility()
         self.annotations_manager = AnnotationsManager(self)
-        self.create_annotation = CreateAnnotation(self)
-        self.view_annotation = ViewAnnotation(self)
 
     @property
     def iframe(self):
@@ -316,20 +334,17 @@ class View:
         sd = get_session_data()
         self.set_scrollbar_visibility(not sd.get('book_scrollbar'))
 
-    def on_lookup_word(self, data):
-        if runtime.is_standalone_viewer:
-            ui_operations.selection_changed(data.word)
-            return
-        self.overlay.show_word_actions(data.word)
-
     def on_annotations_message(self, data):
-        self.create_annotation.handle_message(data)
+        self.selection_bar.handle_message(data)
 
     def left_margin_clicked(self, event):
         if event.button is 0:
             event.preventDefault(), event.stopPropagation()
             sd = get_session_data()
-            self.iframe_wrapper.send_message('next_screen', backwards=True, all_pages_on_screen=sd.get('paged_margin_clicks_scroll_by_screen'))
+            self.iframe_wrapper.send_message(
+                'next_screen', backwards=True,
+                flip_if_rtl_page_progression=True,
+                all_pages_on_screen=sd.get('paged_margin_clicks_scroll_by_screen'))
         elif event.button is 2:
             event.preventDefault(), event.stopPropagation()
             window.setTimeout(self.show_chrome, 0)
@@ -339,7 +354,10 @@ class View:
         if event.button is 0:
             event.preventDefault(), event.stopPropagation()
             sd = get_session_data()
-            self.iframe_wrapper.send_message('next_screen', backwards=False, all_pages_on_screen=sd.get('paged_margin_clicks_scroll_by_screen'))
+            self.iframe_wrapper.send_message(
+                'next_screen', backwards=False,
+                flip_if_rtl_page_progression=True,
+                all_pages_on_screen=sd.get('paged_margin_clicks_scroll_by_screen'))
         elif event.button is 2:
             event.preventDefault(), event.stopPropagation()
             window.setTimeout(self.show_chrome, 0)
@@ -416,6 +434,10 @@ class View:
             self.iframe_wrapper.send_message('overlay_visibility_changed', visible=visible)
         if ui_operations.overlay_visibility_changed:
             ui_operations.overlay_visibility_changed(visible)
+        if visible:
+            self.selection_bar.hide()
+        else:
+            self.selection_bar.update_position()
 
     def on_handle_shortcut(self, data):
         if data.name is 'back':
@@ -429,13 +451,14 @@ class View:
         elif data.name is 'toggle_toc':
             ui_operations.toggle_toc()
         elif data.name is 'toggle_bookmarks':
-            ui_operations.toggle_bookmarks()
+            if ui_operations.toggle_bookmarks:
+                ui_operations.toggle_bookmarks()
+            else:
+                self.overlay.show_bookmarks()
         elif data.name is 'toggle_highlights':
             ui_operations.toggle_highlights()
-        elif data.name is 'create_annotation':
-            self.iframe_wrapper.send_message('create_annotation')
         elif data.name is 'new_bookmark':
-            ui_operations.new_bookmark()
+            self.new_bookmark()
         elif data.name is 'toggle_inspector':
             ui_operations.toggle_inspector()
         elif data.name is 'toggle_lookup':
@@ -467,8 +490,8 @@ class View:
         elif data.name is 'reload_book':
             ui_operations.reload_book()
         elif data.name is 'search_for_selection':
-            if self.currently_showing.selected_text:
-                self.search_overlay.set_text(self.currently_showing.selected_text)
+            if self.currently_showing.selection.text:
+                self.search_overlay.set_text(self.currently_showing.selection.text)
                 self.search_overlay.find_next()
         elif data.name is 'next_section':
             self.on_next_section({'forward': True})
@@ -478,10 +501,16 @@ class View:
             self.overlay.open_book()
         elif data.name is 'next':
             self.iframe_wrapper.send_message(
-                'next_screen', backwards=False, all_pages_on_screen=get_session_data().get('paged_margin_clicks_scroll_by_screen'))
+                'next_screen', backwards=False,
+                flip_if_rtl_page_progression=False,
+                all_pages_on_screen=get_session_data().get('paged_margin_clicks_scroll_by_screen'))
         elif data.name is 'previous':
             self.iframe_wrapper.send_message(
-                'next_screen', backwards=True, all_pages_on_screen=get_session_data().get('paged_margin_clicks_scroll_by_screen'))
+                'next_screen', backwards=True,
+                flip_if_rtl_page_progression=False,
+                all_pages_on_screen=get_session_data().get('paged_margin_clicks_scroll_by_screen'))
+        elif data.name is 'clear_selection':
+            self.iframe_wrapper.send_message('clear_selection')
         elif data.name is 'print':
             ui_operations.print_book()
         elif data.name is 'preferences':
@@ -512,9 +541,30 @@ class View:
             self.iframe_wrapper.send_message('handle_navigation_shortcut', name=data.name)
 
     def on_selection_change(self, data):
-        self.currently_showing.selected_text = data.text
+        self.currently_showing.selection = {
+            'text': data.text, 'empty': data.empty, 'start': data.selection_extents.start,
+            'end': data.selection_extents.end, 'annot_id': data.annot_id,
+            'drag_mouse_position': data.drag_mouse_position,
+            'selection_change_caused_by_search': data.selection_change_caused_by_search,
+            'rtl': data.rtl, 'vertical': data.vertical
+        }
         if ui_operations.selection_changed:
-            ui_operations.selection_changed(data.text)
+            ui_operations.selection_changed(self.currently_showing.selection.text, self.currently_showing.selection.annot_id)
+        self.selection_bar.update_position()
+
+    def new_bookmark(self):
+        if ui_operations.new_bookmark:
+            self.get_current_cfi('new-bookmark', ui_operations.new_bookmark)
+        else:
+            self.get_current_cfi('new-bookmark', def (req_id, data):
+                create_new_bookmark(self.annotations_manager, data)
+            )
+
+    def update_selection_position(self, data):
+        sel = self.currently_showing.selection
+        sel.start = data.selection_extents.start
+        sel.end = data.selection_extents.end
+        self.selection_bar.update_position()
 
     def on_columns_per_screen_changed(self, data):
         sd = get_session_data()
@@ -544,6 +594,13 @@ class View:
 
     def find(self, text, backwards):
         self.iframe_wrapper.send_message('find', text=text, backwards=backwards, searched_in_spine=False)
+
+    def on_invisible_text(self, data):
+        warning_dialog(
+                _('Not found'), _('The text: <i>{}</i> is present on this page but not visible').format(html_escape(data.text)),
+                on_close=def():
+                    self.search_overlay.show()
+            )
 
     def on_find_in_spine(self, data):
         if data.searched_in_spine:
@@ -590,12 +647,13 @@ class View:
         self.search_overlay.hide()
         self.content_popup_overlay.hide()
         self.reference_mode_overlay.style.display = 'none'
-        self.create_annotation.hide()
-        self.view_annotation.hide()
         self.focus_iframe()
 
     def focus_iframe(self):
-        self.iframe.contentWindow.focus()
+        if self.selection_bar.is_visible:
+            self.selection_bar.focus()
+        else:
+            self.iframe.contentWindow.focus()
 
     def show_chrome(self, data):
         elements = {}
@@ -623,12 +681,17 @@ class View:
 
         self.get_current_cfi('prepare-close', close_prepared)
 
-    def show_search(self):
+    def show_search(self, trigger):
         self.hide_overlays()
+        text = self.currently_showing.selection.text
         if runtime.is_standalone_viewer:
-            ui_operations.show_search()
+            ui_operations.show_search(text or '', trigger)
         else:
-            self.search_overlay.show()
+            if text:
+                self.search_overlay.set_text(text)
+            self.search_overlay.show(text)
+            if trigger and text:
+                self.search_overlay.find_next()
 
     def show_content_popup(self):
         self.hide_overlays()
@@ -688,8 +751,10 @@ class View:
         ui_operations.show_error(title, data.msg, data.details)
 
     def apply_color_scheme(self):
-        ans = resolve_color_scheme()
-        self.current_color_scheme = ans
+        self.current_color_scheme = ans = resolve_color_scheme()
+        if runtime.is_standalone_viewer:
+            set_ui_colors(self.current_color_scheme.is_dark_theme)
+        is_dark_theme(self.current_color_scheme.is_dark_theme)
         for which in 'left top right bottom'.split(' '):
             m = document.getElementById('book-{}-margin'.format(which))
             s = m.style
@@ -763,7 +828,14 @@ class View:
                 cfi =  '/' + rest
         return name, cfi
 
-    def display_book(self, book, initial_position):
+    def open_book_page(self):
+        # Open the page for the current book in a new tab
+        if self.book and self.book.key:
+            window.open(query_as_href({
+                'library_id': self.book.key[0], 'book_id': self.book.key[1] + '', 'close_action': 'book_list',
+            }, 'book_details'))
+
+    def display_book(self, book, initial_position, is_redisplay):
         self.hide_overlays()
         self.iframe.focus()
         is_current_book = self.book and self.book.key == book.key
@@ -774,14 +846,23 @@ class View:
             self.loaded_resources = {}
             self.content_popup_overlay.loaded_resources = {}
             self.timers.start_book(book)
+        unkey = username_key(get_interface_data().username)
         self.book = current_book.book = book
-        self.annotations_manager.set_highlights(book.highlights or v'[]')
-        if runtime.is_standalone_viewer:
-            add_book_to_recently_viewed(book)
+        hl = None
+        if not is_redisplay:
+            if runtime.is_standalone_viewer:
+                hl = book.highlights
+                v'delete book.highlights'
+            else:
+                if unkey and book.annotations_map[unkey]:
+                    hl = book.annotations_map[unkey].highlight
+                    self.annotations_manager.set_bookmarks(book.annotations_map[unkey].bookmark or v'[]')
+            self.annotations_manager.set_highlights(hl or v'[]')
+            if runtime.is_standalone_viewer:
+                add_book_to_recently_viewed(book)
         if ui_operations.update_last_read_time:
             ui_operations.update_last_read_time(book)
         pos = {'replace_history':True}
-        unkey = username_key(get_interface_data().username)
         name = book.manifest.spine[0]
         cfi = None
         if initial_position and initial_position.type is 'cfi' and initial_position.data.startswith('epubcfi(/'):
@@ -810,10 +891,10 @@ class View:
         else:
             self.show_name(name, initial_position=pos)
         sd = get_session_data()
-        c = sd.get('controls_help_shown_count', 0)
+        c = sd.get('controls_help_shown_count' + ('_rtl_page_progression' if rtl_page_progression() else ''), 0)
         if c < 2:
             show_controls_help()
-            sd.set('controls_help_shown_count', c + 1)
+            sd.set('controls_help_shown_count' + ('_rtl_page_progression' if rtl_page_progression() else ''), c + 1)
 
     def preferences_changed(self):
         ui_operations.update_url_state(True)
@@ -821,12 +902,16 @@ class View:
 
     def redisplay_book(self):
         # redisplay_book() is called when settings are changed
+        if not self.book:
+            if runtime.is_standalone_viewer:
+                self.overlay.open_book()
+            return
         sd = get_session_data()
         self.keyboard_shortcut_map = create_shortcut_map(sd.get('keyboard_shortcuts'))
         if ui_operations.export_shortcut_map:
             ui_operations.export_shortcut_map(self.keyboard_shortcut_map)
         self.book_scrollbar.apply_visibility()
-        self.display_book(self.book)
+        self.display_book(self.book, None, True)
 
     def iframe_settings(self, name):
         sd = get_session_data()
@@ -834,7 +919,6 @@ class View:
         cs = self.apply_color_scheme()
         fade = int(sd.get('background_image_fade'))
         rgba = cached_color_to_rgba(cs.background)
-        is_dark_theme = max(rgba[0], rgba[1], rgba[2]) < 115
         if self.iframe.style.backgroundImage is not 'none' and fade > 0:
             bg_image_fade = f'rgba({rgba[0]}, {rgba[1]}, {rgba[2]}, {fade/100})'
         return {
@@ -846,7 +930,7 @@ class View:
             'columns_per_screen': sd.get('columns_per_screen'),
             'color_scheme': cs,
             'override_book_colors': sd.get('override_book_colors'),
-            'is_dark_theme': is_dark_theme,
+            'is_dark_theme': cs.is_dark_theme,
             'bg_image_fade': bg_image_fade,
             'base_font_size': sd.get('base_font_size'),
             'user_stylesheet': sd.get('user_stylesheet'),
@@ -871,7 +955,7 @@ class View:
         idx = spine.indexOf(name)
         self.currently_showing = {
             'name':name, 'settings':self.iframe_settings(name), 'initial_position':initial_position,
-            'loading':True, 'spine_index': idx
+            'loading':True, 'spine_index': idx, 'selection': {'empty': True},
         }
         self.show_loading()
         set_current_spine_item(name)
@@ -982,6 +1066,21 @@ class View:
             process_node(toc)
         return found
 
+    def sync_data_received(self, reading_pos_cfi, annotations_map):
+        if annotations_map:
+            ui_operations.annotations_synced(annotations_map)
+            if annotations_map.highlight:
+                if self.annotations_manager.merge_highlights(annotations_map.highlight):
+                    hl = self.annotations_manager.highlights_for_currently_showing()
+                    self.iframe_wrapper.send_message('replace_highlights', highlights=hl)
+        if reading_pos_cfi:
+            self.goto_cfi(reading_pos_cfi)
+
+    def set_notes_for_highlight(self, uuid, notes):
+        if self.annotations_manager.set_notes_for_highlight(uuid, notes):
+            self.selection_bar.notes_edited(uuid)
+            self.selection_bar.update_position()
+
     def on_next_spine_item(self, data):
         spine = self.book.manifest.spine
         idx = spine.indexOf(self.currently_showing.name)
@@ -1008,17 +1107,17 @@ class View:
         self.iframe_wrapper.send_message('get_current_cfi', request_id=request_id)
 
     def update_cfi_data(self, data):
-        self.currently_showing.bookpos = data.cfi
-        self.currently_showing.selected_text = data.selected_text
         username = get_interface_data().username
-        unkey = username_key(username)
-        if not self.book.last_read_position:
-            self.book.last_read_position = {}
-        self.book.last_read_position[unkey] = data.cfi
-        self.set_progress_frac(data.progress_frac, data.file_progress_frac)
-        self.update_header_footer()
-        if ui_operations.update_last_read_time:
-            ui_operations.update_last_read_time(self.book)
+        if self.book:
+            self.currently_showing.bookpos = data.cfi
+            unkey = username_key(username)
+            if not self.book.last_read_position:
+                self.book.last_read_position = {}
+            self.book.last_read_position[unkey] = data.cfi
+            self.set_progress_frac(data.progress_frac, data.file_progress_frac)
+            self.update_header_footer()
+            if ui_operations.update_last_read_time:
+                ui_operations.update_last_read_time(self.book)
         return username
 
     def on_report_cfi(self, data):
@@ -1029,6 +1128,7 @@ class View:
                 'progress_frac': data.progress_frac,
                 'file_progress_frac': data.file_progress_frac,
                 'selected_text': data.selected_text,
+                'selection_bounds': data.selection_bounds,
             })
             v'delete self.report_cfi_callbacks[data.request_id]'
 
@@ -1112,7 +1212,12 @@ class View:
 
     def on_update_toc_position(self, data):
         update_visible_toc_nodes(data.visible_anchors)
-        self.current_toc_node, self.current_toc_toplevel_node = get_current_toc_nodes()
+        self.current_toc_family = get_current_toc_nodes()
+        if self.current_toc_family.length:
+            self.current_toc_node = self.current_toc_family[-1]
+            self.current_toc_toplevel_node = self.current_toc_family[0]
+        else:
+            self.current_toc_node = self.current_toc_toplevel_node = None
         if runtime.is_standalone_viewer:
             ui_operations.update_current_toc_nodes(self.current_toc_node?.id, self.current_toc_toplevel_node?.id)
         self.update_header_footer()
@@ -1138,6 +1243,7 @@ class View:
         )
 
     def on_content_loaded(self, data):
+        self.selection_bar.hide()
         self.processing_spine_item_display = False
         self.currently_showing.loading = False
         self.hide_loading()
@@ -1194,22 +1300,17 @@ class View:
             self.show_name(sr.file_name, initial_position={'type':'search_result', 'search_result':sr, 'replace_history':True})
 
     def highlight_action(self, uuid, which):
-        if self.create_annotation.is_visible:
-            return
-        if which is 'create':
-            self.iframe_wrapper.send_message('create_annotation')
-            return
         spine = self.book.manifest.spine
         spine_index = self.annotations_manager.spine_index_for_highlight(uuid, spine)
         if spine_index < 0 or spine_index >= spine.length:
             return
         if which is 'edit':
             if self.currently_showing.spine_index is spine_index:
-                self.create_annotation.edit_highlight(uuid)
+                self.selection_bar.edit_highlight(uuid)
             else:
                 self.show_name(spine[spine_index], initial_position={'type':'edit_annotation', 'uuid': uuid, 'replace_history':True})
         elif which is 'delete':
-            self.create_annotation.remove_highlight(uuid)
+            self.selection_bar.remove_highlight_with_id(uuid)
         elif which is 'goto':
             cfi = self.annotations_manager.cfi_for_highlight(uuid, spine_index)
             if cfi:

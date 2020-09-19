@@ -5,6 +5,14 @@
 # for important features/bug fixes.
 # Also, each release can have new and improved recipes.
 
+# changes for 5
+# viewer supports annotations
+# viewer works with RTL and vertical text
+# python upgraded to python 3 link to list of not ported plugins
+# regex engine used for searching book list and metadata from file names made more powerful
+# dark mode support in the content server and viewer UIs
+# content server viewer can now browse and create bookmarks
+
 - version: 4.23.0
   date: 2020-08-21
 
@@ -14,7 +22,7 @@
     - title: "Edit book: Allow customizing the base background/foreground and link colors for the preview window."
       tickets: [1889925]
 
-    - title: "Quickview panel: Add actions to the context menu to search for book in library, open in viewer, etc."
+    - title: "Quickview panel: Add actions to the context menu to search for book in library, open in E-book viewer, etc."
       tickets: [1891765]
 
     - title: "Allow forcing calibre to remember the column width for the On device column by right clicking the header of the column"
@@ -180,7 +188,7 @@
     - title: "Book details panel: Fix a regression that caused right clicking on an author name to manage it not opening with that name selected."
       tickets: [1883768]
 
-    - title: "calibredb set_metadata: When converting a string into a datetime if the string is a full ISO 8601 date with timezone do not adjust the date to make it timezone neutral."
+    - title: "calibredb set_metadata: When converting a string into a date and time if the string is a full ISO 8601 date with timezone do not adjust the date to make it timezone neutral."
       tickets: [1883433]
 
     - title: "Edit book: Fix Check book spuriously reporting incorrect mime type warnings for fonts after upgrading a book from EPUB 2 to EPUB 3."
@@ -732,7 +740,7 @@
     - title: "Viewer: Allow modifying the current selection using Ctrl+Shift+Arrow."
       tickets: [1855942]
 
-    - title: "Book details: Add an option in Preferences->Look & feel->Book details to show a heading for the comments in the book details panel"
+    - title: "Book details: Add an option in Preferences->Look & feel->Book details to show a heading for the comments in the Book details panel"
       tickets: [1855942]
 
     - title: "Edit book: Spell check: Ignore soft hyphens in words"
@@ -1230,7 +1238,7 @@
     - title: "LIT Output: Fix regression in 3.41 caused by py3 porting that broke conversion of some files to LIT."
       tickets: [1837561]
 
-    - title: "Version 3.47.1 fixes an error when using internet lookup from the book details panel and the e-book viewer, and also the tweak to control number of columns in the edit metadata dialog not working"
+    - title: "Version 3.47.1 fixes an error when using internet lookup from the book details panel and the E-book viewer, and also the tweak to control number of columns in the edit metadata dialog not working"
       tickets: [1842158,1842183,1842090,1842201]
 
   improved recipes:
@@ -1854,7 +1862,7 @@ to appear as Unknown if metadata management was set to manual in calibre."
     - title: "Edit book: Insert image dialog: Add buttons to change the image thumbnail size."
       tickets: [1791428]
 
-    - title: "Book details panel: Allow right clicking on a format to open it in the calibre editor"
+    - title: "Book details panel: Allow right clicking on a format to open it in the calibre E-book editor"
 
     - title: "Edit metadata dialog: Allow viewing or editing specific formats by right clicking the format in the formats list"
 

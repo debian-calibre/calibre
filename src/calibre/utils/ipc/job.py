@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -60,10 +60,8 @@ class BaseJob(object):
                 self._status_text = _('Error') if self.failed else _('Finished')
             if DEBUG:
                 try:
-                    prints('Job:', self.id, self.description, 'finished',
-                        safe_encode=True)
-                    prints('\t'.join(self.details.splitlines(True)),
-                        safe_encode=True)
+                    prints('Job:', self.id, self.description, 'finished')
+                    prints('\t'.join(self.details.splitlines(True)))
                 except:
                     pass
             if not self._done_called:

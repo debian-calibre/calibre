@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-03 07:43+0530\n"
-"PO-Revision-Date: 2020-07-05 12:03+0000\n"
+"POT-Creation-Date: 2020-09-02 05:23+0000\n"
+"PO-Revision-Date: 2020-09-01 16:32+0000\n"
 "Last-Translator: Jellby <jellby@yahoo.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/calibre/calibre/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -20,11 +20,11 @@ msgstr ""
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:2
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:2
 msgid "Function mode for Search & replace in the Editor"
 msgstr "Modo de función para buscar y sustituir en el editor"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:4
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:4
 msgid ""
 "The :guilabel:`Search & replace` tool in the editor support a *function "
 "mode*. In this mode, you can combine regular expressions (see :doc:`regexp`)"
@@ -32,7 +32,7 @@ msgid ""
 " processing."
 msgstr "La herramienta :guilabel:`Buscar y sustituir` en el editor admite un *modo de función*. En este modo se pueden combinar expresiones regulares (ver :doc:`regexp`) con funciones Python de complejidad arbitraria para realizar todo tipo de procesamiento de texto avanzado."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:9
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:9
 msgid ""
 "In the standard *regexp* mode for search and replace, you specify both a "
 "regular expression to search for as well as a template that is used to "
@@ -42,25 +42,25 @@ msgid ""
 "that are not possible with simple templates."
 msgstr "En el modo estándar de *expresiones regulares* para buscar y sustituir, se especifica una expresión regular para buscar y una plantilla que se usa para sustituir todas las coincidencias. En el modo de función, en lugar de usar una sola plantilla, se especifica una función arbitraria en el `lenguaje de programación Python <https://docs.python.org/>`_. Esto le permite hacer muchas cosas que no son posibles sólo con plantillas."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:16
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:16
 msgid ""
 "Techniques for using function mode and the syntax will be described by means"
 " of examples, showing you how to create functions to perform progressively "
 "more complex tasks."
 msgstr "Algunas técnicas para usar el modo de función y su sintaxis se describirán a través de ejemplos, que le mostrarán cómo crear funciones para realizar tareas cada vez más complejas."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:26
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:26
 msgid "Automatically fixing the case of headings in the document"
 msgstr "Corregir automáticamente las mayúsculas y minúsculas en las cabeceras del documento"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:28
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:28
 msgid ""
 "Here, we will leverage one of the builtin functions in the editor to "
 "automatically change the case of all text inside heading tags to title "
 "case::"
 msgstr "Aquí aprovecharemos una de las funciones incorporadas del editor para poner la primera letra de cada palabra dentro de una etiqueta de encabezado en mayúscula::"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:33
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:33
 msgid ""
 "For the function, simply choose the :guilabel:`Title-case text (ignore "
 "tags)` builtin function. The will change titles that look like: ``<h1>some "
@@ -68,11 +68,11 @@ msgid ""
 "other HTML tags inside the heading tags."
 msgstr "Como función, elija la función predefinida :guilabel:`Capitalize (ignore tags)`. Esto cambiará los títulos de la forma ``<h1>algún TÍTULO</h1>`` a ``<h1>Algún título</h1>``. Funcionará incluso si hay otras etiquetas HTML en la etiqueta de cabecera."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:40
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:40
 msgid "Your first custom function - smartening hyphens"
 msgstr "La primera función personalizada: mejorar guiones"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:42
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:42
 msgid ""
 "The real power of function mode comes from being able to create your own "
 "functions to process text in arbitrary ways. The Smarten Punctuation tool in"
@@ -80,13 +80,13 @@ msgid ""
 "function to replace them with em-dashes."
 msgstr "La verdadera potencia del modo de función procede de la posibilidad de crear funciones propias para procesar el texto de manera arbitraria. La herramienta Mejorar puntuación del editor no modifica los guiones aislados, así que puede usar esta función para sustituirlos por rayas."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:47
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:47
 msgid ""
 "To create a new function, simply click the :guilabel:`Create/edit` button to"
 " create a new function and copy the Python code from below."
 msgstr "Para crear una nueva función, simplemente pulse en el botón :guilabel:`Crear o modificar` y copie el código Python siguiente."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:55
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:55
 msgid ""
 "Every :guilabel:`Search & replace` custom function must have a unique name "
 "and consist of a Python function named replace, that accepts all the "
@@ -99,34 +99,34 @@ msgid ""
 "double hyphens and then single hyphens."
 msgstr "Toda función personalizada de :guilabel:`Buscar y sustituir` debe tener un nombre único y consister en una función Python llamada «replace», que acepte todos los argumentos mostrados arriba. Por ahora no vamos a preocuparnos de los diferentes argumentos de la función ``replace()``. Fíjese sólo en el argumento ``match``. Representa una coincidencia al realizar una búsqueda y sustitución. La documentación completa se encuentra `aquí <https://docs.python.org/library/re.html#match-objects>`_. ``match.group()`` devuelve todo el texto de la coincidencia y todo lo que hacemos es sustituir los guiones del texto por rayas, sustituyendo primero los guiones dobles y luego los sencillos."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:65
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:65
 msgid "Use this function with the find regular expression::"
 msgstr "Use esta función con la expresión regular de búsqueda::"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:69
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:69
 msgid ""
 "And it will replace all hyphens with em-dashes, but only in actual text and "
 "not inside HTML tag definitions."
 msgstr "Y sustituirá todos los guiones por rayas, pero sólo en texto real y no dentro de las definiciones de etiqueta HTML."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:74
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:74
 msgid ""
 "The power of function mode - using a spelling dictionary to fix mis-"
 "hyphenated words"
 msgstr "La potencia del modo de función: usar un diccionario para corregir palabras mal divididas por guiones"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:76
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:76
 msgid ""
 "Often, e-books created from scans of printed books contain mis-hyphenated "
 "words -- words that were split at the end of the line on the printed page. "
 "We will write a simple function to automatically find and fix such words."
 msgstr "A menudo, los libros electrónicos creados a partir de imágenes de libros impresos contienen palabras mal divididas por guiones: palabras que estaban divididas al final de un renglón en la página impresa. Vamos a escribir una función sencilla para encontrar y corregir automáticamente estas palabras."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:101
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:101
 msgid "Use this function with the same find expression as before, namely::"
 msgstr "Use esta función con la misma expresión de búsqueda anterior, es decir::"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:105
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:105
 msgid ""
 "And it will magically fix all mis-hyphenated words in the text of the book. "
 "The main trick is to use one of the useful extra arguments to the replace "
@@ -137,18 +137,18 @@ msgid ""
 " replaced by the hyphen free composite word."
 msgstr "Y corregirá automáticamente todas las palabras con guiones incorrectos en el el texto del libro. El truco principal es utilizar uno de los argumentos adicionales de la función «replace»: ``dictionaries``. Esto se refiere a los diccionarios que el propio editor usa para comprobar la ortografía en el libro. Lo que hace esta función es buscar palabras unidas por un guión, eliminar el guión y comprobar si el diccionario reconoce la palabra compuesta; si lo hace, las palabras originales se sustituyen por la palabra sin guión."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:113
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:113
 msgid ""
 "Note that one limitation of this technique is it will only work for mono-"
 "lingual books, because, by default, ``dictionaries.recognized()`` uses the "
 "main language of the book."
 msgstr "Tenga en cuenta que una limitación de esta técnica es que sólo funciona par libros monolingües, porque de manera predeterminada ``dictionaries.recognized()``usa el idioma principal del libro."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:119
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:119
 msgid "Auto numbering sections"
 msgstr "Enumerar secciones automáticamente"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:121
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:121
 msgid ""
 "Now we will see something a little different. Suppose your HTML file has "
 "many sections, each with a heading in an :code:`<h2>` tag that looks like "
@@ -157,23 +157,23 @@ msgid ""
 "that they look like :code:`<h2>1. Some text</h2>`."
 msgstr "Ahora veremos algo un poco diferente. Supongamos que un archivo HTML tiene muchas secciones, cada una con una cabecera en una etiqueta :code:`<h2>` de esta forma: :code:`<h2>Algún texto</h2>`. Puede crear una función personalizada que numere automáticamente estas cabeceras con números consecutivos, para que tengan esta forma: :code:`<h2>1. Algún texto</h2>`."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:137
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:137
 msgid "Use it with the find expression::"
 msgstr "Úselo con la expresión de búsqueda::"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:141
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:141
 msgid ""
 "Place the cursor at the top of the file and click :guilabel:`Replace all`."
 msgstr "Coloque el cursor al principio del archivo y pulse :guilabel:`Sustituir todo`."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:143
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:143
 msgid ""
 "This function uses another of the useful extra arguments to ``replace()``: "
 "the ``number`` argument. When doing a :guilabel:`Replace All` number is "
 "automatically incremented for every successive match."
 msgstr "Esta función usa otro de los prácticos argumentos adicionales de ``replace()``: el argumento ``number``. Al usar :guilabel:`Sustituir todo`, ``number`` se incrementa automáticamente en cada coincidencia."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:147
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:147
 msgid ""
 "Another new feature is the use of ``replace.file_order`` -- setting that to "
 "``'spine'`` means that if this search is run on multiple HTML files, the "
@@ -181,11 +181,11 @@ msgid ""
 ":ref:`file_order_replace_all` for details."
 msgstr "Otra característica nueva es el uso de ``replace.file_order``. Establecerlo en ``'spine'`` significa que si la búsqueda se ejecuta sobre múltiples archivos HTML, los archivos se procesarán en el orden en el que aparecen en el libro. Más detalles en :ref:`file_order_replace_all`."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:154
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:154
 msgid "Auto create a Table of Contents"
 msgstr "Crear un índice automáticamente"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:156
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:156
 msgid ""
 "Finally, lets try something a little more ambitious. Suppose your book has "
 "headings in ``h1`` and ``h2`` tags that look like ``<h1 id=\"someid\">Some "
@@ -193,18 +193,18 @@ msgid ""
 "headings. Create the custom function below:"
 msgstr "Por último, vamos a intentar algo un poco más ambicioso. Supongamos que el libro tiene encabezados en etiquetas ``h1`` y ``h2`` del tipo ``<h1 id=\"un_id\">Algún texto</h1>``. Vamos a crear un índice HTML generado automáticamente a partir de estos encabezados. Creamos la siguiente función:"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:199
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:199
 msgid "And use it with the find expression::"
 msgstr "Y úselo con la expresión de búsqueda::"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:203
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:203
 msgid ""
 "Run the search on :guilabel:`All text files` and at the end of the search, a"
 " window will popup with \"Debug output from your function\" which will have "
 "the HTML Table of Contents, ready to be pasted into :file:`toc.html`."
 msgstr "Ejecutamos la búsqueda sobre :guilabel:`Todos los archivos de texto` y al final de la búsqueda se abrirá una ventana con «Salida de depuración de la función», que contendrá el índice HTML, listo par copiarlo en :file:`toc.html`."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:207
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:207
 msgid ""
 "The function above is heavily commented, so it should be easy to follow. The"
 " key new feature is the use of another useful extra argument to the "
@@ -213,7 +213,7 @@ msgid ""
 "during a single :guilabel:`Replace All` operation."
 msgstr "La función de arriba está muy comentada, así que debe ser fácil de seguir. La principal nueva característica es el uso de un argumento adicional de la función ``replace()``, el objeto ``data``. El objeto ``data`` es un *diccionario* Python que sobrevive entre sucesivas llamadas a la función ``replace()`` durante una única operación :guilabel:`Sustituir todo`."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:213
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:213
 msgid ""
 "Another new feature is the use of ``call_after_last_match`` -- setting that "
 "to ``True`` on the ``replace()`` function means that the editor will call "
@@ -221,7 +221,7 @@ msgid ""
 "extra call, the match object will be ``None``."
 msgstr "Otra característica nueva es el uso de ``call_after_last_match``. Establecerlo en ``True`` en la función ``replace()`` significa que el editor ejecutará ``replace()`` una vez adicional después de haber encontrado todas las coincidencias. En esa ejecución adicional el objeto de coincidencia será ``None``."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:218
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:218
 msgid ""
 "This was just a demonstration to show you the power of function mode, if you"
 " really needed to generate a Table of Contents from headings in your book, "
@@ -229,17 +229,17 @@ msgid ""
 ":guilabel:`Tools->Table of Contents`."
 msgstr "Esto ha sido sólo una demostración de la potencia del modo de función, si realmente necesita generar un índice a partir de encabezados en un libro, es mejor usar la herramienta específica para índices en :guilabel:`Herramientas > Índice`."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:224
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:224
 msgid "The API for the function mode"
 msgstr "La API para el modo de función"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:226
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:226
 msgid ""
 "All function mode functions must be Python functions named replace, with the"
 " following signature::"
 msgstr "Todas las funciones del modo función deben ser funciones Python con el nombre «replace» y con la siguiente firma::"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:232
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:232
 msgid ""
 "When a find/replace is run, for every match that is found, the ``replace()``"
 " function will be called, it must return the replacement string for that "
@@ -248,11 +248,11 @@ msgid ""
 "function are documented below."
 msgstr "Cuando se realiza una búsqueda y sustitución, la función ``replace()`` se ejecuta para cada coincidencia, debe devolver el texto de sustitución para dicha coincidencia. Si no se ha de efectuar ninguna sustitución, debe devolver ``match.group()``, que es el texto original. Los distintos argumentos de la función ``replace()`` se documentan a continuación."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:239
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:239
 msgid "The ``match`` argument"
 msgstr "El argumento ``match``"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:241
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:241
 msgid ""
 "The ``match`` argument represents the currently found match. It is a `Python"
 " Match object <https://docs.python.org/library/re.html#match-objects>`_. Its"
@@ -261,22 +261,22 @@ msgid ""
 "expression."
 msgstr "El argumento ``match`` representa la coincidencia actual. Es un `objeto Match de Python <https://docs.python.org/library/re.html#match-objects>`_. Su método más útil es ``group()``, que puede emplearse para obtener el texto correspondiente a los grupos de captura individuales en la expresión regular de búsqueda."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:248
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:248
 msgid "The ``number`` argument"
 msgstr "El argumento ``number``"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:250
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:250
 msgid ""
 "The ``number`` argument is the number of the current match. When you run "
 ":guilabel:`Replace All`, every successive match will cause ``replace()`` to "
 "be called with an increasing number. The first match has number 1."
 msgstr "El argumento ``number`` es el número de la coincidencia actual. Al ejecutar :guilabel:`Sustituir todo`, cada coincidencia sucesiva da lugar a una ejecución de ``replace()``, con un número que va en aumento. La primera coincidencia tiene el número 1."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:255
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:255
 msgid "The ``file_name`` argument"
 msgstr "El argumento ``file_name``"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:257
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:257
 msgid ""
 "This is the filename of the file in which the current match was found. When "
 "searching inside marked text, the ``file_name`` is empty. The ``file_name`` "
@@ -284,11 +284,11 @@ msgid ""
 "as the path separator."
 msgstr "Éste es el nombre del archivo donde se encontró la coincidencia actual. Al buscar un texto marcado, ``file_name`` está vacío. El argumento ``file_name`` está en forma canónica: una ruta de acceso relativa a la raíz del libro, usando ``/`` como separador."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:263
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:263
 msgid "The ``metadata`` argument"
 msgstr "El argumento ``metadata``"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:265
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:265
 msgid ""
 "This represents the metadata of the current book, such as title, authors, "
 "language, etc. It is an object of class "
@@ -297,11 +297,11 @@ msgid ""
 "language code)."
 msgstr "Esto representa los metadatos del libro actual, como título, autores, idioma, etc. Es un objeto de clase :class:`calibre.ebooks.metadata.book.base.Metadata`. Algunos atributos útiles son ``title``, ``authors`` (una lista de autores) y ``language`` (el código del idioma)."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:271
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:271
 msgid "The ``dictionaries`` argument"
 msgstr "El argumento ``dictionaries``"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:273
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:273
 msgid ""
 "This represents the collection of dictionaries used for spell checking the "
 "current book. Its most useful method is ``dictionaries.recognized(word)`` "
@@ -309,11 +309,11 @@ msgid ""
 "dictionary for the current book's language."
 msgstr "Esto representa la colección de diccionarios usados para la comprobación de ortografía del libro actual. Su método más útil es ``dictionaries.recognized(word)``, que devuelve True si la palabra ``word`` es reconocida por el diccionario para el idioma del libro actual."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:279
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:279
 msgid "The ``data`` argument"
 msgstr "El argumento ``data``"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:281
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:281
 msgid ""
 "This a simple Python ``dict``. When you run :guilabel:`Replace all`, every "
 "successive match will cause ``replace()`` to be called with the same "
@@ -321,11 +321,11 @@ msgid ""
 "invocations of ``replace()`` during a :guilabel:`Replace all` operation."
 msgstr "Esto es un diccionario de Python sencillo. Al ejecutar :guilabel:`Sustituir todo`, cada coincidencia sucesiva da lugar a una ejecución de ``replace()`` con el mismo ``data``. Por lo tanto puede usarlo para almacenar datos arbitrarios entre ejecuciones de ``replace()`` durante una operación de :guilabel:`Sustituir todo`."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:288
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:288
 msgid "The ``functions`` argument"
 msgstr "El argumento ``functions``"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:290
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:290
 msgid ""
 "The ``functions`` argument gives you access to all other user defined "
 "functions. This is useful for code re-use. You can define utility functions "
@@ -333,13 +333,13 @@ msgid ""
 "suppose you create a function name ``My Function`` like this:"
 msgstr "El argumento ``functions`` proporciona acceso a todas las otras funciones definidas por el usuario. Esto es útil para la reutilización de código. Puede definir funciones en un lugar y luego reutilizarlas en todas las otras funciones. Por ejemplo, supongamos que crea una función con nombre ``My Function`` así::"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:303
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:303
 msgid ""
 "Then, in another function, you can access the ``utility()`` function like "
 "this:"
 msgstr "Luego, en otra función, puede acceder a la función ``utility()`` de esta manera:"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:311
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:311
 msgid ""
 "You can also use the functions object to store persistent data, that can be "
 "re-used by other functions. For example, you could have one function that "
@@ -348,11 +348,11 @@ msgid ""
 "functions:"
 msgstr "También puede usar el objeto ``functions`` para guardar datos persistentes que sean accesibles a otras funciones. Por ejemplo, puede tener una función que al ejecutarse con :guilabel:`Sustituir todo` recopile datos y otra función que los use cuando se ejecuta a continuación. Considere las dos funciones siguientes:"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:331
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:331
 msgid "Debugging your functions"
 msgstr "Depurar las funciones propias"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:333
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:333
 msgid ""
 "You can debug the functions you create by using the standard ``print()`` "
 "function from Python. The output of print will be displayed in a popup "
@@ -360,11 +360,11 @@ msgid ""
 "``print()`` to output an entire table of contents above."
 msgstr "Puede depurar las funciones que cree con la función estándar de Python ``print()``. La salida de ``print()`` se mostrará en una ventana emergente cuando la búsqueda y sustitución se haya completado. Ya hemos visto anteriormente un ejemplo del uso de ``print()`` para mostrar un índice completo."
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:341
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:341
 msgid "Choose file order when running on multiple HTML files"
 msgstr "Elegir un orden de archivos al ejecutar sobre múltiples archivos HTML"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:343
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:343
 msgid ""
 "When you run a :guilabel:`Replace all` on multiple HTML files, the order in "
 "which the files are processes depends on what files you have open for "
@@ -372,19 +372,19 @@ msgid ""
 " appear by setting the ``file_order`` attribute on your function, like this:"
 msgstr "Al ejecutar :guilabel:`Sustituir todo` sobre múltiples archivos HTML, el orden en que se procesan los archivos depende de qué archivos estén abiertos para modificar. Puede hacer que la búsqueda procese los archivos en el orden en el que aparecen estableciendo el attributo ``file_order`` de la función, de esta manera:"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:355
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:355
 msgid ""
 "``file_order`` accepts two values, ``spine`` and ``spine-reverse`` which "
 "cause the search to process multiple files in the order they appear in the "
 "book, either forwards or backwards, respectively."
 msgstr "``file_order`` acepta dos valores, ``spine`` y ``spine-reverse``, que hacen que el la búsqueda procese archivos múltiples en el orden en que aparecen en el libro, hacia adelante o hacia atrás, respectivamente"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:360
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:360
 msgid ""
 "Having your function called an extra time after the last match is found"
 msgstr "Hacer que una función se ejecute una vez más después de la última coincidencia"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:362
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:362
 msgid ""
 "Sometimes, as in the auto generate table of contents example above, it is "
 "useful to have your function called an extra time after the last match is "
@@ -392,11 +392,11 @@ msgid ""
 " your function, like this:"
 msgstr "A veces, como en el ejemplo anterior del índice generado automáticamente, es útil que la función se ejecute una vez adicional después de haber encontrado la última coincidencia. Puede conseguir esto estableciendo el atributo ``call_after_last_match`` en la función, de esta manera:"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:376
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:376
 msgid "Appending the output from the function to marked text"
 msgstr "Añadir la salida de una función al texto marcado"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:378
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:378
 msgid ""
 "When running search and replace on marked text, it is sometimes useful to "
 "append so text to the end of the marked text. You can do that by setting the"
@@ -404,24 +404,24 @@ msgid ""
 " also need to set ``call_after_last_match``), like this:"
 msgstr "Al ejecutar una búsqueda y sustitución sobre un texto marcado, a veces es útil añadir algún texto al final del texto marcado. Puede hacer esto estableciéndo el atributo ``append_final_output_to_marked`` en la función (tenga en cuenta que también debe establecer ``call_after_last_match``), de esta manera:"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:393
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:393
 msgid "Suppressing the result dialog when performing searches on marked text"
 msgstr "No mostrar el cuadro de diálogo de resultados al hacer búsquedas en texto marcado"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:395
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:395
 msgid ""
 "You can also suppress the result dialog (which can slow down the repeated "
 "application of a search/replace on many blocks of text) by setting the "
 "``suppress_result_dialog`` attribute on your function, like this:"
 msgstr "También puede evitar que se muestre el cuadro de diálogo de resultados (que puede ralentizar la aplicación de una búsqueda o sustitución en múltiples bloques de texto) estableciendo el atributo ``suppress_result_dialog`` de la función, de esta manera:"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:408
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:408
 msgid "More examples"
 msgstr "Más ejemplos"
 
-#: ../../home/kovid/work/calibre/manual/function_mode.rst:410
+#: ../../home/runner/work/calibre/calibre/manual/function_mode.rst:410
 msgid ""
 "More useful examples, contributed by calibre users, can be found in the "
-"`calibre Editor forum "
+"`calibre E-book editor forum "
 "<https://www.mobileread.com/forums/showthread.php?t=237181>`_."
-msgstr "Otros ejemplos útiles, creados por usarios de calibre, pueden encontrarse en el `foro del editor de calibre <https://www.mobileread.com/forums/showthread.php?t=237181>`_ (en inglés)."
+msgstr "Otros ejemplos útiles, creados por usarios de calibre, pueden encontrarse en el `foro del editor libros electrónicos de calibre <https://www.mobileread.com/forums/showthread.php?t=237181>`_ (en inglés)."

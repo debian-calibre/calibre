@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "elokuuta 21, 2020" "4.23.0" "calibre"
+.TH "CALIBREDB" "1" "syyskuuta 19, 2020" "4.99.17" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -437,7 +437,7 @@ Vie kaikki kirjat tietokannasta, nimerttyjä id:itä ei huomioida.
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Normally, calibre will convert all non English characters into English equivalents for the file names. WARNING: If you turn this off, you may experience errors when saving, depending on how well the filesystem you are saving to supports unicode. Valinta poistaa toiminnon
+Have calibre convert all non English characters into English equivalents for the file names. This is useful if saving to a legacy filesystem without full support for Unicode filenames. Valinta poistaa toiminnon
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -820,7 +820,7 @@ Tallenna CSV:nä
 .INDENT 0.0
 .TP
 .B \-\-dialect
-Tuotettavan CSV\-tiedoston tyyppi. Vaihtoehdot: excel, excel\-tab
+Tuotettavan CSV\-tiedoston tyyppi. Vaihtoehdot: excel, excel\-tab, unix
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -899,15 +899,18 @@ Päivitä vain määritetyn tiedostotyypin metatiedot. Määrittele tarvittaessa
 .sp
 .nf
 .ft C
-calibredb search [options] hakulauseke
+calibredb search [options] search expression
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Etsi kirjastosta hakulauseketta, tuloksena syntyy pilkuin erotettu lista kirja\-id:itä. Tämä tulostyyppi on käytännöllinen syötettäväksi muihin komentoihin jotka käyttävät listoja syötteenä.
+Search the library for the specified \fBsearch\fP term, returning a comma separated
+list of book ids matching the \fBsearch\fP expression. The output format is useful
+to feed into other commands that accept a list of ids as input.
 .sp
-Hakulausekkeeksi käyvät kaikki calibren hakulausekemuotoilut, esimerkiksi: author:asimov title:robot
+The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
+language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0

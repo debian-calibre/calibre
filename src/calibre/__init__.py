@@ -1,4 +1,4 @@
-from __future__ import unicode_literals, print_function
+
 ''' E-book management software'''
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -16,12 +16,13 @@ try:
 except EnvironmentError:
     os.chdir(os.path.expanduser('~'))
 
-from calibre.constants import (iswindows, isosx, islinux, isfrozen,
+from calibre.constants import (iswindows, ismacos, islinux, isfrozen,
         isbsd, preferred_encoding, __appname__, __version__, __author__,
-        win32event, win32api, winerror, fcntl, ispy3,
+        win32event, win32api, winerror, fcntl,
         filesystem_encoding, plugins, config_dir)
 from calibre.startup import winutil, winutilerror
 from calibre.utils.icu import safe_chr
+from calibre.prints import prints
 
 if False:
     # Prevent pyflakes from complaining
@@ -93,7 +94,7 @@ def unicode_path(path, abs=False):
 
 
 def osx_version():
-    if isosx:
+    if ismacos:
         import platform
         src = platform.mac_ver()[0]
         m = re.match(r'(\d+)\.(\d+)\.(\d+)', src)
@@ -140,79 +141,6 @@ def sanitize_file_name(name, substitute='_'):
 sanitize_file_name2 = sanitize_file_name_unicode = sanitize_file_name
 
 
-def prints(*args, **kwargs):
-    '''
-    Print unicode arguments safely by encoding them to preferred_encoding
-    Has the same signature as the print function from Python 3, except for the
-    additional keyword argument safe_encode, which if set to True will cause the
-    function to use repr when encoding fails.
-
-    Returns the number of bytes written.
-    '''
-    file = kwargs.get('file', sys.stdout)
-    file = getattr(file, 'buffer', file)
-    enc = 'utf-8' if hasenv('CALIBRE_WORKER') else preferred_encoding
-    sep  = kwargs.get('sep', ' ')
-    if not isinstance(sep, bytes):
-        sep = sep.encode(enc)
-    end  = kwargs.get('end', '\n')
-    if not isinstance(end, bytes):
-        end = end.encode(enc)
-    safe_encode = kwargs.get('safe_encode', False)
-    count = 0
-    for i, arg in enumerate(args):
-        if isinstance(arg, unicode_type):
-            if iswindows:
-                from calibre.utils.terminal import Detect
-                cs = Detect(file)
-                if cs.is_console:
-                    cs.write_unicode_text(arg)
-                    count += len(arg)
-                    if i != len(args)-1:
-                        file.write(sep)
-                        count += len(sep)
-                    continue
-            try:
-                arg = arg.encode(enc)
-            except UnicodeEncodeError:
-                try:
-                    arg = arg.encode('utf-8')
-                except:
-                    if not safe_encode:
-                        raise
-                    arg = repr(arg)
-        if not isinstance(arg, bytes):
-            try:
-                arg = native_string_type(arg)
-            except ValueError:
-                arg = unicode_type(arg)
-            if isinstance(arg, unicode_type):
-                try:
-                    arg = arg.encode(enc)
-                except UnicodeEncodeError:
-                    try:
-                        arg = arg.encode('utf-8')
-                    except:
-                        if not safe_encode:
-                            raise
-                        arg = repr(arg)
-
-        try:
-            file.write(arg)
-            count += len(arg)
-        except:
-            from polyglot import reprlib
-            arg = reprlib.repr(arg)
-            file.write(arg)
-            count += len(arg)
-        if i != len(args)-1:
-            file.write(sep)
-            count += len(sep)
-    file.write(end)
-    count += len(end)
-    return count
-
-
 class CommandLineError(Exception):
     pass
 
@@ -241,7 +169,7 @@ def setup_cli_handlers(logger, level):
 def load_library(name, cdll):
     if iswindows:
         return cdll.LoadLibrary(name)
-    if isosx:
+    if ismacos:
         name += '.dylib'
         if hasattr(sys, 'frameworks_dir'):
             return cdll.LoadLibrary(os.path.join(getattr(sys, 'frameworks_dir'), name))
@@ -446,30 +374,11 @@ class CurrentDir(object):
 _ncpus = None
 
 
-if ispy3:
-    def detect_ncpus():
-        global _ncpus
-        if _ncpus is None:
-            _ncpus = max(1, os.cpu_count() or 1)
-        return _ncpus
-else:
-    def detect_ncpus():
-        """Detects the number of effective CPUs in the system"""
-        global _ncpus
-        if _ncpus is None:
-            if iswindows:
-                import win32api
-                ans = win32api.GetSystemInfo()[5]
-            else:
-                import multiprocessing
-                ans = -1
-                try:
-                    ans = multiprocessing.cpu_count()
-                except Exception:
-                    from PyQt5.Qt import QThread
-                    ans = QThread.idealThreadCount()
-            _ncpus = max(1, ans)
-        return _ncpus
+def detect_ncpus():
+    global _ncpus
+    if _ncpus is None:
+        _ncpus = max(1, os.cpu_count() or 1)
+    return _ncpus
 
 
 relpath = os.path.relpath

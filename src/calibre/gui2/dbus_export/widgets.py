@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__ = 'GPL v3'
 __copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -10,7 +10,7 @@ import time, sys, weakref
 from PyQt5.Qt import (
     QObject, QMenuBar, QAction, QEvent, QSystemTrayIcon, QApplication, Qt)
 
-from calibre.constants import iswindows, isosx
+from calibre.constants import iswindows, ismacos
 from polyglot.builtins import range, unicode_type
 
 UNITY_WINDOW_REGISTRAR = ('com.canonical.AppMenu.Registrar', '/com/canonical/AppMenu/Registrar', 'com.canonical.AppMenu.Registrar')
@@ -117,7 +117,7 @@ class Factory(QObject):
     def __init__(self, app_id=None):
         QObject.__init__(self)
         self.app_id = app_id or QApplication.instance().applicationName() or 'unknown_application'
-        if iswindows or isosx:
+        if iswindows or ismacos:
             self.dbus = None
         else:
             try:
@@ -228,7 +228,7 @@ class Factory(QObject):
             self.prune_dead_refs()
             self.status_notifiers.append(weakref.ref(ans))
             return ans
-        if iswindows or isosx:
+        if iswindows or ismacos:
             return QSystemTrayIcon(parent)
 
     def bus_disconnected(self):

@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -9,7 +9,7 @@ __docformat__ = 'restructuredtext en'
 import copy, traceback
 
 from calibre import prints
-from calibre.constants import DEBUG, ispy3
+from calibre.constants import DEBUG
 from calibre.ebooks.metadata.book import (SC_COPYABLE_FIELDS,
         SC_FIELDS_COPY_NOT_NULL, STANDARD_METADATA_FIELDS,
         TOP_LEVEL_IDENTIFIERS, ALL_METADATA_FIELDS)
@@ -810,13 +810,7 @@ class Metadata(object):
             ans[i] = '<tr><td><b>%s</b></td><td>%s</td></tr>'%x
         return '<table>%s</table>'%'\n'.join(ans)
 
-    if ispy3:
-        __str__ = __unicode__representation__
-    else:
-        __unicode__ = __unicode__representation__
-
-        def __str__(self):
-            return self.__unicode__().encode('utf-8')
+    __str__ = __unicode__representation__
 
     def __nonzero__(self):
         return bool(self.title or self.author or self.comments or self.tags)

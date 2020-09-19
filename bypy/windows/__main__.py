@@ -2,7 +2,6 @@
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 import errno
 import glob
@@ -155,10 +154,12 @@ def freeze(env, ext_dir):
             copybin(f)
 
     copybin(os.path.join(env.python_base, 'python%s.dll' % env.py_ver.replace('.', '')))
-    for x in glob.glob(os.path.join(env.python_base, 'DLLs', '*')):  # python pyd modules
+    copybin(os.path.join(env.python_base, 'python%s.dll' % env.py_ver[0]))
+    for x in glob.glob(os.path.join(env.python_base, 'DLLs', '*')):  # python pyd modules and dlls
         copybin(x)
     for f in walk(os.path.join(env.python_base, 'Lib')):
-        if f.lower().endswith('.dll') and 'scintilla' not in f.lower():
+        q = f.lower()
+        if q.endswith('.dll') and 'scintilla' not in q and 'pyqtbuild' not in q:
             copybin(f)
     add_plugins(env, ext_dir)
 
@@ -202,19 +203,15 @@ def freeze(env, ext_dir):
     shutil.copytree(j(comext, 'shell'), j(sp_dir, 'win32com', 'shell'))
     shutil.rmtree(comext)
 
-    for pat in ('PyQt5\\uic\\port_v3', ):
-        x = glob.glob(j(env.lib_dir, 'site-packages', pat))[0]
-        shutil.rmtree(x)
-    pyqt = j(env.lib_dir, 'site-packages', 'PyQt5')
-    for x in {x for x in os.listdir(pyqt) if x.endswith('.pyd')}:
-        if x.partition('.')[0] not in PYQT_MODULES and x != 'sip.pyd':
-            os.remove(j(pyqt, x))
-    with open(j(pyqt, '__init__.py') , 'r+b') as f:
-        raw = f.read()
-        nraw = raw.replace(b'def find_qt():', b'def find_qt():\n    return # disabled for calibre')
-        if nraw == raw:
-            raise Exception('Failed to patch PyQt to disable dll directory manipulation')
-        f.seek(0), f.truncate(), f.write(nraw)
+    # Fix pycryptodome
+    with open(j(sp_dir, 'Crypto', 'Util', '_file_system.py'), 'w') as fspy:
+        fspy.write('''
+import os, sys
+def pycryptodome_filename(dir_comps, filename):
+    base = os.path.join(sys.app_dir, 'app', 'bin')
+    path = os.path.join(base, '.'.join(dir_comps + [filename]))
+    return path
+''')
 
     printf('Adding calibre sources...')
     for x in glob.glob(j(CALIBRE_DIR, 'src', '*')):
@@ -312,14 +309,16 @@ def extract_pyd_modules(env, site_packages_dir):
 
 def embed_resources(env, module, desc=None, extra_data=None, product_description=None):
     icon_base = j(env.src_root, 'icons')
-    icon_map = {'calibre': 'library', 'ebook-viewer': 'viewer', 'ebook-edit': 'ebook-edit',
-                'lrfviewer': 'viewer', 'calibre-portable': 'library'}
+    icon_map = {
+        'calibre': 'library', 'ebook-viewer': 'viewer', 'ebook-edit': 'ebook-edit',
+        'lrfviewer': 'viewer',
+    }
     file_type = 'DLL' if module.endswith('.dll') else 'APP'
     with open(env.rc_template, 'rb') as f:
         template = f.read().decode('utf-8')
     bname = b(module)
     internal_name = os.path.splitext(bname)[0]
-    icon = icon_map.get(internal_name, 'command-prompt')
+    icon = icon_map.get(internal_name.replace('-portable', ''), 'command-prompt')
     if internal_name.startswith('calibre-portable-'):
         icon = 'install'
     icon = j(icon_base, icon + '.ico')
@@ -414,20 +413,25 @@ def build_portable(env):
     obj = j(env.obj_dir, b(src) + '.obj')
     cflags = '/c /EHsc /MT /W3 /Ox /nologo /D_UNICODE /DUNICODE'.split()
 
-    printf('Compiling', obj)
-    cmd = [CL] + cflags + ['/Fo' + obj, '/Tc' + src]
-    run_compiler(env, *cmd)
-
-    exe = j(base, 'calibre-portable.exe')
-    printf('Linking', exe)
-    cmd = [LINK] + [
-        '/INCREMENTAL:NO', '/MACHINE:' + machine,
-        '/LIBPATH:' + env.obj_dir, '/SUBSYSTEM:WINDOWS',
-        '/RELEASE',
-        '/ENTRY:wWinMainCRTStartup',
-        '/OUT:' + exe, embed_resources(env, exe, desc='Calibre Portable', product_description='Calibre Portable'),
-        obj, 'User32.lib']
-    run(*cmd)
+    for exe_name in ('calibre.exe', 'ebook-viewer.exe', 'ebook-edit.exe'):
+        exe = j(base, exe_name.replace('.exe', '-portable.exe'))
+        printf('Compiling', exe)
+        cmd = [CL] + cflags + ['/DEXE_NAME="%s"' % exe_name, '/Fo' + obj, '/Tc' + src]
+        run_compiler(env, *cmd)
+        printf('Linking', exe)
+        desc = {
+            'calibre.exe': 'Calibre Portable',
+            'ebook-viewer.exe': 'Calibre Portable Viewer',
+            'ebook-edit.exe': 'Calibre Portable Editor'
+        }[exe_name]
+        cmd = [LINK] + [
+            '/INCREMENTAL:NO', '/MACHINE:' + machine,
+            '/LIBPATH:' + env.obj_dir, '/SUBSYSTEM:WINDOWS',
+            '/RELEASE',
+            '/ENTRY:wWinMainCRTStartup',
+            '/OUT:' + exe, embed_resources(env, exe, desc=desc, product_description=desc),
+            obj, 'User32.lib']
+        run(*cmd)
 
     printf('Creating portable installer')
     shutil.copytree(env.base, j(base, 'Calibre'))
@@ -559,8 +563,8 @@ def build_launchers(env, debug=False):
             if typ == 'gui':
                 cflags += ['/DGUI_APP=']
 
-            cflags += ['/DMODULE="%s"' % mod, '/DBASENAME="%s"' % bname,
-                       '/DFUNCTION="%s"' % func]
+            cflags += ['/DMODULE=L"%s"' % mod, '/DBASENAME=L"%s"' % bname,
+                       '/DFUNCTION=L"%s"' % func]
             dest = j(env.obj_dir, bname + '.obj')
             printf('Compiling', bname)
             cmd = [CL] + cflags + dflags + ['/Tc' + src, '/Fo' + dest]
@@ -583,6 +587,8 @@ def build_launchers(env, debug=False):
 
 
 def add_to_zipfile(zf, name, base, zf_names):
+    if '__pycache__' in name:
+        return
     abspath = j(base, name)
     name = name.replace(os.sep, '/')
     if name in zf_names:
@@ -623,7 +629,7 @@ def archive_lib_dir(env):
         handled = {'pywin32.pth', 'win32'}
         base = j(sp, 'win32', 'lib')
         for x in os.listdir(base):
-            if os.path.splitext(x)[1] not in ('.exe',):
+            if os.path.splitext(x)[1] not in ('.exe',) and x != '__pycache__':
                 add_to_zipfile(zf, x, base, zf_names)
         base = os.path.dirname(base)
         for x in os.listdir(base):
@@ -633,10 +639,15 @@ def archive_lib_dir(env):
 
         # We dont want the site.py (if any) from site-packages
         handled.add('site.pyo')
+        handled.add('site.pyc')
+        handled.add('site.py')
+        handled.add('sitecustomize.pyo')
+        handled.add('sitecustomize.pyc')
+        handled.add('sitecustomize.py')
 
         # The rest of site-packages
         for x in os.listdir(sp):
-            if x in handled or x.endswith('.egg-info'):
+            if x in handled or x.endswith('.egg-info') or x.endswith('.dist-info'):
                 continue
             absp = j(sp, x)
             if os.path.isdir(absp):

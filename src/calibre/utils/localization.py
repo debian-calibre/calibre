@@ -1,15 +1,15 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import os, locale, re, io, sys
+import os, locale, re, io
 from gettext import GNUTranslations, NullTranslations
 
-from polyglot.builtins import is_py3, iteritems, unicode_type
+from polyglot.builtins import iteritems, unicode_type
 
 _available_translations = None
 
@@ -29,7 +29,7 @@ def available_translations():
 
 
 def get_system_locale():
-    from calibre.constants import iswindows, isosx, plugins
+    from calibre.constants import iswindows, ismacos, plugins
     lang = None
     if iswindows:
         try:
@@ -40,7 +40,7 @@ def get_system_locale():
                 lang = None
         except:
             pass  # Windows XP does not have the GetUserDefaultLocaleName fn
-    elif isosx:
+    elif ismacos:
         try:
             lang = plugins['usbobserver'][0].user_locale() or None
         except:
@@ -268,10 +268,7 @@ def set_translators():
         set_translators.lang = t.info().get('language')
     except Exception:
         pass
-    if is_py3:
-        t.install(names=('ngettext',))
-    else:
-        t.install(unicode=True, names=('ngettext',))
+    t.install(names=('ngettext',))
     # Now that we have installed a translator, we have to retranslate the help
     # for the global prefs object as it was instantiated in get_lang(), before
     # the translator was installed.
@@ -405,8 +402,7 @@ def get_language(lang, gettext_func=None):
         # re-translate
         return translate(_extra_lang_codes[lang])
     if gettext_func is None:
-        attr = 'gettext' if sys.version_info.major > 2 else 'ugettext'
-        gettext_func = getattr(_lang_trans, attr, translate)
+        gettext_func = getattr(_lang_trans, 'gettext', translate)
     return get_iso_language(gettext_func, lang)
 
 

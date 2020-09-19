@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__ = 'GPL v3'
 __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -12,7 +12,7 @@ from contextlib import contextmanager
 from functools import partial
 
 from calibre import prints
-from calibre.constants import iswindows, isosx, filesystem_encoding
+from calibre.constants import iswindows, ismacos, filesystem_encoding
 from calibre.ebooks import BOOK_EXTENSIONS
 
 
@@ -72,7 +72,7 @@ def metadata_extensions():
     return _metadata_extensions
 
 
-if iswindows or isosx:
+if iswindows or ismacos:
     unicode_listdir = os.listdir
 else:
     def unicode_listdir(root):

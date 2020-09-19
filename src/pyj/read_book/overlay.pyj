@@ -4,16 +4,24 @@ from __python__ import bound_methods, hash_literals
 
 from elementmaker import E
 from gettext import gettext as _
+from uuid import short_uuid
 
 from book_list.book_details import CLASS_NAME as BD_CLASS_NAME, render_metadata
 from book_list.globals import get_session_data
-from book_list.library_data import sync_library_books
+from book_list.library_data import (
+    current_library_id, set_book_metadata, sync_library_books
+)
 from book_list.router import home
 from book_list.theme import get_color
-from dom import add_extra_css, build_rule, clear, set_css, svgicon, unique_id
+from book_list.ui import query_as_href, show_panel
+from dom import (
+    add_extra_css, build_rule, clear, ensure_id, set_css, svgicon, unique_id
+)
 from modals import error_dialog
+from read_book.bookmarks import create_bookmarks_panel
 from read_book.globals import runtime, ui_operations
 from read_book.goto import create_goto_panel, create_location_overlay
+from read_book.highlights import create_highlights_panel
 from read_book.open_book import create_open_book
 from read_book.prefs.font_size import create_font_size_panel
 from read_book.prefs.main import create_prefs_panel
@@ -21,7 +29,8 @@ from read_book.toc import create_toc_panel
 from read_book.word_actions import create_word_actions_panel
 from session import get_device_uuid
 from utils import (
-    full_screen_element, full_screen_supported, is_ios, safe_set_inner_html
+    default_context_menu_should_be_allowed, full_screen_element,
+    full_screen_supported, is_ios, safe_set_inner_html
 )
 from widgets import create_button, create_spinner
 
@@ -127,12 +136,13 @@ class SyncBook:  # {{{
         set_css(container, background_color=get_color('window-background'))
         book = self.overlay.view.book
         to_sync = v'[[book.key, new Date(0)]]'
+        self.overlay.view.annotations_manager.sync_annots_to_server()
         sync_library_books(book.key[0], to_sync, self.sync_data_received)
         container.appendChild(E.div(
             style='display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%',
             E.div(style='margin:1ex 1em; max-width: 80vw',
-                E.h2(_('Syncing to last read position')),
-                E.p(_('Downloading last read data from server, please wait...')),
+                E.h2(_('Syncing last read position and annotations')),
+                E.p(_('Downloading data from server, please wait...')),
                 E.div(style='display:flex; justify-content:flex-end',
                     create_button(_('Cancel'), action=self.cancel),
                 )
@@ -154,25 +164,28 @@ class SyncBook:  # {{{
             if xhr.responseText is 'login required for sync':
                 error_dialog(_('Failed to fetch sync data'), _('You must setup user accounts and login to use the sync functionality'))
             else:
-                error_dialog(_('Failed to fetch sync data'), _('Failed to download last read data from server, click "Show details" for more information.'), xhr.error_html)
+                error_dialog(_('Failed to fetch sync data'), _('Failed to download sync data from server, click "Show details" for more information.'), xhr.error_html)
             return
         data = JSON.parse(xhr.responseText)
         book = self.overlay.view.book
         dev = get_device_uuid()
         epoch = 0
         ans = None
+        new_annotations_map = None
         for key in data:
             book_id, fmt = key.partition(':')[::2]
             if book_id is str(book.key[1]) and fmt.upper() is book.key[2].upper():
-                last_read_positions = data[key]
+                new_vals = data[key]
+                last_read_positions = new_vals.last_read_positions
+                new_annotations_map = new_vals.annotations_map
                 for d in last_read_positions:
                     if d.device is not dev and d.epoch > epoch:
                         epoch = d.epoch
                         ans = d
-        if ans is not None:
-            cfi = ans.cfi
-            if cfi:
-                self.overlay.view.goto_cfi(cfi)
+                break
+        cfi = ans?.cfi
+        if new_annotations_map or cfi:
+            self.overlay.view.sync_data_received(cfi, new_annotations_map)
 
 
 # }}}
@@ -247,24 +260,25 @@ class MainOverlay:  # {{{
         sync_action = ac(_('Sync'), _('Get last read position and annotations from the server'), self.overlay.sync_book, 'cloud-download')
         delete_action = ac(_('Delete'), _('Delete this book from local storage'), self.overlay.delete_book, 'trash')
         reload_action = ac(_('Reload'), _('Reload this book from the {}').format( _('computer') if runtime.is_standalone_viewer else _('server')), self.overlay.reload_book, 'refresh')
-        home_action = ac(_('Home'), _('Return to the home page'), def(): home();, 'home')
         back_action = ac(_('Back'), None, self.back, 'arrow-left')
         forward_action = ac(_('Forward'), None, self.forward, 'arrow-right')
+        nav_actions = E.ul(back_action, forward_action)
         if runtime.is_standalone_viewer:
             reload_actions = E.ul(
                 ac(_('Open book'), _('Open a book'), self.overlay.open_book, 'book'),
                 reload_action
             )
-            nav_actions = E.ul(back_action, forward_action)
         else:
             reload_actions = E.ul(sync_action, delete_action, reload_action)
-            nav_actions = E.ul(home_action, back_action, forward_action)
 
         bookmarks_action = ac(_('Bookmarks'), None, self.overlay.show_bookmarks, 'bookmark')
+        highlights_action = ac(
+            _('Browse highlights'), _('Browse all highlights'), def():
+                self.overlay.show_highlights()
+            , 'image')
+
         toc_actions = E.ul(ac(_('Table of Contents'), None, self.overlay.show_toc, 'toc'))
 
-        if runtime.is_standalone_viewer:
-            toc_actions.appendChild(bookmarks_action)
         toc_actions.appendChild(ac(_('Reference mode'), _('Toggle the Reference mode'), self.overlay.toggle_reference_mode, 'reference-mode'))
 
         actions_div = E.div( # actions
@@ -279,6 +293,8 @@ class MainOverlay:  # {{{
 
             toc_actions,
 
+            E.ul(highlights_action, bookmarks_action),
+
             E.ul(
                 ac(_('Font size'), _('Change text size'), self.overlay.show_font_size_chooser, 'Aa', True),
                 ac(_('Preferences'), _('Configure the book viewer'), self.overlay.show_prefs, 'cogs'),
@@ -286,6 +302,13 @@ class MainOverlay:  # {{{
 
             class_=MAIN_OVERLAY_ACTIONS_CLASS
         )
+        if not runtime.is_standalone_viewer:
+            home_action = ac(_('Home'), _('Return to the home page'), def():
+                    home()
+                    ui_operations.close_book()
+            , 'home')
+            library_action = ac(_('Library'), _('Return to the library page'), self.overlay.show_library, 'library')
+            actions_div.insertBefore(E.ul(home_action, library_action), actions_div.firstChild)
         full_screen_actions = []
         if runtime.is_standalone_viewer:
             text = _('Exit full screen') if runtime.viewer_in_full_screen else _('Enter full screen')
@@ -311,16 +334,14 @@ class MainOverlay:  # {{{
         if full_screen_actions.length:
             actions_div.appendChild(E.ul(*full_screen_actions))
 
+        no_selection_bar = not sd.get('show_selection_bar')
         if runtime.is_standalone_viewer:
-            actions_div.appendChild(E.ul(
-                ac(_('Lookup/search word'), _('Lookup or search for the currently selected word'),
-                   def(): self.overlay.hide(), ui_operations.toggle_lookup();, 'library')
-            ))
+            if no_selection_bar:
+                actions_div.appendChild(E.ul(
+                    ac(_('Lookup/search word'), _('Lookup or search for the currently selected word'),
+                    def(): self.overlay.hide(), ui_operations.toggle_lookup(True);, 'library')
+                ))
             copy_actions = E.ul()
-            if self.overlay.view.currently_showing.selected_text:
-                copy_actions.appendChild(ac(_('Copy selection'), _('Copy the current selection'), def():
-                    self.overlay.hide(), ui_operations.copy_selection()
-                , 'copy'))
             if self.elements.link:
                 copy_actions.appendChild(ac(_('Copy link'), _('Copy the current link'), def():
                     self.overlay.hide(), ui_operations.copy_selection(self.elements.link)
@@ -343,6 +364,8 @@ class MainOverlay:  # {{{
                 ac(_('Quit'), _('Close the viewer'),
                    def(): self.overlay.hide(), ui_operations.quit();, 'remove'),
             ))
+        else:
+            pass
         container.appendChild(set_css(E.div(class_=MAIN_OVERLAY_TS_CLASS,  # top section
             onclick=def (evt):evt.stopPropagation();,
 
@@ -524,7 +547,7 @@ class Overlay:
         self.panels = []
 
     def oncontextmenu(self, evt):
-        if evt.target and evt.target.tagName and evt.target.tagName.toLowerCase() in ('input', 'textarea'):
+        if default_context_menu_should_be_allowed(evt):
             return
         evt.preventDefault()
         self.handling_context_menu_event = evt
@@ -649,6 +672,19 @@ class Overlay:
         if runtime.is_standalone_viewer:
             ui_operations.toggle_bookmarks()
             return
+        def do_it(action, data):
+            self.panels.push(TOCOverlay(self, create_bookmarks_panel.bind(None, self.view.annotations_manager, data), _('Bookmarks')))
+            self.show_current_panel()
+        self.view.get_current_cfi('show-bookmarks', do_it)
+
+    def show_highlights(self):
+        self.hide_current_panel()
+        if ui_operations.toggle_highlights:
+            self.hide()
+            ui_operations.toggle_highlights()
+            return
+        self.panels.push(TOCOverlay(self, create_highlights_panel.bind(None, self.view.annotations_manager), _('Highlights')))
+        self.show_current_panel()
 
     def show_goto(self):
         self.hide_current_panel()
@@ -657,10 +693,46 @@ class Overlay:
 
     def show_metadata(self):
         self.hide_current_panel()
+        from_read_book = short_uuid()
 
-        def show_metadata_overlay(mi, pathtoebook, overlay, container):
+        def show_metadata_overlay(mi, pathtoebook, lname, book_id, overlay, container):
+            container_id = ensure_id(container)
             container.appendChild(E.div(class_=BD_CLASS_NAME, style='padding: 1ex 1em'))
             table = E.table(class_='metadata')
+
+            def handle_message(msg):
+                data = msg.data
+                if data.from_read_book is not from_read_book:
+                    return
+                if data.type is 'edit_metadata_closed':
+                    ui_operations.stop_waiting_for_messages_from(this)
+                    self.hide_current_panel()
+                    return
+                if data.type is 'update_cached_book_metadata' and data.metadata:
+                    if current_library_id() is data.library_id:
+                        mi = data.metadata
+                        book_id = int(data.book_id)
+                        set_book_metadata(book_id, mi)
+                        book = self.view.book
+                        if book and book.key[0] is data.library_id and book.key[1] is book_id:
+                            ui_operations.update_metadata(book, mi)
+
+            if not runtime.is_standalone_viewer and lname:
+
+                container.lastChild.appendChild(E.div(
+                    style='text-align: right',
+                    E.a(_('Edit metadata of book in library'), class_='blue-link', onclick=def():
+                        container = document.getElementById(container_id)
+                        clear(container)
+                        container.appendChild(E.iframe(
+                            style='position: absolute; left: 0; top: 0; width: 100vw; height: 100vh; border-width: 0',
+                            src=query_as_href({
+                            'from_read_book': from_read_book, 'library_id': lname, 'book_id': book_id + ''}, 'edit_metadata')
+                        ))
+                        w = container.lastChild.contentWindow
+                        ui_operations.wait_for_messages_from(w, handle_message.bind(w))
+                    )
+                ))
             container.lastChild.appendChild(table)
             render_metadata(mi, table, None, f'html {{ font-size: {document.documentElement.style.fontSize} }}')
             for a in table.querySelectorAll('a[href]'):
@@ -672,7 +744,13 @@ class Overlay:
                     style='margin-top: 1ex; padding-top: 1ex; border-top: solid 1px',
                     _('Path: {}').format(pathtoebook)))
 
-        self.panels.push(SimpleOverlay(self, show_metadata_overlay.bind(None, self.view.book.metadata, self.view.book.manifest.pathtoebook), self.view.book.metadata.title))
+        book = self.view.book
+        key = book.key or v'[null, 0]'
+        lname, book_id = key
+        book_id = int(book_id or 0)
+        panel = SimpleOverlay(self, show_metadata_overlay.bind(None, book.metadata, book.manifest.pathtoebook, lname, book_id), self.view.book.metadata.title)
+        panel.from_read_book = from_read_book
+        self.panels.push(panel)
         self.show_current_panel()
 
     def show_ask_for_location(self):
@@ -689,6 +767,12 @@ class Overlay:
         self.hide_current_panel()
         self.panels.push(PrefsOverlay(self))
         self.show_current_panel()
+
+    def show_library(self):
+        self.hide_current_panel()
+        book = self.view.book
+        show_panel('book_list', {'library_id': book.key[0], 'book_id': book.key[1] + ''}, replace=False)
+        ui_operations.close_book()
 
     def show_font_size_chooser(self):
         self.hide_current_panel()

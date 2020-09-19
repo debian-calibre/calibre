@@ -1,7 +1,7 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
-from __future__ import print_function
+
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
@@ -23,8 +23,10 @@ DOWNLOADS = '/srv/main/downloads'
 HTML2LRF = "calibre/ebooks/lrf/html/demo"
 TXT2LRF = "src/calibre/ebooks/lrf/txt/demo"
 STAGING_HOST = 'download.calibre-ebook.com'
-STAGING_USER = 'root'
+BACKUP_HOST = 'code.calibre-ebook.com'
+STAGING_USER = BACKUP_USER = 'root'
 STAGING_DIR = '/root/staging'
+BACKUP_DIR = '/binaries'
 
 
 def installers(include_source=True):
@@ -123,8 +125,18 @@ def get_fosshub_data():
 
 def send_data(loc):
     subprocess.check_call([
-        'rsync', '--inplace', '--delete', '-r', '-zz', '-h', '--progress', '-e',
+        'rsync', '--inplace', '--delete', '-r', '-zz', '-h', '--info=progress2', '-e',
         'ssh -x', loc + '/', '%s@%s:%s' % (STAGING_USER, STAGING_HOST, STAGING_DIR)
+    ])
+
+
+def send_to_backup(loc):
+    host = f'{BACKUP_USER}@{BACKUP_HOST}'
+    dest = f'{BACKUP_DIR}/{__version__}'
+    subprocess.check_call(['ssh', '-x', host, 'mkdir', '-p', dest])
+    subprocess.check_call([
+        'rsync', '--inplace', '--delete', '-r', '-zz', '-h', '--info=progress2', '-e',
+        'ssh -x', loc + '/', f'{host}:{dest}/'
     ])
 
 
@@ -271,13 +283,22 @@ class UploadInstallers(Command):  # {{{
 
         with open(os.path.join(tdir, 'fmap'), 'wb') as fo:
             for f, desc in iteritems(files):
-                fo.write('%s: %s\n' % (f, desc))
+                fo.write(('%s: %s\n' % (f, desc)).encode('utf-8'))
 
         while True:
             try:
                 send_data(tdir)
             except:
                 print('\nUpload to staging failed, retrying in a minute')
+                time.sleep(60)
+            else:
+                break
+
+        while True:
+            try:
+                send_to_backup(tdir)
+            except:
+                print('\nUpload to backup failed, retrying in a minute')
                 time.sleep(60)
             else:
                 break

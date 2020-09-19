@@ -1,6 +1,5 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -19,7 +18,7 @@ from calibre.customize.ui import device_plugins
 from calibre.devices.scanner import DeviceScanner
 from calibre.utils.config import device_prefs
 from polyglot.builtins import unicode_type
-from polyglot.io import PolyglotBytesIO
+from polyglot.io import PolyglotStringIO
 
 MINIMUM_COL_WIDTH = 12  # : Minimum width of columns in ls output
 
@@ -114,7 +113,7 @@ def ls(dev, path, recurse=False, human_readable_size=False, ll=False, cols=0):
                 c += 1
         return rowwidths
 
-    output = PolyglotBytesIO()
+    output = PolyglotStringIO()
     if path.endswith("/") and len(path) > 1:
         path = path[:-1]
     dirs = dev.list(path, recurse)
@@ -166,7 +165,7 @@ def ls(dev, path, recurse=False, human_readable_size=False, ll=False, cols=0):
                     prints(trytablecol[r][c], "".ljust(padding), end=' ', file=output)
                 prints(file=output)
         prints(file=output)
-    listing = output.getvalue().rstrip().decode('utf-8') + "\n"
+    listing = output.getvalue().rstrip() + "\n"
     output.close()
     return listing
 
@@ -268,7 +267,7 @@ def main():
             parser = OptionParser(usage="usage: %prog ls [options] path\nList files on the device\n\npath must begin with / or card:/")
             parser.add_option(
                 "-l", help="In addition to the name of each file, print the file type, permissions, and  timestamp  (the  modification time, in the local timezone). Times are local.",  # noqa
-                              dest="ll", action="store_true", default=False)
+                dest="ll", action="store_true", default=False)
             parser.add_option("-R", help="Recursively list subdirectories encountered. /dev and /proc are omitted",
                               dest="recurse", action="store_true", default=False)
             parser.remove_option("-h")

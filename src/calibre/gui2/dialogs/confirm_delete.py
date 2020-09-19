@@ -1,5 +1,5 @@
-#!/usr/bin/env  python2
-from __future__ import absolute_import, division, print_function, unicode_literals
+#!/usr/bin/env python
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal kovid@kovidgoyal.net'
@@ -40,9 +40,10 @@ class Dialog(QDialog):
         a.stateChanged.connect(self.toggle)
         l.addWidget(a)
 
-        buttons = QDialogButtonBox.Ok
         if show_cancel_button:
-            buttons |= QDialogButtonBox.Cancel
+            buttons = QDialogButtonBox.Yes | QDialogButtonBox.No
+        else:
+            buttons = QDialogButtonBox.Ok
         self.buttonBox = bb = QDialogButtonBox(buttons, self)
         bb.setObjectName("buttonBox")
         bb.setFocus(Qt.OtherFocusReason)

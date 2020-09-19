@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__ = 'GPL v3'
 __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -344,6 +344,14 @@ class LegacyTest(BaseTest):
 
     def test_legacy_adding_books(self):  # {{{
         'Test various adding/deleting books methods'
+        import sqlite3
+        con = sqlite3.connect(":memory:")
+        try:
+            con.execute("create virtual table recipe using fts5(name, ingredients)")
+        except Exception:
+            self.skipTest('python sqlite3 module does not have FTS5 support')
+        con.close()
+        del con
         from calibre.ebooks.metadata.book.base import Metadata
         from calibre.ptempfile import TemporaryFile
         legacy, old = self.init_legacy(self.cloned_library), self.init_old(self.cloned_library)

@@ -1,10 +1,10 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 import subprocess, re
-from calibre.constants import iswindows, isosx
+from calibre.constants import iswindows, ismacos
 
 
 def get_address_of_default_gateway(family='AF_INET'):
@@ -30,7 +30,7 @@ if iswindows:
 
     def get_default_route_src_address_external():
         # Use -6 for IPv6 addresses
-        raw = subprocess.check_output('route -4 print 0.0.0.0'.split(), creationflags=0x08).decode('utf-8', 'replace')
+        raw = subprocess.check_output('route -4 print 0.0.0.0'.split(), creationflags=subprocess.DETACHED_PROCESS).decode('utf-8', 'replace')
         in_table = False
         default_gateway = get_address_of_default_gateway()
         for line in raw.splitlines():
@@ -56,7 +56,7 @@ if iswindows:
     get_default_route_src_address = get_default_route_src_address_api
 
 
-elif isosx:
+elif ismacos:
 
     def get_default_route_src_address():
         # Use -inet6 for IPv6

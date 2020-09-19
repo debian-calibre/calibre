@@ -35,7 +35,7 @@ You can access the viewer controls by either:
 
   - Right clicking on the text
   - Pressing the :kbd:`Esc` or :kbd:`Menu` keys
-  - On a touchscreen by tapping the top 1/3rd or the screen
+  - On a touchscreen by tapping the top 1/3rd of the screen
 
 
 The viewer has two modes, "paged" and "flow". In paged mode the book content
@@ -48,10 +48,10 @@ using the viewer Preferences under :guilabel:`Page layout` or by pressing the
 Bookmarks
 ^^^^^^^^^^^^
 
-When you are in the middle of a book and close the viewer, it will remember
+When you are in the middle of a book and close the E-book viewer, it will remember
 where you stopped reading and return there the next time you open the book. You
 can also set bookmarks in the book by using the :guilabel:`Bookmarks` button in
-the viewer controls or pressing :kbd:`ctrl+b`.  When viewing EPUB format books,
+the E-book viewer controls or pressing :kbd:`ctrl+b`.  When viewing EPUB format books,
 these bookmarks are actually saved in the EPUB file itself. You can add
 bookmarks, then send the file to a friend.  When they open the file, they will
 be able to see your bookmarks. You can turn off this behavior in the
@@ -65,6 +65,7 @@ If the book you are reading defines a Table of Contents, you can access it by
 pressing the :guilabel:`Table of Contents` button.  This will bring up a list
 of sections in the book. You can click on any of them to jump to that portion
 of the book.
+
 
 Navigating by location
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -95,6 +96,31 @@ You can use this number to unambiguously refer to parts of the books when
 discussing it with friends or referring to it in other works. You can enter
 these numbers in the :guilabel:`Go to function` to navigate to a particular
 reference location.
+
+
+Highlighting text
+----------------------
+
+When you select text in the viewer, a little popup bar appears next to the
+selection. You can click the highlight button in that bar to create a
+highlight. You can add notes and change the color of the highlight. On a touch
+screen, long tap a word to select it and show the popup bar. Once in highlight
+mode you can tap the :guilabel:`Adjust selection` button to change what text is
+selected using touch screen friendly selection handles.  Drag
+the handles to the top or bottom margins to scroll while selecting.
+
+You can use the :guilabel:`Browse highlights` button in the viewer
+controls to show a separate panel with a list of all highlights in the book.
+
+You can browse *all highlights* in your entire calibre library by right
+clicking the :guilabel:`View` button and choosing :guilabel:`Browse
+annotations`.
+
+Finally, if you use the calibre Content server's in browser viewer, you can
+have the viewer sync its annotations with the browser viewer by going to
+:guilabel:`Preferences->Miscellaneous` in the viewer preferences and entering
+the username of the Content server viewer to sync with. Use the special value
+``*`` to sync with anonymous users.
 
 
 Customizing the look and feel of your reading experience

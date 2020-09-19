@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "august 21, 2020" "4.23.0" "calibre"
+.TH "CALIBREDB" "1" "september 19, 2020" "4.99.17" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -442,7 +442,7 @@ Ekspordi kõik raamatud andmebaasis, eirates id\-de loendit.
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Normally, calibre will convert all non English characters into English equivalents for the file names. WARNING: If you turn this off, you may experience errors when saving, depending on how well the filesystem you are saving to supports unicode. Selle lüliti määratlemine keelab selle käitumise.
+Have calibre convert all non English characters into English equivalents for the file names. This is useful if saving to a legacy filesystem without full support for Unicode filenames. Selle lüliti määratlemine keelab selle käitumise.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -834,7 +834,7 @@ Väljund CSV\-s
 .INDENT 0.0
 .TP
 .B \-\-dialect
-Loodava CSV\-faili tüüp. Valikud: excel, excel\-tab
+Loodava CSV\-faili tüüp. Valikud: excel, excel\-tab, unix
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -933,7 +933,7 @@ list of book ids matching the \fBsearch\fP expression. The output format is usef
 to feed into other commands that accept a list of ids as input.
 .sp
 The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
-language, for example: author:asimov title:robot
+language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
 .sp
 Alati kui edastad programmile calibredb tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: "/some path/with spaces"
 .INDENT 0.0

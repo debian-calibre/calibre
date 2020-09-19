@@ -134,7 +134,8 @@ def add_stars_to(stars, val, allow_half_stars):
 window.addEventListener('resize', debounce(adjust_all_iframes, 250))
 
 def adjusting_sandboxed_html(html, extra_css):
-    css =  'html, body {{ overflow: hidden; color: {} }}'.format(get_color('window-foreground'))
+    color = get_color_as_rgba('window-foreground')
+    css =  f'html, body {{ overflow: hidden; color: rgba({color[0]}, {color[1]}, {color[2]}, {color[3]}) }}'
     if extra_css:
         css += '\n\n' + extra_css
     # allow-same-origin is needed for resizing and allow-popups is needed for
@@ -169,15 +170,19 @@ def render_metadata(mi, table, book_id, iframe_css):  # {{{
         fields = filter(allowed_fields, fields)
     comments = v'[]'
 
-    def add_row(name, val, is_searchable=False, is_html=False, join=None):
+    def add_row(name, val, is_searchable=False, is_html=False, join=None, search_text=None):
         if val is undefined or val is None:
             return
         def add_val(v):
             if not v.appendChild:
                 v += ''
             if is_searchable:
+                text_rep = search_text or v
                 table.lastChild.lastChild.appendChild(E.a(
-                    title=_('Click to see books with {0}: {1}').format(name, v), class_='blue-link', href=href_for_search(is_searchable, v), v))
+                    v,
+                    title=_('Click to see books with {0}: {1}').format(name, text_rep), class_='blue-link',
+                    href=href_for_search(is_searchable, text_rep)
+                ))
             else:
                 if v.appendChild:
                     table.lastChild.lastChild.appendChild(v)
@@ -232,7 +237,7 @@ def render_metadata(mi, table, book_id, iframe_css):  # {{{
         val = int(val or 0)
         if val > 0:
             add_stars_to(stars, val, fm.display?.allow_half_stars)
-            add_row(name, stars)
+            add_row(name, stars, is_searchable=field, search_text=val/2 + '')
 
     def process_identifiers(field, fm, name, val):
         if val:
@@ -313,6 +318,9 @@ def render_metadata(mi, table, book_id, iframe_css):  # {{{
                     add_row(name, val)
                     return
                 val = E.span(val).outerHTML
+            else:
+                if field is 'comments' and '<' not in val:
+                    val = '\n'.join(['<p class="description">{}</p>'.format(x.pyreplace('\n', '<br>')) for x in val.split('\n\n')])
             if hp is 'side':
                 add_row(name, val, is_html=True)
                 return
@@ -457,18 +465,20 @@ def render_book(container_id, book_id):
     set_title(c, metadata.title)
     authors = metadata.authors.join(' & ') if metadata.authors else _('Unknown')
     alt = _('{} by {}\n\nClick to read').format(metadata.title, authors)
-    bsrgb = get_color_as_rgba('button-start')
+    border_radius = 20
+    button_style = f'cursor: pointer; border-radius: {border_radius//5}px;'
+    button_style += 'color: #ccc; background-color:rgba(0, 0, 0, 0.75);'
+    button_style += 'display: flex; justify-content: center; align-items: center; padding: 2px;'
 
     def prev_next_button(is_prev):
         return E.div(
-            style=f'cursor: pointer; border-radius: {border_radius//5}px; background-color:rgba({bsrgb[0]}, {bsrgb[1]}, {bsrgb[2]}, 0.75);',
+            style=button_style,
             title=_('Previous book') if is_prev else _('Next book'),
             class_='next-book-button',
             svgicon('chevron-left' if is_prev else 'chevron-right'),
             onclick=next_book.bind(None, book_id, (-1 if is_prev else 1))
         )
 
-    border_radius = 20
     imgdiv = E.div(style='position: relative',
         E.img(
             alt=alt, title=alt, data_title=metadata.title, data_authors=authors,

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "Αυγούστου 21, 2020" "4.23.0" "calibre"
+.TH "CALIBREDB" "1" "Σεπτεμβρίου 19, 2020" "4.99.17" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -140,7 +140,7 @@ details and examples.
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \fI\%http://hostname:port/#library_id\fP for example, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
+Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \fI\%http://hostname:port/#library_id\fP for example, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \fI\%https://manual.calibre\-ebook.com/el/generated/el/calibredb.html\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -441,7 +441,7 @@ Export all books in database, ignoring the list of ids.
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Κανονικά, το calibre θα μετατρέψει όλους τους μη Αγγλικούς χαρακτήρες σε αντίστοιχους Aγγλικούς για τα ονόματα των αρχείων. ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Αν το απενεργοποιήσετε, μπορούν να προκληθούν λάθη κατά την αποθήκευση, ανάλογα με το πόσο καλά το σύστημα αρχείων που αποθηκεύετε υποστηρίζει unicode. Η επιλογή αυτή θα βάλει τέλος στη συμπεριφορά αυτή.
+Have calibre convert all non English characters into English equivalents for the file names. This is useful if saving to a legacy filesystem without full support for Unicode filenames. Η επιλογή αυτή θα βάλει τέλος στη συμπεριφορά αυτή.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -833,7 +833,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-dialect
-Ο τύπος του αρχείου CSV που θα δημιουργηθεί. Επιλογές: excel, excel\-tab
+Ο τύπος του αρχείου CSV που θα δημιουργηθεί. Επιλογές: excel, excel\-tab, unix
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -932,7 +932,7 @@ list of book ids matching the \fBsearch\fP expression. The output format is usef
 to feed into other commands that accept a list of ids as input.
 .sp
 The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
-language, for example: author:asimov title:robot
+language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0

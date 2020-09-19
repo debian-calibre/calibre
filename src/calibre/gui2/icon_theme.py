@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__ = 'GPL v3'
 __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -37,7 +37,6 @@ from calibre.utils.icu import numeric_sort_key as sort_key
 from calibre.utils.img import image_from_data, Canvas, optimize_png, optimize_jpeg
 from calibre.utils.zipfile import ZipFile, ZIP_STORED
 from calibre.utils.filenames import atomic_rename
-from calibre_lzma.xz import compress, decompress
 from polyglot.builtins import iteritems, map, range, reraise, filter, as_bytes, unicode_type
 from polyglot import http_client
 from polyglot.queue import Queue, Empty
@@ -385,12 +384,12 @@ def create_themeball(report, progress=None, abort=None):
             with lopen(srcpath, 'rb') as f:
                 zf.writestr(name, f.read(), compression=ZIP_STORED)
     buf.seek(0)
-    out = BytesIO()
     if abort is not None and abort.is_set():
         return None, None
     if progress is not None:
         progress(next(num), _('Compressing theme file'))
-    compress(buf, out, level=9)
+    import lzma
+    compressed = lzma.compress(buf.getvalue(), format=lzma.FORMAT_XZ, preset=9)
     buf = BytesIO()
     prefix = report.name
     if abort is not None and abort.is_set():
@@ -399,7 +398,7 @@ def create_themeball(report, progress=None, abort=None):
         with lopen(os.path.join(report.path, THEME_METADATA), 'rb') as f:
             zf.writestr(prefix + '/' + THEME_METADATA, f.read())
         zf.writestr(prefix + '/' + THEME_COVER, create_cover(report))
-        zf.writestr(prefix + '/' + 'icons.zip.xz', out.getvalue(), compression=ZIP_STORED)
+        zf.writestr(prefix + '/' + 'icons.zip.xz', compressed, compression=ZIP_STORED)
     if progress is not None:
         progress(next(num), _('Finished'))
     return buf.getvalue(), prefix
@@ -794,8 +793,9 @@ class ChooseTheme(Dialog):
         dt = self.downloaded_theme
 
         def commit_changes():
+            import lzma
             dt.seek(0)
-            f = decompress(dt)
+            f = BytesIO(lzma.decompress(dt.getvalue()))
             f.seek(0)
             remove_icon_theme()
             install_icon_theme(theme, f)

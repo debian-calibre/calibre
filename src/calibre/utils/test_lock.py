@@ -1,8 +1,7 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 import os
 import shutil
@@ -192,6 +191,10 @@ def find_tests():
     return unittest.defaultTestLoader.loadTestsFromTestCase(IPCLockTest)
 
 
+def run_tests():
+    from calibre.utils.run_tests import run_tests
+    run_tests(find_tests)
+
+
 if __name__ == '__main__':
-    suite = find_tests()
-    unittest.TextTestRunner(verbosity=4).run(suite)
+    run_tests()

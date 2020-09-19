@@ -1,7 +1,7 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2008, Kovid Goyal <kovid at kovidgoyal.net>
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 import re, numbers
 from collections import defaultdict, namedtuple
@@ -555,7 +555,6 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
         self.languages.setEditText('')
         self.authors.setFocus(Qt.OtherFocusReason)
         self.generate_cover_settings = None
-        self.button_config_cover_gen.setVisible(False)
         self.button_config_cover_gen.clicked.connect(self.customize_cover_generation)
         self.exec_()
 

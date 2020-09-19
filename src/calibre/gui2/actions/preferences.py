@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -13,7 +13,7 @@ from PyQt5.Qt import QIcon, Qt
 from calibre.gui2.actions import InterfaceAction
 from calibre.gui2.preferences.main import Preferences
 from calibre.gui2 import error_dialog, show_restart_warning
-from calibre.constants import DEBUG, isosx
+from calibre.constants import DEBUG, ismacos
 
 
 class PreferencesAction(InterfaceAction):
@@ -26,7 +26,7 @@ class PreferencesAction(InterfaceAction):
     def genesis(self):
         pm = self.qaction.menu()
         cm = partial(self.create_menu_action, pm)
-        if isosx:
+        if ismacos:
             pm.addAction(QIcon(I('config.png')), _('Preferences'), self.do_config)
         cm('welcome wizard', _('Run Welcome wizard'),
                 icon='wizard.png', triggered=self.gui.run_wizard)

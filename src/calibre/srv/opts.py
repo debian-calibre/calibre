@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__ = 'GPL v3'
 __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -12,11 +12,8 @@ from functools import partial
 
 from calibre.constants import config_dir
 from calibre.utils.lock import ExclusiveFile
-from polyglot.builtins import itervalues, is_py3
-if is_py3:
-    from itertools import zip_longest
-else:
-    from itertools import izip_longest as zip_longest
+from polyglot.builtins import itervalues
+from itertools import zip_longest
 
 Option = namedtuple('Option', 'name default longdoc shortdoc choices')
 

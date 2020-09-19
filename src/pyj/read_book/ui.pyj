@@ -7,7 +7,7 @@ import traceback
 from elementmaker import E
 from gettext import gettext as _
 
-from ajax import ajax
+from ajax import ajax, ajax_send
 from book_list.constants import read_book_container_id
 from book_list.library_data import current_library_id, library_data
 from book_list.router import home, push_state, read_book_mode, update_window_title
@@ -53,7 +53,9 @@ class ReadUI:
             id=self.display_id, style='display:none',
         ))
         self.view = View(container.lastChild)
+        self.windows_to_listen_for_messages_from = []
         window.addEventListener('resize', debounce(self.on_resize.bind(self), 250))
+        window.addEventListener('message', self.message_from_other_window.bind(self))
         self.db = get_db(self.db_initialized.bind(self), self.show_error.bind(self))
         ui_operations.get_file = self.db.get_file
         ui_operations.get_mathjax_files = self.db.get_mathjax_files
@@ -73,6 +75,22 @@ class ReadUI:
         ui_operations.focus_iframe = self.focus_iframe.bind(self)
         ui_operations.toggle_toc = self.toggle_toc.bind(self)
         ui_operations.toggle_full_screen = self.toggle_full_screen.bind(self)
+        ui_operations.annots_changed = self.annots_changed.bind(self)
+        ui_operations.annotations_synced = self.annotations_synced.bind(self)
+        ui_operations.wait_for_messages_from = self.wait_for_messages_from.bind(self)
+        ui_operations.stop_waiting_for_messages_from = self.stop_waiting_for_messages_from.bind(self)
+        ui_operations.update_metadata = self.update_metadata.bind(self)
+        ui_operations.close_book = self.close_book.bind(self)
+        ui_operations.open_url = def(url):
+            window.open(url, '_blank')
+        ui_operations.copy_selection = def(text):
+            if not window.navigator.clipboard:
+                return error_dialog(_('No clipboard access'), _(
+                    'Your browser requires you to access the Content server over an HTTPS connection'
+                    ' to be able to copy to clipboard.'))
+            window.navigator.clipboard.writeText(text or '').then(def (): pass;, def():
+                error_dialog(_('Could not copy to clipboard'), _('No permission to write to clipboard'))
+            )
 
     def on_resize(self):
         self.view.on_resize()
@@ -138,6 +156,9 @@ class ReadUI:
         div = document.getElementById(self.progress_id)
         div.lastChild.textContent = msg or ''
 
+    def close_book(self):
+        self.base_url_data = {}
+
     def load_book(self, library_id, book_id, fmt, metadata, force_reload):
         self.base_url_data = {'library_id': library_id, 'book_id':book_id, 'fmt':fmt}
         if not self.db.initialized:
@@ -191,6 +212,19 @@ class ReadUI:
 
     def update_color_scheme(self):
         self.view.update_color_scheme()
+
+    def annots_changed(self, amap):
+        library_id = self.base_url_data.library_id
+        book_id = self.base_url_data.book_id
+        fmt = self.base_url_data.fmt
+        self.db.update_annotations_data_from_key(library_id, book_id, fmt, {'annotations_map': amap})
+        ajax_send(f'book-update-annotations/{library_id}/{book_id}/{fmt}', amap, def (): pass;)
+
+    def annotations_synced(self, amap):
+        library_id = self.base_url_data.library_id
+        book_id = self.base_url_data.book_id
+        fmt = self.base_url_data.fmt
+        self.db.update_annotations_data_from_key(library_id, book_id, fmt, {'annotations_map': amap})
 
     @property
     def url_data(self):
@@ -508,3 +542,21 @@ class ReadUI:
 
     def update_url_state(self, replace):
         push_state(self.url_data, replace=replace, mode=read_book_mode)
+
+    def update_metadata(self, book, metadata):
+        self.db.update_metadata(book, metadata)
+
+    def wait_for_messages_from(self, w, callback):
+        self.windows_to_listen_for_messages_from.push(v'[w, callback]')
+
+    def stop_waiting_for_messages_from(self, w):
+        self.windows_to_listen_for_messages_from = [x for x in self.windows_to_listen_for_messages_from if x[0] is not w]
+
+    def message_from_other_window(self, msg):
+        if not self.windows_to_listen_for_messages_from.length:
+            return
+        old = self.windows_to_listen_for_messages_from
+        for x in old:
+            w, callback = x
+            if w is msg.source:
+                callback(msg)

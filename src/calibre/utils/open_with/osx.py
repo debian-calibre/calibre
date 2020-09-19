@@ -1,22 +1,17 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__ = 'GPL v3'
 __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
 
 import os, re, mimetypes, subprocess
 from collections import defaultdict
+from plistlib import loads
 
 from calibre.ptempfile import TemporaryDirectory
-from calibre.constants import ispy3
 from calibre.utils.icu import numeric_sort_key
 from polyglot.builtins import iteritems, string_or_bytes
-
-if ispy3:
-    from plistlib import loads
-else:
-    from biplist import readPlistFromString as loads
 
 application_locations = ('/Applications', '~/Applications', '~/Desktop')
 

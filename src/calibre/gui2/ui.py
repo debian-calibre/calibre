@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -21,7 +21,7 @@ from PyQt5.Qt import (
 
 from calibre import prints, force_unicode, detect_ncpus
 from calibre.constants import (
-        __appname__, isosx, iswindows, filesystem_encoding, DEBUG, config_dir)
+        __appname__, ismacos, iswindows, filesystem_encoding, DEBUG, config_dir)
 from calibre.utils.config import prefs, dynamic
 from calibre.utils.ipc.pool import Pool
 from calibre.db.legacy import LibraryDatabase
@@ -271,7 +271,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
             self.system_tray_icon = factory(app_id='com.calibre-ebook.gui').create_system_tray_icon(parent=self, title='calibre')
         if self.system_tray_icon is not None:
             self.system_tray_icon.setIcon(QIcon(I('lt.png', allow_user_override=False)))
-            if not (iswindows or isosx):
+            if not (iswindows or ismacos):
                 self.system_tray_icon.setIcon(QIcon.fromTheme('calibre-tray', self.system_tray_icon.icon()))
             self.system_tray_icon.setToolTip(self.jobs_button.tray_tooltip())
             self.system_tray_icon.setVisible(True)
@@ -373,8 +373,8 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         self.library_view.model().database_changed.connect(self.populate_tb_manage_menu, type=Qt.QueuedConnection)
 
         # ######################## Search Restriction ##########################
-        if db.prefs['virtual_lib_on_startup']:
-            self.apply_virtual_library(db.prefs['virtual_lib_on_startup'])
+        if db.new_api.pref('virtual_lib_on_startup'):
+            self.apply_virtual_library(db.new_api.pref('virtual_lib_on_startup'))
         self.rebuild_vl_tabs()
 
         # ########################## Cover Flow ################################
@@ -424,15 +424,6 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
             self.hide_windows()
         self.auto_adder = AutoAdder(gprefs['auto_add_path'], self)
 
-        # Now that the gui is initialized we can restore the quickview state
-        # The same thing will be true for any action-based operation with a
-        # layout button
-        from calibre.gui2.actions.show_quickview import get_quickview_action_plugin
-        qv = get_quickview_action_plugin()
-        if qv:
-            qv.qv_button.restore_state()
-        self.save_layout_state()
-
         # Collect cycles now
         gc.collect()
 
@@ -443,6 +434,21 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         self.iactions['Connect Share'].check_smartdevice_menus()
         QTimer.singleShot(1, self.start_smartdevice)
         QTimer.singleShot(100, self.update_toggle_to_tray_action)
+
+        # Once the gui is initialized we can restore the quickview state
+        # The same thing will be true for any action-based operation with a
+        # layout button. We need to let a book be selected in the book list
+        # before initializing quickview, so run it after an event loop tick
+        QTimer.singleShot(0, self.start_quickview)
+
+    def start_quickview(self):
+        from calibre.gui2.actions.show_quickview import get_quickview_action_plugin
+        qv = get_quickview_action_plugin()
+        if qv:
+            if DEBUG:
+                prints('Starting QuickView')
+            qv.qv_button.restore_state()
+        self.save_layout_state()
 
     def show_gui_debug_msg(self):
         info_dialog(self, _('Debug mode'), '<p>' +
@@ -707,7 +713,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
             try:
                 olddb = self.library_view.model().db
                 if copy_structure:
-                    default_prefs = olddb.prefs
+                    default_prefs = dict(olddb.prefs)
             except:
                 olddb = None
             if copy_structure and olddb is not None and default_prefs is not None:
@@ -752,8 +758,8 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
             self.set_window_title()
             self.apply_named_search_restriction('')  # reset restriction to null
             self.saved_searches_changed(recount=False)  # reload the search restrictions combo box
-            if db.prefs['virtual_lib_on_startup']:
-                self.apply_virtual_library(db.prefs['virtual_lib_on_startup'])
+            if db.new_api.pref('virtual_lib_on_startup'):
+                self.apply_virtual_library(db.new_api.pref('virtual_lib_on_startup'))
             self.rebuild_vl_tabs()
             for action in self.iactions.values():
                 action.library_changed(db)
@@ -1063,7 +1069,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
             return
         self.write_settings()
         if self.system_tray_icon is not None and self.system_tray_icon.isVisible():
-            if not dynamic['systray_msg'] and not isosx:
+            if not dynamic['systray_msg'] and not ismacos:
                 info_dialog(self, 'calibre', 'calibre '+
                         _('will keep running in the system tray. To close it, '
                         'choose <b>Quit</b> in the context menu of the '

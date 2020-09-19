@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__ = 'GPL v3'
 __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -15,7 +15,7 @@ from PyQt5.Qt import (
     QBuffer, QPixmap, QAction, QKeySequence)
 
 from calibre import as_unicode
-from calibre.constants import iswindows, isosx
+from calibre.constants import iswindows, ismacos
 from calibre.gui2 import error_dialog, choose_files, choose_images, elided_text, sanitize_env_vars, Application, choose_osx_app
 from calibre.gui2.widgets2 import Dialog
 from calibre.gui2.progress_indicator import ProgressIndicator
@@ -146,7 +146,7 @@ if iswindows:
                 det_msg='Command line: %r\n%s' %(cmdline, as_unicode(err)))
     # }}}
 
-elif isosx:
+elif ismacos:
     # macOS {{{
     oprefs = JSONConfig('osx_open_with')
     from calibre.utils.open_with.osx import find_programs, get_icon, entry_to_cmdline, get_bundle_data

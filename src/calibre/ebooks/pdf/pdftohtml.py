@@ -1,8 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2008, Kovid Goyal <kovid at kovidgoyal.net>
-
-from __future__ import print_function, unicode_literals
 
 import errno
 import os
@@ -11,29 +9,24 @@ import shutil
 import subprocess
 import sys
 
-from calibre import CurrentDir, xml_replace_entities, prints
-from calibre.constants import (
-    filesystem_encoding, isbsd, islinux, isosx, ispy3, iswindows
-)
+from calibre import CurrentDir, prints, xml_replace_entities
+from calibre.constants import isbsd, islinux, ismacos, iswindows
 from calibre.ebooks import ConversionError, DRMError
 from calibre.ebooks.chardet import xml_to_unicode
 from calibre.ptempfile import PersistentTemporaryFile
 from calibre.utils.cleantext import clean_xml_chars
 from calibre.utils.ipc import eintr_retry_call
 
-
 PDFTOHTML = 'pdftohtml'
 
 
 def popen(cmd, **kw):
-    if not ispy3:
-        cmd = [x.encode(filesystem_encoding) if not isinstance(x, bytes) else x for x in cmd]
     if iswindows:
-        kw['creationflags'] = 0x08
+        kw['creationflags'] = subprocess.DETACHED_PROCESS
     return subprocess.Popen(cmd, **kw)
 
 
-if isosx and hasattr(sys, 'frameworks_dir'):
+if ismacos and hasattr(sys, 'frameworks_dir'):
     base = os.path.join(os.path.dirname(sys.frameworks_dir), 'utils.app', 'Contents', 'MacOS')
     PDFTOHTML = os.path.join(base, PDFTOHTML)
 if iswindows and hasattr(sys, 'frozen'):

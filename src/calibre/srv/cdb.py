@@ -1,8 +1,7 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 import os
 from functools import partial
@@ -57,8 +56,11 @@ def cdb_run(ctx, rd, which, version):
     try:
         result = m.implementation(db, partial(ctx.notify_changes, db.backend.library_path), *args)
     except Exception as err:
-        import traceback
-        return {'err': as_unicode(err), 'tb': traceback.format_exc()}
+        tb = ''
+        if not getattr(err, 'suppress_traceback', False):
+            import traceback
+            tb = traceback.format_exc()
+        return {'err': as_unicode(err), 'tb': tb}
     return {'result': result}
 
 

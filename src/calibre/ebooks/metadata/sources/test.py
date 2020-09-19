@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 from __future__ import absolute_import, division, print_function, unicode_literals
 
@@ -126,7 +126,7 @@ def pubdate_test(year, month, day):
 def init_test(tdir_name):
     tdir = tempfile.gettempdir()
     lf = os.path.join(tdir, tdir_name.replace(' ', '')+'_identify_test.txt')
-    log = create_log(open(lf, 'wb'))
+    log = create_log(open(lf, 'w'))
     abort = Event()
     return tdir, lf, log, abort
 

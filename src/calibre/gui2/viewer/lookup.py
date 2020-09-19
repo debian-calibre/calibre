@@ -1,8 +1,7 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 import os
 import sys
@@ -338,6 +337,6 @@ class Lookup(QWidget):
         self.view.load(QUrl(url))
         self.current_query = query
 
-    def selected_text_changed(self, text):
+    def selected_text_changed(self, text, annot_id):
         self.selected_text = text or ''
         self.debounce_timer.start()

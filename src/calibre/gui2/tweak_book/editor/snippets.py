@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__ = 'GPL v3'
 __copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -15,7 +15,7 @@ from PyQt5.Qt import (
     QToolButton, QIcon, QHBoxLayout, QPushButton, QListWidget, QListWidgetItem,
     QGridLayout, QPlainTextEdit, QLabel, QFrame, QDialog, QDialogButtonBox)
 
-from calibre.constants import isosx
+from calibre.constants import ismacos
 from calibre.gui2 import error_dialog
 from calibre.gui2.tweak_book.editor import all_text_syntaxes
 from calibre.gui2.tweak_book.editor.smarts.utils import get_text_before_cursor
@@ -27,7 +27,7 @@ from polyglot.builtins import codepoint_to_chr, iteritems, itervalues, unicode_t
 
 string_length = lambda x: strlen(unicode_type(x))  # Needed on narrow python builds, as subclasses of unicode dont work
 KEY = Qt.Key_J
-MODIFIER = Qt.META if isosx else Qt.CTRL
+MODIFIER = Qt.META if ismacos else Qt.CTRL
 
 SnipKey = namedtuple('SnipKey', 'trigger syntaxes')
 

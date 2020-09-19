@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "августа 21, 2020" "4.23.0" "calibre"
+.TH "CALIBREDB" "1" "сентября 19, 2020" "4.99.17" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -441,7 +441,7 @@ calibredb export [параметры] идентификаторы
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-По умолчанию, в именах файлов calibre конвертирует все не английские символы в английские эквиваленты. ПРЕДУПРЕЖДЕНИЕ: если вы выключите эту опцию, могут появиться ошибки при сохранении, в зависимости от того, насколько хорошо поддерживает юникод файловая система, в которой вы сохраняете. Указание этого переключателя отключит данный режим.
+Have calibre convert all non English characters into English equivalents for the file names. This is useful if saving to a legacy filesystem without full support for Unicode filenames. Указание этого переключателя отключит данный режим.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -814,7 +814,7 @@ calibredb list_categories [настройки]
 .INDENT 0.0
 .TP
 .B \-\-dialect
-Тип файла CSV для создания. Варианты: excel, excel\-tab
+Тип файла CSV для создания. Варианты: excel, excel\-tab, unix
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -902,17 +902,18 @@ calibredb embed_metadata [параметры] book_id
 .sp
 .nf
 .ft C
-calibredb search [параметры] поисковое выражение
+calibredb search [options] search expression
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Искать в библиотеки заданный поисковый термин с возвратом разделённого запятыми
-списка идентификаторов книг, соответствующих поисковому выражению. Выходной поток полезно передавать
-другим командам, которые принимают на вход список идентификаторов.
+Search the library for the specified \fBsearch\fP term, returning a comma separated
+list of book ids matching the \fBsearch\fP expression. The output format is useful
+to feed into other commands that accept a list of ids as input.
 .sp
-Поисковое выражение может быть чем угодно из мощного языка запросов calibre, например: author:asimov title:robot
+The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
+language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
 .sp
 Когда вы передаёте аргументы с пробелами в calibredb, заключайте их в кавычки. Например: "/some path/with spaces"
 .INDENT 0.0
