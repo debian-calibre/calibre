@@ -1,4 +1,4 @@
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal kovid@kovidgoyal.net'
@@ -363,25 +363,18 @@ class XMLConfig(dict):
         self.update(d)
 
     def __getitem__(self, key):
-        from polyglot.plistlib import unwrap_bytes
         try:
-            ans = dict.__getitem__(self, key)
-            return unwrap_bytes(ans)
+            return dict.__getitem__(self, key)
         except KeyError:
             return self.defaults.get(key, None)
 
     def get(self, key, default=None):
-        from polyglot.plistlib import unwrap_bytes
         try:
-            ans = dict.__getitem__(self, key)
-            return unwrap_bytes(ans)
+            return dict.__getitem__(self, key)
         except KeyError:
             return self.defaults.get(key, default)
 
     def __setitem__(self, key, val):
-        from polyglot.plistlib import wrap_bytes
-        if isinstance(val, bytes):
-            val = wrap_bytes(val)
         dict.__setitem__(self, key, val)
         self.commit()
 

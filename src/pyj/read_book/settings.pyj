@@ -43,13 +43,20 @@ def apply_font_size():
 def default_selection_colors():
     if opts.is_dark_theme:
         return dark_link_color, '#111'
-    return '#3297FD', '#eee'
+    return '#3297FD', '#fff'
+
+
+def make_selection_background_opaque(selbg):
+    # see https://stackoverflow.com/questions/7224445/css3-selection-behaves-differently-in-ff-chrome
+    if selbg and selbg.startsWith('#') and len(selbg) is 7:
+        selbg += 'fe'
+    return selbg
 
 
 styles_id = 'calibre-color-scheme-style-overrides'
 
 
-def apply_colors():
+def apply_colors(is_content_popup):
     for elem in (document.documentElement, document.body):
         elem.style.color = opts.color_scheme.foreground
         # set background color to transparent so that the users background
@@ -78,8 +85,31 @@ def apply_colors():
         text += f'\nhtml > body :link, html > body :link * {{ color: {c} !important }} html > body :visited, html > body :visited * {{ color: {c} !important }}'
 
     selbg, selfg = default_selection_colors()
+    selbg = make_selection_background_opaque(selbg)
     text += f'\n::selection {{ background-color: {selbg}; color: {selfg} }}'
     text += f'\n::selection:window-inactive {{ background-color: {selbg}; color: {selfg} }}'
+    if not is_content_popup:
+        # In Chrome when content overflows in RTL and vertical layouts on the left side,
+        # it is not displayed properly when scrolling unless overflow:visible is set,
+        # but this causes scrollbars to appear.
+        # Force disable scrollbars in Chrome, Safari, and Firefox to address this side effect.
+        text += '\nhtml::-webkit-scrollbar, body::-webkit-scrollbar { display: none !important }'
+        # for firefox: https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-width
+        text += '\nhtml, body { scrollbar-width: none !important }'
+
+        # show a dot after highlights that have notes
+        text += '''\n\n
+        .crw-has-dot::after {
+            content: "";\
+            vertical-align: text-top;\
+            background-color: currentColor !important;\
+            text-decoration: none !important;\
+            display: inline-block;\
+            height: 0.7ex;\
+            width: 0.7ex;\
+            border-radius: 50%;\
+        }
+        '''
 
     ss.textContent = text
 
@@ -92,6 +122,8 @@ def set_selection_style(style):
     if not sheet:
         return
     css_text = ''
+    if style.selbg:
+        style.selbg = make_selection_background_opaque(style.selbg)
     for prop in Object.keys(style):
         css_text += f'{prop}: {style[prop]}; '
     for rule in sheet.sheet.cssRules:
@@ -119,7 +151,7 @@ def apply_stylesheet():
     style.textContent = opts.user_stylesheet
 
 
-def apply_settings():
+def apply_settings(is_content_popup):
     apply_font_size()
-    apply_colors()
+    apply_colors(is_content_popup)
     apply_stylesheet()

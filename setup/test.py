@@ -1,13 +1,12 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 import os
 import unittest
 
-from setup import Command, islinux, isosx, iswindows, SRC
+from setup import Command, islinux, ismacos, iswindows, SRC
 
 TEST_MODULES = frozenset('srv db polish opf css docx cfi matcher icu smartypants build misc dbcli ebooks'.split())
 
@@ -43,7 +42,7 @@ class TestImports(unittest.TestCase):
         if not iswindows:
             exclude_modules |= {'calibre.utils.iphlpapi', 'calibre.utils.open_with.windows', 'calibre.devices.winusb'}
             exclude_packages |= {'calibre.utils.winreg'}
-        if not isosx:
+        if not ismacos:
             exclude_modules.add('calibre.utils.open_with.osx')
         if not islinux:
             exclude_modules |= {
@@ -55,6 +54,11 @@ class TestImports(unittest.TestCase):
         self.assertGreater(self.base_check(os.path.join(SRC, 'odf'), exclude_packages, exclude_modules), 10)
         base = os.path.join(SRC, 'calibre')
         self.assertGreater(self.base_check(base, exclude_packages, exclude_modules), 1000)
+
+        import calibre.web.feeds.feedparser as f
+        del f
+        from calibre.ebooks.markdown import Markdown
+        del Markdown
 
 
 def find_tests(which_tests=None, exclude_tests=None):
@@ -115,6 +119,8 @@ def find_tests(which_tests=None, exclude_tests=None):
         from calibre.ebooks.pdf.test_html_writer import find_tests
         a(find_tests())
         from calibre.utils.xml_parse import find_tests
+        a(find_tests())
+        from calibre.gui2.viewer.annotations import find_tests
         a(find_tests())
     if ok('misc'):
         from calibre.ebooks.metadata.tag_mapper import find_tests

@@ -4,8 +4,6 @@ from __python__ import bound_methods, hash_literals
 
 from gettext import gettext as _
 
-from read_book.globals import runtime
-
 
 def parse_key_repr(sc):
     parts = sc.split('+')
@@ -264,6 +262,18 @@ def shortcuts_definition():
         _('Toggle the Reference mode')
     ),
 
+    'toggle_bookmarks': desc(
+        v"['Ctrl+b']",
+        'ui',
+        _('Show/hide bookmarks'),
+    ),
+
+    'new_bookmark': desc(
+        v"['Ctrl+Alt+b']",
+        'ui',
+        _('Create a new bookmark'),
+    ),
+
     'metadata': desc(
         v"['Ctrl+n', 'Ctrl+e']",
         'ui',
@@ -331,13 +341,6 @@ def shortcuts_definition():
     ),
 
     }
-    if runtime.in_develop_mode:
-        ans.create_annotation = desc(
-            "Ctrl+h",
-            'ui',
-            _('Create a highlight'),
-        )
-
     return ans
 
 
@@ -355,18 +358,6 @@ def shortcuts_group_desc():
 def add_standalone_viewer_shortcuts():
     ismacos = 'macos' in window.navigator.userAgent
     sc = shortcuts_definition()
-    sc['toggle_bookmarks'] = desc(
-        v"['Ctrl+b']",
-        'ui',
-        _('Show/hide bookmarks'),
-    )
-
-    sc['new_bookmark'] = desc(
-        v"['Ctrl+Alt+b']",
-        'ui',
-        _('Create a new bookmark'),
-    )
-
     sc['toggle_inspector'] = desc(
         v"['Ctrl+i']",
         'ui',
@@ -397,12 +388,12 @@ def add_standalone_viewer_shortcuts():
         'ui',
         _('Toggle the toolbar'),
     )
-    if runtime.in_develop_mode:
-        sc['toggle_highlights'] = desc(
-            "Ctrl+Alt+h",
-            'ui',
-            _('Toggle the highlights panel')
-        )
+
+    sc['toggle_highlights'] = desc(
+        "Ctrl+h",
+        'ui',
+        _('Toggle the highlights panel')
+    )
 
 
 def create_shortcut_map(custom_shortcuts):

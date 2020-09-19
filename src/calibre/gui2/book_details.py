@@ -1,7 +1,7 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 # License: GPLv3 Copyright: 2010, Kovid Goyal <kovid at kovidgoyal.net>
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 import re, os
 from collections import namedtuple
@@ -104,7 +104,7 @@ def init_find_in_tag_browser(menu, ac, field, value):
     hidden_cats = get_gui().tags_view.model().hidden_categories
     if field not in hidden_cats:
         ac.setIcon(QIcon(I('search.png')))
-        ac.setText(_('Find %s in Tag browser') % value)
+        ac.setText(_('Find %s in the Tag browser') % value)
         ac.current_fmt = field, value
         menu.addAction(ac)
 

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "augusti 21, 2020" "4.23.0" "calibre"
+.TH "CALIBREDB" "1" "september 19, 2020" "4.99.17" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -41,42 +41,42 @@ calibredb kommando [alternativ] [argument]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP is the command line interface to the calibre database. It has
-several sub\-commands, documented below.
+\fBcalibredb\fP är kommandoradsgränssnittet till calibre\-databasen. Det har
+flera underkommandon, dokumenterade nedan.
 .sp
-\fBcalibredb\fP can be used to manipulate either a calibre database
-specified by path or a calibre Content server running either on
-the local machine or over the internet. You can start a calibre
-Content server using either the \fBcalibre\-server\fP
-program or in the main calibre program click Connect/share  → 
-Start Content server\&. Since \fBcalibredb\fP can make changes to your
-calibre libraries, you must setup authentication on the server first. There
-are two ways to do that:
+\fBcalibredb\fP kan användas för att manipulera antingen en calibre\-databas
+anges per sökväg eller en calibre Innehållsserver körs antingen på
+den lokala maskinen eller över internet. Du kan starta en calibre
+Innehållsserver med antingen \fBcalibre\-server\fP
+programmet eller klicka på i calibre\-huvudprogrammet Anslut/dela  → 
+Starta Innehållsserver\&. Eftersom \fBcalibredb\fP kan göra ändringar i ditt
+calibre\-bibliotek måste du först ställa in autentisering på servern. Det
+finns två sätt att göra det:
 .INDENT 0.0
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-If you plan to connect only to a server running on the same computer,
-you can simply use the \fB\-\-enable\-local\-write\fP option of the
-content server, to allow any program, including calibredb, running on
-the local computer to make changes to your calibre data. When running
-the server from the main calibre program, this option is in
-Preferences → Sharing over the net → Advanced\&.
+Om du planerar att bara ansluta till en server som körs på samma dator,
+kan du helt enkelt använda flaggan \fB\-\-enable\-local\-write\fP av
+Innehållsserver, så att alla program, inklusive calibredb, körs på
+den lokala datorn för att göra ändringar i dina calibre\-data. När du kör
+servern från calibre\-huvudprogrammet är det här alternativet i
+Inställningar → Dela via nätet → Avancerat\&.
 .IP \(bu 2
-If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
-options to \fBcalibredb\fP to give it access. You can setup
-user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
-option and using \fB\-\-manage\-users\fP to create the user accounts.
-If you are running the server from the main calibre program, use
-Preferences → Sharing over the net → Require username/password\&.
+Om du vill aktivera åtkomst via internet bör du ställa in
+användarkonton på servern och använda \fI\%\-\-username\fP eller \fI\%\-\-password\fP
+flaggorna för \fBcalibredb\fP för att ge den åtkomst. Du kan ställa in
+användarautentisering för \fBcalibre\-server\fP genom att använda \fB\-\-enable\-auth\fP
+flaggan och använda \fB\-\-manage\-users\fP för att skapa användarkonton.
+Om du kör servern från calibre\-huvudprogrammet använder du
+Inställningar → Dela via nätet → Kräv användarnamn/lösenord\&.
 .UNINDENT
 .UNINDENT
 .UNINDENT
 .sp
-To connect to a running Content server, pass the URL of the server to the
-\fI\%\-\-with\-library\fP option, see the documentation of that option for
-details and examples.
+För att ansluta till en körande innehållsserver, skicka serverns webbadress till
+\fI\%\-\-with\-library\fP flaggan, se dokumentationen för det alternativet för
+detaljer och exempel.
 .INDENT 0.0
 .IP \(bu 2
 \fI\%GLOBALA ALTERNATIV\fP
@@ -140,7 +140,7 @@ visa denna hjälptext och avsluta
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Sökväg till calibre\-biblioteket. Standard är att använda sökvägen lagrad i inställningarna. Du kan också ansluta till en calibre\-Innehållsserver för att utföra åtgärder på fjärrbibliotek. Så här använder du en webbadress i formuläret: \fI\%http://hostname:port/#bibliotek_id\fP till exempel, \fI\%http://localhost:8080/#mittbibliotek\fP\&. Bibliotek_id är bibliotekets ID för det bibliotek du vill ansluta till på Innehållsservern. Du kan använda det speciella bibliotek_id\-värdet för att få en lista över biblioteks\-id:n tillgängliga på servern. Mer information om hur du konfigurerar åtkomst via en Innehållsserver finns i https://manual.calibre\-ebook.com/sv/generated/sv/calibredb.html.
+Sökväg till calibre\-biblioteket. Standard är att använda sökvägen lagrad i inställningarna. Du kan också ansluta till en calibre\-Innehållsserver för att utföra åtgärder på fjärrbibliotek. Så här använder du en webbadress i formuläret: \fI\%http://hostname:port/#bibliotek_id\fP till exempel \fI\%http://localhost:8080/#mittbibliotek\fP\&. Bibliotek_id är bibliotekets ID för det bibliotek du vill ansluta till på Innehållsservern. Du kan använda det speciella bibliotek_id\-värdet för att få en lista över biblioteks\-id:n tillgängliga på servern. Mer information om hur du konfigurerar åtkomst via en Innehållsserver finns i https://manual.calibre\-ebook.com/sv/generated/sv/calibredb.html.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -185,7 +185,7 @@ Fälten som ska visas när du listar böcker i databasen. Bör vara en kommasepa
 .INDENT 0.0
 .TP
 .B \-\-for\-machine
-Generera utdata i JSON\-format, vilket är mer lämpat för maskintolkning. Resulterar i radbredd och avskiljaralternativ att ignorera.
+Generera utmatning i JSON\-format, vilket är mer lämpat för maskintolkning. Resulterar i radbredd och avskiljaralternativ att ignorera.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -195,7 +195,7 @@ Högsta antal resultat att visa. Standard: alla
 .INDENT 0.0
 .TP
 .B \-\-line\-width, \-w
-Största bredd på en enskild rad i utdata. Som standard används den detekterade skärmstorleken.
+Största bredd på en enskild rad i utmatning. Som standard används den detekterade skärmstorleken.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -323,7 +323,7 @@ calibredb remove ids
 .UNINDENT
 .UNINDENT
 .sp
-Ta bort böcker som identifierats av id från databasen. id ska vara en kommaseparerad lista med ID\-nummer (du kan få id\-nummer med sökkommandot). Till exempel, 23,34,57\-85 (när du anger ett intervall, det sista numret i intervallet inkluderas inte).
+Ta bort böcker som identifierats av id från databasen. id ska vara en kommaseparerad lista med ID\-nummer (du kan få id\-nummer med sökkommandot). Till exempel 23,34,57\-85 (när du anger ett intervall, det sista numret i intervallet inkluderas inte).
 .sp
 När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .INDENT 0.0
@@ -442,7 +442,7 @@ Exportera alla böcker i databasen och ignorera ID\-listan.
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Normalt kommer calibre att konvertera alla icke\-engelska i filnamnet till engelska motsvarigheter. VARNING: Om du stänga av denna funktion kan det uppstå fel vid sparande, beroende på hur väl filsystemet du sparar till stöder Unicode. Om denna växel aktiveras, kommer detta beteende att stängas av.
+Låt calibre konvertera alla icke\-engelska tecken till engelska ekvivalenter för filnamn. Detta är användbart om du sparar i ett äldre filsystem utan fullt stöd för Unicode\-filnamn. Om denna växel aktiveras, kommer detta beteende att stängas av.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -512,7 +512,7 @@ calibredb sökväg /path/to/destination.(csv|epub|mobi|xml...) [alternativ]
 .UNINDENT
 .sp
 Exportera en sökväg i format specificerat med path/to/destination tillägg.
-Alternativ hur uppslag visas i genererad utdata.
+Alternativ hur uppslag visas i genererad utmatning.
 Observera att olika katalogformat stöder olika uppsättningar av alternativ.
 .sp
 När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
@@ -529,103 +529,103 @@ Filtrera sökningens resultat. Se sökrelaterad dokumentation i Användarhandbok
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Visa detaljerad utdatainformation. Användbart för felsökning
+Visa detaljerad utmatningsinformation. Användbart för felsökning
 .UNINDENT
 .SS EPUB ALTERNATIV
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title
-Titel på den genererade katalogen som används som titel i metadata. Standard: \fB\(aq\fPMy Books\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+Titel på den genererade katalogen som används som titel i metadata. Standard: \fB\(aq\fPMy Books\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cross\-reference\-authors
-Skapa korsreferenser i författarsektionen för böcker med flera författare. Standard: \fB\(aq\fPFalse\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+Skapa korsreferenser i författarsektionen för böcker med flera författare. Standard: \fB\(aq\fPFalse\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Spara utdata från olika stadier av konverteringen till den angivna katalogen. Användbart om du är osäker på i vilket stadium av konverteringsprocessen ett fel sker. Standard: \fB\(aq\fPNone\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+Spara utmatning från olika stadier av konverteringen till den angivna katalogen. Användbart om du är osäker på i vilket stadium av konverteringsprocessen ett fel sker. Standard: \fB\(aq\fPNone\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclude\-genre
-Regex beskriver taggar för att utesluta som genrer. Standard: \fB\(aq\fP[.+]|^+$\fB\(aq\fP utesluter parentestaggar, t.ex. \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, och \fB\(aq\fP+\fB\(aq\fP, standard\-tagg för lästa böcker. Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+Regex beskriver taggar för att utesluta som genrer. Standard: \fB\(aq\fP[.+]|^+$\fB\(aq\fP utesluter parentestaggar, t.ex. \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, och \fB\(aq\fP+\fB\(aq\fP, standard\-tagg för lästa böcker. Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Anger de regler som används för att utesluta böcker från den genererade katalogen. Modellen för en undantagsregel är antingen (\fB\(aq\fP<regel namn>\fB\(aq\fP,\fB\(aq\fPTaggar\fB"\fP,\fB\(aq\fP<komma\-separerad lista med taggar>\fB\(aq\fP) eller (\fB\(aq\fP<regel namn>\fB\(aq\fP,\fB\(aq\fP<anpassad column>\fB\(aq\fP,\fB\(aq\fP<mönster>\fB\(aq\fP). Till exempel: ((\fB"\fPArkiverade böcker\fB"\fP, \fB"\fP# status\fB"\fP, \fB"\fPArkiverade\fB"\fP),) kommer att utesluta en bok med ett värde på \fB"\fPstatus\fB"\fP \fB"\fPArkiverat\fB"\fP i den anpassade kolumnen. När flera regler är definierade, kommer alla regler tillämpas. Standard: \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+Anger de regler som används för att utesluta böcker från den genererade katalogen. Modellen för en undantagsregel är antingen (\fB\(aq\fP<regel namn>\fB\(aq\fP,\fB\(aq\fPTaggar\fB"\fP,\fB\(aq\fP<komma\-separerad lista med taggar>\fB\(aq\fP) eller (\fB\(aq\fP<regel namn>\fB\(aq\fP,\fB\(aq\fP<anpassad column>\fB\(aq\fP,\fB\(aq\fP<mönster>\fB\(aq\fP). Till exempel: ((\fB"\fPArkiverade böcker\fB"\fP, \fB"\fP# status\fB"\fP, \fB"\fPArkiverade\fB"\fP),) kommer att utesluta en bok med ett värde på \fB"\fPstatus\fB"\fP \fB"\fPArkiverat\fB"\fP i den anpassade kolumnen. När flera regler är definierade, kommer alla regler tillämpas. Standard: \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-authors
-Inkludera \fB\(aq\fPFörfattar\fB\(aq\fP sektion i katalogen. Standard: \fB\(aq\fPFalse\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+Inkludera \fB\(aq\fPFörfattar\fB\(aq\fP sektion i katalogen. Standard: \fB\(aq\fPFalse\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-descriptions
-Inkludera sektionen \fB\(aq\fPBeskrivningar\fB\(aq\fP i katalogen. Standard: \fB\(aq\fPFalse\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+Inkludera sektionen \fB\(aq\fPBeskrivningar\fB\(aq\fP i katalogen. Standard: \fB\(aq\fPFalse\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-genres
-Inkludera sektionen \fB\(aq\fPGenrer\fB\(aq\fP i katalogen. Standard: \fB\(aq\fPFalse\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+Inkludera sektionen \fB\(aq\fPGenrer\fB\(aq\fP i katalogen. Standard: \fB\(aq\fPFalse\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-recently\-added
-Inkludera sektioen \fB\(aq\fPSenaste tillagda\fB\(aq\fP i katalogen. Standard: \fB\(aq\fPFalse\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+Inkludera sektioen \fB\(aq\fPSenaste tillagda\fB\(aq\fP i katalogen. Standard: \fB\(aq\fPFalse\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-series
-Inkludera sektioen \fB\(aq\fPSerier\fB\(aq\fP i katalogen Standard: \fB\(aq\fPFalse\fB\(aq\fP  Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+Inkludera sektioen \fB\(aq\fPSerier\fB\(aq\fP i katalogen Standard: \fB\(aq\fPFalse\fB\(aq\fP  Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-titles
-Inkludera sektionen \fB\(aq\fPTitlar\fB\(aq\fP i katalogen. Standard: \fB\(aq\fPFalse\fB\(aq\fP  Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+Inkludera sektionen \fB\(aq\fPTitlar\fB\(aq\fP i katalogen. Standard: \fB\(aq\fPFalse\fB\(aq\fP  Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-genre\-source\-field
-Källfältet för \fB"\fPGenrer\fB"\fP sektion. Standard: \fB\(aq\fPTaggar\fB\(aq\fP  Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+Källfältet för \fB"\fPGenrer\fB"\fP sektion. Standard: \fB\(aq\fPTaggar\fB\(aq\fP  Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-header\-note\-source\-field
-Anpassat fält innehåller anmärkningstext att infoga i beskrivningsrubrik. Standard: \fB"\fP\fB"\fP  Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+Anpassat fält innehåller anmärkningstext att infoga i beskrivningsrubrik. Standard: \fB"\fP\fB"\fP  Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-merge\-comments\-rule
-#<custom field>:[before|after]:[True|False] anger: <custom field> Anpassat fält innehåller anteckningar att sammanfoga med kommentarer [before|after] Placering av noteringar med avseende på kommentarer [True|False] \- En horisontell linje infogas mellan noteringar och Kommentarer Standard: \fB\(aq\fP::\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+#<custom field>:[before|after]:[True|False] anger: <custom field> Anpassat fält innehåller anteckningar att sammanfoga med kommentarer [before|after] Placering av noteringar med avseende på kommentarer [True|False] \- En horisontell linje infogas mellan noteringar och Kommentarer Standard: \fB\(aq\fP::\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Anger utdataprofilen. I vissa fall krävs en utdataprofil för att optimera katalogen för enheten. Till exempel skapar \fB"\fPkindle\fB"\fP eller \fB"\fPkindle_dx\fB"\fP en strukturerad innehållsförteckning med avsnitt och artiklar. Standard: \fB\(aq\fPNone\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+Anger utmatningsprofilen. I vissa fall krävs en utmatningsprofil för att optimera katalogen för enheten. Till exempel skapar \fB"\fPkindle\fB"\fP eller \fB"\fPkindle_dx\fB"\fP en strukturerad innehållsförteckning med avsnitt och artiklar. Standard: \fB\(aq\fPNone\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-Anger de regler som används för att inkludera prefix som indikerar lästa böcker, önskelistsposter och andra användardefinierade prefix. Modellen för en prefixregel är  (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). När flera regler är definierade, kommer den första matchande regeln användas. Standard: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+Anger de regler som används för att inkludera prefix som indikerar lästa böcker, önskelistsposter och andra användardefinierade prefix. Modellen för en prefixregel är  (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). När flera regler är definierade, kommer den första matchande regeln användas. Standard: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-preset
-Använd en namngiven förinställning skapas med GUI Catalog Builder.  En förinställning specificerar alla inställningar för att bygga en katalog.  Standard: \fB\(aq\fPNone\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+Använd en namngiven förinställning skapas med GUI Catalog Builder.  En förinställning specificerar alla inställningar för att bygga en katalog.  Standard: \fB\(aq\fPNone\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-thumb\-width
-Storleksråd (i tum) för bokomslag i katalog. Intervall: 1.0 \- 2.0 Standard: \fB\(aq\fP1.0\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+Storleksråd (i tum) för bokomslag i katalog. Intervall: 1.0 \- 2.0 Standard: \fB\(aq\fP1.0\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-use\-existing\-cover
-Ersätt befintliga omslag när du skapar katalog.  Standard: \fB\(aq\fPFalse\fB\(aq\fP  Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+Ersätt befintliga omslag när du skapar katalog.  Standard: \fB\(aq\fPFalse\fB\(aq\fP  Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .SH SAVED_SEARCHES
 .INDENT 0.0
@@ -788,7 +788,7 @@ När du skickar argument till calibredb som har blanksteg i dem, bifoga argument
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
-Utdata i CSV
+Utmatning i CSV
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -829,12 +829,12 @@ Kommaseparerad lista med kategoriuppslagsnamn. Standard: Alla
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
-Utdata i CSV
+Utmatning i CSV
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dialect
-Den typ av CSV\-fil som ska produceras. Val: excel, excel\-tab
+Den typ av CSV\-fil som ska produceras. Val: excel, excel\-tab, unix
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -844,7 +844,7 @@ Skriv ut endast antalet poster i en kategori istället för räkna per post inom
 .INDENT 0.0
 .TP
 .B \-\-width, \-w
-Största bredd på en enskild rad i utdata. Som standard används den detekterade skärmstorleken.
+Största bredd på en enskild rad i utmatning. Som standard används den detekterade skärmstorleken.
 .UNINDENT
 .SH BACKUP_METADATA
 .INDENT 0.0
@@ -919,24 +919,24 @@ Uppdatera bara metadata i filer för ett särskilt format. Specificera det flera
 .sp
 .nf
 .ft C
-calibredb sök [alternativ] sökuttryck
+calibredb search [options] search expression
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Sök i biblioteket för den angivna söktermen, återvänder ett kommatecken separerad
-lista med bokidentifierare matchar sökuttrycket. Utdataformatet är användbart
-att mata in andra kommandon som accepterar en lista med identifierare som indata.
+Search the library for the specified \fBsearch\fP term, returning a comma separated
+list of book ids matching the \fBsearch\fP expression. The output format is useful
+to feed into other commands that accept a list of ids as input.
 .sp
-Sökningsuttryck kan vara allt från calibres kraftfulla sökfrågnings
-språk, till exempel: author:asimov title:robot
+The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
+language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
 .sp
 När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l
-Högsta antal resultat att returnera. Standard är alla resultat.
+Högsta antal resultat att återge. Standard är alla resultat.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

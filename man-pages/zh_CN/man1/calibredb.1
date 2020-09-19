@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "八月 21, 2020" "4.23.0" "calibre"
+.TH "CALIBREDB" "1" "九月 19, 2020" "4.99.17" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -443,7 +443,7 @@ calibredb export [options] ids
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-一般来说，calibre 为文件名将所有非英文字符转换为英文对应字符。警告：若关闭此项，你可能保存文件出错，取决于你的文件系统是否支持 unicode。 选定此项将关闭此操作。
+Have calibre convert all non English characters into English equivalents for the file names. This is useful if saving to a legacy filesystem without full support for Unicode filenames. 选定此项将关闭此操作。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -823,7 +823,7 @@ calibredb list_categories [options]
 .INDENT 0.0
 .TP
 .B \-\-dialect
-产生CSV文件的类型。选择：excel, excel\-tab
+产生CSV文件的类型。选择：excel, excel\-tab, unix
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -905,14 +905,18 @@ calibredb embed_metadata [options] book_id
 .sp
 .nf
 .ft C
-calibredb搜索 [选项] 搜索表达式
+calibredb search [options] search expression
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-搜索书库中指定的搜索项，返回与搜索表达式匹配的以逗号分隔的图书ID列表。输出格式对于输入格式接受ID列表的其他命令非常有用。
-搜索表达式可以是来自calibre强大的搜索查询语言中的任何内容，例如：author:asimov title:robot
+Search the library for the specified \fBsearch\fP term, returning a comma separated
+list of book ids matching the \fBsearch\fP expression. The output format is useful
+to feed into other commands that accept a list of ids as input.
+.sp
+The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
+language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
 .INDENT 0.0

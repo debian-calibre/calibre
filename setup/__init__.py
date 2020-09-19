@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import with_statement, print_function
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -11,14 +11,13 @@ from contextlib import contextmanager
 
 is64bit = platform.architecture()[0] == '64bit'
 iswindows = re.search('win(32|64)', sys.platform)
-ispy3 = sys.version_info.major > 2
-isosx = 'darwin' in sys.platform
+ismacos = 'darwin' in sys.platform
 isfreebsd = 'freebsd' in sys.platform
 isnetbsd = 'netbsd' in sys.platform
 isdragonflybsd = 'dragonfly' in sys.platform
 isbsd = isnetbsd or isfreebsd or isdragonflybsd
 ishaiku = 'haiku1' in sys.platform
-islinux = not isosx and not iswindows and not isbsd and not ishaiku
+islinux = not ismacos and not iswindows and not isbsd and not ishaiku
 sys.setup_dir = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.abspath(os.path.join(os.path.dirname(sys.setup_dir), 'src'))
 sys.path.insert(0, SRC)
@@ -75,22 +74,19 @@ def build_cache_dir():
 
 
 def require_git_master(branch='master'):
-    if subprocess.check_output(['git', 'symbolic-ref', '--short', 'HEAD']).strip() != branch:
-        raise SystemExit('You must be in the {} got branch'.format(branch))
+    if subprocess.check_output(['git', 'symbolic-ref', '--short', 'HEAD']).decode('utf-8').strip() != branch:
+        raise SystemExit('You must be in the {} git branch'.format(branch))
 
 
 def require_clean_git():
     c = subprocess.check_call
     p = subprocess.Popen
-    with open(os.devnull, 'wb') as null:
-        c('git rev-parse --verify HEAD'.split(), stdout=null)
-        c('git update-index -q --ignore-submodules --refresh'.split())
-        if p('git diff-files --quiet --ignore-submodules'.split()).wait() != 0:
-            print('You have unstaged changes in your working tree', file=sys.stderr)
-            raise SystemExit(1)
-        if p('git diff-index --cached --quiet --ignore-submodules HEAD --'.split()).wait() != 0:
-            print('Your git index contains uncommitted changes', file=sys.stderr)
-            raise SystemExit(1)
+    c('git rev-parse --verify HEAD'.split(), stdout=subprocess.DEVNULL)
+    c('git update-index -q --ignore-submodules --refresh'.split())
+    if p('git diff-files --quiet --ignore-submodules'.split()).wait() != 0:
+        raise SystemExit('You have unstaged changes in your working tree')
+    if p('git diff-index --cached --quiet --ignore-submodules HEAD --'.split()).wait() != 0:
+        raise SystemExit('Your git index contains uncommitted changes')
 
 
 def initialize_constants():
@@ -128,52 +124,8 @@ def initialize_constants():
 
 
 initialize_constants()
-
 preferred_encoding = 'utf-8'
-
-
-if ispy3:
-    prints = print
-else:
-    def prints(*args, **kwargs):
-        '''
-        Print unicode arguments safely by encoding them to preferred_encoding
-        Has the same signature as the print function from Python 3, except for the
-        additional keyword argument safe_encode, which if set to True will cause the
-        function to use repr when encoding fails.
-        '''
-        file = kwargs.get('file', sys.stdout)
-        sep  = kwargs.get('sep', ' ')
-        end  = kwargs.get('end', '\n')
-        enc = preferred_encoding
-        safe_encode = kwargs.get('safe_encode', False)
-        for i, arg in enumerate(args):
-            if isinstance(arg, type(u'')):
-                try:
-                    arg = arg.encode(enc)
-                except UnicodeEncodeError:
-                    if not safe_encode:
-                        raise
-                    arg = repr(arg)
-            if not isinstance(arg, str):
-                try:
-                    arg = str(arg)
-                except ValueError:
-                    arg = type(u'')(arg)
-                if isinstance(arg, type(u'')):
-                    try:
-                        arg = arg.encode(enc)
-                    except UnicodeEncodeError:
-                        if not safe_encode:
-                            raise
-                        arg = repr(arg)
-
-            file.write(arg)
-            if i != len(args)-1:
-                file.write(sep)
-        file.write(end)
-
-
+prints = print
 warnings = []
 
 
@@ -208,7 +160,7 @@ class Command(object):
         self.real_user = os.environ.get('SUDO_USER', None)
 
     def drop_privileges(self):
-        if not islinux or isosx or isfreebsd:
+        if not islinux or ismacos or isfreebsd:
             return
         if self.real_user is not None:
             self.info('Dropping privileges to those of', self.real_user+':',
@@ -219,7 +171,7 @@ class Command(object):
             os.seteuid(int(self.real_uid))
 
     def regain_privileges(self):
-        if not islinux or isosx or isfreebsd:
+        if not islinux or ismacos or isfreebsd:
             return
         if os.geteuid() != 0 and self.orig_euid == 0:
             self.info('Trying to get root privileges')

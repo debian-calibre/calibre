@@ -1,8 +1,7 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2018, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from PyQt5.Qt import QSplitter, QTableView
 
@@ -120,7 +119,7 @@ class PinTableView(QTableView):
     def restore_state(self):
         db = getattr(self.model(), 'db', None)
         if db is not None:
-            state = db.prefs.get('books view split pane state', None)
+            state = db.new_api.pref('books view split pane state', None)
             if self.splitter is not None:
                 self.splitter.restore_state()
             if state:

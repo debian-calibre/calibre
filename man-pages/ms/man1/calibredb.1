@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "Ogos 21, 2020" "4.23.0" "calibre"
+.TH "CALIBREDB" "1" "September 19, 2020" "4.99.17" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -140,7 +140,7 @@ tunjuk mesej bantuan ini dan keluar
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Laluan ke pustaka calibre. Lalai gunakan laluan tersimpan dalam tetapan. Anda juga boleh sambungkan dengan pelayan Kandungan calibre untuk membuat tindakan terhadap pustaka jauh. Untuk membuatnya gunakan URL dalam bentuk: \fI\%http://hostname:port/#library_id\fP sebagai contoh, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id ialah id pustaka bagi pustaka yang mahu disambungkan dengan pelayan Kandungan. Anda boleh gunakan nilai khas library_id \- untuk dapatkan senarai id pustaka yang tersedia dalam pelayan. Untuk perincian bagaimana hendak memasang melalui pelayan Kandungan, sila rujuk \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
+Laluan ke pustaka calibre. Lalai gunakan laluan tersimpan dalam tetapan. Anda juga boleh sambungkan dengan pelayan Kandungan calibre untuk membuat tindakan terhadap pustaka jauh. Untuk membuatnya gunakan URL dalam bentuk: \fI\%http://hostname:port/#library_id\fP sebagai contoh, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id ialah id pustaka bagi pustaka yang mahu disambungkan dengan pelayan Kandungan. Anda boleh gunakan nilai khas library_id \- untuk dapatkan senarai id pustaka yang tersedia dalam pelayan. Untuk perincian bagaimana hendak memasang melalui pelayan Kandungan, sila rujuk \fI\%https://manual.calibre\-ebook.com/ms/generated/ms/calibredb.html\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -444,7 +444,7 @@ Eksport semua buku dalam pangkalan data, mengabaikan senarai id.
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Kebiasaannya, calibre akan menukar semua aksara bukan Inggeris ke setara Inggeris bagi nama fail. AMARAN: Jika anda matikan ini, anda akan hadapi ralat ketika menyimpan, bergantung pada bagaimana kecekapan sistem fail anda mengendalikan penyimpanan yang menyokong unikod. Menyatakan suis ini akan matikan kelakuan ini.
+Have calibre convert all non English characters into English equivalents for the file names. This is useful if saving to a legacy filesystem without full support for Unicode filenames. Menyatakan suis ini akan matikan kelakuan ini.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -840,7 +840,7 @@ Output dalam CSV
 .INDENT 0.0
 .TP
 .B \-\-dialect
-Jenis fail CSV yang dihasilkan. Pilihan: excel, excel\-tab
+Jenis fail CSV yang dihasilkan. Pilihan: excel, excel\-tab, unix
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -930,19 +930,18 @@ Hanya kemaskini data meta dalam fail bagi format yang dinyatakan. Nyatakan ia be
 .sp
 .nf
 .ft C
-calibredb search [options] ungkapan gelintar
+calibredb search [options] search expression
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Gelintar pustaka untuk terma gelintar tertentu, kembalikan senarai id buku
-dipisah tanda koma yang sepadan dengan ungkapan gelintar. Format output
-berguna untuk disuap ke dalam perintah lain yang menerima senarai id sebagai
-input.
+Search the library for the specified \fBsearch\fP term, returning a comma separated
+list of book ids matching the \fBsearch\fP expression. The output format is useful
+to feed into other commands that accept a list of ids as input.
 .sp
-Ungkapan gelintar boleh jadi apa jua melalui bahasa pertanyaan gelintar calibre,
-contohnya: author:asimov title:robot
+The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
+language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0

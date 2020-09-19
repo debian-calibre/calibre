@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "серпня 21, 2020" "4.23.0" "calibre"
+.TH "CALIBREDB" "1" "вересня 19, 2020" "4.99.17" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -41,42 +41,45 @@ calibredb команда [параметри] [аргументи]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP is the command line interface to the calibre database. It has
-several sub\-commands, documented below.
+\fBcalibredb\fP — інтерфейс командного рядка до бази даних calibre.
+Передбачено декілька допоміжних команд, які документовано нижче.
 .sp
-\fBcalibredb\fP can be used to manipulate either a calibre database
-specified by path or a calibre Content server running either on
-the local machine or over the internet. You can start a calibre
-Content server using either the \fBcalibre\-server\fP
-program or in the main calibre program click Connect/share  → 
-Start Content server\&. Since \fBcalibredb\fP can make changes to your
-calibre libraries, you must setup authentication on the server first. There
-are two ways to do that:
+\fBcalibredb\fP можна скористатися для керування або базою даних calibre,
+вказаної шляхом, або Сервером даних calibre, запущеного або на
+локальному комп\(aqютері, або в інтернеті. Запустити Сервер даних
+calibre можна або за допомогою команди \fBcalibre\-server\fP, або
+з головного вікна програми calibre вибором пункту З\(aqєднатись/Роздати  → 
+Запустити сервер даних\&. Оскільки \fBcalibredb\fP може вносити зміни до
+ваших бібліотек calibre, вам слід спочатку налаштувати розпізнавання на сервері.
+Це можна зробити у два способи:
 .INDENT 0.0
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-If you plan to connect only to a server running on the same computer,
-you can simply use the \fB\-\-enable\-local\-write\fP option of the
-content server, to allow any program, including calibredb, running on
-the local computer to make changes to your calibre data. When running
-the server from the main calibre program, this option is in
-Preferences → Sharing over the net → Advanced\&.
+Якщо ви плануєте з\(aqєднуватися лише з сервером, який запущено на тому
+самому комп\(aqютері, ви можете просто скористатися параметром
+\fB\-\-enable\-local\-write\fP сервера даних, щоб уможливити для будь\-якої
+програми, зокрема calibredb, запущеної на локальному комп\(aqютері, внесення
+змін до ваших даних calibre. Якщо ви запускаєте сервер із головного
+вікна програми calibre, цей пункт можна знайти у розділі
+Налаштування  →  Обмін мережею  →  Додатково\&.
 .IP \(bu 2
-If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
-options to \fBcalibredb\fP to give it access. You can setup
-user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
-option and using \fB\-\-manage\-users\fP to create the user accounts.
-If you are running the server from the main calibre program, use
-Preferences → Sharing over the net → Require username/password\&.
+Якщо ви хочете увімкнути доступ інтернетом, вам слід налаштувати
+облікові записи користувачів на сервері і скористатися параметрами
+\fI\%\-\-username\fP і \fI\%\-\-password\fP програми \fBcalibredb\fP для
+надання їй доступу. Ви можете налаштувати розпізнавання для
+\fBcalibre\-server\fP за допомогою параметра \fB\-\-enable\-auth\fP
+і скористатися параметром \fB\-\-manage\-users\fP для створення облікових
+записів користувачів. Якщо ви працюєте із сервером з головного вікна
+програми calibre, скористайтеся пунктом,
+Налаштування → Обмін мережею → Вимагати введення імені користувача і пароля\&.
 .UNINDENT
 .UNINDENT
 .UNINDENT
 .sp
-To connect to a running Content server, pass the URL of the server to the
-\fI\%\-\-with\-library\fP option, see the documentation of that option for
-details and examples.
+Для встановлення з\(aqєднання із запущеним сервером даних, передайте адресу сервера у
+параметрі \fI\%\-\-with\-library\fP\&. Див. документацію до цього параметра, щоб дізнатися більше
+і ознайомитися із прикладами.
 .INDENT 0.0
 .IP \(bu 2
 \fI\%ЗАГАЛЬНІ ПАРАМЕТРИ\fP
@@ -446,7 +449,7 @@ calibredb export [параметри] ідентифікатори
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Типово calibre перетворити всі нелатинські символи у назвах файлів на їхні латинські відповідники. ПОПЕРЕДЖЕННЯ: якщо ви вимкнете це перетворення, можливі різноманітні помилки під час збереження даних, пов’язані з недоліками у підтримці Unicode вашою операційною системою. Визначення цього перемикача вимкне вказану поведінку.
+Наказати calibre перетворити усі символи у назвах файлів, яких немає у англійській абетці, на символи англійської абетки. Це корисно для зберігання даних у застарілих файлових системах без повної підтримки назв файлів у форматі Unicode. Визначення цього перемикача вимкне вказану поведінку.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -843,7 +846,7 @@ calibredb list_categories [параметри]
 .INDENT 0.0
 .TP
 .B \-\-dialect
-Тип файл CSV, який слід створити. Варіанти: excel, excel\-tab
+Тип файл CSV, який слід створити. Варіанти: excel, excel\-tab, unix
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -937,17 +940,18 @@ calibredb embed_metadata [параметри] ідентифікатор_кни�
 .sp
 .nf
 .ft C
-calibredb search [параметри] вираз для пошуку
+calibredb search [options] search expression
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Шукати у бібліотеці записи із вказаним ключем для пошуку. Повертає список ідентифікаторів
-відповідних книг, відокремлених комами. Формат виведення даних корисний
-для передавання іншим командам, які приймають вхідні дані у форматі списку ідентифікаторів.
+Search the library for the specified \fBsearch\fP term, returning a comma separated
+list of book ids matching the \fBsearch\fP expression. The output format is useful
+to feed into other commands that accept a list of ids as input.
 .sp
-Виразом для пошуку може бути будь\-який запис потужною мовою запитів calibre. Приклад author:asimov title:robot
+The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
+language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
 .sp
 Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
 .INDENT 0.0

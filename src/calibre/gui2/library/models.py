@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -660,7 +660,7 @@ class BooksModel(QAbstractTableModel):  # {{{
                                                   cover_as_data=True)
                         newmi = None
                         if use_plugboard and format.lower() in plugboard_formats:
-                            plugboards = self.db.prefs.get('plugboards', {})
+                            plugboards = self.new_api.pref('plugboards', {})
                             cpb = find_plugboard(use_plugboard, format.lower(),
                                                  plugboards)
                             if cpb:
@@ -895,7 +895,7 @@ class BooksModel(QAbstractTableModel):  # {{{
         if col >= len(self.column_to_dc_map):
             return None
         if role == Qt.DisplayRole:
-            rules = self.db.prefs['column_icon_rules']
+            rules = self.db.new_api.pref('column_icon_rules')
             if rules:
                 key = self.column_map[col]
                 id_ = None
@@ -928,7 +928,7 @@ class BooksModel(QAbstractTableModel):  # {{{
             id_ = self.id(index)
             self.column_color.mi = None
 
-            for k, fmt in self.db.prefs['column_color_rules']:
+            for k, fmt in self.db.new_api.pref('column_color_rules', ()):
                 if k == key:
                     ccol = self.column_color(id_, key, fmt, self.db,
                                          self.color_cache, self.color_template_cache)
@@ -952,7 +952,7 @@ class BooksModel(QAbstractTableModel):  # {{{
 
             if self.color_row_fmt_cache is None:
                 self.color_row_fmt_cache = tuple(fmt for key, fmt in
-                    self.db.prefs['column_color_rules'] if key == color_row_key)
+                    self.db.new_api.pref('column_color_rules', ()) if key == color_row_key)
             for fmt in self.color_row_fmt_cache:
                 ccol = self.column_color(id_, color_row_key, fmt, self.db,
                                          self.color_cache, self.color_template_cache)
@@ -965,7 +965,7 @@ class BooksModel(QAbstractTableModel):  # {{{
             default_icon = None
             if self.column_to_dc_decorator_map[col] is not None:
                 default_icon = self.column_to_dc_decorator_map[index.column()](index.row())
-            rules = self.db.prefs['column_icon_rules']
+            rules = self.db.new_api.pref('column_icon_rules')
             if rules:
                 key = self.column_map[col]
                 id_ = None

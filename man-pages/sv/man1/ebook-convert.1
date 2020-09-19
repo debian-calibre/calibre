@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "augusti 21, 2020" "4.23.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "september 19, 2020" "4.99.17" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -43,11 +43,11 @@ ebook\-convert input_file output_file [alternativ]
 .sp
 Konvertera en e\-bok från ett format till ett annat.
 .sp
-input_file är indatafilen och output_file är utdatafilen. Båda måste anges som de två första argumenten i kommandot.
+input_file är inmatningsfilen och output_file är utmatningsfilen. Båda måste anges som de två första argumenten i kommandot.
 .sp
-Utdataformatet för e\-boken uppskattas utifrån filändelsen i output_file. output_file kan även ges specialformatet .EXT, där EXT är utdatafilsändelsen. Om det används kommer namnet på utdatafilen att härledas från namnet på indatafilen. Observera att filnamnen inte får börja med bindestreck. Om ingen filinsticksmodul har angivits för utdatafilen, så behandlas den som en katalog till vilken en "Öppen e\-bok" (OEB) bestående av HTML filer kommer att skrivas. Dessa filer är de filer som normalt sett skulle ha skickats till utdatainsticksmodulen.
+Utmatningsformatet för e\-boken uppskattas utifrån filändelsen i output_file. output_file kan även ges specialformatet .EXT, där EXT är utmatningsfilsändelsen. Om det används kommer namnet på utmatningsfilen att härledas från namnet på inmatningsfilen. Observera att filnamnen inte får börja med bindestreck. Om ingen filinsticksmodul har angivits för utmatningsfilen, så behandlas den som en katalog till vilken en "Öppen e\-bok" (OEB) bestående av HTML filer kommer att skrivas. Dessa filer är de filer som normalt sett skulle ha skickats till utmatningsinsticksmodulen.
 .sp
-Efter att ha angivit in\- och utdatafilerna kan du anpassa konverteringen genom att ange olika alternativ. Vilka alternativ som är tillgängliga beror på in\- och utdatafiltyperna. För att få hjälp med dem, ange in\- och utdatafilerna och lägg därefter till alternativet \-h.
+Efter att ha angivit in\- och utmatningsfilerna kan du anpassa konverteringen genom att ange olika alternativ. Vilka alternativ som är tillgängliga beror på in\- och utmatningsfiltyperna. För att få hjälp med dem, ange in\- och utmatningsfilerna och lägg därefter till alternativet \-h.
 .sp
 För fullständig dokumentation om konverteringssystemet, gå till
 conversion
@@ -55,7 +55,7 @@ conversion
 När du skickar argument till \fBebook\-convert\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .sp
 Alternativen och standardvärden för ändringsalternativ beror på både
-indata\- och utdataformat, därför bör du alltid kolla med:
+inmatning\- och utmatningsformat, därför bör du alltid kolla med:
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -68,12 +68,12 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .UNINDENT
 .sp
 Nedan finns alternativen som är vanliga vid all konvertering följt av
-alternativen unika för varje indata\- och utdataformat.
+alternativen unika för varje inmatning\- och utmatningsformat.
 .INDENT 0.0
 .IP \(bu 2
-\fI\%ALTERNATIV FÖR INDATA\fP
+\fI\%ALTERNATIV FÖR INMATNING\fP
 .IP \(bu 2
-\fI\%ALTERNATIV FÖR UTDATA\fP
+\fI\%ALTERNATIV FÖR UTMATNING\fP
 .IP \(bu 2
 \fI\%UTSEENDE OCH KÄNSLA\fP
 .IP \(bu 2
@@ -97,38 +97,38 @@ visa denna hjälptext och avsluta
 .INDENT 0.0
 .TP
 .B \-\-input\-profile
-Ange indataprofilen. Profilen ger information till konverteringssystemet om hur information i indata ska tolkas. Till exempel upplösningsberoende längder (d.v.s. längder i pixlar). Alternativen är:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+Ange inmatningsprofilen. Profilen ger information till konverteringssystemet om hur information i inmatning ska tolkas. Till exempel upplösningsberoende längder (d.v.s. längder i pixlar). Alternativen är:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-Lista inbyggda receptnamn. Du kan skapa en e\-bok från ett inbyggt recept så här: ebook\-convert \fB"\fPReceptnamn.recipe\fB"\fP utdata.epub
+Lista inbyggda receptnamn. Du kan skapa en e\-bok från ett inbyggt recept så här: ebook\-convert \fB"\fPReceptnamn.recipe\fB"\fP utmatning.epub
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Ange utdataprofil. Utdataprofilen anger för konverteringssystem hur optimering kan ske av det skapade dokumentet för den angivna enheten (såsom ändring av bildstorlek för enhetens skärmstorlek). I vissa fall kan en utdataprofil användas för att optimera resultatet för en viss enhet, men det är sällan nödvändigt. Alternativen är:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+Ange utmatningsprofil. Utmatningsprofilen anger för konverteringssystem hur optimering kan ske av det skapade dokumentet för den angivna enheten (såsom ändring av bildstorlek för enhetens skärmstorlek). I vissa fall kan en utmatningsprofil användas för att optimera resultatet för en viss enhet, men det är sällan nödvändigt. Alternativen är:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-version
 visar programmets versionsnummer och avsluta
 .UNINDENT
-.SH ALTERNATIV FÖR INDATA
+.SH ALTERNATIV FÖR INMATNING
 .sp
 Alternativ för att anpassa bearbetningen av ingående mobi fil
 .INDENT 0.0
 .TP
 .B \-\-input\-encoding
-Ange teckenkodning för indatadokumentet. Detta alternativ åsidosätter eventuell teckenkodning som dokumentet själv anger. Särskilt användbart för dokument som inte deklarerar en kodning eller som har felaktiga kodningsdeklarationer.
+Ange teckenkodning för inmatningsdokumentet. Detta alternativ åsidosätter eventuell teckenkodning som dokumentet själv anger. Särskilt användbart för dokument som inte deklarerar en kodning eller som har felaktiga kodningsdeklarationer.
 .UNINDENT
-.SH ALTERNATIV FÖR UTDATA
+.SH ALTERNATIV FÖR UTMATNING
 .sp
-Alternativ för att anpassa bearbetningen av utdata epub
+Alternativ för att anpassa bearbetningen av utmatning epub
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
-Inaktivera delning vid sidbrytningar. Normalt delas indatafilen automatiskt i två filer vid varje sidbrytning. Detta ger en e\-bok som kan tolkas snabbare och med mindre resurser. Hur som helst är delningen långsam, och om källfilen innehåller ett mycket stort antal sidbrytningar, bör du inaktivera delning vid sidbrytningar.
+Inaktivera delning vid sidbrytningar. Normalt delas inmatningsfilen automatiskt i två filer vid varje sidbrytning. Detta ger en e\-bok som kan tolkas snabbare och med mindre resurser. Hur som helst är delningen långsam, och om källfilen innehåller ett mycket stort antal sidbrytningar, bör du inaktivera delning vid sidbrytningar.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -163,7 +163,7 @@ Dela alla HTML\-filer som är större än denna storlek (i KiB). Detta är nödv
 .INDENT 0.0
 .TP
 .B \-\-no\-default\-epub\-cover
-Om indatafilen inte har något omslag och du inte anger ett, skapas normalt ett standardomslag genererats med titel, författare, o.s.v. Med detta alternativ aktiverat skapas inga standardomslag.
+Om inmatningsfilen inte har något omslag och du inte anger ett, skapas normalt ett standardomslag genererats med titel, författare, o.s.v. Med detta alternativ aktiverat skapas inga standardomslag.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -178,7 +178,7 @@ När man använder ett SVG\-omslag kommer detta alternativ att leda till att oms
 .INDENT 0.0
 .TP
 .B \-\-pretty\-print
-Om detta anges, kommer insticksmodulen att försöka skapa utskrifter som är så läsliga som möjligt. Detta kanske inte har någon effekt för vissa instick för utdata.
+Om detta anges, kommer insticksmodulen att försöka skapa utskrifter som är så läsliga som möjligt. Detta kanske inte har någon effekt för vissa instick för utmatning.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -187,7 +187,7 @@ Titel för alla genererade infogade innehållsförteckningar.
 .UNINDENT
 .SH UTSEENDE OCH KÄNSLA
 .sp
-Alternativ för utseende på utdata
+Alternativ för utseende på utmatning
 .INDENT 0.0
 .TP
 .B \-\-asciiize
@@ -196,7 +196,7 @@ Translitterera Unicode\-tecken till en ASCII\-representation. Används med förs
 .INDENT 0.0
 .TP
 .B \-\-base\-font\-size
-Grundteckenstorleken i punkter. Alla teckenstorlekar i den producerade boken kommer att skalas om baserat på den här storleken. Genom att välja en större storlek kan du få typsnitt i utdatan större och vice versa. Som standard, när värdet är noll kommer grundteckenstorleken för typsnitt att väljas baserat på utdataprofilen du väljer.
+Grundteckenstorleken i punkter. Alla teckenstorlekar i den producerade boken kommer att skalas om baserat på den här storleken. Genom att välja en större storlek kan du få typsnittet i utmatningen större och vice versa. Som standard, när värdet är noll kommer grundteckenstorleken för typsnitt att väljas baserat på utmatningsprofilen du väljer.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -216,7 +216,7 @@ Bädda in varje typsnitt som refereras i inmatningsdokumentet som inte redan är
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Bädda in den angivna typsnittsfamiljen i boken. Här anges \fB"\fPbas\fB"\fP\-typsnitt som används för boken. Om indatadokumentet specificerar sina egna typsnitt, kan de åsidosätta detta bastypsnitt. Du kan använda informationsalternativet filterformat för att ta bort typsnitt från inmatningsdokumentet. Observera att bädda in typsnitt endast fungerar med vissa utdataformat, främst EPUB, AZW3 och DOCX.
+Bädda in den angivna typsnittsfamiljen i boken. Här anges \fB"\fPbas\fB"\fP\-typsnitt som används för boken. Om inmatningsdokumentet specificerar sina egna typsnitt, kan de åsidosätta detta bastypsnitt. Du kan använda informationsalternativet filterformat för att ta bort typsnitt från inmatningsdokumentet. Observera att bädda in typsnitt endast fungerar med vissa utmatningsformat, främst EPUB, AZW3 och DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -236,7 +236,7 @@ En kommaseparerad lista över CSS\-egenskaper som kommer att tas bort från alla
 .INDENT 0.0
 .TP
 .B \-\-font\-size\-mapping
-Omvandlar CSS\-typsnittsnamn till teckenstorlekar i punkter. En exempelinställning är 12,12,14,16,18,20,22,24. Detta konverterar storlekarna xx\-liten till xx\-stor, den sista storleken används för enorma typsnitt. Omskalningsalgoritmen använder dessa storlekar för att på ett smart sätt skala om typsnitten. Som standard används en kartläggning baserad på din valda utdataprofil.
+Omvandlar CSS\-typsnittsnamn till teckenstorlekar i punkter. En exempelinställning är 12,12,14,16,18,20,22,24. Detta konverterar storlekarna xx\-liten till xx\-stor, den sista storleken används för enorma typsnitt. Omskalningsalgoritmen använder dessa storlekar för att på ett smart sätt skala om typsnitten. Som standard används en kartläggning baserad på din valda utmatningsprofil.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -251,7 +251,7 @@ Ställ in höjden på infogade tomma rader (i EM). Höjden på raderna mellan pu
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Bevara ligaturer som finns i indatadokumentet. En ligatur är en speciell framställning ett teckenpar som ff, fi, fl och så vidare. De flesta läsenheter saknar stöd för ligaturer i deras standardtypsnitt så det är osannolikt att de återges korrekt. Som standard konverterar calibre en ligatur till motsvarande par av vanliga tecken. Detta alternativ kommer att bevara ligaturerna istället.
+Bevara ligaturer som finns i inmatningsdokumentet. En ligatur är en speciell framställning ett teckenpar som ff, fi, fl och så vidare. De flesta läsenheter saknar stöd för ligaturer i deras standardtypsnitt så det är osannolikt att de återges korrekt. Som standard konverterar calibre en ligatur till motsvarande par av vanliga tecken. Detta alternativ kommer att bevara ligaturerna istället.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -296,7 +296,7 @@ Tar bort mellanrum mellan stycken. Indenterar även första raden på det nya st
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing\-indent\-size
-När calibre tar bort tomma rader mellan stycken, anger det automatiskt ett styckeindrag, för att se till att styckeindelningen syns tydligt. Det här alternativet bestämmer bredden för indraget (i em). Om du anger ett negativt värde kommer indraget som anges i indatadokumentet användas, det vill säga, calibre ändrar inte indraget.
+När calibre tar bort tomma rader mellan stycken, anger det automatiskt ett styckeindrag, för att se till att styckeindelningen syns tydligt. Det här alternativet bestämmer bredden för indraget (i em). Om du anger ett negativt värde kommer indraget som anges i inmatningsdokumentet användas, det vill säga, calibre ändrar inte indraget.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -378,7 +378,7 @@ Skala som används för att bestämma längden på vilken en rad bör har ha fö
 .INDENT 0.0
 .TP
 .B \-\-replace\-scene\-breaks
-Ersätt scenbrytningar med den angivna texten. Som standard är texten från indatadokumentet som används.
+Ersätt scenbrytningar med den angivna texten. Som standard är texten från inmatningsdokumentet som används.
 .UNINDENT
 .SH SÖK OCH ERSÄTT
 .sp
@@ -454,7 +454,7 @@ Använd omslag från källfilen istället för det angivna omslaget.
 .INDENT 0.0
 .TP
 .B \-\-remove\-first\-image
-Ta bort den första bilden från den inmatade e\-boken. Praktiskt om indatadokumentet har en omslagsbild som inte identifieras som ett omslag. Om du anger ett omslag i calibre kommer det resulterande dokumentet ha två omslagsbilder om du inte markerar det här alternativet.
+Ta bort den första bilden från den inmatade e\-boken. Praktiskt om inmatningsdokumentet har en omslagsbild som inte identifieras som ett omslag. Om du anger ett omslag i calibre kommer det resulterande dokumentet ha två omslagsbilder om du inte markerar det här alternativet.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -467,7 +467,7 @@ Anpassa hur innehållsförteckningen skapas. Om källfilen har en innehållsför
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc
-När du skapar en innehållsförteckning från länkar i indata dokumentet, tillåter dubbla poster, d.v.s. att fler än en post med samma text, förutsatt att de hänvisar till en annan plats.
+När du skapar en innehållsförteckning från länkar i inmatning dokumentet, tillåter dubbla poster, d.v.s. att fler än en post med samma text, förutsatt att de hänvisar till en annan plats.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -511,7 +511,7 @@ Om källfilen redan har en innehållsförteckning, används normalt denna i stä
 .UNINDENT
 .SH METADATA
 .sp
-Alternativ för att ställa in metadata i utdata
+Alternativ för att ställa in metadata i utmatning
 .INDENT 0.0
 .TP
 .B \-\-author\-sort
@@ -603,7 +603,7 @@ Alternativ för att hjälpa till att felsöka konverteringen
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Spara utdata från olika stadier av konverteringssekvensen till den angivna katalogen. Användbart om du är osäker på i vilket steg ett fel uppträder.
+Spara utmatning från olika stadier av konverteringssekvensen till den angivna katalogen. Användbart om du är osäker på i vilket steg ett fel uppträder.
 .UNINDENT
 .INDENT 0.0
 .TP

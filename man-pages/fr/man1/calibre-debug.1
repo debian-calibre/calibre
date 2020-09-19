@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "août 21, 2020" "4.23.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "septembre 19, 2020" "4.99.17" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -43,7 +43,7 @@ calibre\-debug [options]
 .sp
 Différentes interfaces en ligne de commande utiles pour dépanner calibre. Sans options,
 cette commande démarre un interprétateur Python intégré. Vous pouvez également exécuter l\(aqinterface
-utilisateur principale de calibre, la visionneuse de calibre et l\(aqéditeur de calibre en mode dépannage.
+utilisateur principale de calibre, la visionneuse de calibre et l\(aqéditeur de livre numérique de calibre en mode dépannage.
 .sp
 Il contient également des interfaces vers différentes parties de calibre qui n\(aqont pas
 d\(aqoutils en ligne de commande dédiés, comme le sous\-ensemble de police, l\(aqoutil diff e\-book
@@ -101,6 +101,11 @@ Décompacte le livre dans le dossier spécifié. Utilisation : \-x file.epub out
 .TP
 .B \-\-export\-all\-calibre\-data
 Exporter toutes les données de calibre (livres/paramètres/extensions). Normalement, on vous demandera le répertoire d\fB\(aq\fPexportation et les bibliothèques à exporter. Vous pouvez également les spécifier en tant qu\fB\(aq\fParguments de ligne de commande pour sauter les questions. Utilisez des chemins absolus pour le répertoire d\fB\(aq\fPexportation et les bibliothèques. Le mot\-clé spécial \fB"\fPall\fB"\fP permet d\fB\(aq\fPexporter toutes les bibliothèques.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-fix\-multiprocessing
+Pour usage interne
 .UNINDENT
 .INDENT 0.0
 .TP

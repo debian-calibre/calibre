@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import print_function
+
 
 __license__ = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -11,13 +11,10 @@ import sys, os
 
 def check_version_info():
     vi = sys.version_info
-    if vi[0] == 2 and vi[1:3] >= (7, 9):
-        return
-    if vi.major > 2 and 'CALIBRE_PY3_PORT' in os.environ:
-        # PY3_TODO: Remove check for 'CALIBRE_PY3_PORT' once calibre works with python3
+    if vi.major > 3 or (vi.major == 3 and vi[1:3] >= (7, 0)):
         return
     raise SystemExit(
-        'calibre requires python >= 2.7.9 and < 3. Current python version: ' + '.'.join(map(str, vi[:3])))
+        'calibre requires python >= 3.7.0. Current python version: ' + '.'.join(map(str, vi[:3])))
 
 
 check_version_info()

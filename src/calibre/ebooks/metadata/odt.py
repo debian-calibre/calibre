@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:fdm=marker:ai
 #
 # Copyright (C) 2006 Søren Roug, European Environment Agency
@@ -18,7 +18,7 @@
 #
 # Contributor(s):
 #
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 import io
 import json

@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__ = 'GPL v3'
 __copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -19,8 +19,6 @@ from polyglot.builtins import itervalues, unicode_type
 class Tool(object):
 
     '''
-    .. module:: calibre.gui2.tweak_book.plugin.Tool
-
     The base class for individual tools in an Edit Book plugin. Useful members include:
 
         * ``self.plugin``: A reference to the :class:`calibre.customize.Plugin` object to which this tool belongs.

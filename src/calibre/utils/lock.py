@@ -1,8 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
-
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 import atexit
 import errno
@@ -13,9 +11,10 @@ import time
 from functools import partial
 
 from calibre.constants import (
-    __appname__, fcntl, filesystem_encoding, islinux, isosx, iswindows, plugins, ispy3
+    __appname__, fcntl, filesystem_encoding, islinux, ismacos, iswindows, plugins
 )
 from calibre.utils.monotonic import monotonic
+from calibre.utils.shared_file import raise_winerror
 
 speedup = plugins['speedup'][0]
 if iswindows:
@@ -50,7 +49,7 @@ def unix_retry(err):
 
 def windows_open(path):
     if isinstance(path, bytes):
-        path = path.decode('mbcs')
+        path = os.fsdecode(path)
     try:
         h = win32file.CreateFileW(
             path,
@@ -63,7 +62,7 @@ def windows_open(path):
             None,  # No template file
         )
     except pywintypes.error as err:
-        raise WindowsError(err[0], err[2], path)
+        raise_winerror(err)
     fd = msvcrt.open_osfhandle(h.Detach(), 0)
     return os.fdopen(fd, 'r+b')
 
@@ -153,8 +152,6 @@ elif islinux:
         )
         name = name
         address = '\0' + name.replace(' ', '_')
-        if not ispy3:
-            address = address.encode('utf-8')
         sock = socket.socket(family=socket.AF_UNIX)
         try:
             eintr_retry_call(sock.bind, address)
@@ -175,7 +172,7 @@ else:
         )
         home = os.path.expanduser('~')
         locs = ['/var/lock', home, tempfile.gettempdir()]
-        if isosx:
+        if ismacos:
             locs.insert(0, '/Library/Caches')
         for loc in locs:
             if os.access(loc, os.W_OK | os.R_OK | os.X_OK):

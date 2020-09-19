@@ -1,4 +1,4 @@
-from __future__ import print_function, unicode_literals
+
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal kovid@kovidgoyal.net'
 __docformat__ = 'restructuredtext en'
@@ -10,7 +10,7 @@ Perform various initialization tasks.
 import locale, sys, os
 
 # Default translation is NOOP
-from polyglot.builtins import builtins, is_py3, unicode_type
+from polyglot.builtins import builtins, unicode_type
 builtins.__dict__['_'] = lambda s: s
 
 # For strings which belong in the translation tables, but which shouldn't be
@@ -21,52 +21,63 @@ builtins.__dict__['__'] = lambda s: s
 builtins.__dict__['dynamic_property'] = lambda func: func(None)
 
 
-from calibre.constants import iswindows, preferred_encoding, plugins, isosx, islinux, isfrozen, DEBUG, isfreebsd, ispy3
+from calibre.constants import iswindows, preferred_encoding, plugins, ismacos, islinux, DEBUG, isfreebsd
 
 _run_once = False
 winutil = winutilerror = None
 
+
+def get_debug_executable():
+    exe_name = 'calibre-debug' + ('.exe' if iswindows else '')
+    if hasattr(sys, 'frameworks_dir'):
+        base = os.path.dirname(sys.frameworks_dir)
+        return [os.path.join(base, 'MacOS', exe_name)]
+    if getattr(sys, 'run_local', None):
+        return [sys.run_local, exe_name]
+    nearby = os.path.join(os.path.dirname(os.path.abspath(sys.executable)), exe_name)
+    if getattr(sys, 'frozen', False):
+        return [nearby]
+    exloc = getattr(sys, 'executables_location', None)
+    if exloc:
+        ans = os.path.join(exloc, exe_name)
+        if os.path.exists(ans):
+            return [ans]
+    if os.path.exists(nearby):
+        return [nearby]
+    return [exe_name]
+
+
 if not _run_once:
     _run_once = True
+    from importlib.machinery import ModuleSpec
+    from importlib.util import find_spec
     from importlib import import_module
 
-    if not isfrozen and not ispy3:
-        # Prevent PyQt4 from being loaded
-        class PyQt4Ban(object):
+    class DeVendorLoader:
 
-            def find_module(self, fullname, path=None):
-                if fullname.startswith('PyQt4'):
-                    return self
+        def __init__(self, aliased_name):
+            self.aliased_module = import_module(aliased_name)
+            try:
+                self.path = self.aliased_module.__loader__.path
+            except Exception:
+                self.path = aliased_name
 
-            def load_module(self, fullname):
-                raise ImportError('Importing PyQt4 is not allowed as calibre uses PyQt5')
+        def create_module(self, spec):
+            return self.aliased_module
 
-        sys.meta_path.insert(0, PyQt4Ban())
+        def exec_module(self, module):
+            return module
 
-    class DeVendor(object):
+        def __repr__(self):
+            return repr(self.path)
 
-        if ispy3:
+    class DeVendor:
 
-            def find_spec(self, fullname, path, target=None):
-                spec = None
-                if fullname == 'calibre.web.feeds.feedparser':
-                    m = import_module('feedparser')
-                    spec = m.__spec__
-                elif fullname.startswith('calibre.ebooks.markdown'):
-                    m = import_module(fullname[len('calibre.ebooks.'):])
-                    spec = m.__spec__
-                return spec
-
-        else:
-
-            def find_module(self, fullname, path=None):
-                if fullname == 'calibre.web.feeds.feedparser' or fullname.startswith('calibre.ebooks.markdown'):
-                    return self
-
-            def load_module(self, fullname):
-                if fullname == 'calibre.web.feeds.feedparser':
-                    return import_module('feedparser')
-                return import_module(fullname[len('calibre.ebooks.'):])
+        def find_spec(self, fullname, path=None, target=None):
+            if fullname == 'calibre.web.feeds.feedparser':
+                return find_spec('feedparser')
+            if fullname.startswith('calibre.ebooks.markdown'):
+                return ModuleSpec(fullname, DeVendorLoader(fullname[len('calibre.ebooks.'):]))
 
     sys.meta_path.insert(0, DeVendor())
 
@@ -79,25 +90,6 @@ if not _run_once:
         if len(sys.argv) > 1 and not isinstance(sys.argv[1], unicode_type):
             sys.argv[1:] = winutil.argv()[1-len(sys.argv):]
 
-        if not ispy3:
-            # Python2's expanduser is broken for non-ASCII usernames
-            # and unicode paths
-
-            def expanduser(path):
-                if isinstance(path, bytes):
-                    path = path.decode('mbcs')
-                if path[:1] != '~':
-                    return path
-                i, n = 1, len(path)
-                while i < n and path[i] not in '/\\':
-                    i += 1
-                userhome = winutil.special_folder_path(winutil.CSIDL_PROFILE)
-                if i != 1:  # ~user
-                    userhome = os.path.join(os.path.dirname(userhome), path[1:i])
-
-                return userhome + path[i:]
-            os.path.expanduser = expanduser
-
     # Ensure that all temp files/dirs are created under a calibre tmp dir
     from calibre.ptempfile import base_dir
     try:
@@ -108,7 +100,7 @@ if not _run_once:
     #
     # Convert command line arguments to unicode
     enc = preferred_encoding
-    if isosx:
+    if ismacos:
         enc = 'utf-8'
     for i in range(1, len(sys.argv)):
         if not isinstance(sys.argv[i], unicode_type):
@@ -130,6 +122,26 @@ if not _run_once:
                 if DEBUG:
                     import traceback
                     traceback.print_exc()
+
+    #
+    # Fix multiprocessing
+    from multiprocessing import spawn, util
+
+    def get_command_line(**kwds):
+        prog = 'from multiprocessing.spawn import spawn_main; spawn_main(%s)'
+        prog %= ', '.join('%s=%r' % item for item in kwds.items())
+        return get_debug_executable() + ['--fix-multiprocessing', '--', prog]
+    spawn.get_command_line = get_command_line
+    orig_spawn_passfds = util.spawnv_passfds
+
+    def spawnv_passfds(path, args, passfds):
+        try:
+            idx = args.index('-c')
+        except ValueError:
+            return orig_spawn_passfds(args[0], args, passfds)
+        patched_args = get_debug_executable() + ['--fix-multiprocessing', '--'] + args[idx + 1:]
+        return orig_spawn_passfds(patched_args[0], patched_args, passfds)
+    util.spawnv_passfds = spawnv_passfds
 
     #
     # Setup resources
@@ -161,44 +173,7 @@ if not _run_once:
             pass
 
     # local_open() opens a file that wont be inherited by child processes
-    if is_py3:
-        local_open = open  # PEP 446
-    elif iswindows:
-        def local_open(name, mode='r', bufsize=-1):
-            mode += 'N'
-            return open(name, mode, bufsize)
-    elif isosx:
-        import fcntl
-        FIOCLEX = 0x20006601
-
-        def local_open(name, mode='r', bufsize=-1):
-            ans = open(name, mode, bufsize)
-            try:
-                fcntl.ioctl(ans.fileno(), FIOCLEX)
-            except EnvironmentError:
-                fcntl.fcntl(ans, fcntl.F_SETFD, fcntl.fcntl(ans, fcntl.F_GETFD) | fcntl.FD_CLOEXEC)
-            return ans
-    else:
-        import fcntl
-        try:
-            cloexec_flag = fcntl.FD_CLOEXEC
-        except AttributeError:
-            cloexec_flag = 1
-        supports_mode_e = False
-
-        def local_open(name, mode='r', bufsize=-1):
-            global supports_mode_e
-            mode += 'e'
-            ans = open(name, mode, bufsize)
-            if supports_mode_e:
-                return ans
-            old = fcntl.fcntl(ans, fcntl.F_GETFD)
-            if not (old & cloexec_flag):
-                fcntl.fcntl(ans, fcntl.F_SETFD, old | cloexec_flag)
-            else:
-                supports_mode_e = True
-            return ans
-
+    local_open = open  # PEP 446
     builtins.__dict__['lopen'] = local_open
 
     from calibre.utils.icu import title_case, lower as icu_lower, upper as icu_upper
@@ -224,7 +199,7 @@ if not _run_once:
         bound_signal.connect(slot, **kw)
     builtins.__dict__['connect_lambda'] = connect_lambda
 
-    if islinux or isosx or isfreebsd:
+    if islinux or ismacos or isfreebsd:
         # Name all threads at the OS level created using the threading module, see
         # http://bugs.python.org/issue15500
         import threading

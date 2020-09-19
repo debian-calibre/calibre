@@ -2,8 +2,6 @@
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import print_function
-
 import errno
 import glob
 import os
@@ -40,13 +38,13 @@ def binary_includes():
         j(PREFIX, 'private', 'mozjpeg', 'bin', x) for x in ('jpegtran', 'cjpeg')] + [
         ] + list(map(
             get_dll_path,
-            ('usb-1.0 mtp expat sqlite3 ffi z openjp2 poppler dbus-1 iconv xml2 xslt jpeg png16'
+            ('usb-1.0 mtp expat sqlite3 ffi z lzma openjp2 poppler dbus-1 iconv xml2 xslt jpeg png16'
              ' webp webpmux webpdemux exslt ncursesw readline chm hunspell-1.7 hyphen'
              ' icudata icui18n icuuc icuio gcrypt gpg-error'
              ' gobject-2.0 glib-2.0 gthread-2.0 gmodule-2.0 gio-2.0 dbus-glib-1').split()
         )) + [
             get_dll_path('podofo', 3), get_dll_path('bz2', 2), j(PREFIX, 'lib', 'libunrar.so'),
-            get_dll_path('ssl', 3), get_dll_path('crypto', 3), get_dll_path('python' + py_ver, 2),
+            get_dll_path('ssl', 2), get_dll_path('crypto', 2), get_dll_path('python' + py_ver, 2),
             # We dont include libstdc++.so as the OpenGL dlls on the target
             # computer fail to load in the QPA xcb plugin if they were compiled
             # with a newer version of gcc than the one on the build computer.
@@ -96,7 +94,7 @@ def import_site_packages(srcdir, dest):
         if ext in ('py', 'so'):
             shutil.copy2(f, dest)
         elif ext == 'pth' and x != 'setuptools.pth':
-            for line in open(f, 'rb').read().splitlines():
+            for line in open(f, 'rb').read().decode('utf-8').splitlines():
                 src = os.path.abspath(j(srcdir, line))
                 if os.path.exists(src) and os.path.isdir(src):
                     import_site_packages(src, dest)
@@ -141,13 +139,6 @@ def copy_python(env, ext_dir):
     srcdir = j(srcdir, 'site-packages')
     dest = j(env.py_dir, 'site-packages')
     import_site_packages(srcdir, dest)
-    shutil.rmtree(j(dest, 'PyQt5/uic/port_v3'))
-
-    filter_pyqt = {x + '.so' for x in PYQT_MODULES} | {'sip.so'}
-    pyqt = j(dest, 'PyQt5')
-    for x in os.listdir(pyqt):
-        if x.endswith('.so') and x not in filter_pyqt:
-            os.remove(j(pyqt, x))
 
     for x in os.listdir(env.SRC):
         c = j(env.SRC, x)
@@ -176,7 +167,7 @@ def build_launchers(env):
     base = self_dir
     sources = [j(base, x) for x in ['util.c']]
     objects = [j(env.obj_dir, os.path.basename(x) + '.o') for x in sources]
-    cflags = '-fno-strict-aliasing -W -Wall -c -O2 -pipe -DPYTHON_VER="python%s"' % py_ver
+    cflags = '-fno-strict-aliasing -W -Wall -c -O2 -pipe -DPY_VERSION_MAJOR={} -DPY_VERSION_MINOR={}'.format(*py_ver.split('.'))
     cflags = cflags.split() + ['-I%s/include/python%s' % (PREFIX, py_ver)]
     for src, obj in zip(sources, objects):
         cmd = ['gcc'] + cflags + ['-fPIC', '-o', obj, src]
@@ -204,8 +195,8 @@ def build_launchers(env):
             xflags = list(cflags)
             xflags.remove('-c')
             xflags += ['-DGUI_APP=' + ('1' if typ == 'gui' else '0')]
-            xflags += ['-DMODULE="%s"' % mod, '-DBASENAME="%s"' % bname,
-                       '-DFUNCTION="%s"' % func]
+            xflags += ['-DMODULE=L"%s"' % mod, '-DBASENAME=L"%s"' % bname,
+                       '-DFUNCTION=L"%s"' % func]
 
             exe = j(env.bin_dir, bname)
             cmd = ['gcc'] + xflags + [src, '-o', exe, '-L' + env.lib_dir, '-lcalibre-launcher']

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-03 07:43+0530\n"
-"PO-Revision-Date: 2020-07-03 02:14+0000\n"
+"POT-Creation-Date: 2020-09-02 05:23+0000\n"
+"PO-Revision-Date: 2020-08-30 02:37+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Vietnamese (http://www.transifex.com/calibre/calibre/language/vi/)\n"
 "MIME-Version: 1.0\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Language: vi\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:4
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:4
 msgid "All about using regular expressions in calibre"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:6
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:6
 msgid ""
 "Regular expressions are features used in many places in calibre to perform "
 "sophisticated manipulation of e-book content and metadata. This tutorial is "
@@ -29,15 +29,15 @@ msgid ""
 "in calibre."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:11
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:11
 msgid "Contents"
 msgstr "Nội dung"
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:14
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:14
 msgid "First, a word of warning and a word of courage"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:16
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:16
 msgid ""
 "This is, inevitably, going to be somewhat technical- after all, regular "
 "expressions are a technical tool for doing technical stuff. I'm going to "
@@ -53,24 +53,26 @@ msgid ""
 "step. So, take a step and follow me into the rabbit hole."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:19
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:19
 msgid "Where in calibre can you use regular expressions?"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:21
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:21
 msgid ""
 "There are a few places calibre uses regular expressions. There's the "
 ":guilabel:`Search & replace` in conversion options, metadata detection from "
 "filenames in the import settings and Search & replace when editing the "
 "metadata of books in bulk. The calibre book editor can also use regular "
-"expressions in its search and replace feature."
+"expressions in its :guilabel:`Search and replace` feature. Finally, you can "
+"use regular expressions when searching the calibre book list and when "
+"searching inside the calibre E-book viewer."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:28
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:30
 msgid "What on earth *is* a regular expression?"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:30
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:32
 msgid ""
 "A regular expression is a way to describe sets of strings. A single regular "
 "expression can *match* a number of different strings. This is what makes "
@@ -78,7 +80,7 @@ msgid ""
 "potentially large number of variations."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:32
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:34
 msgid ""
 "I'm using string here in the sense it is used in programming languages: a "
 "string of one or more characters, characters including actual characters, "
@@ -93,11 +95,11 @@ msgid ""
 "people bother using them at all. More on that in a bit."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:35
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:37
 msgid "Care to explain?"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:37
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:39
 msgid ""
 "Well, that's why we're here. First, this is the most important concept in "
 "regular expressions: *A string by itself is a regular expression that "
@@ -109,11 +111,11 @@ msgid ""
 "variation."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:40
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:42
 msgid "That doesn't sound too bad. What's next?"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:42
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:44
 msgid ""
 "Next is the beginning of the really good stuff. Remember where I said that "
 "regular expressions can match multiple strings? This is where it gets a "
@@ -135,11 +137,11 @@ msgid ""
 "expression would look like. Yes, go ahead. Write it down."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:45
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:47
 msgid "Hey, neat! This is starting to make sense!"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:47
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:49
 msgid ""
 "I was hoping you'd say that. But brace yourself, now it gets even better! We"
 " just saw that using sets, we could match one of several characters at once."
@@ -165,7 +167,7 @@ msgid ""
 " every page number in that book!"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:50
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:52
 msgid ""
 "A note on these quantifiers: They generally try to match as much text as "
 "possible, so be careful when using them. This is called \"greedy "
@@ -185,13 +187,13 @@ msgid ""
 "write a regular expression."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:54
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:56
 msgid ""
 "Well, these special characters are very neat and all, but what if I wanted "
 "to match a dot or a question mark?"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:56
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:58
 msgid ""
 "You can of course do that: Just put a backslash in front of any special "
 "character and it is interpreted as the literal character, without any "
@@ -206,11 +208,11 @@ msgid ""
 "needing to be escaped if you want the literal character."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:59
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:61
 msgid "So, what are the most useful sets?"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:61
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:63
 msgid ""
 "Knew you'd ask. Some useful sets are ``[0-9]`` matching a single number, "
 "``[a-z]`` matching a single lowercase letter, ``[A-Z]`` matching a single "
@@ -219,14 +221,14 @@ msgid ""
 "shorthand::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:68
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:70
 msgid ""
 "\"Whitespace\" is a term for anything that won't be printed. These "
 "characters include space, tabulator, line feed, form feed and carriage "
 "return."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:70
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:72
 msgid ""
 "As a last note on sets, you can also define a set as any character *but* "
 "those in the set. You do that by including the character ``\"^\"`` as the "
@@ -241,13 +243,13 @@ msgid ""
 "bracket."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:73
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:75
 msgid ""
 "But if I had a few varying strings I wanted to match, things get "
 "complicated?"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:75
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:77
 msgid ""
 "Fear not, life still is good and easy. Consider this example: The book "
 "you're converting has \"Title\" written on every odd page and \"Author\" "
@@ -263,7 +265,7 @@ msgid ""
 "the even pages). Well, wasn't that easy?"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:77
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:79
 msgid ""
 "You can, of course, use the vertical bar without using grouping parentheses,"
 " as well. Remember when I said that quantifiers repeat the element preceding"
@@ -279,11 +281,11 @@ msgid ""
 "short: If in doubt, use grouping together with the vertical bar."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:80
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:82
 msgid "You missed..."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:82
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:84
 msgid ""
 "... wait just a minute, there's one last, really neat thing you can do with "
 "groups. If you have a group that you previously matched, you can use "
@@ -294,13 +296,13 @@ msgid ""
 "match the whole string!"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:86
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:88
 msgid ""
 "In the beginning, you said there was a way to make a regular expression case"
 " insensitive?"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:88
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:90
 msgid ""
 "Yes, I did, thanks for paying attention and reminding me. You can tell "
 "calibre how you want certain things handled by using something called flags."
@@ -311,7 +313,7 @@ msgid ""
 "\"Test\", \"tEst\", \"TEst\" and any case variation you could think of."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:90
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:92
 msgid ""
 "Another useful flag lets the dot match any character at all, *including* the"
 " newline, the flag ``s``. If you want to use multiple flags in an "
@@ -320,17 +322,17 @@ msgid ""
 "``(?si)`` would be equivalent to the above."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:93
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:95
 msgid ""
 "I think I'm beginning to understand these regular expressions now... how do "
 "I use them in calibre?"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:96
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:98
 msgid "Conversions"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:98
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:100
 msgid ""
 "Let's begin with the conversion settings, which is really neat. In the "
 ":guilabel:`Search & replace` part, you can input a regexp (short for regular"
@@ -346,7 +348,7 @@ msgid ""
 "convert. Be careful if your conversion source has tags like this example::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:108
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:110
 msgid ""
 "(shamelessly ripped out of `this thread "
 "<https://www.mobileread.com/forums/showthread.php?t=75594\">`_). You'd have "
@@ -373,11 +375,11 @@ msgid ""
 " removal."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:111
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:113
 msgid "Adding books"
 msgstr "Thêm sách"
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:113
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:115
 msgid ""
 "Another thing you can use regular expressions for is to extract metadata "
 "from filenames. You can find this feature in the \"Adding books\" part of "
@@ -400,37 +402,37 @@ msgid ""
 "working expression."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:117
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:119
 msgid "Bulk editing metadata"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:119
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:121
 msgid ""
-"The last part is regular expression search and replace in metadata fields. "
-"You can access this by selecting multiple books in the library and using "
-"bulk metadata edit. Be very careful when using this last feature, as it can "
-"do **Very Bad Things** to your library! Doublecheck that your expressions do"
-" what you want them to using the test fields, and only mark the books you "
-"really want to change! In the regular expression search mode, you can search"
-" in one field, replace the text with something and even write the result "
-"into another field. A practical example: Say your library contained the "
-"books of Frank Herbert's Dune series, named after the fashion ``Dune 1 - "
-"Dune``, ``Dune 2 - Dune Messiah`` and so on. Now you want to get ``Dune`` "
-"into the series field. You can do that by searching for ``(.*?) \\d+ - .*`` "
-"in the title field and replacing it with ``\\1`` in the series field. See "
-"what I did there? That's a reference to the first group you're replacing the"
-" series field with. Now that you have the series all set, you only need to "
-"do another search for ``.*? -`` in the title field and replace it with "
-"``\"\"`` (an empty string), again in the title field, and your metadata is "
-"all neat and tidy. Isn't that great? By the way, instead of replacing the "
-"entire field, you can also append or prepend to the field, so, if you "
-"*wanted* the book title to be prepended with series info, you could do that "
-"as well. As you by now have undoubtedly noticed, there's a checkbox labeled "
-":guilabel:`Case sensitive`, so you won't have to use flags to select "
-"behaviour here."
+"The last part is regular expression :guilabel:`Search and replace` in "
+"metadata fields. You can access this by selecting multiple books in the "
+"library and using bulk metadata edit. Be very careful when using this last "
+"feature, as it can do **Very Bad Things** to your library! Doublecheck that "
+"your expressions do what you want them to using the test fields, and only "
+"mark the books you really want to change! In the regular expression search "
+"mode, you can search in one field, replace the text with something and even "
+"write the result into another field. A practical example: Say your library "
+"contained the books of Frank Herbert's Dune series, named after the fashion "
+"``Dune 1 - Dune``, ``Dune 2 - Dune Messiah`` and so on. Now you want to get "
+"``Dune`` into the series field. You can do that by searching for ``(.*?) "
+"\\d+ - .*`` in the title field and replacing it with ``\\1`` in the series "
+"field. See what I did there? That's a reference to the first group you're "
+"replacing the series field with. Now that you have the series all set, you "
+"only need to do another search for ``.*? -`` in the title field and replace "
+"it with ``\"\"`` (an empty string), again in the title field, and your "
+"metadata is all neat and tidy. Isn't that great? By the way, instead of "
+"replacing the entire field, you can also append or prepend to the field, so,"
+" if you *wanted* the book title to be prepended with series info, you could "
+"do that as well. As you by now have undoubtedly noticed, there's a checkbox "
+"labeled :guilabel:`Case sensitive`, so you won't have to use flags to select"
+" behaviour here."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:121
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:123
 msgid ""
 "Well, that just about concludes the very short introduction to regular "
 "expressions. Hopefully I'll have shown you enough to at least get you "
@@ -439,7 +441,7 @@ msgid ""
 "<https://docs.python.org/library/re.html>`_."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:123
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:125
 msgid ""
 "One last word of warning, though: Regexps are powerful, but also really easy"
 " to get wrong. calibre provides really great testing possibilities to see if"
@@ -449,47 +451,47 @@ msgid ""
 "learn from it."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:127
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:129
 msgid "Quick reference"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:135
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:137
 msgid "Credits"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:137
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:139
 msgid "Thanks for helping with tips, corrections and such:"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:139
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:141
 msgid "ldolse"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:140
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:142
 msgid "kovidgoyal"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:141
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:143
 msgid "chaley"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:142
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:144
 msgid "dwanthny"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:143
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:145
 msgid "kacir"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:144
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:146
 msgid "Starson17"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:145
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:147
 msgid "Orpheu"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/regexp.rst:147
+#: ../../home/runner/work/calibre/calibre/manual/regexp.rst:149
 msgid ""
 "For more about regexps see `The Python User Manual "
 "<https://docs.python.org/library/re.html>`_. The actual regular expression "

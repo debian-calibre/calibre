@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -699,7 +699,7 @@ class CcBoolDelegate(QStyledItemDelegate, UpdateEditorGeometry):  # {{{
         editor = DelegateCB(parent)
         items = [_('Y'), _('N'), ' ']
         icons = [I('ok.png'), I('list_remove.png'), I('blank.png')]
-        if not index.model().db.prefs.get('bools_are_tristate'):
+        if not index.model().db.new_api.pref('bools_are_tristate'):
             items = items[:-1]
             icons = icons[:-1]
         self.longest_text = ''
@@ -721,7 +721,7 @@ class CcBoolDelegate(QStyledItemDelegate, UpdateEditorGeometry):  # {{{
     def setEditorData(self, editor, index):
         m = index.model()
         val = m.db.data[index.row()][m.custom_columns[m.column_map[index.column()]]['rec_index']]
-        if not m.db.prefs.get('bools_are_tristate'):
+        if not m.db.new_api.pref('bools_are_tristate'):
             val = 1 if not val or check_key_modifier(Qt.ControlModifier) else 0
         else:
             val = 2 if val is None or check_key_modifier(Qt.ControlModifier) \

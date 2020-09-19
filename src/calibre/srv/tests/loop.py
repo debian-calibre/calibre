@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__ = 'GPL v3'
 __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -11,7 +11,6 @@ from unittest import skipIf
 from glob import glob
 from threading import Event
 
-from calibre.constants import ispy3
 from calibre.srv.pre_activated import has_preactivated_support
 from calibre.srv.tests.base import BaseTest, TestServer
 from calibre.ptempfile import TemporaryDirectory
@@ -37,7 +36,6 @@ class LoopTest(BaseTest):
 
             def log_size():
                 ssize = l.outputs[0].stream.tell()
-                self.ae(ssize, l.outputs[0].current_pos)
                 self.ae(ssize, os.path.getsize(fname))
                 return ssize
 
@@ -86,7 +84,7 @@ class LoopTest(BaseTest):
             self.ae(0, sum(int(w.is_alive()) for w in server.loop.pool.workers))
         # Test shutdown with hung worker
         block = Event()
-        with TestServer(lambda data:block.wait(), worker_count=3, shutdown_timeout=0.1, timeout=0.01) as server:
+        with TestServer(lambda data:block.wait(), worker_count=3, shutdown_timeout=0.1, timeout=0.1) as server:
             pool = server.loop.pool
             self.ae(3, sum(int(w.is_alive()) for w in pool.workers))
             conn = server.connect()
@@ -114,10 +112,7 @@ class LoopTest(BaseTest):
     def test_bonjour(self):
         'Test advertising via BonJour'
         from calibre.srv.bonjour import BonJour
-        if ispy3:
-            from zeroconf import Zeroconf
-        else:
-            from calibre.utils.Zeroconf import Zeroconf
+        from zeroconf import Zeroconf
         b = BonJour(wait_for_stop=False)
         with TestServer(lambda data:(data.path[0] + data.read()), plugins=(b,), shutdown_timeout=5) as server:
             self.assertTrue(b.started.wait(5), 'BonJour not started')
@@ -228,7 +223,7 @@ class LoopTest(BaseTest):
         self.ae(s.fileno(), 3)
         os.environ['LISTEN_PID'] = unicode_type(os.getpid())
         os.environ['LISTEN_FDS'] = '1'
-        with TestServer(lambda data:(data.path[0] + data.read()), allow_socket_preallocation=True) as server:
+        with TestServer(lambda data:(data.path[0].encode('utf-8') + data.read()), allow_socket_preallocation=True) as server:
             conn = server.connect()
             conn.request('GET', '/test', 'body')
             r = conn.getresponse()
@@ -305,3 +300,8 @@ class LoopTest(BaseTest):
         self.assertIn('a testing error', tb)
         jm.start_job('simple test', 'calibre.srv.jobs', 'sleep_test', args=(1.0,))
         jm.shutdown(), jm.wait_for_shutdown(monotonic() + 1)
+
+
+def find_tests():
+    import unittest
+    return unittest.defaultTestLoader.loadTestsFromTestCase(LoopTest)

@@ -1,26 +1,22 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2020, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
-
 import json
-import re
 from collections import Counter, OrderedDict
 from threading import Thread
 
 import regex
 from PyQt5.Qt import (
-    QAction, QCheckBox, QComboBox, QFont, QFontMetrics, QHBoxLayout, QIcon, QLabel,
-    QStyle, QStyledItemDelegate, Qt, QToolButton, QTreeWidget, QTreeWidgetItem,
-    QVBoxLayout, QWidget, pyqtSignal
+    QCheckBox, QComboBox, QFont, QHBoxLayout, QIcon, QLabel, Qt, QToolButton,
+    QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget, pyqtSignal
 )
 
 from calibre.ebooks.conversion.search_replace import REGEX_FLAGS
-from calibre.gui2 import QT_HIDDEN_CLEAR_ACTION, warning_dialog
+from calibre.gui2 import warning_dialog
 from calibre.gui2.progress_indicator import ProgressIndicator
 from calibre.gui2.viewer.web_view import get_data, get_manifest, vprefs
-from calibre.gui2.widgets2 import HistoryComboBox
+from calibre.gui2.viewer.widgets import ResultsDelegate, SearchBox
 from polyglot.builtins import iteritems, map, unicode_type
 from polyglot.functools import lru_cache
 from polyglot.queue import Queue
@@ -295,22 +291,6 @@ def search_in_name(name, search_query, ctx_size=50):
         yield before, match.group(), after, start
 
 
-class SearchBox(HistoryComboBox):
-
-    history_saved = pyqtSignal(object, object)
-
-    def save_history(self):
-        ret = HistoryComboBox.save_history(self)
-        self.history_saved.emit(self.text(), self.history)
-        return ret
-
-    def contextMenuEvent(self, event):
-        menu = self.lineEdit().createStandardContextMenu()
-        menu.addSeparator()
-        menu.addAction(_('Clear search history'), self.clear_history)
-        menu.exec_(event.globalPos())
-
-
 class SearchInput(QWidget):  # {{{
 
     do_search = pyqtSignal(object)
@@ -331,11 +311,7 @@ class SearchInput(QWidget):  # {{{
         sb.initialize('viewer-{}-panel-expression'.format(panel_name))
         sb.item_selected.connect(self.saved_search_selected)
         sb.history_saved.connect(self.history_saved)
-        sb.lineEdit().setPlaceholderText(_('Search'))
-        sb.lineEdit().setClearButtonEnabled(True)
-        ac = sb.lineEdit().findChild(QAction, QT_HIDDEN_CLEAR_ACTION)
-        if ac is not None:
-            ac.triggered.connect(self.cleared)
+        sb.cleared.connect(self.cleared)
         sb.lineEdit().returnPressed.connect(self.find_next)
         h.addWidget(sb)
 
@@ -444,87 +420,6 @@ class SearchInput(QWidget):  # {{{
 # }}}
 
 
-class ResultsDelegate(QStyledItemDelegate):  # {{{
-
-    def paint(self, painter, option, index):
-        QStyledItemDelegate.paint(self, painter, option, index)
-        result = index.data(Qt.UserRole)
-        if not isinstance(result, SearchResult):
-            return
-        painter.save()
-        try:
-            p = option.palette
-            c = p.HighlightedText if option.state & QStyle.State_Selected else p.Text
-            group = (p.Active if option.state & QStyle.State_Active else p.Inactive)
-            c = p.color(group, c)
-            painter.setPen(c)
-            font = option.font
-            emphasis_font = QFont(font)
-            emphasis_font.setBold(True)
-            flags = Qt.AlignTop | Qt.TextSingleLine | Qt.TextIncludeTrailingSpaces
-            rect = option.rect.adjusted(option.decorationSize.width() + 4 if result.is_hidden else 0, 0, 0, 0)
-            painter.setClipRect(rect)
-            before = re.sub(r'\s+', ' ', result.before)
-            before_width = 0
-            if before:
-                before_width = painter.boundingRect(rect, flags, before).width()
-            after = re.sub(r'\s+', ' ', result.after.rstrip())
-            after_width = 0
-            if after:
-                after_width = painter.boundingRect(rect, flags, after).width()
-            ellipsis_width = painter.boundingRect(rect, flags, '...').width()
-            painter.setFont(emphasis_font)
-            text = re.sub(r'\s+', ' ', result.text)
-            match_width = painter.boundingRect(rect, flags, text).width()
-            if match_width >= rect.width() - 3 * ellipsis_width:
-                efm = QFontMetrics(emphasis_font)
-                text = efm.elidedText(text, Qt.ElideRight, rect.width())
-                painter.drawText(rect, flags, text)
-            else:
-                self.draw_match(
-                    painter, flags, before, text, after, rect, before_width, match_width, after_width, ellipsis_width, emphasis_font, font)
-        except Exception:
-            import traceback
-            traceback.print_exc()
-        painter.restore()
-
-    def draw_match(self, painter, flags, before, text, after, rect, before_width, match_width, after_width, ellipsis_width, emphasis_font, normal_font):
-        extra_width = int(rect.width() - match_width)
-        if before_width < after_width:
-            left_width = min(extra_width // 2, before_width)
-            right_width = extra_width - left_width
-        else:
-            right_width = min(extra_width // 2, after_width)
-            left_width = min(before_width, extra_width - right_width)
-        x = rect.left()
-        nfm = QFontMetrics(normal_font)
-        if before_width and left_width:
-            r = rect.adjusted(0, 0, 0, 0)
-            r.setRight(x + left_width)
-            painter.setFont(normal_font)
-            ebefore = nfm.elidedText(before, Qt.ElideLeft, left_width)
-            if ebefore == before:
-                ebefore = '…' + before[1:]
-            r.setLeft(x)
-            x += painter.drawText(r, flags, ebefore).width()
-        painter.setFont(emphasis_font)
-        r = rect.adjusted(0, 0, 0, 0)
-        r.setLeft(x)
-        painter.drawText(r, flags, text).width()
-        x += match_width
-        if after_width and right_width:
-            painter.setFont(normal_font)
-            r = rect.adjusted(0, 0, 0, 0)
-            r.setLeft(x)
-            eafter = nfm.elidedText(after, Qt.ElideRight, right_width)
-            if eafter == after:
-                eafter = after[:-1] + '…'
-            painter.setFont(normal_font)
-            painter.drawText(r, flags, eafter)
-
-# }}}
-
-
 class Results(QTreeWidget):  # {{{
 
     show_search_result = pyqtSignal(object)
@@ -573,9 +468,10 @@ class Results(QTreeWidget):  # {{{
             lines = []
             for i, node in enumerate(toc_nodes):
                 lines.append('\xa0\xa0' * i + '➤ ' + (node.get('title') or _('Unknown')))
-            tt = ngettext('Table of Contents section:', 'Table of Contents sections:', len(lines))
-            tt += '\n' + '\n'.join(lines)
-            section.setToolTip(0, tt)
+            if lines:
+                tt = ngettext('Table of Contents section:', 'Table of Contents sections:', len(lines))
+                tt += '\n' + '\n'.join(lines)
+                section.setToolTip(0, tt)
             self.section_map[section_key] = section
             self.addTopLevelItem(section)
             section.setExpanded(True)
@@ -784,6 +680,9 @@ class SearchPanel(QWidget):  # {{{
 
     def find_next_requested(self, previous):
         self.results.find_next(previous)
+
+    def trigger(self):
+        self.search_input.find_next()
 
     def do_show_search_result(self, sr):
         self.show_search_result.emit(sr.for_js)

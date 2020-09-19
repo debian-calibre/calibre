@@ -1,7 +1,7 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2015-2019, Kovid Goyal <kovid at kovidgoyal.net>
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 import errno
 import os
@@ -17,7 +17,7 @@ from PyQt5.QtCore import QBuffer, QByteArray, Qt
 from PyQt5.QtGui import QColor, QImage, QImageReader, QImageWriter, QPixmap, QTransform
 
 from calibre import fit_image, force_unicode
-from calibre.constants import iswindows, plugins, ispy3
+from calibre.constants import iswindows, plugins
 from calibre.ptempfile import TemporaryDirectory
 from calibre.utils.config_base import tweaks
 from calibre.utils.filenames import atomic_rename
@@ -53,12 +53,12 @@ def get_exe_path(name):
 
 def load_jxr_data(data):
     with TemporaryDirectory() as tdir:
-        if iswindows and isinstance(tdir, unicode_type):
-            tdir = tdir.encode('mbcs')
+        if isinstance(tdir, bytes):
+            tdir = os.fsdecode(tdir)
         with lopen(os.path.join(tdir, 'input.jxr'), 'wb') as f:
             f.write(data)
         cmd = [get_exe_path('JxrDecApp'), '-i', 'input.jxr', '-o', 'output.tif']
-        creationflags = 0x08 if iswindows else 0
+        creationflags = subprocess.DETACHED_PROCESS if iswindows else 0
         subprocess.Popen(cmd, cwd=tdir, stdout=lopen(os.devnull, 'wb'), stderr=subprocess.STDOUT, creationflags=creationflags).wait()
         i = QImage()
         if not i.load(os.path.join(tdir, 'output.tif')):
@@ -542,16 +542,9 @@ def run_optimizer(file_path, cmd, as_filter=False, input_data=None):
             cmd[cmd.index(q)] = r
         if not as_filter:
             repl(True, iname), repl(False, oname)
-        if iswindows and not ispy3:
-            # subprocess in python 2 cannot handle unicode strings that are not
-            # encodeable in mbcs, so we fail here, where it is more explicit,
-            # instead.
-            cmd = [x.encode('mbcs') if isinstance(x, unicode_type) else x for x in cmd]
-            if isinstance(cwd, unicode_type):
-                cwd = cwd.encode('mbcs')
         stdin = subprocess.PIPE if as_filter else None
         stderr = subprocess.PIPE if as_filter else subprocess.STDOUT
-        creationflags = 0x08 if iswindows else 0
+        creationflags = subprocess.DETACHED_PROCESS if iswindows else 0
         p = subprocess.Popen(cmd, cwd=cwd, stdout=subprocess.PIPE, stderr=stderr, stdin=stdin, creationflags=creationflags)
         stderr = p.stderr if as_filter else p.stdout
         if as_filter:
@@ -651,7 +644,9 @@ def test():  # {{{
     despeckle_image(img)
     remove_borders_from_image(img)
     image_to_data(img, fmt='GIF')
-    raw = subprocess.Popen([get_exe_path('JxrDecApp'), '-h'], creationflags=0x08 if iswindows else 0, stdout=subprocess.PIPE).stdout.read()
+    raw = subprocess.Popen([get_exe_path('JxrDecApp'), '-h'],
+                           creationflags=subprocess.DETACHED_PROCESS if iswindows else 0,
+                           stdout=subprocess.PIPE).stdout.read()
     if b'JPEG XR Decoder Utility' not in raw:
         raise SystemExit('Failed to run JxrDecApp')
 # }}}

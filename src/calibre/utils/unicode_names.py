@@ -1,8 +1,7 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2018, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from collections import defaultdict
 
@@ -36,7 +35,7 @@ def points_for_word(w):
     w = w.lower()
     ans = points_for_word.cache.get(w)
     if ans is None:
-        ans = plugins['unicode_names'][0].codepoints_for_word(w.encode('utf-8')) | html_entities().get(w, set())
+        ans = plugins['unicode_names'][0].codepoints_for_word(w) | html_entities().get(w, set())
         points_for_word.cache[w] = ans
     return ans
 

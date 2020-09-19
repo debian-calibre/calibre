@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__ = 'GPL v3'
 __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -31,7 +31,7 @@ def default_programs():
 
         'ebook-edit.exe': {
             'icon_id':'editor_icon',
-            'description': _('The calibre e-book editor. It can be used to edit common e-book formats.'),
+            'description': _('The calibre E-book editor. It can be used to edit common e-book formats.'),
             'capability_name': 'Editor' + ('64bit' if is64bit else ''),
             'name': 'calibre Editor' + (' 64-bit' if is64bit else ''),
             'assoc_name': 'calibreEditor' + ('64bit' if is64bit else ''),
@@ -198,8 +198,8 @@ def get_prog_id_map(base, key_path):
     desc, ans = None, {}
     try:
         k = Key(open_at=key_path, root=base)
-    except WindowsError as err:
-        if err.errno == winerror.ERROR_FILE_NOT_FOUND:
+    except OSError as err:
+        if err.winerror == winerror.ERROR_FILE_NOT_FOUND:
             return desc, ans
         raise
     with k:
@@ -214,8 +214,8 @@ def get_prog_id_map(base, key_path):
 def get_open_data(base, prog_id):
     try:
         k = Key(open_at=r'Software\Classes\%s' % prog_id, root=base)
-    except WindowsError as err:
-        if err.errno == winerror.ERROR_FILE_NOT_FOUND:
+    except OSError as err:
+        if err.winerror == winerror.ERROR_FILE_NOT_FOUND:
             return None, None, None
     with k:
         cmd = k.get(sub_key=r'shell\open\command')
@@ -266,8 +266,8 @@ def find_programs(extensions):
     for base in (HKEY_CURRENT_USER, HKEY_LOCAL_MACHINE):
         try:
             k = Key(open_at=r'Software\RegisteredApplications', root=base)
-        except WindowsError as err:
-            if err.errno == winerror.ERROR_FILE_NOT_FOUND:
+        except OSError as err:
+            if err.winerror == winerror.ERROR_FILE_NOT_FOUND:
                 continue
             raise
         with k:
@@ -292,8 +292,8 @@ def find_programs(extensions):
     for ext in extensions:
         try:
             k = Key(open_at=r'Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.%s\OpenWithProgIDs' % ext, root=HKEY_CURRENT_USER)
-        except WindowsError as err:
-            if err.errno == winerror.ERROR_FILE_NOT_FOUND:
+        except OSError as err:
+            if err.winerror == winerror.ERROR_FILE_NOT_FOUND:
                 continue
         for prog_id in itervalues(k):
             if prog_id and prog_id not in seen_prog_ids:

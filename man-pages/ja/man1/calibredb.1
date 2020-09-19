@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "8月 21, 2020" "4.23.0" "calibre"
+.TH "CALIBREDB" "1" "9月 19, 2020" "4.99.17" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -444,7 +444,7 @@ IDのリストを無視してデータベースからすべての本をエクス
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Calibreは、通常のファイル名にすべての非アルファベット文字を、英語に相当するものへ変換します。注意: これをOFFにした場合、ファイルシステムがどの程度ユニコードをサポートしているかによって、保存時にエラーが発生することがあります。 このスイッチ指定すると、この挙動をOFFにできます。
+Have calibre convert all non English characters into English equivalents for the file names. This is useful if saving to a legacy filesystem without full support for Unicode filenames. このスイッチ指定すると、この挙動をOFFにできます。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -833,7 +833,7 @@ CSVで出力
 .INDENT 0.0
 .TP
 .B \-\-dialect
-DSVファイルのタイプ。選択肢: excel, excel\-tab
+DSVファイルのタイプ。選択肢: excel, excel\-tab, unix
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -931,11 +931,12 @@ calibredb search [options] search expression
 .UNINDENT
 .UNINDENT
 .sp
-検索条件を指定してライブラリを検索し、結果を本のIDのカンマ区切りリストで返します。
-出力された結果は、本のIDを引数にとる他のコマンドの入力として
-使用するのに便利です。
+Search the library for the specified \fBsearch\fP term, returning a comma separated
+list of book ids matching the \fBsearch\fP expression. The output format is useful
+to feed into other commands that accept a list of ids as input.
 .sp
-以下のようにCalibreの強力な検索用言語が使用できます。例: author:asimov title:robot
+The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
+language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
 .sp
 スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
 .INDENT 0.0

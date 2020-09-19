@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -12,7 +12,7 @@ from collections import Counter
 
 from PyQt5.Qt import QObject, QTimer, QModelIndex
 
-from calibre.constants import isosx
+from calibre.constants import ismacos
 from calibre.gui2 import error_dialog, question_dialog
 from calibre.gui2.dialogs.delete_matching_from_device import DeleteMatchingFromDeviceDialog
 from calibre.gui2.dialogs.confirm_delete import confirm
@@ -87,7 +87,7 @@ class MultiDeleter(QObject):  # {{{
 class DeleteAction(InterfaceAction):
 
     name = 'Remove Books'
-    action_spec = (_('Remove books'), 'remove_books.png', _('Delete books'), 'Backspace' if isosx else 'Del')
+    action_spec = (_('Remove books'), 'remove_books.png', _('Delete books'), 'Backspace' if ismacos else 'Del')
     action_type = 'current'
     action_add_menu = True
     action_menu_clone_qaction = _('Remove selected books')

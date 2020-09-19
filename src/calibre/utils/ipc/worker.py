@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -13,7 +13,7 @@ from contextlib import closing
 from zipimport import ZipImportError
 
 from calibre import prints
-from calibre.constants import iswindows, isosx
+from calibre.constants import iswindows, ismacos
 from calibre.utils.ipc import eintr_retry_call
 from calibre.utils.serialize import msgpack_loads, pickle_dumps
 from polyglot.queue import Queue
@@ -171,12 +171,18 @@ def main():
         # Close open file descriptors inherited from parent
         # On Unix this is done by the subprocess module
         os.closerange(3, 256)
-    if isosx and 'CALIBRE_WORKER_ADDRESS' not in os.environ and 'CALIBRE_SIMPLE_WORKER' not in os.environ and '--pipe-worker' not in sys.argv:
+    if ismacos and 'CALIBRE_WORKER_ADDRESS' not in os.environ and 'CALIBRE_SIMPLE_WORKER' not in os.environ and '--pipe-worker' not in sys.argv:
         # On some OS X computers launchd apparently tries to
         # launch the last run process from the bundle
         # so launch the gui as usual
         from calibre.gui2.main import main as gui_main
         return gui_main(['calibre'])
+    niceness = os.environ.pop('CALIBRE_WORKER_NICENESS', None)
+    if niceness:
+        try:
+            os.nice(int(niceness))
+        except Exception:
+            pass
     csw = os.environ.pop('CALIBRE_SIMPLE_WORKER', None)
     if csw:
         mod, _, func = csw.partition(':')

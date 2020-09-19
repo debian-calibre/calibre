@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "agosto 21, 2020" "4.23.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "setembro 19, 2020" "4.99.17" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -41,22 +41,15 @@ calibre\-debug [opções]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre viewer and the calibre editor in debug mode.
+Várias interfaces de linha de comandos úteis para depurar o Calibre. Executado sem opções, este comando inicia um interpretador de Python. Pode também executar a interface de utilizador principal, o visualizador e o editor em modo depuração.
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the E\-book diff tool and so
-on.
+Contém também as interfaces para várias partes do Calibre que não têm ferramentas de linha de comandos dedicadas, tais como definição de fontes, ferramenta de diferenças entre livros digitais e outras.
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
-.INDENT 0.0
-.INDENT 3.5
+Pode ainda utilizar \fBcalibre\-debug\fP para executar scripts em modo independente. Para tal, corra o seguinte:
+.sp
 \fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
-.UNINDENT
-.UNINDENT
 .sp
-Everything after the \fB\-\-\fP is passed to the script.
+Tudo após \fB\-\-\fP será passado ao script como parâmetro.
 .sp
 Sempre que passar argumentos para o \fBcalibre\-debug\fP que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
 .SH [OPÇÕES]
@@ -103,7 +96,12 @@ Explode the book into the specified directory. Usage: \-x file.epub output_dir E
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Exportar todos os dados do Calibre (livros/configurações/plugins). Normalmente, ser\-lhe\-á pedido para definir uma pasta para onde exportar e quais as bibliotecas a exportar. Também pode fazer essa especificação por argumentos de linha de comando para ignorar as perguntas. Use caminhos absolutos para indicar a pasta para onde exportar e as bibliotecas a incluir. O termo especial \fB"\fPall\fB"\fP pode ser usado para exportar todas as bibliotecas.
+Exportar todos os dados do Calibre (livros/configurações/plugins). Normalmente, ser\-lhe\-á pedido para definir uma pasta para onde exportar e quais as bibliotecas a exportar. Também pode fazer essa especificação por argumentos de linha de comandos para ignorar as perguntas. Use caminhos absolutos para indicar a pasta para onde exportar e as bibliotecas a incluir. O termo especial \fB"\fPall\fB"\fP pode ser usado para exportar todas as bibliotecas.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-fix\-multiprocessing
+Para uso interno
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -158,7 +156,7 @@ Causa a terminação de uma instância do Calibre, caso exista alguma em execuç
 .INDENT 0.0
 .TP
 .B \-\-subset\-font, \-f
-Subdivida o tipo de letra especificado. Use \fB\-\-\fP depois desta opção para passar a opção pelo programa de subdivisão de fontes.
+Subdividir o tipo de letra especificado. Use \fB\-\-\fP depois desta opção para passar a opção pelo programa de subdivisão de tipos de letra.
 .UNINDENT
 .INDENT 0.0
 .TP

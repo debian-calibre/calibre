@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__ = 'GPL v3'
 __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -8,7 +8,7 @@ __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
 import os, sys, subprocess, signal, time, errno, socket, ssl
 from threading import Thread, Lock
 
-from calibre.constants import islinux, iswindows, isosx
+from calibre.constants import islinux, iswindows, ismacos
 from calibre.srv.http_response import create_http_handler
 from calibre.srv.loop import ServerLoop
 from calibre.srv.opts import Options
@@ -161,7 +161,7 @@ elif iswindows:
                     else:
                         self.handle_modified({path})
 
-elif isosx:
+elif ismacos:
     from fsevents import Observer, Stream
 
     class Watcher(WatcherBase):

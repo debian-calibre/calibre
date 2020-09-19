@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "abuztua 21, 2020" "4.23.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "iraila 19, 2020" "4.99.17" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -43,7 +43,7 @@ calibre\-debug [aukerak]
 .sp
 Various command line interfaces useful for debugging calibre. With no options,
 this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre viewer and the calibre editor in debug mode.
+calibre GUI, the calibre E\-book viewer and the calibre editor in debug mode.
 .sp
 It also contains interfaces to various bits of calibre that do not have
 dedicated command line tools, such as font subsetting, the E\-book diff tool and so
@@ -104,6 +104,11 @@ Explode the book into the specified directory. Usage: \-x file.epub output_dir E
 .TP
 .B \-\-export\-all\-calibre\-data
 Export all calibre data (books/settings/plugins). Normally, you will be asked for the export dir and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export directory and libraries. The special keyword \fB"\fPall\fB"\fP can be used to export all libraries.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-fix\-multiprocessing
+For internal use
 .UNINDENT
 .INDENT 0.0
 .TP

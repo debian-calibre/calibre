@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -9,7 +9,7 @@ __docformat__ = 'restructuredtext en'
 
 import time
 from calibre import prints
-from calibre.constants import islinux, isosx, get_osx_version, DEBUG, plugins
+from calibre.constants import islinux, ismacos, get_osx_version, DEBUG, plugins
 from polyglot.builtins import unicode_type
 
 
@@ -109,7 +109,7 @@ class QtNotifier(Notifier):
                 try:
                     if not isinstance(body, unicode_type):
                         body = body.decode('utf-8')
-                    if isosx and not self.systray.isVisible():
+                    if ismacos and not self.systray.isVisible():
                         self.systray.show()
                         hide = True
                     self.systray.showMessage(summary, body, self.systray.Information,
@@ -161,7 +161,7 @@ def get_notifier(systray=None):
             import traceback
             traceback.print_exc()
             ans = None
-    elif isosx:
+    elif ismacos:
         if get_osx_version() >= (10, 8, 0):
             ans = AppleNotifier()
             if not ans.ok:

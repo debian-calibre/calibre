@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "srpna 21, 2020" "4.23.0" "calibre"
+.TH "CALIBREDB" "1" "září 19, 2020" "4.99.17" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -41,42 +41,42 @@ calibredb command [options] [arguments]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP is the command line interface to the calibre database. It has
-several sub\-commands, documented below.
+\fBcalibredb\fP je rozhraní příkazového řádku k databázi Calibre.
+Má několik níže zdokumentovaných podpříkazů.
 .sp
-\fBcalibredb\fP can be used to manipulate either a calibre database
-specified by path or a calibre Content server running either on
-the local machine or over the internet. You can start a calibre
-Content server using either the \fBcalibre\-server\fP
-program or in the main calibre program click Connect/share  → 
-Start Content server\&. Since \fBcalibredb\fP can make changes to your
-calibre libraries, you must setup authentication on the server first. There
-are two ways to do that:
-.INDENT 0.0
-.INDENT 3.5
+\fBcalibredb\fP calibredb\(ga lze použít buď pro zacházení s databází
+Calibre zadanou cestou nebo se Serverem s obsahem Calibre
+běžícím buď na místním počítači nebo přes internet. Server s obsahem
+Calibre můžete spustit buď pomocí programu \fBcalibre\-server\fP nebo
+v hlavním programu Calibre klikněte na Připojit nebo sdílet  →  Spustit
+Server s obsahem\&. Protože \fBcalibredb\fP může ve vašich knihovnách
+Calibre provádět změny, musíte nejprve na serveru nastavit ověřování. Jsou
+dva způsoby, jak toho dosáhnout:
 .INDENT 0.0
 .IP \(bu 2
-If you plan to connect only to a server running on the same computer,
-you can simply use the \fB\-\-enable\-local\-write\fP option of the
-content server, to allow any program, including calibredb, running on
-the local computer to make changes to your calibre data. When running
-the server from the main calibre program, this option is in
-Preferences → Sharing over the net → Advanced\&.
-.IP \(bu 2
-If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
-options to \fBcalibredb\fP to give it access. You can setup
-user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
-option and using \fB\-\-manage\-users\fP to create the user accounts.
-If you are running the server from the main calibre program, use
-Preferences → Sharing over the net → Require username/password\&.
-.UNINDENT
-.UNINDENT
+Pokud se plánujete připojovat pouze k serveru běžícímu na
 .UNINDENT
 .sp
-To connect to a running Content server, pass the URL of the server to the
-\fI\%\-\-with\-library\fP option, see the documentation of that option for
-details and examples.
+stejném počítači, můžete jednoduše použít volbu serveru s obsahem
+\fB\-\-enable\-local\-write\fP, aby umožnil jakémukoliv programu, včetně calibredb,
+běžícímu na místním počítači provádět změny v datech Calibre. Při spuštění
+serveru z hlavního programu Calibru je tato možnost v  Předvolby → 
+Sdílení po síti → Rozšířené\&.
+.INDENT 0.0
+.IP \(bu 2
+Pokud chcete povolit přístup přes internet, měli byste na serveru nastavit
+.UNINDENT
+.sp
+uživatelské účty a použít volby \fI\%\-\-username\fP a \fI\%\-\-password\fP
+pro \fBcalibredb\fP, aby jim udělil přístup. Ověřování uživatele pro
+\fBcalibre\-server\fP můžete nastavit pomocí volby \fB\-\-enable\-auth\fP
+a pomocí \fB\-\-manage\-users\fP vytvořit uživatelské účty. Pokud spouštíte
+server z hlavního programu Calibre, použijte Předvolby → Sdílení
+po síti → Vyžadovat uživatelské jméno a heslo\&.
+.sp
+Pro připojení k běžícímu serveru s obsahem předejte adresu URL serveru
+volbě \fI\%\-\-with\-library\fP, viz dokumentace této volby pro podrobnosti
+a příklady.
 .INDENT 0.0
 .IP \(bu 2
 \fI\%GLOBÁLNÍ VOLBY\fP
@@ -441,7 +441,7 @@ Exportovat všechny knihy v databázi, ignorovat seznam identifikátorů.
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Obyčejně Calibre převede všechny neanglické znaky na anglické ekvivalenty pro názvy souborů. VAROVÁNÍ: Pokud toto vypnete, můžete zažít chyby při ukládání v závislosti na tom, jak dobře systém souborů, do kterého ukládáte, podporuje unicode. Zadání tohoto přepínače vypne toto chování.
+Nechat Calibre převést všechny neanglické znaky na anglické ekvivalenty pro názvy souborů. To je užitečné, pokud ukládáte do starší verze systému souborů bez plné podpory názvů souborů Unicode. Zadání tohoto přepínače vypne toto chování.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -833,7 +833,7 @@ Výstup v CSV
 .INDENT 0.0
 .TP
 .B \-\-dialect
-Typ souboru CSV, který vytvářet. Možnosti: excel, excel\-tab
+Typ souboru CSV, který vytvářet. Možnosti: excel, excel\-tab, unix
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -929,12 +929,12 @@ calibredb search [options] search expression
 .UNINDENT
 .UNINDENT
 .sp
-Vyhledat v knihovně zadaný hledaný výraz vracející čárkami oddělený seznam
-identifikátorů knih odpovídající hledanému výrazu.Výstupní formát je užitečný
-pro zásobení jiných příkazů, které přijímají seznam identifikátorů jako vstup.
+Search the library for the specified \fBsearch\fP term, returning a comma separated
+list of book ids matching the \fBsearch\fP expression. The output format is useful
+to feed into other commands that accept a list of ids as input.
 .sp
-Hledaný výraz může být cokoliv z výkonného jazyka vyhledávacích dotazů Calibre,
-například: author:asimov title:robot
+The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
+language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
 .sp
 Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
 .INDENT 0.0

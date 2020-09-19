@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "augusti 21, 2020" "4.23.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "september 19, 2020" "4.99.17" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -41,18 +41,20 @@ calibre\-debug [alternativ]
 .UNINDENT
 .UNINDENT
 .sp
-Olika kommandoradsgränssnitt användbara för felsökning av calibre. Utan alternativ
-startar detta kommando en inbäddad Python\-tolk. Du kan också köra calibres huvudanvändargränssnitt, calibre\-visaren och calibre\-redigeringen i felsökningsläge.
+Olika kommandoradsgränssnitt som är användbara för felsökning av calibre. Med inga
+alternativ startar detta kommando en inbäddad Python\-tolk. Du kan också köra calibre\-huvudgränssnittet, calibre E\-bokvisaren och calibres redigerare i felsökningsläge.
 .sp
-Den innehåller också gränssnitt till olika delar av calibre som inte har
-dedikerade kommandoradsverktyg, såsom delmängder av typsnitt, verktyget Diff för e\-böcker och så
-vidare.
+Den innehåller också gränssnitt till olika bitar av calibre som inte har dedikerade
+kommandoradsverktyg, som typsnittsdelning, E\-bokdiffverktyg och så vidare.
 .sp
-Du kan också använda \fBcalibre\-debug\fP att köra fristående skript. Använd det så här:
-.sp
+Du kan också använda \fBcalibre\-debug\fP för att köra fristående skript. För att göra det använder du det så här:
+.INDENT 0.0
+.INDENT 3.5
 \fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
+.UNINDENT
+.UNINDENT
 .sp
-Allt efter \fB\-\-\fP förs till skriptet.
+Allting efter \fB\-\-\fP skickas till skriptet.
 .sp
 När du skickar argument till \fBcalibre\-debug\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .SH [ALTERNATIV]
@@ -100,6 +102,11 @@ Bryt isär boken i den angivna mappen. Användning: \-x file.epub output_dir Exp
 .TP
 .B \-\-export\-all\-calibre\-data
 Exportera alla calibre\-data (böcker/inställningar/insticksmoduler). Normalt kommer du att bli ombedd om exporteringsmappen och biblioteken att exportera. Du kan även ange dem som kommandoradsargument för att hoppa över frågorna. Använd absoluta sökvägar för exportmappen och biblioteken. Det speciella nyckelordet \fB"\fPall\fB"\fP kan användas för att exportera alla bibliotek.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-fix\-multiprocessing
+För internt bruk
 .UNINDENT
 .INDENT 0.0
 .TP

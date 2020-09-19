@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "d’agost 21, 2020" "4.23.0" "calibre"
+.TH "CALIBREDB" "1" "de setembre 19, 2020" "4.99.17" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -442,7 +442,7 @@ Exporta tots els llibres de la base de dades, ignorant la llista dels id.
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Normalment calibre convertirà els caràcters no ASCII dels noms de fitxer als seus equivalents ASCII. ATENCIÓ: Si ho desactiveu podeu tenir errors en desar, depenent del suport per a Unicode que hi hagi al vostre sistema de fitxers. Si s\fB\(aq\fPespecifica aquesta opció, es desactiva aquest comportament.
+Have calibre convert all non English characters into English equivalents for the file names. This is useful if saving to a legacy filesystem without full support for Unicode filenames. Si s\fB\(aq\fPespecifica aquesta opció, es desactiva aquest comportament.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -831,7 +831,7 @@ Sortida CSV
 .INDENT 0.0
 .TP
 .B \-\-dialect
-El tipus de fitxer CSV a produir. Opcions: excel, excel\-tab
+El tipus de fitxer CSV a produir. Opcions: excel, excel\-tab, unix
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -920,18 +920,18 @@ Només actualitza les metadades als fitxers del format especificat. Especifiqueu
 .sp
 .nf
 .ft C
-calibredb search [opcions] expressió de cerca
+calibredb search [options] search expression
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Cerca a la biblioteca el terme de cerca especificat, retornant una llista separada
-per comes dels id. dels llibres que coincideixen amb l\(aqexpressió de cerca. El format
-de sortida és útil per alimentar altres ordres que accepten una llista d\(aqid. com a entrada.
+Search the library for the specified \fBsearch\fP term, returning a comma separated
+list of book ids matching the \fBsearch\fP expression. The output format is useful
+to feed into other commands that accept a list of ids as input.
 .sp
-L\(aqexpressió de cerca pot ser qualsevol de llenguatge de cerca potent de calibre,
-per exemple: author:asimov title:robot
+The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
+language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
 .sp
 Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0

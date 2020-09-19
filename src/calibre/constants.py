@@ -1,12 +1,11 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
-from __future__ import print_function, unicode_literals
 from polyglot.builtins import map, unicode_type, environ_item, hasenv, getenv, as_unicode, native_string_type
 import sys, locale, codecs, os, importlib, collections
 
 __appname__   = 'calibre'
-numeric_version = (4, 23, 0)
+numeric_version = (4, 99, 17)
 __version__   = '.'.join(map(unicode_type, numeric_version))
 git_version   = None
 __author__    = "Kovid Goyal <kovid@kovidgoyal.net>"
@@ -18,16 +17,16 @@ Various run time constants.
 
 _plat = sys.platform.lower()
 iswindows = 'win32' in _plat or 'win64' in _plat
-isosx     = 'darwin' in _plat
-isnewosx  = isosx and getattr(sys, 'new_app_bundle', False)
+ismacos = isosx = 'darwin' in _plat
+isnewosx  = ismacos and getattr(sys, 'new_app_bundle', False)
 isfreebsd = 'freebsd' in _plat
 isnetbsd = 'netbsd' in _plat
 isdragonflybsd = 'dragonfly' in _plat
 isbsd = isfreebsd or isnetbsd or isdragonflybsd
 ishaiku = 'haiku1' in _plat
-islinux   = not(iswindows or isosx or isbsd or ishaiku)
+islinux   = not(iswindows or ismacos or isbsd or ishaiku)
 isfrozen  = hasattr(sys, 'frozen')
-isunix = isosx or islinux or ishaiku
+isunix = ismacos or islinux or ishaiku
 isportable = hasenv('CALIBRE_PORTABLE_BUILD')
 ispy3 = sys.version_info.major > 2
 isxp = isoldvista = False
@@ -56,6 +55,25 @@ winerror   = importlib.import_module('winerror') if iswindows else None
 win32api   = importlib.import_module('win32api') if iswindows else None
 fcntl      = None if iswindows else importlib.import_module('fcntl')
 dark_link_color = '#6cb4ee'
+builtin_colors_light = {
+    'yellow': '#ffeb6b',
+    'green': '#c0ed72',
+    'blue': '#add8ff',
+    'red': '#ffb0ca',
+    'purple': '#d9b2ff',
+}
+builtin_colors_dark = {
+    'yellow': '#c18d18',
+    'green': '#306f50',
+    'blue': '#265589',
+    'red': '#a23e5a',
+    'purple': '#505088',
+}
+builtin_decorations = {
+    'wavy': {'text-decoration-style': 'wavy', 'text-decoration-color': 'red', 'text-decoration-line': 'underline'},
+    'strikeout': {'text-decoration-line': 'line-through', 'text-decoration-color': 'red'},
+}
+
 
 _osx_ver = None
 
@@ -125,7 +143,7 @@ def _get_cache_dir():
             candidate = os.path.join(w.special_folder_path(w.CSIDL_LOCAL_APPDATA), '%s-cache'%__appname__)
         except ValueError:
             return confcache
-    elif isosx:
+    elif ismacos:
         candidate = os.path.join(os.path.expanduser('~/Library/Caches'), __appname__)
     else:
         candidate = getenv('XDG_CACHE_HOME', '~/.cache')
@@ -152,8 +170,6 @@ def cache_dir():
 
 
 plugins_loc = sys.extensions_location
-if ispy3:
-    plugins_loc = os.path.join(plugins_loc, '3')
 
 
 # plugins {{{
@@ -170,7 +186,6 @@ class Plugins(collections.Mapping):
                 'podofo',
                 'cPalmdoc',
                 'progress_indicator',
-                'chmlib',
                 'icu',
                 'speedup',
                 'html_as_json',
@@ -185,19 +200,13 @@ class Plugins(collections.Mapping):
                 'matcher',
                 'tokenizer',
                 'certgen',
-                'lzma_binding',
             ]
-        if not ispy3:
-            plugins.extend([
-                'monotonic',
-                'zlib2',
-            ])
         if iswindows:
             plugins.extend(['winutil', 'wpd', 'winfonts'])
-        if isosx:
+        if ismacos:
             plugins.append('usbobserver')
             plugins.append('cocoa')
-        if isfreebsd or ishaiku or islinux or isosx:
+        if isfreebsd or ishaiku or islinux or ismacos:
             plugins.append('libusb')
             plugins.append('libmtp')
         self.plugins = frozenset(plugins)
@@ -260,7 +269,7 @@ elif iswindows:
     if not config_dir or not os.access(config_dir, os.W_OK|os.X_OK):
         config_dir = os.path.expanduser('~')
     config_dir = os.path.join(config_dir, 'calibre')
-elif isosx:
+elif ismacos:
     config_dir = os.path.expanduser('~/Library/Preferences/calibre')
 else:
     bdir = os.path.abspath(os.path.expanduser(getenv('XDG_CONFIG_HOME', '~/.config')))
@@ -289,6 +298,7 @@ else:
 dv = getenv('CALIBRE_DEVELOP_FROM')
 is_running_from_develop = bool(getattr(sys, 'frozen', False) and dv and os.path.abspath(dv) in sys.path)
 del dv
+in_develop_mode = getenv('CALIBRE_ENABLE_DEVELOP_MODE') == '1'
 
 
 def get_version():

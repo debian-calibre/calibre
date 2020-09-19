@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "augusts 21, 2020" "4.23.0" "calibre"
+.TH "CALIBREDB" "1" "septembris 19, 2020" "4.99.17" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -442,7 +442,7 @@ Eksportēt visas datubāzē esošās grāmatas, neņemot vērā id sarakstu,
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Parasti calibre pārvērš ne\-ASCII rakstzīmes datņu nosaukumos to angļu valodas ekvivalentos. UZMANĪBU! Ja Jūs izslēgsiet šo, pastāv iespēja, ka sastapsieties ar sarežģījumiem saglabājot; tas būs atkarīgs vienīgi no tā, cik lielā mērā Jūsu izmantotā operāciju sistēma uztur Unicode. Atzīmējot šo slēdzi, darbība tiks izslēgta.
+Have calibre convert all non English characters into English equivalents for the file names. This is useful if saving to a legacy filesystem without full support for Unicode filenames. Atzīmējot šo slēdzi, darbība tiks izslēgta.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -838,7 +838,7 @@ Izvade CSV
 .INDENT 0.0
 .TP
 .B \-\-dialect
-CSV faila izveidošanas veids. Izvēle: excel, excel\-tab
+CSV faila izveidošanas veids. Izvēle: excel, excel\-tab, unix
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -926,18 +926,18 @@ Atjaunināt metadatu failus tikai norādītajā formātā. Norādiet to vairāka
 .sp
 .nf
 .ft C
-calibredb search [opcijas] meklēšanas izteiksme
+calibredb search [options] search expression
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Meklēt bibliotēkā norādīto meklēšanas terminu, atgriežot ar komatu atdalītu
-id grāmatu sarakstu, atbilstošu meklēšanas izteiksmei. Izvades formātā ir noderīgas
-ziņas citām komandām, kas pieņem ieejas ID sarakstu.
+Search the library for the specified \fBsearch\fP term, returning a comma separated
+list of book ids matching the \fBsearch\fP expression. The output format is useful
+to feed into other commands that accept a list of ids as input.
 .sp
-Meklēšanas izteiksme var būt jebkas, sākot no spēcīgās calibre meklēšanas
-valodas, piemēram: author:asimov title:robot
+The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
+language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
 .sp
 Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .INDENT 0.0

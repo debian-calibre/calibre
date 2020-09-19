@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import with_statement, print_function
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -11,20 +11,20 @@ from collections import defaultdict
 from locale import normalize as normalize_locale
 from functools import partial
 
-from setup import Command, __appname__, __version__, require_git_master, build_cache_dir, edit_file, dump_json, ispy3
-from setup.parallel_build import parallel_check_output
+from setup import Command, __appname__, __version__, require_git_master, build_cache_dir, edit_file, dump_json
+from setup.parallel_build import batched_parallel_jobs
 from polyglot.builtins import codepoint_to_chr, iteritems, range
 is_ci = os.environ.get('CI', '').lower() == 'true'
 
 
 def qt_sources():
-    qtdir = '/usr/src/qt5'
+    qtdir = os.environ.get('QT_SRC', '/usr/src/qt5/qtbase')
     j = partial(os.path.join, qtdir)
     return list(map(j, [
-            'qtbase/src/gui/kernel/qplatformtheme.cpp',
-            'qtbase/src/widgets/dialogs/qcolordialog.cpp',
-            'qtbase/src/widgets/dialogs/qfontdialog.cpp',
-            'qtbase/src/widgets/widgets/qscrollbar.cpp',
+            'src/gui/kernel/qplatformtheme.cpp',
+            'src/widgets/dialogs/qcolordialog.cpp',
+            'src/widgets/dialogs/qfontdialog.cpp',
+            'src/widgets/widgets/qscrollbar.cpp',
     ]))
 
 
@@ -212,7 +212,8 @@ class POT(Command):  # {{{
                 time=time.strftime('%Y-%m-%d %H:%M+%Z'))
 
     def run(self, opts):
-        require_git_master()
+        if not is_ci:
+            require_git_master()
         self.get_iso639_strings()
         if not is_ci:
             self.get_website_strings()
@@ -223,7 +224,7 @@ class POT(Command):  # {{{
         pot_header = self.pot_header()
 
         with tempfile.NamedTemporaryFile() as fl:
-            fl.write('\n'.join(files))
+            fl.write('\n'.join(files).encode('utf-8'))
             fl.flush()
             out = tempfile.NamedTemporaryFile(suffix='.pot', delete=False)
             out.close()
@@ -240,7 +241,7 @@ class POT(Command):  # {{{
                 ] + qt_inputs)
 
             with open(out.name, 'rb') as f:
-                src = f.read()
+                src = f.read().decode('utf-8')
             os.remove(out.name)
             src = pot_header + '\n' + src
             src += '\n\n' + self.get_tweaks_docs()
@@ -253,12 +254,12 @@ class POT(Command):  # {{{
             src = re.sub(r'#, python-brace-format\s+msgid ""\s+.*<code>{0:</code>',
                    lambda m: m.group().replace('python-brace', 'no-python-brace'), src)
             with open(pot, 'wb') as f:
-                f.write(src)
+                f.write(src.encode('utf-8'))
             self.info('Translations template:', os.path.abspath(pot))
             self.upload_pot(resource='main')
             self.git(['add', os.path.abspath(pot)])
 
-        if self.git('diff-index --cached --quiet --ignore-submodules HEAD --', use_call=True) != 0:
+        if not is_ci and self.git('diff-index --cached --quiet --ignore-submodules HEAD --', use_call=True) != 0:
             self.git(['commit', '-m', 'Updated translation templates'])
             self.git('push')
 
@@ -320,8 +321,7 @@ class Translations(POT):  # {{{
         self.compile_changelog_translations()
 
     def compile_group(self, files, handle_stats=None, file_ok=None, action_per_file=None):
-        from calibre.constants import islinux
-        jobs, ok_files = [], []
+        ok_files = []
         hashmap = {}
 
         def stats_cache(src, data=None):
@@ -348,20 +348,22 @@ class Translations(POT):  # {{{
                         handle_stats(src, stats_cache(src))
             else:
                 if file_ok is None or file_ok(data, src):
-                    self.info('\t' + os.path.relpath(src, self.j(self.d(self.SRC), 'translations')))
-                    if islinux:
-                        msgfmt = ['msgfmt']
-                    else:
-                        msgfmt = [sys.executable, self.j(self.SRC, 'calibre', 'translations', 'msgfmt.py')]
-                    jobs.append(msgfmt + ['--statistics', '-o', dest, src])
+                    # self.info('\t' + os.path.relpath(src, self.j(self.d(self.SRC), 'translations')))
                     ok_files.append((src, dest))
                     hashmap[src] = current_hash
             if action_per_file is not None:
                 action_per_file(src)
 
-        for (src, dest), line in zip(ok_files, parallel_check_output(jobs, self.info)):
+        self.info(f'\tCompiling {len(ok_files)} files')
+        items = []
+        results = batched_parallel_jobs(
+            [sys.executable, self.j(self.SRC, 'calibre', 'translations', 'msgfmt.py'), 'STDIN'],
+            ok_files)
+        for (src, dest), nums in zip(ok_files, results):
+            items.append((src, dest, nums))
+
+        for (src, dest, nums) in items:
             self.write_cache(open(dest, 'rb').read(), hashmap[src], src)
-            nums = tuple(map(int, re.findall(r'\d+', line)))
             stats_cache(src, nums)
             if handle_stats is not None:
                 handle_stats(src, nums)
@@ -500,7 +502,7 @@ class Translations(POT):  # {{{
                 if current_hash == saved_hash:
                     raw = saved_data
                 else:
-                    self.info('\tParsing ' + os.path.basename(src))
+                    # self.info('\tParsing ' + os.path.basename(src))
                     raw = None
                     po_data = data.decode('utf-8')
                     data = json.loads(msgfmt(po_data))
@@ -602,7 +604,7 @@ class Translations(POT):  # {{{
             lang_names = {}
             for l in dl:
                 translator = translator_for_lang(l)['translator']
-                t = getattr(translator, 'gettext' if ispy3 else 'ugettext')
+                t = translator.gettext
                 t = partial(get_language, gettext_func=t)
                 lang_names[l] = {x: t(x) for x in dl}
             zi = ZipInfo('lang-names.json')
@@ -690,7 +692,7 @@ class GetTranslations(Translations):  # {{{
         if opts.check_for_errors:
             self.check_all()
             return
-        self.tx('pull -a')
+        self.tx('pull -a --parallel --no-interactive')
         if not self.is_modified:
             self.info('No translations were updated')
             return
@@ -803,7 +805,7 @@ class GetTranslations(Translations):  # {{{
             for f in errfiles:
                 with open(f, 'r+b') as f:
                     raw = f.read()
-                    raw = re.sub(r'# \(pofilter\).*', '', raw)
+                    raw = re.sub(rb'# \(pofilter\).*', '', raw)
                     f.seek(0)
                     f.truncate()
                     f.write(raw)

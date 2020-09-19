@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -18,7 +18,7 @@ from PyQt5.Qt import (
     QScrollArea, QVBoxLayout, Qt, QListWidgetItem, QListWidget, QSize)
 
 from calibre import as_unicode
-from calibre.constants import isosx
+from calibre.constants import ismacos
 from calibre.gui2.actions import InterfaceAction
 from calibre.gui2 import (error_dialog, Dispatcher, warning_dialog, gprefs,
         info_dialog, choose_dir)
@@ -374,7 +374,7 @@ class CopyToLibraryAction(InterfaceAction):
             self.menu.addAction(_('Choose library...'), self.choose_library)
 
         self.qaction.setVisible(bool(locations))
-        if isosx:
+        if ismacos:
             # The cloned action has to have its menu updated
             self.qaction.changed.emit()
 

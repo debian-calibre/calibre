@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -211,7 +211,7 @@ class ConditionEditor(QWidget):  # {{{
             dt = m['datatype']
             if dt == 'bool':
                 from calibre.gui2.ui import get_gui
-                if not get_gui().current_db.prefs.get('bools_are_tristate'):
+                if not get_gui().current_db.new_api.pref('bools_are_tristate'):
                     dt = 'bool2'
             if dt in self.action_map:
                 actions = self.action_map[dt]
@@ -517,7 +517,7 @@ class RuleEditor(QDialog):  # {{{
     def filename_button_clicked(self):
         try:
             path = choose_files(self, 'choose_category_icon',
-                        _('Select Icon'), filters=[
+                        _('Select icon'), filters=[
                         (_('Images'), ['png', 'gif', 'jpg', 'jpeg'])],
                     all_files=False, select_only_single_file=True)
             if path:

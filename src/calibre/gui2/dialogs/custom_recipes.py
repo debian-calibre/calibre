@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__ = 'GPL v3'
 __copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -14,6 +14,7 @@ from PyQt5.Qt import (
     QToolButton, QTreeView)
 
 from calibre.gui2 import error_dialog, open_local_file, choose_files, choose_save_file
+from calibre.gui2.dialogs.confirm_delete import confirm as confirm_delete
 from calibre.gui2.widgets2 import Dialog
 from calibre.web.feeds.recipes import custom_recipes, compile_recipe
 from calibre.gui2.tweak_book.editor.text import TextEdit
@@ -143,9 +144,8 @@ def options_to_recipe_source(title, oldest_article, max_articles_per_feed, feeds
     if feeds:
         feeds = 'feeds          = [\n%s\n    ]' % feeds
     src = textwrap.dedent('''\
-    #!/usr/bin/env python2
+    #!/usr/bin/env python
     # vim:fileencoding=utf-8
-    from __future__ import unicode_literals, division, absolute_import, print_function
     from calibre.web.feeds.news import {base}
 
     class {classname}({base}):
@@ -608,7 +608,8 @@ class CustomRecipes(Dialog):
     def reject(self):
         idx = self.stack.currentIndex()
         if idx > 0:
-            self.stack.setCurrentIndex(0)
+            if confirm_delete(_('Are you sure? Any unsaved changes will be lost.'), 'confirm-cancel-edit-custom-recipe'):
+                self.stack.setCurrentIndex(0)
             return
         Dialog.reject(self)
 

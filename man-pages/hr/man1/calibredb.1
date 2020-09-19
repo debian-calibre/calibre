@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "kolovoza 21, 2020" "4.23.0" "calibre"
+.TH "CALIBREDB" "1" "rujna 19, 2020" "4.99.17" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -442,7 +442,7 @@ Izvezi sve knjige u bazi podataka, ignorirajući id listu.
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Normalno, calibre će pretvoriti sve ne engleske znalove u njihove engleske ekvivalente za imena datoteka. UPOZORENJE: ako ovo isključite, možete iskusiti greške kod spremanja, ovisno o tome kako dobro datotečni sustav na kojeg spremate podržava unicode. Specificiranje ovog prekidača će isključiti ovu karakteristiku.
+Have calibre convert all non English characters into English equivalents for the file names. This is useful if saving to a legacy filesystem without full support for Unicode filenames. Specificiranje ovog prekidača će isključiti ovu karakteristiku.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -834,7 +834,7 @@ Output in CSV
 .INDENT 0.0
 .TP
 .B \-\-dialect
-The type of CSV file to produce. Choices: excel, excel\-tab
+The type of CSV file to produce. Choices: excel, excel\-tab, unix
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -933,7 +933,7 @@ list of book ids matching the \fBsearch\fP expression. The output format is usef
 to feed into other commands that accept a list of ids as input.
 .sp
 The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
-language, for example: author:asimov title:robot
+language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0

@@ -1,8 +1,7 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from collections import defaultdict
 from threading import Thread
@@ -31,6 +30,8 @@ def set_data(name, val):
         editors[name].replace_data(val, only_if_different=False)
     else:
         with current_container().open(name, 'wb') as f:
+            if isinstance(val, str):
+                val = val.encode('utf-8')
             f.write(val)
     get_boss().set_modified()
 

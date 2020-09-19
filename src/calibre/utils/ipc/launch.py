@@ -1,19 +1,17 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
 import subprocess, os, sys, time
-from functools import partial
 
-from calibre.constants import iswindows, isosx, isfrozen, filesystem_encoding, ispy3
+from calibre.constants import iswindows, ismacos, isfrozen
 from calibre.utils.config import prefs
 from calibre.ptempfile import PersistentTemporaryFile, base_dir
 from calibre.utils.serialize import msgpack_dumps
-from polyglot.builtins import iteritems, unicode_type, string_or_bytes, environ_item, native_string_type, getcwd
+from polyglot.builtins import string_or_bytes, environ_item, native_string_type, getcwd
 from polyglot.binary import as_hex_unicode
 
 if iswindows:
@@ -58,8 +56,8 @@ class Worker(object):
         if iswindows:
             return os.path.join(os.path.dirname(sys.executable),
                    e+'.exe' if isfrozen else 'Scripts\\%s.exe'%e)
-        if isosx:
-            return os.path.join(sys.binaries_path, e)
+        if ismacos:
+            return os.path.join(sys.executables_location, e)
 
         if isfrozen:
             return os.path.join(sys.executables_location, e)
@@ -72,40 +70,21 @@ class Worker(object):
 
     @property
     def gui_executable(self):
-        if isosx and not hasattr(sys, 'running_from_setup'):
+        if ismacos and not hasattr(sys, 'running_from_setup'):
             if self.job_name == 'ebook-viewer':
-                base = os.path.dirname(sys.binaries_path)
+                base = os.path.dirname(sys.executables_location)
                 return os.path.join(base, 'ebook-viewer.app/Contents/MacOS/', self.exe_name)
             if self.job_name == 'ebook-edit':
-                base = os.path.dirname(sys.binaries_path)
+                base = os.path.dirname(sys.executables_location)
                 return os.path.join(base, 'ebook-viewer.app/Contents/ebook-edit.app/Contents/MacOS/', self.exe_name)
 
-            return os.path.join(sys.binaries_path, self.exe_name)
+            return os.path.join(sys.executables_location, self.exe_name)
 
         return self.executable
 
     @property
     def env(self):
-        if ispy3:
-            env = os.environ.copy()
-        else:
-            # We use this inefficient method of copying the environment variables
-            # because of non ascii env vars on windows. See https://bugs.launchpad.net/bugs/811191
-            env = {}
-            for key in os.environ:
-                try:
-                    val = os.environ[key]
-                    if isinstance(val, unicode_type):
-                        # On windows subprocess cannot handle unicode env vars
-                        try:
-                            val = val.encode(filesystem_encoding)
-                        except ValueError:
-                            val = val.encode('utf-8')
-                    if isinstance(key, unicode_type):
-                        key = key.encode('ascii')
-                    env[key] = val
-                except:
-                    pass
+        env = os.environ.copy()
         env[native_string_type('CALIBRE_WORKER')] = environ_item('1')
         td = as_hex_unicode(msgpack_dumps(base_dir()))
         env[native_string_type('CALIBRE_WORKER_TEMP_DIR')] = environ_item(td)
@@ -156,22 +135,7 @@ class Worker(object):
         self._env = {}
         self.gui = gui
         self.job_name = job_name
-        if ispy3:
-            self._env = env.copy()
-        else:
-            # Windows cannot handle unicode env vars
-            for k, v in iteritems(env):
-                try:
-                    if isinstance(k, unicode_type):
-                        k = k.encode('ascii')
-                    if isinstance(v, unicode_type):
-                        try:
-                            v = v.encode(filesystem_encoding)
-                        except:
-                            v = v.encode('utf-8')
-                    self._env[k] = v
-                except:
-                    pass
+        self._env = env.copy()
 
     def __call__(self, redirect_output=True, cwd=None, priority=None):
         '''
@@ -206,7 +170,7 @@ class Worker(object):
                     'low'    : 10,
                     'high'   : 20,
             }[priority]
-            args['preexec_fn'] = partial(renice, niceness)
+            args['env']['CALIBRE_WORKER_NICENESS'] = str(niceness)
         ret = None
         if redirect_output:
             self._file = PersistentTemporaryFile('_worker_redirect.log')
@@ -222,12 +186,6 @@ class Worker(object):
             args['stdin'] = subprocess.PIPE
             args['stdout'] = windows_null_file
             args['stderr'] = subprocess.STDOUT
-
-        if not iswindows:
-            # Close inherited file descriptors in worker
-            # On windows, this is done in the worker process
-            # itself
-            args['close_fds'] = True
 
         self.child = subprocess.Popen(cmd, **args)
         if 'stdin' in args:

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "agosto 21, 2020" "4.23.0" "calibre"
+.TH "CALIBREDB" "1" "septiembre 19, 2020" "4.99.17" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -41,42 +41,21 @@ calibredb orden [opciones] [argumentos]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP is the command line interface to the calibre database. It has
-several sub\-commands, documented below.
+\fBcalibredb\fP es la interfaz de línea de órdenes para la base de datos de calibre. Tiene varias subórdenes que se documentan a continuación.
 .sp
-\fBcalibredb\fP can be used to manipulate either a calibre database
-specified by path or a calibre Content server running either on
-the local machine or over the internet. You can start a calibre
-Content server using either the \fBcalibre\-server\fP
-program or in the main calibre program click Connect/share  → 
-Start Content server\&. Since \fBcalibredb\fP can make changes to your
-calibre libraries, you must setup authentication on the server first. There
-are two ways to do that:
+\fBcalibredb\fP puede usarse para manipular una base de datos de calibre especificada por una ruta de acceso o un servidor de contenidos de calibre que esté ejecutándose en el equipo local o a través de internet. Puede iniciar un servidor de contenidos de calibre mediante el programa \fBcalibre\-server\fP o, en el programa principal de calibre, pulsando Conectar y compartir > Iniciar servidor de contenidos\&. Puesto que \fBcalibredb\fP puede realizar cambios en las bibliotecas de calibre, debe configurar la autenticación en el servidor previamente. Hay dos maneras de hacerlo:
 .INDENT 0.0
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-If you plan to connect only to a server running on the same computer,
-you can simply use the \fB\-\-enable\-local\-write\fP option of the
-content server, to allow any program, including calibredb, running on
-the local computer to make changes to your calibre data. When running
-the server from the main calibre program, this option is in
-Preferences → Sharing over the net → Advanced\&.
+Si tiene pensado conectar sólo con un servidor que se ejecute en el mismo equipo, puede usar simplemente la opción \fB\-\-enable\-local\-write\fP del servidor de contenidos, para permitir que cualquier programa, incluido \fBcalibredb\fP, que se ejecute en el equipo local pueda hacer cambios en los datos de calibre. Al ejecutar el servidor desde el programa principal de calibre, esta opción está en Preferencias > Compartir por la red > Avanzado\&.
 .IP \(bu 2
-If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
-options to \fBcalibredb\fP to give it access. You can setup
-user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
-option and using \fB\-\-manage\-users\fP to create the user accounts.
-If you are running the server from the main calibre program, use
-Preferences → Sharing over the net → Require username/password\&.
+Si quiere activar el acceso remoto por internet, debería configurar cuentas de usuario en el servidor y usar las opciones \fI\%\-\-username\fP y \fI\%\-\-password\fP de \fBcalibredb\fP para darle acceso. Puede configurar la autenticación de usuarios para \fBcalibre\-server\fP usando la opción \fB\-\-enable\-auth\fP y \fB\-\-manage\-users\fP para crear las cuentas de usuario. Si ejecuta el servidor desde el programa principal de calibre, use Preferencias > Compartir por la red > Requerir nombre de usuario y contraseña\&.
 .UNINDENT
 .UNINDENT
 .UNINDENT
 .sp
-To connect to a running Content server, pass the URL of the server to the
-\fI\%\-\-with\-library\fP option, see the documentation of that option for
-details and examples.
+Para conectar con un servidor de contenidos en ejecución, pase el URL del servidor con la opción \fI\%\-\-with\-library\fP, vea la documentación de esta opción para más detalles y ejemplos.
 .INDENT 0.0
 .IP \(bu 2
 \fI\%OPCIONES GLOBALES\fP
@@ -434,7 +413,7 @@ Exportar todos los libros de la base de datos, ignorando el listado de ID.
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Normalmente, calibre convertirá todos los caracteres no ASCII de los nombres de archivo en sus equivalentes ASCII. ADVERTENCIA: Si se desactiva esta opción, pueden ocasionarse errores al guardar, dependiendo del soporte para Unicode del sistema de archivos donde se guarden los libros. Si se especifica esta opción, se desactiva este comportamiento.
+Hacer que calibre convierta todos los caracteres no ASCII en sus equivalentes ASCII para los nombres de archivo. Esto es útil si se guarda en sistemas de archivos antiguos que no tienen compatibilidad completa con nombres de archivo Unicode. Si se especifica esta opción, se desactiva este comportamiento.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -821,7 +800,7 @@ Salida a formato CSV
 .INDENT 0.0
 .TP
 .B \-\-dialect
-El tipo de archivo CSV para crear. Posibilidades: excel, excel\-tab
+El tipo de archivo CSV para crear. Posibilidades: excel, excel\-tab, unix
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -913,15 +892,18 @@ Actualizar los metadatos sólo en el formato especificado. Especificar varias ve
 .sp
 .nf
 .ft C
-calibredb search [opciones] expresión de búsqueda
+calibredb search [options] search expression
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Busca la expresión de búsqueda especificada en la biblioteca y devuelve una lista separada por comas de ID de libros que coinciden con la expresión. El formato de la salida puede usarse como entrada par otras órdenes que admiten una lista de ID.
+Search the library for the specified \fBsearch\fP term, returning a comma separated
+list of book ids matching the \fBsearch\fP expression. The output format is useful
+to feed into other commands that accept a list of ids as input.
 .sp
-La expresión de búsqueda puede ser cualquiera aceptada por el potente lenguaje de búsquedas de calibre, por ejemplo: author:asimov title:robot
+The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
+language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
 .sp
 Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .INDENT 0.0

@@ -1,4 +1,4 @@
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
 """
@@ -9,7 +9,7 @@ import tempfile, os, atexit
 from polyglot.builtins import map, getenv
 
 from calibre.constants import (__version__, __appname__, filesystem_encoding,
-        iswindows, get_windows_temp_path, isosx, ispy3)
+        iswindows, get_windows_temp_path, ismacos)
 
 
 def cleanup(path):
@@ -113,7 +113,7 @@ def base_dir():
                     # unicode temp path instead. See
                     # https://bugs.launchpad.net/bugs/937389
                     base = get_windows_temp_path()
-                elif isosx:
+                elif ismacos:
                     # Use the cache dir rather than the temp dir for temp files as Apple
                     # thinks deleting unused temp files is a good idea. See note under
                     # _CS_DARWIN_USER_TEMP_DIR here
@@ -125,7 +125,7 @@ def base_dir():
 
         try:
             tempfile.gettempdir()
-        except:
+        except Exception:
             # Widows temp vars set to a path not encodable in mbcs
             # Use our temp dir
             tempfile.tempdir = _base_dir
@@ -265,28 +265,27 @@ class SpooledTemporaryFile(tempfile.SpooledTemporaryFile):
             suffix = ''
         if dir is None:
             dir = base_dir()
-        if ispy3:
-            self._name = None
-            tempfile.SpooledTemporaryFile.__init__(self, max_size=max_size,
-                    suffix=suffix, prefix=prefix, dir=dir, mode=mode)
-        else:
-            tempfile.SpooledTemporaryFile.__init__(self, max_size=max_size,
-                    suffix=suffix, prefix=prefix, dir=dir, mode=mode,
-                    bufsize=bufsize)
+        self._name = None
+        tempfile.SpooledTemporaryFile.__init__(self, max_size=max_size,
+                suffix=suffix, prefix=prefix, dir=dir, mode=mode)
 
-    if ispy3:
-        @property
-        def name(self):
-            return self._name
+    @property
+    def name(self):
+        return self._name
 
-        @name.setter
-        def name(self, val):
-            self._name = val
+    @name.setter
+    def name(self, val):
+        self._name = val
 
-    def truncate(self, *args):
-        # The stdlib SpooledTemporaryFile implementation of truncate() doesn't
-        # allow specifying a size.
-        self._file.truncate(*args)
+    # See https://bugs.python.org/issue26175
+    def readable(self):
+        return self._file.readable()
+
+    def seekable(self):
+        return self._file.seekable()
+
+    def writable(self):
+        return self._file.writable()
 
 
 def better_mktemp(*args, **kwargs):

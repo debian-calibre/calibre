@@ -1,4 +1,4 @@
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
 
@@ -72,13 +72,13 @@ def debug(ioreg_to_tmp=False, buf=None, plugins=None,
     from calibre.customize.ui import device_plugins, disabled_device_plugins
     from calibre.debug import print_basic_debug_info
     from calibre.devices.scanner import DeviceScanner
-    from calibre.constants import iswindows, isosx
+    from calibre.constants import iswindows, ismacos
     from calibre import prints
-    from polyglot.io import PolyglotBytesIO
+    from polyglot.io import PolyglotStringIO
     oldo, olde = sys.stdout, sys.stderr
 
     if buf is None:
-        buf = PolyglotBytesIO()
+        buf = PolyglotStringIO()
     sys.stdout = sys.stderr = buf
     out = partial(prints, file=buf)
 
@@ -108,7 +108,7 @@ def debug(ioreg_to_tmp=False, buf=None, plugins=None,
         out(pprint.pformat(devices))
 
         ioreg = None
-        if isosx:
+        if ismacos:
             from calibre.devices.usbms.device import Device
             mount = '\n'.join(repr(x) for x in Device.osx_run_mount().splitlines())
             drives = pprint.pformat(Device.osx_get_usb_drives())
@@ -187,7 +187,7 @@ def debug(ioreg_to_tmp=False, buf=None, plugins=None,
                     out(ioreg)
 
         if hasattr(buf, 'getvalue'):
-            return buf.getvalue().decode('utf-8', 'replace')
+            return buf.getvalue()
     finally:
         sys.stdout = oldo
         sys.stderr = olde

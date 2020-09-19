@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -12,7 +12,7 @@ from PyQt5.Qt import (QDialog, QVBoxLayout, QHBoxLayout, QRadioButton, QFrame,
         QPushButton, QLabel, QGroupBox, QGridLayout, QIcon, QSize, QTimer)
 
 from calibre import as_unicode
-from calibre.constants import isosx
+from calibre.constants import ismacos
 from calibre.gui2 import error_dialog, question_dialog, open_local_file, gprefs
 from calibre.gui2.actions import InterfaceAction
 from calibre.ptempfile import (PersistentTemporaryDirectory,
@@ -255,7 +255,7 @@ class UnpackBook(QDialog):
         self.reject()
 
     def cleanup(self):
-        if isosx and self._exploded:
+        if ismacos and self._exploded:
             try:
                 import appscript
                 self.finder = appscript.app('Finder')

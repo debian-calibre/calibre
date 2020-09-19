@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__ = 'GPL v3'
 __copyright__ = '2016, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -75,7 +75,7 @@ class CascadeTest(BaseTest):
         get_rules({'x/one.css':'@media screen { body { color: red; } }'})
         get_rules({'x/one.css':'@media xyz { body { color: red; } }'}, l=0)
         c = get_rules({'x/one.css':'@import "../two.css";', 'two.css':'@import "x/one.css"; body { color: red; }'})[1]
-        self.assertIn('Recursive import', c.log_stream.getvalue().decode('utf-8'))
+        self.assertIn('Recursive import', c.log_stream.getvalue())
 
     def test_resolve_styles(self):
 

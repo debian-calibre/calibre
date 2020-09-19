@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -115,14 +115,14 @@ class MovedDialog(QDialog):  # {{{
         self.header.setWordWrap(True)
         ncols = 2
         l.addWidget(self.header, 0, 0, 1, ncols)
-        self.cl = QLabel('<br><b>'+_('New location of this library:'))
-        l.addWidget(self.cl, 1, 0, 1, ncols)
+        self.cl = QLabel('<b>'+_('New location of this library:'))
+        l.addWidget(self.cl, l.rowCount(), 0, 1, ncols)
         self.loc = QLineEdit(loc, self)
-        l.addWidget(self.loc, 2, 0, 1, 1)
+        l.addWidget(self.loc, l.rowCount(), 0, 1, 1)
         self.cd = QToolButton(self)
         self.cd.setIcon(QIcon(I('document_open.png')))
         self.cd.clicked.connect(self.choose_dir)
-        l.addWidget(self.cd, 2, 1, 1, 1)
+        l.addWidget(self.cd, l.rowCount() - 1, 1, 1, 1)
         self.bb = QDialogButtonBox(QDialogButtonBox.Abort)
         b = self.bb.addButton(_('Library moved'), self.bb.AcceptRole)
         b.setIcon(QIcon(I('ok.png')))
@@ -132,7 +132,7 @@ class MovedDialog(QDialog):  # {{{
         self.bb.accepted.connect(self.accept)
         self.bb.rejected.connect(self.reject)
         l.addWidget(self.bb, 3, 0, 1, ncols)
-        self.resize(self.sizeHint() + QSize(100, 50))
+        self.resize(self.sizeHint() + QSize(120, 0))
 
     def choose_dir(self):
         d = choose_dir(self, 'library moved choose new loc',

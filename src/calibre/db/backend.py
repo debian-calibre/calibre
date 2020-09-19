@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -16,9 +16,10 @@ from polyglot.builtins import (iteritems, itervalues,
 
 from calibre import isbytestring, force_unicode, prints, as_unicode
 from calibre.constants import (iswindows, filesystem_encoding,
-        preferred_encoding, ispy3)
+        preferred_encoding)
 from calibre.ptempfile import PersistentTemporaryFile, TemporaryFile
 from calibre.db import SPOOL_SIZE
+from calibre.db.annotations import annot_db_data
 from calibre.db.schema_upgrades import SchemaUpgrade
 from calibre.db.delete_service import delete_service
 from calibre.db.errors import NoSuchFormat
@@ -27,7 +28,7 @@ from calibre.ebooks.metadata import title_sort, author_to_author_sort
 from calibre.utils import pickle_binary_string, unpickle_binary_string
 from calibre.utils.icu import sort_key
 from calibre.utils.config import to_json, from_json, prefs, tweaks
-from calibre.utils.date import utcfromtimestamp, parse_date
+from calibre.utils.date import utcfromtimestamp, parse_date, utcnow, EPOCH
 from calibre.utils.filenames import (
     is_case_sensitive, samefile, hardlink_file, ascii_filename,
     WindowsAtomicFolderMove, atomic_rename, remove_dir_if_empty,
@@ -42,14 +43,15 @@ from calibre.db.tables import (OneToOneTable, ManyToOneTable, ManyToManyTable,
         CompositeTable, UUIDTable, RatingTable)
 # }}}
 
-'''
-Differences in semantics from pysqlite:
 
-    1. execute/executemany operate in autocommit mode
-    2. There is no fetchone() method on cursor objects, instead use next(cursor)
-    3. There is no executescript
+class FTSQueryError(ValueError):
 
-'''
+    def __init__(self, query, sql_statement, apsw_error):
+        ValueError.__init__(self, 'Failed to parse search query: {} with error: {}'.format(query, apsw_error))
+        self.query = query
+        self.sql_statement = sql_statement
+
+
 CUSTOM_DATA_TYPES = frozenset(('rating', 'text', 'comments', 'datetime',
     'int', 'float', 'bool', 'series', 'composite', 'enumeration'))
 WINDOWS_RESERVED_NAMES = frozenset('CON PRN AUX NUL COM1 COM2 COM3 COM4 COM5 COM6 COM7 COM8 COM9 LPT1 LPT2 LPT3 LPT4 LPT5 LPT6 LPT7 LPT8 LPT9'.split())
@@ -118,6 +120,7 @@ class DBPrefs(dict):  # {{{
     def __setitem__(self, key, val):
         if not self.disable_setting:
             raw = self.to_raw(val)
+            do_set = False
             with self.db.conn:
                 try:
                     dbraw = next(self.db.execute('SELECT id,val FROM preferences WHERE key=?', (key,)))
@@ -128,7 +131,9 @@ class DBPrefs(dict):  # {{{
                         self.db.execute('INSERT INTO preferences (key,val) VALUES (?,?)', (key, raw))
                     else:
                         self.db.execute('UPDATE preferences SET val=? WHERE id=?', (raw, dbraw[0]))
-                    dict.__setitem__(self, key, val)
+                    do_set = True
+            if do_set:
+                dict.__setitem__(self, key, val)
 
     def set(self, key, val):
         self.__setitem__(key, val)
@@ -283,6 +288,35 @@ def AumSortedConcatenate():
 # }}}
 
 
+# Annotations {{{
+def annotations_for_book(cursor, book_id, fmt, user_type='local', user='viewer'):
+    for (data,) in cursor.execute(
+        'SELECT annot_data FROM annotations WHERE book=? AND format=? AND user_type=? AND user=?',
+        (book_id, fmt.upper(), user_type, user)
+    ):
+        try:
+            yield json.loads(data)
+        except Exception:
+            pass
+
+
+def save_annotations_for_book(cursor, book_id, fmt, annots_list, user_type='local', user='viewer'):
+    data = []
+    fmt = fmt.upper()
+    for annot, timestamp_in_secs in annots_list:
+        atype = annot['type'].lower()
+        aid, text = annot_db_data(annot)
+        if aid is None:
+            continue
+        data.append((book_id, fmt, user_type, user, timestamp_in_secs, aid, atype, json.dumps(annot), text))
+    cursor.execute('INSERT OR IGNORE INTO annotations_dirtied (book) VALUES (?)', (book_id,))
+    cursor.execute('DELETE FROM annotations WHERE book=? AND format=? AND user_type=? AND user=?', (book_id, fmt, user_type, user))
+    cursor.executemany(
+        'INSERT OR REPLACE INTO annotations (book, format, user_type, user, timestamp, annot_id, annot_type, annot_data, searchable_text)'
+        ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', data)
+# }}}
+
+
 class Connection(apsw.Connection):  # {{{
 
     BUSY_TIMEOUT = 10000  # milliseconds
@@ -349,6 +383,16 @@ def set_global_state(backend):
         backend.library_id, (), precompiled_user_functions=backend.get_user_template_functions())
 
 
+def rmtree_with_retry(path, sleep_time=1):
+    try:
+        shutil.rmtree(path)
+    except EnvironmentError as e:
+        if e.errno == errno.ENOENT and not os.path.exists(path):
+            return
+        time.sleep(sleep_time)  # In case something has temporarily locked a file
+        shutil.rmtree(path)
+
+
 class DB(object):
 
     PATH_LIMIT = 40 if iswindows else 100
@@ -359,6 +403,7 @@ class DB(object):
     def __init__(self, library_path, default_prefs=None, read_only=False,
                  restore_all_prefs=False, progress_callback=lambda x, y:True,
                  load_user_formatter_functions=True):
+        self.is_closed = False
         try:
             if isbytestring(library_path):
                 library_path = library_path.decode(filesystem_encoding)
@@ -863,6 +908,7 @@ class DB(object):
     def conn(self):
         if self._conn is None:
             self._conn = Connection(self.dbpath)
+            self.is_closed = False
             if self._exists and self.user_version == 0:
                 self._conn.close()
                 os.remove(self.dbpath)
@@ -1104,6 +1150,7 @@ class DB(object):
                     pass
             self._conn.close(force)
             del self._conn
+            self.is_closed = True
 
     def reopen(self, force=False):
         self.close(force=force, unload_formatter_functions=False)
@@ -1179,15 +1226,7 @@ class DB(object):
 
     def rmtree(self, path):
         if self.is_deletable(path):
-            try:
-                shutil.rmtree(path)
-            except EnvironmentError as e:
-                if e.errno == errno.ENOENT and not os.path.exists(path):
-                    return
-                import traceback
-                traceback.print_exc()
-                time.sleep(1)  # In case something has temporarily locked a file
-                shutil.rmtree(path)
+            rmtree_with_retry(path)
 
     def construct_path_name(self, book_id, title, author):
         '''
@@ -1721,8 +1760,189 @@ class DB(object):
         else:
             self.execute('DELETE FROM books_plugin_data WHERE name=?', (name,))
 
+    def dirtied_books(self):
+        for (book_id,) in self.execute('SELECT book FROM metadata_dirtied'):
+            yield book_id
+
+    def dirty_books(self, book_ids):
+        self.executemany('INSERT OR IGNORE INTO metadata_dirtied (book) VALUES (?)', ((x,) for x in book_ids))
+
+    def mark_book_as_clean(self, book_id):
+        self.execute('DELETE FROM metadata_dirtied WHERE book=?', (book_id,))
+
     def get_ids_for_custom_book_data(self, name):
         return frozenset(r[0] for r in self.execute('SELECT book FROM books_plugin_data WHERE name=?', (name,)))
+
+    def annotations_for_book(self, book_id, fmt, user_type, user):
+        for x in annotations_for_book(self.conn, book_id, fmt, user_type, user):
+            yield x
+
+    def search_annotations(self,
+        fts_engine_query, use_stemming, highlight_start, highlight_end, snippet_size, annotation_type,
+        restrict_to_book_ids, restrict_to_user, ignore_removed=False
+    ):
+        fts_table = 'annotations_fts_stemmed' if use_stemming else 'annotations_fts'
+        text = 'annotations.searchable_text'
+        if highlight_start is not None and highlight_end is not None:
+            if snippet_size is not None:
+                text = 'snippet({fts_table}, 0, "{highlight_start}", "{highlight_end}", "…", {snippet_size})'.format(
+                        fts_table=fts_table, highlight_start=highlight_start, highlight_end=highlight_end,
+                        snippet_size=max(1, min(snippet_size, 64)))
+            else:
+                text = 'highlight({}, 0, "{}", "{}")'.format(fts_table, highlight_start, highlight_end)
+        query = 'SELECT {0}.id, {0}.book, {0}.format, {0}.user_type, {0}.user, {0}.annot_data, {1} FROM {0} '
+        query = query.format('annotations', text)
+        query += ' JOIN {fts_table} ON annotations.id = {fts_table}.rowid'.format(fts_table=fts_table)
+        query += ' WHERE {fts_table} MATCH ?'.format(fts_table=fts_table)
+        data = [fts_engine_query]
+        if restrict_to_user:
+            query += ' AND annotations.user_type = ? AND annotations.user = ?'
+            data += list(*restrict_to_user)
+        if annotation_type:
+            query += ' AND annotations.annot_type = ? '
+            data.append(annotation_type)
+        query += ' ORDER BY {}.rank '.format(fts_table)
+        ls = json.loads
+        try:
+            for (rowid, book_id, fmt, user_type, user, annot_data, text) in self.execute(query, tuple(data)):
+                try:
+                    parsed_annot = ls(annot_data)
+                except Exception:
+                    continue
+                if ignore_removed and parsed_annot.get('removed'):
+                    continue
+                yield {
+                    'id': rowid,
+                    'book_id': book_id,
+                    'format': fmt,
+                    'user_type': user_type,
+                    'user': user,
+                    'text': text,
+                    'annotation': parsed_annot,
+                }
+        except apsw.SQLError as e:
+            raise FTSQueryError(fts_engine_query, query, e)
+
+    def all_annotations_for_book(self, book_id, ignore_removed=False):
+        for (fmt, user_type, user, data) in self.execute(
+            'SELECT id, book, format, user_type, user, annot_data FROM annotations WHERE book=?', (book_id,)
+        ):
+            try:
+                annot = json.loads(data)
+            except Exception:
+                pass
+            if not ignore_removed or not annot.get('removed'):
+                yield {'format': fmt, 'user_type': user_type, 'user': user, 'annotation': annot}
+
+    def delete_annotations(self, annot_ids):
+        replacements = []
+        removals = []
+        now = utcnow()
+        ts = now.isoformat()
+        timestamp = (now - EPOCH).total_seconds()
+        for annot_id in annot_ids:
+            for (raw_annot_data, annot_type) in self.execute(
+                'SELECT annot_data, annot_type FROM annotations WHERE id=?', (annot_id,)
+            ):
+                try:
+                    annot_data = json.loads(raw_annot_data)
+                except Exception:
+                    removals.append((annot_id,))
+                    continue
+                now = utcnow()
+                new_annot = {'removed': True, 'timestamp': ts, 'type': annot_type}
+                uuid = annot_data.get('uuid')
+                if uuid is not None:
+                    new_annot['uuid'] = uuid
+                else:
+                    new_annot['title'] = annot_data['title']
+                replacements.append((json.dumps(new_annot), timestamp, annot_id))
+        if replacements:
+            self.executemany('UPDATE annotations SET annot_data=?, timestamp=?, searchable_text="" WHERE id=?', replacements)
+        if removals:
+            self.executemany('DELETE FROM annotations WHERE id=?', removals)
+
+    def update_annotations(self, annot_id_map):
+        now = utcnow()
+        ts = now.isoformat()
+        timestamp = (now - EPOCH).total_seconds()
+        with self.conn:
+            for annot_id, annot in annot_id_map.items():
+                atype = annot['type']
+                aid, text = annot_db_data(annot)
+                if aid is not None:
+                    annot['timestamp'] = ts
+                    self.execute('UPDATE annotations SET annot_data=?, timestamp=?, annot_type=?, searchable_text=?, annot_id=? WHERE id=?',
+                        (json.dumps(annot), timestamp, atype, text, aid, annot_id))
+
+    def all_annotations(self, restrict_to_user=None, limit=None, annotation_type=None, ignore_removed=False):
+        ls = json.loads
+        q = 'SELECT id, book, format, user_type, user, annot_data FROM annotations'
+        data = []
+        restrict_clauses = []
+        if restrict_to_user is not None:
+            data.extend(restrict_to_user)
+            restrict_clauses.append(' user_type = ? AND user = ?')
+        if annotation_type:
+            data.append(annotation_type)
+            restrict_clauses.append(' annot_type = ? ')
+        if restrict_clauses:
+            q += ' WHERE ' + ' AND '.join(restrict_clauses)
+        q += ' ORDER BY timestamp DESC '
+        count = 0
+        for (rowid, book_id, fmt, user_type, user, annot_data) in self.execute(q, tuple(data)):
+            try:
+                annot = ls(annot_data)
+                atype = annot['type']
+            except Exception:
+                continue
+            if ignore_removed and annot.get('removed'):
+                continue
+            text = ''
+            if atype == 'bookmark':
+                text = annot['title']
+            elif atype == 'highlight':
+                text = annot.get('highlighted_text') or ''
+            yield {
+                'id': rowid,
+                'book_id': book_id,
+                'format': fmt,
+                'user_type': user_type,
+                'user': user,
+                'text': text,
+                'annotation': annot,
+            }
+            count += 1
+            if limit is not None and count >= limit:
+                break
+
+    def all_annotation_users(self):
+        return self.execute('SELECT DISTINCT user_type, user FROM annotations')
+
+    def all_annotation_types(self):
+        for x in self.execute('SELECT DISTINCT annot_type FROM annotations'):
+            yield x[0]
+
+    def set_annotations_for_book(self, book_id, fmt, annots_list, user_type='local', user='viewer'):
+        try:
+            with self.conn:  # Disable autocommit mode, for performance
+                save_annotations_for_book(self.conn.cursor(), book_id, fmt, annots_list, user_type, user)
+        except apsw.IOError:
+            # This can happen if the computer was suspended see for example:
+            # https://bugs.launchpad.net/bugs/1286522. Try to reopen the db
+            if not self.conn.getautocommit():
+                raise  # We are in a transaction, re-opening the db will fail anyway
+            self.reopen(force=True)
+            with self.conn:  # Disable autocommit mode, for performance
+                save_annotations_for_book(self.conn.cursor(), book_id, fmt, annots_list, user_type, user)
+
+    def dirty_books_with_dirtied_annotations(self):
+        with self.conn:
+            self.execute('INSERT or IGNORE INTO metadata_dirtied(book) SELECT book FROM annotations_dirtied;')
+            changed = self.conn.changes() > 0
+            if changed:
+                self.execute('DELETE FROM annotations_dirtied')
+        return changed
 
     def conversion_options(self, book_id, fmt):
         for (data,) in self.conn.get('SELECT data FROM conversion_options WHERE book=? AND format=?', (book_id, fmt.upper())):
@@ -1752,8 +1972,6 @@ class DB(object):
                 x = native_string_type(x)
             x = x.encode('utf-8') if isinstance(x, unicode_type) else x
             x = pickle_binary_string(x)
-            if not ispy3:
-                x = buffer(x)  # noqa
             return x
         options = [(book_id, fmt.upper(), map_data(data)) for book_id, data in iteritems(options)]
         self.executemany('INSERT OR REPLACE INTO conversion_options(book,format,data) VALUES (?,?,?)', options)
@@ -1806,7 +2024,7 @@ class DB(object):
         self._conn = None
         for loc in old_dirs:
             try:
-                shutil.rmtree(loc)
+                rmtree_with_retry(loc)
             except EnvironmentError as e:
                 if os.path.exists(loc):
                     prints('Failed to delete:', loc, 'with error:', as_unicode(e))

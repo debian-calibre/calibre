@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "sierpnia 21, 2020" "4.23.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "września 19, 2020" "4.99.17" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -43,7 +43,7 @@ calibre\-debug [opcje]
 .sp
 Various command line interfaces useful for debugging calibre. With no options,
 this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre viewer and the calibre editor in debug mode.
+calibre GUI, the calibre E\-book viewer and the calibre editor in debug mode.
 .sp
 It also contains interfaces to various bits of calibre that do not have
 dedicated command line tools, such as font subsetting, the E\-book diff tool and so
@@ -104,6 +104,11 @@ Wsadź książkę do określonego katalogu Zastosowanie: \-x file.epub output_di
 .TP
 .B \-\-export\-all\-calibre\-data
 Eksportowanie wszystkich danych programu calibre (książki/ustawienia/wtyczki). Zazwyczaj zostaniesz zapytany o nazwę katalogu oraz biblioteki do eksportu. W celu uniknięcia zapytań możesz podać te dane jako argumenty w linii poleceń. Użyj pełnych ścieżek do katalogu i bibliotek do eksportu. Specjalne słowo kluczowe \fB"\fPall\fB"\fP może zostać użyte do eksportu wszystkich bibliotek.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-fix\-multiprocessing
+For internal use
 .UNINDENT
 .INDENT 0.0
 .TP

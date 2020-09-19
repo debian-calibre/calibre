@@ -1,5 +1,5 @@
-#!/usr/bin/env python2
-from __future__ import absolute_import, division, print_function, unicode_literals
+#!/usr/bin/env python
+
 
 __copyright__ = '2008, Kovid Goyal kovid@kovidgoyal.net'
 __docformat__ = 'restructuredtext en'
@@ -44,7 +44,7 @@ class TemplateHighlighter(QSyntaxHighlighter):
     Formats = {}
     BN_FACTOR = 1000
 
-    KEYWORDS = ["program"]
+    KEYWORDS = ["program", 'if', 'then', 'else', 'fi']
 
     def __init__(self, parent=None):
         super(TemplateHighlighter, self).__init__(parent)
@@ -359,7 +359,7 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
     def filename_button_clicked(self):
         try:
             path = choose_files(self, 'choose_category_icon',
-                        _('Select Icon'), filters=[
+                        _('Select icon'), filters=[
                         ('Images', ['png', 'gif', 'jpg', 'jpeg'])],
                     all_files=False, select_only_single_file=True)
             if path:
