@@ -5,9 +5,13 @@
 # Compulsory line, this is a version 4 file
 version=4
 
-opts="pgpmode=next" \
-  https://github.com/kovidgoyal/@PACKAGE@/releases \
-  /kovidgoyal/@PACKAGE@/releases/download/v(\d+\.\d+\.\d+)/@PACKAGE@-\g1\.tar\.xz
-opts="pgpmode=previous" \
-  https://calibre-ebook.com/signatures/ \
-  @PACKAGE@-(\d+\.\d+\.\d+)\.tar\.xz\.sig previous
+#opts="pgpmode=next" \
+#  https://github.com/kovidgoyal/@PACKAGE@/releases \
+#  /kovidgoyal/@PACKAGE@/releases/download/v(\d+\.\d+\.\d+)/@PACKAGE@-\g1\.tar\.xz
+#opts="pgpmode=previous" \
+#  https://calibre-ebook.com/signatures/ \
+#  @PACKAGE@-(\d+\.\d+\.\d+)\.tar\.xz\.sig previous
+
+# beta versions
+https://download.calibre-ebook.com/betas/ \
+  @PACKAGE@-(\d+\.\d+\.\d+)\.tar\.xz
