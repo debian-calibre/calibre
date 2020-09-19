@@ -38,16 +38,16 @@ Index: b/src/calibre/srv/tests/http.py
  
  
  class TestHTTP(BaseTest):
-@@ -88,7 +88,7 @@ class TestHTTP(BaseTest):
+@@ -96,7 +96,7 @@ class TestHTTP(BaseTest):
          def handler(data):
              return data.lang_code + data._('Unknown')
  
--        with TestServer(handler, timeout=0.3) as server:
-+        with TestServer(handler, timeout=30) as server:
+-        with TestServer(handler, timeout=1) as server:
++        with TestServer(handler, timeout=100) as server:
              conn = server.connect()
  
              def test(al, q):
-@@ -147,7 +147,7 @@ class TestHTTP(BaseTest):
+@@ -155,7 +155,7 @@ class TestHTTP(BaseTest):
              conn._HTTPConnection__state = http_client._CS_REQ_SENT
              return conn.getresponse()
  
@@ -56,7 +56,7 @@ Index: b/src/calibre/srv/tests/http.py
  
          with TestServer(handler, timeout=base_timeout, max_header_line_size=100./1024, max_request_body_size=100./(1024*1024)) as server:
              conn = server.connect()
-@@ -280,7 +280,7 @@ class TestHTTP(BaseTest):
+@@ -288,7 +288,7 @@ class TestHTTP(BaseTest):
              conn = server.connect()
  
              # Test closing
@@ -65,7 +65,7 @@ Index: b/src/calibre/srv/tests/http.py
              conn.request('GET', '/close', headers={'Connection':'close'})
              r = conn.getresponse()
              self.ae(r.status, 200), self.ae(r.read(), b'close')
-@@ -293,8 +293,8 @@ class TestHTTP(BaseTest):
+@@ -301,8 +301,8 @@ class TestHTTP(BaseTest):
              self.assertIsNone(conn.sock)
  
              # Test timeout
@@ -76,7 +76,7 @@ Index: b/src/calibre/srv/tests/http.py
              conn.request('GET', '/something')
              r = conn.getresponse()
              self.ae(r.status, 200), self.ae(r.read(), b'something')
-@@ -308,7 +308,7 @@ class TestHTTP(BaseTest):
+@@ -316,7 +316,7 @@ class TestHTTP(BaseTest):
          def handler(conn):
              return conn.generate_static_output('test', lambda : ''.join(conn.path))
          with NamedTemporaryFile(suffix='test.epub') as f, open(P('localization/locales.zip'), 'rb') as lf, \
@@ -85,7 +85,7 @@ Index: b/src/calibre/srv/tests/http.py
              fdata = (string.ascii_letters * 100).encode('ascii')
              f.write(fdata), f.seek(0)
  
-@@ -409,7 +409,7 @@ class TestHTTP(BaseTest):
+@@ -417,7 +417,7 @@ class TestHTTP(BaseTest):
                  lf.seek(0)
                  data =  lf.read()
                  server.change_handler(lambda conn: lf)
@@ -132,7 +132,7 @@ Index: b/src/calibre/test_build.py
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
 @@ -15,7 +15,7 @@ import os, ctypes, sys, unittest, time
- from calibre.constants import plugins, iswindows, islinux, isosx, plugins_loc
+ from calibre.constants import plugins, iswindows, islinux, ismacos, plugins_loc
  from polyglot.builtins import iteritems, map, unicode_type, getenv, native_string_type
  
 -is_ci = os.environ.get('CI', '').lower() == 'true'
@@ -147,5 +147,5 @@ Index: b/src/calibre/test_build.py
 -            QTimer.singleShot(5000, lambda: QApplication.instance().quit())
 +            QTimer.singleShot(500000, lambda: QApplication.instance().quit())
              QApplication.instance().exec_()
-             test_flaky = isosx and not is_ci
+             test_flaky = ismacos and not is_ci
              if not test_flaky:
