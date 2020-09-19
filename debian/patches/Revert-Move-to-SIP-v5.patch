@@ -1,0 +1,489 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Sat, 19 Sep 2020 17:29:09 +0900
+Subject: [PATCH] Revert "Move to SIP v5"
+
+This reverts commit 7a4b3f61ff24f8c39c8d5cf86c54da9de9267025.
+---
+ bypy/linux/__main__.py     |   6 ++
+ bypy/macos/__main__.py     |   3 +
+ bypy/sources.json          |  69 +++-------------
+ bypy/windows/__main__.py   |  10 ++-
+ setup/build.py             | 160 +++++++++++++++++++++----------------
+ setup/build_environment.py |  45 ++++++++++-
+ setup/extensions.json      |   1 -
+ 7 files changed, 155 insertions(+), 139 deletions(-)
+
+diff --git a/bypy/linux/__main__.py b/bypy/linux/__main__.py
+index 97538a81b5..c71116498d 100644
+--- a/bypy/linux/__main__.py
++++ b/bypy/linux/__main__.py
+@@ -140,6 +140,12 @@ def copy_python(env, ext_dir):
+     dest = j(env.py_dir, 'site-packages')
+     import_site_packages(srcdir, dest)
+ 
++    filter_pyqt = {x + '.so' for x in PYQT_MODULES} | {'sip.so'}
++    pyqt = j(dest, 'PyQt5')
++    for x in os.listdir(pyqt):
++        if x.endswith('.so') and x not in filter_pyqt:
++            os.remove(j(pyqt, x))
++
+     for x in os.listdir(env.SRC):
+         c = j(env.SRC, x)
+         if os.path.exists(j(c, '__init__.py')):
+diff --git a/bypy/macos/__main__.py b/bypy/macos/__main__.py
+index 321f83c2cc..8904c836aa 100644
+--- a/bypy/macos/__main__.py
++++ b/bypy/macos/__main__.py
+@@ -538,6 +538,9 @@ class Freeze(object):
+             if err.errno != errno.ENOENT:
+                 raise
+         sp = join(self.resources_dir, 'Python', 'site-packages')
++        for x in os.listdir(join(sp, 'PyQt5')):
++            if x.endswith('.so') and x.rpartition('.')[0] not in PYQT_MODULES and x != 'sip.so':
++                os.remove(join(sp, 'PyQt5', x))
+         self.remove_bytecode(sp)
+ 
+     @flush
+diff --git a/bypy/sources.json b/bypy/sources.json
+index 5fd5e7ae3e..1312fc5816 100644
+--- a/bypy/sources.json
++++ b/bypy/sources.json
+@@ -787,81 +787,30 @@
+         }
+     },
+ 
+-    {
+-        "name": "toml",
+-		"comment": "Needed for sip (build time dependency)",
+-        "unix": {
+-            "filename": "toml-0.10.1.tar.gz",
+-            "hash": "sha256:926b612be1e5ce0634a2ca03470f95169cf16f939018233a670519cb4ac58b0f",
+-            "urls": ["pypi"]
+-        }
+-    },
+-
+-    {
+-        "name": "pyparsing",
+-		"comment": "Needed for packaging (build time dependency)",
+-        "unix": {
+-            "filename": "pyparsing-2.4.7.tar.gz",
+-            "hash": "sha256:c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1",
+-            "urls": ["pypi"]
+-        }
+-    },
+-
+-    {
+-        "name": "packaging",
+-		"comment": "Needed for sip (build time dependency)",
+-        "unix": {
+-            "filename": "packaging-20.4.tar.gz",
+-            "hash": "sha256:4357f74f47b9c12db93624a82154e9b120fa8293699949152b22065d556079f8",
+-            "urls": ["pypi"]
+-        }
+-    },
+-
+     {
+         "name": "sip",
+-		"comment": "build time dependency",
+-        "unix": {
+-            "filename": "sip-5.4.0.tar.gz",
+-            "hash": "sha256:4282ab45948674f5ef74278a8e70d1302f65c95b519a0af19409002f5715d641",
+-            "urls": ["pypi"]
+-        }
+-    },
+-
+-    {
+-        "name": "pyqt-builder",
+-		"comment": "build time dependency",
+-        "unix": {
+-            "filename": "PyQt-builder-1.5.0.tar.gz",
+-            "hash": "sha256:11bbe26e8e3d5ffec6d2ef2f50596b1670eb2d8b49aee0f859821922d8282841",
+-            "urls": ["pypi"]
+-        }
+-    },
+-
+-    {
+-        "name": "pyqt-sip",
+-		"comment": "runtime sip module for PyQt",
+         "unix": {
+-            "filename": "PyQt5_sip-12.8.1.tar.gz",
+-            "hash": "sha256:30e944db9abee9cc757aea16906d4198129558533eb7fadbe48c5da2bd18e0bd",
+-            "urls": ["pypi"]
++            "filename": "sip-4.19.24.tar.gz",
++            "hash": "sha256:edcd3790bb01938191eef0f6117de0bf56d1136626c0ddb678f3a558d62e41e5",
++            "urls": ["https://www.riverbankcomputing.com/static/Downloads/sip/4.19.24/{filename}"]
+         }
+     },
+ 
+     {
+         "name": "pyqt",
+         "unix": {
+-            "filename": "PyQt5-5.15.1.tar.gz",
+-            "hash": "sha256:d9a76b850246d08da9863189ecb98f6c2aa9b4d97a3e85e29330a264aed0f9a1",
+-            "urls": ["pypi"]
++            "filename": "PyQt5-5.15.0.tar.gz",
++            "hash": "sha256:c6f75488ffd5365a65893bc64ea82a6957db126fbfe33654bcd43ae1c30c52f9",
++            "urls": ["https://files.pythonhosted.org/packages/8c/90/82c62bbbadcca98e8c6fa84f1a638de1ed1c89e85368241e9cc43fcbc320/{filename}"]
+         }
+     },
+ 
+     {
+         "name": "pyqt-webengine",
+         "unix": {
+-            "filename": "PyQtWebEngine-5.15.1.tar.gz",
+-            "hash": "sha256:f0ca7915ee206ba5d703168c6ca40b0aad62c67360328fae4af5359cdbcee439",
+-            "urls": ["pypi"]
++            "filename": "PyQtWebEngine-5.15.0.tar.gz",
++            "hash": "sha256:670812688e40bf75f70ddf01eadd897d231300318d3856b275bf8e7e0085bf75",
++            "urls": ["https://files.pythonhosted.org/packages/0d/8d/aece7598d2959f66f09fcced6487dd7727f44ad867fc09978c5aeeaf1d29/{filename}"]
+         }
+     },
+ 
+diff --git a/bypy/windows/__main__.py b/bypy/windows/__main__.py
+index 52579cae1e..8f69a1392d 100644
+--- a/bypy/windows/__main__.py
++++ b/bypy/windows/__main__.py
+@@ -158,8 +158,7 @@ def freeze(env, ext_dir):
+     for x in glob.glob(os.path.join(env.python_base, 'DLLs', '*')):  # python pyd modules and dlls
+         copybin(x)
+     for f in walk(os.path.join(env.python_base, 'Lib')):
+-        q = f.lower()
+-        if q.endswith('.dll') and 'scintilla' not in q and 'pyqtbuild' not in q:
++        if f.lower().endswith('.dll') and 'scintilla' not in f.lower():
+             copybin(f)
+     add_plugins(env, ext_dir)
+ 
+@@ -213,6 +212,11 @@ def pycryptodome_filename(dir_comps, filename):
+     return path
+ ''')
+ 
++    pyqt = j(env.lib_dir, 'site-packages', 'PyQt5')
++    for x in {x for x in os.listdir(pyqt) if x.endswith('.pyd')}:
++        if x.partition('.')[0] not in PYQT_MODULES and x != 'sip.pyd':
++            os.remove(j(pyqt, x))
++
+     printf('Adding calibre sources...')
+     for x in glob.glob(j(CALIBRE_DIR, 'src', '*')):
+         if os.path.isdir(x):
+@@ -647,7 +651,7 @@ def archive_lib_dir(env):
+ 
+         # The rest of site-packages
+         for x in os.listdir(sp):
+-            if x in handled or x.endswith('.egg-info') or x.endswith('.dist-info'):
++            if x in handled or x.endswith('.egg-info'):
+                 continue
+             absp = j(sp, x)
+             if os.path.isdir(absp):
+diff --git a/setup/build.py b/setup/build.py
+index fb44da9cc9..ba818a65a7 100644
+--- a/setup/build.py
++++ b/setup/build.py
+@@ -8,7 +8,7 @@ __docformat__ = 'restructuredtext en'
+ import textwrap, os, shlex, subprocess, glob, shutil, sys, json
+ from collections import namedtuple
+ 
+-from setup import Command, islinux, isbsd, isfreebsd, ismacos, ishaiku, SRC, iswindows
++from setup import Command, islinux, isbsd, isfreebsd, ismacos, ishaiku, SRC, iswindows, __version__
+ isunix = islinux or ismacos or isbsd or ishaiku
+ 
+ py_lib = os.path.join(sys.prefix, 'libs', 'python%d%d.lib' % sys.version_info[:2])
+@@ -16,12 +16,6 @@ CompileCommand = namedtuple('CompileCommand', 'cmd src dest')
+ LinkCommand = namedtuple('LinkCommand', 'cmd objects dest')
+ 
+ 
+-def walk(path='.'):
+-    for dirpath, dirnames, filenames in os.walk(path):
+-        for f in filenames:
+-            yield os.path.join(dirpath, f)
+-
+-
+ def init_symbol_name(name):
+     prefix = 'PyInit_'
+     return prefix + name
+@@ -41,7 +35,6 @@ class Extension(object):
+         self.needs_py2 = d['needs_py2'] = kwargs.get('needs_py2', False)
+         self.headers = d['headers'] = absolutize(kwargs.get('headers', []))
+         self.sip_files = d['sip_files'] = absolutize(kwargs.get('sip_files', []))
+-        self.needs_exceptions = d['needs_exceptions'] = kwargs.get('needs_exceptions', False)
+         self.inc_dirs = d['inc_dirs'] = absolutize(kwargs.get('inc_dirs', []))
+         self.lib_dirs = d['lib_dirs'] = absolutize(kwargs.get('lib_dirs', []))
+         self.extra_objs = d['extra_objs'] = absolutize(kwargs.get('extra_objs', []))
+@@ -72,6 +65,7 @@ class Extension(object):
+             flag = '/O%d' if iswindows else '-O%d'
+             of = flag % of
+         self.cflags.insert(0, of)
++        self.qt_private_headers = d['qt_private_headers'] = kwargs.get('qt_private', [])
+ 
+ 
+ def lazy_load(name):
+@@ -248,6 +242,9 @@ class Build(Command):
+            PODOFO_LIB_DIR - podofo library files
+ 
+            QMAKE          - Path to qmake
++           SIP_BIN        - Path to the sip binary
++           VS90COMNTOOLS  - Location of Microsoft Visual Studio 9 Tools (windows only)
++
+         ''')
+ 
+     def add_options(self, parser):
+@@ -326,8 +323,7 @@ class Build(Command):
+                 raise SystemExit(1)
+         for (ext, dest) in pyqt_extensions:
+             sbf = sbf_map[id(ext)]
+-            if not os.path.exists(sbf):
+-                self.build_pyqt_extension(ext, dest, sbf)
++            self.build_pyqt_extension(ext, dest, sbf)
+ 
+         if opts.only in {'all', 'headless'}:
+             self.build_headless()
+@@ -469,78 +465,100 @@ class Build(Command):
+         if ismacos:
+             os.rename(self.j(self.d(target), 'libheadless.dylib'), self.j(self.d(target), 'headless.so'))
+ 
+-    def create_sip_build_skeleton(self, src_dir, ext):
+-        sipf = ext.sip_files[0]
+-        needs_exceptions = 'true' if ext.needs_exceptions else 'false'
+-        with open(os.path.join(src_dir, 'pyproject.toml'), 'w') as f:
+-            f.write(f'''
+-[build-system]
+-requires = ["sip >=5.3", "PyQt-builder >=1"]
+-build-backend = "sipbuild.api"
+-
+-[tool.sip.metadata]
+-name = "{ext.name}"
+-requires-dist = "PyQt5 (>=5.15)"
+-
+-[tool.sip]
+-project-factory = "pyqtbuild:PyQtProject"
+-
+-[tool.sip.project]
+-sip-files-dir = "."
+-sip-module = "PyQt5.sip"
+-
+-[tool.sip.bindings.pictureflow]
+-headers = {ext.headers}
+-sources = {ext.sources}
+-exceptions = {needs_exceptions}
+-include-dirs = {ext.inc_dirs}
+-qmake-QT = ["widgets"]
+-sip-file = "{os.path.basename(sipf)}"
+-''')
+-        shutil.copy2(sipf, src_dir)
+-
+     def get_sip_commands(self, ext):
+-        from setup.build_environment import QMAKE
+         pyqt_dir = self.j(self.build_dir, 'pyqt')
+         src_dir = self.j(pyqt_dir, ext.name)
+-        # TODO: Handle building extensions with multiple SIP files.
+-        sipf = ext.sip_files[0]
++        from setup.build_environment import pyqt
++        sip_files = ext.sip_files
++        ext.sip_files = []
++        sipf = sip_files[0]
++        os.makedirs(src_dir, exist_ok=True)
+         sbf = self.j(src_dir, self.b(sipf)+'.sbf')
+         cmd = None
+-        if self.newer(sbf, [sipf] + ext.headers + ext.sources):
+-            shutil.rmtree(src_dir, ignore_errors=True)
+-            os.makedirs(src_dir)
+-            self.create_sip_build_skeleton(src_dir, ext)
+-            cmd = [
+-                sys.executable, '-c',
+-                f'''import os; os.chdir({src_dir!r}); from sipbuild.tools.build import main; main();''',
+-                '--verbose', '--no-make', '--qmake', QMAKE
+-            ]
++        if self.newer(sbf, [sipf]+ext.headers):
++            shutil.rmtree(src_dir)
++            os.mkdir(src_dir)
++            cmd = [pyqt['sip_bin'], '-w', '-c', src_dir, '-I' + pyqt['pyqt_sip_dir']] + shlex.split(pyqt['sip_flags']) + [sipf]
+         return cmd, sbf
+ 
++    def get_sip_data(self, sbf):
++        if os.path.exists(sbf):
++            with open(sbf) as f:
++                return json.loads(f.read())
++        src_dir = os.path.dirname(sbf)
++
++        def transform(x):
++            return x.replace(os.sep, '/')
++
++        ans = {
++            'target': os.path.basename(src_dir),
++            'sources': list(map(transform, glob.glob(os.path.join(src_dir, '*.cpp')))),
++            'headers': list(map(transform, glob.glob(os.path.join(src_dir, '*.h')))),
++        }
++        with open(sbf, 'w') as f:
++            f.write(json.dumps(ans))
++        return ans
++
+     def build_pyqt_extension(self, ext, dest, sbf):
+         self.info(f'\n####### Building {ext.name} extension', '#'*7)
+-        src_dir = os.path.dirname(sbf)
++        from setup.build_environment import pyqt, qmakespec, QMAKE
++        from setup.parallel_build import cpu_count
++        from distutils import sysconfig
++        pyqt_dir = self.j(self.build_dir, 'pyqt')
++        src_dir = self.j(pyqt_dir, ext.name)
++        if not os.path.exists(src_dir):
++            os.makedirs(src_dir)
++        sip = self.get_sip_data(sbf)
++        pro = textwrap.dedent(
++        '''\
++        TEMPLATE = lib
++        CONFIG += release plugin
++        QT += widgets
++        TARGET = {target}
++        HEADERS = {headers}
++        SOURCES = {sources}
++        INCLUDEPATH += {sipinc} {pyinc}
++        VERSION = {ver}
++        win32 {{
++            LIBS += {py_lib}
++            TARGET_EXT = .dll
++        }}
++        macx {{
++            QMAKE_LFLAGS += "-undefined dynamic_lookup"
++        }}
++        ''').format(
++            target=sip['target'], headers=' '.join(sip['headers'] + ext.headers), sources=' '.join(ext.sources + sip['sources']),
++            sipinc=pyqt['sip_inc_dir'], pyinc=sysconfig.get_python_inc(), py_lib=py_lib,
++            ver=__version__
++        )
++        for incdir in ext.inc_dirs:
++            pro += '\nINCLUDEPATH += ' + incdir
++        if not iswindows and not ismacos:
++            # Ensure that only the init symbol is exported
++            pro += '\nQMAKE_LFLAGS += -Wl,--version-script=%s.exp' % sip['target']
++            with open(os.path.join(src_dir, sip['target'] + '.exp'), 'wb') as f:
++                f.write(('{ global: %s; local: *; };' % init_symbol_name(sip['target'])).encode('utf-8'))
++        if ext.qt_private_headers:
++            qph = ' '.join(x + '-private' for x in ext.qt_private_headers)
++            pro += '\nQT += ' + qph
++        proname = '%s.pro' % sip['target']
++        with open(os.path.join(src_dir, proname), 'wb') as f:
++            f.write(pro.encode('utf-8'))
+         cwd = os.getcwd()
++        qmc = []
++        if iswindows:
++            qmc += ['-spec', qmakespec]
++        fext = 'dll' if iswindows else 'dylib' if ismacos else 'so'
++        name = '%s%s.%s' % ('release/' if iswindows else 'lib', sip['target'], fext)
+         try:
+-            os.chdir(os.path.join(src_dir, 'build'))
+-            if ext.needs_exceptions:
+-                # bug in sip-build
+-                for q in walk('.'):
+-                    if os.path.basename(q) in ('Makefile',):
+-                        with open(q, 'r+') as f:
+-                            raw = f.read()
+-                            raw = raw.replace('-fno-exceptions', '-fexceptions')
+-                            f.seek(0), f.truncate()
+-                            f.write(raw)
+-            self.check_call([self.env.make] + ([] if iswindows else ['-j%d'%(os.cpu_count() or 1)]))
+-            e = 'pyd' if iswindows else 'so'
+-            m = glob.glob(f'{ext.name}/{ext.name}.*{e}')
+-            if len(m) != 1:
+-                raise SystemExit(f'Found extra PyQt extension files: {m}')
+-            shutil.copy2(m[0], dest)
+-            with open(sbf, 'w') as f:
+-                f.write('done')
++            os.chdir(src_dir)
++            if self.newer(dest, sip['headers'] + sip['sources'] + ext.sources + ext.headers):
++                self.check_call([QMAKE] + qmc + [proname])
++                self.check_call([self.env.make]+([] if iswindows else ['-j%d'%(cpu_count or 1)]))
++                shutil.copy2(os.path.realpath(name), dest)
++                if iswindows and os.path.exists(name + '.manifest'):
++                    shutil.copy2(name + '.manifest', dest + '.manifest')
++
+         finally:
+             os.chdir(cwd)
+ 
+diff --git a/setup/build_environment.py b/setup/build_environment.py
+index c47609b46c..160fbbb70c 100644
+--- a/setup/build_environment.py
++++ b/setup/build_environment.py
+@@ -6,10 +6,10 @@ __license__   = 'GPL v3'
+ __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
+ __docformat__ = 'restructuredtext en'
+ 
+-import os, subprocess, re
++import os, subprocess, re, sys, sysconfig
+ from distutils.spawn import find_executable
+ 
+-from setup import ismacos, iswindows, is64bit, islinux, ishaiku
++from setup import isfreebsd, ismacos, iswindows, is64bit, islinux, ishaiku
+ is64bit
+ 
+ NMAKE = RC = msvc = MT = win_inc = win_lib = None
+@@ -30,8 +30,6 @@ for x in ('qmake-qt5', 'qt5-qmake', 'qmake'):
+         QMAKE = q
+         break
+ QMAKE = os.environ.get('QMAKE', QMAKE)
+-if iswindows and not QMAKE.lower().endswith('.exe'):
+-    QMAKE += '.exe'
+ 
+ PKGCONFIG = find_executable('pkg-config')
+ PKGCONFIG = os.environ.get('PKG_CONFIG', PKGCONFIG)
+@@ -83,8 +81,47 @@ def readvar(name):
+     return re.search('^%s:(.+)$' % name, qraw, flags=re.M).group(1).strip()
+ 
+ 
++pyqt = {x:readvar(y) for x, y in (
++    ('inc', 'QT_INSTALL_HEADERS'), ('lib', 'QT_INSTALL_LIBS')
++)}
+ qt = {x:readvar(y) for x, y in {'libs':'QT_INSTALL_LIBS', 'plugins':'QT_INSTALL_PLUGINS'}.items()}
+ qmakespec = readvar('QMAKE_SPEC') if iswindows else None
++
++pyqt['sip_bin'] = os.environ.get('SIP_BIN', 'sip')
++
++import PyQt5
++from PyQt5.QtCore import PYQT_CONFIGURATION
++pyqt['sip_flags'] = PYQT_CONFIGURATION['sip_flags']
++
++
++def get_sip_dir():
++    q = None
++    if getattr(PyQt5, '__file__', None):
++        q = os.path.join(os.path.dirname(PyQt5.__file__), 'bindings')
++        if not os.path.exists(q):
++            q = None
++    if q is None:
++        if iswindows:
++            q = os.path.join(sys.prefix, 'share', 'sip')
++        elif isfreebsd:
++            q = os.path.join(sys.prefix, 'share', 'py-sip')
++        else:
++            q = os.path.join(os.path.dirname(PyQt5.__file__), 'bindings')
++            if not os.path.exists(q):
++                q = os.path.join(sys.prefix, 'share', 'sip')
++    q = os.environ.get('SIP_DIR', q)
++    for x in ('', 'Py2-PyQt5', 'PyQt5', 'sip/PyQt5'):
++        base = os.path.join(q, x)
++        if os.path.exists(os.path.join(base, 'QtWidgets')):
++            return base
++    raise EnvironmentError('Failed to find the location of the PyQt5 .sip files')
++
++
++pyqt['pyqt_sip_dir'] = get_sip_dir()
++pyqt['sip_inc_dir'] = os.environ.get('SIP_INC_DIR', sysconfig.get_path('include'))
++
++qt_inc = pyqt['inc']
++qt_lib = pyqt['lib']
+ ft_lib_dirs = []
+ ft_libs = []
+ ft_inc_dirs = []
+diff --git a/setup/extensions.json b/setup/extensions.json
+index 59e70602d3..c094eb04ba 100644
+--- a/setup/extensions.json
++++ b/setup/extensions.json
+@@ -133,7 +133,6 @@
+         "sources": "calibre/utils/imageops/imageops.cpp calibre/utils/imageops/quantize.cpp calibre/utils/imageops/ordered_dither.cpp",
+         "headers": "calibre/utils/imageops/imageops.h",
+         "sip_files": "calibre/utils/imageops/imageops.sip",
+-		"needs_exceptions": true,
+         "inc_dirs": "calibre/utils/imageops"
+     },
+     {
+-- 
+2.28.0
+
