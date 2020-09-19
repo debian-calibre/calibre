@@ -5,9 +5,7 @@
 # Compulsory line, this is a version 4 file
 version=4
 
-opts="pgpmode=next, \
-      dversionmangle=s!4\.99\.\d+\+dfsg\+really!!, \
-      oversionmangle=s!(.+)!4.99.12+dfsg+really$1!" \
+opts="pgpmode=next" \
   https://github.com/kovidgoyal/@PACKAGE@/releases \
   /kovidgoyal/@PACKAGE@/releases/download/v(\d+\.\d+\.\d+)/@PACKAGE@-\g1\.tar\.xz
 opts="pgpmode=previous" \
