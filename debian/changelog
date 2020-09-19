@@ -1,3 +1,63 @@
+calibre (4.99.17-1) UNRELEASED; urgency=medium
+
+  * Lintian fix
+    get-orig-source target is obsolete.
+  * Enable uscan to import source
+  * Lintian fix.
+    Don't use bulleted list in NEWS entry.
+  * Lintian fix.
+    All patch files are must in debian/patches/series .
+  * Lintian fix.
+    Remove trailing white space
+  * Lintian fix.
+    Add descriptions to quilt patch
+  * Lintian fix.
+    Each package has different description from other packages.
+  * Lintian fix.
+    Add upstream bug tracker
+  * Lintian fix.
+    Theses patches are Debian-only.
+    Not needed to forward upstream.
+  * Sort dependency lines
+  * Lintian fix.
+    Remove duplicated lines
+  * Lintian fix.
+    There is no need to root privileges.
+    Don't install default config files.
+  * Lintian fix.
+    Don't install empty directory
+  * Cosmetic fix
+  * Use latest version of "poppler-utils" (Closes: #962668)
+    Older "pdftohtml" provides surrogate pair characters in UTF-8 string.
+    This behavior is not valid for UTF-8 encoding.
+    Use latest "pdftohtml" to avoid some error on "python3-lxml".
+  * Remove unused target
+  * Use trampoline script to Makefile target
+  * Use Automatic environment values
+  * Refactor parallel build
+  * Fix jobserver warning
+  * Add comment for trampoline script
+  * Remove version mangle
+  * Use beta versions as upstream code
+  * Update gbp config
+    "uscan = True" is not works well
+  * New upstream version 4.99.17
+  * Remove py3 patches.
+    All patches were merged into upstream master branch.
+  * Refresh patches
+  * Remove unused line
+  * Revert SIP5 code.
+    Debian doesn't support SIP5 based PyQt5 yet.
+  * Reorder to work patches well
+  * No need to forward for upstream
+  * Remove obsolete document
+  * Update document
+  * Update changelog
+  * Update changelog
+  * Update changelog
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sat, 19 Sep 2020 20:28:50 +0900
+
 calibre (4.99.12+dfsg+really4.23.0-1) unstable; urgency=medium
 
   * Update beta version number
