@@ -26,8 +26,6 @@ DEB_DH_GENCONTROL_ARGS = -- -Vpyqt:Version=$(shell dpkg-query -f'$${Version}' -W
 export QT_SELECT=qt5
 
 override_dh_auto_configure:
-#	# apply binary patch
-	find debian/patches/py3-binary/ -type f -name "*.patch"  | sort | xargs --verbose --no-run-if-empty git apply
 #	# use mathjax source package
 	$(SETUP) mathjax --mathjax-url="file://$(CURDIR)/debian/mathjax/MathJax-3.0.5.tar.gz"
 
