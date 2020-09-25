@@ -73,7 +73,7 @@ def upload_signatures():
                 raw = f.read()
             fingerprint = hashlib.sha512(raw).hexdigest()
             sha512 = os.path.join(tdir, os.path.basename(installer + '.sha512'))
-            with open(sha512, 'wb') as f:
+            with open(sha512, 'w') as f:
                 f.write(fingerprint)
             scp.append(sha512)
         for srv in 'code main'.split():
@@ -110,7 +110,7 @@ class ReUpload(Command):  # {{{
 # Data {{{
 def get_github_data():
     with open(os.environ['PENV'] + '/github-token', 'rb') as f:
-        un, pw = f.read().strip().split(':')
+        un, pw = f.read().decode('utf-8').strip().split(':')
     return {'username': un, 'password': pw}
 
 
@@ -218,8 +218,10 @@ def upload_to_fosshub():
         'publish': True,
         'isOldRelease': False,
     }
-    # print(json.dumps(jq, indent=2))
-    if not request('projects/{}/releases/'.format(project_id), data=json.dumps(jq)):
+    data = json.dumps(jq)
+    # print(data)
+    data = data.encode('utf-8')
+    if not request('projects/{}/releases/'.format(project_id), data=data):
         raise SystemExit('Failed to queue publish job with fosshub')
 
 
