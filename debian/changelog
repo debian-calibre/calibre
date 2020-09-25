@@ -1,5 +1,12 @@
-calibre (4.99.17+dfsg-1) UNRELEASED; urgency=medium
+calibre (5.0.0+dfsg-1) UNRELEASED; urgency=medium
 
+  [ Norbert Preining ]
+  * initial work on sip5 support (see ##964125)
+  * adjust sip deps according to bug report
+  * more suggestions concerning sip5
+  * test build changelog entry
+
+  [ YOKOTA Hiroshi ]
   * Lintian fix
     get-orig-source target is obsolete.
   * Enable uscan to import source
@@ -53,10 +60,15 @@ calibre (4.99.17+dfsg-1) UNRELEASED; urgency=medium
   * Remove obsolete document
   * Update document
   * Update changelog
-  * Update changelog
-  * Update changelog
+  * Restore version mangle.
+    They are still needed because Debian uses own MathJax code.
+  * Restore watch file
+  * New upstream version 5.0.0+dfsg
+  * Drop obsolete patch (Closes: #964125)
+  * Update hardening patch
+  * Restore hardening code for SIP
 
- -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sat, 19 Sep 2020 20:28:50 +0900
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Fri, 25 Sep 2020 23:20:18 +0900
 
 calibre (4.99.12+dfsg+really4.23.0-1) unstable; urgency=medium
 
