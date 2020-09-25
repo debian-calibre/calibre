@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "九月 19, 2020" "4.99.17" "calibre"
+.TH "CALIBRE-DEBUG" "1" "九月 25, 2020" "5.0.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -41,22 +41,22 @@ calibre\-debug [选项]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre E\-book viewer and the calibre editor in debug mode.
+多种命令行界面在排除 calibre 的故障时很有用。这个命令将无条件
+地开启内置的 python 编译器。你也可以在 debug 模式下运行主
+要的 cailbre GUI，calibre 阅读器和 calibre 编辑器。
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the E\-book diff tool and so
-on.
+它同时也包含了部分没有命令行工具的
+calibre 界面，比如字体子集，电子书区分
+工具等等。
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+你也能用 \fBcalibre\-debug\fP 来运行独立的脚本。像这样来操作：
 .INDENT 0.0
 .INDENT 3.5
 \fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .UNINDENT
 .UNINDENT
 .sp
-Everything after the \fB\-\-\fP is passed to the script.
+在 \fB\-\-\fP 后的的所有东西都被传输到了脚本里。
 .sp
 每当向具有它们自己空间的:command:
 .nf
@@ -112,7 +112,7 @@ calibre\-debug\(ga传递参数时，用引号括起这些参数。例如: "/some
 .INDENT 0.0
 .TP
 .B \-\-fix\-multiprocessing
-For internal use
+供内部使用
 .UNINDENT
 .INDENT 0.0
 .TP

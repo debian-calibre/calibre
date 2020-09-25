@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "septiembre 19, 2020" "4.99.17" "calibre"
+.TH "CALIBREDB" "1" "septiembre 25, 2020" "5.0.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -571,7 +571,7 @@ Campo personalizado que incluye el texto que se insertará en la cabecera de «D
 .INDENT 0.0
 .TP
 .B \-\-merge\-comments\-rule
-#<campo personalizado>:[before|after]:[True|False] para especificar: <campo personalizado> Campo personalizado que contiene las notas para unir con Comentarios [before|after] Posición de las notas con respecto a Comentarios («before»=antes, «after»=después) [True|False] Si «True», se insertará una línea horizontal entre las notas y Comentarios Valor predeterminado: «::» Se aplica a: formatos de salida AZW3, EPUB y MOBI
+#<campo personalizado>:[before|after]:[True|False] para especificar: <campo personalizado> Campo personalizado que contiene las notas para unir con comentarios [before|after] Posición de las notas con respecto a comentarios («before»=antes, «after»=después) [True|False] Si «True», se insertará una línea horizontal entre las notas y comentarios Valor predeterminado: «::» Se aplica a: formatos de salida AZW3, EPUB y MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -892,18 +892,15 @@ Actualizar los metadatos sólo en el formato especificado. Especificar varias ve
 .sp
 .nf
 .ft C
-calibredb search [options] search expression
+calibredb search [opciones] expresión de búsqueda
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Search the library for the specified \fBsearch\fP term, returning a comma separated
-list of book ids matching the \fBsearch\fP expression. The output format is useful
-to feed into other commands that accept a list of ids as input.
+Busca la expresión de búsqueda especificada en la biblioteca y devuelve una lista separada por comas de ID de libros que coinciden con la expresión. El formato de la salida puede usarse como entrada par otras órdenes que admiten una lista de ID.
 .sp
-The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
-language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
+La expresión de búsqueda puede ser cualquiera aceptada por el potente lenguaje de búsquedas de calibre, por ejemplo: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
 .sp
 Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .INDENT 0.0
