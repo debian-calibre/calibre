@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "září 19, 2020" "4.99.17" "calibre"
+.TH "CALIBREDB" "1" "září 25, 2020" "5.0.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -599,7 +599,7 @@ Vlastní pole obsahující text poznámky k vložení do záhlaví Popisu. Vých
 .INDENT 0.0
 .TP
 .B \-\-merge\-comments\-rule
-#<custom field>:[before|after]:[True|False] určující: <custom field>Vlastní pole obsahující poznámky ke sloučení s Komentáři [before|after] Umístění poznámek vzhledem ke Kometářům [True|False] \- Mezi poznámky a Komentáře je vložena vodorovná čára Výchozí: \fB\(aq\fP::\fB\(aq\fP Použije se na výstupní formáty AZW3, EPUB, MOBI
+#<custom field>:[before|after]:[True|False] určující: <custom field>Vlastní pole obsahující poznámky ke sloučení s komentáři [before|after] Umístění poznámek vzhledem ke kometářům [True|False] \- Mezi poznámky a komentáře je vložena vodorovná čára Výchozí: \fB\(aq\fP::\fB\(aq\fP Použije se na: výstupní formáty AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -929,12 +929,12 @@ calibredb search [options] search expression
 .UNINDENT
 .UNINDENT
 .sp
-Search the library for the specified \fBsearch\fP term, returning a comma separated
-list of book ids matching the \fBsearch\fP expression. The output format is useful
-to feed into other commands that accept a list of ids as input.
+Vyhledat v knihovně zadaný hledaný výraz vracející čárkami oddělený seznam
+identifikátorů knih odpovídající hledanému výrazu.Výstupní formát je užitečný
+pro zásobení jiných příkazů, které přijímají seznam identifikátorů jako vstup.
 .sp
-The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
-language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
+Hledaný výraz může být cokoliv z výkonného jazyka vyhledávacích dotazů Calibre,
+například: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
 .sp
 Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
 .INDENT 0.0

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "setembro 19, 2020" "4.99.17" "calibre"
+.TH "CALIBREDB" "1" "setembro 25, 2020" "5.0.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -597,7 +597,7 @@ Campo personalizado que contém o texto da nota para inserir no cabeçalho da De
 .INDENT 0.0
 .TP
 .B \-\-merge\-comments\-rule
-#<custom field>:[before|after]:[True|False] especificando:  <custom field> Campo personalizado contendo notas para mesclar com os Comentários  [before|after] Espaços reservados de notas com os respectivos Comentários  [True|False] \- Uma régua horizontal é inserida entre notas e Comentários Padrão: \fB\(aq\fP::\fB\(aq\fP Aplica\-se a formatos de saída AZW3, ePub, MOBI
+#<custom field>:[before|after]:[True|False] especificando:  <custom field> Campo personalizado contendo notas para mesclar com os comentários  [before|after] Espaços reservados de notas com os respectivos comentários  [True|False] \- Uma régua horizontal é inserida entre notas e comentários padrão: \fB\(aq\fP::\fB\(aq\fP Aplica\-se a formatos de saída AZW3, ePub, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -934,12 +934,12 @@ calibredb search [options] search expression
 .UNINDENT
 .UNINDENT
 .sp
-Search the library for the specified \fBsearch\fP term, returning a comma separated
-list of book ids matching the \fBsearch\fP expression. The output format is useful
-to feed into other commands that accept a list of ids as input.
+Procura a biblioteca para o termo de pesquisa especificado, retornando uma lista
+separada por vírgula de ids de livros resultantes da expressão de busca. O formato de saída é útil
+para alimentar outros comandos que aceitam uma lista de ids como entrada.
 .sp
-The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
-language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
+O comando de expressão poder ser qualquer coisa da poderosa consulta de busca do calibre
+por exemplo: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
 .sp
 Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
 .INDENT 0.0

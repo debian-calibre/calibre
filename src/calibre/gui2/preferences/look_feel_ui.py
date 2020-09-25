@@ -722,4 +722,3 @@ class Ui_Form(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.quickview_tab), _("&Quickview"))
 from calibre.gui2.complete2 import EditWithComplete
 from calibre.gui2.widgets2 import ScrollingTabWidget
-

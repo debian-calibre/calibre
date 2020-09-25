@@ -5,13 +5,14 @@
 # Translators:
 # Николай Кочкин <urfiner@gmail.com>, 2015
 # Николай Кочкин <urfiner@gmail.com>, 2015
+# Родион Р., 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-01 08:51+0530\n"
-"PO-Revision-Date: 2017-12-03 10:51+0000\n"
-"Last-Translator: ashed <craysy@gmail.com>\n"
+"POT-Creation-Date: 2020-09-19 17:02+0000\n"
+"PO-Revision-Date: 2020-09-13 03:17+0000\n"
+"Last-Translator: Родион Р.\n"
 "Language-Team: Russian (http://www.transifex.com/calibre/calibre/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,11 +20,11 @@ msgstr ""
 "Language: ru\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: ../../home/kovid/work/calibre/manual/typesetting_math.rst:5
+#: ../../home/runner/work/calibre/calibre/manual/typesetting_math.rst:5
 msgid "Typesetting Math in e-books"
 msgstr "Набор математических выражений в электронных книгах"
 
-#: ../../home/kovid/work/calibre/manual/typesetting_math.rst:7
+#: ../../home/runner/work/calibre/calibre/manual/typesetting_math.rst:7
 msgid ""
 "The calibre E-book viewer has the ability to display math embedded in "
 "e-books (EPUB and HTML files). You can typeset the math directly with TeX or"
@@ -31,13 +32,13 @@ msgid ""
 "<https://www.mathjax.org>`_ library to do this. This is a brief tutorial on "
 "creating e-books with math in them that work well with the calibre E-book "
 "viewer."
-msgstr "Просмотрщик электронных книг calibre имеет возможность отображать математические выражения, встроенные в электронные книги (файлы EPUB и HTML). Вы можете набирать их с помощью TeX или MathML или AsciiMath. В просмотрщике электронных книг calibre используется превосходная библиотека `MathJax <https://www.mathjax.org>`_ . Это краткое руководство по созданию электронных книг с мат.выражениями, которые хорошо работают с просмотрщиком calibre."
+msgstr "Читалка электронных книг calibre умеет отображать математические выражения, встроенные в электронные книги (файлы EPUB и HTML). Вы можете набирать их с помощью TeX, или MathML, или AsciiMath. Читалка calibre использует превосходную библиотеку `MathJax <https://www.mathjax.org>`_. Это краткое руководство по созданию электронных книг со встроенными формулами, которые хорошо работают в читалке calibre."
 
-#: ../../home/kovid/work/calibre/manual/typesetting_math.rst:15
+#: ../../home/runner/work/calibre/calibre/manual/typesetting_math.rst:15
 msgid "A simple HTML file with mathematics"
-msgstr "Простой HTML файл с формулами"
+msgstr "Простой HTML-файл с формулами"
 
-#: ../../home/kovid/work/calibre/manual/typesetting_math.rst:17
+#: ../../home/runner/work/calibre/calibre/manual/typesetting_math.rst:17
 msgid ""
 "You can write mathematics inline inside a simple HTML file and the calibre "
 "E-book viewer will render it into properly typeset mathematics. In the "
@@ -45,50 +46,50 @@ msgid ""
 "can use normal TeX commands, with the small caveat that ampersands and less "
 "than and greater than signs have to be written as &amp; &lt; and &gt; "
 "respectively."
-msgstr "Вы можете написать мат.выражения внутри простого HTML-файла, а просмотрщик calibre отрендерит их в правильно подобраный мат.тайпсет. В приведенном ниже примере используется TeX нотация для мат.выражений. Вы можете использовать обычные команды TeX, с небольшим оговоркой, что амперсанды и знаки \"меньше\" и \"больше\" должны быть записаны как &amp; &lt; и &gt; соответственно."
+msgstr "Вы можете вписать математические выражения внутрь простого HTML-файла, а читалка calibre превратит их в правильно набранные формулы. В примере ниже для математических выражений применяется нотация TeX. Вы увидите, что можно использовать обычные команды TeX, пусть с небольшой оговоркой: амперсанды и знаки «меньше» и «больше» должны записываться как &amp;, &lt; и &gt; соответственно."
 
-#: ../../home/kovid/work/calibre/manual/typesetting_math.rst:23
+#: ../../home/runner/work/calibre/calibre/manual/typesetting_math.rst:23
 msgid ""
 "The first step is to tell calibre that this will contains maths. You do this"
 " by adding the following snippet of code to the <head> section of the HTML "
 "file::"
-msgstr "Сперва необходимо сообщить calibre, что документ содержит формулы. Это делается добавлением следующего фрагмента кода в раздел <head> HTML файла::"
+msgstr "Сперва необходимо сообщить calibre, что документ содержит формулы. Для этого в раздел <head> HTML-файла добавляется следующий фрагмент кода::"
 
-#: ../../home/kovid/work/calibre/manual/typesetting_math.rst:28
+#: ../../home/runner/work/calibre/calibre/manual/typesetting_math.rst:28
 msgid ""
 "That's it, now you can type mathematics just as you would in a .tex file. "
 "For example, here are Lorentz's equations::"
-msgstr "Теперь Вы можете писать формулы так, словно это .tex файл. Например, вот уравнения Лоренца:"
+msgstr "И всё, теперь можно писать формулы так же, как в .tex файле. К примеру, вот уравнения Лоренца::"
 
-#: ../../home/kovid/work/calibre/manual/typesetting_math.rst:41
+#: ../../home/runner/work/calibre/calibre/manual/typesetting_math.rst:41
 msgid ""
 "This snippet looks like the following screen shot in the calibre E-book "
 "viewer."
-msgstr "Этот сниппет выглядит как следующий снимок экрана в просмотрщике calibre."
+msgstr "Этот фрагмент в читалке calibre выглядит как снимок экрана ниже."
 
-#: ../../home/kovid/work/calibre/manual/typesetting_math.rst:46
+#: ../../home/runner/work/calibre/calibre/manual/typesetting_math.rst:46
 msgid ":guilabel:`The Lorenz Equations`"
 msgstr ":guilabel:`Уравнения Лоренца`"
 
-#: ../../home/kovid/work/calibre/manual/typesetting_math.rst:48
+#: ../../home/runner/work/calibre/calibre/manual/typesetting_math.rst:48
 msgid ""
 "The complete HTML file, with more equations and inline mathematics is "
 "reproduced below. You can convert this HTML file to EPUB in calibre to end "
 "up with an e-book you can distribute easily to other people."
-msgstr "Ниже приводится полный HTML-файл, содержащий больше уравнений и встроенную математику. Вы можете преобразовать этот HTML-файл в EPUB, чтобы получить электронную книгу, которую вы можете легко распространять другим людям."
+msgstr "Ниже приведён полный HTML-файл с большим количеством уравнений и встроенной математики. Вы можете преобразовать этот HTML-файл в EPUB в calibre, чтобы в итоге получить электронную книгу, которую легко распространять среди других людей."
 
-#: ../../home/kovid/work/calibre/manual/typesetting_math.rst:54
+#: ../../home/runner/work/calibre/calibre/manual/typesetting_math.rst:54
 msgid ""
 "Here is the generated EPUB file: `mathjax.epub <_static/mathjax.epub>`_."
-msgstr "Полученный EPUB файл  находится здесь: `mathjax.epub <_static/mathjax.epub>`_."
+msgstr "Полученный EPUB-файл находится здесь: `mathjax.epub <_static/mathjax.epub>`_."
 
-#: ../../home/kovid/work/calibre/manual/typesetting_math.rst:60
+#: ../../home/runner/work/calibre/calibre/manual/typesetting_math.rst:60
 msgid "More information"
 msgstr "Дополнительная информация"
 
-#: ../../home/kovid/work/calibre/manual/typesetting_math.rst:62
+#: ../../home/runner/work/calibre/calibre/manual/typesetting_math.rst:62
 msgid ""
 "Since the calibre E-book viewer uses the MathJax library to render "
 "mathematics, the best place to find out more about math in e-books and get "
 "help is the `MathJax website <https://www.mathjax.org>`_."
-msgstr "Поскольку просмотрщик calibre использует библиотеку MathJax для рендеринга математики, лучшее место, чтобы узнать больше о математике в электронных книгах и получить помощь, - это веб-сайт MathJax <https://www.mathjax.org>`_."
+msgstr "Поскольку читалка calibre для отрисовки формул использует библиотеку MathJax, лучшее место, где можно узнать больше о математике в электронных книгах и получить помощь, — это `веб-сайт MathJax <https://www.mathjax.org>`_."
