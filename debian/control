@@ -25,7 +25,7 @@ Build-Depends:
  libusb-1.0-0-dev,
  optipng,
  poppler-utils (>= 0.85.0),
- pyqt5-dev (>= 5.3.1),
+ pyqt5-dev (>= 5.15.0+dfsg-1+exp1~),
  pyqt5-dev-tools,
  python3,
  python3-apsw,
@@ -56,15 +56,17 @@ Build-Depends:
  python3-pyqt5,
  python3-pyqt5.qtsvg,
  python3-pyqt5.qtwebengine (>= 5.12.1-4+b1),
+ python3-pyqtbuild,
  python3-regex,
  python3-routes,
  python3-setuptools,
- python3-sip-dev,
+ python3-sipbuild,
  python3-zeroconf,
  qt5-qmake,
  qtbase5-dev (>= 5.12),
  qtbase5-private-dev,
  qtchooser,
+ sip5-tools,
  xauth,
  xdg-utils,
  xvfb,
@@ -148,7 +150,7 @@ Package: calibre-bin
 Architecture: any
 Depends: ${shlibs:Depends},
  ${misc:Depends},
- ${sip3:Depends},
+ python3-pyqt5.sip,
  python3
 Recommends: calibre (>= ${source:Version})
 Description: powerful and easy to use e-book manager (binary plugins)
