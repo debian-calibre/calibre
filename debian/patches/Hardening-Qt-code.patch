@@ -4,8 +4,8 @@ Subject: [PATCH] Hardening Qt code
 Forwarded: not-needed
 
 ---
- setup/build.py |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ setup/build.py |   19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
 Index: b/setup/build.py
 ===================================================================
@@ -37,3 +37,19 @@ Index: b/setup/build.py
          bdir = self.j(self.build_dir, 'headless')
          if not os.path.exists(bdir):
              os.makedirs(bdir)
+@@ -533,6 +541,15 @@ sip-file = "{os.path.basename(sipf)}"
+                             raw = raw.replace('-fno-exceptions', '-fexceptions')
+                             f.seek(0), f.truncate()
+                             f.write(raw)
++            for q in walk('.'):
++                if os.path.basename(q) in ('Makefile',):
++                    with open(q, 'r+') as f:
++                        raw = f.read()
++                        raw = raw.replace('CFLAGS        =', 'CFLAGS        = ' + os.environ.get('CFLAGS',   '') + ' ' + os.environ.get('CPPFLAGS', ''))
++                        raw = raw.replace('CXXFLAGS      =', 'CXXFLAGS      = ' + os.environ.get('CXXFLAGS', '') + ' ' + os.environ.get('CPPFLAGS', ''))
++                        raw = raw.replace('LFLAGS        =', 'LFLAGS        = ' + os.environ.get('LDFLAGS',  ''))
++                        f.seek(0), f.truncate()
++                        f.write(raw)
+             self.check_call([self.env.make] + ([] if iswindows else ['-j%d'%(os.cpu_count() or 1)]))
+             e = 'pyd' if iswindows else 'so'
+             m = glob.glob(f'{ext.name}/{ext.name}.*{e}')
