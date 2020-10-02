@@ -11,7 +11,7 @@ from functools import partial
 from datetime import timedelta
 from collections import deque, OrderedDict
 
-from calibre.constants import preferred_encoding
+from calibre.constants import preferred_encoding, DEBUG
 from calibre.db.utils import force_to_bool
 from calibre.utils.config_base import prefs
 from calibre.utils.date import parse_date, UNDEFINED_DATE, now, dt_as_local
@@ -627,6 +627,47 @@ class Parser(SearchQueryParser):  # {{{
 
         # Everything else (and 'all' matches)
         case_sensitive = prefs['case_sensitive']
+
+        if location == 'template':
+            try:
+                template, sep, query = regex.split('#@#:([tdnb]):', query, flags=regex.IGNORECASE)
+                if sep:
+                    sep = sep.lower()
+                else:
+                    sep = 't'
+            except:
+                if DEBUG:
+                    import traceback
+                    traceback.print_exc()
+                raise ParseException(_('search template: missing or invalid separator. Valid separators are: {}').format('#@#:[tdnb]:'))
+            matchkind, query = _matchkind(query, case_sensitive=case_sensitive)
+            matches = set()
+            error_string = '*@*TEMPLATE_ERROR*@*'
+            template_cache = {}
+            for book_id in candidates:
+                mi = self.dbcache.get_proxy_metadata(book_id)
+                val = mi.formatter.safe_format(template, {}, error_string, mi,
+                                            column_name='search template',
+                                            template_cache=template_cache)
+                if val.startswith(error_string):
+                    raise ParseException(val[len(error_string):])
+                if sep == 't':
+                    if _match(query, [val,], matchkind, use_primary_find_in_search=upf,
+                              case_sensitive=case_sensitive):
+                        matches.add(book_id)
+                elif sep == 'n' and val:
+                    matches.update(self.num_search(
+                        icu_lower(query), {val:{book_id,}}.items, '', '',
+                        {book_id,}, is_many=False))
+                elif sep == 'd' and val:
+                    matches.update(self.date_search(
+                            icu_lower(query), {val:{book_id,}}.items))
+                elif sep == 'b':
+                    matches.update(self.bool_search(icu_lower(query),
+                            {'True' if val else 'False':{book_id,}}.items, False))
+
+            return matches
+
         matchkind, query = _matchkind(query, case_sensitive=case_sensitive)
         all_locs = set()
         text_fields = set()

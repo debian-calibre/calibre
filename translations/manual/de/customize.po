@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-24 07:51+0530\n"
-"PO-Revision-Date: 2020-04-24 02:22+0000\n"
+"POT-Creation-Date: 2020-10-01 03:09+0000\n"
+"PO-Revision-Date: 2020-09-26 02:31+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: German (http://www.transifex.com/calibre/calibre/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -28,11 +28,11 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:6
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:6
 msgid "Customizing calibre"
 msgstr "Anpassen von Calibre"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:8
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:8
 msgid ""
 "calibre has a highly modular design. Various parts of it can be customized. "
 "You can learn how to create *recipes* to add new sources of online content "
@@ -43,27 +43,27 @@ msgid ""
 "to calibre."
 msgstr "Calibre ist sehr modular aufgebaut. Viele Teile können angepasst werden. Im Abschnitt :ref:`news` können Sie lernen, wie man *Rezepte* für neue Nachrichtenquellen von Online-Inhalten erstellt und diese zu Calibre hinzufügt. Hier lernen Sie zuerst, wie mithilfe von Umgebungsvariablen und *Optimierungen* calibres Verhalten anpasst wird und danach, wie man eigene statische Ressourcen wie z. B. Symbole und Vorlagen verwendet, um Standardwerte zu überschreiben und zuletzt, wie man *Erweiterungen* verwendet um in Calibre Funktionalitäten zu erweitern."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:24
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:24
 msgid "Environment variables"
 msgstr "Umgebungsvariablen"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:26
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:26
 msgid ""
 "``CALIBRE_CONFIG_DIRECTORY`` - sets the directory where configuration files "
 "are stored/read."
 msgstr "``CALIBRE_CONFIG_DIRECTORY`` - legt das Verzeichnis fest, in dem die Konfigurationsdateien gespeichert/gelesen werden."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:27
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:27
 msgid "``CALIBRE_TEMP_DIR`` - sets the temporary directory used by calibre"
 msgstr "``CALIBRE_TEMP_DIR`` - legt das verwendete temporäre Verzeichnis von Calibre fest"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:28
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:28
 msgid ""
 "``CALIBRE_CACHE_DIRECTORY`` - sets the directory calibre uses to cache "
 "persistent data between sessions"
 msgstr "``CALIBRE_CACHE_DIRECTORY`` - legt das Verzeichnis fest, in dem  Calibre Daten zwischen den Sitzungen zwischenspeichert."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:29
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:29
 msgid ""
 "``CALIBRE_OVERRIDE_DATABASE_PATH`` - allows you to specify the full path to "
 "metadata.db. Using this variable you can have metadata.db be in a location "
@@ -71,38 +71,38 @@ msgid ""
 "networked drive that does not support file locking."
 msgstr "``CALIBRE_OVERRIDE_DATABASE_PATH`` - erlaubt die Angabe des vollständigen Pfads zur metadata.db. Durch Benutzung dieser Variable kann sich die metadata.db an einem anderen Speicherort befinden als im normalerweise vorgesehenen Bibliotheks-Ordner. Dies ist nützlich, wenn Ihr Bibliotheksordner sich auf einem Netzlaufwerk befindet und das Sperren von Dateien nicht unterstützt wird."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:30
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:30
 msgid ""
 "``CALIBRE_DEVELOP_FROM`` - Used to run from a calibre development "
 "environment. See :ref:`develop`."
 msgstr "``CALIBRE_DEVELOP_FROM`` - wird verwendet, um Calibre in einer Entwicklungsumgebung zu starten. Siehe :ref:`develop`."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:31
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:31
 msgid ""
 "``CALIBRE_OVERRIDE_LANG`` - Used to force the language used by the interface"
 " (ISO 639 language code)"
 msgstr "``CALIBRE_OVERRIDE_LANG`` - wird verwendet, um die Sprache der Benutzeroberfläche zu erzwingen (ISO 639-Sprachcode)."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:32
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:32
 msgid ""
 "``CALIBRE_TEST_TRANSLATION`` - Used to test a translation .po file (should "
 "be the path to the .po file)"
 msgstr "``CALIBRE_TEST_TRANSLATION`` - Wird dazu verwendet, eine .po-Übersetzungsdatei zu testen (sollte der Pfad zur .po-Datei sein)"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:33
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:33
 msgid ""
 "``CALIBRE_NO_NATIVE_FILEDIALOGS`` - Causes calibre to not use native file "
 "dialogs for selecting files/directories."
 msgstr "``CALIBRE_NO_NATIVE_FILEDIALOGS`` - Bewirkt, dass Calibre keine nativen Dateidialoge verwendet,  um Dateien oder Verzeichnisse auszuwählen."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:34
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:34
 msgid ""
 "``CALIBRE_NO_NATIVE_MENUBAR`` - Causes calibre to not create a native "
 "(global) menu on Ubuntu Unity and similar linux desktop environments. The "
 "menu is instead placed inside the window, as is traditional."
 msgstr "``CALIBRE_NO_NATIVE_MENUBAR`` - Veranlasst Calibre kein natives (globales) Menü auf Ubuntu Unity und ähnliche Linux-Desktop-Umgebungen zu erstellen. Das Menü wird stattdessen wie üblich innerhalb des Fensters platziert."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:35
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:35
 msgid ""
 "``CALIBRE_USE_SYSTEM_THEME`` - By default, on Linux, calibre uses its own "
 "builtin Qt style. This is to avoid crashes and hangs caused by "
@@ -112,36 +112,36 @@ msgid ""
 "to use the system theme -- beware of crashes and hangs."
 msgstr "``CALIBRE_USE_SYSTEM_THEME`` - Standardmäßig verwendet Calibre unter Linux seinen eigenen eingebauten Qt-Stil. Damit sollen Abstürze und Hängenbleiben durch Inkompatibilitäten zwischen der Version des Calibre-Qt und dem System-Qt vermieden werden. Der Nachteil ist, dass Calibre möglicherweise nicht dem Look and Feel des Systems entspricht. Wenn Sie diese Umgebungsvariable unter Linux setzen, wird Calibre dazu veranlasst, das Systemthema zu verwenden -- Vorsicht vor Abstürzen und Hänger."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:41
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:41
 msgid ""
 "``CALIBRE_SHOW_DEPRECATION_WARNINGS`` - Causes calibre to print deprecation "
 "warnings to stdout. Useful for calibre developers."
 msgstr "``CALIBRE_SHOW_DEPRECATION_WARNINGS`` - Veranlasst Calibre eine 'veraltet'-Warnung auf stdout auszugeben. Nützlich für Calibre-Entwickler."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:42
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:42
 msgid ""
 "``CALIBRE_NO_DEFAULT_PROGRAMS`` - Prevent calibre from automatically "
 "registering the filetypes it is capable of handling with Windows."
 msgstr "``CALIBRE_NO_DEFAULT_PROGRAMS`` - Verhindert, dass Calibre automatisch die Dateitypen registriert, die es mit Windows verwenden kann."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:43
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:43
 msgid ""
 "``CALIBRE_USE_DARK_PALETTE`` - Set it to ``1`` to have calibre use dark "
 "colors and ``0`` for normal colors (ignored on macOS). On Windows 10 in the "
-"absence of this variable, the windows system preference for dark colors is "
+"absence of this variable, the Windows system preference for dark colors is "
 "used."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:45
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:45
 msgid "``SYSFS_PATH`` - Use if sysfs is mounted somewhere other than /sys"
 msgstr "``SYSFS_PATH`` - zu benutzen, wenn wenn sysfs irgendwo anders als unter /sys eingebunden ist."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:46
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:46
 msgid ""
 "``http_proxy``, ``https_proxy`` - Used on Linux to specify an HTTP(S) proxy"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:48
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:48
 msgid ""
 "See `How to set environment variables in Windows "
 "<https://www.computerhope.com/issues/ch000549.htm>`_. If you are on macOS "
@@ -150,11 +150,11 @@ msgid ""
 "environment variables one per line in it, for example::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:58
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:58
 msgid "Tweaks"
 msgstr "Optimierungen"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:60
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:60
 msgid ""
 "Tweaks are small changes that you can specify to control various aspects of "
 "calibre's behavior. You can change them by going to "
@@ -162,11 +162,11 @@ msgid ""
 "reproduced below"
 msgstr "Optimierungen oder auch \"Tweaks\" sind kleine Änderungen, die Sie angeben können, um verschiedene Aspekte von Calibres Verhalten zu steuern. Sie können diese ändern, indem Sie auf Einstellungen → Erweitert → Optimierungen gehen. Die Standardwerte für alle Optimierungen sind nachfolgend beschrieben."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:67
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:67
 msgid "Overriding icons, templates, et cetera"
 msgstr "Überschreiben von Symbolen, Vorlagen usw."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:70
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:70
 msgid ""
 "calibre has direct support for icon themes, there are several icon themes "
 "available for calibre, that you can use by going to "
@@ -175,7 +175,7 @@ msgid ""
 "resources."
 msgstr "Calibre hat direkte Unterstützung für Icon-Themen, es gibt mehrere Icon-Themes für Calibre, die du verwenden kannst, indem du zu :guilabel: `Einstellungen -> Erscheinungsbild -> Symboldesign` gehst. Die Icon-Themen verwenden den gleichen Mechanismus wie unten beschrieben, um statische Ressourcen zu überschreiben."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:74
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:74
 msgid ""
 "calibre allows you to override the static resources, like icons, JavaScript "
 "and templates for the metadata jacket, catalogs, etc. with customized "
@@ -188,7 +188,7 @@ msgid ""
 "you choose to install calibre."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:83
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:83
 msgid ""
 "You should not change the files in this resources folder, as your changes "
 "will get overwritten the next time you update calibre. Instead, go to "
@@ -200,7 +200,7 @@ msgid ""
 "file in preference to the built-in one the next time it is started."
 msgstr "Sie sollten die Dateien in diesem Ressourcenordner nicht ändern, da die Änderungen bei der nächsten Aktualisierung von Calibre überschrieben werden. Stattdessen gehen Sie zu :guilabel:`Einstellungen → Erweitert → Verschiedenes` und klicken Sie auf :guilabel:`Calibre Konfigurationsverzeichnis öffnen`. Erstellen Sie in diesem Konfigurationsverzeichnis einen Unterordner namens \"resources\", und speichern dort die Dateien, die Sie überschreiben möchten. Speichern Sie Dateien in die entsprechenden Unterordner, z. B. platzieren Sie Bildern im Ordner :file:`resources/images` usw. Calibre wird beim nächsten Programmstart automatisch die benutzerdefinierte Datei der integrierten vorziehen."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:92
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:92
 msgid ""
 "For example, if you wanted to change the icon for the :guilabel:`Remove "
 "books` action, you would first look in the built-in resources folder and see"
@@ -211,11 +211,11 @@ msgid ""
 "calibre user interface are in :file:`resources/images` and its sub-folders."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:101
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:101
 msgid "Creating your own icon theme for calibre"
 msgstr "Erstellen eines eigenen Symboldesigns für Calibre"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:103
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:103
 msgid ""
 "If you have created a beautiful set of icons and wish to share them with "
 "other calibre users via calibre's builtin icon theme support, you can easily"
@@ -229,11 +229,11 @@ msgid ""
 " make your theme available via calibre's builtin icon theme system."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:116
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:116
 msgid "Customizing calibre with plugins"
 msgstr "Anpassen von Calibre durch Erweiterungen"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:118
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:118
 msgid ""
 "calibre has a very modular design. Almost all functionality in calibre comes"
 " in the form of plugins. Plugins are used for conversion, for downloading "
@@ -243,7 +243,7 @@ msgid ""
 "plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:120
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:120
 msgid ""
 "You can write your own plugins to customize and extend the behavior of "
 "calibre. The plugin architecture in calibre is very simple, see the tutorial"

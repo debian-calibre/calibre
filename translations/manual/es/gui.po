@@ -17,9 +17,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-24 02:15+0000\n"
-"PO-Revision-Date: 2020-09-23 08:57+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2020-10-01 03:09+0000\n"
+"PO-Revision-Date: 2020-09-27 06:56+0000\n"
+"Last-Translator: Jellby <jellby@yahoo.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/calibre/calibre/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -62,7 +62,7 @@ msgid ""
 msgstr "La barra de herramientas de acciones ofrece un acceso inmediato a algunas acciones usuales. Si pulsa con el botón derecho sobre los botones puede realizar variaciones de la acción predeterminada. Tenga en cuenta que la barra de herramientas de acciones puede tener un aspecto distinto dependiendo de si hay algún dispositivo de lectura conectado al equipo."
 
 #: ../../home/runner/work/calibre/calibre/manual/gui.rst:41
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:664
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:688
 msgid "Add books"
 msgstr "Añadir libros"
 
@@ -259,7 +259,7 @@ msgid ""
 msgstr "**Crear un catálogo de los libros en la biblioteca de calibre**: Le permite generar un listado completo de los libros en la biblioteca, incluyendo todos los metadatos, en formatos como XML, CSV, BiBTeX, EPUB y MOBI. El catálogo contendrá todos los libros que se muestren actualmente en la vista de biblioteca. Esto le permite usar las funciones de búsqueda para limitar los libros catalogados. Además, si selecciona varios libros con el ratón, sólo se incluirán esos libros. Si genera el catálogo en un formato de libro electrónico como EPUB, MOBI o AZW3, la próxima vez que conecte un dispositivo de lectura el catálogo se enviará automáticamente al dispositivo. Para más información sobre cómo funcionan los catálogos, lea :ref:`catalog_tut`."
 
 #: ../../home/runner/work/calibre/calibre/manual/gui.rst:119
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:694
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:718
 msgid "View"
 msgstr "Mostrar"
 
@@ -275,7 +275,7 @@ msgid ""
 msgstr "|vi| La acción :guilabel:`Mostrar` abre el libro en un programa visualizador de libros electrónicos. calibre tiene un visor incorporado para muchos formatos de libro electrónico. Para otros formatos usa la aplicación predeterminada del sistema operativo. Puede configurar qué formatos se abren con el visor interno en :guilabel:`Preferencias > Interfaz > Comportamiento`. Si un libro tiene más de un formato, puede abrir un formato específico pulsando con el botón derecho sobre el botón de la acción."
 
 #: ../../home/runner/work/calibre/calibre/manual/gui.rst:134
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:670
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:694
 msgid "Send to device"
 msgstr "Enviar al dispositivo"
 
@@ -487,7 +487,7 @@ msgid ""
 msgstr "|dvi| La acción :guilabel:`Dispositivo` le permite ver los libros en la memoria principal o en las tarjetas de almacenamiento de un dispositivo o desconectarlo de calibre. Este icono aparece automáticamente en la barra de herramientas principal de calibre cuando se conecta un dispositivo soportado. Puede pulsar sobre él para ver los libros en el dispositivo. También puede arrastrar y soltar libros de la biblioteca de calibre sobre el icono para copiarlos al dispositivo. Análogamente, puede arrastrar y soltar libros del dispositivo sobre el icono de la biblioteca en la barra de herramientas para copiarlos del dispositivo a la biblioteca de calibre."
 
 #: ../../home/runner/work/calibre/calibre/manual/gui.rst:206
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:690
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:714
 msgid "Save to disk"
 msgstr "Guardar en el disco"
 
@@ -1017,11 +1017,61 @@ msgstr "``identifier:i:1`` encontrará libros con identificadores cuyo tipo cont
 msgid ":guilabel:`Advanced search dialog`"
 msgstr ":guilabel:`Diálogo de búsqueda avanzada`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:447
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:444
+msgid ""
+"You can search using a template in the :ref:`templatelangcalibre` instead of"
+" a metadata field. To do so you enter a template, a search type, and the "
+"value to search for. The syntax is::"
+msgstr "Puede buscar usando una plantilla en el :ref:`templatelangcalibre` en lugar de un campo de metadatos. Para ello debe introducir una plantilla, un tipo de búsqueda y un valor para buscar. La sintaxis es::"
+
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:450
+msgid ""
+"The ``template`` is any valid calibre template language template. The "
+"``search type`` must be one of ``t`` (text search), ``d`` (date search), "
+"``n`` (numeric search), or ``b`` (set/not set (boolean)). The ``value`` is "
+"whatever you want. It can use the special operators described above for the "
+"various search types. You must quote the entire search string if there are "
+"spaces anywhere in it."
+msgstr "``template`` es cualquier plantilla válida del lenguaje de plantillas de calibre. ``search type`` debe ser uno de ``t`` (búsqueda de texto), ``d`` (búsqueda de fecha), ``n`` (búsqueda numérica), ``b`` (establecido o no). ``value`` es el valor que desea. Puede hacer uso de los operadores especiales descritos anteriormente para los distintos tipos de búsqueda. Debe poner todo el texto de búsqueda entre comillas si contiene algún espacio."
+
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:456
+msgid "Examples:"
+msgstr "Ejemplos:"
+
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:458
+msgid ""
+"``template:\"program: connected_device_name('main')#@#:t:kindle\"`` -- is "
+"true when the ``kindle`` device is connected"
+msgstr "``template:\"program: connected_device_name('main')#@#:t:kindle\"`` -- es «true» cuando el dispositivo ``kindle`` está conectado"
+
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:459
+msgid ""
+"``template:\"program: select(formats_sizes(), 'EPUB')#@#:n:>1000000\"`` -- "
+"finds books with EPUB files larger than 1 MB"
+msgstr "``template:\"program: select(formats_sizes(), 'EPUB')#@#:n:>1000000\"`` -- encuentra libros con archivo EPUB mayores de 1 MB"
+
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:460
+msgid ""
+"``template:\"program: select(formats_modtimes('iso'), "
+"'EPUB')#@#:d:>10daysago\"`` -- finds books with EPUB files newer than 10 "
+"days ago"
+msgstr "``template:\"program: select(formats_modtimes('iso'), 'EPUB')#@#:d:>10daysago\"`` -- encuentra libros con archivo epub de antigüedad menor de 10 días"
+
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:462
+msgid ""
+"You can build template search queries easily using the :guilabel:`Advanced "
+"search dialog` accessed by clicking the button |sbi|. You can test templates"
+" on specific books using the calibre :guilabel:`Template tester`. This can "
+"be added to the toolbars or menus via :guilabel:`Preferences->Toolbars & "
+"menus`. It can also be assigned a keyboard shortcut via "
+":guilabel:`Preferences->Shortcuts`."
+msgstr "Puede construir consultas de búsqueda por plantilla fácilmente usando el :guilabel:`Diálogo de búsqueda avanzada`, al que se accede pulsando el botón |sbi|. Puede probar plantillas en libros concretos con la :guilabel:`Prueba de plantillas`, que puede añadirse a las barras de herramientas o menús en :guilabel:`Preferencias > Barras de herramientas y menús`, o asignarse a un atajo de teclado en :guilabel:`Preferencias > Atajos`."
+
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:471
 msgid "Saving searches"
 msgstr "Guardar búsquedas"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:449
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:473
 msgid ""
 "calibre allows you to save a frequently used search under a special name and"
 " then reuse that search with a single click. To do this, create your search "
@@ -1031,18 +1081,18 @@ msgid ""
 "save the search."
 msgstr "calibre le permite guardar una búsqueda usada frecuentemente con un nombre especial, y luego usar dicha búsqueda con una sola pulsación. Para ello, cree la búsqueda escribiendo en la barra de búsqueda o con el explorador de etiquetas. Después escriba el nombre que desee darle a la búsqueda en el cuadro de búsquedas guardadas junto a la barra de búsqueda. Pulse el icono con el signo más junto al cuadro de búsquedas guardadas para guardar la búsqueda."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:451
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:475
 msgid ""
 "Now you can access your saved search in the Tag browser under "
 ":guilabel:`Saved searches`. A single click will allow you to reuse any "
 "arbitrarily complex search easily, without needing to re-create it."
 msgstr "A partir de ahora podrá acceder a la búsqueda guardada en el explorador de etiquetas, bajo :guilabel:`Búsquedas guardadas`. Una sola pulsación le permite volver a usar fácilmente búsquedas de cualquier complejidad, sin tener que crearlas de nuevo."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:456
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:480
 msgid "Virtual libraries"
 msgstr "Bibliotecas virtuales"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:458
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:482
 msgid ""
 "A :guilabel:`Virtual library` is a way to pretend that your calibre library "
 "has only a few books instead of its full collection. This is an excellent "
@@ -1051,11 +1101,11 @@ msgid ""
 ":ref:`virtual_libraries`."
 msgstr "La opción :guilabel:`Biblioteca virtual` es una manera de que calibre muestre sólo algunos libros en vez de contener la biblioteca completa. Ésta es una manera excelente de dividir la biblioteca completa en pequeñas secciones fáciles de manejar. Para aprender cómo crear y usar bibliotecas virtuales, vea el cursillo :ref:`virtual_libraries`."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:467
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:491
 msgid "Guessing metadata from file names"
 msgstr "Extraer metadata de los nombres de archivo"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:469
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:493
 msgid ""
 "Normally, calibre reads metadata from inside the book file. However, it can "
 "be configured to read metadata from the file name instead, via "
@@ -1063,7 +1113,7 @@ msgid ""
 " contents`."
 msgstr "Normalmente, calibre lee los metadatos a partir del contenido del archivo del libro. Sin embargo, puede configurarse para leer los metadatos a partir del nombre de archivo, por medio de :guilabel:`Preferencias > Importar y exportar > Añadir libros > Leer metadatos desde el contenido del archivo`."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:473
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:497
 msgid ""
 "You can also control how metadata is read from the filename using regular "
 "expressions (see :doc:`regexp`).  In the :guilabel:`Adding Books` section of"
@@ -1072,30 +1122,30 @@ msgid ""
 "add to the library. The default regular expression is::"
 msgstr "También puede controlar cómo se leen los metadatos desde el nombre del archivo utilizando expresiones regulares (ver :doc:`regexp`). En la sección :guilabel:`Añadir libros` del cuadro de diálogo de configuración, puede especificar una expresión regular que calibre utilizará para tratar de adivinar los metadatos a partir de los nombres de los archivos de libro electrónico que se añaden a la biblioteca. La expresión regular predeterminada es::"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:481
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:505
 msgid ""
 "that is, it assumes that all characters up to the first ``-`` are the title "
 "of the book and subsequent characters are the author of the book. For "
 "example, the filename::"
 msgstr "es decir, asume que todos los caracteres hasta el primer ``-`` son el título del libro y los caracteres subsiguientes son el autor del libro. Por ejemplo, el nombre de archivo::"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:487
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:511
 msgid ""
 "will be interpreted to have the title: Foundation and Earth and author: "
 "Isaac Asimov"
 msgstr "será interpretado con el título: «Foundation and Earth» y autor: «Isaac Asimov»"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:490
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:514
 msgid ""
 "If the filename does not contain the hyphen, the above regular expression "
 "will fail."
 msgstr "Si el nombre del archivo no contiene ningún guión, la expresión regular anterior fallará."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:496
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:520
 msgid "Book details"
 msgstr "Detalles del libro"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:500
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:524
 msgid ""
 "The Book details display shows the cover and all the metadata for the "
 "currently selected book. It can be hidden via the :guilabel:`Layout` button "
@@ -1105,51 +1155,51 @@ msgid ""
 " on the author name and selecting Manage this author."
 msgstr "El panel de detalles del libro muestra la portada y los metadatos para el libro actualmente seleccionado. Estos datos pueden ocultarse pulsando en el botón que se encuentra en la esquina inferior derecha de la ventana principal de calibre. Se puede pulsar sobre los nombres de autor en el panel de detalles del libro, y al hacerlo el sistema abrirá el artículo de Wikipedia del respectivo autor. Esta opción se puede personalizar pulsando con el botón derecho sobre el nombre del autor y seleccionando la opción :guilabel:`Administrar este autor`."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:507
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:531
 msgid ""
 "Similarly, if you download metadata for the book, the Book details panel "
 "will automatically show you links pointing to the web pages for the book on "
 "amazon, worldcat, etc. from where the metadata was downloaded."
 msgstr "De manera similar, si se descargan metadatos del libro, el panel de detalles del libro mostrará automáticamente enlaces a las páginas del libro en Amazon, Worldcat, etc. desde donde se descargaron los metadatos."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:511
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:535
 msgid ""
 "You can right click on individual e-book formats in the Book details panel "
 "to delete them, compare them to their original versions, save them to disk, "
 "open them with an external program, etc."
 msgstr "Puede pulsar con el botón derecho individualmente en los formatos de libro electrónico en el panel de detalles del libro para eliminarlos, compararlos con sus versiones originales, guardarlos en un disco, abrirlos con un programa externo, etc."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:515
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:539
 msgid ""
 "You can change the cover of the book by simply drag and dropping an image "
 "onto the Book details panel. If you wish to edit the cover image in an "
 "external program, simply right click on it and choose :guilabel:`Open with`."
 msgstr "Puede cambiar la portada del libro arrastrando y soltando una imagen en el panel de detalles del libro. Si desea modificar la imagen de portada en un programa externo, pulse con el botón derecho sobre la imagen y elija :guilabel:`Abrir portada con...`."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:519
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:543
 msgid ""
 "You can also add e-book files to the current book by drag and dropping the "
 "files onto the Book details panel."
 msgstr "También puede añadir archivos de libro electrónico para el libro actual simplemente arrastrando y soltando los archivos en el panel de detalles del libro."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:522
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:546
 msgid ""
 "Double clicking the Book details panel will open it up in a separate popup "
 "window."
 msgstr "Al pulsar dos veces en el panel de detalles del libro la información se desplegará en una nueva ventana."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:525
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:549
 msgid ""
 "Finally, you can customize exactly what information is displayed in the Book"
 " details panel via :guilabel:`Preferences->Interface->Look & feel->Book "
 "details`."
 msgstr "Finalmente, puede personalizar qué información se mostrará en el panel de detalles del libro en :guilabel:`Preferencias > Interfaz > Apariencia > Detalles del libro`."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:535
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:559
 msgid "Tag browser"
 msgstr "Explorador de etiquetas"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:539
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:563
 msgid ""
 "The Tag browser allows you to easily browse your collection by "
 "Author/Tags/Series/etc. If you click on any item in the Tag browser, for "
@@ -1159,7 +1209,7 @@ msgid ""
 " series."
 msgstr "El explorador de etiquetas le permite navegar en la colección por autor, etiquetas, serie, etc. Si pulsa en cualquiera de los elementos del explorador de etiquetas, por ejemplo el nombre del autor Isaac Asimov, la lista de libros a la derecha mostrará solamente los libros de ese autor. Puede pulsar también en las diversas categorías. Por ejemplo, pulsando «Serie» obtendrá una lista de los libros en cualquier serie."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:541
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:565
 msgid ""
 "The first click on an item will restrict the list of books to those that "
 "contain or match the item. Continuing the above example, clicking on Isaac "
@@ -1177,7 +1227,7 @@ msgid ""
 "construct basic search expressions."
 msgstr "La primera pulsación sobre un elemento restringe la lista de libros a aquellos que contienen o coinciden con un elemento. Siguiendo con el ejemplo anterior, si pulsamos sobre «Isaac Asimov» se mostrarán los libros de este autor. Al pulsar otra vez sobre el elemento se cambia lo que se muestra, dependiendo de si el elemento tiene descendientes (ver subcategorías y elementos jerárquicos más adelante). En el mismo ejemplo, si pulsamos otra vez sobre «Isaac Asimov» se restringe la lista de libros a los que no son de Isaac Asimov. Una tercera pulsación elimina la restricción y muestra todos los libros. Si mantiene pulsada la tecla Ctrl o Mayús y pulsa en varios elementos, se crearán restricciones basadas en varios elementos. Por ejemplo, puede mantener pulsada la tecla Ctrl y pulsar en las etiquetas «Historia» y «Europa» para buscar libros sobre historia europea. El explorador de etiquetas construye expresiones de búsqueda que se introducen automáticamente en la barra de búsqueda. Examinar lo que genera el explorador de etiquetas es una buena manera de aprender cómo construir expresiones básicas."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:543
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:567
 msgid ""
 "Items in the Tag browser have their icons partially colored. The amount of "
 "color depends on the average rating of the books in that category. So for "
@@ -1186,7 +1236,7 @@ msgid ""
 "your mouse over the icon to see the average rating."
 msgstr "Los iconos de los elementos del explorador de etiquetas están coloreados parcialmente. La cantidad de color depende de la calificación promedio de los libros en la categoría. Por ejemplo, si los libros de Isaac Asimov tienen una calificación media de cuatro estrellas, el icono para Isaac Asimov en el explorador de etiquetas está coloreado en 4/5. Puede colocar el cursor del ratón sobre el icono para ver la calificación promedio."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:545
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:569
 msgid ""
 "The outer-level items in the :guilabel:`Tag browser`, such as Authors and "
 "Series, are called categories. You can create your own categories, called "
@@ -1205,38 +1255,38 @@ msgid ""
 "Favorites example above."
 msgstr "Los elementos más externos del :guilabel:`Explorador de etiquetas`, como Autores y Series, se llaman categorías. Puede crear nuevas categorías, llamadas :guilabel:`Categorías de usuario`, que resultan útiles para organizar los libros. Por ejemplo, puede usar el :guilabel:`Editor de categorías de usuario` (pulse el botón :guilabel:`Configurar` en la parte inferior izquierda del :guilabel:`Explorador de etiquetas` y elija :guilabel:`Administrar autores, etiquetas, etc. > Categorías de usuario`) para crear una categoría llamada ``Autores favoritos`` y luego asignar los elementos de sus autores favoritos a la categoría. Las categorías de usuario pueden tener subcategorías. Por ejemplo, la categoría de usuario ``Favoritos.Autores`` es una subcategoría de ``Favoritos``. Podría tener también ``Favoritos.Series``, y entonces habría dos subcategorías dentro de ``Favoritos``. Puede crear subcategorías pulsando con el botón derecho sobre una categoría de usuario, eligiendo :guilabel:`Añadir una subcategoría a ...` e introduciendo el nombre de la subcategoría; o usando el :guilabel:`Editor de categorías de usuario` e introduciendo nombres como en el ejemplo anterior de «Favoritos»."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:551
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:575
 msgid ""
 "You can search User categories in the same way as built-in categories, by "
 "clicking on them. There are four different searches cycled through by "
 "clicking:"
 msgstr "Puede buscar categorías de usuario de la misma manera que las categorías predefinidas, pulsando sobre ellas. Hay cuatro tipos de búsqueda por las que se atraviesa al pulsar:"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:548
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:572
 msgid ""
 "\"everything matching an item in the category\" indicated by a single green "
 "plus sign."
 msgstr "«todo lo que coincida con un elemento de la categoría», indicado por un solo signo más verde."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:549
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:573
 msgid ""
 "\"everything matching an item in the category or its sub-categories\" "
 "indicated by two green plus signs."
 msgstr "«todo lo que coincida con un elemento de la categoría o sus subcategorías», indicado por dos signos más verdes."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:550
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:574
 msgid ""
 "\"everything not matching an item in the category\" shown by a single red "
 "minus sign."
 msgstr "«todo lo que no coincida con ningún elemento de la categoría», indicado por un signo menos rojo."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:551
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:575
 msgid ""
 "\"everything not matching an item in the category or its sub-categories\" "
 "shown by two red minus signs."
 msgstr "«todo lo que no coincida con ningún elemento de la categoría o sus subcategorías», indicado por dos signos menos rojos."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:553
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:577
 msgid ""
 "It is also possible to create hierarchies inside some of the text categories"
 " such as tags, series, and custom columns. These hierarchies show with the "
@@ -1253,14 +1303,14 @@ msgid ""
 " \"genre\" <subgroups-tutorial>` for more information."
 msgstr "También es posible crear jerarquías dentro de algunas categorías de texto como las etiquetas, series y columnas de texto. Estas jerarquías se muestran como un pequeño triángulo, permitiendo ocultar los subelementos. Para usar jerarquías de elementos en una categoría debe ir a :guilabel:`Preferencias > Interfaz > Apariencia` e introducir el nombre de la(s) categoría(s) en el campo «Categorías con elementos jerárquicos». Una vez hecho esto, los elementos en dicha categoría que contengan puntos se mostrarán usando el pequeño triángulo. Por ejemplo, supongamos que crea una columna personalizada llamada «Género» e indica que contiene elementos jerárquicos. Los elementos tales como «Misterio.Intriga» y «Misterio.Español» se mostrarán como «Misterio» con el triángulo al lado. Al pulsar sobre el triángulo se mostrarán «Intriga» y «Español» como subelementos. Véase :ref:`Gestionar subgrupos de libros, por ejemplo «género» <subgroups-tutorial>` para más información."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:555
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:579
 msgid ""
 "Hierarchical items (items with children) use the same four 'click-on' "
 "searches as User categories. Items that do not have children use two of the "
 "searches: \"everything matching\" and \"everything not matching\"."
 msgstr "Los elementos jerárquicos (elementos que tienen descendientes) usan las mismas cuatro búsquedas al pulsar que las categorías de usuario. Los elementos sin descendientes usan dos de las búsquedas: «todo lo que coincida» y «todo lo que no coincida»."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:557
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:581
 msgid ""
 "You can drag and drop items in the Tag browser onto User categories to add "
 "them to that category. If the source is a User category, holding the shift "
@@ -1272,7 +1322,7 @@ msgid ""
 "tag History to the book's tags."
 msgstr "Puede arrastrar y soltar elementos del explorador de etiquetas sobre las categorías de usuario para añadirlos a la categoría. Si el origen es una categoría de usuario y se mantiene pulsada la tecla Mayús mientras se arrastra, se moverá el elemento a la nueva categoría. También puede arrastrar y soltar libros de la lista de libros sobre elementos en el explorador de etiquetas; al soltar un libro sobre un elemento, éste se aplicará sobre el libro soltado. Por ejemplo, si se arrastra un libro sobre «Isaac Asimov» se establecerá el autor de dicho libro en «Isaac Asimov». Si se arrastra sobre la etiqueta «Historia» se añadirá la etiqueta «Historia» a las etiquetas del libro."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:559
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:583
 msgid ""
 "You can easily find any item in the Tag browser by clicking the search "
 "button at the lower-right corner. In addition, you can right click on any "
@@ -1282,7 +1332,7 @@ msgid ""
 "authors and control how their names are sorted."
 msgstr "Puede encontrar cualquier elemento en el explorador de etiquetas pulsando en el botón de búsqueda en la esquina inferior derecha. Además, puede pulsar con el botón derecho sobre cualquier elemento y elegir entre varias operaciones. Algunos ejemplos son: ocultarlo, cambiarle el nombre o abrir un cuadro de diálogo de «Administrar x», donde puede administrar los elementos de ese tipo. Por ejemplo el cuadro «Administrar autores» le permite cambiar los nombres de los autores y controlár cómo se ordenan."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:561
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:585
 msgid ""
 "You can control how items are sorted in the Tag browser via the "
 ":guilabel:`Configure` button at the lower-left of the Tag browser. You can "
@@ -1291,11 +1341,11 @@ msgid ""
 " Isaac Asimov is the number of books in your library by Isaac Asimov)."
 msgstr "Puede controlar cómo se ordenan los elementos del explorador de etiquetas por medio del botón :guilabel:`Configurar` en la parte inferior izquierda del explorador de etiquetas. Puede elegir entre ordenar por nombre, calificación promedio o popularidad (popularidad es el número de libros con un elemento en la biblioteca; por ejemplo, la popularidad de Isaac Asimov es el número de libros de Isaac Asimov en la biblioteca)."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:568
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:592
 msgid "Cover grid"
 msgstr "Cuadro de portadas"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:573
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:597
 msgid ""
 "You can have calibre display a grid of book covers instead of a list of "
 "books, if you prefer to browse your collection by covers instead. The "
@@ -1307,11 +1357,11 @@ msgid ""
 "title or authors or rating or a custom column of your own devising."
 msgstr "Puede hacer que calibre muestre un cuadro de portadas en lugar de una lista de libros, si prefiere ver la biblioteca como portadas en lugar de nombres. El :guilabel:`Cuadro de portadas` se activa pulsando en el botón :guilabel:`Distribución` en la esquina inferior derecha de la ventana principal de calibre. Puede personalizar los tamaños de las portadas y el fondo del :guilabel:`Cuadro de portadas` en :guilabel:`Preferencias > Interfaz > Apariencia > Cuadro de portadas`. Puede también mostrar cualquier campo especificado bajo las portadas, como el título, autores o calificación, o una columna personalizada de diseño propio."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:583
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:607
 msgid "Cover browser"
 msgstr "Explorador de portadas"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:588
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:612
 msgid ""
 "In addition to the :guilabel:`Cover grid` described above, you can also have"
 " calibre display covers in the single row. This is activated via the "
@@ -1321,11 +1371,11 @@ msgid ""
 "browser` display itself in a separate popup window."
 msgstr "Además del :guilabel:`Cuadro de portadas` descrito anteriormente, puede hacer que calibre muestre las portadas en una sola fila. Esto se activa por medio del botón :guilabel:`Distribución` en la esquina inferior derecha de la ventana principal. En :guilabel:`Preferencias > Interfaz > Apariencia > Explorador de portadas` puede cambiar el número de portadas que se muestran o hacer que el :guilabel:`Explorador de portadas` se abra en una ventana aparte."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:595
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:619
 msgid "Quickview"
 msgstr "Vista rápida"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:597
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:621
 msgid ""
 "Sometimes you want to select a book and quickly get a list of books with the"
 " same value in some category (authors, tags, publisher, series, etc.) as the"
@@ -1340,53 +1390,53 @@ msgid ""
 "and all the books by the selected author on the right."
 msgstr "En ocasiones querrá seleccionar un libro y obtener rápidamente una lista de libros con el mismo valor de alguna categoría (autores, etiquetas, editorial, serie, etc.) que el libro seleccionado, pero sin cambiar la vista actual de la biblioteca. Puede conseguirlo con la vista rápida. La vista rápida abre una segunda ventana o un panel en la lista de libros que muestra la lista de los libros que coinciden con el valor de interés. Por ejemplo, supongamos que quiere ver una lista de todos los libros con alguno de los autores del libro actualmente seleccionado. Pulse en la casilla de autor que le interesa y pulse la tecla «Q» o el icono de vista rápida en la sección de distribución de la ventana de calibre. Se abrirá una ventana o un panel con todos los autores del libro a la izquierda y todos los libros del autor seleccionado a la  derecha."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:604
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:628
 msgid "Some example Quickview usages: quickly seeing what other books:"
 msgstr "Algunos ejemplos de uso de la vista rápida: ver rápidamente qué otros libros:"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:600
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:624
 msgid "have some tag(s) applied to the currently selected book,"
 msgstr "tienen alguna etiqueta que el libro actualmente seleccionado tiene aplicada,"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:601
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:625
 msgid "are in the same series as the current book"
 msgstr "están en la misma serie que el libro actual"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:602
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:626
 msgid "have the same values in a custom column as the current book"
 msgstr "tienen los mismos valores en una columna personalizada que el libro actual"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:603
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:627
 msgid "are written by one of the same authors of the current book"
 msgstr "están escrtos por alguno de los autores del libro actual"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:604
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:628
 msgid "share values in a custom column"
 msgstr "comparten valores de una columna personalizada"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:606
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:630
 msgid "There are two choices for where the Quickview information appears:"
 msgstr "Hay dos posibles ubicaciones para la información de vista rápida:"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:608
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:632
 msgid ""
 "It can open \"undocked\": on top of the calibre window and will stay open "
 "until you explicitly close it."
 msgstr "Puede abrirse «desacoplada»: por encima de la ventana de calibre y se mantendrá abierta hasta que la cierre."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:609
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:633
 msgid ""
 "It can open \"docked\": as a panel in the book list section of the calibre "
 "main window."
 msgstr "Puede abrirse «acoplada»: como un panel en la sección de lista de libros de la ventana principal de calibre."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:611
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:635
 msgid ""
 "You can move the window from docked to undocked as desired using the "
 "\"Dock/Undock\" button."
 msgstr "Puede cambiar la ventana de acoplada a desacoplada según desee con el botón «Acoplar o desacoplar»"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:613
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:637
 msgid ""
 "The Quickview panel can be left open permanently, in which case it follows "
 "movements on the book list. For example, if you click in the calibre library"
@@ -1399,21 +1449,21 @@ msgid ""
 "panel to see the books with that different value."
 msgstr "El panel de vista rápida puede dejarse abierto permanentemente, y entonces seguirá los movimientos de la lista de libros. Por ejemplo, si pulsa en la vista de biblioteca de calibre sobre una columna de categoría (etiquetas, serie, editorial, autores, etc.) para un libro, el contenido de la ventana de vista rápida cambiará para mostrar en el panel izquierdo los valores de dicha categoría para el libro seleccionado (por ejemplo, las etiquetas para el libro). El primer elemento de la lista será seleccionado y la vista rápida mostrará en el panel derecho todos los libros de la biblioteca que usan ese valor. Pulse en otro valor del panel izquierdo para ver los libros con ese otro valor."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:615
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:639
 msgid ""
 "Double-click on a book in the Quickview window to select that book in the "
 "library view. This will also change the items display in the QuickView "
 "window (the left-hand panel) to show the items in the newly-selected book."
 msgstr "Pulse dos veces sobre un libro en la ventana de vista rápida para seleccionar ese libro en la vista de biblioteca. Esto también cambiará los elementos que se muestran en la ventana de vista rápida (el panel izquierdo) para mostrar los elementos en el nuevo libro seleccionado."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:617
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:641
 msgid ""
 "``Shift-`` or ``Ctrl-`` double-click on a book in the Quickview window to "
 "open the edit metadata dialog on that book in the calibre window. The edited"
 " book will be Quickview'ed when you close the edit metadata dialog."
 msgstr "Pulse dos veces manteniendo pulsada la tecla ``Mayús`` (o ``Ctrl``) sobre un libro en la ventana de vista rápida para abrir el cuadro de modificación de metadatos para dicho libro en la ventana de calibre. El libro modificado estará seleccionado en la vista rápida cuando cierre el cuadro modificación de metadatos."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:619
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:643
 msgid ""
 "You can see if a column can be Quickview'ed by hovering your mouse over the "
 "column heading and looking at the tooltip for that heading. You can also "
@@ -1422,47 +1472,47 @@ msgid ""
 " equivalent to pressing 'Q' in the current cell."
 msgstr "Puede ver si una columna puede ser objeto de la vista rápida colocando el cursor del ratón sobre el encabezado de la columna y mirando la ayuda emergente de dicho encabezado. También puede pulsar con el botón derecho sobre el encabezado de la columna para ver si la opción «Vista rápida» se muestra en el menú, en cuyo caso elegir la opción :guilabel:`Vista rápida` es equivalente a pulsar «Q» en la celda actual."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:621
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:645
 msgid "Options (in :guilabel:`Preferences->Look & feel->Quickview`):"
 msgstr "Opciones (en :guilabel:`Preferencias > Apariencia > Vista rápida`):"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:623
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:647
 msgid ""
 "Respect (or not) the current Virtual library. If checked then Quickview "
 "shows only books in the current Virtual library. Default: respect Virtual "
 "libraries"
 msgstr "Respetar (o no) la biblioteca virtual actual. Si se activa, la vista rápida mostrará sólo los libros en la biblioteca virtual actual. De manera predeterminada se respetan las bibliotecas virtuales."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:624
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:648
 msgid ""
 "Change the Quickview window contents when the column is changed on the book "
 "list using the cursor keys. Default: don't follow changes made with cursor "
 "keys"
 msgstr "Cambiar los contenidos de la ventana de vista rápida cuando se cambia la columna en la lista de libros con las teclas de desplazamiento. De manera predeterminada no se siguen los cambios realizados con las teclas de desplazamiento"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:625
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:649
 msgid ""
 "Change the column being \"quickview'ed\" when a cell in the Quickview window"
 " is double-clicked. Otherwise the book is changed but the column being "
 "examined is not. Default: change the column"
 msgstr "Cambiar la columna activa en la vista rápida cuando se pulsa dos veces sobre una casilla en la ventana de vista rápida. De lo contrario, se cambia el libro pero no la columna que se examina. De manera predeterminada se cambia la columna"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:626
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:650
 msgid ""
 "Change the column being \"quickview'ed\" to the current column when the "
 "return key is pressed in the Quickview panel. Otherwise the book is changed "
 "but the column being examined is not. Default: change the column"
 msgstr "Cambiar la columna activa en la vista rápida a la columna actual cuando se pulsa la tecla Intro en el panel de vista rápida. De lo contrario, se cambia el libro pero no la columna que se examina. De manera predeterminada se cambia la columna"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:627
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:651
 msgid "Choose which columns are shown in the Quickview window/panel."
 msgstr "Elegir qué columnas se muestran en la ventana o panel de vista rápida."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:636
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:660
 msgid "Jobs"
 msgstr "Tareas"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:640
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:664
 msgid ""
 "The Jobs panel shows the number of currently running jobs. Jobs are tasks "
 "that run in a separate process. They include converting e-books and talking "
@@ -1472,11 +1522,11 @@ msgid ""
 "have completed successfully."
 msgstr "El panel de tareas muestra el número de tareas actualmente en ejecución. Las tareas son procesos que se ejecutan de manera separada. Incluyen la conversión de libros y la comunicación con el dispositivo lector. Puede pulsar sobre el panel de tareas para acceder a la lista de tareas. Una vez completada una tarea puede ver un registro detallado de dicha tarea pulsando dos veces sobre ella en la lista. Esto es útil para depurar tareas que no se hayan completado con éxito."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:647
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:671
 msgid "Keyboard shortcuts"
 msgstr "Atajos de teclado"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:649
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:673
 msgid ""
 "calibre has several keyboard shortcuts to save you time and mouse movement. "
 "These shortcuts are active in the book list view (when you're not editing "
@@ -1485,402 +1535,402 @@ msgid ""
 "customised by clicking the :guilabel:`Preferences` button in the viewer."
 msgstr "calibre tiene varios atajos de teclado que pueden ahorrarle tiempo y movimientos de ratón. Estos atajos están activos en la vista de lista de libros (mientras no se estén modificando los detalles de un libro particular), y la mayoría de ellos afecta al libro que esté seleccionado. El visor de libros de calibre tiene sus propios atajos que pueden personalizarse pulsando en el botón :guilabel:`Preferencias` del visor."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:653
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:677
 msgid ""
 "Note: The calibre keyboard shortcuts do not require a modifier key (Command,"
 " Option, Control, etc.), unless specifically noted. You only need to press "
 "the letter key, e.g. E to edit."
 msgstr "Nota: Los atajos de teclado de calibre no requieren una tecla modificadora (Alt, Opción, Control, etc.), a no ser que se especifique lo contrario. Sólo necesita presionar tecla correspondiente, por ejemplo E para editar."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:655
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:679
 msgid "Keyboard shortcuts for the main calibre program"
 msgstr "Atajos de teclado para el programa principal de calibre"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:659
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:683
 msgid "Keyboard shortcut"
 msgstr "Atajos de teclado"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:660
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:684
 msgid "Action"
 msgstr "Acción"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:661
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:685
 msgid ":kbd:`F2 (Enter in macOS)`"
 msgstr ":kbd:`F2 (Tecla Intro en macOS)`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:662
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:686
 msgid "Edit the metadata of the currently selected field in the book list."
 msgstr "Modificar los metadatos del campo actualmente seleccionado en la lista de libros"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:663
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:687
 msgid ":kbd:`A`"
 msgstr ":kbd:`A`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:665
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:689
 msgid ":kbd:`Shift+A`"
 msgstr ":kbd:`Mayús+A`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:666
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:690
 msgid "Add formats to the selected books"
 msgstr "Añadir formatos a los libros seleccionados"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:667
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:691
 msgid ":kbd:`C`"
 msgstr ":kbd:`C`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:668
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:692
 msgid "Convert selected books"
 msgstr "Convertir los libros seleccionados"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:669
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:693
 msgid ":kbd:`D`"
 msgstr ":kbd:`D`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:671
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:695
 msgid ":kbd:`Del`"
 msgstr ":kbd:`Supr`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:672
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:696
 msgid "Remove selected books"
 msgstr "Eliminar los libros seleccionados"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:673
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:697
 msgid ":kbd:`E`"
 msgstr ":kbd:`E`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:674
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:698
 msgid "Edit metadata of selected books"
 msgstr "Modificar metadatos de los libros seleccionados"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:675
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:699
 msgid ":kbd:`G`"
 msgstr ":kbd:`G`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:676
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:700
 msgid "Get books"
 msgstr "Obtener libros"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:677
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:701
 msgid ":kbd:`I`"
 msgstr ":kbd:`I`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:678
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:702
 msgid "Show Book details"
 msgstr "Mostrar detalles del libro"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:679
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:703
 msgid ":kbd:`K`"
 msgstr ":kbd:`K`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:680
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:704
 msgid "Edit Table of Contents"
 msgstr "Modificar índice"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:681
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:705
 msgid ":kbd:`M`"
 msgstr ":kbd:`M`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:682
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:706
 msgid "Merge selected records"
 msgstr "Unir los registros de libros seleccionados"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:683
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:707
 msgid ":kbd:`Alt+M`"
 msgstr ":kbd:`Alt+M`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:684
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:708
 msgid "Merge selected records, keeping originals"
 msgstr "Unir los registros seleccionados, mantener los originales"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:685
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:709
 msgid ":kbd:`O`"
 msgstr ":kbd:`O`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:686
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:710
 msgid "Open containing folder"
 msgstr "Abrir carpeta contenedora"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:687
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:711
 msgid ":kbd:`P`"
 msgstr ":kbd:`P`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:688
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:712
 msgid "Polish books"
 msgstr "Pulir libros"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:689
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:713
 msgid ":kbd:`S`"
 msgstr ":kbd:`S`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:691
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:715
 msgid ":kbd:`T`"
 msgstr ":kbd:`T`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:692
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:716
 msgid "Edit book"
 msgstr "Modificar libro"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:693
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:717
 msgid ":kbd:`V`"
 msgstr ":kbd:`V`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:695
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:719
 msgid ":kbd:`Alt+V/Cmd+V in macOS`"
 msgstr ":kbd:`Alt+V (Cmd+V en macOS)`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:696
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:720
 msgid "View specific format"
 msgstr "Mostrar un formato específico"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:697
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:721
 msgid ":kbd:`Alt+Shift+J`"
 msgstr ":kbd:`Alt+Mayús+J`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:698
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:722
 msgid "Toggle jobs list"
 msgstr "Conmutar lista de tareas"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:699
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:723
 msgid ":kbd:`Alt+Shift+B`"
 msgstr ":kbd:`Alt+Mayús+B`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:700
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:724
 msgid "Toggle Cover browser"
 msgstr "Conmutar explorador de portadas"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:701
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:725
 msgid ":kbd:`Alt+Shift+D`"
 msgstr ":kbd:`Alt+Mayús+D`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:702
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:726
 msgid "Toggle Book details panel"
 msgstr "Conmutar detalles del libro"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:703
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:727
 msgid ":kbd:`Alt+Shift+T`"
 msgstr ":kbd:`Alt+Mayús+T`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:704
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:728
 msgid "Toggle Tag browser"
 msgstr "Conmutar explorador de etiquetas"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:705
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:729
 msgid ":kbd:`Alt+Shift+G`"
 msgstr ":kbd:`Alt+Mayús+G`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:706
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:730
 msgid "Toggle Cover grid"
 msgstr "Conmutar cuadro de portadas"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:707
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:731
 msgid ":kbd:`Alt+A`"
 msgstr ":kbd:`Alt+A`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:708
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:732
 msgid "Show books by the same author as the current book"
 msgstr "Mostrar libros del mismo autor que el libro actual"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:709
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:733
 msgid ":kbd:`Alt+T`"
 msgstr ":kbd:`Alt+T`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:710
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:734
 msgid "Show books with the same tags as current book"
 msgstr "Mostrar libros con las mismas etiquetas que el libro actual"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:711
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:735
 msgid ":kbd:`Alt+P`"
 msgstr ":kbd:`Alt+P`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:712
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:736
 msgid "Show books by the same publisher as current book"
 msgstr "Mostrar libros de la misma editorial que el libro actual"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:713
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:737
 msgid ":kbd:`Alt+Shift+S`"
 msgstr ":kbd:`Alt+Mayús+S`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:714
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:738
 msgid "Show books in the same series as current book"
 msgstr "Mostrar libros de la misma serie que el libro actual"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:715
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:739
 msgid ":kbd:`/, Ctrl+F`"
 msgstr ":kbd:`/, Ctrl+F`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:716
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:740
 msgid "Focus the Search bar"
 msgstr "Activar la barra de búsqueda"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:717
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:741
 msgid ":kbd:`Shift+Ctrl+F`"
 msgstr ":kbd:`Ctrl+Mayús+F`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:718
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:742
 msgid "Open the advanced search dialog"
 msgstr "Abrir el cuadro de diálogo de búsqueda avanzada"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:719
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:743
 msgid ":kbd:`Shift+Alt+F`"
 msgstr ":kbd:`Mayús+Alt+F`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:720
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:744
 msgid "Toggle the Search bar"
 msgstr "Conmutar la barra de búsqueda"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:721
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:745
 msgid ":kbd:`Esc`"
 msgstr ":kbd:`Esc`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:722
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:746
 msgid "Clear the current search"
 msgstr "Limpiar la búsqueda actual"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:723
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:747
 msgid ":kbd:`Shift+Esc`"
 msgstr ":kbd:`Mayús+Esc`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:724
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:748
 msgid "Focus the book list"
 msgstr "Llevar el foco a la lista de libros"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:725
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:749
 msgid ":kbd:`Ctrl+Esc`"
 msgstr ":kbd:`Ctrl+Esc`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:726
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:750
 msgid "Clear the Virtual library"
 msgstr "Limpiar la biblioteca virtual"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:727
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:751
 msgid ":kbd:`Alt+Esc`"
 msgstr ":kbd:`Alt+Esc`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:728
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:752
 msgid "Clear the additional restriction"
 msgstr "Limpiar la restricción adicional"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:729
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:753
 msgid ":kbd:`Ctrl+*`"
 msgstr ":kbd:`Ctrl+*`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:730
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:754
 msgid "Create a temporary Virtual library based on the current search"
 msgstr "Crear una biblioteca virtual temporal basada en la búsqueda actual"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:731
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:755
 msgid ":kbd:`Ctrl+Right`"
 msgstr ":kbd:`Ctrl+Derecha`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:732
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:756
 msgid "Select the next Virtual library tab"
 msgstr "Seleccionar la siguiente pestaña de biblioteca virtual"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:733
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:757
 msgid ":kbd:`Ctrl+Left`"
 msgstr ":kbd:`Ctrl+Izquierda`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:734
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:758
 msgid "Select the previous Virtual library tab"
 msgstr "Seleccionar la pestaña de biblioteca virtual anterior"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:735
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:759
 msgid ":kbd:`N or F3`"
 msgstr ":kbd:`N, F3`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:736
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:760
 msgid ""
 "Find the next book that matches the current search (only works if search "
 "highlighting is turned on in search preferences)"
 msgstr "Encontrar el siguiente libro que coincida con el criterio de búsqueda (sólo funciona si el resaltado de búsquedas está activado en las preferencias de búsqueda)"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:737
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:761
 msgid ":kbd:`Shift+N or Shift+F3`"
 msgstr ":kbd:`Mayús+N, Mayús+F3`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:738
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:762
 msgid ""
 "Find the previous book that matches the current search (only works if search"
 " highlighting is turned on in search preferences)"
 msgstr "Encontrar el libro anterior que coincida con el criterio de búsqueda (sólo funciona si el resaltado de búsquedas está activado en las preferencias de búsqueda)"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:739
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:763
 msgid ":kbd:`Ctrl+D`"
 msgstr ":kbd:`Ctrl+D`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:740
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:764
 msgid "Download metadata and covers"
 msgstr "Descargar metadatos y portadas"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:741
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:765
 msgid ":kbd:`Ctrl+R`"
 msgstr ":kbd:`Ctrl+R`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:742
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:766
 msgid "Restart calibre"
 msgstr "Reiniciar calibre"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:743
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:767
 msgid ":kbd:`Ctrl+Shift+R`"
 msgstr ":kbd:`Ctrl+Mayús+R`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:744
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:768
 msgid "Restart calibre in debug mode"
 msgstr "Reiniciar calibre en modo de depuración"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:745
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:769
 msgid ":kbd:`Shift+Ctrl+E`"
 msgstr ":kbd:`Ctrl+Mayús+E`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:746
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:770
 msgid "Add empty books to calibre"
 msgstr "Añadir libros vacíos a calibre"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:747
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:771
 msgid ":kbd:`Ctrl+M`"
 msgstr ":kbd:`Ctrl+M`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:748
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:772
 msgid "Toggle mark/unmarked status on selected books"
 msgstr "Conmutar marca para los libros seleccionados"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:749
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:773
 msgid ":kbd:`Q`"
 msgstr ":kbd:`Q`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:750
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:774
 msgid ""
 "Open the Quick View popup for viewing books in related series/tags/etc."
 msgstr "Abrir la ventana de vista rápida para ver libros relacionados por serie, etiquetas, etc."
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:751
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:775
 msgid ":kbd:`Shift+Q`"
 msgstr ":kbd:`Mayús+Q`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:752
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:776
 msgid "Focus the opened Quick View panel"
 msgstr "Llevar el foco al panel de vista rápida abierto"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:753
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:777
 msgid ":kbd:`Shift+S`"
 msgstr ":kbd:`Mayús+S`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:754
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:778
 msgid "Perform a search in the Quick View panel"
 msgstr "Buscar en el panel de vista rápida"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:755
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:779
 msgid ":kbd:`F5`"
-msgstr ""
+msgstr ":kbd:`F5`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:756
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:780
 msgid "Re-apply the current sort"
-msgstr ""
+msgstr "Volver a aplicar el orden actual"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:757
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:781
 msgid ":kbd:`Ctrl+Q`"
 msgstr ":kbd:`Ctrl+Q`"
 
-#: ../../home/runner/work/calibre/calibre/manual/gui.rst:758
+#: ../../home/runner/work/calibre/calibre/manual/gui.rst:782
 msgid "Quit calibre"
 msgstr "Salir de calibre"

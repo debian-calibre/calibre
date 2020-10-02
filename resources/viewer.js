@@ -6615,10 +6615,12 @@ return parser;
             ρσ_d["net_search_url"] = "https://google.com/search?q={q}";
             ρσ_d["selection_bar_actions"] = ['copy', 'lookup', 'highlight', 'remove_highlight', 'search_net', 'clear'];
             ρσ_d["selection_bar_quick_highlights"] = [];
+            ρσ_d["skipped_dialogs"] = {};
             return ρσ_d;
         }).call(this);
         is_local_setting = (function(){
             var ρσ_d = Object.create(null);
+            ρσ_d["skipped_dialogs"] = true;
             ρσ_d["background_image_fade"] = true;
             ρσ_d["background_image_style"] = true;
             ρσ_d["background_image"] = true;
@@ -9673,6 +9675,8 @@ return this.__repr__();
 
         var create_button = ρσ_modules.widgets.create_button;
 
+        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
+
         modal_container = null;
         modal_count = 0;
         add_extra_css((function() {
@@ -9785,7 +9789,15 @@ return this.__repr__();
             self.modals.push(new Modal(create_func, on_close, show_close, onkeydown));
             modal_id = (ρσ_expr_temp = self.modals)[ρσ_expr_temp.length-1].id;
             self.update();
-            self.modal_container.focus();
+            window.setTimeout((function() {
+                var ρσ_anonfunc = function () {
+                    self.modal_container.focus();
+                };
+                if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                    __module__ : {value: "modals"}
+                });
+                return ρσ_anonfunc;
+            })(), 0);
             return modal_id;
         };
         if (!ModalContainer.prototype.show_modal.__defaults__) Object.defineProperties(ModalContainer.prototype.show_modal, {
@@ -10079,6 +10091,10 @@ return this.__repr__();
             var callback = ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[2];
             var yes_text = (arguments[3] === undefined || ( 3 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? question_dialog.__defaults__.yes_text : arguments[3];
             var no_text = (arguments[4] === undefined || ( 4 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? question_dialog.__defaults__.no_text : arguments[4];
+            var skip_dialog_name = (arguments[5] === undefined || ( 5 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? question_dialog.__defaults__.skip_dialog_name : arguments[5];
+            var skip_dialog_msg = (arguments[6] === undefined || ( 6 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? question_dialog.__defaults__.skip_dialog_msg : arguments[6];
+            var skip_dialog_skipped_value = (arguments[7] === undefined || ( 7 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? question_dialog.__defaults__.skip_dialog_skipped_value : arguments[7];
+            var skip_dialog_skip_precheck = (arguments[8] === undefined || ( 8 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? question_dialog.__defaults__.skip_dialog_skip_precheck : arguments[8];
             var ρσ_kwargs_obj = arguments[arguments.length-1];
             if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
             if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "yes_text")){
@@ -10087,15 +10103,36 @@ return this.__repr__();
             if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "no_text")){
                 no_text = ρσ_kwargs_obj.no_text;
             }
-            var called;
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "skip_dialog_name")){
+                skip_dialog_name = ρσ_kwargs_obj.skip_dialog_name;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "skip_dialog_msg")){
+                skip_dialog_msg = ρσ_kwargs_obj.skip_dialog_msg;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "skip_dialog_skipped_value")){
+                skip_dialog_skipped_value = ρσ_kwargs_obj.skip_dialog_skipped_value;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "skip_dialog_skip_precheck")){
+                skip_dialog_skip_precheck = ρσ_kwargs_obj.skip_dialog_skip_precheck;
+            }
+            var called, skip_box, sd, skipped_dialogs;
             yes_text = yes_text || _("Yes");
             no_text = no_text || _("No");
             called = Object.create(null);
             function keyaction(yes, close_modal) {
+                var sd, skipped_dialogs;
                 if (called.done) {
                     return;
                 }
                 called.done = true;
+                if (skip_dialog_name) {
+                    if (!skip_box.querySelector("input").checked) {
+                        sd = get_session_data();
+                        skipped_dialogs = Object.assign({}, sd.get("skipped_dialogs", {}));
+                        skipped_dialogs[(typeof skip_dialog_name === "number" && skip_dialog_name < 0) ? skipped_dialogs.length + skip_dialog_name : skip_dialog_name] = (new Date).toISOString();
+                        sd.set("skipped_dialogs", skipped_dialogs);
+                    }
+                }
                 if (close_modal) {
                     close_modal();
                 }
@@ -10124,10 +10161,24 @@ return this.__repr__();
                 __module__ : {value: "modals"}
             });
 
+            skip_box = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-top: 2ex;"})]);
+            if (skip_dialog_name) {
+                sd = get_session_data();
+                skipped_dialogs = sd.get("skipped_dialogs", {});
+                if (skipped_dialogs[(typeof skip_dialog_name === "number" && skip_dialog_name < 0) ? skipped_dialogs.length + skip_dialog_name : skip_dialog_name]) {
+                    return callback(skip_dialog_skipped_value);
+                }
+                skip_dialog_msg = skip_dialog_msg || _("Show this confirmation again");
+                skip_box.appendChild(E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "checkbox", name: "skip_dialog"})]), " ", skip_dialog_msg));
+                if (skip_dialog_skip_precheck) {
+                    skip_box.querySelector("input").checked = true;
+                }
+            } else {
+                skip_box.style.display = "none";
+            }
             ρσ_interpolate_kwargs.call(this, create_custom_dialog, [title, (function() {
                 var ρσ_anonfunc = function (parent, close_modal) {
-                    parent.appendChild(E.div(E.div(msg), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, create_button, [yes_text, "check", keyaction.bind(null, true, close_modal)].concat([ρσ_desugar_kwargs({highlight: true})])), " ", create_button(no_text, "close", keyaction.bind(null, false, close_modal))].concat([ρσ_desugar_kwargs({class_: "button-box"})]))));
-                    parent.lastChild.focus();
+                    parent.appendChild(E.div(E.div(msg), skip_box, ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, create_button, [yes_text, "check", keyaction.bind(null, true, close_modal)].concat([ρσ_desugar_kwargs({highlight: true})])), " ", create_button(no_text, "close", keyaction.bind(null, false, close_modal))].concat([ρσ_desugar_kwargs({class_: "button-box"})]))));
                 };
                 if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
                     __argnames__ : {value: ["parent", "close_modal"]},
@@ -10137,9 +10188,9 @@ return this.__repr__();
             })()].concat([ρσ_desugar_kwargs({on_close: keyaction.bind(null, false, null), onkeydown: on_keydown})]));
         };
         if (!question_dialog.__defaults__) Object.defineProperties(question_dialog, {
-            __defaults__ : {value: {yes_text:null, no_text:null}},
+            __defaults__ : {value: {yes_text:null, no_text:null, skip_dialog_name:null, skip_dialog_msg:null, skip_dialog_skipped_value:true, skip_dialog_skip_precheck:true}},
             __handles_kwarg_interpolation__ : {value: true},
-            __argnames__ : {value: ["title", "msg", "callback", "yes_text", "no_text"]},
+            __argnames__ : {value: ["title", "msg", "callback", "yes_text", "no_text", "skip_dialog_name", "skip_dialog_msg", "skip_dialog_skipped_value", "skip_dialog_skip_precheck"]},
             __module__ : {value: "modals"}
         });
 
@@ -23031,6 +23082,7 @@ return this.__repr__();
                     ρσ_d["back"] = desc(['Alt+ArrowLeft', 'Shift+ArrowLeft'], "scroll", _("Back"));
                     ρσ_d["forward"] = desc(['Alt+ArrowRight', 'Shift+ArrowRight'], "scroll", _("Forward"));
                     ρσ_d["toggle_toc"] = desc("Ctrl+t", "ui", _("Show/hide Table of Contents"));
+                    ρσ_d["copy_to_clipboard"] = desc("Ctrl+C", "ui", _("Copy to clipboard"));
                     ρσ_d["start_search"] = desc(['/', 'Ctrl+f'], "ui", _("Start search"));
                     ρσ_d["next_match"] = desc(['F3', 'Enter'], "ui", _("Find next"));
                     ρσ_d["previous_match"] = desc(['Shift+F3'], "ui", _("Find previous"));
@@ -24361,7 +24413,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.0.1";
+        CALIBRE_VERSION = "5.1.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -25826,10 +25878,16 @@ return this.__repr__();
         });
         IframeBoss.prototype.copy_selection = function copy_selection() {
             var self = this;
-            var text;
-            text = window.getSelection().toString();
+            var s, text, container, i;
+            s = window.getSelection();
+            text = s.toString();
             if (text) {
-                ρσ_interpolate_kwargs.call(self, self.send_message, ["copy_text_to_clipboard"].concat([ρσ_desugar_kwargs({text: text})]));
+                container = document.createElement("div");
+                for (var ρσ_Index8 = 0; ρσ_Index8 < s.rangeCount; ρσ_Index8++) {
+                    i = ρσ_Index8;
+                    container.appendChild(s.getRangeAt(i).cloneContents());
+                }
+                ρσ_interpolate_kwargs.call(self, self.send_message, ["copy_text_to_clipboard"].concat([ρσ_desugar_kwargs({text: text, html: container.innerHTML})]));
             }
         };
         if (!IframeBoss.prototype.copy_selection.__module__) Object.defineProperties(IframeBoss.prototype.copy_selection, {
@@ -35310,6 +35368,8 @@ return this.__repr__();
             sc_name = shortcut_for_key_event(ev, self.view.keyboard_shortcut_map);
             if (sc_name === "show_chrome") {
                 self.clear_selection();
+            } else if (sc_name === "copy_to_clipboard") {
+                self.copy_to_clipboard();
             } else if (ρσ_in(sc_name, ["up", "down", "pageup", "pagedown", "left", "right"])) {
                 ρσ_interpolate_kwargs.call(self, self.send_message, ["trigger-shortcut"].concat([ρσ_desugar_kwargs({name: sc_name})]));
             } else if (sc_name === "start_search") {
@@ -35752,9 +35812,7 @@ return this.__repr__();
         });
         SelectionBar.prototype.copy_to_clipboard = function copy_to_clipboard() {
             var self = this;
-            if (self.view.currently_showing.selection.text) {
-                ui_operations.copy_selection(self.view.currently_showing.selection.text);
-            }
+            self.view.copy_to_clipboard();
         };
         if (!SelectionBar.prototype.copy_to_clipboard.__module__) Object.defineProperties(SelectionBar.prototype.copy_to_clipboard, {
             __module__ : {value: "read_book.selection_bar"}
@@ -35862,7 +35920,7 @@ return this.__repr__();
             var annot_id;
             annot_id = self.view.currently_showing.selection.annot_id;
             if (annot_id) {
-                question_dialog(_("Are you sure?"), _("Are you sure you want to delete this highlight permanently?"), (function() {
+                ρσ_interpolate_kwargs.call(this, question_dialog, [_("Are you sure?"), _("Are you sure you want to delete this highlight permanently?"), (function() {
                     var ρσ_anonfunc = function (yes) {
                         if (yes) {
                             self.remove_highlight_with_id(annot_id);
@@ -35873,7 +35931,7 @@ return this.__repr__();
                         __module__ : {value: "read_book.selection_bar"}
                     });
                     return ρσ_anonfunc;
-                })());
+                })()].concat([ρσ_desugar_kwargs({skip_dialog_name: "confirm_remove_highlight"})]));
             }
         };
         if (!SelectionBar.prototype.remove_highlight.__module__) Object.defineProperties(SelectionBar.prototype.remove_highlight, {
@@ -37675,6 +37733,7 @@ return this.__repr__();
         var create_word_actions_panel = ρσ_modules["read_book.word_actions"].create_word_actions_panel;
 
         var get_device_uuid = ρσ_modules.session.get_device_uuid;
+        var session_defaults = ρσ_modules.session.defaults;
 
         var default_context_menu_should_be_allowed = ρσ_modules.utils.default_context_menu_should_be_allowed;
         var full_screen_element = ρσ_modules.utils.full_screen_element;
@@ -38228,7 +38287,11 @@ return this.__repr__();
                     return ρσ_anonfunc;
                 })(), "bug"), ac(_("Reset interface"), _("Reset viewer panels, toolbars and scrollbars to defaults"), (function() {
                     var ρσ_anonfunc = function () {
-                        [self.overlay.hide(), ui_operations.reset_interface()];
+                        var sd;
+                        self.overlay.hide();
+                        ui_operations.reset_interface();
+                        sd = get_session_data();
+                        sd.set("skipped_dialogs", session_defaults.skipped_dialogs);
                     };
                     if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
                         __module__ : {value: "read_book.overlay"}
@@ -40059,6 +40122,7 @@ return this.__repr__();
             View.prototype.__init__.apply(this, arguments);
         }
         Object.defineProperty(View.prototype, "__bind_methods__", {value: function () {
+            this.copy_to_clipboard = View.prototype.copy_to_clipboard.bind(this);
             this.set_scrollbar_visibility = View.prototype.set_scrollbar_visibility.bind(this);
             this.toggle_scrollbar = View.prototype.toggle_scrollbar.bind(this);
             this.on_annotations_message = View.prototype.on_annotations_message.bind(this);
@@ -40299,7 +40363,7 @@ return this.__repr__();
                 ρσ_d["annotations"] = self.on_annotations_message;
                 ρσ_d["copy_text_to_clipboard"] = (function() {
                     var ρσ_anonfunc = function (data) {
-                        ui_operations.copy_selection(data.text);
+                        ui_operations.copy_selection(data.text, data.html);
                     };
                     if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
                         __argnames__ : {value: ["data"]},
@@ -40357,6 +40421,13 @@ return this.__repr__();
         });
         View.__argnames__ = View.prototype.__init__.__argnames__;
         View.__handles_kwarg_interpolation__ = View.prototype.__init__.__handles_kwarg_interpolation__;
+        View.prototype.copy_to_clipboard = function copy_to_clipboard() {
+            var self = this;
+            self.iframe_wrapper.send_message("copy_selection");
+        };
+        if (!View.prototype.copy_to_clipboard.__module__) Object.defineProperties(View.prototype.copy_to_clipboard, {
+            __module__ : {value: "read_book.view"}
+        });
         View.prototype.set_scrollbar_visibility = function set_scrollbar_visibility(visible) {
             var self = this;
             var sd;
@@ -40604,6 +40675,8 @@ return this.__repr__();
                 ui_operations.toggle_highlights();
             } else if (data.name === "new_bookmark") {
                 self.new_bookmark();
+            } else if (data.name === "copy_to_clipboard") {
+                self.copy_to_clipboard();
             } else if (data.name === "toggle_inspector") {
                 ui_operations.toggle_inspector();
             } else if (data.name === "toggle_lookup") {
@@ -43031,11 +43104,11 @@ return this.__repr__();
                 return ρσ_anonfunc;
             })();
             ui_operations.copy_selection = (function() {
-                var ρσ_anonfunc = function (text) {
-                    to_python.copy_selection(text || null);
+                var ρσ_anonfunc = function (text, html) {
+                    to_python.copy_selection(text || null, html || null);
                 };
                 if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["text"]},
+                    __argnames__ : {value: ["text", "html"]},
                     __module__ : {value: null}
                 });
                 return ρσ_anonfunc;

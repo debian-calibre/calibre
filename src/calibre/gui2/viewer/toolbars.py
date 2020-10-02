@@ -44,7 +44,7 @@ def all_actions():
             'back': Action('back.png', _('Back')),
             'forward': Action('forward.png', _('Forward')),
             'open': Action('document_open.png', _('Open e-book')),
-            'copy': Action('edit-copy.png', _('Copy to clipboard')),
+            'copy': Action('edit-copy.png', _('Copy to clipboard'), 'copy_to_clipboard'),
             'increase_font_size': Action('font_size_larger.png', _('Increase font size'), 'increase_font_size'),
             'decrease_font_size': Action('font_size_smaller.png', _('Decrease font size'), 'decrease_font_size'),
             'fullscreen': Action('page.png', _('Toggle full screen'), 'toggle_full_screen'),
@@ -64,7 +64,6 @@ def all_actions():
             'print': Action('print.png', _('Print book'), 'print'),
             'preferences': Action('config.png', _('Preferences'), 'preferences'),
             'metadata': Action('metadata.png', _('Show book metadata'), 'metadata'),
-            'highlight': Action('highlight.png', _('Highlight text in the book'), 'create_annotation'),
             'toggle_highlights': Action('highlight_only_on.png', _('Browse highlights in book'), 'toggle_highlights'),
         }
         all_actions.ans = Actions(amap)
@@ -73,7 +72,7 @@ def all_actions():
 
 DEFAULT_ACTIONS = (
     'back', 'forward', None, 'open', 'copy', 'increase_font_size', 'decrease_font_size', 'fullscreen', 'color_scheme',
-    None, 'previous', 'next', None, 'toc', 'search', 'bookmarks', 'lookup', 'highlight', 'chrome', None,
+    None, 'previous', 'next', None, 'toc', 'search', 'bookmarks', 'lookup', 'toggle_highlights', 'chrome', None,
     'mode', 'print', 'preferences', 'metadata', 'inspector'
 )
 
@@ -151,8 +150,7 @@ class ActionsToolBar(ToolBar):
         a.setMenu(m)
         m.aboutToShow.connect(self.populate_open_menu)
         connect_lambda(a.triggered, self, lambda self: self.open_book_at_path.emit(None))
-        self.copy_action = a = page.action(QWebEnginePage.Copy)
-        a.setIcon(aa.copy.icon), a.setText(aa.copy.text)
+        self.copy_action = shortcut_action('copy')
         self.increase_font_size_action = shortcut_action('increase_font_size')
         self.decrease_font_size_action = shortcut_action('decrease_font_size')
         self.fullscreen_action = shortcut_action('fullscreen')
@@ -170,7 +168,6 @@ class ActionsToolBar(ToolBar):
         a.setCheckable(True)
         self.reference_action = a = shortcut_action('reference')
         a.setCheckable(True)
-        self.highlight_action = a = shortcut_action('highlight')
         self.toggle_highlights_action = self.highlights_action = a = shortcut_action('toggle_highlights')
         a.setCheckable(True)
         self.lookup_action = a = shortcut_action('lookup')
