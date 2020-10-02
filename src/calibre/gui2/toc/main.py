@@ -628,8 +628,8 @@ class TreeWidget(QTreeWidget):  # {{{
 
     def bulk_rename(self):
         from calibre.gui2.tweak_book.file_list import get_bulk_rename_settings
-        sort_map = {item:i for i, item in enumerate(self.iter_items())}
-        items = sorted(self.selectedItems(), key=lambda x:sort_map.get(x, -1))
+        sort_map = {id(item):i for i, item in enumerate(self.iter_items())}
+        items = sorted(self.selectedItems(), key=lambda x:sort_map.get(id(x), -1))
         settings = get_bulk_rename_settings(self, len(items), prefix=_('Chapter '), msg=_(
             'All selected items will be renamed to the form prefix-number'), sanitize=lambda x:x, leading_zeros=False)
         fmt, num = settings['prefix'], settings['start']
@@ -665,7 +665,7 @@ class TreeWidget(QTreeWidget):  # {{{
             return ' [%s]'%sc
 
         if item is not None:
-            m = QMenu()
+            m = QMenu(self)
             m.addAction(QIcon(I('edit_input.png')), _('Change the location this entry points to'), self.edit_item)
             m.addAction(QIcon(I('modified.png')), _('Bulk rename all selected items'), self.bulk_rename)
             m.addAction(QIcon(I('trash.png')), _('Remove all selected items'), self.del_items)
@@ -683,7 +683,7 @@ class TreeWidget(QTreeWidget):  # {{{
                 m.addAction(QIcon(I('forward.png')), (_('Indent "%s"')%ci)+key(Qt.Key_Right), self.move_right)
 
             m.addSeparator()
-            case_menu = QMenu(_('Change case'))
+            case_menu = QMenu(_('Change case'), m)
             case_menu.addAction(_('Upper case'), self.upper_case)
             case_menu.addAction(_('Lower case'), self.lower_case)
             case_menu.addAction(_('Swap case'), self.swap_case)
