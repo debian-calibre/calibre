@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "Ekim 02, 2020" "5.1.0" "calibre"
+.TH "CALIBREDB" "1" "Ekim 07, 2020" "5.2.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -505,15 +505,17 @@ Yolları küçük harflere dönüştür.
 .sp
 .nf
 .ft C
-calibredb catalog /hedef/yolu.(csv|epub|mobi|xml...)  [seçenekler]
+calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Bir kataloğu /hedef/yolu uzantısında belirtildiği biçimde dışa aktar.
-Seçenekler genel katalog çıktısında girdilerin nasıl görüneceğini kontrol eder.
-Farklı katalog biçimlerinin farklı seçenekleri desteklediğini unutmayın.
+Export a \fBcatalog\fP in format specified by path/to/destination extension.
+Options control how entries are displayed in the generated \fBcatalog\fP output.
+Note that different \fBcatalog\fP formats support different sets of options. To
+see the different options, specify the name of the output file and then the
+\-\-help option.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -810,14 +812,14 @@ Raporların virgülle ayrılmış listesi. Varsayılan: tümü
 .sp
 .nf
 .ft C
-calibredb list_categories [seçenekler]
+calibredb list_categories [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Veri tabanındaki kategori bilgisinin raporunu oluştur. Bilgi etiketler
-panelinde gösterilenin eşidir.
+Produce a report of the category information in the database. The
+information is the equivalent of what is shown in the Tag browser.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0

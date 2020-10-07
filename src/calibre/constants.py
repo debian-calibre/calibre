@@ -5,7 +5,7 @@ from polyglot.builtins import map, unicode_type, environ_item, hasenv, getenv, a
 import sys, locale, codecs, os, importlib, collections
 
 __appname__   = 'calibre'
-numeric_version = (5, 1, 0)
+numeric_version = (5, 2, 0)
 __version__   = '.'.join(map(unicode_type, numeric_version))
 git_version   = None
 __author__    = "Kovid Goyal <kovid@kovidgoyal.net>"
@@ -214,7 +214,8 @@ class Plugins(collections.Mapping):
     def load_plugin(self, name):
         if name in self._plugins:
             return
-        sys.path.insert(0, plugins_loc)
+        if not isfrozen:
+            sys.path.insert(0, plugins_loc)
         try:
             del sys.modules[name]
         except KeyError:
@@ -229,7 +230,8 @@ class Plugins(collections.Mapping):
             except Exception:
                 plugin_err = as_unicode(native_string_type(err), encoding=preferred_encoding, errors='replace')
         self._plugins[name] = p, plugin_err
-        sys.path.remove(plugins_loc)
+        if not isfrozen:
+            sys.path.remove(plugins_loc)
 
     def __iter__(self):
         return iter(self.plugins)
@@ -295,9 +297,15 @@ else:
 # }}}
 
 
-dv = getenv('CALIBRE_DEVELOP_FROM')
-is_running_from_develop = bool(getattr(sys, 'frozen', False) and dv and os.path.abspath(dv) in sys.path)
-del dv
+is_running_from_develop = False
+if getattr(sys, 'frozen', False):
+    try:
+        from bypy_importer import running_in_develop_mode
+    except ImportError:
+        pass
+    else:
+        is_running_from_develop = running_in_develop_mode()
+
 in_develop_mode = getenv('CALIBRE_ENABLE_DEVELOP_MODE') == '1'
 
 

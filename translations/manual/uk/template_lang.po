@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-23 07:57+0000\n"
-"PO-Revision-Date: 2020-09-22 05:43+0000\n"
+"POT-Creation-Date: 2020-10-06 07:47+0000\n"
+"PO-Revision-Date: 2020-10-03 15:20+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
 "MIME-Version: 1.0\n"
@@ -578,9 +578,9 @@ msgstr "Мова програмування є подібною до ``функ�
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:190
 msgid ""
 "The syntax of the language is shown by the following grammar. For a "
-"discussion of 'compare' and 'if_expression' see :ref:`General Program Mode "
-"<general_mode>`:::"
-msgstr "Синтаксис мови викладено у наведеній нижче граматиці. Обговорення щодо «compare» і «if_expression» наведено у розділі :ref:`Загальний режим програмування <general_mode>`:::"
+"discussion of 'compare','if_expression', and 'template_call' see "
+":ref:`General Program Mode <general_mode>`:::"
+msgstr "Синтаксис мови викладено у наведеній нижче граматиці. Обговорення щодо «compare», «if_expression» і «template_call» наведено у розділі :ref:`Загальний режим програмування <general_mode>`:::"
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:203
 msgid "Comments are lines with a '#' character at the beginning of the line."
@@ -1273,6 +1273,77 @@ msgstr "``program: if '11' > '2' then 'yes' else 'no' fi`` повертає 'no'
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:406
 msgid ""
+"General Program Mode supports saving General Program Mode templates and "
+"calling those templates from another template. You save templates using "
+":guilabel:`Preferences->Advanced->Template functions`. More information is "
+"provided in that dialog. You call a template the same way you call a "
+"function, passing positional arguments if desired. An argument can be any "
+"expression. Examples of calling a template, assuming the stored template is "
+"named ``foo``:"
+msgstr "У загальному режимі програмування передбачено можливість збереження шаблонів загального режиму програмування та виклику цих шаблонів з інших шаблонів. Зберегти шаблони можна за допомогою пункту :guilabel:`Налаштування->Додатково->Шаблонні функції`. у відповідному діалоговому вікні буде наведено довідкову інформації. Викликати шаблон можна у той самий спосіб, що і функцію, передавши йому, якщо потрібно, позиційні аргументи. Аргументом може бути будь-який вираз. Приклади виклику шаблону, де ми припускаємо, що збережений шаблон має назву ``foo``:"
+
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:411
+msgid "``foo()`` -- call the template passing no arguments."
+msgstr "``foo()`` — виклик шаблону без передавання аргументів."
+
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:412
+msgid ""
+"``foo(a, b)`` call the template passing the values of the two variables "
+"``a`` and ``b``."
+msgstr "``foo(a, b)`` — виклик шаблону з передаванням значень двох змінних — ``a`` і ``b``."
+
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:413
+msgid ""
+"``foo(if field('series') then field('series_index') else 0 fi)`` -- if the "
+"book has a ``series`` then pass the             ``series_index``, otherwise "
+"pass the value ``0``."
+msgstr "``foo(if field('series') then field('series_index') else 0 fi)`` — якщо книга належить до циклу, передати номер книги у циклі, інакше — передати значення ``0``."
+
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:415
+msgid ""
+"In the stored template you retrieve the arguments passed in the call using "
+"the ``arguments`` function. It both declares and initializes local "
+"variables. The variables are positional; they get the value of the value "
+"given in the call in the same position. If the corresponding parameter is "
+"not provided in the call then ``arguments`` gives that parameter the "
+"provided default value. If there is no default value then the argument is "
+"set to the empty string. For example, the following ``arguments`` function "
+"declares 2 variables, ``key``, ``alternate``::"
+msgstr "У збереженому шаблоні отримання аргументів відбувається за допомогою виклику функції ``arguments``. Ця функція одразу оголошує і ініціалізує локальні змінні. Ці змінні є позиційними — їм надається значення, яке стоїть у виклику на відповідній позиції. Якщо відповідне значення параметра не було надано у виклику, ``arguments`` надає параметру типового значення. Якщо типове значення не вказано, аргументу буде надано значення порожнього рядка. Наприклад, наведена нижче функція ``arguments`` оголошує 2 змінні — ``key``, ``alternate``::"
+
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:421
+msgid "Examples, again assuming the stored template is named ``foo``:"
+msgstr "У наведених нижче прикладах знову припускаємо, що збережений шаблон має назву ``foo``:"
+
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:423
+msgid ""
+"``foo('#myseries')`` -- argument ``key`` will have the value ``myseries`` "
+"and the argument ``alternate`` will have the value ``series``."
+msgstr "``foo('#myseries')`` — аргумент ``key`` матиме значення ``myseries``, а аргумент ``alternate`` матиме значення ``series``."
+
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:424
+msgid ""
+"``foo('series', '#genre')`` the variable ``key`` is assigned the value "
+"``series`` and the variable ``alternate`` is assigned the value ``#genre``."
+msgstr "``foo('series', '#genre')`` — змінній ``key`` буде надано значення ``series``, а змінній ``alternate`` — значення ``#genre``."
+
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:425
+msgid ""
+"``foo()`` -- the variable ``key`` is assigned the empty string and the "
+"variable ``alternate`` is assigned the value ``#genre``."
+msgstr "``foo()`` -— змінній ``key`` буде надано значення порожнього рядка, а змінній ``alternate`` — значення ``#genre``."
+
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:427
+msgid ""
+"An easy way to test stored templates is using the ``Template tester`` "
+"dialog. Give it a keyboard shortcut in "
+":guilabel:`Preferences->Advanced->Keyboard shortcuts->Template tester`. "
+"Giving the ``Stored templates`` dialog a shortcut will help switching more "
+"rapidly between the tester and editing the stored template's source code."
+msgstr "Простим способом тестування збережених шаблонів є використання вікна ``Засіб тестування шаблонів``. Надайте цьому вікну клавіатурного скорочення за допомогою пункту :guilabel:`Налаштування->Додатково->Клавіатурні скорочення->Засіб тестування шаблонів`. Надання клавіатурного скорочення вікну ``Збережені шаблони`` допоможе вам швидше перемикатися між тестуванням та редагування початкового коду збереженого шаблону."
+
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:431
+msgid ""
 "The following example is a `program:` mode implementation of a recipe on the"
 " MobileRead forum: \"Put series into the title, using either initials or a "
 "shortened form. Strip leading articles from the series name (any).\" For "
@@ -1282,7 +1353,7 @@ msgid ""
 "following:"
 msgstr "Наведений нижче приклад є реалізацією у режимі `program:` рецепта на форумі MobileRead: «Записати цикл до назви, використовуючи або абревіатуру, або скорочену форму. Вилучити початкові артиклі із назви циклу (якщо такі є).» Наприклад, для книги «The Two Towers» з циклу «The Lord of the Rings» рецепт має дати `LotR [02] The Two Towers`. У стандартних шаблонах реалізація рецепта потребує трьох нетипових стовпчиків і набору метаданих, як це зроблено тут:"
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:408
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:433
 msgid ""
 "The solution requires creating three composite columns. The first column is "
 "used to remove the leading articles. The second is used to compute the "
@@ -1291,14 +1362,14 @@ msgid ""
 "of the three columns on the library view::"
 msgstr "Вирішення потребує створення трьох складених стовпчиків. Перший стовпчик використовується для вилучення початкових артиклів. Другий — для обчислення «скороченої» форми. Третій — для форми «абревіатури». Після створення цих стовпчиків набір метаданих вибирає між ними. Ви можете сховати будь-який або усі три стовпчики з вікна перегляду бібліотеки::"
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:447
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:472
 msgid ""
 "The following program produces the same results as the original recipe, "
 "using only one custom column to hold the results of a program that computes "
 "the special title value::"
 msgstr "Записана нижче програма дає той самий результат, що і початковий рецепт, використовуючи лише один нетиповий стовпчик для зберігання результатів виконання програми, яка обчислює спеціальне значення заголовка::"
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:484
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:509
 msgid ""
 "It would be possible to do the above with no custom columns by putting the "
 "program into the template box of the plugboard. However, to do so, all "
@@ -1308,23 +1379,24 @@ msgid ""
 " being one giant line."
 msgstr "Реалізувати описаний вище рецепт можна без нетиповий стовпчиків, вписавши програму до поля шаблона набору метаданих. Втім, для цього доведеться вилучити усі коментарі, оскільки у текстовому полі набору метаданих не передбачено багаторядкового редагування. Щодо того, чи варте заощадження нетипових стовпчиків втрати зрозумілості коду, можна подискутувати, оскільки тепер програма перетворюється на один гігантський рядок."
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:488
-msgid "User-defined template functions"
-msgstr "Функції шаблонів, визначені користувачем"
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:513
+msgid "User-defined Python template functions"
+msgstr "Визначені користувачем шаблонні функції Python"
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:490
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:515
 msgid ""
-"You can add your own functions to the template processor. Such functions are"
-" written in Python, and can be used in any of the three template programming"
-" modes. The functions are added by going to Preferences -> Advanced -> "
-"Template functions. Instructions are shown in that dialog."
+"You can add your own python functions to the template processor. Such "
+"functions are written in Python, and can be used in any of the three "
+"template programming modes. The functions are added by going to "
+":guilabel:`Preferences -> Advanced -> Template functions`. Instructions are "
+"shown in that dialog."
 msgstr "Ви можете додавати власні функції до обробника шаблонів. Такі функції пишуться мовою Python. Ними можна скористатися у будь-якому з трьох режимі програмування шаблонів. Функції додаються за допомогою сторінки :guilabel:`Налаштування -> Додатково -> Шаблонні функції`. Відповідні настанови можна знайти у діалоговому вікні, яке відкриє програма."
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:493
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:518
 msgid "Special notes for save/send templates"
 msgstr "Спеціальні нотатки щодо шаблонів збереження або надсилання"
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:495
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:520
 msgid ""
 "Special processing is applied when a template is used in a `save to disk` or"
 " `send to device` template. The values of the fields are cleaned, replacing "
@@ -1335,18 +1407,18 @@ msgid ""
 "create variable-depth folder structure."
 msgstr "До шаблонів, які використовуються для дій `зберегти на диск` і `надіслати на пристрій`, застосовується спеціальна обробка. Значення полів буде очищено із заміною символів, які мають спеціальне значення у файлових системах, зокрема символів похилих рисок, на символи підкреслювання. Це означає, що текст поля не можна використовувати для створення тек. Втім, похилі риски не замінюватимуться у рядках префікса і суфікса, отже похилі риски у цих рядках можна використати для створення тек. Таким чином, ви можете створити структуру тек довільного рівня вкладеності."
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:497
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:522
 msgid ""
 "For example, assume we want the folder structure `series/series_index - "
 "title`, with the caveat that if series does not exist, then the title should"
 " be in the top folder. The template to do this is::"
 msgstr "Наприклад, припустімо ми хочемо створити структуру тек `цикл/номер_у_циклі - назва`, із умовою, що якщо циклу не існує, назву слід розташувати у верхній теці. Шаблон для виконання цього завдання::"
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:501
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:526
 msgid "The slash and the hyphen appear only if series is not empty."
 msgstr "Похила риска і дефіс мають з’являтися, лише якщо цикл не є порожнім."
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:503
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:528
 msgid ""
 "The lookup function lets us do even fancier processing. For example, assume "
 "that if a book has a series, then we want the folder structure "
@@ -1356,25 +1428,25 @@ msgid ""
 "depending on the value of series."
 msgstr "Функція `lookup` надає вам змогу виконувати виконувати навіть ще вишуканішу обробку. Наприклад, припустімо, що якщо книга належить до циклу, ми хочемо мати структуру тек `цикл/номер у циклі - назва.формат`. Якщо книга не належить до циклу, нам потрібна структура тек `жанр/упорядковане ім’я автора/назва.формат`. Якщо ж книга не належить до певного жанру, слід скористатися текою 'Unknown'. Нам потрібно два повністю різних шляхи, залежно від значення параметра циклу."
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:508
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:533
 msgid "To accomplish this, we:"
 msgstr "Для виконання цього завдання ми:"
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:506
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:531
 msgid ""
 "Create a composite field (give it lookup name #AA) containing "
 "``{series}/{series_index} - {title}``. If the series is not empty, then this"
 " template will produce `series/series_index - title`."
 msgstr "Створимо складене поле (надавши йому назву #AA), що міститиме дані ``{series}/{series_index} - {title}``. Якщо значення циклу (series) є непорожнім, такий шаблон дасть нам `цикл/номер_у_циклі - назва`."
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:507
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:532
 msgid ""
 "Create a composite field (give it lookup name #BB) containing "
 "``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. This template produces "
 "`genre/author_sort/title`, where an empty genre is replaced with `Unknown`."
 msgstr "Створимо складене поле (надавши йому назву #BB) із вмістом ``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. Цей шаблон дає `жанр/упорядковані_автори/назва`. Якщо немає даних щодо жанру, запис жанру буде замінено на `Unknown`."
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:508
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:533
 msgid ""
 "Set the save template to ``{series:lookup(.,#AA,#BB)}``. This template "
 "chooses composite field #AA if series is not empty, and composite field #BB "
@@ -1382,11 +1454,11 @@ msgid ""
 "depending on whether or not `series` is empty."
 msgstr "Встановимо шаблон збереження ``{series:lookup(.,#AA,#BB)}``. Цей шаблон вибирає складене поле #AA, якщо значення запису циклу є непорожнім, і складене поле #BB, якщо значення запису циклу є порожнім. Таким чином, ми матимемо повністю різні шляхи для збереження книг, залежно від того, чи є запис `series` порожнім."
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:511
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:536
 msgid "Templates and plugboards"
 msgstr "Шаблони і набори метаданих"
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:513
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:538
 msgid ""
 "Plugboards are used for changing the metadata written into books during "
 "send-to-device and save-to-disk operations. A plugboard permits you to "
@@ -1397,7 +1469,7 @@ msgid ""
 "display issues."
 msgstr "Набори метаданих використовуються для внесення змін до метаданих, що записуються до книг під час дій із надсилання на пристрій і збереження на диск. Набір метаданих надає вам змогу вказати шаблон для надання даних, які слід записати до метаданих книги. Ви можете скористатися наборами метаданих для внесення змін до таких полів: authors, author_sort, language, publisher, tags, title, title_sort. Набори метаданих допомагають у використанні спеціалізованих метаданих для книг на пристрої з метою усування проблем із упорядковуванням книг або їхнім показом."
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:515
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:540
 msgid ""
 "When you create a plugboard, you specify the format and device for which the"
 " plugboard is to be used. A special device is provided, save_to_disk, that "
@@ -1408,7 +1480,7 @@ msgid ""
 "can, of course, use composite columns in these templates."
 msgstr "Під час створення набору метаданих ви визначаєте формат і пристрій, для яких використовуватиметься набір. Передбачено особливий пристрій, save_to_disk, який використовується для збереження книг у певних форматах (на відміну від надсилання книг на пристрій). Після вибору формату і пристрою вам слід вибрати поля метаданих для внесення змін і надати шаблони для визначення нових значень цих полів. Ці шаблони буде `з’єднано` з відповідними полями призначення. Ви, звичайно ж, можете використовувати у шаблонах наборів метаданих складені стовпчики."
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:517
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:542
 msgid ""
 "When a plugboard might apply (Content server, save to disk, or send to "
 "device), calibre searches the defined plugboards to choose the correct one "
@@ -1417,29 +1489,29 @@ msgid ""
 " the plugboards using the following search order:"
 msgstr "Якщо до метаданих може бути застосовано набір (на сервері даних, для збереження на диск або надсилання на пристрій), calibre шукає визначені набори метаданих і вибирає належний для заданого формату і пристрою. Наприклад, для того, щоб знайти належний набір метаданих для книги EPUB, яку надсилають на пристрій під керуванням ANDROID, calibre шукає набори метаданих у такому порядку:"
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:519
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:544
 msgid ""
 "a plugboard with an exact match on format and device, e.g., ``EPUB`` and "
 "``ANDROID``"
 msgstr "набір метаданих із точною відповідністю за форматом і пристроєм, наприклад ``EPUB`` і ``ANDROID``"
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:520
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:545
 msgid ""
 "a plugboard with an exact match on format and the special ``any device`` "
 "choice, e.g., ``EPUB`` and ``any device``"
 msgstr "набір метаданих із точним відповідником за форматом і спеціальним варіантом ``any device``, наприклад ``EPUB`` і ``any device``"
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:521
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:546
 msgid ""
 "a plugboard with the special ``any format`` choice and an exact match on "
 "device, e.g., ``any format`` and ``ANDROID``"
 msgstr "набір метаданих із спеціальним варіантом ``any format`` і точною відповідністю за пристроєм, наприклад ``any format`` і ``ANDROID``"
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:522
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:547
 msgid "a plugboard with ``any format`` and ``any device``"
 msgstr "набір метаданих ``any format`` і ``any device``"
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:524
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:549
 msgid ""
 "The tags and authors fields have special treatment, because both of these "
 "fields can hold more than one item. A book can have many tags and many "
@@ -1451,7 +1523,7 @@ msgid ""
 "comma in the middle of a tag."
 msgstr "Поля міток (`tags`) і авторів (`authors`) обробляються у особливий спосіб, оскільки у обох цих полях може міститися декілька записів. У книги може бути багато міток і багато авторів. Якщо ви визначаєте одне з цих двох полів як таке, вміст якого слід змінити, результати використання шаблона буде перевірено на наявність декількох записів. Для міток результат буде розділено на записи за знайденими calibre комами. Наприклад, якщо шаблон створює значення ``Трилер, Жахи``, результатом буде дві мітки, ``Трилер`` і ``Жахи``. Способів додавання коми у окрему мітку не передбачено."
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:526
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:551
 msgid ""
 "The same thing happens for authors, but using a different character for the "
 "cut, a `&` (ampersand) instead of a comma. For example, if the template "
@@ -1461,7 +1533,7 @@ msgid ""
 "author with a rather strange name."
 msgstr "Те саме стосується авторів, але для поділу на записи використовується інший символ, `&` (амперсанд), а не кома. Наприклад, якщо шаблоном створюється значення ``Blogs, Joe&Posts, Susan``, для книги буде визначено двоє авторів, ``Blogs, Joe`` і ``Posts, Susan``. Якщо ж шаблон створює значення ``Blogs, Joe;Posts, Susan``, книга матиме один запис автора із доволі чудернацьким іменем."
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:528
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:553
 msgid ""
 "Plugboards affect the metadata written into the book when it is saved to "
 "disk or written to the device. Plugboards do not affect the metadata used by"
@@ -1470,34 +1542,34 @@ msgid ""
 "preferences window."
 msgstr "Набори метаданих впливають на метадані, які записуються до книги, коли її зберігають на диск або записують на пристрій для читання. Набори метаданих не змінюють метадані, які використовуються діями ``зберегти на диск`` та ``надіслати на пристрій`` для створення назв файлів. Назви файлів будуються за допомогою шаблонів, які вказано у відповідних місцях вікна налаштувань."
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:531
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:556
 msgid "Helpful tips"
 msgstr "Корисні підказки"
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:533
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:558
 msgid "You might find the following tips useful."
 msgstr "Можливо, для вас будуть корисними зазначені нижче підказки."
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:535
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:560
 msgid ""
 "Create a custom composite column to test templates. Once you have the "
 "column, you can change its template simply by double-clicking on the column."
 " Hide the column when you are not testing."
 msgstr "Створіть нетиповий складений стовпчик для тестування шаблонів. Після створення такого стовпчика для внесення змін до його вмісту достатньо буде двічі клацнути на ньому лівою кнопкою миші. Приховайте цей стовпчик, якщо ви нічого не тестуєте."
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:536
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:561
 msgid ""
 "Templates can use other templates by referencing a composite custom column."
 msgstr "Шаблони можуть використовувати інші шаблони, посилаючись на них як на нетипові складені стовпчики."
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:537
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:562
 msgid ""
 "In a plugboard, you can set a field to empty (or whatever is equivalent to "
 "empty) by using the special template ``{}``. This template will always "
 "evaluate to an empty string."
 msgstr "У наборі метаданих ви можете вказати порожні значення поля (або вказати будь-який еквівалент порожнього поля) за допомогою спеціального шаблона ``{}``. Цей шаблон завжди обробляється як порожній рядок."
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:538
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:563
 msgid ""
 "The technique described above to show numbers even if they have a zero value"
 " works with the standard field series_index."

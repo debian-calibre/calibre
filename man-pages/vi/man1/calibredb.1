@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "tháng 10 02, 2020" "5.1.0" "calibre"
+.TH "CALIBREDB" "1" "tháng 10 07, 2020" "5.2.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -513,7 +513,9 @@ calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .sp
 Export a \fBcatalog\fP in format specified by path/to/destination extension.
 Options control how entries are displayed in the generated \fBcatalog\fP output.
-Note that different \fBcatalog\fP formats support different sets of options.
+Note that different \fBcatalog\fP formats support different sets of options. To
+see the different options, specify the name of the output file and then the
+\-\-help option.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -818,7 +820,7 @@ calibredb list_categories [options]
 .UNINDENT
 .sp
 Produce a report of the category information in the database. The
-information is the equivalent of what is shown in the tags pane.
+information is the equivalent of what is shown in the Tag browser.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0

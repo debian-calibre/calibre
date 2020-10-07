@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "ottobre 02, 2020" "5.1.0" "calibre"
+.TH "CALIBREDB" "1" "ottobre 07, 2020" "5.2.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -505,15 +505,17 @@ Converti i percorsi in lettere minuscole.
 .sp
 .nf
 .ft C
-calibredb catalogo /percorso/di/destinazione.(csv|epub|mobi|xml...) [opzioni]
+calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Esporta un catalogo nel formato specificato dall\(aqestensione di percorso/di/destinazione
-Le opzioni controllano il modo in cui le voci sono visualizzate nel catalogo generato.
-Notare che i differenti formati di catalogo supportano impostazioni differenti delle opzioni.
+Export a \fBcatalog\fP in format specified by path/to/destination extension.
+Options control how entries are displayed in the generated \fBcatalog\fP output.
+Note that different \fBcatalog\fP formats support different sets of options. To
+see the different options, specify the name of the output file and then the
+\-\-help option.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -811,13 +813,14 @@ Elenco separato da virgole dei resoconti. Predefinito: tutti
 .sp
 .nf
 .ft C
-calibredb list_categories [opzioni]
+calibredb list_categories [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Produce un resoconto delle informazioni di categoria nel database. Le informazioni sono uguali a quelle mostrate nel pannello dei tag.
+Produce a report of the category information in the database. The
+information is the equivalent of what is shown in the Tag browser.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
