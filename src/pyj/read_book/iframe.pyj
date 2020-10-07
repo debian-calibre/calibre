@@ -137,7 +137,7 @@ class IframeBoss:
             'scroll_to_ref': self.on_scroll_to_ref,
             'set_reference_mode': self.set_reference_mode,
             'toggle_autoscroll': self.toggle_autoscroll,
-            'wheel_from_margin': self.wheel_from_margin,
+            'fake_wheel_event': self.fake_wheel_event,
             'window_size': self.received_window_size,
             'overlay_visibility_changed': self.on_overlay_visibility_changed,
             'show_search_result': self.show_search_result,
@@ -305,7 +305,8 @@ class IframeBoss:
     def gesture_from_margin(self, data):
         self.handle_gesture(data.gesture)
 
-    def wheel_from_margin(self, data):
+    def fake_wheel_event(self, data):
+        # these are wheel events from margin or selection mode
         self.onwheel(data.evt)
 
     def report_human_scroll(self, scrolled_by_frac):
@@ -536,15 +537,20 @@ class IframeBoss:
         text = ''
         annot_id = None
         collapsed = not sel or sel.isCollapsed
+        start_is_anchor = True
         if not collapsed:
             text = sel.toString()
             annot_id = highlight_associated_with_selection(sel, annot_id_uuid_map)
+            r = sel.getRangeAt(0)
+            start_is_anchor = r.startContainer is sel.anchorNode and r.startOffset is sel.anchorOffset
         by_search = window.performance.now() - self.last_search_at < 1000
         self.send_message(
             'selectionchange', text=text, empty=v'!!collapsed', annot_id=annot_id,
             drag_mouse_position=drag_mouse_position, selection_change_caused_by_search=by_search,
             selection_extents=selection_extents(current_layout_mode() is 'flow'),
-            rtl=scroll_viewport.rtl, vertical=scroll_viewport.vertical_writing_mode)
+            rtl=scroll_viewport.rtl, vertical=scroll_viewport.vertical_writing_mode,
+            start_is_anchor=start_is_anchor
+        )
 
     def onresize_stage2(self):
         if scroll_viewport.width() is self.last_window_width and scroll_viewport.height() is self.last_window_height:

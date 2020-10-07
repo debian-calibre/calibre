@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "outubro 02, 2020" "5.1.0" "calibre"
+.TH "CALIBREDB" "1" "outubro 07, 2020" "5.2.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -502,15 +502,17 @@ Converter os caminhos para minúsculas.
 .sp
 .nf
 .ft C
-calibredb catalog /path/to/destination.(CSV|EPUB|MOBI|XML ...) [options]
+calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-\ \ \  Exporta um catálogo em formato especificado por caminho/para/destino.extensão.
-As opções controlam a forma como as entradas serão mostradas no catálogo de saída gerada.
-Note que diferentes formatos de catalogo suportam diferentes conjunto de opções.
+Export a \fBcatalog\fP in format specified by path/to/destination extension.
+Options control how entries are displayed in the generated \fBcatalog\fP output.
+Note that different \fBcatalog\fP formats support different sets of options. To
+see the different options, specify the name of the output file and then the
+\-\-help option.
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
 .INDENT 0.0

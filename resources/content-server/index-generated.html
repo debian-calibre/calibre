@@ -25057,7 +25057,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.1.0";
+        CALIBRE_VERSION = "5.2.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -25170,7 +25170,7 @@ return this.__repr__();
             this.handle_gesture = IframeBoss.prototype.handle_gesture.bind(this);
             this.handle_long_tap = IframeBoss.prototype.handle_long_tap.bind(this);
             this.gesture_from_margin = IframeBoss.prototype.gesture_from_margin.bind(this);
-            this.wheel_from_margin = IframeBoss.prototype.wheel_from_margin.bind(this);
+            this.fake_wheel_event = IframeBoss.prototype.fake_wheel_event.bind(this);
             this.report_human_scroll = IframeBoss.prototype.report_human_scroll.bind(this);
             this.on_scroll_to_anchor = IframeBoss.prototype.on_scroll_to_anchor.bind(this);
             this.on_next_screen = IframeBoss.prototype.on_next_screen.bind(this);
@@ -25253,7 +25253,7 @@ return this.__repr__();
                 ρσ_d["scroll_to_ref"] = self.on_scroll_to_ref;
                 ρσ_d["set_reference_mode"] = self.set_reference_mode;
                 ρσ_d["toggle_autoscroll"] = self.toggle_autoscroll;
-                ρσ_d["wheel_from_margin"] = self.wheel_from_margin;
+                ρσ_d["fake_wheel_event"] = self.fake_wheel_event;
                 ρσ_d["window_size"] = self.received_window_size;
                 ρσ_d["overlay_visibility_changed"] = self.on_overlay_visibility_changed;
                 ρσ_d["show_search_result"] = self.show_search_result;
@@ -25532,11 +25532,11 @@ return this.__repr__();
             __argnames__ : {value: ["data"]},
             __module__ : {value: "read_book.iframe"}
         });
-        IframeBoss.prototype.wheel_from_margin = function wheel_from_margin(data) {
+        IframeBoss.prototype.fake_wheel_event = function fake_wheel_event(data) {
             var self = this;
             self.onwheel(data.evt);
         };
-        if (!IframeBoss.prototype.wheel_from_margin.__argnames__) Object.defineProperties(IframeBoss.prototype.wheel_from_margin, {
+        if (!IframeBoss.prototype.fake_wheel_event.__argnames__) Object.defineProperties(IframeBoss.prototype.fake_wheel_event, {
             __argnames__ : {value: ["data"]},
             __module__ : {value: "read_book.iframe"}
         });
@@ -25896,7 +25896,7 @@ return this.__repr__();
         });
         IframeBoss.prototype.onselectionchange = function onselectionchange() {
             var self = this;
-            var sel, text, annot_id, collapsed, by_search;
+            var sel, text, annot_id, collapsed, start_is_anchor, r, by_search;
             if (!self.content_ready) {
                 return;
             }
@@ -25904,12 +25904,15 @@ return this.__repr__();
             text = "";
             annot_id = null;
             collapsed = !sel || sel.isCollapsed;
+            start_is_anchor = true;
             if (!collapsed) {
                 text = sel.toString();
                 annot_id = highlight_associated_with_selection(sel, annot_id_uuid_map);
+                r = sel.getRangeAt(0);
+                start_is_anchor = r.startContainer === sel.anchorNode && r.startOffset === sel.anchorOffset;
             }
             by_search = window.performance.now() - self.last_search_at < 1e3;
-            ρσ_interpolate_kwargs.call(self, self.send_message, ["selectionchange"].concat([ρσ_desugar_kwargs({text: text, empty: !!collapsed, annot_id: annot_id, drag_mouse_position: drag_mouse_position, selection_change_caused_by_search: by_search, selection_extents: selection_extents(current_layout_mode() === "flow"), rtl: scroll_viewport.rtl, vertical: scroll_viewport.vertical_writing_mode})]));
+            ρσ_interpolate_kwargs.call(self, self.send_message, ["selectionchange"].concat([ρσ_desugar_kwargs({text: text, empty: !!collapsed, annot_id: annot_id, drag_mouse_position: drag_mouse_position, selection_change_caused_by_search: by_search, selection_extents: selection_extents(current_layout_mode() === "flow"), rtl: scroll_viewport.rtl, vertical: scroll_viewport.vertical_writing_mode, start_is_anchor: start_is_anchor})]));
         };
         if (!IframeBoss.prototype.onselectionchange.__module__) Object.defineProperties(IframeBoss.prototype.onselectionchange, {
             __module__ : {value: "read_book.iframe"}
@@ -35192,6 +35195,7 @@ return this.__repr__();
             this.end_handle_drag = SelectionBar.prototype.end_handle_drag.bind(this);
             this.mouseup_on_container = SelectionBar.prototype.mouseup_on_container.bind(this);
             this.touchend_on_container = SelectionBar.prototype.touchend_on_container.bind(this);
+            this.on_wheel = SelectionBar.prototype.on_wheel.bind(this);
             this.on_keydown = SelectionBar.prototype.on_keydown.bind(this);
             this.run_drag_scroll = SelectionBar.prototype.run_drag_scroll.bind(this);
             this.do_one_drag_scroll = SelectionBar.prototype.do_one_drag_scroll.bind(this);
@@ -35434,6 +35438,11 @@ return this.__repr__();
                 ρσ_d["passive"] = false;
                 return ρσ_d;
             }).call(this));
+            container.addEventListener("wheel", self.on_wheel, (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["passive"] = false;
+                return ρσ_d;
+            }).call(this));
             container.setAttribute("tabindex", "0");
             self.dragging_handle = null;
             self.position_in_handle = (function(){
@@ -35497,13 +35506,28 @@ return this.__repr__();
         });
         SelectionBar.prototype.build_bar = function build_bar(annot_id) {
             var self = this;
-            var notes, bar_container, x, bar, hs, actions, sd, ac, acname, selection_bar_quick_highlights;
+            var notes, bar_container, notes_container, x, bar, hs, actions, sd, ac, acname, selection_bar_quick_highlights;
             notes = self.annotations_manager.notes_for_highlight(annot_id);
             bar_container = self.bar;
             clear(bar_container);
             bar_container.style.maxWidth = (self.supports_css_min_max) ? "min(50rem, 90vw)" : "50rem";
             bar_container.style.backgroundColor = get_color("window-background");
-            var ρσ_Iter2 = ρσ_Iterable(ρσ_list_decorate([ ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "height: 4ex; display: flex; align-items: center; padding: 5px; justify-content: center"})]), ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "border-top: solid 1px; margin: 0; padding: 0; display: none"})]), ρσ_interpolate_kwargs.call(E, E.div, [E.div()].concat([ρσ_desugar_kwargs({style: "display: none; padding: 5px;"})])) ]));
+            notes_container = E.div();
+            notes_container.addEventListener("wheel", (function() {
+                var ρσ_anonfunc = function (evt) {
+                    evt.stopPropagation();
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["evt"]},
+                    __module__ : {value: "read_book.selection_bar"}
+                });
+                return ρσ_anonfunc;
+            })(), (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["passive"] = true;
+                return ρσ_d;
+            }).call(this));
+            var ρσ_Iter2 = ρσ_Iterable(ρσ_list_decorate([ ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "height: 4ex; display: flex; align-items: center; padding: 5px; justify-content: center"})]), ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "border-top: solid 1px; margin: 0; padding: 0; display: none"})]), ρσ_interpolate_kwargs.call(E, E.div, [notes_container].concat([ρσ_desugar_kwargs({style: "display: none; padding: 5px;"})])) ]));
             for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
                 x = ρσ_Iter2[ρσ_Index2];
                 bar_container.appendChild(x);
@@ -35794,6 +35818,15 @@ return this.__repr__();
             __argnames__ : {value: ["ev"]},
             __module__ : {value: "read_book.selection_bar"}
         });
+        SelectionBar.prototype.on_wheel = function on_wheel(ev) {
+            var self = this;
+            [ev.stopPropagation(), ev.preventDefault()];
+            self.view.send_wheel_event_to_iframe(ev, "selection-mode");
+        };
+        if (!SelectionBar.prototype.on_wheel.__argnames__) Object.defineProperties(SelectionBar.prototype.on_wheel, {
+            __argnames__ : {value: ["ev"]},
+            __module__ : {value: "read_book.selection_bar"}
+        });
         SelectionBar.prototype.on_keydown = function on_keydown(ev) {
             var self = this;
             var sc_name;
@@ -35994,10 +36027,18 @@ return this.__repr__();
                 __module__ : {value: "read_book.selection_bar"}
             });
 
-            if (dragged_handle && dragged_handle !== self.end_handle_id) {
-                ρσ_unpack = [end, start];
-                start = ρσ_unpack[0];
-                end = ρσ_unpack[1];
+            if (dragged_handle) {
+                if (dragged_handle !== self.end_handle_id) {
+                    ρσ_unpack = [end, start];
+                    start = ρσ_unpack[0];
+                    end = ρσ_unpack[1];
+                }
+            } else {
+                if (!cs.start_is_anchor) {
+                    ρσ_unpack = [end, start];
+                    start = ρσ_unpack[0];
+                    end = ρσ_unpack[1];
+                }
             }
             if (!end.onscreen && start.onscreen) {
                 ρσ_unpack = [end, start];
@@ -38749,7 +38790,7 @@ return this.__repr__();
                 })(), "remove")));
             } else {
             }
-            container.appendChild(ρσ_interpolate_kwargs.call(this, set_css, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, set_css, [E.div(ρσ_interpolate_kwargs.call(E, E.div, [self.overlay.view.book.metadata.title || _("Unknown")].concat([ρσ_desugar_kwargs({style: "max-width: 90%; text-overflow: ellipsis; font-weight: bold; white-space: nowrap; overflow: hidden"})])), ρσ_interpolate_kwargs.call(E, E.div, [self.date_formatter.format(new Date)].concat([ρσ_desugar_kwargs({id: timer_id(), style: "max-width: 9%; white-space: nowrap; overflow: hidden"})])))].concat([ρσ_desugar_kwargs({display: "flex", justify_content: "space-between", align_items: "baseline", font_size: "smaller", padding: "0.5ex 1ex", border_bottom: "solid 1px currentColor"})])), actions_div].concat([ρσ_desugar_kwargs({class_: MAIN_OVERLAY_TS_CLASS, onclick: (function() {
+            container.appendChild(ρσ_interpolate_kwargs.call(this, set_css, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, set_css, [E.div(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_exists.d(ρσ_exists.d(self.overlay.view.book).metadata).title || _("Unknown")].concat([ρσ_desugar_kwargs({style: "max-width: 90%; text-overflow: ellipsis; font-weight: bold; white-space: nowrap; overflow: hidden"})])), ρσ_interpolate_kwargs.call(E, E.div, [self.date_formatter.format(new Date)].concat([ρσ_desugar_kwargs({id: timer_id(), style: "max-width: 9%; white-space: nowrap; overflow: hidden"})])))].concat([ρσ_desugar_kwargs({display: "flex", justify_content: "space-between", align_items: "baseline", font_size: "smaller", padding: "0.5ex 1ex", border_bottom: "solid 1px currentColor"})])), actions_div].concat([ρσ_desugar_kwargs({class_: MAIN_OVERLAY_TS_CLASS, onclick: (function() {
                 var ρσ_anonfunc = function (evt) {
                     evt.stopPropagation();
                 };
@@ -40574,6 +40615,7 @@ return this.__repr__();
             this.bottom_margin_clicked = View.prototype.bottom_margin_clicked.bind(this);
             this.margin_context_menu = View.prototype.margin_context_menu.bind(this);
             this.on_margin_wheel = View.prototype.on_margin_wheel.bind(this);
+            this.send_wheel_event_to_iframe = View.prototype.send_wheel_event_to_iframe.bind(this);
             this.forward_gesture = View.prototype.forward_gesture.bind(this);
             this.iframe_size = View.prototype.iframe_size.bind(this);
             this.on_request_size = View.prototype.on_request_size.bind(this);
@@ -40975,18 +41017,30 @@ return this.__repr__();
         });
         View.prototype.on_margin_wheel = function on_margin_wheel(which, event) {
             var self = this;
-            var evt, attr;
             event.preventDefault();
-            evt = Object.create(null);
+            self.send_wheel_event_to_iframe(event, "margin-" + ρσ_str.format("{}", which) + "");
+        };
+        if (!View.prototype.on_margin_wheel.__argnames__) Object.defineProperties(View.prototype.on_margin_wheel, {
+            __argnames__ : {value: ["which", "event"]},
+            __module__ : {value: "read_book.view"}
+        });
+        View.prototype.send_wheel_event_to_iframe = function send_wheel_event_to_iframe(event, location) {
+            var self = this;
+            var evt, attr;
+            evt = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["location"] = location;
+                return ρσ_d;
+            }).call(this);
             var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ "deltaX", "deltaY", "deltaMode", "altKey", "ctrlKey", "shiftKey", "metaKey" ]));
             for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
                 attr = ρσ_Iter0[ρσ_Index0];
                 evt[(typeof attr === "number" && attr < 0) ? evt.length + attr : attr] = event[(typeof attr === "number" && attr < 0) ? event.length + attr : attr];
             }
-            ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["wheel_from_margin"].concat([ρσ_desugar_kwargs({evt: evt})]));
+            ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["fake_wheel_event"].concat([ρσ_desugar_kwargs({evt: evt})]));
         };
-        if (!View.prototype.on_margin_wheel.__argnames__) Object.defineProperties(View.prototype.on_margin_wheel, {
-            __argnames__ : {value: ["which", "event"]},
+        if (!View.prototype.send_wheel_event_to_iframe.__argnames__) Object.defineProperties(View.prototype.send_wheel_event_to_iframe, {
+            __argnames__ : {value: ["event", "location"]},
             __module__ : {value: "read_book.view"}
         });
         View.prototype.forward_gesture = function forward_gesture(gesture) {
@@ -41232,6 +41286,7 @@ return this.__repr__();
                 ρσ_d["selection_change_caused_by_search"] = data.selection_change_caused_by_search;
                 ρσ_d["rtl"] = data.rtl;
                 ρσ_d["vertical"] = data.vertical;
+                ρσ_d["start_is_anchor"] = data.start_is_anchor;
                 return ρσ_d;
             }).call(this);
             if (ui_operations.selection_changed) {

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "oktober 02, 2020" "5.1.0" "calibre"
+.TH "CALIBREDB" "1" "oktober 07, 2020" "5.2.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -505,15 +505,17 @@ Paden naar kleine letters omzetten.
 .sp
 .nf
 .ft C
-calibredb catalog /path/naar/bestemming.(csv|epub|mobi|xml...) [options]
+calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Exporteer een\ catalogus in een\ door\ path/naar/bestemming gespecifieerde\ extentie.
-Opties bepalen hoe de invoer in de gegenereerde catalogusuitvoer wordt weergegeven.
-Merk op dat verschillende catalogusformaten\ andere\ opties ondersteunen.
+Export a \fBcatalog\fP in format specified by path/to/destination extension.
+Options control how entries are displayed in the generated \fBcatalog\fP output.
+Note that different \fBcatalog\fP formats support different sets of options. To
+see the different options, specify the name of the output file and then the
+\-\-help option.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -807,14 +809,14 @@ Kommagescheiden lijst van rapporten. Standaard: all
 .sp
 .nf
 .ft C
-calibredb list_categories [opties]
+calibredb list_categories [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Maak een rapport van de categorie\-informatie in de gegevensbank. De
-informatie is gelijk aan wat er in het labelpaneel staat.
+Produce a report of the category information in the database. The
+information is the equivalent of what is shown in the Tag browser.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0

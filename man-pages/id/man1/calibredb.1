@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "Oktober 02, 2020" "5.1.0" "calibre"
+.TH "CALIBREDB" "1" "Oktober 07, 2020" "5.2.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -505,16 +505,17 @@ Convert paths to lowercase.
 .sp
 .nf
 .ft C
-calibredb catalog /path/ke/tujuan.(csv|epub|mobi|xml...) [pilihan]
+calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Mengekspor katalog dalam format yang ditentukan oleh ekstensi path/ke/tujuan.
-Pilihan mengendalikan bagaimana entri ditampilkan dalam luaran katalog yang
-dihasilkan. Perhatikan bahwa format katalog yang berbeda mendukung set
-yang berbeda dari pilihan.
+Export a \fBcatalog\fP in format specified by path/to/destination extension.
+Options control how entries are displayed in the generated \fBcatalog\fP output.
+Note that different \fBcatalog\fP formats support different sets of options. To
+see the different options, specify the name of the output file and then the
+\-\-help option.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -819,7 +820,7 @@ calibredb list_categories [options]
 .UNINDENT
 .sp
 Produce a report of the category information in the database. The
-information is the equivalent of what is shown in the tags pane.
+information is the equivalent of what is shown in the Tag browser.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0

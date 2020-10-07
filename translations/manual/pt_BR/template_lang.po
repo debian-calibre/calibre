@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-23 07:57+0000\n"
-"PO-Revision-Date: 2020-09-22 02:22+0000\n"
+"POT-Creation-Date: 2020-10-06 07:47+0000\n"
+"PO-Revision-Date: 2020-10-03 13:09+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/calibre/calibre/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -579,8 +579,8 @@ msgstr ""
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:190
 msgid ""
 "The syntax of the language is shown by the following grammar. For a "
-"discussion of 'compare' and 'if_expression' see :ref:`General Program Mode "
-"<general_mode>`:::"
+"discussion of 'compare','if_expression', and 'template_call' see "
+":ref:`General Program Mode <general_mode>`:::"
 msgstr ""
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:203
@@ -1274,6 +1274,77 @@ msgstr ""
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:406
 msgid ""
+"General Program Mode supports saving General Program Mode templates and "
+"calling those templates from another template. You save templates using "
+":guilabel:`Preferences->Advanced->Template functions`. More information is "
+"provided in that dialog. You call a template the same way you call a "
+"function, passing positional arguments if desired. An argument can be any "
+"expression. Examples of calling a template, assuming the stored template is "
+"named ``foo``:"
+msgstr ""
+
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:411
+msgid "``foo()`` -- call the template passing no arguments."
+msgstr ""
+
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:412
+msgid ""
+"``foo(a, b)`` call the template passing the values of the two variables "
+"``a`` and ``b``."
+msgstr ""
+
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:413
+msgid ""
+"``foo(if field('series') then field('series_index') else 0 fi)`` -- if the "
+"book has a ``series`` then pass the             ``series_index``, otherwise "
+"pass the value ``0``."
+msgstr ""
+
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:415
+msgid ""
+"In the stored template you retrieve the arguments passed in the call using "
+"the ``arguments`` function. It both declares and initializes local "
+"variables. The variables are positional; they get the value of the value "
+"given in the call in the same position. If the corresponding parameter is "
+"not provided in the call then ``arguments`` gives that parameter the "
+"provided default value. If there is no default value then the argument is "
+"set to the empty string. For example, the following ``arguments`` function "
+"declares 2 variables, ``key``, ``alternate``::"
+msgstr ""
+
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:421
+msgid "Examples, again assuming the stored template is named ``foo``:"
+msgstr ""
+
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:423
+msgid ""
+"``foo('#myseries')`` -- argument ``key`` will have the value ``myseries`` "
+"and the argument ``alternate`` will have the value ``series``."
+msgstr ""
+
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:424
+msgid ""
+"``foo('series', '#genre')`` the variable ``key`` is assigned the value "
+"``series`` and the variable ``alternate`` is assigned the value ``#genre``."
+msgstr ""
+
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:425
+msgid ""
+"``foo()`` -- the variable ``key`` is assigned the empty string and the "
+"variable ``alternate`` is assigned the value ``#genre``."
+msgstr ""
+
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:427
+msgid ""
+"An easy way to test stored templates is using the ``Template tester`` "
+"dialog. Give it a keyboard shortcut in "
+":guilabel:`Preferences->Advanced->Keyboard shortcuts->Template tester`. "
+"Giving the ``Stored templates`` dialog a shortcut will help switching more "
+"rapidly between the tester and editing the stored template's source code."
+msgstr ""
+
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:431
+msgid ""
 "The following example is a `program:` mode implementation of a recipe on the"
 " MobileRead forum: \"Put series into the title, using either initials or a "
 "shortened form. Strip leading articles from the series name (any).\" For "
@@ -1283,7 +1354,7 @@ msgid ""
 "following:"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:408
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:433
 msgid ""
 "The solution requires creating three composite columns. The first column is "
 "used to remove the leading articles. The second is used to compute the "
@@ -1292,14 +1363,14 @@ msgid ""
 "of the three columns on the library view::"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:447
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:472
 msgid ""
 "The following program produces the same results as the original recipe, "
 "using only one custom column to hold the results of a program that computes "
 "the special title value::"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:484
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:509
 msgid ""
 "It would be possible to do the above with no custom columns by putting the "
 "program into the template box of the plugboard. However, to do so, all "
@@ -1309,23 +1380,24 @@ msgid ""
 " being one giant line."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:488
-msgid "User-defined template functions"
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:513
+msgid "User-defined Python template functions"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:490
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:515
 msgid ""
-"You can add your own functions to the template processor. Such functions are"
-" written in Python, and can be used in any of the three template programming"
-" modes. The functions are added by going to Preferences -> Advanced -> "
-"Template functions. Instructions are shown in that dialog."
+"You can add your own python functions to the template processor. Such "
+"functions are written in Python, and can be used in any of the three "
+"template programming modes. The functions are added by going to "
+":guilabel:`Preferences -> Advanced -> Template functions`. Instructions are "
+"shown in that dialog."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:493
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:518
 msgid "Special notes for save/send templates"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:495
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:520
 msgid ""
 "Special processing is applied when a template is used in a `save to disk` or"
 " `send to device` template. The values of the fields are cleaned, replacing "
@@ -1336,18 +1408,18 @@ msgid ""
 "create variable-depth folder structure."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:497
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:522
 msgid ""
 "For example, assume we want the folder structure `series/series_index - "
 "title`, with the caveat that if series does not exist, then the title should"
 " be in the top folder. The template to do this is::"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:501
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:526
 msgid "The slash and the hyphen appear only if series is not empty."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:503
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:528
 msgid ""
 "The lookup function lets us do even fancier processing. For example, assume "
 "that if a book has a series, then we want the folder structure "
@@ -1357,25 +1429,25 @@ msgid ""
 "depending on the value of series."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:508
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:533
 msgid "To accomplish this, we:"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:506
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:531
 msgid ""
 "Create a composite field (give it lookup name #AA) containing "
 "``{series}/{series_index} - {title}``. If the series is not empty, then this"
 " template will produce `series/series_index - title`."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:507
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:532
 msgid ""
 "Create a composite field (give it lookup name #BB) containing "
 "``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. This template produces "
 "`genre/author_sort/title`, where an empty genre is replaced with `Unknown`."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:508
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:533
 msgid ""
 "Set the save template to ``{series:lookup(.,#AA,#BB)}``. This template "
 "chooses composite field #AA if series is not empty, and composite field #BB "
@@ -1383,11 +1455,11 @@ msgid ""
 "depending on whether or not `series` is empty."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:511
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:536
 msgid "Templates and plugboards"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:513
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:538
 msgid ""
 "Plugboards are used for changing the metadata written into books during "
 "send-to-device and save-to-disk operations. A plugboard permits you to "
@@ -1398,7 +1470,7 @@ msgid ""
 "display issues."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:515
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:540
 msgid ""
 "When you create a plugboard, you specify the format and device for which the"
 " plugboard is to be used. A special device is provided, save_to_disk, that "
@@ -1409,7 +1481,7 @@ msgid ""
 "can, of course, use composite columns in these templates."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:517
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:542
 msgid ""
 "When a plugboard might apply (Content server, save to disk, or send to "
 "device), calibre searches the defined plugboards to choose the correct one "
@@ -1418,29 +1490,29 @@ msgid ""
 " the plugboards using the following search order:"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:519
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:544
 msgid ""
 "a plugboard with an exact match on format and device, e.g., ``EPUB`` and "
 "``ANDROID``"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:520
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:545
 msgid ""
 "a plugboard with an exact match on format and the special ``any device`` "
 "choice, e.g., ``EPUB`` and ``any device``"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:521
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:546
 msgid ""
 "a plugboard with the special ``any format`` choice and an exact match on "
 "device, e.g., ``any format`` and ``ANDROID``"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:522
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:547
 msgid "a plugboard with ``any format`` and ``any device``"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:524
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:549
 msgid ""
 "The tags and authors fields have special treatment, because both of these "
 "fields can hold more than one item. A book can have many tags and many "
@@ -1452,7 +1524,7 @@ msgid ""
 "comma in the middle of a tag."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:526
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:551
 msgid ""
 "The same thing happens for authors, but using a different character for the "
 "cut, a `&` (ampersand) instead of a comma. For example, if the template "
@@ -1462,7 +1534,7 @@ msgid ""
 "author with a rather strange name."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:528
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:553
 msgid ""
 "Plugboards affect the metadata written into the book when it is saved to "
 "disk or written to the device. Plugboards do not affect the metadata used by"
@@ -1471,34 +1543,34 @@ msgid ""
 "preferences window."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:531
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:556
 msgid "Helpful tips"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:533
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:558
 msgid "You might find the following tips useful."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:535
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:560
 msgid ""
 "Create a custom composite column to test templates. Once you have the "
 "column, you can change its template simply by double-clicking on the column."
 " Hide the column when you are not testing."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:536
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:561
 msgid ""
 "Templates can use other templates by referencing a composite custom column."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:537
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:562
 msgid ""
 "In a plugboard, you can set a field to empty (or whatever is equivalent to "
 "empty) by using the special template ``{}``. This template will always "
 "evaluate to an empty string."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:538
+#: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:563
 msgid ""
 "The technique described above to show numbers even if they have a zero value"
 " works with the standard field series_index."

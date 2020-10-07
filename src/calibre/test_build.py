@@ -32,6 +32,8 @@ class BuildTest(unittest.TestCase):
                     self.assertTrue(False, 'Failed to load DLL %s with error: %s' % (x, err))
         from Crypto.Cipher import AES
         del AES
+        from pywintypes import error
+        del error
 
     @unittest.skipUnless(islinux, 'DBUS only used on linux')
     def test_dbus(self):
@@ -42,6 +44,16 @@ class BuildTest(unittest.TestCase):
             bus = dbus.SessionBus()
             self.assertTrue(bus.list_names(), 'Failed to list names on the session bus')
             del bus
+
+    def test_loaders(self):
+        import importlib
+        ldr = importlib.import_module('calibre').__spec__.loader
+        self.assertIn('ebooks', ldr.contents())
+        try:
+            raw = ldr.open_resource('__init__.py').read()
+        except FileNotFoundError:
+            raw = ldr.open_resource('__init__.pyc').read()
+        self.assertGreater(len(raw), 1024)
 
     def test_regex(self):
         import regex

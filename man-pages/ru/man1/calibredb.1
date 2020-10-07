@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "октября 02, 2020" "5.1.0" "calibre"
+.TH "CALIBREDB" "1" "октября 07, 2020" "5.2.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -504,15 +504,17 @@ Have calibre convert all non English characters into English equivalents for the
 .sp
 .nf
 .ft C
-calibredb catalog /путь/к/месту.(csv|epub|mobi|xml...) [опции]
+calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Экспортировать каталог в формат, указанный в расширении пути/к/месту.
-Опции управляют тем, как записи отображаются в выходных данных созданного каталога.
-Обратите внимание, что разные форматы каталога поддерживают разные наборы опций.
+Export a \fBcatalog\fP in format specified by path/to/destination extension.
+Options control how entries are displayed in the generated \fBcatalog\fP output.
+Note that different \fBcatalog\fP formats support different sets of options. To
+see the different options, specify the name of the output file and then the
+\-\-help option.
 .sp
 Когда вы передаёте аргументы с пробелами в calibredb, заключайте их в кавычки. Например: "/some path/with spaces"
 .INDENT 0.0
@@ -791,14 +793,14 @@ calibredb check_library [настройки]
 .sp
 .nf
 .ft C
-calibredb list_categories [настройки]
+calibredb list_categories [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Генерирует отчёт по категориям в базе данных.
-Информация соответствует той, что отображается в панели тегов.
+Produce a report of the category information in the database. The
+information is the equivalent of what is shown in the Tag browser.
 .sp
 Когда вы передаёте аргументы с пробелами в calibredb, заключайте их в кавычки. Например: "/some path/with spaces"
 .INDENT 0.0
