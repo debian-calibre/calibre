@@ -9,19 +9,20 @@ So it soleves OpenSSL license issues.
 
 "pyopenssl" Uses Apache License Version 2.0, and it can be use with GPL3.
 ---
- setup/extensions.json        |    8 ----
- src/calibre/constants.py     |    1 
- src/calibre/utils/certgen.py |   74 ++++++++++++++++++++++++++++++-------------
- 3 files changed, 52 insertions(+), 31 deletions(-)
+ setup/extensions.json        |  8 -----
+ src/calibre/constants.py     |  1 -
+ src/calibre/utils/certgen.py | 72 +++++++++++++++++++++++++++++++-------------
+ 3 files changed, 51 insertions(+), 30 deletions(-)
 
-Index: b/setup/extensions.json
-===================================================================
+diff --git a/setup/extensions.json b/setup/extensions.json
+index 59e7060..5c402b7 100644
 --- a/setup/extensions.json
 +++ b/setup/extensions.json
-@@ -29,14 +29,6 @@
+@@ -28,14 +28,6 @@
+         "libraries": "m",
          "windows_libraries": ""
      },
-     {
+-    {
 -        "name": "certgen",
 -        "sources": "calibre/utils/certgen.c",
 -        "libraries": "crypto",
@@ -29,12 +30,11 @@ Index: b/setup/extensions.json
 -        "inc_dirs": "!openssl_inc_dirs",
 -        "lib_dirs": "!openssl_lib_dirs"
 -    },
--    {
+     {
          "name": "html_syntax_highlighter",
          "sources": "calibre/gui2/tweak_book/editor/syntax/html.c"
-     },
-Index: b/src/calibre/constants.py
-===================================================================
+diff --git a/src/calibre/constants.py b/src/calibre/constants.py
+index a9d6bf3..3bdfbff 100644
 --- a/src/calibre/constants.py
 +++ b/src/calibre/constants.py
 @@ -199,7 +199,6 @@ class Plugins(collections.Mapping):
@@ -45,8 +45,8 @@ Index: b/src/calibre/constants.py
              ]
          if iswindows:
              plugins.extend(['winutil', 'wpd', 'winfonts'])
-Index: b/src/calibre/utils/certgen.py
-===================================================================
+diff --git a/src/calibre/utils/certgen.py b/src/calibre/utils/certgen.py
+index babfc24..051f7cc 100644
 --- a/src/calibre/utils/certgen.py
 +++ b/src/calibre/utils/certgen.py
 @@ -6,16 +6,15 @@ __license__ = 'GPL v3'
@@ -79,11 +79,6 @@ Index: b/src/calibre/utils/certgen.py
 -        if isinstance(x, unicode_type):
 -            x = x.encode('ascii')
 -        return x or None
--
--    return certgen.create_rsa_cert_req(
--        key_pair, tuple(enc(x) for x in alt_names if x), common_name,
--        country, state, locality, organization, organizational_unit, email_address, basic_constraints
--    )
 +    req = crypto.X509Req()
 +    subj = req.get_subject()
 +
@@ -105,8 +100,12 @@ Index: b/src/calibre/utils/certgen.py
 +        n = str.join(",", alt_names)
 +        ext.append(crypto.X509Extension(b"subjectAltName", False, n.encode("ascii")))
  
+-    return certgen.create_rsa_cert_req(
+-        key_pair, tuple(enc(x) for x in alt_names if x), common_name,
+-        country, state, locality, organization, organizational_unit, email_address, basic_constraints
+-    )
 +    req.add_extensions(ext)
-+
+ 
 +    req.set_pubkey(key_pair)
 +    req.sign(key_pair, "sha256")
 +

@@ -5,14 +5,15 @@ Subject: disable unrar test since the module is not in Debian main
 Forwarded: not-needed
 
 disable unrar test since the module is not in Debian main
-
 ---
- src/calibre/test_build.py |    5 +++++
+ src/calibre/test_build.py | 5 +++++
  1 file changed, 5 insertions(+)
 
---- calibre-debian.git.orig/src/calibre/test_build.py
-+++ calibre-debian.git/src/calibre/test_build.py
-@@ -17,6 +17,10 @@ from polyglot.builtins import iteritems,
+diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
+index b541d53..da15caf 100644
+--- a/src/calibre/test_build.py
++++ b/src/calibre/test_build.py
+@@ -17,6 +17,10 @@ from polyglot.builtins import iteritems, map, unicode_type, getenv, native_strin
  
  is_ci = os.environ.get('CI', '').lower() == 'true'
  
@@ -23,7 +24,7 @@ disable unrar test since the module is not in Debian main
  
  class BuildTest(unittest.TestCase):
  
-@@ -265,6 +269,7 @@ class BuildTest(unittest.TestCase):
+@@ -277,6 +281,7 @@ class BuildTest(unittest.TestCase):
          from calibre.gui2.win_file_dialogs import test
          test()
  

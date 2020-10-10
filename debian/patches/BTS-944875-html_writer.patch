@@ -1,6 +1,10 @@
-From: Piotr Ożarowski <piotr@debian.org>
-Subject: calibre: ebook-convert to pdf aborts due to missing objects in QWebEngineProfile
-Date: Tue May 12 12:32:01 2020 +0200
+From: =?utf-8?q?Piotr_O=C5=BCarowski?= <piotr@debian.org>
+Date: Tue, 12 May 2020 12:32:01 +0200
+Subject: calibre: ebook-convert to pdf aborts due to missing objects in
+ QWebEngineProfile
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
 Forwarded: not-needed
 Closes: #944875
@@ -11,9 +15,12 @@ Author: Piotr Ożarowski <piotr@debian.org>
 Date:   Tue May 12 12:32:01 2020 +0200
 
     use deprecated setRequestInterceptor if setUrlRequestInterceptor is not available
+---
+ src/calibre/ebooks/pdf/html_writer.py | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/src/calibre/ebooks/pdf/html_writer.py b/src/calibre/ebooks/pdf/html_writer.py
-index c3abe969b..293ee3341 100644
+index be00d1b..636c79f 100644
 --- a/src/calibre/ebooks/pdf/html_writer.py
 +++ b/src/calibre/ebooks/pdf/html_writer.py
 @@ -276,7 +276,10 @@ class RenderManager(QObject):
