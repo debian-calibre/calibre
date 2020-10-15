@@ -292,7 +292,7 @@ class View:
             ,
             'annotations': self.on_annotations_message,
             'copy_text_to_clipboard': def(data):
-                ui_operations.copy_selection(data.text)
+                ui_operations.copy_selection(data.text, data.html)
             ,
             'view_image': def(data):
                 if ui_operations.view_image:
@@ -325,6 +325,9 @@ class View:
     @property
     def reference_mode_overlay(self):
         return document.getElementById('reference-mode-overlay')
+
+    def copy_to_clipboard(self):
+        self.iframe_wrapper.send_message('copy_selection')
 
     def set_scrollbar_visibility(self, visible):
         sd = get_session_data()
@@ -386,10 +389,13 @@ class View:
 
     def on_margin_wheel(self, which, event):
         event.preventDefault()
-        evt = {}
+        self.send_wheel_event_to_iframe(event, f'margin-{which}')
+
+    def send_wheel_event_to_iframe(self, event, location):
+        evt = {'location': location}
         for attr in ('deltaX', 'deltaY', 'deltaMode', 'altKey', 'ctrlKey', 'shiftKey', 'metaKey'):
             evt[attr] = event[attr]
-        self.iframe_wrapper.send_message('wheel_from_margin', evt=evt)
+        self.iframe_wrapper.send_message('fake_wheel_event', evt=evt)
 
     def forward_gesture(self, gesture):
         self.iframe_wrapper.send_message('gesture_from_margin', gesture=gesture)
@@ -460,6 +466,8 @@ class View:
             ui_operations.toggle_highlights()
         elif data.name is 'new_bookmark':
             self.new_bookmark()
+        elif data.name is 'copy_to_clipboard':
+            self.copy_to_clipboard()
         elif data.name is 'toggle_inspector':
             ui_operations.toggle_inspector()
         elif data.name is 'toggle_lookup':
@@ -547,7 +555,8 @@ class View:
             'end': data.selection_extents.end, 'annot_id': data.annot_id,
             'drag_mouse_position': data.drag_mouse_position,
             'selection_change_caused_by_search': data.selection_change_caused_by_search,
-            'rtl': data.rtl, 'vertical': data.vertical
+            'rtl': data.rtl, 'vertical': data.vertical,
+            'start_is_anchor': data.start_is_anchor
         }
         if ui_operations.selection_changed:
             ui_operations.selection_changed(self.currently_showing.selection.text, self.currently_showing.selection.annot_id)

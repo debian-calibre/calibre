@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "septembre 25, 2020" "5.0.0" "calibre"
+.TH "CALIBREDB" "1" "octobre 07, 2020" "5.2.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -512,9 +512,11 @@ calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .UNINDENT
 .UNINDENT
 .sp
-Exporter un catalogue dans un format spécifié par path/to/destination extension.
-Les options contrôlent comment comment les entées sont affichées dans la sorie du catalogue généré.
-Noter que différents formats de catalogue supportent différents ensembles d\(aqoptions.
+Export a \fBcatalog\fP in format specified by path/to/destination extension.
+Options control how entries are displayed in the generated \fBcatalog\fP output.
+Note that different \fBcatalog\fP formats support different sets of options. To
+see the different options, specify the name of the output file and then the
+\-\-help option.
 .sp
 Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .INDENT 0.0
@@ -820,7 +822,7 @@ calibredb list_categories [options]
 .UNINDENT
 .sp
 Produit un rapport sur les informations des catégories dans la base de données.
-Les informations sont les équivalents de ce qui est affiché dans le panneau des étiquettes.
+Les informations sont les équivalents de ce qui est affiché dans le Navigateur d\(aqétiquettes.
 .sp
 Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .INDENT 0.0

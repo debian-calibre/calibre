@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "de setembre 25, 2020" "5.0.0" "calibre"
+.TH "CALIBREDB" "1" "d’octubre 07, 2020" "5.2.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -505,15 +505,17 @@ Converteix els camins a minúscules.
 .sp
 .nf
 .ft C
-calibredb catalog /camí/a/destinació.(csv|epub|mobi|xml...) [opcions]
+calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Exporta un catàleg amb el format especificat en l\(aqextensió de camí/a/destinació.
-Les opcions controlen com es mostren les entrades a la sortida del catàleg generat.
-Tingueu en compte que diferents formats de catàleg admeten diferents conjunts d\(aqopcions.
+Export a \fBcatalog\fP in format specified by path/to/destination extension.
+Options control how entries are displayed in the generated \fBcatalog\fP output.
+Note that different \fBcatalog\fP formats support different sets of options. To
+see the different options, specify the name of the output file and then the
+\-\-help option.
 .sp
 Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0
@@ -808,14 +810,14 @@ Llista d\fB\(aq\fPinformes separats per comes. Per defecte: tots
 .sp
 .nf
 .ft C
-calibredb list_categories [opcions]
+calibredb list_categories [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Genera un informe de la informació de les categories de la base de dades. La
-informació equival al que es mostra a la subfinestra d\(aqetiquetes.
+Produce a report of the category information in the database. The
+information is the equivalent of what is shown in the Tag browser.
 .sp
 Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0

@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-24 07:51+0530\n"
-"PO-Revision-Date: 2020-04-24 05:31+0000\n"
+"POT-Creation-Date: 2020-10-01 03:09+0000\n"
+"PO-Revision-Date: 2020-09-26 06:47+0000\n"
 "Last-Translator: Trottel <trottel09@gmail.com>\n"
 "Language-Team: Czech (http://www.transifex.com/calibre/calibre/language/cs/)\n"
 "MIME-Version: 1.0\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Language: cs\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:6
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:6
 msgid "Customizing calibre"
 msgstr "Přizpůsobení Calibre"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:8
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:8
 msgid ""
 "calibre has a highly modular design. Various parts of it can be customized. "
 "You can learn how to create *recipes* to add new sources of online content "
@@ -34,27 +34,27 @@ msgid ""
 "to calibre."
 msgstr "Calibre má vysoce modulární provedení. Různé jeho části mohou být upraveny. Jak vytvořit *předpisy* pro přidání nových zdrojů online obsahu do Calibre se můžete naučit v oddílu :ref:`news`. Zde se nejdříve naučíte, jak používat proměnné prostředí a *vylepšení* pro přizpůsobení chování Calibre, a potom jak zadat své vlastní statické zdroje, jako jsou ikony a šablony, pro přepsání výchozího nastavení a nakonec jak používat *moduly* pro přidávání funkcí do Calibre."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:24
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:24
 msgid "Environment variables"
 msgstr "Proměnné prostředí"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:26
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:26
 msgid ""
 "``CALIBRE_CONFIG_DIRECTORY`` - sets the directory where configuration files "
 "are stored/read."
 msgstr "``CALIBRE_CONFIG_DIRECTORY`` – Nastaví adresář, kde jsou uložené konfigurační soubory."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:27
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:27
 msgid "``CALIBRE_TEMP_DIR`` - sets the temporary directory used by calibre"
 msgstr "``CALIBRE_TEMP_DIR`` – Nastaví dočasný adresář používaný Calibre."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:28
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:28
 msgid ""
 "``CALIBRE_CACHE_DIRECTORY`` - sets the directory calibre uses to cache "
 "persistent data between sessions"
 msgstr "``CALIBRE_CACHE_DIRECTORY`` – Nastaví adresář, který Calibre používá pro ukládání trvalých dat do mezipaměti mezi relacemi"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:29
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:29
 msgid ""
 "``CALIBRE_OVERRIDE_DATABASE_PATH`` - allows you to specify the full path to "
 "metadata.db. Using this variable you can have metadata.db be in a location "
@@ -62,38 +62,38 @@ msgid ""
 "networked drive that does not support file locking."
 msgstr "``CALIBRE_OVERRIDE_DATABASE_PATH`` – Umožní vám zadat úplnou cestu k metadata.db. Pomocí této proměnné můžete mít metadata.db v jiném umístění než ve složce knihovny. Užitečné, pokud je vaše složka knihovny na síťové jednotce, která nepodporuje uzamykání souboru."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:30
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:30
 msgid ""
 "``CALIBRE_DEVELOP_FROM`` - Used to run from a calibre development "
 "environment. See :ref:`develop`."
 msgstr "``CALIBRE_DEVELOP_FROM`` – Použito pro spuštění z vývojového prostředí Calibre. Podívejte se na :ref:`develop`."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:31
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:31
 msgid ""
 "``CALIBRE_OVERRIDE_LANG`` - Used to force the language used by the interface"
 " (ISO 639 language code)"
 msgstr "``CALIBRE_OVERRIDE_LANG`` – Použito pro vynucení jazyka použitého rozhraním (kód jazyka ISO 639)."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:32
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:32
 msgid ""
 "``CALIBRE_TEST_TRANSLATION`` - Used to test a translation .po file (should "
 "be the path to the .po file)"
 msgstr "``CALIBRE_TEST_TRANSLATION`` - Použito pro testování souboru překladu .po (měla by to být cesta k souboru .po)"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:33
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:33
 msgid ""
 "``CALIBRE_NO_NATIVE_FILEDIALOGS`` - Causes calibre to not use native file "
 "dialogs for selecting files/directories."
 msgstr "``CALIBRE_NO_NATIVE_FILEDIALOGS`` – Způsobí, že Calibre nepoužívá nativní dialogová okna souboru pro výběr souborů nebo adresářů."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:34
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:34
 msgid ""
 "``CALIBRE_NO_NATIVE_MENUBAR`` - Causes calibre to not create a native "
 "(global) menu on Ubuntu Unity and similar linux desktop environments. The "
 "menu is instead placed inside the window, as is traditional."
 msgstr "``CALIBRE_NO_NATIVE_MENUBAR`` – Způsobí, aby Calibre nevytvářelo nativní (globální) nabídku v Ubuntu Unity a podobných desktopových prostředí Linux. Nabídka je namísto toho umístěna uvnitř okna, jak je obvyklé."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:35
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:35
 msgid ""
 "``CALIBRE_USE_SYSTEM_THEME`` - By default, on Linux, calibre uses its own "
 "builtin Qt style. This is to avoid crashes and hangs caused by "
@@ -103,36 +103,36 @@ msgid ""
 "to use the system theme -- beware of crashes and hangs."
 msgstr "``CALIBRE_USE_SYSTEM_THEME`` - Ve výchozím nastavení na Linuxu používá Calibre svůj vlastní vestavěný styl Qt. Tím je zabráněno pádům a zablokováním způsobeným nekompatibilitou mezi verzí Qt Calibre a systému. Nevýhodou je, že Calibre nemusí odpovídat vzhledu a chování systému. Pokud nastavíte tuto proměnnou prostředí na Linuxu, způsobí to, že Calibre bude používat motiv systému - dejte pozor na pády a zablokování."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:41
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:41
 msgid ""
 "``CALIBRE_SHOW_DEPRECATION_WARNINGS`` - Causes calibre to print deprecation "
 "warnings to stdout. Useful for calibre developers."
 msgstr "``CALIBRE_SHOW_DEPRECATION_WARNINGS`` – Způsobí, že Calibre vytiskne varování o neschválení do stdout. Užitečné pro vývojáře Calibre."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:42
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:42
 msgid ""
 "``CALIBRE_NO_DEFAULT_PROGRAMS`` - Prevent calibre from automatically "
 "registering the filetypes it is capable of handling with Windows."
 msgstr "``CALIBRE_NO_DEFAULT_PROGRAMS`` - Zabrání Calibre, aby automaticky registrovalo typy souborů, se kterými je schopné pracovat pomocí Windows."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:43
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:43
 msgid ""
 "``CALIBRE_USE_DARK_PALETTE`` - Set it to ``1`` to have calibre use dark "
 "colors and ``0`` for normal colors (ignored on macOS). On Windows 10 in the "
-"absence of this variable, the windows system preference for dark colors is "
+"absence of this variable, the Windows system preference for dark colors is "
 "used."
-msgstr "``CALIBRE_USE_DARK_PALETTE`` - Nastavte na ``1``, aby Calibre používalo tmavé barvy, a ``0`` pro normální barvy (ignorováno na macOS). Na Windows 10 v případě nepřítomnosti této proměnné, je použit předvolba systému windows pro tmavé barvy."
+msgstr "``CALIBRE_USE_DARK_PALETTE`` - Nastavte na ``1``, aby Calibre používalo tmavé barvy, a ``0`` pro normální barvy (ignorováno na macOS). Na Windows 10 v případě nepřítomnosti této proměnné, je použit předvolba systému Windows pro tmavé barvy."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:45
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:45
 msgid "``SYSFS_PATH`` - Use if sysfs is mounted somewhere other than /sys"
 msgstr "``SYSFS_PATH`` – Použijte, pokud je sysfs připojeno někde jinde než /sys."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:46
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:46
 msgid ""
 "``http_proxy``, ``https_proxy`` - Used on Linux to specify an HTTP(S) proxy"
 msgstr "``http_proxy``, ``https_proxy`` – Použito v Linuxu pro zadání proxy HTTP."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:48
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:48
 msgid ""
 "See `How to set environment variables in Windows "
 "<https://www.computerhope.com/issues/ch000549.htm>`_. If you are on macOS "
@@ -141,11 +141,11 @@ msgid ""
 "environment variables one per line in it, for example::"
 msgstr "Podívejte se na `Jak nastavit proměnné prostředí ve Windows <https://www.computerhope.com/issues/ch000549.htm>`_. Pokud jste na macOS, můžete nastavit proměnné prostředí vytvořením :file:`~/Library/Preferences/calibre/macos-env.txt` a uložením proměnných prostředí do něj, každou na jeden řádek, na příklad::"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:58
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:58
 msgid "Tweaks"
 msgstr "Vylepšení"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:60
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:60
 msgid ""
 "Tweaks are small changes that you can specify to control various aspects of "
 "calibre's behavior. You can change them by going to "
@@ -153,11 +153,11 @@ msgid ""
 "reproduced below"
 msgstr "Vylepšení jsou malé změny, které můžete zadat pro určení různých aspektů chování Calibre. Můžete je změnit v Předvolby->Rozšířené->Vylepšení. Výchozí hodnoty pro vylepšení jsou zopakovány níže"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:67
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:67
 msgid "Overriding icons, templates, et cetera"
 msgstr "Přepsání ikon, šablon atd."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:70
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:70
 msgid ""
 "calibre has direct support for icon themes, there are several icon themes "
 "available for calibre, that you can use by going to "
@@ -166,7 +166,7 @@ msgid ""
 "resources."
 msgstr "Calibre má přímou podporu pro motivy ikon, je pro něj dostupných několik motivů ikon, které můžete použít přejitím na :guilabel:`Předvolby->Rozhraní->Vzhled a chování->Změnit motiv ikon`. Motivy ikon používají stejný mechanismus, jak je popsáno níže pro přepsání statických zdrojů."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:74
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:74
 msgid ""
 "calibre allows you to override the static resources, like icons, JavaScript "
 "and templates for the metadata jacket, catalogs, etc. with customized "
@@ -179,7 +179,7 @@ msgid ""
 "you choose to install calibre."
 msgstr "Calibre vám umožňuje přepsat statické zdroje, jako jsou ikony, JavaScript a šablony, pro přebal s metadaty, katalogy atd. upravenými verzemi, které se vám líbí. Všechny statické zdroje jsou uložené v podsložce resources instalačního umístění Calibre. Ve Windows je to obvykle :file:`C:\\\\Program Files\\\\Calibre2\\\\app\\\\resources`. V macOS :file:`/Applications/calibre.app/Contents/Resources/resources/`. V Linuxu, pokud používáte binární instalační balíček z webové stránky Calibre, to bude :file:`/opt/calibre/resources`. Tyto cesty se můžou měnit v závislosti na tom, kam si zvolíte nainstalovat Calibre."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:83
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:83
 msgid ""
 "You should not change the files in this resources folder, as your changes "
 "will get overwritten the next time you update calibre. Instead, go to "
@@ -191,7 +191,7 @@ msgid ""
 "file in preference to the built-in one the next time it is started."
 msgstr "Soubory v této složce zdrojů byste neměli měnit, protože vaše změny budou přepsaány při příští aktualizaci Calibre. Namísto toho přejděte do :guilabel:`Předvolby->Rozšířené->Různé` a klikněte na :guilabel:`Otevřít konfigurační adresář Calibre`. V tomto konfiguračním adresáři vytvořte podsložku nazvanou resources a umístěte do ní soubory, které chcete přepsat. Umístěte soubory do příslušných podsložek, například obrázky umístěte do :file:`resources/images` atd. Calibre automaticky použije při příštím spuštění váš vlastní soubor přednostně před vestavěným."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:92
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:92
 msgid ""
 "For example, if you wanted to change the icon for the :guilabel:`Remove "
 "books` action, you would first look in the built-in resources folder and see"
@@ -202,11 +202,11 @@ msgid ""
 "calibre user interface are in :file:`resources/images` and its sub-folders."
 msgstr "Například pokud chcete změnit ikonu pro akci :guilabel:`Odebrat knihy`, nejdříve byste se podívali do vestavěné složky resources a viděli byste, že odpovídající soubor je :file:`resources/images/remove_books.png`. Pokud máte alternativní ikonu ve formátu PNG nazvanou :file:`my_remove_books.png`, uložili byste ji do konfiguračního adresáře jako :file:`resources/images/remove_books.png`. Všechny ikony použité uživatelským rozhraním Calibre jsou v :file:`resources/images` a jeho podsložkách."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:101
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:101
 msgid "Creating your own icon theme for calibre"
 msgstr "Vytvoření vlastního motivu ikon pro Calibre"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:103
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:103
 msgid ""
 "If you have created a beautiful set of icons and wish to share them with "
 "other calibre users via calibre's builtin icon theme support, you can easily"
@@ -220,11 +220,11 @@ msgid ""
 " make your theme available via calibre's builtin icon theme system."
 msgstr "Pokud jste vytvořili krásnou sadu ikon a chcete ji sdílet s ostatními uživateli Calibre prostřednictvím vestavěného podpory motivů ikon Calibre, můžete snadno zabalit vaše ikony do motivu. K tomu přejděte na :guilabel:`Předvolby->Různé->Vytvořit motiv ikon`, vyberte složku, kam jste vložili své ikony (obvykle složka :file:`resources/images` v konfiguračním adresáři Calibre, jak je popsáno výše). Pak vyplňte metadata motivu a klikněte na OK. Vznikne tak soubor ZIP obsahující ikony motivu. Ten můžete nahrát na fórum Calibre na `Mobileread <https://www.mobileread.com/forums/forumdisplay.php?f=166>`_ a já pak zpřístupním váš motiv prostřednictvím vestavěného systému motivu ikon Calibre."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:116
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:116
 msgid "Customizing calibre with plugins"
 msgstr "Přizpůsobení Calibre pomocí modulů"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:118
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:118
 msgid ""
 "calibre has a very modular design. Almost all functionality in calibre comes"
 " in the form of plugins. Plugins are used for conversion, for downloading "
@@ -234,7 +234,7 @@ msgid ""
 "plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
 msgstr "Calibre má velice modulární provedení. Téměř všechny funkce jsou ve formě modulů. Moduly jsou použity pro převod, stahování zpráv (ačkoliv ty jsou nazvány předpisy), různé komponenty uživatelského rozhraní, připojení k různým zařízením, zpracování souborů při jejich přidávání do Calibre a tak dále. Kompletní seznam všech vestavěných modulů můžete získat v Calibre v :guilabel:`Předvolby->Rozšířené->Moduly`."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:120
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:120
 msgid ""
 "You can write your own plugins to customize and extend the behavior of "
 "calibre. The plugin architecture in calibre is very simple, see the tutorial"

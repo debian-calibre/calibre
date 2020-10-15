@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "september 25, 2020" "5.0.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "oktober 07, 2020" "5.2.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -35,18 +35,19 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-calibre\-smtp [alternativ] [from to text]
+calibre\-smtp [options] [from to text]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Skicka post genom använda SMTP\-protokollet. \fBcalibre\-smtp\fP har två lägen av utförande. I läget komponera anger du från\- och till\-text som används för att bygga och skicka ett e\-postmeddelande.
-I läget filtrera, läser \fBcalibre\-smtp\fP ett komplett e\-postmeddelande från STDIN och skickar det.
+Skicka e\-post med SMTP\-protokollet. \fBcalibre\-smtp\fP har två lägen av utförande. I
+skrivläget anger du från och till text och dessa används för att skapa och skicka ett e\-postmeddelande.
+I filterläget läser \fBcalibre\-smtp\fP ett komplett e\-postmeddelande från STDIN och skickar det.
 .sp
-text är huvudtexten av e\-postmeddelandet.
+texten är e\-postmeddelandet.
 Om text inte anges, läses ett komplett e\-postmeddelande från STDIN.
-från är avsändare och till är mottagare av e\-postmeddelandet. När ett komplett e\-postmeddelande är läst från STDIN, används bara från och till i SMTP\-förhandlingen, meddelandehuvuden modifieras inte.
+från är avsändarens e\-postadress och till är mottagares e\-postadress. När ett komplett e\-postmeddelande läses från STDIN, används från och till bara i SMTP\-förhandlingen, meddelanderubrikerna ändras inte.
 .sp
 När du skickar argument till \fBcalibre\-smtp\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .SH [ALTERNATIV]

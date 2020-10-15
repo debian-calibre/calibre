@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "setembro 25, 2020" "5.0.0" "calibre"
+.TH "CALIBREDB" "1" "outubro 07, 2020" "5.2.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -508,9 +508,11 @@ calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .UNINDENT
 .UNINDENT
 .sp
-Exporta um catálogo em formato especificado pela extensão path/to/destination.
-Opções controlam como as entradas são exibidas no catálogo gerado.
-Note que formatos de catálogos diferentes suportam diferentes conjuntos de opções.
+Export a \fBcatalog\fP in format specified by path/to/destination extension.
+Options control how entries are displayed in the generated \fBcatalog\fP output.
+Note that different \fBcatalog\fP formats support different sets of options. To
+see the different options, specify the name of the output file and then the
+\-\-help option.
 .sp
 Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
 .INDENT 0.0
@@ -809,14 +811,14 @@ Lista de relatórios separados por vírgula. Padrão: tudo
 .sp
 .nf
 .ft C
-calibredb list_categories [opções]
+calibredb list_categories [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Produz um relatório das informações da categoria no banco de dados. A
-informação é equivalente à que é mostrada no painel de etiquetas.
+Produce a report of the category information in the database. The
+information is the equivalent of what is shown in the Tag browser.
 .sp
 Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
 .INDENT 0.0

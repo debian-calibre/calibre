@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "September 25, 2020" "5.0.0" "calibre"
+.TH "CALIBREDB" "1" "Oktober 07, 2020" "5.2.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -504,15 +504,17 @@ Pfade in Kleinbuchstaben umwandeln.
 .sp
 .nf
 .ft C
-calibredb catalog /Pfad/zum/Ziel.(csv|epub|mobi|xml\ …) [Optionen]
+calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Exportieren eines Katalogs nach /Pfad/zum/Ziel im Format der angegebenen Dateinamenerweiterung.
-Die Optionen bestimmen, wie Einträge im erzeugten Katalog dargestellt werden.
-Beachten Sie, dass unterschiedliche Katalogformate unterschiedliche Optionen unterstützen.
+Export a \fBcatalog\fP in format specified by path/to/destination extension.
+Options control how entries are displayed in the generated \fBcatalog\fP output.
+Note that different \fBcatalog\fP formats support different sets of options. To
+see the different options, specify the name of the output file and then the
+\-\-help option.
 .sp
 Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .INDENT 0.0
@@ -806,14 +808,14 @@ Kommagetrenne Liste von Berichten. Standardeinstellung: alle
 .sp
 .nf
 .ft C
-calibredb list_categories [Optionen]
+calibredb list_categories [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Erzeugen eines Berichts der Kategorieinformationen in der Datenbank.
-Die Informationen entsprechen dem, was in der Schlagwortleiste angezeigt wird.
+Produce a report of the category information in the database. The
+information is the equivalent of what is shown in the Tag browser.
 .sp
 Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .INDENT 0.0

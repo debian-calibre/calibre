@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "setembro 25, 2020" "5.0.0" "calibre"
+.TH "CALIBREDB" "1" "outubro 07, 2020" "5.2.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -502,15 +502,17 @@ Converter os caminhos para minúsculas.
 .sp
 .nf
 .ft C
-calibredb catalog /path/to/destination.(CSV|EPUB|MOBI|XML ...) [options]
+calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-\ \ \  Exporta um catálogo em formato especificado por caminho/para/destino.extensão.
-As opções controlam a forma como as entradas serão mostradas no catálogo de saída gerada.
-Note que diferentes formatos de catalogo suportam diferentes conjunto de opções.
+Export a \fBcatalog\fP in format specified by path/to/destination extension.
+Options control how entries are displayed in the generated \fBcatalog\fP output.
+Note that different \fBcatalog\fP formats support different sets of options. To
+see the different options, specify the name of the output file and then the
+\-\-help option.
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
 .INDENT 0.0
@@ -597,7 +599,7 @@ Campo personalizado que contém texto de notas para inserir no cabeçalho \fB"\f
 .INDENT 0.0
 .TP
 .B \-\-merge\-comments\-rule
-#<custom field>:[before|after]:[True|False] specifying:  <custom field> Custom field containing notes to merge with comments  [before|after] Placement of notes with respect to comments  [True|False] \- A horizontal rule is inserted between notes and comments Default: \fB\(aq\fP::\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+#<custom field>:[before|after]:[True|False] especificando:  <custom field> Campo personalizado contendo notas para fundir com os comentários  [before|after] Colocação de notas em relação aos comentários  [True|False] \- Uma linha horizontal é inserida entre notas e comentários Predefinição: \fB\(aq\fP::\fB\(aq\fP Aplica\-se a formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP

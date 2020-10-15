@@ -63,6 +63,10 @@ class ViewAction(InterfaceAction):
         self.clear_history_action = cm('clear history',
                 _('Clear recently viewed list'), triggered=self.clear_history)
         self.history_actions = [self.clear_sep1]
+        self.action_view_last_read = ac = self.create_action(
+            spec=(_('Continue reading previous book'), None, _('Continue reading the last opened book'), 'shift+v'), attr='action_view_last_read')
+        ac.triggered.connect(self.view_last_read)
+        self.gui.addAction(ac)
 
     def initialization_complete(self):
         self.build_menus(self.gui.current_db)
@@ -81,6 +85,12 @@ class ViewAction(InterfaceAction):
                 self.view_menu.insertAction(self.clear_sep2, ac)
                 ac.view_historical.connect(self.view_historical)
                 self.history_actions.append(ac)
+
+    def view_last_read(self):
+        history = self.gui.current_db.new_api.pref('gui_view_history', [])
+        for book_id, title in history:
+            self.view_historical(book_id)
+            break
 
     def browse_annots(self):
         self.gui.iactions['Browse Annotations'].show_browser()
@@ -286,14 +296,14 @@ class ViewAction(InterfaceAction):
         views = []
         for id_ in ids:
             try:
-                formats = db.formats(id_, index_is_id=True)
+                title = db.title(id_, index_is_id=True)
             except:
                 error_dialog(self.gui, _('Cannot view'),
                     _('This book no longer exists in your library'), show=True)
                 self.update_history([], remove={id_})
                 continue
 
-            title   = db.title(id_, index_is_id=True)
+            formats = db.formats(id_, index_is_id=True)
             if not formats:
                 error_dialog(self.gui, _('Cannot view'),
                     _('%s has no available formats.')%(title,), show=True)

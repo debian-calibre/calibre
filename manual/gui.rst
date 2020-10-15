@@ -441,6 +441,30 @@ Identifiers (e.g., ISBN, doi, lccn etc) also use an extended syntax. First, note
 
     :guilabel:`Advanced search dialog`
 
+You can search using a template in the :ref:`templatelangcalibre` instead of a
+metadata field. To do so you enter a template, a search type, and the value to
+search for. The syntax is::
+
+    template: (the template) #@#: (search type) : (the value)
+
+The ``template`` is any valid calibre template language template. The ``search
+type`` must be one of ``t`` (text search), ``d`` (date search), ``n`` (numeric
+search), or ``b`` (set/not set (boolean)). The ``value`` is whatever you want.
+It can use the special operators described above for the various search types.
+You must quote the entire search string if there are spaces anywhere in it.
+
+Examples:
+
+    * ``template:"program: connected_device_name('main')#@#:t:kindle"`` -- is true when the ``kindle`` device is connected
+	* ``template:"program: select(formats_sizes(), 'EPUB')#@#:n:>1000000"`` -- finds books with EPUB files larger than 1 MB
+    * ``template:"program: select(formats_modtimes('iso'), 'EPUB')#@#:d:>10daysago"`` -- finds books with EPUB files newer than 10 days ago
+
+You can build template search queries easily using the :guilabel:`Advanced
+search dialog` accessed by clicking the button |sbi|. You can test templates on
+specific books using the calibre :guilabel:`Template tester`. This can be added
+to the toolbars or menus via :guilabel:`Preferences->Toolbars & menus`. It can
+also be assigned a keyboard shortcut via :guilabel:`Preferences->Shortcuts`.
+
 .. _saved_searches:
 
 Saving searches
@@ -692,6 +716,8 @@ calibre has several keyboard shortcuts to save you time and mouse movement. Thes
       - Edit book
     * - :kbd:`V`
       - View
+    * - :kbd:`Shift+V`
+      - View last read book
     * - :kbd:`Alt+V/Cmd+V in macOS`
       - View specific format
     * - :kbd:`Alt+Shift+J`

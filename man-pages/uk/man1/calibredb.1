@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "вересня 25, 2020" "5.0.0" "calibre"
+.TH "CALIBREDB" "1" "жовтня 07, 2020" "5.2.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -512,15 +512,17 @@ calibredb export [параметри] ідентифікатори
 .sp
 .nf
 .ft C
-calibredb catalog /шлях/до/призначення.(csv|epub|mobi|xml...) [параметри]
+calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Експортувати каталог у форматі, вказаної параметром «шлях/до/призначення.суфікс_назви».
-Параметри керують способом показу у виведених даних каталогу.
-Зауважте, що у різних форматах каталогів передбачено підтримку різних наборів параметрів.
+Export a \fBcatalog\fP in format specified by path/to/destination extension.
+Options control how entries are displayed in the generated \fBcatalog\fP output.
+Note that different \fBcatalog\fP formats support different sets of options. To
+see the different options, specify the name of the output file and then the
+\-\-help option.
 .sp
 Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
 .INDENT 0.0
@@ -830,7 +832,7 @@ calibredb list_categories [параметри]
 .UNINDENT
 .sp
 Створити звіт щодо даних категорій у базі даних. Отримані дані
-еквівалентні до даних, показаних на панелі міток.
+еквівалентні до даних, показаних на панелі навігації мітками.
 .sp
 Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
 .INDENT 0.0

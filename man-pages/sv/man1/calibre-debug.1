@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "september 25, 2020" "5.0.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "oktober 07, 2020" "5.2.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -35,14 +35,14 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-calibre\-debug [alternativ]
+calibre\-debug [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
 Olika kommandoradsgränssnitt som är användbara för felsökning av calibre. Med inga
-alternativ startar detta kommando en inbäddad Python\-tolk. Du kan också köra calibre\-huvudgränssnittet, calibre E\-bokvisaren och calibres redigerare i felsökningsläge.
+flaggor startar detta kommando en inbäddad Python\-tolk. Du kan också köra calibre\-huvudgränssnittet, calibre E\-bokvisaren och calibre redigerare i felsökningsläge.
 .sp
 Den innehåller också gränssnitt till olika bitar av calibre som inte har dedikerade
 kommandoradsverktyg, som typsnittsdelning, E\-bokdiffverktyg och så vidare.
@@ -161,7 +161,7 @@ Orsakar att en körande calibre\-instans avslutas, om någon körs. Observera at
 .INDENT 0.0
 .TP
 .B \-\-subset\-font, \-f
-Deluppsättning av angivna typsnitt. Använd \fB\-\-\fP efter detta val för att skicka valet till programmet för deluppsättning av typsnitt.
+Deluppsättning av angivna typsnitt. Använd \fB\-\-\fP efter denna flagga för att skicka flaggan till programmet för deluppsättning av typsnitt.
 .UNINDENT
 .INDENT 0.0
 .TP

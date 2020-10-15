@@ -247,6 +247,7 @@ class SelectionBar:
         container.addEventListener('touchend', self.touchend_on_container, {'passive': False})
         container.addEventListener('touchcancel', self.touchend_on_container, {'passive': False})
         container.addEventListener('keydown', self.on_keydown, {'passive': False})
+        container.addEventListener('wheel', self.on_wheel, {'passive': False})
         container.setAttribute('tabindex', '0')
 
         self.dragging_handle = None
@@ -289,6 +290,8 @@ class SelectionBar:
         clear(bar_container)
         bar_container.style.maxWidth = 'min(50rem, 90vw)' if self.supports_css_min_max else '50rem'
         bar_container.style.backgroundColor = get_color("window-background")
+        notes_container = E.div()
+        notes_container.addEventListener('wheel', def(evt): evt.stopPropagation();, {'passive': True})
         for x in [
             E.div(style='height: 4ex; display: flex; align-items: center; padding: 5px; justify-content: center'),
 
@@ -296,7 +299,7 @@ class SelectionBar:
 
             E.div(
                 style='display: none; padding: 5px;',
-                E.div(),
+                notes_container,
             )
         ]:
             bar_container.appendChild(x)
@@ -545,6 +548,10 @@ class SelectionBar:
                     self.end_handle_drag()
                     return
 
+    def on_wheel(self, ev):
+        ev.stopPropagation(), ev.preventDefault()
+        self.view.send_wheel_event_to_iframe(ev, 'selection-mode')
+
     def on_keydown(self, ev):
         ev.stopPropagation(), ev.preventDefault()
         if ev.key is 'Escape':
@@ -556,6 +563,8 @@ class SelectionBar:
         sc_name = shortcut_for_key_event(ev, self.view.keyboard_shortcut_map)
         if sc_name is 'show_chrome':
             self.clear_selection()
+        elif sc_name is 'copy_to_clipboard':
+            self.copy_to_clipboard()
         elif sc_name in ('up', 'down', 'pageup', 'pagedown', 'left', 'right'):
             self.send_message('trigger-shortcut', name=sc_name)
         elif sc_name is 'start_search':
@@ -685,8 +694,12 @@ class SelectionBar:
 
         # We try to place the bar near the last dragged handle so it shows up
         # close to current mouse position. We assume it is the "end" handle.
-        if dragged_handle and dragged_handle is not self.end_handle_id:
-            start, end = end, start
+        if dragged_handle:
+            if dragged_handle is not self.end_handle_id:
+                start, end = end, start
+        else:
+            if not cs.start_is_anchor:
+                start, end = end, start
         if not end.onscreen and start.onscreen:
             start, end = end, start
 
@@ -876,8 +889,7 @@ class SelectionBar:
 
     # Actions  {{{
     def copy_to_clipboard(self):
-        if self.view.currently_showing.selection.text:
-            ui_operations.copy_selection(self.view.currently_showing.selection.text)
+        self.view.copy_to_clipboard()
 
     def lookup(self):
         if ui_operations.toggle_lookup:
@@ -934,10 +946,12 @@ class SelectionBar:
     def remove_highlight(self):
         annot_id = self.view.currently_showing.selection.annot_id
         if annot_id:
-            question_dialog(_('Are you sure?'), _('Are you sure you want to delete this highlight permanently?'),
+            question_dialog(
+                _('Are you sure?'), _('Are you sure you want to delete this highlight permanently?'),
                 def (yes):
                     if yes:
                         self.remove_highlight_with_id(annot_id)
+                , skip_dialog_name='confirm_remove_highlight'
             )
 
     def remove_highlight_with_id(self, annot_id):

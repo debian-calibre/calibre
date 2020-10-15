@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-24 07:51+0530\n"
-"PO-Revision-Date: 2020-04-24 04:39+0000\n"
+"POT-Creation-Date: 2020-10-01 03:09+0000\n"
+"PO-Revision-Date: 2020-09-26 05:39+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
 "MIME-Version: 1.0\n"
@@ -21,11 +21,11 @@ msgstr ""
 "Language: uk\n"
 "Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:6
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:6
 msgid "Customizing calibre"
 msgstr "Налаштування calibre"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:8
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:8
 msgid ""
 "calibre has a highly modular design. Various parts of it can be customized. "
 "You can learn how to create *recipes* to add new sources of online content "
@@ -36,27 +36,27 @@ msgid ""
 "to calibre."
 msgstr "Структурно calibre поділено на модулі. Ви можете налаштовувати кожен модуль програми окремо. Ви можете навчитися створювати *рецепти* для додавання нових джерел даних у інтернеті до  calibre за допомогою розділу :ref:`news`. У цьому розділі ми спочатку обговоримо використання змінних середовища та *коригувань* для налаштовування поведінки calibre, а потім обговоримо способи визначення власних статичних ресурсів програми, зокрема піктограм та шаблонів для перевизначення типових. Завершимо обговорення питаннями щодо способів використання *додатків* для розширення функціональних можливостей calibre."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:24
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:24
 msgid "Environment variables"
 msgstr "Змінні середовища"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:26
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:26
 msgid ""
 "``CALIBRE_CONFIG_DIRECTORY`` - sets the directory where configuration files "
 "are stored/read."
 msgstr "``CALIBRE_CONFIG_DIRECTORY`` — визначає каталог, у якому будуть зберігатися файли налаштувань і з якого програма читатиме ці файли."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:27
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:27
 msgid "``CALIBRE_TEMP_DIR`` - sets the temporary directory used by calibre"
 msgstr "``CALIBRE_TEMP_DIR`` — визначає каталог тимчасових даних, який використовуватиметься calibre"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:28
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:28
 msgid ""
 "``CALIBRE_CACHE_DIRECTORY`` - sets the directory calibre uses to cache "
 "persistent data between sessions"
 msgstr "``CALIBRE_CACHE_DIRECTORY`` — визначає каталог, який calibre використовуватиме для кешування даних між сеансами"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:29
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:29
 msgid ""
 "``CALIBRE_OVERRIDE_DATABASE_PATH`` - allows you to specify the full path to "
 "metadata.db. Using this variable you can have metadata.db be in a location "
@@ -64,38 +64,38 @@ msgid ""
 "networked drive that does not support file locking."
 msgstr "``CALIBRE_OVERRIDE_DATABASE_PATH`` — надає вам змогу вказати шлях до metadata.db повністю. За допомогою цієї змінної ви можете зберігати metadata.db у каталозі, відмінному від каталогу бібліотеки. Корисно, якщо ваша тека бібліотеки зберігається на диску у мережі, для якого не передбачено підтримки блокування файлів."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:30
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:30
 msgid ""
 "``CALIBRE_DEVELOP_FROM`` - Used to run from a calibre development "
 "environment. See :ref:`develop`."
 msgstr "``CALIBRE_DEVELOP_FROM`` — використовується для запуску із середовища розробки calibre. Див. :ref:`develop`."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:31
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:31
 msgid ""
 "``CALIBRE_OVERRIDE_LANG`` - Used to force the language used by the interface"
 " (ISO 639 language code)"
 msgstr "``CALIBRE_OVERRIDE_LANG`` — використовується для примусового визначення мови інтерфейсу програми (у форматі коду мови ISO 639)"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:32
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:32
 msgid ""
 "``CALIBRE_TEST_TRANSLATION`` - Used to test a translation .po file (should "
 "be the path to the .po file)"
 msgstr "``CALIBRE_TEST_TRANSLATION`` — використовується для тестування файла перекладу .po (має містити шлях до файла .po)"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:33
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:33
 msgid ""
 "``CALIBRE_NO_NATIVE_FILEDIALOGS`` - Causes calibre to not use native file "
 "dialogs for selecting files/directories."
 msgstr "``CALIBRE_NO_NATIVE_FILEDIALOGS`` — наказує calibre не використовувати власні діалогові вікна операційної системи для вибору файлів або каталогів."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:34
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:34
 msgid ""
 "``CALIBRE_NO_NATIVE_MENUBAR`` - Causes calibre to not create a native "
 "(global) menu on Ubuntu Unity and similar linux desktop environments. The "
 "menu is instead placed inside the window, as is traditional."
 msgstr "``CALIBRE_NO_NATIVE_MENUBAR`` — наказує calibre не створювати природного (загального) меню в Ubuntu Unity та подібних стільничних середовищ у linux. Замість цього, меню, традиційно, розташовуватиметься у верхній частині вікна програми."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:35
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:35
 msgid ""
 "``CALIBRE_USE_SYSTEM_THEME`` - By default, on Linux, calibre uses its own "
 "builtin Qt style. This is to avoid crashes and hangs caused by "
@@ -105,36 +105,36 @@ msgid ""
 "to use the system theme -- beware of crashes and hangs."
 msgstr "``CALIBRE_USE_SYSTEM_THEME`` — типово, у Linux calibre використовує власний вбудований стиль Qt. Так зроблено, щоб уникнути аварійних завершень роботи і зависань, які спричинено несумісностями з версією Qt, за допомогою якої зібрано calibre, і версією Qt, яку встановлено у системі. Небажаним наслідком такого підходу є те, що calibre може не використовувати загальносистемні параметри вигляду та поведінки. Якщо ви встановите цю змінну середовища у Linux, calibre використовуватиме загальносистемні параметри теми. Це може призвести, як ми вже зауважували, до аварійних завершень роботи програми та повисань."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:41
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:41
 msgid ""
 "``CALIBRE_SHOW_DEPRECATION_WARNINGS`` - Causes calibre to print deprecation "
 "warnings to stdout. Useful for calibre developers."
 msgstr "``CALIBRE_SHOW_DEPRECATION_WARNINGS`` — наказує calibre виводити попередження щодо застарілості певних функцій до стандартного виведення (stdout). Корисно для розробників calibre."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:42
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:42
 msgid ""
 "``CALIBRE_NO_DEFAULT_PROGRAMS`` - Prevent calibre from automatically "
 "registering the filetypes it is capable of handling with Windows."
 msgstr "``CALIBRE_NO_DEFAULT_PROGRAMS`` — забороняє calibre автоматично реєструвати типи файлів, які може обробляти програма, у Windows."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:43
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:43
 msgid ""
 "``CALIBRE_USE_DARK_PALETTE`` - Set it to ``1`` to have calibre use dark "
 "colors and ``0`` for normal colors (ignored on macOS). On Windows 10 in the "
-"absence of this variable, the windows system preference for dark colors is "
+"absence of this variable, the Windows system preference for dark colors is "
 "used."
 msgstr "``CALIBRE_USE_DARK_PALETTE`` — встановіть значення ``1``, якщо в інтерфейсі calibre має бути використано темні кольори, і ``0``, якщо кольори мають бути звичайними (буде проігноровано у macOS). У Windows 10, якщо цю змінну не вказано, буде використано загальносистемні налаштування Windows."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:45
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:45
 msgid "``SYSFS_PATH`` - Use if sysfs is mounted somewhere other than /sys"
 msgstr "``SYSFS_PATH`` — використовується, якщо sysfs змонтовано кудись, окрім /sys"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:46
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:46
 msgid ""
 "``http_proxy``, ``https_proxy`` - Used on Linux to specify an HTTP(S) proxy"
 msgstr "``http_proxy``, ``https_proxy`` — використовуються у Linux для визначення проксі-сервера HTTP(S)"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:48
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:48
 msgid ""
 "See `How to set environment variables in Windows "
 "<https://www.computerhope.com/issues/ch000549.htm>`_. If you are on macOS "
@@ -143,11 +143,11 @@ msgid ""
 "environment variables one per line in it, for example::"
 msgstr "Див. `Як налаштувати змінні середовища у Windows <https://www.computerhope.com/issues/ch000549.htm>`_. Якщо ви працюєте у macOS, ви можете налаштувати змінні середовища за допомогою створення файла :file:`~/Library/Preferences/calibre/macos-env.txt`, до якого слід вписати змінні середовища, по одній на рядок. Приклад::"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:58
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:58
 msgid "Tweaks"
 msgstr "Коригування"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:60
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:60
 msgid ""
 "Tweaks are small changes that you can specify to control various aspects of "
 "calibre's behavior. You can change them by going to "
@@ -155,11 +155,11 @@ msgid ""
 "reproduced below"
 msgstr "Коригування — незначні зміни, якими можна керувати різними аспектами роботи calibre. Ви можете внести їх за допомогою пункту меню Налаштування -> Додатково -> Коригування. Типові значення коригувань наведено нижче"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:67
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:67
 msgid "Overriding icons, templates, et cetera"
 msgstr "Перевизначення піктограм, шаблонів тощо"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:70
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:70
 msgid ""
 "calibre has direct support for icon themes, there are several icon themes "
 "available for calibre, that you can use by going to "
@@ -168,7 +168,7 @@ msgid ""
 "resources."
 msgstr "У calibre передбачено безпосередню підтримку тем піктограм. У типовому пакунку програми є декілька таких тем. Змінити тему можна за допомогою пункту :guilabel:`Налаштування -> Інтерфейс -> Зовнішній вигляд -> Змінити тему піктограм`. У темах піктограм використовується той самий механізм, який нижче обговорено у частині, яку присвячено перевизначенню статичних ресурсів."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:74
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:74
 msgid ""
 "calibre allows you to override the static resources, like icons, JavaScript "
 "and templates for the metadata jacket, catalogs, etc. with customized "
@@ -181,7 +181,7 @@ msgid ""
 "you choose to install calibre."
 msgstr "У calibre передбачено можливість перевизначити статичні ресурси програми, зокрема піктограми, скрипти JavaScript та шаблони для панелі метаданих, каталогів тощо, скориставшись налаштованими вами відповідним чином версіями. Усі статичні ресурси зберігаються у підтеці resources теки, до якої було встановлено calibre. У Windows це, зазвичай, :file:`C:\\\\Program Files\\\\Calibre2\\\\app\\\\resources`. У macOS це :file:`/Applications/calibre.app/Contents/Resources/resources/`. У Linux, якщо ви використовуєте бінарний пакунок з сайта calibre, це :file:`/opt/calibre/resources`. Шлях у вашій системі, звичайно ж, залежатиме від каталогу до якого ви встановили calibre."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:83
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:83
 msgid ""
 "You should not change the files in this resources folder, as your changes "
 "will get overwritten the next time you update calibre. Instead, go to "
@@ -193,7 +193,7 @@ msgid ""
 "file in preference to the built-in one the next time it is started."
 msgstr "Вам не варто безпосередньо змінювати файли у теці ресурсів, оскільки внесені вами зміни буде перезаписано новими версіями файлів під час оновлення calibre. Замість цього, відкрийте сторінку :guilabel:`Налаштування -> Додатково -> Різне` і натисніть кнопку :guilabel:`Відкрити каталог налаштувань calibre`. У каталозі налаштувань створіть підтеку із назвою «resources» і розташуйте у ній файли, які слід перевизначити у типовому наборі. Файли слід розташовувати у відповідних підтеках. Наприклад, зображення мають зберігатися у :file:`resources/images` тощо. calibre автоматично надаватиме пріоритет вашому нетиповому файлу перед вбудованим до пакунка під час наступного завантаження програми."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:92
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:92
 msgid ""
 "For example, if you wanted to change the icon for the :guilabel:`Remove "
 "books` action, you would first look in the built-in resources folder and see"
@@ -204,11 +204,11 @@ msgid ""
 "calibre user interface are in :file:`resources/images` and its sub-folders."
 msgstr "Наприклад, якщо ви хочете змінити піктограму для кнопки :guilabel:`Вилучити книги`, вам слід спочатку зазирнути до теки resources пакунка і знайти відповідний файл — :file:`resources/images/remove_books.png`. Нехай тепер у вас є альтернативний варіант піктограми у форматі PNG із назвою :file:`my_remove_books.png`. Його слід зберегти до каталогу налаштувань як :file:`resources/images/remove_books.png`. Усі піктограми, які calibre використовує у інтерфейсі користувача, зберігаються у каталозі :file:`resources/images` та його підкаталогах."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:101
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:101
 msgid "Creating your own icon theme for calibre"
 msgstr "Створення власної теми піктограм для calibre"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:103
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:103
 msgid ""
 "If you have created a beautiful set of icons and wish to share them with "
 "other calibre users via calibre's builtin icon theme support, you can easily"
@@ -222,11 +222,11 @@ msgid ""
 " make your theme available via calibre's builtin icon theme system."
 msgstr "Якщо вами було створено красивий набір піктограм, і ви хочете поділитися ним із іншими користувачами calibre, додавши його до набору вбудованих тем піктограм calibre, ви можете запакувати ваші піктограми у власну тему. Для цього відкрийте сторінку :guilabel:`Налаштування -> Різне -> Створити тему піктограм`, виберіть теку, у якій ви зберегли ваші піктограми (зазвичай теку :file:`resources/images` у каталозі налаштувань calibre, як ми це описували вище). Далі, вкажіть метадані теми і натисніть кнопку «Гаразд». Програма створить файл архіву ZIP із піктограмами теми. Ви можете розмістити його на форумі calibre на `Mobileread <https://www.mobileread.com/forums/forumdisplay.php?f=166>`_, а вже згодом розробник програми додасть її до списку вбудованих тем піктограм calibre."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:116
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:116
 msgid "Customizing calibre with plugins"
 msgstr "Налаштовування calibre за допомогою додатків"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:118
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:118
 msgid ""
 "calibre has a very modular design. Almost all functionality in calibre comes"
 " in the form of plugins. Plugins are used for conversion, for downloading "
@@ -236,7 +236,7 @@ msgid ""
 "plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
 msgstr "У calibre дуже багато модулів. Майже усі функціональні можливості calibre реалізовано у формі додатків. Додатки використовуються для перетворення даних, для отримання новин (у формі так званих рецептів), для різноманітних компонентів інтерфейсу користувача, для встановлення з’єднання з різними пристроями, для обробки файлів під час додавання їх до бібліотеки calibre тощо. Із повним списком вбудованих додатків calibre можна ознайомитися на сторінці :guilabel:`Налаштування -> Додатково -> Додатки`."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:120
+#: ../../home/runner/work/calibre/calibre/manual/customize.rst:120
 msgid ""
 "You can write your own plugins to customize and extend the behavior of "
 "calibre. The plugin architecture in calibre is very simple, see the tutorial"
