@@ -5,20 +5,20 @@ Forwarded: not-needed
 
 This reverts commit 7a4b3f61ff24f8c39c8d5cf86c54da9de9267025.
 ---
- bypy/linux/__main__.py     |   6 ++
- bypy/macos/__main__.py     |   3 +
- bypy/sources.json          |  69 +++-------------
- bypy/windows/__main__.py   |  10 ++-
- setup/build.py             | 160 +++++++++++++++++++++----------------
- setup/build_environment.py |  45 ++++++++++-
- setup/extensions.json      |   1 -
- 7 files changed, 155 insertions(+), 139 deletions(-)
+ bypy/linux/__main__.py     |    6 +
+ bypy/macos/__main__.py     |    3 
+ bypy/sources.json          |   69 ++-----------------
+ bypy/windows/__main__.py   |    8 +-
+ setup/build.py             |  160 +++++++++++++++++++++++++--------------------
+ setup/build_environment.py |   45 +++++++++++-
+ setup/extensions.json      |    1 
+ 7 files changed, 154 insertions(+), 138 deletions(-)
 
-diff --git a/bypy/linux/__main__.py b/bypy/linux/__main__.py
-index 97538a81b5..c71116498d 100644
+Index: b/bypy/linux/__main__.py
+===================================================================
 --- a/bypy/linux/__main__.py
 +++ b/bypy/linux/__main__.py
-@@ -140,6 +140,12 @@ def copy_python(env, ext_dir):
+@@ -141,6 +141,12 @@ def copy_python(env, ext_dir):
      dest = j(env.py_dir, 'site-packages')
      import_site_packages(srcdir, dest)
  
@@ -31,11 +31,11 @@ index 97538a81b5..c71116498d 100644
      for x in os.listdir(env.SRC):
          c = j(env.SRC, x)
          if os.path.exists(j(c, '__init__.py')):
-diff --git a/bypy/macos/__main__.py b/bypy/macos/__main__.py
-index 321f83c2cc..8904c836aa 100644
+Index: b/bypy/macos/__main__.py
+===================================================================
 --- a/bypy/macos/__main__.py
 +++ b/bypy/macos/__main__.py
-@@ -538,6 +538,9 @@ class Freeze(object):
+@@ -543,6 +543,9 @@ class Freeze(object):
              if err.errno != errno.ENOENT:
                  raise
          sp = join(self.resources_dir, 'Python', 'site-packages')
@@ -45,15 +45,14 @@ index 321f83c2cc..8904c836aa 100644
          self.remove_bytecode(sp)
  
      @flush
-diff --git a/bypy/sources.json b/bypy/sources.json
-index 5fd5e7ae3e..1312fc5816 100644
+Index: b/bypy/sources.json
+===================================================================
 --- a/bypy/sources.json
 +++ b/bypy/sources.json
-@@ -787,81 +787,30 @@
-         }
+@@ -788,80 +788,29 @@
      },
  
--    {
+     {
 -        "name": "toml",
 -		"comment": "Needed for sip (build time dependency)",
 -        "unix": {
@@ -83,7 +82,7 @@ index 5fd5e7ae3e..1312fc5816 100644
 -        }
 -    },
 -
-     {
+-    {
          "name": "sip",
 -		"comment": "build time dependency",
 -        "unix": {
@@ -140,23 +139,23 @@ index 5fd5e7ae3e..1312fc5816 100644
          }
      },
  
-diff --git a/bypy/windows/__main__.py b/bypy/windows/__main__.py
-index 52579cae1e..8f69a1392d 100644
+Index: b/bypy/windows/__main__.py
+===================================================================
 --- a/bypy/windows/__main__.py
 +++ b/bypy/windows/__main__.py
-@@ -158,8 +158,7 @@ def freeze(env, ext_dir):
-     for x in glob.glob(os.path.join(env.python_base, 'DLLs', '*')):  # python pyd modules and dlls
+@@ -153,8 +153,7 @@ def freeze(env, ext_dir, incdir):
+     for x in glob.glob(os.path.join(env.python_base, 'DLLs', '*.dll')):  # dlls needed by python
          copybin(x)
      for f in walk(os.path.join(env.python_base, 'Lib')):
 -        q = f.lower()
 -        if q.endswith('.dll') and 'scintilla' not in q and 'pyqtbuild' not in q:
 +        if f.lower().endswith('.dll') and 'scintilla' not in f.lower():
              copybin(f)
-     add_plugins(env, ext_dir)
- 
-@@ -213,6 +212,11 @@ def pycryptodome_filename(dir_comps, filename):
-     return path
- ''')
+     ext_map = extract_extension_modules(ext_dir, env.dll_dir)
+     ext_map.update(extract_extension_modules(j(env.python_base, 'DLLs'), env.dll_dir, move=False))
+@@ -194,6 +193,11 @@ def freeze(env, ext_dir, incdir):
+     install_site_py(env)
+     sp_dir = j(env.lib_dir, 'site-packages')
  
 +    pyqt = j(env.lib_dir, 'site-packages', 'PyQt5')
 +    for x in {x for x in os.listdir(pyqt) if x.endswith('.pyd')}:
@@ -166,17 +165,8 @@ index 52579cae1e..8f69a1392d 100644
      printf('Adding calibre sources...')
      for x in glob.glob(j(CALIBRE_DIR, 'src', '*')):
          if os.path.isdir(x):
-@@ -647,7 +651,7 @@ def archive_lib_dir(env):
- 
-         # The rest of site-packages
-         for x in os.listdir(sp):
--            if x in handled or x.endswith('.egg-info') or x.endswith('.dist-info'):
-+            if x in handled or x.endswith('.egg-info'):
-                 continue
-             absp = j(sp, x)
-             if os.path.isdir(absp):
-diff --git a/setup/build.py b/setup/build.py
-index fb44da9cc9..ba818a65a7 100644
+Index: b/setup/build.py
+===================================================================
 --- a/setup/build.py
 +++ b/setup/build.py
 @@ -8,7 +8,7 @@ __docformat__ = 'restructuredtext en'
@@ -188,7 +178,7 @@ index fb44da9cc9..ba818a65a7 100644
  isunix = islinux or ismacos or isbsd or ishaiku
  
  py_lib = os.path.join(sys.prefix, 'libs', 'python%d%d.lib' % sys.version_info[:2])
-@@ -16,12 +16,6 @@ CompileCommand = namedtuple('CompileCommand', 'cmd src dest')
+@@ -16,12 +16,6 @@ CompileCommand = namedtuple('CompileComm
  LinkCommand = namedtuple('LinkCommand', 'cmd objects dest')
  
  
@@ -399,8 +389,8 @@ index fb44da9cc9..ba818a65a7 100644
          finally:
              os.chdir(cwd)
  
-diff --git a/setup/build_environment.py b/setup/build_environment.py
-index c47609b46c..160fbbb70c 100644
+Index: b/setup/build_environment.py
+===================================================================
 --- a/setup/build_environment.py
 +++ b/setup/build_environment.py
 @@ -6,10 +6,10 @@ __license__   = 'GPL v3'
@@ -416,7 +406,7 @@ index c47609b46c..160fbbb70c 100644
  is64bit
  
  NMAKE = RC = msvc = MT = win_inc = win_lib = None
-@@ -30,8 +30,6 @@ for x in ('qmake-qt5', 'qt5-qmake', 'qmake'):
+@@ -30,8 +30,6 @@ for x in ('qmake-qt5', 'qt5-qmake', 'qma
          QMAKE = q
          break
  QMAKE = os.environ.get('QMAKE', QMAKE)
@@ -473,11 +463,11 @@ index c47609b46c..160fbbb70c 100644
  ft_lib_dirs = []
  ft_libs = []
  ft_inc_dirs = []
-diff --git a/setup/extensions.json b/setup/extensions.json
-index 59e70602d3..c094eb04ba 100644
+Index: b/setup/extensions.json
+===================================================================
 --- a/setup/extensions.json
 +++ b/setup/extensions.json
-@@ -133,7 +133,6 @@
+@@ -125,7 +125,6 @@
          "sources": "calibre/utils/imageops/imageops.cpp calibre/utils/imageops/quantize.cpp calibre/utils/imageops/ordered_dither.cpp",
          "headers": "calibre/utils/imageops/imageops.h",
          "sip_files": "calibre/utils/imageops/imageops.sip",
@@ -485,6 +475,3 @@ index 59e70602d3..c094eb04ba 100644
          "inc_dirs": "calibre/utils/imageops"
      },
      {
--- 
-2.28.0
-
