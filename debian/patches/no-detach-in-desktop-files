@@ -1,17 +1,21 @@
+From: Calibre maintainer team <team+calibre@tracker.debian.org>
+Date: Thu, 15 Oct 2020 23:48:02 +0900
+Subject: no-detach-in-desktop-files
+
 Forwarded: not-needed
 
 do not use --detach in the .desktop files, otherwise
 mimetype handling of temporary files is broken as
 the tmp files disappear too quickly. See #877774
 ---
- src/calibre/linux.py |    6 +++---
+ src/calibre/linux.py | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
-Index: calibre-debian.git/src/calibre/linux.py
-===================================================================
---- calibre-debian.git.orig/src/calibre/linux.py
-+++ calibre-debian.git/src/calibre/linux.py
-@@ -1097,7 +1097,7 @@ Name=E-book Viewer
+diff --git a/src/calibre/linux.py b/src/calibre/linux.py
+index c16d974..9941032 100644
+--- a/src/calibre/linux.py
++++ b/src/calibre/linux.py
+@@ -1097,7 +1097,7 @@ Name=E-book viewer
  GenericName=Viewer for E-books
  Comment=Viewer for E-books in all the major formats
  TryExec=ebook-viewer
@@ -20,7 +24,7 @@ Index: calibre-debian.git/src/calibre/linux.py
  Icon=calibre-viewer
  Categories=Graphics;Viewer;
  '''
-@@ -1110,7 +1110,7 @@ Name=E-book Editor
+@@ -1110,7 +1110,7 @@ Name=E-book editor
  GenericName=Editor for E-books
  Comment=Edit E-books in various formats
  TryExec=ebook-edit

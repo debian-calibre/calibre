@@ -1,12 +1,22 @@
+From: Calibre maintainer team <team+calibre@tracker.debian.org>
+Date: Thu, 15 Oct 2020 23:48:02 +0900
+Subject: BTS-944875-html_writer
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
 commit 6d030410a363123c5152d4b2d1a056bac8bffa46 (HEAD -> master)
 Author: Piotr Ożarowski <piotr@debian.org>
 Date:   Tue May 12 12:32:01 2020 +0200
 Forwarded: not-needed
 
     use deprecated setRequestInterceptor if setUrlRequestInterceptor is not available
+---
+ src/calibre/ebooks/pdf/html_writer.py | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/src/calibre/ebooks/pdf/html_writer.py b/src/calibre/ebooks/pdf/html_writer.py
-index c3abe969b..293ee3341 100644
+index be00d1b..636c79f 100644
 --- a/src/calibre/ebooks/pdf/html_writer.py
 +++ b/src/calibre/ebooks/pdf/html_writer.py
 @@ -276,7 +276,10 @@ class RenderManager(QObject):

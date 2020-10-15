@@ -1,19 +1,20 @@
 From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
 Date: Fri, 17 Apr 2020 20:10:46 +0900
 Subject: [PATCH] Extend timeout limit
+
 Forwarded: not-needed
 
 Some non-x86 architecture is much slower than x86.
 Treat Debian package builder as CI system.
 ---
- src/calibre/srv/tests/base.py |    2 +-
- src/calibre/srv/tests/http.py |   16 ++++++++--------
- src/calibre/srv/tests/loop.py |    8 ++++----
- src/calibre/test_build.py     |    4 ++--
+ src/calibre/srv/tests/base.py |  2 +-
+ src/calibre/srv/tests/http.py | 16 ++++++++--------
+ src/calibre/srv/tests/loop.py |  8 ++++----
+ src/calibre/test_build.py     |  4 ++--
  4 files changed, 15 insertions(+), 15 deletions(-)
 
-Index: b/src/calibre/srv/tests/base.py
-===================================================================
+diff --git a/src/calibre/srv/tests/base.py b/src/calibre/srv/tests/base.py
+index de2176b..4454c65 100644
 --- a/src/calibre/srv/tests/base.py
 +++ b/src/calibre/srv/tests/base.py
 @@ -93,7 +93,7 @@ class TestServer(Thread):
@@ -25,11 +26,11 @@ Index: b/src/calibre/srv/tests/base.py
          kwargs['listen_on'] = kwargs.get('listen_on', 'localhost')
          kwargs['port'] = kwargs.get('port', 0)
          kwargs['userdb'] = kwargs.get('userdb', ':memory:')
-Index: b/src/calibre/srv/tests/http.py
-===================================================================
+diff --git a/src/calibre/srv/tests/http.py b/src/calibre/srv/tests/http.py
+index b5eb2c7..e07b61d 100644
 --- a/src/calibre/srv/tests/http.py
 +++ b/src/calibre/srv/tests/http.py
-@@ -16,7 +16,7 @@ from calibre.utils.monotonic import mono
+@@ -16,7 +16,7 @@ from calibre.utils.monotonic import monotonic
  from polyglot.builtins import iteritems, range, unicode_type
  from polyglot import http_client
  
@@ -94,11 +95,11 @@ Index: b/src/calibre/srv/tests/http.py
                  conn.request('GET', '/test')
                  r = conn.getresponse()
                  self.ae(r.status, http_client.OK)
-Index: b/src/calibre/srv/tests/loop.py
-===================================================================
+diff --git a/src/calibre/srv/tests/loop.py b/src/calibre/srv/tests/loop.py
+index 57d20e4..05ba661 100644
 --- a/src/calibre/srv/tests/loop.py
 +++ b/src/calibre/srv/tests/loop.py
-@@ -18,7 +18,7 @@ from calibre.utils.certgen import create
+@@ -18,7 +18,7 @@ from calibre.utils.certgen import create_server_cert
  from calibre.utils.monotonic import monotonic
  from polyglot.builtins import range, unicode_type, map
  from polyglot import http_client
@@ -127,8 +128,8 @@ Index: b/src/calibre/srv/tests/loop.py
              self.ae(b.advertised_port, server.address[1])
              service = b.services[0]
              self.ae(service.type, '_calibre._tcp.local.')
-Index: b/src/calibre/test_build.py
-===================================================================
+diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
+index da15caf..ad3b47d 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
 @@ -15,7 +15,7 @@ import os, ctypes, sys, unittest, time

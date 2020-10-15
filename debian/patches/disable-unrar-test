@@ -1,16 +1,19 @@
+From: Calibre maintainer team <team+calibre@tracker.debian.org>
+Date: Thu, 15 Oct 2020 23:48:02 +0900
+Subject: disable-unrar-test
+
 Forwarded: not-needed
 
 disable unrar test since the module is not in Debian main
-
 ---
- src/calibre/test_build.py |    5 +++++
+ src/calibre/test_build.py | 5 +++++
  1 file changed, 5 insertions(+)
 
-Index: b/src/calibre/test_build.py
-===================================================================
+diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
+index b541d53..da15caf 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
-@@ -17,6 +17,10 @@ from polyglot.builtins import iteritems,
+@@ -17,6 +17,10 @@ from polyglot.builtins import iteritems, map, unicode_type, getenv, native_strin
  
  is_ci = os.environ.get('CI', '').lower() == 'true'
  

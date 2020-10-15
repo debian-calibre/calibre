@@ -1,21 +1,22 @@
 From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
 Date: Sat, 19 Sep 2020 17:29:09 +0900
 Subject: [PATCH] Revert "Move to SIP v5"
+
 Forwarded: not-needed
 
 This reverts commit 7a4b3f61ff24f8c39c8d5cf86c54da9de9267025.
 ---
- bypy/linux/__main__.py     |    6 +
- bypy/macos/__main__.py     |    3 
- bypy/sources.json          |   69 ++-----------------
- bypy/windows/__main__.py   |    8 +-
- setup/build.py             |  160 +++++++++++++++++++++++++--------------------
- setup/build_environment.py |   45 +++++++++++-
- setup/extensions.json      |    1 
+ bypy/linux/__main__.py     |   6 ++
+ bypy/macos/__main__.py     |   3 +
+ bypy/sources.json          |  69 +++----------------
+ bypy/windows/__main__.py   |   8 ++-
+ setup/build.py             | 160 +++++++++++++++++++++++++--------------------
+ setup/build_environment.py |  45 +++++++++++--
+ setup/extensions.json      |   1 -
  7 files changed, 154 insertions(+), 138 deletions(-)
 
-Index: b/bypy/linux/__main__.py
-===================================================================
+diff --git a/bypy/linux/__main__.py b/bypy/linux/__main__.py
+index 55494f4..c9484a9 100644
 --- a/bypy/linux/__main__.py
 +++ b/bypy/linux/__main__.py
 @@ -141,6 +141,12 @@ def copy_python(env, ext_dir):
@@ -31,8 +32,8 @@ Index: b/bypy/linux/__main__.py
      for x in os.listdir(env.SRC):
          c = j(env.SRC, x)
          if os.path.exists(j(c, '__init__.py')):
-Index: b/bypy/macos/__main__.py
-===================================================================
+diff --git a/bypy/macos/__main__.py b/bypy/macos/__main__.py
+index 0613daa..53229d7 100644
 --- a/bypy/macos/__main__.py
 +++ b/bypy/macos/__main__.py
 @@ -543,6 +543,9 @@ class Freeze(object):
@@ -45,14 +46,15 @@ Index: b/bypy/macos/__main__.py
          self.remove_bytecode(sp)
  
      @flush
-Index: b/bypy/sources.json
-===================================================================
+diff --git a/bypy/sources.json b/bypy/sources.json
+index 5fd5e7a..1312fc5 100644
 --- a/bypy/sources.json
 +++ b/bypy/sources.json
-@@ -788,80 +788,29 @@
+@@ -787,81 +787,30 @@
+         }
      },
  
-     {
+-    {
 -        "name": "toml",
 -		"comment": "Needed for sip (build time dependency)",
 -        "unix": {
@@ -82,7 +84,7 @@ Index: b/bypy/sources.json
 -        }
 -    },
 -
--    {
+     {
          "name": "sip",
 -		"comment": "build time dependency",
 -        "unix": {
@@ -139,8 +141,8 @@ Index: b/bypy/sources.json
          }
      },
  
-Index: b/bypy/windows/__main__.py
-===================================================================
+diff --git a/bypy/windows/__main__.py b/bypy/windows/__main__.py
+index 1d9b72f..1702040 100644
 --- a/bypy/windows/__main__.py
 +++ b/bypy/windows/__main__.py
 @@ -153,8 +153,7 @@ def freeze(env, ext_dir, incdir):
@@ -165,8 +167,8 @@ Index: b/bypy/windows/__main__.py
      printf('Adding calibre sources...')
      for x in glob.glob(j(CALIBRE_DIR, 'src', '*')):
          if os.path.isdir(x):
-Index: b/setup/build.py
-===================================================================
+diff --git a/setup/build.py b/setup/build.py
+index fb44da9..ba818a6 100644
 --- a/setup/build.py
 +++ b/setup/build.py
 @@ -8,7 +8,7 @@ __docformat__ = 'restructuredtext en'
@@ -178,7 +180,7 @@ Index: b/setup/build.py
  isunix = islinux or ismacos or isbsd or ishaiku
  
  py_lib = os.path.join(sys.prefix, 'libs', 'python%d%d.lib' % sys.version_info[:2])
-@@ -16,12 +16,6 @@ CompileCommand = namedtuple('CompileComm
+@@ -16,12 +16,6 @@ CompileCommand = namedtuple('CompileCommand', 'cmd src dest')
  LinkCommand = namedtuple('LinkCommand', 'cmd objects dest')
  
  
@@ -389,8 +391,8 @@ Index: b/setup/build.py
          finally:
              os.chdir(cwd)
  
-Index: b/setup/build_environment.py
-===================================================================
+diff --git a/setup/build_environment.py b/setup/build_environment.py
+index c47609b..160fbbb 100644
 --- a/setup/build_environment.py
 +++ b/setup/build_environment.py
 @@ -6,10 +6,10 @@ __license__   = 'GPL v3'
@@ -406,7 +408,7 @@ Index: b/setup/build_environment.py
  is64bit
  
  NMAKE = RC = msvc = MT = win_inc = win_lib = None
-@@ -30,8 +30,6 @@ for x in ('qmake-qt5', 'qt5-qmake', 'qma
+@@ -30,8 +30,6 @@ for x in ('qmake-qt5', 'qt5-qmake', 'qmake'):
          QMAKE = q
          break
  QMAKE = os.environ.get('QMAKE', QMAKE)
@@ -463,8 +465,8 @@ Index: b/setup/build_environment.py
  ft_lib_dirs = []
  ft_libs = []
  ft_inc_dirs = []
-Index: b/setup/extensions.json
-===================================================================
+diff --git a/setup/extensions.json b/setup/extensions.json
+index 5c402b7..f702df6 100644
 --- a/setup/extensions.json
 +++ b/setup/extensions.json
 @@ -125,7 +125,6 @@
