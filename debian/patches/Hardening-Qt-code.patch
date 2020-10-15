@@ -1,17 +1,17 @@
 From: YOKOTA Hiroshi <qykth-git@users.noreply.github.com>
 Date: Sat, 23 Nov 2019 17:48:46 +0900
-Subject: [PATCH] Hardening Qt code
+Subject: Hardening Qt code
 
 Forwarded: not-needed
 ---
- setup/build.py | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ setup/build.py | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
 diff --git a/setup/build.py b/setup/build.py
-index fb44da9..85e3c89 100644
+index ba818a6..5dee2db 100644
 --- a/setup/build.py
 +++ b/setup/build.py
-@@ -174,6 +174,7 @@ def init_env():
+@@ -168,6 +168,7 @@ def init_env():
          ldflags = os.environ.get('OVERRIDE_LDFLAGS', '-Wall')
          ldflags = shlex.split(ldflags)
          cflags += shlex.split(os.environ.get('CFLAGS', ''))
@@ -19,7 +19,7 @@ index fb44da9..85e3c89 100644
          ldflags += shlex.split(os.environ.get('LDFLAGS', ''))
          cflags += ['-fvisibility=hidden']
  
-@@ -449,9 +450,16 @@ class Build(Command):
+@@ -445,9 +446,16 @@ class Build(Command):
              INCLUDEPATH += {freetype}
              DESTDIR = {destdir}
              CONFIG -= create_cmake  # Prevent qmake from generating a cmake build file which it puts in the calibre src directory
@@ -37,19 +37,22 @@ index fb44da9..85e3c89 100644
          bdir = self.j(self.build_dir, 'headless')
          if not os.path.exists(bdir):
              os.makedirs(bdir)
-@@ -533,6 +541,15 @@ sip-file = "{os.path.basename(sipf)}"
-                             raw = raw.replace('-fno-exceptions', '-fexceptions')
-                             f.seek(0), f.truncate()
-                             f.write(raw)
-+            for q in walk('.'):
-+                if os.path.basename(q) in ('Makefile',):
-+                    with open(q, 'r+') as f:
-+                        raw = f.read()
-+                        raw = raw.replace('CFLAGS        =', 'CFLAGS        = ' + os.environ.get('CFLAGS',   '') + ' ' + os.environ.get('CPPFLAGS', ''))
-+                        raw = raw.replace('CXXFLAGS      =', 'CXXFLAGS      = ' + os.environ.get('CXXFLAGS', '') + ' ' + os.environ.get('CPPFLAGS', ''))
-+                        raw = raw.replace('LFLAGS        =', 'LFLAGS        = ' + os.environ.get('LDFLAGS',  ''))
-+                        f.seek(0), f.truncate()
-+                        f.write(raw)
-             self.check_call([self.env.make] + ([] if iswindows else ['-j%d'%(os.cpu_count() or 1)]))
-             e = 'pyd' if iswindows else 'so'
-             m = glob.glob(f'{ext.name}/{ext.name}.*{e}')
+@@ -526,10 +534,17 @@ class Build(Command):
+         macx {{
+             QMAKE_LFLAGS += "-undefined dynamic_lookup"
+         }}
++        QMAKE_CFLAGS   += {CFLAGS}   {CPPFLAGS}
++        QMAKE_CXXFLAGS += {CXXFLAGS} {CPPFLAGS}
++        QMAKE_LFLAGS   += {LFLAGS}
+         ''').format(
+             target=sip['target'], headers=' '.join(sip['headers'] + ext.headers), sources=' '.join(ext.sources + sip['sources']),
+             sipinc=pyqt['sip_inc_dir'], pyinc=sysconfig.get_python_inc(), py_lib=py_lib,
+-            ver=__version__
++            ver=__version__,
++            CFLAGS   = os.environ.get('CFLAGS',   ''),
++            CXXFLAGS = os.environ.get('CXXFLAGS', ''),
++            CPPFLAGS = os.environ.get('CPPFLAGS', ''),
++            LFLAGS   = os.environ.get('LDFLAGS',  '')
+         )
+         for incdir in ext.inc_dirs:
+             pro += '\nINCLUDEPATH += ' + incdir
