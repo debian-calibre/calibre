@@ -21939,17 +21939,17 @@ return this.__repr__();
             __module__ : {value: "read_book.paged_mode"}
         });
 
-        function scroll_to_previous_position() {
-            var fsd;
-            fsd = next_spine_item.forward_scroll_data;
+        function scroll_to_previous_position(fsd) {
+            fsd = fsd || next_spine_item.forward_scroll_data;
             next_spine_item.forward_scroll_data = null;
             if (0 < (ρσ_cond_temp = fsd.cols_left) && ρσ_cond_temp < cols_per_screen && cols_per_screen < number_of_cols) {
-                scroll_resize_bug_watcher.last_command = scroll_to_previous_position;
+                scroll_resize_bug_watcher.last_command = scroll_to_previous_position.bind(null, fsd);
                 scroll_to_column(fsd.current_col);
                 return true;
             }
         };
-        if (!scroll_to_previous_position.__module__) Object.defineProperties(scroll_to_previous_position, {
+        if (!scroll_to_previous_position.__argnames__) Object.defineProperties(scroll_to_previous_position, {
+            __argnames__ : {value: ["fsd"]},
             __module__ : {value: "read_book.paged_mode"}
         });
 
@@ -21976,13 +21976,18 @@ return this.__repr__();
             __module__ : {value: "read_book.paged_mode"}
         });
 
+        function column_at_current_scroll_offset() {
+            return column_at(current_scroll_offset() + 10);
+        };
+        if (!column_at_current_scroll_offset.__module__) Object.defineProperties(column_at_current_scroll_offset, {
+            __module__ : {value: "read_book.paged_mode"}
+        });
+
         function current_column_location() {
-            var c;
             if (is_full_screen_layout) {
                 return 0;
             }
-            c = column_at(current_scroll_offset() + 10);
-            return c * col_and_gap;
+            return column_at_current_scroll_offset() * col_and_gap;
         };
         if (!current_column_location.__module__) Object.defineProperties(current_column_location, {
             __module__ : {value: "read_book.paged_mode"}
@@ -22046,7 +22051,11 @@ return this.__repr__();
             ans = cc + col_and_gap;
             limit = scroll_viewport.paged_content_inline_size() - scroll_viewport.inline_size();
             if (ans > limit) {
-                ans = (Math.ceil(current_scroll_offset()) < limit) ? limit : -1;
+                if (Math.ceil(current_scroll_offset()) < limit && column_at(limit) > column_at_current_scroll_offset()) {
+                    ans = limit;
+                } else {
+                    ans = -1;
+                }
             }
             return ans;
         };
@@ -22062,7 +22071,11 @@ return this.__repr__();
             cc = current_column_location();
             ans = cc - col_and_gap;
             if (ans < 0) {
-                ans = (Math.floor(current_scroll_offset()) > 0) ? 0 : -1;
+                if (Math.floor(current_scroll_offset()) > 0 && column_at(0) < column_at_current_scroll_offset()) {
+                    ans = 0;
+                } else {
+                    ans = -1;
+                }
             }
             return ans;
         };
@@ -22228,6 +22241,32 @@ return this.__repr__();
         };
         if (!progress_frac.__argnames__) Object.defineProperties(progress_frac, {
             __argnames__ : {value: ["frac"]},
+            __module__ : {value: "read_book.paged_mode"}
+        });
+
+        function page_counts() {
+            var doc_size, screen_size, pos;
+            if (in_paged_mode()) {
+                return (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["current"] = column_at_current_scroll_offset();
+                    ρσ_d["total"] = number_of_cols;
+                    ρσ_d["pages_per_screen"] = cols_per_screen;
+                    return ρσ_d;
+                }).call(this);
+            }
+            doc_size = scroll_viewport.document_block_size();
+            screen_size = scroll_viewport.block_size();
+            pos = scroll_viewport.block_pos();
+            return (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["current"] = Math.floor((pos + 10) / screen_size);
+                ρσ_d["total"] = Math.floor(doc_size / screen_size);
+                ρσ_d["pages_per_screen"] = 1;
+                return ρσ_d;
+            }).call(this);
+        };
+        if (!page_counts.__module__) Object.defineProperties(page_counts, {
             __module__ : {value: "read_book.paged_mode"}
         });
 
@@ -22776,6 +22815,7 @@ return this.__repr__();
         ρσ_modules["read_book.paged_mode"].scroll_to_previous_position = scroll_to_previous_position;
         ρσ_modules["read_book.paged_mode"].scroll_to_fraction = scroll_to_fraction;
         ρσ_modules["read_book.paged_mode"].column_boundaries = column_boundaries;
+        ρσ_modules["read_book.paged_mode"].column_at_current_scroll_offset = column_at_current_scroll_offset;
         ρσ_modules["read_book.paged_mode"].current_column_location = current_column_location;
         ρσ_modules["read_book.paged_mode"].number_of_cols_left = number_of_cols_left;
         ρσ_modules["read_book.paged_mode"].next_screen_location = next_screen_location;
@@ -22788,6 +22828,7 @@ return this.__repr__();
         ρσ_modules["read_book.paged_mode"].jump_to_cfi = jump_to_cfi;
         ρσ_modules["read_book.paged_mode"].current_cfi = current_cfi;
         ρσ_modules["read_book.paged_mode"].progress_frac = progress_frac;
+        ρσ_modules["read_book.paged_mode"].page_counts = page_counts;
         ρσ_modules["read_book.paged_mode"].next_spine_item = next_spine_item;
         ρσ_modules["read_book.paged_mode"].is_return = is_return;
         ρσ_modules["read_book.paged_mode"].HandleWheel = HandleWheel;
@@ -24371,6 +24412,7 @@ return this.__repr__();
         var paged_onwheel = ρσ_modules["read_book.paged_mode"].onwheel;
         var paged_prepare_for_resize = ρσ_modules["read_book.paged_mode"].prepare_for_resize;
         var progress_frac = ρσ_modules["read_book.paged_mode"].progress_frac;
+        var page_counts = ρσ_modules["read_book.paged_mode"].page_counts;
         var reset_paged_mode_globals = ρσ_modules["read_book.paged_mode"].reset_paged_mode_globals;
         var paged_resize_done = ρσ_modules["read_book.paged_mode"].resize_done;
         var paged_scroll_by_page = ρσ_modules["read_book.paged_mode"].scroll_by_page;
@@ -24413,7 +24455,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.2.0";
+        CALIBRE_VERSION = "5.3.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -25120,7 +25162,7 @@ return this.__repr__();
                     }
                 }
             }
-            ρσ_interpolate_kwargs.call(self, self.send_message, ["content_loaded"].concat([ρσ_desugar_kwargs({progress_frac: self.calculate_progress_frac(), file_progress_frac: progress_frac()})]));
+            ρσ_interpolate_kwargs.call(self, self.send_message, ["content_loaded"].concat([ρσ_desugar_kwargs({progress_frac: self.calculate_progress_frac(), file_progress_frac: progress_frac(), page_counts: page_counts()})]));
             self.last_cfi = null;
             self.auto_scroll_action("resume");
             reset_touch_handlers();
@@ -25171,11 +25213,11 @@ return this.__repr__();
                         selcfi.end = epubcfi(selcfi.end);
                     }
                     cfi = epubcfi(cfi);
-                    ρσ_interpolate_kwargs.call(self, self.send_message, ["report_cfi"].concat([ρσ_desugar_kwargs({cfi: cfi, progress_frac: self.calculate_progress_frac(), file_progress_frac: progress_frac(), request_id: data.request_id, selected_text: seltext, selection_bounds: selcfi})]));
+                    ρσ_interpolate_kwargs.call(self, self.send_message, ["report_cfi"].concat([ρσ_desugar_kwargs({cfi: cfi, progress_frac: self.calculate_progress_frac(), file_progress_frac: progress_frac(), request_id: data.request_id, selected_text: seltext, selection_bounds: selcfi, page_counts: page_counts()})]));
                     return;
                 }
             }
-            ρσ_interpolate_kwargs.call(self, self.send_message, ["report_cfi"].concat([ρσ_desugar_kwargs({cfi: null, progress_frac: 0, file_progress_frac: 0, request_id: data.request_id})]));
+            ρσ_interpolate_kwargs.call(self, self.send_message, ["report_cfi"].concat([ρσ_desugar_kwargs({cfi: null, progress_frac: 0, file_progress_frac: 0, page_counts: page_counts(), request_id: data.request_id})]));
         };
         if (!IframeBoss.prototype.get_current_cfi.__argnames__) Object.defineProperties(IframeBoss.prototype.get_current_cfi, {
             __argnames__ : {value: ["data"]},
@@ -25193,10 +25235,10 @@ return this.__repr__();
                     fpf = progress_frac();
                     if (cfi !== self.last_cfi) {
                         self.last_cfi = cfi;
-                        ρσ_interpolate_kwargs.call(self, self.send_message, ["update_cfi"].concat([ρσ_desugar_kwargs({cfi: cfi, replace_history: self.replace_history_on_next_cfi_update, progress_frac: pf, file_progress_frac: fpf})]));
+                        ρσ_interpolate_kwargs.call(self, self.send_message, ["update_cfi"].concat([ρσ_desugar_kwargs({cfi: cfi, replace_history: self.replace_history_on_next_cfi_update, progress_frac: pf, file_progress_frac: fpf, page_counts: page_counts()})]));
                         self.replace_history_on_next_cfi_update = true;
                     } else {
-                        ρσ_interpolate_kwargs.call(self, self.send_message, ["update_progress_frac"].concat([ρσ_desugar_kwargs({progress_frac: pf, file_progress_frac: fpf})]));
+                        ρσ_interpolate_kwargs.call(self, self.send_message, ["update_progress_frac"].concat([ρσ_desugar_kwargs({progress_frac: pf, file_progress_frac: fpf, page_counts: page_counts()})]));
                     }
                 }
             }
@@ -25228,7 +25270,7 @@ return this.__repr__();
             var pf, fpf, sel;
             pf = self.calculate_progress_frac();
             fpf = progress_frac();
-            ρσ_interpolate_kwargs.call(self, self.send_message, ["update_progress_frac"].concat([ρσ_desugar_kwargs({progress_frac: pf, file_progress_frac: fpf})]));
+            ρσ_interpolate_kwargs.call(self, self.send_message, ["update_progress_frac"].concat([ρσ_desugar_kwargs({progress_frac: pf, file_progress_frac: fpf, page_counts: page_counts()})]));
             sel = window.getSelection();
             if (sel && !sel.isCollapsed) {
                 ρσ_interpolate_kwargs.call(self, self.send_message, ["update_selection_position"].concat([ρσ_desugar_kwargs({selection_extents: selection_extents(current_layout_mode() === "flow", true)})]));
@@ -26813,7 +26855,7 @@ return this.__repr__();
                 __module__ : {value: "read_book.prefs.head_foot"}
             });
 
-            return E.tr(ρσ_interpolate_kwargs.call(E, E.td, [label + ":"].concat([ρσ_desugar_kwargs({style: "padding: 1ex 1rem"})])), E.td(ρσ_interpolate_kwargs.call(E, E.select, [opt(_("Empty"), "empty", true), sep(), opt(_("Book title"), "title"), opt(_("Authors"), "authors"), opt(_("Series"), "series"), sep(), opt(_("Top level section"), "top-section"), opt(_("Current section"), "section"), sep(), opt(_("Progress"), "progress"), opt(_("Time to read book"), "time-book"), opt(_("Time to read chapter"), "time-chapter"), opt(_("Time to read chapter and book"), "time-chapter-book"), opt(_("Position in book"), "pos-book"), opt(_("Position in chapter"), "pos-chapter"), opt(_("Clock"), "clock")].concat([ρσ_desugar_kwargs({data_region: region})]))));
+            return E.tr(ρσ_interpolate_kwargs.call(E, E.td, [label + ":"].concat([ρσ_desugar_kwargs({style: "padding: 1ex 1rem"})])), E.td(ρσ_interpolate_kwargs.call(E, E.select, [opt(_("Empty"), "empty", true), sep(), opt(_("Book title"), "title"), opt(_("Authors"), "authors"), opt(_("Series"), "series"), sep(), opt(_("Top level section"), "top-section"), opt(_("Current section"), "section"), sep(), opt(_("Clock"), "clock"), sep(), opt(_("Progress"), "progress"), opt(_("Time to read book"), "time-book"), opt(_("Time to read chapter"), "time-chapter"), opt(_("Time to read chapter and book"), "time-chapter-book"), opt(_("Position in book"), "pos-book"), opt(_("Position in chapter"), "pos-chapter"), opt(_("Pages in chapter"), "pages-progress")].concat([ρσ_desugar_kwargs({data_region: region})]))));
         };
         if (!create_item.__argnames__) Object.defineProperties(create_item, {
             __argnames__ : {value: ["region", "label"]},
@@ -27054,6 +27096,12 @@ return this.__repr__();
                     text = format_pos(pos.progress_frac, pos.book_length);
                 } else {
                     text = format_pos(pos.file_progress_frac, pos.chapter_length);
+                }
+            } else if (field === "pages-progress") {
+                if (pos.page_counts) {
+                    text = "" + ρσ_str.format("{}", pos.page_counts.current + 1) + " / " + ρσ_str.format("{}", pos.page_counts.total) + "";
+                } else {
+                    text = _("Unknown");
                 }
             }
             if (!text) {
@@ -40290,6 +40338,7 @@ return this.__repr__();
                         ρσ_d["chapter_length"] = chapter_length;
                         ρσ_d["file_progress_frac"] = self.current_file_progress_frac;
                         ρσ_d["cfi"] = ρσ_exists.d(self.currently_showing).bookpos;
+                        ρσ_d["page_counts"] = self.current_page_counts;
                         return ρσ_d;
                     }).call(this);
                     return pos;
@@ -40304,6 +40353,13 @@ return this.__repr__();
             self.reference_mode_enabled = false;
             self.loaded_resources = Object.create(null);
             self.current_progress_frac = self.current_file_progress_frac = 0;
+            self.current_page_counts = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["current"] = 0;
+                ρσ_d["total"] = 0;
+                ρσ_d["pages_per_screen"] = 1;
+                return ρσ_d;
+            }).call(this);
             self.current_toc_node = self.current_toc_toplevel_node = null;
             self.current_toc_family = [];
             self.report_cfi_callbacks = Object.create(null);
@@ -41928,7 +41984,7 @@ return this.__repr__();
                     self.book.last_read_position = Object.create(null);
                 }
                 (ρσ_expr_temp = self.book.last_read_position)[(typeof unkey === "number" && unkey < 0) ? ρσ_expr_temp.length + unkey : unkey] = data.cfi;
-                self.set_progress_frac(data.progress_frac, data.file_progress_frac);
+                self.set_progress_frac(data.progress_frac, data.file_progress_frac, data.page_counts);
                 self.update_header_footer();
                 if (ui_operations.update_last_read_time) {
                     ui_operations.update_last_read_time(self.book);
@@ -41952,6 +42008,7 @@ return this.__repr__();
                     ρσ_d["file_progress_frac"] = data.file_progress_frac;
                     ρσ_d["selected_text"] = data.selected_text;
                     ρσ_d["selection_bounds"] = data.selection_bounds;
+                    ρσ_d["page_counts"] = data.page_counts;
                     return ρσ_d;
                 }).call(this));
                 delete self.report_cfi_callbacks[data.request_id];
@@ -41963,7 +42020,7 @@ return this.__repr__();
         });
         View.prototype.on_update_progress_frac = function on_update_progress_frac(data) {
             var self = this;
-            self.set_progress_frac(data.progress_frac, data.file_progress_frac);
+            self.set_progress_frac(data.progress_frac, data.file_progress_frac, data.page_counts);
             self.update_header_footer();
         };
         if (!View.prototype.on_update_progress_frac.__argnames__) Object.defineProperties(View.prototype.on_update_progress_frac, {
@@ -42116,7 +42173,7 @@ return this.__repr__();
             self.processing_spine_item_display = false;
             self.currently_showing.loading = false;
             self.hide_loading();
-            self.set_progress_frac(data.progress_frac, data.file_progress_frac);
+            self.set_progress_frac(data.progress_frac, data.file_progress_frac, data.page_counts);
             self.update_header_footer();
             self.on_reference_item_changed();
             window.scrollTo(0, 0);
@@ -42134,14 +42191,15 @@ return this.__repr__();
             __argnames__ : {value: ["data"]},
             __module__ : {value: "read_book.view"}
         });
-        View.prototype.set_progress_frac = function set_progress_frac(progress_frac, file_progress_frac) {
+        View.prototype.set_progress_frac = function set_progress_frac(progress_frac, file_progress_frac, page_counts) {
             var self = this;
             self.current_progress_frac = progress_frac || 0;
             self.current_file_progress_frac = file_progress_frac || 0;
+            self.current_page_counts = page_counts;
             self.book_scrollbar.sync_to_contents(self.current_progress_frac);
         };
         if (!View.prototype.set_progress_frac.__argnames__) Object.defineProperties(View.prototype.set_progress_frac, {
-            __argnames__ : {value: ["progress_frac", "file_progress_frac"]},
+            __argnames__ : {value: ["progress_frac", "file_progress_frac", "page_counts"]},
             __module__ : {value: "read_book.view"}
         });
         View.prototype.update_font_size = function update_font_size() {

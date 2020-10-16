@@ -81,15 +81,6 @@ if not _run_once:
 
     sys.meta_path.insert(0, DeVendor())
 
-    #
-    # Platform specific modules
-    if iswindows:
-        winutil, winutilerror = plugins['winutil']
-        if not winutil:
-            raise RuntimeError('Failed to load the winutil plugin: %s'%winutilerror)
-        if len(sys.argv) > 1 and not isinstance(sys.argv[1], unicode_type):
-            sys.argv[1:] = winutil.argv()[1-len(sys.argv):]
-
     # Ensure that all temp files/dirs are created under a calibre tmp dir
     from calibre.ptempfile import base_dir
     try:
@@ -221,56 +212,3 @@ if not _run_once:
             except Exception:
                 pass  # Don't care about failure to set name
         threading.Thread.start = new_start
-
-
-def test_lopen():
-    from calibre.ptempfile import TemporaryDirectory
-    from calibre import CurrentDir
-    n = 'f\xe4llen'
-    print('testing lopen()')
-
-    if iswindows:
-        import msvcrt, win32api
-
-        def assert_not_inheritable(f):
-            if win32api.GetHandleInformation(msvcrt.get_osfhandle(f.fileno())) & 0b1:
-                raise SystemExit('File handle is inheritable!')
-    else:
-        import fcntl
-
-        def assert_not_inheritable(f):
-            if not fcntl.fcntl(f, fcntl.F_GETFD) & fcntl.FD_CLOEXEC:
-                raise SystemExit('File handle is inheritable!')
-
-    def copen(*args):
-        ans = lopen(*args)
-        assert_not_inheritable(ans)
-        return ans
-
-    with TemporaryDirectory() as tdir, CurrentDir(tdir):
-        with copen(n, 'w') as f:
-            f.write('one')
-
-        print('O_CREAT tested')
-        with copen(n, 'w+b') as f:
-            f.write(b'two')
-        with copen(n, 'r') as f:
-            if f.read() == 'two':
-                print('O_TRUNC tested')
-            else:
-                raise Exception('O_TRUNC failed')
-        with copen(n, 'ab') as f:
-            f.write(b'three')
-        with copen(n, 'r+') as f:
-            if f.read() == 'twothree':
-                print('O_APPEND tested')
-            else:
-                raise Exception('O_APPEND failed')
-        with copen(n, 'r+') as f:
-            f.seek(3)
-            f.write('xxxxx')
-            f.seek(0)
-            if f.read() == 'twoxxxxx':
-                print('O_RANDOM tested')
-            else:
-                raise Exception('O_RANDOM failed')

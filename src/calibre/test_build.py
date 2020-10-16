@@ -10,10 +10,10 @@ __docformat__ = 'restructuredtext en'
 Test a binary calibre build to ensure that all needed binary images/libraries have loaded.
 '''
 
-import os, ctypes, sys, unittest, time
+import os, ctypes, sys, unittest, time, shutil
 
 from calibre.constants import plugins, iswindows, islinux, ismacos, plugins_loc
-from polyglot.builtins import iteritems, map, unicode_type, getenv, native_string_type
+from polyglot.builtins import iteritems, map, unicode_type, getenv
 
 is_ci = os.environ.get('CI', '').lower() == 'true'
 
@@ -22,12 +22,11 @@ class BuildTest(unittest.TestCase):
 
     @unittest.skipUnless(iswindows and not is_ci, 'DLL loading needs testing only on windows (non-continuous integration)')
     def test_dlls(self):
-        import win32api
-        base = win32api.GetDllDirectory()
+        base = plugins['winutil'][0].get_dll_directory()
         for x in os.listdir(base):
             if x.lower().endswith('.dll'):
                 try:
-                    ctypes.WinDLL(native_string_type(os.path.join(base, x)))
+                    ctypes.WinDLL(os.path.join(base, x))
                 except Exception as err:
                     self.assertTrue(False, 'Failed to load DLL %s with error: %s' % (x, err))
         from Crypto.Cipher import AES
@@ -124,6 +123,8 @@ class BuildTest(unittest.TestCase):
         raw = b'<a/>'
         root = etree.fromstring(raw, parser=etree.XMLParser(recover=True, no_network=True, resolve_entities=False))
         self.assertEqual(etree.tostring(root), raw)
+        from lxml import html
+        html.fromstring("<p>\U0001f63a")
 
     def test_certgen(self):
         from calibre.utils.certgen import create_key_pair
@@ -147,6 +148,7 @@ class BuildTest(unittest.TestCase):
 
     @unittest.skipUnless(iswindows, 'winutil is windows only')
     def test_winutil(self):
+        import tempfile
         from calibre.constants import plugins
         from calibre import strftime
         winutil = plugins['winutil'][0]
@@ -155,8 +157,6 @@ class BuildTest(unittest.TestCase):
             self.assertTrue(
                 isinstance(x, unicode_type),
                 '%s() did not return a unicode string, instead returning: %r' % (name, x))
-        for x in winutil.argv():
-            au(x, 'argv')
         for x in 'username temp_path locale_name'.split():
             au(getattr(winutil, x)(), x)
         d = winutil.localeconv()
@@ -177,9 +177,86 @@ class BuildTest(unittest.TestCase):
         for fmt in (fmt, fmt.encode('ascii')):
             x = strftime(fmt, t)
             au(x, 'strftime')
-            if isinstance(fmt, bytes):
-                fmt = fmt.decode('ascii')
-            self.assertEqual(unicode_type(time.strftime(fmt.replace('%e', '%#d'), t)), x)
+        tdir = tempfile.mkdtemp(dir=winutil.temp_path())
+        path = os.path.join(tdir, 'test-create-file.txt')
+        h = winutil.create_file(
+            path, winutil.GENERIC_READ | winutil.GENERIC_WRITE, 0, winutil.OPEN_ALWAYS, winutil.FILE_ATTRIBUTE_NORMAL)
+        self.assertRaises(OSError, winutil.delete_file, path)
+        del h
+        winutil.delete_file(path)
+        self.assertRaises(OSError, winutil.delete_file, path)
+        self.assertRaises(OSError, winutil.create_file,
+            os.path.join(path, 'cannot'), winutil.GENERIC_READ, 0, winutil.OPEN_ALWAYS, winutil.FILE_ATTRIBUTE_NORMAL)
+        sz = 23
+        data = os.urandom(sz)
+        open(path, 'wb').write(data)
+        h = winutil.Handle(0, winutil.ModuleHandle, 'moo')
+        r = repr(h)
+        h2 = winutil.Handle(h.detach(), winutil.ModuleHandle, 'moo')
+        self.assertEqual(r, repr(h2))
+        h2.close()
+
+        h = winutil.create_file(
+            path, winutil.GENERIC_READ | winutil.GENERIC_WRITE, 0, winutil.OPEN_ALWAYS, winutil.FILE_ATTRIBUTE_NORMAL)
+        self.assertEqual(winutil.get_file_size(h), sz)
+        self.assertRaises(OSError, winutil.set_file_pointer, h, 23, 23)
+        self.assertEqual(winutil.read_file(h), data)
+        self.assertEqual(winutil.read_file(h), b'')
+        winutil.set_file_pointer(h, 3)
+        self.assertEqual(winutil.read_file(h), data[3:])
+        self.assertEqual(winutil.nlinks(path), 1)
+        npath = path + '.2'
+        winutil.create_hard_link(npath, path)
+        h.close()
+        self.assertEqual(open(npath, 'rb').read(), data)
+        self.assertEqual(winutil.nlinks(path), 2)
+        winutil.delete_file(path)
+        self.assertEqual(winutil.nlinks(npath), 1)
+        winutil.set_file_attributes(npath, winutil.FILE_ATTRIBUTE_READONLY)
+        self.assertRaises(OSError, winutil.delete_file, npath)
+        winutil.set_file_attributes(npath, winutil.FILE_ATTRIBUTE_NORMAL)
+        winutil.delete_file(npath)
+        self.assertGreater(min(winutil.get_disk_free_space(None)), 0)
+        open(path, 'wb').close()
+        open(npath, 'wb').close()
+        winutil.move_file(path, npath, winutil.MOVEFILE_WRITE_THROUGH | winutil.MOVEFILE_REPLACE_EXISTING)
+        self.assertFalse(os.path.exists(path))
+        os.remove(npath)
+        dpath = tempfile.mkdtemp(dir=os.path.dirname(path))
+        dh = winutil.create_file(
+            dpath, winutil.FILE_LIST_DIRECTORY, winutil.FILE_SHARE_READ, winutil.OPEN_EXISTING, winutil.FILE_FLAG_BACKUP_SEMANTICS,
+        )
+        from threading import Thread
+        events = []
+
+        def read_changes():
+            buffer = b'0' * 8192
+            events.extend(winutil.read_directory_changes(
+                dh, buffer, True,
+                winutil.FILE_NOTIFY_CHANGE_FILE_NAME |
+                winutil.FILE_NOTIFY_CHANGE_DIR_NAME |
+                winutil.FILE_NOTIFY_CHANGE_ATTRIBUTES |
+                winutil.FILE_NOTIFY_CHANGE_SIZE |
+                winutil.FILE_NOTIFY_CHANGE_LAST_WRITE |
+                winutil.FILE_NOTIFY_CHANGE_SECURITY
+            ))
+        t = Thread(target=read_changes, daemon=True)
+        t.start()
+        testp = os.path.join(dpath, 'test')
+        open(testp, 'w').close()
+        t.join(4)
+        self.assertTrue(events)
+        for actions, path in events:
+            self.assertEqual(os.path.join(dpath, path), testp)
+        dh.close()
+        os.remove(testp)
+        os.rmdir(dpath)
+        del h
+        shutil.rmtree(tdir)
+        m = winutil.create_mutex("test-mutex", False)
+        self.assertRaises(OSError, winutil.create_mutex, 'test-mutex', False)
+        m.close()
+        self.assertEqual(winutil.parse_cmdline('"c:\\test exe.exe" "some arg" 2'), ('c:\\test exe.exe', 'some arg', '2'))
 
     def test_sqlite(self):
         import sqlite3

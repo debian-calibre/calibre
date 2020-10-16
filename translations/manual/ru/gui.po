@@ -14,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-06 07:47+0000\n"
-"PO-Revision-Date: 2020-10-06 04:15+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2020-10-15 03:00+0000\n"
+"PO-Revision-Date: 2020-10-06 16:33+0000\n"
+"Last-Translator: ashed <craysy@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/calibre/calibre/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -814,7 +814,7 @@ msgid ""
 "For example, to match a literal parenthesis you must enter ``\\\\(``. "
 "Regular expression searches are 'contains' searches unless the expression "
 "contains anchors."
-msgstr ""
+msgstr "Поиск равенства обозначается префиксом в строке поиска — знаком равенства (=). Например, запрос ``tag:\"=science\"`` будет соответствовать «science», но не «science fiction» или «hard science». Поиск с регулярными выражениями обозначается префиксом в строке поиска — тильдой (~). Можно использовать любое `python-совместимое регулярное выражение <https://docs.python.org/2/library/re.html>`_. Обратите внимание, что обратные косые черты, использующиеся для экранирования спецсимволов в регулярных выражениях, следует удваивать, так как одиночные при анализе запроса будут удалены. Например, для соответствия буквенной скобке нужно ввести ``\\\\(``. Поиск с регулярными выражениями — запросы вида «содержит», за исключением выражений с якорями."
 
 #: ../../home/runner/work/calibre/calibre/manual/gui.rst:351
 msgid ""
@@ -1019,7 +1019,7 @@ msgid ""
 "You can search using a template in the :ref:`templatelangcalibre` instead of"
 " a metadata field. To do so you enter a template, a search type, and the "
 "value to search for. The syntax is::"
-msgstr ""
+msgstr "Вы можете искать, используя шаблон в :ref:`templatelangcalibre` вместо поля метаданных. Для этого вы вводите шаблон, тип поиска и значение для поиска. Синтаксис::"
 
 #: ../../home/runner/work/calibre/calibre/manual/gui.rst:450
 msgid ""
@@ -1029,7 +1029,7 @@ msgid ""
 "whatever you want. It can use the special operators described above for the "
 "various search types. You must quote the entire search string if there are "
 "spaces anywhere in it."
-msgstr ""
+msgstr "`` Шаблон`` - это любой допустимый языковой шаблон шаблона калибра. «Тип поиска» должен быть одним из «t» (текстовый поиск), «d» (поиск по дате), «n» (числовой поиск) или «b» (установлено/не установлено (логическое значение)). `` Значение`` - это все, что вы хотите. Оно может использовать специальные операторы, описанные выше, для различных типов поиска. Вы должны заключить в кавычки всю строку поиска, если в ней есть пробелы."
 
 #: ../../home/runner/work/calibre/calibre/manual/gui.rst:456
 msgid "Examples:"
@@ -1039,20 +1039,20 @@ msgstr "Примеры:"
 msgid ""
 "``template:\"program: connected_device_name('main')#@#:t:kindle\"`` -- is "
 "true when the ``kindle`` device is connected"
-msgstr ""
+msgstr "``template:\"program: connected_device_name('main')#@#:t:kindle\"`` -- true когда устройство ``kindle`` присоединено"
 
 #: ../../home/runner/work/calibre/calibre/manual/gui.rst:459
 msgid ""
 "``template:\"program: select(formats_sizes(), 'EPUB')#@#:n:>1000000\"`` -- "
 "finds books with EPUB files larger than 1 MB"
-msgstr ""
+msgstr "``template:\"program: select(formats_sizes(), 'EPUB')#@#:n:>1000000\"`` -- найти книги с файлами EPUB больше чем 1 MB"
 
 #: ../../home/runner/work/calibre/calibre/manual/gui.rst:460
 msgid ""
 "``template:\"program: select(formats_modtimes('iso'), "
 "'EPUB')#@#:d:>10daysago\"`` -- finds books with EPUB files newer than 10 "
 "days ago"
-msgstr ""
+msgstr "``template:\"program: select(formats_modtimes('iso'), 'EPUB')#@#:d:>10daysago\"`` -- найти книги с EPUB файлами новее чем 10 дней тому назад"
 
 #: ../../home/runner/work/calibre/calibre/manual/gui.rst:462
 msgid ""
@@ -1062,7 +1062,7 @@ msgid ""
 "be added to the toolbars or menus via :guilabel:`Preferences->Toolbars & "
 "menus`. It can also be assigned a keyboard shortcut via "
 ":guilabel:`Preferences->Shortcuts`."
-msgstr ""
+msgstr " Вы можете легко создавать шаблоны поисковых запросов, используя :guilabel: ʻAdvanced search dialog`, доступ к которому можно получить, нажав кнопку  |sbi|. Вы можете протестировать шаблоны на определенных книгах, используя calibre :guilabel:`Template tester`. Это может быть добавлено к панелям инструментов или меню через :guilabel:`Preferences-Toolbars & menus`. Ему также можно назначить сочетание клавиш через :guilabel:`Preferences-Shortcuts`."
 
 #: ../../home/runner/work/calibre/calibre/manual/gui.rst:471
 msgid "Saving searches"
@@ -1673,11 +1673,11 @@ msgstr ":kbd:`V`"
 
 #: ../../home/runner/work/calibre/calibre/manual/gui.rst:719
 msgid ":kbd:`Shift+V`"
-msgstr ""
+msgstr ":kbd:`Shift+V`"
 
 #: ../../home/runner/work/calibre/calibre/manual/gui.rst:720
 msgid "View last read book"
-msgstr ""
+msgstr "Посмотреть последнюю прочитанную книгу"
 
 #: ../../home/runner/work/calibre/calibre/manual/gui.rst:721
 msgid ":kbd:`Alt+V/Cmd+V in macOS`"
@@ -1926,11 +1926,11 @@ msgstr "Выполнить поиск в панели быстрого прос�
 
 #: ../../home/runner/work/calibre/calibre/manual/gui.rst:781
 msgid ":kbd:`F5`"
-msgstr ""
+msgstr ":kbd:`F5`"
 
 #: ../../home/runner/work/calibre/calibre/manual/gui.rst:782
 msgid "Re-apply the current sort"
-msgstr ""
+msgstr " Повторно применить текущую сортировку"
 
 #: ../../home/runner/work/calibre/calibre/manual/gui.rst:783
 msgid ":kbd:`Ctrl+Q`"
