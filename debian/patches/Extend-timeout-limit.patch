@@ -129,19 +129,19 @@ index 57d20e4..05ba661 100644
              service = b.services[0]
              self.ae(service.type, '_calibre._tcp.local.')
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index da15caf..ad3b47d 100644
+index 56ebda6..8542159 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
-@@ -15,7 +15,7 @@ import os, ctypes, sys, unittest, time
+@@ -15,7 +15,7 @@ import os, ctypes, sys, unittest, time, shutil
  from calibre.constants import plugins, iswindows, islinux, ismacos, plugins_loc
- from polyglot.builtins import iteritems, map, unicode_type, getenv, native_string_type
+ from polyglot.builtins import iteritems, map, unicode_type, getenv
  
 -is_ci = os.environ.get('CI', '').lower() == 'true'
 +is_ci = os.environ.get('SCHROOT_USER', None) != None
  
  try:
      import unrardll
-@@ -249,7 +249,7 @@ class BuildTest(unittest.TestCase):
+@@ -326,7 +326,7 @@ class BuildTest(unittest.TestCase):
  
              p.runJavaScript('1 + 1', callback)
              p.printToPdf(print_callback)
