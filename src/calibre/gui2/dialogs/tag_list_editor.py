@@ -3,17 +3,21 @@
 # License: GPLv3 Copyright: 2008, Kovid Goyal <kovid at kovidgoyal.net>
 
 
+from functools import partial
+
 from PyQt5.Qt import (Qt, QDialog, QTableWidgetItem, QIcon, QByteArray, QSize,
                       QDialogButtonBox, QTableWidget, QItemDelegate, QApplication,
-                      pyqtSignal, QAction, QFrame, QLabel, QTimer)
+                      pyqtSignal, QAction, QFrame, QLabel, QTimer, QMenu)
 
-from calibre.gui2.dialogs.tag_list_editor_ui import Ui_TagListEditor
+from calibre.gui2.actions.show_quickview import get_quickview_action_plugin
 from calibre.gui2.complete2 import EditWithComplete
+from calibre.gui2.dialogs.tag_list_editor_ui import Ui_TagListEditor
 from calibre.gui2.dialogs.confirm_delete import confirm
 from calibre.gui2.widgets import EnLineEdit
 from calibre.gui2 import question_dialog, error_dialog, gprefs
 from calibre.utils.config import prefs
-from calibre.utils.icu import contains, primary_contains, primary_startswith
+from calibre.utils.icu import contains, primary_contains, primary_startswith, capitalize
+from calibre.utils.titlecase import titlecase
 from polyglot.builtins import unicode_type
 
 QT_HIDDEN_CLEAR_ACTION = '_q_qlineeditclearaction'
@@ -136,7 +140,7 @@ class EditColumnDelegate(QItemDelegate):
 class TagListEditor(QDialog, Ui_TagListEditor):
 
     def __init__(self, window, cat_name, tag_to_match, get_book_ids, sorter,
-                 ttm_is_first_letter=False):
+                 ttm_is_first_letter=False, category=None):
         QDialog.__init__(self, window)
         Ui_TagListEditor.__init__(self)
         self.setupUi(self)
@@ -146,6 +150,7 @@ class TagListEditor(QDialog, Ui_TagListEditor):
         # Put the category name into the title bar
         t = self.windowTitle()
         self.category_name = cat_name
+        self.category = category
         self.setWindowTitle(t + ' (' + cat_name + ')')
         # Remove help icon on title bar
         icon = self.windowIcon()
@@ -248,6 +253,91 @@ class TagListEditor(QDialog, Ui_TagListEditor):
         # Add the data
         self.search_item_row = -1
         self.fill_in_table(None, tag_to_match, ttm_is_first_letter)
+
+        self.table.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.table.customContextMenuRequested.connect(self.show_context_menu)
+
+    def show_context_menu(self, point):
+        idx = self.table.indexAt(point)
+        if idx.column() != 0:
+            return
+        m = self.au_context_menu = QMenu(self)
+
+        item = self.table.itemAt(point)
+        disable_copy_paste_search = len(self.table.selectedItems()) != 1 or item.is_deleted
+        ca = m.addAction(_('Copy'))
+        ca.triggered.connect(partial(self.copy_to_clipboard, item))
+        if disable_copy_paste_search:
+            ca.setEnabled(False)
+        ca = m.addAction(_('Paste'))
+        ca.triggered.connect(partial(self.paste_from_clipboard, item))
+        if disable_copy_paste_search:
+            ca.setEnabled(False)
+        ca = m.addAction(_('Undo'))
+        ca.triggered.connect(self.undo_edit)
+        ca.setEnabled(False)
+        for item in self.table.selectedItems():
+            if (item.text() != self.original_names[int(item.data(Qt.UserRole))] or item.is_deleted):
+                ca.setEnabled(True)
+                break
+        ca = m.addAction(_('Edit'))
+        ca.triggered.connect(self.rename_tag)
+        ca = m.addAction(_('Delete'))
+        ca.triggered.connect(self.delete_tags)
+        if self.category is not None:
+            ca = m.addAction(_("Search the library for '{0}'").format(
+                                   unicode_type(item.text())))
+            ca.triggered.connect(partial(self.search_for_books, item))
+            if disable_copy_paste_search:
+                ca.setEnabled(False)
+        m.addSeparator()
+        case_menu = QMenu(_('Change case'))
+        action_upper_case = case_menu.addAction(_('Upper case'))
+        action_lower_case = case_menu.addAction(_('Lower case'))
+        action_swap_case = case_menu.addAction(_('Swap case'))
+        action_title_case = case_menu.addAction(_('Title case'))
+        action_capitalize = case_menu.addAction(_('Capitalize'))
+        action_upper_case.triggered.connect(partial(self.do_case, icu_upper))
+        action_lower_case.triggered.connect(partial(self.do_case, icu_lower))
+        action_swap_case.triggered.connect(partial(self.do_case, self.swap_case))
+        action_title_case.triggered.connect(partial(self.do_case, titlecase))
+        action_capitalize.triggered.connect(partial(self.do_case, capitalize))
+        m.addMenu(case_menu)
+        m.exec_(self.table.mapToGlobal(point))
+
+    def search_for_books(self, item):
+        from calibre.gui2.ui import get_gui
+        get_gui().search.set_search_string('{0}:"{1}"'.format(self.category,
+                                   unicode_type(item.text()).replace(r'"', r'\"')))
+
+        qv = get_quickview_action_plugin()
+        if qv:
+            view = get_gui().library_view
+            rows = view.selectionModel().selectedRows()
+            if len(rows) > 0:
+                current_row = rows[0].row()
+                current_col = view.column_map.index(self.category)
+                index = view.model().index(current_row, current_col)
+                qv.change_quickview_column(index)
+
+    def copy_to_clipboard(self, item):
+        cb = QApplication.clipboard()
+        cb.setText(unicode_type(item.text()))
+
+    def paste_from_clipboard(self, item):
+        cb = QApplication.clipboard()
+        item.setText(cb.text())
+
+    def do_case(self, func):
+        items = self.table.selectedItems()
+        # block signals to avoid the "edit one changes all" behavior
+        self.table.blockSignals(True)
+        for item in items:
+            item.setText(func(unicode_type(item.text())))
+        self.table.blockSignals(False)
+
+    def swap_case(self, txt):
+        return txt.swapcase()
 
     def vl_box_changed(self):
         self.search_item_row = -1
@@ -449,19 +539,22 @@ class TagListEditor(QDialog, Ui_TagListEditor):
             error_dialog(self, _('No item selected'),
                          _('You must select one item from the list of Available items.')).exec_()
             return
-        col_zero_item = self.table.item(item.row(), 0)
-        if col_zero_item.is_deleted:
-            if not question_dialog(self, _('Undelete item?'),
-                   '<p>'+_('That item is deleted. Do you want to undelete it?')+'<br>'):
-                return
-            col_zero_item.set_is_deleted(False)
-            self.to_delete.discard(int(col_zero_item.data(Qt.UserRole)))
-            orig = self.table.item(col_zero_item.row(), 2)
-            self.table.blockSignals(True)
-            orig.setData(Qt.DisplayRole, '')
-            self.table.blockSignals(False)
-        else:
-            self.table.editItem(item)
+        for col_zero_item in self.table.selectedItems():
+            if col_zero_item.is_deleted:
+                if not question_dialog(self, _('Undelete items?'),
+                       '<p>'+_('Items must be undeleted to continue. Do you want '
+                               'to do this?')+'<br>'):
+                    return
+        self.table.blockSignals(True)
+        for col_zero_item in self.table.selectedItems():
+            # undelete any deleted items
+            if col_zero_item.is_deleted:
+                col_zero_item.set_is_deleted(False)
+                self.to_delete.discard(int(col_zero_item.data(Qt.UserRole)))
+                orig = self.table.item(col_zero_item.row(), 2)
+                orig.setData(Qt.DisplayRole, '')
+        self.table.blockSignals(False)
+        self.table.editItem(item)
 
     def delete_pressed(self):
         if self.table.currentColumn() == 0:

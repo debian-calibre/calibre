@@ -67,18 +67,28 @@ def entry_to_icon_text(entry, only_text=False):
 if iswindows:
     # Windows {{{
     from calibre.utils.winreg.default_programs import find_programs, friendly_app_name
-    from calibre.utils.open_with.windows import load_icon_resource
-    from win32process import CreateProcess, STARTUPINFO
-    from win32event import WaitForInputIdle
-    import win32con
+    from calibre.utils.open_with.windows import load_icon_resource, load_icon_for_cmdline
+    from calibre.constants import plugins
+    import subprocess
     oprefs = JSONConfig('windows_open_with')
 
     def entry_sort_key(entry):
         return sort_key(entry.get('name') or '')
 
+    def icon_for_entry(entry, delete_icon_resource=False, as_data=False):
+        res = entry.pop('icon_resource', None) if delete_icon_resource else entry.get('icon_resource')
+        if res is None:
+            return load_icon_for_cmdline(entry['cmdline'], as_data=as_data)
+        try:
+            return load_icon_resource(res, as_data=as_data)
+        except Exception:
+            import traceback
+            traceback.print_exc()
+        return load_icon_for_cmdline(entry['cmdline'], as_data=as_data)
+
     def finalize_entry(entry):
         try:
-            data = load_icon_resource(entry.pop('icon_resource', None), as_data=True)
+            data = icon_for_entry(entry, delete_icon_resource=True, as_data=True)
         except Exception:
             data = None
             import traceback
@@ -89,7 +99,7 @@ if iswindows:
 
     def entry_to_item(entry, parent):
         try:
-            icon = load_icon_resource(entry.get('icon_resource'))
+            icon = icon_for_entry(entry)
         except Exception:
             icon = None
             import traceback
@@ -113,7 +123,7 @@ if iswindows:
                 return
             qans = ans.replace('"', r'\"')
             name = friendly_app_name(exe=ans) or os.path.splitext(os.path.basename(ans))[0]
-            return {'cmdline':'"%s" "%%1"' % qans, 'name':name, 'icon_resource':ans + ',0'}
+            return {'cmdline':'"%s" "%%1"' % qans, 'name':name}
 
     def entry_to_cmdline(entry, path):
         cmdline = entry['cmdline']
@@ -125,20 +135,17 @@ if iswindows:
     def run_program(entry, path, parent):  # noqa
         import re
         cmdline = entry_to_cmdline(entry, path)
-        flags = win32con.CREATE_DEFAULT_ERROR_MODE | win32con.CREATE_NEW_PROCESS_GROUP
+        flags = subprocess.CREATE_DEFAULT_ERROR_MODE | subprocess.CREATE_NEW_PROCESS_GROUP
         if re.match(r'"[^"]+?(.bat|.cmd|.com)"', cmdline, flags=re.I):
-            flags |= win32con.CREATE_NO_WINDOW
+            flags |= subprocess.CREATE_NO_WINDOW
             console = ' (console)'
         else:
-            flags |= win32con.DETACHED_PROCESS
+            flags |= subprocess.DETACHED_PROCESS
             console = ''
         print('Running Open With commandline%s:' % console, repr(entry['cmdline']), ' |==> ', repr(cmdline))
         try:
             with sanitize_env_vars():
-                process_handle, thread_handle, process_id, thread_id = CreateProcess(
-                    None, cmdline, None, None, False,  flags,
-                    None, None, STARTUPINFO())
-            WaitForInputIdle(process_handle, 2000)
+                plugins['winutil'][0].run_cmdline(cmdline, flags, 2000)
         except Exception as err:
             return error_dialog(
                 parent, _('Failed to run'), _(
