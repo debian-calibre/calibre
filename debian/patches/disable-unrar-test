@@ -6,14 +6,14 @@ Forwarded: not-needed
 
 disable unrar test since the module is not in Debian main
 ---
- src/calibre/test_build.py | 5 +++++
+ src/calibre/test_build.py |    5 +++++
  1 file changed, 5 insertions(+)
 
-diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index 6d80cd5..56ebda6 100644
+Index: b/src/calibre/test_build.py
+===================================================================
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
-@@ -17,6 +17,10 @@ from polyglot.builtins import iteritems, map, unicode_type, getenv
+@@ -17,6 +17,10 @@ from polyglot.builtins import iteritems,
  
  is_ci = os.environ.get('CI', '').lower() == 'true'
  
@@ -24,7 +24,7 @@ index 6d80cd5..56ebda6 100644
  
  class BuildTest(unittest.TestCase):
  
-@@ -354,6 +358,7 @@ class BuildTest(unittest.TestCase):
+@@ -362,6 +366,7 @@ class BuildTest(unittest.TestCase):
          from calibre.gui2.win_file_dialogs import test
          test()
  
