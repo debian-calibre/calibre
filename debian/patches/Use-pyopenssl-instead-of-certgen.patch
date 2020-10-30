@@ -9,19 +9,20 @@ So it soleves OpenSSL license issues.
 
 "pyopenssl" Uses Apache License Version 2.0, and it can be use with GPL3.
 ---
- setup/extensions.json        |    8 ----
- src/calibre/constants.py     |    1 
- src/calibre/utils/certgen.py |   70 +++++++++++++++++++++++++++++++------------
- 3 files changed, 52 insertions(+), 27 deletions(-)
+ setup/extensions.json        |  8 ------
+ src/calibre/constants.py     |  1 -
+ src/calibre/utils/certgen.py | 68 +++++++++++++++++++++++++++++++++-----------
+ 3 files changed, 51 insertions(+), 26 deletions(-)
 
-Index: b/setup/extensions.json
-===================================================================
+diff --git a/setup/extensions.json b/setup/extensions.json
+index 2c9d518..e059163 100644
 --- a/setup/extensions.json
 +++ b/setup/extensions.json
-@@ -29,14 +29,6 @@
+@@ -28,14 +28,6 @@
+         "libraries": "m",
          "windows_libraries": ""
      },
-     {
+-    {
 -        "name": "certgen",
 -        "sources": "calibre/utils/certgen.c",
 -        "libraries": "crypto",
@@ -29,12 +30,11 @@ Index: b/setup/extensions.json
 -        "inc_dirs": "!openssl_inc_dirs",
 -        "lib_dirs": "!openssl_lib_dirs"
 -    },
--    {
+     {
          "name": "html_syntax_highlighter",
          "sources": "calibre/gui2/tweak_book/editor/syntax/html.c"
-     },
-Index: b/src/calibre/constants.py
-===================================================================
+diff --git a/src/calibre/constants.py b/src/calibre/constants.py
+index b75d705..0c0b043 100644
 --- a/src/calibre/constants.py
 +++ b/src/calibre/constants.py
 @@ -246,7 +246,6 @@ class ExtensionsImporter:
@@ -45,11 +45,11 @@ Index: b/src/calibre/constants.py
          )
          if iswindows:
              extra = ('winutil', 'wpd', 'winfonts', 'winsapi')
-Index: b/src/calibre/utils/certgen.py
-===================================================================
+diff --git a/src/calibre/utils/certgen.py b/src/calibre/utils/certgen.py
+index e180ddb..b950dfb 100644
 --- a/src/calibre/utils/certgen.py
 +++ b/src/calibre/utils/certgen.py
-@@ -7,11 +7,14 @@ __copyright__ = '2015, Kovid Goyal <kovi
+@@ -7,11 +7,14 @@ __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
  
  import socket
  from polyglot.builtins import unicode_type
@@ -74,16 +74,15 @@ Index: b/src/calibre/utils/certgen.py
 -        if isinstance(x, unicode_type):
 -            x = x.encode('ascii')
 -        return x or None
--
++    req = crypto.X509Req()
++    subj = req.get_subject()
+ 
 -    return certgen.create_rsa_cert_req(
 -        key_pair, tuple(enc(x) for x in alt_names if x), common_name,
 -        country, state, locality, organization, organizational_unit, email_address, basic_constraints
 -    )
-+    req = crypto.X509Req()
-+    subj = req.get_subject()
- 
 +    req.set_version(2)
-+
+ 
 +    if common_name         : setattr(subj, "CN",           common_name)
 +    if country             : setattr(subj, "C",            country)
 +    if state               : setattr(subj, "ST",           state)
