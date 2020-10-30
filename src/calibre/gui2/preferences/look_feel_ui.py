@@ -367,6 +367,12 @@ class Ui_Form(object):
         self.formLayout.setFieldGrowthPolicy(QtWidgets.QFormLayout.ExpandingFieldsGrow)
         self.formLayout.setContentsMargins(0, 0, 0, 0)
         self.formLayout.setObjectName("formLayout")
+        self.opt_tags_browser_partition_method = QtWidgets.QComboBox(self.tag_browser_tab)
+        self.opt_tags_browser_partition_method.setObjectName("opt_tags_browser_partition_method")
+        self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.opt_tags_browser_partition_method)
+        self.label_9 = QtWidgets.QLabel(self.tag_browser_tab)
+        self.label_9.setObjectName("label_9")
+        self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.label_9)
         self.label_10 = QtWidgets.QLabel(self.tag_browser_tab)
         self.label_10.setObjectName("label_10")
         self.formLayout.setWidget(3, QtWidgets.QFormLayout.LabelRole, self.label_10)
@@ -381,6 +387,16 @@ class Ui_Form(object):
         self.opt_tags_browser_collapse_fl_at.setMaximum(10000)
         self.opt_tags_browser_collapse_fl_at.setObjectName("opt_tags_browser_collapse_fl_at")
         self.formLayout.setWidget(4, QtWidgets.QFormLayout.FieldRole, self.opt_tags_browser_collapse_fl_at)
+        self.label = QtWidgets.QLabel(self.tag_browser_tab)
+        self.label.setObjectName("label")
+        self.formLayout.setWidget(5, QtWidgets.QFormLayout.LabelRole, self.label)
+        self.opt_tag_browser_item_padding = QtWidgets.QDoubleSpinBox(self.tag_browser_tab)
+        self.opt_tag_browser_item_padding.setDecimals(1)
+        self.opt_tag_browser_item_padding.setMinimum(-1.0)
+        self.opt_tag_browser_item_padding.setMaximum(2.0)
+        self.opt_tag_browser_item_padding.setSingleStep(0.1)
+        self.opt_tag_browser_item_padding.setObjectName("opt_tag_browser_item_padding")
+        self.formLayout.setWidget(5, QtWidgets.QFormLayout.FieldRole, self.opt_tag_browser_item_padding)
         self.label_8111 = QtWidgets.QLabel(self.tag_browser_tab)
         self.label_8111.setObjectName("label_8111")
         self.formLayout.setWidget(6, QtWidgets.QFormLayout.LabelRole, self.label_8111)
@@ -403,6 +419,16 @@ class Ui_Form(object):
         self.opt_categories_using_hierarchy.setSizePolicy(sizePolicy)
         self.opt_categories_using_hierarchy.setObjectName("opt_categories_using_hierarchy")
         self.formLayout.setWidget(7, QtWidgets.QFormLayout.FieldRole, self.opt_categories_using_hierarchy)
+        self.opt_tag_browser_show_tooltips = QtWidgets.QCheckBox(self.tag_browser_tab)
+        self.opt_tag_browser_show_tooltips.setObjectName("opt_tag_browser_show_tooltips")
+        self.formLayout.setWidget(8, QtWidgets.QFormLayout.LabelRole, self.opt_tag_browser_show_tooltips)
+        self.opt_show_avg_rating = QtWidgets.QCheckBox(self.tag_browser_tab)
+        self.opt_show_avg_rating.setChecked(True)
+        self.opt_show_avg_rating.setObjectName("opt_show_avg_rating")
+        self.formLayout.setWidget(9, QtWidgets.QFormLayout.LabelRole, self.opt_show_avg_rating)
+        self.opt_tag_browser_show_counts = QtWidgets.QCheckBox(self.tag_browser_tab)
+        self.opt_tag_browser_show_counts.setObjectName("opt_tag_browser_show_counts")
+        self.formLayout.setWidget(10, QtWidgets.QFormLayout.SpanningRole, self.opt_tag_browser_show_counts)
         self.opt_tag_browser_old_look = QtWidgets.QCheckBox(self.tag_browser_tab)
         self.opt_tag_browser_old_look.setObjectName("opt_tag_browser_old_look")
         self.formLayout.setWidget(11, QtWidgets.QFormLayout.SpanningRole, self.opt_tag_browser_old_look)
@@ -412,32 +438,9 @@ class Ui_Form(object):
         self.opt_tag_browser_always_autocollapse = QtWidgets.QCheckBox(self.tag_browser_tab)
         self.opt_tag_browser_always_autocollapse.setObjectName("opt_tag_browser_always_autocollapse")
         self.formLayout.setWidget(13, QtWidgets.QFormLayout.SpanningRole, self.opt_tag_browser_always_autocollapse)
-        self.opt_tags_browser_partition_method = QtWidgets.QComboBox(self.tag_browser_tab)
-        self.opt_tags_browser_partition_method.setObjectName("opt_tags_browser_partition_method")
-        self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.opt_tags_browser_partition_method)
-        self.label_9 = QtWidgets.QLabel(self.tag_browser_tab)
-        self.label_9.setObjectName("label_9")
-        self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.label_9)
-        self.opt_show_avg_rating = QtWidgets.QCheckBox(self.tag_browser_tab)
-        self.opt_show_avg_rating.setChecked(True)
-        self.opt_show_avg_rating.setObjectName("opt_show_avg_rating")
-        self.formLayout.setWidget(9, QtWidgets.QFormLayout.LabelRole, self.opt_show_avg_rating)
-        self.opt_tag_browser_show_counts = QtWidgets.QCheckBox(self.tag_browser_tab)
-        self.opt_tag_browser_show_counts.setObjectName("opt_tag_browser_show_counts")
-        self.formLayout.setWidget(10, QtWidgets.QFormLayout.SpanningRole, self.opt_tag_browser_show_counts)
-        self.label = QtWidgets.QLabel(self.tag_browser_tab)
-        self.label.setObjectName("label")
-        self.formLayout.setWidget(5, QtWidgets.QFormLayout.LabelRole, self.label)
-        self.opt_tag_browser_item_padding = QtWidgets.QDoubleSpinBox(self.tag_browser_tab)
-        self.opt_tag_browser_item_padding.setDecimals(1)
-        self.opt_tag_browser_item_padding.setMinimum(-1.0)
-        self.opt_tag_browser_item_padding.setMaximum(2.0)
-        self.opt_tag_browser_item_padding.setSingleStep(0.1)
-        self.opt_tag_browser_item_padding.setObjectName("opt_tag_browser_item_padding")
-        self.formLayout.setWidget(5, QtWidgets.QFormLayout.FieldRole, self.opt_tag_browser_item_padding)
-        self.opt_tag_browser_show_tooltips = QtWidgets.QCheckBox(self.tag_browser_tab)
-        self.opt_tag_browser_show_tooltips.setObjectName("opt_tag_browser_show_tooltips")
-        self.formLayout.setWidget(8, QtWidgets.QFormLayout.LabelRole, self.opt_tag_browser_show_tooltips)
+        self.opt_tag_browser_allow_keyboard_focus = QtWidgets.QCheckBox(self.tag_browser_tab)
+        self.opt_tag_browser_allow_keyboard_focus.setObjectName("opt_tag_browser_allow_keyboard_focus")
+        self.formLayout.setWidget(14, QtWidgets.QFormLayout.SpanningRole, self.opt_tag_browser_allow_keyboard_focus)
         icon7 = QtGui.QIcon()
         icon7.addPixmap(QtGui.QPixmap(I("tags.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.tabWidget.addTab(self.tag_browser_tab, icon7, "")
@@ -549,12 +552,12 @@ class Ui_Form(object):
         self.label_15.setBuddy(self.opt_cover_grid_cache_size_multiple)
         self.label_18.setBuddy(self.opt_cover_grid_disk_cache_size)
         self.label_25.setBuddy(self.opt_book_details_comments_heading_pos)
+        self.label_9.setBuddy(self.opt_tags_browser_partition_method)
         self.label_10.setBuddy(self.opt_tags_browser_collapse_at)
         self.label_101.setBuddy(self.opt_tags_browser_collapse_fl_at)
+        self.label.setBuddy(self.opt_tag_browser_item_padding)
         self.label_8111.setBuddy(self.opt_tag_browser_dont_collapse)
         self.label_81.setBuddy(self.opt_categories_using_hierarchy)
-        self.label_9.setBuddy(self.opt_tags_browser_partition_method)
-        self.label.setBuddy(self.opt_tag_browser_item_padding)
         self.label_6.setBuddy(self.opt_cover_flow_queue_length)
         self.label_23.setBuddy(self.opt_cover_browser_title_template)
         self.label_24.setBuddy(self.opt_cover_browser_subtitle_field)
@@ -656,13 +659,22 @@ class Ui_Form(object):
         self.opt_use_roman_numerals_for_series_number.setText(_("Use &Roman numerals for series"))
         self.label_25.setText(_("Show comments &heading:"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.book_details_tab), _("&Book details"))
+        self.opt_tags_browser_partition_method.setToolTip(_("Choose how Tag browser subcategories are displayed when\n"
+"there are more items than the limit. Select by first\n"
+"letter to see an A, B, C list. Choose partitioned to\n"
+"have a list of fixed-sized groups. Set to disabled\n"
+"if you never want subcategories"))
+        self.label_9.setText(_("&Category partitioning method:"))
         self.label_10.setText(_("Co&llapse when more items than:"))
         self.opt_tags_browser_collapse_at.setToolTip(_("If a Tag browser category has more than this number of items, it is divided\n"
 "up into subcategories. If the partition method is set to disable, this value is ignored."))
         self.label_101.setText(_("Combine letters &when fewer items than:"))
         self.opt_tags_browser_collapse_fl_at.setToolTip(_("If collapsing by first letter, combine adjacent letters together if\n"
 "there are fewer items under a letter than specified here. If the partition method is\n"
-"not set to first letter, this value is ignored."))
+"not set to first letter, this value is ignored. Set to zero to disable."))
+        self.label.setText(_("Spacing between &items:"))
+        self.opt_tag_browser_item_padding.setToolTip(_("The spacing between consecutive items in the Tag browser. In units of (ex) which is the approximate height of the letter \'x\' in the currently used font. "))
+        self.opt_tag_browser_item_padding.setSuffix(_(" ex"))
         self.label_8111.setText(_("Categories &not to partition:"))
         self.opt_tag_browser_dont_collapse.setToolTip(_("A comma-separated list of categories that are not to\n"
 "be partitioned even if the number of items is larger than\n"
@@ -676,6 +688,12 @@ class Ui_Form(object):
 "and \'Mystery.Thriller\' will be displayed with English and Thriller\n"
 "both under \'Mystery\'. If \'tags\' is not in this box,\n"
 "then the tags will be displayed each on their own line."))
+        self.opt_tag_browser_show_tooltips.setText(_("Show &tooltips"))
+        self.opt_show_avg_rating.setText(_("Show &average ratings"))
+        self.opt_tag_browser_show_counts.setToolTip(_("Show counts for items in the Tag browser. Such as the number of books\n"
+"by each author, the number of authors, etc. If you turn it off, you can still\n"
+"see the counts by hovering your mouse over any item."))
+        self.opt_tag_browser_show_counts.setText(_("Show &counts"))
         self.opt_tag_browser_old_look.setText(_("Use &alternating row colors"))
         self.opt_tag_browser_hide_empty_categories.setToolTip(_("When checked, calibre will automatically hide any category\n"
 " (a column, custom or standard) that has no items to show. For example, some\n"
@@ -686,21 +704,12 @@ class Ui_Form(object):
 " that match the search instead of the first one. If Hide empty categories is\n"
 " also checked then only categories containing a matched item will be shown."))
         self.opt_tag_browser_always_autocollapse.setText(_("Find &shows all items that match"))
-        self.opt_tags_browser_partition_method.setToolTip(_("Choose how Tag browser subcategories are displayed when\n"
-"there are more items than the limit. Select by first\n"
-"letter to see an A, B, C list. Choose partitioned to\n"
-"have a list of fixed-sized groups. Set to disabled\n"
-"if you never want subcategories"))
-        self.label_9.setText(_("&Category partitioning method:"))
-        self.opt_show_avg_rating.setText(_("Show &average ratings"))
-        self.opt_tag_browser_show_counts.setToolTip(_("Show counts for items in the Tag browser. Such as the number of books\n"
-"by each author, the number of authors, etc. If you turn it off, you can still\n"
-"see the counts by hovering your mouse over any item."))
-        self.opt_tag_browser_show_counts.setText(_("Show &counts"))
-        self.label.setText(_("Spacing between &items:"))
-        self.opt_tag_browser_item_padding.setToolTip(_("The spacing between consecutive items in the Tag browser. In units of (ex) which is the approximate height of the letter \'x\' in the currently used font. "))
-        self.opt_tag_browser_item_padding.setSuffix(_(" ex"))
-        self.opt_tag_browser_show_tooltips.setText(_("Show &tooltips"))
+        self.opt_tag_browser_allow_keyboard_focus.setText(_("Allow the Tag browser to have keyboard focus (needs restart)"))
+        self.opt_tag_browser_allow_keyboard_focus.setToolTip(_("<p>When checked, the Tag browser can get keyboard focus, allowing\n"
+"use of the keyboard to navigate the tree using the arrow keys. The RETURN key simulates\n"
+"a click on the selected item. The keyboard shortcut \'Tag browser /\n"
+"Give the Tag browser keyboard focus\' changes the keyboard focus without\n"
+"using the mouse.</p>"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tag_browser_tab), _("&Tag browser"))
         self.opt_cover_browser_title_template.setToolTip(_("The template used to generate the text below the covers. Uses the same syntax as save templates. Defaults to just the book title. Note that this setting is per-library, which means that you have to set it again for every different calibre library you use."))
         self.label_6.setText(_("&Number of covers to show in browse mode (needs restart):"))

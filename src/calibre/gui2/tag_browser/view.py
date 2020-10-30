@@ -157,6 +157,7 @@ class TagsView(QTreeView):  # {{{
     restriction_error       = pyqtSignal()
     tag_item_delete         = pyqtSignal(object, object, object, object, object)
     apply_tag_to_selected   = pyqtSignal(object, object, object)
+    edit_enum_values        = pyqtSignal(object, object, object)
 
     def __init__(self, parent=None):
         QTreeView.__init__(self, parent=None)
@@ -182,6 +183,8 @@ class TagsView(QTreeView):  # {{{
         self.edit_metadata_icon = QIcon(I('edit_input.png'))
         self.delete_icon = QIcon(I('list_remove.png'))
         self.rename_icon = QIcon(I('edit-undo.png'))
+        self.plus_icon = QIcon(I('plus.png'))
+        self.minus_icon = QIcon(I('minus.png'))
 
         self._model = TagsModel(self)
         self._model.search_item_renamed.connect(self.search_item_renamed)
@@ -193,9 +196,8 @@ class TagsView(QTreeView):  # {{{
                 type=Qt.QueuedConnection)
         self._model.drag_drop_finished.connect(self.drag_drop_finished)
         self.set_look_and_feel()
-        # Allowing keyboard focus looks bad in the Qt Fusion style and is useless
-        # anyway since the enter/spacebar keys do nothing
-        self.setFocusPolicy(Qt.NoFocus)
+        if not gprefs['tag_browser_allow_keyboard_focus']:
+            self.setFocusPolicy(Qt.NoFocus)
         QApplication.instance().palette_changed.connect(self.set_style_sheet, type=Qt.QueuedConnection)
 
     def set_style_sheet(self):
@@ -289,6 +291,15 @@ class TagsView(QTreeView):  # {{{
         self.refresh_signal_processed = True
         db.add_listener(self.database_changed)
         self.expanded.connect(self.item_expanded)
+        self.collapsed.connect(self.collapse_node_and_children)
+
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Return and self.state() != self.EditingState:
+            # I don't see how it can ever not be valid, but ...
+            if self.currentIndex().isValid():
+                self.toggle_current_index()
+            return
+        QTreeView.keyPressEvent(self, event)
 
     def database_changed(self, event, ids):
         if self.refresh_signal_processed:
@@ -540,6 +551,9 @@ class TagsView(QTreeView):  # {{{
                 if item is not None:
                     self.apply_to_selected_books(item, True)
                 return
+            elif action == 'edit_enum':
+                self.edit_enum_values.emit(self, self.db, key)
+                return
             self.db.new_api.set_pref('tag_browser_hidden_categories', list(self.hidden_categories))
             if reset_filter_categories:
                 self._model.set_categories_filter(None)
@@ -573,7 +587,6 @@ class TagsView(QTreeView):  # {{{
 
         index = self.indexAt(point)
         self.context_menu = QMenu(self)
-        parent_index = None
         added_show_hidden_categories = False
 
         def add_show_hidden_categories():
@@ -616,15 +629,16 @@ class TagsView(QTreeView):  # {{{
                     # the possibility of renaming that item.
                     if tag.is_editable or tag.is_hierarchical:
                         # Add the 'rename' items to both interior and leaf nodes
-                        if self.model().get_in_vl():
+                        if fm['datatype'] != 'enumeration':
+                            if self.model().get_in_vl():
+                                self.context_menu.addAction(self.rename_icon,
+                                        _('Rename %s in Virtual library')%display_name(tag),
+                                        partial(self.context_menu_handler, action='edit_item_in_vl',
+                                                index=index, category=key))
                             self.context_menu.addAction(self.rename_icon,
-                                                    _('Rename %s in Virtual library')%display_name(tag),
-                                    partial(self.context_menu_handler, action='edit_item_in_vl',
-                                            index=index, category=key))
-                        self.context_menu.addAction(self.rename_icon,
-                                                _('Rename %s')%display_name(tag),
-                                partial(self.context_menu_handler, action='edit_item_no_vl',
-                                        index=index, category=key))
+                                        _('Rename %s')%display_name(tag),
+                                        partial(self.context_menu_handler, action='edit_item_no_vl',
+                                                index=index, category=key))
                         if key in ('tags', 'series', 'publisher') or \
                                 self._model.db.field_metadata.is_custom_field(key):
                             if self.model().get_in_vl():
@@ -676,10 +690,10 @@ class TagsView(QTreeView):  # {{{
                         if fm['datatype'] != 'rating':
                             m = self.context_menu.addMenu(self.edit_metadata_icon,
                                             _('Apply %s to selected books')%display_name(tag))
-                            m.addAction(QIcon(I('plus.png')),
+                            m.addAction(self.plus_icon,
                                 _('Add %s to selected books') % display_name(tag),
                                 partial(self.context_menu_handler, action='add_tag', index=index))
-                            m.addAction(QIcon(I('minus.png')),
+                            m.addAction(self.minus_icon,
                                 _('Remove %s from selected books') % display_name(tag),
                                 partial(self.context_menu_handler, action='remove_tag', index=index))
 
@@ -701,6 +715,7 @@ class TagsView(QTreeView):  # {{{
                                     key=key, index=tag_item))
                     if tag.is_searchable:
                         # Add the search for value items. All leaf nodes are searchable
+                        self.context_menu.addSeparator()
                         self.context_menu.addAction(self.search_icon,
                                 _('Search for %s')%display_name(tag),
                                 partial(self.context_menu_handler, action='search',
@@ -756,7 +771,7 @@ class TagsView(QTreeView):  # {{{
                 # Offer specific editors for tags/series/publishers/saved searches
                 self.context_menu.addSeparator()
                 if key in ['tags', 'publisher', 'series'] or (
-                        self.db.field_metadata[key]['is_custom'] and self.db.field_metadata[key]['datatype'] != 'composite'):
+                        fm['is_custom'] and fm['datatype'] != 'composite'):
                     if tag_item.type == TagTreeItem.CATEGORY and tag_item.temporary:
                         self.context_menu.addAction(_('Manage %s')%category,
                             partial(self.context_menu_handler, action='open_editor',
@@ -766,6 +781,10 @@ class TagsView(QTreeView):  # {{{
                         self.context_menu.addAction(_('Manage %s')%category,
                             partial(self.context_menu_handler, action='open_editor',
                                     category=tag.original_name if tag else None,
+                                    key=key))
+                    if fm['datatype'] == 'enumeration':
+                        self.context_menu.addAction(_('Edit permissible values for %s')%category,
+                            partial(self.context_menu_handler, action='edit_enum',
                                     key=key))
                 elif key == 'authors':
                     if tag_item.type == TagTreeItem.CATEGORY:
@@ -805,19 +824,6 @@ class TagsView(QTreeView):  # {{{
                             _('Manage User categories'),
                             partial(self.context_menu_handler, action='manage_categories',
                                     category=None))
-
-                node_name = tag_item.tag.name
-                parent = tag_item.parent
-                if parent.type != TagTreeItem.ROOT:
-                    # We have an internal node. Find its immediate parent
-                    parent_index = self._model.parent(index)
-                    parent_node = parent
-                    parent_name = parent.tag.name
-                else:
-                    # We have a top-level node.
-                    parent_index = index
-                    parent_node = tag_item
-                    parent_name = tag_item.name
         if self.hidden_categories:
             if not self.context_menu.isEmpty():
                 self.context_menu.addSeparator()
@@ -849,46 +855,78 @@ class TagsView(QTreeView):  # {{{
             da.setToolTip('*')
             pa.setToolTip('*')
 
+        # Add expand menu items
         self.context_menu.addSeparator()
-        if index.isValid() and self.model().rowCount(index) > 0:
-            self.context_menu.addAction(_('Expand {0}').format(node_name),
-                                        partial(self.expand_node_and_descendants, index))
-            if self.isExpanded(index):
-                self.context_menu.addAction(_("Collapse {0}").format(node_name),
-                                            partial(self.collapse_node, index))
-        if parent_index is not None and parent_index != index:
-            if self.isExpanded(parent_index):
-                # Don't bother to collapse if it isn't expanded
-                self.context_menu.addAction(_("Collapse {0}").format(parent_name),
-                                            partial(self.collapse_node, parent_index))
-            if parent_node.parent.type != TagTreeItem.ROOT:
-                # Add the top level node if the current parent is an internal node
-                while parent_node.parent.type != TagTreeItem.ROOT:
-                    parent_node = parent_node.parent
-                idx = self._model.index_for_category(parent_node.category_key)
-                self.context_menu.addAction(_("Collapse {0}").format(parent_node.name),
-                                            partial(self.collapse_node, idx))
-        self.context_menu.addAction(_('Collapse all'), self.collapseAll)
+        m = self.context_menu.addMenu(_('Expand or collapse'))
+        try:
+            node_name = self._model.get_node(index).tag.name
+        except AttributeError:
+            pass
+        else:
+            if self.has_children(index) and not self.isExpanded(index):
+                m.addAction(self.plus_icon,
+                            _('Expand {0}').format(node_name), partial(self.expand, index))
+            if self.has_unexpanded_children(index):
+                m.addAction(self.plus_icon,
+                            _('Expand {0} and its children').format(node_name),
+                                            partial(self.expand_node_and_children, index))
+
+        # Add menu items to collapse parent nodes
+        idx = index
+        paths = []
+        while True:
+            # First walk up the node tree getting the displayed names of
+            # expanded parent nodes
+            node = self._model.get_node(idx)
+            if node.type == TagTreeItem.ROOT:
+                break
+            if self.has_children(idx) and self.isExpanded(idx):
+                # leaf nodes don't have children so can't be expanded.
+                # Also the leaf node might be collapsed
+                paths.append((node.tag.name, idx))
+            idx = self._model.parent(idx)
+        for p in paths:
+            # Now add the menu items
+            m.addAction(self.minus_icon,
+                        _("Collapse {0}").format(p[0]), partial(self.collapse_node, p[1]))
+        m.addAction(self.minus_icon, _('Collapse all'), self.collapseAll)
 
         if not self.context_menu.isEmpty():
             self.context_menu.popup(self.mapToGlobal(point))
         return True
 
+    def has_children(self, idx):
+        return self.model().rowCount(idx) > 0
+
+    def collapse_node_and_children(self, idx):
+        self.collapse(idx)
+        for r in range(self.model().rowCount(idx)):
+            self.collapse_node_and_children(idx.child(r, 0))
+
     def collapse_node(self, idx):
-        def collapse_node_and_children(idx):
-            self.collapse(idx)
-            for r in range(self.model().rowCount(idx)):
-                collapse_node_and_children(idx.child(r, 0))
-        collapse_node_and_children(idx)
+        if not idx.isValid():
+            return
+        self.collapse_node_and_children(idx)
         self.setCurrentIndex(idx)
         self.scrollTo(idx)
 
-    def expand_node_and_descendants(self, index):
+    def expand_node_and_children(self, index):
         if not index.isValid():
             return
         self.expand(index)
         for r in range(self.model().rowCount(index)):
-            self.expand_node_and_descendants(index.child(r, 0))
+            self.expand_node_and_children(index.child(r, 0))
+
+    def has_unexpanded_children(self, index):
+        if not index.isValid():
+            return False
+        for r in range(self._model.rowCount(index)):
+            dex = index.child(r, 0)
+            if self._model.rowCount(dex) > 0:
+                if not self.isExpanded(dex):
+                    return True
+                return self.has_unexpanded_children(dex)
+        return False
 
     def collapse_menu_hovered(self, action):
         tip = action.toolTip()

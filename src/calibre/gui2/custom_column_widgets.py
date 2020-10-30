@@ -9,15 +9,15 @@ __docformat__ = 'restructuredtext en'
 import os
 from functools import partial
 
-from PyQt5.Qt import (QComboBox, QLabel, QSpinBox, QDoubleSpinBox,
+from PyQt5.Qt import (Qt, QComboBox, QLabel, QSpinBox, QDoubleSpinBox,
         QDateTime, QGroupBox, QVBoxLayout, QSizePolicy, QGridLayout, QUrl,
         QSpacerItem, QIcon, QCheckBox, QWidget, QHBoxLayout, QLineEdit,
-        QPushButton, QMessageBox, QToolButton, QPlainTextEdit)
+        QMessageBox, QToolButton, QPlainTextEdit)
 
 from calibre.utils.date import qt_to_dt, now, as_local_time, as_utc, internal_iso_format_string
 from calibre.gui2.complete2 import EditWithComplete
 from calibre.gui2.comments_editor import Editor as CommentsEditor
-from calibre.gui2 import UNDEFINED_QDATETIME, error_dialog
+from calibre.gui2 import UNDEFINED_QDATETIME, error_dialog, elided_text
 from calibre.gui2.dialogs.tag_editor import TagEditor
 from calibre.utils.config import tweaks
 from calibre.utils.icu import sort_key
@@ -44,6 +44,14 @@ def label_string(txt):
     return txt
 
 
+def get_tooltip(col_metadata, add_index=False):
+    key = col_metadata['label'] + ('_index' if add_index else '')
+    label = col_metadata['name'] + (_(' index') if add_index else '')
+    description = col_metadata.get('display', {}).get('description', '')
+    return '{0} (#{1}){2} {3}'.format(
+                  label, key, ':' if description else '', description).strip()
+
+
 class Base(object):
 
     def __init__(self, db, col_id, parent=None):
@@ -52,18 +60,13 @@ class Base(object):
         self.initial_val = self.widgets = None
         self.signals_to_disconnect = []
         self.setup_ui(parent)
-        key = db.field_metadata.label_to_key(self.col_metadata['label'],
-                                                       prefer_custom=True)
-        description = self.col_metadata.get('display', {}).get('description', '')
-        if description:
-            description = key + ': ' + description
-        else:
-            description = key
+        description = get_tooltip(self.col_metadata)
         try:
+            self.widgets[0].setToolTip(description)
             self.widgets[1].setToolTip(description)
         except:
             try:
-                self.widgets[0].setToolTip(description)
+                self.widgets[1].setToolTip(description)
             except:
                 pass
 
@@ -111,7 +114,7 @@ class Base(object):
 class SimpleText(Base):
 
     def setup_ui(self, parent):
-        self.widgets = [QLabel(label_string(self.col_metadata['name'])+':', parent),
+        self.widgets = [QLabel(label_string(self.col_metadata['name']), parent),
                         QLineEdit(parent)]
 
     def setter(self, val):
@@ -151,7 +154,7 @@ class LongText(Base):
 class Bool(Base):
 
     def setup_ui(self, parent):
-        self.widgets = [QLabel(label_string(self.col_metadata['name'])+':', parent)]
+        self.widgets = [QLabel(label_string(self.col_metadata['name']), parent)]
         w = QWidget(parent)
         self.widgets.append(w)
 
@@ -161,31 +164,21 @@ class Bool(Base):
         self.combobox = QComboBox(parent)
         l.addWidget(self.combobox)
 
-        t = _('Yes')
-        c = QPushButton(t, parent)
-        width = c.fontMetrics().boundingRect(t).width() + 7
-        c.setMaximumWidth(width)
+        c = QToolButton(parent)
+        c.setText(_('Yes'))
         l.addWidget(c)
         c.clicked.connect(self.set_to_yes)
 
-        t = _('No')
-        c = QPushButton(t, parent)
-        width = c.fontMetrics().boundingRect(t).width() + 7
-        c.setMaximumWidth(width)
+        c = QToolButton(parent)
+        c.setText(_('No'))
         l.addWidget(c)
         c.clicked.connect(self.set_to_no)
 
         if self.db.new_api.pref('bools_are_tristate'):
-            t = _('Clear')
-            c = QPushButton(t, parent)
-            width = c.fontMetrics().boundingRect(t).width() + 7
-            c.setMaximumWidth(width)
+            c = QToolButton(parent)
+            c.setText(_('Clear'))
             l.addWidget(c)
             c.clicked.connect(self.set_to_cleared)
-
-        c = QLabel('', parent)
-        c.setMaximumWidth(1)
-        l.addWidget(c, 1)
 
         w = self.combobox
         items = [_('Yes'), _('No'), _('Undefined')]
@@ -224,7 +217,7 @@ class Int(Base):
 
     def setup_ui(self, parent):
         self.was_none = False
-        self.widgets = [QLabel(label_string(self.col_metadata['name'])+':', parent),
+        self.widgets = [QLabel(label_string(self.col_metadata['name']), parent),
                 ClearingSpinBox(parent)]
         w = self.widgets[1]
         w.setRange(-1000000, 100000000)
@@ -257,7 +250,7 @@ class Int(Base):
 class Float(Int):
 
     def setup_ui(self, parent):
-        self.widgets = [QLabel(label_string(self.col_metadata['name'])+':', parent),
+        self.widgets = [QLabel(label_string(self.col_metadata['name']), parent),
                 ClearingDoubleSpinBox(parent)]
         w = self.widgets[1]
         w.setRange(-1000000., float(100000000))
@@ -272,7 +265,7 @@ class Rating(Base):
 
     def setup_ui(self, parent):
         allow_half_stars = self.col_metadata['display'].get('allow_half_stars', False)
-        self.widgets = [QLabel(label_string(self.col_metadata['name'])+':', parent),
+        self.widgets = [QLabel(label_string(self.col_metadata['name']), parent),
                         RatingEditor(parent=parent, is_half_star=allow_half_stars)]
 
     def setter(self, val):
@@ -309,7 +302,7 @@ class DateTime(Base):
 
     def setup_ui(self, parent):
         cm = self.col_metadata
-        self.widgets = [QLabel(label_string(cm['name'])+':', parent)]
+        self.widgets = [QLabel(label_string(cm['name']), parent)]
         w = QWidget(parent)
         self.widgets.append(w)
         l = QHBoxLayout()
@@ -326,15 +319,16 @@ class DateTime(Base):
         dte.setMinimumDateTime(UNDEFINED_QDATETIME)
         dte.setSpecialValueText(_('Undefined'))
         l.addWidget(dte)
+
         self.today_button = QToolButton(parent)
         self.today_button.setText(_('Today'))
         self.today_button.clicked.connect(dte.set_to_today)
         l.addWidget(self.today_button)
+
         self.clear_button = QToolButton(parent)
         self.clear_button.setIcon(QIcon(I('trash.png')))
         self.clear_button.clicked.connect(dte.set_to_clear)
         l.addWidget(self.clear_button)
-        l.addStretch(1)
 
     def setter(self, val):
         if val is None:
@@ -487,7 +481,7 @@ class Text(Base):
             w.set_separator(None)
             w.setSizeAdjustPolicy(w.AdjustToMinimumContentsLengthWithIcon)
             w.setMinimumContentsLength(25)
-        self.widgets = [QLabel(label_string(self.col_metadata['name'])+':', parent), w]
+        self.widgets = [QLabel(label_string(self.col_metadata['name']), parent), w]
 
     def initialize(self, book_id):
         values = list(self.db.all_custom(num=self.col_id))
@@ -560,15 +554,18 @@ class Series(Base):
         w.setSizeAdjustPolicy(w.AdjustToMinimumContentsLengthWithIcon)
         w.setMinimumContentsLength(25)
         self.name_widget = w
-        self.widgets = [QLabel(label_string(self.col_metadata['name'])+':', parent), w]
+        self.widgets = [QLabel(label_string(self.col_metadata['name']), parent), w]
         w.editTextChanged.connect(self.series_changed)
 
-        self.widgets.append(QLabel(label_string(self.col_metadata['name'])+_(' index:'), parent))
+        w = QLabel(label_string(self.col_metadata['name'])+_(' index'), parent)
+        w.setToolTip(get_tooltip(self.col_metadata, add_index=True))
+        self.widgets.append(w)
         w = QDoubleSpinBox(parent)
         w.setRange(-10000., float(100000000))
         w.setDecimals(2)
         w.setSingleStep(1)
         self.idx_widget=w
+        w.setToolTip(get_tooltip(self.col_metadata, add_index=True))
         self.widgets.append(w)
 
     def initialize(self, book_id):
@@ -634,7 +631,7 @@ class Enumeration(Base):
 
     def setup_ui(self, parent):
         self.parent = parent
-        self.widgets = [QLabel(label_string(self.col_metadata['name'])+':', parent),
+        self.widgets = [QLabel(label_string(self.col_metadata['name']), parent),
                 QComboBox(parent)]
         w = self.widgets[1]
         vals = self.col_metadata['display']['enum_values']
@@ -755,10 +752,13 @@ def populate_metadata_page(layout, db, book_id, bulk=False, two_column=False, pa
         turnover_point = count + 1000
     ans = []
     column = row = base_row = max_row = 0
-    minimum_label = 0
+    label_width = 0
+    do_elision = tweaks['metadata_edit_elide_labels']
+    elide_pos = tweaks['metadata_edit_elision_point']
+    elide_pos = elide_pos if elide_pos in {'left', 'middle', 'right'} else 'right'
     for key in cols:
         if not fm[key]['is_editable']:
-            continue  # this almost never happens
+            continue  # The job spy plugin can change is_editable
         dt = fm[key]['datatype']
         if dt == 'composite' or (bulk and dt == 'comments'):
             continue
@@ -790,33 +790,33 @@ def populate_metadata_page(layout, db, book_id, bulk=False, two_column=False, pa
             row += 1
         for c in range(0, len(w.widgets), 2):
             if not is_comments:
-                w.widgets[c].setWordWrap(True)
-                '''
-                It seems that there is something strange with wordwrapped labels
-                with some fonts. Apparently one part of QT thinks it is showing
-                a single line and sizes the line vertically accordingly. Another
-                part thinks there isn't enough space and wraps the label. The
-                result is two lines in a single line space, cutting off parts of
-                the lines. It doesn't happen with every font, nor with every
-                "long" label.
-
-                This change works around the problem by setting the maximum
-                display width and telling QT to respect that width.
-
-                While here I implemented an arbitrary minimum label length so
-                that there is a better chance that the field edit boxes line up.
-                '''
-                if minimum_label == 0:
-                    minimum_label = w.widgets[c].fontMetrics().boundingRect('smallLabel').width()
-                label_width = w.widgets[c].fontMetrics().boundingRect(w.widgets[c].text()).width()
+                # Set the label column width to a fixed size. Elide labels that
+                # don't fit
+                wij = w.widgets[c]
+                if label_width == 0:
+                    font_metrics = wij.fontMetrics()
+                    colon_width = font_metrics.width(':')
+                    if bulk:
+                        label_width = (font_metrics.averageCharWidth() *
+                               tweaks['metadata_edit_bulk_cc_label_length']) - colon_width
+                    else:
+                        label_width = (font_metrics.averageCharWidth() *
+                               tweaks['metadata_edit_single_cc_label_length']) - colon_width
+                wij.setMaximumWidth(label_width)
                 if c == 0:
-                    w.widgets[0].setMaximumWidth(label_width)
-                    w.widgets[0].setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Preferred)
-                    l.setColumnMinimumWidth(0, minimum_label)
-                else:
-                    w.widgets[0].setMaximumWidth(max(w.widgets[0].maximumWidth(), label_width))
-                w.widgets[c].setBuddy(w.widgets[c+1])
-                l.addWidget(w.widgets[c], c, 0)
+                    wij.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Preferred)
+                    l.setColumnMinimumWidth(0, label_width)
+                wij.setAlignment(Qt.AlignRight|Qt.AlignVCenter)
+                t = unicode_type(wij.text())
+                if t:
+                    if do_elision:
+                        wij.setText(elided_text(t, font=font_metrics,
+                                            width=label_width, pos=elide_pos) + ':')
+                    else:
+                        wij.setText(t + ':')
+                        wij.setWordWrap(True)
+                wij.setBuddy(w.widgets[c+1])
+                l.addWidget(wij, c, 0)
                 l.addWidget(w.widgets[c+1], c, 1)
             else:
                 l.addWidget(w.widgets[0], 0, 0, 1, 2)
@@ -872,10 +872,9 @@ class BulkBase(Base):
         val = self.normalize_ui_val(val)
         self.db.set_custom_bulk(book_ids, val, num=self.col_id, notify=notify)
 
-    def make_widgets(self, parent, main_widget_class, extra_label_text='',
-                     add_tags_edit_button=False):
+    def make_widgets(self, parent, main_widget_class, add_tags_edit_button=False):
         w = QWidget(parent)
-        self.widgets = [QLabel(label_string(self.col_metadata['name'])+':', w), w]
+        self.widgets = [QLabel(label_string(self.col_metadata['name']), w), w]
         l = QHBoxLayout()
         l.setContentsMargins(0, 0, 0, 0)
         w.setLayout(l)
@@ -1295,9 +1294,7 @@ class BulkText(BulkBase):
         values.sort(key=sort_key)
         if self.col_metadata['is_multiple']:
             is_tags = not self.col_metadata['display'].get('is_names', False)
-            self.make_widgets(parent, EditWithComplete,
-                              extra_label_text=_('tags to add'),
-                              add_tags_edit_button=is_tags)
+            self.make_widgets(parent, EditWithComplete, add_tags_edit_button=is_tags)
             self.main_widget.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Preferred)
             self.adding_widget = self.main_widget
 
@@ -1305,8 +1302,12 @@ class BulkText(BulkBase):
                 self.edit_tags_button.clicked.connect(self.edit_add)
                 w = RemoveTags(parent, values)
                 w.remove_tags_button.clicked.connect(self.edit_remove)
-                self.widgets.append(QLabel(label_string(self.col_metadata['name'])+': ' +
-                                           _('tags to remove'), parent))
+                l = QLabel(label_string(self.col_metadata['name'])+': ' +
+                                           _('tags to remove'), parent)
+                tt = get_tooltip(self.col_metadata) + ': ' + _('tags to remove')
+                l.setToolTip(tt)
+                self.widgets.append(l)
+                w.setToolTip(tt)
                 self.widgets.append(w)
                 self.removing_widget = w
                 self.main_widget.set_separator(',')
