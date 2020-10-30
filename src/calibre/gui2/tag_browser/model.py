@@ -6,24 +6,29 @@ __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import traceback, copy, os
+import copy
+import os
+import traceback
 from collections import OrderedDict, namedtuple
-
-from PyQt5.Qt import (QAbstractItemModel, QIcon, QFont, Qt,
-        QMimeData, QModelIndex, pyqtSignal, QObject)
+from PyQt5.Qt import (
+    QAbstractItemModel, QFont, QIcon, QMimeData, QModelIndex, QObject, Qt,
+    pyqtSignal
+)
 
 from calibre.constants import config_dir
-from calibre.ebooks.metadata import rating_to_stars
-from calibre.gui2 import gprefs, config, error_dialog, file_icon_provider
 from calibre.db.categories import Tag
-from calibre.utils.config import tweaks, prefs
-from calibre.utils.icu import sort_key, lower, strcmp, collation_order, primary_strcmp, primary_contains, contains
-from calibre.library.field_metadata import category_icon_map
+from calibre.ebooks.metadata import rating_to_stars
+from calibre.gui2 import config, error_dialog, file_icon_provider, gprefs
 from calibre.gui2.dialogs.confirm_delete import confirm
+from calibre.library.field_metadata import category_icon_map
+from calibre.utils.config import prefs, tweaks
 from calibre.utils.formatter import EvalFormatter
+from calibre.utils.icu import (
+    collation_order, contains, lower, primary_contains, primary_strcmp, sort_key,
+    strcmp
+)
 from calibre.utils.serialize import json_dumps, json_loads
 from polyglot.builtins import iteritems, itervalues, map, range, unicode_type
-
 
 TAG_SEARCH_STATES = {'clear': 0, 'mark_plus': 1, 'mark_plusplus': 2,
                      'mark_minus': 3, 'mark_minusminus': 4}
@@ -302,6 +307,7 @@ class TagsModel(QAbstractItemModel):  # {{{
     drag_drop_finished = pyqtSignal(object)
     user_categories_edited = pyqtSignal(object, object)
     user_category_added = pyqtSignal()
+    show_error_after_event_loop_tick_signal = pyqtSignal(object, object, object)
 
     def __init__(self, parent, prefs=gprefs):
         QAbstractItemModel.__init__(self, parent)
@@ -327,6 +333,7 @@ class TagsModel(QAbstractItemModel):  # {{{
         self.db = None
         self._build_in_progress = False
         self.reread_collapse_model({}, rebuild=False)
+        self.show_error_after_event_loop_tick_signal.connect(self.on_show_error_after_event_loop_tick, type=Qt.QueuedConnection)
 
     @property
     def gui_parent(self):
@@ -1193,16 +1200,14 @@ class TagsModel(QAbstractItemModel):  # {{{
         # we position at the parent label
         val = unicode_type(value or '').strip()
         if not val:
-            error_dialog(self.gui_parent, _('Item is blank'),
-                        _('An item cannot be set to nothing. Delete it instead.')).exec_()
-            return False
+            return self.show_error_after_event_loop_tick(_('Item is blank'),
+                        _('An item cannot be set to nothing. Delete it instead.'))
         item = self.get_node(index)
         if item.type == TagTreeItem.CATEGORY and item.category_key.startswith('@'):
             if val.find('.') >= 0:
-                error_dialog(self.gui_parent, _('Rename User category'),
+                return self.show_error_after_event_loop_tick(_('Rename User category'),
                     _('You cannot use periods in the name when '
-                      'renaming User categories'), show=True)
-                return False
+                      'renaming User categories'))
 
             user_cats = self.db.new_api.pref('user_categories', {})
             user_cat_keys_lower = [icu_lower(k) for k in user_cats]
@@ -1224,18 +1229,16 @@ class TagsModel(QAbstractItemModel):  # {{{
                     if len(c) == len(ckey):
                         if strcmp(ckey, nkey) != 0 and \
                                 nkey_lower in user_cat_keys_lower:
-                            error_dialog(self.gui_parent, _('Rename User category'),
-                                _('The name %s is already used')%nkey, show=True)
-                            return False
+                            return self.show_error_after_event_loop_tick(_('Rename User category'),
+                                _('The name %s is already used')%nkey)
                         user_cats[nkey] = user_cats[ckey]
                         del user_cats[ckey]
                     elif c[len(ckey)] == '.':
                         rest = c[len(ckey):]
                         if strcmp(ckey, nkey) != 0 and \
                                     icu_lower(nkey + rest) in user_cat_keys_lower:
-                            error_dialog(self.gui_parent, _('Rename User category'),
-                                _('The name %s is already used')%(nkey+rest), show=True)
-                            return False
+                            return self.show_error_after_event_loop_tick(_('Rename User category'),
+                                _('The name %s is already used')%(nkey+rest))
                         user_cats[nkey + rest] = user_cats[ckey + rest]
                         del user_cats[ckey + rest]
             self.user_categories_edited.emit(user_cats, nkey)  # Does a refresh
@@ -1248,14 +1251,13 @@ class TagsModel(QAbstractItemModel):  # {{{
             return False
         if key == 'authors':
             if val.find('&') >= 0:
-                error_dialog(self.gui_parent, _('Invalid author name'),
-                        _('Author names cannot contain & characters.')).exec_()
+                return self.show_error_after_event_loop_tick(_('Invalid author name'),
+                        _('Author names cannot contain & characters.'))
                 return False
         if key == 'search':
             if val in self.db.saved_search_names():
-                error_dialog(self.gui_parent, _('Duplicate search name'),
-                    _('The saved search name %s is already used.')%val).exec_()
-                return False
+                return self.show_error_after_event_loop_tick(
+                    _('Duplicate search name'), _('The saved search name %s is already used.')%val)
             self.use_position_based_index_on_next_recount = True
             self.db.saved_search_rename(unicode_type(item.data(role) or ''), val)
             item.tag.name = val
@@ -1263,6 +1265,13 @@ class TagsModel(QAbstractItemModel):  # {{{
         else:
             self.rename_item(item, key, val)
         return True
+
+    def show_error_after_event_loop_tick(self, title, msg, det_msg=''):
+        self.show_error_after_event_loop_tick_signal.emit(title, msg, det_msg)
+        return False
+
+    def on_show_error_after_event_loop_tick(self, title, msg, details):
+        error_dialog(self.gui_parent, title, msg, det_msg=details, show=True)
 
     def rename_item(self, item, key, to_what):
         def do_one_item(lookup_key, an_item, original_name, new_name, restrict_to_books):

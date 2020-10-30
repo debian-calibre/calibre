@@ -1230,8 +1230,8 @@ class PlainTextEdit(QPlainTextEdit):  # {{{
             return True
 
     def windows_ignore_altgr_shortcut(self, ev):
-        import win32api, win32con
-        s = win32api.GetAsyncKeyState(win32con.VK_RMENU) & 0xffff  # VK_RMENU == R_ALT
+        from calibre_extensions import winutil
+        s = winutil.get_async_key_state(winutil.VK_RMENU)  # VK_RMENU == R_ALT
         return s & 0x8000
 
     def event(self, ev):
