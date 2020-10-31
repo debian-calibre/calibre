@@ -6,3 +6,17 @@ calibre binary: repeated-path-segment calibre usr/lib/calibre/calibre/
 # Language string "ms" is confrict with /usr/share/groff/current/tmac/ms.tmac
 # and other "ms" macros
 calibre binary: groff-message usr/share/man/ms/man1/*
+
+# Calibre specific symbols font
+calibre binary: font-outside-font-dir usr/share/calibre/fonts/calibreSymbols.otf
+
+# Used in each programs
+calibre binary: package-contains-documentation-outside-usr-share-doc usr/share/calibre/content-server/empty.html
+calibre binary: package-contains-documentation-outside-usr-share-doc usr/share/calibre/content-server/index-generated.html
+calibre binary: package-contains-documentation-outside-usr-share-doc usr/share/calibre/content-server/index.html
+calibre binary: package-contains-documentation-outside-usr-share-doc usr/share/calibre/localization/website-languages.txt
+calibre binary: package-contains-documentation-outside-usr-share-doc usr/share/calibre/viewer.html
+
+# Temporary fix: Use embeded MathJax v3 font until Debian releases MathJax v3
+calibre binary: font-in-non-font-package usr/share/calibre/mathjax/output/chtml/fonts/woff-v2/*
+calibre binary: font-outside-font-dir usr/share/calibre/mathjax/output/chtml/fonts/woff-v2/*
