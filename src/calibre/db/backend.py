@@ -1948,6 +1948,11 @@ class DB(object):
                 self.execute('DELETE FROM annotations_dirtied')
         return changed
 
+    def annotation_count_for_book(self, book_id):
+        for (count,) in self.execute('SELECT count(id) FROM annotations WHERE book=?', (book_id,)):
+            return count
+        return 0
+
     def conversion_options(self, book_id, fmt):
         for (data,) in self.conn.get('SELECT data FROM conversion_options WHERE book=? AND format=?', (book_id, fmt.upper())):
             if data:

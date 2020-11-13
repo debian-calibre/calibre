@@ -23686,9 +23686,14 @@ return this.__repr__();
         });
 
         function keyevent_as_shortcut(evt) {
+            var key;
+            key = evt.key;
+            if (capital_letters[(typeof key === "number" && key < 0) ? capital_letters.length + key : key] && evt.shiftKey) {
+                key = key.toLowerCase();
+            }
             return (function(){
                 var ρσ_d = Object.create(null);
-                ρσ_d["key"] = evt.key;
+                ρσ_d["key"] = key;
                 ρσ_d["altKey"] = evt.altKey;
                 ρσ_d["ctrlKey"] = evt.ctrlKey;
                 ρσ_d["metaKey"] = evt.metaKey;
@@ -23800,7 +23805,7 @@ return this.__repr__();
                     ρσ_d["back"] = desc(['Alt+ArrowLeft', 'Shift+ArrowLeft'], "scroll", _("Back"));
                     ρσ_d["forward"] = desc(['Alt+ArrowRight', 'Shift+ArrowRight'], "scroll", _("Forward"));
                     ρσ_d["toggle_toc"] = desc("Ctrl+t", "ui", _("Show/hide Table of Contents"));
-                    ρσ_d["copy_to_clipboard"] = desc("Ctrl+c", "ui", _("Copy to clipboard"));
+                    ρσ_d["copy_to_clipboard"] = desc(['Ctrl+c', 'Meta+c'], "ui", _("Copy to clipboard"));
                     ρσ_d["start_search"] = desc(['/', 'Ctrl+f'], "ui", _("Start search"));
                     ρσ_d["next_match"] = desc(['F3', 'Enter'], "ui", _("Find next"));
                     ρσ_d["previous_match"] = desc(['Shift+F3'], "ui", _("Find previous"));
@@ -23809,7 +23814,7 @@ return this.__repr__();
                     ρσ_d["increase_number_of_columns"] = desc(['Ctrl+]'], "ui", _("Increase number of pages per screen"));
                     ρσ_d["decrease_number_of_columns"] = desc(['Ctrl+['], "ui", _("Decrease number of pages per screen"));
                     ρσ_d["reset_number_of_columns"] = desc(['Ctrl+Alt+c'], "ui", _("Make number of pages per screen automatic"));
-                    ρσ_d["toggle_full_screen"] = desc(['F11', 'Ctrl+Shift+F'], "ui", _("Toggle full screen"));
+                    ρσ_d["toggle_full_screen"] = desc(['F11', 'Ctrl+Shift+f'], "ui", _("Toggle full screen"));
                     ρσ_d["toggle_paged_mode"] = desc("Ctrl+m", "ui", _("Toggle between Paged mode and Flow mode for text layout"));
                     ρσ_d["toggle_scrollbar"] = desc("Ctrl+w", "ui", _("Toggle the scrollbar"));
                     ρσ_d["toggle_reference_mode"] = desc("Ctrl+x", "ui", _("Toggle the Reference mode"));
@@ -25133,7 +25138,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.4.2";
+        CALIBRE_VERSION = "5.5.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -26082,6 +26087,9 @@ return this.__repr__();
             cancel_drag_scroll();
             drag_mouse_position.x = drag_mouse_position.y = null;
             self.onselectionchange();
+            if (evt.button === 3 || evt.button === 4) {
+                ρσ_interpolate_kwargs.call(self, self.send_message, ["handle_shortcut"].concat([ρσ_desugar_kwargs({name: (evt.button === 3) ? "back" : "forward"})]));
+            }
         };
         if (!IframeBoss.prototype.onmouseup.__argnames__) Object.defineProperties(IframeBoss.prototype.onmouseup, {
             __argnames__ : {value: ["evt"]},
@@ -27625,6 +27633,8 @@ return this.__repr__();
 
         var _ = ρσ_modules.gettext.gettext;
 
+        var encode_query_component = ρσ_modules.ajax.encode_query_component;
+
         var build_list = ρσ_modules["book_list.item_list"].build_list;
         var create_item = ρσ_modules["book_list.item_list"].create_item;
 
@@ -27757,19 +27767,20 @@ return this.__repr__();
             __module__ : {value: "read_book.goto"}
         });
 
-        function create_location_overlay(current_position_data, overlay, container) {
-            var container_id, current_cfi;
+        function create_location_overlay(current_position_data, book, overlay, container) {
+            var container_id, current_cfi, calibre_book_url;
             container_id = ensure_id(container);
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin: 0 1rem"})]));
             container = container.lastChild;
             current_cfi = current_position_data.cfi;
-            if (current_cfi) {
-                container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [_("Current location: {}").format(current_cfi)].concat([ρσ_desugar_kwargs({style: "flex-grow: 10; text-overflow: ellipsis; margin-bottom: 1ex"})])), ρσ_interpolate_kwargs.call(this, create_button, [_("Copy")].concat([ρσ_desugar_kwargs({action: (function() {
+            calibre_book_url = (typeof book !== "undefined" && book !== null ? book : Object.create(null)).calibre_book_url;
+            function copy_button(text_to_copy) {
+                return ρσ_interpolate_kwargs.call(this, create_button, [_("Copy")].concat([ρσ_desugar_kwargs({action: (function() {
                     var ρσ_anonfunc = function () {
                         var src, orig;
                         src = document.querySelector("#" + ρσ_str.format("{}", container_id) + " input");
                         orig = src.value;
-                        src.value = current_cfi;
+                        src.value = text_to_copy;
                         src.focus();
                         src.select();
                         try {
@@ -27782,7 +27793,23 @@ return this.__repr__();
                         __module__ : {value: "read_book.goto"}
                     });
                     return ρσ_anonfunc;
-                })()})]))].concat([ρσ_desugar_kwargs({style: "margin: 1rem; margin-bottom: calc(1rem - 1ex); display: flex; align-items: baseline; flex-wrap: wrap"})])));
+                })()})]));
+            };
+            if (!copy_button.__argnames__) Object.defineProperties(copy_button, {
+                __argnames__ : {value: ["text_to_copy"]},
+                __module__ : {value: "read_book.goto"}
+            });
+
+            function display_and_copy(label, text) {
+                container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [label, " ", ρσ_interpolate_kwargs.call(E, E.span, [text].concat([ρσ_desugar_kwargs({style: "font-size: smaller; font-family: monospace"})]))].concat([ρσ_desugar_kwargs({style: "flex-grow: 10; text-overflow: ellipsis; margin-bottom: 1ex"})])), copy_button(text)].concat([ρσ_desugar_kwargs({style: "margin: 1rem; margin-bottom: calc(1rem - 1ex); display: flex; align-items: baseline; flex-wrap: wrap"})])));
+            };
+            if (!display_and_copy.__argnames__) Object.defineProperties(display_and_copy, {
+                __argnames__ : {value: ["label", "text"]},
+                __module__ : {value: "read_book.goto"}
+            });
+
+            if (current_cfi) {
+                display_and_copy(_("Current location:"), current_cfi);
             }
             function goto_cfi(cfi) {
                 if (ui_operations.goto_cfi(cfi)) {
@@ -27854,10 +27881,18 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })()})]), E.span(" "), ρσ_interpolate_kwargs.call(this, create_button, [_("Go")].concat([ρσ_desugar_kwargs({action: goto_pos})]))].concat([ρσ_desugar_kwargs({style: "display: flex; align-items: baseline; flex-wrap: wrap"})]))].concat([ρσ_desugar_kwargs({style: "margin: 1rem;"})])));
+            if (calibre_book_url) {
+                if (current_cfi) {
+                    calibre_book_url += "?open_at=" + encode_query_component(current_cfi);
+                }
+                display_and_copy(_("URL for this position:"), calibre_book_url);
+            } else if (!runtime.is_standalone_viewer) {
+                display_and_copy(_("URL for this position:"), window.top.location.toString());
+            }
             container.querySelector("[name=newpos]").focus();
         };
         if (!create_location_overlay.__argnames__) Object.defineProperties(create_location_overlay, {
-            __argnames__ : {value: ["current_position_data", "overlay", "container"]},
+            __argnames__ : {value: ["current_position_data", "book", "overlay", "container"]},
             __module__ : {value: "read_book.goto"}
         });
 
@@ -32997,8 +33032,9 @@ return this.__repr__();
         });
 
         function render_book(container_id, book_id) {
-            var c, metadata, authors, alt, border_radius, button_style, imgdiv, img, container, read_button, fmt, download_button, row, md, table;
+            var is_random, c, metadata, authors, alt, border_radius, button_style, imgdiv, img, container, read_button, fmt, download_button, row, md, table;
             render_book.book_id = book_id;
+            is_random = parse_url_params().book_id === "0";
             c = document.getElementById(container_id);
             if (!c) {
                 return;
@@ -33012,6 +33048,9 @@ return this.__repr__();
             button_style = "cursor: pointer; border-radius: " + ρσ_str.format("{}", Math.floor(border_radius / 5)) + "px;";
             button_style += "color: #ccc; background-color:rgba(0, 0, 0, 0.75);";
             button_style += "display: flex; justify-content: center; align-items: center; padding: 2px;";
+            if (is_random) {
+                button_style += "display: none;";
+            }
             function prev_next_button(is_prev) {
                 return ρσ_interpolate_kwargs.call(E, E.div, [svgicon((is_prev) ? "chevron-left" : "chevron-right")].concat([ρσ_desugar_kwargs({style: button_style, title: (is_prev) ? _("Previous book") : _("Next book"), class_: "next-book-button", onclick: next_book.bind(null, book_id, (is_prev) ? -1 : 1)})]));
             };
@@ -39764,7 +39803,7 @@ return this.__repr__();
         Overlay.prototype.show_ask_for_location = function show_ask_for_location() {
             var self = this;
             self.hide_current_panel();
-            self.panels.push(new SimpleOverlay(self, create_location_overlay.bind(null, self.view.current_position_data), _("Go to location, position or reference…")));
+            self.panels.push(new SimpleOverlay(self, create_location_overlay.bind(null, self.view.current_position_data, self.view.book), _("Go to location, position or reference…")));
             self.show_current_panel();
         };
         if (!Overlay.prototype.show_ask_for_location.__module__) Object.defineProperties(Overlay.prototype.show_ask_for_location, {

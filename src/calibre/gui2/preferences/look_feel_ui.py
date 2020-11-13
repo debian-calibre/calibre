@@ -441,6 +441,11 @@ class Ui_Form(object):
         self.opt_tag_browser_allow_keyboard_focus = QtWidgets.QCheckBox(self.tag_browser_tab)
         self.opt_tag_browser_allow_keyboard_focus.setObjectName("opt_tag_browser_allow_keyboard_focus")
         self.formLayout.setWidget(14, QtWidgets.QFormLayout.SpanningRole, self.opt_tag_browser_allow_keyboard_focus)
+        self.tb_focus_label = QtWidgets.QLabel(self.tag_browser_tab)
+        self.tb_focus_label.setStyleSheet("margin-left: 1.5em")
+        self.tb_focus_label.setWordWrap(True)
+        self.tb_focus_label.setObjectName("tb_focus_label")
+        self.formLayout.setWidget(15, QtWidgets.QFormLayout.SpanningRole, self.tb_focus_label)
         icon7 = QtGui.QIcon()
         icon7.addPixmap(QtGui.QPixmap(I("tags.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.tabWidget.addTab(self.tag_browser_tab, icon7, "")
@@ -566,6 +571,7 @@ class Ui_Form(object):
         self.tabWidget.setCurrentIndex(0)
         self.cover_grid_tab.setCurrentIndex(0)
         self.opt_cover_grid_show_title.toggled['bool'].connect(self.opt_field_under_covers_in_grid.setEnabled)
+        self.opt_tag_browser_allow_keyboard_focus.toggled['bool'].connect(self.tb_focus_label.setVisible)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
@@ -704,12 +710,13 @@ class Ui_Form(object):
 " that match the search instead of the first one. If Hide empty categories is\n"
 " also checked then only categories containing a matched item will be shown."))
         self.opt_tag_browser_always_autocollapse.setText(_("Find &shows all items that match"))
-        self.opt_tag_browser_allow_keyboard_focus.setText(_("Allow the Tag browser to have keyboard focus (needs restart)"))
         self.opt_tag_browser_allow_keyboard_focus.setToolTip(_("<p>When checked, the Tag browser can get keyboard focus, allowing\n"
 "use of the keyboard to navigate the tree using the arrow keys. The RETURN key simulates\n"
 "a click on the selected item. The keyboard shortcut \'Tag browser /\n"
 "Give the Tag browser keyboard focus\' changes the keyboard focus without\n"
 "using the mouse.</p>"))
+        self.opt_tag_browser_allow_keyboard_focus.setText(_("Allow the Tag browser to have keyboard focus"))
+        self.tb_focus_label.setText(_("<p style=\"text-indent: 2em; font-size:smaller\">If you enable this option then you should set a keyboard shortcut to focus the Tag browser under <code>Preferences-&gt;Shortcuts-&gt;Tag browser-&gt;Give the Tag browser keyboard focus</code>"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tag_browser_tab), _("&Tag browser"))
         self.opt_cover_browser_title_template.setToolTip(_("The template used to generate the text below the covers. Uses the same syntax as save templates. Defaults to just the book title. Note that this setting is per-library, which means that you have to set it again for every different calibre library you use."))
         self.label_6.setText(_("&Number of covers to show in browse mode (needs restart):"))
