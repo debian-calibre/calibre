@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE" "1" "十月 30, 2020" "5.4.2" "calibre"
+.TH "CALIBRE" "1" "十一月 13, 2020" "5.5.0" "calibre"
 .SH NAME
 calibre \- calibre
 .
@@ -35,13 +35,22 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-calibre [选项] [path_to_ebook]
+calibre [options] [path_to_ebook or calibre url ...]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-运行 \fBcalibre\fP 图形用户界面主程序，并可将 path_to_ebook 添加到书库。
+Launch the main \fBcalibre\fP Graphical User Interface and optionally add the e\-book at
+path_to_ebook to the database. You can also specify \fBcalibre\fP URLs to perform various
+different actions, than just adding books. For example:
+.sp
+\fBcalibre\fP://view\-book/test_library/1842/epub
+.sp
+Will open the book with id 1842 in the EPUB format from the library
+"test_library" in the \fBcalibre\fP viewer. Library names are the folder names of the
+libraries with spaces replaced by underscores. A full description of the
+various URL based actions is in the User Manual.
 .sp
 每当向具有它们自己空间的:command:
 .nf

@@ -6,13 +6,13 @@ __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import os, re
+import os, re, traceback
 from functools import partial
 
 from PyQt5.Qt import (
     QStyledItemDelegate, Qt, QTreeView, pyqtSignal, QSize, QIcon, QApplication,
     QMenu, QPoint, QToolTip, QCursor, QDrag, QRect, QModelIndex,
-    QLinearGradient, QPalette, QColor, QPen, QBrush, QFont
+    QLinearGradient, QPalette, QColor, QPen, QBrush, QFont, QTimer
 )
 
 from calibre import sanitize_file_name
@@ -22,7 +22,8 @@ from calibre.gui2.complete2 import EditWithComplete
 from calibre.gui2.tag_browser.model import (TagTreeItem, TAG_SEARCH_STATES,
         TagsModel, DRAG_IMAGE_ROLE, COUNT_ROLE)
 from calibre.gui2.widgets import EnLineEdit
-from calibre.gui2 import config, gprefs, choose_files, pixmap_to_data, rating_font, empty_index
+from calibre.gui2 import (config, gprefs, choose_files, pixmap_to_data,
+                          rating_font, empty_index, question_dialog)
 from calibre.utils.icu import sort_key
 from calibre.utils.serialize import json_loads
 from polyglot.builtins import unicode_type, range, zip
@@ -30,12 +31,13 @@ from polyglot.builtins import unicode_type, range, zip
 
 class TagDelegate(QStyledItemDelegate):  # {{{
 
-    def __init__(self, *args, **kwargs):
-        QStyledItemDelegate.__init__(self, *args, **kwargs)
+    def __init__(self, tags_view):
+        QStyledItemDelegate.__init__(self, tags_view)
         self.old_look = False
         self.rating_pat = re.compile(r'[%s]' % rating_to_stars(3, True))
         self.rating_font = QFont(rating_font())
         self.completion_data = None
+        self.tags_view = tags_view
 
     def draw_average_rating(self, item, style, painter, option, widget):
         rating = item.average_rating
@@ -127,6 +129,15 @@ class TagDelegate(QStyledItemDelegate):  # {{{
         self.completion_data = data
 
     def createEditor(self, parent, option, index):
+        item = self.tags_view.model().get_node(index)
+        item.use_vl = False
+        if self.tags_view.model().get_in_vl():
+            if question_dialog(self.tags_view, _('Rename in Virtual library'), '<p>' +
+                               _('Do you want this rename to apply only to books '
+                                 'in the current Virtual library?') + '</p>',
+                               yes_text=_('Yes, apply only in VL'),
+                               no_text=_('No, apply in entire library')):
+                item.use_vl = True
         if self.completion_data:
             editor = EditWithComplete(parent)
             editor.set_separator(None)
@@ -161,6 +172,7 @@ class TagsView(QTreeView):  # {{{
 
     def __init__(self, parent=None):
         QTreeView.__init__(self, parent=None)
+        self.setProperty('frame_for_focus', True)
         self.setMouseTracking(True)
         self.alter_tb = None
         self.disable_recounting = False
@@ -169,7 +181,7 @@ class TagsView(QTreeView):  # {{{
         self.setTabKeyNavigation(True)
         self.setAnimated(True)
         self.setHeaderHidden(True)
-        self.setItemDelegate(TagDelegate(self))
+        self.setItemDelegate(TagDelegate(tags_view=self))
         self.made_connections = False
         self.setAcceptDrops(True)
         self.setDragEnabled(True)
@@ -195,9 +207,7 @@ class TagsView(QTreeView):  # {{{
         self._model.user_categories_edited.connect(self.user_categories_edited,
                 type=Qt.QueuedConnection)
         self._model.drag_drop_finished.connect(self.drag_drop_finished)
-        self.set_look_and_feel()
-        if not gprefs['tag_browser_allow_keyboard_focus']:
-            self.setFocusPolicy(Qt.NoFocus)
+        self.set_look_and_feel(first=True)
         QApplication.instance().palette_changed.connect(self.set_style_sheet, type=Qt.QueuedConnection)
 
     def set_style_sheet(self):
@@ -223,10 +233,26 @@ class TagsView(QTreeView):  # {{{
         '''.replace('PAD', unicode_type(gprefs['tag_browser_item_padding'])) + (
             '' if gprefs['tag_browser_old_look'] else stylish_tb))
 
-    def set_look_and_feel(self):
+    def set_look_and_feel(self, first=False):
         self.set_style_sheet()
         self.setAlternatingRowColors(gprefs['tag_browser_old_look'])
         self.itemDelegate().old_look = gprefs['tag_browser_old_look']
+
+        if gprefs['tag_browser_allow_keyboard_focus']:
+            self.setFocusPolicy(Qt.StrongFocus)
+        else:
+            self.setFocusPolicy(Qt.NoFocus)
+        # Ensure the TB doesn't keep the focus it might already have. When this
+        # method is first called during GUI initialization not everything is
+        # set up, in which case don't try to change the focus.
+        # Note: this process has the side effect of moving the focus to the
+        # library view whenever a look & feel preference is changed.
+        if not first:
+            try:
+                from calibre.gui2.ui import get_gui
+                get_gui().shift_esc()
+            except:
+                traceback.print_exc()
 
     @property
     def hidden_categories(self):
@@ -294,10 +320,10 @@ class TagsView(QTreeView):  # {{{
         self.collapsed.connect(self.collapse_node_and_children)
 
     def keyPressEvent(self, event):
-        if event.key() == Qt.Key_Return and self.state() != self.EditingState:
-            # I don't see how it can ever not be valid, but ...
-            if self.currentIndex().isValid():
-                self.toggle_current_index()
+        if (gprefs['tag_browser_allow_keyboard_focus'] and event.key() == Qt.Key_Return and self.state() != self.EditingState and
+                # I don't see how current_index can ever be not valid, but ...
+                self.currentIndex().isValid()):
+            self.toggle_current_index()
             return
         QTreeView.keyPressEvent(self, event)
 
@@ -400,7 +426,15 @@ class TagsView(QTreeView):  # {{{
         modifiers = int(QApplication.keyboardModifiers())
         exclusive = modifiers not in (Qt.CTRL, Qt.SHIFT)
         if self._model.toggle(index, exclusive, set_to=set_to):
+            # Reset the focus back to TB if it has it before the toggle
+            # Must ask this question before starting the search because
+            # it changes the focus
+            has_focus = self.hasFocus()
             self.tags_marked.emit(self.search_string)
+            if has_focus and gprefs['tag_browser_allow_keyboard_focus']:
+                # Reset the focus to the TB. Use the singleshot in case
+                # some of searching is done using queued signals.
+                QTimer.singleShot(0, lambda: self.setFocus())
 
     def conditional_clear(self, search_string):
         if search_string != self.search_string:
@@ -430,7 +464,6 @@ class TagsView(QTreeView):  # {{{
                         self._model.set_custom_category_icon(key, unicode_type(path))
                         self.recount()
                 except:
-                    import traceback
                     traceback.print_exc()
                 return
             if action == 'clear_icon':
@@ -559,7 +592,6 @@ class TagsView(QTreeView):  # {{{
                 self._model.set_categories_filter(None)
             self._model.rebuild_node_tree()
         except Exception:
-            import traceback
             traceback.print_exc()
             return
 
@@ -602,6 +634,7 @@ class TagsView(QTreeView):  # {{{
                 m.addAction(_('All categories'),
                         partial(self.context_menu_handler, action='defaults'))
 
+        search_submenu = None
         if index.isValid():
             item = index.data(Qt.UserRole)
             tag = None
@@ -689,7 +722,7 @@ class TagsView(QTreeView):  # {{{
                         # from selected books
                         if fm['datatype'] != 'rating':
                             m = self.context_menu.addMenu(self.edit_metadata_icon,
-                                            _('Apply %s to selected books')%display_name(tag))
+                                            _('Add/remove %s to selected books')%display_name(tag))
                             m.addAction(self.plus_icon,
                                 _('Add %s to selected books') % display_name(tag),
                                 partial(self.context_menu_handler, action='add_tag', index=index))
@@ -716,21 +749,22 @@ class TagsView(QTreeView):  # {{{
                     if tag.is_searchable:
                         # Add the search for value items. All leaf nodes are searchable
                         self.context_menu.addSeparator()
-                        self.context_menu.addAction(self.search_icon,
+                        search_submenu = self.context_menu.addMenu(_('Search'))
+                        search_submenu.addAction(self.search_icon,
                                 _('Search for %s')%display_name(tag),
                                 partial(self.context_menu_handler, action='search',
                                         search_state=TAG_SEARCH_STATES['mark_plus'],
                                         index=index))
-                        self.context_menu.addAction(self.search_icon,
+                        search_submenu.addAction(self.search_icon,
                                 _('Search for everything but %s')%display_name(tag),
                                 partial(self.context_menu_handler, action='search',
                                         search_state=TAG_SEARCH_STATES['mark_minus'],
                                         index=index))
-                        self.context_menu.addAction(self.search_copy_icon,
-                                _('Search using saved search expression'),
-                                partial(self.context_menu_handler, action='raw_search',
-                                        key=tag.name))
-
+                        if key == 'search':
+                            search_submenu.addAction(self.search_copy_icon,
+                                     _('Search using saved search expression'),
+                                     partial(self.context_menu_handler, action='raw_search',
+                                             key=tag.name))
                     self.context_menu.addSeparator()
                 elif key.startswith('@') and not item.is_gst:
                     if item.can_be_edited:
@@ -747,27 +781,25 @@ class TagsView(QTreeView):  # {{{
                             partial(self.context_menu_handler,
                                     action='delete_user_category', key=key))
                     self.context_menu.addSeparator()
-                # Hide/Show/Restore categories
-                self.context_menu.addAction(_('Hide category %s') % category,
-                    partial(self.context_menu_handler, action='hide',
-                            category=key))
-                add_show_hidden_categories()
-
                 # search by category. Some categories are not searchable, such
                 # as search and news
                 if item.tag.is_searchable:
-                    self.context_menu.addAction(self.search_icon,
+                    if search_submenu is None:
+                        search_submenu = self.context_menu.addMenu(_('Search'))
+                        self.context_menu.addSeparator()
+                    search_submenu.addAction(self.search_icon,
                             _('Search for books in category %s')%category,
                             partial(self.context_menu_handler,
                                     action='search_category',
                                     index=self._model.createIndex(item.row(), 0, item),
                                     search_state=TAG_SEARCH_STATES['mark_plus']))
-                    self.context_menu.addAction(self.search_icon,
+                    search_submenu.addAction(self.search_icon,
                             _('Search for books not in category %s')%category,
                             partial(self.context_menu_handler,
                                     action='search_category',
                                     index=self._model.createIndex(item.row(), 0, item),
                                     search_state=TAG_SEARCH_STATES['mark_minus']))
+
                 # Offer specific editors for tags/series/publishers/saved searches
                 self.context_menu.addSeparator()
                 if key in ['tags', 'publisher', 'series'] or (
@@ -803,6 +835,13 @@ class TagsView(QTreeView):  # {{{
                     self.context_menu.addAction(_('Manage Saved searches'),
                         partial(self.context_menu_handler, action='manage_searches',
                                 category=tag.name if tag else None))
+
+                # Hide/Show/Restore categories
+                self.context_menu.addSeparator()
+                self.context_menu.addAction(_('Hide category %s') % category,
+                    partial(self.context_menu_handler, action='hide',
+                            category=key))
+                add_show_hidden_categories()
 
                 if tag is None:
                     self.context_menu.addSeparator()

@@ -135,7 +135,11 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
             except:
                 # Ignore errors in loading user supplied plugins
                 import traceback
-                traceback.print_exc()
+                try:
+                    traceback.print_exc()
+                except Exception:
+                    if action.plugin_path:
+                        print('Failed to load Interface Action plugin:', action.plugin_path, file=sys.stderr)
                 if action.plugin_path is None:
                     raise
                 continue
@@ -597,11 +601,129 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         self.tags_view.recount()
 
     def handle_cli_args(self, args):
+        from urllib.parse import unquote, urlparse, parse_qs
         if isinstance(args, string_or_bytes):
             args = [args]
-        files = [os.path.abspath(p) for p in args if not os.path.isdir(p) and os.access(p, os.R_OK)]
+        files, urls = [], []
+        for p in args:
+            if p.startswith('calibre://'):
+                try:
+                    purl = urlparse(p)
+                    if purl.scheme == 'calibre':
+                        action = purl.netloc
+                        path = unquote(purl.path)
+                        query = parse_qs(unquote(purl.query))
+                        urls.append((action, path, query))
+                except Exception:
+                    prints('Ignoring malformed URL:', p, file=sys.stderr)
+                    continue
+            elif p.startswith('file://'):
+                try:
+                    purl = urlparse(p)
+                    if purl.scheme == 'file':
+                        path = unquote(purl.path)
+                        a = os.path.abspath(path)
+                        if not os.path.isdir(a) and os.access(a, os.R_OK):
+                            files.append(a)
+                except Exception:
+                    prints('Ignoring malformed URL:', p, file=sys.stderr)
+                    continue
+            else:
+                a = os.path.abspath(p)
+                if not os.path.isdir(a) and os.access(a, os.R_OK):
+                    files.append(a)
         if files:
             self.iactions['Add Books'].add_filesystem_book(files)
+        if urls:
+            def doit():
+                for action, path, query in urls:
+                    self.handle_url_action(action, path, query)
+            QTimer.singleShot(10, doit)
+
+    def handle_url_action(self, action, path, query):
+        import posixpath
+
+        def decode_library_id(x):
+            if x == '_':
+                return getattr(self.current_db.new_api, 'server_library_id', None) or '_'
+            if x.startswith('_hex_-'):
+                return bytes.fromhex(x[6:]).decode('utf-8')
+            return x
+
+        if action == 'switch-library':
+            library_id = decode_library_id(posixpath.basename(path))
+            library_path = self.library_broker.path_for_library_id(library_id)
+            if library_path is not None and library_id != getattr(self.current_db.new_api, 'server_library_id', None):
+                self.library_moved(library_path)
+        elif action == 'show-book':
+            parts = tuple(filter(None, path.split('/')))
+            if len(parts) != 2:
+                return
+            library_id, book_id = parts
+            library_id = decode_library_id(library_id)
+            try:
+                book_id = int(book_id)
+            except Exception:
+                prints('Ignoring invalid book id', book_id, file=sys.stderr)
+                return
+            library_path = self.library_broker.path_for_library_id(library_id)
+            if library_path is None:
+                return
+
+            def doit():
+                self.library_view.select_rows((book_id,))
+
+            if library_id != getattr(self.current_db.new_api, 'server_library_id', None):
+                self.library_moved(library_path)
+                QTimer.singleShot(0, doit)
+            else:
+                doit()
+
+        elif action == 'view-book':
+            parts = tuple(filter(None, path.split('/')))
+            if len(parts) != 3:
+                return
+            library_id, book_id, fmt = parts
+            library_id = decode_library_id(library_id)
+            try:
+                book_id = int(book_id)
+            except Exception:
+                prints('Ignoring invalid book id', book_id, file=sys.stderr)
+                return
+            library_path = self.library_broker.path_for_library_id(library_id)
+            if library_path is None:
+                return
+            view = self.iactions['View']
+
+            def doit():
+                at = query.get('open_at') or None
+                if at:
+                    at = at[0]
+                view.view_format_by_id(book_id, fmt.upper(), open_at=at)
+
+            if library_id != getattr(self.current_db.new_api, 'server_library_id', None):
+                self.library_moved(library_path)
+                QTimer.singleShot(0, doit)
+            else:
+                doit()
+
+        elif action == 'search':
+            parts = tuple(filter(None, path.split('/')))
+            if len(parts) != 1:
+                return
+            library_id = decode_library_id(parts[0])
+            library_path = self.library_broker.path_for_library_id(library_id)
+            if library_path is None:
+                return
+            sq = query.get('eq')
+            if sq:
+                sq = bytes.fromhex(sq[0]).decode('utf-8')
+            else:
+                sq = query.get('q')
+                if sq:
+                    sq = sq[0]
+            sq = sq or ''
+            self.search.set_search_string(sq)
 
     def message_from_another_instance(self, msg):
         if isinstance(msg, bytes):

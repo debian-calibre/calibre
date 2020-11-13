@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE" "1" "d’octubre 30, 2020" "5.4.2" "calibre"
+.TH "CALIBRE" "1" "de novembre 13, 2020" "5.5.0" "calibre"
 .SH NAME
 calibre \- calibre
 .
@@ -35,14 +35,22 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-calibre [opcions] [camí_al_llibre_electrònic]
+calibre [options] [path_to_ebook or calibre url ...]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Llança la interfície gràfica d\(aqusuari de \fBcalibre\fP i de forma opcional afegeix
-el llibre electrònic del camí_al_llibre_electrònic a la base de dades.
+Launch the main \fBcalibre\fP Graphical User Interface and optionally add the e\-book at
+path_to_ebook to the database. You can also specify \fBcalibre\fP URLs to perform various
+different actions, than just adding books. For example:
+.sp
+\fBcalibre\fP://view\-book/test_library/1842/epub
+.sp
+Will open the book with id 1842 in the EPUB format from the library
+"test_library" in the \fBcalibre\fP viewer. Library names are the folder names of the
+libraries with spaces replaced by underscores. A full description of the
+various URL based actions is in the User Manual.
 .sp
 Sempre que passeu arguments a \fBcalibre\fP i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .SH [OPCIONS]

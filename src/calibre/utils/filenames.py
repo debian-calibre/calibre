@@ -126,7 +126,7 @@ def is_case_sensitive(path):
         name1, name2 = ('calibre_test_case_sensitivity.txt',
                         'calibre_TesT_CaSe_sensitiVitY.Txt')
         f1, f2 = os.path.join(path, name1), os.path.join(path, name2)
-        if os.path.exists(f1):
+        with suppress(OSError):
             os.remove(f1)
         open(f1, 'w').close()
         is_case_sensitive = not os.path.exists(f2)
@@ -466,21 +466,25 @@ if iswindows:
         move_file(a, b)
 
 
+def retry_on_fail(func, *args, count=10, sleep_time=0.2):
+    for i in range(count):
+        try:
+            func(*args)
+            break
+        except OSError:
+            if i > count - 2:
+                raise
+            # Try the operation repeatedly in case something like a virus
+            # scanner has opened one of the files (I love windows)
+            time.sleep(sleep_time)
+
+
 def atomic_rename(oldpath, newpath):
     '''Replace the file newpath with the file oldpath. Can fail if the files
     are on different volumes. If succeeds, guaranteed to be atomic. newpath may
     or may not exist. If it exists, it is replaced. '''
     if iswindows:
-        for i in range(10):
-            try:
-                rename_file(oldpath, newpath)
-                break
-            except Exception:
-                if i > 8:
-                    raise
-                # Try the rename repeatedly in case something like a virus
-                # scanner has opened one of the files (I love windows)
-                time.sleep(1)
+        retry_on_fail(rename_file, oldpath, newpath)
     else:
         os.rename(oldpath, newpath)
 
