@@ -16,7 +16,7 @@ ifdef SCHROOT_USER
 endif
 
 %:
-	dh $@ --buildsystem=makefile
+	dh $@ --with=python3 --buildsystem=makefile
 
 .PHONY: calibre_auto_test calibre_auto_install
 
