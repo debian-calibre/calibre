@@ -1,3 +1,18 @@
+calibre (5.5.0+dfsg-2) unstable; urgency=medium
+
+  * Upgrade Debian standard
+  * Drop "[PATCH]" from patch file.
+    For just a cosmetic reason.
+  * Don't change book file unless user's consent (Closes: #974974)
+    This fix changes default value and behavior of ebook-viewer(1) preferences
+    "Miscellaneous"->"Keep a copy of annotations/bookmarks in the e-book file,
+    for easy sharing".
+  * Specify python3 version by dh-python
+  * Specify exact python3 version (Closes: #975284, #975320, #975388)
+    for un-brake 3.8->3.9 transition
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sun, 22 Nov 2020 20:11:56 +0900
+
 calibre (5.5.0+dfsg-1) unstable; urgency=medium
 
   * New upstream version 5.5.0+dfsg
