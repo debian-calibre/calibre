@@ -1,7 +1,9 @@
 #!/usr/bin/make -f
 
+PYTHON=$(shell py3versions -r 3.9)
+
 # building with python3
-SETUP=python3 setup.py
+SETUP=$(PYTHON) setup.py
 
 # build options
 export DEB_BUILD_MAINT_OPTIONS=hardening=+all reproducible=+all
@@ -69,7 +71,7 @@ calibre_auto_install:
 	find debian/tmp/usr/lib/calibre/calibre -type f -executable | xargs --no-run-if-empty chmod a-x
 #
 #	# fix "env python3" style hashbangs
-	find debian/tmp -type f | xargs sed -i '1 { /^#!.*python/ s_^.*$$_#!/usr/bin/python3_ }'
+	find debian/tmp -type f | xargs sed -i '1 { /^#!.*python/ s_^.*$$_#!/usr/bin/${PYTHON}_ }'
 
 override_dh_installman:
 #	# Create and install some of the man pages
