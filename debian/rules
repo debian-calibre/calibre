@@ -79,8 +79,6 @@ override_dh_auto_clean:
 	[ ! -d build ] || $(SETUP) build -c
 	$(SETUP) mathjax --clean
 	py3clean setup src
-	find . -name '*.pyc' -delete
-	find . -name '*.so'  -delete
 
 override_dh_gencontrol:
 	dh_gencontrol $(DEB_DH_GENCONTROL_ARGS)
