@@ -1,12 +1,7 @@
 #!/usr/bin/make -f
 
-PYTHON=$(shell py3versions -r 3.9)
-
-ifeq ($(PYTHON),)
-  $(error PYTHON not found)
-endif
-
 # building with python3
+PYTHON=python3
 SETUP=$(PYTHON) setup.py
 
 # build options
