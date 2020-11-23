@@ -65,6 +65,9 @@ calibre_auto_install:
 #	# do not ship a copy of fonts-liberation
 	rm -r debian/tmp/usr/share/calibre/fonts/liberation/
 	ln -s /usr/share/fonts/truetype/liberation/ debian/tmp/usr/share/calibre/fonts/liberation
+#
+#	# do not install developer's script
+	rm debian/tmp/usr/lib/calibre/calibre/devices/mtp/unix/upstream/update.py
 
 override_dh_installman:
 #	# Create and install some of the man pages
