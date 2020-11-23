@@ -1,3 +1,35 @@
+calibre (5.5.0+dfsg-3) unstable; urgency=medium
+
+  * Stop if required Python is not found
+  * Remove over-engineered section
+  * Add comment about Python version between scripts and binary plugins
+  * Remove X-Python3-Version.
+    3.8->3.9 transition is done.
+  * Remove hand-crafted "python3" dependency.
+    Automatically generated "libpython[version number]" dependency dose that.
+  * dh_python3 wants ${python3:Depends}
+    It prvides some warnings about ${python3:Depends} on build log.
+    This fix might Closes: #975284 .
+    > E: dh_python3 dh_python3:176: no package to act on (python3-foo or one with ${python3:Depends} in Depends)
+  * Manually add add pyqt5-sip dependency to "python3:Depends"
+    It fixes dpkg-gencontrol's "unused variables" warning
+  * No need to replace shbangs
+    "dh_python3" dose the work.
+    Some executables exists in "lib" directory.
+        /usr/lib/calibre/calibre/devices/cli.py
+        /usr/lib/calibre/calibre/devices/mtp/unix/upstream/update.py
+  * dh_fixperms removes executable permission
+  * Use Python 3
+    "dh_python3" wants "python" for Python 2, and "python3" for Python 3.
+  * No need install updater script.
+    This script is for developers only.
+  * Fix dependency for python3-pyqt5.sip
+    "python3-pyqt5.sip" is used by "calibre" package
+  * Refactor cleaner
+  * Update changelog
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Tue, 24 Nov 2020 02:33:14 +0900
+
 calibre (5.5.0+dfsg-2) unstable; urgency=medium
 
   * Upgrade Debian standard
