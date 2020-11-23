@@ -87,3 +87,7 @@ override_dh_auto_clean:
 
 override_dh_gencontrol:
 	dh_gencontrol $(DEB_DH_GENCONTROL_ARGS)
+
+override_dh_python3:
+	dh_python3 -pcalibre-bin --depends=pyqt5-sip
+	dh_python3
