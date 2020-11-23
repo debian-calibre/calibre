@@ -68,9 +68,6 @@ calibre_auto_install:
 #
 #	# fix executable permissions
 	find debian/tmp/usr/lib/calibre/calibre -type f -executable | xargs --no-run-if-empty chmod a-x
-#
-#	# fix "env python3" style hashbangs
-	find debian/tmp -type f | xargs sed -i '1 { /^#!.*python/ s_^.*$$_#!/usr/bin/${PYTHON}_ }'
 
 override_dh_installman:
 #	# Create and install some of the man pages
