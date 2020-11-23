@@ -65,9 +65,6 @@ calibre_auto_install:
 #	# do not ship a copy of fonts-liberation
 	rm -r debian/tmp/usr/share/calibre/fonts/liberation/
 	ln -s /usr/share/fonts/truetype/liberation/ debian/tmp/usr/share/calibre/fonts/liberation
-#
-#	# fix executable permissions
-	find debian/tmp/usr/lib/calibre/calibre -type f -executable | xargs --no-run-if-empty chmod a-x
 
 override_dh_installman:
 #	# Create and install some of the man pages
