@@ -1,7 +1,8 @@
 #!/usr/bin/make -f
 
 # building with python3
-PYTHON=python3
+PYTHON=$(shell py3versions -r 3.9)
+PYTHON_PATH=$(shell which $(PYTHON))
 SETUP=$(PYTHON) setup.py
 
 # build options
@@ -85,4 +86,4 @@ override_dh_gencontrol:
 
 # No need to touch "calibre-bin".
 override_dh_python3:
-	dh_python3 --no-package=calibre-bin
+	dh_python3 --no-package=calibre-bin --shebang=$(PYTHON_PATH)
