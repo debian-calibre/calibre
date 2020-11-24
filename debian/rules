@@ -85,4 +85,4 @@ override_dh_gencontrol:
 
 # No need to touch "calibre-bin".
 override_dh_python3:
-	dh_python3 -pcalibre
+	dh_python3 --no-package=calibre-bin
