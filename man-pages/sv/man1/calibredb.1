@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "november 13, 2020" "5.5.0" "calibre"
+.TH "CALIBREDB" "1" "november 27, 2020" "5.6.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -171,7 +171,7 @@ calibredb list [options]
 .sp
 Lista de böcker som finns i calibre\-databasen.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -190,7 +190,7 @@ Generera utmatning i JSON\-format, vilket är mer lämpat för maskintolkning. R
 .INDENT 0.0
 .TP
 .B \-\-limit
-Högsta antal resultat att visa. Standard: alla
+Högsta antalet resultat att visa. Standard: alla
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -232,11 +232,16 @@ calibredb add [options] file1 file2 file3 ...
 Lägg till de angivna filerna som böcker i databasen. Du kan även ange mappar, se
 katalogrelaterade alternativ nedan.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
 Ange författarna för den tillagda boken eller de tillagda böckerna
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-automerge, \-m
+Om böcker med liknande titlar och författare hittas, sammanfoga de inkommande formaten (filer) automatiskt till befintliga bokposter. Värdet \fB"\fPignore\fB"\fP betyder att dublettformat kasseras. Värdet \fB"\fPoverwrite\fB"\fP betyder att dublettformat i biblioteket skrivs över med de nyligen tillagda filerna. Värdet \fB"\fPnew_record\fB"\fP betyder att dublettformat placeras i en ny bokpost.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -246,7 +251,7 @@ Vägen till omslaget för att använda för extra bok
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Lägg till böcker i databasen även om de redan finns. Jämförelsen görs utifrån boktitlarna.
+Lägg till böcker i databasen även om de redan finns. Jämförelse görs baserat på boktitlar och författare. Observera att alternativet \fI\%\-\-automerge\fP har företräde.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -325,7 +330,7 @@ calibredb remove ids
 .sp
 Ta bort böcker som identifierats av id från databasen. id:t ska vara en kommaseparerad lista med id\-nummer (du kan få id\-nummer med sökkommandot). Till exempel 23,34,57\-85 (när du anger ett intervall, det sista numret i intervallet inkluderas inte).
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-permanent
@@ -345,7 +350,7 @@ calibredb add_format [options] id ebook_file
 .sp
 Lägg e\-boken i ebook_file till tillgängliga format för den logiska boken som identifieras av id. Du kan få id genom att använda sökkommandot. Om formatet redan finns ersätts det, såvida inte ersätt inte flaggan anges.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -365,7 +370,7 @@ calibredb remove_format [options] id fmt
 .sp
 Ta bort formatet fmt från den logiska boken identifierad med hjälp av id. Du kan få id med sökkommandot. fmt bör vara en filändelse som LRF eller TXT eller EPUB. Om den logiska boken inte har fmt tillgängligt, görs inget.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -381,7 +386,7 @@ calibredb show_metadata [options] id
 Visa metadata lagrade i calibre\-databasen för boken identifierad av id.
 id är ett id\-nummer från sökkommandot.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -406,7 +411,7 @@ kommandot show_metadata. Du kan också ställa in metadata för enskilda fält m
 flaggan \-\-field. Om du använder flaggan \-\-field behöver du inte ange
 en OPF\-fil.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
@@ -433,7 +438,7 @@ Exportera böckerna som anges av id (en kommaseparerad lista) till filsystemet.
 Exporten sparar alla format av boken, dess omslag och metadata (i
 en OPF\-fil). Du kan få id\-nummer från sökkommandot.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -482,12 +487,12 @@ Exportera alla böcker till en enda katalog
 .INDENT 0.0
 .TP
 .B \-\-template
-Mallen styr filnamnet och katalogstrukturen för sparade filer. Grundinställning är \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP som kommer spara böcker i en per\-författare underkatalog med filnamn bestående av titel och författare. Tillgängliga val är: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+Mallen för att styra filnamn och mappstruktur för de sparade filerna. Standard är \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP vilket sparar böcker i en undermapp per författare med filnamn bestående av titel och författare. Tillgängliga kontroller är: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timefmt
-Format för datumvisning. %d \- dag, %b \- månad, %m \- månadsnummer, %Y \- år. Grundinställning är: %b, %Y
+Format för datumvisning. %d \- dag, %b \- månad, %m \- månadsnummer, %Y \- år. Standard är: %b, %Y
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -517,11 +522,11 @@ Note that different \fBcatalog\fP formats support different sets of options. To
 see the different options, specify the name of the output file and then the
 \-\-help option.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
-Kommaseparerad lista med databas\-ID till katalogen. Om de deklareras, ignoreras \fI\%\-\-search\fP\&. Standard: alla
+Kommaseparerad lista över databas\-ID till katalogen. Om de deklareras, ignoreras \fI\%\-\-search\fP\&. Standard: alla
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -653,7 +658,7 @@ Syntax för att ta bort:
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -667,10 +672,10 @@ calibredb add_custom_column [options] label name datatype
 .UNINDENT
 .sp
 Skapa en egen kolumn. Kolumnamn är det maskinvänliga namnet på kolumnen. Bör
-inte innehålla blanksteg eller kolon. Namn är det människovänliga namnet på kolumnen.
+inte innehålla mellanslag eller kolon. Namn är det människovänliga namnet på kolumnen.
 Datatypen är en av: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-display
@@ -695,7 +700,7 @@ calibredb custom_columns [options]
 .sp
 Lista anpassade kolumner. Visar kolumnnamn och id.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -716,7 +721,7 @@ calibredb remove_custom_column [options] label
 Ta bort den anpassade kolumnen som identifieras med etikett. Du kan se
 tillgängliga kolumner med kommandot custom_columns.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -739,11 +744,11 @@ Du kan få en lista med id genom använda sökkommando.
 Du kan få en lista med anpassade kolumnnamn med hjälp av custom_columns
 kommando.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
-Om kolumnen lagrar flera värden, lägg angivna värden till de redan befintliga, istället för att ersätta dem.
+Om kolumnen lagrar flera värden, lägg till de angivna värdena till de befintliga i stället för att ersätta dem.
 .UNINDENT
 .SH RESTORE_DATABASE
 .INDENT 0.0
@@ -766,11 +771,11 @@ alla sparade sökningar, användarkategorier, pluggbrädor, lagrade
 konverterings inställningar per bok och anpassade recept. Återställda metadata är
 bara så exakta som det som finns i OPF\-filerna.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
-Verkligen gör återställningen. Kommandot kommer inte köras om detta alternativ har angetts.
+Verkligen gör återställningen. Kommandot kommer inte köras om det här alternativet har angetts.
 .UNINDENT
 .SH CHECK_LIBRARY
 .INDENT 0.0
@@ -786,7 +791,7 @@ calibredb check_library [options]
 .sp
 Utföra vissa kontroller av filsystemet som representerar ett bibliotek. Rapporter är invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -795,17 +800,17 @@ Utmatning i CSV
 .INDENT 0.0
 .TP
 .B \-\-ignore_extensions, \-e
-Kommaseparerad lista med tillägg att ignorera. Standard: alla
+Kommaseparerad lista över tillägg att ignorera. Standard: alla
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore_names, \-n
-Kommaseparerad lista med namn att ignorera. Standard: Alla
+Kommaseparerad lista över namn att ignorera. Standard: Alla
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-report, \-r
-Kommaseparerad lista med rapporter. Standard: Alla
+Kommaseparerad lista över rapporter. Standard: Alla
 .UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
@@ -822,11 +827,11 @@ calibredb list_categories [options]
 Skapa en rapport om kategoriinformationen i databasen.
 Informationen motsvarar vad som visas i Taggbläddraren.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
-Kommaseparerad lista med kategoriuppslagsnamn. Standard: Alla
+Kommaseparerad lista över kategoriuppslagsnamn. Standard: Alla
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -866,7 +871,7 @@ kommando för att tvinga ny generering av OPF\-filer med flaggan \-\-all.
 .sp
 Observera att det är normalt ingen anledning att göra detta, eftersom de OPF\-filer säkerhetskopieras automatiskt, varje gång metadata ändras.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -889,7 +894,7 @@ samma anpassade kolumner, Virtuella bibliotek och andra inställningar som det a
 .sp
 Det klonade biblioteket innehåller inga böcker. Om du vill skapa ett komplett duplikat, inklusive alla böcker, kan du bara använda dina filsystemsverktyg för att kopiera biblioteksmappen.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -910,7 +915,7 @@ metadata. Du kan använda det specialvärdet "alla" för book_id för att uppdat
 i alla böcker. Du kan också ange flera böckers id åtskilda av blankslag och id\-intevall
 åtskilda av bindestreck. Till exempel: calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
@@ -935,11 +940,11 @@ för att mata in andra kommandon som accepterar en lista med id:er som inmatning
 Sökuttrycket kan vara vad som helst från calibres kraftfulla sökfrågespråk,
 till exempel: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l
-Högsta antal resultat att återge. Standard är alla resultat.
+Högsta antalet resultat att återge. Standard är alla resultat.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

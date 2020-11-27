@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "十一月 13, 2020" "5.5.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "十一月 27, 2020" "5.6.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -187,7 +187,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-把 Unicode 字符转换为 ASCII 表达型式。请谨慎使用这个功能，因为它会把所有的 Unicode 字符转换为 ASCII 字符。比如：它会把 \fB"\fPМихаил Горбачёв\fB"\fP 替换为 \fB"\fPMikhail Gorbachiov\fB"\fP。并且当一个字符可能有多种表示方式时（比如中文和日文中一些共用的字符）， calibre 会根据当前设置的界面语言类型决定如何去转换这类字符。
+Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPМихаил Горбачёв\fB"\fP with \fB"\fPMikhail Gorbachiov\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
 .UNINDENT
 .INDENT 0.0
 .TP

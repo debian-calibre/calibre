@@ -430,7 +430,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                 prints('Starting QuickView')
             qv.qv_button.restore_state()
         self.save_layout_state()
-        self.library_view.setFocus(Qt.OtherFocusReason)
+        self.focus_library_view()
 
     def show_gui_debug_msg(self):
         info_dialog(self, _('Debug mode'), '<p>' +
@@ -442,12 +442,20 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
     def esc(self, *args):
         self.search.clear()
 
-    def shift_esc(self):
-        self.current_view().setFocus(Qt.OtherFocusReason)
+    def focus_current_view(self):
+        view = self.current_view()
+        if view is self.library_view:
+            self.focus_library_view()
+        else:
+            view.setFocus(Qt.OtherFocusReason)
+    shift_esc = focus_current_view
+
+    def focus_library_view(self):
+        self.library_view.alternate_views.current_view.setFocus(Qt.OtherFocusReason)
 
     def ctrl_esc(self):
         self.apply_virtual_library()
-        self.current_view().setFocus(Qt.OtherFocusReason)
+        self.focus_current_view()
 
     def start_smartdevice(self):
         message = None
@@ -671,14 +679,14 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                 return
 
             def doit():
-                self.library_view.select_rows((book_id,))
+                rows = self.library_view.select_rows((book_id,))
+                db = self.current_db
+                if not rows and (db.data.get_base_restriction_name() or db.data.get_search_restriction_name()):
+                    self.apply_virtual_library()
+                    self.apply_named_search_restriction()
+                    self.library_view.select_rows((book_id,))
 
-            if library_id != getattr(self.current_db.new_api, 'server_library_id', None):
-                self.library_moved(library_path)
-                QTimer.singleShot(0, doit)
-            else:
-                doit()
-
+            self.perform_url_action(library_id, library_path, doit)
         elif action == 'view-book':
             parts = tuple(filter(None, path.split('/')))
             if len(parts) != 3:
@@ -701,12 +709,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                     at = at[0]
                 view.view_format_by_id(book_id, fmt.upper(), open_at=at)
 
-            if library_id != getattr(self.current_db.new_api, 'server_library_id', None):
-                self.library_moved(library_path)
-                QTimer.singleShot(0, doit)
-            else:
-                doit()
-
+            self.perform_url_action(library_id, library_path, doit)
         elif action == 'search':
             parts = tuple(filter(None, path.split('/')))
             if len(parts) != 1:
@@ -723,7 +726,26 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                 if sq:
                     sq = sq[0]
             sq = sq or ''
-            self.search.set_search_string(sq)
+            vl = None
+            if query.get('encoded_virtual_library'):
+                vl = bytes.fromhex(query.get('encoded_virtual_library')[0]).decode('utf-8')
+            elif query.get('virtual_library'):
+                vl = query.get('virtual_library')[0]
+            if vl == '-':
+                vl = None
+
+            def doit():
+                if vl != '_':
+                    self.apply_virtual_library(vl)
+                self.search.set_search_string(sq)
+            self.perform_url_action(library_id, library_path, doit)
+
+    def perform_url_action(self, library_id, library_path, func):
+        if library_id != getattr(self.current_db.new_api, 'server_library_id', None):
+            self.library_moved(library_path)
+            QTimer.singleShot(0, func)
+        else:
+            func()
 
     def message_from_another_instance(self, msg):
         if isinstance(msg, bytes):
@@ -793,6 +815,9 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
             return self.card_a_view
         if idx == 3:
             return self.card_b_view
+
+    def show_library_view(self):
+        self.location_manager.library_action.trigger()
 
     def booklists(self):
         return self.memory_view.model().db, self.card_a_view.model().db, self.card_b_view.model().db

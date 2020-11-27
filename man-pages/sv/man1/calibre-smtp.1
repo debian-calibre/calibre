@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "november 13, 2020" "5.5.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "november 27, 2020" "5.6.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -49,12 +49,12 @@ texten är e\-postmeddelandet.
 Om text inte anges, läses ett komplett e\-postmeddelande från STDIN.
 från är avsändarens e\-postadress och till är mottagares e\-postadress. När ett komplett e\-postmeddelande läses från STDIN, används från och till bara i SMTP\-förhandlingen, meddelanderubrikerna ändras inte.
 .sp
-När du skickar argument till \fBcalibre\-smtp\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till \fBcalibre\-smtp\fP som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .SH [ALTERNATIV]
 .INDENT 0.0
 .TP
 .B \-\-fork, \-f
-Dela upp och leverera meddelande i bakgrunden. Om du använder detta alternativ bör du också använda \fI\%\-\-outbox\fP för hantera misslyckade leveranser.
+Dela upp och leverera meddelande i bakgrunden. Om du använder det här alternativet bör du också använda \fI\%\-\-outbox\fP för hantera misslyckade leveranser.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -1,11 +1,122 @@
 [
     {
+        "version": "5.6.0",
+        "date": "2020-11-27",
+        "new features": [
+            {
+                "title": "Edit book: Show a non-modal popup for a few seconds to allow undoing file delete operations"
+            },
+            {
+                "tickets": [
+                    1903418
+                ],
+                "title": "Device books view: Add an action to the context menu to easily jump to the matching book in the calibre library view"
+            },
+            {
+                "tickets": [
+                    1903270
+                ],
+                "title": "Add ability to undo Generate cover in the Edit metadata screen, by long clicking the Generate cover button"
+            },
+            {
+                "title": "Edit book: Allow adding tags to the list of tags for the insert tag button"
+            },
+            {
+                "title": "calibredb add: New option --automerge to automatically merge duplicates"
+            },
+            {
+                "tickets": [
+                    1905646
+                ],
+                "title": "Add an edit notes action to the context menu in the viewer highlights panel"
+            },
+            {
+                "tickets": [
+                    1903333
+                ],
+                "title": "Content server viewer: Allow viewing images in a new window by right clicking them, matches the calibre builtin viewer behavior"
+            },
+            {
+                "tickets": [
+                    1903403
+                ],
+                "title": "Book details window: Allow opening the edit metadata window using either the keyboard shortcut or the context menu"
+            },
+            {
+                "title": "Allow copying the current search as a calibre:// URL by right clicking the search box"
+            },
+            {
+                "title": "Book details panel: Add entries to copy calibre:// links for the current book to the context menu"
+            },
+            {
+                "title": "Edit book: Upgrade book: Ask whether to keep the NCX based Table of Contents"
+            }
+        ],
+        "bug fixes": [
+            {
+                "tickets": [
+                    1904310
+                ],
+                "title": "Windows: Fix calibre portable launcher not working correctly from root directory in calibre 5.5"
+            },
+            {
+                "tickets": [
+                    1904505
+                ],
+                "title": "macOS: Fix rendering of space after punctuation incorrect in Big Sur"
+            },
+            {
+                "tickets": [
+                    1905319
+                ],
+                "title": "DOCX Input: When converting images placed using the obsolete VML markup default them to being inline rather than block images"
+            },
+            {
+                "tickets": [
+                    1905479
+                ],
+                "title": "Metadata edit dialog: Fix keyboard shortcuts for bold/italic/underline not working when more than one comments editor widget is present on a single tab"
+            },
+            {
+                "tickets": [
+                    1905113
+                ],
+                "title": "When using calibre://show-book URLs and the book is not found, clear any Virtual library or search restriction and then show the book"
+            },
+            {
+                "title": "macOS: Fix calibre:// URLs not working from other documents"
+            },
+            {
+                "title": "Fix calibre:// URL search action not changing library if needed"
+            },
+            {
+                "tickets": [
+                    1904305
+                ],
+                "title": "annotation_count() template function displaying value for deleted annotations"
+            },
+            {
+                "tickets": [
+                    1905806
+                ],
+                "title": "Edit book: Fix syntax highlighting not recognizing ends-with selector"
+            }
+        ],
+        "improved recipes": [
+            "The BBC",
+            "Folha de Sao Paolo",
+            "Netzpolitik"
+        ],
+        "new recipes": []
+    },
+    {
         "version": "5.5.0",
         "date": "2020-11-13",
         "new features": [
             {
+                "type": "major",
                 "title": "Support the calibre:// URL scheme",
-                "description": "Clicking on calibre:// URLs can be used to have calibre perform various actions.For details, see: https://manual.calibre-ebook.com/url_scheme.html"
+                "description": "Clicking on calibre:// URLs can be used to have calibre perform various actions. For details, see: https://manual.calibre-ebook.com/url_scheme.html"
             },
             {
                 "title": "Viewer: Show calibre:// URL for current book in the Goto->Location panel"
@@ -79,7 +190,7 @@
                 "tickets": [
                     1903699
                 ],
-                "title": "Viewer: Fix regression causing custom shortcuts with shift key pressed not working"
+                "title": "Viewer: Fix regression causing custom shortcuts with Shift key pressed not working"
             },
             {
                 "tickets": [
@@ -144,7 +255,7 @@
             },
             {
                 "title": "Edit metadata dialog: Make most custom metadata controls use only a single line.",
-                "description": "Elide the names of custom columns that are longer than a fixed width, instead of using multiple lines.Configurable via Preferences->Tweaks->Edit metadata custom column label length"
+                "description": "Elide the names of custom columns that are longer than a fixed width, instead of using multiple lines. Configurable via Preferences->Tweaks->Edit metadata custom column label length"
             },
             {
                 "title": "Edit book: Remove unused CSS: Add an option to merge CSS rules that have identical properties"
@@ -182,7 +293,7 @@
                 "tickets": [
                     1900946
                 ],
-                "title": "Viewer: Fix keyboard shortcuts using ctrl+alt+letter key not working on Windows."
+                "title": "Viewer: Fix keyboard shortcuts using Ctrl+Alt+letter key not working on Windows."
             },
             {
                 "tickets": [
@@ -455,13 +566,13 @@
                 "title": "Viewer: Fix selection popup bar not always close to mouse when ending select-to-drag"
             },
             {
-                "title": "Fix calibre-server not exiting on Ctrl+c on Windows"
+                "title": "Fix calibre-server not exiting on Ctrl+C on Windows"
             },
             {
                 "tickets": [
                     1897410
                 ],
-                "title": "Content server OPDS feeds: Fix error if the metadata for a book contains particular unicode characters."
+                "title": "Content server OPDS feeds: Fix error if the metadata for a book contains particular Unicode characters."
             },
             {
                 "tickets": [
@@ -1168,7 +1279,7 @@
                 "title": "Viewer: Improve the interface for changing font sizes"
             },
             {
-                "title": "Viewer: Add a keyboard shortcut (Ctrl+Alt+b) for adding a bookmark"
+                "title": "Viewer: Add a keyboard shortcut (Ctrl+Alt+B) for adding a bookmark"
             }
         ],
         "bug fixes": [
@@ -1355,7 +1466,7 @@
                 "tickets": [
                     1866742
                 ],
-                "title": "Add a shortcut [Ctrl+Alt+p] to switch to the previously opened library."
+                "title": "Add a shortcut [Ctrl+Alt+P] to switch to the previously opened library."
             }
         ],
         "bug fixes": [
@@ -1375,7 +1486,7 @@
                 "title": "Viewer: Ensure there is no bleed between pages when using single page per screen"
             },
             {
-                "title": "Fix shift click not working reliably in the book list"
+                "title": "Fix Shift click not working reliably in the book list"
             },
             {
                 "title": "Fix edit open with applications not working from files browser in editor"
@@ -1436,7 +1547,7 @@
                 "title": "Content server: Add a button to delete all locally cached books."
             },
             {
-                "title": "Edit Book: Allow selecting the contents of a tag with Ctrl+Alt+t"
+                "title": "Edit Book: Allow selecting the contents of a tag with Ctrl+Alt+T"
             },
             {
                 "title": "Viewer: Save current position after 3 seconds of last position change. Useful if the viewer crashes on resume from sleep."
@@ -1445,7 +1556,7 @@
                 "tickets": [
                     1864356
                 ],
-                "title": "Viewer: Add a keyboard shortcut (Ctrl+w) to toggle the scrollbar."
+                "title": "Viewer: Add a keyboard shortcut (Ctrl+W) to toggle the scrollbar."
             },
             {
                 "title": "Viewer: Keyboard shortcuts to change number of columns (Ctrl+[ and Ctrl+])"
@@ -1508,7 +1619,7 @@
                 "title": "Edit book: Preview panel: Allow right clicking on images to edit them"
             },
             {
-                "title": "Add a new Quick select action to quickly select a virtual library with a few keystrokes. Activated by Ctrl+t or the Virtual library menu"
+                "title": "Add a new Quick select action to quickly select a virtual library with a few keystrokes. Activated by Ctrl+T or the Virtual library menu"
             },
             {
                 "title": "Viewer: Calculate default column widths based on current font size"
@@ -1523,7 +1634,7 @@
                 "tickets": [
                     1862432
                 ],
-                "title": "Viewer: Add shortcut for showing metadata (Ctrl+n)"
+                "title": "Viewer: Add shortcut for showing metadata (Ctrl+N)"
             }
         ],
         "bug fixes": [
@@ -2432,7 +2543,7 @@
                 "title": "Viewer: Don't flash the home page before loading a book if a book has been specified"
             },
             {
-                "title": "Viewer: Fix ctrl+m shortcut not working on Windows"
+                "title": "Viewer: Fix Ctrl+M shortcut not working on Windows"
             },
             {
                 "title": "Content server: Fix regression that caused series name in book details view not not be blue to indicate it is clickable"

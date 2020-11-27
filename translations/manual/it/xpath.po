@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-03 07:43+0530\n"
-"PO-Revision-Date: 2020-07-03 02:15+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2020-11-26 07:03+0000\n"
+"PO-Revision-Date: 2020-11-21 09:02+0000\n"
+"Last-Translator: demetrio <mendem@tiscali.it>\n"
 "Language-Team: Italian (http://www.transifex.com/calibre/calibre/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,11 +21,11 @@ msgstr ""
 "Language: it\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:4
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:4
 msgid "XPath tutorial"
 msgstr "Guida di XPath"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:6
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:6
 msgid ""
 "In this tutorial, you will be given a gentle introduction to `XPath "
 "<https://en.wikipedia.org/wiki/XPath>`_, a query language that can be used "
@@ -36,35 +36,35 @@ msgid ""
 "HTML document."
 msgstr "In questo tutorial ti sarà fornita un'introduzione graduale a  `XPath <https://en.wikipedia.org/wiki/XPath>`_, un linguaggio per query che può essere utilizzato per selezionare parti arbitrarie di documenti `HTML <https://en.wikipedia.org/wiki/HTML>`_ in Calibre. XPath è uno standard ampiamente utilizzato e una ricerca su Google rivela un sacco di informazioni. Questo tutorial, tuttavia, si concentra sull'utilizzo di XPath per effettuare compiti sugli ebook, come trovare le intestazioni dei capitoli in un documento HTML non strutturato."
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:16
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:16
 msgid "Contents"
 msgstr "Contenuti"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:19
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:19
 msgid "Selecting by tag name"
 msgstr "Selezione per nome del tag"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:21
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:21
 msgid ""
 "The simplest form of selection is to select tags by name. For example, "
 "suppose you want to select all the ``<h2>`` tags in a document. The XPath "
 "query for this is simply::"
 msgstr "La forma più semplice di selezione è selezionare i tag per nome. Ad esempio, immagina di voler selezionare tutti i tag \"<h2>\" in un documento. La query di XPath per farlo è semplicemente::"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:27
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:27
 msgid ""
 "The prefix `//` means *search at any level of the document*. Now suppose you"
 " want to search for ``<span>`` tags that are inside ``<a>`` tags. That can "
 "be achieved with::"
 msgstr "Il prefisso \"\\\\\" significa *cerca in ogni livello del documento*. Adesso, immagina di dover cercare i tag \"<span>\" che si trovano dentro i tag \"<a>\". Ciò si può fare con::"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:33
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:33
 msgid ""
 "If you want to search for tags at a particular level in the document, change"
 " the prefix::"
 msgstr "Se vuoi cercare dei tag in un livello particolare del documento, modifica il prefisso:"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:39
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:39
 msgid ""
 "This will match only ``<p>A very short e-book to demonstrate the use of "
 "XPath.</p>`` in the :ref:`sample_ebook` but not any of the other ``<p>`` "
@@ -74,7 +74,7 @@ msgid ""
 "tags."
 msgstr "Così troverà solo \"<p>Un brevissimo ebook per dimostrare l'uso di XPath.</p>\" in :ref:`sample_ebook`, ma non gli altri tag \"<p>\". Il prefisso \"h:\" negli esempi precedenti è richiesto per cercare i tag XHTML. Ciò è necessario perché, internamente, Calibre rappresenta tutti i contenuti come XHTML. In XHTML i tag hanno un *namespace* e \"h:\" è il prefisso di namespace per i tag HTML."
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:45
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:45
 msgid ""
 "Now suppose you want to select both ``<h1>`` and ``<h2>`` tags. To do that, "
 "we need a XPath construct called *predicate*. A :dfn:`predicate` is simply a"
@@ -83,7 +83,7 @@ msgid ""
 "is created by enclosing the test expression in square brackets::"
 msgstr "Adesso, immagina di voler selezionare sia i tag \"<h1>\" che quelli \"<h2\". Per farlo, abbiamo bisogno di un costrutto di XPath chiamato \"predicato\". Un :dfn:`predicate` è semplicemente un test che si usa per selezionare i tag. I test possono essere arbitrariamente potenti e durante lo svolgimento di questo tutorial vedrai degli esempi ancora più potenti. Un predicato si crea mettendo l'espressione di test in parentesi quadre::"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:53
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:53
 msgid ""
 "There are several new features in this XPath expression. The first is the "
 "use of the wildcard ``*``. It means *match any tag*. Now look at the test "
@@ -95,73 +95,73 @@ msgid ""
 "will be introduced in this tutorial."
 msgstr "Ci sono diverse nuove funzionalità in questa espressione XPath. La prima è l'uso del carattere jolly ``*``. Significa *abbinare qualsiasi tag*. Ora guarda l'espressione di test ``name()='h1' o name()='h2'``. : term:`name()` è un esempio di *funzione integrata*. Essa valuta semplicemente il nome del tag. Quindi, usandola, possiamo selezionare tag i cui nomi sono `h1` o` h2`. Si noti che la funzione: term:`name()` ignora gli spazi dei nomi in modo che non sia necessario il prefisso ``h:``. XPath ha diverse utili funzioni integrate. Alcune altre saranno introdotte in questo tutorial."
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:62
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:62
 msgid "Selecting by attributes"
 msgstr "Selezione per attributi"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:64
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:64
 msgid ""
 "To select tags based on their attributes, the use of predicates is "
 "required::"
 msgstr "Per selezionare i tag in base alle loro caratteristiche, è richiesto l'uso di predicati "
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:70
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:70
 msgid ""
 "Here, the ``@`` operator refers to the attributes of the tag. You can use "
 "some of the `XPath built-in functions`_ to perform more sophisticated "
 "matching on attribute values."
 msgstr "Qui, l'operatore ``@`` si riferisce agli attributi del tag. È possibile utilizzare alcune delle `funzioni incorporate di XPath` per eseguire una corrispondenza più sofisticata sui valori degli attributi."
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:76
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:76
 msgid "Selecting by tag content"
 msgstr "Selezione per contenuto del tag"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:78
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:78
 msgid ""
 "Using XPath, you can even select tags based on the text they contain. The "
 "best way to do this is to use the power of *regular expressions* via the "
 "built-in function :term:`re:test()`::"
 msgstr "Usando XPath, puoi persino selezionare i tag in base al testo che contengono. Il modo migliore per farlo è usare la potenza delle *espressioni regolari* tramite la funzione integrata :term:`re: test()`::"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:84
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:84
 msgid ""
 "Here the ``.`` operator refers to the contents of the tag, just as the ``@``"
 " operator referred to its attributes."
 msgstr "Qui l'operatore ``.`` si riferisce al contenuto del tag, proprio come l'operatore ``@`` si riferiva ai suoi attributi."
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:90
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:90
 msgid "Sample e-book"
 msgstr "Libro di esempio"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:96
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:96
 msgid "XPath built-in functions"
 msgstr "Funzioni interne di XPath"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:99
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:99
 msgid "name()"
 msgstr "name()"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:101
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:101
 msgid "The name of the current tag."
 msgstr "Il nome del tag attuale"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:102
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:102
 msgid "contains()"
 msgstr "contains()"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:104
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:104
 msgid "``contains(s1, s2)`` returns `true` if s1 contains s2."
 msgstr "``contains(s1, s2)`` restituisce `true` se s1 contiene s2."
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:105
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:105
 msgid "re:test()"
 msgstr "re:test()"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:107
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:107
 msgid ""
 "``re:test(src, pattern, flags)`` returns `true` if the string `src` matches "
 "the regular expression `pattern`. A particularly useful flag is ``i``, it "
 "makes matching case insensitive. A good primer on the syntax for regular "
 "expressions can be found at `regexp syntax "
 "<https://docs.python.org/library/re.html>`_"
-msgstr ""
+msgstr "```re:test(src, pattern, flags)`` restituisce `true` se la stringa `src` corrisponde all'espressione regolare `pattern`. Un flag particolarmente utile è ``i``, che non considera la differenza MAIUSCOLE/minuscole. Un primo aiuto sulla sintassi per le espressioni regolari è disponibile in `sintassi delle regexp<https://docs.python.org/2.7/library/re.html>` _"

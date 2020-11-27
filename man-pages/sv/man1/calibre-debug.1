@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "november 13, 2020" "5.5.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "november 27, 2020" "5.6.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -45,7 +45,7 @@ Olika kommandoradsgränssnitt som är användbara för felsökning av calibre. M
 flaggor startar detta kommando en inbäddad Python\-tolk. Du kan också köra calibre\-huvudgränssnittet, calibre E\-bokvisaren och calibre redigerare i felsökningsläge.
 .sp
 Den innehåller också gränssnitt till olika bitar av calibre som inte har dedikerade
-kommandoradsverktyg, som typsnittsdelning, E\-bokdiffverktyg och så vidare.
+kommandoradsverktyg, som teckensnittsdelning, E\-bokdiffverktyg och så vidare.
 .sp
 Du kan också använda \fBcalibre\-debug\fP för att köra fristående skript. För att göra det använder du det så här:
 .INDENT 0.0
@@ -56,7 +56,7 @@ Du kan också använda \fBcalibre\-debug\fP för att köra fristående skript. F
 .sp
 Allting efter \fB\-\-\fP skickas till skriptet.
 .sp
-När du skickar argument till \fBcalibre\-debug\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till \fBcalibre\-debug\fP som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .SH [ALTERNATIV]
 .INDENT 0.0
 .TP
@@ -151,7 +151,7 @@ Mata ut nödvändiga sökvägar för att konfigurera calibres miljö
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-Kör en insticksmodul som ger ett kommandoradsgränssnitt. Till exempel: calibre\-debug\-r ”Lägg till böcker” \fB\-\-\fP file1 \fB\-\-option1\fP Allt efter \fB\-\-\fP kommer att skickas till insticksmodulen som argument.
+Kör en insticksmodul som ger ett kommandoradsgränssnitt. Till exempel: calibre\-debug\-r \fB"\fPLägg till böcker\fB"\fP \fB\-\-\fP file1 \fB\-\-option1\fP Allt efter \fB\-\-\fP kommer att skickas till insticksmodulen som argument.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -161,7 +161,7 @@ Orsakar att en körande calibre\-instans avslutas, om någon körs. Observera at
 .INDENT 0.0
 .TP
 .B \-\-subset\-font, \-f
-Deluppsättning av angivna typsnitt. Använd \fB\-\-\fP efter denna flagga för att skicka flaggan till programmet för deluppsättning av typsnitt.
+Deluppsättning av angivna teckensnitt. Använd \fB\-\-\fP efter denna flagga för att skicka flaggan till programmet för deluppsättning av teckensnitt.
 .UNINDENT
 .INDENT 0.0
 .TP

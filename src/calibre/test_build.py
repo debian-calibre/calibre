@@ -30,6 +30,8 @@ class BuildTest(unittest.TestCase):
                     ctypes.WinDLL(os.path.join(base, x))
                 except Exception as err:
                     self.assertTrue(False, 'Failed to load DLL %s with error: %s' % (x, err))
+
+    def test_pycryptodome(self):
         from Crypto.Cipher import AES
         del AES
 
@@ -95,6 +97,11 @@ class BuildTest(unittest.TestCase):
     def test_bs4(self):
         import soupsieve, bs4
         del soupsieve, bs4
+
+    @unittest.skipUnless(islinux, 'Speech dispatcher only used on Linux')
+    def test_speech_dispatcher(self):
+        from speechd.client import SSIPClient
+        del SSIPClient
 
     def test_zeroconf(self):
         import zeroconf as z, ifaddr
