@@ -8,9 +8,9 @@ import re
 from collections import namedtuple
 from functools import partial
 from PyQt5.Qt import (
-    QAction, QApplication, QColor, QEasingCurve, QIcon, QLayout, QMenu, QMimeData,
-    QPainter, QPen, QPixmap, QPropertyAnimation, QRect, QSize, QSizePolicy, Qt, QUrl,
-    QWidget, pyqtProperty, pyqtSignal
+    QAction, QApplication, QColor, QEasingCurve, QIcon, QKeySequence, QLayout, QMenu,
+    QMimeData, QPainter, QPen, QPixmap, QPropertyAnimation, QRect, QSize,
+    QSizePolicy, Qt, QUrl, QWidget, pyqtProperty, pyqtSignal
 )
 
 from calibre import fit_image, sanitize_file_name
@@ -25,7 +25,7 @@ from calibre.gui2 import (
     NO_URL_FORMATTING, choose_save_file, config, default_author_link, gprefs,
     pixmap_to_data, rating_font, safe_open_url
 )
-from calibre.gui2.dialogs.confirm_delete import confirm as confirm_delete
+from calibre.gui2.dialogs.confirm_delete import confirm, confirm as confirm_delete
 from calibre.gui2.dnd import (
     dnd_get_files, dnd_get_image, dnd_has_extension, dnd_has_image, image_extensions
 )
@@ -245,6 +245,7 @@ def add_format_entries(menu, data, book_info):
 
 
 def add_item_specific_entries(menu, data, book_info):
+    from calibre.gui2.ui import get_gui
     search_internet_added = False
     find_action = book_info.find_in_tag_browser_action
     dt = data['type']
@@ -263,6 +264,7 @@ def add_item_specific_entries(menu, data, book_info):
             menu.addAction(ac)
         add_copy_action(author)
         init_find_in_tag_browser(menu, find_action, 'authors', author)
+        menu.addAction(init_manage_action(book_info.manage_action, 'authors', author))
         if hasattr(book_info, 'search_internet'):
             menu.sia = sia = create_search_internet_menu(book_info.search_internet, author)
             menu.addMenu(sia)
@@ -270,8 +272,12 @@ def add_item_specific_entries(menu, data, book_info):
         if hasattr(book_info, 'search_requested'):
             menu.addAction(_('Search calibre for %s') % author,
                             lambda : book_info.search_requested('authors:"={}"'.format(author.replace('"', r'\"'))))
+            ac = book_info.remove_item_action
+            book_id = get_gui().library_view.current_id
+            ac.data = ('authors', author, book_id)
+            ac.setText(_('Remove %s from this book') % escape_for_menu(author))
+            menu.addAction(ac)
     elif dt in ('path', 'devpath'):
-        from calibre.gui2.ui import get_gui
         path = data['loc']
         ac = book_info.copy_link_action
         if isinstance(path, int):
@@ -306,19 +312,59 @@ def add_item_specific_entries(menu, data, book_info):
     return search_internet_added
 
 
+def create_copy_links(menu, data=None):
+    from calibre.gui2.ui import get_gui
+    db = get_gui().current_db.new_api
+    library_id = getattr(db, 'server_library_id', None)
+    if not library_id:
+        return
+    library_id = '_hex_-' + library_id.encode('utf-8').hex()
+    book_id = get_gui().library_view.current_id
+
+    def link(text, url):
+        def doit():
+            QApplication.instance().clipboard().setText(url)
+        menu.addAction(text, doit)
+
+    link(_('Show book in calibre'), f'calibre://show-book/{library_id}/{book_id}')
+    if data:
+        field = data.get('field')
+        if data['type'] == 'author':
+            field = 'authors'
+        if field and field in ('tags', 'series', 'publisher', 'authors') or is_category(field):
+            name = data['name' if data['type'] == 'author' else 'value']
+            eq = f'{field}:"={name}"'.encode('utf-8').hex()
+            link(_('Show books matching {} in calibre').format(name),
+                 f'calibre://search/{library_id}?eq={eq}')
+
+    for fmt in db.formats(book_id):
+        fmt = fmt.upper()
+        link(_('View {} format of book').format(fmt.upper()), f'calibre://view-book/{library_id}/{book_id}/{fmt}')
+
+
 def details_context_menu_event(view, ev, book_info, add_popup_action=False):
     url = view.anchorAt(ev.pos())
     menu = QMenu(view)
     menu.addAction(QIcon(I('edit-copy.png')), _('Copy all book details'), partial(copy_all, view))
+    cm = QMenu(_('Copy link to book'), menu)
+    cm.setIcon(QIcon(I('edit-copy.png')))
+    copy_links_added = False
     search_internet_added = False
     if url and url.startswith('action:'):
         data = json_loads(from_hex_bytes(url.split(':', 1)[1]))
+        create_copy_links(cm, data)
+        copy_links_added = True
         search_internet_added = add_item_specific_entries(menu, data, book_info)
     elif url and not url.startswith('#'):
         ac = book_info.copy_link_action
         ac.current_url = url
         ac.setText(_('Copy link location'))
         menu.addAction(ac)
+    if not copy_links_added:
+        create_copy_links(cm)
+    if list(cm.actions()):
+        menu.addMenu(cm)
+
     if not search_internet_added and hasattr(book_info, 'search_internet'):
         menu.addSeparator()
         menu.si = create_search_internet_menu(book_info.search_internet)
@@ -326,10 +372,14 @@ def details_context_menu_event(view, ev, book_info, add_popup_action=False):
     for ac in tuple(menu.actions()):
         if not ac.isEnabled():
             menu.removeAction(ac)
+    menu.addSeparator()
     if add_popup_action:
-        menu.addSeparator()
         ac = menu.addAction(_('Open the Book details window'))
         ac.triggered.connect(book_info.show_book_info)
+    else:
+        from calibre.gui2.ui import get_gui
+        ema = get_gui().iactions['Edit Metadata'].menuless_qaction
+        menu.addAction(_('Open the Edit metadata window') + '\t' + ema.shortcut().toString(QKeySequence.NativeText), ema.trigger)
     if len(menu.actions()) > 0:
         menu.exec_(ev.globalPos())
 # }}}
@@ -619,7 +669,7 @@ class BookInfo(HTMLDisplay):
 
     def remove_item_triggered(self):
         field, value, book_id = self.remove_item_action.data
-        if field:
+        if field and confirm(_('Are you sure you want to delete <b>{}</b> from the book?').format(value), 'book_details_remove_item'):
             self.remove_item.emit(book_id, field, value)
 
     def context_action_triggered(self, which):

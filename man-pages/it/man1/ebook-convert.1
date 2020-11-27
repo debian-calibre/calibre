@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "novembre 13, 2020" "5.5.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "novembre 27, 2020" "5.6.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -183,7 +183,7 @@ Opzioni per controllare l\(aqaspetto dell\(aqoutput
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Traslittera i caratteri unicode in caratteri ASCII. Usare con attenzione perché i caratteri unicode verranno sostituiti. Ad esempio, sostituirà \fB"\fPМихаил Горбачёв\fB"\fP con \fB"\fPMikhail Gorbachiov\fB"\fP\&. Nei casi in cui sono possibili più rappresentazioni di un carattere (ad esempio i caratteri in comune tra cinese e giapponese) verrà usata la rappresentazione del linguaggio scelto per l\fB\(aq\fPinterfaccia di calibre.
+Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPМихаил Горбачёв\fB"\fP with \fB"\fPMikhail Gorbachiov\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -213,7 +213,7 @@ Includere il font nell\fB\(aq\fPebook. Permette di specificare il font di \fB"\f
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+Per impostazione predefinita, Calibre utilizza la forma abbreviata per varie proprietà CSS come margine, imbottitura, bordo, ecc. Questa opzione gli farà usare invece il modulo espanso completo. Si noti che i CSS sono sempre espansi quando si generano file EPUB con il profilo di output impostato su uno dei profili Nook, in quanto il Nook non può gestire CSS abbreviati.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -230,6 +230,9 @@ textarea {
   <symbol viewBox="0 0 1792 1792" id="icon-print">
     <path d="M448 1536h896v-256h-896v256zm0-640h896v-384h-160q-40 0-68-28t-28-68v-160h-640v640zm1152 64q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128 0v416q0 13-9.5 22.5t-22.5 9.5h-224v160q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-160h-224q-13 0-22.5-9.5t-9.5-22.5v-416q0-79 56.5-135.5t135.5-56.5h64v-544q0-40 28-68t68-28h672q40 0 88 20t76 48l152 152q28 28 48 76t20 88v256h64q79 0 135.5 56.5t56.5 135.5z"/>
   </symbol>
+  <symbol viewBox="0 0 1792 1792" id="icon-bullhorn">
+    <path d="M1664 640q53 0 90.5 37.5t37.5 90.5-37.5 90.5-90.5 37.5v384q0 52-38 90t-90 38q-417-347-812-380-58 19-91 66t-31 100.5 40 92.5q-20 33-23 65.5t6 58 33.5 55 48 50 61.5 50.5q-29 58-111.5 83t-168.5 11.5-132-55.5q-7-23-29.5-87.5t-32-94.5-23-89-15-101 3.5-98.5 22-110.5h-122q-66 0-113-47t-47-113v-192q0-66 47-113t113-47h480q435 0 896-384 52 0 90 38t38 90v384zm-128 604v-954q-394 302-768 343v270q377 42 768 341z"/>
+  </symbol>
   <symbol viewBox="0 0 1792 1792" id="icon-heart">
     <path d="M896 1664q-26 0-44-18l-624-602q-10-8-27.5-26t-55.5-65.5-68-97.5-53.5-121-23.5-138q0-220 127-344t351-124q62 0 126.5 21.5t120 58 95.5 68.5 76 68q36-36 76-68t95.5-68.5 120-58 126.5-21.5q224 0 351 124t127 344q0 221-229 450l-623 600q-18 18-44 18z"/>
   </symbol>
@@ -841,6 +844,25 @@ function ρσ_range(start, stop, step) {
         });
         return ρσ_anonfunc;
     })();
+    ans.__len__ = (function() {
+        var ρσ_anonfunc = function () {
+            return length;
+        };
+        if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+            __module__ : {value: "__main__"}
+        });
+        return ρσ_anonfunc;
+    })();
+    ans.__repr__ = (function() {
+        var ρσ_anonfunc = function () {
+            return "range(" + ρσ_str.format("{}", start) + ", " + ρσ_str.format("{}", stop) + ", " + ρσ_str.format("{}", step) + ")";
+        };
+        if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+            __module__ : {value: "__main__"}
+        });
+        return ρσ_anonfunc;
+    })();
+    ans.__str__ = ans.toString = ans.__repr__;
     if (typeof Proxy === "function") {
         ans = new Proxy(ans, (function(){
             var ρσ_d = {};
@@ -25138,7 +25160,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.5.0";
+        CALIBRE_VERSION = "5.6.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -32264,6 +32286,8 @@ return this.__repr__();
         var create_button = ρσ_modules.widgets.create_button;
         var create_spinner = ρσ_modules.widgets.create_spinner;
 
+        var human_readable = ρσ_modules.utils.human_readable;
+
         bd_counter = 0;
         CLASS_NAME = "book-details-panel";
         SEARCH_INTERNET_CLASS = "book-details-search-internet";
@@ -32710,6 +32734,23 @@ return this.__repr__();
                 __module__ : {value: "book_list.book_details"}
             });
 
+            function process_size(field, fm, name, val) {
+                if (val) {
+                    try {
+                        add_row(name, human_readable(int(val)));
+                    } catch (ρσ_Exception) {
+                        ρσ_last_exception = ρσ_Exception;
+                        {
+                            add_row(name, val + "");
+                        } 
+                    }
+                }
+            };
+            if (!process_size.__argnames__) Object.defineProperties(process_size, {
+                __argnames__ : {value: ["field", "fm", "name", "val"]},
+                __module__ : {value: "book_list.book_details"}
+            });
+
             function process_languages(field, fm, name, val) {
                 var td, lang, k;
                 if (val && val.length) {
@@ -32842,6 +32883,8 @@ return this.__repr__();
                     func = process_publisher;
                 } else if (field === "languages") {
                     func = process_languages;
+                } else if (field === "size") {
+                    func = process_size;
                 } else if (datatype === "datetime") {
                     func = process_datetime;
                 } else if (datatype === "series") {
@@ -35265,6 +35308,7 @@ return this.__repr__();
                     ρσ_d["search_net"] = a("global-search", _("Search for selection on the net"), "internet_search");
                     ρσ_d["remove_highlight"] = a("trash", _("Remove this highlight"), "remove_highlight", true);
                     ρσ_d["clear"] = a("close", _("Clear selection"), "clear_selection");
+                    ρσ_d["speak"] = a("bullhorn", _("Speak aloud"), "speak_aloud");
                     return ρσ_d;
                 }).call(this);
                 qh = all_actions.ans.quick_highlight;
@@ -35356,6 +35400,7 @@ return this.__repr__();
             this.new_bookmark = SelectionBar.prototype.new_bookmark.bind(this);
             this.internet_search = SelectionBar.prototype.internet_search.bind(this);
             this.clear_selection = SelectionBar.prototype.clear_selection.bind(this);
+            this.speak_aloud = SelectionBar.prototype.speak_aloud.bind(this);
             this.create_highlight = SelectionBar.prototype.create_highlight.bind(this);
             this.quick_highlight = SelectionBar.prototype.quick_highlight.bind(this);
             this.quick_highlight_with_style = SelectionBar.prototype.quick_highlight_with_style.bind(this);
@@ -36536,6 +36581,17 @@ return this.__repr__();
             self.hide();
         };
         if (!SelectionBar.prototype.clear_selection.__module__) Object.defineProperties(SelectionBar.prototype.clear_selection, {
+            __module__ : {value: "read_book.selection_bar"}
+        });
+        SelectionBar.prototype.speak_aloud = function speak_aloud() {
+            var self = this;
+            var text;
+            text = self.view.currently_showing.selection.text;
+            if (text) {
+                ui_operations.speak_simple_text(text);
+            }
+        };
+        if (!SelectionBar.prototype.speak_aloud.__module__) Object.defineProperties(SelectionBar.prototype.speak_aloud, {
             __module__ : {value: "read_book.selection_bar"}
         });
         SelectionBar.prototype.create_highlight = function create_highlight() {
@@ -38979,6 +39035,43 @@ return this.__repr__();
                     return ρσ_anonfunc;
                 })(), "remove")));
             } else {
+                copy_actions = E.ul();
+                if (self.elements.link) {
+                    copy_actions.appendChild(ac(_("Copy link"), _("Copy the current link"), (function() {
+                        var ρσ_anonfunc = function () {
+                            [self.overlay.hide(), ui_operations.copy_selection(self.elements.link)];
+                        };
+                        if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                            __module__ : {value: "read_book.overlay"}
+                        });
+                        return ρσ_anonfunc;
+                    })(), "link"));
+                }
+                if (self.elements.img) {
+                    copy_actions.appendChild(ac(_("View image"), _("View the current image"), (function() {
+                        var ρσ_anonfunc = function () {
+                            [self.overlay.hide(), ui_operations.view_image(self.elements.img)];
+                        };
+                        if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                            __module__ : {value: "read_book.overlay"}
+                        });
+                        return ρσ_anonfunc;
+                    })(), "image"));
+                    if (window.navigator.clipboard) {
+                        copy_actions.appendChild(ac(_("Copy image"), _("Copy the current image"), (function() {
+                            var ρσ_anonfunc = function () {
+                                [self.overlay.hide(), ui_operations.copy_image(self.elements.img)];
+                            };
+                            if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                                __module__ : {value: "read_book.overlay"}
+                            });
+                            return ρσ_anonfunc;
+                        })(), "copy"));
+                    }
+                }
+                if (copy_actions.childNodes.length) {
+                    actions_div.appendChild(copy_actions);
+                }
             }
             container.appendChild(ρσ_interpolate_kwargs.call(this, set_css, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, set_css, [E.div(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_exists.d(ρσ_exists.d(self.overlay.view.book).metadata).title || _("Unknown")].concat([ρσ_desugar_kwargs({style: "max-width: 90%; text-overflow: ellipsis; font-weight: bold; white-space: nowrap; overflow: hidden"})])), ρσ_interpolate_kwargs.call(E, E.div, [self.date_formatter.format(new Date)].concat([ρσ_desugar_kwargs({id: timer_id(), style: "max-width: 9%; white-space: nowrap; overflow: hidden"})])))].concat([ρσ_desugar_kwargs({display: "flex", justify_content: "space-between", align_items: "baseline", font_size: "smaller", padding: "0.5ex 1ex", border_bottom: "solid 1px currentColor"})])), actions_div].concat([ρσ_desugar_kwargs({class_: MAIN_OVERLAY_TS_CLASS, onclick: (function() {
                 var ρσ_anonfunc = function (evt) {
@@ -43039,6 +43132,8 @@ return this.__repr__();
             ui_operations.stop_waiting_for_messages_from = self.stop_waiting_for_messages_from.bind(self);
             ui_operations.update_metadata = self.update_metadata.bind(self);
             ui_operations.close_book = self.close_book.bind(self);
+            ui_operations.copy_image = self.copy_image.bind(self);
+            ui_operations.view_image = self.view_image.bind(self);
             ui_operations.open_url = (function() {
                 var ρσ_anonfunc = function (url) {
                     window.open(url, "_blank");
@@ -43098,6 +43193,21 @@ return this.__repr__();
                 };
                 if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
                     __argnames__ : {value: ["text", "html"]},
+                    __module__ : {value: "read_book.ui"}
+                });
+                return ρσ_anonfunc;
+            })();
+            ui_operations.speak_simple_text = (function() {
+                var ρσ_anonfunc = function (text) {
+                    var ut;
+                    if (!window.speechSynthesis) {
+                        return error_dialog(_("No speech support"), _("Your browser does not have support for Text-to-Speech"));
+                    }
+                    ut = new SpeechSynthesisUtterance(text);
+                    window.speechSynthesis.speak(ut);
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["text"]},
                     __module__ : {value: "read_book.ui"}
                 });
                 return ρσ_anonfunc;
@@ -43224,6 +43334,62 @@ return this.__repr__();
             self.base_url_data = Object.create(null);
         };
         if (!ReadUI.prototype.close_book.__module__) Object.defineProperties(ReadUI.prototype.close_book, {
+            __module__ : {value: "read_book.ui"}
+        });
+        ReadUI.prototype.copy_image = function copy_image(image_file_name) {
+            var self = this;
+            if (!ρσ_exists.d(self.view).book) {
+                return;
+            }
+            ui_operations.get_file(self.view.book, image_file_name, (function() {
+                var ρσ_anonfunc = function (blob, name, mimetype) {
+                    try {
+                        window.navigator.clipboard.write(ρσ_list_decorate([ new ClipboardItem((function(){
+                            var ρσ_d = Object.create(null);
+                            ρσ_d[mimetype] = blob;
+                            return ρσ_d;
+                        }).call(this)) ]));
+                    } catch (ρσ_Exception) {
+                        ρσ_last_exception = ρσ_Exception;
+                        if (ρσ_Exception instanceof Error) {
+                            var err = ρσ_Exception;
+                            error_dialog(_("Could not copy image"), str(err));
+                        } else {
+                            throw ρσ_Exception;
+                        }
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["blob", "name", "mimetype"]},
+                    __module__ : {value: "read_book.ui"}
+                });
+                return ρσ_anonfunc;
+            })());
+        };
+        if (!ReadUI.prototype.copy_image.__argnames__) Object.defineProperties(ReadUI.prototype.copy_image, {
+            __argnames__ : {value: ["image_file_name"]},
+            __module__ : {value: "read_book.ui"}
+        });
+        ReadUI.prototype.view_image = function view_image(image_file_name) {
+            var self = this;
+            if (!ρσ_exists.d(self.view).book) {
+                return;
+            }
+            ui_operations.get_file(self.view.book, image_file_name, (function() {
+                var ρσ_anonfunc = function (blob, name, mimetype) {
+                    var url;
+                    url = window.URL.createObjectURL(blob);
+                    window.open(url);
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["blob", "name", "mimetype"]},
+                    __module__ : {value: "read_book.ui"}
+                });
+                return ρσ_anonfunc;
+            })());
+        };
+        if (!ReadUI.prototype.view_image.__argnames__) Object.defineProperties(ReadUI.prototype.view_image, {
+            __argnames__ : {value: ["image_file_name"]},
             __module__ : {value: "read_book.ui"}
         });
         ReadUI.prototype.load_book = function load_book(library_id, book_id, fmt, metadata, force_reload) {
@@ -48365,7 +48531,7 @@ return this.__repr__();
                 }).call(this)));
                 g.appendChild(checkbox("smarten_punctuation", _("Smarten &punctuation")));
                 g.appendChild(checkbox("unsmarten_punctuation", _("&UnSmarten punctuation")));
-                g.appendChild(checkbox("asciiize", _("&Transliterate unicode characters to ASCII")));
+                g.appendChild(checkbox("asciiize", _("&Transliterate Unicode characters to ASCII")));
                 subhead(_("Lay&out"));
                 add_listener("remove_paragraph_spacing", (function() {
                     var ρσ_anonfunc = function (name) {

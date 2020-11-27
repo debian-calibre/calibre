@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "noviembre 13, 2020" "5.5.0" "calibre"
+.TH "CALIBREDB" "1" "noviembre 27, 2020" "5.6.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -219,13 +219,18 @@ Establece el autor de los libros añadidos
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-automerge, \-m
+Si se encuentran libros con libros y autores similares, añadir los formatos entrantes (archivos) automáticamente a los registros existentes. El valor «ignore» significa que los formatos duplicados se descartas. El valor «overwrite» significa que los formatos duplicados en la biblioteca se sustituyen por los archivos recién añadidos. El valor «new_record» significa que los formatos duplicados se ponen en un nuevo registro de libro.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-cover, \-c
 Ruta de la portada para usar para el libro añadido
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Añadir los libros a la base de datos aunque ya existan. La comparación se realiza sobre el título de los libros.
+Añadir los libros a la base de datos aunque ya existan. La comparación se realiza sobre el título y autores de los libros. Tenga en cuenta que la opción \fI\%\-\-automerge\fP tiene prioridad.
 .UNINDENT
 .INDENT 0.0
 .TP

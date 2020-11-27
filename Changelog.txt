@@ -23,11 +23,64 @@
 # - title by author
 # }}}
 
+{{{ 5.6.0 2020-11-27
+
+:: new features
+
+- Edit book: Show a non-modal popup for a few seconds to allow undoing file delete operations
+
+- [1903418] Device books view: Add an action to the context menu to easily jump to the matching book in the calibre library view
+
+- [1903270] Add ability to undo Generate cover in the Edit metadata screen, by long clicking the Generate cover button
+
+- Edit book: Allow adding tags to the list of tags for the insert tag button
+
+- calibredb add: New option --automerge to automatically merge duplicates
+
+- [1905646] Add an edit notes action to the context menu in the viewer highlights panel
+
+- [1903333] Content server viewer: Allow viewing images in a new window by right clicking them, matches the calibre builtin viewer behavior
+
+- [1903403] Book details window: Allow opening the edit metadata window using either the keyboard shortcut or the context menu
+
+- Allow copying the current search as a calibre:// URL by right clicking the search box
+
+- Book details panel: Add entries to copy calibre:// links for the current book to the context menu
+
+- Edit book: Upgrade book: Ask whether to keep the NCX based Table of Contents
+
+:: bug fixes
+
+- [1904310] Windows: Fix calibre portable launcher not working correctly from root directory in calibre 5.5
+
+- [1904505] macOS: Fix rendering of space after punctuation incorrect in Big Sur
+
+- [1905319] DOCX Input: When converting images placed using the obsolete VML markup default them to being inline rather than block images
+
+- [1905479] Metadata edit dialog: Fix keyboard shortcuts for bold/italic/underline not working when more than one comments editor widget is present on a single tab
+
+- [1905113] When using calibre://show-book URLs and the book is not found, clear any Virtual library or search restriction and then show the book
+
+- macOS: Fix calibre:// URLs not working from other documents
+
+- Fix calibre:// URL search action not changing library if needed
+
+- [1904305] annotation_count() template function displaying value for deleted annotations
+
+- [1905806] Edit book: Fix syntax highlighting not recognizing ends-with selector
+
+:: improved recipes
+- The BBC
+- Folha de Sao Paolo
+- Netzpolitik
+
+}}}
+
 {{{ 5.5.0 2020-11-13
 
 :: new features
 
-- Support the calibre:// URL scheme
+- [major] Support the calibre:// URL scheme
 
   Clicking on calibre:// URLs can be used to have calibre perform various actions.
   For details, see: https://manual.calibre-ebook.com/url_scheme.html
@@ -60,7 +113,7 @@
 
 - [1903825] Welcome wizard: Fix changing the language causing a empty folder to be created.
 
-- [1903699] Viewer: Fix regression causing custom shortcuts with shift key pressed not working
+- [1903699] Viewer: Fix regression causing custom shortcuts with Shift key pressed not working
 
 - [1903423] Viewer: In dark mode when showing images with transparency in the popup use a light background color as most images are designed with a light background color in mind.
 
@@ -112,7 +165,7 @@
 
 - Get Books: Update Google and Gutenberg plugins for website changes
 
-- [1900946] Viewer: Fix keyboard shortcuts using ctrl+alt+letter key not working on Windows.
+- [1900946] Viewer: Fix keyboard shortcuts using Ctrl+Alt+letter key not working on Windows.
 
 - [1900942] Viewer: Fix keyboard shortcuts to shrink/grow selection not working.
 
@@ -249,9 +302,9 @@ Only works with output formats such as EPUB that support CSS transforms
 
 - Viewer: Fix selection popup bar not always close to mouse when ending select-to-drag
 
-- Fix calibre-server not exiting on Ctrl+c on Windows
+- Fix calibre-server not exiting on Ctrl+C on Windows
 
-- [1897410] Content server OPDS feeds: Fix error if the metadata for a book contains particular unicode characters.
+- [1897410] Content server OPDS feeds: Fix error if the metadata for a book contains particular Unicode characters.
 
 - [1898167] Edit book: Reports tool: Fix a regression that broke sorting.
 
@@ -663,7 +716,7 @@ For books sent with this release of calibre, reconnecting the Kindle to calibre 
 
 - Viewer: Improve the interface for changing font sizes
 
-- Viewer: Add a keyboard shortcut (Ctrl+Alt+b) for adding a bookmark
+- Viewer: Add a keyboard shortcut (Ctrl+Alt+B) for adding a bookmark
 
 
 :: bug fixes
@@ -767,7 +820,7 @@ For books sent with this release of calibre, reconnecting the Kindle to calibre 
 
 - Edit book: Allow skipping confirmation dialog when marking non-first file as cover page
 
-- [1866742] Add a shortcut [Ctrl+Alt+p] to switch to the previously opened library.
+- [1866742] Add a shortcut [Ctrl+Alt+P] to switch to the previously opened library.
 
 
 :: bug fixes
@@ -778,7 +831,7 @@ For books sent with this release of calibre, reconnecting the Kindle to calibre 
 
 - Viewer: Ensure there is no bleed between pages when using single page per screen
 
-- Fix shift click not working reliably in the book list
+- Fix Shift click not working reliably in the book list
 
 - Fix edit open with applications not working from files browser in editor
 
@@ -820,11 +873,11 @@ For books sent with this release of calibre, reconnecting the Kindle to calibre 
 
 - [1864305] Content server: Add a button to delete all locally cached books.
 
-- Edit Book: Allow selecting the contents of a tag with Ctrl+Alt+t
+- Edit Book: Allow selecting the contents of a tag with Ctrl+Alt+T
 
 - Viewer: Save current position after 3 seconds of last position change. Useful if the viewer crashes on resume from sleep.
 
-- [1864356] Viewer: Add a keyboard shortcut (Ctrl+w) to toggle the scrollbar.
+- [1864356] Viewer: Add a keyboard shortcut (Ctrl+W) to toggle the scrollbar.
 
 - Viewer: Keyboard shortcuts to change number of columns (Ctrl+[ and Ctrl+])
 
@@ -864,13 +917,13 @@ For books sent with this release of calibre, reconnecting the Kindle to calibre 
 
 - Edit book: Preview panel: Allow right clicking on images to edit them
 
-- Add a new Quick select action to quickly select a virtual library with a few keystrokes. Activated by Ctrl+t or the Virtual library menu
+- Add a new Quick select action to quickly select a virtual library with a few keystrokes. Activated by Ctrl+T or the Virtual library menu
 
 - Viewer: Calculate default column widths based on current font size
 
 - [1862441] Viewer: Add a control to quit the viewer useful on touchscreens.
 
-- [1862432] Viewer: Add shortcut for showing metadata (Ctrl+n)
+- [1862432] Viewer: Add shortcut for showing metadata (Ctrl+N)
 
 
 :: bug fixes
@@ -1357,7 +1410,7 @@ If you turn on dark mode under the Windows Settings->Personalisation->Colors and
 
 - Viewer: Don't flash the home page before loading a book if a book has been specified
 
-- Viewer: Fix ctrl+m shortcut not working on Windows
+- Viewer: Fix Ctrl+M shortcut not working on Windows
 
 - Content server: Fix regression that caused series name in book details view not not be blue to indicate it is clickable
 

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "november 13, 2020" "5.5.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "november 27, 2020" "5.6.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -52,7 +52,7 @@ Efter att ha angivit in\- och utmatningsfilerna kan du anpassa konverteringen ge
 För fullständig dokumentation om konverteringssystemet, gå till
 conversion
 .sp
-När du skickar argument till \fBebook\-convert\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till \fBebook\-convert\fP som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .sp
 Alternativen och standardvärden för ändringsalternativ beror på både
 inmatning\- och utmatningsformat, därför bör du alltid kolla med:
@@ -120,7 +120,7 @@ Alternativ för att anpassa bearbetningen av ingående mobi fil
 .INDENT 0.0
 .TP
 .B \-\-input\-encoding
-Ange teckenkodning för inmatningsdokumentet. Detta alternativ åsidosätter eventuell teckenkodning som dokumentet själv anger. Särskilt användbart för dokument som inte deklarerar en kodning eller som har felaktiga kodningsdeklarationer.
+Ange teckenkodning för inmatningsdokumentet. Det här alternativet åsidosätter eventuell teckenkodning som dokumentet själv anger. Särskilt användbart för dokument som inte deklarerar en kodning eller som har felaktiga kodningsdeklarationer.
 .UNINDENT
 .SH ALTERNATIV FÖR UTMATNING
 .sp
@@ -128,12 +128,12 @@ Alternativ för att anpassa bearbetningen av utmatning epub
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
-Inaktivera delning vid sidbrytningar. Normalt delas inmatningsfilen automatiskt i två filer vid varje sidbrytning. Detta ger en e\-bok som kan tolkas snabbare och med mindre resurser. Hur som helst är delningen långsam, och om källfilen innehåller ett mycket stort antal sidbrytningar, bör du inaktivera delning vid sidbrytningar.
+Inaktivera delning vid sidbrytningar. Normalt delas inmatningsfilen automatiskt vid varje sidbrytning i två filer. Detta ger en utmatad e\-bok som kan tolkas snabbare och med mindre resurser. Att dela är dock långsamt och om din källfil innehåller ett mycket stort antal sidbrytningar bör du inaktivera delning vid sidbrytning.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-epub\-flatten
-Detta alternativ behövs endast om du tänker använda EPUB med FBReaderJ. Det plattar ut filsystemet inuti EPUB och lägger alla filer i den översta nivån.
+Det här alternativet behövs endast om du tänker använda EPUB med FBReaderJ. Det plattar ut filsystemet inuti EPUB och lägger alla filer i den översta nivån.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -163,17 +163,17 @@ Dela alla HTML\-filer som är större än denna storlek (i KiB). Detta är nödv
 .INDENT 0.0
 .TP
 .B \-\-no\-default\-epub\-cover
-Om inmatningsfilen inte har något omslag och du inte anger ett, skapas normalt ett standardomslag genererats med titel, författare, o.s.v. Med detta alternativ aktiverat skapas inga standardomslag.
+Om inmatningsfilen inte har något omslag och du inte anger ett, skapas normalt ett standardomslag genererats med titel, författare, o.s.v. Med det här alternativet aktiverat skapas inga standardomslag.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-no\-svg\-cover
-Använd inte SVG\-grafik till omslag. Använd om din EPUB\-fil kommer att användas på enheter som inte stöder SVG, t.ex. iPhone och JetBook Lite. Om detta alternativ inte väljs, kommer dessa enheter att visa ett tomt omslag.
+Använd inte SVG\-grafik till omslag. Använd om din EPUB\-fil kommer att användas på enheter som inte stöder SVG, t.ex. iPhone och JetBook Lite. Om det här alternativet inte väljs, kommer dessa enheter att visa ett tomt omslag.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-preserve\-cover\-aspect\-ratio
-När man använder ett SVG\-omslag kommer detta alternativ att leda till att omslaget skalas om för att täcka det tillgängliga skärmområdet, men bevarar fortfarande dess bildförhållande (förhållande mellan bredd och höjd). Det innebär att det kan finnas vita kanter på sidorna eller på toppen och botten av bilden, men bilden kommer aldrig att förvrängas. Om detta alternativ inaktiveras, kan bilden bli en aning förvrängd, men det kommer inte finnas några ramar.
+När man använder ett SVG\-omslag kommer det här alternativet att leda till att omslaget skalas om för att täcka det tillgängliga skärmområdet, men bevarar fortfarande dess bildförhållande (förhållande mellan bredd och höjd). Det innebär att det kan finnas vita kanter på sidorna eller på toppen och botten av bilden, men bilden kommer aldrig att förvrängas. Om det här alternativet inaktiveras, kan bilden bli en aning förvrängd, men det kommer inte finnas några ramar.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -191,12 +191,12 @@ Alternativ för utseende på utmatning
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Translitterera Unicode\-tecken till en ASCII\-representation. Används med försiktighet, eftersom detta kommer att ersätta Unicode\-tecken med ASCII. Till exempel kommer det att ersätta \fB"\fPМихаил Горбачёв\fB"\fP med \fB"\fPMikhail Gorbachiov\fB"\fP\&. Tänk också på att i de fall där det finns flera representationer av ett tecken (exempelvis tecken som delas av kinesiska och japanska) kommer representationen som grundar sig på aktuella calibre\-gränssnittsspråk att användas.
+Translitterera Unicode\-tecken till en ASCII\-representation. Används med försiktighet, eftersom detta kommer att ersätta Unicode\-tecken med ASCII. Till exempel kommer det att ersätta \fB"\fPМихаил Горбачёв\fB"\fP med \fB"\fPMikhail Gorbachiov\fB"\fP\&. Tänk också på att i de fall där det finns flera representationer av ett tecken (exempelvis tecken som delas av kinesiska och japanska) kommer representationen som grundar sig på aktuella calibre\-gränssnittsspråket att användas.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-base\-font\-size
-Grundteckenstorleken i punkter. Alla teckenstorlekar i den producerade boken kommer att skalas om baserat på den här storleken. Genom att välja en större storlek kan du få typsnittet i utmatningen större och vice versa. Som standard, när värdet är noll kommer grundteckenstorleken för typsnitt att väljas baserat på utmatningsprofilen du väljer.
+Grundteckenstorleken i punkter. Alla teckenstorlekar i den producerade boken kommer att skalas om baserat på den här storleken. Genom att välja en större storlek kan du få teckensnittet i utmatningen större och vice versa. Som standard, när värdet är noll kommer grundteckenstorleken för teckensnitt att väljas baserat på utmatningsprofilen du väljer.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -211,22 +211,22 @@ Inaktivera all omskalning av teckenstorlekar.
 .INDENT 0.0
 .TP
 .B \-\-embed\-all\-fonts
-Bädda in varje typsnitt som refereras i inmatningsdokumentet som inte redan är inbäddat. Detta kommer att söka i ditt system efter typsnitt och om de påträffas, kommer de att bäddas in. Inbäddning fungerar bara om det format du konverterar till stöder inbäddade typsnitt, t.ex. EPUB, AZW3, DOCX eller PDF. Se till att du har rätt licens för att bädda in typsnitt som används i detta dokument.
+Bädda in varje teckensnitt som refereras i inmatningsdokumentet som inte redan är inbäddat. Detta kommer att söka i ditt system efter teckensnitt och om de påträffas, kommer de att bäddas in. Inbäddning fungerar bara om det format du konverterar till stöder inbäddade teckensnitt, t.ex. EPUB, AZW3, DOCX eller PDF. Se till att du har rätt licens för att bädda in teckensnitt som används i detta dokument.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Bädda in den angivna typsnittsfamiljen i boken. Här anges \fB"\fPbas\fB"\fP\-typsnitt som används för boken. Om inmatningsdokumentet specificerar sina egna typsnitt, kan de åsidosätta detta bastypsnitt. Du kan använda informationsalternativet filterformat för att ta bort typsnitt från inmatningsdokumentet. Observera att bädda in typsnitt endast fungerar med vissa utmatningsformat, främst EPUB, AZW3 och DOCX.
+Bädda in den angivna teckensnittsfamiljen i boken. Här anges \fB"\fPbas\fB"\fP\-teckensnitt som används för boken. Om inmatningsdokumentet specificerar sina egna teckensnitt, kan de åsidosätta detta grundteckensnitt. Du kan använda informationsalternativet filterformat för att ta bort teckensnitt från inmatningsdokumentet. Observera att bädda in teckensnitt endast fungerar med vissa utmatningsformat, främst EPUB, AZW3 och DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-Som standard kommer Calibre använda stenografiformen för olika CSS\-egenskaper såsom marginal, utfyllnad, kanter, etc. Detta alternativ kommer att få den att använda hela expanderade formen istället. Observera att CSS alltid är expanderat vid generering av EPUB\-filer med utgångsprofilen inställd på en av Nook profiler eftersom Nook inte kan hantera stenografi CSS.
+Som standard kommer Calibre använda stenografiformen för olika CSS\-egenskaper såsom marginal, utfyllnad, kanter, etc. Det här alternativet kommer att få den att använda hela expanderade formen istället. Observera att CSS alltid är expanderat vid generering av EPUB\-filer med utgångsprofilen inställd på en av Nook profiler eftersom Nook inte kan hantera stenografi CSS.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-extra\-css
-Antingen sökvägen till en CSS\-formatmall eller rå CSS. Denna CSS\-kod kommer att läggas till formatreglerna i källfilen. De kan också användas för att åsidosätta källfilens bestämmelser.
+Antingen sökvägen till ett CSS\-formatmall eller rå CSS. Denna CSS läggs till i formatreglerna från källfilen, så den kan användas för att åsidosätta dessa regler.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -236,7 +236,7 @@ En kommaseparerad lista över CSS\-egenskaper som kommer att tas bort från alla
 .INDENT 0.0
 .TP
 .B \-\-font\-size\-mapping
-Omvandlar CSS\-typsnittsnamn till teckenstorlekar i punkter. En exempelinställning är 12,12,14,16,18,20,22,24. Detta konverterar storlekarna xx\-liten till xx\-stor, den sista storleken används för enorma typsnitt. Omskalningsalgoritmen använder dessa storlekar för att på ett smart sätt skala om typsnitten. Som standard används en kartläggning baserad på din valda utmatningsprofil.
+Omvandlar CSS\-teckensnittsnamn till teckenstorlekar i punkter. En exempelinställning är 12,12,14,16,18,20,22,24. Detta konverterar storlekarna xx\-liten till xx\-stor, den sista storleken används för enorma teckensnitt. Omskalningsalgoritmen använder dessa storlekar för att på ett smart sätt skala om teckensnitten. Som standard används en kartläggning baserad på din valda utmatningsprofil.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -251,7 +251,7 @@ Ställ in höjden på infogade tomma rader (i EM). Höjden på raderna mellan pu
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Bevara ligaturer som finns i inmatningsdokumentet. En ligatur är en speciell framställning ett teckenpar som ff, fi, fl och så vidare. De flesta läsenheter saknar stöd för ligaturer i deras standardtypsnitt så det är osannolikt att de återges korrekt. Som standard konverterar calibre en ligatur till motsvarande par av vanliga tecken. Detta alternativ kommer att bevara ligaturerna istället.
+Bevara ligaturer som finns i inmatningsdokumentet. En ligatur är en speciell framställning ett teckenpar som ff, fi, fl och så vidare. De flesta läsenheter saknar stöd för ligaturer i deras standardteckensnitt så det är osannolikt att de återges korrekt. Som standard konverterar calibre en ligatur till motsvarande par av vanliga tecken. Det här alternativet kommer att bevara ligaturerna istället.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -261,27 +261,27 @@ Radavståndet i punkter. Anpassar avståndet mellan på varandra följande textr
 .INDENT 0.0
 .TP
 .B \-\-linearize\-tables
-Vissa dokument med dålig formgivning använder tabeller för att anpassa textflödet på sidan. När dessa dokument konverteras finns ofta text som går utanför sidan och andra artefakter. Detta alternativ kommer att extrahera innehållet från tabellerna och presentera det linjärt.
+Vissa dokument med dålig formgivning använder tabeller för att anpassa textflödet på sidan. När dessa dokument konverteras finns ofta text som går utanför sidan och andra artefakter. Det här alternativet kommer att extrahera innehållet från tabellerna och presentera det linjärt.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-bottom
-Ställ in nedre marginalen i punkter. Standard är 5.0. Att ställa in detta till mindre än noll kommer att orsaka att ingen marginal ställs in (marginalinställningen i originaldokumentet kommer att bevaras). Obs: Sidorienterade format som PDF och DOCX har egna marginalinställningar som tar företräde.
+Ställ in nedre marginalen i punkter. Standard är 5.0. Om du ställer in det här till mindre än noll kommer ingen marginal att ställas in (marginalinställningen i originaldokumentet bevaras). Obs: Sidorienterade format som PDF och DOCX har egna marginalinställningar som har företräde.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-left
-Ställ in vänstra marginalen i punkter. Standard är 5.0. Att ställa in detta till mindre än noll kommer att orsaka att ingen marginal ställs in (marginalinställningen i originaldokumentet kommer att bevaras). Obs: Sidorienterade format som PDF och DOCX har egna marginalinställningar som tar företräde.
+Ställ in vänstra marginalen i punkter. Standard är 5.0. Om du ställer in det här till mindre än noll kommer ingen marginal att ställas in (marginalinställningen i originaldokumentet bevaras). Obs: Sidorienterade format som PDF och DOCX har egna marginalinställningar som har företräde.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-right
-Ställ in högra marginalen i punkter. Standard är 5.0. Att ställa in detta till mindre än noll kommer att orsaka att ingen marginal ställs in (marginalinställningen i originaldokumentet kommer att bevaras). Obs: Sidorienterade format som PDF och DOCX har egna marginalinställningar som tar företräde.
+Ställ in högra marginalen i punkter. Standard är 5.0. Om du ställer in det här till mindre än noll kommer ingen marginal att ställas in (marginalinställningen i originaldokumentet bevaras). Obs: Sidorienterade format som PDF och DOCX har egna marginalinställningar som har företräde.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-top
-Ställ in övre marginalen i punkter. Standard är 5.0. Att ställa in detta till mindre än noll kommer att orsaka att ingen marginal ställs in (marginalinställningen i originaldokumentet kommer att bevaras). Obs: Sid orienterade format som PDF och DOCX har egna marginalinställningar som tar företräde.
+Ställ in övre marginalen i punkter. Standard är 5.0. Om du ställer in det här till mindre än noll kommer ingen marginal att ställas in (marginalinställningen i originaldokumentet bevaras). Obs: Sidorienterade format som PDF och DOCX har egna marginalinställningar som har företräde.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -291,7 +291,7 @@ Den minsta radavståndet, som andel av elementets beräknat m.h.a. teckenstorlek
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing
-Tar bort mellanrum mellan stycken. Indenterar även första raden på det nya stycket 1,5 em. Mellanrum kan inte tas bort om källfilen inte använder stycken (<p>\- eller <div>\-markeringar).
+Ta bort avståndet mellan styckena. Drar även in första raden på det nya stycket med 1,5 em. Avståndsavlägsnande fungerar inte om källfilen inte använder stycken (<p> eller <div> taggar).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -306,7 +306,7 @@ Omvandla rena citat, bindestreck och ellips till deras typografiskt korrekta mot
 .INDENT 0.0
 .TP
 .B \-\-subset\-embedded\-fonts
-Använd delmängd av alla inbäddade typsnitt. Varje inbäddat typsnitt reduceras till endast innehålla de glyfer som används i detta dokument. Detta minskar storleken på typsnittsfiler. Användbart om du bäddar in ett särskilt stort typsnitt med massor av oanvända glyfer.
+Använd delmängd av alla inbäddade teckensnitt. Varje inbäddat teckensnitt reduceras till endast innehålla de glyfer som används i detta dokument. Detta minskar storleken på teckensnittsfiler. Användbart om du bäddar in ett särskilt stort teckensnitt med massor av oanvända glyfer.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -338,7 +338,7 @@ Ta bort tomma stycken ur dokumentet när de finns mellan varannan paragraf
 .INDENT 0.0
 .TP
 .B \-\-disable\-fix\-indents
-Vänd indrag skapas från flera icke\-brytande mellanslag enheter i CSS indrag.
+Vändningsindrag som skapats från flera icke\-brytande mellanslag enheter i CSS indrag.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -382,7 +382,7 @@ Ersätt scenbrytningar med den angivna texten. Som standard är texten från inm
 .UNINDENT
 .SH SÖK OCH ERSÄTT
 .sp
-Ändra dokumentets text och struktur med hjälp av användardefinierade mönster.
+Ändra dokumenttexten och strukturen med användardefinierade mönster.
 .INDENT 0.0
 .TP
 .B \-\-search\-replace
@@ -467,7 +467,7 @@ Anpassa hur innehållsförteckningen genereras. Om källfilen har en innehållsf
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc
-När du skapar en innehållsförteckning från länkar i inmatning dokumentet, tillåter dubbla poster, d.v.s. att fler än en post med samma text, förutsatt att de hänvisar till en annan plats.
+När du skapar en innehållsförteckning från länkar i inmatningsdokumentet, tillåt dubbla poster, d.v.s. tillåt mer än en post med samma text, förutsatt att de pekar på en annan plats.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -487,7 +487,7 @@ XPath\-uttryck som anger alla markeringar som ska läggas till i innehållsfört
 .INDENT 0.0
 .TP
 .B \-\-max\-toc\-links
-Högsta antal länkar för att infoga i innehållsförteckningen. Ställ in på 0 för att inaktivera. Grundinställning är: 50. Länkarna läggs endast till innehållsförteckningen om antalet upptäckta kapitel är lägre än tröskelvärdet.
+Högst antal länkar för att infoga i innehållsförteckningen. Ställ in på 0 för att inaktivera. Standard är: 50. Länkarna läggs endast till innehållsförteckningen om antalet upptäckta kapitel är lägre än tröskelvärdet.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -603,7 +603,7 @@ Alternativ för att hjälpa till att felsöka konverteringen
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Spara utmatning från olika stadier av konverteringssekvensen till den angivna katalogen. Användbart om du är osäker på i vilket steg ett fel uppträder.
+Spara utmatning från olika skeden i konverteringssekvensen till den angivna mappen. Användbart om du är osäker i vilket skede av konverteringsprocessen ett fel uppstår.
 .UNINDENT
 .INDENT 0.0
 .TP

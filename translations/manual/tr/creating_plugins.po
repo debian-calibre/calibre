@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-23 07:53+0530\n"
-"PO-Revision-Date: 2020-05-23 02:23+0000\n"
+"POT-Creation-Date: 2020-11-26 07:03+0000\n"
+"PO-Revision-Date: 2020-11-22 15:44+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Turkish (http://www.transifex.com/calibre/calibre/language/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Language: tr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:4
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:4
 msgid "Writing your own plugins to extend calibre's functionality"
 msgstr "Calibre'nin işlevselliğini artırmak için kendi eklentilerinizi yazmak"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:6
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:6
 msgid ""
 "calibre has a very modular design. Almost all functionality in calibre comes"
 " in the form of plugins. Plugins are used for conversion, for downloading "
@@ -33,32 +33,32 @@ msgid ""
 "plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:8
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:8
 msgid ""
 "Here, we will teach you how to create your own plugins to add new features "
 "to calibre."
 msgstr "Burda, calibre'ye yeni işlevler kazandırmak için kendi eklentilerinizi nasıl oluşturacağınızı öğreteceğiz."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:13
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:13
 msgid "Contents"
 msgstr "İçindekiler"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:15
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:15
 msgid "This only applies to calibre releases >= 0.8.60"
 msgstr "Bu yalnızca >= 0.8.60 calibre sürümleri ile mümkündür"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:18
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:18
 msgid "Anatomy of a calibre plugin"
 msgstr "Bir calibre eklentisinin anatomisi"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:20
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:20
 msgid ""
 "A calibre plugin is very simple, it's just a ZIP file that contains some "
 "Python code and any other resources like image files needed by the plugin. "
 "Without further ado, let's see a basic example."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:24
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:24
 msgid ""
 "Suppose you have an installation of calibre that you are using to self "
 "publish various e-documents in EPUB and MOBI formats. You would like all "
@@ -68,26 +68,26 @@ msgid ""
 "enter the following Python code into it:"
 msgstr "Çeşitli e-belgeleri EPUB ve MOBI biçimlerinde dağıtmak için kullandığınız bir calibre kurulumunuz olduğunu varsayın. Calibre tarafından üretilen tüm dosyaların yayıncısının \"Merhaba dünya\" olmasını istersiniz, bunu şu şekilde yapabilirsiniz. :file:`__init__.py` isimli bir dosya oluşturun (bu özel bir isimdir ve eklentinizin ana dosyası için her zaman kullanılmak zorundadır) ve aşağıdaki Python kodunu girin:"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:32
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:32
 msgid ""
 "That's all. To add this code to calibre as a plugin, simply run the "
 "following in the directory in which you created :file:`__init__.py`::"
 msgstr "Bu kadar. Bu kodu calibre'ye eklenti olarak eklemek için :file:`__init__.py` dosyasını oluşturduğunuz dizinde aşağıdaki komutu çalıştırın::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:38
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:38
 msgid ""
 "On macOS, the command line tools are inside the calibre bundle, for example,"
 " if you installed calibre in :file:`/Applications` the command line tools "
 "are in :file:`/Applications/calibre.app/Contents/MacOS/`."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:42
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:42
 msgid ""
 "You can download the Hello World plugin from `helloworld_plugin.zip  <https"
 "://calibre-ebook.com/downloads/helloworld_plugin.zip>`_."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:45
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:45
 msgid ""
 "Every time you use calibre to convert a book, the plugin's :meth:`run` "
 "method will be called and the converted book will have its publisher set to "
@@ -95,11 +95,11 @@ msgid ""
 "example that actually adds a component to the user interface."
 msgstr "Calibre kullanarak her bir kitap dönüştürme işlemi yaptığınızda, eklentinin :meth:`run` metodu çağrılacak ve dönüştürülen kitabın yayımcısı olarak \"Merhaba Dünya\" ayarlanacak. Bu önemsiz bir eklenti, daha karmaşık ve kullanıcı arayüzüne bir şeyler ekleyen bir tanesine geçelim."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:50
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:50
 msgid "A User Interface plugin"
 msgstr "Kullanıcı Arayüzü eklentisi"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:52
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:52
 msgid ""
 "This plugin will be spread over a few files (to keep the code clean). It "
 "will show you how to get resources (images or data files) from the plugin "
@@ -108,24 +108,24 @@ msgid ""
 " calibre."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:57
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:57
 msgid ""
 "You can download this plugin from `interface_demo_plugin.zip <https"
 "://calibre-ebook.com/downloads/interface_demo_plugin.zip>`_"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:61
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:61
 msgid ""
 "The first thing to note is that this ZIP file has a lot more files in it, "
 "explained below, pay particular attention to ``plugin-import-name-"
 "interface_demo.txt``."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:77
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:77
 msgid "**plugin-import-name-interface_demo.txt**"
 msgstr "**plugin-import-name-interface_demo.txt**"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:65
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:65
 msgid ""
 "An empty text file used to enable the multi-file plugin magic. This file "
 "must be present in all plugins that use more than one .py file. It should be"
@@ -135,7 +135,7 @@ msgid ""
 "like::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:71
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:71
 msgid ""
 "The prefix ``calibre_plugins`` must always be present. ``some_name`` comes "
 "from the filename of the empty text file. ``some_module`` refers to  "
@@ -146,76 +146,76 @@ msgid ""
 "\"just work\"."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:76
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:76
 msgid ""
 "The name you use for ``some_name`` enters a global namespace shared by all "
 "plugins, **so make it as unique as possible**. But remember that it must be "
 "a valid Python identifier (only alphabets, numbers and the underscore)."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:80
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:80
 msgid "**__init__.py**"
 msgstr "**__init__.py**"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:80
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:80
 msgid "As before, the file that defines the plugin class"
 msgstr "Daha önce olduğu gibi, eklenti sınıfını belirleyen dosya"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:83
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:83
 msgid "**main.py**"
 msgstr "**main.py**"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:83
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:83
 msgid "This file contains the actual code that does something useful"
 msgstr "Bu dosya işe yarar bir şeyler yapan gerçek kodu içerir"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:86
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:86
 msgid "**ui.py**"
 msgstr "**ui.py**"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:86
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:86
 msgid "This file defines the interface part of the plugin"
 msgstr "Bu dosya eklentinin arayüz kısmını tanımlar"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:89
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:89
 msgid "**images/icon.png**"
 msgstr "**images/icon.png**"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:89
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:89
 msgid "The icon for this plugin"
 msgstr "Eklenti için simge"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:92
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:92
 msgid "**about.txt**"
 msgstr "**about.txt**"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:92
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:92
 msgid "A text file with information about the plugin"
 msgstr "Eklenti hakkında bilgi veren bir metin dosyası"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:97
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:97
 msgid "**translations**"
 msgstr "**translations**"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:95
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:95
 msgid ""
 "A folder containing .mo files with the translations of the user interface of"
 " your plugin into different languages. See below for details."
 msgstr "Eklentinizin değişik dillere çevirilerini içeren .mo dosyalarını içeren bir dizin. Detaylar için aşağıya bakın."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:99
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:99
 msgid "Now let's look at the code."
 msgstr "Şimdi koda bakalım."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:102
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:102
 msgid "__init__.py"
 msgstr "__init__.py"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:104
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:104
 msgid "First, the obligatory ``__init__.py`` to define the plugin metadata:"
 msgstr "Önce, eklenti metadatasını tanımlamak için zorunlu ``__init__.py``:"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:109
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:109
 msgid ""
 "The only noteworthy feature is the field :attr:`actual_plugin`. Since "
 "calibre has both command line and GUI interfaces, GUI plugins like this one "
@@ -225,52 +225,52 @@ msgid ""
 "context."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:114
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:114
 msgid ""
 "Remember that for this to work, you must have a plugin-import-name-"
 "some_name.txt file in your plugin ZIP file, as discussed above."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:117
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:117
 msgid ""
 "Also there are a couple of methods for enabling user configuration of the "
 "plugin. These are discussed below."
 msgstr "Ayrıca eklentinin kullanıcı yapılandırmasının etkinleştirilmesi için bir kaç metod bulunmaktadır. Bunlardan aşağıda söz edilmektedir."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:120
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:120
 msgid "ui.py"
 msgstr "ui.py"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:122
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:122
 msgid ""
 "Now let's look at ui.py which defines the actual GUI plugin. The source code"
 " is heavily commented and should be self explanatory:"
 msgstr "Şimdi asıl GUI eklentisini tanımlayan ui.py ye bakalım. Kaynak kod yoğun şekilde yorumlanmıştır, kendini açıklıyor olması lazım:"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:128
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:212
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:128
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:212
 msgid "main.py"
 msgstr "main.py"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:130
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:130
 msgid "The actual logic to implement the Interface Plugin Demo dialog."
 msgstr "Arayüz Eklenti Tanıtım iletişim penceresini uygulayan asıl mantıksal kısım."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:136
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:136
 msgid "Getting resources from the plugin ZIP file"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:138
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:138
 msgid ""
 "calibre's plugin loading system defines a couple of built-in functions that "
 "allow you to conveniently get files from the plugin ZIP file."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:145
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:145
 msgid "**get_resources(name_or_list_of_names)**"
 msgstr "**get_resources(isim_veya_isim_listesi)**"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:141
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:141
 msgid ""
 "This function should be called with a list of paths to files inside the ZIP "
 "file. For example to access the file icon.png in the directory images in the"
@@ -282,55 +282,55 @@ msgid ""
 "present in the returned dict."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:149
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:149
 msgid "**get_icons(name_or_list_of_names)**"
 msgstr "**get_icons(isim_veya_isim_listesi)**"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:148
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:148
 msgid ""
 "A convenience wrapper for get_resources() that creates QIcon objects from "
 "the raw bytes returned by get_resources. If a name is not found in the ZIP "
 "file the corresponding QIcon will be null."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:152
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:152
 msgid "Enabling user configuration of your plugin"
 msgstr "Eklentiniz için kullanıcı yapılandırmasını etkinleştirmek"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:154
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:154
 msgid ""
 "To allow users to configure your plugin, you must define three methods in "
 "your base plugin class, **is_customizable**, **config_widget** and "
 "**save_settings** as shown below:"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:165
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:165
 msgid ""
 "calibre has many different ways to store configuration data (a legacy of its"
 " long history). The recommended way is to use the **JSONConfig** class, "
 "which stores your configuration information in a .json file."
 msgstr "calibre'nin yapılandırma verisi saklamak için bir çok yöntemi vardır (uzun geçmişinden miras). Önerilen metod **JSONConfig** sınıfının kullanılmasıdır, bu da yapılandırmanızı bir .json dosyasında tutar."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:167
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:167
 msgid ""
 "The code to manage configuration data in the demo plugin is in config.py:"
 msgstr "Tanıtım eklentisindeki yapılandırma verisini yöneten kod config.py'de:"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:172
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:172
 msgid ""
 "The ``prefs`` object is now available throughout the plugin code by a "
 "simple::"
 msgstr "``prefs`` nesnesi şimdi eklenti kodunda basitçe şu şekilde kullanılabilir::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:177
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:177
 msgid "You can see the ``prefs`` object being used in main.py:"
 msgstr "``prefs`` nesnesinin main.py'de kullanıldığını görebilirsiniz:"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:184
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:184
 msgid "Edit book plugins"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:186
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:186
 msgid ""
 "Now let's change gears for a bit and look at creating a plugin to add tools "
 "to the calibre book editor. The plugin is available here: "
@@ -338,20 +338,20 @@ msgid ""
 "ebook.com/downloads/editor_demo_plugin.zip>`_."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:190
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:190
 msgid ""
 "The first step, as for all plugins is to create the import name empty txt "
 "file, as described :ref:`above <import_name_txt>`. We shall name the file "
 "``plugin-import-name-editor_plugin_demo.txt``."
 msgstr "İlk adım, :ref:`above <import_name_txt>` de açıklandığı gibi tüm eklentiler için boş bir içe aktarma ismi dosyası oluşturmaktır. Eklentiyi ``plugin-import-name-editor_plugin_demo.txt`` olarak adlandıralım."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:194
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:194
 msgid ""
 "Now we create the mandatory ``__init__.py`` file that contains metadata "
 "about the plugin -- its name, author, version, etc."
 msgstr "Şimdi eklenti metadatasını içeren -- ismi, yazarı, sürümü vs. zorunlu ``__init__.py`` dosyasını oluşturuyoruz."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:200
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:200
 msgid ""
 "A single editor plugin can provide multiple tools each tool corresponds to a"
 " single button in the toolbar and entry in the :guilabel:`Plugins` menu in "
@@ -359,7 +359,7 @@ msgid ""
 "actions."
 msgstr "Tek bir düzenleyici eklenti her biri araç çubuğunda bir simgeye ve düzenleyicide :guilabel:`Eklentiler` menüsünde bir girdiye denk gelmek üzere bir çok araç sağlayabilir. Aracın birden çok eylemi  bulunması durumunda alt menüleri de olabilir."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:204
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:204
 msgid ""
 "The tools must all be defined in the file ``main.py`` in your plugin. Every "
 "tool is a class that inherits from the "
@@ -369,7 +369,7 @@ msgid ""
 ":class:`calibre.gui2.tweak_book.plugin.Tool` class for more details."
 msgstr "Araçların her biri eklentinizdeki ``main.py`` içinde tanımlanmalıdır. Her araç :class:`calibre.gui2.tweak_book.plugin.Tool` sınıfından türetilen bir sınıftır. Tanıtım eklentisindeki ``main.py`` ye bakalım, kaynak kod yoğun olarak yorumlanmış ve kendini anlatabiliyor durumdadır. Daha fazla detay için :class:`calibre.gui2.tweak_book.plugin.Tool` sınıfının API belgelerini okuyun."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:214
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:214
 msgid ""
 "Here we will see the definition of a single tool that will multiply all font"
 " sizes in the book by a number provided by the user. This tool demonstrates "
@@ -377,20 +377,20 @@ msgid ""
 "plugins, so you should read the (heavily commented) source code carefully."
 msgstr "Burda kitaptaki tüm yazı tipi boyutlarını kullanıcı tarafından sağlanan bir numarayla çarpan tek bir araç tanımı göreceğiz. Bu araç kendi eklentilerinizi geliştirirken ihtiyaç duyacağınız çeşitli önemli kavramı gösterir, yani (yoğun bir şekilde yorumlanmış) kaynak kodu dikkatli okumalısınız."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:222
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:222
 msgid ""
 "Let's break down ``main.py``. We see that it defines a single tool, named "
 "*Magnify fonts*. This tool will ask the user for a number and multiply all "
 "font sizes in the book by that number."
 msgstr "``main.py`` yi kısımlara ayıralım. *Magnify fonts* adında tek bir araç tanımladığını görüyoruz. Bu araç kullanıcıya bir sayı soracak ve kitaptaki tüm yazı tipi boyutlarını bu sayıyla çarpacak."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:226
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:226
 msgid ""
 "The first important thing is the tool name which you must set to some "
 "relatively unique string as it will be used as the key for this tool."
 msgstr "İlk önemli nokta, bu araç için anahtar olarak kullanılacağından benzersiz bir karakter dizisi olarak ayarlayacağınız araç ismidir."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:229
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:229
 msgid ""
 "The next important entry point is the "
 ":meth:`calibre.gui2.tweak_book.plugin.Tool.create_action`. This method "
@@ -401,7 +401,7 @@ msgid ""
 "runs the magnification code."
 msgstr "Sonraki önemli nokta da :meth:`calibre.gui2.tweak_book.plugin.Tool.create_action`. Bu metod eklenti araç çubuğu ve eklenti menüsünde görünen QAction nesnelerini oluşturur. Bunun yanında, isteğe bağlı olarak kullanıcının özelleştirebileceği bir klavye kısayolu atar. QAction tarafından tetiklenen sinyal kullanıcıya yazı tipi boyutu çarpanını soran ask_user() metoduna bağlıdır, bu da çarpma kodunu çalıştırır."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:237
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:237
 msgid ""
 "The magnification code is well commented and fairly simple. The main things "
 "to note are that you get a reference to the editor window as ``self.gui`` "
@@ -410,7 +410,7 @@ msgid ""
 "documented in the :class:`calibre.gui2.tweak_book.boss.Boss` class."
 msgstr "Çarpma kodu iyi belgelenmiş ve oldukça basittir. Dikkate alınacan temel şeyler düzenleyici pencereye ``self.gui`` ile, düzenleyici *Boss* una ``self.boss`` ile bir referans aldığınızdır. *Boss* düzenleyici kullanıcı arayüzünü kontrol eden nesnedir. :class:`calibre.gui2.tweak_book.boss.Boss` sınıfında belgelenmiş bir çok faydalı metodu vardır."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:243
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:243
 msgid ""
 "Finally, there is ``self.current_container`` which is a reference to the "
 "book being edited as a "
@@ -421,11 +421,11 @@ msgid ""
 "plugin code are documented in :ref:`polish_api`."
 msgstr "Son olarak :class:`calibre.ebooks.oeb.polish.container.Container` nesnesi olan düzenlenen kitaba referans olan ``self.current_container`` bulunmaktadır. Bu, kitabı, kitabı oluşturan HTML/CSS/resim dosyaları koleksiyonu olarak temsil eder ve daha bir çok faydalı iş yapan metodu vardır. Eklenti kodunuzda tekrar kullanabileceğiniz bir çok kullanışlı fonksiyon ve kapsayıcı nesne :ref:`polish_api` içinde belgelenmiştir."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:252
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:252
 msgid "Running User Interface plugins in a separate process"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:254
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:254
 msgid ""
 "If you are writing a user interface plugin that needs to make use of Qt "
 "WebEngine, it cannot be run in the main calibre process as it is not "
@@ -434,40 +434,40 @@ msgid ""
 "separate process. A simple example plugin follows that shows how to do this."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:261
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:261
 msgid ""
 "You can download the plugin from `webengine_demo_plugin.zip  <https"
 "://calibre-ebook.com/downloads/webengine_demo_plugin.zip>`_."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:264
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:264
 msgid "The important part of the plugin is in two functions:"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:273
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:273
 msgid ""
 "The ``show_demo()`` function asks the user for a URL and then runs the "
 "``main()`` function passing it that URL. The ``main()`` function displays "
 "the URL in a ``QWebEngineView``."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:279
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:279
 msgid "Adding translations to your plugin"
 msgstr "Eklentinize çeviriler eklemek"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:281
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:281
 msgid ""
 "You can have all the user interface strings in your plugin translated and "
 "displayed in whatever language is set for the main calibre user interface."
 msgstr "Eklentinizdeki tüm kullanıcı arayüzü karakter dizilerini ana calibre kullanıcı arayüzü için hangi dil seçildiyse o dile çevirip gösterebilirsiniz."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:284
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:284
 msgid ""
 "The first step is to go through your plugin's source code and mark all user "
 "visible strings as translatable, by surrounding them in _(). For example::"
 msgstr "İlk adım eklentinizin kaynak kodunun üstünden geçmek ve kullanıcıya görünür tüm metinleri _() içerisine alarak çevrilebilir olarak işaretlemektir. Örneğin::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:289
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:289
 msgid ""
 "Then use some program to generate .po files from your plugin source code. "
 "There should be one .po file for every language you want to translate into. "
@@ -475,17 +475,17 @@ msgid ""
 "`Poedit <https://poedit.net/>`_ program for this."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:294
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:294
 msgid ""
 "Send these .po files to your translators. Once you get them back, compile "
 "them into .mo files. You can again use Poedit for that, or just do::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:299
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:299
 msgid "Put the .mo files into the ``translations`` folder in your plugin."
 msgstr ".mo dosyalarını eklentinizdeki ``translations`` dizinine koyun."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:301
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:301
 msgid ""
 "The last step is to simply call the function `load_translations()` at the "
 "top of your plugin's .py files. For performance reasons you should only call"
@@ -494,23 +494,23 @@ msgid ""
 "``ui.py`` but not ``__init__.py``."
 msgstr "Son adım eklentinizin .py dosyalarının başına `load_translations()` fonksiyonunu eklemektir. Performans açısından bu fonksiyonu yalnızca çevrilebilir karakter dizilerinin olduğu dosyalara eklemelisiniz. Yani tipik bir kullanıcı arayüzü eklentisinde ``ui.py`` başında çağırırken ``__init__.py``de çağırmazsınız."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:307
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:307
 msgid ""
 "You can test the translations of your plugins by changing the user interface"
 " language in calibre under :guilabel:`Preferences->Interface->Look & feel` "
 "or by running calibre like this::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:313
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:313
 msgid ""
 "Replace ``de`` with the language code of the language you want to test."
 msgstr "``de`` yi test etmek istediğiniz dil koduyla değiştirin."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:316
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:316
 msgid "The plugin API"
 msgstr "Eklenti API'si"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:318
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:318
 msgid ""
 "As you may have noticed above, a plugin in calibre is a class. There are "
 "different classes for the different types of plugins in calibre. Details on "
@@ -518,36 +518,36 @@ msgid ""
 ":ref:`plugins`."
 msgstr "Yukarda fark etmiş olabileceğiniz gibi, calibre'de eklenti bir sınıftır. Calibre'de değişik türde eklentiler için değişik sınıflar bulunur. Tüm eklentiler için temel sınıf dahil her sınıfla ilgili detay :ref:`plugins` içinde bulunabilir."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:321
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:321
 msgid ""
 "Your plugin is almost certainly going to use code from calibre. To learn how"
 " to find various bits of functionality in the calibre code base, read the "
 "section on the calibre :ref:`code_layout`."
 msgstr "Eklentiniz çoğu durumda calibre'den de kod kullanacaktır. calibre kod tabanındaki fonksiyonellikle ilgili çeşitli bilgiler bulmak için, calibre'deki :ref:`code_layout` kısmını okuyun."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:326
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:326
 msgid "Debugging plugins"
 msgstr "Eklentilerde hata ayıklama"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:328
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:328
 msgid ""
 "The first, most important step is to run calibre in debug mode. You can do "
 "this from the command line with::"
 msgstr "İlk, en önemli adım calibre'yi hata ayıklama kipinde çalıştırmaktır. Bu işlemi komut satırından şu şekilde yapabilirsiniz::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:332
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:332
 msgid ""
 "Or from within calibre by right-clicking the :guilabel:`Preferences` button "
-"or using the `Ctrl+Shift+R` keyboard shortcut."
+"or using the :kbd:`Ctrl+Shift+R` keyboard shortcut."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:334
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:334
 msgid ""
 "When running from the command line, debug output will be printed to the "
 "console, when running from within calibre the output will go to a txt file."
 msgstr "Komut satırından çalıştırırken, hata ayıklama çıktısı konsola yazdırılacaktır, calibre içinden çalıştırılırken çıktı bir txt dosyasına gider."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:336
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:336
 msgid ""
 "You can insert print statements anywhere in your plugin code, they will be "
 "output in debug mode. Remember, this is Python, you really shouldn't need "
@@ -555,33 +555,33 @@ msgid ""
 "using just this debugging technique."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:338
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:338
 msgid ""
 "You can quickly test changes to your plugin by using the following command "
 "line::"
 msgstr "Eklentinize yaptığınızı değişiklikleri hızlıca şu komut satırıyla test edebilirsiniz::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:343
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:343
 msgid ""
 "This will shutdown a running calibre, wait for the shutdown to complete, "
 "then update your plugin in calibre and relaunch calibre."
 msgstr "Bu işlem calibre'yi kapatır, kapanmanın bitmesini bekler, eklentinizi calibre'de günceller ve calibre'yi baştan başlatır."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:346
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:346
 msgid "More plugin examples"
 msgstr "Daha fazla eklenti örneği"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:348
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:348
 msgid ""
 "You can find a list of many, sophisticated calibre plugins `here "
 "<https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:351
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:351
 msgid "Sharing your plugins with others"
 msgstr "Eklentilerinizi başkalarıyla paylaşmak"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:353
+#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:353
 msgid ""
 "If you would like to share the plugins you have created with other users of "
 "calibre, post your plugin in a new thread in the `calibre plugins forum "

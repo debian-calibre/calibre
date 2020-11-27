@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "WEB2DISK" "1" "november 13, 2020" "5.5.0" "calibre"
+.TH "WEB2DISK" "1" "november 27, 2020" "5.6.0" "calibre"
 .SH NAME
 web2disk \- web2disk
 .
@@ -43,12 +43,12 @@ web2disk URL
 .sp
 Där URL är t.ex. \fI\%https://google.com\fP
 .sp
-När du skickar argument till \fBweb2disk\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till \fBweb2disk\fP som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .SH [ALTERNATIV]
 .INDENT 0.0
 .TP
 .B \-\-base\-dir, \-d
-Baskatalogen där webbadressen sparas. Grundinställningen är .
+Baskatalogen där webbadressen sparas. Standard är .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -63,12 +63,12 @@ Hämta inte CSS\-formatmallar.
 .INDENT 0.0
 .TP
 .B \-\-encoding
-Teckenkodning för de webbplatser som du försöker hämta. Grundinställningen är att försöka uppskatta kodningen.
+Teckenkodningen för de webbplatser du försöker hända. Standarden är att försöka gissa kodningen.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-filter\-regexp
-Varje länk som matchar detta reguljära uttryck kommer att ignoreras. Detta alternativ kan anges flera gånger, i vilket fall så länge någon regexp matchar en länk, kommer det att ignoreras. Som standard ignoreras inga länkar. Om både filtrera regexp och matchar regexp specificeras, då används filtrera regexp först.
+Varje länk som matchar detta reguljära uttryck kommer att ignoreras. Det här alternativet kan anges flera gånger, i vilket fall så länge någon regexp matchar en länk, kommer det att ignoreras. Som standard ignoreras inga länkar. Om både filtrera regexp och matchar regexp specificeras, då används filtrera regexp först.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -78,17 +78,17 @@ visa denna hjälptext och avsluta
 .INDENT 0.0
 .TP
 .B \-\-match\-regexp
-Endast länkar som matchar det reguljära uttrycket kommer att följas. Detta alternativ kan anges flera gånger, då kommer länkar att följas så länge de matchar det reguljära uttrycket. Som standard följs alla länkar.
+Endast länkar som matchar det reguljära uttrycket kommer att följas. Det här alternativet kan anges flera gånger, då kommer länkar att följas så länge de matchar det reguljära uttrycket. Som standard följs alla länkar.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-files, \-n
-Högsta antal filer att hämta. Endast för filer med <a href> taggar. Grundinställning är 9223372036854775807
+Högsta antalet filer att hämta. Endast för filer med <a href> taggar. Standard är 9223372036854775807
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-recursions, \-r
-Högsta antal nivåer, d.v.s. länkdjup, att följa. Grundinställning 1
+Högst antal nivåer som ska återskapas, dvs. djupet på länkar som ska följas. Standard 1
 .UNINDENT
 .INDENT 0.0
 .TP

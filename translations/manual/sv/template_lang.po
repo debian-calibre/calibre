@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-29 05:31+0000\n"
-"PO-Revision-Date: 2020-10-18 13:35+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2020-11-26 07:03+0000\n"
+"PO-Revision-Date: 2020-11-20 09:06+0000\n"
+"Last-Translator: Jonatan Nyberg <jonatan.nyberg.karl@gmail.com>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -90,7 +90,7 @@ msgstr "och om en bok inte har en serie::"
 msgid ""
 "(calibre automatically removes multiple slashes and leading or trailing "
 "spaces)."
-msgstr "(calibre tar automatiskt flera snedstreck och inledande eller avslutande blanksteg)."
+msgstr "(calibre tar automatiskt flera snedstreck och inledande eller avslutande mellanslag)."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:47
 msgid "Advanced formatting"
@@ -306,7 +306,7 @@ msgid ""
 " `separator`, returning the number of items in the list. Most lists use a "
 "comma as the separator, but authors uses an ampersand. Examples: "
 "`{tags:count(,)}`, `{authors:count(&)}`"
-msgstr "``count(separator)`` -- tolkar värde som en lista med post åtskilda med `separator`, återger antalet post i listan. De flesta listor använder kommatecken som skiljetecken, men författarna använder ett et-tecken. Exempel: `{tags:count(,)}`, `{authors:count(&)}`"
+msgstr "``count(separator)`` -- tolkar värde som en lista med poster åtskilda med `separator`, återger antalet poster i listan. De flesta listor använder kommatecken som avskiljare men författarna använder ett et-tecken. Exempel: `{tags:count(,)}`, `{authors:count(&)}`"
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:122
 msgid ""
@@ -364,7 +364,7 @@ msgid ""
 "number zero. The last item can be returned using `list_item(-1,separator)`. "
 "If the item is not in the list, then the empty value is returned. The "
 "separator has the same meaning as in the `count` function."
-msgstr "``list_item(index, separator)`` -- tolkar fältet som en lista med post åtskilda med `separator`, återge` index`-posten. Den första elementet är siffran noll. Den sista punkten kan återges med `list_item (-1, separator)`. Om elementet inte finns i listan, då återges det tomma värdet. Avskiljaren har samma betydelse som i `count` funktionen."
+msgstr "``list_item(index, separator)`` -- tolkar fältet som en lista med poster åtskilda med `separator`, återge` index`-posten. Den första elementet är siffran noll. Den sista punkten kan återges med `list_item (-1, separator)`. Om elementet inte finns i listan, då återges det tomma värdet. Avskiljaren har samma betydelse som i `count` funktionen."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:129
 msgid ""
@@ -398,7 +398,7 @@ msgid ""
 "equal to key, and return the corresponding value. This function is "
 "particularly useful for extracting a value such as an ISBN from the set of "
 "identifiers for a book."
-msgstr "``select(key)`` -- tolka fältet som en kommaseparerad lista med poster, med posterna som formen \"id:värde\". Hitta paret med id som är lika med nyckeln och återge motsvarande värde. Denna funktion är särskilt användbar för att extrahera ett värde som en ISBN från uppsättningen identifierare för en bok."
+msgstr "``select(key)`` -- tolka fältet som en kommaseparerad lista över poster, med posterna som formen \"id:värde\". Hitta paret med id som är lika med nyckeln och återge motsvarande värde. Denna funktion är särskilt användbar för att extrahera ett värde som en ISBN från uppsättningen identifierare för en bok."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:133
 msgid ""
@@ -438,7 +438,7 @@ msgid ""
 "of zero. If an index is negative, then it counts from the end of the list. "
 "As a special case, an end_index of zero is assumed to be the length of the "
 "list. Examples::"
-msgstr "``subitems(start_index, end_index)`` -- Denna funktion används för att bryta isär listor över tagglika hierarkiska post såsom genrer. Det tolkar fältet som en kommaseparerad lista med taggliknande post, där varje post är en period separerad lista. Återger en ny lista görs genom att först hitta alla period separerad tagg liknande föremål, därefter för varje sådan post extrahera komponenterna från `start_index` till` end_index`, sedan kombinera resultaten tillbaka tillsammans. Den första komponenten i en period separerad lista har ett index på noll. Om ett index är negativ, så det räknas från slutet av listan. Som ett special fall är en END_INDEX av noll antas vara längden av listan. Exempel::"
+msgstr "``subitems(start_index, end_index)`` -- Denna funktion används för att bryta isär listor över tagglika hierarkiska post såsom genrer. Det tolkar fältet som en kommaseparerad lista över taggliknande post, där varje post är en period separerad lista. Återger en ny lista görs genom att först hitta alla period separerad tagg liknande föremål, därefter för varje sådan post extrahera komponenterna från `start_index` till` end_index`, sedan kombinera resultaten tillbaka tillsammans. Den första komponenten i en period separerad lista har ett index på noll. Om ett index är negativ, så det räknas från slutet av listan. Som ett special fall är en END_INDEX av noll antas vara längden av listan. Exempel::"
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:145
 msgid ""
@@ -561,7 +561,7 @@ msgstr "funktioner måste få alla deras argument. Det finns inget standardvärd
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:183
 msgid "white space is ignored and can be used anywhere within the expression."
-msgstr "blanksteg ignoreras och kan användas var som helst i uttrycket."
+msgstr "mellanslag ignoreras och kan användas var som helst i uttrycket."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:184
 msgid ""
@@ -745,7 +745,7 @@ msgid ""
 "spaces. It is up to you to choose separator strings that do not occur in "
 "author names or links. An author is included even if the author link is "
 "empty."
-msgstr "``author_links(val_separator, pair_separator)`` -- återger en sträng som innehåller en lista med författare och att författarens länkvärden i form ``author1 val_separator author1link pair_separator author2 val_separator author2link`` o.s.v. En författare är separerad från dess länk värde av ``val_separator`` sträng utan tillagda blanksteg. ``author:linkvalue`` paren skiljs åt av ``pair_separator`` strängargument utan tillagda blanksteg. Det är upp till dig att välja avskiljare som inte förekommer i författarnamn eller länkar. En författare ingår, även om författaren länken är tom."
+msgstr "``author_links(val_separator, pair_separator)`` -- återger en sträng som innehåller en lista med författare och att författarens länkvärden i form ``author1 val_separator author1link pair_separator author2 val_separator author2link`` o.s.v. En författare är separerad från dess länk värde av ``val_separator`` sträng utan tillagda mellanslag. ``author:linkvalue`` paren skiljs åt av ``pair_separator`` strängargument utan tillagda mellanslag. Det är upp till dig att välja avskiljare som inte förekommer i författarnamn eller länkar. En författare ingår, även om författaren länken är tom."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:245
 msgid ""
@@ -756,7 +756,7 @@ msgid ""
 "author sort values in this list are in the same order as the authors of the "
 "book. If you want spaces around ``val_separator`` then include them in the "
 "separator string"
-msgstr "``author_sorts(val_separator)`` -- återger en sträng med en lista med författarens sorteringsvärden för författarna till boken. Sorteringen är  författarens metadata (som skiljer sig från den author_sort i böcker). Den återgivna listan har formen författaren sortera 1 ``val_separator`` författare sort 2 o.s.v. Författaren sortera värdena i denna lista är i samma ordning som författarna till boken. Om du vill ha blanksteg runt ``val_separator`` så inkludera dem i avskiljarsträngen"
+msgstr "``author_sorts(val_separator)`` -- återger en sträng med en lista med författarens sorteringsvärden för författarna till boken. Sorteringen är  författarens metadata (som skiljer sig från den author_sort i böcker). Den återgivna listan har formen författaren sortera 1 ``val_separator`` författare sort 2 o.s.v. Författaren sortera värdena i denna lista är i samma ordning som författarna till boken. Om du vill ha mellanslag runt ``val_separator`` så inkludera dem i avskiljarsträngen"
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:246
 msgid ""
@@ -915,7 +915,7 @@ msgid ""
 " See the `format_date()` function for details. You can use the select "
 "function to get the mod time for a specific format. Note that format names "
 "are always uppercase, as in EPUB."
-msgstr "``formats_modtimes(format_string)`` -- återger en kommaseparerad lista med kolonseparerade post som representerar modifieringstider för formaten i en bok. Den format_string parametern anger hur datumet ska formateras. Se `format_date()`-funktionen för detaljer. Du kan använda funktionen för val för att få modifieringstider för ett visst format. Observera att formatnamn är alltid versaler, som i EPUB."
+msgstr "``formats_modtimes(format_string)`` -- återger en kommaseparerad lista över kolonseparerade post som representerar modifieringstider för formaten i en bok. Den format_string parametern anger hur datumet ska formateras. Se `format_date()`-funktionen för detaljer. Du kan använda funktionen för val för att få modifieringstider för ett visst format. Observera att formatnamn är alltid versaler, som i EPUB."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:317
 msgid ""
@@ -923,7 +923,7 @@ msgid ""
 "items representing full path to the formats of a book. You can use the "
 "select function to get the path for a specific format. Note that format "
 "names are always uppercase, as in EPUB."
-msgstr "``formats_paths()`` -- återger en kommaseparerad lista med kolonseparerade post som representerar fullständig sökväg till format i en bok. Du kan använda select-funktionen för att få sökvägen för ett visst format. Observera att formatnamn är alltid versaler, som i EPUB."
+msgstr "``formats_paths()`` -- återger en kommaseparerad lista över kolonseparerade post som representerar fullständig sökväg till format i en bok. Du kan använda select-funktionen för att få sökvägen för ett visst format. Observera att formatnamn är alltid versaler, som i EPUB."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:318
 msgid ""
@@ -931,7 +931,7 @@ msgid ""
 "items representing sizes in bytes of the formats of a book. You can use the "
 "select function to get the size for a specific format. Note that format "
 "names are always uppercase, as in EPUB."
-msgstr "``formats_sizes()`` -- återger en kommaseparerad lista med kolonseparerade poster som representerar storlekar i oktetter av formaten i en bok. Du kan använda select-funktionen för att få storleken för ett visst format. Observera att formatnamn är alltid versaler, som i EPUB."
+msgstr "``formats_sizes()`` -- återger en kommaseparerad lista över kolonseparerade poster som representerar storlekar i oktetter av formaten i en bok. Du kan använda select-funktionen för att få storleken för ett visst format. Observera att formatnamn är alltid versaler, som i EPUB."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:319
 msgid ""

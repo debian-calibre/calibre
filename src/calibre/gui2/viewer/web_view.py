@@ -268,6 +268,7 @@ class ViewerBridge(Bridge):
     close_prep_finished = from_js(object)
     highlights_changed = from_js(object)
     open_url = from_js(object)
+    speak_simple_text = from_js(object)
 
     create_view = to_js()
     start_book_load = to_js()
@@ -463,15 +464,18 @@ class WebView(RestartingWebEngineView):
     paged_mode_changed = pyqtSignal()
     standalone_misc_settings_changed = pyqtSignal(object)
     view_created = pyqtSignal(object)
+    dispatch_on_main_thread_signal = pyqtSignal(object)
 
     def __init__(self, parent=None):
         self._host_widget = None
+        self._tts_client = None
         self.callback_id_counter = count()
         self.callback_map = {}
         self.current_cfi = self.current_content_file = None
         RestartingWebEngineView.__init__(self, parent)
         self.dead_renderer_error_shown = False
         self.render_process_failed.connect(self.render_process_died)
+        self.dispatch_on_main_thread_signal.connect(self.dispatch_on_main_thread)
         w = QApplication.instance().desktop().availableGeometry(self).width()
         QApplication.instance().palette_changed.connect(self.palette_changed)
         self.show_home_page_on_ready = True
@@ -514,6 +518,7 @@ class WebView(RestartingWebEngineView):
         self.bridge.close_prep_finished.connect(self.close_prep_finished)
         self.bridge.highlights_changed.connect(self.highlights_changed)
         self.bridge.open_url.connect(safe_open_url)
+        self.bridge.speak_simple_text.connect(self.speak_simple_text)
         self.bridge.export_shortcut_map.connect(self.set_shortcut_map)
         self.shortcut_map = {}
         self.bridge.report_cfi.connect(self.call_callback)
@@ -526,6 +531,32 @@ class WebView(RestartingWebEngineView):
         if parent is not None:
             self.inspector = Inspector(parent.inspector_dock.toggleViewAction(), self)
             parent.inspector_dock.setWidget(self.inspector)
+
+    @property
+    def tts_client(self):
+        if self._tts_client is None:
+            from calibre.gui2.tts.implementation import Client
+            self._tts_client = Client(self.dispatch_on_main_thread_signal.emit)
+        return self._tts_client
+
+    def dispatch_on_main_thread(self, func):
+        try:
+            func()
+        except Exception:
+            import traceback
+            traceback.print_exc()
+
+    def speak_simple_text(self, text):
+        from calibre.gui2.tts.errors import TTSSystemUnavailable
+        try:
+            self.tts_client.speak_simple_text(text)
+        except TTSSystemUnavailable as err:
+            return error_dialog(self, _('Text-to-Speech unavailable'), str(err), show=True)
+
+    def shutdown(self):
+        if self._tts_client is not None:
+            self._tts_client.shutdown()
+            self._tts_client = None
 
     def set_shortcut_map(self, smap):
         self.shortcut_map = smap

@@ -399,6 +399,25 @@ function ρσ_range(start, stop, step) {
         });
         return ρσ_anonfunc;
     })();
+    ans.__len__ = (function() {
+        var ρσ_anonfunc = function () {
+            return length;
+        };
+        if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+            __module__ : {value: "__main__"}
+        });
+        return ρσ_anonfunc;
+    })();
+    ans.__repr__ = (function() {
+        var ρσ_anonfunc = function () {
+            return "range(" + ρσ_str.format("{}", start) + ", " + ρσ_str.format("{}", stop) + ", " + ρσ_str.format("{}", step) + ")";
+        };
+        if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+            __module__ : {value: "__main__"}
+        });
+        return ρσ_anonfunc;
+    })();
+    ans.__str__ = ans.toString = ans.__repr__;
     if (typeof Proxy === "function") {
         ans = new Proxy(ans, (function(){
             var ρσ_d = {};
@@ -24494,7 +24513,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.5.0";
+        CALIBRE_VERSION = "5.6.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -31823,6 +31842,8 @@ return this.__repr__();
         var create_button = ρσ_modules.widgets.create_button;
         var create_spinner = ρσ_modules.widgets.create_spinner;
 
+        var human_readable = ρσ_modules.utils.human_readable;
+
         bd_counter = 0;
         CLASS_NAME = "book-details-panel";
         SEARCH_INTERNET_CLASS = "book-details-search-internet";
@@ -32269,6 +32290,23 @@ return this.__repr__();
                 __module__ : {value: "book_list.book_details"}
             });
 
+            function process_size(field, fm, name, val) {
+                if (val) {
+                    try {
+                        add_row(name, human_readable(int(val)));
+                    } catch (ρσ_Exception) {
+                        ρσ_last_exception = ρσ_Exception;
+                        {
+                            add_row(name, val + "");
+                        } 
+                    }
+                }
+            };
+            if (!process_size.__argnames__) Object.defineProperties(process_size, {
+                __argnames__ : {value: ["field", "fm", "name", "val"]},
+                __module__ : {value: "book_list.book_details"}
+            });
+
             function process_languages(field, fm, name, val) {
                 var td, lang, k;
                 if (val && val.length) {
@@ -32401,6 +32439,8 @@ return this.__repr__();
                     func = process_publisher;
                 } else if (field === "languages") {
                     func = process_languages;
+                } else if (field === "size") {
+                    func = process_size;
                 } else if (datatype === "datetime") {
                     func = process_datetime;
                 } else if (datatype === "series") {
@@ -34824,6 +34864,7 @@ return this.__repr__();
                     ρσ_d["search_net"] = a("global-search", _("Search for selection on the net"), "internet_search");
                     ρσ_d["remove_highlight"] = a("trash", _("Remove this highlight"), "remove_highlight", true);
                     ρσ_d["clear"] = a("close", _("Clear selection"), "clear_selection");
+                    ρσ_d["speak"] = a("bullhorn", _("Speak aloud"), "speak_aloud");
                     return ρσ_d;
                 }).call(this);
                 qh = all_actions.ans.quick_highlight;
@@ -34915,6 +34956,7 @@ return this.__repr__();
             this.new_bookmark = SelectionBar.prototype.new_bookmark.bind(this);
             this.internet_search = SelectionBar.prototype.internet_search.bind(this);
             this.clear_selection = SelectionBar.prototype.clear_selection.bind(this);
+            this.speak_aloud = SelectionBar.prototype.speak_aloud.bind(this);
             this.create_highlight = SelectionBar.prototype.create_highlight.bind(this);
             this.quick_highlight = SelectionBar.prototype.quick_highlight.bind(this);
             this.quick_highlight_with_style = SelectionBar.prototype.quick_highlight_with_style.bind(this);
@@ -36095,6 +36137,17 @@ return this.__repr__();
             self.hide();
         };
         if (!SelectionBar.prototype.clear_selection.__module__) Object.defineProperties(SelectionBar.prototype.clear_selection, {
+            __module__ : {value: "read_book.selection_bar"}
+        });
+        SelectionBar.prototype.speak_aloud = function speak_aloud() {
+            var self = this;
+            var text;
+            text = self.view.currently_showing.selection.text;
+            if (text) {
+                ui_operations.speak_simple_text(text);
+            }
+        };
+        if (!SelectionBar.prototype.speak_aloud.__module__) Object.defineProperties(SelectionBar.prototype.speak_aloud, {
             __module__ : {value: "read_book.selection_bar"}
         });
         SelectionBar.prototype.create_highlight = function create_highlight() {
@@ -38538,6 +38591,43 @@ return this.__repr__();
                     return ρσ_anonfunc;
                 })(), "remove")));
             } else {
+                copy_actions = E.ul();
+                if (self.elements.link) {
+                    copy_actions.appendChild(ac(_("Copy link"), _("Copy the current link"), (function() {
+                        var ρσ_anonfunc = function () {
+                            [self.overlay.hide(), ui_operations.copy_selection(self.elements.link)];
+                        };
+                        if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                            __module__ : {value: "read_book.overlay"}
+                        });
+                        return ρσ_anonfunc;
+                    })(), "link"));
+                }
+                if (self.elements.img) {
+                    copy_actions.appendChild(ac(_("View image"), _("View the current image"), (function() {
+                        var ρσ_anonfunc = function () {
+                            [self.overlay.hide(), ui_operations.view_image(self.elements.img)];
+                        };
+                        if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                            __module__ : {value: "read_book.overlay"}
+                        });
+                        return ρσ_anonfunc;
+                    })(), "image"));
+                    if (window.navigator.clipboard) {
+                        copy_actions.appendChild(ac(_("Copy image"), _("Copy the current image"), (function() {
+                            var ρσ_anonfunc = function () {
+                                [self.overlay.hide(), ui_operations.copy_image(self.elements.img)];
+                            };
+                            if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                                __module__ : {value: "read_book.overlay"}
+                            });
+                            return ρσ_anonfunc;
+                        })(), "copy"));
+                    }
+                }
+                if (copy_actions.childNodes.length) {
+                    actions_div.appendChild(copy_actions);
+                }
             }
             container.appendChild(ρσ_interpolate_kwargs.call(this, set_css, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, set_css, [E.div(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_exists.d(ρσ_exists.d(self.overlay.view.book).metadata).title || _("Unknown")].concat([ρσ_desugar_kwargs({style: "max-width: 90%; text-overflow: ellipsis; font-weight: bold; white-space: nowrap; overflow: hidden"})])), ρσ_interpolate_kwargs.call(E, E.div, [self.date_formatter.format(new Date)].concat([ρσ_desugar_kwargs({id: timer_id(), style: "max-width: 9%; white-space: nowrap; overflow: hidden"})])))].concat([ρσ_desugar_kwargs({display: "flex", justify_content: "space-between", align_items: "baseline", font_size: "smaller", padding: "0.5ex 1ex", border_bottom: "solid 1px currentColor"})])), actions_div].concat([ρσ_desugar_kwargs({class_: MAIN_OVERLAY_TS_CLASS, onclick: (function() {
                 var ρσ_anonfunc = function (evt) {
@@ -43521,6 +43611,16 @@ return this.__repr__();
                 };
                 if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
                     __argnames__ : {value: ["amap"]},
+                    __module__ : {value: null}
+                });
+                return ρσ_anonfunc;
+            })();
+            ui_operations.speak_simple_text = (function() {
+                var ρσ_anonfunc = function (text) {
+                    to_python.speak_simple_text(text);
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["text"]},
                     __module__ : {value: null}
                 });
                 return ρσ_anonfunc;
