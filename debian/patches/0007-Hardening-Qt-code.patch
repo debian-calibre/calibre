@@ -10,7 +10,7 @@ Allow hardening flags from debhelper.
  1 file changed, 18 insertions(+), 1 deletion(-)
 
 diff --git a/setup/build.py b/setup/build.py
-index fb44da9..85e3c89 100644
+index 44dad2a..86adce9 100644
 --- a/setup/build.py
 +++ b/setup/build.py
 @@ -174,6 +174,7 @@ def init_env():
@@ -39,10 +39,10 @@ index fb44da9..85e3c89 100644
          bdir = self.j(self.build_dir, 'headless')
          if not os.path.exists(bdir):
              os.makedirs(bdir)
-@@ -533,6 +541,15 @@ sip-file = "{os.path.basename(sipf)}"
-                             raw = raw.replace('-fno-exceptions', '-fexceptions')
-                             f.seek(0), f.truncate()
-                             f.write(raw)
+@@ -523,6 +531,15 @@ sip-file = "{os.path.basename(sipf)}"
+         cwd = os.getcwd()
+         try:
+             os.chdir(os.path.join(src_dir, 'build'))
 +            for q in walk('.'):
 +                if os.path.basename(q) in ('Makefile',):
 +                    with open(q, 'r+') as f:

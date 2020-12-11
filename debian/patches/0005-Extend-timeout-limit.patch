@@ -14,11 +14,11 @@ Treat Debian package builder as CI system.
  4 files changed, 15 insertions(+), 15 deletions(-)
 
 diff --git a/src/calibre/srv/tests/base.py b/src/calibre/srv/tests/base.py
-index de2176b..4454c65 100644
+index a2a7ca6..f1c3ffa 100644
 --- a/src/calibre/srv/tests/base.py
 +++ b/src/calibre/srv/tests/base.py
-@@ -93,7 +93,7 @@ class TestServer(Thread):
-         specialize(self)
+@@ -107,7 +107,7 @@ class TestServer(Thread):
+         self.log = self.loop.log
  
      def setup_defaults(self, kwargs):
 -        kwargs['shutdown_timeout'] = kwargs.get('shutdown_timeout', 0.1)
@@ -27,7 +27,7 @@ index de2176b..4454c65 100644
          kwargs['port'] = kwargs.get('port', 0)
          kwargs['userdb'] = kwargs.get('userdb', ':memory:')
 diff --git a/src/calibre/srv/tests/http.py b/src/calibre/srv/tests/http.py
-index b5eb2c7..e07b61d 100644
+index 2fb5952..ca005d5 100644
 --- a/src/calibre/srv/tests/http.py
 +++ b/src/calibre/srv/tests/http.py
 @@ -16,7 +16,7 @@ from calibre.utils.monotonic import monotonic
@@ -57,7 +57,7 @@ index b5eb2c7..e07b61d 100644
  
          with TestServer(handler, timeout=base_timeout, max_header_line_size=100./1024, max_request_body_size=100./(1024*1024)) as server:
              conn = server.connect()
-@@ -288,7 +288,7 @@ class TestHTTP(BaseTest):
+@@ -281,7 +281,7 @@ class TestHTTP(BaseTest):
              conn = server.connect()
  
              # Test closing
@@ -66,7 +66,7 @@ index b5eb2c7..e07b61d 100644
              conn.request('GET', '/close', headers={'Connection':'close'})
              r = conn.getresponse()
              self.ae(r.status, 200), self.ae(r.read(), b'close')
-@@ -301,8 +301,8 @@ class TestHTTP(BaseTest):
+@@ -294,8 +294,8 @@ class TestHTTP(BaseTest):
              self.assertIsNone(conn.sock)
  
              # Test timeout
@@ -77,7 +77,7 @@ index b5eb2c7..e07b61d 100644
              conn.request('GET', '/something')
              r = conn.getresponse()
              self.ae(r.status, 200), self.ae(r.read(), b'something')
-@@ -316,7 +316,7 @@ class TestHTTP(BaseTest):
+@@ -309,7 +309,7 @@ class TestHTTP(BaseTest):
          def handler(conn):
              return conn.generate_static_output('test', lambda : ''.join(conn.path))
          with NamedTemporaryFile(suffix='test.epub') as f, open(P('localization/locales.zip'), 'rb') as lf, \
@@ -86,7 +86,7 @@ index b5eb2c7..e07b61d 100644
              fdata = (string.ascii_letters * 100).encode('ascii')
              f.write(fdata), f.seek(0)
  
-@@ -417,7 +417,7 @@ class TestHTTP(BaseTest):
+@@ -410,7 +410,7 @@ class TestHTTP(BaseTest):
                  lf.seek(0)
                  data =  lf.read()
                  server.change_handler(lambda conn: lf)
@@ -96,7 +96,7 @@ index b5eb2c7..e07b61d 100644
                  r = conn.getresponse()
                  self.ae(r.status, http_client.OK)
 diff --git a/src/calibre/srv/tests/loop.py b/src/calibre/srv/tests/loop.py
-index 57d20e4..05ba661 100644
+index c0547d9..dae78ef 100644
 --- a/src/calibre/srv/tests/loop.py
 +++ b/src/calibre/srv/tests/loop.py
 @@ -18,7 +18,7 @@ from calibre.utils.certgen import create_server_cert
@@ -108,8 +108,8 @@ index 57d20e4..05ba661 100644
  
  
  class LoopTest(BaseTest):
-@@ -84,7 +84,7 @@ class LoopTest(BaseTest):
-             self.ae(0, sum(int(w.is_alive()) for w in server.loop.pool.workers))
+@@ -82,7 +82,7 @@ class LoopTest(BaseTest):
+         self.ae(0, sum(int(w.is_alive()) for w in server.loop.pool.workers))
          # Test shutdown with hung worker
          block = Event()
 -        with TestServer(lambda data:block.wait(), worker_count=3, shutdown_timeout=0.1, timeout=0.1) as server:
@@ -117,7 +117,7 @@ index 57d20e4..05ba661 100644
              pool = server.loop.pool
              self.ae(3, sum(int(w.is_alive()) for w in pool.workers))
              conn = server.connect()
-@@ -114,8 +114,8 @@ class LoopTest(BaseTest):
+@@ -111,8 +111,8 @@ class LoopTest(BaseTest):
          from calibre.srv.bonjour import BonJour
          from zeroconf import Zeroconf
          b = BonJour(wait_for_stop=False)
