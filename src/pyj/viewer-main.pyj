@@ -206,6 +206,11 @@ def generic_action(which, data):
 
 
 @from_python
+def tts_event(which, data):
+    view.read_aloud.handle_tts_event(which, data)
+
+
+@from_python
 def show_home_page():
     view.overlay.open_book(False)
 
@@ -400,6 +405,8 @@ if window is window.top:
             to_python.highlights_changed(amap.highlight)
     ui_operations.speak_simple_text = def(text):
         to_python.speak_simple_text(text)
+    ui_operations.tts = def(action, data):
+        to_python.tts(action, data or v'{}')
 
     document.body.appendChild(E.div(id='view'))
     window.onerror = onerror

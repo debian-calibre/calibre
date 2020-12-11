@@ -9,7 +9,7 @@ import textwrap
 from math import ceil
 
 from PyQt5.Qt import (
-    QWidget, Qt, QStaticText, QTextOption, QSize, QPainter, QTimer, QPalette)
+    QWidget, Qt, QStaticText, QTextOption, QSize, QPainter, QTimer, QPalette, QEvent)
 
 from calibre import prints, prepare_string_for_xml
 from calibre.gui2 import error_dialog
@@ -26,11 +26,11 @@ class ChoosePopupWidget(QWidget):
     def __init__(self, parent, max_height=1000):
         QWidget.__init__(self, parent)
 
-        self.setFocusPolicy(Qt.NoFocus)
+        self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.setFocusProxy(parent)
         self.setVisible(False)
         self.setMouseTracking(True)
-        self.setCursor(Qt.PointingHandCursor)
+        self.setCursor(Qt.CursorShape.PointingHandCursor)
 
         self.current_results = self.current_size_hint = None
 
@@ -40,8 +40,8 @@ class ChoosePopupWidget(QWidget):
         self.max_height = max_height
 
         self.text_option = to = QTextOption()
-        to.setWrapMode(QTextOption.NoWrap)
-        to.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+        to.setWrapMode(QTextOption.WrapMode.NoWrap)
+        to.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
 
         self.rendered_text_cache = {}
         parent.installEventFilter(self)
@@ -71,11 +71,11 @@ class ChoosePopupWidget(QWidget):
             desc = self.descriptions.get(otext)
             if desc:
                 text += ' - <i>%s</i>' % prepare_string_for_xml(desc)
-            color = self.palette().color(QPalette.Text).name()
+            color = self.palette().color(QPalette.ColorRole.Text).name()
             text = '<span style="color: %s">%s</span>' % (color, text)
             st = self.rendered_text_cache[otext] = QStaticText(text)
             st.setTextOption(self.text_option)
-            st.setTextFormat(Qt.RichText)
+            st.setTextFormat(Qt.TextFormat.RichText)
             st.prepare(font=self.parent().font())
         return st
 
@@ -109,9 +109,9 @@ class ChoosePopupWidget(QWidget):
         painter = QPainter(self)
         painter.setClipRect(ev.rect())
         pal = self.palette()
-        painter.fillRect(self.rect(), pal.color(pal.Text))
+        painter.fillRect(self.rect(), pal.color(QPalette.ColorRole.Text))
         crect = self.rect().adjusted(1, 1, -1, -1)
-        painter.fillRect(crect, pal.color(pal.Base))
+        painter.fillRect(crect, pal.color(QPalette.ColorRole.Base))
         painter.setClipRect(crect)
         painter.setFont(self.parent().font())
         width = self.rect().width()
@@ -119,7 +119,7 @@ class ChoosePopupWidget(QWidget):
             painter.save()
             if i == self.current_index:
                 painter.fillRect(1, y, width, height, pal.color(pal.Highlight))
-                color = pal.color(QPalette.HighlightedText).name()
+                color = pal.color(QPalette.ColorRole.HighlightedText).name()
                 st = QStaticText(st)
                 text = st.text().partition('>')[2]
                 st.setText('<span style="color: %s">%s' % (color, text))
@@ -177,25 +177,25 @@ class ChoosePopupWidget(QWidget):
 
     def handle_keypress(self, ev):
         key = ev.key()
-        if key == Qt.Key_Escape:
+        if key == Qt.Key.Key_Escape:
             self.abort(), ev.accept()
             return True
-        if key == Qt.Key_Tab and not ev.modifiers() & Qt.CTRL:
-            self.choose_next_result(previous=ev.modifiers() & Qt.ShiftModifier)
+        if key == Qt.Key.Key_Tab and not ev.modifiers() & Qt.Modifier.CTRL:
+            self.choose_next_result(previous=ev.modifiers() & Qt.KeyboardModifier.ShiftModifier)
             ev.accept()
             return True
-        if key == Qt.Key_Backtab and not ev.modifiers() & Qt.CTRL:
-            self.choose_next_result(previous=ev.modifiers() & Qt.ShiftModifier)
+        if key == Qt.Key.Key_Backtab and not ev.modifiers() & Qt.Modifier.CTRL:
+            self.choose_next_result(previous=ev.modifiers() & Qt.KeyboardModifier.ShiftModifier)
             return True
-        if key in (Qt.Key_Up, Qt.Key_Down):
-            self.choose_next_result(previous=key == Qt.Key_Up)
+        if key in (Qt.Key.Key_Up, Qt.Key.Key_Down):
+            self.choose_next_result(previous=key == Qt.Key.Key_Up)
             return True
         return False
 
     def eventFilter(self, obj, ev):
         if obj is self.parent() and self.isVisible():
             etype = ev.type()
-            if etype == ev.KeyPress:
+            if etype == QEvent.Type.KeyPress:
                 ret = self.handle_keypress(ev)
                 if ret:
                     ev.accept()

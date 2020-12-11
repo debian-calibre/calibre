@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "novembro 27, 2020" "5.6.0" "calibre"
+.TH "CALIBREDB" "1" "dezembro 11, 2020" "5.7.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -221,7 +221,7 @@ Definir o autor do(s)  livro(s) adicionado(s)
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-If books with similar titles and authors are found, merge the incoming formats (files) automatically into existing book records. A value of \fB"\fPignore\fB"\fP means duplicate formats are discarded. A value of \fB"\fPoverwrite\fB"\fP means duplicate formats in the library are overwritten with the newly added files. A value of \fB"\fPnew_record\fB"\fP means duplicate formats are placed into a new book record.
+Se forem encontrados livros com títulos e autores semelhantes, fundir automaticamente os formatos (ficheiros) a receber nos registos de livros existentes. Um valor de \fB"\fPignore\fB"\fP (Ignorar) significa que os formatos duplicados são descartados. Um valor \fB"\fPoverwrite\fB"\fP (Sobrepor) significa que os formatos duplicados na biblioteca são substituídos pelos ficheiros recém\-adicionados. Um valor de \fB"\fPnew_record\fB"\fP (Novo registo) significa que os formatos duplicados são colocados num novo registo de livro.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -231,7 +231,7 @@ Caminho para a capa utilizar no livro adicionado
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Add books to database even if they already exist. Comparison is done based on book titles and authors. Note that the \fI\%\-\-automerge\fP option takes precedence.
+Adicionar livros à base de dados mesmo se estes já existem. A comparação é feita baseada nos títulos e autores dos livros. Note que a opção \fI\%\-\-automerge\fP tem precedência.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -739,14 +739,9 @@ calibredb restore_database [options]
 .UNINDENT
 .UNINDENT
 .sp
-Restaurar esta base de dados a partir dos metadados armazenados em ficheiros OPF em cada
-pasta da biblioteca do Calibre. Isto é útil se o seu ficheiro metadata.db
-tiver sido corrompido.
+Restaurar esta base de dados a partir dos metadados armazenados nos ficheiros OPF em cada pasta da biblioteca do Calibre. Isto é útil se o seu ficheiro metadata.db tiver sido corrompido.
 .sp
-AVISO: Este comando regenera completamente a sua base de dados. Vai perder
-todas as pesquisas guardadas, categorias do utilizador, ligações a dispositivos, preferências de conversões por livro e receitas personalizadas. Os metadados restaurados
-serão tão precisos quanto os encontrados nos ficheiros OPF
-\&.
+AVISO: Este comando regenera completamente a sua base de dados. Vai perder todas as pesquisas guardadas, categorias do utilizador, conectores, preferências de conversões por livro e receitas personalizadas. Os metadados restaurados serão tão precisos quanto os encontrados nos ficheiros OPF.
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
 .INDENT 0.0

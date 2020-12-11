@@ -68,7 +68,7 @@ class TagDelegate(QStyledItemDelegate):  # {{{
         if set_color:
             painter.save()
             pen = painter.pen()
-            pen.setColor(QColor(Qt.black))
+            pen.setColor(QColor(Qt.GlobalColor.black))
             painter.setPen(pen)
         painter.drawText(rect, flags, text)
         if set_color:
@@ -76,7 +76,7 @@ class TagDelegate(QStyledItemDelegate):  # {{{
 
     def draw_text(self, style, painter, option, widget, index, item):
         tr = style.subElementRect(style.SE_ItemViewItemText, option, widget)
-        text = index.data(Qt.DisplayRole)
+        text = index.data(Qt.ItemDataRole.DisplayRole)
         hover = option.state & style.State_MouseOver
         is_search = (True if item.type == TagTreeItem.TAG and
                             item.tag.category == 'search' else False)
@@ -85,20 +85,20 @@ class TagDelegate(QStyledItemDelegate):  # {{{
             width = painter.fontMetrics().boundingRect(count).width()
             r = QRect(tr)
             r.setRight(r.right() - 1), r.setLeft(r.right() - width - 4)
-            self.paint_text(painter, r, Qt.AlignCenter | Qt.TextSingleLine, count, hover)
+            self.paint_text(painter, r, Qt.AlignmentFlag.AlignCenter | Qt.TextFlag.TextSingleLine, count, hover)
             tr.setRight(r.left() - 1)
         else:
             tr.setRight(tr.right() - 1)
         is_rating = item.type == TagTreeItem.TAG and not self.rating_pat.sub('', text)
         if is_rating:
             painter.setFont(self.rating_font)
-        flags = Qt.AlignVCenter | Qt.AlignLeft | Qt.TextSingleLine
+        flags = Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft | Qt.TextFlag.TextSingleLine
         lr = QRect(tr)
         lr.setRight(lr.right() * 2)
         br = painter.boundingRect(lr, flags, text)
         if br.width() > tr.width():
             g = QLinearGradient(tr.topLeft(), tr.topRight())
-            c = option.palette.color(QPalette.WindowText)
+            c = option.palette.color(QPalette.ColorRole.WindowText)
             g.setColorAt(0, c), g.setColorAt(0.8, c)
             c = QColor(c)
             c.setAlpha(0)
@@ -113,7 +113,7 @@ class TagDelegate(QStyledItemDelegate):  # {{{
         widget = self.parent()
         style = QApplication.style() if widget is None else widget.style()
         self.initStyleOption(option, index)
-        item = index.data(Qt.UserRole)
+        item = index.data(Qt.ItemDataRole.UserRole)
         self.draw_icon(style, painter, option, widget)
         painter.save()
         self.draw_text(style, painter, option, widget, index, item)
@@ -130,14 +130,26 @@ class TagDelegate(QStyledItemDelegate):  # {{{
 
     def createEditor(self, parent, option, index):
         item = self.tags_view.model().get_node(index)
-        item.use_vl = False
-        if self.tags_view.model().get_in_vl():
-            if question_dialog(self.tags_view, _('Rename in Virtual library'), '<p>' +
-                               _('Do you want this rename to apply only to books '
-                                 'in the current Virtual library?') + '</p>',
-                               yes_text=_('Yes, apply only in VL'),
-                               no_text=_('No, apply in entire library')):
-                item.use_vl = True
+        if not item.ignore_vl:
+            if item.use_vl is None:
+                if self.tags_view.model().get_in_vl():
+                    item.use_vl = question_dialog(self.tags_view,
+                                      _('Rename in Virtual library'), '<p>' +
+                                      _('Do you want this rename to apply only to books '
+                                        'in the current Virtual library?') + '</p>',
+                                      yes_text=_('Yes, apply only in VL'),
+                                      no_text=_('No, apply in entire library'))
+                else:
+                    item.use_vl = False
+            elif not item.use_vl and self.tags_view.model().get_in_vl():
+                item.use_vl = not question_dialog(self.tags_view,
+                                    _('Rename in Virtual library'), '<p>' +
+                                    _('A virtual library is active but you are renaming '
+                                      'the item in all books in your library. Is '
+                                      'this really what you want to do?') + '</p>',
+                                    yes_text=_('Yes, apply in entire library'),
+                                    no_text=_('No, apply only in VL'),
+                                    skip_dialog_name='tag_item_rename_in_entire_library')
         if self.completion_data:
             editor = EditWithComplete(parent)
             editor.set_separator(None)
@@ -201,14 +213,14 @@ class TagsView(QTreeView):  # {{{
         self._model = TagsModel(self)
         self._model.search_item_renamed.connect(self.search_item_renamed)
         self._model.refresh_required.connect(self.refresh_required,
-                type=Qt.QueuedConnection)
+                type=Qt.ConnectionType.QueuedConnection)
         self._model.tag_item_renamed.connect(self.tag_item_renamed)
         self._model.restriction_error.connect(self.restriction_error)
         self._model.user_categories_edited.connect(self.user_categories_edited,
-                type=Qt.QueuedConnection)
+                type=Qt.ConnectionType.QueuedConnection)
         self._model.drag_drop_finished.connect(self.drag_drop_finished)
         self.set_look_and_feel(first=True)
-        QApplication.instance().palette_changed.connect(self.set_style_sheet, type=Qt.QueuedConnection)
+        QApplication.instance().palette_changed.connect(self.set_style_sheet, type=Qt.ConnectionType.QueuedConnection)
 
     def set_style_sheet(self):
         stylish_tb = '''
@@ -239,9 +251,9 @@ class TagsView(QTreeView):  # {{{
         self.itemDelegate().old_look = gprefs['tag_browser_old_look']
 
         if gprefs['tag_browser_allow_keyboard_focus']:
-            self.setFocusPolicy(Qt.StrongFocus)
+            self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
         else:
-            self.setFocusPolicy(Qt.NoFocus)
+            self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         # Ensure the TB doesn't keep the focus it might already have. When this
         # method is first called during GUI initialization not everything is
         # set up, in which case don't try to change the focus.
@@ -299,7 +311,7 @@ class TagsView(QTreeView):  # {{{
         self.alter_tb = alter_tb
         self.pane_is_visible = True  # because TagsModel.set_database did a recount
         self.setModel(self._model)
-        self.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         pop = self.db.CATEGORY_SORTS.index(config['sort_tags_by'])
         self.alter_tb.sort_menu.actions()[pop].setChecked(True)
         try:
@@ -310,7 +322,7 @@ class TagsView(QTreeView):  # {{{
         if not self.made_connections:
             self.clicked.connect(self.toggle)
             self.customContextMenuRequested.connect(self.show_context_menu)
-            self.refresh_required.connect(self.recount, type=Qt.QueuedConnection)
+            self.refresh_required.connect(self.recount, type=Qt.ConnectionType.QueuedConnection)
             self.alter_tb.sort_menu.triggered.connect(self.sort_changed)
             self.alter_tb.match_menu.triggered.connect(self.match_changed)
             self.made_connections = True
@@ -320,11 +332,27 @@ class TagsView(QTreeView):  # {{{
         self.collapsed.connect(self.collapse_node_and_children)
 
     def keyPressEvent(self, event):
-        if (gprefs['tag_browser_allow_keyboard_focus'] and event.key() == Qt.Key_Return and self.state() != self.EditingState and
-                # I don't see how current_index can ever be not valid, but ...
-                self.currentIndex().isValid()):
-            self.toggle_current_index()
-            return
+        # I don't see how current_index can ever be not valid, but ...
+        if self.currentIndex().isValid():
+            if (gprefs['tag_browser_allow_keyboard_focus'] and
+                    event.key() == Qt.Key.Key_Return and self.state() != self.EditingState):
+                self.toggle_current_index()
+                return
+            # If this is an edit request, mark the node to request whether to use VLs
+            # As far as I can tell, F2 is used across all platforms
+            if event.key() == Qt.Key.Key_F2:
+                node = self.model().get_node(self.currentIndex())
+                if node.type == TagTreeItem.TAG:
+                    # Saved search nodes don't use the VL test/dialog
+                    node.use_vl = None
+                    node.ignore_vl = node.tag.category == 'search'
+                else:
+                    # Don't open the editor for non-editable items
+                    if not node.category_key.startswith('@') or node.is_gst:
+                        return
+                    # Category nodes don't use the VL test/dialog
+                    node.use_vl = False
+                    node.ignore_vl = True
         QTreeView.keyPressEvent(self, event)
 
     def database_changed(self, event, ids):
@@ -359,17 +387,17 @@ class TagsView(QTreeView):  # {{{
             pass
 
     def mousePressEvent(self, event):
-        if event.buttons() & Qt.LeftButton:
+        if event.buttons() & Qt.MouseButton.LeftButton:
             self.possible_drag_start = event.pos()
         return QTreeView.mousePressEvent(self, event)
 
     def mouseMoveEvent(self, event):
         dex = self.indexAt(event.pos())
         if dex.isValid():
-            self.setCursor(Qt.PointingHandCursor)
+            self.setCursor(Qt.CursorShape.PointingHandCursor)
         else:
             self.unsetCursor()
-        if not event.buttons() & Qt.LeftButton:
+        if not event.buttons() & Qt.MouseButton.LeftButton:
             return
         if not dex.isValid():
             QTreeView.mouseMoveEvent(self, event)
@@ -380,7 +408,7 @@ class TagsView(QTreeView):  # {{{
             QTreeView.mouseMoveEvent(self, event)
             return
 
-        if not self._model.flags(dex) & Qt.ItemIsDragEnabled:
+        if not self._model.flags(dex) & Qt.ItemFlag.ItemIsDragEnabled:
             QTreeView.mouseMoveEvent(self, event)
             return
         md = self._model.mimeData([dex])
@@ -396,9 +424,9 @@ class TagsView(QTreeView):  # {{{
             categories stops working. Don't know why. To avoid the problem
             we fix the action in dragMoveEvent.
             '''
-            drag.exec_(Qt.CopyAction|Qt.MoveAction, Qt.CopyAction)
+            drag.exec_(Qt.DropAction.CopyAction|Qt.DropAction.MoveAction, Qt.DropAction.CopyAction)
         else:
-            drag.exec_(Qt.CopyAction)
+            drag.exec_(Qt.DropAction.CopyAction)
 
     def mouseDoubleClickEvent(self, event):
         # swallow these to avoid toggling and editing at the same time
@@ -424,7 +452,7 @@ class TagsView(QTreeView):  # {{{
         in TAG_SEARCH_STATES
         '''
         modifiers = int(QApplication.keyboardModifiers())
-        exclusive = modifiers not in (Qt.CTRL, Qt.SHIFT)
+        exclusive = modifiers not in (Qt.Modifier.CTRL, Qt.Modifier.SHIFT)
         if self._model.toggle(index, exclusive, set_to=set_to):
             # Reset the focus back to TB if it has it before the toggle
             # Must ask this question before starting the search because
@@ -442,7 +470,7 @@ class TagsView(QTreeView):  # {{{
 
     def context_menu_handler(self, action=None, category=None,
                              key=None, index=None, search_state=None,
-                             use_vl=None, is_first_letter=False):
+                             is_first_letter=False, ignore_vl=False):
         if not action:
             return
         try:
@@ -481,12 +509,14 @@ class TagsView(QTreeView):  # {{{
             if action == 'edit_item_no_vl':
                 item = self.model().get_node(index)
                 item.use_vl = False
+                item.ignore_vl = ignore_vl
                 set_completion_data(category)
                 self.edit(index)
                 return
             if action == 'edit_item_in_vl':
                 item = self.model().get_node(index)
                 item.use_vl = True
+                item.ignore_vl = ignore_vl
                 set_completion_data(category)
                 self.edit(index)
                 return
@@ -636,7 +666,7 @@ class TagsView(QTreeView):  # {{{
 
         search_submenu = None
         if index.isValid():
-            item = index.data(Qt.UserRole)
+            item = index.data(Qt.ItemDataRole.UserRole)
             tag = None
             tag_item = item
 
@@ -734,7 +764,7 @@ class TagsView(QTreeView):  # {{{
                         self.context_menu.addAction(self.rename_icon,
                                                     _('Rename %s')%display_name(tag),
                             partial(self.context_menu_handler, action='edit_item_no_vl',
-                                    index=index))
+                                    index=index, ignore_vl=True))
                         self.context_menu.addAction(self.delete_icon,
                                 _('Delete Saved search %s')%display_name(tag),
                                 partial(self.context_menu_handler,
@@ -771,7 +801,7 @@ class TagsView(QTreeView):  # {{{
                         self.context_menu.addAction(self.rename_icon,
                             _('Rename %s')%item.py_name,
                             partial(self.context_menu_handler, action='edit_item_no_vl',
-                                    index=index))
+                                    index=index, ignore_vl=True))
                     self.context_menu.addAction(self.user_category_icon,
                             _('Add sub-category to %s')%item.py_name,
                             partial(self.context_menu_handler,
@@ -980,7 +1010,7 @@ class TagsView(QTreeView):  # {{{
         if not index.isValid():
             return
         src_is_tb = event.mimeData().hasFormat('application/calibre+from_tag_browser')
-        item = index.data(Qt.UserRole)
+        item = index.data(Qt.ItemDataRole.UserRole)
         if item.type == TagTreeItem.ROOT:
             return
 
@@ -997,14 +1027,14 @@ class TagsView(QTreeView):  # {{{
                     src_item.tag.category == item.tag.category and
                     not item.temporary and
                     self._model.is_key_a_hierarchical_category(src_item.tag.category)):
-                event.setDropAction(Qt.MoveAction)
+                event.setDropAction(Qt.DropAction.MoveAction)
                 self.setDropIndicatorShown(True)
                 return
         # We aren't dropping an item on its own category. Check if the dest is
         # not a user category and can be dropped on. This covers drops from the
         # booklist. It is OK to drop onto virtual nodes
-        if item.type == TagTreeItem.TAG and self._model.flags(index) & Qt.ItemIsDropEnabled:
-            event.setDropAction(Qt.CopyAction)
+        if item.type == TagTreeItem.TAG and self._model.flags(index) & Qt.ItemFlag.ItemIsDropEnabled:
+            event.setDropAction(Qt.DropAction.CopyAction)
             self.setDropIndicatorShown(not src_is_tb)
             return
         # Now see if we are on a user category and the source can be dropped there
@@ -1013,7 +1043,7 @@ class TagsView(QTreeView):  # {{{
             if fm_dest['kind'] == 'user':
                 if src_is_tb:
                     # src_md and src_item are initialized above
-                    if event.dropAction() == Qt.MoveAction:
+                    if event.dropAction() == Qt.DropAction.MoveAction:
                         # can move only from user categories
                         if (src_md[0] == TagTreeItem.TAG and
                                  (not src_md[1].startswith('@') or src_md[2])):
@@ -1040,7 +1070,7 @@ class TagsView(QTreeView):  # {{{
             self.model().clear_state()
 
     def is_visible(self, idx):
-        item = idx.data(Qt.UserRole)
+        item = idx.data(Qt.ItemDataRole.UserRole)
         if getattr(item, 'type', None) == TagTreeItem.TAG:
             idx = idx.parent()
         return self.isExpanded(idx)
@@ -1104,7 +1134,7 @@ class TagsView(QTreeView):  # {{{
 
     def show_item_at_index(self, idx, box=False,
                            position=QTreeView.PositionAtCenter):
-        if idx.isValid() and idx.data(Qt.UserRole) is not self._model.root_item:
+        if idx.isValid() and idx.data(Qt.ItemDataRole.UserRole) is not self._model.root_item:
             self.expand_parent(idx)
             self.setCurrentIndex(idx)
             self.scrollTo(idx, position)

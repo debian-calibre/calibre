@@ -3,8 +3,8 @@
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 
 from PyQt5.Qt import (
-    QDialog, QLabel, QSizePolicy, QStackedLayout, QStackedWidget, Qt, QVBoxLayout,
-    QWidget
+    QDialog, QLabel, QObject, QSizePolicy, QStackedLayout, QStackedWidget, Qt,
+    QVBoxLayout, QWidget, pyqtSignal
 )
 
 from calibre_extensions.progress_indicator import (
@@ -13,21 +13,45 @@ from calibre_extensions.progress_indicator import (
 
 draw_snake_spinner
 
+try:
+    from calibre_extensions.progress_indicator import SpinAnimator
+except ImportError:
+    # dummy class for people running from source without updated binaries
+    class SpinAnimator(QObject):
+
+        updated = pyqtSignal()
+
+        def __init__(self, parent):
+            QObject.__init__(self, parent)
+            self.running = False
+
+        def draw(self, *a):
+            pass
+
+        def start(self):
+            self.running = True
+
+        def stop(self):
+            self.running = False
+
+        def is_running(self):
+            return self.running
+
 
 class WaitPanel(QWidget):
 
     def __init__(self, msg, parent=None, size=256, interval=10):
         QWidget.__init__(self, parent)
-        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.l = l = QVBoxLayout(self)
         self.spinner = ProgressIndicator(self, size, interval)
         self.start, self.stop = self.spinner.start, self.spinner.stop
-        l.addStretch(), l.addWidget(self.spinner, 0, Qt.AlignCenter)
+        l.addStretch(), l.addWidget(self.spinner, 0, Qt.AlignmentFlag.AlignCenter)
         self.la = QLabel(msg)
         f = self.la.font()
         f.setPointSize(28)
         self.la.setFont(f)
-        l.addWidget(self.la, 0, Qt.AlignCenter), l.addStretch()
+        l.addWidget(self.la, 0, Qt.AlignmentFlag.AlignCenter), l.addStretch()
 
     @property
     def msg(self):
@@ -92,6 +116,37 @@ class WaitLayout(QStackedLayout):
     @msg.setter
     def msg(self, val):
         self.wp.msg = val
+
+
+def develop():
+    from PyQt5.Qt import QPainter, QPalette
+
+    from calibre.gui2 import Application
+    from calibre_extensions.progress_indicator import SpinAnimator
+
+    class Widget(QWidget):
+
+        def __init__(self):
+            QWidget.__init__(self)
+            self.a = SpinAnimator(self)
+            self.a.updated.connect(self.update)
+
+        def paintEvent(self, ev):
+            p = QPainter(self)
+            pal = self.palette()
+            self.a.draw(p, self.rect(), pal.color(QPalette.ColorRole.WindowText))
+            p.end()
+
+    app = Application([])
+    d = QDialog()
+    d.resize(64, 64)
+    l = QVBoxLayout(d)
+    w = Widget()
+    l.addWidget(w)
+    w.a.start()
+    d.exec_()
+    del d
+    del app
 
 
 if __name__ == '__main__':

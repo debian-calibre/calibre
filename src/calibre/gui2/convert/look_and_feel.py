@@ -8,7 +8,7 @@ __docformat__ = 'restructuredtext en'
 
 import json
 
-from PyQt5.Qt import Qt
+from PyQt5.Qt import Qt, QDialog
 
 from calibre.gui2.convert.look_and_feel_ui import Ui_Form
 from calibre.gui2.convert import Widget
@@ -49,9 +49,9 @@ class LookAndFeelWidget(Widget, Ui_Form):
         self.opt_remove_paragraph_spacing.toggle()
         self.opt_remove_paragraph_spacing.toggle()
         connect_lambda(self.opt_smarten_punctuation.stateChanged, self, lambda self, state:
-                state != Qt.Unchecked and self.opt_unsmarten_punctuation.setCheckState(Qt.Unchecked))
+                state != Qt.CheckState.Unchecked and self.opt_unsmarten_punctuation.setCheckState(Qt.CheckState.Unchecked))
         connect_lambda(self.opt_unsmarten_punctuation.stateChanged, self, lambda self, state:
-                state != Qt.Unchecked and self.opt_smarten_punctuation.setCheckState(Qt.Unchecked))
+                state != Qt.CheckState.Unchecked and self.opt_smarten_punctuation.setCheckState(Qt.CheckState.Unchecked))
 
     def get_value_handler(self, g):
         if g is self.opt_change_justification:
@@ -115,7 +115,7 @@ class LookAndFeelWidget(Widget, Ui_Form):
         from calibre.gui2.convert.font_key import FontKeyChooser
         d = FontKeyChooser(self, self.opt_base_font_size.value(),
                 unicode_type(self.opt_font_size_mapping.text()).strip())
-        if d.exec_() == d.Accepted:
+        if d.exec_() == QDialog.DialogCode.Accepted:
             self.opt_font_size_mapping.setText(', '.join(['%.1f'%x for x in
                 d.fsizes]))
             self.opt_base_font_size.setValue(d.dbase)

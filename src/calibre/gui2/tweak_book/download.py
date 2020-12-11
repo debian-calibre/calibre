@@ -7,7 +7,7 @@ from threading import Thread
 
 from PyQt5.Qt import (
     pyqtSignal, QWidget, QListWidget, QListWidgetItem, QLabel, Qt,
-    QVBoxLayout, QScrollArea, QProgressBar, QGridLayout, QSize, QIcon)
+    QVBoxLayout, QScrollArea, QProgressBar, QGridLayout, QSize, QIcon, QDialogButtonBox)
 
 from calibre.gui2 import error_dialog, info_dialog, warning_dialog
 from calibre.gui2.tweak_book import current_container
@@ -34,15 +34,16 @@ class ChooseResources(QWidget):
 
     def select_none(self):
         for item in self:
-            item.setCheckState(Qt.Unchecked)
+            item.setCheckState(Qt.CheckState.Unchecked)
 
     def select_all(self):
         for item in self:
-            item.setCheckState(Qt.Checked)
+            item.setCheckState(Qt.CheckState.Checked)
 
     @property
     def resources(self):
-        return {i.data(Qt.UserRole):self.original_resources[i.data(Qt.UserRole)] for i in self if i.checkState() == Qt.Checked}
+        return {i.data(Qt.ItemDataRole.UserRole):self.original_resources[i.data(Qt.ItemDataRole.UserRole)]
+                for i in self if i.checkState() == Qt.CheckState.Checked}
 
     @resources.setter
     def resources(self, resources):
@@ -57,9 +58,9 @@ class ChooseResources(QWidget):
                 text = _('Data URL #{}').format(dc)
             text += ' ({})'.format(ngettext('one instance', '{} instances', num).format(num))
             i = QListWidgetItem(text, self.items)
-            i.setData(Qt.UserRole, url)
-            i.setCheckState(Qt.Checked)
-            i.setFlags(Qt.ItemIsUserCheckable | Qt.ItemIsEnabled)
+            i.setData(Qt.ItemDataRole.UserRole, url)
+            i.setCheckState(Qt.CheckState.Checked)
+            i.setFlags(Qt.ItemFlag.ItemIsUserCheckable | Qt.ItemFlag.ItemIsEnabled)
 
 
 class DownloadStatus(QScrollArea):
@@ -109,7 +110,7 @@ class DownloadResources(Dialog):
         self.get_done.connect(self._get_done)
         self.download_done.connect(self._download_done)
         self.replace_done.connect(self._replace_done)
-        self.progress.connect(self.download_status.progress, type=Qt.QueuedConnection)
+        self.progress.connect(self.download_status.progress, type=Qt.ConnectionType.QueuedConnection)
 
     def setup_ui(self):
         self.setWindowIcon(QIcon(I('download-metadata.png')))
@@ -223,8 +224,8 @@ class DownloadResources(Dialog):
             self.state = 3
             self.bb.clear()
             self.resources_replaced = True
-            self.bb.setStandardButtons(self.bb.Ok | self.bb.Close)
-            b = self.bb.button(self.bb.Ok)
+            self.bb.setStandardButtons(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Close)
+            b = self.bb.button(QDialogButtonBox.StandardButton.Ok)
             b.setText(_('See what &changed'))
             b.setIcon(QIcon(I('diff.png')))
             connect_lambda(b.clicked, self, lambda self: setattr(self, 'show_diff', True))

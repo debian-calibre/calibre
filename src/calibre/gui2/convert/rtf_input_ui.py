@@ -19,7 +19,7 @@ class Ui_Form(object):
         self.opt_ignore_wmf = QtWidgets.QCheckBox(Form)
         self.opt_ignore_wmf.setObjectName("opt_ignore_wmf")
         self.verticalLayout_3.addWidget(self.opt_ignore_wmf)
-        spacerItem = QtWidgets.QSpacerItem(20, 213, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem = QtWidgets.QSpacerItem(20, 213, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
         self.verticalLayout_3.addItem(spacerItem)
 
         self.retranslateUi(Form)

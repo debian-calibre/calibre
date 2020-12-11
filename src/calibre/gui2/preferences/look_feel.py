@@ -12,7 +12,7 @@ from collections import defaultdict
 from threading import Thread
 
 from PyQt5.Qt import (
-    QApplication, QFont, QFontInfo, QFontDialog, QColorDialog, QPainter,
+    QApplication, QFont, QFontInfo, QFontDialog, QColorDialog, QPainter, QDialog,
     QAbstractListModel, Qt, QIcon, QKeySequence, QColor, pyqtSignal, QCursor,
     QWidget, QSizePolicy, QBrush, QPixmap, QSize, QPushButton, QVBoxLayout,
     QTableWidget, QTableWidgetItem, QLabel, QFormLayout, QLineEdit, QComboBox
@@ -44,7 +44,7 @@ from polyglot.builtins import iteritems, unicode_type, map
 class BusyCursor(object):
 
     def __enter__(self):
-        QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
+        QApplication.setOverrideCursor(QCursor(Qt.CursorShape.WaitCursor))
 
     def __exit__(self, *args):
         QApplication.restoreOverrideCursor()
@@ -141,7 +141,7 @@ class IdLinksRuleEdit(Dialog):
         self.template = t = QLineEdit(self)
         l.addRow(_('&Template:'), t)
         t.selectAll()
-        t.setFocus(Qt.OtherFocusReason)
+        t.setFocus(Qt.FocusReason.OtherFocusReason)
         l.addWidget(self.bb)
 
     def accept(self):
@@ -205,7 +205,7 @@ class IdLinksEditor(Dialog):
         if r > -1:
             key, name, template = map(lambda c: self.table.item(r, c).text(), range(3))
         d = IdLinksRuleEdit(key, name, template, self)
-        if d.exec_() == d.Accepted:
+        if d.exec_() == QDialog.DialogCode.Accepted:
             if r < 0:
                 self.table.setRowCount(self.table.rowCount() + 1)
                 r = self.table.rowCount() - 1
@@ -248,7 +248,7 @@ class DisplayedFields(QAbstractListModel):  # {{{
             field, visible = self.fields[index.row()]
         except:
             return None
-        if role == Qt.DisplayRole:
+        if role == Qt.ItemDataRole.DisplayRole:
             name = field
             try:
                 name = self.db.field_metadata[field]['name']
@@ -257,9 +257,9 @@ class DisplayedFields(QAbstractListModel):  # {{{
             if not name:
                 name = field
             return name
-        if role == Qt.CheckStateRole:
-            return Qt.Checked if visible else Qt.Unchecked
-        if role == Qt.DecorationRole and field.startswith('#'):
+        if role == Qt.ItemDataRole.CheckStateRole:
+            return Qt.CheckState.Checked if visible else Qt.CheckState.Unchecked
+        if role == Qt.ItemDataRole.DecorationRole and field.startswith('#'):
             return QIcon(I('column.png'))
         return None
 
@@ -267,15 +267,15 @@ class DisplayedFields(QAbstractListModel):  # {{{
         for i in range(self.rowCount()):
             idx = self.index(i)
             if idx.isValid():
-                self.setData(idx, show, Qt.CheckStateRole)
+                self.setData(idx, show, Qt.ItemDataRole.CheckStateRole)
 
     def flags(self, index):
         ans = QAbstractListModel.flags(self, index)
-        return ans | Qt.ItemIsUserCheckable
+        return ans | Qt.ItemFlag.ItemIsUserCheckable
 
     def setData(self, index, val, role):
         ret = False
-        if role == Qt.CheckStateRole:
+        if role == Qt.ItemDataRole.CheckStateRole:
             self.fields[index.row()][1] = bool(val)
             self.changed = True
             ret = True
@@ -350,7 +350,7 @@ class Background(QWidget):  # {{{
         self.bcol = QColor(*gprefs['cover_grid_color'])
         self.btex = gprefs['cover_grid_texture']
         self.update_brush()
-        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
 
     def update_brush(self):
         self.brush = QBrush(self.bcol)
@@ -545,27 +545,27 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         self.emblems_tab.layout().addWidget(self.grid_rules)
 
         self.tabWidget.setCurrentIndex(0)
-        keys = [QKeySequence('F11', QKeySequence.PortableText), QKeySequence(
-            'Ctrl+Shift+F', QKeySequence.PortableText)]
-        keys = [unicode_type(x.toString(QKeySequence.NativeText)) for x in keys]
+        keys = [QKeySequence('F11', QKeySequence.SequenceFormat.PortableText), QKeySequence(
+            'Ctrl+Shift+F', QKeySequence.SequenceFormat.PortableText)]
+        keys = [unicode_type(x.toString(QKeySequence.SequenceFormat.NativeText)) for x in keys]
         self.fs_help_msg.setText(unicode_type(self.fs_help_msg.text())%(
             _(' or ').join(keys)))
-        self.size_calculated.connect(self.update_cg_cache_size, type=Qt.QueuedConnection)
+        self.size_calculated.connect(self.update_cg_cache_size, type=Qt.ConnectionType.QueuedConnection)
         self.tabWidget.currentChanged.connect(self.tab_changed)
 
         l = self.cg_background_box.layout()
         self.cg_bg_widget = w = Background(self)
         l.addWidget(w, 0, 0, 3, 1)
         self.cover_grid_color_button = b = QPushButton(_('Change &color'), self)
-        b.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        b.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         l.addWidget(b, 0, 1)
         b.clicked.connect(self.change_cover_grid_color)
         self.cover_grid_texture_button = b = QPushButton(_('Change &background image'), self)
-        b.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        b.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         l.addWidget(b, 1, 1)
         b.clicked.connect(self.change_cover_grid_texture)
         self.cover_grid_default_appearance_button = b = QPushButton(_('Restore &default appearance'), self)
-        b.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        b.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         l.addWidget(b, 2, 1)
         b.clicked.connect(self.restore_cover_grid_appearance)
         self.cover_grid_empty_cache.clicked.connect(self.empty_cache)
@@ -586,14 +586,14 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
     def choose_icon_theme(self):
         from calibre.gui2.icon_theme import ChooseTheme
         d = ChooseTheme(self)
-        if d.exec_() == d.Accepted:
+        if d.exec_() == QDialog.DialogCode.Accepted:
             self.commit_icon_theme = d.commit_changes
             self.icon_theme_title = d.new_theme_title or _('Default icons')
             self.icon_theme.setText(_('Icon theme: <b>%s</b>') % self.icon_theme_title)
             self.changed_signal.emit()
 
     def edit_id_link_rules(self):
-        if IdLinksEditor(self).exec_() == Dialog.Accepted:
+        if IdLinksEditor(self).exec_() == QDialog.DialogCode.Accepted:
             self.changed_signal.emit()
 
     @property
@@ -637,7 +637,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         font = gprefs['font']
         if font is not None:
             font = list(font)
-            font.append(gprefs.get('font_stretch', QFont.Unstretched))
+            font.append(gprefs.get('font_stretch', QFont.Stretch.Unstretched))
         self.current_font = self.initial_font = font
         self.update_font_display()
         self.display_model.initialize()
@@ -725,7 +725,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
     def change_cover_grid_texture(self):
         from calibre.gui2.preferences.texture_chooser import TextureChooser
         d = TextureChooser(parent=self, initial=self.cg_bg_widget.btex)
-        if d.exec_() == d.Accepted:
+        if d.exec_() == QDialog.DialogCode.Accepted:
             self.set_cg_texture(d.texture)
             self.changed_signal.emit()
 
@@ -750,7 +750,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
 
     def change_font(self, *args):
         fd = QFontDialog(self.build_font_obj(), self)
-        if fd.exec_() == fd.Accepted:
+        if fd.exec_() == QDialog.DialogCode.Accepted:
             font = fd.selectedFont()
             fi = QFontInfo(font)
             self.current_font = [unicode_type(fi.family()), fi.pointSize(),
@@ -765,7 +765,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
                 gprefs['font'] = (self.current_font[:4] if self.current_font else
                         None)
                 gprefs['font_stretch'] = (self.current_font[4] if self.current_font
-                        is not None else QFont.Unstretched)
+                        is not None else QFont.Stretch.Unstretched)
                 QApplication.setFont(self.font_display.font())
                 rr = True
             self.display_model.commit()

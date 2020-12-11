@@ -42,7 +42,7 @@ class Ui_Form(object):
         self.label_16 = QtWidgets.QLabel(Form)
         self.label_16.setObjectName("label_16")
         self.gridLayout.addWidget(self.label_16, 7, 0, 1, 1)
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
         self.gridLayout.addItem(spacerItem, 13, 0, 1, 1)
         self.opt_duplicate_links_in_toc = QtWidgets.QCheckBox(Form)
         self.opt_duplicate_links_in_toc.setObjectName("opt_duplicate_links_in_toc")

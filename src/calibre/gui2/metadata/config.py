@@ -6,10 +6,12 @@ __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import textwrap, numbers
-
-from PyQt5.Qt import (QWidget, QGridLayout, QGroupBox, QListView, Qt, QSpinBox,
-        QDoubleSpinBox, QCheckBox, QLineEdit, QComboBox, QLabel)
+import numbers
+import textwrap
+from PyQt5.Qt import (
+    QCheckBox, QComboBox, QDoubleSpinBox, QGridLayout, QGroupBox, QLabel, QLineEdit,
+    QListView, QSpinBox, Qt, QVBoxLayout, QWidget
+)
 
 from calibre.gui2.preferences.metadata_sources import FieldsModel as FM
 from calibre.utils.icu import sort_key
@@ -36,8 +38,8 @@ class FieldsModel(FM):  # {{{
 
     def state(self, field, defaults=False):
         src = self.prefs.defaults if defaults else self.prefs
-        return (Qt.Unchecked if field in src['ignore_fields']
-                    else Qt.Checked)
+        return (Qt.CheckState.Unchecked if field in src['ignore_fields']
+                    else Qt.CheckState.Checked)
 
     def restore_defaults(self):
         self.beginResetModel()
@@ -48,10 +50,16 @@ class FieldsModel(FM):  # {{{
         ignored_fields = {x for x in self.prefs['ignore_fields'] if x not in
             self.overrides}
         changed = {k for k, v in iteritems(self.overrides) if v ==
-            Qt.Unchecked}
+            Qt.CheckState.Unchecked}
         self.prefs['ignore_fields'] = list(ignored_fields.union(changed))
 
 # }}}
+
+
+class FieldsList(QListView):
+
+    def sizeHint(self):
+        return self.minimumSizeHint()
 
 
 class ConfigWidget(QWidget):
@@ -60,29 +68,29 @@ class ConfigWidget(QWidget):
         QWidget.__init__(self)
         self.plugin = plugin
 
-        self.l = l = QGridLayout()
-        self.setLayout(l)
-
+        self.overl = l = QVBoxLayout(self)
         self.gb = QGroupBox(_('Metadata fields to download'), self)
         if plugin.config_help_message:
             self.pchm = QLabel(plugin.config_help_message)
             self.pchm.setWordWrap(True)
             self.pchm.setOpenExternalLinks(True)
-            l.addWidget(self.pchm, 0, 0, 1, 2)
-        l.addWidget(self.gb, l.rowCount(), 0, 1, 2)
-        self.gb.l = QGridLayout()
-        self.gb.setLayout(self.gb.l)
-        self.fields_view = v = QListView(self)
-        self.gb.l.addWidget(v, 0, 0)
-        v.setFlow(v.LeftToRight)
+            l.addWidget(self.pchm, 10)
+        l.addWidget(self.gb)
+        self.gb.l = g = QVBoxLayout(self.gb)
+        g.setContentsMargins(0, 0, 0, 0)
+        self.fields_view = v = FieldsList(self)
+        g.addWidget(v)
+        v.setFlow(QListView.Flow.LeftToRight)
         v.setWrapping(True)
-        v.setResizeMode(v.Adjust)
+        v.setResizeMode(QListView.ResizeMode.Adjust)
         self.fields_model = FieldsModel(self.plugin)
         self.fields_model.initialize()
         v.setModel(self.fields_model)
-
         self.memory = []
         self.widgets = []
+        self.l = QGridLayout()
+        self.l.setContentsMargins(0, 0, 0, 0)
+        l.addLayout(self.l, 100)
         for opt in plugin.options:
             self.create_widgets(opt)
 

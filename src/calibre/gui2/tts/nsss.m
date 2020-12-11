@@ -21,17 +21,19 @@ static PyTypeObject NSSSType = {
 };
 
 static void
-dispatch_message(NSSS *self, MessageType which, unsigned long val) {
+dispatch_message(NSSS *self, MessageType which, unsigned int val) {
 	PyGILState_STATE state = PyGILState_Ensure();
-	PyObject *ret = PyObject_CallFunction(self->callback, "ik", which, val);
+	PyObject *ret = PyObject_CallFunction(self->callback, "iI", which, val);
 	if (ret) Py_DECREF(ret);
 	else PyErr_Print();
 	PyGILState_Release(state);
 }
 
 @interface SynthesizerDelegate : NSObject <NSSpeechSynthesizerDelegate> {
-	NSSS *parent;
+	@private
+	NSSS *nsss;
 }
+
 - (id)initWithNSSS:(NSSS *)x;
 @end
 
@@ -39,18 +41,18 @@ dispatch_message(NSSS *self, MessageType which, unsigned long val) {
 
 - (id)initWithNSSS:(NSSS *)x {
     self = [super init];
-    if (self) parent = x;
+    nsss = x;
     return self;
 }
 
 - (void)speechSynthesizer:(NSSpeechSynthesizer *)sender didFinishSpeaking:(BOOL)success {
-	dispatch_message(parent, END, success);
+	dispatch_message(nsss, END, success);
 }
 
 - (void)speechSynthesizer:(NSSpeechSynthesizer *)sender didEncounterSyncMessage:(NSString *)message {
 	NSError *err = nil;
 	NSNumber *syncProp = (NSNumber*) [sender objectForProperty: NSSpeechRecentSyncProperty error: &err];
-	if (syncProp && !err) dispatch_message(parent, MARK, syncProp.unsignedLongValue);
+	if (syncProp && !err) dispatch_message(nsss, MARK, syncProp.unsignedIntValue);
 }
 
 @end
@@ -102,13 +104,20 @@ static PyObject*
 NSSS_get_all_voices(NSSS *self, PyObject *args) {
 	PyObject *ans = PyDict_New();
 	if (!ans) return NULL;
+	NSLocale *locale = [NSLocale autoupdatingCurrentLocale];
 	for (NSSpeechSynthesizerVoiceName voice_id in [NSSpeechSynthesizer availableVoices]) {
 		NSDictionary *attributes = [NSSpeechSynthesizer attributesForVoice:voice_id];
 		if (attributes) {
+			NSObject *lang_key = [attributes objectForKey:NSVoiceLocaleIdentifier];
+			const char *lang_name = NULL;
+			if (lang_key && [lang_key isKindOfClass:[NSString class]]) {
+				NSString *display_name = [locale displayNameForKey:NSLocaleIdentifier value:(NSString*)lang_key];
+				if (display_name) lang_name = [display_name UTF8String];
+			}
 #define E(x, y) #x, as_python([attributes objectForKey:y])
-			PyObject *v = Py_BuildValue("{sN sN sN sN sN}",
+			PyObject *v = Py_BuildValue("{sN sN sN sN sN sz}",
 					E(name, NSVoiceName), E(age, NSVoiceAge), E(gender, NSVoiceGender),
-					E(demo_text, NSVoiceDemoText), E(locale_id, NSVoiceLocaleIdentifier));
+					E(demo_text, NSVoiceDemoText), E(locale_id, NSVoiceLocaleIdentifier), "language_display_name", lang_name);
 			if (!v) { Py_DECREF(ans); return NULL; }
 #undef E
 			if (PyDict_SetItemString(ans, [voice_id UTF8String], v) != 0) {

@@ -55,7 +55,7 @@ class Ui_Form(object):
         self.example_label.setOpenExternalLinks(True)
         self.example_label.setObjectName("example_label")
         self.verticalLayout.addWidget(self.example_label)
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
         self.verticalLayout.addItem(spacerItem)
         self.label.setBuddy(self.tag)
         self.label_2.setBuddy(self.attribute)

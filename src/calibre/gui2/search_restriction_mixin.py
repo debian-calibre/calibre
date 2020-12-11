@@ -9,7 +9,7 @@ from functools import partial
 
 from PyQt5.Qt import (
     Qt, QMenu, QIcon, QDialog, QGridLayout, QLabel, QLineEdit, QComboBox,
-    QDialogButtonBox, QSize, QVBoxLayout, QListWidget, QRadioButton, QAction, QTextBrowser)
+    QDialogButtonBox, QSize, QVBoxLayout, QListWidget, QRadioButton, QAction, QTextBrowser, QAbstractItemView)
 
 from calibre.gui2 import error_dialog, question_dialog, gprefs
 from calibre.gui2.dialogs.confirm_delete import confirm
@@ -32,7 +32,7 @@ class SelectNames(QDialog):  # {{{
 
         self._names = QListWidget(self)
         self._names.addItems(sorted(names, key=sort_key))
-        self._names.setSelectionMode(self._names.MultiSelection)
+        self._names.setSelectionMode(QAbstractItemView.SelectionMode.MultiSelection)
         l.addWidget(self._names)
 
         self._or = QRadioButton(_('Match any of the selected %s')%txt)
@@ -41,7 +41,7 @@ class SelectNames(QDialog):  # {{{
         l.addWidget(self._or)
         l.addWidget(self._and)
 
-        self.bb = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+        self.bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
         self.bb.accepted.connect(self.accept)
         self.bb.rejected.connect(self.reject)
         l.addWidget(self.bb)
@@ -51,7 +51,7 @@ class SelectNames(QDialog):  # {{{
     @property
     def names(self):
         for item in self._names.selectedItems():
-            yield unicode_type(item.data(Qt.DisplayRole) or '')
+            yield unicode_type(item.data(Qt.ItemDataRole.DisplayRole) or '')
 
     @property
     def match_type(self):
@@ -137,7 +137,7 @@ class CreateVirtualLibrary(QDialog):  # {{{
             '<a href="search.{4}">{4}</a>.').format(_('Authors'), _('Tags'),
                                             _('Publishers'), ngettext('Series', 'Series', 2), _('Saved searches')))
         sl.setWordWrap(True)
-        sl.setTextInteractionFlags(Qt.LinksAccessibleByMouse)
+        sl.setTextInteractionFlags(Qt.TextInteractionFlag.LinksAccessibleByMouse)
         sl.linkActivated.connect(self.link_activated)
         gl.addWidget(sl, 3, 0, 1, 2)
         gl.setRowStretch(3,10)
@@ -163,7 +163,7 @@ class CreateVirtualLibrary(QDialog):  # {{{
         hl.setFrameStyle(hl.StyledPanel)
         gl.addWidget(hl, 0, 3, 4, 1)
 
-        bb = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+        bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
         bb.accepted.connect(self.accept)
         bb.rejected.connect(self.reject)
         gl.addWidget(bb, 4, 0, 1, 0)
@@ -245,7 +245,7 @@ class CreateVirtualLibrary(QDialog):  # {{{
         else:
             names = getattr(db, 'all_%s_names'%f)()
         d = SelectNames(names, txt, parent=self)
-        if d.exec_() == d.Accepted:
+        if d.exec_() == QDialog.DialogCode.Accepted:
             prefix = f+'s' if f in {'tag', 'author'} else f
             if f == 'search':
                 search = ['(%s)'%(db.saved_search_lookup(x)) for x in d.names]
@@ -357,7 +357,7 @@ class SearchRestrictionMixin(object):
         db = self.library_view.model().db
         virt_libs = db.new_api.pref('virtual_libraries', {})
         cd = CreateVirtualLibrary(self, virt_libs.keys(), editing=name)
-        if cd.exec_() == cd.Accepted:
+        if cd.exec_() == QDialog.DialogCode.Accepted:
             if name:
                 self._remove_vl(name, reapply=False)
             self.add_virtual_library(db, cd.library_name, cd.library_search)
@@ -519,7 +519,7 @@ class SearchRestrictionMixin(object):
         d = QuickOpen(
                 sorted(virt_libs.keys(), key=sort_key), parent=self, title=_('Choose Virtual library'),
                 name='vl-open', level1=' ', help_text=help_text)
-        if d.exec_() == d.Accepted and d.selected_result:
+        if d.exec_() == QDialog.DialogCode.Accepted and d.selected_result:
             self.apply_virtual_library(library=d.selected_result)
 
     def _remove_vl(self, name, reapply=True):
@@ -638,7 +638,7 @@ class SearchRestrictionMixin(object):
         self.search.clear(emit_search=True)
         self.tags_view.recount()
         self.set_number_of_books_shown()
-        self.current_view().setFocus(Qt.OtherFocusReason)
+        self.current_view().setFocus(Qt.FocusReason.OtherFocusReason)
         self.set_window_title()
         v = self.current_view()
         if not v.currentIndex().isValid():

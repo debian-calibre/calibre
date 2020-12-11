@@ -4,7 +4,7 @@
 
 
 from PyQt5.Qt import (
-    QFormLayout, QIcon, QLabel, QLineEdit, QListWidget, Qt, QVBoxLayout
+    QFormLayout, QIcon, QLabel, QLineEdit, QListWidget, Qt, QVBoxLayout, QDialog
 )
 
 from calibre import prepare_string_for_xml
@@ -57,7 +57,7 @@ class AddSavedSearch(Dialog):
         s.setPlaceholderText(_('The search expression'))
         if self.initial_search:
             s.setText(self.initial_search)
-        n.setFocus(Qt.OtherFocusReason)
+        n.setFocus(Qt.FocusReason.OtherFocusReason)
         l.addRow(self.bb)
 
     def accept(self):
@@ -142,7 +142,7 @@ class SavedSearchEditor(Dialog):
                 return ans
 
     def keyPressEvent(self, ev):
-        if ev.key() == Qt.Key_Delete:
+        if ev.key() == Qt.Key.Key_Delete:
             self.del_search()
             return
         return Dialog.keyPressEvent(self, ev)
@@ -154,7 +154,7 @@ class SavedSearchEditor(Dialog):
 
     def add_search(self):
         d = AddSavedSearch(parent=self, commit_changes=False)
-        if d.exec_() != d.Accepted:
+        if d.exec_() != QDialog.DialogCode.Accepted:
             return
         name, expression = d.accepted_data
         nmap = {icu_lower(n):n for n in self.searches}
@@ -188,7 +188,7 @@ class SavedSearchEditor(Dialog):
         d.setWindowTitle(_('Edit saved search'))
         d.sname.setText(n)
         d.search.setText(self.searches[n])
-        if d.exec_() != d.Accepted:
+        if d.exec_() != QDialog.DialogCode.Accepted:
             return
         name, expression = d.accepted_data
         self.slist.currentItem().setText(name)
@@ -202,7 +202,7 @@ class SavedSearchEditor(Dialog):
             return _('A saved search with the name {} already exists. Choose another name').format(name)
 
     def select_search(self, name):
-        items = self.slist.findItems(name, Qt.MatchFixedString | Qt.MatchCaseSensitive)
+        items = self.slist.findItems(name, Qt.MatchFlag.MatchFixedString | Qt.MatchFlag.MatchCaseSensitive)
         if items:
             self.slist.setCurrentItem(items[0])
 

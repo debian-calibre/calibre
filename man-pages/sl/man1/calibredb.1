@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "november 27, 2020" "5.6.0" "calibre"
+.TH "CALIBREDB" "1" "december 11, 2020" "5.7.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -236,7 +236,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
-Določite avtorje dodanih knjig
+Nastavite avtorje dodanih knjig
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -246,12 +246,12 @@ If books with similar titles and authors are found, merge the incoming formats (
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-Path to the cover to use for the added book
+Pot do naslovnice, ki jo želite uporabiti za dodano knjigo
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Add books to database even if they already exist. Comparison is done based on book titles and authors. Note that the \fI\%\-\-automerge\fP option takes precedence.
+Dodajte knjige v zbirko podatkov, tudi če že obstajajo. Primerjava poteka na podlagi naslovov knjig in avtorjev.  Upoštevajte, da možnost \fI\%\-\-automerge\fP ima prednost.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -261,37 +261,37 @@ Dodaj prazno knjigo (knjigo brez zapisa)
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Set the identifiers for this book, for e.g. \-I asin:XXX \-I isbn:YYY
+Nastavite identifikatorje za to knjigo, npr. \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-isbn, \-i
-Določite ISBN dodanih knjig
+Nastavite ISBN dodanih knjig
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-languages, \-l
-A comma separated list of languages (best to use ISO639 language codes, though some language names may also be recognized)
+Seznam jezikov, ločenih z vejico (najbolje uporabiti jezikovne kode ISO639, čeprav so morda prepoznana tudi nekatera jezikovna imena)
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-series, \-s
-Set the series of the added book(s)
+Nastavite število serij dodanih knjig
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-series\-index, \-S
-Set the series number of the added book(s)
+Nastavite število serij dodanih knjig
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-tags, \-T
-Določite značke dodanih knjig
+Nastavite značke dodanih knjig
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-title, \-t
-Določite naslov dodanih knjig
+Nastavite naslov dodanih knjig
 .UNINDENT
 .SS DODAJANJE IZ MAP
 .sp
@@ -304,7 +304,7 @@ A filename (glob) pattern, files matching this pattern will be added when scanni
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning directories for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all pdf files
+Vzorec imena datoteke (glob). Datoteke, ki se ujemajo s tem vzorcem, bodo prezrte pri iskanju datotek v imenikih. Lahko ga določite večkrat za več vzorcev. Na primer: * .pdf bo prezrl vse datoteke pdf
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -334,7 +334,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Do not use the recycle bin
+Ne uporabljaj koša
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -354,7 +354,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
-Do not replace the format if it already exists
+Ne zamenjaj format, če že obstaja
 .UNINDENT
 .SH REMOVE_FORMAT
 .INDENT 0.0
@@ -447,22 +447,22 @@ Izvozi vse knjige iz zbirke podatkov brez upoštevanja seznama id\-jev.
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Have calibre convert all non English characters into English equivalents for the file names. This is useful if saving to a legacy filesystem without full support for Unicode filenames. Specifying this switch will turn this behavior off.
+Have calibre convert all non English characters into English equivalents for the file names. This is useful if saving to a legacy filesystem without full support for Unicode filenames. Določanje tega stikala bo izključilo to akcijo.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-save\-cover
-Normally, calibre will save the cover in a separate file along with the actual e\-book files. Specifying this switch will turn this behavior off.
+Normally, calibre will save the cover in a separate file along with the actual e\-book files. Določanje tega stikala bo izključilo to akcijo.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-update\-metadata
-Normally, calibre will update the metadata in the saved files from what is in the calibre library. Makes saving to disk slower. Specifying this switch will turn this behavior off.
+Normally, calibre will update the metadata in the saved files from what is in the calibre library. Makes saving to disk slower. Določanje tega stikala bo izključilo to akcijo.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-write\-opf
-Normally, calibre will write the metadata into a separate OPF file along with the actual e\-book files. Specifying this switch will turn this behavior off.
+Normally, calibre will write the metadata into a separate OPF file along with the actual e\-book files. Določanje tega stikala bo izključilo to akcijo.
 .UNINDENT
 .INDENT 0.0
 .TP
