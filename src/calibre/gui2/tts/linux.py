@@ -10,23 +10,34 @@ from .common import Event, EventType
 from .errors import TTSSystemUnavailable
 
 
+def wrap_in_ssml(text):
+    return ('<?xml version="1.0"?>\n<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis"><s>' +
+            text + '</s></speak>')
+
+
 class Client:
 
     mark_template = '<mark name="{}"/>'
+    name = 'speechd'
+    min_rate = -100
+    max_rate = 100
 
     @classmethod
     def escape_marked_text(cls, text):
         return prepare_string_for_xml(text)
 
-    def __init__(self, dispatch_on_main_thread):
-        self.create_ssip_client()
+    def __init__(self, settings=None, dispatch_on_main_thread=lambda f: f()):
+        self.ssip_client = None
         self.status = {'synthesizing': False, 'paused': False}
+        self.settings = settings or {}
         self.dispatch_on_main_thread = dispatch_on_main_thread
         self.current_marked_text = None
         self.last_mark = None
         self.next_cancel_is_for_pause = False
         self.next_begin_is_for_resume = False
         self.current_callback = None
+        self.settings_applied = False
+        self.system_default_output_module = None
 
     def create_ssip_client(self):
         from speechd.client import Priority, SpawnError, SSIPClient
@@ -37,11 +48,41 @@ class Client:
         self.ssip_client.set_priority(Priority.TEXT)
 
     def __del__(self):
-        if hasattr(self, 'ssip_client'):
-            self.ssip_client.cancel()
+        if self.ssip_client is not None:
+            try:
+                self.ssip_client.cancel()
+            except Exception:
+                pass
             self.ssip_client.close()
-            del self.ssip_client
+            self.ssip_client = None
     shutdown = __del__
+
+    def ensure_state(self, use_ssml=False):
+        if self.ssip_client is None:
+            self.create_ssip_client()
+        if self.system_default_output_module is None:
+            self.system_default_output_module = self.ssip_client.get_output_module()
+        if not self.settings_applied:
+            self.apply_settings()
+        self.set_use_ssml(use_ssml)
+
+    def apply_settings(self, new_settings=None):
+        if new_settings is not None:
+            self.settings = new_settings
+        if self.settings_applied:
+            self.shutdown()
+            self.settings_applied = False
+            self.ensure_state()
+        om = self.settings.get('output_module')
+        if om:
+            self.ssip_client.set_output_module(om)
+        voice = self.settings.get('voice')
+        if voice:
+            self.ssip_client.set_synthesis_voice(voice[0])
+        rate = self.settings.get('rate')
+        if rate:
+            self.ssip_client.set_rate(rate)
+        self.settings_applied = True
 
     def set_use_ssml(self, on):
         from speechd.client import DataMode, SSIPCommunicationError
@@ -50,12 +91,12 @@ class Client:
             self.ssip_client.set_data_mode(mode)
         except SSIPCommunicationError:
             self.ssip_client.close()
-            self.create_ssip_client()
-            self.ssip_client.set_data_mode(mode)
+            self.ssip_client = None
+            self.ensure_state(on)
 
     def speak_simple_text(self, text):
         self.stop()
-        self.set_use_ssml(False)
+        self.ensure_state(use_ssml=False)
         self.current_marked_text = self.last_mark = None
 
         def callback(callback_type, index_mark=None):
@@ -86,7 +127,7 @@ class Client:
             self.next_cancel_is_for_pause = False
         return event
 
-    def speak_marked_text(self, text, callback):
+    def speak_marked_text(self, text, callback=lambda ev: None):
         self.stop()
         self.current_marked_text = text
         self.last_mark = None
@@ -104,8 +145,8 @@ class Client:
             self.dispatch_on_main_thread(partial(callback_wrapper, callback_type, index_mark))
         self.current_callback = cw
 
-        self.set_use_ssml(True)
-        self.ssip_client.speak(text, callback=self.current_callback)
+        self.ensure_state(use_ssml=True)
+        self.ssip_client.speak(wrap_in_ssml(text), callback=self.current_callback)
 
     def pause(self):
         if self.status['synthesizing'] and not self.status['paused']:
@@ -125,10 +166,44 @@ class Client:
                 text = self.current_marked_text
             else:
                 text = self.current_marked_text[idx:]
-        self.ssip_client.speak(text, callback=self.current_callback)
+        self.ensure_state(use_ssml=True)
+        self.ssip_client.speak(wrap_in_ssml(text), callback=self.current_callback)
+    resume_after_configure = resume
 
     def stop(self):
         self.current_callback = self.current_marked_text = self.last_mark = None
         self.next_cancel_is_for_pause = False
         self.next_begin_is_for_resume = False
-        self.ssip_client.stop()
+        if self.ssip_client is not None:
+            self.ssip_client.stop()
+
+    def config_widget(self, backend_settings, parent):
+        from calibre.gui2.tts.linux_config import Widget
+        return Widget(self, backend_settings, parent)
+
+    def get_voice_data(self):
+        ans = getattr(self, 'voice_data', None)
+        if ans is None:
+            self.ensure_state()
+            ans = self.voice_data = {}
+            output_module = self.ssip_client.get_output_module()
+            for om in self.ssip_client.list_output_modules():
+                self.ssip_client.set_output_module(om)
+                ans[om] = tuple(self.ssip_client.list_synthesis_voices())
+            self.ssip_client.set_output_module(output_module)
+        return ans
+
+    def change_rate(self, steps=1):
+        rate = current_rate = self.settings.get('rate') or 0
+        step_size = (self.max_rate - self.min_rate) // 10
+        rate += steps * step_size
+        rate = max(self.min_rate, min(rate, self.max_rate))
+        if rate != current_rate:
+            self.settings['rate'] = rate
+            prev_state = self.status.copy()
+            self.apply_settings()
+            if prev_state['synthesizing'] and not prev_state['paused']:
+                self.status['synthesizing'] = True
+                self.status['paused'] = True
+                self.resume_after_configure()
+            return self.settings

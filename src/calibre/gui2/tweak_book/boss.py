@@ -118,7 +118,7 @@ class Boss(QObject):
         get_boss.boss = self
         self.gui = parent
         completion_worker().result_callback = self.handle_completion_result_signal.emit
-        self.handle_completion_result_signal.connect(self.handle_completion_result, Qt.QueuedConnection)
+        self.handle_completion_result_signal.connect(self.handle_completion_result, Qt.ConnectionType.QueuedConnection)
         self.completion_request_count = 0
         self.editor_cache = JSONConfig('editor-cache', base_path=cache_dir())
         d = self.editor_cache.defaults
@@ -205,12 +205,12 @@ class Boss(QObject):
                     for bar in ed.bars:
                         bar.setIconSize(QSize(tprefs['toolbar_icon_size'], tprefs['toolbar_icon_size']))
 
-        if ret == p.Accepted:
+        if ret == QDialog.DialogCode.Accepted:
             setup_css_parser_serialization()
             self.gui.apply_settings()
             self.refresh_file_list()
             self.gui.preview.start_refresh_timer()
-        if ret == p.Accepted or p.dictionaries_changed:
+        if ret == QDialog.DialogCode.Accepted or p.dictionaries_changed:
             for ed in itervalues(editors):
                 ed.apply_settings(dictionaries_changed=p.dictionaries_changed)
         if orig_spell != tprefs['inline_spell_check']:
@@ -257,7 +257,7 @@ class Boss(QObject):
         if not self._check_before_open():
             return
         d = NewBook(self.gui)
-        if d.exec_() == d.Accepted:
+        if d.exec_() == QDialog.DialogCode.Accepted:
             fmt = d.fmt.lower()
             path = choose_save_file(self.gui, 'edit-book-new-book', _('Choose file location'),
                                     filters=[(fmt.upper(), (fmt,))], all_files=False)
@@ -274,7 +274,7 @@ class Boss(QObject):
         d = ImportForeign(self.gui)
         if hasattr(path, 'rstrip'):
             d.set_src(os.path.abspath(path))
-        if d.exec_() == d.Accepted:
+        if d.exec_() == QDialog.DialogCode.Accepted:
             for name in tuple(editors):
                 self.close_editor(name)
             from calibre.ebooks.oeb.polish.import_book import import_book_as_epub
@@ -479,7 +479,7 @@ class Boss(QObject):
             return
         self.commit_dirty_opf()
         d = NewFileDialog(self.gui)
-        if d.exec_() != d.Accepted:
+        if d.exec_() != QDialog.DialogCode.Accepted:
             return
         added_name = self.do_add_file(d.file_name, d.file_data, using_template=d.using_template, edit_file=True)
         if d.file_name.rpartition('.')[2].lower() in ('ttf', 'otf', 'woff'):
@@ -553,7 +553,7 @@ class Boss(QObject):
         d = AddCover(current_container(), self.gui)
         d.import_requested.connect(self.do_add_file)
         try:
-            if d.exec_() == d.Accepted and d.file_name is not None:
+            if d.exec_() == QDialog.DialogCode.Accepted and d.file_name is not None:
                 report = []
                 with BusyCursor():
                     self.add_savepoint(_('Before: Add cover'))
@@ -574,7 +574,7 @@ class Boss(QObject):
             return
         self.add_savepoint(_('Before: Edit Table of Contents'))
         d = TOCEditor(title=self.current_metadata.title, parent=self.gui)
-        if d.exec_() != d.Accepted:
+        if d.exec_() != QDialog.DialogCode.Accepted:
             self.rewind_savepoint()
             return
         with BusyCursor():
@@ -625,7 +625,7 @@ class Boss(QObject):
         d.rules = last_used_transform_rules
         ret = d.exec_()
         last_used_transform_rules = d.rules
-        if ret != d.Accepted:
+        if ret != QDialog.DialogCode.Accepted:
             return
         with BusyCursor():
             self.add_savepoint(_('Before style transformation'))
@@ -682,7 +682,7 @@ class Boss(QObject):
                 _('The %s format does not support file and folder names internally, therefore'
                   ' arranging files into folders is not allowed.') % c.book_type.upper(), show=True)
         d = RationalizeFolders(self.gui)
-        if d.exec_() != d.Accepted:
+        if d.exec_() != QDialog.DialogCode.Accepted:
             return
         self.commit_all_editors_to_container()
         name_map = rationalize_folders(c, d.folder_map)
@@ -745,7 +745,7 @@ class Boss(QObject):
         self.apply_container_update_to_gui()
         if from_filelist:
             self.gui.file_list.select_names(frozenset(itervalues(name_map)), current_name=name_map.get(from_filelist))
-            self.gui.file_list.file_list.setFocus(Qt.PopupFocusReason)
+            self.gui.file_list.file_list.setFocus(Qt.FocusReason.PopupFocusReason)
 
     # }}}
 
@@ -794,12 +794,12 @@ class Boss(QObject):
                 if name in editors:
                     editor = editors[name]
                     editor.go_to_line(lnum)
-                    editor.setFocus(Qt.OtherFocusReason)
+                    editor.setFocus(Qt.FocusReason.OtherFocusReason)
                     self.gui.raise_()
         d = Diff(revert_button_msg=revert_msg, show_open_in_editor=show_open_in_editor)
         [x.break_cycles() for x in _diff_dialogs if not x.isVisible()]
         _diff_dialogs = [x for x in _diff_dialogs if x.isVisible()] + [d]
-        d.show(), d.raise_(), d.setFocus(Qt.OtherFocusReason), d.setWindowModality(Qt.NonModal)
+        d.show(), d.raise_(), d.setFocus(Qt.FocusReason.OtherFocusReason), d.setWindowModality(Qt.WindowModality.NonModal)
         if show_open_in_editor:
             d.line_activated.connect(line_activated)
         return d
@@ -831,14 +831,14 @@ class Boss(QObject):
         k.addWidget(cb)
         cb.setChecked(True)
         connect_lambda(cb.toggled, d, lambda d, checked: tprefs.set('skip_ask_to_show_current_diff_for_' + name, not checked))
-        d.bb = bb = QDialogButtonBox(QDialogButtonBox.Close, d)
+        d.bb = bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Close, d)
         k.addWidget(bb)
         bb.accepted.connect(d.accept)
         bb.rejected.connect(d.reject)
         d.b = b = bb.addButton(_('See what &changed'), bb.AcceptRole)
         b.setIcon(QIcon(I('diff.png'))), b.setAutoDefault(False)
         bb.button(bb.Close).setDefault(True)
-        if d.exec_() == d.Accepted:
+        if d.exec_() == QDialog.DialogCode.Accepted:
             self.show_current_diff(allow_revert=allow_revert, to_container=to_container)
 
     def compare_book(self):
@@ -943,11 +943,11 @@ class Boss(QObject):
             elif action[0] == 'insert_hyperlink':
                 self.commit_all_editors_to_container()
                 d = InsertLink(current_container(), edname, initial_text=ed.get_smart_selection(), parent=self.gui)
-                if d.exec_() == d.Accepted:
+                if d.exec_() == QDialog.DialogCode.Accepted:
                     ed.insert_hyperlink(d.href, d.text, template=d.rendered_template)
             elif action[0] == 'insert_tag':
                 d = InsertTag(parent=self.gui)
-                if d.exec_() == d.Accepted:
+                if d.exec_() == QDialog.DialogCode.Accepted:
                     ed.insert_tag(d.tag)
             else:
                 ed.action_triggered(action)
@@ -959,7 +959,7 @@ class Boss(QObject):
             return error_dialog(self.gui, _('Not supported'), _(
                 'Semantics are not supported for the AZW3 format.'), show=True)
         d = InsertSemantics(c, parent=self.gui)
-        if d.exec_() == d.Accepted and d.changed_type_map:
+        if d.exec_() == QDialog.DialogCode.Accepted and d.changed_type_map:
             self.add_savepoint(_('Before: Set Semantics'))
             d.apply_changes(current_container())
             self.apply_container_update_to_gui()
@@ -972,7 +972,7 @@ class Boss(QObject):
         if current_name and c.mime_map[current_name] not in OEB_DOCS | OEB_STYLES:
             current_name = None
         d = FilterCSS(current_name=current_name, parent=self.gui)
-        if d.exec_() == d.Accepted and d.filtered_properties:
+        if d.exec_() == QDialog.DialogCode.Accepted and d.filtered_properties:
             self.add_savepoint(_('Before: Filter style information'))
             with BusyCursor():
                 changed = filter_css(current_container(), d.filtered_properties, names=d.filter_names)
@@ -994,7 +994,7 @@ class Boss(QObject):
 
     def show_text_search(self):
         self.gui.text_search_dock.show()
-        self.gui.text_search.find.setFocus(Qt.OtherFocusReason)
+        self.gui.text_search.find.setFocus(Qt.FocusReason.OtherFocusReason)
 
     def search_action_triggered(self, action, overrides=None):
         ss = self.gui.saved_searches.isVisible()
@@ -1013,9 +1013,9 @@ class Boss(QObject):
                    self.gui, self.show_editor, self.edit_file, self.show_current_diff, self.add_savepoint, self.rewind_savepoint, self.set_modified)
         ed = ret is True and self.gui.central.current_editor
         if getattr(ed, 'has_line_numbers', False):
-            ed.editor.setFocus(Qt.OtherFocusReason)
+            ed.editor.setFocus(Qt.FocusReason.OtherFocusReason)
         else:
-            self.gui.saved_searches.setFocus(Qt.OtherFocusReason)
+            self.gui.saved_searches.setFocus(Qt.FocusReason.OtherFocusReason)
 
     def search(self, action, overrides=None):
         # Run a search/replace
@@ -1035,9 +1035,9 @@ class Boss(QObject):
                    self.gui, self.show_editor, self.edit_file, self.show_current_diff, self.add_savepoint, self.rewind_savepoint, self.set_modified)
         ed = ret is True and self.gui.central.current_editor
         if getattr(ed, 'has_line_numbers', False):
-            ed.editor.setFocus(Qt.OtherFocusReason)
+            ed.editor.setFocus(Qt.FocusReason.OtherFocusReason)
         else:
-            self.gui.saved_searches.setFocus(Qt.OtherFocusReason)
+            self.gui.saved_searches.setFocus(Qt.FocusReason.OtherFocusReason)
 
     def find_text(self, state):
         from calibre.gui2.tweak_book.text_search import run_text_search
@@ -1049,7 +1049,7 @@ class Boss(QObject):
         ret = run_text_search(state, ed, name, searchable_names, self.gui, self.show_editor, self.edit_file)
         ed = ret is True and self.gui.central.current_editor
         if getattr(ed, 'has_line_numbers', False):
-            ed.editor.setFocus(Qt.OtherFocusReason)
+            ed.editor.setFocus(Qt.FocusReason.OtherFocusReason)
 
     def find_word(self, word, locations):
         # Go to a word from the spell check dialog
@@ -1254,7 +1254,7 @@ class Boss(QObject):
         if name is None:
             return
         d = MultiSplit(self.gui)
-        if d.exec_() == d.Accepted:
+        if d.exec_() == QDialog.DialogCode.Accepted:
             with BusyCursor():
                 self.add_savepoint(_('Before: Split %s') % self.gui.elided_text(name))
                 try:
@@ -1473,11 +1473,11 @@ class Boss(QObject):
             return
         from calibre.gui2.tweak_book.polish import show_report, CompressImages, CompressImagesProgress
         d = CompressImages(self.gui)
-        if d.exec_() == d.Accepted:
+        if d.exec_() == QDialog.DialogCode.Accepted:
             with BusyCursor():
                 self.add_savepoint(_('Before: compress images'))
                 d = CompressImagesProgress(names=d.names, jpeg_quality=d.jpeg_quality, parent=self.gui)
-                if d.exec_() != d.Accepted:
+                if d.exec_() != QDialog.DialogCode.Accepted:
                     self.rewind_savepoint()
                     return
                 changed, report = d.result
@@ -1631,7 +1631,7 @@ class Boss(QObject):
         c = current_container()
         files = [name for name, mime in iteritems(c.mime_map) if c.exists(name) and syntax_from_mime(name, mime) is not None]
         d = QuickOpen(files, parent=self.gui)
-        if d.exec_() == d.Accepted and d.selected_result is not None:
+        if d.exec_() == QDialog.DialogCode.Accepted and d.selected_result is not None:
             self.edit_file_requested(d.selected_result, None, c.mime_map[d.selected_result])
 
     # Editor basic controls {{{
@@ -1773,7 +1773,7 @@ class Boss(QObject):
             d.m = QLabel(_('There are unsaved changes, if you quit without saving, you will lose them.'))
             d.m.setWordWrap(True)
             d.l.addWidget(d.m, 0, 1)
-            d.bb = QDialogButtonBox(QDialogButtonBox.Cancel)
+            d.bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Cancel)
             d.bb.rejected.connect(d.reject)
             d.bb.accepted.connect(d.accept)
             d.l.addWidget(d.bb, 1, 0, 1, 2)
@@ -1782,13 +1782,13 @@ class Boss(QObject):
             def endit(d, x):
                 d.do_save = x
                 d.accept()
-            b = d.bb.addButton(_('&Save and Quit'), QDialogButtonBox.ActionRole)
+            b = d.bb.addButton(_('&Save and Quit'), QDialogButtonBox.ButtonRole.ActionRole)
             b.setIcon(QIcon(I('save.png')))
             connect_lambda(b.clicked, d, lambda d: endit(d, True))
-            b = d.bb.addButton(_('&Quit without saving'), QDialogButtonBox.ActionRole)
+            b = d.bb.addButton(_('&Quit without saving'), QDialogButtonBox.ButtonRole.ActionRole)
             connect_lambda(b.clicked, d, lambda d: endit(d, False))
             d.resize(d.sizeHint())
-            if d.exec_() != d.Accepted or d.do_save is None:
+            if d.exec_() != QDialog.DialogCode.Accepted or d.do_save is None:
                 return False
             if d.do_save:
                 self.gui.action_save.trigger()

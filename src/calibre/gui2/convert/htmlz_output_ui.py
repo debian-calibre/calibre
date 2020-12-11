@@ -16,7 +16,7 @@ class Ui_Form(object):
         Form.resize(438, 300)
         self.gridLayout = QtWidgets.QGridLayout(Form)
         self.gridLayout.setObjectName("gridLayout")
-        spacerItem = QtWidgets.QSpacerItem(20, 246, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem = QtWidgets.QSpacerItem(20, 246, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
         self.gridLayout.addItem(spacerItem, 3, 0, 1, 1)
         self.opt_htmlz_class_style = QtWidgets.QComboBox(Form)
         self.opt_htmlz_class_style.setObjectName("opt_htmlz_class_style")

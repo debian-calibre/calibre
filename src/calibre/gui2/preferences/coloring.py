@@ -12,7 +12,7 @@ from PyQt5.Qt import (QWidget, QDialog, QLabel, QGridLayout, QComboBox, QSize,
         QLineEdit, QIntValidator, QDoubleValidator, QFrame, Qt, QIcon, QHBoxLayout,
         QScrollArea, QPushButton, QVBoxLayout, QDialogButtonBox, QToolButton,
         QListView, QAbstractListModel, pyqtSignal, QSizePolicy, QSpacerItem,
-        QApplication, QStandardItem, QStandardItemModel, QCheckBox, QMenu)
+        QApplication, QStandardItem, QStandardItemModel, QCheckBox, QMenu, QAbstractItemView)
 
 from calibre import prepare_string_for_xml, sanitize_file_name, as_unicode
 from calibre.constants import config_dir
@@ -321,7 +321,7 @@ class RuleEditor(QDialog):  # {{{
         l.addWidget(l1, 0, 0, 1, 8)
 
         self.f1 = QFrame(self)
-        self.f1.setFrameShape(QFrame.HLine)
+        self.f1.setFrameShape(QFrame.Shape.HLine)
         l.addWidget(self.f1, 1, 0, 1, 8)
 
         self.l2 = l2 = QLabel(_('Add the emblem:') if self.rule_kind == 'emblem' else _('Set the'))
@@ -364,10 +364,10 @@ class RuleEditor(QDialog):  # {{{
         if self.rule_kind == 'color':
             self.color_box = ColorButton(parent=self)
             self.color_label = QLabel('Sample text Sample text')
-            self.color_label.setTextFormat(Qt.RichText)
+            self.color_label.setTextFormat(Qt.TextFormat.RichText)
             l.addWidget(self.color_box, 2, 5)
             l.addWidget(self.color_label, 2, 6)
-            l.addItem(QSpacerItem(10, 10, QSizePolicy.Expanding), 2, 7)
+            l.addItem(QSpacerItem(10, 10, QSizePolicy.Policy.Expanding), 2, 7)
         elif self.rule_kind == 'emblem':
             create_filename_box()
             self.update_filename_box()
@@ -414,7 +414,7 @@ class RuleEditor(QDialog):  # {{{
         l.addWidget(l6, 6, 0, 1, 8)
 
         self.bb = bb = QDialogButtonBox(
-                QDialogButtonBox.Ok|QDialogButtonBox.Cancel)
+                QDialogButtonBox.StandardButton.Ok|QDialogButtonBox.StandardButton.Cancel)
         bb.accepted.connect(self.accept)
         bb.rejected.connect(self.reject)
         l.addWidget(bb, 7, 0, 1, 8)
@@ -428,7 +428,7 @@ class RuleEditor(QDialog):  # {{{
         self.conditions_widget = QWidget(self)
         sa.setWidget(self.conditions_widget)
         self.conditions_widget.setLayout(QVBoxLayout())
-        self.conditions_widget.layout().setAlignment(Qt.AlignTop)
+        self.conditions_widget.layout().setAlignment(Qt.AlignmentFlag.AlignTop)
         self.conditions = []
 
         if self.rule_kind == 'color':
@@ -490,10 +490,10 @@ class RuleEditor(QDialog):  # {{{
         for i,filename in enumerate(self.icon_file_names):
             item = QStandardItem(filename)
             if doing_multiple:
-                item.setFlags(Qt.ItemIsUserCheckable | Qt.ItemIsEnabled)
-                item.setData(Qt.Unchecked, Qt.CheckStateRole)
+                item.setFlags(Qt.ItemFlag.ItemIsUserCheckable | Qt.ItemFlag.ItemIsEnabled)
+                item.setData(Qt.CheckState.Unchecked, Qt.ItemDataRole.CheckStateRole)
             else:
-                item.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
+                item.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable)
             icon = QIcon(os.path.join(self.icon_folder, filename))
             item.setIcon(icon)
             model.appendRow(item)
@@ -556,7 +556,7 @@ class RuleEditor(QDialog):  # {{{
             fnames = []
             for i in range(1, model.rowCount()):
                 item = model.item(i, 0)
-                if item.checkState() == Qt.Checked:
+                if item.checkState() == Qt.CheckState.Checked:
                     fnames.append(lower(unicode_type(item.text())))
             fname = ' : '.join(fnames)
         else:
@@ -577,7 +577,7 @@ class RuleEditor(QDialog):  # {{{
                     idx = self.filename_box.findText(icon)
                     if idx >= 0:
                         item = model.item(idx)
-                        item.setCheckState(Qt.Checked)
+                        item.setCheckState(Qt.CheckState.Checked)
 
     def update_remove_button(self):
         m = self.remove_button.menu()
@@ -732,13 +732,13 @@ class RulesModel(QAbstractListModel):  # {{{
             kind, col, rule = self.rules[row]
         except:
             return None
-        if role == Qt.DisplayRole:
+        if role == Qt.ItemDataRole.DisplayRole:
             if col == color_row_key:
                 col = all_columns_string
             else:
                 col = self.fm[col]['name']
             return self.rule_to_html(kind, col, rule)
-        if role == Qt.UserRole:
+        if role == Qt.ItemDataRole.UserRole:
             return (kind, col, rule)
 
     def add_rule(self, kind, col, rule):
@@ -911,7 +911,7 @@ class EditRules(QWidget):  # {{{
         self.g = g = QGridLayout()
         self.rules_view = QListView(self)
         self.rules_view.doubleClicked.connect(self.edit_rule)
-        self.rules_view.setSelectionMode(self.rules_view.ExtendedSelection)
+        self.rules_view.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
         self.rules_view.setAlternatingRowColors(True)
         self.rtfd = RichTextDelegate(parent=self.rules_view, max_width=400)
         self.rules_view.setItemDelegate(self.rtfd)
@@ -921,12 +921,12 @@ class EditRules(QWidget):  # {{{
         b.setIcon(QIcon(I('arrow-up.png')))
         b.setToolTip(_('Move the selected rule up'))
         b.clicked.connect(self.move_up)
-        g.addWidget(b, 0, 1, 1, 1, Qt.AlignTop)
+        g.addWidget(b, 0, 1, 1, 1, Qt.AlignmentFlag.AlignTop)
         self.down_button = b = QToolButton(self)
         b.setIcon(QIcon(I('arrow-down.png')))
         b.setToolTip(_('Move the selected rule down'))
         b.clicked.connect(self.move_down)
-        g.addWidget(b, 1, 1, 1, 1, Qt.AlignBottom)
+        g.addWidget(b, 1, 1, 1, 1, Qt.AlignmentFlag.AlignBottom)
 
         l.addLayout(g, l.rowCount(), 0, 1, 2)
         l.setRowStretch(l.rowCount() - 1, 10)
@@ -992,7 +992,7 @@ class EditRules(QWidget):  # {{{
     def add_rule(self):
         d = RuleEditor(self.model.fm, self.pref_name)
         d.add_blank_condition()
-        if d.exec_() == d.Accepted:
+        if d.exec_() == QDialog.DialogCode.Accepted:
             kind, col, r = d.rule
             if kind and r and col:
                 idx = self.model.add_rule(kind, col, r)
@@ -1002,7 +1002,7 @@ class EditRules(QWidget):  # {{{
     def add_advanced(self):
         if self.pref_name == 'column_color_rules':
             td = TemplateDialog(self, '', mi=self.mi, fm=self.fm, color_field='')
-            if td.exec_() == td.Accepted:
+            if td.exec_() == QDialog.DialogCode.Accepted:
                 col, r = td.rule
                 if r and col:
                     idx = self.model.add_rule('color', col, r)
@@ -1013,7 +1013,7 @@ class EditRules(QWidget):  # {{{
                 td = TemplateDialog(self, '', mi=self.mi, fm=self.fm, doing_emblem=True)
             else:
                 td = TemplateDialog(self, '', mi=self.mi, fm=self.fm, icon_field_key='')
-            if td.exec_() == td.Accepted:
+            if td.exec_() == QDialog.DialogCode.Accepted:
                 typ, col, r = td.rule
                 if typ and r and col:
                     idx = self.model.add_rule(typ, col, r)
@@ -1022,7 +1022,7 @@ class EditRules(QWidget):  # {{{
 
     def edit_rule(self, index):
         try:
-            kind, col, rule = self.model.data(index, Qt.UserRole)
+            kind, col, rule = self.model.data(index, Qt.ItemDataRole.UserRole)
         except:
             return
         if isinstance(rule, Rule):
@@ -1036,7 +1036,7 @@ class EditRules(QWidget):  # {{{
             d = TemplateDialog(self, rule, mi=self.mi, fm=self.fm, icon_field_key=col,
                                icon_rule_kind=kind)
 
-        if d.exec_() == d.Accepted:
+        if d.exec_() == QDialog.DialogCode.Accepted:
             if len(d.rule) == 2:  # Convert template dialog rules to a triple
                 d.rule = ('color', d.rule[0], d.rule[1])
             kind, col, r = d.rule

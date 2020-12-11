@@ -10,7 +10,7 @@ import os, stat
 from PyQt5.Qt import (
     QSize, QStackedLayout, QWidget, QVBoxLayout, QLabel, QPushButton,
     QListWidget, QListWidgetItem, QIcon, Qt, pyqtSignal, QGridLayout,
-    QProgressBar, QDialog, QDialogButtonBox, QScrollArea, QLineEdit, QFrame
+    QProgressBar, QDialog, QDialogButtonBox, QScrollArea, QLineEdit, QFrame, QAbstractItemView
 )
 
 from calibre import human_readable, as_unicode
@@ -88,7 +88,7 @@ class RunAction(QDialog):
     def setup_ui(self):
         self.l = l = QGridLayout(self)
         self.bb = QDialogButtonBox(self)
-        self.bb.setStandardButtons(self.bb.Cancel)
+        self.bb.setStandardButtons(QDialogButtonBox.StandardButton.Cancel)
         self.bb.rejected.connect(self.reject)
 
         self.la1 = la = QLabel('<h2>' + self.title)
@@ -111,9 +111,9 @@ class RunAction(QDialog):
         la.setMaximumWidth(450)
         l.addWidget(la, l.rowCount(), 1)
         l.addWidget(self.bb, l.rowCount(), 0, 1, -1)
-        self.update_current_signal.connect(self.update_current, type=Qt.QueuedConnection)
-        self.update_overall_signal.connect(self.update_overall, type=Qt.QueuedConnection)
-        self.finish_signal.connect(self.finish_processing, type=Qt.QueuedConnection)
+        self.update_current_signal.connect(self.update_current, type=Qt.ConnectionType.QueuedConnection)
+        self.update_overall_signal.connect(self.update_overall, type=Qt.ConnectionType.QueuedConnection)
+        self.finish_signal.connect(self.finish_processing, type=Qt.ConnectionType.QueuedConnection)
 
     def update_overall(self, msg, count, total):
         self.overall.setMaximum(total), self.overall.setValue(count)
@@ -125,7 +125,7 @@ class RunAction(QDialog):
 
     def reject(self):
         self.abort.set()
-        self.bb.button(self.bb.Cancel).setEnabled(False)
+        self.bb.button(QDialogButtonBox.StandardButton.Cancel).setEnabled(False)
 
     def finish_processing(self):
         if self.abort.is_set():
@@ -200,22 +200,23 @@ class EximDialog(Dialog):
         la.setWordWrap(True), l.addWidget(la)
         self.lib_list = ll = QListWidget(self)
         l.addWidget(ll)
-        ll.setSelectionMode(ll.ExtendedSelection)
+        ll.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
         ll.setStyleSheet('QListView::item { padding: 5px }')
         ll.setAlternatingRowColors(True)
         lpaths = all_known_libraries()
         for lpath in sorted(lpaths, key=lambda x:numeric_sort_key(os.path.basename(x))):
             i = QListWidgetItem(self.export_lib_text(lpath), ll)
-            i.setData(Qt.UserRole, lpath)
-            i.setData(Qt.UserRole+1, lpaths[lpath])
+            i.setData(Qt.ItemDataRole.UserRole, lpath)
+            i.setData(Qt.ItemDataRole.UserRole+1, lpaths[lpath])
             i.setIcon(QIcon(I('lt.png')))
             i.setSelected(True)
         self.update_disk_usage.connect((
-            lambda i, sz: self.lib_list.item(i).setText(self.export_lib_text(self.lib_list.item(i).data(Qt.UserRole), sz))), type=Qt.QueuedConnection)
+            lambda i, sz: self.lib_list.item(i).setText(self.export_lib_text(
+                self.lib_list.item(i).data(Qt.ItemDataRole.UserRole), sz))), type=Qt.ConnectionType.QueuedConnection)
 
     def get_lib_sizes(self):
         for i in range(self.lib_list.count()):
-            path = self.lib_list.item(i).data(Qt.UserRole)
+            path = self.lib_list.item(i).data(Qt.ItemDataRole.UserRole)
             try:
                 sz = disk_usage(path, abort=self.abort_disk_usage)
             except Exception:
@@ -326,7 +327,7 @@ class EximDialog(Dialog):
     def show_panel(self, which):
         self.validate = self.run_action = lambda : True
         if which is None:
-            self.bb.setStandardButtons(self.bb.Cancel)
+            self.bb.setStandardButtons(QDialogButtonBox.StandardButton.Cancel)
         else:
             if which == 'export':
                 self.validate = self.validate_export
@@ -337,7 +338,7 @@ class EximDialog(Dialog):
             else:
                 self.validate = self.validate_import
                 self.run_action = self.run_import_action
-            self.bb.setStandardButtons(self.bb.Ok | self.bb.Cancel)
+            self.bb.setStandardButtons(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
         self.stack.setCurrentIndex({'export':1, 'import':2}.get(which, 0))
 
     def validate_export(self):
@@ -353,7 +354,7 @@ class EximDialog(Dialog):
 
     def run_export_action(self):
         from calibre.gui2.ui import get_gui
-        library_paths = {i.data(Qt.UserRole):i.data(Qt.UserRole+1) for i in self.lib_list.selectedItems()}
+        library_paths = {i.data(Qt.ItemDataRole.UserRole):i.data(Qt.ItemDataRole.UserRole+1) for i in self.lib_list.selectedItems()}
         dbmap = {}
         gui = get_gui()
         if gui is not None:
@@ -361,7 +362,7 @@ class EximDialog(Dialog):
             dbmap[db.library_path] = db.new_api
         return RunAction(_('Exporting all calibre data...'), _(
             'Failed to export data.'), partial(export, self.export_dir, library_paths=library_paths, dbmap=dbmap),
-                      parent=self).exec_() == Dialog.Accepted
+                      parent=self).exec_() == QDialog.DialogCode.Accepted
 
     def run_import_action(self):
         library_path_map = {}
@@ -369,7 +370,7 @@ class EximDialog(Dialog):
             if w.path:
                 library_path_map[w.lpath] = w.path
         return RunAction(_('Importing all calibre data...'), _(
-            'Failed to import data.'), partial(import_data, self.importer, library_path_map), parent=self).exec_() == Dialog.Accepted
+            'Failed to import data.'), partial(import_data, self.importer, library_path_map), parent=self).exec_() == QDialog.DialogCode.Accepted
 
     def accept(self):
         if not self.validate():

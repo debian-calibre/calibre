@@ -23,7 +23,7 @@ from PyQt5.Qt import (
 from PyQt5.QtWebEngineCore import QWebEngineUrlRequestInterceptor
 from PyQt5.QtWebEngineWidgets import QWebEnginePage, QWebEngineProfile
 
-from calibre import detect_ncpus, prepare_string_for_xml
+from calibre import detect_ncpus, prepare_string_for_xml, human_readable
 from calibre.constants import __version__, iswindows
 from calibre.ebooks.metadata.xmp import metadata_to_xmp_packet
 from calibre.ebooks.oeb.base import XHTML, XPath
@@ -38,6 +38,7 @@ from calibre.gui2.webengine import secure_webengine
 from calibre.srv.render_book import check_for_maths
 from calibre.utils.fonts.sfnt.container import Sfnt, UnsupportedFont
 from calibre.utils.fonts.sfnt.merge import merge_truetype_fonts_for_pdf
+from calibre.utils.fonts.sfnt.subset import pdf_subset
 from calibre.utils.logging import default_log
 from calibre.utils.monotonic import monotonic
 from calibre.utils.podofo import (
@@ -178,7 +179,7 @@ class Renderer(QWebEnginePage):
         self.loadFinished.connect(self.load_finished)
         self.load_hang_check_timer = t = QTimer(self)
         self.load_started_at = 0
-        t.setTimerType(Qt.VeryCoarseTimer)
+        t.setTimerType(Qt.TimerType.VeryCoarseTimer)
         t.setInterval(HANG_TIME * 1000)
         t.setSingleShot(True)
         t.timeout.connect(self.on_load_hang)
@@ -383,7 +384,7 @@ def job_for_name(container, name, margins, page_layout):
     index_file = container.name_to_abspath(name)
     if margins:
         page_layout = QPageLayout(page_layout)
-        page_layout.setUnits(QPageLayout.Point)
+        page_layout.setUnits(QPageLayout.Unit.Point)
         new_margins = QMarginsF(*resolve_margins(margins, page_layout))
         page_layout.setMargins(new_margins)
     return index_file, page_layout, name
@@ -752,7 +753,7 @@ class Range(object):
         return len(self.widths) == 1
 
 
-def all_glyph_ids_in_w_arrays(arrays):
+def all_glyph_ids_in_w_arrays(arrays, as_set=False):
     ans = set()
     for w in arrays:
         i = 0
@@ -765,7 +766,7 @@ def all_glyph_ids_in_w_arrays(arrays):
             else:
                 ans |= set(range(elem, next_elem + 1))
                 i += 3
-    return sorted(ans)
+    return ans if as_set else sorted(ans)
 
 
 def merge_w_arrays(arrays):
@@ -909,7 +910,7 @@ def merge_cmaps(cmaps):
 
 def fonts_are_identical(fonts):
     sentinel = object()
-    for key in ('ToUnicode', 'Data'):
+    for key in ('ToUnicode', 'Data', 'W', 'W2'):
         prev_val = sentinel
         for f in fonts:
             val = f[key]
@@ -994,8 +995,25 @@ def test_merge_fonts():
     merge_fonts(pdf_doc)
     out = path.rpartition('.')[0] + '-merged.pdf'
     pdf_doc.save(out)
-    print('Merged PDF writted to', out)
+    print('Merged PDF written to', out)
 
+
+def subset_fonts(pdf_doc, log):
+    all_fonts = pdf_doc.list_fonts(True)
+    for font in all_fonts:
+        if font['Subtype'] != 'Type0' and font['Data']:
+            try:
+                sfnt = Sfnt(font['Data'])
+            except UnsupportedFont:
+                continue
+            if b'glyf' not in sfnt:
+                continue
+            num, gen = font['Reference']
+            glyphs = all_glyph_ids_in_w_arrays((font['W'] or (), font['W2'] or ()), as_set=True)
+            pdf_subset(sfnt, glyphs)
+            data = sfnt()[0]
+            log('Subset embedded font from: {} to {}'.format(human_readable(len(font['Data'])), human_readable(len(data))))
+            pdf_doc.replace_font_data(data, num, gen)
 # }}}
 
 
@@ -1013,9 +1031,11 @@ def add_header_footer(manager, opts, pdf_doc, container, page_number_display_map
     report_progress(0.8, _('Adding headers and footers'))
     name = create_skeleton(container)
     root = container.parsed(name)
+    reset_css = 'margin: 0; padding: 0; border-width: 0; background-color: unset;'
+    root.set('style', reset_css)
     body = last_tag(root)
     body.attrib.pop('id', None)
-    body.set('style', 'margin: 0; padding: 0; border-width: 0; background-color: unset;')
+    body.set('style', reset_css)
     job = job_for_name(container, name, Margins(0, 0, 0, 0), page_layout)
 
     def m(tag_name, text=None, style=None, **attrs):
@@ -1163,6 +1183,7 @@ def add_header_footer(manager, opts, pdf_doc, container, page_number_display_map
     data = results[name]
     if not isinstance(data, bytes):
         raise SystemExit(data)
+    # open('/t/impose.pdf', 'wb').write(data)
     doc = data_as_pdf_doc(data)
     first_page_num = pdf_doc.page_count()
     num_pages = doc.page_count()
@@ -1292,6 +1313,11 @@ def convert(opf_path, opts, metadata=None, output_path=None, log=default_log, co
     num_removed = remove_unused_fonts(pdf_doc)
     if num_removed:
         log('Removed', num_removed, 'unused fonts')
+
+    # Originally added because of https://bugreports.qt.io/browse/QTBUG-88976
+    # however even after that fix, calibre's font subsetting is superior to
+    # harfbuzz, so continue to use it.
+    subset_fonts(pdf_doc, log)
 
     num_removed = pdf_doc.dedup_images()
     if num_removed:

@@ -22,7 +22,7 @@ class Ui_Form(object):
         self.opt_format = QtWidgets.QComboBox(Form)
         self.opt_format.setObjectName("opt_format")
         self.gridLayout.addWidget(self.opt_format, 0, 1, 1, 1)
-        spacerItem = QtWidgets.QSpacerItem(148, 246, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem = QtWidgets.QSpacerItem(148, 246, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
         self.gridLayout.addItem(spacerItem, 3, 0, 1, 1)
         self.opt_inline_toc = QtWidgets.QCheckBox(Form)
         self.opt_inline_toc.setObjectName("opt_inline_toc")

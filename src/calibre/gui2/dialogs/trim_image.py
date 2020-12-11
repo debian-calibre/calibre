@@ -25,7 +25,7 @@ class TrimImage(QDialog):
 
         self.bar = b = QToolBar(self)
         l.addWidget(b)
-        b.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
+        b.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
         b.setIconSize(QSize(32, 32))
 
         self.msg = la = QLabel('\xa0' + _(
@@ -36,12 +36,13 @@ class TrimImage(QDialog):
         c.image_changed.connect(self.image_changed)
         c.load_image(img_data)
         self.undo_action = u = c.undo_action
-        u.setShortcut(QKeySequence(QKeySequence.Undo))
+        u.setShortcut(QKeySequence(QKeySequence.StandardKey.Undo))
         self.redo_action = r = c.redo_action
-        r.setShortcut(QKeySequence(QKeySequence.Redo))
+        r.setShortcut(QKeySequence(QKeySequence.StandardKey.Redo))
         self.trim_action = ac = self.bar.addAction(QIcon(I('trim.png')), _('&Trim'), self.do_trim)
         ac.setShortcut(QKeySequence('Ctrl+T'))
-        ac.setToolTip('%s [%s]' % (_('Trim image by removing borders outside the selected region'), ac.shortcut().toString(QKeySequence.NativeText)))
+        ac.setToolTip('%s [%s]' % (_('Trim image by removing borders outside the selected region'),
+                                   ac.shortcut().toString(QKeySequence.SequenceFormat.NativeText)))
         ac.setEnabled(False)
         c.selection_state_changed.connect(self.selection_changed)
         l.addWidget(c)
@@ -54,7 +55,7 @@ class TrimImage(QDialog):
         self.bar.addSeparator()
         self.bar.addWidget(self.sz)
 
-        self.bb = bb = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+        self.bb = bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
         bb.accepted.connect(self.accept)
         bb.rejected.connect(self.reject)
         l.addWidget(bb)
@@ -100,7 +101,7 @@ if __name__ == '__main__':
     with open(fname, 'rb') as f:
         data = f.read()
     d = TrimImage(data)
-    if d.exec_() == d.Accepted and d.image_data is not None:
+    if d.exec_() == QDialog.DialogCode.Accepted and d.image_data is not None:
         b, ext = os.path.splitext(fname)
         fname = b + '-trimmed' + ext
         with open(fname, 'wb') as f:

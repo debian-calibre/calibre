@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-29 05:31+0000\n"
-"PO-Revision-Date: 2020-10-21 18:58+0000\n"
-"Last-Translator: Druss Lahache <fouquetre+log@gmail.com>\n"
+"POT-Creation-Date: 2020-12-09 16:34+0000\n"
+"PO-Revision-Date: 2020-11-27 14:41+0000\n"
+"Last-Translator: Ptit Prince <leporello1791@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/calibre/calibre/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -42,7 +42,7 @@ msgid ""
 "replaced by the corresponding metadata from the book being processed. For "
 "example, the default template used for saving books to device in calibre "
 "is::"
-msgstr "Le langage de base du modèle est simple mais comporte de puissantes fonctionnalités avancées. Un modèle se compose de texte et de noms entre parenthèses qui sont ensuite remplacés par les métadonnées correspondantes du livre traité. Par exemple, le modèle par défaut utilisé pour enregistrer les livres dans l'appareil avec calibre est: :"
+msgstr "Le langage de base du modèle est simple mais comporte de puissantes fonctionnalités avancées. Un modèle se compose de texte et de noms entre parenthèses qui sont ensuite remplacés par les métadonnées correspondantes du livre traité. Par exemple, le modèle par défaut utilisé pour enregistrer les livres dans l'appareil avec calibre est ::"
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:13
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:21
@@ -65,7 +65,7 @@ msgid ""
 " is always an additional field named ``#seriesname_index`` that is the "
 "series index for that series. So if you have a custom series field named "
 "``#myseries``, there will also be a field named ``#myseries_index``."
-msgstr "Vous pouvez utiliser tous les champs de métadonnées disponibles avec calibre dans un modèle, y compris toutes les colonnes personnalisées que vous avez créées, en utilisant son \"nom de recherche\". Pour trouver le nom de recherche d'une colonne (champ), passez votre souris sur l'en-tête de la colonne. Les noms des colonnes personnalisées (colonnes que vous avez créées vous-même) ont toujours un # comme premier caractère. Pour les colonnes personnalisées de type série, il y a toujours un champ supplémentaire nommé \"#nom_de_la_série_index\" qui est l'index de la série en question. Ainsi, si vous avez un champ de série personnalisé nommé \"#myseries\", il y aura également un champ nommé \"#index_series\"."
+msgstr "Vous pouvez utiliser tous les champs de métadonnées disponibles avec calibre dans un modèle, y compris toutes les colonnes personnalisées que vous avez créées, en utilisant son 'nom de recherche'. Pour trouver le nom de recherche d'une colonne (champ), passer votre souris sur l'en-tête de la colonne. Les noms des colonnes personnalisées (colonnes que vous avez créées vous-même) ont toujours un # comme premier caractère. Pour les colonnes personnalisées de type série, il y a toujours un champ supplémentaire nommé \"#nom_de_la_série_index\" qui est l'index de la série en question. Ainsi, si vous avez un champ de série personnalisé nommé \"#myseries\", il y aura également un champ nommé \"#index_series\"."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:27
 msgid "In addition to the column based fields, you also can use::"
@@ -76,7 +76,7 @@ msgid ""
 "If a book does not have a particular piece of metadata, the field in the "
 "template is replaced by the empty string for that book. Consider, for "
 "example::"
-msgstr "Si un livre ne possède pas de métadonnées particulières, le champ du modèle est remplacé par la chaîne vide de ce livre. Considérons, par exemple: :"
+msgstr "Si un livre ne possède pas de métadonnées particulières, le champ du modèle est remplacé par la chaîne vide de ce livre. Considérons, par exemple ::"
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:36
 msgid "If a book has a series, the template will produce::"
@@ -126,7 +126,7 @@ msgid ""
 "will be the empty string (nothing); the prefix and suffix are ignored. The "
 "prefix and suffix can contain blanks. **Do not use subtemplates (`{ ... }`) "
 "or functions (see below) as the prefix or the suffix.**"
-msgstr "Si le livre n'a pas de série, la réponse sera \"- - titre\". La plupart des gens préféreraient que le résultat soit simplement \"titre\", sans les traits d'union. Pour ce faire, utilisez la syntaxe étendue ``{field:|prefix_text|suffix_text}``. Lorsque vous utilisez cette syntaxe, si le champ a la valeur SERIES alors le résultat sera ``prefix_textSERIESsuffix_text``. Si le champ n'a pas de valeur, alors le résultat sera la chaîne vide (rien) ; le préfixe et le suffixe sont ignorés. Le préfixe et le suffixe peuvent contenir des blancs. **N'utilisez pas de sous-modèles (`{ ... }`) ou de fonctions (voir ci-dessous) comme préfixe ou comme suffixe.**"
+msgstr "Si le livre n'a pas de série, la réponse sera ``- - titre``. La plupart des gens préféreraient que le résultat soit simplement ``titre``, sans les traits d'union. Pour ce faire, utilisez la syntaxe étendue ``{field:|prefix_text|suffix_text}``. Lorsque vous utilisez cette syntaxe, si le champ a la valeur SERIES alors le résultat sera ``prefix_textSERIESsuffix_text``. Si le champ n'a pas de valeur, alors le résultat sera la chaîne vide (rien) ; le préfixe et le suffixe sont ignorés. Le préfixe et le suffixe peuvent contenir des blancs. **N'utilisez pas de sous-modèles (`{ ... }`) ou de fonctions (voir ci-dessous) comme préfixe ou comme suffixe.**"
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:59
 msgid ""
@@ -199,7 +199,7 @@ msgid ""
 "the ISBN, create the column and enter ``{identifiers:select(isbn)}`` into "
 "the template box. To display a column containing the values of two series "
 "custom columns separated by a comma, use ``{#series1:||,}{#series2}``."
-msgstr "Parfois, vous souhaitez afficher dans la liste des livres des métadonnées que calibre n'affiche pas normalement, ou afficher des données d'une manière différente de celle du calibre. Par exemple, vous pouvez vouloir afficher l'ISBN, un champ que le calibre n'affiche pas. Pour cela, vous pouvez utiliser des colonnes personnalisées en créant une colonne du type \"colonne construite à partir d'autres colonnes\" (ci-après appelées colonnes composites) et en saisissant un modèle. Résultat : Calibre affichera une colonne montrant le résultat de l'évaluation de ce modèle. Pour afficher l'ISBN, créez la colonne et entrez \"{identifiers:select(isbn)}`` dans la case du modèle. Pour afficher une colonne contenant les valeurs de deux séries de colonnes personnalisées séparées par une virgule, utilisez ``{#series1:||,}{#series2}``."
+msgstr "Parfois, vous souhaitez afficher dans la liste des livres des métadonnées que calibre n'affiche pas normalement, ou afficher des données d'une manière différente de celle de calibre. Par exemple, vous pouvez vouloir afficher l'ISBN, un champ que calibre n'affiche pas. Pour cela, vous pouvez utiliser des colonnes personnalisées en créant une colonne du type 'colonne construite à partir d'autres colonnes' (ci-après appelées colonnes composites) et en saisissant un modèle. Résultat : Calibre affichera une colonne montrant le résultat de l'évaluation de ce modèle. Pour afficher l'ISBN, créez la colonne et entrez ``{identifiers:select(isbn)}`` dans la case du modèle. Pour afficher une colonne contenant les valeurs de deux séries de colonnes personnalisées séparées par une virgule, utilisez ``{#series1:||,}{#series2}``."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:95
 msgid "Composite columns can use any template option, including formatting."
@@ -260,7 +260,7 @@ msgid ""
 "no sub-evaluation. **Do not use subtemplates (`{ ... }`) as function "
 "arguments.** Instead, use :ref:`Template Program Mode <template_mode>` and "
 ":ref:`General Program Mode <general_mode>`."
-msgstr "Important : si vous avez de l'expérience en programmation, veuillez noter que la syntaxe dans ce mode (fonction unique) n'est pas celle à laquelle vous pourriez vous attendre. Les chaînes de caractères ne sont pas citées. Les espaces sont significatifs. Tous les arguments doivent être des constantes ; il n'y a pas de sous-évaluation. **N'utilisez pas de sous-modèles (`{ ... }`) comme arguments de fonction, mais utilisez plutôt :ref:`Template Program Mode` et :ref:`General Program Mode`."
+msgstr "Important : si vous avez de l'expérience en programmation, veuillez noter que la syntaxe dans ce mode (fonction unique) n'est pas celle à laquelle vous pourriez vous attendre. Les chaînes de caractères ne sont pas citées. Les espaces sont significatifs. Tous les arguments doivent être des constantes ; il n'y a pas de sous-évaluation. **N'utilisez pas de sous-modèles (`{ ... }`) comme arguments de fonction, mais utilisez plutôt :ref:`Mode de Programme Modèle<template_mode>` et :ref:`Mode de Programme Général<general_mode>`."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:112
 msgid ""
@@ -273,7 +273,7 @@ msgid ""
 "The functions available are listed below. Note that the definitive "
 "documentation for functions is available in the section :ref:`Function "
 "reference <template_functions_reference>`:"
-msgstr "Les fonctions disponibles sont énumérées ci-dessous. Notez que la documentation définitive des fonctions est disponible dans la section :ref:`Function reference` :"
+msgstr "Les fonctions disponibles sont énumérées ci-dessous. Notez que la documentation définitive des fonctions est disponible dans la section :ref:`Référence de la fonction<template_functions_reference>` :"
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:116
 msgid "``lowercase()``   -- return value of the field in lower case."
@@ -510,7 +510,7 @@ msgstr "Notez que vous pouvez également utiliser préfixe et suffixe, si vous v
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:168
 msgid "More complex functions in templates - Template Program Mode"
-msgstr "Fonctions plus complexes dans les modèles - Mode programme de modèles"
+msgstr "Fonctions plus complexes dans les modèles - Mode Programme de Modèles"
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:170
 msgid ""
@@ -518,13 +518,13 @@ msgid ""
 "writing template expressions that refer to other metadata fields, use nested"
 " functions, modify values, and do arithmetic. It is a reasonably complete "
 "programming language."
-msgstr "Le mode de programme modèle diffère du mode de fonction unique en ce qu'il permet d'écrire des expressions modèles qui se réfèrent à d'autres champs de métadonnées, d'utiliser des fonctions imbriquées, de modifier des valeurs et de faire de l'arithmétique. Il s'agit d'un langage de programmation assez complet."
+msgstr "Le Mode de Programme Modèle diffère du mode de fonction unique en ce qu'il permet d'écrire des expressions modèles qui se réfèrent à d'autres champs de métadonnées, d'utiliser des fonctions imbriquées, de modifier des valeurs et de faire de l'arithmétique. Il s'agit d'un langage de programmation assez complet."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:172
 msgid ""
 "You can use the functions documented above in Template Program Mode. See "
 "below for details."
-msgstr "Vous pouvez utiliser les fonctions documentées ci-dessus en mode de programme modèle. Voir ci-dessous pour plus de détails."
+msgstr "Vous pouvez utiliser les fonctions documentées ci-dessus en Mode de Programme Modèle. Voir ci-dessous pour plus de détails."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:174
 msgid ""
@@ -533,7 +533,7 @@ msgid ""
 " You cannot do this in the basic template language because you cannot make "
 "reference to another metadata field within a template expression. In "
 "Template Program Mode, you can. The following expression works::"
-msgstr "En commençant par un exemple, supposons que vous vouliez que votre modèle montre la série d'un livre s'il en a un, sinon indiquez la valeur d'un champ personnalisé #genre. Vous ne pouvez pas faire cela dans le langage de base du modèle car vous ne pouvez pas faire référence à un autre champ de métadonnées dans une expression du modèle. En mode de programmation des modèles, vous pouvez le faire. L'expression suivante fonctionne: :"
+msgstr "En commençant par un exemple, supposons que vous vouliez que votre modèle montre la série d'un livre s'il en a un, sinon indiquez la valeur d'un champ personnalisé #genre. Vous ne pouvez pas faire cela dans le langage de base du modèle car vous ne pouvez pas faire référence à un autre champ de métadonnées dans une expression du modèle. En mode de programmation des modèles, vous pouvez le faire. L'expression suivante fonctionne ::"
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:178
 msgid "The example shows several things:"
@@ -543,7 +543,7 @@ msgstr "L'exemple montre plusieurs choses :"
 msgid ""
 "Template Program Mode is used if the expression begins with ``:'`` and ends "
 "with ``'``. Anything else is assumed to be in single function mode."
-msgstr "Le mode de programme modèle est utilisé si l'expression commence par ``:'`` et se termine par ``'``. Tout le reste est supposé être en mode de fonction unique."
+msgstr "Le Mode de Programme Modèle est utilisé si l'expression commence par ``:'`` et se termine par ``'``. Tout le reste est supposé être en mode de fonction unique."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:181
 msgid ""
@@ -732,7 +732,7 @@ msgid ""
 "list is correct, although it probably is. This function can be called in "
 "Template Program Mode using the template ``{:'approximate_formats()'}``. "
 "Note that format names are always uppercase, as in EPUB."
-msgstr "``approximate_formats()`` -- renvoie une liste de formats séparés par des virgules qui, à un moment donné, ont été associés au livre. Il n'y a aucune garantie que la liste soit correcte, bien qu'elle le soit probablement. Cette fonction peut être appelée en mode programme modèle en utilisant le modèle ``{:'approximate_formats()'}``. Notez que les noms de format sont toujours en majuscules, comme dans EPUB."
+msgstr "``approximate_formats()`` -- renvoie une liste de formats séparés par des virgules qui, à un moment donné, ont été associés au livre. Il n'y a aucune garantie que la liste soit correcte, bien qu'elle le soit probablement. Cette fonction peut être appelée en Mode Programme Modèle en utilisant le modèle ``{:'approximate_formats()'}``. Notez que les noms de format sont toujours en majuscules, comme dans EPUB."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:244
 msgid ""
@@ -808,14 +808,14 @@ msgid ""
 "``current_library_name()`` -- return the last name on the path to the "
 "current calibre library. This function can be called in Template Program "
 "Mode using the template ``{:'current_library_name()'}``."
-msgstr "``current_library_name()`` -- renvoie le nom de famille sur le chemin de la bibliothèque du calibre actuel. Cette fonction peut être appelée en mode programme modèle en utilisant le modèle ``{:'current_library_name()'}``."
+msgstr "``current_library_name()`` -- renvoie le nom de famille sur le chemin de la bibliothèque calibre actuelle. Cette fonction peut être appelée en mode programme modèle en utilisant le modèle ``{:'current_library_name()'}``."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:256
 msgid ""
 "``current_library_path()`` -- return the path to the current calibre "
 "library. This function can be called in Template Program Mode using the "
 "template ``{:'current_library_path()'}``."
-msgstr "``current_library_path()`` -- renvoie le chemin vers la bibliothèque du calibre actuel. Cette fonction peut être appelée en mode programme modèle en utilisant le modèle ``{:'current_library_path()'}``."
+msgstr "``current_library_path()`` -- renvoie le chemin vers la bibliothèque calibre actuelle. Cette fonction peut être appelée en Mode Programme de Modèle en utilisant le modèle ``{:'current_library_path()'}``."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:257
 msgid ""
@@ -840,7 +840,7 @@ msgid ""
 " `]]` for the '}' character; they are converted automatically. Note also "
 "that prefixes and suffixes (the `|prefix|suffix` syntax) cannot be used in "
 "the argument to this function when using Template Program Mode."
-msgstr "\"eval(string)`` -- évalue la chaîne de caractères comme un programme, en passant les variables locales (celles qui sont \"assignées\" à). Cela permet d'utiliser le processeur de modèle pour construire des résultats complexes à partir des variables locales. Comme les caractères `{` et `}` sont spéciaux, vous devez utiliser `[[` pour le caractère `{` et `]]` pour le caractère '}' ; ils sont convertis automatiquement. Notez également que les préfixes et les suffixes (la syntaxe `|préfixe|suffixe`) ne peuvent pas être utilisés dans l'argument de cette fonction lorsque vous utilisez le mode de programme modèle."
+msgstr "``eval(string)`` -- évalue la chaîne de caractères comme un programme, en passant les variables locales (celles qui sont ``assignées`` à). Cela permet d'utiliser le processeur de modèle pour construire des résultats complexes à partir des variables locales. Comme les caractères `{` et `}` sont spéciaux, vous devez utiliser `[[` pour le caractère `{` et `]]` pour le caractère '}' ; ils sont convertis automatiquement. Notez également que les préfixes et les suffixes (la syntaxe `|préfixe|suffixe`) ne peuvent pas être utilisés dans l'argument de cette fonction lorsque vous utilisez le Mode Programme de Modèle."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:260
 msgid "``field(name)`` -- returns the metadata field named by ``name``."
@@ -855,7 +855,7 @@ msgid ""
 " :ref:`General Program Mode <general_mode>` (see below) to take advantage of"
 " GPM template compilation. For example, the following program produces the "
 "same output as the above template::"
-msgstr "``finish_formatting(val, fmt, prefix, suffix)`` -- appliquer le format, le préfixe et le suffixe à une valeur de la même manière que dans un modèle comme ``{series_index:05.2f| - |- }``. Cette fonction est fournie pour faciliter la conversion de modèles complexes en mode programme à fonction unique ou en mode programme-modèle en :ref:`Mode programme général<general_mode>` (voir ci-dessous) pour tirer parti de la compilation des modèles GPM. Par exemple, le programme suivant produit le même résultat que le modèle ci-dessus::"
+msgstr "``finish_formatting(val, fmt, prefix, suffix)`` -- applique le format, le préfixe et le suffixe à une valeur de la même manière que dans un modèle comme ``{series_index:05.2f| - |- }``. Cette fonction est fournie pour faciliter la conversion de modèles complexes en mode programme à fonction unique ou en mode programme-modèle en :ref:`Mode Programme Général<general_mode>` (voir ci-dessous) pour tirer parti de la compilation des modèles MPG. Par exemple, le programme suivant produit le même résultat que le modèle ci-dessus ::"
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:272
 msgid ""
@@ -905,7 +905,7 @@ msgid ""
 "contain ``MMMM``. In this case, instead of using something like "
 "``{pubdate:format_date(yyyy)}``, write the template using Template Program "
 "Mode as in ``{:'format_date(raw_field('pubdate'),'yyyy')'}``."
-msgstr "Vous pouvez obtenir des résultats inattendus si la date que vous formatez contient des noms de mois localisés, ce qui peut arriver si vous avez modifié les réglages de format pour qu'ils contiennent \"MMMMM\". Dans ce cas, au lieu d'utiliser quelque chose comme ``{pubdate:format_date(yyyy)}``, écrivez le modèle en utilisant le mode de programme modèle comme dans ``{:'format_date(raw_field('pubdate'), 'yyyy')'}``."
+msgstr "Vous pouvez obtenir des résultats inattendus si la date que vous formatez contient des noms de mois localisés, ce qui peut arriver si vous avez modifié les réglages de format pour qu'ils contiennent ``MMMM``. Dans ce cas, au lieu d'utiliser quelque chose comme ``{pubdate:format_date(yyyy)}``, écrivez le modèle en utilisant le mode de programme modèle comme dans ``{:'format_date(raw_field('pubdate'),'yyyy')'}``."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:316
 msgid ""
@@ -1068,7 +1068,7 @@ msgid ""
 "Mode, like for the template and the eval functions, you use [[ for { and ]] "
 "for }. The following example in Template Program Mode looks for series with "
 "more than one word and uppercases the first word::"
-msgstr "``re_group(val, pattern, template_for_group_1, for_group_2, ...)`` -- retourne une chaîne de caractères faite en appliquant le pattern d'expression régulière à la val et en remplaçant chaque instance correspondante par la chaîne de caractères calculée en remplaçant chaque groupe correspondant par la valeur retournée par le template correspondant. La valeur originale de la correspondance pour le groupe est disponible sous la forme $. En mode de programme de modèle, comme pour le modèle et les fonctions eval, vous utilisez [[ for { and ]] for }. L'exemple suivant en mode Modèle de programme recherche les séries comportant plus d'un mot et met le premier mot en majuscule: :"
+msgstr "``re_group(val, pattern, template_for_group_1, for_group_2, ...)`` -- retourne une chaîne de caractères faite en appliquant le pattern d'expression régulière à la val et en remplaçant chaque instance correspondante par la chaîne de caractères calculée en remplaçant chaque groupe correspondant par la valeur retournée par le modèle correspondant. La valeur originale de la correspondance pour le groupe est disponible sous la forme $. En Mode de Programme de Modèle, comme pour le modèle et les fonctions eval, vous utilisez [[ for { and ]] for }. L'exemple suivant en Mode Programme de Modèle recherche les séries comportant plus d'un mot et met le premier mot en majuscule ::"
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:340
 msgid ""
@@ -1141,11 +1141,11 @@ msgid ""
 "evaluate the template ``{title_sort}`` and return its value. Note also that "
 "prefixes and suffixes (the `|prefix|suffix` syntax) cannot be used in the "
 "argument to this function when using Template Program Mode."
-msgstr "\"Template(x)\" -- évalue x comme modèle. L'évaluation est faite dans son propre contexte, ce qui signifie que les variables ne sont pas partagées entre l'appelant et l'évaluation du modèle. Comme les caractères `{` et `}` sont spéciaux, vous devez utiliser `[[` pour le caractère `{` et `]]` pour le caractère '}' ; ils sont convertis automatiquement. Par exemple, ``template('[[title_sort]]]) va évaluer le modèle ``{title_sort}`` et retourner sa valeur. Notez également que les préfixes et les suffixes (la syntaxe `|prefix|suffix`) ne peuvent pas être utilisés dans l'argument de cette fonction lorsque vous utilisez le mode de programmation des modèles."
+msgstr "``Template(x)`` -- évalue x comme modèle. L'évaluation est faite dans son propre contexte, ce qui signifie que les variables ne sont pas partagées entre l'appelant et l'évaluation du modèle. Comme les caractères `{` et `}` sont spéciaux, vous devez utiliser `[[` pour le caractère `{` et `]]` pour le caractère '}' ; ils sont convertis automatiquement. Par exemple, ``template('[[title_sort]]]) va évaluer le modèle ``{title_sort}`` et retourner sa valeur. Notez également que les préfixes et les suffixes (la syntaxe `|prefix|suffix`) ne peuvent pas être utilisés dans l'argument de cette fonction lorsque vous utilisez le Mode de Programmation des Modèles."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:354
 msgid "Using General Program Mode"
-msgstr "Utilisation du mode programme général"
+msgstr "Utilisation du Mode Programme Général"
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:356
 msgid ""
@@ -1155,20 +1155,20 @@ msgid ""
 "The template program is compiled and executed. No template processing (e.g.,"
 " formatting, prefixes, suffixes) is done. The special variable `$` is not "
 "set."
-msgstr "Pour les programmes modèles plus complexes, il est souvent plus facile d'éviter la syntaxe des modèles (tous les caractères `{` et `}`), et d'écrire un programme d'apparence plus classique. Vous pouvez faire cela en commençant le modèle par `programme:`. Le programme modèle est compilé et exécuté. Aucun traitement de modèle (par exemple, formatage, préfixes, suffixes) n'est effectué. La variable spéciale `$` n'est pas définie."
+msgstr "Pour les programmes modèles plus complexes, il est souvent plus facile d'éviter la syntaxe des modèles (tous les caractères `{` et `}`), et d'écrire un programme d'apparence plus classique. Vous pouvez faire cela en commençant le modèle par `program:`. Le programme modèle est compilé et exécuté. Aucun traitement de modèle (par exemple, formatage, préfixes, suffixes) n'est effectué. La variable spéciale `$` n'est pas définie."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:358
 msgid ""
 "One advantage of `program:` mode is that braces are no longer special. For "
 "example, it is not necessary to use `[[` and `]]` when using the "
 "`template()` function. Another advantage is readability."
-msgstr "L'un des avantages du mode `programme:` est que les appareils dentaires ne sont plus spéciaux. Par exemple, il n'est pas nécessaire d'utiliser les `[[` et `]]` lors de l'utilisation de la fonction `template()`. Un autre avantage est la lisibilité."
+msgstr "L'un des avantages du mode `programme:` est que les accolades ne sont plus spéciales. Par exemple, il n'est pas nécessaire d'utiliser les `[[` et `]]` lors de l'utilisation de la fonction `template()`. Un autre avantage est la lisibilité."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:360
 msgid ""
 "Both General and Template Program Modes support ``if`` expressions with the "
 "following syntax::"
-msgstr "Les modes de programme général et modèle prennent en charge les expressions ``si`` avec la syntaxe suivante: :"
+msgstr "Les Modes de Programme Général et Modèle prennent en charge les expressions ``if`` avec la syntaxe suivante ::"
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:368
 msgid ""
@@ -1178,7 +1178,7 @@ msgid ""
 "<<expression>> is one template language expression;  semicolons are not "
 "allowed. <<expression_list>> is a semicolon-separated sequence of template "
 "language expressions, including nested ifs. Examples:"
-msgstr "Les parties \"elif\" et \"else\" sont facultatives. Les mots ``if``, ``then``, ``elif``, ``else`` et ``fi`` sont réservés ; vous ne pouvez pas les utiliser comme noms d'identification. Vous pouvez mettre des lignes de rappel et des espaces partout où ils ont un sens. <<expression>> est une expression linguistique modèle ; les points-virgules ne sont pas autorisés. <<expression_list>> est une séquence d'expressions de langue modèle séparées par des points-virgules, y compris les ifs imbriqués. Exemples :"
+msgstr "Les parties elif et else sont facultatives. Les mots ``if``, ``then``, ``elif``, ``else`` et ``fi`` sont réservés ; vous ne pouvez pas les utiliser comme noms d'identification. Vous pouvez mettre des lignes de rappel et des espaces partout où ils ont un sens. <<expression>> est une expression linguistique modèle ; les points-virgules ne sont pas autorisés. <<expression_list>> est une séquence d'expressions de langue modèle séparées par des points-virgules, y compris les ifs imbriqués. Exemples :"
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:370
 msgid "``program: if field('series') then 'yes' else 'no' fi``"
@@ -1223,7 +1223,7 @@ msgid ""
 "(comparison) operators: ``==``, ``!=``, ``<``, ``<=``, ``>``, ``>=``. The "
 "operators return '1' if they evaluate to True, otherwise ''. They do case-"
 "insensitive string comparison using lexical order. Examples:"
-msgstr "Le mode programme modèle et le mode programme général prennent en charge les opérateurs relationnels (de comparaison) classiques : ``==``, ``!=``, ``<``, ``<=``, ``>``, ``>=``. Les opérateurs renvoient \"1\" s'ils évaluent à True, sinon \"\". Ils font une comparaison de chaînes insensible à la casse en utilisant l'ordre lexical. Exemples :"
+msgstr "Le Mode Programme de Modèle et le Mode Programme Général prennent en charge les opérateurs relationnels (de comparaison) classiques : ``==``, ``!=``, ``<``, ``<=``, ``>``, ``>=``. Les opérateurs renvoient \"1\" s'ils évaluent à True, sinon ''. Ils font une comparaison de chaînes insensible à la casse en utilisant l'ordre lexical. Exemples :"
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:396
 msgid ""
@@ -1263,7 +1263,7 @@ msgid ""
 "function, passing positional arguments if desired. An argument can be any "
 "expression. Examples of calling a template, assuming the stored template is "
 "named ``foo``:"
-msgstr "Le mode programme général permet d'enregistrer des modèles et de les appeler à partir d'un autre modèle. Vous enregistrez les modèles en utilisant :guilabel:`Preferences->Advanced->Template functions`. Plus d'informations sont fournies dans ce dialogue. Vous appelez un modèle de la même manière que vous appelez une fonction, en passant des arguments de position si vous le souhaitez. Un argument peut être n'importe quelle expression. Exemples d'appel d'un modèle, en supposant que le modèle stocké est nommé``foo`` :"
+msgstr "Le Mode Programme Général permet d'enregistrer des modèles et de les appeler à partir d'un autre modèle. Vous enregistrez les modèles en utilisant :guilabel:`Préférences->Avancé->Modéles de fonctions`. Plus d'informations sont fournies dans cette boite de dialogue. Vous appelez un modèle de la même manière que vous appelez une fonction, en passant des arguments de position si vous le souhaitez. Un argument peut être n'importe quelle expression. Exemples d'appel d'un modèle, en supposant que le modèle stocké est nommé ``foo`` :"
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:406
 msgid "``foo()`` -- call the template passing no arguments."
@@ -1293,7 +1293,7 @@ msgid ""
 "value then the variable is set to the empty string. For example, the "
 "following ``arguments`` function declares 2 variables, ``key``, "
 "``alternate``::"
-msgstr "Dans le modèle stocké, vous récupérez les arguments passés dans l'appel en utilisant la fonction ``Arguments``. Elle déclare et initialise les variables locales, en fait des paramètres. Les variables sont positionnelles ; elles obtiennent la valeur de la valeur donnée dans l'appel dans la même position. Si le paramètre correspondant n'est pas fourni dans l'appel, alors la fonction ``arguments`` attribue à cette variable la valeur par défaut fournie. S'il n'y a pas de valeur par défaut, alors la variable est fixée à la chaîne vide. Par exemple, la fonction \"arguments\" suivante déclare 2 variables, ``key``, ``alternate``: :"
+msgstr "Dans le modèle stocké, vous récupérez les arguments passés dans l'appel en utilisant la fonction ``arguments``. Elle déclare et initialise les variables locales, en fait des paramètres. Les variables sont positionnelles ; elles obtiennent la valeur de la valeur donnée dans l'appel dans la même position. Si le paramètre correspondant n'est pas fourni dans l'appel, alors la fonction ``arguments`` attribue à cette variable la valeur par défaut fournie. S'il n'y a pas de valeur par défaut, alors la variable est fixée à la chaîne vide. Par exemple, la fonction \"arguments\" suivante déclare 2 variables, ``key``, ``alternate``::"
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:417
 msgid "Examples, again assuming the stored template is named ``foo``:"
@@ -1338,35 +1338,35 @@ msgid ""
 " value of the column is always passed as an 'invisible' first argument to a "
 "function included in the template. SFM also doesn't support the difference "
 "between variables and strings; all values are strings."
-msgstr "Les trois modes de programme, le mode de fonction unique (SFM), le mode de programme modèle (TPM) et le mode de programme général (GPM), fonctionnent différemment. Le SFM se veut \"simple\" et cache donc beaucoup de bits du langage de programmation. Par exemple, la valeur de la colonne est toujours passée comme premier argument \"invisible\" à une fonction incluse dans le modèle. La GDF ne prend pas non plus en charge la différence entre les variables et les chaînes de caractères ; toutes les valeurs sont des chaînes de caractères."
+msgstr "Les trois modes de programme, le mode de fonction unique (MFU), le mode de programme modèle (MPM) et le mode de programme général (MPG), fonctionnent différemment. Le MFU se veut 'simple' et cache donc beaucoup de bits du langage de programmation. Par exemple, la valeur de la colonne est toujours passée comme premier argument 'invisible' à une fonction incluse dans le modèle. La MPG ne prend pas non plus en charge la différence entre les variables et les chaînes de caractères ; toutes les valeurs sont des chaînes de caractères."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:436
 msgid ""
 "Example: the following SFM template returns either the series name or the "
 "string \"no series\"::"
-msgstr "Exemple : le modèle SFM suivant renvoie soit le nom de la série, soit la chaîne \"pas de série\": :"
+msgstr "Exemple : le modèle SFM suivant renvoie soit le nom de la série, soit la chaîne \"pas de série\" ::"
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:440
 msgid "The equivalent template in TPM is ::"
-msgstr "Le modèle équivalent dans TPM est : :"
+msgstr "Le modèle équivalent dans MPM est ::"
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:444
 msgid "The equivalent template in GPM is::"
-msgstr "Le modèle équivalent dans GPM est : :"
+msgstr "Le modèle équivalent dans MPG est ::"
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:448
 msgid ""
 "The first argument to ``ifempty`` is the value of the field ``series``. The "
 "second argument is the string ``no series``. In SFM the first argument, the "
 "value of the field, is automatically passed (the invisible argument)."
-msgstr "Le premier argument de ``si vide`` est la valeur du champ ``série``. Le second argument est la chaîne ``no series``. Dans SFM, le premier argument, la valeur du champ, est automatiquement passé (l'argument invisible)."
+msgstr "Le premier argument de ``ifempty`` est la valeur du champ ``série``. Le second argument est la chaîne ``no series``. Dans SFM, le premier argument, la valeur du champ, est automatiquement passé (l'argument invisible)."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:452
 msgid ""
 "Several template functions, for example ``booksize()`` and "
 "``current_library_name()``, take no arguments. Because of the 'invisible "
 "argument' you cannot use these functions in SFM."
-msgstr "Plusieurs fonctions du modèle, par exemple ``booksize()`` et ``current_library_name()``, ne prennent aucun argument. En raison de l'\"argument invisible\", vous ne pouvez pas utiliser ces fonctions dans la gestion durable des forêts."
+msgstr "Plusieurs fonctions du modèle, par exemple ``booksize()`` et ``current_library_name()``, ne prennent aucun argument. En raison de l'\"argument invisible\", vous ne pouvez pas utiliser ces fonctions dans SFM."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:455
 msgid ""
@@ -1374,16 +1374,16 @@ msgid ""
 "argument, cannot be used in SFM. For example this template, intended to "
 "return the first 5 characters of the series value uppercased, won't work in "
 "SFM::"
-msgstr "Les fonctions imbriquées, où une fonction appelle une autre fonction pour calculer un argument, ne peuvent pas être utilisées dans la GDF. Par exemple, ce modèle, destiné à renvoyer les 5 premiers caractères de la valeur de la série en majuscules, ne fonctionnera pas dans la GDF: :"
+msgstr "Les fonctions imbriquées, où une fonction appelle une autre fonction pour calculer un argument, ne peuvent pas être utilisées dans SFM. Par exemple, ce modèle, destiné à renvoyer les 5 premiers caractères de la valeur de la série en majuscules, ne fonctionnera pas dans SFM ::"
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:460
 msgid ""
 "TPM and GPM support nested functions. The above template in TPM would be::"
-msgstr "TPM et GPM soutiennent des fonctions imbriquées. Le modèle ci-dessus dans TPM serait: :"
+msgstr "MPM et MPG soutiennent des fonctions imbriquées. Le modèle ci-dessus dans MPM serait: :"
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:464
 msgid "In GPM it would be::"
-msgstr "Dans GPM, ce serait: :"
+msgstr "Dans MPG, ce serait ::"
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:470
 msgid "User-defined Python template functions"
@@ -1395,7 +1395,7 @@ msgid ""
 "functions can be used in any of the three template programming modes. The "
 "functions are added by going to :guilabel:`Preferences -> Advanced -> "
 "Template functions`. Instructions are shown in that dialog."
-msgstr "Vous pouvez ajouter vos propres fonctions Python au processeur de modèles. Ces fonctions peuvent être utilisées dans l'un des trois modes de programmation du modèle. Les fonctions sont ajoutées en allant dans :guilabel:`Préférences -> Avancé -> Fonctions de template`. Les instructions sont affichées dans ce dialogue."
+msgstr "Vous pouvez ajouter vos propres fonctions Python au processeur de modèles. Ces fonctions peuvent être utilisées dans l'un des trois modes de programmation du modèle. Les fonctions sont ajoutées en allant dans :guilabel:`Préférences -> Avancé -> Fonctions de modèle`. Les instructions sont affichées dans cette boite de dialogue."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:475
 msgid "Special notes for save/send templates"
@@ -1559,13 +1559,13 @@ msgstr "Vous devriez trouver les astuces suivantes utiles."
 msgid ""
 "Use the Template Tester to test templates. Add the tester to the context "
 "menu for books in the library and/or give it a keyboard shortcut."
-msgstr "Utilisez le testeur de modèles pour tester les modèles. Ajoutez le testeur au menu contextuel des livres de la bibliothèque et/ou donnez-lui un raccourci clavier."
+msgstr "Utilisez le Testeur de Modèles pour tester les modèles. Ajoutez le testeur au menu contextuel des livres de la bibliothèque et/ou donnez-lui un raccourci clavier."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:518
 msgid ""
 "Templates can use other templates by referencing composite columns built "
 "with the desired template. Alternatively, you could use Stored Templates."
-msgstr "Les modèles peuvent utiliser d'autres modèles en faisant référence à des colonnes composites construites avec le modèle souhaité. Vous pouvez également utiliser des modèles stockés."
+msgstr "Les modèles peuvent utiliser d'autres modèles en faisant référence à des colonnes composites construites avec le modèle souhaité. Vous pouvez également utiliser des Modèles Stockés."
 
 #: ../../home/runner/work/calibre/calibre/manual/template_lang.rst:520
 msgid ""

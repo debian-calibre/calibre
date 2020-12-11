@@ -663,10 +663,10 @@ if __name__ == '__main__':
     d.l = QVBoxLayout()
     d.setLayout(d.l)
     d.l.addWidget(cw)
-    bb = QDialogButtonBox(QDialogButtonBox.Ok|QDialogButtonBox.Cancel)
+    bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok|QDialogButtonBox.StandardButton.Cancel)
     d.l.addWidget(bb)
     bb.accepted.connect(d.accept)
     bb.rejected.connect(d.reject)
-    if d.exec_() == d.Accepted:
+    if d.exec_() == QDialog.DialogCode.Accepted:
         cw.commit()
     dev.shutdown()

@@ -8,8 +8,8 @@ import shutil
 import sys
 from itertools import count
 from PyQt5.Qt import (
-    QT_VERSION, QApplication, QBuffer, QByteArray, QFontDatabase, QFontInfo,
-    QHBoxLayout, QMimeData, QSize, Qt, QTimer, QUrl, QWidget, pyqtSignal
+    QT_VERSION, QApplication, QBuffer, QByteArray, QFontDatabase, QFontInfo, QPalette,
+    QHBoxLayout, QMimeData, QSize, Qt, QTimer, QUrl, QWidget, pyqtSignal, QIODevice
 )
 from PyQt5.QtWebEngineCore import QWebEngineUrlSchemeHandler
 from PyQt5.QtWebEngineWidgets import (
@@ -25,6 +25,7 @@ from calibre.ebooks.metadata.book.base import field_metadata
 from calibre.ebooks.oeb.polish.utils import guess_type
 from calibre.gui2 import choose_images, error_dialog, safe_open_url
 from calibre.gui2.viewer.config import viewer_config_dir, vprefs
+from calibre.gui2.viewer.tts import TTS
 from calibre.gui2.webengine import (
     Bridge, RestartingWebEngineView, create_script, from_js, insert_scripts,
     secure_webengine, to_js
@@ -99,7 +100,7 @@ def send_reply(rq, mime_type, data):
     # make the buf a child of rq so that it is automatically deleted when
     # rq is deleted
     buf = QBuffer(parent=rq)
-    buf.open(QBuffer.WriteOnly)
+    buf.open(QIODevice.OpenModeFlag.WriteOnly)
     # we have to copy data into buf as it will be garbage
     # collected by python
     buf.write(data)
@@ -269,6 +270,7 @@ class ViewerBridge(Bridge):
     highlights_changed = from_js(object)
     open_url = from_js(object)
     speak_simple_text = from_js(object)
+    tts = from_js(object, object)
 
     create_view = to_js()
     start_book_load = to_js()
@@ -286,6 +288,7 @@ class ViewerBridge(Bridge):
     show_search_result = to_js()
     prepare_for_close = to_js()
     viewer_font_size_changed = to_js()
+    tts_event = to_js()
 
 
 def apply_font_settings(page_or_view):
@@ -348,8 +351,10 @@ class WebPage(QWebEnginePage):
             QApplication.instance().clipboard().setMimeData(md)
 
     def javaScriptConsoleMessage(self, level, msg, linenumber, source_id):
-        prefix = {QWebEnginePage.InfoMessageLevel: 'INFO', QWebEnginePage.WarningMessageLevel: 'WARNING'}.get(
-                level, 'ERROR')
+        prefix = {
+            QWebEnginePage.JavaScriptConsoleMessageLevel.InfoMessageLevel: 'INFO',
+            QWebEnginePage.JavaScriptConsoleMessageLevel.WarningMessageLevel: 'WARNING'
+        }.get(level, 'ERROR')
         prints('%s: %s:%s: %s' % (prefix, source_id, linenumber, msg), file=sys.stderr)
         try:
             sys.stderr.flush()
@@ -373,9 +378,9 @@ class WebPage(QWebEnginePage):
 
     def runjs(self, src, callback=None):
         if callback is None:
-            self.runJavaScript(src, QWebEngineScript.ApplicationWorld)
+            self.runJavaScript(src, QWebEngineScript.ScriptWorldId.ApplicationWorld)
         else:
-            self.runJavaScript(src, QWebEngineScript.ApplicationWorld, callback)
+            self.runJavaScript(src, QWebEngineScript.ScriptWorldId.ApplicationWorld, callback)
 
 
 def viewer_html():
@@ -417,8 +422,8 @@ def system_colors():
     is_dark_theme = app.is_dark_theme
     pal = app.palette()
     ans = {
-        'background': pal.color(pal.Base).name(),
-        'foreground': pal.color(pal.Text).name(),
+        'background': pal.color(QPalette.ColorRole.Base).name(),
+        'foreground': pal.color(QPalette.ColorRole.Text).name(),
     }
     if is_dark_theme:
         # only override link colors for dark themes
@@ -464,18 +469,18 @@ class WebView(RestartingWebEngineView):
     paged_mode_changed = pyqtSignal()
     standalone_misc_settings_changed = pyqtSignal(object)
     view_created = pyqtSignal(object)
-    dispatch_on_main_thread_signal = pyqtSignal(object)
 
     def __init__(self, parent=None):
         self._host_widget = None
-        self._tts_client = None
         self.callback_id_counter = count()
         self.callback_map = {}
         self.current_cfi = self.current_content_file = None
         RestartingWebEngineView.__init__(self, parent)
+        self.tts = TTS(self)
+        self.tts.settings_changed.connect(self.tts_settings_changed)
+        self.tts.event_received.connect(self.tts_event_received)
         self.dead_renderer_error_shown = False
         self.render_process_failed.connect(self.render_process_died)
-        self.dispatch_on_main_thread_signal.connect(self.dispatch_on_main_thread)
         w = QApplication.instance().desktop().availableGeometry(self).width()
         QApplication.instance().palette_changed.connect(self.palette_changed)
         self.show_home_page_on_ready = True
@@ -518,7 +523,8 @@ class WebView(RestartingWebEngineView):
         self.bridge.close_prep_finished.connect(self.close_prep_finished)
         self.bridge.highlights_changed.connect(self.highlights_changed)
         self.bridge.open_url.connect(safe_open_url)
-        self.bridge.speak_simple_text.connect(self.speak_simple_text)
+        self.bridge.speak_simple_text.connect(self.tts.speak_simple_text)
+        self.bridge.tts.connect(self.tts.action)
         self.bridge.export_shortcut_map.connect(self.set_shortcut_map)
         self.shortcut_map = {}
         self.bridge.report_cfi.connect(self.call_callback)
@@ -532,31 +538,8 @@ class WebView(RestartingWebEngineView):
             self.inspector = Inspector(parent.inspector_dock.toggleViewAction(), self)
             parent.inspector_dock.setWidget(self.inspector)
 
-    @property
-    def tts_client(self):
-        if self._tts_client is None:
-            from calibre.gui2.tts.implementation import Client
-            self._tts_client = Client(self.dispatch_on_main_thread_signal.emit)
-        return self._tts_client
-
-    def dispatch_on_main_thread(self, func):
-        try:
-            func()
-        except Exception:
-            import traceback
-            traceback.print_exc()
-
-    def speak_simple_text(self, text):
-        from calibre.gui2.tts.errors import TTSSystemUnavailable
-        try:
-            self.tts_client.speak_simple_text(text)
-        except TTSSystemUnavailable as err:
-            return error_dialog(self, _('Text-to-Speech unavailable'), str(err), show=True)
-
     def shutdown(self):
-        if self._tts_client is not None:
-            self._tts_client.shutdown()
-            self._tts_client = None
+        self.tts.shutdown()
 
     def set_shortcut_map(self, smap):
         self.shortcut_map = smap
@@ -590,14 +573,14 @@ class WebView(RestartingWebEngineView):
             child = event.child()
             if 'HostView' in child.metaObject().className():
                 self._host_widget = child
-                self._host_widget.setFocus(Qt.OtherFocusReason)
+                self._host_widget.setFocus(Qt.FocusReason.OtherFocusReason)
         return QWebEngineView.event(self, event)
 
     def sizeHint(self):
         return self._size_hint
 
     def refresh(self):
-        self.pageAction(QWebEnginePage.ReloadAndBypassCache).trigger()
+        self.pageAction(QWebEnginePage.WebAction.ReloadAndBypassCache).trigger()
 
     @property
     def bridge(self):
@@ -727,7 +710,13 @@ class WebView(RestartingWebEngineView):
 
     def highlight_action(self, uuid, which):
         self.execute_when_ready('highlight_action', uuid, which)
-        self.setFocus(Qt.OtherFocusReason)
+        self.setFocus(Qt.FocusReason.OtherFocusReason)
 
     def generic_action(self, which, data):
         self.execute_when_ready('generic_action', which, data)
+
+    def tts_event_received(self, which, data):
+        self.execute_when_ready('tts_event', which, data)
+
+    def tts_settings_changed(self, ui_settings):
+        self.execute_when_ready('tts_event', 'configured', ui_settings)

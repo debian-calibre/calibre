@@ -10,7 +10,7 @@ import json
 import os
 import time
 from functools import partial
-from PyQt5.Qt import QAction, QIcon, Qt, pyqtSignal
+from PyQt5.Qt import QAction, QIcon, Qt, pyqtSignal, QDialog
 
 from calibre.constants import ismacos, iswindows
 from calibre.gui2 import (
@@ -147,7 +147,7 @@ class ViewAction(InterfaceAction):
         self._view_file(job.result)
 
     def _launch_viewer(self, name=None, viewer='ebook-viewer', internal=True, calibre_book_data=None, open_at=None):
-        self.gui.setCursor(Qt.BusyCursor)
+        self.gui.setCursor(Qt.CursorShape.BusyCursor)
         try:
             if internal:
                 args = [viewer]
@@ -218,7 +218,7 @@ class ViewAction(InterfaceAction):
         d = ChooseFormatDialog(self.gui, _('Choose the format to view'),
                 list(sorted(all_fmts)), show_open_with=True)
         self.gui.book_converted.connect(d.book_converted)
-        if d.exec_() == d.Accepted:
+        if d.exec_() == QDialog.DialogCode.Accepted:
             formats = [[x.upper() for x in db.new_api.formats(book_id)] for book_id in book_ids]
             fmt = d.format()
             orig_num = len(rows)

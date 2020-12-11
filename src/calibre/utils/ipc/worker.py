@@ -6,18 +6,23 @@ __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import os, sys, importlib
-from multiprocessing.connection import Client
+import importlib
+import os
+import sys
 from threading import Thread
-from contextlib import closing
 from zipimport import ZipImportError
 
 from calibre import prints
-from calibre.constants import iswindows, ismacos
+from calibre.constants import ismacos, iswindows
 from calibre.utils.ipc import eintr_retry_call
-from calibre.utils.serialize import msgpack_loads, pickle_dumps
+from calibre.utils.serialize import pickle_dumps
+from polyglot.binary import from_hex_unicode
 from polyglot.queue import Queue
-from polyglot.binary import from_hex_bytes, from_hex_unicode
+
+if iswindows:
+    from multiprocessing.connection import PipeConnection as Connection
+else:
+    from multiprocessing.connection import Connection
 
 PARALLEL_FUNCS = {
     'lrfviewer'    :
@@ -168,10 +173,7 @@ def main():
             from multiprocessing import freeze_support
             freeze_support()
             return 0
-        # Close open file descriptors inherited from parent
-        # On Unix this is done by the subprocess module
-        os.closerange(3, 256)
-    if ismacos and 'CALIBRE_WORKER_ADDRESS' not in os.environ and 'CALIBRE_SIMPLE_WORKER' not in os.environ and '--pipe-worker' not in sys.argv:
+    if ismacos and 'CALIBRE_WORKER_FD' not in os.environ and 'CALIBRE_SIMPLE_WORKER' not in os.environ and '--pipe-worker' not in sys.argv:
         # On some OS X computers launchd apparently tries to
         # launch the last run process from the bundle
         # so launch the gui as usual
@@ -198,10 +200,9 @@ def main():
             sys.stdout.flush()
             raise
         return
-    address = msgpack_loads(from_hex_bytes(os.environ['CALIBRE_WORKER_ADDRESS']))
-    key     = from_hex_bytes(os.environ['CALIBRE_WORKER_KEY'])
+    fd = int(os.environ['CALIBRE_WORKER_FD'])
     resultf = from_hex_unicode(os.environ['CALIBRE_WORKER_RESULT'])
-    with closing(Client(address, authkey=key)) as conn:
+    with Connection(fd) as conn:
         name, args, kwargs, desc = eintr_retry_call(conn.recv)
         if desc:
             prints(desc)
@@ -213,7 +214,8 @@ def main():
             notifier.start()
 
         result = func(*args, **kwargs)
-        if result is not None and os.path.exists(os.path.dirname(resultf)):
+        if result is not None:
+            os.makedirs(os.path.dirname(resultf), exist_ok=True)
             with lopen(resultf, 'wb') as f:
                 f.write(pickle_dumps(result))
 
