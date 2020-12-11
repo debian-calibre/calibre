@@ -24622,7 +24622,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.7.0";
+        CALIBRE_VERSION = "5.7.1";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -35017,7 +35017,7 @@ return this.__repr__();
                     ρσ_d["search_net"] = a("global-search", _("Search for selection on the net"), "internet_search");
                     ρσ_d["remove_highlight"] = a("trash", _("Remove this highlight"), "remove_highlight", true);
                     ρσ_d["clear"] = a("close", _("Clear selection"), "clear_selection");
-                    ρσ_d["speak"] = a("bullhorn", _("Speak aloud"), "speak_aloud");
+                    ρσ_d["speak"] = a("bullhorn", _("Read aloud"), "speak_aloud");
                     return ρσ_d;
                 }).call(this);
                 qh = all_actions.ans.quick_highlight;
