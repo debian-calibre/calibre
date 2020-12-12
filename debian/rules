@@ -70,6 +70,9 @@ calibre_auto_install:
 #	# do not install developer's script
 	rm debian/tmp/usr/lib/calibre/calibre/devices/mtp/unix/upstream/update.py
 	rm debian/tmp/usr/lib/calibre/tinycss/tests/*.py
+#
+# 	# Replace "python" to "python3" in shebang
+	find debian/tmp/usr/lib/calibre -name '*.py' -print | xargs --no-run-if-empty sed --separate --file=debian/fix-python-shebang.sed --in-place
 
 override_dh_installman:
 #	# Create and install some of the man pages
