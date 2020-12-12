@@ -24622,7 +24622,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.7.1";
+        CALIBRE_VERSION = "5.7.2";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -38663,9 +38663,6 @@ return this.__repr__();
                     return ρσ_anonfunc;
                 })(), "auto-scroll"));
             }
-            if (full_screen_actions.length) {
-                actions_div.appendChild(E.ul.apply(E, full_screen_actions));
-            }
             actions_div.appendChild(E.ul(ac(_("Read aloud"), _("Read the book aloud"), (function() {
                 var ρσ_anonfunc = function () {
                     self.overlay.hide();
@@ -38676,6 +38673,9 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })(), "bullhorn")));
+            if (full_screen_actions.length) {
+                actions_div.appendChild(E.ul.apply(E, full_screen_actions));
+            }
             no_selection_bar = !sd.get("show_selection_bar");
             if (runtime.is_standalone_viewer) {
                 if (no_selection_bar) {
@@ -40346,6 +40346,9 @@ return this.__repr__();
                 self.state = HIDDEN;
                 self.container.style.display = "none";
                 self.view.focus_iframe();
+                if (ui_operations.read_aloud_state_changed) {
+                    ui_operations.read_aloud_state_changed(false);
+                }
             }
         };
         if (!ReadAloud.prototype.hide.__module__) Object.defineProperties(ReadAloud.prototype.hide, {
@@ -40357,6 +40360,9 @@ return this.__repr__();
                 self.container.style.display = "block";
                 self.state = STOPPED;
                 self.focus();
+                if (ui_operations.read_aloud_state_changed) {
+                    ui_operations.read_aloud_state_changed(true);
+                }
             }
         };
         if (!ReadAloud.prototype.show.__module__) Object.defineProperties(ReadAloud.prototype.show, {
@@ -41077,6 +41083,7 @@ return this.__repr__();
             this.hide_overlays = View.prototype.hide_overlays.bind(this);
             this.focus_iframe = View.prototype.focus_iframe.bind(this);
             this.start_read_aloud = View.prototype.start_read_aloud.bind(this);
+            this.toggle_read_aloud = View.prototype.toggle_read_aloud.bind(this);
             this.show_chrome = View.prototype.show_chrome.bind(this);
             this.show_chrome_force = View.prototype.show_chrome_force.bind(this);
             this.do_show_chrome = View.prototype.do_show_chrome.bind(this);
@@ -41667,6 +41674,8 @@ return this.__repr__();
                 self.toggle_reference_mode();
             } else if (data.name === "read_aloud") {
                 self.start_read_aloud();
+            } else if (data.name === "toggle_read_aloud") {
+                self.toggle_read_aloud();
             } else if (data.name === "reload_book") {
                 ui_operations.reload_book();
             } else if (data.name === "next_section") {
@@ -41981,6 +41990,17 @@ return this.__repr__();
         };
         if (!View.prototype.start_read_aloud.__argnames__) Object.defineProperties(View.prototype.start_read_aloud, {
             __argnames__ : {value: ["dont_start_talking"]},
+            __module__ : {value: "read_book.view"}
+        });
+        View.prototype.toggle_read_aloud = function toggle_read_aloud() {
+            var self = this;
+            if (self.read_aloud.is_visible) {
+                self.read_aloud.hide();
+            } else {
+                self.start_read_aloud();
+            }
+        };
+        if (!View.prototype.toggle_read_aloud.__module__) Object.defineProperties(View.prototype.toggle_read_aloud, {
             __module__ : {value: "read_book.view"}
         });
         View.prototype.show_chrome = function show_chrome(data) {
@@ -44216,6 +44236,16 @@ return this.__repr__();
             ui_operations.autoscroll_state_changed = (function() {
                 var ρσ_anonfunc = function (active) {
                     to_python.autoscroll_state_changed(active);
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["active"]},
+                    __module__ : {value: null}
+                });
+                return ρσ_anonfunc;
+            })();
+            ui_operations.read_aloud_state_changed = (function() {
+                var ρσ_anonfunc = function (active) {
+                    to_python.read_aloud_state_changed(active);
                 };
                 if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
                     __argnames__ : {value: ["active"]},
