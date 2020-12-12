@@ -23,7 +23,7 @@ class VoicesModel(QAbstractTableModel):
         def language(x):
             return x.get('language_display_name') or x['language'] or ''
 
-        self.current_voices = tuple((x['name'], language(x), x['age'], x['gender'], x['id']) for x in voice_data)
+        self.current_voices = tuple((x['name'], language(x), x.get('age', ''), x.get('gender', ''), x['id']) for x in voice_data)
         self.column_headers = _('Name'), _('Language'), _('Age'), _('Gender')
 
     def rowCount(self, parent=None):
@@ -59,7 +59,7 @@ class VoicesModel(QAbstractTableModel):
         if v != self.system_default_voice:
             for i, x in enumerate(self.current_voices):
                 if x[4] == v:
-                    r = i + i
+                    r = i + 1
                     break
             else:
                 return
