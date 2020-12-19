@@ -9,13 +9,13 @@ So it soleves OpenSSL license issues.
 
 "pyopenssl" Uses Apache License Version 2.0, and it can be use with GPL3.
 ---
- setup/extensions.json        |  8 -----
+ setup/extensions.json        |  8 ------
  src/calibre/constants.py     |  1 -
- src/calibre/utils/certgen.py | 72 +++++++++++++++++++++++++++++++-------------
- 3 files changed, 51 insertions(+), 30 deletions(-)
+ src/calibre/utils/certgen.py | 68 +++++++++++++++++++++++++++++++++-----------
+ 3 files changed, 51 insertions(+), 26 deletions(-)
 
 diff --git a/setup/extensions.json b/setup/extensions.json
-index f5e9067..e9a88ed 100644
+index bb215a0..474db76 100644
 --- a/setup/extensions.json
 +++ b/setup/extensions.json
 @@ -28,14 +28,6 @@
@@ -34,34 +34,29 @@ index f5e9067..e9a88ed 100644
          "name": "html_syntax_highlighter",
          "sources": "calibre/gui2/tweak_book/editor/syntax/html.c"
 diff --git a/src/calibre/constants.py b/src/calibre/constants.py
-index d7e220c..3bf3173 100644
+index 648a7c1..7ead8d0 100644
 --- a/src/calibre/constants.py
 +++ b/src/calibre/constants.py
-@@ -199,7 +199,6 @@ class Plugins(collections.Mapping):
-                 'bzzdec',
-                 'matcher',
-                 'tokenizer',
--                'certgen',
-             ]
+@@ -246,7 +246,6 @@ class ExtensionsImporter:
+             'bzzdec',
+             'matcher',
+             'tokenizer',
+-            'certgen',
+         )
          if iswindows:
-             plugins.extend(['winutil', 'wpd', 'winfonts'])
+             extra = ('winutil', 'wpd', 'winfonts', 'winsapi')
 diff --git a/src/calibre/utils/certgen.py b/src/calibre/utils/certgen.py
-index babfc24..051f7cc 100644
+index e180ddb..b950dfb 100644
 --- a/src/calibre/utils/certgen.py
 +++ b/src/calibre/utils/certgen.py
-@@ -6,16 +6,15 @@ __license__ = 'GPL v3'
- __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
+@@ -7,11 +7,14 @@ __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
  
  import socket
--from calibre.constants import plugins
+ from polyglot.builtins import unicode_type
+-from calibre_extensions import certgen
 +import secrets
 +from OpenSSL import crypto
- from polyglot.builtins import unicode_type
  
--certgen, err = plugins['certgen']
--if err:
--    raise ImportError('Failed to load the certgen module with error: %s' % err)
--
  
  def create_key_pair(size=2048):
 -    return certgen.create_rsa_keypair(size)
@@ -71,7 +66,7 @@ index babfc24..051f7cc 100644
  
  
  def create_cert_request(
-@@ -23,35 +22,66 @@ def create_cert_request(
+@@ -19,35 +22,66 @@ def create_cert_request(
      country='IN', state='Maharashtra', locality='Mumbai', organization=None,
      organizational_unit=None, email_address=None, alt_names=(), basic_constraints=None
  ):
@@ -81,9 +76,13 @@ index babfc24..051f7cc 100644
 -        return x or None
 +    req = crypto.X509Req()
 +    subj = req.get_subject()
-+
+ 
+-    return certgen.create_rsa_cert_req(
+-        key_pair, tuple(enc(x) for x in alt_names if x), common_name,
+-        country, state, locality, organization, organizational_unit, email_address, basic_constraints
+-    )
 +    req.set_version(2)
-+
+ 
 +    if common_name         : setattr(subj, "CN",           common_name)
 +    if country             : setattr(subj, "C",            country)
 +    if state               : setattr(subj, "ST",           state)
@@ -99,13 +98,9 @@ index babfc24..051f7cc 100644
 +    if len(alt_names) > 0 :
 +        n = str.join(",", alt_names)
 +        ext.append(crypto.X509Extension(b"subjectAltName", False, n.encode("ascii")))
- 
--    return certgen.create_rsa_cert_req(
--        key_pair, tuple(enc(x) for x in alt_names if x), common_name,
--        country, state, locality, organization, organizational_unit, email_address, basic_constraints
--    )
++
 +    req.add_extensions(ext)
- 
++
 +    req.set_pubkey(key_pair)
 +    req.sign(key_pair, "sha256")
 +
@@ -152,7 +147,7 @@ index babfc24..051f7cc 100644
  
  
  def create_server_cert(
-@@ -102,7 +132,7 @@ def create_server_cert(
+@@ -98,7 +132,7 @@ def create_server_cert(
  
  
  if __name__ == '__main__':

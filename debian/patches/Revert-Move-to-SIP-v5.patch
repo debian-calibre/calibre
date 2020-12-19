@@ -8,18 +8,18 @@ This reverts commit 7a4b3f61ff24f8c39c8d5cf86c54da9de9267025.
 ---
  bypy/linux/__main__.py     |   6 ++
  bypy/macos/__main__.py     |   3 +
- bypy/sources.json          |  69 +++----------------
+ bypy/sources.json          |  69 +++------------------
  bypy/windows/__main__.py   |   8 ++-
- setup/build.py             | 160 +++++++++++++++++++++++++--------------------
- setup/build_environment.py |  45 +++++++++++--
+ setup/build.py             | 150 +++++++++++++++++++++++++++------------------
+ setup/build_environment.py |  45 ++++++++++++--
  setup/extensions.json      |   1 -
- 7 files changed, 154 insertions(+), 138 deletions(-)
+ 7 files changed, 154 insertions(+), 128 deletions(-)
 
 diff --git a/bypy/linux/__main__.py b/bypy/linux/__main__.py
-index 55494f4..c9484a9 100644
+index e0b07b1..1a4778a 100644
 --- a/bypy/linux/__main__.py
 +++ b/bypy/linux/__main__.py
-@@ -141,6 +141,12 @@ def copy_python(env, ext_dir):
+@@ -143,6 +143,12 @@ def copy_python(env, ext_dir):
      dest = j(env.py_dir, 'site-packages')
      import_site_packages(srcdir, dest)
  
@@ -33,10 +33,10 @@ index 55494f4..c9484a9 100644
          c = j(env.SRC, x)
          if os.path.exists(j(c, '__init__.py')):
 diff --git a/bypy/macos/__main__.py b/bypy/macos/__main__.py
-index 0613daa..53229d7 100644
+index 45ccae7..dc9d7d6 100644
 --- a/bypy/macos/__main__.py
 +++ b/bypy/macos/__main__.py
-@@ -543,6 +543,9 @@ class Freeze(object):
+@@ -554,6 +554,9 @@ class Freeze(object):
              if err.errno != errno.ENOENT:
                  raise
          sp = join(self.resources_dir, 'Python', 'site-packages')
@@ -47,10 +47,10 @@ index 0613daa..53229d7 100644
  
      @flush
 diff --git a/bypy/sources.json b/bypy/sources.json
-index 435a3ca..4c02609 100644
+index 1e43d84..8216db3 100644
 --- a/bypy/sources.json
 +++ b/bypy/sources.json
-@@ -791,81 +791,30 @@
+@@ -780,81 +780,30 @@
          }
      },
  
@@ -88,8 +88,8 @@ index 435a3ca..4c02609 100644
          "name": "sip",
 -		"comment": "build time dependency",
 -        "unix": {
--            "filename": "sip-5.4.0.tar.gz",
--            "hash": "sha256:4282ab45948674f5ef74278a8e70d1302f65c95b519a0af19409002f5715d641",
+-            "filename": "sip-5.5.0.tar.gz",
+-            "hash": "sha256:5d024c419b30fea8a6de8c71a560c7ab0bc3c221fbfb14d55a5b865bd58eaac5",
 -            "urls": ["pypi"]
 -        }
 -    },
@@ -98,8 +98,8 @@ index 435a3ca..4c02609 100644
 -        "name": "pyqt-builder",
 -		"comment": "build time dependency",
 -        "unix": {
--            "filename": "PyQt-builder-1.5.0.tar.gz",
--            "hash": "sha256:11bbe26e8e3d5ffec6d2ef2f50596b1670eb2d8b49aee0f859821922d8282841",
+-            "filename": "PyQt-builder-1.6.0.tar.gz",
+-            "hash": "sha256:fb80f01407718bfc68f78e276f2543fcfc5b5900b1187c1fd1f2ff51a6f2a13c",
 -            "urls": ["pypi"]
 -        }
 -    },
@@ -120,8 +120,8 @@ index 435a3ca..4c02609 100644
      {
          "name": "pyqt",
          "unix": {
--            "filename": "PyQt5-5.15.1.tar.gz",
--            "hash": "sha256:d9a76b850246d08da9863189ecb98f6c2aa9b4d97a3e85e29330a264aed0f9a1",
+-            "filename": "PyQt5-5.15.2.tar.gz",
+-            "hash": "sha256:372b08dc9321d1201e4690182697c5e7ffb2e0770e6b4a45519025134b12e4fc",
 -            "urls": ["pypi"]
 +            "filename": "PyQt5-5.15.0.tar.gz",
 +            "hash": "sha256:c6f75488ffd5365a65893bc64ea82a6957db126fbfe33654bcd43ae1c30c52f9",
@@ -132,8 +132,8 @@ index 435a3ca..4c02609 100644
      {
          "name": "pyqt-webengine",
          "unix": {
--            "filename": "PyQtWebEngine-5.15.1.tar.gz",
--            "hash": "sha256:f0ca7915ee206ba5d703168c6ca40b0aad62c67360328fae4af5359cdbcee439",
+-            "filename": "PyQtWebEngine-5.15.2.tar.gz",
+-            "hash": "sha256:4d72fea774071ce6f76e341a3d2c5d595886c9906a9b9493239c841cce54a634",
 -            "urls": ["pypi"]
 +            "filename": "PyQtWebEngine-5.15.0.tar.gz",
 +            "hash": "sha256:670812688e40bf75f70ddf01eadd897d231300318d3856b275bf8e7e0085bf75",
@@ -142,10 +142,10 @@ index 435a3ca..4c02609 100644
      },
  
 diff --git a/bypy/windows/__main__.py b/bypy/windows/__main__.py
-index 1d9b72f..1702040 100644
+index 635feb0..b7f991b 100644
 --- a/bypy/windows/__main__.py
 +++ b/bypy/windows/__main__.py
-@@ -153,8 +153,7 @@ def freeze(env, ext_dir, incdir):
+@@ -156,8 +156,7 @@ def freeze(env, ext_dir, incdir):
      for x in glob.glob(os.path.join(env.python_base, 'DLLs', '*.dll')):  # dlls needed by python
          copybin(x)
      for f in walk(os.path.join(env.python_base, 'Lib')):
@@ -155,7 +155,7 @@ index 1d9b72f..1702040 100644
              copybin(f)
      ext_map = extract_extension_modules(ext_dir, env.dll_dir)
      ext_map.update(extract_extension_modules(j(env.python_base, 'DLLs'), env.dll_dir, move=False))
-@@ -194,6 +193,11 @@ def freeze(env, ext_dir, incdir):
+@@ -197,6 +196,11 @@ def freeze(env, ext_dir, incdir):
      install_site_py(env)
      sp_dir = j(env.lib_dir, 'site-packages')
  
@@ -168,7 +168,7 @@ index 1d9b72f..1702040 100644
      for x in glob.glob(j(CALIBRE_DIR, 'src', '*')):
          if os.path.isdir(x):
 diff --git a/setup/build.py b/setup/build.py
-index fb44da9..ba818a6 100644
+index 44dad2a..ba818a6 100644
 --- a/setup/build.py
 +++ b/setup/build.py
 @@ -8,7 +8,7 @@ __docformat__ = 'restructuredtext en'
@@ -229,7 +229,7 @@ index fb44da9..ba818a6 100644
  
          if opts.only in {'all', 'headless'}:
              self.build_headless()
-@@ -469,78 +465,100 @@ class Build(Command):
+@@ -469,68 +465,100 @@ class Build(Command):
          if ismacos:
              os.rename(self.j(self.d(target), 'libheadless.dylib'), self.j(self.d(target), 'headless.so'))
  
@@ -251,7 +251,6 @@ index fb44da9..ba818a6 100644
 -
 -[tool.sip.project]
 -sip-files-dir = "."
--sip-module = "PyQt5.sip"
 -
 -[tool.sip.bindings.pictureflow]
 -headers = {ext.headers}
@@ -363,15 +362,6 @@ index fb44da9..ba818a6 100644
 +        name = '%s%s.%s' % ('release/' if iswindows else 'lib', sip['target'], fext)
          try:
 -            os.chdir(os.path.join(src_dir, 'build'))
--            if ext.needs_exceptions:
--                # bug in sip-build
--                for q in walk('.'):
--                    if os.path.basename(q) in ('Makefile',):
--                        with open(q, 'r+') as f:
--                            raw = f.read()
--                            raw = raw.replace('-fno-exceptions', '-fexceptions')
--                            f.seek(0), f.truncate()
--                            f.write(raw)
 -            self.check_call([self.env.make] + ([] if iswindows else ['-j%d'%(os.cpu_count() or 1)]))
 -            e = 'pyd' if iswindows else 'so'
 -            m = glob.glob(f'{ext.name}/{ext.name}.*{e}')
@@ -466,7 +456,7 @@ index c47609b..160fbbb 100644
  ft_libs = []
  ft_inc_dirs = []
 diff --git a/setup/extensions.json b/setup/extensions.json
-index e9a88ed..2d7dd46 100644
+index 474db76..9f73931 100644
 --- a/setup/extensions.json
 +++ b/setup/extensions.json
 @@ -125,7 +125,6 @@
