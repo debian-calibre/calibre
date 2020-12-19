@@ -6,16 +6,17 @@ __license__ = 'GPL v3'
 __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 
 from PyQt5.Qt import (
-    QDialog, pyqtSignal, QIcon, QVBoxLayout, QDialogButtonBox, QStackedWidget,
-    QAction, QMenu, QTreeWidget, QTreeWidgetItem, QGridLayout, QWidget, Qt,
-    QSize, QStyledItemDelegate, QApplication, QTimer)
+    QAction, QApplication, QDialog, QDialogButtonBox, QGridLayout, QIcon, QMenu,
+    QSize, QStackedWidget, QStyledItemDelegate, Qt, QTimer, QTreeWidget,
+    QTreeWidgetItem, QVBoxLayout, QWidget, pyqtSignal
+)
 
-from calibre.constants import plugins
 from calibre.ebooks.oeb.polish.toc import commit_toc, get_toc
 from calibre.gui2 import error_dialog, make_view_use_window_background
-from calibre.gui2.toc.main import TOCView, ItemEdit
-from calibre.gui2.tweak_book import current_container, TOP, actions, tprefs
-from polyglot.builtins import unicode_type, range
+from calibre.gui2.toc.main import ItemEdit, TOCView
+from calibre.gui2.tweak_book import TOP, actions, current_container, tprefs
+from calibre_extensions.progress_indicator import set_no_activate_on_click
+from polyglot.builtins import range, unicode_type
 
 
 class TOCEditor(QDialog):
@@ -42,7 +43,7 @@ class TOCEditor(QDialog):
         self.item_edit = ItemEdit(self, tprefs)
         s.addWidget(self.item_edit)
 
-        bb = self.bb = QDialogButtonBox(QDialogButtonBox.Ok|QDialogButtonBox.Cancel)
+        bb = self.bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok|QDialogButtonBox.StandardButton.Cancel)
         l.addWidget(bb)
         bb.accepted.connect(self.accept)
         bb.rejected.connect(self.reject)
@@ -105,7 +106,7 @@ class TOCEditor(QDialog):
                 uid=self.toc_view.toc_uid)
 
 
-DEST_ROLE = Qt.UserRole
+DEST_ROLE = Qt.ItemDataRole.UserRole
 FRAG_ROLE = DEST_ROLE + 1
 
 
@@ -133,13 +134,11 @@ class TOCViewer(QWidget):
         self.view.setItemDelegate(self.delegate)
         self.view.setHeaderHidden(True)
         self.view.setAnimated(True)
-        self.view.setContextMenuPolicy(Qt.CustomContextMenu)
-        self.view.customContextMenuRequested.connect(self.show_context_menu, type=Qt.QueuedConnection)
+        self.view.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+        self.view.customContextMenuRequested.connect(self.show_context_menu, type=Qt.ConnectionType.QueuedConnection)
         self.view.itemActivated.connect(self.emit_navigate)
         self.view.itemPressed.connect(self.item_pressed)
-        pi = plugins['progress_indicator'][0]
-        if hasattr(pi, 'set_no_activate_on_click'):
-            pi.set_no_activate_on_click(self.view)
+        set_no_activate_on_click(self.view)
         self.view.itemDoubleClicked.connect(self.emit_navigate)
         l.addWidget(self.view)
 
@@ -169,7 +168,7 @@ class TOCViewer(QWidget):
         self.build()
 
     def item_pressed(self, item):
-        if QApplication.mouseButtons() & Qt.LeftButton:
+        if QApplication.mouseButtons() & Qt.MouseButton.LeftButton:
             QTimer.singleShot(0, self.emit_navigate)
 
     def show_context_menu(self, pos):
@@ -214,7 +213,7 @@ class TOCViewer(QWidget):
                 node.setData(0, FRAG_ROLE, child.frag or '')
                 tt = _('File: {0}\nAnchor: {1}').format(
                     child.dest or '', child.frag or _('Top of file'))
-                node.setData(0, Qt.ToolTipRole, tt)
+                node.setData(0, Qt.ItemDataRole.ToolTipRole, tt)
                 process_node(child, node)
 
         self.view.clear()

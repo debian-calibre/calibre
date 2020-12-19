@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "10月 16, 2020" "5.3.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "12月 12, 2020" "5.7.2" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -191,7 +191,7 @@ Split all HTML files larger than this size (in KB). This is necessary as most EP
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-把 Unicode 字元轉換為 ASCII 表達型式。請謹慎使用這個功能，因為它會把所有的 Unicode 字元取代為 ASCII 字元。比如：它會把 \fB"\fPМихаил Горбачёв\fB"\fP 取代為 \fB"\fPMikhail Gorbachiov\fB"\fP。並且當一個字元可能有多種表示方式時（比如中文和日文中一些共用的字元）， calibre 會根據當前設定的介面語言類型決定如何去轉換這類字元。
+Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPМихаил Горбачёв\fB"\fP with \fB"\fPMikhail Gorbachiov\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
 .UNINDENT
 .INDENT 0.0
 .TP

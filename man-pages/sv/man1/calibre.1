@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE" "1" "oktober 16, 2020" "5.3.0" "calibre"
+.TH "CALIBRE" "1" "december 12, 2020" "5.7.2" "calibre"
 .SH NAME
 calibre \- calibre
 .
@@ -35,16 +35,24 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-calibre [options] [path_to_ebook]
+calibre [options] [path_to_ebook or calibre url ...]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Sätt i gång \fBcalibre\fP grafiska användargränssnitt och lägg valfritt till e\-boken för
-sökväg_till_ebok till databasen.
+Starta huvudanvändargränssnittet i \fBcalibre\fP och lägg till e\-boken på
+path_to_ebook till databasen. Du kan också ange webbadresser i \fBcalibre\fP för att utföra olika
+åtgärder än att bara lägga till böcker. Till exempel:
 .sp
-När du skickar argument till \fBcalibre\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+\fBcalibre\fP://view\-book/test_bibliotek/1842/epub
+.sp
+Öppnar boken med id 1842 i EPUB\-format från biblioteket
+"test_bibliotek" i \fBcalibre\fP E\-bokvisaren. Biblioteksnamn är bibliotekens
+mappnamn med mellanslag ersatta med understrykningar. En fullständig beskrivning av de
+olika webbadressbaserade åtgärderna finns i användarhandboken.
+.sp
+När du skickar argument till \fBcalibre\fP som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .SH [ALTERNATIV]
 .INDENT 0.0
 .TP
@@ -69,7 +77,7 @@ Sök inte efter uppdateringar
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-running\-calibre, \-s
-Orsakar att en körande calibre\-instans avslutas, om någon körs. Observera att om jobb körs, kommer de att avslutas tyst, så använd med försiktighet.
+Orsakar att en körande calibre\-instans avslutas, om någon körs. Observera att om jobb är pågående, kommer de att avslutas tyst, så använd med försiktighet.
 .UNINDENT
 .INDENT 0.0
 .TP

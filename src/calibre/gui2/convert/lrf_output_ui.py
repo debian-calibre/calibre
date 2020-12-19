@@ -93,7 +93,7 @@ class Ui_Form(object):
         self.opt_mono_family.setObjectName("opt_mono_family")
         self.gridLayout_2.addWidget(self.opt_mono_family, 2, 1, 1, 1)
         self.verticalLayout.addWidget(self.groupBox)
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
         self.verticalLayout.addItem(spacerItem)
         self.label.setBuddy(self.opt_wordspace)
         self.label_2.setBuddy(self.opt_minimum_indent)

@@ -7,9 +7,9 @@ from collections import OrderedDict
 import textwrap
 
 from PyQt5.Qt import (
-    QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QListWidget, QIcon,
-    QSize, QComboBox, QLineEdit, QListWidgetItem, QStyledItemDelegate,
-    QStaticText, Qt, QStyle, QToolButton, QInputDialog, QMenu, pyqtSignal
+    QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QListWidget, QIcon, QDialog,
+    QSize, QComboBox, QLineEdit, QListWidgetItem, QStyledItemDelegate, QAbstractItemView,
+    QStaticText, Qt, QStyle, QToolButton, QInputDialog, QMenu, pyqtSignal, QPalette, QItemSelectionModel
 )
 
 from calibre.ebooks.metadata.tag_mapper import map_tags, compile_pat
@@ -154,7 +154,7 @@ class RuleEdit(QWidget):
     def edit_tags(self):
         from calibre.gui2.dialogs.tag_editor import TagEditor
         d = TagEditor(self, get_gui().current_db, current_tags=list(filter(None, [x.strip() for x in self.query.text().split(',')])))
-        if d.exec_() == d.Accepted:
+        if d.exec_() == QDialog.DialogCode.Accepted:
             self.query.setText(', '.join(d.tags))
 
     @property
@@ -215,7 +215,7 @@ class RuleEditDialog(Dialog):
             Dialog.accept(self)
 
 
-DATA_ROLE = Qt.UserRole
+DATA_ROLE = Qt.ItemDataRole.UserRole
 RENDER_ROLE = DATA_ROLE + 1
 
 
@@ -256,7 +256,7 @@ class Delegate(QStyledItemDelegate):
     def paint(self, painter, option, index):
         QStyledItemDelegate.paint(self, painter, option, index)
         pal = option.palette
-        color = pal.color(pal.HighlightedText if option.state & QStyle.State_Selected else pal.Text).name()
+        color = pal.color(QPalette.ColorRole.HighlightedText if option.state & QStyle.StateFlag.State_Selected else QPalette.ColorRole.Text).name()
         text = '<div style="color:%s">%s</div>' % (color, index.data(RENDER_ROLE))
         st = QStaticText(text)
         st.setTextWidth(option.rect.width())
@@ -295,7 +295,7 @@ class Rules(QWidget):
         l.addLayout(h)
         self.rule_list = r = QListWidget(self)
         self.delegate = Delegate(self)
-        r.setSelectionMode(r.ExtendedSelection)
+        r.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
         r.setItemDelegate(self.delegate)
         r.doubleClicked.connect(self.edit_rule)
         h.addWidget(r)
@@ -303,7 +303,7 @@ class Rules(QWidget):
         r.viewport().setAcceptDrops(True)
         r.setDropIndicatorShown(True)
         r.setDragDropMode(r.InternalMove)
-        r.setDefaultDropAction(Qt.MoveAction)
+        r.setDefaultDropAction(Qt.DropAction.MoveAction)
         self.l2 = l = QVBoxLayout()
         h.addLayout(l)
         self.up_button = b = QToolButton(self)
@@ -320,7 +320,7 @@ class Rules(QWidget):
 
     def add_rule(self):
         d = self.RuleEditDialogClass(self)
-        if d.exec_() == d.Accepted:
+        if d.exec_() == QDialog.DialogCode.Accepted:
             i = self.RuleItemClass(d.edit_widget.rule, self.rule_list)
             self.rule_list.scrollToItem(i)
             self.changed.emit()
@@ -329,8 +329,8 @@ class Rules(QWidget):
         i = self.rule_list.currentItem()
         if i is not None:
             d = self.RuleEditDialogClass(self)
-            d.edit_widget.rule = i.data(Qt.UserRole)
-            if d.exec_() == d.Accepted:
+            d.edit_widget.rule = i.data(Qt.ItemDataRole.UserRole)
+            if d.exec_() == QDialog.DialogCode.Accepted:
                 rule = d.edit_widget.rule
                 i.setData(DATA_ROLE, rule)
                 i.setData(RENDER_ROLE, self.RuleItemClass.text_from_rule(rule, self.rule_list))
@@ -344,25 +344,30 @@ class Rules(QWidget):
         if changed:
             self.changed.emit()
 
+    def move_selected(self, delta=-1):
+        current_item = self.rule_list.currentItem()
+        items = self.rule_list.selectedItems()
+        if current_item is None or not items or not len(items):
+            return
+        row_map = {id(item): self.rule_list.row(item) for item in items}
+        items.sort(key=lambda item: row_map[id(item)])
+        num = self.rule_list.count()
+        for item in items:
+            row = row_map[id(item)]
+            nrow = (row + delta + num) % num
+            self.rule_list.takeItem(row)
+            self.rule_list.insertItem(nrow, item)
+        sm = self.rule_list.selectionModel()
+        for item in items:
+            sm.select(self.rule_list.indexFromItem(item), QItemSelectionModel.SelectionFlag.Select)
+        sm.setCurrentIndex(self.rule_list.indexFromItem(current_item), QItemSelectionModel.SelectionFlag.Current)
+        self.changed.emit()
+
     def move_up(self):
-        i = self.rule_list.currentItem()
-        if i is not None:
-            row = self.rule_list.row(i)
-            if row > 0:
-                self.rule_list.takeItem(row)
-                self.rule_list.insertItem(row - 1, i)
-                self.rule_list.setCurrentItem(i)
-                self.changed.emit()
+        self.move_selected()
 
     def move_down(self):
-        i = self.rule_list.currentItem()
-        if i is not None:
-            row = self.rule_list.row(i)
-            if row < self.rule_list.count() - 1:
-                self.rule_list.takeItem(row)
-                self.rule_list.insertItem(row + 1, i)
-                self.rule_list.setCurrentItem(i)
-                self.changed.emit()
+        self.move_selected(1)
 
     @property
     def rules(self):

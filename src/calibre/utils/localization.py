@@ -29,7 +29,7 @@ def available_translations():
 
 
 def get_system_locale():
-    from calibre.constants import iswindows, ismacos, plugins
+    from calibre.constants import iswindows, ismacos
     lang = None
     if iswindows:
         try:
@@ -41,9 +41,10 @@ def get_system_locale():
         except:
             pass  # Windows XP does not have the GetUserDefaultLocaleName fn
     elif ismacos:
+        from calibre_extensions.usbobserver import user_locale
         try:
-            lang = plugins['usbobserver'][0].user_locale() or None
-        except:
+            lang = user_locale() or None
+        except Exception:
             # Fallback to environment vars if something bad happened
             import traceback
             traceback.print_exc()
@@ -239,10 +240,20 @@ def translator_for_lang(lang):
                     pass  # No lcdata
 
     if buf is not None:
-        t = GNUTranslations(buf)
+        try:
+            t = GNUTranslations(buf)
+        except Exception:
+            import traceback
+            traceback.print_exc()
+            t = None
         if iso639 is not None:
-            iso639 = GNUTranslations(iso639)
-            t.add_fallback(iso639)
+            try:
+                iso639 = GNUTranslations(iso639)
+            except Exception:
+                iso639 = None
+            else:
+                if t is not None:
+                    t.add_fallback(iso639)
 
     if t is None:
         t = NullTranslations()
@@ -537,7 +548,7 @@ def website_languages():
     stats = getattr(website_languages, 'stats', None)
     if stats is None:
         try:
-            stats = frozenset(P('localization/website-languages.txt', allow_user_override=False, data=True).split())
+            stats = frozenset(P('localization/website-languages.txt', allow_user_override=False, data=True).decode('utf-8').split())
         except EnvironmentError:
             stats = frozenset()
         website_languages.stats = stats

@@ -16,7 +16,7 @@ class Ui_Form(object):
         Form.resize(400, 300)
         self.gridLayout = QtWidgets.QGridLayout(Form)
         self.gridLayout.setObjectName("gridLayout")
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
         self.gridLayout.addItem(spacerItem, 5, 0, 1, 1)
         self.opt_snb_hide_chapter_name = QtWidgets.QCheckBox(Form)
         self.opt_snb_hide_chapter_name.setObjectName("opt_snb_hide_chapter_name")

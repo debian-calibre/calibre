@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "října 16, 2020" "5.3.0" "calibre"
+.TH "CALIBREDB" "1" "prosince 12, 2020" "5.7.2" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -239,13 +239,18 @@ Nastavit autory přidaných knih
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-automerge, \-m
+Pokud jsou nalezeny knihy s podobnými názvy a autory, automaticky sloučit příchozí formáty (soubory) do existujících záznamů knih. Hodnota „ignore“ znamená, že duplicitní formáty jsou zahozeny. Hodnota „overwrite“ znamená, že duplicitní formáty v knihovně jsou přepsány nově přidanými soubory. Hodnota „new_record“ znamená, že duplicitní formáty jsou umístěny do nového záznamu knihy.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-cover, \-c
 Nastavit použitou obálku pro přidanou knihu
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Přidat knihy do databáze, i když již existují. Porovnání je prováděno na základě názvů knih.
+Přidat knihy do databáze, i když již existují. Srovnání je prováděno na základě názvů knih. Pamatujte, že volby \fI\%\-\-automerge\fP mají přednost.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -34,6 +34,7 @@ from read_book.resources import load_resources
 from read_book.scrollbar import BookScrollbar
 from read_book.search import SearchOverlay, find_in_spine
 from read_book.selection_bar import SelectionBar
+from read_book.read_aloud import ReadAloud
 from read_book.shortcuts import create_shortcut_map
 from read_book.timers import Timers
 from read_book.toc import get_current_toc_nodes, update_visible_toc_nodes
@@ -243,6 +244,7 @@ class View:
                         right_margin,
                         self.book_scrollbar.create(),
                         E.div(style='position: absolute; top:0; left:0; width: 100%; height: 100%; display:none;', id='book-selection-bar-overlay'),  # selection bar overlay
+                        E.div(style='position: absolute; top:0; left:0; width: 100%; height: 100%; display:none;', id='book-read-aloud-overlay'),  # read aloud overlay
                         E.div(style='position: absolute; top:0; left:0; width: 100%; pointer-events:none; display:none', id='book-search-overlay'),  # search overlay
                         E.div(style='position: absolute; top:0; left:0; width: 100%; height: 100%; display:none', id='book-content-popup-overlay'),  # content popup overlay
                         E.div(style='position: absolute; top:0; left:0; width: 100%; height: 100%; overflow: auto; display:none', id='book-overlay'),  # main overlay
@@ -292,6 +294,7 @@ class View:
                     ui_operations.search_result_not_found(data.search_result)
             ,
             'annotations': self.on_annotations_message,
+            'tts': self.on_tts_message,
             'copy_text_to_clipboard': def(data):
                 ui_operations.copy_selection(data.text, data.html)
             ,
@@ -313,6 +316,7 @@ class View:
         self.content_popup_overlay = ContentPopupOverlay(self)
         self.overlay = Overlay(self)
         self.selection_bar = SelectionBar(self)
+        self.read_aloud = ReadAloud(self)
         self.processing_spine_item_display = False
         self.pending_load = None
         self.currently_showing = {'selection': {'empty': True}}
@@ -341,6 +345,9 @@ class View:
 
     def on_annotations_message(self, data):
         self.selection_bar.handle_message(data)
+
+    def on_tts_message(self, data):
+        self.read_aloud.handle_message(data)
 
     def left_margin_clicked(self, event):
         if event.button is 0:
@@ -444,6 +451,7 @@ class View:
             ui_operations.overlay_visibility_changed(visible)
         if visible:
             self.selection_bar.hide()
+            self.read_aloud.hide()
         else:
             self.selection_bar.update_position()
 
@@ -497,12 +505,12 @@ class View:
             ui_operations.toggle_full_screen()
         elif data.name is 'toggle_reference_mode':
             self.toggle_reference_mode()
+        elif data.name is 'read_aloud':
+            self.start_read_aloud()
+        elif data.name is 'toggle_read_aloud':
+            self.toggle_read_aloud()
         elif data.name is 'reload_book':
             ui_operations.reload_book()
-        elif data.name is 'search_for_selection':
-            if self.currently_showing.selection.text:
-                self.search_overlay.set_text(self.currently_showing.selection.text)
-                self.search_overlay.find_next()
         elif data.name is 'next_section':
             self.on_next_section({'forward': True})
         elif data.name is 'previous_section':
@@ -663,8 +671,22 @@ class View:
     def focus_iframe(self):
         if self.selection_bar.is_visible:
             self.selection_bar.focus()
+        elif self.read_aloud.is_visible:
+            self.read_aloud.focus()
         else:
             self.iframe.contentWindow.focus()
+
+    def start_read_aloud(self, dont_start_talking):
+        self.selection_bar.hide()
+        self.read_aloud.show()
+        if not dont_start_talking:
+            self.read_aloud.play()
+
+    def toggle_read_aloud(self):
+        if self.read_aloud.is_visible:
+            self.read_aloud.hide()
+        else:
+            self.start_read_aloud()
 
     def show_chrome(self, data):
         elements = {}
@@ -1095,19 +1117,23 @@ class View:
             self.selection_bar.notes_edited(uuid)
             self.selection_bar.update_position()
 
-    def on_next_spine_item(self, data):
+    def show_next_spine_item(self, previous):
         spine = self.book.manifest.spine
         idx = spine.indexOf(self.currently_showing.name)
-        if data.previous:
+        if previous:
             if idx is 0:
-                return
+                return False
             idx = min(spine.length - 1, max(idx - 1, 0))
             self.show_name(spine[idx], initial_position={'type':'frac', 'frac':1, 'replace_history':True})
         else:
             if idx is spine.length - 1:
-                return
+                return False
             idx = max(0, min(spine.length - 1, idx + 1))
             self.show_name(spine[idx], initial_position={'type':'frac', 'frac':0, 'replace_history':True})
+        return True
+
+    def on_next_spine_item(self, data):
+        self.show_next_spine_item(data.previous)
 
     def on_next_section(self, data):
         toc_node = get_next_section(data.forward)
@@ -1273,6 +1299,8 @@ class View:
                 ui_operations.clear_history()
         if ui_operations.content_file_changed:
             ui_operations.content_file_changed(self.currently_showing.name)
+        if self.read_aloud.is_visible:
+            self.read_aloud.play()
 
     def set_progress_frac(self, progress_frac, file_progress_frac, page_counts):
         self.current_progress_frac = progress_frac or 0
@@ -1320,6 +1348,8 @@ class View:
         spine = self.book.manifest.spine
         spine_index = self.annotations_manager.spine_index_for_highlight(uuid, spine)
         if spine_index < 0 or spine_index >= spine.length:
+            if which is 'edit':
+                self.selection_bar.report_failed_edit_highlight(uuid)
             return
         if which is 'edit':
             if self.currently_showing.spine_index is spine_index:

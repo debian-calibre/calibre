@@ -8,8 +8,8 @@ import shutil
 import sys
 from itertools import count
 from PyQt5.Qt import (
-    QT_VERSION, QApplication, QBuffer, QByteArray, QFontDatabase, QFontInfo,
-    QHBoxLayout, QMimeData, QSize, Qt, QTimer, QUrl, QWidget, pyqtSignal
+    QT_VERSION, QApplication, QBuffer, QByteArray, QFontDatabase, QFontInfo, QPalette,
+    QHBoxLayout, QMimeData, QSize, Qt, QTimer, QUrl, QWidget, pyqtSignal, QIODevice
 )
 from PyQt5.QtWebEngineCore import QWebEngineUrlSchemeHandler
 from PyQt5.QtWebEngineWidgets import (
@@ -25,6 +25,7 @@ from calibre.ebooks.metadata.book.base import field_metadata
 from calibre.ebooks.oeb.polish.utils import guess_type
 from calibre.gui2 import choose_images, error_dialog, safe_open_url
 from calibre.gui2.viewer.config import viewer_config_dir, vprefs
+from calibre.gui2.viewer.tts import TTS
 from calibre.gui2.webengine import (
     Bridge, RestartingWebEngineView, create_script, from_js, insert_scripts,
     secure_webengine, to_js
@@ -99,7 +100,7 @@ def send_reply(rq, mime_type, data):
     # make the buf a child of rq so that it is automatically deleted when
     # rq is deleted
     buf = QBuffer(parent=rq)
-    buf.open(QBuffer.WriteOnly)
+    buf.open(QIODevice.OpenModeFlag.WriteOnly)
     # we have to copy data into buf as it will be garbage
     # collected by python
     buf.write(data)
@@ -250,6 +251,7 @@ class ViewerBridge(Bridge):
     ask_for_open = from_js(object)
     selection_changed = from_js(object, object)
     autoscroll_state_changed = from_js(object)
+    read_aloud_state_changed = from_js(object)
     copy_selection = from_js(object, object)
     view_image = from_js(object)
     copy_image = from_js(object)
@@ -268,6 +270,8 @@ class ViewerBridge(Bridge):
     close_prep_finished = from_js(object)
     highlights_changed = from_js(object)
     open_url = from_js(object)
+    speak_simple_text = from_js(object)
+    tts = from_js(object, object)
 
     create_view = to_js()
     start_book_load = to_js()
@@ -285,6 +289,7 @@ class ViewerBridge(Bridge):
     show_search_result = to_js()
     prepare_for_close = to_js()
     viewer_font_size_changed = to_js()
+    tts_event = to_js()
 
 
 def apply_font_settings(page_or_view):
@@ -347,8 +352,10 @@ class WebPage(QWebEnginePage):
             QApplication.instance().clipboard().setMimeData(md)
 
     def javaScriptConsoleMessage(self, level, msg, linenumber, source_id):
-        prefix = {QWebEnginePage.InfoMessageLevel: 'INFO', QWebEnginePage.WarningMessageLevel: 'WARNING'}.get(
-                level, 'ERROR')
+        prefix = {
+            QWebEnginePage.JavaScriptConsoleMessageLevel.InfoMessageLevel: 'INFO',
+            QWebEnginePage.JavaScriptConsoleMessageLevel.WarningMessageLevel: 'WARNING'
+        }.get(level, 'ERROR')
         prints('%s: %s:%s: %s' % (prefix, source_id, linenumber, msg), file=sys.stderr)
         try:
             sys.stderr.flush()
@@ -372,9 +379,9 @@ class WebPage(QWebEnginePage):
 
     def runjs(self, src, callback=None):
         if callback is None:
-            self.runJavaScript(src, QWebEngineScript.ApplicationWorld)
+            self.runJavaScript(src, QWebEngineScript.ScriptWorldId.ApplicationWorld)
         else:
-            self.runJavaScript(src, QWebEngineScript.ApplicationWorld, callback)
+            self.runJavaScript(src, QWebEngineScript.ScriptWorldId.ApplicationWorld, callback)
 
 
 def viewer_html():
@@ -416,8 +423,8 @@ def system_colors():
     is_dark_theme = app.is_dark_theme
     pal = app.palette()
     ans = {
-        'background': pal.color(pal.Base).name(),
-        'foreground': pal.color(pal.Text).name(),
+        'background': pal.color(QPalette.ColorRole.Base).name(),
+        'foreground': pal.color(QPalette.ColorRole.Text).name(),
     }
     if is_dark_theme:
         # only override link colors for dark themes
@@ -446,6 +453,7 @@ class WebView(RestartingWebEngineView):
     ask_for_open = pyqtSignal(object)
     selection_changed = pyqtSignal(object, object)
     autoscroll_state_changed = pyqtSignal(object)
+    read_aloud_state_changed = pyqtSignal(object)
     view_image = pyqtSignal(object)
     copy_image = pyqtSignal(object)
     overlay_visibility_changed = pyqtSignal(object)
@@ -470,6 +478,9 @@ class WebView(RestartingWebEngineView):
         self.callback_map = {}
         self.current_cfi = self.current_content_file = None
         RestartingWebEngineView.__init__(self, parent)
+        self.tts = TTS(self)
+        self.tts.settings_changed.connect(self.tts_settings_changed)
+        self.tts.event_received.connect(self.tts_event_received)
         self.dead_renderer_error_shown = False
         self.render_process_failed.connect(self.render_process_died)
         w = QApplication.instance().desktop().availableGeometry(self).width()
@@ -499,6 +510,7 @@ class WebView(RestartingWebEngineView):
         self.bridge.ask_for_open.connect(self.ask_for_open)
         self.bridge.selection_changed.connect(self.selection_changed)
         self.bridge.autoscroll_state_changed.connect(self.autoscroll_state_changed)
+        self.bridge.read_aloud_state_changed.connect(self.read_aloud_state_changed)
         self.bridge.view_image.connect(self.view_image)
         self.bridge.copy_image.connect(self.copy_image)
         self.bridge.overlay_visibility_changed.connect(self.overlay_visibility_changed)
@@ -514,6 +526,8 @@ class WebView(RestartingWebEngineView):
         self.bridge.close_prep_finished.connect(self.close_prep_finished)
         self.bridge.highlights_changed.connect(self.highlights_changed)
         self.bridge.open_url.connect(safe_open_url)
+        self.bridge.speak_simple_text.connect(self.tts.speak_simple_text)
+        self.bridge.tts.connect(self.tts.action)
         self.bridge.export_shortcut_map.connect(self.set_shortcut_map)
         self.shortcut_map = {}
         self.bridge.report_cfi.connect(self.call_callback)
@@ -526,6 +540,9 @@ class WebView(RestartingWebEngineView):
         if parent is not None:
             self.inspector = Inspector(parent.inspector_dock.toggleViewAction(), self)
             parent.inspector_dock.setWidget(self.inspector)
+
+    def shutdown(self):
+        self.tts.shutdown()
 
     def set_shortcut_map(self, smap):
         self.shortcut_map = smap
@@ -559,14 +576,14 @@ class WebView(RestartingWebEngineView):
             child = event.child()
             if 'HostView' in child.metaObject().className():
                 self._host_widget = child
-                self._host_widget.setFocus(Qt.OtherFocusReason)
+                self._host_widget.setFocus(Qt.FocusReason.OtherFocusReason)
         return QWebEngineView.event(self, event)
 
     def sizeHint(self):
         return self._size_hint
 
     def refresh(self):
-        self.pageAction(QWebEnginePage.ReloadAndBypassCache).trigger()
+        self.pageAction(QWebEnginePage.WebAction.ReloadAndBypassCache).trigger()
 
     @property
     def bridge(self):
@@ -598,9 +615,14 @@ class WebView(RestartingWebEngineView):
     def on_content_file_changed(self, data):
         self.current_content_file = data
 
-    def start_book_load(self, initial_position=None, highlights=None):
+    def start_book_load(self, initial_position=None, highlights=None, current_book_data=None):
         key = (set_book_path.path,)
-        self.execute_when_ready('start_book_load', key, initial_position, set_book_path.pathtoebook, highlights or [])
+        cbd = current_book_data or {}
+        book_url = None
+        if 'calibre_library_id' in cbd:
+            lid = cbd['calibre_library_id'].encode('utf-8').hex()
+            book_url = f'calibre://view-book/_hex_-{lid}/{cbd["calibre_book_id"]}/{cbd["calibre_book_fmt"]}'
+        self.execute_when_ready('start_book_load', key, initial_position, set_book_path.pathtoebook, highlights or [], book_url)
 
     def execute_when_ready(self, action, *args):
         if self.bridge.ready:
@@ -691,7 +713,13 @@ class WebView(RestartingWebEngineView):
 
     def highlight_action(self, uuid, which):
         self.execute_when_ready('highlight_action', uuid, which)
-        self.setFocus(Qt.OtherFocusReason)
+        self.setFocus(Qt.FocusReason.OtherFocusReason)
 
     def generic_action(self, which, data):
         self.execute_when_ready('generic_action', which, data)
+
+    def tts_event_received(self, which, data):
+        self.execute_when_ready('tts_event', which, data)
+
+    def tts_settings_changed(self, ui_settings):
+        self.execute_when_ready('tts_event', 'configured', ui_settings)

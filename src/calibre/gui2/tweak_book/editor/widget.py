@@ -5,25 +5,30 @@
 __license__ = 'GPL v3'
 __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 
-import unicodedata, math
+import math
+import unicodedata
 from functools import partial
-
 from PyQt5.Qt import (
-    QMainWindow, Qt, QApplication, pyqtSignal, QMenu, qDrawShadeRect, QPainter,
-    QImage, QColor, QIcon, QPixmap, QToolButton, QAction, QTextCursor, QSize)
+    QAction, QApplication, QColor, QIcon, QImage, QInputDialog, QMainWindow, QMenu,
+    QPainter, QPixmap, QSize, Qt, QTextCursor, QToolButton, pyqtSignal,
+    qDrawShadeRect
+)
 
 from calibre import prints
 from calibre.constants import DEBUG
 from calibre.ebooks.chardet import replace_encoding_declarations
-from calibre.gui2.tweak_book import (
-    actions, current_container, tprefs, dictionaries, editor_toolbar_actions,
-    editor_name, editors, update_mark_text_action)
 from calibre.gui2 import error_dialog, open_url
-from calibre.gui2.tweak_book.editor import SPELL_PROPERTY, LINK_PROPERTY, TAG_NAME_PROPERTY, CSS_PROPERTY
+from calibre.gui2.tweak_book import (
+    actions, current_container, dictionaries, editor_name, editor_toolbar_actions,
+    editors, tprefs, update_mark_text_action
+)
+from calibre.gui2.tweak_book.editor import (
+    CSS_PROPERTY, LINK_PROPERTY, SPELL_PROPERTY, TAG_NAME_PROPERTY
+)
 from calibre.gui2.tweak_book.editor.help import help_url
 from calibre.gui2.tweak_book.editor.text import TextEdit
 from calibre.utils.icu import utf16_length
-from polyglot.builtins import itervalues, unicode_type, string_or_bytes
+from polyglot.builtins import itervalues, string_or_bytes, unicode_type
 
 
 def create_icon(text, palette=None, sz=None, divider=2, fill='white'):
@@ -32,8 +37,8 @@ def create_icon(text, palette=None, sz=None, divider=2, fill='white'):
     sz = sz or int(math.ceil(tprefs['toolbar_icon_size'] * QApplication.instance().devicePixelRatio()))
     if palette is None:
         palette = QApplication.palette()
-    img = QImage(sz, sz, QImage.Format_ARGB32)
-    img.fill(Qt.transparent)
+    img = QImage(sz, sz, QImage.Format.Format_ARGB32)
+    img.fill(Qt.GlobalColor.transparent)
     p = QPainter(img)
     p.setRenderHints(p.TextAntialiasing | p.Antialiasing)
     if fill is not None:
@@ -41,7 +46,7 @@ def create_icon(text, palette=None, sz=None, divider=2, fill='white'):
     f = p.font()
     f.setFamily('Liberation Sans'), f.setPixelSize(int(sz // divider)), f.setBold(True)
     p.setFont(f), p.setPen(QColor('#2271d5'))
-    p.drawText(img.rect().adjusted(2, 2, -2, -2), Qt.AlignCenter, text)
+    p.drawText(img.rect().adjusted(2, 2, -2, -2), Qt.AlignmentFlag.AlignCenter, text)
     p.end()
     return QIcon(QPixmap.fromImage(img))
 
@@ -138,11 +143,11 @@ class Editor(QMainWindow):
     def __init__(self, syntax, parent=None):
         QMainWindow.__init__(self, parent)
         if parent is None:
-            self.setWindowFlags(Qt.Widget)
+            self.setWindowFlags(Qt.WindowType.Widget)
         self.is_synced_to_container = False
         self.syntax = syntax
         self.editor = TextEdit(self)
-        self.editor.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.editor.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         self.editor.customContextMenuRequested.connect(self.show_context_menu)
         self.setCentralWidget(self.editor)
         self.create_toolbars()
@@ -225,7 +230,7 @@ class Editor(QMainWindow):
         self.editor.apply_settings(prefs=None, dictionaries_changed=dictionaries_changed)
 
     def set_focus(self):
-        self.editor.setFocus(Qt.OtherFocusReason)
+        self.editor.setFocus(Qt.FocusReason.OtherFocusReason)
 
     def action_triggered(self, action):
         action, args = action[0], action[1:]
@@ -244,8 +249,9 @@ class Editor(QMainWindow):
         names = tprefs['insert_tag_mru']
         for name in names:
             m.addAction(name, partial(self.insert_tag, name))
+        m.addSeparator()
+        m.addAction(_('Add a tag to this menu'), self.add_insert_tag)
         if names:
-            m.addSeparator()
             m = m.addMenu(_('Remove from this menu'))
             for name in names:
                 m.addAction(name, partial(self.remove_insert_tag, name))
@@ -257,6 +263,15 @@ class Editor(QMainWindow):
             mru.remove(name)
         except ValueError:
             pass
+        mru.insert(0, name)
+        tprefs['insert_tag_mru'] = mru
+        self._build_insert_tag_button_menu()
+
+    def add_insert_tag(self):
+        name, ok = QInputDialog.getText(self, _('Name of tag to add'), _(
+            'Enter the name of the tag'))
+        if ok:
+            mru = tprefs['insert_tag_mru']
         mru.insert(0, name)
         tprefs['insert_tag_mru'] = mru
         self._build_insert_tag_button_menu()
@@ -381,9 +396,9 @@ class Editor(QMainWindow):
                 if hasattr(w, 'setPopupMode'):
                     # For some unknown reason this button is occassionally a
                     # QPushButton instead of a QToolButton
-                    w.setPopupMode(QToolButton.MenuButtonPopup)
+                    w.setPopupMode(QToolButton.ToolButtonPopupMode.MenuButtonPopup)
                 w.setMenu(self.insert_tag_menu)
-                w.setContextMenuPolicy(Qt.CustomContextMenu)
+                w.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
                 w.customContextMenuRequested.connect(w.showMenu)
                 self._build_insert_tag_button_menu()
             elif name == 'change-paragraph':
@@ -393,7 +408,7 @@ class Editor(QMainWindow):
                 if hasattr(ch, 'setPopupMode'):
                     # For some unknown reason this button is occassionally a
                     # QPushButton instead of a QToolButton
-                    ch.setPopupMode(QToolButton.InstantPopup)
+                    ch.setPopupMode(QToolButton.ToolButtonPopupMode.InstantPopup)
                 for name in tuple('h%d' % d for d in range(1, 7)) + ('p',):
                     m.addAction(actions['rename-block-tag-%s' % name])
 
@@ -491,7 +506,9 @@ class Editor(QMainWindow):
         return False
 
     def pretty_print(self, name):
-        from calibre.ebooks.oeb.polish.pretty import pretty_html, pretty_css, pretty_xml
+        from calibre.ebooks.oeb.polish.pretty import (
+            pretty_css, pretty_html, pretty_xml
+        )
         if self.syntax in {'css', 'html', 'xml'}:
             func = {'css':pretty_css, 'xml':pretty_xml}.get(self.syntax, pretty_html)
             original_text = unicode_type(self.editor.toPlainText())
@@ -604,14 +621,15 @@ class Editor(QMainWindow):
 
 
 def launch_editor(path_to_edit, path_is_raw=False, syntax='html', callback=None):
+    from calibre.gui2 import Application
     from calibre.gui2.tweak_book import dictionaries
+    from calibre.gui2.tweak_book.editor.syntax.html import refresh_spell_check_status
     from calibre.gui2.tweak_book.main import option_parser
     from calibre.gui2.tweak_book.ui import Main
-    from calibre.gui2.tweak_book.editor.syntax.html import refresh_spell_check_status
     dictionaries.initialize()
     refresh_spell_check_status()
     opts = option_parser().parse_args([])
-    app = QApplication([])
+    app = Application([])
     # Create the actions that are placed into the editors toolbars
     main = Main(opts)  # noqa
     if path_is_raw:

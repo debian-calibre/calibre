@@ -10,12 +10,10 @@ import numbers
 from datetime import datetime, timedelta
 from collections import defaultdict
 
-from calibre.constants import plugins
 from calibre.utils.date import parse_date, UNDEFINED_DATE, utc_tz
 from calibre.ebooks.metadata import author_to_author_sort
 from polyglot.builtins import iteritems, itervalues, range
-
-_c_speedup = plugins['speedup'][0].parse_date
+from calibre_extensions.speedup import parse_date as _c_speedup
 
 
 def c_parse(val):
@@ -573,8 +571,8 @@ class AuthorsTable(ManyToManyTable):
 
         return ret
 
-    def remove_items(self, item_ids, db):
-        raise ValueError('Direct removal of authors is not allowed')
+    def remove_items(self, item_ids, db, restrict_to_book_ids=None):
+        raise NotImplementedError('Direct removal of authors is not allowed')
 
 
 class FormatsTable(ManyToManyTable):

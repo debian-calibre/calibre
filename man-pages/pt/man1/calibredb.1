@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "outubro 16, 2020" "5.3.0" "calibre"
+.TH "CALIBREDB" "1" "dezembro 12, 2020" "5.7.2" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -41,42 +41,23 @@ calibredb comando [options] [arguments]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP is the command line interface to the calibre database. It has
-several sub\-commands, documented below.
+\fBcalibredb\fP é a interface de linha de comandos para a base de dados do Calibre. Possui vários subcomandos, documentados a seguir.
 .sp
-\fBcalibredb\fP can be used to manipulate either a calibre database
-specified by path or a calibre Content server running either on
-the local machine or over the internet. You can start a calibre
-Content server using either the \fBcalibre\-server\fP
-program or in the main calibre program click Connect/share  → 
-Start Content server\&. Since \fBcalibredb\fP can make changes to your
-calibre libraries, you must setup authentication on the server first. There
-are two ways to do that:
-.INDENT 0.0
-.INDENT 3.5
+\fBcalibredb\fP pode ser usado para manipular quer uma base de dados Calibre especificada por caminho quer um Servidor de conteúdos  Calibre em execução em máquina local ou na internet.
+Você pode iniciar um :guilabel: \fIServidor de conteúdos\fP Calibre usando o programa \fBcalibre\-server\fP ou, no programa principal Calibre, clicar em Ligar/Partilhar \-> Iniciar servidor de conteúdos\(ga.
+Como o \fBcalibredb\fP pode efetuar alterações nas suas bibliotecas Calibre, primeiro você deve configurar a autenticação no servidor.
+Existem duas maneiras de fazer isso:
 .INDENT 0.0
 .IP \(bu 2
-If you plan to connect only to a server running on the same computer,
-you can simply use the \fB\-\-enable\-local\-write\fP option of the
-content server, to allow any program, including calibredb, running on
-the local computer to make changes to your calibre data. When running
-the server from the main calibre program, this option is in
-Preferences → Sharing over the net → Advanced\&.
+Se planeia ligar\-se apenas a um servidor rodando no mesmo computador, você pode simplesmente usar a opção \fB\-\-enable\-local\-write\fP do servidor de conteúdos, para permitir que qualquer programa que seja executado no computador local, incluindo o calibredb, possa fazer alterações nos seus dados Calibre. Ao executar o servidor a partir do programa principal do Calibre, esta opção está em Preferências → Partilhar na rede → Avançado\&.
 .IP \(bu 2
-If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
-options to \fBcalibredb\fP to give it access. You can setup
-user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
-option and using \fB\-\-manage\-users\fP to create the user accounts.
-If you are running the server from the main calibre program, use
-Preferences → Sharing over the net → Require username/password\&.
-.UNINDENT
-.UNINDENT
+Se você deseja ativar o acesso pela internet, então deve configurar contas de utilizador no servidor e usar as opções :option: \fI\-\-username\fP e :option:\(ga \-\-password\(ga para :command: \fIcalibredb\fP para fornecer acesso.
 .UNINDENT
 .sp
-To connect to a running Content server, pass the URL of the server to the
-\fI\%\-\-with\-library\fP option, see the documentation of that option for
-details and examples.
+Você pode configurar a autenticação de utilizadores para :command: \fIcalibre\-server\fP usando a opção \fB\-\-enable\-auth\fP e usando \fB\-\-manage\-users\fP para criar as contas de utilizador.
+Se estiver a executar o servidor a partir do programa Calibre principal, use Preferências →  Partilhar na rede → Exigir nome de utilizador / senha\&.
+.sp
+Para ligar a um servidor de conteúdo em execução, passe a URL do servidor para a opção :option: \fI\-\-with\-library\fP\&. Veja a documentação dessa opção para detalhes e exemplos.
 .INDENT 0.0
 .IP \(bu 2
 \fI\%OPÇÕES GLOBAIS\fP
@@ -239,13 +220,18 @@ Definir o autor do(s)  livro(s) adicionado(s)
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-automerge, \-m
+Se forem encontrados livros com títulos e autores semelhantes, fundir automaticamente os formatos (ficheiros) a receber nos registos de livros existentes. Um valor de \fB"\fPignore\fB"\fP (Ignorar) significa que os formatos duplicados são descartados. Um valor \fB"\fPoverwrite\fB"\fP (Sobrepor) significa que os formatos duplicados na biblioteca são substituídos pelos ficheiros recém\-adicionados. Um valor de \fB"\fPnew_record\fB"\fP (Novo registo) significa que os formatos duplicados são colocados num novo registo de livro.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-cover, \-c
 Caminho para a capa utilizar no livro adicionado
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Adicionar livros à base de dados mesmo se estes já existem. A comparação é feita baseada nos títulos dos livros.
+Adicionar livros à base de dados mesmo se estes já existem. A comparação é feita baseada nos títulos e autores dos livros. Note que a opção \fI\%\-\-automerge\fP tem precedência.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -753,14 +739,9 @@ calibredb restore_database [options]
 .UNINDENT
 .UNINDENT
 .sp
-Restaurar esta base de dados a partir dos metadados armazenados em ficheiros OPF em cada
-pasta da biblioteca do Calibre. Isto é útil se o seu ficheiro metadata.db
-tiver sido corrompido.
+Restaurar esta base de dados a partir dos metadados armazenados nos ficheiros OPF em cada pasta da biblioteca do Calibre. Isto é útil se o seu ficheiro metadata.db tiver sido corrompido.
 .sp
-AVISO: Este comando regenera completamente a sua base de dados. Vai perder
-todas as pesquisas guardadas, categorias do utilizador, ligações a dispositivos, preferências de conversões por livro e receitas personalizadas. Os metadados restaurados
-serão tão precisos quanto os encontrados nos ficheiros OPF
-\&.
+AVISO: Este comando regenera completamente a sua base de dados. Vai perder todas as pesquisas guardadas, categorias do utilizador, conectores, preferências de conversões por livro e receitas personalizadas. Os metadados restaurados serão tão precisos quanto os encontrados nos ficheiros OPF.
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
 .INDENT 0.0

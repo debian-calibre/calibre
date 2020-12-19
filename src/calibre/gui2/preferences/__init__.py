@@ -90,7 +90,7 @@ class ConfigWidgetInterface(object):
 
 class Setting(object):
 
-    CHOICES_SEARCH_FLAGS = Qt.MatchExactly | Qt.MatchCaseSensitive
+    CHOICES_SEARCH_FLAGS = Qt.MatchFlag.MatchExactly | Qt.MatchFlag.MatchCaseSensitive
 
     def __init__(self, name, config_obj, widget, gui_name=None,
             empty_string_is_None=True, choices=None, restart_required=False):
@@ -187,7 +187,7 @@ class Setting(object):
             if isinstance(self.gui_obj, EditWithComplete):
                 self.gui_obj.setText(val)
             else:
-                idx = self.gui_obj.findData((val), role=Qt.UserRole,
+                idx = self.gui_obj.findData((val), role=Qt.ItemDataRole.UserRole,
                         flags=self.CHOICES_SEARCH_FLAGS)
                 if idx == -1:
                     idx = 0
@@ -357,15 +357,15 @@ def show_config_widget(category, name, gui=None, show_restart_msg=False,
     d.setWindowTitle(_('Configure ') + pl.gui_name)
     d.setWindowIcon(QIcon(I('config.png')))
     bb = QDialogButtonBox(d)
-    bb.setStandardButtons(bb.Apply|bb.Cancel|bb.RestoreDefaults)
+    bb.setStandardButtons(QDialogButtonBox.StandardButton.Apply|QDialogButtonBox.StandardButton.Cancel|QDialogButtonBox.StandardButton.RestoreDefaults)
     bb.accepted.connect(d.accept)
     bb.rejected.connect(d.reject)
     w = pl.create_widget(d)
     d.set_widget(w)
-    bb.button(bb.RestoreDefaults).clicked.connect(w.restore_defaults)
-    bb.button(bb.RestoreDefaults).setEnabled(w.supports_restoring_to_defaults)
-    bb.button(bb.Apply).setEnabled(False)
-    bb.button(bb.Apply).clicked.connect(d.accept)
+    bb.button(QDialogButtonBox.StandardButton.RestoreDefaults).clicked.connect(w.restore_defaults)
+    bb.button(QDialogButtonBox.StandardButton.RestoreDefaults).setEnabled(w.supports_restoring_to_defaults)
+    bb.button(QDialogButtonBox.StandardButton.Apply).setEnabled(False)
+    bb.button(QDialogButtonBox.StandardButton.Apply).clicked.connect(d.accept)
 
     def onchange():
         b = bb.button(bb.Apply)
@@ -373,7 +373,7 @@ def show_config_widget(category, name, gui=None, show_restart_msg=False,
         b.setDefault(True)
         b.setAutoDefault(True)
     w.changed_signal.connect(onchange)
-    bb.button(bb.Cancel).setFocus(True)
+    bb.button(QDialogButtonBox.StandardButton.Cancel).setFocus(True)
     l = QVBoxLayout()
     d.setLayout(l)
     l.addWidget(w)

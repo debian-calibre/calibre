@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "oktober 16, 2020" "5.3.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "december 12, 2020" "5.7.2" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -41,13 +41,13 @@ calibre\-server [options] [path to library folder...]
 .UNINDENT
 .UNINDENT
 .sp
-Starta calibre Innehållsserver. calibre Innehållsservern exponerar
+Starta calibre Innehållsservern. calibre Innehållsservern exponerar
 dina calibre\-bibliotek över internet. Du kan ange sökvägen
 till biblioteksmappar som argument till \fBcalibre\-server\fP\&. Om du inte
 anger några vägar, kommer alla biblioteken som i calibre\-
 huvudprogrammet känner till att användas.
 .sp
-När du skickar argument till \fBcalibre\-server\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till \fBcalibre\-server\fP som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .SH [ALTERNATIV]
 .INDENT 0.0
 .TP
@@ -62,7 +62,7 @@ Tid (i sekunder) att vänta på ett svar från servern när förfrågningar gör
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Välj typen av autentisering att användas.   Ställ in HTTP\-autentiseringsläge som används av servern. Ställ in på \fB"\fPgrundläggande\fB"\fP om du sätter denna server bakom en SSL\-proxy. Annars lämna den som \fB"\fPauto\fB"\fP, som kommer att använda \fB"\fPgrundläggande\fB"\fP om SSL är konfigurerad annars kommer \fB"\fPnedbrytning\fB"\fP att användas.
+Välj typen av autentisering att användas.   Ställ in HTTP\-autentiseringsläget som används av servern. Ställ in på \fB"\fPbasic\fB"\fP om du placerar den här servern bakom en SSL\-proxy. Annars lämnar du det som \fB"\fPauto\fB"\fP, vilket kommer att använda \fB"\fPbasic\fB"\fP om SSL är konfigurerat, annars använder det \fB"\fPdigest\fB"\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -72,7 +72,7 @@ Starta automatiskt om servern när källkoden ändras. Användbar för utvecklin
 .INDENT 0.0
 .TP
 .B \-\-ban\-after
-Antal misslyckande inloggningsförsök för bannlysning.       Antal misslyckade inloggningsförsök varefter en IP\-adress är bannlyst
+Antal misslyckade inloggningar för bannlysning.     Antal misslyckade inloggningsförsök varefter en IP\-adress är bannlyst
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -102,42 +102,42 @@ Kör process i bakgrunden som en demon (endast Linux).
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-Begränsa användardefinierade fält som ska visas.    Kommaseparerad lista med användardefinierade metadatafält som ska visas av Innehållsservern i /opds\- och /mobila\-vyer. Om du anger det här alternativet, kommer alla fält som inte finns i denna lista inte att visas. Till exempel: my_rating,my_tags
+Begränsa användardefinierade fält som ska visas.    Kommaseparerad lista med användardefinierade metadatafält som kommer att visas av Innehållsservern i /opds\- och /mobila\-vyer. Om du anger det här alternativet kommer alla fält som inte finns i den här listan att inte visas. Till exempel: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-allow\-socket\-preallocation, \-\-disable\-allow\-socket\-preallocation
-Förallokering av socket\-anslutning, till exempel med systemd socket aktivering. Som standard är detta alternativ aktiverat.
+Förallokering av socket\-anslutning, till exempel med systemd socket aktivering. Som standard är det här alternativet aktiverat.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-auth, \-\-disable\-auth
-Lösenordsbaserad autentisering för att komma åt servern.    Normalt är servern obegränsad, så att alla kan få tillgång till den. Du kan begränsa åtkomsten till fördefinierade användare med det här alternativet. Som standard är detta alternativ inaktiverat.
+Lösenordsbaserad autentisering för att komma åt servern.    Normalt är servern obegränsad, så att alla kan få åtkomst till den. Du kan begränsa åtkomsten till fördefinierade användare med det här alternativet. Som standard är det här alternativet inaktiverat.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Återgång till automatiskt detekterat gränssnitt.    Om av någon anledning servern inte kan binda till gränssnittet som anges i listen_on alternativet, så kommer det att försöka identifiera ett gränssnitt som ansluter till omvärlden och binda till det. Som standard är detta alternativ aktiverat.
+Återgång till automatiskt detekterat gränssnitt.    Om av någon anledning servern inte kan binda till gränssnittet som anges i listen_on alternativet, så kommer det att försöka identifiera ett gränssnitt som ansluter till omvärlden och binda till det. Som standard är det här alternativet aktiverat.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Tillåt icke\-autentiserade lokala anslutningar att göra ändringar.   Normalt, om du inte aktiverar autentisering, fungerar servern i läsläge, så att inte anonyma användare kan göra ändringar i dina calibre\-bibliotek. Med det här alternativet kan alla ansluta från samma dator som servern körs för att göra ändringar. Det här är användbart om du vill köra servern utan autentisering, men använd fortfarande calibredb för att göra ändringar i dina calibre\-bibliotek. Observera att om du aktiverar det här alternativet innebär det att ett program som körs på datorn kan göra ändringar i dina calibre\-bibliotek. Som standard är detta alternativ inaktiverat.
+Tillåt icke\-autentiserade lokala anslutningar att göra ändringar.   Normalt, om du inte aktiverar autentisering, fungerar servern i skrivskyddat läge för att inte tillåta anonyma användare att göra ändringar i dina calibre\-bibliotek. Med det här alternativet kan alla som ansluter från samma dator som servern körs göra ändringar. Detta är användbart om du vill köra servern utan autentisering men ändå använder calibredb för att göra ändringar i dina calibre\-bibliotek. Observera att om du aktiverar det här alternativet betyder det att alla program som körs på datorn kan göra ändringar i dina calibre\-bibliotek. Som standard är det här alternativet inaktiverat.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-Logga HTTP 404 (Inte hittad) förfrågningar.         Normalt loggar servern alla HTTP\-förfrågningar för resurser som inte finns. Detta kan generera en hel del skräploggar, om din server är inriktad från robotar. Använd detta alternativ för att stänga av dem. Som standard är detta alternativ aktiverat.
+Logga HTTP 404 (Inte hittad) förfrågningar.         Normalt loggar servern alla HTTP\-förfrågningar för resurser som inte finns. Detta kan generera en hel del skräploggar, om din server är inriktad från robotar. Använd det här alternativet för att stänga av dem. Som standard är det här alternativet aktiverat.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
-Annonsera OPDS\-flöden via BonJour.  Annonsera OPDS\-flöden via BonJour\-tjänsten så att OPDS\-baserade läsappar kan upptäcka och ansluta till servern automatiskt. Som standard är detta alternativ aktiverat.
+Annonsera OPDS\-flöden via BonJour.  Annonsera OPDS\-flöden via BonJour\-tjänsten så att OPDS\-baserade läsappar kan upptäcka och ansluta till servern automatiskt. Som standard är det här alternativet aktiverat.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-Noll\-kopieringsfilöverföringar för ökad prestanda.  Detta kommer att använda noll\-kopiering för överföringar i kärnan när du skickar filer via nätverket, vilket ökar prestanda. Det kan dock leda till skadade filöverföringar på några trasiga filsystem. Om du upplever skadade filöverföringar, stäng av den. Som standard är detta alternativ aktiverat.
+Noll\-kopieringsfilöverföringar för ökad prestanda.  Detta kommer att använda noll\-kopiering för överföringar i kärnan när du skickar filer via nätverket, vilket ökar prestanda. Det kan dock leda till skadade filöverföringar på några trasiga filsystem. Om du upplever skadade filöverföringar, stäng av den. Som standard är det här alternativet aktiverat.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -147,12 +147,12 @@ visa denna hjälptext och avsluta
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-Ignorera användardefinierade metadatafält.  Kommaseparerad lista med användardefinierade metadatafält som inte kommer att visas av Innehållsservern i /opds\- och /mobila\-vyer. Till exempel: my_rating,my_tags
+Ignorera användardefinierade metadatafält.  Kommaseparerad lista över användardefinierade metadatafält som inte kommer att visas av Innehållsservern i /opds\- och /mobila\-vyer. Till exempel: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-Gränssnittet för att lyssna efter anslutningar.     Standard är att lyssna på alla tillgängliga IPv4\-gränssnitt. Du kan ändra det här till exempelvis \fB"\fP127.0.0.1\fB"\fP för att bara lyssna på anslutningar från den lokala maskinen, eller till \fB"\fP::\fB"\fP för att lyssna på alla inkommande IPv6\- och IPv4\-anslutningar.
+Gränssnitt för att lyssna efter anslutningar.       Standard är att lyssna på alla tillgängliga IPv4\-gränssnitt. Du kan ändra det här till exempelvis \fB"\fP127.0.0.1\fB"\fP för att bara lyssna på anslutningar från den lokala maskinen, eller till \fB"\fP::\fB"\fP för att lyssna på alla inkommande IPv6\- och IPv4\-anslutningar.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -177,7 +177,7 @@ Längsta tid för arbetarprocesser.   Högsta tiden arbetsprocesser tillåts att
 .INDENT 0.0
 .TP
 .B \-\-max\-jobs
-Högsta antal arbetarprocesser.      Arbetsprocesser lanseras efter behov och används för stora jobb som att förbereda en bok för visning, lägga till böcker, konvertera o.s.v. Normalt är högsta antalet sådana processer baserat på antalet CPU\-kärnor. Du kan kontrollera den med den här inställningen.
+Högst antal arbetarprocesser.       Arbetarprocesser startas efter behov och används för stora jobb som att förbereda en bok för visning, lägga till böcker, konvertera o.s.v. Normalt är högsta antalet sådana processer baserat på antalet CPU\-kärnor. Du kan kontrollera det med den här inställningen.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -187,12 +187,12 @@ Största loggfilstorlek (i MB).      Största storlek på loggfiler som generera
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-items
-Högsta antal böcker i OPDS\-flöden.  Högsta antal böcker som servern kommer att återvända i ett enda OPDS\-anskaffningsflöde.
+Högst antal böcker i OPDS\-flöden.   Högsta antalet böcker som servern kommer att återge i ett enskilt OPDS\-anskaffningsflöde.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-ungrouped\-items
-Högsta antal ogrupperade post i OPDS\-flöden.        Gruppera post i kategorier som författare/taggar från första bokstaven när det finns mer än detta antal post. Använd noll för att inaktivera.
+Högst antal ogrupperade poster i OPDS\-flöden.       Gruppera poster i kategorier som författare/taggar efter första bokstaven när det finns fler än det här antalet poster. Ange noll för att inaktivera.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -212,7 +212,7 @@ Skriv process\-PID till angiven fil
 .INDENT 0.0
 .TP
 .B \-\-port
-Port att lyssna på för anslutningar.
+Port att lyssna på efter anslutningar.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -242,12 +242,12 @@ Tid (i sekunder) varefter en inaktiv anslutning stängs.
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-Tillåt icke\-autentiserade anslutningar från specifika IP\-adresser att göra ändringar.       Normalt, om du inte aktiverar autentisering, fungerar servern i skrivskyddat läge, så att anonyma användare inte kan göra ändringar i dina calibre\-bibliotek. Det här alternativ tillåter alla som ansluter från de angivna IP\-adresserna att göra ändringar. Måste vara en kommaseparerad lista med adress\- eller nätverksspecifikationer. Detta är användbart om du vill köra servern utan autentisering men ändå använder calibredb för att göra ändringar i dina calibre\-bibliotek. Observera att aktivering av det här alternativet innebär att alla som ansluter från de angivna IP\-adresserna kan göra ändringar i dina calibre\-bibliotek.
+Tillåt icke\-autentiserade anslutningar från specifika IP\-adresser att göra ändringar.       Normalt, om du inte aktiverar autentisering, fungerar servern i skrivskyddat läge för att inte tillåta anonyma användare att göra ändringar i dina calibre\-bibliotek. Med det här alternativet kan alla som ansluter från de angivna IP\-adresserna göra ändringar. Måste vara en kommaseparerad lista med adress\- eller nätverksspecifikationer. Detta är användbart om du vill köra servern utan autentisering men ändå använder calibredb för att göra ändringar i dina calibre\-bibliotek. Observera att om du aktiverar det här alternativet betyder att alla som ansluter från de angivna IP\-adresserna kan göra ändringar i dina calibre\-bibliotek.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-url\-prefix
-Ett prefix att lägga till i början av alla webbadresser.    Användbart om du vill köra den här servern bakom en omvänd proxy. Till exempel använd /calibre som URL\-prefix.
+Ett prefix att lägga till i början på alla webbadresser.    Användbart om du vill köra den här servern bakom en omvänd proxy. Använd till exempel /calibre som URL\-prefix.
 .UNINDENT
 .INDENT 0.0
 .TP

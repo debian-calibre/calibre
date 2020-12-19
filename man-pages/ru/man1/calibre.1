@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE" "1" "октября 16, 2020" "5.3.0" "calibre"
+.TH "CALIBRE" "1" "декабря 12, 2020" "5.7.2" "calibre"
 .SH NAME
 calibre \- calibre
 .
@@ -35,14 +35,22 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-calibre [опции] [путь_к_книге]
+calibre [options] [path_to_ebook or calibre url ...]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Запускает основной графический интерфейс \fBcalibre\fP и, опционально, добавляет электронную книгу, расположенную в
-путь_к_книге, в базу данных.
+Launch the main \fBcalibre\fP Graphical User Interface and optionally add the e\-book at
+path_to_ebook to the database. You can also specify \fBcalibre\fP URLs to perform various
+different actions, than just adding books. For example:
+.sp
+\fBcalibre\fP://view\-book/test_library/1842/epub
+.sp
+Will open the book with id 1842 in the EPUB format from the library
+"test_library" in the \fBcalibre\fP E\-book viewer. Library names are the folder names of the
+libraries with spaces replaced by underscores. A full description of the
+various URL based actions is in the User Manual.
 .sp
 Когда вы передаёте аргументы с пробелами в \fBcalibre\fP, заключайте их в кавычки. Например: "/some path/with spaces"
 .SH [ОПЦИИ]

@@ -19,20 +19,20 @@ class ResultsDelegate(QStyledItemDelegate):  # {{{
 
     def result_data(self, result):
         if not hasattr(result, 'is_hidden'):
-            return None, None, None, None
-        return result.is_hidden, result.before, result.text, result.after
+            return None, None, None, None, None
+        return result.is_hidden, result.before, result.text, result.after, False
 
     def paint(self, painter, option, index):
         QStyledItemDelegate.paint(self, painter, option, index)
-        result = index.data(Qt.UserRole)
-        is_hidden, result_before, result_text, result_after = self.result_data(result)
+        result = index.data(Qt.ItemDataRole.UserRole)
+        is_hidden, result_before, result_text, result_after, show_leading_dot = self.result_data(result)
         if result_text is None:
             return
         painter.save()
         try:
             p = option.palette
-            c = p.HighlightedText if option.state & QStyle.State_Selected else p.Text
-            group = (p.Active if option.state & QStyle.State_Active else p.Inactive)
+            c = p.HighlightedText if option.state & QStyle.StateFlag.State_Selected else p.Text
+            group = (p.Active if option.state & QStyle.StateFlag.State_Active else p.Inactive)
             c = p.color(group, c)
             painter.setPen(c)
             font = option.font
@@ -41,10 +41,12 @@ class ResultsDelegate(QStyledItemDelegate):  # {{{
                 emphasis_font.setBold(True)
             else:
                 emphasis_font = font
-            flags = Qt.AlignTop | Qt.TextSingleLine | Qt.TextIncludeTrailingSpaces
+            flags = Qt.AlignmentFlag.AlignTop | Qt.TextFlag.TextSingleLine | Qt.TextFlag.TextIncludeTrailingSpaces
             rect = option.rect.adjusted(option.decorationSize.width() + 4 if is_hidden else 0, 0, 0, 0)
             painter.setClipRect(rect)
             before = re.sub(r'\s+', ' ', result_before)
+            if show_leading_dot:
+                before = '•' + before
             before_width = 0
             if before:
                 before_width = painter.boundingRect(rect, flags, before).width()
@@ -58,7 +60,9 @@ class ResultsDelegate(QStyledItemDelegate):  # {{{
             match_width = painter.boundingRect(rect, flags, text).width()
             if match_width >= rect.width() - 3 * ellipsis_width:
                 efm = QFontMetrics(emphasis_font)
-                text = efm.elidedText(text, Qt.ElideRight, rect.width())
+                if show_leading_dot:
+                    text = '•' + text
+                text = efm.elidedText(text, Qt.TextElideMode.ElideRight, rect.width())
                 painter.drawText(rect, flags, text)
             else:
                 self.draw_match(
@@ -82,7 +86,7 @@ class ResultsDelegate(QStyledItemDelegate):  # {{{
             r = rect.adjusted(0, 0, 0, 0)
             r.setRight(x + left_width)
             painter.setFont(normal_font)
-            ebefore = nfm.elidedText(before, Qt.ElideLeft, left_width)
+            ebefore = nfm.elidedText(before, Qt.TextElideMode.ElideLeft, left_width)
             if self.add_ellipsis and ebefore == before:
                 ebefore = '…' + before[1:]
             r.setLeft(x)
@@ -96,7 +100,7 @@ class ResultsDelegate(QStyledItemDelegate):  # {{{
             painter.setFont(normal_font)
             r = rect.adjusted(0, 0, 0, 0)
             r.setLeft(x)
-            eafter = nfm.elidedText(after, Qt.ElideRight, right_width)
+            eafter = nfm.elidedText(after, Qt.TextElideMode.ElideRight, right_width)
             if self.add_ellipsis and eafter == after:
                 eafter = after[:-1] + '…'
             painter.setFont(normal_font)

@@ -9,15 +9,13 @@
 #define NO_PYTHON_TO_ICU32
 #include "icu_calibre_utils.h"
 #include <float.h>
+#include <stdbool.h>
 
 #ifdef _MSC_VER
 // inline does not work with the visual studio C compiler
 #define inline
 #endif
 
-typedef unsigned char bool;
-#define TRUE 1
-#define FALSE 0
 #define MAX(x, y) ((x > y) ? x : y)
 #define nullfree(x) if(x != NULL) free(x); x = NULL;
 
@@ -240,10 +238,10 @@ static bool create_searches(UStringSearch **searches, UChar *haystack, int32_t h
         U16_FWD_1(needle, i, needle_len);
         if (pos == i) break;
         searches[pos] = usearch_openFromCollator(needle + pos, i - pos, haystack, haystack_len, collator, NULL, &status);
-        if (U_FAILURE(status)) { PyErr_SetString(PyExc_ValueError, u_errorName(status)); searches[pos] = NULL; return FALSE; }
+        if (U_FAILURE(status)) { PyErr_SetString(PyExc_ValueError, u_errorName(status)); searches[pos] = NULL; return false; }
     }
 
-    return TRUE;
+    return true;
 }
 
 static void free_searches(UStringSearch **searches, int32_t count) {
@@ -259,14 +257,14 @@ static bool match(UChar **items, int32_t *item_lengths, uint32_t item_count, UCh
     int32_t i = 0, maxhl = 0;
     int32_t r = 0, *positions = NULL;
     MatchInfo *matches = NULL;
-    bool ok = FALSE;
+    bool ok = false;
     MemoryItem ***memo = NULL;
     int32_t needle_len = u_strlen(needle);
     UStringSearch **searches = NULL;
 
     if (needle_len <= 0 || item_count <= 0) {
         for (i = 0; i < (int32_t)item_count; i++) match_results[i].score = 0.0;
-        ok = TRUE;
+        ok = true;
         goto end;
     }
 
@@ -289,7 +287,7 @@ static bool match(UChar **items, int32_t *item_lengths, uint32_t item_count, UCh
 
     if (maxhl <= 0) {
         for (i = 0; i < (int32_t)item_count; i++) match_results[i].score = 0.0;
-        ok = TRUE;
+        ok = true;
         goto end;
     }
 
@@ -308,7 +306,7 @@ static bool match(UChar **items, int32_t *item_lengths, uint32_t item_count, UCh
         convert_positions(positions, final_positions + i * needle_char_len, matches[i].haystack, needle_char_len, needle_len, match_results[i].score);
     }
 
-    ok = TRUE;
+    ok = true;
 end:
     nullfree(positions);
     nullfree(stack.items);
@@ -401,7 +399,7 @@ static PyObject *
 Matcher_calculate_scores(Matcher *self, PyObject *args) {
     int32_t *final_positions = NULL, *p;
     Match *matches = NULL;
-    bool ok = FALSE;
+    bool ok = false;
     uint32_t i = 0, needle_char_len = 0, j = 0;
     PyObject *items = NULL, *score = NULL, *positions = NULL, *pneedle = NULL;
     UChar *needle = NULL;
@@ -501,31 +499,24 @@ static PyTypeObject MatcherType = { // {{{
     /* tp_new            */ PyType_GenericNew,
 }; // }}}
 
-static struct PyModuleDef matcher_module = {
-    /* m_base     */ PyModuleDef_HEAD_INIT,
-    /* m_name     */ "matcher",
-    /* m_doc      */ "Find subsequence matches.",
-    /* m_size     */ -1,
-    /* m_methods  */ 0,
-    /* m_slots    */ 0,
-    /* m_traverse */ 0,
-    /* m_clear    */ 0,
-    /* m_free     */ 0,
-};
-
-CALIBRE_MODINIT_FUNC PyInit_matcher(void) {
-    PyObject *mod = PyModule_Create(&matcher_module);
-    if (mod == NULL) return NULL;
-
-    if (PyType_Ready(&MatcherType) < 0) {
-        return NULL;
-    }
-
+static int
+exec_module(PyObject *mod) {
+    if (PyType_Ready(&MatcherType) < 0) return -1;
     Py_INCREF(&MatcherType);
     if(PyModule_AddObject(mod, "Matcher", (PyObject *)&MatcherType) < 0) {
         Py_DECREF(&MatcherType);
-        return NULL;
+        return -1;
     }
-
-    return mod;
+	return 0;
 }
+
+static PyModuleDef_Slot slots[] = { {Py_mod_exec, exec_module}, {0, NULL} };
+
+static struct PyModuleDef module_def = {
+    .m_base     = PyModuleDef_HEAD_INIT,
+    .m_name     = "matcher",
+    .m_doc      = "Find subsequence matches.",
+    .m_slots    = slots,
+};
+
+CALIBRE_MODINIT_FUNC PyInit_matcher(void) { return PyModuleDef_Init(&module_def); }

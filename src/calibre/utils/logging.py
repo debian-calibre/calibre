@@ -26,7 +26,6 @@ class Stream(object):
             stream = io.StringIO()
         self.stream = stream
         self.encoding = getattr(self.stream, 'encoding', None) or 'utf-8'
-        self._prints = partial(prints, file=self.stream)
 
     def write(self, text):
         self._prints(text, end='')
@@ -37,10 +36,18 @@ class Stream(object):
     def prints(self, level, *args, **kwargs):
         self._prints(*args, **kwargs)
 
+    def _prints(self, *args, **kwargs):
+        prints(*args, **kwargs, file=self.stream)
+
+
+stdout_sentinel = object()
+
 
 class ANSIStream(Stream):
 
-    def __init__(self, stream=sys.stdout):
+    def __init__(self, stream=stdout_sentinel):
+        if stream is stdout_sentinel:
+            stream = sys.stdout
         Stream.__init__(self, stream)
         self.color = {
             DEBUG: 'green',
@@ -77,7 +84,9 @@ class HTMLStream(Stream):
     }
     normal = '</span>'
 
-    def __init__(self, stream=sys.stdout):
+    def __init__(self, stream=stdout_sentinel):
+        if stream is stdout_sentinel:
+            stream = sys.stdout
         Stream.__init__(self, stream)
 
     def prints(self, level, *args, **kwargs):

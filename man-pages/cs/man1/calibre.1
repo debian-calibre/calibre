@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE" "1" "října 16, 2020" "5.3.0" "calibre"
+.TH "CALIBRE" "1" "prosince 12, 2020" "5.7.2" "calibre"
 .SH NAME
 calibre \- calibre
 .
@@ -35,14 +35,22 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-calibre [options] [path_to_ebook]
+calibre [volby] [cesta_k_eknize nebo url calibre...]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Spustit hlavní grafické uživatelské rozhraní Calibre a volitelně přidat e\-knihu
-z path_to_ebook do databáze.
+Spustí hlavní grafické uživatelské rozhraní Calibre a volitelně přidejte e\-knihu v
+cestě_k_eknize do databáze. Můžete také zadat adresy URL Calibre pro provádění
+jednotlivých různých akcí, než jen přidávání knih. Například:
+.sp
+\fBcalibre\fP://view\-book/testovací_knihovna/1842/epub
+.sp
+Ro otevře knihu s ID 1842 ve formátu EPUB z knihovny „testovací_knihovna“
+v Prohlížeči e\-knih Calibre. Názvy knihoven jsou názvy složek knihoven
+s mezerami nahrazenými podtržítky. Úplný popis různých akcí založených
+na URL naleznete v Uživatelské příručce.
 .sp
 Kdykoliv předáváte parametry pro \fBcalibre\fP, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
 .SH [VOLBY]

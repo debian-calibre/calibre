@@ -18,7 +18,7 @@ from PyQt5.Qt import (
     QDesktopServices, QDialog, QEvent, QFileDialog, QFileIconProvider, QFileInfo, QPalette,
     QFont, QFontDatabase, QFontInfo, QFontMetrics, QIcon, QLocale, QColor,
     QNetworkProxyFactory, QObject, QSettings, QSocketNotifier, QStringListModel, Qt,
-    QThread, QTimer, QTranslator, QUrl, pyqtSignal
+    QThread, QTimer, QTranslator, QUrl, pyqtSignal, QIODevice
 )
 from PyQt5.QtWidgets import QStyle  # Gives a nicer error message than import from Qt
 
@@ -26,7 +26,7 @@ from calibre import as_unicode, prints
 from calibre.constants import (
     DEBUG, __appname__ as APP_UID, __version__, config_dir, filesystem_encoding,
     is_running_from_develop, isbsd, isfrozen, islinux, ismacos, iswindows, isxp,
-    plugins, plugins_loc
+    plugins_loc
 )
 from calibre.ebooks.metadata import MetaInformation
 from calibre.gui2.linux_file_dialogs import (
@@ -44,7 +44,7 @@ from polyglot.builtins import (
 )
 
 try:
-    NO_URL_FORMATTING = QUrl.None_
+    NO_URL_FORMATTING = QUrl.UrlFormattingOption.None_
 except AttributeError:
     NO_URL_FORMATTING = getattr(QUrl, 'None')
 
@@ -117,7 +117,8 @@ def create_defs():
 
     defs['action-layout-context-menu-device'] = (
             'View', 'Save To Disk', None, 'Remove Books', None,
-            'Add To Library', 'Edit Collections', 'Match Books'
+            'Add To Library', 'Edit Collections', 'Match Books',
+            'Show Matched Book In Library'
             )
 
     defs['action-layout-context-menu-cover-browser'] = (
@@ -152,6 +153,7 @@ def create_defs():
     defs['tag_browser_old_look'] = False
     defs['tag_browser_hide_empty_categories'] = False
     defs['tag_browser_always_autocollapse'] = False
+    defs['tag_browser_allow_keyboard_focus'] = False
     defs['book_list_tooltips'] = True
     defs['show_layout_buttons'] = False
     defs['bd_show_cover'] = True
@@ -316,9 +318,9 @@ config = _config()
 
 # }}}
 
-QSettings.setPath(QSettings.IniFormat, QSettings.UserScope, config_dir)
-QSettings.setPath(QSettings.IniFormat, QSettings.SystemScope, config_dir)
-QSettings.setDefaultFormat(QSettings.IniFormat)
+QSettings.setPath(QSettings.Format.IniFormat, QSettings.Scope.UserScope, config_dir)
+QSettings.setPath(QSettings.Format.IniFormat, QSettings.Scope.SystemScope, config_dir)
+QSettings.setDefaultFormat(QSettings.Format.IniFormat)
 
 
 def default_author_link():
@@ -433,7 +435,7 @@ def question_dialog(parent, title, msg, det_msg='', show_copy_button=False,
         tc.setChecked(bool(skip_dialog_skip_precheck))
         d.resize_needed.emit()
 
-    ret = d.exec_() == d.Accepted
+    ret = d.exec_() == QDialog.DialogCode.Accepted
 
     if skip_dialog_name is not None and not d.toggle_checkbox.isChecked():
         auto_skip.add(skip_dialog_name)
@@ -483,9 +485,9 @@ class Dispatcher(QObject):
     def __init__(self, func, queued=True, parent=None):
         QObject.__init__(self, parent)
         self.func = func
-        typ = Qt.QueuedConnection
+        typ = Qt.ConnectionType.QueuedConnection
         if not queued:
-            typ = Qt.AutoConnection if queued is None else Qt.DirectConnection
+            typ = Qt.ConnectionType.AutoConnection if queued is None else Qt.ConnectionType.DirectConnection
         self.dispatch_signal.connect(self.dispatch, type=typ)
 
     def __call__(self, *args, **kwargs):
@@ -515,9 +517,9 @@ class FunctionDispatcher(QObject):
 
         QObject.__init__(self, parent)
         self.func = func
-        typ = Qt.QueuedConnection
+        typ = Qt.ConnectionType.QueuedConnection
         if not queued:
-            typ = Qt.AutoConnection if queued is None else Qt.DirectConnection
+            typ = Qt.ConnectionType.AutoConnection if queued is None else Qt.ConnectionType.DirectConnection
         self.dispatch_signal.connect(self.dispatch, type=typ)
         self.q = queue.Queue()
         self.lock = threading.Lock()
@@ -551,8 +553,8 @@ class GetMetadata(QObject):
 
     def __init__(self):
         QObject.__init__(self)
-        self.edispatch.connect(self._get_metadata, type=Qt.QueuedConnection)
-        self.idispatch.connect(self._from_formats, type=Qt.QueuedConnection)
+        self.edispatch.connect(self._get_metadata, type=Qt.ConnectionType.QueuedConnection)
+        self.idispatch.connect(self._from_formats, type=Qt.ConnectionType.QueuedConnection)
 
     def __call__(self, id, *args, **kwargs):
         self.edispatch.emit(id, args, kwargs)
@@ -637,9 +639,9 @@ class FileIconProvider(QFileIconProvider):
     def icon(self, arg):
         if isinstance(arg, QFileInfo):
             return self.load_icon(arg)
-        if arg == QFileIconProvider.Folder:
+        if arg == QFileIconProvider.IconType.Folder:
             return self.icons['dir']
-        if arg == QFileIconProvider.File:
+        if arg == QFileIconProvider.IconType.File:
             return self.icons['default']
         return QFileIconProvider.icon(self, arg)
 
@@ -679,12 +681,12 @@ else:
 
 def is_dark_theme():
     pal = QApplication.instance().palette()
-    col = pal.color(pal.Window)
+    col = pal.color(QPalette.ColorRole.Window)
     return max(col.getRgb()[:3]) < 115
 
 
 def choose_osx_app(window, name, title, default_dir='/Applications'):
-    fd = FileDialog(title=title, parent=window, name=name, mode=QFileDialog.ExistingFile,
+    fd = FileDialog(title=title, parent=window, name=name, mode=QFileDialog.FileMode.ExistingFile,
             default_dir=default_dir)
     app = fd.get_files()
     fd.setParent(None)
@@ -707,7 +709,7 @@ def pixmap_to_data(pixmap, format='JPEG', quality=None):
             quality = 90
     ba = QByteArray()
     buf = QBuffer(ba)
-    buf.open(QBuffer.WriteOnly)
+    buf.open(QIODevice.OpenModeFlag.WriteOnly)
     pixmap.save(buf, format, quality=quality)
     return ba.data()
 
@@ -819,11 +821,11 @@ def setup_hidpi():
     if hidpi == 'on' or (hidpi == 'auto' and not has_env_setting):
         if DEBUG:
             prints('Turning on automatic hidpi scaling')
-        QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
+        QApplication.setAttribute(Qt.ApplicationAttribute.AA_EnableHighDpiScaling, True)
     elif hidpi == 'off':
         if DEBUG:
             prints('Turning off automatic hidpi scaling')
-        QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, False)
+        QApplication.setAttribute(Qt.ApplicationAttribute.AA_EnableHighDpiScaling, False)
         for p in env_vars:
             os.environ.pop(p, None)
     elif DEBUG:
@@ -850,9 +852,9 @@ def setup_unix_signals(self):
         original_handlers[sig] = signal.signal(sig, lambda x, y: None)
         signal.siginterrupt(sig, False)
     signal.set_wakeup_fd(write_fd)
-    self.signal_notifier = QSocketNotifier(read_fd, QSocketNotifier.Read, self)
+    self.signal_notifier = QSocketNotifier(read_fd, QSocketNotifier.Type.Read, self)
     self.signal_notifier.setEnabled(True)
-    self.signal_notifier.activated.connect(self.signal_received, type=Qt.QueuedConnection)
+    self.signal_notifier.activated.connect(self.signal_received, type=Qt.ConnectionType.QueuedConnection)
     return original_handlers
 
 
@@ -881,9 +883,8 @@ class Application(QApplication):
             args.extend(['-platformpluginpath', plugins_loc, '-platform', 'headless'])
         self.headless = headless
         qargs = [i.encode('utf-8') if isinstance(i, unicode_type) else i for i in args]
-        self.pi, pi_err = plugins['progress_indicator']
-        if pi_err:
-            raise RuntimeError('Failed to load the progress_indicator C extension, with error: {}'.format(pi_err))
+        from calibre_extensions import progress_indicator
+        self.pi = progress_indicator
         if not ismacos and not headless:
             # On OS X high dpi scaling is turned on automatically by the OS, so we dont need to set it explicitly
             setup_hidpi()
@@ -893,15 +894,16 @@ class Application(QApplication):
         QApplication.setApplicationName(APP_UID)
         if override_program_name and hasattr(QApplication, 'setDesktopFileName'):
             QApplication.setDesktopFileName(override_program_name)
-        QApplication.setAttribute(Qt.AA_ShareOpenGLContexts, True)  # needed for webengine
+        QApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts, True)  # needed for webengine
         QApplication.__init__(self, qargs)
         sh = self.styleHints()
         if hasattr(sh, 'setShowShortcutsInContextMenus'):
             sh.setShowShortcutsInContextMenus(True)
         if ismacos:
-            plugins['cocoa'][0].disable_cocoa_ui_elements()
-        self.setAttribute(Qt.AA_UseHighDpiPixmaps)
-        self.setAttribute(Qt.AA_SynthesizeTouchForUnhandledMouseEvents, False)
+            from calibre_extensions.cocoa import disable_cocoa_ui_elements
+            disable_cocoa_ui_elements()
+        self.setAttribute(Qt.ApplicationAttribute.AA_UseHighDpiPixmaps)
+        self.setAttribute(Qt.ApplicationAttribute.AA_SynthesizeTouchForUnhandledMouseEvents, False)
         try:
             base_dir()
         except EnvironmentError as err:
@@ -917,7 +919,7 @@ class Application(QApplication):
         if not iswindows:
             self.setup_unix_signals()
         if islinux or isbsd:
-            self.setAttribute(Qt.AA_DontUseNativeMenuBar, 'CALIBRE_NO_NATIVE_MENUBAR' in os.environ)
+            self.setAttribute(Qt.ApplicationAttribute.AA_DontUseNativeMenuBar, 'CALIBRE_NO_NATIVE_MENUBAR' in os.environ)
         self.setup_styles(force_calibre_style)
         self.setup_ui_font()
         if not self.using_calibre_style and self.style().objectName() == 'fusion':
@@ -977,10 +979,8 @@ class Application(QApplication):
             self.aboutToQuit.connect(self.flush_clipboard)
 
         if ismacos:
-            cocoa, err = plugins['cocoa']
-            if err:
-                raise RuntimeError('Failed to load cocoa plugin with error: {}'.format(err))
-            cft = cocoa.cursor_blink_time()
+            from calibre_extensions.cocoa import cursor_blink_time
+            cft = cursor_blink_time()
             if cft >= 0:
                 self.setCursorFlashTime(int(cft))
 
@@ -1068,7 +1068,7 @@ class Application(QApplication):
         # Workaround for https://bugreports.qt.io/browse/QTBUG-75321
         # Buttontext is set to black for some reason
         pal = QPalette(self.palette())
-        pal.setColor(pal.ButtonText, pal.color(pal.WindowText))
+        pal.setColor(QPalette.ColorRole.ButtonText, pal.color(QPalette.ColorRole.WindowText))
         self.ignore_palette_changes = True
         self.setPalette(pal, 'QComboBox')
         self.ignore_palette_changes = False
@@ -1080,7 +1080,7 @@ class Application(QApplication):
         # appearance is changed. And it has to be after current event
         # processing finishes as of Qt 5.14 otherwise the palette change is
         # ignored.
-        QTimer.singleShot(1000, lambda: QApplication.instance().setAttribute(Qt.AA_SetPalette, False))
+        QTimer.singleShot(1000, lambda: QApplication.instance().setAttribute(Qt.ApplicationAttribute.AA_SetPalette, False))
         self.ignore_palette_changes = False
 
     def on_palette_change(self):
@@ -1134,9 +1134,10 @@ class Application(QApplication):
             icon_map[getattr(QStyle, 'SP_'+k)] = v
         transient_scroller = 0
         if ismacos:
-            transient_scroller = plugins['cocoa'][0].transient_scroller()
-        icon_map[QStyle.SP_CustomBase + 1] = I('close-for-light-theme.png')
-        icon_map[QStyle.SP_CustomBase + 2] = I('close-for-dark-theme.png')
+            from calibre_extensions.cocoa import transient_scroller
+            transient_scroller = transient_scroller()
+        icon_map[QStyle.StandardPixmap.SP_CustomBase + 1] = I('close-for-light-theme.png')
+        icon_map[QStyle.StandardPixmap.SP_CustomBase + 2] = I('close-for-dark-theme.png')
         self.pi.load_style(icon_map, transient_scroller)
 
     def _send_file_open_events(self):
@@ -1152,7 +1153,13 @@ class Application(QApplication):
         self.installTranslator(self._translator)
 
     def event(self, e):
-        if callable(self.file_event_hook) and e.type() == QEvent.FileOpen:
+        if callable(self.file_event_hook) and e.type() == QEvent.Type.FileOpen:
+            url = e.url().toString(QUrl.ComponentFormattingOption.FullyEncoded)
+            if url and url.startswith('calibre://'):
+                with self._file_open_lock:
+                    self._file_open_paths.append(url)
+                QTimer.singleShot(1000, self._send_file_open_events)
+                return True
             path = unicode_type(e.file())
             if os.access(path, os.R_OK):
                 with self._file_open_lock:
@@ -1307,7 +1314,7 @@ def ensure_app(headless=True):
                 if ismacos:
                     os.environ['QT_MAC_DISABLE_FOREGROUND_APPLICATION_TRANSFORM'] = '1'
             if headless and iswindows:
-                QApplication.setAttribute(Qt.AA_UseSoftwareOpenGL, True)
+                QApplication.setAttribute(Qt.ApplicationAttribute.AA_UseSoftwareOpenGL, True)
             _store_app = QApplication(args)
             if headless and has_headless:
                 _store_app.headless = True
@@ -1491,13 +1498,14 @@ def set_app_uid(val):
 
 
 def add_to_recent_docs(path):
+    from calibre_extensions import winutil
     app = QApplication.instance()
-    plugins['winutil'][0].add_to_recent_docs(unicode_type(path), app.windows_app_uid)
+    winutil.add_to_recent_docs(unicode_type(path), app.windows_app_uid)
 
 
 def windows_is_system_dark_mode_enabled():
-    s = QSettings(r"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", QSettings.NativeFormat)
-    if s.status() == QSettings.NoError:
+    s = QSettings(r"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", QSettings.Format.NativeFormat)
+    if s.status() == QSettings.Status.NoError:
         return s.value("AppsUseLightTheme") == 0
     return False
 

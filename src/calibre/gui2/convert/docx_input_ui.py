@@ -25,7 +25,7 @@ class Ui_Form(object):
         self.opt_docx_inline_subsup = QtWidgets.QCheckBox(Form)
         self.opt_docx_inline_subsup.setObjectName("opt_docx_inline_subsup")
         self.verticalLayout_3.addWidget(self.opt_docx_inline_subsup)
-        spacerItem = QtWidgets.QSpacerItem(20, 213, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem = QtWidgets.QSpacerItem(20, 213, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding)
         self.verticalLayout_3.addItem(spacerItem)
 
         self.retranslateUi(Form)

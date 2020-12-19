@@ -29,21 +29,29 @@ class BookmarksList(QListWidget):
         QListWidget.__init__(self, parent)
         self.setAlternatingRowColors(True)
         self.setStyleSheet('QListView::item { padding: 0.5ex }')
-        self.setContextMenuPolicy(Qt.ActionsContextMenu)
+        self.setContextMenuPolicy(Qt.ContextMenuPolicy.ActionsContextMenu)
         self.ac_edit = ac = QAction(QIcon(I('edit_input.png')), _('Rename this bookmark'), self)
         self.addAction(ac)
         self.ac_delete = ac = QAction(QIcon(I('trash.png')), _('Remove this bookmark'), self)
         self.addAction(ac)
 
+    @property
+    def current_non_removed_item(self):
+        ans = self.currentItem()
+        if ans is not None:
+            bm = ans.data(Qt.ItemDataRole.UserRole)
+            if not bm.get('removed'):
+                return ans
+
     def keyPressEvent(self, ev):
-        if ev.key() in (Qt.Key_Enter, Qt.Key_Return):
-            i = self.currentItem()
+        if ev.key() in (Qt.Key.Key_Enter, Qt.Key.Key_Return):
+            i = self.current_non_removed_item
             if i is not None:
                 self.bookmark_activated.emit(i)
                 ev.accept()
                 return
-        if ev.key() in (Qt.Key_Delete, Qt.Key_Backspace):
-            i = self.currentItem()
+        if ev.key() in (Qt.Key.Key_Delete, Qt.Key.Key_Backspace):
+            i = self.current_non_removed_item
             if i is not None:
                 self.ac_delete.trigger()
                 ev.accept()
@@ -51,11 +59,19 @@ class BookmarksList(QListWidget):
         return QListWidget.keyPressEvent(self, ev)
 
     def activate_related_bookmark(self, delta=1):
-        if self.count() > 0:
-            row = self.currentRow()
-            nrow = (row + delta + self.count()) % self.count()
-            self.setCurrentRow(nrow)
-            self.bookmark_activated.emit(self.currentItem())
+        if not self.count():
+            return
+        items = [self.item(r) for r in range(self.count())]
+        row = self.currentRow()
+        current_item = items[row]
+        items = [i for i in items if not i.isHidden()]
+        count = len(items)
+        if not count:
+            return
+        row = items.index(current_item)
+        nrow = (row + delta + count) % count
+        self.setCurrentItem(items[nrow])
+        self.bookmark_activated.emit(self.currentItem())
 
     def next_bookmark(self):
         self.activate_related_bookmark()
@@ -101,7 +117,7 @@ class BookmarkManager(QWidget):
         b.clicked.connect(self.delete_bookmark)
         l.addWidget(b, l.rowCount() - 1, 1)
 
-        self.button_prev = b = QPushButton(QIcon(I('back.png')), _('P&revious'), self)
+        self.button_prev = b = QPushButton(QIcon(I('back.png')), _('Pre&vious'), self)
         b.clicked.connect(self.bookmarks_list.previous_bookmark)
         l.addWidget(b)
 
@@ -165,15 +181,16 @@ class BookmarkManager(QWidget):
         self.bookmarks_list.clear()
         for bm in bookmarks:
             i = QListWidgetItem(bm['title'])
-            i.setData(Qt.UserRole, self.bm_to_item(bm))
-            i.setFlags(i.flags() | Qt.ItemIsEditable)
+            i.setData(Qt.ItemDataRole.ToolTipRole, bm['title'])
+            i.setData(Qt.ItemDataRole.UserRole, self.bm_to_item(bm))
+            i.setFlags(i.flags() | Qt.ItemFlag.ItemIsEditable)
             self.bookmarks_list.addItem(i)
             if bm.get('removed'):
                 i.setHidden(True)
         for i in range(self.bookmarks_list.count()):
             item = self.bookmarks_list.item(i)
             if not item.isHidden():
-                self.bookmarks_list.setCurrentItem(item, QItemSelectionModel.ClearAndSelect)
+                self.bookmarks_list.setCurrentItem(item, QItemSelectionModel.SelectionFlag.ClearAndSelect)
                 break
         if current_bookmark_id is not None:
             self.current_bookmark_id = current_bookmark_id
@@ -182,14 +199,14 @@ class BookmarkManager(QWidget):
     def current_bookmark_id(self):
         item = self.bookmarks_list.currentItem()
         if item is not None:
-            return item.data(Qt.DisplayRole)
+            return item.data(Qt.ItemDataRole.DisplayRole)
 
     @current_bookmark_id.setter
     def current_bookmark_id(self, val):
         for i, q in enumerate(self):
             if q['title'] == val:
                 item = self.bookmarks_list.item(i)
-                self.bookmarks_list.setCurrentItem(item, QItemSelectionModel.ClearAndSelect)
+                self.bookmarks_list.setCurrentItem(item, QItemSelectionModel.SelectionFlag.ClearAndSelect)
                 self.bookmarks_list.scrollToItem(item)
 
     def set_current_bookmark(self, bm):
@@ -197,7 +214,7 @@ class BookmarkManager(QWidget):
             if bm == q:
                 l = self.bookmarks_list
                 item = l.item(i)
-                l.setCurrentItem(item, QItemSelectionModel.ClearAndSelect)
+                l.setCurrentItem(item, QItemSelectionModel.SelectionFlag.ClearAndSelect)
                 l.scrollToItem(item)
 
     def __iter__(self):
@@ -208,7 +225,7 @@ class BookmarkManager(QWidget):
         remove = []
         for i in range(self.bookmarks_list.count()):
             item = self.bookmarks_list.item(i)
-            bm = item.data(Qt.UserRole)
+            bm = item.data(Qt.ItemDataRole.UserRole)
             if bm.get('removed') and bm['title'] == base:
                 remove.append(i)
         for i in reversed(remove):
@@ -223,20 +240,21 @@ class BookmarkManager(QWidget):
 
     def item_changed(self, item):
         self.bookmarks_list.blockSignals(True)
-        title = unicode_type(item.data(Qt.DisplayRole)) or _('Unknown')
+        title = unicode_type(item.data(Qt.ItemDataRole.DisplayRole)) or _('Unknown')
         title = self.uniqify_bookmark_title(title)
-        item.setData(Qt.DisplayRole, title)
-        bm = item.data(Qt.UserRole)
+        item.setData(Qt.ItemDataRole.DisplayRole, title)
+        item.setData(Qt.ItemDataRole.ToolTipRole, title)
+        bm = item.data(Qt.ItemDataRole.UserRole)
         bm['title'] = title
         bm['timestamp'] = utcnow().isoformat()
-        item.setData(Qt.UserRole, bm)
+        item.setData(Qt.ItemDataRole.UserRole, bm)
         self.bookmarks_list.blockSignals(False)
         self.edited.emit(self.get_bookmarks())
 
     def delete_bookmark(self):
-        item = self.bookmarks_list.currentItem()
+        item = self.bookmarks_list.current_non_removed_item
         if item is not None:
-            bm = item.data(Qt.UserRole)
+            bm = item.data(Qt.ItemDataRole.UserRole)
             if confirm(
                 _('Are you sure you want to delete the bookmark: {0}?').format(bm['title']),
                 'delete-bookmark-from-viewer', parent=self, config_set=vprefs
@@ -244,13 +262,13 @@ class BookmarkManager(QWidget):
                 bm['removed'] = True
                 bm['timestamp'] = utcnow().isoformat()
                 self.bookmarks_list.blockSignals(True)
-                item.setData(Qt.UserRole, bm)
+                item.setData(Qt.ItemDataRole.UserRole, bm)
                 self.bookmarks_list.blockSignals(False)
                 item.setHidden(True)
                 self.edited.emit(self.get_bookmarks())
 
     def edit_bookmark(self):
-        item = self.bookmarks_list.currentItem()
+        item = self.bookmarks_list.current_non_removed_item
         if item is not None:
             self.bookmarks_list.editItem(item)
 
@@ -258,7 +276,7 @@ class BookmarkManager(QWidget):
         return bm.copy()
 
     def item_to_bm(self, item):
-        return item.data(Qt.UserRole).copy()
+        return item.data(Qt.ItemDataRole.UserRole).copy()
 
     def get_bookmarks(self):
         return list(self)
@@ -352,7 +370,7 @@ class BookmarkManager(QWidget):
 
     def keyPressEvent(self, ev):
         sc = get_shortcut_for(self, ev)
-        if ev.key() == Qt.Key_Escape or sc == 'toggle_bookmarks':
+        if ev.key() == Qt.Key.Key_Escape or sc == 'toggle_bookmarks':
             self.toggle_requested.emit()
             return
         if sc == 'new_bookmark':

@@ -10,9 +10,9 @@ import json
 import os
 import time
 from functools import partial
-from PyQt5.Qt import QAction, QIcon, Qt, pyqtSignal
+from PyQt5.Qt import QAction, QIcon, Qt, pyqtSignal, QDialog
 
-from calibre.constants import ismacos, iswindows, plugins
+from calibre.constants import ismacos, iswindows
 from calibre.gui2 import (
     Dispatcher, config, elided_text, error_dialog, info_dialog, open_local_file,
     question_dialog
@@ -128,7 +128,7 @@ class ViewAction(InterfaceAction):
                 merge_annotations(other_annotations_map, annotations_map, merge_last_read=False)
         return {
             'book_id': book_id, 'uuid': db.field_for('uuid', book_id), 'fmt': fmt.upper(),
-            'annotations_map': annotations_map,
+            'annotations_map': annotations_map, 'library_id': getattr(self.gui.current_db.new_api, 'server_library_id', None)
         }
 
     def view_format_by_id(self, id_, format, open_at=None):
@@ -147,7 +147,7 @@ class ViewAction(InterfaceAction):
         self._view_file(job.result)
 
     def _launch_viewer(self, name=None, viewer='ebook-viewer', internal=True, calibre_book_data=None, open_at=None):
-        self.gui.setCursor(Qt.BusyCursor)
+        self.gui.setCursor(Qt.CursorShape.BusyCursor)
         try:
             if internal:
                 args = [viewer]
@@ -166,7 +166,7 @@ class ViewAction(InterfaceAction):
                         kwargs=dict(args=args))
             else:
                 if iswindows:
-                    winutil = plugins['winutil'][0]
+                    from calibre_extensions import winutil
                     ext = name.rpartition('.')[-1]
                     if ext:
                         try:
@@ -218,7 +218,7 @@ class ViewAction(InterfaceAction):
         d = ChooseFormatDialog(self.gui, _('Choose the format to view'),
                 list(sorted(all_fmts)), show_open_with=True)
         self.gui.book_converted.connect(d.book_converted)
-        if d.exec_() == d.Accepted:
+        if d.exec_() == QDialog.DialogCode.Accepted:
             formats = [[x.upper() for x in db.new_api.formats(book_id)] for book_id in book_ids]
             fmt = d.format()
             orig_num = len(rows)

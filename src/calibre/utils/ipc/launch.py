@@ -30,7 +30,7 @@ def renice(niceness):
         pass
 
 
-class Worker(object):
+class Worker:
     '''
     Platform independent object for launching child processes. All processes
     have the environment variable :envvar:`CALIBRE_WORKER` set.
@@ -136,7 +136,7 @@ class Worker(object):
         self.job_name = job_name
         self._env = env.copy()
 
-    def __call__(self, redirect_output=True, cwd=None, priority=None):
+    def __call__(self, redirect_output=True, cwd=None, priority=None, pass_fds=()):
         '''
         If redirect_output is True, output from the child is redirected
         to a file on disk and this method returns the path to that file.
@@ -186,7 +186,20 @@ class Worker(object):
             args['stdout'] = windows_null_file
             args['stderr'] = subprocess.STDOUT
 
-        self.child = subprocess.Popen(cmd, **args)
+        args['close_fds'] = True
+        try:
+            if pass_fds:
+                if iswindows:
+                    for fd in pass_fds:
+                        os.set_handle_inheritable(fd, True)
+                    args['startupinfo'] = subprocess.STARTUPINFO(lpAttributeList={'handle_list':pass_fds})
+                else:
+                    args['pass_fds'] = pass_fds
+            self.child = subprocess.Popen(cmd, **args)
+        finally:
+            if iswindows and pass_fds:
+                for fd in pass_fds:
+                    os.set_handle_inheritable(fd, False)
         if 'stdin' in args:
             self.child.stdin.close()
 

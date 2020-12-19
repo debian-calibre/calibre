@@ -127,7 +127,7 @@ class TweakEpubAction(InterfaceAction):
         if len(tweakable_fmts) > 1:
             if tprefs['choose_tweak_fmt']:
                 d = Choose(sorted(tweakable_fmts, key=tprefs.defaults['tweak_fmt_order'].index), self.gui)
-                if d.exec_() != d.Accepted:
+                if d.exec_() != QDialog.DialogCode.Accepted:
                     return
                 tweakable_fmts = {d.fmt}
             else:
@@ -154,7 +154,7 @@ class TweakEpubAction(InterfaceAction):
                 ' library maintenance.') % fmt, show=True)
         tweak = 'ebook-edit'
         try:
-            self.gui.setCursor(Qt.BusyCursor)
+            self.gui.setCursor(Qt.CursorShape.BusyCursor)
             if tprefs['update_metadata_from_calibre']:
                 db.new_api.embed_metadata((book_id,), only_fmts={fmt})
             notify = '%d:%s:%s:%s' % (book_id, fmt, db.library_id, db.library_path)

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE" "1" "octobre 16, 2020" "5.3.0" "calibre"
+.TH "CALIBRE" "1" "décembre 12, 2020" "5.7.2" "calibre"
 .SH NAME
 calibre \- calibre
 .
@@ -35,14 +35,22 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-calibre [options] [path_to_ebook]
+calibre [options] [path_to_ebook ou url calibre ...]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Lancer l\(aqInterface Graphique Utilisateur principale et optionnellement ajouter le livrenumérique à
-path_to_ebook dans la base de données.
+Lancez l\(aqinterface graphique principale de \fBcalibre\fP et ajoutez éventuellement le livre numérique à
+path_to_ebook vers la base de données. Vous pouvez également spécifier des URL \fBcalibre\fP pour effectuer
+différentes actions, tel que le simple ajout de livres. Par exemple :
+.sp
+\fBcalibre\fP://view\-book/test_library/1842/epub
+.sp
+ouvrira le livre avec le numéro d\(aqidentification 1842 au format EPUB de la bibliothèque
+"test_library" dans la visionneuse de livre numérique \fBcalibre\fP\&. Les noms des bibliothèques sont les noms de dossiers
+des bibliothèques dont les espaces sont remplacés par des caractères de soulignement. Une description complète des
+diverses actions basées sur l\(aqURL se trouve dans le Manuel de l\(aqutilisateur.
 .sp
 Chaque fois que vous passez à \fBcalibre\fP des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .SH [OPTIONS]

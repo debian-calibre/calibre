@@ -31,7 +31,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         functions are usable. The function must be named <b>evaluate</b>, and
         must have the signature shown below.</p>
         <p><code>evaluate(self, formatter, kwargs, mi, locals, your parameters)
-        &rarr; returning a unicode string</code></p>
+        &rarr; returning a Unicode string</code></p>
         <p>The parameters of the evaluate function are:
         <ul>
         <li><b>formatter</b>: the instance of the formatter being used to
@@ -198,7 +198,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
                            'Setting it to zero means that this function cannot '
                            'be used in single function mode.'), det_msg='',
                          show=False)
-            box.bb.setStandardButtons(box.bb.standardButtons() | QDialogButtonBox.Cancel)
+            box.bb.setStandardButtons(box.bb.standardButtons() | QDialogButtonBox.StandardButton.Cancel)
             box.det_msg_toggle.setVisible(False)
             if not box.exec_():
                 return

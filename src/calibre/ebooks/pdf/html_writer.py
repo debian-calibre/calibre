@@ -8,22 +8,19 @@
 import copy
 import json
 import os
-import re
 import signal
 import sys
 from collections import namedtuple
+from html5_parser import parse
 from io import BytesIO
 from itertools import count, repeat
-from operator import attrgetter, itemgetter
-
-from html5_parser import parse
 from PyQt5.Qt import (
     QApplication, QMarginsF, QObject, QPageLayout, Qt, QTimer, QUrl, pyqtSignal
 )
 from PyQt5.QtWebEngineCore import QWebEngineUrlRequestInterceptor
 from PyQt5.QtWebEngineWidgets import QWebEnginePage, QWebEngineProfile
 
-from calibre import detect_ncpus, prepare_string_for_xml
+from calibre import detect_ncpus, human_readable, prepare_string_for_xml
 from calibre.constants import __version__, iswindows
 from calibre.ebooks.metadata.xmp import metadata_to_xmp_packet
 from calibre.ebooks.oeb.base import XHTML, XPath
@@ -38,15 +35,14 @@ from calibre.gui2.webengine import secure_webengine
 from calibre.srv.render_book import check_for_maths
 from calibre.utils.fonts.sfnt.container import Sfnt, UnsupportedFont
 from calibre.utils.fonts.sfnt.merge import merge_truetype_fonts_for_pdf
+from calibre.utils.fonts.sfnt.subset import pdf_subset
 from calibre.utils.logging import default_log
 from calibre.utils.monotonic import monotonic
 from calibre.utils.podofo import (
     dedup_type3_fonts, get_podofo, remove_unused_fonts, set_metadata_implementation
 )
 from calibre.utils.short_uuid import uuid4
-from polyglot.builtins import (
-    as_bytes, as_unicode, filter, iteritems, map, range, unicode_type
-)
+from polyglot.builtins import filter, iteritems, map, range, unicode_type
 from polyglot.urllib import urlparse
 
 OK, KILL_SIGNAL = range(0, 2)
@@ -178,7 +174,7 @@ class Renderer(QWebEnginePage):
         self.loadFinished.connect(self.load_finished)
         self.load_hang_check_timer = t = QTimer(self)
         self.load_started_at = 0
-        t.setTimerType(Qt.VeryCoarseTimer)
+        t.setTimerType(Qt.TimerType.VeryCoarseTimer)
         t.setInterval(HANG_TIME * 1000)
         t.setSingleShot(True)
         t.timeout.connect(self.on_load_hang)
@@ -383,7 +379,7 @@ def job_for_name(container, name, margins, page_layout):
     index_file = container.name_to_abspath(name)
     if margins:
         page_layout = QPageLayout(page_layout)
-        page_layout.setUnits(QPageLayout.Point)
+        page_layout.setUnits(QPageLayout.Unit.Point)
         new_margins = QMarginsF(*resolve_margins(margins, page_layout))
         page_layout.setMargins(new_margins)
     return index_file, page_layout, name
@@ -701,58 +697,7 @@ def add_pagenum_toc(root, toc, opts, page_number_display_map):
 # Fonts {{{
 
 
-class Range(object):
-
-    __slots__ = ('first', 'last', 'widths', 'sort_order')
-
-    def __init__(self, first, last, widths):
-        self.first, self.last, self.widths = first, last, widths
-        # Sort by first with larger ranges coming before smaller ones
-        self.sort_order = self.first, -self.last
-
-    def __repr__(self):
-        return '({}, {}, {})'.format(self.first, self.last, self.widths)
-
-    def merge(self, r):
-        if r.last <= self.last:
-            return  # is a subset
-        if r.first > self.last:
-            if r.first == self.last + 1 and self.has_single_width == r.has_single_width:
-                if self.has_single_width:
-                    if r.widths[0] == self.widths[0]:
-                        self.last = r.last
-                        return
-                else:
-                    self.last = r.last
-                    delta = self.last - self.first + 1 - len(self.widths)
-                    self.widths.extend(r.widths[-delta:])
-                    return
-            return r
-        if self.has_single_width != r.has_single_width:
-            # make r disjoint
-            delta = self.last + 1 - r.first
-            r.first = self.last + 1
-            if len(r.widths) > 1:
-                del r.widths[:delta]
-            return r if r.widths else None
-        # subsume r into self
-        self.last = r.last
-        if not self.has_single_width:
-            delta = self.last - self.first + 1 - len(self.widths)
-            self.widths.extend(r.widths[-delta:])
-
-    @property
-    def as_item(self):
-        if self.has_single_width:
-            return self.first, self.last, self.widths[0]
-        return self.first, self.widths
-
-    @property
-    def has_single_width(self):
-        return len(self.widths) == 1
-
-
-def all_glyph_ids_in_w_arrays(arrays):
+def all_glyph_ids_in_w_arrays(arrays, as_set=False):
     ans = set()
     for w in arrays:
         i = 0
@@ -765,151 +710,12 @@ def all_glyph_ids_in_w_arrays(arrays):
             else:
                 ans |= set(range(elem, next_elem + 1))
                 i += 3
-    return sorted(ans)
-
-
-def merge_w_arrays(arrays):
-    ranges = []
-    for w in arrays:
-        i = 0
-        while i + 1 < len(w):
-            elem = w[i]
-            next_elem = w[i+1]
-            if isinstance(next_elem, list):
-                ranges.append(Range(elem, elem + len(next_elem) - 1, next_elem))
-                i += 2
-            elif i + 2 < len(w):
-                ranges.append(Range(elem, next_elem, [w[i+2]]))
-                i += 3
-            else:
-                break
-    ranges.sort(key=attrgetter('sort_order'))
-    merged_ranges = ranges[:1]
-    for r in ranges[1:]:
-        prev_range = merged_ranges[-1]
-        left_over = prev_range.merge(r)
-        if left_over is not None:
-            merged_ranges.append(left_over)
-    if not merged_ranges:
-        return []
-    ans = []
-    for r in merged_ranges:
-        ans.extend(r.as_item)
-    return ans
-
-
-class CMap(object):
-
-    def __init__(self):
-        self.start_codespace = sys.maxsize
-        self.end_codespace = 0
-        self.ranges = set()
-        self.chars = set()
-        self.header = self.footer = None
-
-    def add_codespace(self, start, end):
-        self.start_codespace = min(self.start_codespace, start)
-        self.end_codespace = max(self.end_codespace, end)
-
-    def serialize(self):
-        chars = sorted(self.chars, key=itemgetter(0))
-
-        def ashex(x):
-            ans = '{:04X}'.format(x)
-            leftover = len(ans) % 4
-            if leftover:
-                ans = ('0' * (4 - leftover)) + ans
-            return ans
-
-        lines = ['1 begincodespacerange', '<{}> <{}>'.format(*map(ashex, (self.start_codespace, self.end_codespace))), 'endcodespacerange']
-        while chars:
-            group, chars = chars[:100], chars[100:]
-            lines.append('{} beginbfchar'.format(len(group)))
-            for g in group:
-                lines.append('<{}> <{}>'.format(*map(ashex, g)))
-            lines.append('endbfchar')
-
-        ranges = sorted(self.ranges, key=itemgetter(0))
-        while ranges:
-            group, ranges = ranges[:100], ranges[100:]
-            lines.append('{} beginbfrange'.format(len(group)))
-            for g in group:
-                lines.append('<{}> <{}> <{}>'.format(*map(ashex, g)))
-            lines.append('endbfrange')
-        return self.header + '\n' + '\n'.join(lines) + '\n' + self.footer
-
-
-def merge_cmaps(cmaps):
-    header, incmap, incodespace, inchar, inrange, footer = 'header cmap codespace char range footer'.split()
-    start_pat = re.compile(r'\d+\s+begin(codespacerange|bfrange|bfchar)')
-    ans = CMap()
-    for cmap in cmaps:
-        state = header
-        headerlines = []
-        footerlines = []
-        prefix_ended = False
-        for line in as_unicode(cmap, errors='replace').splitlines():
-            line = line.strip()
-            if state is header:
-                headerlines.append(line)
-                if line == 'begincmap':
-                    state = incmap
-                continue
-            if state is incmap:
-                if line == 'endcmap':
-                    state = footer
-                    footerlines.append(line)
-                    continue
-                m = start_pat.match(line)
-                if m is not None:
-                    state = incodespace if m.group(1) == 'codespacerange' else (inchar if m.group(1) == 'bfchar' else inrange)
-                    prefix_ended = True
-                    continue
-                if not prefix_ended:
-                    headerlines.append(line)
-                continue
-            if state is incodespace:
-                if line == 'endcodespacerange':
-                    state = incmap
-                else:
-                    s, e = line.split()
-                    s = int(s[1:-1], 16)
-                    e = int(e[1:-1], 16)
-                    ans.add_codespace(s, e)
-                continue
-            if state is inchar:
-                if line == 'endbfchar':
-                    state = incmap
-                else:
-                    a, b = line.split()
-                    a = int(a[1:-1], 16)
-                    b = int(b[1:-1], 16)
-                    ans.chars.add((a, b))
-                continue
-            if state is inrange:
-                if line == 'endbfrange':
-                    state = incmap
-                else:
-                    # technically bfrange can contain arrays for th eunicode
-                    # value but from looking at SkPDFFont.cpp in chromium, it
-                    # does not generate any
-                    a, b, u = line.split()
-                    a = int(a[1:-1], 16)
-                    b = int(b[1:-1], 16)
-                    u = int(u[1:-1], 16)
-                    ans.ranges.add((a, b, u))
-                continue
-            if state is footer:
-                footerlines.append(line)
-        if ans.header is None:
-            ans.header = '\n'.join(headerlines)
-            ans.footer = '\n'.join(footerlines)
-    return ans.serialize()
+    return ans if as_set else sorted(ans)
 
 
 def fonts_are_identical(fonts):
     sentinel = object()
-    for key in ('ToUnicode', 'Data'):
+    for key in ('ToUnicode', 'Data', 'W', 'W2'):
         prev_val = sentinel
         for f in fonts:
             val = f[key]
@@ -919,32 +725,27 @@ def fonts_are_identical(fonts):
     return True
 
 
-def merge_font(fonts, log):
+def merge_font_files(fonts, log):
+    # As of Qt 5.15.1 Chromium has switched to harfbuzz and dropped sfntly. It
+    # now produces font descriptors whose W arrays dont match the glyph width
+    # information from the hhea table, in contravention of the PDF spec. So
+    # we can no longer merge font descriptors, all we can do is merge the
+    # actual sfnt data streams into a single stream and subset it to contain
+    # only the glyphs from all W arrays.
     # choose the largest font as the base font
+
     fonts.sort(key=lambda f: len(f['Data'] or b''), reverse=True)
-    base_font = fonts[0]
-    t0_font = next(f for f in fonts if f['DescendantFont'] == base_font['Reference'])
     descendant_fonts = [f for f in fonts if f['Subtype'] != 'Type0']
-    t0_fonts = [f for f in fonts if f['Subtype'] == 'Type0']
-    references_to_drop = tuple(f['Reference'] for f in fonts if f is not base_font and f is not t0_font)
-    if fonts_are_identical(descendant_fonts):
-        return t0_font, base_font, references_to_drop
-    cmaps = list(filter(None, (f['ToUnicode'] for f in t0_fonts)))
-    if cmaps:
-        t0_font['ToUnicode'] = as_bytes(merge_cmaps(cmaps))
-    base_font['sfnt'], width_for_glyph_id, height_for_glyph_id = merge_truetype_fonts_for_pdf(tuple(f['sfnt'] for f in descendant_fonts), log)
-    widths = []
-    arrays = tuple(filter(None, (f['W'] for f in descendant_fonts)))
-    if arrays:
-        for gid in all_glyph_ids_in_w_arrays(arrays):
-            widths.append(gid), widths.append(gid), widths.append(1000*width_for_glyph_id(gid))
-        base_font['W'] = merge_w_arrays((widths,))
-    arrays = tuple(filter(None, (f['W2'] for f in descendant_fonts)))
-    if arrays:
-        for gid in all_glyph_ids_in_w_arrays(arrays):
-            widths.append(gid), widths.append(gid), widths.append(1000*height_for_glyph_id(gid))
-        base_font['W2'] = merge_w_arrays((widths,))
-    return t0_font, base_font, references_to_drop
+    total_size = sum(len(f['Data']) for f in descendant_fonts)
+    merged_sfnt = merge_truetype_fonts_for_pdf(tuple(f['sfnt'] for f in descendant_fonts), log)
+    w_arrays = tuple(filter(None, (f['W'] for f in descendant_fonts)))
+    glyph_ids = all_glyph_ids_in_w_arrays(w_arrays, as_set=True)
+    h_arrays = tuple(filter(None, (f['W2'] for f in descendant_fonts)))
+    glyph_ids |= all_glyph_ids_in_w_arrays(h_arrays, as_set=True)
+    pdf_subset(merged_sfnt, glyph_ids)
+    font_data = merged_sfnt()[0]
+    log(f'Merged {len(fonts)} instances of {fonts[0]["BaseFont"]} reducing size from {human_readable(total_size)} to {human_readable(len(font_data))}')
+    return font_data, tuple(f['Reference'] for f in descendant_fonts)
 
 
 def merge_fonts(pdf_doc, log):
@@ -972,18 +773,10 @@ def merge_fonts(pdf_doc, log):
 
     for f in all_fonts:
         base_font_map.setdefault(f['BaseFont'], []).append(f)
-    replacements = {}
-    items = []
     for name, fonts in iteritems(base_font_map):
         if mergeable(fonts):
-            t0_font, base_font, references_to_drop = merge_font(fonts, log)
-            for ref in references_to_drop:
-                replacements[ref] = t0_font['Reference']
-            data = base_font['sfnt']()[0]
-            items.append((
-                base_font['Reference'], t0_font['Reference'], base_font['W'] or [], base_font['W2'] or [],
-                data, t0_font['ToUnicode'] or b''))
-    pdf_doc.merge_fonts(tuple(items), replacements)
+            font_data, references = merge_font_files(fonts, log)
+            pdf_doc.merge_fonts(font_data, references)
 
 
 def test_merge_fonts():
@@ -991,11 +784,11 @@ def test_merge_fonts():
     podofo = get_podofo()
     pdf_doc = podofo.PDFDoc()
     pdf_doc.open(path)
-    merge_fonts(pdf_doc)
+    from calibre.utils.logging import default_log
+    merge_fonts(pdf_doc, default_log)
     out = path.rpartition('.')[0] + '-merged.pdf'
     pdf_doc.save(out)
-    print('Merged PDF writted to', out)
-
+    print('Merged PDF written to', out)
 # }}}
 
 
@@ -1013,9 +806,11 @@ def add_header_footer(manager, opts, pdf_doc, container, page_number_display_map
     report_progress(0.8, _('Adding headers and footers'))
     name = create_skeleton(container)
     root = container.parsed(name)
+    reset_css = 'margin: 0; padding: 0; border-width: 0; background-color: unset;'
+    root.set('style', reset_css)
     body = last_tag(root)
     body.attrib.pop('id', None)
-    body.set('style', 'margin: 0; padding: 0; border-width: 0; background-color: unset;')
+    body.set('style', reset_css)
     job = job_for_name(container, name, Margins(0, 0, 0, 0), page_layout)
 
     def m(tag_name, text=None, style=None, **attrs):
@@ -1163,6 +958,7 @@ def add_header_footer(manager, opts, pdf_doc, container, page_number_display_map
     data = results[name]
     if not isinstance(data, bytes):
         raise SystemExit(data)
+    # open('/t/impose.pdf', 'wb').write(data)
     doc = data_as_pdf_doc(data)
     first_page_num = pdf_doc.page_count()
     num_pages = doc.page_count()
@@ -1284,14 +1080,14 @@ def convert(opf_path, opts, metadata=None, output_path=None, log=default_log, co
         page_number_display_map, page_layout, page_margins_map,
         pdf_metadata, report_progress, toc if has_toc else None)
 
+    num_removed = remove_unused_fonts(pdf_doc)
+    if num_removed:
+        log('Removed', num_removed, 'unused fonts')
+
     merge_fonts(pdf_doc, log)
     num_removed = dedup_type3_fonts(pdf_doc)
     if num_removed:
         log('Removed', num_removed, 'duplicated Type3 glyphs')
-
-    num_removed = remove_unused_fonts(pdf_doc)
-    if num_removed:
-        log('Removed', num_removed, 'unused fonts')
 
     num_removed = pdf_doc.dedup_images()
     if num_removed:

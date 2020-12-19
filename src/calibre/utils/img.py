@@ -10,26 +10,24 @@ import subprocess
 import sys
 import tempfile
 from io import BytesIO
+# We use explicit module imports so tracebacks when importing are more useful
+from PyQt5.QtCore import QBuffer, QByteArray, Qt, QIODevice
+from PyQt5.QtGui import (
+    QColor, QImage, QImageReader, QImageWriter, QPixmap, QTransform
+)
 from threading import Thread
 
-# We use explicit module imports so tracebacks when importing are more useful
-from PyQt5.QtCore import QBuffer, QByteArray, Qt
-from PyQt5.QtGui import QColor, QImage, QImageReader, QImageWriter, QPixmap, QTransform
-
 from calibre import fit_image, force_unicode
-from calibre.constants import iswindows, plugins
+from calibre.constants import iswindows
 from calibre.ptempfile import TemporaryDirectory
 from calibre.utils.config_base import tweaks
 from calibre.utils.filenames import atomic_rename
 from calibre.utils.imghdr import what
+from calibre_extensions import imageops
 from polyglot.builtins import string_or_bytes, unicode_type
 
+
 # Utilities {{{
-imageops, imageops_err = plugins['imageops']
-if imageops is None:
-    raise RuntimeError(imageops_err)
-
-
 class NotImage(ValueError):
     pass
 
@@ -153,7 +151,7 @@ def image_and_format_from_data(data):
     ' Create an image object from the specified data which should be a bytestring and also return the format of the image '
     ba = QByteArray(data)
     buf = QBuffer(ba)
-    buf.open(QBuffer.ReadOnly)
+    buf.open(QIODevice.OpenModeFlag.ReadOnly)
     r = QImageReader(buf)
     fmt = bytes(r.format()).decode('utf-8')
     return r.read(), fmt
@@ -174,7 +172,7 @@ def image_to_data(img, compression_quality=95, fmt='JPEG', png_compression_level
     fmt = fmt.upper()
     ba = QByteArray()
     buf = QBuffer(ba)
-    buf.open(QBuffer.WriteOnly)
+    buf.open(QIODevice.OpenModeFlag.WriteOnly)
     if fmt == 'GIF':
         w = QImageWriter(buf, b'PNG')
         w.setQuality(90)
@@ -256,7 +254,7 @@ def save_cover_data_to(
         changed = fmt != orig_fmt
     if resize_to is not None:
         changed = True
-        img = img.scaled(resize_to[0], resize_to[1], Qt.IgnoreAspectRatio, Qt.SmoothTransformation)
+        img = img.scaled(resize_to[0], resize_to[1], Qt.AspectRatioMode.IgnoreAspectRatio, Qt.TransformationMode.SmoothTransformation)
     owidth, oheight = img.width(), img.height()
     nwidth, nheight = tweaks['maximum_cover_size'] if minify_to is None else minify_to
     if letterbox:
@@ -268,7 +266,7 @@ def save_cover_data_to(
         scaled, nwidth, nheight = fit_image(owidth, oheight, nwidth, nheight)
         if scaled:
             changed = True
-            img = img.scaled(nwidth, nheight, Qt.IgnoreAspectRatio, Qt.SmoothTransformation)
+            img = img.scaled(nwidth, nheight, Qt.AspectRatioMode.IgnoreAspectRatio, Qt.TransformationMode.SmoothTransformation)
     if img.hasAlphaChannel():
         changed = True
         img = blend_image(img, bgcolor)
@@ -295,9 +293,9 @@ def blend_on_canvas(img, width, height, bgcolor='#ffffff'):
     w, h = img.width(), img.height()
     scaled, nw, nh = fit_image(w, h, width, height)
     if scaled:
-        img = img.scaled(nw, nh, Qt.IgnoreAspectRatio, Qt.SmoothTransformation)
+        img = img.scaled(nw, nh, Qt.AspectRatioMode.IgnoreAspectRatio, Qt.TransformationMode.SmoothTransformation)
         w, h = nw, nh
-    canvas = QImage(width, height, QImage.Format_RGB32)
+    canvas = QImage(width, height, QImage.Format.Format_RGB32)
     canvas.fill(QColor(bgcolor))
     overlay_image(img, canvas, (width - w)//2, (height - h)//2)
     return canvas
@@ -306,7 +304,7 @@ def blend_on_canvas(img, width, height, bgcolor='#ffffff'):
 class Canvas(object):
 
     def __init__(self, width, height, bgcolor='#ffffff'):
-        self.img = QImage(width, height, QImage.Format_RGB32)
+        self.img = QImage(width, height, QImage.Format.Format_RGB32)
         self.img.fill(QColor(bgcolor))
 
     def __enter__(self):
@@ -325,7 +323,7 @@ class Canvas(object):
 
 def create_canvas(width, height, bgcolor='#ffffff'):
     'Create a blank canvas of the specified size and color '
-    img = QImage(width, height, QImage.Format_RGB32)
+    img = QImage(width, height, QImage.Format.Format_RGB32)
     img.fill(QColor(bgcolor))
     return img
 
@@ -333,8 +331,8 @@ def create_canvas(width, height, bgcolor='#ffffff'):
 def overlay_image(img, canvas=None, left=0, top=0):
     ' Overlay the `img` onto the canvas at the specified position '
     if canvas is None:
-        canvas = QImage(img.size(), QImage.Format_RGB32)
-        canvas.fill(Qt.white)
+        canvas = QImage(img.size(), QImage.Format.Format_RGB32)
+        canvas.fill(Qt.GlobalColor.white)
     left, top = int(left), int(top)
     imageops.overlay(img, canvas, left, top)
     return canvas
@@ -349,7 +347,7 @@ def texture_image(canvas, texture):
 
 def blend_image(img, bgcolor='#ffffff'):
     ' Used to convert images that have semi-transparent pixels to opaque by blending with the specified color '
-    canvas = QImage(img.size(), QImage.Format_RGB32)
+    canvas = QImage(img.size(), QImage.Format.Format_RGB32)
     canvas.fill(QColor(bgcolor))
     overlay_image(img, canvas)
     return canvas
@@ -362,7 +360,7 @@ def add_borders_to_image(img, left=0, top=0, right=0, bottom=0, border_color='#f
     img = image_from_data(img)
     if not (left > 0 or right > 0 or top > 0 or bottom > 0):
         return img
-    canvas = QImage(img.width() + left + right, img.height() + top + bottom, QImage.Format_RGB32)
+    canvas = QImage(img.width() + left + right, img.height() + top + bottom, QImage.Format.Format_RGB32)
     canvas.fill(QColor(border_color))
     overlay_image(img, canvas, left, top)
     return canvas
@@ -383,7 +381,7 @@ def remove_borders_from_image(img, fuzz=None):
 
 
 def resize_image(img, width, height):
-    return img.scaled(int(width), int(height), Qt.IgnoreAspectRatio, Qt.SmoothTransformation)
+    return img.scaled(int(width), int(height), Qt.AspectRatioMode.IgnoreAspectRatio, Qt.TransformationMode.SmoothTransformation)
 
 
 def resize_to_fit(img, width, height):
@@ -410,10 +408,10 @@ def scale_image(data, width=60, height=80, compression_quality=70, as_png=False,
     if preserve_aspect_ratio:
         scaled, nwidth, nheight = fit_image(img.width(), img.height(), width, height)
         if scaled:
-            img = img.scaled(nwidth, nheight, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+            img = img.scaled(nwidth, nheight, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
     else:
         if img.width() != width or img.height() != height:
-            img = img.scaled(width, height, Qt.IgnoreAspectRatio, Qt.SmoothTransformation)
+            img = img.scaled(width, height, Qt.AspectRatioMode.IgnoreAspectRatio, Qt.TransformationMode.SmoothTransformation)
     fmt = 'PNG' if as_png else 'JPEG'
     w, h = img.width(), img.height()
     return w, h, image_to_data(img, compression_quality=compression_quality, fmt=fmt)
@@ -611,7 +609,7 @@ def encode_jpeg(file_path, quality=80):
         raise ValueError('%s is not a valid image file' % file_path)
     ba = QByteArray()
     buf = QBuffer(ba)
-    buf.open(QBuffer.WriteOnly)
+    buf.open(QIODevice.OpenModeFlag.WriteOnly)
     if not img.save(buf, 'PPM'):
         raise ValueError('Failed to export image to PPM')
     return run_optimizer(file_path, cmd, as_filter=True, input_data=ReadOnlyFileBuffer(ba.data()))
@@ -619,9 +617,10 @@ def encode_jpeg(file_path, quality=80):
 
 
 def test():  # {{{
-    from calibre.ptempfile import TemporaryDirectory
-    from calibre import CurrentDir
     from glob import glob
+
+    from calibre import CurrentDir
+    from calibre.ptempfile import TemporaryDirectory
     img = image_from_data(I('lt.png', data=True, allow_user_override=False))
     with TemporaryDirectory() as tdir, CurrentDir(tdir):
         save_image(img, 'test.jpg')

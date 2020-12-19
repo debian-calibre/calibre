@@ -91,7 +91,7 @@ def show_error(title, msg, details):
     to_python.show_error(title, msg, details)
 
 
-def manifest_received(key, initial_position, pathtoebook, highlights, end_type, xhr, ev):
+def manifest_received(key, initial_position, pathtoebook, highlights, book_url, end_type, xhr, ev):
     nonlocal book
     end_type = workaround_qt_bug(xhr, end_type)
     if end_type is 'load':
@@ -102,6 +102,7 @@ def manifest_received(key, initial_position, pathtoebook, highlights, end_type, 
         book.manifest.pathtoebook = pathtoebook
         book.highlights = highlights
         book.stored_files = {}
+        book.calibre_book_url = book_url
         book.is_complete = True
         v'delete book.manifest["metadata"]'
         v'delete book.manifest["last_read_positions"]'
@@ -205,13 +206,18 @@ def generic_action(which, data):
 
 
 @from_python
+def tts_event(which, data):
+    view.read_aloud.handle_tts_event(which, data)
+
+
+@from_python
 def show_home_page():
     view.overlay.open_book(False)
 
 
 @from_python
-def start_book_load(key, initial_position, pathtoebook, highlights):
-    xhr = ajax('manifest', manifest_received.bind(None, key, initial_position, pathtoebook, highlights), ok_code=0)
+def start_book_load(key, initial_position, pathtoebook, highlights, book_url):
+    xhr = ajax('manifest', manifest_received.bind(None, key, initial_position, pathtoebook, highlights, book_url), ok_code=0)
     xhr.responseType = 'json'
     xhr.send()
 
@@ -388,6 +394,8 @@ if window is window.top:
         to_python.customize_toolbar()
     ui_operations.autoscroll_state_changed = def(active):
         to_python.autoscroll_state_changed(active)
+    ui_operations.read_aloud_state_changed = def(active):
+        to_python.read_aloud_state_changed(active)
     ui_operations.search_result_not_found = def(sr):
         to_python.search_result_not_found(sr)
     ui_operations.scrollbar_context_menu = def(x, y, frac):
@@ -397,6 +405,10 @@ if window is window.top:
     ui_operations.annots_changed = def(amap):
         if amap.highlight:
             to_python.highlights_changed(amap.highlight)
+    ui_operations.speak_simple_text = def(text):
+        to_python.speak_simple_text(text)
+    ui_operations.tts = def(action, data):
+        to_python.tts(action, data or v'{}')
 
     document.body.appendChild(E.div(id='view'))
     window.onerror = onerror

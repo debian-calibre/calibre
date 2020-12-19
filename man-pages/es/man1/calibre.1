@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE" "1" "octubre 16, 2020" "5.3.0" "calibre"
+.TH "CALIBRE" "1" "diciembre 12, 2020" "5.7.2" "calibre"
 .SH NAME
 calibre \- calibre
 .
@@ -35,14 +35,22 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-calibre [opciones] [ruta_a_libro]
+1calibre [opciones] [ruta_a_libro o url de calibre ...]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Inicia la interfaz gráfica principal de \fBcalibre\fP y, opcionalmente, añade el libro en
-ruta_a_libro a la base de datos.
+Inicia la interfaz gráfica principal de \fBcalibre\fP y opcionalmente añade el libro en
+«ruta_a_libro» a la base de datos. También puede especificar URL de \fBcalibre\fP para
+efectuar otras acciones en lugar de añadir libros. Por ejemplo:
+.sp
+\fBcalibre\fP://view\-book/biblioteca_de_prueba/1842/epub
+.sp
+abrirá el formato EPUB del libro con identificador 1842 de la biblioteca «biblioteca_de_prueba»
+en el visor de libros electrónicos de \fBcalibre\fP\&. Los nombres de biblioteca son los nombres de carpeta con
+los espacios reemplazados por guiones bajos. En el Manual de usuario hay una
+descripción completa de las distintas acciones basadas en URL.
 .sp
 Cuando alguno de los argumentos de \fBcalibre\fP contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .SH [OPCIONES]

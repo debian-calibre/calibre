@@ -1,0 +1,234 @@
+# vim:fileencoding=utf-8
+# License: GPL v3 Copyright: 2020, Kovid Goyal <kovid at kovidgoyal.net>
+from __python__ import bound_methods, hash_literals
+
+from elementmaker import E
+
+from book_list.theme import get_color
+from dom import clear, svgicon, unique_id
+from gettext import gettext as _
+from read_book.globals import runtime, ui_operations
+from read_book.highlights import ICON_SIZE
+from read_book.selection_bar import BUTTON_MARGIN, get_margins, map_to_iframe_coords
+from read_book.shortcuts import shortcut_for_key_event
+
+HIDDEN = 0
+WAITING_FOR_PLAY_TO_START = 1
+PAUSED = 2
+PLAYING = 3
+STOPPED = 4
+
+
+class ReadAloud:
+
+    def __init__(self, view):
+        self.view = view
+        self._state = HIDDEN
+        self.bar_id = unique_id('bar')
+        container = self.container
+        container.setAttribute('tabindex', '0')
+        container.style.overflow = 'hidden'
+        container.style.textAlign = 'right'
+        container.appendChild(E.div(
+            id=self.bar_id,
+            style='position: static; border: solid 1px currentColor; border-radius: 5px;'
+            'display: inline-flex; flex-direction: column; margin: 1rem;'
+        ))
+        container.addEventListener('keydown', self.on_keydown, {'passive': False})
+        container.addEventListener('click', self.container_clicked, {'passive': False})
+
+    @property
+    def container(self):
+        return document.getElementById('book-read-aloud-overlay')
+
+    @property
+    def supports_css_min_max(self):
+        return not runtime.is_standalone_viewer or runtime.QT_VERSION >= 0x050f00
+
+    @property
+    def bar(self):
+        return document.getElementById(self.bar_id)
+
+    @property
+    def is_visible(self):
+        return self.container.style.display is not 'none'
+
+    @property
+    def state(self):
+        return self._state
+
+    @state.setter
+    def state(self, val):
+        if val is not self._state:
+            self._state = val
+            self.build_bar()
+
+    def hide(self):
+        if self.state is not HIDDEN:
+            ui_operations.tts('stop')
+            self.state = HIDDEN
+            self.container.style.display = 'none'
+            self.view.focus_iframe()
+            if ui_operations.read_aloud_state_changed:
+                ui_operations.read_aloud_state_changed(False)
+
+    def show(self):
+        if self.state is HIDDEN:
+            self.container.style.display = 'block'
+            self.state = STOPPED
+            self.focus()
+            if ui_operations.read_aloud_state_changed:
+                ui_operations.read_aloud_state_changed(True)
+
+    def focus(self):
+        self.container.focus()
+
+    def build_bar(self, annot_id):
+        if self.state is HIDDEN:
+            return
+        bar_container = self.bar
+        clear(bar_container)
+        bar_container.style.maxWidth = 'min(40rem, 80vw)' if self.supports_css_min_max else '40rem'
+        bar_container.style.backgroundColor = get_color("window-background")
+        for x in [
+            E.div(style='height: 4ex; display: flex; align-items: center; padding: 5px; justify-content: center'),
+
+            E.hr(style='border-top: solid 1px; margin: 0; padding: 0; display: none'),
+
+            E.div(
+                style='display: none; padding: 5px; font-size: smaller',
+                E.div()
+            )
+        ]:
+            bar_container.appendChild(x)
+        bar = bar_container.firstChild
+
+        def cb(name, icon, text):
+            ans = svgicon(icon, ICON_SIZE, ICON_SIZE, text)
+            if name:
+                ans.addEventListener('click', def(ev):
+                    ev.stopPropagation(), ev.preventDefault()
+                    self[name](ev)
+                    self.view.focus_iframe()
+                )
+            ans.classList.add('simple-link')
+            ans.style.marginLeft = ans.style.marginRight = BUTTON_MARGIN
+            return ans
+
+        if self.state is PLAYING:
+            bar.appendChild(cb('pause', 'pause', _('Pause reading')))
+        elif self.state is WAITING_FOR_PLAY_TO_START:
+            bar.appendChild(cb(None, 'hourglass', _('Pause reading')))
+        else:
+            bar.appendChild(cb('play', 'play', _('Start reading') if self.state is STOPPED else _('Resume reading')))
+        bar.appendChild(cb('slower', 'slower', _('Slow down speech')))
+        bar.appendChild(cb('faster', 'faster', _('Speed up speech')))
+        bar.appendChild(cb('configure', 'cogs', _('Configure Read aloud')))
+        bar.appendChild(cb('hide', 'close', _('Close Read aloud')))
+        if self.state is not WAITING_FOR_PLAY_TO_START:
+            notes_container = bar_container.lastChild
+            notes_container.style.display = notes_container.previousSibling.style.display = 'block'
+            notes_container = notes_container.lastChild
+            if self.state is STOPPED:
+                notes_container.textContent = _('Tap/click on a word to start from there')
+            elif self.state is PLAYING:
+                notes_container.textContent = _('Tap/click on a word to skip to it')
+            else:
+                notes_container.textContent = _('Tap/click on a word to continue from there')
+
+    def configure(self):
+        self.pause()
+        self.waiting_for_configure = True
+        ui_operations.tts('configure')
+
+    def slower(self):
+        ui_operations.tts('slower')
+
+    def faster(self):
+        ui_operations.tts('faster')
+
+    def play(self):
+        if self.state is PAUSED:
+            ui_operations.tts('resume_after_configure' if self.waiting_for_configure else 'resume')
+            self.waiting_for_configure = False
+            self.state = PLAYING
+        elif self.state is STOPPED:
+            self.send_message('play')
+            self.state = WAITING_FOR_PLAY_TO_START
+
+    def pause(self):
+        if self.state is PLAYING:
+            ui_operations.tts('pause')
+            self.state = PAUSED
+
+    def stop(self):
+        if self.state is PLAYING or self.state is PAUSED:
+            ui_operations.tts('stop')
+            self.state = STOPPED
+
+    def toggle(self):
+        if self.state is PLAYING:
+            self.pause()
+        elif self.state is PAUSED or self.state is STOPPED:
+            self.play()
+
+    def container_clicked(self, ev):
+        if ev.button is not 0:
+            return
+        ev.stopPropagation(), ev.preventDefault()
+        margins = get_margins()
+        pos = {'x': ev.clientX, 'y': ev.clientY}
+        pos = map_to_iframe_coords(pos, margins)
+        self.send_message('play', pos=pos)
+
+    def on_keydown(self, ev):
+        ev.stopPropagation(), ev.preventDefault()
+        if ev.key is 'Escape':
+            self.hide()
+            return
+        if ev.key is ' ' or ev.key is 'MediaPlayPause':
+            self.toggle()
+            return
+        if ev.key is 'Play' or ev.key is 'MediaPlay':
+            self.play()
+            return
+        if ev.key is 'Pause' or ev.key is 'MediaPause':
+            self.pause()
+            return
+        if ev.key is 'MediaStop':
+            self.stop()
+            return
+        sc_name = shortcut_for_key_event(ev, self.view.keyboard_shortcut_map)
+        if not sc_name:
+            return
+        if sc_name is 'show_chrome':
+            self.hide()
+        elif sc_name is 'quit':
+            self.hide()
+            ui_operations.quit()
+        elif sc_name in ('up', 'down', 'pageup', 'pagedown', 'left', 'right'):
+            self.send_message('trigger-shortcut', name=sc_name)
+
+    def handle_tts_event(self, which, data):
+        if which is 'mark':
+            self.send_message('mark', num=data)
+        elif which is 'begin':
+            self.state = PLAYING
+        elif which is 'end':
+            self.state = STOPPED
+            self.view.show_next_spine_item()
+        elif which is 'configured':
+            self.focus()
+            if self.waiting_for_configure:
+                self.play()
+            if data is not None:
+                pass
+
+    def send_message(self, type, **kw):
+        self.view.iframe_wrapper.send_message('tts', type=type, **kw)
+
+    def handle_message(self, msg):
+        if msg.type is 'text-extracted':
+            if msg.pos:
+                self.stop()
+            ui_operations.tts('play', {'marked_text': msg.marked_text})

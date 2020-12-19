@@ -1,37 +1,260 @@
 {% extends "!layout.html" %}
 
+{%- block extrahead %}
+{% if not embedded %}
+<!-- Quantcast Choice. Consent Manager Tag v2.0 (for TCF 2.0) -->
+<!-- See https://www.quantcast.com/protect/sites username is email -->
+<script type="text/javascript" async=true>
+(function() {
+  var host = window.location.hostname;
+  var element = document.createElement('script');
+  var firstScript = document.getElementsByTagName('script')[0];
+  var url = 'https://quantcast.mgr.consensu.org'
+    .concat('/choice/', '593Yp13RM2k2D', '/', host, '/choice.js')
+  var uspTries = 0;
+  var uspTriesLimit = 3;
+  element.async = true;
+  element.type = 'text/javascript';
+  element.src = url;
+
+  firstScript.parentNode.insertBefore(element, firstScript);
+
+  function makeStub() {
+    var TCF_LOCATOR_NAME = '__tcfapiLocator';
+    var queue = [];
+    var win = window;
+    var cmpFrame;
+
+    function addFrame() {
+      var doc = win.document;
+      var otherCMP = !!(win.frames[TCF_LOCATOR_NAME]);
+
+      if (!otherCMP) {
+        if (doc.body) {
+          var iframe = doc.createElement('iframe');
+
+          iframe.style.cssText = 'display:none';
+          iframe.name = TCF_LOCATOR_NAME;
+          doc.body.appendChild(iframe);
+        } else {
+          setTimeout(addFrame, 5);
+        }
+      }
+      return !otherCMP;
+    }
+
+    function tcfAPIHandler() {
+      var gdprApplies;
+      var args = arguments;
+
+      if (!args.length) {
+        return queue;
+      } else if (args[0] === 'setGdprApplies') {
+        if (
+          args.length > 3 &&
+          args[2] === 2 &&
+          typeof args[3] === 'boolean'
+        ) {
+          gdprApplies = args[3];
+          if (typeof args[2] === 'function') {
+            args[2]('set', true);
+          }
+        }
+      } else if (args[0] === 'ping') {
+        var retr = {
+          gdprApplies: gdprApplies,
+          cmpLoaded: false,
+          cmpStatus: 'stub'
+        };
+
+        if (typeof args[2] === 'function') {
+          args[2](retr);
+        }
+      } else {
+        queue.push(args);
+      }
+    }
+
+    function postMessageEventHandler(event) {
+      var msgIsString = typeof event.data === 'string';
+      var json = {};
+
+      try {
+        if (msgIsString) {
+          json = JSON.parse(event.data);
+        } else {
+          json = event.data;
+        }
+      } catch (ignore) {}
+
+      var payload = json.__tcfapiCall;
+
+      if (payload) {
+        window.__tcfapi(
+          payload.command,
+          payload.version,
+          function(retValue, success) {
+            var returnMsg = {
+              __tcfapiReturn: {
+                returnValue: retValue,
+                success: success,
+                callId: payload.callId
+              }
+            };
+            if (msgIsString) {
+              returnMsg = JSON.stringify(returnMsg);
+            }
+            event.source.postMessage(returnMsg, '*');
+          },
+          payload.parameter
+        );
+      }
+    }
+
+    while (win) {
+      try {
+        if (win.frames[TCF_LOCATOR_NAME]) {
+          cmpFrame = win;
+          break;
+        }
+      } catch (ignore) {}
+
+      if (win === window.top) {
+        break;
+      }
+      win = win.parent;
+    }
+    if (!cmpFrame) {
+      addFrame();
+      win.__tcfapi = tcfAPIHandler;
+      win.addEventListener('message', postMessageEventHandler, false);
+    }
+  };
+
+  makeStub();
+
+  var uspStubFunction = function() {
+    var arg = arguments;
+    if (typeof window.__uspapi !== uspStubFunction) {
+      setTimeout(function() {
+        if (typeof window.__uspapi !== 'undefined') {
+          window.__uspapi.apply(window.__uspapi, arg);
+        }
+      }, 500);
+    }
+  };
+
+  var checkIfUspIsReady = function() {
+    uspTries++;
+    if (window.__uspapi === uspStubFunction && uspTries < uspTriesLimit) {
+      console.warn('USP is not accessible');
+    } else {
+      clearInterval(uspInterval);
+    }
+  };
+
+  if (typeof window.__uspapi === 'undefined') {
+    window.__uspapi = uspStubFunction;
+    var uspInterval = setInterval(checkIfUspIsReady, 6000);
+  }
+})();
+</script>
+<!-- End Quantcast Choice. Consent Manager Tag v2.0 (for TCF 2.0) -->
+<script data-cfasync="false" type="text/javascript">
+  var freestar = freestar || {};
+  freestar.hitTime = Date.now();
+  freestar.queue = freestar.queue || [];
+  freestar.config = freestar.config || {};
+  freestar.debug = window.location.search.indexOf('fsdebug') === -1 ? false : true;
+  freestar.config.enabled_slots = [];
+  !function(a,b){var c=b.getElementsByTagName("script")[0],d=b.createElement("script"),e="https://a.pub.network/manual-calibre-ebook-com";e+=freestar.debug?"/qa/pubfig.min.js":"/pubfig.min.js",d.async=!0,d.src=e,c.parentNode.insertBefore(d,c)}(window,document);
+  freestar.initCallback = function () { (freestar.config.enabled_slots.length === 0) ? freestar.initCallbackCalled = false : freestar.newAdSlots(freestar.config.enabled_slots) }
+</script>
+
+<style type="text/css">
+@media screen and (max-width: 875px) {
+    body {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    div.related { display: none; }
+    ul { margin-left: 0.75em; } /* fix bullets being displayed outside container */
+}
+
+@media screen and (min-width: 876px) {
+    body {
+        display: grid;
+        grid-template-rows: [top] 3.5ex [r] auto;
+        grid-template-columns: [left] 220px [c] auto;
+        height: 100vh; width: 100vw;
+        max-height: 100vh; max-width: 100vw;
+    }
+    div.related {
+        height: 3.5ex;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        grid-row-start: top; grid-row-end: span 1;
+        grid-column-start: left; grid-column-end: span 2;
+    }
+    div.documentwrapper {
+        grid-row-start: r; grid-row-end: span 1;
+        grid-column-start: c; grid-column-end: span 1;
+        overflow: auto;
+    }
+    div.related > ul { flex-grow: 10; }
+    div.sphinxsidebar {
+        overflow-y: auto;
+        grid-row-start: r; grid-row-end: span 1;
+        grid-column-start: left; grid-column-end: span 2;
+        position: static;
+    }
+    div.document { margin-top: 0; }
+}
+
+div.document, div.footer {
+    width: auto; /* fix horizontal scrollbar if screen is less that 940px */
+}
+
+</style>
+{% endif %}
+{% endblock %}
+
 {%- block relbar1 %}{{ relbar() }}{% endblock %}
 
 {%- block content %}
-  <div class="document">
     {{ sidebar() }}
     {%- block document %}
       <div class="documentwrapper">
-      {%- if render_sidebar %}
-        <div class="bodywrapper">
-      {%- endif %}
-      {% if not embedded %}
-          <div class="body" role="main">
-            <div id="ad-container" style="text-align:center">
-                <script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                <ins class="adsbygoogle"
-                    style="display:inline-block;width:728px;height:90px"
-                    data-ad-client="ca-pub-5939552585043235"
-                    data-ad-slot="7580893187"></ins>
-                <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
-        {% endif %}
-            {% block body %} {% endblock %}
-          </div>
-      {%- if render_sidebar %}
-        </div>
-      {%- endif %}
-      </div>
-    {%- endblock %}
-    <div class="clearer"></div>
-  </div>
-{%- endblock %}
+		<div class="body" role="main">
+		{% if not embedded %}
+				<div id="ad-container" style="text-align:center">
+					<div align="center" data-freestar-ad="__970x90 __336x280" id="manualcalibre-ebook_leaderboard_atf">
+						<script data-cfasync="false" type="text/javascript">
+							freestar.config.enabled_slots.push({ placementName: "manualcalibre-ebook_leaderboard_atf", slotId: "manualcalibre-ebook_leaderboard_atf" });
+						</script>
+					</div>
+				</div>
+		{% endif %}
+		{% block body %} {% endblock %}
+		<div class="footer" role="contentinfo">
+		{%- if show_copyright %}
+		{%- if hasdoc('copyright') %}
+			{% trans path=pathto('copyright'), copyright=copyright|e %}&#169; <a href="{{ path }}">Copyright</a> {{ copyright }}.{% endtrans %}
+		{%- else %}
+			{% trans copyright=copyright|e %}&#169; Copyright {{ copyright }}.{% endtrans %}
+		{%- endif %}
+		{%- endif %}
+		{%- if last_updated %}
+		{% trans last_updated=last_updated|e %}Last updated on {{ last_updated }}.{% endtrans %}
+		{%- endif %}
+		{%- if show_sphinx %}
+		{% trans sphinx_version=sphinx_version|e %}Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> {{ sphinx_version }}.{% endtrans %}
+		{%- endif %}
+		</div>  <!-- end content-footer -->
+		</div> <!-- end class="body" -->
+	  </div> <!-- end documentwrapper -->
+    {%- endblock document %}
+{%- endblock content %}
 
-
+{%- block footer -%} {%- endblock footer -%}

@@ -43,6 +43,8 @@ ALL_OPTS = {
 CUSTOMIZATION = {
     'remove_unused_classes': False,
     'merge_identical_selectors': False,
+    'merge_rules_with_identical_properties': False,
+    'remove_ncx': True,
 }
 
 SUPPORTED = {'EPUB', 'AZW3'}
@@ -108,7 +110,7 @@ when single quotes at the start of contractions are involved.</p>
 'remove_unused_css': _('''\
 <p>Remove all unused CSS rules from stylesheets and &lt;style&gt; tags. Some books
 created from production templates can have a large number of extra CSS rules
-that dont match any actual content. These extra rules can slow down readers
+that don't match any actual content. These extra rules can slow down readers
 that need to parse them all.</p>
 '''),
 
@@ -233,7 +235,11 @@ def polish_one(ebook, opts, report, customization=None):
     if opts.remove_unused_css:
         rt(_('Removing unused CSS rules'))
         if remove_unused_css(
-                ebook, report, remove_unused_classes=customization['remove_unused_classes'], merge_rules=customization['merge_identical_selectors']):
+            ebook, report,
+            remove_unused_classes=customization['remove_unused_classes'],
+            merge_rules=customization['merge_identical_selectors'],
+            merge_rules_with_identical_properties=customization['merge_rules_with_identical_properties']
+        ):
             changed = True
         report('')
 
@@ -245,7 +251,7 @@ def polish_one(ebook, opts, report, customization=None):
 
     if opts.upgrade_book:
         rt(_('Upgrading book, if possible'))
-        if upgrade_book(ebook, report):
+        if upgrade_book(ebook, report, remove_ncx=customization['remove_ncx']):
             changed = True
         report('')
 

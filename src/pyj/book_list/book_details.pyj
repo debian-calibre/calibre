@@ -29,6 +29,7 @@ from utils import (
     safe_set_inner_html, sandboxed_html
 )
 from widgets import create_button, create_spinner
+from utils import human_readable
 
 bd_counter = 0
 
@@ -255,6 +256,13 @@ def render_metadata(mi, table, book_id, iframe_css):  # {{{
                 if td.childNodes.length:
                     table.appendChild(E.tr(E.td(name + ':'), td))
 
+    def process_size(field, fm, name, val):
+        if val:
+            try:
+                add_row(name, human_readable(int(val)))
+            except:
+                add_row(name, val+'')
+
     def process_languages(field, fm, name, val):
         if val and val.length:
             table.appendChild(E.tr(E.td(name + ':'), E.td()))
@@ -341,6 +349,8 @@ def render_metadata(mi, table, book_id, iframe_css):  # {{{
             func = process_publisher
         elif field is 'languages':
             func = process_languages
+        elif field is 'size':
+            func = process_size
         elif datatype is 'datetime':
             func = process_datetime
         elif datatype is 'series':
@@ -457,6 +467,7 @@ def next_book(book_id, delta):
 
 def render_book(container_id, book_id):
     render_book.book_id = book_id
+    is_random = parse_url_params().book_id is '0'
     c = document.getElementById(container_id)
     if not c:
         return
@@ -469,6 +480,8 @@ def render_book(container_id, book_id):
     button_style = f'cursor: pointer; border-radius: {border_radius//5}px;'
     button_style += 'color: #ccc; background-color:rgba(0, 0, 0, 0.75);'
     button_style += 'display: flex; justify-content: center; align-items: center; padding: 2px;'
+    if is_random:
+        button_style += 'display: none;'
 
     def prev_next_button(is_prev):
         return E.div(
@@ -527,7 +540,9 @@ def add_top_bar_buttons(container_id):
         add_button(container, 'trash', action=delete_book, tooltip=_('Delete this book'))
         book_id = parse_url_params().book_id
         if book_id is '0':
-            add_button(container, 'random', def(): fetch_metadata(container_id, 0, proceed_after_succesful_fetch_metadata);)
+            add_button(container, 'random', tooltip=_('Show a random book'), action=def():
+                fetch_metadata(container_id, 0, proceed_after_succesful_fetch_metadata)
+            )
         add_button(container, 'ellipsis-v', action=show_subsequent_panel.bind(None, 'more_actions'), tooltip=_('More actions'))
 
 
@@ -652,19 +667,19 @@ def init(container_id):
 
 def show_subsequent_panel(name, replace=False):
     q = parse_url_params()
-    q.book_id = (read_book.book_id or q.book_id) + ''
+    q.book_id = (render_book.book_id or q.book_id) + ''
     show_panel('book_details^' + name, query=q, replace=replace)
 
 
 def edit_metadata():
     q = parse_url_params()
-    q.book_id = (read_book.book_id or q.book_id) + ''
+    q.book_id = (render_book.book_id or q.book_id) + ''
     show_panel('edit_metadata', query=q, replace=False)
 
 
 def convert_book():
     q = parse_url_params()
-    q.book_id = (read_book.book_id or q.book_id) + ''
+    q.book_id = (render_book.book_id or q.book_id) + ''
     show_panel('convert_book', query=q, replace=False)
 
 

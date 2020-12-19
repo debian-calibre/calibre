@@ -98,7 +98,7 @@ class CreateCustomColumn(QDialog):
         self.heading_label.setText('<b>' + _('Create a custom column'))
         # Remove help icon on title bar
         icon = self.windowIcon()
-        self.setWindowFlags(self.windowFlags()&(~Qt.WindowContextHelpButtonHint))
+        self.setWindowFlags(self.windowFlags()&(~Qt.WindowType.WindowContextHelpButtonHint))
         self.setWindowIcon(icon)
 
         self.simple_error = partial(error_dialog, self, show=True,
@@ -115,9 +115,6 @@ class CreateCustomColumn(QDialog):
         for t in self.column_types:
             self.column_type_box.addItem(self.column_types[t]['text'])
         self.column_type_box.currentIndexChanged.connect(self.datatype_changed)
-
-        all_colors = [unicode_type(s) for s in list(QColor.colorNames())]
-        self.enum_colors_label.setToolTip('<p>' + ', '.join(all_colors) + '</p>')
 
         if not self.editing_col:
             self.datatype_changed()
@@ -203,6 +200,8 @@ class CreateCustomColumn(QDialog):
             self.is_names.setChecked(c['display'].get('is_names', False))
         self.description_box.setText(c['display'].get('description', ''))
 
+        all_colors = [unicode_type(s) for s in list(QColor.colorNames())]
+        self.enum_colors_label.setToolTip('<p>' + ', '.join(all_colors) + '</p>')
         self.exec_()
 
     def shortcut_activated(self, url):  # {{{
@@ -240,7 +239,7 @@ class CreateCustomColumn(QDialog):
     # }}}
 
     def setup_ui(self):  # {{{
-        self.setWindowModality(Qt.ApplicationModal)
+        self.setWindowModality(Qt.WindowModality.ApplicationModal)
         self.setWindowIcon(QIcon(I('column.png')))
         self.vl = l = QVBoxLayout(self)
         self.heading_label = la = QLabel('')
@@ -260,7 +259,7 @@ class CreateCustomColumn(QDialog):
         self.g = g = QGridLayout()
         l.addLayout(g)
         l.addStretch(10)
-        self.button_box = bb = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, self)
+        self.button_box = bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel, self)
         bb.accepted.connect(self.accept), bb.rejected.connect(self.reject)
         l.addWidget(bb)
 
@@ -361,22 +360,16 @@ class CreateCustomColumn(QDialog):
         self.comments_type_label = add_row(_('Interpret this column as:') + ' ', ct)
 
         # Values for enum type
-        l = QGridLayout()
         self.enum_box = eb = QLineEdit(self)
         eb.setToolTip(_(
             "A comma-separated list of permitted values. The empty value is always\n"
             "included, and is the default. For example, the list 'one,two,three' has\n"
             "four values, the first of them being the empty value."))
-        self.enum_default_label = la = QLabel(_("Values"))
-        la.setBuddy(eb)
-        l.addWidget(eb), l.addWidget(la, 0, 1)
+        self.enum_default_label = add_row(_("&Values"), eb)
         self.enum_colors = ec = QLineEdit(self)
         ec.setToolTip(_("A list of color names to use when displaying an item. The\n"
             "list must be empty or contain a color for each value."))
-        self.enum_colors_label = la = QLabel(_('Colors'))
-        la.setBuddy(ec)
-        l.addWidget(ec), l.addWidget(la, 1, 1)
-        self.enum_label = add_row(_('&Values'), l)
+        self.enum_colors_label = add_row(_('Colors'), ec)
 
         # Rating allow half stars
         self.allow_half_stars = ahs = QCheckBox(_('Allow half stars'))
@@ -482,7 +475,7 @@ class CreateCustomColumn(QDialog):
         for x in ('box', 'default_label', 'label', 'sort_by', 'sort_by_label',
                   'make_category', 'contains_html'):
             getattr(self, 'composite_'+x).setVisible(col_type in ['composite', '*composite'])
-        for x in ('box', 'default_label', 'label', 'colors', 'colors_label'):
+        for x in ('box', 'default_label',  'colors', 'colors_label'):
             getattr(self, 'enum_'+x).setVisible(col_type == 'enumeration')
         for x in ('value_label', 'value'):
             getattr(self, 'default_'+x).setVisible(col_type not in ['composite', '*composite'])

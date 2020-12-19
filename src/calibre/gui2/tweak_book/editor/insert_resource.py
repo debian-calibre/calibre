@@ -5,28 +5,28 @@
 __license__ = 'GPL v3'
 __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 
-import sys, os
+import os
+import sys
 from functools import partial
-
 from PyQt5.Qt import (
-    QGridLayout, QSize, QListView, QStyledItemDelegate, QLabel, QPixmap,
-    QApplication, QSizePolicy, QAbstractListModel, Qt, QRect, QCheckBox,
-    QPainter, QSortFilterProxyModel, QLineEdit, QToolButton,
-    QIcon, QFormLayout, pyqtSignal, QTreeWidget, QTreeWidgetItem, QVBoxLayout,
-    QMenu, QInputDialog, QHBoxLayout)
+    QAbstractListModel, QApplication, QCheckBox, QFormLayout, QGridLayout,
+    QHBoxLayout, QIcon, QInputDialog, QLabel, QLineEdit, QListView, QMenu, QPainter,
+    QPixmap, QRect, QSize, QSizePolicy, QSortFilterProxyModel, QStyledItemDelegate,
+    Qt, QToolButton, QTreeWidget, QTreeWidgetItem, QVBoxLayout, pyqtSignal, QDialog, QDialogButtonBox
+)
 
 from calibre import fit_image
-from calibre.constants import plugins
 from calibre.ebooks.metadata import string_to_authors
 from calibre.ebooks.metadata.book.base import Metadata
-from calibre.gui2 import choose_files, error_dialog, pixmap_to_data, empty_index
+from calibre.gui2 import choose_files, empty_index, error_dialog, pixmap_to_data
 from calibre.gui2.languages import LanguagesEdit
 from calibre.gui2.tweak_book import current_container, tprefs
-from calibre.gui2.tweak_book.widgets import Dialog
 from calibre.gui2.tweak_book.file_list import name_is_ok
+from calibre.gui2.tweak_book.widgets import Dialog
 from calibre.ptempfile import PersistentTemporaryFile
-from calibre.utils.localization import get_lang, canonicalize_lang
 from calibre.utils.icu import numeric_sort_key
+from calibre.utils.localization import canonicalize_lang, get_lang
+from calibre_extensions.progress_indicator import set_no_activate_on_click
 from polyglot.builtins import unicode_type
 
 
@@ -111,7 +111,7 @@ class ImageDelegate(QStyledItemDelegate):
 
     def paint(self, painter, option, index):
         QStyledItemDelegate.paint(self, painter, option, empty_index)  # draw the hover and selection highlights
-        name = unicode_type(index.data(Qt.DisplayRole) or '')
+        name = unicode_type(index.data(Qt.ItemDataRole.DisplayRole) or '')
         cover = self.cover_cache.get(name, None)
         if cover is None:
             cover = self.cover_cache[name] = QPixmap()
@@ -129,7 +129,7 @@ class ImageDelegate(QStyledItemDelegate):
                 if not cover.isNull():
                     scaled, width, height = fit_image(cover.width(), cover.height(), self.cover_size.width(), self.cover_size.height())
                     if scaled:
-                        cover = self.cover_cache[name] = cover.scaled(int(dpr*width), int(dpr*height), transformMode=Qt.SmoothTransformation)
+                        cover = self.cover_cache[name] = cover.scaled(int(dpr*width), int(dpr*height), transformMode=Qt.TransformationMode.SmoothTransformation)
 
         painter.save()
         try:
@@ -144,10 +144,10 @@ class ImageDelegate(QStyledItemDelegate):
                 painter.drawPixmap(rect, cover)
             rect = trect
             rect.setTop(rect.bottom() - self.title_height + 5)
-            painter.setRenderHint(QPainter.TextAntialiasing, True)
+            painter.setRenderHint(QPainter.RenderHint.TextAntialiasing, True)
             metrics = painter.fontMetrics()
-            painter.drawText(rect, Qt.AlignCenter|Qt.TextSingleLine,
-                                metrics.elidedText(name, Qt.ElideLeft, rect.width()))
+            painter.drawText(rect, Qt.AlignmentFlag.AlignCenter|Qt.TextFlag.TextSingleLine,
+                                metrics.elidedText(name, Qt.TextElideMode.ElideLeft, rect.width()))
         finally:
             painter.restore()
 
@@ -184,7 +184,7 @@ class Images(QAbstractListModel):
             name = self.image_names[index.row()]
         except IndexError:
             return None
-        if role in (Qt.DisplayRole, Qt.ToolTipRole):
+        if role in (Qt.ItemDataRole.DisplayRole, Qt.ItemDataRole.ToolTipRole):
             return name
         return None
 
@@ -208,20 +208,18 @@ class InsertImage(Dialog):
         self.setLayout(l)
 
         self.la1 = la = QLabel(_('&Existing images in the book'))
-        la.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        la.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         l.addWidget(la, 0, 0, 1, 2)
         if self.for_browsing:
             la.setVisible(False)
 
         self.view = v = QListView(self)
-        v.setViewMode(v.IconMode)
-        v.setFlow(v.LeftToRight)
+        v.setViewMode(QListView.ViewMode.IconMode)
+        v.setFlow(QListView.Flow.LeftToRight)
         v.setSpacing(4)
-        v.setResizeMode(v.Adjust)
+        v.setResizeMode(QListView.ResizeMode.Adjust)
         v.setUniformItemSizes(True)
-        pi = plugins['progress_indicator'][0]
-        if hasattr(pi, 'set_no_activate_on_click'):
-            pi.set_no_activate_on_click(v)
+        set_no_activate_on_click(v)
         v.activated.connect(self.activated)
         v.doubleClicked.connect(self.activated)
         self.d = ImageDelegate(v)
@@ -252,7 +250,7 @@ class InsertImage(Dialog):
             b.clicked.connect(self.refresh)
             b.setIcon(QIcon(I('view-refresh.png')))
             b.setToolTip(_('Refresh the displayed images'))
-            self.setAttribute(Qt.WA_DeleteOnClose, False)
+            self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose, False)
         else:
             b = self.import_button = self.bb.addButton(_('&Import image'), self.bb.ActionRole)
             b.clicked.connect(self.import_image)
@@ -302,7 +300,7 @@ class InsertImage(Dialog):
             n, e = basename.rpartition('.')[0::2]
             basename = n + '.' + e.lower()
             d = ChooseName(basename, self)
-            if d.exec_() == d.Accepted and d.filename:
+            if d.exec_() == QDialog.DialogCode.Accepted and d.filename:
                 self.accept()
                 self.chosen_image_is_external = (d.filename, path)
 
@@ -323,7 +321,7 @@ class InsertImage(Dialog):
             return error_dialog(self, _('No image'), _(
                 'There is no image on the clipboard'), show=True)
         d = ChooseName('image.jpg', self)
-        if d.exec_() == d.Accepted and d.filename:
+        if d.exec_() == QDialog.DialogCode.Accepted and d.filename:
             fmt = d.filename.rpartition('.')[-1].lower()
             if fmt not in {'jpg', 'jpeg', 'png'}:
                 return error_dialog(self, _('Invalid file extension'), _(
@@ -335,7 +333,7 @@ class InsertImage(Dialog):
             self.accept()
 
     def pressed(self, index):
-        if QApplication.mouseButtons() & Qt.LeftButton:
+        if QApplication.mouseButtons() & Qt.MouseButton.LeftButton:
             self.activated(index)
 
     def activated(self, index):
@@ -357,7 +355,7 @@ class InsertImage(Dialog):
 def get_resource_data(rtype, parent):
     if rtype == 'image':
         d = InsertImage(parent)
-        if d.exec_() == d.Accepted:
+        if d.exec_() == QDialog.DialogCode.Accepted:
             return d.chosen_image, d.chosen_image_is_external, d.fullpage.isChecked(), d.preserve_aspect_ratio.isChecked()
 
 
@@ -393,7 +391,7 @@ class ChooseFolder(Dialog):  # {{{
         f.setHeaderHidden(True)
         f.itemDoubleClicked.connect(self.accept)
         l.addWidget(f)
-        f.setContextMenuPolicy(Qt.CustomContextMenu)
+        f.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         f.customContextMenuRequested.connect(self.show_context_menu)
         self.root = QTreeWidgetItem(f, ('/',))
 
@@ -454,7 +452,7 @@ class NewBook(Dialog):  # {{{
 
         self.title = t = QLineEdit(self)
         l.addRow(_('&Title:'), t)
-        t.setFocus(Qt.OtherFocusReason)
+        t.setFocus(Qt.FocusReason.OtherFocusReason)
 
         self.authors = a = QLineEdit(self)
         l.addRow(_('&Authors:'), a)
@@ -467,7 +465,7 @@ class NewBook(Dialog):  # {{{
         bb = self.bb
         l.addRow(bb)
         bb.clear()
-        bb.addButton(bb.Cancel)
+        bb.addButton(QDialogButtonBox.StandardButton.Cancel)
         b = bb.addButton('&EPUB', bb.AcceptRole)
         connect_lambda(b.clicked, self, lambda self: self.set_fmt('epub'))
         b = bb.addButton('&AZW3', bb.AcceptRole)

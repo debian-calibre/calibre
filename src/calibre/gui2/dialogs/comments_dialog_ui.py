@@ -14,7 +14,7 @@ class Ui_CommentsDialog(object):
     def setupUi(self, CommentsDialog):
         CommentsDialog.setObjectName("CommentsDialog")
         CommentsDialog.resize(400, 400)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.MinimumExpanding, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(CommentsDialog.sizePolicy().hasHeightForWidth())
@@ -25,8 +25,8 @@ class Ui_CommentsDialog(object):
         self.textbox.setObjectName("textbox")
         self.verticalLayout.addWidget(self.textbox)
         self.buttonBox = QtWidgets.QDialogButtonBox(CommentsDialog)
-        self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
+        self.buttonBox.setOrientation(QtCore.Qt.Orientation.Horizontal)
+        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.StandardButton.Cancel|QtWidgets.QDialogButtonBox.StandardButton.Ok)
         self.buttonBox.setObjectName("buttonBox")
         self.verticalLayout.addWidget(self.buttonBox)
 

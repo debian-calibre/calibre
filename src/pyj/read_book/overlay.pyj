@@ -297,7 +297,7 @@ class MainOverlay:  # {{{
 
             E.ul(
                 ac(_('Font size'), _('Change text size'), self.overlay.show_font_size_chooser, 'Aa', True),
-                ac(_('Preferences'), _('Configure the book viewer'), self.overlay.show_prefs, 'cogs'),
+                ac(_('Preferences'), _('Configure the E-book viewer'), self.overlay.show_prefs, 'cogs'),
             ),
 
             class_=MAIN_OVERLAY_ACTIONS_CLASS
@@ -331,6 +331,13 @@ class MainOverlay:  # {{{
                     window.setTimeout(self.overlay.view.toggle_autoscroll, 0)
                 , 'auto-scroll'))
 
+        actions_div.appendChild(E.ul(
+            ac(_('Read aloud'), _('Read the book aloud'), def():
+               self.overlay.hide()
+               self.overlay.view.start_read_aloud()
+            , 'bullhorn')
+        ))
+
         if full_screen_actions.length:
             actions_div.appendChild(E.ul(*full_screen_actions))
 
@@ -359,18 +366,33 @@ class MainOverlay:  # {{{
             actions_div.appendChild(E.ul(
                 ac(_('Inspector'), _('Show the content inspector'),
                    def(): self.overlay.hide(), ui_operations.toggle_inspector();, 'bug'),
-                ac(_('Reset interface'), _('Reset viewer panels, toolbars and scrollbars to defaults'),
+                ac(_('Reset interface'), _('Reset E-book viewer panels, toolbars and scrollbars to defaults'),
                     def():
                         self.overlay.hide()
                         ui_operations.reset_interface()
                         sd = get_session_data()
                         sd.set('skipped_dialogs', session_defaults.skipped_dialogs)
                     , 'window-restore'),
-                ac(_('Quit'), _('Close the viewer'),
+                ac(_('Quit'), _('Close the E-book viewer'),
                    def(): self.overlay.hide(), ui_operations.quit();, 'remove'),
             ))
         else:
-            pass
+            copy_actions = E.ul()
+            if self.elements.link:
+                copy_actions.appendChild(ac(_('Copy link'), _('Copy the current link'), def():
+                    self.overlay.hide(), ui_operations.copy_selection(self.elements.link)
+                , 'link'))
+            if self.elements.img:
+                copy_actions.appendChild(ac(_('View image'), _('View the current image'), def():
+                    self.overlay.hide(), ui_operations.view_image(self.elements.img)
+                , 'image'))
+                if window.navigator.clipboard:
+                    copy_actions.appendChild(ac(_('Copy image'), _('Copy the current image'), def():
+                        self.overlay.hide(), ui_operations.copy_image(self.elements.img)
+                    , 'copy'))
+            if copy_actions.childNodes.length:
+                actions_div.appendChild(copy_actions)
+
         container.appendChild(set_css(E.div(class_=MAIN_OVERLAY_TS_CLASS,  # top section
             onclick=def (evt):evt.stopPropagation();,
 
@@ -761,7 +783,7 @@ class Overlay:
     def show_ask_for_location(self):
         self.hide_current_panel()
         self.panels.push(SimpleOverlay(
-            self, create_location_overlay.bind(None, self.view.current_position_data), _('Go to location, position or reference…')))
+            self, create_location_overlay.bind(None, self.view.current_position_data, self.view.book), _('Go to location, position or reference…')))
         self.show_current_panel()
 
     def show_search(self):

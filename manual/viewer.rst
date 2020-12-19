@@ -42,7 +42,7 @@ The viewer has two modes, "paged" and "flow". In paged mode the book content
 is presented as pages, similar to a paper book. In flow mode the text is
 presented continuously, like in a web browser. You can switch between them
 using the viewer Preferences under :guilabel:`Page layout` or by pressing the
-:kbd:`ctrl+m` key.
+:kbd:`Ctrl+M` key.
 
 
 Bookmarks
@@ -51,7 +51,7 @@ Bookmarks
 When you are in the middle of a book and close the E-book viewer, it will remember
 where you stopped reading and return there the next time you open the book. You
 can also set bookmarks in the book by using the :guilabel:`Bookmarks` button in
-the E-book viewer controls or pressing :kbd:`ctrl+b`.  When viewing EPUB format books,
+the E-book viewer controls or pressing :kbd:`Ctrl+B`. When viewing EPUB format books,
 these bookmarks are actually saved in the EPUB file itself. You can add
 bookmarks, then send the file to a friend.  When they open the file, they will
 be able to see your bookmarks. You can turn off this behavior in the
@@ -78,6 +78,10 @@ You can use this location information to unambiguously refer to parts of the
 books when discussing it with friends or referring to it in other works. You
 can enter these locations under :guilabel:`Go to->Location` in the viewer
 controls.
+
+There is a URL you can copy to the clipboard and paste into other programs
+or documents. Clicking on this URL will open the book in the calibre E-book viewer at
+the current location.
 
 If you click on links inside the e-book to take you to different parts of the
 book, such as an endnote, you can use the :guilabel:`Back` and
@@ -122,6 +126,32 @@ have the viewer sync its annotations with the browser viewer by going to
 :guilabel:`Preferences->Miscellaneous` in the viewer preferences and entering
 the username of the Content server viewer to sync with. Use the special value
 ``*`` to sync with anonymous users.
+
+
+Read aloud
+------------
+
+The viewer can read book text aloud. To use it you can simply click the
+:guilabel:`Read aloud` button in the viewer controls to start reading book text
+aloud. The word being currently read is highlighted. Speech is synthesized from
+the text using your operating system services for text-to-speech. You can
+change the voice being used by clicking the gear icon in the bar that is
+displayed while :guilabel:`Read aloud` is active.
+
+You can also read aloud highlighted passages by adding the :guilabel:`Read aloud` button to
+the selection bar in the viewer preferences under :guilabel:`Selection
+behavior`.
+
+
+.. note:: Support for text-to-speech in browsers is very incomplete and
+   bug-ridden so how well :guilabel:`Read aloud` will work in the in-browser
+   viewer is dependent on how well the underlying browser supports
+   text-to-speech. In particular, highlighting of current word does not work,
+   and changing speed or voice will cause reading to start again from the
+   beginning.
+
+.. note:: On Linux, :guilabel:`Read aloud` requires `Speech Dispatcher
+   <https://freebsoft.org/speechd>`_ to be installed and working.
 
 
 Customizing the look and feel of your reading experience

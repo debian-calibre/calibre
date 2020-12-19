@@ -9,83 +9,60 @@ __docformat__ = 'restructuredtext en'
 
 '''The main GUI'''
 
-import collections, os, sys, textwrap, time, gc, errno, re
-from threading import Thread
+import apsw
+import collections
+import errno
+import gc
+import os
+import re
+import sys
+import textwrap
+import time
 from collections import OrderedDict
 from io import BytesIO
-
-import apsw
 from PyQt5.Qt import (
-    Qt, QTimer, QAction, QMenu, QIcon, pyqtSignal, QUrl, QFont, QDialog,
-    QApplication, QSystemTrayIcon)
+    QAction, QApplication, QDialog, QFont, QIcon, QMenu, QSystemTrayIcon, Qt, QTimer,
+    QUrl, pyqtSignal
+)
 
-from calibre import prints, force_unicode, detect_ncpus
+from calibre import detect_ncpus, force_unicode, prints
 from calibre.constants import (
-        __appname__, ismacos, iswindows, filesystem_encoding, DEBUG, config_dir)
-from calibre.utils.config import prefs, dynamic
-from calibre.utils.ipc.pool import Pool
+    DEBUG, __appname__, config_dir, filesystem_encoding, ismacos, iswindows
+)
+from calibre.customize.ui import available_store_plugins, interface_actions
 from calibre.db.legacy import LibraryDatabase
-from calibre.customize.ui import interface_actions, available_store_plugins
-from calibre.gui2 import (error_dialog, GetMetadata, open_url,
-        gprefs, max_available_height, config, info_dialog, Dispatcher,
-        question_dialog, warning_dialog)
-from calibre.gui2.cover_flow import CoverFlowMixin
+from calibre.gui2 import (
+    Dispatcher, GetMetadata, config, error_dialog, gprefs, info_dialog,
+    max_available_height, open_url, question_dialog, warning_dialog
+)
+from calibre.gui2.auto_add import AutoAdder
 from calibre.gui2.changes import handle_changes
-from calibre.gui2.widgets import ProgressIndicator
-from calibre.gui2.update import UpdateMixin
-from calibre.gui2.main_window import MainWindow
-from calibre.gui2.layout import MainWindowMixin
+from calibre.gui2.cover_flow import CoverFlowMixin
+from calibre.gui2.dbus_export.widgets import factory
 from calibre.gui2.device import DeviceMixin
-from calibre.gui2.email import EmailMixin
+from calibre.gui2.dialogs.message_box import JobError
 from calibre.gui2.ebook_download import EbookDownloadMixin
-from calibre.gui2.jobs import JobManager, JobsDialog, JobsButton
-from calibre.gui2.init import LibraryViewMixin, LayoutMixin
-from calibre.gui2.search_box import SearchBoxMixin, SavedSearchBoxMixin
+from calibre.gui2.email import EmailMixin
+from calibre.gui2.init import LayoutMixin, LibraryViewMixin
+from calibre.gui2.job_indicator import Pointer
+from calibre.gui2.jobs import JobManager, JobsButton, JobsDialog
+from calibre.gui2.keyboard import Manager
+from calibre.gui2.layout import MainWindowMixin
+from calibre.gui2.listener import Listener
+from calibre.gui2.main_window import MainWindow
+from calibre.gui2.open_with import register_keyboard_shortcuts
+from calibre.gui2.proceed import ProceedQuestion
+from calibre.gui2.search_box import SavedSearchBoxMixin, SearchBoxMixin
 from calibre.gui2.search_restriction_mixin import SearchRestrictionMixin
 from calibre.gui2.tag_browser.ui import TagBrowserMixin
-from calibre.gui2.keyboard import Manager
-from calibre.gui2.auto_add import AutoAdder
-from calibre.gui2.proceed import ProceedQuestion
-from calibre.gui2.dialogs.message_box import JobError
-from calibre.gui2.job_indicator import Pointer
-from calibre.gui2.dbus_export.widgets import factory
-from calibre.gui2.open_with import register_keyboard_shortcuts
+from calibre.gui2.update import UpdateMixin
+from calibre.gui2.widgets import ProgressIndicator
 from calibre.library import current_library_name
-from calibre.srv.library_broker import GuiLibraryBroker
-from polyglot.builtins import unicode_type, string_or_bytes
-from polyglot.queue import Queue, Empty
-
-
-class Listener(Thread):  # {{{
-
-    def __init__(self, listener):
-        Thread.__init__(self)
-        self.daemon = True
-        self.listener, self.queue = listener, Queue()
-        self._run = True
-        self.start()
-
-    def run(self):
-        if self.listener is None:
-            return
-        while self._run:
-            try:
-                conn = self.listener.accept()
-                msg = conn.recv()
-                self.queue.put(msg)
-            except:
-                continue
-
-    def close(self):
-        self._run = False
-        try:
-            if self.listener is not None:
-                self.listener.close()
-        except:
-            import traceback
-            traceback.print_exc()
-
-# }}}
+from calibre.srv.library_broker import GuiLibraryBroker, db_matches
+from calibre.utils.config import dynamic, prefs
+from calibre.utils.ipc.pool import Pool
+from polyglot.builtins import string_or_bytes, unicode_type
+from polyglot.queue import Empty, Queue
 
 
 def get_gui():
@@ -93,11 +70,11 @@ def get_gui():
 
 
 def add_quick_start_guide(library_view, refresh_cover_browser=None):
-    from calibre.ebooks.metadata.meta import get_metadata
     from calibre.ebooks.covers import calibre_cover2
-    from calibre.utils.zipfile import safe_replace
-    from calibre.utils.localization import get_lang, canonicalize_lang
+    from calibre.ebooks.metadata.meta import get_metadata
     from calibre.ptempfile import PersistentTemporaryFile
+    from calibre.utils.localization import canonicalize_lang, get_lang
+    from calibre.utils.zipfile import safe_replace
     l = canonicalize_lang(get_lang()) or 'eng'
     gprefs['quick_start_guide_added'] = True
     imgbuf = BytesIO(calibre_cover2(_('Quick Start Guide'), ''))
@@ -140,7 +117,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         self.setWindowIcon(QApplication.instance().windowIcon())
         self.jobs_pointer = Pointer(self)
         self.proceed_requested.connect(self.do_proceed,
-                type=Qt.QueuedConnection)
+                type=Qt.ConnectionType.QueuedConnection)
         self.proceed_question = ProceedQuestion(self)
         self.job_error_dialog = JobError(self)
         self.keyboard = Manager(self)
@@ -158,7 +135,11 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
             except:
                 # Ignore errors in loading user supplied plugins
                 import traceback
-                traceback.print_exc()
+                try:
+                    traceback.print_exc()
+                except Exception:
+                    if action.plugin_path:
+                        print('Failed to load Interface Action plugin:', action.plugin_path, file=sys.stderr)
                 if action.plugin_path is None:
                     raise
                 continue
@@ -215,7 +196,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         else:
             stmap[st.name] = st
 
-    def initialize(self, library_path, db, listener, actions, show_gui=True):
+    def initialize(self, library_path, db, actions, show_gui=True):
         opts = self.opts
         self.preferences_action, self.quit_action = actions
         self.library_path = library_path
@@ -226,10 +207,6 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         t.setInterval(1000), t.timeout.connect(self.handle_changes_from_server_debounced), t.setSingleShot(True)
         self._spare_pool = None
         self.must_restart_before_config = False
-        self.listener = Listener(listener)
-        self.check_messages_timer = QTimer()
-        self.check_messages_timer.timeout.connect(self.another_instance_wants_to_talk)
-        self.check_messages_timer.start(1000)
 
         for ac in self.iactions.values():
             try:
@@ -366,11 +343,11 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         self.library_view.model().count_changed()
         self.bars_manager.database_changed(self.library_view.model().db)
         self.library_view.model().database_changed.connect(self.bars_manager.database_changed,
-                type=Qt.QueuedConnection)
+                type=Qt.ConnectionType.QueuedConnection)
 
         # ########################## Tags Browser ##############################
         TagBrowserMixin.init_tag_browser_mixin(self, db)
-        self.library_view.model().database_changed.connect(self.populate_tb_manage_menu, type=Qt.QueuedConnection)
+        self.library_view.model().database_changed.connect(self.populate_tb_manage_menu, type=Qt.ConnectionType.QueuedConnection)
 
         # ######################## Search Restriction ##########################
         if db.new_api.pref('virtual_lib_on_startup'):
@@ -424,6 +401,10 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
             self.hide_windows()
         self.auto_adder = AutoAdder(gprefs['auto_add_path'], self)
 
+        self.listener = Listener(parent=self)
+        self.listener.message_received.connect(self.message_from_another_instance)
+        QTimer.singleShot(0, self.listener.start_listening)
+
         # Collect cycles now
         gc.collect()
 
@@ -449,6 +430,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                 prints('Starting QuickView')
             qv.qv_button.restore_state()
         self.save_layout_state()
+        self.focus_library_view()
 
     def show_gui_debug_msg(self):
         info_dialog(self, _('Debug mode'), '<p>' +
@@ -460,12 +442,20 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
     def esc(self, *args):
         self.search.clear()
 
-    def shift_esc(self):
-        self.current_view().setFocus(Qt.OtherFocusReason)
+    def focus_current_view(self):
+        view = self.current_view()
+        if view is self.library_view:
+            self.focus_library_view()
+        else:
+            view.setFocus(Qt.FocusReason.OtherFocusReason)
+    shift_esc = focus_current_view
+
+    def focus_library_view(self):
+        self.library_view.alternate_views.current_view.setFocus(Qt.FocusReason.OtherFocusReason)
 
     def ctrl_esc(self):
         self.apply_virtual_library()
-        self.current_view().setFocus(Qt.OtherFocusReason)
+        self.focus_current_view()
 
     def start_smartdevice(self):
         message = None
@@ -555,7 +545,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         pass
 
     def system_tray_icon_activated(self, r=False):
-        if r in (QSystemTrayIcon.Trigger, QSystemTrayIcon.MiddleClick, False):
+        if r in (QSystemTrayIcon.ActivationReason.Trigger, QSystemTrayIcon.ActivationReason.MiddleClick, False):
             if self.isVisible():
                 if self.isMinimized():
                     self.showNormal()
@@ -619,17 +609,145 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         self.tags_view.recount()
 
     def handle_cli_args(self, args):
+        from urllib.parse import unquote, urlparse, parse_qs
         if isinstance(args, string_or_bytes):
             args = [args]
-        files = [os.path.abspath(p) for p in args if not os.path.isdir(p) and os.access(p, os.R_OK)]
+        files, urls = [], []
+        for p in args:
+            if p.startswith('calibre://'):
+                try:
+                    purl = urlparse(p)
+                    if purl.scheme == 'calibre':
+                        action = purl.netloc
+                        path = unquote(purl.path)
+                        query = parse_qs(unquote(purl.query))
+                        urls.append((action, path, query))
+                except Exception:
+                    prints('Ignoring malformed URL:', p, file=sys.stderr)
+                    continue
+            elif p.startswith('file://'):
+                try:
+                    purl = urlparse(p)
+                    if purl.scheme == 'file':
+                        path = unquote(purl.path)
+                        a = os.path.abspath(path)
+                        if not os.path.isdir(a) and os.access(a, os.R_OK):
+                            files.append(a)
+                except Exception:
+                    prints('Ignoring malformed URL:', p, file=sys.stderr)
+                    continue
+            else:
+                a = os.path.abspath(p)
+                if not os.path.isdir(a) and os.access(a, os.R_OK):
+                    files.append(a)
         if files:
             self.iactions['Add Books'].add_filesystem_book(files)
+        if urls:
+            def doit():
+                for action, path, query in urls:
+                    self.handle_url_action(action, path, query)
+            QTimer.singleShot(10, doit)
 
-    def another_instance_wants_to_talk(self):
-        try:
-            msg = self.listener.queue.get_nowait()
-        except Empty:
-            return
+    def handle_url_action(self, action, path, query):
+        import posixpath
+
+        def decode_library_id(x):
+            if x == '_':
+                return getattr(self.current_db.new_api, 'server_library_id', None) or '_'
+            if x.startswith('_hex_-'):
+                return bytes.fromhex(x[6:]).decode('utf-8')
+            return x
+
+        if action == 'switch-library':
+            library_id = decode_library_id(posixpath.basename(path))
+            library_path = self.library_broker.path_for_library_id(library_id)
+            if not db_matches(self.current_db, library_id, library_path):
+                self.library_moved(library_path)
+        elif action == 'show-book':
+            parts = tuple(filter(None, path.split('/')))
+            if len(parts) != 2:
+                return
+            library_id, book_id = parts
+            library_id = decode_library_id(library_id)
+            try:
+                book_id = int(book_id)
+            except Exception:
+                prints('Ignoring invalid book id', book_id, file=sys.stderr)
+                return
+            library_path = self.library_broker.path_for_library_id(library_id)
+            if library_path is None:
+                return
+
+            def doit():
+                rows = self.library_view.select_rows((book_id,))
+                db = self.current_db
+                if not rows and (db.data.get_base_restriction_name() or db.data.get_search_restriction_name()):
+                    self.apply_virtual_library()
+                    self.apply_named_search_restriction()
+                    self.library_view.select_rows((book_id,))
+
+            self.perform_url_action(library_id, library_path, doit)
+        elif action == 'view-book':
+            parts = tuple(filter(None, path.split('/')))
+            if len(parts) != 3:
+                return
+            library_id, book_id, fmt = parts
+            library_id = decode_library_id(library_id)
+            try:
+                book_id = int(book_id)
+            except Exception:
+                prints('Ignoring invalid book id', book_id, file=sys.stderr)
+                return
+            library_path = self.library_broker.path_for_library_id(library_id)
+            if library_path is None:
+                return
+            view = self.iactions['View']
+
+            def doit():
+                at = query.get('open_at') or None
+                if at:
+                    at = at[0]
+                view.view_format_by_id(book_id, fmt.upper(), open_at=at)
+
+            self.perform_url_action(library_id, library_path, doit)
+        elif action == 'search':
+            parts = tuple(filter(None, path.split('/')))
+            if len(parts) != 1:
+                return
+            library_id = decode_library_id(parts[0])
+            library_path = self.library_broker.path_for_library_id(library_id)
+            if library_path is None:
+                return
+            sq = query.get('eq')
+            if sq:
+                sq = bytes.fromhex(sq[0]).decode('utf-8')
+            else:
+                sq = query.get('q')
+                if sq:
+                    sq = sq[0]
+            sq = sq or ''
+            vl = None
+            if query.get('encoded_virtual_library'):
+                vl = bytes.fromhex(query.get('encoded_virtual_library')[0]).decode('utf-8')
+            elif query.get('virtual_library'):
+                vl = query.get('virtual_library')[0]
+            if vl == '-':
+                vl = None
+
+            def doit():
+                if vl != '_':
+                    self.apply_virtual_library(vl)
+                self.search.set_search_string(sq)
+            self.perform_url_action(library_id, library_path, doit)
+
+    def perform_url_action(self, library_id, library_path, func):
+        if not db_matches(self.current_db, library_id, library_path):
+            self.library_moved(library_path)
+            QTimer.singleShot(0, func)
+        else:
+            func()
+
+    def message_from_another_instance(self, msg):
         if isinstance(msg, bytes):
             msg = msg.decode('utf-8', 'replace')
         if msg.startswith('launched:'):
@@ -646,14 +764,10 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                 argv = ()
             if isinstance(argv, (list, tuple)) and len(argv) > 1:
                 self.handle_cli_args(argv[1:])
-            self.setWindowState(self.windowState() & ~Qt.WindowMinimized|Qt.WindowActive)
+            self.setWindowState(self.windowState() & ~Qt.WindowState.WindowMinimized|Qt.WindowState.WindowActive)
             self.show_windows()
             self.raise_()
             self.activateWindow()
-        elif msg.startswith('refreshdb:'):
-            m = self.library_view.model()
-            m.db.new_api.reload_from_db()
-            self.refresh_all()
         elif msg.startswith('shutdown:'):
             self.quit(confirm_quit=False)
         elif msg.startswith('bookedited:'):
@@ -702,6 +816,9 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         if idx == 3:
             return self.card_b_view
 
+    def show_library_view(self):
+        self.location_manager.library_action.trigger()
+
     def booklists(self):
         return self.memory_view.model().db, self.card_a_view.model().db, self.card_b_view.model().db
 
@@ -734,7 +851,9 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                             det_msg=traceback.format_exc()
                             )
                     if repair:
-                        from calibre.gui2.dialogs.restore_library import repair_library_at
+                        from calibre.gui2.dialogs.restore_library import (
+                            repair_library_at
+                        )
                         if repair_library_at(newloc, parent=self):
                             db = LibraryDatabase(newloc, default_prefs=default_prefs)
                         else:
@@ -1004,7 +1123,6 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
             action.shutting_down()
         if write_settings:
             self.write_settings()
-        self.check_messages_timer.stop()
         if getattr(self, 'update_checker', None):
             self.update_checker.shutdown()
         self.listener.close()

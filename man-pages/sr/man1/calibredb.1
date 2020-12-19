@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "октобар 16, 2020" "5.3.0" "calibre"
+.TH "CALIBREDB" "1" "децембар 12, 2020" "5.7.2" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -240,13 +240,18 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-automerge, \-m
+If books with similar titles and authors are found, merge the incoming formats (files) automatically into existing book records. A value of \fB"\fPignore\fB"\fP means duplicate formats are discarded. A value of \fB"\fPoverwrite\fB"\fP means duplicate formats in the library are overwritten with the newly added files. A value of \fB"\fPnew_record\fB"\fP means duplicate formats are placed into a new book record.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-cover, \-c
 Path to the cover to use for the added book
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Додај књиге у библиотеку чак и ако су већ у њој. Поређење се врши на основу наслова.
+Add books to database even if they already exist. Comparison is done based on book titles and authors. Note that the \fI\%\-\-automerge\fP option takes precedence.
 .UNINDENT
 .INDENT 0.0
 .TP

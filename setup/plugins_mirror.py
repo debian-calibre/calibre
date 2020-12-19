@@ -185,6 +185,8 @@ def convert_node(fields, x, names={}, import_data=None):
     elif name == 'BinOp':
         if x.right.__class__.__name__ == 'Str':
             return x.right.s.decode('utf-8') if isinstance(x.right.s, bytes) else x.right.s
+        if x.right.__class__.__name__ == 'Constant' and isinstance(x.right.value, str):
+            return x.right.value
     elif name == 'Attribute':
         return conv(getattr(conv(x.value), x.attr))
     raise TypeError('Unknown datatype %s for fields: %s' % (x, fields))
@@ -306,19 +308,7 @@ def parse_metadata(raw, namelist, zf):
     raise ValueError('Could not find plugin class')
 
 
-def check_qt5_compatibility(zf, names):
-    uses_qt = False
-    for name in names:
-        if name.endswith('.py'):
-            raw = zf.read(name)
-            has_qt4 = (b'PyQt' + b'4') in raw
-            uses_qt = uses_qt or has_qt4
-            if uses_qt and has_qt4 and b'PyQt5' not in raw:
-                return False
-    return True
-
-
-def get_plugin_info(raw, check_for_qt5=False):
+def get_plugin_info(raw):
     metadata = None
     with zipfile.ZipFile(io.BytesIO(raw)) as zf:
         names = {x.decode('utf-8') if isinstance(x, bytes) else x : x for x in zf.namelist()}
@@ -337,8 +327,6 @@ def get_plugin_info(raw, check_for_qt5=False):
         raw = zf.open(metadata).read()
         ans = parse_metadata(raw, names, zf)
         if isinstance(ans, dict):
-            if check_for_qt5:
-                ans['qt5'] = check_qt5_compatibility(zf, names)
             return ans
         # The plugin is importing its base class from somewhere else, le sigh
         for mod, _ in ans:
@@ -350,8 +338,6 @@ def get_plugin_info(raw, check_for_qt5=False):
                 raw = zf.open(names[mod]).read()
                 ans = parse_metadata(raw, names, zf)
                 if isinstance(ans, dict):
-                    if check_for_qt5:
-                        ans['qt5'] = check_qt5_compatibility(zf, names)
                     return ans
 
     raise ValueError('Failed to find plugin class')
@@ -462,7 +448,6 @@ def plugin_to_index(plugin, count):
         'Version: <b>%s</b>' % escape('.'.join(map(str, plugin['version']))),
         'Released: <b>%s</b>' % escape(released),
         'Author: %s' % escape(plugin['author']),
-        'History: %s' % escape('Yes' if plugin['history'] else 'No'),
         'calibre: %s' % escape('.'.join(map(str, plugin['minimum_calibre_version']))),
         'Platforms: %s' % escape(', '.join(sorted(plugin['supported_platforms']) or ['all'])),
     ]
@@ -612,49 +597,6 @@ def update_stats():
     return stats
 
 
-def check_for_qt5_incompatibility():
-    ok_plugins, bad_plugins = [], []
-    for name in os.listdir('.'):
-        if name.endswith('.zip') and not name.endswith('-deprecated.zip'):
-            with open(name, 'rb') as f:
-                info = get_plugin_info(f.read(), check_for_qt5=True)
-                if info['qt5']:
-                    ok_plugins.append(info)
-                else:
-                    bad_plugins.append(info)
-    plugs = ['<li>%s</li>' % x['name'] for x in bad_plugins]
-    gplugs = ('<li>%s</li>' % x['name'] for x in ok_plugins)
-    stats = '''
-<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"><title>Stats for porting of calibre plugins to Qt 5</title>
-<link rel="icon" type="image/x-icon" href="//calibre-ebook.com/favicon.ico" />
-<style type="text/css">
-body { background-color: #eee; }
-h1 img, h3 img { vertical-align: middle; margin-right: 0.5em; }
-h1 { text-align: center }
-</style>
-</head>
-<body>
-<h1><img src="//manual.calibre-ebook.com/_static/logo.png">Stats for porting of calibre plugins to Qt 5</h1>
-<p>Number of Qt 5 compatible plugins: %s<br>Number of Qt 5 incompatible plugins: %s<br>Percentage of plugins ported: %.0f%%</p>
-<h2>Plugins that have been ported</h2>
-<ul>
-%s
-</ul>
-<h2>Plugins still to be ported</h2>
-<ul>
-%s
-</ul>
-</body>
-</html>
-    ''' % (len(ok_plugins), len(bad_plugins), len(ok_plugins)/(max(1, len(ok_plugins) + len(bad_plugins))) * 100,
-           '\n'.join(sorted(gplugs, key=lambda x:x.lower())),
-           '\n'.join(sorted(plugs, key=lambda x:x.lower())))
-    with open('porting.html', 'wb') as f:
-        f.write(stats.encode('utf-8'))
-
-
 def main():
     try:
         os.chdir(WORKDIR)
@@ -676,7 +618,6 @@ def main():
         plugins_index = load_plugins_index()
         plugins_index = fetch_plugins(plugins_index)
         create_index(plugins_index, stats)
-        check_for_qt5_incompatibility()
     except:
         import traceback
         log('Failed to run at:', datetime.utcnow().isoformat())

@@ -5,8 +5,7 @@
 __license__ = 'GPL v3'
 __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
 
-import errno, socket, select, os, time
-from contextlib import closing
+import errno, socket, os, time
 from email.utils import formatdate
 from operator import itemgetter
 
@@ -16,7 +15,7 @@ from calibre.srv.errors import HTTPNotFound
 from calibre.utils.localization import get_translator
 from calibre.utils.socket_inheritance import set_socket_inherit
 from calibre.utils.logging import ThreadSafeLog
-from calibre.utils.shared_file import share_open, raise_winerror
+from calibre.utils.shared_file import share_open
 from polyglot.builtins import iteritems, map, range
 from polyglot import reprlib
 from polyglot.http_cookie import SimpleCookie
@@ -146,41 +145,10 @@ def stop_cork(sock):
         sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_CORK, 0)
 
 
-def create_sock_pair(port=0):
-    '''Create socket pair. Works also on windows by using an ephemeral TCP port.'''
-    if hasattr(socket, 'socketpair'):
-        client_sock, srv_sock = socket.socketpair()
-        set_socket_inherit(client_sock, False), set_socket_inherit(srv_sock, False)
-        return client_sock, srv_sock
-
-    # Create a non-blocking temporary server socket
-    temp_srv_sock = socket.socket()
-    set_socket_inherit(temp_srv_sock, False)
-    temp_srv_sock.setblocking(False)
-    temp_srv_sock.bind(('127.0.0.1', port))
-    port = temp_srv_sock.getsockname()[1]
-    temp_srv_sock.listen(1)
-    with closing(temp_srv_sock):
-        # Create non-blocking client socket
-        client_sock = socket.socket()
-        client_sock.setblocking(False)
-        set_socket_inherit(client_sock, False)
-        try:
-            client_sock.connect(('127.0.0.1', port))
-        except socket.error as err:
-            # EWOULDBLOCK is not an error, as the socket is non-blocking
-            if err.errno not in socket_errors_nonblocking:
-                raise
-
-        # Use select to wait for connect() to succeed.
-        timeout = 1
-        readable = select.select([temp_srv_sock], [], [], timeout)[0]
-        if temp_srv_sock not in readable:
-            raise Exception('Client socket not connected in {} second(s)'.format(timeout))
-        srv_sock = temp_srv_sock.accept()[0]
-        set_socket_inherit(srv_sock, False)
-        client_sock.setblocking(True)
-
+def create_sock_pair():
+    '''Create socket pair. '''
+    client_sock, srv_sock = socket.socketpair()
+    set_socket_inherit(client_sock, False), set_socket_inherit(srv_sock, False)
     return client_sock, srv_sock
 
 
@@ -334,11 +302,8 @@ class RotatingStream(object):
     def rename(self, src, dest):
         try:
             if iswindows:
-                import win32file, pywintypes
-                try:
-                    win32file.MoveFileEx(src, dest, win32file.MOVEFILE_REPLACE_EXISTING|win32file.MOVEFILE_WRITE_THROUGH)
-                except pywintypes.error as e:
-                    raise_winerror(e)
+                from calibre_extensions import winutil
+                winutil.move_file(src, dest)
             else:
                 os.rename(src, dest)
         except EnvironmentError as e:

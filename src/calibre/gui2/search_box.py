@@ -11,7 +11,7 @@ from functools import partial
 
 
 from PyQt5.Qt import (
-    QComboBox, Qt, QLineEdit, pyqtSlot, QDialog,
+    QComboBox, Qt, QLineEdit, pyqtSlot, QDialog, QEvent,
     pyqtSignal, QCompleter, QAction, QKeySequence, QTimer,
     QIcon, QMenu, QApplication, QKeyEvent)
 
@@ -35,6 +35,7 @@ class SearchLineEdit(QLineEdit):  # {{{
     key_pressed = pyqtSignal(object)
     clear_history = pyqtSignal()
     select_on_mouse_press = None
+    as_url = None
 
     def keyPressEvent(self, event):
         self.key_pressed.emit(event)
@@ -47,7 +48,7 @@ class SearchLineEdit(QLineEdit):  # {{{
     def contextMenuEvent(self, ev):
         self.parent().normalize_state()
         menu = self.createStandardContextMenu()
-        menu.setAttribute(Qt.WA_DeleteOnClose)
+        menu.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
         ac = menu.addAction(_('Paste and &search'))
         ac.setEnabled(bool(QApplication.clipboard().text()))
         ac.setIcon(QIcon(I('search.png')))
@@ -59,12 +60,16 @@ class SearchLineEdit(QLineEdit):  # {{{
         else:
             menu.addAction(ac)
         menu.addSeparator()
+        if self.as_url is not None:
+            url = self.as_url(self.text())
+            if url:
+                menu.addAction(_('Copy search as URL'), lambda : QApplication.clipboard().setText(url))
         menu.addAction(_('&Clear search history')).triggered.connect(self.clear_history)
         menu.exec_(ev.globalPos())
 
     def paste_and_search(self):
         self.paste()
-        ev = QKeyEvent(QKeyEvent.KeyPress, Qt.Key_Enter, Qt.NoModifier)
+        ev = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Enter, Qt.KeyboardModifier.NoModifier)
         self.keyPressEvent(ev)
 
     @pyqtSlot()
@@ -109,9 +114,10 @@ class SearchBox2(QComboBox):  # {{{
     changed = pyqtSignal()
     focus_to_library = pyqtSignal()
 
-    def __init__(self, parent=None, add_clear_action=True):
+    def __init__(self, parent=None, add_clear_action=True, as_url=None):
         QComboBox.__init__(self, parent)
         self.line_edit = SearchLineEdit(self)
+        self.line_edit.as_url = as_url
         self.setLineEdit(self.line_edit)
         self.line_edit.clear_history.connect(self.clear_history)
         if add_clear_action:
@@ -124,14 +130,14 @@ class SearchBox2(QComboBox):  # {{{
         c.setCompletionMode(c.PopupCompletion)
         c.highlighted[native_string_type].connect(self.completer_used)
 
-        self.line_edit.key_pressed.connect(self.key_pressed, type=Qt.DirectConnection)
+        self.line_edit.key_pressed.connect(self.key_pressed, type=Qt.ConnectionType.DirectConnection)
         # QueuedConnection as workaround for https://bugreports.qt-project.org/browse/QTBUG-40807
-        self.activated[native_string_type].connect(self.history_selected, type=Qt.QueuedConnection)
+        self.activated[native_string_type].connect(self.history_selected, type=Qt.ConnectionType.QueuedConnection)
         self.setEditable(True)
         self.as_you_type = True
         self.timer = QTimer()
         self.timer.setSingleShot(True)
-        self.timer.timeout.connect(self.timer_event, type=Qt.QueuedConnection)
+        self.timer.timeout.connect(self.timer_event, type=Qt.ConnectionType.QueuedConnection)
         self.setInsertPolicy(self.NoInsert)
         self.setMaxCount(self.MAX_COUNT)
         self.setSizeAdjustPolicy(self.AdjustToMinimumContentsLengthWithIcon)
@@ -139,7 +145,7 @@ class SearchBox2(QComboBox):  # {{{
         self._in_a_search = False
         self.tool_tip_text = self.toolTip()
 
-    def add_action(self, icon, position=QLineEdit.TrailingPosition):
+    def add_action(self, icon, position=QLineEdit.ActionPosition.TrailingPosition):
         if not isinstance(icon, QIcon):
             icon = QIcon(I(icon))
         return self.lineEdit().addAction(icon, position)
@@ -156,9 +162,10 @@ class SearchBox2(QComboBox):  # {{{
         self.colorize = colorize
         self.clear()
 
-    def clear_search_history(self):
+    def clear_history(self):
         config[self.opt_name] = []
         self.clear()
+    clear_search_history = clear_history
 
     def hide_completer_popup(self):
         try:
@@ -173,9 +180,6 @@ class SearchBox2(QComboBox):  # {{{
     def text(self):
         return self.currentText()
 
-    def clear_history(self, *args):
-        QComboBox.clear(self)
-
     def clear(self, emit_search=True):
         self.normalize_state()
         self.setEditText('')
@@ -186,7 +190,7 @@ class SearchBox2(QComboBox):  # {{{
 
     def clear_clicked(self, *args):
         self.clear()
-        self.setFocus(Qt.OtherFocusReason)
+        self.setFocus(Qt.FocusReason.OtherFocusReason)
 
     def search_done(self, ok):
         if isinstance(ok, string_or_bytes):
@@ -204,15 +208,15 @@ class SearchBox2(QComboBox):  # {{{
     # Comes from the lineEdit control
     def key_pressed(self, event):
         k = event.key()
-        if k in (Qt.Key_Left, Qt.Key_Right, Qt.Key_Up, Qt.Key_Down,
-                Qt.Key_Home, Qt.Key_End, Qt.Key_PageUp, Qt.Key_PageDown,
-                Qt.Key_unknown):
+        if k in (Qt.Key.Key_Left, Qt.Key.Key_Right, Qt.Key.Key_Up, Qt.Key.Key_Down,
+                Qt.Key.Key_Home, Qt.Key.Key_End, Qt.Key.Key_PageUp, Qt.Key.Key_PageDown,
+                Qt.Key.Key_unknown):
             return
         self.normalize_state()
         if self._in_a_search:
             self.changed.emit()
             self._in_a_search = False
-        if event.key() in (Qt.Key_Return, Qt.Key_Enter):
+        if event.key() in (Qt.Key.Key_Return, Qt.Key.Key_Enter):
             self.do_search()
             self.focus_to_library.emit()
         elif self.as_you_type and unicode_type(event.text()):
@@ -221,13 +225,13 @@ class SearchBox2(QComboBox):  # {{{
     # Comes from the combobox itself
     def keyPressEvent(self, event):
         k = event.key()
-        if k in (Qt.Key_Enter, Qt.Key_Return):
+        if k in (Qt.Key.Key_Enter, Qt.Key.Key_Return):
             return self.do_search()
-        if k not in (Qt.Key_Up, Qt.Key_Down):
+        if k not in (Qt.Key.Key_Up, Qt.Key.Key_Down):
             return QComboBox.keyPressEvent(self, event)
         self.blockSignals(True)
         self.normalize_state()
-        if k == Qt.Key_Down and self.currentIndex() == 0 and not self.lineEdit().text():
+        if k == Qt.Key.Key_Down and self.currentIndex() == 0 and not self.lineEdit().text():
             self.setCurrentIndex(1), self.setCurrentIndex(0)
             event.accept()
         else:
@@ -255,7 +259,7 @@ class SearchBox2(QComboBox):  # {{{
         self.search.emit(text)
 
         if store_in_history:
-            idx = self.findText(text, Qt.MatchFixedString|Qt.MatchCaseSensitive)
+            idx = self.findText(text, Qt.MatchFlag.MatchFixedString|Qt.MatchFlag.MatchCaseSensitive)
             self.block_signals(True)
             if idx < 0:
                 self.insertItem(0, text)
@@ -280,25 +284,25 @@ class SearchBox2(QComboBox):  # {{{
         if not store_in_history:
             self.activated[native_string_type].disconnect()
         try:
-            self.setFocus(Qt.OtherFocusReason)
+            self.setFocus(Qt.FocusReason.OtherFocusReason)
             if not txt:
                 self.clear()
             else:
                 self.normalize_state()
                 # must turn on case sensitivity here so that tag browser strings
                 # are not case-insensitively replaced from history
-                self.line_edit.completer().setCaseSensitivity(Qt.CaseSensitive)
+                self.line_edit.completer().setCaseSensitivity(Qt.CaseSensitivity.CaseSensitive)
                 self.setEditText(txt)
                 self.line_edit.end(False)
                 if emit_changed:
                     self.changed.emit()
                 self._do_search(store_in_history=store_in_history)
-                self.line_edit.completer().setCaseSensitivity(Qt.CaseInsensitive)
+                self.line_edit.completer().setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
             self.focus_to_library.emit()
         finally:
             if not store_in_history:
                 # QueuedConnection as workaround for https://bugreports.qt-project.org/browse/QTBUG-40807
-                self.activated[native_string_type].connect(self.history_selected, type=Qt.QueuedConnection)
+                self.activated[native_string_type].connect(self.history_selected, type=Qt.ConnectionType.QueuedConnection)
 
     def search_as_you_type(self, enabled):
         self.as_you_type = enabled
@@ -329,7 +333,7 @@ class SavedSearchBox(QComboBox):  # {{{
 
         self.line_edit = SearchLineEdit(self)
         self.setLineEdit(self.line_edit)
-        self.line_edit.key_pressed.connect(self.key_pressed, type=Qt.DirectConnection)
+        self.line_edit.key_pressed.connect(self.key_pressed, type=Qt.ConnectionType.DirectConnection)
         self.activated[native_string_type].connect(self.saved_search_selected)
 
         # Turn off auto-completion so that it doesn't interfere with typing
@@ -365,7 +369,7 @@ class SavedSearchBox(QComboBox):  # {{{
         self.line_edit.home(False)
 
     def key_pressed(self, event):
-        if event.key() in (Qt.Key_Return, Qt.Key_Enter):
+        if event.key() in (Qt.Key.Key_Return, Qt.Key.Key_Enter):
             self.saved_search_selected(self.currentText())
 
     def saved_search_selected(self, qname):
@@ -464,7 +468,7 @@ class SearchBoxMixin(object):  # {{{
         self.search.cleared.connect(self.search_box_cleared)
         # Queued so that search.current_text will be correct
         self.search.changed.connect(self.search_box_changed,
-                type=Qt.QueuedConnection)
+                type=Qt.ConnectionType.QueuedConnection)
         self.search.focus_to_library.connect(self.focus_to_library)
         self.advanced_search_toggle_action.triggered.connect(self.do_advanced_search)
 
@@ -472,8 +476,8 @@ class SearchBoxMixin(object):  # {{{
         self.search.setMaximumWidth(self.width()-150)
         self.action_focus_search = QAction(self)
         shortcuts = list(
-                map(lambda x:unicode_type(x.toString(QKeySequence.PortableText)),
-                QKeySequence.keyBindings(QKeySequence.Find)))
+                map(lambda x:unicode_type(x.toString(QKeySequence.SequenceFormat.PortableText)),
+                QKeySequence.keyBindings(QKeySequence.StandardKey.Find)))
         shortcuts += ['/', 'Alt+S']
         self.keyboard.register_shortcut('start search', _('Start search'),
                 default_keys=shortcuts, action=self.action_focus_search)
@@ -513,7 +517,7 @@ class SearchBoxMixin(object):  # {{{
         self.library_view.model().set_highlight_only(config['highlight_search_matches'])
 
     def focus_search_box(self, *args):
-        self.search.setFocus(Qt.OtherFocusReason)
+        self.search.setFocus(Qt.FocusReason.OtherFocusReason)
         self.search.lineEdit().selectAll()
 
     def search_box_cleared(self):
@@ -527,7 +531,7 @@ class SearchBoxMixin(object):  # {{{
 
     def do_advanced_search(self, *args):
         d = SearchDialog(self, self.library_view.model().db)
-        if d.exec_() == QDialog.Accepted:
+        if d.exec_() == QDialog.DialogCode.Accepted:
             self.search.set_search_string(d.search_string(), store_in_history=True)
 
     def do_search_button(self):
@@ -535,7 +539,7 @@ class SearchBoxMixin(object):  # {{{
         self.focus_to_library()
 
     def focus_to_library(self):
-        self.current_view().setFocus(Qt.OtherFocusReason)
+        self.current_view().setFocus(Qt.FocusReason.OtherFocusReason)
 
     # }}}
 
@@ -600,7 +604,7 @@ class SavedSearchBoxMixin(object):  # {{{
     def do_saved_search_edit(self, search):
         d = SavedSearchEditor(self, search)
         d.exec_()
-        if d.result() == d.Accepted:
+        if d.result() == QDialog.DialogCode.Accepted:
             self.do_rebuild_saved_searches()
 
     def do_rebuild_saved_searches(self):
@@ -610,7 +614,7 @@ class SavedSearchBoxMixin(object):  # {{{
     def add_saved_search(self):
         from calibre.gui2.dialogs.saved_search_editor import AddSavedSearch
         d = AddSavedSearch(parent=self, search=self.search.current_text)
-        if d.exec_() == d.Accepted:
+        if d.exec_() == QDialog.DialogCode.Accepted:
             self.current_db.new_api.ensure_has_search_category(fail_on_existing=False)
             self.do_rebuild_saved_searches()
 
