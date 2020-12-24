@@ -111,6 +111,39 @@ def apply_colors(is_content_popup):
         }
         '''
 
+    # follow links hint box
+    text += f'''\n\n
+        .calibre-hint-visible::before {{
+            content: attr(data-calibre-hint-render) !important;\
+            display: inline-block !important;\
+            position: absolute !important;\
+            text-indent: 0 !important;\
+            text-decoration: none !important;\
+            font-weight: bold !important;\
+            color: {selfg} !important;\
+            background: {selbg} !important;\
+            cursor: default !important;\
+            padding: 1px !important;\
+            border: solid 1px {opts.color_scheme.foreground} !important;\
+
+        }}
+
+        .calibre-hint-enter::before {{
+            background: #FF5733 !important; \
+        }}
+
+        .calibre-animated-hint {{
+            animation-name: calibre-animate-hint; \
+            animation-duration: 0.3s; \
+            animation-timing-function: ease-out; \
+            display: inline-block !important; \
+            text-indent: 0 !important; \
+        }}
+        @keyframes calibre-animate-hint {{
+            from {{ transform: scale(1); }}
+            to {{ transform: scale(2); }}
+        }}
+    '''
     ss.textContent = text
 
 

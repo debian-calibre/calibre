@@ -398,7 +398,7 @@ operates on the intermediate XHTML produced by the conversion pipeline. Use the 
 :ref:`conversion-introduction` to figure out the appropriate settings for your book. There is also a button for a XPath wizard
 to help with the generation of simple XPath expressions.
 
-By default, calibre uses the following expression for chapter detection::
+By default, calibre uses the following expression for detecting chapters::
 
     //*[((name()='h1' or name()='h2') and re:test(., 'chapter|book|section|part\s+', 'i')) or @class = 'chapter']
 
@@ -720,7 +720,7 @@ Convert PDF documents
 
 PDF documents are one of the worst formats to convert from. They are a fixed page size and text placement format.
 Meaning, it is very difficult to determine where one paragraph ends and another begins. calibre will try to unwrap
-paragraphs using a configurable, :guilabel:`Line Un-Wrapping Factor`. This is a scale used to determine the length
+paragraphs using a configurable, :guilabel:`Line un-wrapping factor`. This is a scale used to determine the length
 at which a line should be unwrapped. Valid values are a decimal
 between 0 and 1. The default is 0.45, just under the median line length. Lower this value to include more
 text in the unwrapping. Increase to include less. You can adjust this value in the conversion settings under :guilabel:`PDF Input`.

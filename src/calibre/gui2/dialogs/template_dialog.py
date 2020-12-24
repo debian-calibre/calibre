@@ -9,7 +9,7 @@ import json, os, traceback
 
 from PyQt5.Qt import (Qt, QDialog, QDialogButtonBox, QSyntaxHighlighter, QFont,
                       QRegExp, QApplication, QTextCharFormat, QColor, QCursor,
-                      QIcon, QSize)
+                      QIcon, QSize, QPalette)
 
 from calibre import sanitize_file_name
 from calibre.constants import config_dir
@@ -85,8 +85,8 @@ class TemplateHighlighter(QSyntaxHighlighter):
         pal = QApplication.instance().palette()
         for name, color, bold, italic in (
                 ("normal", None, False, False),
-                ("keyword", pal.color(pal.Link).name(), True, False),
-                ("builtin", pal.color(pal.Link).name(), False, False),
+                ("keyword", pal.color(QPalette.ColorRole.Link).name(), True, False),
+                ("builtin", pal.color(QPalette.ColorRole.Link).name(), False, False),
                 ("comment", "#007F00", False, True),
                 ("string", "#808000", False, False),
                 ("number", "#924900", False, False),
@@ -213,7 +213,8 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
 
     def __init__(self, parent, text, mi=None, fm=None, color_field=None,
                  icon_field_key=None, icon_rule_kind=None, doing_emblem=False,
-                 text_is_placeholder=False, dialog_is_st_editor=False):
+                 text_is_placeholder=False, dialog_is_st_editor=False,
+                 global_vars={}):
         QDialog.__init__(self, parent)
         Ui_TemplateDialog.__init__(self)
         self.setupUi(self)
@@ -222,6 +223,7 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
         self.iconing = icon_field_key is not None
         self.embleming = doing_emblem
         self.dialog_is_st_editor = dialog_is_st_editor
+        self.global_vars = global_vars
 
         cols = []
         if fm is not None:
@@ -424,8 +426,8 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
             self.highlighter.regenerate_paren_positions()
             self.text_cursor_changed()
             self.template_value.setText(
-                SafeFormat().safe_format(cur_text, self.mi,
-                                                _('EXCEPTION: '), self.mi))
+                SafeFormat().safe_format(cur_text, self.mi, _('EXCEPTION: '),
+                                         self.mi, global_vars=self.global_vars))
 
     def text_cursor_changed(self):
         cursor = self.textbox.textCursor()

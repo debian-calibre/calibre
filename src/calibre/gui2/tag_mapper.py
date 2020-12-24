@@ -9,7 +9,7 @@ import textwrap
 from PyQt5.Qt import (
     QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QListWidget, QIcon, QDialog,
     QSize, QComboBox, QLineEdit, QListWidgetItem, QStyledItemDelegate, QAbstractItemView,
-    QStaticText, Qt, QStyle, QToolButton, QInputDialog, QMenu, pyqtSignal, QPalette, QItemSelectionModel
+    QStaticText, Qt, QStyle, QToolButton, QInputDialog, QMenu, pyqtSignal, QPalette, QItemSelectionModel, QDialogButtonBox
 )
 
 from calibre.ebooks.metadata.tag_mapper import map_tags, compile_pat
@@ -302,7 +302,7 @@ class Rules(QWidget):
         r.setDragEnabled(True)
         r.viewport().setAcceptDrops(True)
         r.setDropIndicatorShown(True)
-        r.setDragDropMode(r.InternalMove)
+        r.setDragDropMode(QAbstractItemView.DragDropMode.InternalMove)
         r.setDefaultDropAction(Qt.DropAction.MoveAction)
         self.l2 = l = QVBoxLayout()
         h.addLayout(l)
@@ -398,7 +398,7 @@ class Tester(Dialog):
 
     def setup_ui(self):
         self.l = l = QVBoxLayout(self)
-        self.bb.setStandardButtons(self.bb.Close)
+        self.bb.setStandardButtons(QDialogButtonBox.StandardButton.Close)
         self.la = la = QLabel(self.LABEL)
         l.addWidget(la)
         self.tags = t = QLineEdit(self)
@@ -495,15 +495,15 @@ class RulesDialog(Dialog, SaveLoadMixin):
         self.edit_widget = w = self.RulesClass(self)
         l.addWidget(w)
         l.addWidget(self.bb)
-        self.save_button = b = self.bb.addButton(_('&Save'), self.bb.ActionRole)
+        self.save_button = b = self.bb.addButton(_('&Save'), QDialogButtonBox.ButtonRole.ActionRole)
         b.setToolTip(_('Save this ruleset for later re-use'))
         b.clicked.connect(self.save_ruleset)
-        self.load_button = b = self.bb.addButton(_('&Load'), self.bb.ActionRole)
+        self.load_button = b = self.bb.addButton(_('&Load'), QDialogButtonBox.ButtonRole.ActionRole)
         b.setToolTip(_('Load a previously saved ruleset'))
         self.load_menu = QMenu(self)
         b.setMenu(self.load_menu)
         self.build_load_menu()
-        self.test_button = b = self.bb.addButton(_('&Test rules'), self.bb.ActionRole)
+        self.test_button = b = self.bb.addButton(_('&Test rules'), QDialogButtonBox.ButtonRole.ActionRole)
         b.clicked.connect(self.test_rules)
 
     @property

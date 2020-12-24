@@ -11,7 +11,7 @@ from threading import Thread
 from PyQt5.Qt import (
     QTextBrowser, QVBoxLayout, QDialog, QDialogButtonBox, QIcon, QLabel,
     QCheckBox, Qt, QListWidgetItem, QHBoxLayout, QListWidget, QPixmap,
-    QSpinBox, QStyledItemDelegate, QSize, QStyle, QPen,
+    QSpinBox, QStyledItemDelegate, QSize, QStyle, QPen, QPalette,
     QProgressBar, pyqtSignal, QApplication, QAbstractItemView
 )
 
@@ -112,10 +112,10 @@ def show_report(changed, title, report, parent, show_current_diff):
     d.bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Close)
     d.show_changes = False
     if changed:
-        b = d.b = d.bb.addButton(_('See what &changed'), d.bb.AcceptRole)
+        b = d.b = d.bb.addButton(_('See what &changed'), QDialogButtonBox.ButtonRole.AcceptRole)
         b.setIcon(QIcon(I('diff.png'))), b.setAutoDefault(False)
         connect_lambda(b.clicked, d, lambda d: setattr(d, 'show_changes', True))
-    b = d.bb.addButton(_('&Copy to clipboard'), d.bb.ActionRole)
+    b = d.bb.addButton(_('&Copy to clipboard'), QDialogButtonBox.ButtonRole.ActionRole)
     b.setIcon(QIcon(I('edit-copy.png'))), b.setAutoDefault(False)
 
     def copy_report():
@@ -125,7 +125,7 @@ def show_report(changed, title, report, parent, show_current_diff):
         cp.setText(text)
 
     b.clicked.connect(copy_report)
-    d.bb.button(d.bb.Close).setDefault(True)
+    d.bb.button(QDialogButtonBox.StandardButton.Close).setDefault(True)
     d.l.addWidget(d.bb)
     d.bb.rejected.connect(d.reject)
     d.bb.accepted.connect(d.accept)
@@ -163,7 +163,7 @@ class ImageItemDelegate(QStyledItemDelegate):
         trect.setRight(option.rect.right())
         painter.save()
         if option.state & QStyle.StateFlag.State_Selected:
-            painter.setPen(QPen(option.palette.color(option.palette.HighlightedText)))
+            painter.setPen(QPen(option.palette.color(QPalette.ColorRole.HighlightedText)))
         painter.drawText(trect, Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft, name + '\n' + sz)
         painter.restore()
 

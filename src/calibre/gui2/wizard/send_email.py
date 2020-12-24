@@ -117,9 +117,9 @@ class RelaySetup(QDialog):
                 self.ptoggle = QCheckBox(_('&Show password'), self)
                 l.addWidget(self.ptoggle, r, 2)
                 self.ptoggle.stateChanged.connect(
-                        lambda s: self.password.setEchoMode(self.password.Normal if s == Qt.CheckState.Checked else self.password.Password))
+                        lambda s: self.password.setEchoMode(QLineEdit.EchoMode.Normal if s == Qt.CheckState.Checked else QLineEdit.EchoMode.Password))
         self.username.setText(service['username'])
-        self.password.setEchoMode(self.password.Password)
+        self.password.setEchoMode(QLineEdit.EchoMode.Password)
         self.bl = QLabel('<p>' + _(
             'If you plan to use email to send books to your Kindle, remember to'
             ' add your %s email address to the allowed email addresses in your '
@@ -174,8 +174,8 @@ class SendEmail(QWidget, Ui_Form):
             button.clicked.connect(partial(self.create_service_relay, x))
         self.relay_show_password.stateChanged.connect(
          lambda state : self.relay_password.setEchoMode(
-             self.relay_password.Password if
-             state == 0 else self.relay_password.Normal))
+             QLineEdit.EchoMode.Password if
+             state == 0 else QLineEdit.EchoMode.Normal))
         self.test_email_button.clicked.connect(self.test_email)
 
     def changed(self, *args):

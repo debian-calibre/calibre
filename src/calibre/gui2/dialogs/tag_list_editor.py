@@ -5,8 +5,8 @@
 
 from functools import partial
 
-from PyQt5.Qt import (Qt, QDialog, QTableWidgetItem, QIcon, QByteArray, QSize,
-                      QDialogButtonBox, QTableWidget, QItemDelegate, QApplication,
+from PyQt5.Qt import (Qt, QDialog, QTableWidgetItem, QIcon, QByteArray, QSize, QAbstractItemView,
+                      QDialogButtonBox, QItemDelegate, QApplication,
                       pyqtSignal, QAction, QFrame, QLabel, QTimer, QMenu, QColor)
 
 from calibre.gui2.actions.show_quickview import get_quickview_action_plugin
@@ -240,7 +240,7 @@ class TagListEditor(QDialog, Ui_TagListEditor):
 
         self.apply_vl_checkbox.clicked.connect(self.vl_box_changed)
 
-        self.table.setEditTriggers(QTableWidget.EditKeyPressed)
+        self.table.setEditTriggers(QAbstractItemView.EditTrigger.EditKeyPressed)
 
         try:
             geom = gprefs.get('tag_list_editor_dialog_geometry', None)
@@ -296,7 +296,7 @@ class TagListEditor(QDialog, Ui_TagListEditor):
             ca.triggered.connect(partial(self.search_for_books, item))
             if disable_copy_paste_search:
                 ca.setEnabled(False)
-        if self.table.state() == self.table.EditingState:
+        if self.table.state() == QAbstractItemView.State.EditingState:
             m.addSeparator()
             case_menu = QMenu(_('Change case'))
             action_upper_case = case_menu.addAction(_('Upper case'))

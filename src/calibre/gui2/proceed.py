@@ -9,7 +9,7 @@ __docformat__ = 'restructuredtext en'
 from collections import namedtuple
 
 from PyQt5.Qt import (
-    QWidget, Qt, QLabel, QVBoxLayout, QDialogButtonBox, QApplication, QTimer, QPixmap,
+    QWidget, Qt, QLabel, QVBoxLayout, QDialogButtonBox, QApplication, QTimer, QPixmap, QEvent,
     QSize, pyqtSignal, QIcon, QPlainTextEdit, QCheckBox, QPainter, QHBoxLayout, QFontMetrics,
     QPainterPath, QRectF, pyqtProperty, QPropertyAnimation, QEasingCurve, QSizePolicy, QImage, QPalette)
 
@@ -114,17 +114,17 @@ class ProceedQuestion(QWidget):
         self.bb = QDialogButtonBox()
         self.bb.accepted.connect(self.accept)
         self.bb.rejected.connect(self.reject)
-        self.log_button = self.bb.addButton(_('View log'), self.bb.ActionRole)
+        self.log_button = self.bb.addButton(_('View log'), QDialogButtonBox.ButtonRole.ActionRole)
         self.log_button.setIcon(QIcon(I('debug.png')))
         self.log_button.clicked.connect(self.show_log)
         self.copy_button = self.bb.addButton(_('&Copy to clipboard'),
-                self.bb.ActionRole)
+                QDialogButtonBox.ButtonRole.ActionRole)
         self.copy_button.clicked.connect(self.copy_to_clipboard)
-        self.action_button = self.bb.addButton('', self.bb.ActionRole)
+        self.action_button = self.bb.addButton('', QDialogButtonBox.ButtonRole.ActionRole)
         self.action_button.clicked.connect(self.action_clicked)
         self.show_det_msg = _('Show &details')
         self.hide_det_msg = _('Hide &details')
-        self.det_msg_toggle = self.bb.addButton(self.show_det_msg, self.bb.ActionRole)
+        self.det_msg_toggle = self.bb.addButton(self.show_det_msg, QDialogButtonBox.ButtonRole.ActionRole)
         self.det_msg_toggle.clicked.connect(self.toggle_det_msg)
         self.det_msg_toggle.setToolTip(
                 _('Show detailed information about this error'))
@@ -160,7 +160,7 @@ class ProceedQuestion(QWidget):
         t.setSingleShot(True), t.setInterval(100), t.timeout.connect(self.parent_resized)
 
     def eventFilter(self, obj, ev):
-        if ev.type() == ev.Resize and self.isVisible():
+        if ev.type() == QEvent.Type.Resize and self.isVisible():
             self.resize_timer.start()
         return False
 

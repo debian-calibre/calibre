@@ -4,14 +4,13 @@
 
 
 import weakref
-
 from PyQt5.Qt import (
-    QApplication, QByteArray, QCalendarWidget, QCheckBox, QColor, QColorDialog,
+    QApplication, QByteArray, QCalendarWidget, QCheckBox, QColor, QColorDialog, QFrame,
     QComboBox, QDate, QDateTime, QDateTimeEdit, QDialog, QDialogButtonBox, QFont,
-    QFontInfo, QFontMetrics, QIcon, QKeySequence, QLabel, QLayout, QMenu,
-    QMimeData, QPalette, QPixmap, QPoint, QPushButton, QRect, QScrollArea, QSize,
-    QSizePolicy, QStyle, QStyledItemDelegate, Qt, QTabWidget, QTextBrowser,
-    QToolButton, QUndoCommand, QUndoStack, QWidget, pyqtSignal
+    QFontInfo, QFontMetrics, QIcon, QKeySequence, QLabel, QLayout, QMenu, QMimeData,
+    QPalette, QPixmap, QPoint, QPushButton, QRect, QScrollArea, QSize, QSizePolicy,
+    QStyle, QStyledItemDelegate, Qt, QTabWidget, QTextBrowser, QToolButton, QTextCursor,
+    QUndoCommand, QUndoStack, QUrl, QWidget, pyqtSignal
 )
 
 from calibre.ebooks.metadata import rating_to_stars
@@ -458,7 +457,7 @@ class HTMLDisplay(QTextBrowser):
         if delta:
             font.setPixelSize(f.pixelSize() + delta)
             self.setFont(font)
-        self.setFrameShape(self.NoFrame)
+        self.setFrameShape(QFrame.Shape.NoFrame)
         self.setOpenLinks(False)
         self.setAttribute(Qt.WidgetAttribute.WA_OpaquePaintEvent, False)
         palette = self.palette()
@@ -479,8 +478,8 @@ class HTMLDisplay(QTextBrowser):
         app = QApplication.instance()
         if app.is_dark_theme:
             pal = app.palette()
-            col = pal.color(pal.Link)
-            self.default_css = 'a { color: %s }\n\n' % col.name(col.HexRgb)
+            col = pal.color(QPalette.ColorRole.Link)
+            self.default_css = 'a { color: %s }\n\n' % col.name(QColor.NameFormat.HexRgb)
         else:
             self.default_css = ''
         self.document().setDefaultStyleSheet(self.default_css + self.external_css)
@@ -488,7 +487,7 @@ class HTMLDisplay(QTextBrowser):
 
     def on_anchor_clicked(self, qurl):
         if not qurl.scheme() and qurl.hasFragment() and qurl.toString().startswith('#'):
-            frag = qurl.fragment(qurl.FullyDecoded)
+            frag = qurl.fragment(QUrl.ComponentFormattingOption.FullyDecoded)
             if frag:
                 self.scrollToAnchor(frag)
                 return
@@ -559,8 +558,8 @@ def to_plain_text(self):
     # that
     c = self.textCursor()
     c.clearSelection()
-    c.movePosition(c.Start)
-    c.movePosition(c.End, c.KeepAnchor)
+    c.movePosition(QTextCursor.MoveOperation.Start)
+    c.movePosition(QTextCursor.MoveOperation.End, QTextCursor.MoveMode.KeepAnchor)
     ans = c.selectedText().replace(PARAGRAPH_SEPARATOR, '\n')
     # QTextCursor pads the return value of selectedText with null bytes if
     # non BMP characters such as 0x1f431 are present.
@@ -583,7 +582,7 @@ class DateTimeEdit(QDateTimeEdit):
         self.setMinimumDateTime(UNDEFINED_QDATETIME)
         self.setCalendarPopup(True)
         self.cw = CalendarWidget(self)
-        self.cw.setVerticalHeaderFormat(self.cw.NoVerticalHeader)
+        self.cw.setVerticalHeaderFormat(QCalendarWidget.VerticalHeaderFormat.NoVerticalHeader)
         self.setCalendarWidget(self.cw)
         self.setSpecialValueText(_('Undefined'))
 

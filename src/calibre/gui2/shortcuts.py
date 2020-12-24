@@ -9,8 +9,8 @@ __docformat__ = 'restructuredtext en'
 from functools import partial
 
 from PyQt5.Qt import (
-    QAbstractListModel, Qt, QKeySequence, QListView, QVBoxLayout, QLabel,
-    QHBoxLayout, QWidget, QApplication, QStyledItemDelegate, QStyle, QIcon,
+    QAbstractListModel, Qt, QKeySequence, QListView, QVBoxLayout, QLabel, QAbstractItemView,
+    QHBoxLayout, QWidget, QApplication, QStyledItemDelegate, QStyle, QIcon, QAbstractItemDelegate,
     QTextDocument, QRectF, QFrame, QSize, QFont, QKeyEvent, QRadioButton, QPushButton, QToolButton, QEvent
 )
 
@@ -29,8 +29,8 @@ class Customize(QFrame):
 
     def __init__(self, index, dup_check, parent=None):
         QFrame.__init__(self, parent)
-        self.setFrameShape(self.StyledPanel)
-        self.setFrameShadow(self.Raised)
+        self.setFrameShape(QFrame.Shape.StyledPanel)
+        self.setFrameShadow(QFrame.Shadow.Raised)
         self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
         self.setAutoFillBackground(True)
         self.l = l = QVBoxLayout(self)
@@ -170,7 +170,7 @@ class Delegate(QStyledItemDelegate):
 
     def setEditorData(self, editor, index):
         defs = index.data(DEFAULTS)
-        defs = _(' or ').join([unicode_type(x.toString(x.NativeText)) for x in defs])
+        defs = _(' or ').join([unicode_type(x.toString(QKeySequence.SequenceFormat.NativeText)) for x in defs])
         editor.key = unicode_type(index.data(KEY))
         editor.default_shortcuts.setText(_('&Default') + ': %s' % defs)
         editor.default_shortcuts.setChecked(True)
@@ -183,11 +183,11 @@ class Delegate(QStyledItemDelegate):
                 button = getattr(editor, 'button%d'%(x+1))
                 if len(custom) > x:
                     seq = QKeySequence(custom[x])
-                    button.setText(seq.toString(seq.NativeText))
+                    button.setText(seq.toString(QKeySequence.SequenceFormat.NativeText))
                     setattr(editor, 'shortcut%d'%(x+1), seq)
 
     def setModelData(self, editor, model, index):
-        self.closeEditor.emit(editor, self.NoHint)
+        self.closeEditor.emit(editor, QAbstractItemDelegate.EndEditHint.NoHint)
         custom = []
         if editor.custom.isChecked():
             for x in ('1', '2'):
@@ -251,7 +251,7 @@ class Shortcuts(QAbstractListModel):
             return self.descriptions[key]
 
     def get_shortcuts(self, key):
-        return [unicode_type(x.toString(x.NativeText)) for x in
+        return [unicode_type(x.toString(QKeySequence.SequenceFormat.NativeText)) for x in
                 self.get_sequences(key)]
 
     def data(self, index, role):
@@ -305,11 +305,11 @@ class ShortcutConfig(QWidget):
                 type=Qt.ConnectionType.QueuedConnection)
 
     def scrollTo(self, index):
-        self.view.scrollTo(index, self.view.EnsureVisible)
+        self.view.scrollTo(index, QAbstractItemView.ScrollHint.EnsureVisible)
 
     @property
     def is_editing(self):
-        return self.view.state() == self.view.EditingState
+        return self.view.state() == QAbstractItemView.State.EditingState
 
 
 if __name__ == '__main__':

@@ -13,7 +13,7 @@ from itertools import groupby
 from PyQt5.Qt import (QAbstractTableModel, Qt, pyqtSignal, QIcon, QImage, QFont,
         QModelIndex, QDateTime, QColor, QPixmap, QPainter, QApplication)
 
-from calibre import fit_image, force_unicode
+from calibre import fit_image, force_unicode, prepare_string_for_xml, human_readable
 from calibre.gui2 import error_dialog
 from calibre.utils.search_query_parser import ParseException
 from calibre.ebooks.metadata import fmt_sidx, authors_to_string, string_to_authors
@@ -34,12 +34,6 @@ from calibre.library.coloring import color_row_key
 from polyglot.builtins import iteritems, itervalues, unicode_type, string_or_bytes, range, map
 
 Counts = namedtuple('Counts', 'library_total total current')
-
-
-def human_readable(size, precision=1):
-    """ Convert a size in bytes into megabytes """
-    return ('%.'+unicode_type(precision)+'f') % (size/(1024*1024))
-
 
 TIME_FMT = '%d %b %Y'
 
@@ -117,7 +111,7 @@ class ColumnIcon(object):  # {{{
                                     template_cache=template_cache)
                 if not rule_icons:
                     continue
-                icon_list = [ic.strip() for ic in rule_icons.split(':')]
+                icon_list = [ic.strip() for ic in rule_icons.split(':') if ic.strip()]
                 icons.extend(icon_list)
                 if icon_list and not kind.endswith('_composed'):
                     break
@@ -1020,19 +1014,23 @@ class BooksModel(QAbstractTableModel):  # {{{
                 return None
             if role == Qt.ItemDataRole.ToolTipRole:
                 ht = self.column_map[section]
+                title = self.headers[ht]
                 fm = self.db.field_metadata[self.column_map[section]]
                 if ht == 'timestamp':  # change help text because users know this field as 'date'
                     ht = 'date'
                 if fm['is_category']:
-                    is_cat = '\n\n' + _('Click in this column and press Q to Quickview books with the same "%s"') % ht
+                    is_cat = '<br><br>' + prepare_string_for_xml(_('Click in this column and press Q to Quickview books with the same "%s"') % ht)
                 else:
                     is_cat = ''
                 cust_desc = ''
                 if fm['is_custom']:
                     cust_desc = fm['display'].get('description', '')
                     if cust_desc:
-                        cust_desc = '\n' + _('Description:') + ' ' + cust_desc
-                return (_('The lookup/search name is "{0}"{1}{2}').format(ht, cust_desc, is_cat))
+                        cust_desc = '<br><b>{}</b>'.format(_('Description:')) + ' ' + prepare_string_for_xml(cust_desc)
+                return '<b>{}</b>: {}'.format(
+                    prepare_string_for_xml(title),
+                    _('The lookup/search name is <i>{0}</i>').format(ht) + cust_desc + is_cat
+                )
             if role == Qt.ItemDataRole.DisplayRole:
                 return (self.headers[self.column_map[section]])
             return None
@@ -1703,7 +1701,11 @@ class DeviceBooksModel(BooksModel):  # {{{
 
     def headerData(self, section, orientation, role):
         if role == Qt.ItemDataRole.ToolTipRole and orientation == Qt.Orientation.Horizontal:
-            return (_('The lookup/search name is "{0}"').format(self.column_map[section]))
+            cname = self.column_map[section]
+            text = self.headers[cname]
+            return '<b>{}</b>: {}'.format(
+                prepare_string_for_xml(text),
+                prepare_string_for_xml(_('The lookup/search name is <i>{0}</i>').format(self.column_map[section])))
         if DEBUG and role == Qt.ItemDataRole.ToolTipRole and orientation == Qt.Orientation.Vertical:
             return (_('This book\'s UUID is "{0}"').format(self.db[self.map[section]].uuid))
         if role != Qt.ItemDataRole.DisplayRole:

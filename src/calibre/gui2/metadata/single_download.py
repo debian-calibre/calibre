@@ -19,7 +19,7 @@ from PyQt5.Qt import (
     QDialog, QVBoxLayout, QLabel, QDialogButtonBox, QStyle, QStackedWidget,
     QWidget, QTableView, QGridLayout, QPalette, QTimer, pyqtSignal,
     QAbstractTableModel, QSize, QListView, QPixmap, QModelIndex,
-    QAbstractListModel, QRect, QTextBrowser, QStringListModel, QMenu,
+    QAbstractListModel, QRect, QTextBrowser, QStringListModel, QMenu, QItemSelectionModel,
     QCursor, QHBoxLayout, QPushButton, QSizePolicy, QSplitter, QAbstractItemView)
 
 from calibre.customize.ui import metadata_plugins
@@ -54,9 +54,9 @@ class RichTextDelegate(QStyledItemDelegate):  # {{{
         doc = QTextDocument()
         if option is not None and option.state & QStyle.StateFlag.State_Selected:
             p = option.palette
-            group = (p.Active if option.state & QStyle.StateFlag.State_Active else
-                    p.Inactive)
-            c = p.color(group, p.HighlightedText)
+            group = (QPalette.ColorGroup.Active if option.state & QStyle.StateFlag.State_Active else
+                    QPalette.ColorGroup.Inactive)
+            c = p.color(group, QPalette.ColorRole.HighlightedText)
             c = 'rgb(%d, %d, %d)'%c.getRgb()[:3]
             doc.setDefaultStyleSheet(' * { color: %s }'%c)
         doc.setHtml(index.data() or '')
@@ -234,7 +234,7 @@ class ResultsView(QTableView):  # {{{
         if idx.isValid() and self.model().rowCount() > 0:
             self.show_details(idx)
             sm = self.selectionModel()
-            sm.select(idx, sm.ClearAndSelect|sm.Rows)
+            sm.select(idx, QItemSelectionModel.SelectionFlag.ClearAndSelect|QItemSelectionModel.SelectionFlag.Rows)
 
     def resize_delegate(self):
         self.rt_delegate.max_width = int(self.width()/2.1)
@@ -291,11 +291,11 @@ class ResultsView(QTableView):  # {{{
 
     def keyPressEvent(self, ev):
         if ev.key() in (Qt.Key.Key_Left, Qt.Key.Key_Right):
-            ac = self.MoveDown if ev.key() == Qt.Key.Key_Right else self.MoveUp
+            ac = QAbstractItemView.CursorAction.MoveDown if ev.key() == Qt.Key.Key_Right else QAbstractItemView.CursorAction.MoveUp
             index = self.moveCursor(ac, ev.modifiers())
             if index.isValid() and index != self.currentIndex():
                 m = self.selectionModel()
-                m.select(index, m.Select|m.Current|m.Rows)
+                m.select(index, QItemSelectionModel.SelectionFlag.Select|QItemSelectionModel.SelectionFlag.Current|QItemSelectionModel.SelectionFlag.Rows)
                 self.setCurrentIndex(index)
                 ev.accept()
                 return
@@ -796,7 +796,7 @@ class CoversView(QListView):  # {{{
     def select(self, num):
         current = self.model().index(num)
         sm = self.selectionModel()
-        sm.select(current, sm.SelectCurrent)
+        sm.select(current, QItemSelectionModel.SelectionFlag.SelectCurrent)
 
     def start(self):
         self.select(0)
@@ -978,7 +978,7 @@ class LogViewer(QDialog):  # {{{
         self.bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Close)
         l.addWidget(self.bb)
         self.copy_button = self.bb.addButton(_('Copy to clipboard'),
-                self.bb.ActionRole)
+                QDialogButtonBox.ButtonRole.ActionRole)
         self.copy_button.clicked.connect(self.copy_to_clipboard)
         self.copy_button.setIcon(QIcon(I('edit-copy.png')))
         self.bb.rejected.connect(self.reject)
@@ -1040,7 +1040,7 @@ class FullFetch(QDialog):  # {{{
         self.prev_button = pb = QPushButton(QIcon(I('back.png')), _('&Back'), self)
         pb.clicked.connect(self.back_clicked)
         pb.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
-        self.log_button = self.bb.addButton(_('&View log'), self.bb.ActionRole)
+        self.log_button = self.bb.addButton(_('&View log'), QDialogButtonBox.ButtonRole.ActionRole)
         self.log_button.clicked.connect(self.view_log)
         self.log_button.setIcon(QIcon(I('debug.png')))
         self.prev_button.setVisible(False)
@@ -1154,7 +1154,7 @@ class CoverFetch(QDialog):  # {{{
 
         self.bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Cancel|QDialogButtonBox.StandardButton.Ok)
         l.addWidget(self.bb)
-        self.log_button = self.bb.addButton(_('&View log'), self.bb.ActionRole)
+        self.log_button = self.bb.addButton(_('&View log'), QDialogButtonBox.ButtonRole.ActionRole)
         self.log_button.clicked.connect(self.view_log)
         self.log_button.setIcon(QIcon(I('debug.png')))
         self.bb.rejected.connect(self.reject)

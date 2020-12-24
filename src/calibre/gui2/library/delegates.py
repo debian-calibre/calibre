@@ -11,7 +11,7 @@ import sys
 from PyQt5.Qt import (Qt, QApplication, QStyle, QIcon,  QDoubleSpinBox, QStyleOptionViewItem,
         QSpinBox, QStyledItemDelegate, QComboBox, QTextDocument, QMenu, QKeySequence,
         QAbstractTextDocumentLayout, QFont, QFontInfo, QDate, QDateTimeEdit, QDateTime, QEvent,
-        QStyleOptionComboBox, QStyleOptionSpinBox, QLocale, QSize, QLineEdit, QDialog)
+        QStyleOptionComboBox, QStyleOptionSpinBox, QLocale, QSize, QLineEdit, QDialog, QPalette)
 
 from calibre.ebooks.metadata import rating_to_stars
 from calibre.gui2 import UNDEFINED_QDATETIME, rating_font
@@ -43,7 +43,7 @@ class UpdateEditorGeometry(object):
         opt.showDecorationSelected = True
         opt.decorationSize = QSize(0, 0)  # We want the editor to cover the decoration
         style = QApplication.style()
-        initial_geometry = style.subElementRect(style.SE_ItemViewItemText, opt, None)
+        initial_geometry = style.subElementRect(QStyle.SubElement.SE_ItemViewItemText, opt, None)
         orig_width = initial_geometry.width()
 
         # Compute the required width: the width that can show all of the current value
@@ -145,6 +145,8 @@ def make_clearing_spinbox(spinbox):
             if ev.key() == Qt.Key.Key_Space:
                 self.clear_to_undefined()
             else:
+                if self.value() == self.minimum():
+                    self.clear()
                 return spinbox.keyPressEvent(self, ev)
     return SpinBox
 
@@ -648,7 +650,7 @@ class CcCommentsDelegate(QStyledItemDelegate):  # {{{
         ctx = QAbstractTextDocumentLayout.PaintContext()
         ctx.palette = option.palette
         if option.state & QStyle.StateFlag.State_Selected:
-            ctx.palette.setColor(ctx.palette.Text, ctx.palette.color(ctx.palette.HighlightedText))
+            ctx.palette.setColor(QPalette.ColorRole.Text, ctx.palette.color(QPalette.ColorRole.HighlightedText))
         textRect = style.subElementRect(QStyle.SubElement.SE_ItemViewItemText, option, self.parent())
         painter.save()
         painter.translate(textRect.topLeft())

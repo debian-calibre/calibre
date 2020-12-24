@@ -127,7 +127,7 @@ class SearchBox2(QComboBox):  # {{{
                 ac.triggered.connect(self.clear_clicked)
 
         c = self.line_edit.completer()
-        c.setCompletionMode(c.PopupCompletion)
+        c.setCompletionMode(QCompleter.CompletionMode.PopupCompletion)
         c.highlighted[native_string_type].connect(self.completer_used)
 
         self.line_edit.key_pressed.connect(self.key_pressed, type=Qt.ConnectionType.DirectConnection)
@@ -138,9 +138,9 @@ class SearchBox2(QComboBox):  # {{{
         self.timer = QTimer()
         self.timer.setSingleShot(True)
         self.timer.timeout.connect(self.timer_event, type=Qt.ConnectionType.QueuedConnection)
-        self.setInsertPolicy(self.NoInsert)
+        self.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
         self.setMaxCount(self.MAX_COUNT)
-        self.setSizeAdjustPolicy(self.AdjustToMinimumContentsLengthWithIcon)
+        self.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon)
         self.setMinimumContentsLength(25)
         self._in_a_search = False
         self.tool_tip_text = self.toolTip()
@@ -342,8 +342,8 @@ class SavedSearchBox(QComboBox):  # {{{
         self.setCompleter(completer)
 
         self.setEditable(True)
-        self.setInsertPolicy(self.NoInsert)
-        self.setSizeAdjustPolicy(self.AdjustToMinimumContentsLengthWithIcon)
+        self.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
+        self.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon)
         self.setMinimumContentsLength(10)
         self.tool_tip_text = self.toolTip()
 

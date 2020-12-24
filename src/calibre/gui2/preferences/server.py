@@ -12,7 +12,7 @@ import time
 
 from PyQt5.Qt import (
     QCheckBox, QComboBox, QDialog, QDialogButtonBox, QDoubleSpinBox, QFormLayout,
-    QFrame, QHBoxLayout, QIcon, QLabel, QLineEdit, QListWidget, QPlainTextEdit,
+    QFrame, QHBoxLayout, QIcon, QLabel, QLineEdit, QListWidget, QPlainTextEdit, QLayout,
     QPushButton, QScrollArea, QSize, QSizePolicy, QSpinBox, Qt, QTabWidget, QTimer,
     QToolButton, QUrl, QVBoxLayout, QWidget, pyqtSignal
 )
@@ -243,7 +243,7 @@ class AdvancedTab(QWidget):
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
         self.l = l = QFormLayout(self)
-        l.setFieldGrowthPolicy(l.AllNonFixedFieldsGrow)
+        l.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
         self.widgets = []
         self.widget_map = {}
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
@@ -448,7 +448,7 @@ class NewUser(QDialog):
             if username else _('Add new user')
         )
         self.l = l = QFormLayout(self)
-        l.setFieldGrowthPolicy(l.AllNonFixedFieldsGrow)
+        l.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
         self.uw = u = QLineEdit(self)
         l.addRow(_('&Username:'), u)
         if username:
@@ -539,10 +539,10 @@ class Library(QWidget):
         self.name = name
         self.enable_on_checked = enable_on_checked
         self.l = l = QVBoxLayout(self)
-        l.setSizeConstraint(l.SetMinAndMaxSize)
+        l.setSizeConstraint(QLayout.SizeConstraint.SetMinAndMaxSize)
         if not is_first:
             self.border = b = QFrame(self)
-            b.setFrameStyle(b.HLine)
+            b.setFrameStyle(QFrame.Shape.HLine)
             l.addWidget(b)
         self.cw = cw = QCheckBox(name.replace('&', '&&'))
         cw.setStyleSheet('QCheckBox { font-weight: bold }')
@@ -591,7 +591,7 @@ class ChangeRestriction(QDialog):
         self.username = username
         self._items = []
         self.l = l = QFormLayout(self)
-        l.setFieldGrowthPolicy(l.AllNonFixedFieldsGrow)
+        l.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
 
         self.libraries = t = QWidget(self)
         t.setObjectName('libraries')
@@ -898,7 +898,7 @@ class CustomList(QWidget):  # {{{
         QWidget.__init__(self, parent)
         self.default_template = default_custom_list_template()
         self.l = l = QFormLayout(self)
-        l.setFieldGrowthPolicy(l.AllNonFixedFieldsGrow)
+        l.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
         self.la = la = QLabel('<p>' + _(
             'Here you can create a template to control what data is shown when'
             ' using the <i>Custom list</i> mode for the book list'))
@@ -938,9 +938,9 @@ class CustomList(QWidget):  # {{{
         l.addRow(t)
         t.textChanged.connect(self.changed_signal)
         self.imex = bb = QDialogButtonBox(self)
-        b = bb.addButton(_('&Import template'), bb.ActionRole)
+        b = bb.addButton(_('&Import template'), QDialogButtonBox.ButtonRole.ActionRole)
         b.clicked.connect(self.import_template)
-        b = bb.addButton(_('E&xport template'), bb.ActionRole)
+        b = bb.addButton(_('E&xport template'), QDialogButtonBox.ButtonRole.ActionRole)
         b.clicked.connect(self.export_template)
         l.addRow(bb)
 
@@ -1029,7 +1029,7 @@ class URLItem(QWidget):
         self.changed_signal.connect(parent.changed_signal)
         self.l = l = QFormLayout(self)
         self.type_widget = t = QComboBox(self)
-        l.setFieldGrowthPolicy(l.ExpandingFieldsGrow)
+        l.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
         t.addItems([_('Book'), _('Author')])
         l.addRow(_('URL type:'), t)
         self.name_widget = n = QLineEdit(self)
@@ -1346,7 +1346,7 @@ class ConfigWidget(ConfigWidgetBase):
         bx = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok)
         layout.addWidget(bx)
         bx.accepted.connect(d.accept)
-        b = bx.addButton(_('&Clear logs'), bx.ActionRole)
+        b = bx.addButton(_('&Clear logs'), QDialogButtonBox.ButtonRole.ActionRole)
 
         def clear_logs():
             if getattr(self.server, 'is_running', False):

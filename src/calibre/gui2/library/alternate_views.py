@@ -14,7 +14,7 @@ from PyQt5.Qt import (
     QAbstractItemView, QApplication, QBuffer, QByteArray, QColor, QDrag,
     QEasingCurve, QEvent, QFont, QHelpEvent, QIcon, QImage, QItemSelection,
     QItemSelectionModel, QListView, QMimeData, QModelIndex, QPainter, QPixmap,
-    QPoint, QPropertyAnimation, QRect, QSize, QStyledItemDelegate,
+    QPoint, QPropertyAnimation, QRect, QSize, QStyledItemDelegate, QPalette,
     QStyleOptionViewItem, Qt, QTableView, QTimer, QToolTip, QTreeView, QUrl,
     pyqtProperty, pyqtSignal, pyqtSlot, qBlue, qGreen, qRed, QIODevice
 )
@@ -53,14 +53,14 @@ def handle_enter_press(self, ev, special_action=None, has_edit_cell=True):
         mods = ev.modifiers()
         if mods & Qt.Modifier.CTRL or mods & Qt.Modifier.ALT or mods & Qt.Modifier.SHIFT or mods & Qt.Modifier.META:
             return
-        if self.state() != self.EditingState and self.hasFocus() and self.currentIndex().isValid():
+        if self.state() != QAbstractItemView.State.EditingState and self.hasFocus() and self.currentIndex().isValid():
             from calibre.gui2.ui import get_gui
             ev.ignore()
             tweak = tweaks['enter_key_behavior']
             gui = get_gui()
             if tweak == 'edit_cell':
                 if has_edit_cell:
-                    self.edit(self.currentIndex(), self.EditKeyPressed, ev)
+                    self.edit(self.currentIndex(), QAbstractItemView.EditTrigger.EditKeyPressed, ev)
                 else:
                     gui.iactions['Edit Metadata'].edit_metadata(False)
             elif tweak == 'edit_metadata':
@@ -135,7 +135,7 @@ def drag_icon(self, cover, multiple):
         rect.moveTop(20)
         p.fillRect(rect, QColor('white'))
         p.save()
-        p.setCompositionMode(p.CompositionMode_SourceAtop)
+        p.setCompositionMode(QPainter.CompositionMode.CompositionMode_SourceAtop)
         p.drawImage(rect.topLeft(), cover)
         p.restore()
         p.drawRect(rect)
@@ -271,7 +271,7 @@ def setup_dnd_interface(cls_or_self):
         self.drag_start_pos = None
         self.setDragEnabled(True)
         self.setDragDropOverwriteMode(False)
-        self.setDragDropMode(self.DragDrop)
+        self.setDragDropMode(QAbstractItemView.DragDropMode.DragDrop)
 # }}}
 
 # Manage slave views {{{
@@ -702,7 +702,7 @@ class GridView(QListView):
         self.setFlow(QListView.Flow.LeftToRight)
         # We cannot set layout mode to batched, because that breaks
         # restore_vpos()
-        # self.setLayoutMode(self.Batched)
+        # self.setLayoutMode(QListView.ResizeMode.Batched)
         self.setResizeMode(QListView.ResizeMode.Adjust)
         self.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
         self.setVerticalScrollMode(QAbstractItemView.ScrollMode.ScrollPerPixel)
@@ -799,7 +799,7 @@ class GridView(QListView):
         r, g, b = gprefs['cover_grid_color']
         tex = gprefs['cover_grid_texture']
         pal = self.palette()
-        pal.setColor(pal.Base, QColor(r, g, b))
+        pal.setColor(QPalette.ColorRole.Base, QColor(r, g, b))
         self.setPalette(pal)
         ss = ''
         if tex:
@@ -990,8 +990,8 @@ class GridView(QListView):
         # performance if a large number of rows has to be selected.
         for k, g in itertools.groupby(enumerate(rows), lambda i_x:i_x[0]-i_x[1]):
             group = list(map(operator.itemgetter(1), g))
-            sel.merge(QItemSelection(m.index(min(group), 0), m.index(max(group), 0)), sm.Select)
-        sm.select(sel, sm.ClearAndSelect)
+            sel.merge(QItemSelection(m.index(min(group), 0), m.index(max(group), 0)), QItemSelectionModel.SelectionFlag.Select)
+        sm.select(sel, QItemSelectionModel.SelectionFlag.ClearAndSelect)
 
     def selectAll(self):
         # We re-implement this to ensure that only indexes from column 0 are
@@ -1001,11 +1001,11 @@ class GridView(QListView):
         m = self.model()
         sm = self.selectionModel()
         sel = QItemSelection(m.index(0, 0), m.index(m.rowCount(QModelIndex())-1, 0))
-        sm.select(sel, sm.ClearAndSelect)
+        sm.select(sel, QItemSelectionModel.SelectionFlag.ClearAndSelect)
 
     def set_current_row(self, row):
         sm = self.selectionModel()
-        sm.setCurrentIndex(self.model().index(row, 0), sm.NoUpdate)
+        sm.setCurrentIndex(self.model().index(row, 0), QItemSelectionModel.SelectionFlag.NoUpdate)
 
     def set_context_menu(self, menu):
         self.context_menu = menu
@@ -1040,17 +1040,17 @@ class GridView(QListView):
                 return
             ci = self.currentIndex()
             sm = self.selectionModel()
-            sm.setCurrentIndex(index, sm.NoUpdate)
+            sm.setCurrentIndex(index, QItemSelectionModel.SelectionFlag.NoUpdate)
             if not ci.isValid():
                 return
             if not sm.hasSelection():
-                sm.select(index, sm.ClearAndSelect)
+                sm.select(index, QItemSelectionModel.SelectionFlag.ClearAndSelect)
                 return
             cr = ci.row()
             tgt = index.row()
             top = self.model().index(min(cr, tgt), 0)
             bottom = self.model().index(max(cr, tgt), 0)
-            sm.select(QItemSelection(top, bottom), sm.Select)
+            sm.select(QItemSelection(top, bottom), QItemSelectionModel.SelectionFlag.Select)
         else:
             return QListView.mousePressEvent(self, ev)
 
@@ -1098,8 +1098,8 @@ class GridView(QListView):
                 end = c
             top = self.model().index(min(n, end), 0)
             bottom = self.model().index(max(n, end), 0)
-            sm.select(QItemSelection(top, bottom), sm.ClearAndSelect)
-            sm.setCurrentIndex(self.model().index(n, 0), sm.NoUpdate)
+            sm.select(QItemSelection(top, bottom), QItemSelectionModel.SelectionFlag.ClearAndSelect)
+            sm.setCurrentIndex(self.model().index(n, 0), QItemSelectionModel.SelectionFlag.NoUpdate)
         else:
             return QListView.keyPressEvent(self, ev)
 
@@ -1124,7 +1124,7 @@ class GridView(QListView):
             return
         self.set_current_row(row)
         self.select_rows((row,))
-        self.scrollTo(self.model().index(row, 0), self.PositionAtCenter)
+        self.scrollTo(self.model().index(row, 0), QAbstractItemView.ScrollHint.PositionAtCenter)
 
     def marked_changed(self, old_marked, current_marked):
         changed = old_marked | current_marked
@@ -1137,10 +1137,10 @@ class GridView(QListView):
 
     def moveCursor(self, action, modifiers):
         index = QListView.moveCursor(self, action, modifiers)
-        if action in (QListView.MoveLeft, QListView.MoveRight) and index.isValid():
+        if action in (QAbstractItemView.CursorAction.MoveLeft, QAbstractItemView.CursorAction.MoveRight) and index.isValid():
             ci = self.currentIndex()
             if ci.isValid() and index.row() == ci.row():
-                nr = index.row() + (1 if action == QListView.MoveRight else -1)
+                nr = index.row() + (1 if action == QAbstractItemView.CursorAction.MoveRight else -1)
                 if 0 <= nr < self.model().rowCount(QModelIndex()):
                     index = self.model().index(nr, 0)
         return index

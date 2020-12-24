@@ -10,7 +10,7 @@ import os, re, traceback
 from functools import partial
 
 from PyQt5.Qt import (
-    QStyledItemDelegate, Qt, QTreeView, pyqtSignal, QSize, QIcon, QApplication,
+    QStyledItemDelegate, Qt, QTreeView, pyqtSignal, QSize, QIcon, QApplication, QStyle, QAbstractItemView,
     QMenu, QPoint, QToolTip, QCursor, QDrag, QRect, QModelIndex,
     QLinearGradient, QPalette, QColor, QPen, QBrush, QFont, QTimer
 )
@@ -43,7 +43,7 @@ class TagDelegate(QStyledItemDelegate):  # {{{
         rating = item.average_rating
         if rating is None:
             return
-        r = style.subElementRect(style.SE_ItemViewItemDecoration, option, widget)
+        r = style.subElementRect(QStyle.SubElement.SE_ItemViewItemDecoration, option, widget)
         icon = option.icon
         painter.save()
         nr = r.adjusted(0, 0, 0, 0)
@@ -53,15 +53,15 @@ class TagDelegate(QStyledItemDelegate):  # {{{
         if self.old_look:
             bg = option.palette.alternateBase() if option.features&option.Alternate else option.palette.base()
         painter.fillRect(r, bg)
-        style.proxy().drawPrimitive(style.PE_PanelItemViewItem, option, painter, widget)
+        style.proxy().drawPrimitive(QStyle.PrimitiveElement.PE_PanelItemViewItem, option, painter, widget)
         painter.setOpacity(0.3)
-        icon.paint(painter, r, option.decorationAlignment, icon.Normal, icon.On)
+        icon.paint(painter, r, option.decorationAlignment, QIcon.Mode.Normal, QIcon.State.On)
         painter.restore()
 
     def draw_icon(self, style, painter, option, widget):
-        r = style.subElementRect(style.SE_ItemViewItemDecoration, option, widget)
+        r = style.subElementRect(QStyle.SubElement.SE_ItemViewItemDecoration, option, widget)
         icon = option.icon
-        icon.paint(painter, r, option.decorationAlignment, icon.Normal, icon.On)
+        icon.paint(painter, r, option.decorationAlignment, QIcon.Mode.Normal, QIcon.State.On)
 
     def paint_text(self, painter, rect, flags, text, hover):
         set_color = hover and QApplication.instance().is_dark_theme
@@ -75,9 +75,9 @@ class TagDelegate(QStyledItemDelegate):  # {{{
             painter.restore()
 
     def draw_text(self, style, painter, option, widget, index, item):
-        tr = style.subElementRect(style.SE_ItemViewItemText, option, widget)
+        tr = style.subElementRect(QStyle.SubElement.SE_ItemViewItemText, option, widget)
         text = index.data(Qt.ItemDataRole.DisplayRole)
-        hover = option.state & style.State_MouseOver
+        hover = option.state & QStyle.StateFlag.State_MouseOver
         is_search = (True if item.type == TagTreeItem.TAG and
                             item.tag.category == 'search' else False)
         if not is_search and (hover or gprefs['tag_browser_show_counts']):
@@ -119,7 +119,7 @@ class TagDelegate(QStyledItemDelegate):  # {{{
         self.draw_text(style, painter, option, widget, index, item)
         painter.restore()
         if item.boxed:
-            r = style.subElementRect(style.SE_ItemViewItemFocusRect, option,
+            r = style.subElementRect(QStyle.SubElement.SE_ItemViewItemFocusRect, option,
                     widget)
             painter.drawLine(r.bottomLeft(), r.bottomRight())
         if item.type == TagTreeItem.TAG and item.tag.state == 0 and config['show_avg_rating']:
@@ -144,7 +144,7 @@ class TagDelegate(QStyledItemDelegate):  # {{{
             elif not item.use_vl and self.tags_view.model().get_in_vl():
                 item.use_vl = not question_dialog(self.tags_view,
                                     _('Rename in Virtual library'), '<p>' +
-                                    _('A virtual library is active but you are renaming '
+                                    _('A Virtual library is active but you are renaming '
                                       'the item in all books in your library. Is '
                                       'this really what you want to do?') + '</p>',
                                     yes_text=_('Yes, apply in entire library'),
@@ -197,7 +197,7 @@ class TagsView(QTreeView):  # {{{
         self.made_connections = False
         self.setAcceptDrops(True)
         self.setDragEnabled(True)
-        self.setDragDropMode(self.DragDrop)
+        self.setDragDropMode(QAbstractItemView.DragDropMode.DragDrop)
         self.setDropIndicatorShown(True)
         self.setAutoExpandDelay(500)
         self.pane_is_visible = False
@@ -335,7 +335,7 @@ class TagsView(QTreeView):  # {{{
         # I don't see how current_index can ever be not valid, but ...
         if self.currentIndex().isValid():
             if (gprefs['tag_browser_allow_keyboard_focus'] and
-                    event.key() == Qt.Key.Key_Return and self.state() != self.EditingState):
+                    event.key() == Qt.Key.Key_Return and self.state() != QAbstractItemView.State.EditingState):
                 self.toggle_current_index()
                 return
             # If this is an edit request, mark the node to request whether to use VLs
@@ -690,7 +690,7 @@ class TagsView(QTreeView):  # {{{
                 if tag:
                     # If the user right-clicked on an editable item, then offer
                     # the possibility of renaming that item.
-                    if tag.is_editable or tag.is_hierarchical:
+                    if fm['datatype'] != 'composite' and (tag.is_editable or tag.is_hierarchical):
                         # Add the 'rename' items to both interior and leaf nodes
                         if fm['datatype'] != 'enumeration':
                             if self.model().get_in_vl():
@@ -1113,7 +1113,7 @@ class TagsView(QTreeView):  # {{{
         self.blockSignals(False)
 
     def show_item_at_path(self, path, box=False,
-                          position=QTreeView.PositionAtCenter):
+                          position=QAbstractItemView.ScrollHint.PositionAtCenter):
         '''
         Scroll the browser and open categories to show the item referenced by
         path. If possible, the item is placed in the center. If box=True, a
@@ -1133,7 +1133,7 @@ class TagsView(QTreeView):  # {{{
         self.expand(idx)
 
     def show_item_at_index(self, idx, box=False,
-                           position=QTreeView.PositionAtCenter):
+                           position=QAbstractItemView.ScrollHint.PositionAtCenter):
         if idx.isValid() and idx.data(Qt.ItemDataRole.UserRole) is not self._model.root_item:
             self.expand_parent(idx)
             self.setCurrentIndex(idx)

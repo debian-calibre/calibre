@@ -90,7 +90,7 @@ class Completer(QListView):  # {{{
         self.disable_popup = False
         self.setWindowFlags(Qt.WindowType.Popup)
         self.max_visible_items = max_visible_items
-        self.setEditTriggers(self.NoEditTriggers)
+        self.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
         self.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
@@ -512,7 +512,7 @@ class EditWithComplete(EnComboBox):
         except AttributeError:
             return False
         etype = e.type()
-        if self.eat_focus_out and self is obj and etype == e.FocusOut:
+        if self.eat_focus_out and self is obj and etype == QEvent.Type.FocusOut:
             if c.isVisible():
                 return True
         return EnComboBox.eventFilter(self, obj, e)

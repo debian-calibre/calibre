@@ -1722,6 +1722,40 @@ class BuiltinConnectedDeviceName(BuiltinFormatterFunction):
         return _('This function can be used only in the GUI')
 
 
+class BuiltinConnectedDeviceUUID(BuiltinFormatterFunction):
+    name = 'connected_device_uuid'
+    arg_count = 1
+    category = 'Get values from metadata'
+    __doc__ = doc = _("connected_device_uuid(storage_location) -- if a device is "
+                      "connected then return the device uuid (unique id), "
+                      "otherwise return the empty string. Each storage location "
+                      "on a device has a different uuid. The location names are "
+                      "'main', 'carda' and 'cardb'. This function works only in "
+                      "the GUI.")
+
+    def evaluate(self, formatter, kwargs, mi, locals, storage_location):
+        if hasattr(mi, '_proxy_metadata'):
+            # Do the import here so that we don't entangle the GUI when using
+            # command line functions
+            from calibre.gui2.ui import get_gui
+            info = get_gui().device_manager.get_current_device_information()
+            if info is None:
+                return ''
+            try:
+                if storage_location not in {'main', 'carda', 'cardb'}:
+                    raise ValueError(
+                         _('connected_device_name: invalid storage location "{0}"'
+                                    .format(storage_location)))
+                info = info['info'][4]
+                if storage_location not in info:
+                    return ''
+                return info[storage_location]['device_store_uuid']
+            except:
+                traceback.print_exc()
+                raise
+        return _('This function can be used only in the GUI')
+
+
 class BuiltinCheckYesNo(BuiltinFormatterFunction):
     name = 'check_yes_no'
     arg_count = 4
@@ -1804,16 +1838,56 @@ class BuiltinSwapAroundArticles(BuiltinFormatterFunction):
         return separator.join(sorted(result, key=sort_key))
 
 
+class BuiltinArguments(BuiltinFormatterFunction):
+    name = 'arguments'
+    arg_count = -1
+    category = 'other'
+    __doc__ = doc = _('arguments(id[=expression] [, id[=expression]]*) '
+                      '-- Used in a stored template to retrieve the arguments '
+                      'passed in the call. It both declares and initializes '
+                      'local variables, effectively parameters. The variables '
+                      'are positional; they get the value of the value given '
+                      'in the call in the same position. If the corresponding '
+                      'parameter is not provided in the call then arguments '
+                      'assigns that variable the provided default value. If '
+                      'there is no default value then the variable is set to '
+                      'the empty string.')
+
+    def evaluate(self, formatter, kwargs, mi, locals, *args):
+        # The arguments function is implemented in-line in the formatter
+        raise NotImplementedError()
+
+
+class BuiltinGlobals(BuiltinFormatterFunction):
+    name = 'globals'
+    arg_count = -1
+    category = 'other'
+    __doc__ = doc = _('globals(id[=expression] [, id[=expression]]*) '
+                      '-- Retrieves "global variables" that can be passed into '
+                      'the formatter. It both declares and initializes local '
+                      'variables with the names of the global variables passed '
+                      'in. If the corresponding variable is not provided in '
+                      'the passed-in globals then it assigns that variable the '
+                      'provided default value. If there is no default value '
+                      'then the variable is set to the empty string.')
+
+    def evaluate(self, formatter, kwargs, mi, locals, *args):
+        # The globals function is implemented in-line in the formatter
+        raise NotImplementedError()
+
+
 _formatter_builtins = [
-    BuiltinAdd(), BuiltinAnd(), BuiltinApproximateFormats(), BuiltinAssign(),
+    BuiltinAdd(), BuiltinAnd(), BuiltinApproximateFormats(), BuiltinArguments(),
+    BuiltinAssign(),
     BuiltinAuthorLinks(), BuiltinAuthorSorts(), BuiltinBooksize(),
     BuiltinCapitalize(), BuiltinCheckYesNo(), BuiltinCeiling(),
-    BuiltinCmp(), BuiltinConnectedDeviceName(), BuiltinContains(),
+    BuiltinCmp(), BuiltinConnectedDeviceName(), BuiltinConnectedDeviceUUID(), BuiltinContains(),
     BuiltinCount(), BuiltinCurrentLibraryName(), BuiltinCurrentLibraryPath(),
     BuiltinDaysBetween(), BuiltinDivide(), BuiltinEval(), BuiltinFirstNonEmpty(),
     BuiltinField(), BuiltinFinishFormatting(), BuiltinFirstMatchingCmp(), BuiltinFloor(),
     BuiltinFormatDate(), BuiltinFormatNumber(), BuiltinFormatsModtimes(),
     BuiltinFormatsPaths(), BuiltinFormatsSizes(), BuiltinFractionalPart(),
+    BuiltinGlobals(),
     BuiltinHasCover(), BuiltinHumanReadable(), BuiltinIdentifierInList(),
     BuiltinIfempty(), BuiltinLanguageCodes(), BuiltinLanguageStrings(),
     BuiltinInList(), BuiltinListDifference(), BuiltinListEquals(),

@@ -18,7 +18,7 @@ from PyQt5.Qt import (
     QDesktopServices, QDialog, QEvent, QFileDialog, QFileIconProvider, QFileInfo, QPalette,
     QFont, QFontDatabase, QFontInfo, QFontMetrics, QIcon, QLocale, QColor,
     QNetworkProxyFactory, QObject, QSettings, QSocketNotifier, QStringListModel, Qt,
-    QThread, QTimer, QTranslator, QUrl, pyqtSignal, QIODevice
+    QThread, QTimer, QTranslator, QUrl, pyqtSignal, QIODevice, QDialogButtonBox
 )
 from PyQt5.QtWidgets import QStyle  # Gives a nicer error message than import from Qt
 
@@ -458,7 +458,7 @@ def info_dialog(parent, title, msg, det_msg='', show=False,
 def show_restart_warning(msg, parent=None):
     d = warning_dialog(parent, _('Restart needed'), msg,
             show_copy_button=False)
-    b = d.bb.addButton(_('&Restart calibre now'), d.bb.AcceptRole)
+    b = d.bb.addButton(_('&Restart calibre now'), QDialogButtonBox.ButtonRole.AcceptRole)
     b.setIcon(QIcon(I('lt.png')))
     d.do_restart = False
 
@@ -970,8 +970,8 @@ class Application(QApplication):
             # same as non highlighted colors. This is a regression from Qt 4.
             # https://bugreports.qt-project.org/browse/QTBUG-41060
             p = self.palette()
-            for role in (p.Highlight, p.HighlightedText, p.Base, p.AlternateBase):
-                p.setColor(p.Inactive, role, p.color(p.Active, role))
+            for role in (QPalette.ColorRole.Highlight, QPalette.ColorRole.HighlightedText, QPalette.ColorRole.Base, QPalette.ColorRole.AlternateBase):
+                p.setColor(QPalette.ColorGroup.Inactive, role, p.color(QPalette.ColorGroup.Active, role))
             self.setPalette(p)
 
             # Prevent text copied to the clipboard from being lost on quit due to
@@ -1512,7 +1512,7 @@ def windows_is_system_dark_mode_enabled():
 
 def make_view_use_window_background(view):
     p = view.palette()
-    p.setColor(p.Base, p.color(p.Window))
-    p.setColor(p.AlternateBase, p.color(p.Window))
+    p.setColor(QPalette.ColorRole.Base, p.color(QPalette.ColorRole.Window))
+    p.setColor(QPalette.ColorRole.AlternateBase, p.color(QPalette.ColorRole.Window))
     view.setPalette(p)
     return view

@@ -38,17 +38,6 @@ class Config(Dialog):
         return super().accept()
 
 
-def add_markup(text_parts, mark_template):
-    from calibre.gui2.tts.implementation import Client
-    buf = []
-    for x in text_parts:
-        if isinstance(x, int):
-            buf.append(mark_template.format(x))
-        else:
-            buf.append(Client.escape_marked_text(x))
-    return ''.join(buf)
-
-
 class TTS(QObject):
 
     dispatch_on_main_thread_signal = pyqtSignal(object)
@@ -75,7 +64,10 @@ class TTS(QObject):
     @property
     def tts_client(self):
         if self._tts_client is None:
-            self._tts_client = self.tts_client_class(self.backend_settings, self.dispatch_on_main_thread_signal.emit)
+            settings = self.backend_settings
+            self._tts_client = self.tts_client_class(settings, self.dispatch_on_main_thread_signal.emit)
+            if self._tts_client.settings != settings:
+                self.backend_settings = self._tts_client.settings
         return self._tts_client
 
     def shutdown(self):
@@ -98,8 +90,7 @@ class TTS(QObject):
             return error_dialog(self.parent(), _('Text-to-Speech unavailable'), str(err), show=True)
 
     def play(self, data):
-        marked_text = add_markup(data['marked_text'], self.tts_client_class.mark_template)
-        self.tts_client.speak_marked_text(marked_text.strip(), self.callback)
+        self.tts_client.speak_marked_text(data['marked_text'], self.callback)
 
     def pause(self, data):
         self.tts_client.pause()
