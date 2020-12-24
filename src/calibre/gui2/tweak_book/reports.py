@@ -20,7 +20,7 @@ from PyQt5.Qt import (
     QListWidgetItem, QLineEdit, QStackedWidget, QSplitter, QByteArray, QPixmap,
     QStyledItemDelegate, QModelIndex, QRect, QStyle, QPalette, QTimer, QMenu,
     QAbstractItemModel, QTreeView, QFont, QRadioButton, QHBoxLayout,
-    QFontDatabase, QComboBox, QUrl, QAbstractItemView)
+    QFontDatabase, QComboBox, QUrl, QAbstractItemView, QDialogButtonBox, QTextCursor)
 
 from calibre import human_readable, fit_image
 from calibre.constants import DEBUG
@@ -219,7 +219,7 @@ class FilesView(QTableView):
             self.sortByColumn(sort_column, sort_order)
         h.setSectionsMovable(True), h.setSectionsClickable(True)
         h.setDragEnabled(True), h.setAcceptDrops(True)
-        h.setDragDropMode(self.InternalMove)
+        h.setDragDropMode(QAbstractItemView.DragDropMode.InternalMove)
 
 # }}}
 
@@ -337,7 +337,7 @@ def jump_to_location(loc):
         if not block.isValid():
             return
         c = editor.textCursor()
-        c.setPosition(block.position(), c.MoveAnchor)
+        c.setPosition(block.position(), QTextCursor.MoveMode.MoveAnchor)
         editor.setTextCursor(c)
         if loc.text_on_line is not None:
             editor.find(regex.compile(regex.escape(loc.text_on_line)))
@@ -1395,11 +1395,11 @@ class Reports(Dialog):
         la.setStyleSheet('QLabel { font-size: 30pt; font-weight: bold }')
         l.addWidget(la, alignment=Qt.AlignmentFlag.AlignHCenter), l.addStretch(1)
 
-        self.bb.setStandardButtons(self.bb.Close)
-        self.refresh_button = b = self.bb.addButton(_('&Refresh'), self.bb.ActionRole)
+        self.bb.setStandardButtons(QDialogButtonBox.StandardButton.Close)
+        self.refresh_button = b = self.bb.addButton(_('&Refresh'), QDialogButtonBox.ButtonRole.ActionRole)
         b.clicked.connect(self.refresh)
         b.setIcon(QIcon(I('view-refresh.png')))
-        self.save_button = b = self.bb.addButton(_('&Save'), self.bb.ActionRole)
+        self.save_button = b = self.bb.addButton(_('&Save'), QDialogButtonBox.ButtonRole.ActionRole)
         b.clicked.connect(self.reports.to_csv)
         b.setIcon(QIcon(I('save.png')))
         b.setToolTip(_('Export the currently shown report as a CSV file'))

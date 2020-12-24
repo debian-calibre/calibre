@@ -60,9 +60,9 @@ class HeaderView(QHeaderView):  # {{{
         self.fm = QFontMetrics(self.current_font)
 
     def event(self, e):
-        if e.type() in (e.HoverMove, e.HoverEnter):
+        if e.type() in (QEvent.Type.HoverMove, QEvent.Type.HoverEnter):
             self.hover = self.logicalIndexAt(e.pos())
-        elif e.type() in (e.Leave, e.HoverLeave):
+        elif e.type() in (QEvent.Type.Leave, QEvent.Type.HoverLeave):
             self.hover = -1
         return QHeaderView.event(self, e)
 
@@ -97,11 +97,11 @@ class HeaderView(QHeaderView):  # {{{
         opt.fontMetrics = self.fm
         model = self.parent().model()
         style = self.style()
-        margin = 2 * style.pixelMetric(style.PM_HeaderMargin, None, self)
+        margin = 2 * style.pixelMetric(QStyle.PixelMetric.PM_HeaderMargin, None, self)
         if self.isSortIndicatorShown() and self.sortIndicatorSection() == logical_index:
             opt.sortIndicator = QStyleOptionHeader.SortIndicator.SortDown if \
                 self.sortIndicatorOrder() == Qt.SortOrder.AscendingOrder else QStyleOptionHeader.SortIndicator.SortUp
-            margin += style.pixelMetric(style.PM_HeaderMarkSize, None, self)
+            margin += style.pixelMetric(QStyle.PixelMetric.PM_HeaderMarkSize, None, self)
         opt.text = unicode_type(model.headerData(logical_index, opt.orientation, Qt.ItemDataRole.DisplayRole) or '')
         if self.textElideMode() != Qt.TextElideMode.ElideNone:
             opt.text = opt.fontMetrics.elidedText(opt.text, Qt.TextElideMode.ElideRight, rect.width() - margin)
@@ -236,13 +236,13 @@ class BooksView(QTableView):  # {{{
 
         for wv in self, self.pin_view:
             if not tweaks['horizontal_scrolling_per_column']:
-                wv.setHorizontalScrollMode(self.ScrollPerPixel)
+                wv.setHorizontalScrollMode(QAbstractItemView.ScrollMode.ScrollPerPixel)
 
-            wv.setEditTriggers(self.EditKeyPressed)
+            wv.setEditTriggers(QAbstractItemView.EditTrigger.EditKeyPressed)
             if tweaks['doubleclick_on_library_view'] == 'edit_cell':
-                wv.setEditTriggers(self.DoubleClicked|wv.editTriggers())
+                wv.setEditTriggers(QAbstractItemView.EditTrigger.DoubleClicked|wv.editTriggers())
             elif tweaks['doubleclick_on_library_view'] == 'open_viewer':
-                wv.setEditTriggers(self.SelectedClicked|wv.editTriggers())
+                wv.setEditTriggers(QAbstractItemView.EditTrigger.SelectedClicked|wv.editTriggers())
                 wv.doubleClicked.connect(parent.iactions['View'].view_triggered)
             elif tweaks['doubleclick_on_library_view'] == 'edit_metadata':
                 # Must not enable single-click to edit, or the field will remain
@@ -252,7 +252,7 @@ class BooksView(QTableView):  # {{{
                             partial(parent.iactions['Edit Metadata'].edit_metadata,
                                     checked=False))
                 else:
-                    wv.setEditTriggers(self.DoubleClicked|wv.editTriggers())
+                    wv.setEditTriggers(QAbstractItemView.EditTrigger.DoubleClicked|wv.editTriggers())
 
         setup_dnd_interface(self)
         for wv in self, self.pin_view:
@@ -314,7 +314,7 @@ class BooksView(QTableView):  # {{{
             self.pin_view.column_header.sectionMoved.connect(self.pin_view.save_state)
             self.pin_view.column_header.customContextMenuRequested.connect(partial(self.show_column_header_context_menu, view=self.pin_view))
         self.row_header = HeaderView(Qt.Orientation.Vertical, self)
-        self.row_header.setSectionResizeMode(self.row_header.Fixed)
+        self.row_header.setSectionResizeMode(QHeaderView.ResizeMode.Fixed)
         self.setVerticalHeader(self.row_header)
         # }}}
 
@@ -1010,11 +1010,14 @@ class BooksView(QTableView):  # {{{
             current_row = ci.row()
             sm = self.selectionModel()
             if clicked_row == current_row:
-                sm.setCurrentIndex(index, sm.NoUpdate)
+                sm.setCurrentIndex(index, QItemSelectionModel.SelectionFlag.NoUpdate)
                 return
             sr = sm.selectedRows()
             if not len(sr):
-                sm.select(index, sm.Select | sm.Clear | sm.Current | sm.Rows)
+                sm.select(
+                    index,
+                    QItemSelectionModel.SelectionFlag.Select | QItemSelectionModel.SelectionFlag.Clear |
+                    QItemSelectionModel.SelectionFlag.Current | QItemSelectionModel.SelectionFlag.Rows)
                 return
 
             m = self.model()
@@ -1035,15 +1038,17 @@ class BooksView(QTableView):  # {{{
                     upper, lower = clicked_row, min_row
                 else:
                     upper, lower = max_row, clicked_row
-                existing_selection.merge(new_selection(upper, lower), sm.Select)
+                existing_selection.merge(new_selection(upper, lower), QItemSelectionModel.SelectionFlag.Select)
             else:
                 if current_row < clicked_row:
                     upper, lower = current_row, clicked_row
                 else:
                     upper, lower  = clicked_row, current_row
-                existing_selection.merge(new_selection(upper, lower), sm.Toggle)
-            sm.select(existing_selection, sm.ClearAndSelect)
-            sm.setCurrentIndex(index, sm.Select | sm.Rows)  # ensure clicked row is always selected
+                existing_selection.merge(new_selection(upper, lower), QItemSelectionModel.SelectionFlag.Toggle)
+            sm.select(existing_selection, QItemSelectionModel.SelectionFlag.ClearAndSelect)
+            sm.setCurrentIndex(
+                # ensure clicked row is always selected
+                index, QItemSelectionModel.SelectionFlag.Select | QItemSelectionModel.SelectionFlag.Rows)
         else:
             return QTableView.mousePressEvent(self, ev)
 
@@ -1083,7 +1088,7 @@ class BooksView(QTableView):  # {{{
             h = self.horizontalHeader()
             for i in range(h.count()):
                 if not h.isSectionHidden(i) and h.sectionViewportPosition(i) >= 0:
-                    self.scrollTo(self.model().index(row, i), self.PositionAtCenter)
+                    self.scrollTo(self.model().index(row, i), QAbstractItemView.ScrollHint.PositionAtCenter)
                     break
 
     @property
@@ -1125,20 +1130,20 @@ class BooksView(QTableView):  # {{{
             index = self.model().index(row, i)
             if for_sync:
                 sm = self.selectionModel()
-                sm.setCurrentIndex(index, sm.NoUpdate)
+                sm.setCurrentIndex(index, QItemSelectionModel.SelectionFlag.NoUpdate)
             else:
                 self.setCurrentIndex(index)
                 if select:
                     sm = self.selectionModel()
-                    sm.select(index, sm.ClearAndSelect|sm.Rows)
+                    sm.select(index, QItemSelectionModel.SelectionFlag.ClearAndSelect|QItemSelectionModel.SelectionFlag.Rows)
 
     def select_cell(self, row_number=0, logical_column=0):
         if row_number > -1 and row_number < self.model().rowCount(QModelIndex()):
             index = self.model().index(row_number, logical_column)
             self.setCurrentIndex(index)
             sm = self.selectionModel()
-            sm.select(index, sm.ClearAndSelect|sm.Rows)
-            sm.select(index, sm.Current)
+            sm.select(index, QItemSelectionModel.SelectionFlag.ClearAndSelect|QItemSelectionModel.SelectionFlag.Rows)
+            sm.select(index, QItemSelectionModel.SelectionFlag.Current)
             self.clicked.emit(index)
 
     def row_at_top(self):
@@ -1161,7 +1166,7 @@ class BooksView(QTableView):  # {{{
     def moveCursor(self, action, modifiers):
         orig = self.currentIndex()
         index = QTableView.moveCursor(self, action, modifiers)
-        if action == QTableView.MovePageDown:
+        if action == QAbstractItemView.CursorAction.MovePageDown:
             moved = index.row() - orig.row()
             try:
                 rows = self.row_at_bottom() - self.row_at_top()
@@ -1169,7 +1174,7 @@ class BooksView(QTableView):  # {{{
                 rows = moved
             if moved > rows:
                 index = self.model().index(orig.row() + rows, index.column())
-        elif action == QTableView.MovePageUp:
+        elif action == QAbstractItemView.CursorAction.MovePageUp:
             moved = orig.row() - index.row()
             try:
                 rows = self.row_at_bottom() - self.row_at_top()
@@ -1177,9 +1182,9 @@ class BooksView(QTableView):  # {{{
                 rows = moved
             if moved > rows:
                 index = self.model().index(orig.row() - rows, index.column())
-        elif action == QTableView.MoveHome and modifiers & Qt.KeyboardModifier.ControlModifier:
+        elif action == QAbstractItemView.CursorAction.MoveHome and modifiers & Qt.KeyboardModifier.ControlModifier:
             return self.model().index(0, orig.column())
-        elif action == QTableView.MoveEnd and modifiers & Qt.KeyboardModifier.ControlModifier:
+        elif action == QAbstractItemView.CursorAction.MoveEnd and modifiers & Qt.KeyboardModifier.ControlModifier:
             return self.model().index(self.model().rowCount(QModelIndex()) - 1, orig.column())
         return index
 
@@ -1237,8 +1242,8 @@ class BooksView(QTableView):  # {{{
         for k, g in itertools.groupby(enumerate(rows), lambda i_x:i_x[0]-i_x[1]):
             group = list(map(operator.itemgetter(1), g))
             sel.merge(QItemSelection(m.index(min(group), 0),
-                m.index(max(group), max_col)), sm.Select)
-        sm.select(sel, sm.ClearAndSelect)
+                m.index(max(group), max_col)), QItemSelectionModel.SelectionFlag.Select)
+        sm.select(sel, QItemSelectionModel.SelectionFlag.ClearAndSelect)
         return rows
 
     def get_selected_ids(self, as_set=False):
@@ -1367,7 +1372,7 @@ class DeviceBooksView(BooksView):  # {{{
         self.half_rating_delegate = None
         for i in range(10):
             self.setItemDelegateForColumn(i, TextDelegate(self))
-        self.setDragDropMode(self.NoDragDrop)
+        self.setDragDropMode(QAbstractItemView.DragDropMode.NoDragDrop)
         self.setAcceptDrops(False)
         self.set_row_header_visibility()
 

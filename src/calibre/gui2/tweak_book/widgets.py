@@ -11,10 +11,10 @@ from collections import OrderedDict
 from PyQt5.Qt import (
     QGridLayout, QLabel, QLineEdit, QVBoxLayout, QFormLayout, QHBoxLayout,
     QToolButton, QIcon, QApplication, Qt, QWidget, QPoint, QSizePolicy,
-    QPainter, QStaticText, pyqtSignal, QTextOption, QAbstractListModel,
-    QModelIndex, QStyledItemDelegate, QStyle, QCheckBox, QListView,
+    QPainter, QStaticText, pyqtSignal, QTextOption, QAbstractListModel, QItemSelectionModel,
+    QModelIndex, QStyledItemDelegate, QStyle, QCheckBox, QListView, QPalette,
     QTextDocument, QSize, QComboBox, QFrame, QCursor, QGroupBox, QSplitter,
-    QPixmap, QRect, QPlainTextEdit, QMimeData, QDialog, QEvent)
+    QPixmap, QRect, QPlainTextEdit, QMimeData, QDialog, QEvent, QDialogButtonBox)
 
 from calibre import prepare_string_for_xml, human_readable
 from calibre.constants import iswindows
@@ -188,7 +188,7 @@ class ImportForeign(Dialog):  # {{{
 
     def setup_ui(self):
         self.l = l = QFormLayout(self)
-        l.setFieldGrowthPolicy(l.AllNonFixedFieldsGrow)
+        l.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
         self.setLayout(l)
 
         la = self.la = QLabel(_(
@@ -277,7 +277,7 @@ def make_highlighted_text(emph, text, positions):
 
 def emphasis_style():
     pal = QApplication.instance().palette()
-    return 'color: {}; font-weight: bold'.format(pal.color(pal.Link).name())
+    return 'color: {}; font-weight: bold'.format(pal.color(QPalette.ColorRole.Link).name())
 
 
 class Results(QWidget):
@@ -297,7 +297,7 @@ class Results(QWidget):
         self.setMouseTracking(True)
         self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.text_option = to = QTextOption()
-        to.setWrapMode(to.NoWrap)
+        to.setWrapMode(QTextOption.WrapMode.NoWrap)
         self.divider = QStaticText('\xa0→ \xa0')
         self.divider.setTextFormat(Qt.TextFormat.PlainText)
 
@@ -503,8 +503,8 @@ class NamesDelegate(QStyledItemDelegate):
         painter.save()
         painter.setFont(option.font)
         p = option.palette
-        c = p.HighlightedText if option.state & QStyle.StateFlag.State_Selected else p.Text
-        group = (p.Active if option.state & QStyle.StateFlag.State_Active else p.Inactive)
+        c = QPalette.ColorRole.HighlightedText if option.state & QStyle.StateFlag.State_Selected else QPalette.ColorRole.Text
+        group = (QPalette.ColorGroup.Active if option.state & QStyle.StateFlag.State_Active else QPalette.ColorGroup.Inactive)
         c = p.color(group, c)
         painter.setClipRect(option.rect)
         if positions is None or -1 in positions:
@@ -512,7 +512,7 @@ class NamesDelegate(QStyledItemDelegate):
             painter.drawText(option.rect, Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter | Qt.TextFlag.TextSingleLine, text)
         else:
             to = QTextOption()
-            to.setWrapMode(to.NoWrap)
+            to.setWrapMode(QTextOption.WrapMode.NoWrap)
             to.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
             positions = sorted(set(positions) - {-1}, reverse=True)
             text = '<body>%s</body>' % make_highlighted_text(emphasis_style(), text, positions)
@@ -666,7 +666,7 @@ class InsertLink(Dialog):
         h.addLayout(fnl), h.setStretch(1, 1)
 
         self.tl = tl = QFormLayout()
-        tl.setFieldGrowthPolicy(tl.AllNonFixedFieldsGrow)
+        tl.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
         self.target = t = QLineEdit(self)
         t.setPlaceholderText(_('The destination (href) for the link'))
         tl.addRow(_('&Target:'), t)
@@ -846,7 +846,7 @@ class InsertSemantics(Dialog):
         l.addLayout(tl)
 
         self.hline = hl = QFrame(self)
-        hl.setFrameStyle(hl.HLine)
+        hl.setFrameStyle(QFrame.Shape.HLine)
         l.addWidget(hl)
 
         self.h = h = QHBoxLayout()
@@ -872,7 +872,7 @@ class InsertSemantics(Dialog):
         fnl.addWidget(la), fnl.addWidget(f), fnl.addWidget(fn)
         h.addLayout(fnl), h.setStretch(1, 1)
 
-        self.bb.addButton(self.bb.Help)
+        self.bb.addButton(QDialogButtonBox.StandardButton.Help)
         self.bb.helpRequested.connect(self.help_requested)
         l.addWidget(self.bb)
         self.semantic_type_changed()
@@ -901,12 +901,12 @@ class InsertSemantics(Dialog):
             row = self.file_names.model().find_name(name)
             if row is not None:
                 sm = self.file_names.selectionModel()
-                sm.select(self.file_names.model().index(row), sm.ClearAndSelect)
+                sm.select(self.file_names.model().index(row), QItemSelectionModel.SelectionFlag.ClearAndSelect)
                 if frag:
                     row = self.anchor_names.model().find_name(frag)
                     if row is not None:
                         sm = self.anchor_names.selectionModel()
-                        sm.select(self.anchor_names.model().index(row), sm.ClearAndSelect)
+                        sm.select(self.anchor_names.model().index(row), QItemSelectionModel.SelectionFlag.ClearAndSelect)
         self.target.blockSignals(True)
         if name is not None:
             self.target.setText(name + (('#' + frag) if frag else ''))
@@ -1142,7 +1142,7 @@ class AddCover(Dialog):
         l.addLayout(h)
 
         l.addWidget(self.bb)
-        b = self.bb.addButton(_('Import &image'), self.bb.ActionRole)
+        b = self.bb.addButton(_('Import &image'), QDialogButtonBox.ButtonRole.ActionRole)
         b.clicked.connect(self.import_image)
         b.setIcon(QIcon(I('document_open.png')))
         self.names.setFocus(Qt.FocusReason.OtherFocusReason)

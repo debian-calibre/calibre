@@ -4,7 +4,7 @@
 
 
 from PyQt5.Qt import (
-    QFormLayout, QIcon, QLabel, QLineEdit, QListWidget, Qt, QVBoxLayout, QDialog
+    QFormLayout, QIcon, QLabel, QLineEdit, QListWidget, Qt, QVBoxLayout, QDialog, QDialogButtonBox
 )
 
 from calibre import prepare_string_for_xml
@@ -38,7 +38,7 @@ class AddSavedSearch(Dialog):
 
     def setup_ui(self):
         self.l = l = QFormLayout(self)
-        l.setFieldGrowthPolicy(l.AllNonFixedFieldsGrow)
+        l.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
 
         self.la = la = QLabel(self.label or _(
             'You can create a <i>Saved search</i>, for frequently used searches here.'
@@ -99,15 +99,15 @@ class SavedSearchEditor(Dialog):
         from calibre.gui2.ui import get_gui
         db = get_gui().current_db
         self.l = l = QVBoxLayout(self)
-        b = self.bb.addButton(_('&Add search'), self.bb.ActionRole)
+        b = self.bb.addButton(_('&Add search'), QDialogButtonBox.ButtonRole.ActionRole)
         b.setIcon(QIcon(I('plus.png')))
         b.clicked.connect(self.add_search)
 
-        b = self.bb.addButton(_('&Remove search'), self.bb.ActionRole)
+        b = self.bb.addButton(_('&Remove search'), QDialogButtonBox.ButtonRole.ActionRole)
         b.setIcon(QIcon(I('minus.png')))
         b.clicked.connect(self.del_search)
 
-        b = self.bb.addButton(_('&Edit search'), self.bb.ActionRole)
+        b = self.bb.addButton(_('&Edit search'), QDialogButtonBox.ButtonRole.ActionRole)
         b.setIcon(QIcon(I('modified.png')))
         b.clicked.connect(self.edit_search)
 

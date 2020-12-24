@@ -17,7 +17,7 @@ from PyQt5.Qt import (
     QHBoxLayout, QIcon, QKeySequence, QLabel, QLineEdit, QMenu, QPalette,
     QPlainTextEdit, QPushButton, QSize, QSyntaxHighlighter, Qt, QTabWidget,
     QTextBlockFormat, QTextCharFormat, QTextCursor, QTextEdit, QTextListFormat,
-    QToolBar, QUrl, QVBoxLayout, QWidget, pyqtSignal, pyqtSlot, QToolButton
+    QToolBar, QUrl, QVBoxLayout, QWidget, pyqtSignal, pyqtSlot, QToolButton, QTextFormat
 )
 
 from calibre import xml_replace_entities
@@ -558,11 +558,11 @@ class EditorWidget(QTextEdit, LineEditECM):  # {{{
             bf.setTopMargin(tmargin), bf.setBottomMargin(bmargin)
             bf.setHeadingLevel(lvl)
             if adjust:
-                bcf.setProperty(QTextCharFormat.FontSizeAdjustment, adjust)
-                cf.setProperty(QTextCharFormat.FontSizeAdjustment, adjust)
+                bcf.setProperty(QTextFormat.Property.FontSizeAdjustment, adjust)
+                cf.setProperty(QTextFormat.Property.FontSizeAdjustment, adjust)
             if wt:
-                bcf.setProperty(QTextCharFormat.FontWeight, wt)
-                cf.setProperty(QTextCharFormat.FontWeight, wt)
+                bcf.setProperty(QTextFormat.Property.FontWeight, wt)
+                cf.setProperty(QTextFormat.Property.FontWeight, wt)
             c.setBlockCharFormat(bcf)
             c.mergeCharFormat(cf)
             c.mergeBlockFormat(bf)
@@ -589,7 +589,7 @@ class EditorWidget(QTextEdit, LineEditECM):  # {{{
 
     def do_insert_hr(self, *args):
         with self.editing_cursor() as c:
-            c.movePosition(c.EndOfBlock, c.MoveAnchor)
+            c.movePosition(QTextCursor.MoveOperation.EndOfBlock, QTextCursor.MoveMode.MoveAnchor)
             c.insertHtml('<hr>')
 
     def do_insert_link(self, *args):
@@ -617,7 +617,7 @@ class EditorWidget(QTextEdit, LineEditECM):  # {{{
                         start, end = min(pos, anchor), max(pos, anchor)
                         for i in range(start, end):
                             cur = self.textCursor()
-                            cur.setPosition(i), cur.setPosition(i + 1, c.KeepAnchor)
+                            cur.setPosition(i), cur.setPosition(i + 1, QTextCursor.MoveMode.KeepAnchor)
                             cur.mergeCharFormat(fmt)
                     c.setPosition(c.position())
                     c.setCharFormat(oldfmt)
@@ -677,7 +677,7 @@ class EditorWidget(QTextEdit, LineEditECM):  # {{{
             'will stop working if the file is moved.'))
         la.setWordWrap(True)
         la.setStyleSheet('QLabel { margin-bottom: 1.5ex }')
-        l.setWidget(0, l.SpanningRole, la)
+        l.setWidget(0, QFormLayout.ItemRole.SpanningRole, la)
         l.addRow(_('Enter &URL:'), d.url)
         l.addRow(_('Treat the URL as an &image'), d.treat_as_image)
         l.addRow(_('Enter &name (optional):'), d.name)
@@ -1067,7 +1067,7 @@ class Editor(QWidget):  # {{{
         self.set_base_url = self.editor.set_base_url
         self.set_html = self.editor.set_html
         self.tabs = QTabWidget(self)
-        self.tabs.setTabPosition(self.tabs.South)
+        self.tabs.setTabPosition(QTabWidget.TabPosition.South)
         self.wyswyg = QWidget(self.tabs)
         self.code_edit = QPlainTextEdit(self.tabs)
         self.source_dirty = False

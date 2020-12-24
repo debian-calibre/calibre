@@ -11,8 +11,8 @@ from PyQt5.Qt import (QIcon, QFont, QLabel, QListWidget, QAction, QEvent,
         QListWidgetItem, QTextCharFormat, QApplication, QSyntaxHighlighter,
         QCursor, QColor, QWidget, QPixmap, QSplitterHandle, QToolButton,
         Qt, pyqtSignal, QRegExp, QSize, QSplitter, QPainter, QPageSize, QPrinter,
-        QLineEdit, QComboBox, QPen, QGraphicsScene, QMenu, QStringListModel,
-        QCompleter, QTimer, QRect, QGraphicsView, QPagedPaintDevice)
+        QLineEdit, QComboBox, QPen, QGraphicsScene, QMenu, QStringListModel, QKeySequence,
+        QCompleter, QTimer, QRect, QGraphicsView, QPagedPaintDevice, QPalette, QClipboard)
 
 from calibre.constants import iswindows, ismacos
 from calibre.gui2 import (error_dialog, pixmap_to_data, gprefs,
@@ -295,7 +295,7 @@ class ImageDropMixin(object):  # {{{
         cb = QApplication.instance().clipboard()
         pmap = cb.pixmap()
         if pmap.isNull() and cb.supportsSelection():
-            pmap = cb.pixmap(cb.Selection)
+            pmap = cb.pixmap(QClipboard.Mode.Selection)
         if not pmap.isNull():
             self.set_pixmap(pmap)
             self.cover_changed.emit(
@@ -402,7 +402,7 @@ class CoverView(QGraphicsView, ImageDropMixin):  # {{{
         ImageDropMixin.__init__(self)
         self.pixmap_size = 0, 0
         if self.show_size:
-            self.setViewportUpdateMode(self.FullViewportUpdate)
+            self.setViewportUpdateMode(QGraphicsView.ViewportUpdateMode.FullViewportUpdate)
 
     def get_pixmap(self):
         for item in self.scene.items():
@@ -672,7 +672,7 @@ class HistoryLineEdit(QComboBox):  # {{{
     def __init__(self, *args):
         QComboBox.__init__(self, *args)
         self.setEditable(True)
-        self.setInsertPolicy(self.NoInsert)
+        self.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
         self.setMaxCount(10)
         self.setClearButtonEnabled = self.lineEdit().setClearButtonEnabled
         self.textChanged = self.editTextChanged
@@ -868,9 +868,9 @@ class PythonHighlighter(QSyntaxHighlighter):  # {{{
         p = QApplication.instance().palette()
         for name, color, bold, italic in (
                 ("normal", None, False, False),
-                ("keyword", p.color(p.Link).name(), True, False),
-                ("builtin", p.color(p.Link).name(), False, False),
-                ("constant", p.color(p.Link).name(), False, False),
+                ("keyword", p.color(QPalette.ColorRole.Link).name(), True, False),
+                ("builtin", p.color(QPalette.ColorRole.Link).name(), False, False),
+                ("constant", p.color(QPalette.ColorRole.Link).name(), False, False),
                 ("decorator", "#0000E0", False, False),
                 ("comment", "#007F00", False, True),
                 ("string", "#808000", False, False),
@@ -1009,7 +1009,7 @@ class LayoutButton(QToolButton):
     def update_shortcut(self, action_toggle=None):
         action_toggle = action_toggle or getattr(self, 'action_toggle', None)
         if action_toggle:
-            sc = ', '.join(sc.toString(sc.NativeText)
+            sc = ', '.join(sc.toString(QKeySequence.SequenceFormat.NativeText)
                                 for sc in action_toggle.shortcuts())
             self.shortcut = sc or ''
             self.update_text()

@@ -12,9 +12,9 @@ from functools import partial
 from PyQt5.Qt import (
     QAbstractListModel, QAction, QApplication, QCheckBox, QComboBox, QFont, QFrame,
     QGridLayout, QHBoxLayout, QIcon, QItemSelection, QKeySequence, QLabel, QLineEdit,
-    QListView, QMenu, QMimeData, QModelIndex, QPushButton, QScrollArea, QSize,
+    QListView, QMenu, QMimeData, QModelIndex, QPushButton, QScrollArea, QSize, QItemSelectionModel,
     QSizePolicy, QStackedLayout, QStyledItemDelegate, Qt, QTimer, QToolBar, QDialog,
-    QToolButton, QVBoxLayout, QWidget, pyqtSignal, QAbstractItemView, QEvent
+    QToolButton, QVBoxLayout, QWidget, pyqtSignal, QAbstractItemView, QEvent, QDialogButtonBox
 )
 
 from calibre import prepare_string_for_xml
@@ -299,7 +299,7 @@ class SearchWidget(QWidget):
         b.clicked.connect(self.remove_function)
         fhl.addWidget(b)
         self.fsep = f = QFrame(self)
-        f.setFrameShape(f.VLine)
+        f.setFrameShape(QFrame.Shape.VLine)
         fhl.addWidget(f)
 
         self.fb = fb = PushButton(_('Fin&d'), 'find', self)
@@ -670,7 +670,7 @@ class EditSearch(QFrame):  # {{{
 
     def __init__(self, parent=None):
         QFrame.__init__(self, parent)
-        self.setFrameShape(self.StyledPanel)
+        self.setFrameShape(QFrame.Shape.StyledPanel)
         self.search_index = -1
         self.search = {}
         self.original_name = None
@@ -916,7 +916,7 @@ class SavedSearches(QWidget):
         self.delegate = SearchDelegate(searches)
         searches.setItemDelegate(self.delegate)
         searches.setAlternatingRowColors(True)
-        searches.setDragEnabled(True), searches.setAcceptDrops(True), searches.setDragDropMode(searches.InternalMove)
+        searches.setDragEnabled(True), searches.setAcceptDrops(True), searches.setDragDropMode(QAbstractItemView.DragDropMode.InternalMove)
         searches.setDropIndicatorShown(True)
         h.addLayout(stack, stretch=10)
         self.v = v = QVBoxLayout()
@@ -1139,9 +1139,9 @@ class SavedSearches(QWidget):
                 index = self.model.index_for_search(s)
                 if index.isValid() and index.row() > -1:
                     if s is current_search:
-                        sm.setCurrentIndex(index, sm.Select)
+                        sm.setCurrentIndex(index, QItemSelectionModel.SelectionFlag.Select)
                     else:
-                        sm.select(index, sm.Select)
+                        sm.select(index, QItemSelectionModel.SelectionFlag.Select)
 
     def search_editing_done(self, save_changes):
         if save_changes and not self.edit_search_widget.save_changes():
@@ -1187,7 +1187,7 @@ class SavedSearches(QWidget):
         index = self.model.index(self.model.rowCount() - 1)
         self.searches.scrollTo(index)
         sm = self.searches.selectionModel()
-        sm.setCurrentIndex(index, sm.ClearAndSelect)
+        sm.setCurrentIndex(index, QItemSelectionModel.SelectionFlag.ClearAndSelect)
         self.show_details()
 
     def add_predefined_search(self, state):
@@ -1239,7 +1239,7 @@ class SavedSearches(QWidget):
                 self.model.add_searches(count=count)
                 sm = self.searches.selectionModel()
                 top, bottom = self.model.index(self.model.rowCount() - count), self.model.index(self.model.rowCount() - 1)
-                sm.select(QItemSelection(top, bottom), sm.ClearAndSelect)
+                sm.select(QItemSelection(top, bottom), QItemSelectionModel.SelectionFlag.ClearAndSelect)
                 self.searches.scrollTo(bottom)
 
     def copy_to_search_panel(self):
@@ -1493,7 +1493,7 @@ def run_search(
                     det_msg += _('{0}: {1} occurrences').format(k, count_map[k]) + '\n'
             if show_diff and count > 0:
                 d = MessageBox(MessageBox.INFO, _('Searching done'), '<p>'+msg, parent=gui_parent, show_copy_button=False, det_msg=det_msg)
-                d.diffb = b = d.bb.addButton(_('See what &changed'), d.bb.AcceptRole)
+                d.diffb = b = d.bb.addButton(_('See what &changed'), QDialogButtonBox.ButtonRole.AcceptRole)
                 d.show_changes = False
                 b.setIcon(QIcon(I('diff.png'))), b.clicked.connect(d.accept)
                 connect_lambda(b.clicked, d, lambda d: setattr(d, 'show_changes', True))

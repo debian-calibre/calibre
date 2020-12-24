@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "december 12, 2020" "5.7.2" "calibre"
+.TH "CALIBREDB" "1" "december 24, 2020" "5.8.1" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -40,43 +40,53 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .fi
 .UNINDENT
 .UNINDENT
-.sp
-\fBcalibredb\fP is the command line interface to the calibre database. It has
-several sub\-commands, documented below.
-.sp
-\fBcalibredb\fP can be used to manipulate either a calibre database
-specified by path or a calibre Content server running either on
-the local machine or over the internet. You can start a calibre
-Content server using either the \fBcalibre\-server\fP
-program or in the main calibre program click Connect/share  → 
-Start Content server\&. Since \fBcalibredb\fP can make changes to your
-calibre libraries, you must setup authentication on the server first. There
-are two ways to do that:
 .INDENT 0.0
-.INDENT 3.5
+.TP
+.B command
+\fIcalibredb\fP is de opdrachtregelinterface naar de calibre\-database. Het heeft
+.UNINDENT
+.sp
+verschillende subopdrachten, hieronder gedocumenteerd.
+.sp
+: command: \fIcalibredb\fP kan worden gebruikt om een ​​Calibre\-database te manipuleren
+gespecificeerd door pad of een calibre: guilabel: \fIContent server\fP draait ofwel op
+de lokale machine of via internet. U kunt een calibre beginnen
+:guilabel: \fIContent server\fP met behulp van het: commando:\(ga calibre\-server\(ga
+programma of klik in het hoofdprogramma van calibre op: guilabel: \fIConnect / share \->
+Start Content server\fP\&. Sinds: commando: \fIcalibredb\fP kan wijzigingen aanbrengen in uw
+calibre\-bibliotheken, moet u eerst authenticatie op de server instellen. Daar
+zijn twee manieren om dat te doen:
 .INDENT 0.0
 .IP \(bu 2
-If you plan to connect only to a server running on the same computer,
-you can simply use the \fB\-\-enable\-local\-write\fP option of the
-content server, to allow any program, including calibredb, running on
-the local computer to make changes to your calibre data. When running
-the server from the main calibre program, this option is in
-Preferences → Sharing over the net → Advanced\&.
-.IP \(bu 2
-If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
-options to \fBcalibredb\fP to give it access. You can setup
-user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
-option and using \fB\-\-manage\-users\fP to create the user accounts.
-If you are running the server from the main calibre program, use
-Preferences → Sharing over the net → Require username/password\&.
-.UNINDENT
-.UNINDENT
+Als u van plan bent om alleen verbinding te maken met een server die op dezelfde computer draait,
 .UNINDENT
 .sp
-To connect to a running Content server, pass the URL of the server to the
-\fI\%\-\-with\-library\fP option, see the documentation of that option for
-details and examples.
+je kunt gewoon de \(ga\(ga \-\-enable\-local\-write \(aq\(aq optie van de
+inhoudsserver, zodat elk programma, inclusief calibredb, wordt uitgevoerd
+de lokale computer om wijzigingen aan te brengen in uw calibre\-gegevens. Tijdens het hardlopen
+de server van het hoofdprogramma van calibre, deze optie is in
+:guilabel: \fIVoorkeuren\-> Delen via het net\-> Geavanceerd\fP\&.
+.INDENT 0.0
+.IP \(bu 2
+Als u toegang via internet wilt inschakelen, moet u instellen
+.UNINDENT
+.sp
+gebruikersaccounts op de server en gebruik de: option: \fI\-\-username\fP en: option:\(ga \-\-password\(ga
+opties om :command: \fIcalibredb\fP om het toegang te geven. U kunt instellen
+gebruikersauthenticatie voor: commando: \fIcalibre\-server\fP met behulp van de\(ga \fI\-\-enable\-auth \(aq\(aq
+optie en het gebruik van \(ga\fP \-\-manage\-users \(aq\(aq om de gebruikersaccounts aan te maken.
+Als u de server draait vanuit het hoofdprogramma van Calibre, gebruikt u
+:guilabel: \fIVoorkeuren\-> Delen via het net\-> Gebruikersnaam / wachtwoord vereist\fP\&.
+.sp
+Om verbinding te maken met een actieve inhoudsserver, geeft u de URL van de server door aan het
+: option: \fI\-\-with\-library\fP optie, zie de documentatie van die optie voor
+details en voorbeelden.
+Meer over deze brontekstBrontekst vereist voor aanvullende vertaalinformatie
+Feedback sturen
+Zijvensters
+Geschiedenis
+Opgeslagen
+Bijdragen
 .INDENT 0.0
 .IP \(bu 2
 \fI\%ALGEMENE OPTIES\fP
@@ -241,7 +251,7 @@ Stel de auteur in voor toegevoegde boek(en)
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-If books with similar titles and authors are found, merge the incoming formats (files) automatically into existing book records. A value of \fB"\fPignore\fB"\fP means duplicate formats are discarded. A value of \fB"\fPoverwrite\fB"\fP means duplicate formats in the library are overwritten with the newly added files. A value of \fB"\fPnew_record\fB"\fP means duplicate formats are placed into a new book record.
+Als boeken met vergelijkbare titels en auteurs worden gevonden, voegt u de binnenkomende formaten (bestanden) automatisch samen met bestaande boekrecords. De waarde \fB"\fPnegeren\fB"\fP betekent dat dubbele formaten worden verwijderd. De waarde \fB"\fPoverschrijven\fB"\fP betekent dat dubbele formaten in de bibliotheek worden overschreven door de nieuw toegevoegde bestanden. De waarde \fB"\fPnew_record\fB"\fP betekent dat dubbele formaten in een nieuw boekrecord worden geplaatst.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -251,7 +261,7 @@ Pad naar de omslag voor het toegevoegde boek
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Add books to database even if they already exist. Comparison is done based on book titles and authors. Note that the \fI\%\-\-automerge\fP option takes precedence.
+Voeg boeken toe aan de database, zelfs als ze al bestaan. Er wordt vergeleken op basis van boektitels en auteurs. Merk op dat de optie \fI\%\-\-automerge\fP voorrang heeft.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -814,14 +824,14 @@ Kommagescheiden lijst van rapporten. Standaard: all
 .sp
 .nf
 .ft C
-calibredb list_categories [options]
+calibredb list_categories [opties]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Produce a report of the category information in the database. The
-information is the equivalent of what is shown in the Tag browser.
+Maak een rapport van de categorie\-informatie in de database. De
+informatie is het equivalent van wat wordt weergegeven in de Tag\-browser.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0

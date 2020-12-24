@@ -7,7 +7,7 @@ import os
 import sys
 import textwrap
 from PyQt5.Qt import (
-    QApplication, QCheckBox, QComboBox, QDialog, QDialogButtonBox, QFormLayout,
+    QApplication, QCheckBox, QComboBox, QDialog, QDialogButtonBox, QFormLayout, QAbstractItemView,
     QHBoxLayout, QIcon, QLabel, QLineEdit, QListWidget, QListWidgetItem, QPushButton,
     QSize, Qt, QTimer, QUrl, QVBoxLayout, QWidget, pyqtSignal
 )
@@ -127,19 +127,19 @@ class SourcesEditor(Dialog):
         e.itemDoubleClicked.connect(self.edit_source)
         e.viewport().setAcceptDrops(True)
         e.setDropIndicatorShown(True)
-        e.setDragDropMode(e.InternalMove)
+        e.setDragDropMode(QAbstractItemView.DragDropMode.InternalMove)
         e.setDefaultDropAction(Qt.DropAction.MoveAction)
         l.addWidget(e)
         l.addWidget(self.bb)
         self.build_entries(vprefs['lookup_locations'])
 
-        self.add_button = b = self.bb.addButton(_('Add'), self.bb.ActionRole)
+        self.add_button = b = self.bb.addButton(_('Add'), QDialogButtonBox.ButtonRole.ActionRole)
         b.setIcon(QIcon(I('plus.png')))
         b.clicked.connect(self.add_source)
-        self.remove_button = b = self.bb.addButton(_('Remove'), self.bb.ActionRole)
+        self.remove_button = b = self.bb.addButton(_('Remove'), QDialogButtonBox.ButtonRole.ActionRole)
         b.setIcon(QIcon(I('minus.png')))
         b.clicked.connect(self.remove_source)
-        self.restore_defaults_button = b = self.bb.addButton(_('Restore defaults'), self.bb.ActionRole)
+        self.restore_defaults_button = b = self.bb.addButton(_('Restore defaults'), QDialogButtonBox.ButtonRole.ActionRole)
         b.clicked.connect(self.restore_defaults)
 
     def add_entry(self, entry, prepend=False):

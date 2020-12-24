@@ -13,13 +13,14 @@ import textwrap
 import weakref
 from datetime import date, datetime
 from PyQt5.Qt import (
-    QAction, QApplication, QDateTime, QDialog, QDialogButtonBox, QDoubleSpinBox,
+    QAction, QApplication, QDateTime, QDialog, QDialogButtonBox, QDoubleSpinBox, QAbstractItemView,
     QGridLayout, QIcon, QKeySequence, QLabel, QLineEdit, QListWidgetItem, QMenu,
-    QMessageBox, QPixmap, QPlainTextEdit, QSize, QSizePolicy, Qt, QToolButton,
+    QMessageBox, QPixmap, QPlainTextEdit, QSize, QSizePolicy, Qt, QToolButton, QComboBox,
     QUndoCommand, QUndoStack, QUrl, QVBoxLayout, QWidget, pyqtSignal
 )
 
 from calibre import strftime
+from calibre.constants import iswindows
 from calibre.customize.ui import run_plugins_on_import
 from calibre.db import SPOOL_SIZE
 from calibre.ebooks import BOOK_EXTENSIONS
@@ -343,7 +344,7 @@ class AuthorsEdit(EditWithComplete, ToMetadataMixin):
         self.setToolTip(self.TOOLTIP)
         self.setWhatsThis(self.TOOLTIP)
         self.setEditable(True)
-        self.setSizeAdjustPolicy(self.AdjustToMinimumContentsLengthWithIcon)
+        self.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon)
         self.manage_authors_signal = manage_authors
         manage_authors.triggered.connect(self.manage_authors)
         self.lineEdit().createStandardContextMenu = self.createStandardContextMenu
@@ -600,7 +601,7 @@ class SeriesEdit(EditWithComplete, ToMetadataMixin):
         self.set_separator(None)
         self.dialog = parent
         self.setSizeAdjustPolicy(
-                self.AdjustToMinimumContentsLengthWithIcon)
+                QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon)
         self.setToolTip(self.TOOLTIP)
         self.setWhatsThis(self.TOOLTIP)
         self.setEditable(True)
@@ -886,7 +887,7 @@ class FormatsManager(QWidget):
         self.formats.edit_fmt.connect(self.edit_format)
         self.formats.delete_format.connect(self.remove_format)
         self.formats.itemDoubleClicked.connect(self.show_format)
-        self.formats.setDragDropMode(self.formats.DropOnly)
+        self.formats.setDragDropMode(QAbstractItemView.DragDropMode.DropOnly)
         self.formats.setIconSize(QSize(32, 32))
         self.formats.setMaximumWidth(200)
 
@@ -973,6 +974,11 @@ class FormatsManager(QWidget):
         bad_perms = []
         for _file in paths:
             _file = make_long_path_useable(os.path.abspath(_file))
+            if iswindows:
+                from calibre.gui2.add import resolve_windows_links
+                x = list(resolve_windows_links([_file], hwnd=int(self.effectiveWinId())))
+                if x:
+                    _file = x[0]
             if not os.access(_file, os.R_OK):
                 bad_perms.append(_file)
                 continue
@@ -1129,7 +1135,7 @@ class Cover(ImageView):  # {{{
         b.setMenu(m)
         m.addAction(QIcon(I('config.png')), _('Customize the styles and colors of the generated cover'), self.custom_cover)
         m.addAction(QIcon(I('edit-undo.png')), _('Undo last Generate cover'), self.undo_generate)
-        b.setPopupMode(b.DelayedPopup)
+        b.setPopupMode(QToolButton.ToolButtonPopupMode.DelayedPopup)
         self.buttons = [self.select_cover_button, self.remove_cover_button,
                 self.trim_cover_button, self.download_cover_button,
                 self.generate_cover_button]
@@ -1764,7 +1770,7 @@ class PublisherEdit(EditWithComplete, ToMetadataMixin):  # {{{
         self.currentTextChanged.connect(self.data_changed)
         self.set_separator(None)
         self.setSizeAdjustPolicy(
-                self.AdjustToMinimumContentsLengthWithIcon)
+                QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon)
         self.books_to_refresh = set()
         self.clear_button = QToolButton(parent)
         self.clear_button.setIcon(QIcon(I('trash.png')))

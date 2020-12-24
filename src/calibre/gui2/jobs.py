@@ -12,10 +12,10 @@ Job management.
 import time
 
 from PyQt5.Qt import (QAbstractTableModel, QModelIndex, Qt, QPainter,
-    QTimer, pyqtSignal, QIcon, QDialog, QAbstractItemDelegate, QApplication,
+    QTimer, pyqtSignal, QIcon, QDialog, QAbstractItemDelegate, QApplication, QEvent,
     QSize, QStyleOptionProgressBar, QStyle, QToolTip, QWidget, QStyleOption,
-    QHBoxLayout, QVBoxLayout, QSizePolicy, QLabel, QCoreApplication, QAction,
-    QByteArray, QSortFilterProxyModel, QTextBrowser, QPlainTextEdit)
+    QHBoxLayout, QVBoxLayout, QSizePolicy, QLabel, QCoreApplication, QAction, QItemSelectionModel,
+    QByteArray, QSortFilterProxyModel, QTextBrowser, QPlainTextEdit, QDialogButtonBox)
 
 from calibre import strftime
 from calibre.constants import islinux, isbsd
@@ -461,11 +461,11 @@ class DetailView(Dialog):  # {{{
             self.tb = w = QTextBrowser(self)
         else:
             self.log = w = QPlainTextEdit(self)
-            w.setReadOnly(True), w.setLineWrapMode(w.NoWrap)
+            w.setReadOnly(True), w.setLineWrapMode(QPlainTextEdit.LineWrapMode.NoWrap)
         l.addWidget(w)
         l.addWidget(self.bb)
-        self.bb.clear(), self.bb.setStandardButtons(self.bb.Close)
-        self.copy_button = b = self.bb.addButton(_('&Copy to clipboard'), self.bb.ActionRole)
+        self.bb.clear(), self.bb.setStandardButtons(QDialogButtonBox.StandardButton.Close)
+        self.copy_button = b = self.bb.addButton(_('&Copy to clipboard'), QDialogButtonBox.ButtonRole.ActionRole)
         b.setIcon(QIcon(I('edit-copy.png')))
         b.clicked.connect(self.copy_to_clipboard)
         self.next_pos = 0
@@ -533,9 +533,9 @@ class JobsButton(QWidget):  # {{{
     def event(self, ev):
         m = None
         et = ev.type()
-        if et == ev.Enter:
+        if et == QEvent.Type.Enter:
             m = True
-        elif et == ev.Leave:
+        elif et == QEvent.Type.Leave:
             m = False
         if m is not None and m != self.mouse_over:
             self.mouse_over = m
@@ -657,7 +657,7 @@ class JobsDialog(QDialog, Ui_JobsDialog):
         idx = self.jobs_view.model().index(0, 0)
         if idx.isValid():
             sm = self.jobs_view.selectionModel()
-            sm.select(idx, sm.ClearAndSelect|sm.Rows)
+            sm.select(idx, QItemSelectionModel.SelectionFlag.ClearAndSelect|QItemSelectionModel.SelectionFlag.Rows)
 
     def save_state(self):
         try:

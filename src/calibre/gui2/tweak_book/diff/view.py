@@ -15,9 +15,9 @@ from polyglot.builtins import iteritems, unicode_type, zip, range, as_bytes, map
 
 import regex
 from PyQt5.Qt import (
-    QSplitter, QApplication, QTimer,
+    QSplitter, QApplication, QTimer, QEvent,
     QTextCursor, QTextCharFormat, Qt, QRect, QPainter, QPalette, QPen, QBrush,
-    QColor, QTextLayout, QCursor, QFont, QSplitterHandle, QPainterPath,
+    QColor, QTextLayout, QCursor, QFont, QSplitterHandle, QPainterPath, QPlainTextEdit,
     QHBoxLayout, QWidget, QScrollBar, QEventLoop, pyqtSignal, QImage, QPixmap,
     QMenu, QIcon, QKeySequence)
 
@@ -107,7 +107,7 @@ class TextBrowser(PlainTextEdit):  # {{{
         self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.right = right
         self.setReadOnly(True)
-        self.setLineWrapMode(self.WidgetWidth)
+        self.setLineWrapMode(QPlainTextEdit.LineWrapMode.WidgetWidth)
         font = self.font()
         ff = tprefs['editor_font_family']
         if ff is None:
@@ -240,11 +240,11 @@ class TextBrowser(PlainTextEdit):  # {{{
             if num in headers:
                 self.search_header_pos = start + length
             else:
-                c.setPosition(c.position() + length, c.KeepAnchor)
+                c.setPosition(c.position() + length, QTextCursor.MoveMode.KeepAnchor)
                 self.search_header_pos = 0
             if reverse:
                 pos, anchor = c.position(), c.anchor()
-                c.setPosition(pos), c.setPosition(anchor, c.KeepAnchor)
+                c.setPosition(pos), c.setPosition(anchor, QTextCursor.MoveMode.KeepAnchor)
             self.setTextCursor(c)
             self.centerCursor()
             self.scrolled.emit()
@@ -401,8 +401,8 @@ class DiffSplitHandle(QSplitterHandle):  # {{{
     wheel_event = pyqtSignal(object)
 
     def event(self, ev):
-        if ev.type() in (ev.HoverEnter, ev.HoverLeave):
-            self.hover = ev.type() == ev.HoverEnter
+        if ev.type() in (QEvent.Type.HoverEnter, QEvent.Type.HoverLeave):
+            self.hover = ev.type() == QEvent.Type.HoverEnter
         return QSplitterHandle.event(self, ev)
 
     def paintEvent(self, event):
@@ -522,7 +522,7 @@ class DiffSplit(QSplitter):  # {{{
     def finalize(self):
         for v in (self.left, self.right):
             c = v.textCursor()
-            c.movePosition(c.Start)
+            c.movePosition(QTextCursor.MoveOperation.Start)
             v.setTextCursor(c)
         self.update()
 
@@ -536,14 +536,14 @@ class DiffSplit(QSplitter):  # {{{
         self.right.headers.append((self.right.blockCount() - 1, right_name))
         for v in (self.left, self.right):
             c = v.textCursor()
-            c.movePosition(c.End)
+            c.movePosition(QTextCursor.MoveOperation.End)
             (c.insertBlock(), c.insertBlock(), c.insertBlock())
 
         with BusyCursor():
             if is_identical:
                 for v in (self.left, self.right):
                     c = v.textCursor()
-                    c.movePosition(c.End)
+                    c.movePosition(QTextCursor.MoveOperation.End)
                     c.insertText('[%s]\n\n' % _('The files are identical'))
             elif left_name != right_name and not left_text and not right_text:
                 self.add_text_diff(_('[This file was renamed to %s]') % right_name, _('[This file was renamed from %s]') % left_name, context, None)
@@ -605,10 +605,10 @@ class DiffSplit(QSplitter):  # {{{
         QApplication.processEvents(QEventLoop.ProcessEventsFlag.ExcludeUserInputEvents | QEventLoop.ProcessEventsFlag.ExcludeSocketNotifiers)
         for v, img, size in ((self.left, left_img, len(left_data)), (self.right, right_img, len(right_data))):
             c = v.textCursor()
-            c.movePosition(c.End)
+            c.movePosition(QTextCursor.MoveOperation.End)
             start = c.block().blockNumber()
             lines, w = self.get_lines_for_image(img, v)
-            c.movePosition(c.StartOfBlock)
+            c.movePosition(QTextCursor.MoveOperation.StartOfBlock)
             if size > 0:
                 c.beginEditBlock()
                 c.insertText(_('Size: {0} Resolution: {1}x{2}').format(human_readable(size), img.width(), img.height()))
@@ -638,12 +638,12 @@ class DiffSplit(QSplitter):  # {{{
                 top, bot, kind = v.changes[i]
                 c = QTextCursor(v.document().findBlockByNumber(top+1))
                 c.beginEditBlock()
-                c.movePosition(c.StartOfBlock)
+                c.movePosition(QTextCursor.MoveOperation.StartOfBlock)
                 if delta > 0:
                     for _ in range(delta):
                         c.insertBlock()
                 else:
-                    c.movePosition(c.NextBlock, c.KeepAnchor, -delta)
+                    c.movePosition(QTextCursor.MoveOperation.NextBlock, QTextCursor.MoveMode.KeepAnchor, -delta)
                     c.removeSelectedText()
                 c.endEditBlock()
                 v.images[top] = (img, w, lines)
@@ -678,7 +678,7 @@ class DiffSplit(QSplitter):  # {{{
             if len(left_text) == len(right_text) and left_text == right_text:
                 for v in (self.left, self.right):
                     c = v.textCursor()
-                    c.movePosition(c.End)
+                    c.movePosition(QTextCursor.MoveOperation.End)
                     c.insertText('[%s]\n\n' % _('The files are identical after beautifying'))
                 return
 
@@ -690,7 +690,7 @@ class DiffSplit(QSplitter):  # {{{
         left_highlight, right_highlight = get_highlighter(self.left, left_text, syntax), get_highlighter(self.right, right_text, syntax)
         cl, cr = self.left_cursor, self.right_cursor = self.left.textCursor(), self.right.textCursor()
         cl.beginEditBlock(), cr.beginEditBlock()
-        cl.movePosition(cl.End), cr.movePosition(cr.End)
+        cl.movePosition(QTextCursor.MoveOperation.End), cr.movePosition(QTextCursor.MoveOperation.End)
         self.left_insert = partial(self.do_insert, cl, left_highlight, self.left.line_number_map)
         self.right_insert = partial(self.do_insert, cr, right_highlight, self.right.line_number_map)
 

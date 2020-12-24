@@ -8,12 +8,12 @@ import shutil
 import sys
 from itertools import count
 from PyQt5.Qt import (
-    QT_VERSION, QApplication, QBuffer, QByteArray, QFontDatabase, QFontInfo, QPalette,
-    QHBoxLayout, QMimeData, QSize, Qt, QTimer, QUrl, QWidget, pyqtSignal, QIODevice
+    QT_VERSION, QApplication, QBuffer, QByteArray, QFontDatabase, QFontInfo, QPalette, QEvent,
+    QHBoxLayout, QMimeData, QSize, Qt, QTimer, QUrl, QWidget, pyqtSignal, QIODevice, QLocale
 )
-from PyQt5.QtWebEngineCore import QWebEngineUrlSchemeHandler
+from PyQt5.QtWebEngineCore import QWebEngineUrlSchemeHandler, QWebEngineUrlRequestJob, QWebEngineUrlRequestInfo
 from PyQt5.QtWebEngineWidgets import (
-    QWebEnginePage, QWebEngineProfile, QWebEngineScript, QWebEngineView
+    QWebEnginePage, QWebEngineProfile, QWebEngineScript, QWebEngineView, QWebEngineSettings
 )
 
 from calibre import as_unicode, prints
@@ -124,14 +124,14 @@ def handle_mathjax_request(rq, name):
                 raw = f.read()
         except EnvironmentError as err:
             prints("Failed to get mathjax file: {} with error: {}".format(name, err), file=sys.stderr)
-            rq.fail(rq.RequestFailed)
+            rq.fail(QWebEngineUrlRequestJob.Error.RequestFailed)
             return
         if name.endswith('/startup.js'):
             raw = P('pdf-mathjax-loader.js', data=True, allow_user_override=False) + raw
         send_reply(rq, mt, raw)
     else:
         prints("Failed to get mathjax file: {} outside mathjax directory".format(name), file=sys.stderr)
-        rq.fail(rq.RequestFailed)
+        rq.fail(QWebEngineUrlRequestJob.Error.RequestFailed)
 
 
 class UrlSchemeHandler(QWebEngineUrlSchemeHandler):
@@ -142,7 +142,7 @@ class UrlSchemeHandler(QWebEngineUrlSchemeHandler):
 
     def requestStarted(self, rq):
         if bytes(rq.requestMethod()) != b'GET':
-            return self.fail_request(rq, rq.RequestDenied)
+            return self.fail_request(rq, QWebEngineUrlRequestJob.Error.RequestDenied)
         url = rq.requestUrl()
         host = url.host()
         if host not in self.allowed_hosts or url.scheme() != FAKE_PROTOCOL:
@@ -161,7 +161,7 @@ class UrlSchemeHandler(QWebEngineUrlSchemeHandler):
             try:
                 data, mime_type = get_data(name)
                 if data is None:
-                    rq.fail(rq.UrlNotFound)
+                    rq.fail(QWebEngineUrlRequestJob.Error.UrlNotFound)
                     return
                 data = as_bytes(data)
                 mime_type = {
@@ -174,7 +174,7 @@ class UrlSchemeHandler(QWebEngineUrlSchemeHandler):
             except Exception:
                 import traceback
                 traceback.print_exc()
-                return self.fail_request(rq, rq.RequestFailed)
+                return self.fail_request(rq, QWebEngineUrlRequestJob.Error.RequestFailed)
         elif name == 'manifest':
             data = b'[' + set_book_path.manifest + b',' + set_book_path.metadata + b']'
             send_reply(rq, set_book_path.manifest_mime, data)
@@ -183,7 +183,7 @@ class UrlSchemeHandler(QWebEngineUrlSchemeHandler):
             if data:
                 send_reply(rq, mt, data)
             else:
-                rq.fail(rq.UrlNotFound)
+                rq.fail(QWebEngineUrlRequestJob.Error.UrlNotFound)
         elif name.startswith('mathjax/'):
             handle_mathjax_request(rq, name)
         elif not name:
@@ -193,7 +193,7 @@ class UrlSchemeHandler(QWebEngineUrlSchemeHandler):
 
     def fail_request(self, rq, fail_code=None):
         if fail_code is None:
-            fail_code = rq.UrlNotFound
+            fail_code = QWebEngineUrlRequestJob.Error.UrlNotFound
         rq.fail(fail_code)
         prints("Blocking FAKE_PROTOCOL request: {}".format(rq.requestUrl().toString()))
 
@@ -223,7 +223,7 @@ def create_profile():
         ans.installUrlSchemeHandler(QByteArray(FAKE_PROTOCOL.encode('ascii')), url_handler)
         s = ans.settings()
         s.setDefaultTextEncoding('utf-8')
-        s.setAttribute(s.LinksIncludedInFocusChain, False)
+        s.setAttribute(QWebEngineSettings.WebAttribute.LinksIncludedInFocusChain, False)
         create_profile.ans = ans
     return ans
 
@@ -297,35 +297,38 @@ def apply_font_settings(page_or_view):
     sd = vprefs['session_data']
     fs = sd.get('standalone_font_settings', {})
     if fs.get('serif_family'):
-        s.setFontFamily(s.SerifFont, fs.get('serif_family'))
+        s.setFontFamily(QWebEngineSettings.FontFamily.SerifFont, fs.get('serif_family'))
     else:
-        s.resetFontFamily(s.SerifFont)
+        s.resetFontFamily(QWebEngineSettings.FontFamily.SerifFont)
     if fs.get('sans_family'):
-        s.setFontFamily(s.SansSerifFont, fs.get('sans_family'))
+        s.setFontFamily(QWebEngineSettings.FontFamily.SansSerifFont, fs.get('sans_family'))
     else:
-        s.resetFontFamily(s.SansSerifFont)
+        s.resetFontFamily(QWebEngineSettings.FontFamily.SansSerifFont)
     if fs.get('mono_family'):
-        s.setFontFamily(s.FixedFont, fs.get('mono_family'))
+        s.setFontFamily(QWebEngineSettings.FontFamily.FixedFont, fs.get('mono_family'))
     else:
-        s.resetFontFamily(s.SansSerifFont)
+        s.resetFontFamily(QWebEngineSettings.FontFamily.SansSerifFont)
     sf = fs.get('standard_font') or 'serif'
     sf = getattr(s, {'serif': 'SerifFont', 'sans': 'SansSerifFont', 'mono': 'FixedFont'}[sf])
-    s.setFontFamily(s.StandardFont, s.fontFamily(sf))
-    old_minimum = s.fontSize(s.MinimumFontSize)
-    old_base = s.fontSize(s.DefaultFontSize)
-    old_fixed_base = s.fontSize(s.DefaultFixedFontSize)
+    s.setFontFamily(QWebEngineSettings.FontFamily.StandardFont, s.fontFamily(sf))
+    old_minimum = s.fontSize(QWebEngineSettings.FontSize.MinimumFontSize)
+    old_base = s.fontSize(QWebEngineSettings.FontSize.DefaultFontSize)
+    old_fixed_base = s.fontSize(QWebEngineSettings.FontSize.DefaultFixedFontSize)
     mfs = fs.get('minimum_font_size')
     if mfs is None:
-        s.resetFontSize(s.MinimumFontSize)
+        s.resetFontSize(QWebEngineSettings.FontSize.MinimumFontSize)
     else:
-        s.setFontSize(s.MinimumFontSize, mfs)
+        s.setFontSize(QWebEngineSettings.FontSize.MinimumFontSize, mfs)
     bfs = sd.get('base_font_size')
     if bfs is not None:
-        s.setFontSize(s.DefaultFontSize, bfs)
-        s.setFontSize(s.DefaultFixedFontSize, int(bfs * 13 / 16))
+        s.setFontSize(QWebEngineSettings.FontSize.DefaultFontSize, bfs)
+        s.setFontSize(QWebEngineSettings.FontSize.DefaultFixedFontSize, int(bfs * 13 / 16))
 
     font_size_changed = (old_minimum, old_base, old_fixed_base) != (
-            s.fontSize(s.MinimumFontSize), s.fontSize(s.DefaultFontSize), s.fontSize(s.DefaultFixedFontSize))
+            s.fontSize(QWebEngineSettings.FontSize.MinimumFontSize),
+            s.fontSize(QWebEngineSettings.FontSize.DefaultFontSize),
+            s.fontSize(QWebEngineSettings.FontSize.DefaultFixedFontSize)
+    )
     if font_size_changed and hasattr(page_or_view, 'execute_when_ready'):
         page_or_view.execute_when_ready('viewer_font_size_changed')
 
@@ -363,13 +366,13 @@ class WebPage(QWebEnginePage):
             pass
 
     def acceptNavigationRequest(self, url, req_type, is_main_frame):
-        if req_type == self.NavigationTypeReload:
+        if req_type == QWebEngineUrlRequestInfo.NavigationType.NavigationTypeReload:
             return True
-        if req_type == self.NavigationTypeBackForward:
+        if req_type == QWebEngineUrlRequestInfo.NavigationType.NavigationTypeBackForward:
             return True
         if url.scheme() in (FAKE_PROTOCOL, 'data'):
             return True
-        if url.scheme() in ('http', 'https'):
+        if url.scheme() in ('http', 'https') and req_type == QWebEnginePage.NavigationType.NavigationTypeLinkClicked:
             safe_open_url(url)
         prints('Blocking navigation request to:', url.toString())
         return False
@@ -430,7 +433,7 @@ def system_colors():
         # only override link colors for dark themes
         # since if the book specifies its own link colors
         # they will likely work well with light themes
-        ans['link'] = pal.color(pal.Link).name()
+        ans['link'] = pal.color(QPalette.ColorRole.Link).name()
     return ans
 
 
@@ -550,7 +553,7 @@ class WebView(RestartingWebEngineView):
 
     def url_changed(self, url):
         if url.hasFragment():
-            frag = url.fragment(url.FullyDecoded)
+            frag = url.fragment(QUrl.ComponentFormattingOption.FullyDecoded)
             if frag and frag.startswith('bookpos='):
                 cfi = frag[len('bookpos='):]
                 if cfi:
@@ -572,7 +575,7 @@ class WebView(RestartingWebEngineView):
             ' You should try restarting the viewer.') , show=True)
 
     def event(self, event):
-        if event.type() == event.ChildPolished:
+        if event.type() == QEvent.Type.ChildPolished:
             child = event.child()
             if 'HostView' in child.metaObject().className():
                 self._host_widget = child
@@ -602,6 +605,7 @@ class WebView(RestartingWebEngineView):
             'show_home_page_on_ready': self.show_home_page_on_ready,
             'system_colors': system_colors(),
             'QT_VERSION': QT_VERSION,
+            'short_time_fmt': QLocale.system().timeFormat(QLocale.FormatType.ShortFormat),
         }
         self.bridge.create_view(
             vprefs['session_data'], vprefs['local_storage'], field_metadata.all_metadata(), ui_data)

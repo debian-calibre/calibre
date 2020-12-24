@@ -11,7 +11,7 @@ from PyQt5.Qt import (
     QColor, QFont, QHBoxLayout, QIcon, QImage, QItemSelectionModel, QKeySequence,
     QLabel, QMenu, QPainter, QPainterPath, QPixmap, QPushButton, QRect, QSizePolicy,
     Qt, QTextEdit, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget, pyqtSignal,
-    QAbstractItemView, QDialog
+    QAbstractItemView, QDialog, QPalette, QStyle
 )
 
 from calibre.constants import (
@@ -23,6 +23,7 @@ from calibre.gui2.dialogs.confirm_delete import confirm
 from calibre.gui2.library.annotations import (
     Details, Export as ExportBase, render_highlight_as_text, render_notes
 )
+from calibre.gui2.viewer import get_current_book_data
 from calibre.gui2.viewer.config import vprefs
 from calibre.gui2.viewer.search import SearchInput
 from calibre.gui2.viewer.shortcuts import get_shortcut_for, index_to_key_sequence
@@ -82,7 +83,7 @@ def decoration_for_style(palette, style, icon_size, device_pixel_ratio, is_dark)
         canvas.setDevicePixelRatio(device_pixel_ratio)
         p = QPainter(canvas)
         p.setRenderHint(QPainter.RenderHint.Antialiasing, True)
-        p.setPen(palette.color(palette.WindowText))
+        p.setPen(palette.color(QPalette.ColorRole.WindowText))
         irect = QRect(0, 0, icon_size, icon_size)
         adjust = -2
         text_rect = p.drawText(irect.adjusted(0, adjust, 0, adjust), Qt.AlignmentFlag.AlignHCenter| Qt.AlignmentFlag.AlignTop, 'a')
@@ -130,15 +131,31 @@ class Export(ExportBase):
         return _('highlights')
 
     def exported_data(self):
-        if self.export_format.currentData() == 'calibre_highlights':
+        cbd = get_current_book_data()
+        link_prefix = library_id = None
+        if 'calibre_library_id' in cbd:
+            library_id = cbd['calibre_library_id']
+            book_id = cbd['calibre_book_id']
+            book_fmt = cbd['calibre_book_fmt']
+        elif cbd.get('book_library_details'):
+            bld = cbd['book_library_details']
+            book_id = bld['book_id']
+            book_fmt = bld['fmt'].upper()
+            library_id = bld['library_id']
+        if library_id:
+            library_id = '_hex_-' + library_id.encode('utf-8').hex()
+            link_prefix = f'calibre://show-book/{library_id}/{book_id}/{book_fmt}?open_at='
+        fmt = self.export_format.currentData()
+        if fmt == 'calibre_highlights':
             return json.dumps({
                 'version': 1,
                 'type': 'calibre_highlights',
                 'highlights': self.annotations,
             }, ensure_ascii=False, sort_keys=True, indent=2)
         lines = []
+        as_markdown = fmt == 'md'
         for hl in self.annotations:
-            render_highlight_as_text(hl, lines)
+            render_highlight_as_text(hl, lines, as_markdown=as_markdown, link_prefix=link_prefix)
         return '\n'.join(lines).strip()
 
 
@@ -188,7 +205,7 @@ class Highlights(QTreeWidget):
 
     def load(self, highlights):
         s = self.style()
-        icon_size = s.pixelMetric(s.PM_SmallIconSize, None, self)
+        icon_size = s.pixelMetric(QStyle.PixelMetric.PM_SmallIconSize, None, self)
         dpr = self.devicePixelRatioF()
         is_dark = is_dark_theme()
         self.clear()

@@ -42,7 +42,7 @@ class ScrollArea(QScrollArea):
 
     def __init__(self, widget=None, parent=None):
         QScrollArea.__init__(self, parent)
-        self.setFrameShape(self.NoFrame)
+        self.setFrameShape(QFrame.Shape.NoFrame)
         self.setWidgetResizable(True)
         if widget is not None:
             self.setWidget(widget)
@@ -92,8 +92,8 @@ class MetadataSingleDialogBase(QDialog):
                 self)
         self.prev_button.setShortcut(QKeySequence('Alt+Left'))
 
-        self.button_box.addButton(self.prev_button, bb.ActionRole)
-        self.button_box.addButton(self.next_button, bb.ActionRole)
+        self.button_box.addButton(self.prev_button, QDialogButtonBox.ButtonRole.ActionRole)
+        self.button_box.addButton(self.next_button, QDialogButtonBox.ButtonRole.ActionRole)
         self.prev_button.clicked.connect(self.prev_clicked)
         bb.setStandardButtons(QDialogButtonBox.StandardButton.Ok|QDialogButtonBox.StandardButton.Cancel)
         bb.button(QDialogButtonBox.StandardButton.Ok).setDefault(True)
@@ -255,7 +255,7 @@ class MetadataSingleDialogBase(QDialog):
                       'to choose a different prefix.') + '</p>')
         b.setIcon(QIcon(I('edit-paste.png')))
         b.clicked.connect(self.identifiers.paste_identifier)
-        b.setPopupMode(b.DelayedPopup)
+        b.setPopupMode(QToolButton.ToolButtonPopupMode.DelayedPopup)
         b.setMenu(QMenu(b))
         self.update_paste_identifiers_menu()
 
@@ -275,7 +275,7 @@ class MetadataSingleDialogBase(QDialog):
         b.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
         b.setMinimumHeight(b.sizeHint().height())
         b.setIcon(QIcon())
-        b.setText(_('&Download metadata')), b.setPopupMode(b.DelayedPopup)
+        b.setText(_('&Download metadata')), b.setPopupMode(QToolButton.ToolButtonPopupMode.DelayedPopup)
         b.setToolTip(_('Download metadata for this book [%s]') % self.download_shortcut.key().toString(QKeySequence.SequenceFormat.NativeText))
         b.setSizePolicy(QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed))
         self.fetch_metadata_button.clicked.connect(self.fetch_metadata)
@@ -717,8 +717,8 @@ class MetadataSingleDialogBase(QDialog):
                     ' [Alt+Left]')%prev
             self.prev_button.setToolTip(tip)
         self.prev_button.setEnabled(prev is not None)
-        self.button_box.button(self.button_box.Ok).setDefault(True)
-        self.button_box.button(self.button_box.Ok).setFocus(Qt.FocusReason.OtherFocusReason)
+        self.button_box.button(QDialogButtonBox.StandardButton.Ok).setDefault(True)
+        self.button_box.button(QDialogButtonBox.StandardButton.Ok).setFocus(Qt.FocusReason.OtherFocusReason)
         self(self.db.id(self.row_list[self.current_row]))
         for w, state in iteritems(self.comments_edit_state_at_apply):
             if state == 'code':

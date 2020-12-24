@@ -14,8 +14,8 @@ from threading import Thread
 from PyQt5.Qt import (
     QApplication, QFont, QFontInfo, QFontDialog, QColorDialog, QPainter, QDialog,
     QAbstractListModel, Qt, QIcon, QKeySequence, QColor, pyqtSignal, QCursor,
-    QWidget, QSizePolicy, QBrush, QPixmap, QSize, QPushButton, QVBoxLayout,
-    QTableWidget, QTableWidgetItem, QLabel, QFormLayout, QLineEdit, QComboBox
+    QWidget, QSizePolicy, QBrush, QPixmap, QSize, QPushButton, QVBoxLayout, QItemSelectionModel,
+    QTableWidget, QTableWidgetItem, QLabel, QFormLayout, QLineEdit, QComboBox, QDialogButtonBox
 )
 
 from calibre import human_readable
@@ -61,7 +61,7 @@ class DefaultAuthorLink(QWidget):  # {{{
         l.setContentsMargins(0, 0, 0, 0)
         l = QFormLayout(self)
         l.setContentsMargins(0, 0, 0, 0)
-        l.setFieldGrowthPolicy(l.AllNonFixedFieldsGrow)
+        l.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
         self.choices = c = QComboBox()
         c.setMinimumContentsLength(30)
         for text, data in [
@@ -125,7 +125,7 @@ class IdLinksRuleEdit(Dialog):
 
     def setup_ui(self):
         self.l = l = QFormLayout(self)
-        l.setFieldGrowthPolicy(l.AllNonFixedFieldsGrow)
+        l.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
         l.addRow(QLabel(_(
             'The key of the identifier, for example, in isbn:XXX, the key is "isbn"')))
         self.key = k = QLineEdit(self)
@@ -179,13 +179,13 @@ class IdLinksEditor(Dialog):
         t.horizontalHeader().setSectionResizeMode(2, t.horizontalHeader().Stretch)
         self.cb = b = QPushButton(QIcon(I('plus.png')), _('&Add rule'), self)
         connect_lambda(b.clicked, self, lambda self: self.edit_rule())
-        self.bb.addButton(b, self.bb.ActionRole)
+        self.bb.addButton(b, QDialogButtonBox.ButtonRole.ActionRole)
         self.rb = b = QPushButton(QIcon(I('minus.png')), _('&Remove rule'), self)
         connect_lambda(b.clicked, self, lambda self: self.remove_rule())
-        self.bb.addButton(b, self.bb.ActionRole)
+        self.bb.addButton(b, QDialogButtonBox.ButtonRole.ActionRole)
         self.eb = b = QPushButton(QIcon(I('modified.png')), _('&Edit rule'), self)
         connect_lambda(b.clicked, self, lambda self: self.edit_rule(self.table.currentRow()))
-        self.bb.addButton(b, self.bb.ActionRole)
+        self.bb.addButton(b, QDialogButtonBox.ButtonRole.ActionRole)
         l.addWidget(self.bb)
 
     def sizeHint(self):
@@ -308,7 +308,7 @@ def move_field_up(widget, model):
         idx = model.move(idx, -1)
         if idx is not None:
             sm = widget.selectionModel()
-            sm.select(idx, sm.ClearAndSelect)
+            sm.select(idx, QItemSelectionModel.SelectionFlag.ClearAndSelect)
             widget.setCurrentIndex(idx)
 
 
@@ -318,7 +318,7 @@ def move_field_down(widget, model):
         idx = model.move(idx, 1)
         if idx is not None:
             sm = widget.selectionModel()
-            sm.select(idx, sm.ClearAndSelect)
+            sm.select(idx, QItemSelectionModel.SelectionFlag.ClearAndSelect)
             widget.setCurrentIndex(idx)
 
 # }}}

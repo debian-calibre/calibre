@@ -9,7 +9,7 @@ import textwrap
 from math import ceil
 
 from PyQt5.Qt import (
-    QWidget, Qt, QStaticText, QTextOption, QSize, QPainter, QTimer, QPalette, QEvent)
+    QWidget, Qt, QStaticText, QTextOption, QSize, QPainter, QTimer, QPalette, QEvent, QTextCursor)
 
 from calibre import prints, prepare_string_for_xml
 from calibre.gui2 import error_dialog
@@ -118,7 +118,7 @@ class ChoosePopupWidget(QWidget):
         for i, st, y, height in self.iter_visible_items():
             painter.save()
             if i == self.current_index:
-                painter.fillRect(1, y, width, height, pal.color(pal.Highlight))
+                painter.fillRect(1, y, width, height, pal.color(QPalette.ColorRole.Highlight))
                 color = pal.color(QPalette.ColorRole.HighlightedText).name()
                 st = QStaticText(st)
                 text = st.text().partition('>')[2]
@@ -200,7 +200,7 @@ class ChoosePopupWidget(QWidget):
                 if ret:
                     ev.accept()
                 return ret
-            elif etype == ev.Resize:
+            elif etype == QEvent.Type.Resize:
                 self.relayout_timer.start()
         return False
 
@@ -259,7 +259,7 @@ class CompletionPopup(ChoosePopupWidget):
             c.insertText(text)
             chars = string_length(text)
             c.setPosition(c.position() - chars)
-            c.setPosition(c.position() + chars, c.KeepAnchor)
+            c.setPosition(c.position() + chars, QTextCursor.MoveMode.KeepAnchor)
 
     def abort(self):
         ChoosePopupWidget.abort(self)
@@ -268,7 +268,7 @@ class CompletionPopup(ChoosePopupWidget):
     def mark_completion(self, editor, query):
         self.current_completion = c = editor.textCursor()
         chars = string_length(query or '')
-        c.setPosition(c.position() - chars), c.setPosition(c.position() + chars, c.KeepAnchor)
+        c.setPosition(c.position() - chars), c.setPosition(c.position() + chars, QTextCursor.MoveMode.KeepAnchor)
         self.hide()
 
     def handle_result(self, result):

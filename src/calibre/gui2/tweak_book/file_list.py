@@ -10,7 +10,7 @@ import textwrap
 from collections import Counter, OrderedDict, defaultdict
 from functools import partial
 from PyQt5.Qt import (
-    QApplication, QCheckBox, QDialog, QDialogButtonBox, QFont, QFormLayout,
+    QApplication, QCheckBox, QDialog, QDialogButtonBox, QFont, QFormLayout, QItemSelectionModel,
     QGridLayout, QIcon, QInputDialog, QLabel, QLineEdit, QListWidget, QAbstractItemView,
     QListWidgetItem, QMenu, QPainter, QPixmap, QRadioButton, QScrollArea, QSize,
     QSpinBox, QStyle, QStyledItemDelegate, Qt, QTimer, QTreeWidget, QTreeWidgetItem,
@@ -251,11 +251,11 @@ class FileList(QTreeWidget, OpenWithHandler):
         self.setIconSize(QSize(16, 16))
         self.header().close()
         self.setDragEnabled(True)
-        self.setEditTriggers(self.EditKeyPressed)
+        self.setEditTriggers(QAbstractItemView.EditTrigger.EditKeyPressed)
         self.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
         self.viewport().setAcceptDrops(True)
         self.setDropIndicatorShown(True)
-        self.setDragDropMode(self.InternalMove)
+        self.setDragDropMode(QAbstractItemView.DragDropMode.InternalMove)
         self.setAutoScroll(True)
         self.setAutoScrollMargin(TOP_ICON_SIZE*2)
         self.setDefaultDropAction(Qt.DropAction.MoveAction)
@@ -338,7 +338,7 @@ class FileList(QTreeWidget, OpenWithHandler):
                 if q == current_name:
                     self.scrollToItem(c)
                     s = self.selectionModel()
-                    s.setCurrentIndex(self.indexFromItem(c), s.NoUpdate)
+                    s.setCurrentIndex(self.indexFromItem(c), QItemSelectionModel.SelectionFlag.NoUpdate)
 
     def mark_name_as_current(self, name):
         current = self.item_from_name(name)
@@ -928,7 +928,7 @@ class FileList(QTreeWidget, OpenWithHandler):
         l.addWidget(s)
         s.setDragEnabled(True)
         s.setDropIndicatorShown(True)
-        s.setDragDropMode(self.InternalMove)
+        s.setDragDropMode(QAbstractItemView.DragDropMode.InternalMove)
         s.setAutoScroll(True)
         s.setDefaultDropAction(Qt.DropAction.MoveAction)
         for name in sheets:
@@ -974,7 +974,7 @@ class NewFileDialog(QDialog):  # {{{
         l.addWidget(bb)
         bb.accepted.connect(self.accept)
         bb.rejected.connect(self.reject)
-        self.imp_button = b = bb.addButton(_('Import resource file (image/font/etc.)'), bb.ActionRole)
+        self.imp_button = b = bb.addButton(_('Import resource file (image/font/etc.)'), QDialogButtonBox.ButtonRole.ActionRole)
         b.setIcon(QIcon(I('view-image.png')))
         b.setToolTip(_('Import a file from your computer as a new'
                        ' file into the book.'))

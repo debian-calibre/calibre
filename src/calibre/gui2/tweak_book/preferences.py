@@ -95,12 +95,12 @@ class BasicSettings(QWidget):  # {{{
         widget = QListWidget(self)
         widget.addItems(prefs.defaults[name])
         widget.setDragEnabled(True)
-        widget.setDragDropMode(widget.InternalMove)
+        widget.setDragDropMode(QAbstractItemView.DragDropMode.InternalMove)
         widget.viewport().setAcceptDrops(True)
         widget.setDropIndicatorShown(True)
         widget.indexesMoved.connect(self.emit_changed)
         widget.setDefaultDropAction(Qt.DropAction.MoveAction)
-        widget.setMovement(widget.Snap)
+        widget.setMovement(QListView.Movement.Snap)
         widget.setSpacing(5)
         widget.defaults = prefs.defaults[name]
 
@@ -381,6 +381,11 @@ class PreviewSettings(BasicSettings):  # {{{
         w = self('preview_minimum_font_size')
         w.setMinimum(4), w.setMaximum(100), w.setSuffix(' px')
         l.addRow(_('Mi&nimum font size:'), w)
+        w = self('preview_sync_context')
+        w.setMinimum(0), w.setMaximum(10), w.setSuffix(' ' + _('lines'))
+        w.setToolTip('<p>' + _(
+            'Number of lines that are shown above the current line when syncing the text shown in the preview panel to the cursor position in the code view'))
+        l.addRow(_('Visible lines above s&ync point:'), w)
         l.addRow(_('Background color:'), self.color_override('preview_background'))
         l.addRow(_('Foreground color:'), self.color_override('preview_foreground'))
         l.addRow(_('Link color:'), self.color_override('preview_link_color'))
@@ -680,8 +685,8 @@ class TemplatesDialog(Dialog):  # {{{
         self.show_template()
 
         self.bb.clear()
-        self.bb.addButton(self.bb.Close)
-        self.rd = b = self.bb.addButton(self.bb.RestoreDefaults)
+        self.bb.addButton(QDialogButtonBox.StandardButton.Close)
+        self.rd = b = self.bb.addButton(QDialogButtonBox.StandardButton.RestoreDefaults)
         b.clicked.connect(self.restore_defaults)
         l.addWidget(self.bb)
 
@@ -734,7 +739,7 @@ class Preferences(QDialog):
         cl.clearPropertyFlags()
         cl.setViewMode(QListView.ViewMode.IconMode)
         cl.setFlow(QListView.Flow.TopToBottom)
-        cl.setMovement(cl.Static)
+        cl.setMovement(QListView.Movement.Static)
         cl.setWrapping(False)
         cl.setSpacing(15)
         if get_lang()[:2] not in ('zh', 'ja'):
@@ -744,13 +749,13 @@ class Preferences(QDialog):
         self.bb = bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
         bb.accepted.connect(self.accept)
         bb.rejected.connect(self.reject)
-        self.rdb = b = bb.addButton(_('Restore all &defaults'), bb.ResetRole)
+        self.rdb = b = bb.addButton(_('Restore all &defaults'), QDialogButtonBox.ButtonRole.ResetRole)
         b.setToolTip(_('Restore defaults for all preferences'))
         b.clicked.connect(self.restore_all_defaults)
-        self.rcdb = b = bb.addButton(_('Restore &current defaults'), bb.ResetRole)
+        self.rcdb = b = bb.addButton(_('Restore &current defaults'), QDialogButtonBox.ButtonRole.ResetRole)
         b.setToolTip(_('Restore defaults for currently displayed preferences'))
         b.clicked.connect(self.restore_current_defaults)
-        self.rconfs = b = bb.addButton(_('Restore c&onfirmations'), bb.ResetRole)
+        self.rconfs = b = bb.addButton(_('Restore c&onfirmations'), QDialogButtonBox.ButtonRole.ResetRole)
         b.setToolTip(_('Restore all disabled confirmation prompts'))
         b.clicked.connect(self.restore_confirmations)
 

@@ -8,16 +8,15 @@ import textwrap
 import time
 from collections import defaultdict
 from functools import partial
-from threading import Thread
-
 from PyQt5.Qt import (
     QApplication, QByteArray, QHBoxLayout, QIcon, QLabel, QMenu, QSize, QSizePolicy,
     QStackedLayout, Qt, QTimer, QToolBar, QUrl, QVBoxLayout, QWidget, pyqtSignal
 )
-from PyQt5.QtWebEngineCore import QWebEngineUrlSchemeHandler
+from PyQt5.QtWebEngineCore import QWebEngineUrlSchemeHandler, QWebEngineUrlRequestJob, QWebEngineUrlRequestInfo
 from PyQt5.QtWebEngineWidgets import (
-    QWebEnginePage, QWebEngineProfile, QWebEngineScript, QWebEngineView
+    QWebEnginePage, QWebEngineProfile, QWebEngineScript, QWebEngineView, QWebEngineSettings, QWebEngineContextMenuData
 )
+from threading import Thread
 
 from calibre import prints
 from calibre.constants import (
@@ -25,7 +24,9 @@ from calibre.constants import (
 )
 from calibre.ebooks.oeb.base import OEB_DOCS, XHTML_MIME, serialize
 from calibre.ebooks.oeb.polish.parsing import parse
-from calibre.gui2 import NO_URL_FORMATTING, error_dialog, is_dark_theme, open_url
+from calibre.gui2 import (
+    NO_URL_FORMATTING, error_dialog, is_dark_theme, safe_open_url
+)
 from calibre.gui2.palette import dark_color, dark_link_color, dark_text_color
 from calibre.gui2.tweak_book import TOP, actions, current_container, editors, tprefs
 from calibre.gui2.tweak_book.file_list import OpenWithHandler
@@ -170,11 +171,11 @@ class UrlSchemeHandler(QWebEngineUrlSchemeHandler):
 
     def requestStarted(self, rq):
         if bytes(rq.requestMethod()) != b'GET':
-            rq.fail(rq.RequestDenied)
+            rq.fail(QWebEngineUrlRequestJob.Error.RequestDenied)
             return
         url = rq.requestUrl()
         if url.host() != FAKE_HOST or url.scheme() != FAKE_PROTOCOL:
-            rq.fail(rq.UrlNotFound)
+            rq.fail(QWebEngineUrlRequestJob.Error.UrlNotFound)
             return
         name = url.path()[1:]
         try:
@@ -183,7 +184,7 @@ class UrlSchemeHandler(QWebEngineUrlSchemeHandler):
                 return
             c = current_container()
             if not c.has_name(name):
-                rq.fail(rq.UrlNotFound)
+                rq.fail(QWebEngineUrlRequestJob.Error.UrlNotFound)
                 return
             mime_type = c.mime_map.get(name, 'application/octet-stream')
             if mime_type in OEB_DOCS:
@@ -204,7 +205,7 @@ class UrlSchemeHandler(QWebEngineUrlSchemeHandler):
         except Exception:
             import traceback
             traceback.print_exc()
-            rq.fail(rq.RequestFailed)
+            rq.fail(QWebEngineUrlRequestJob.Error.RequestFailed)
 
     def check_for_parse(self):
         remove = []
@@ -286,8 +287,8 @@ def create_profile():
         ans.installUrlSchemeHandler(QByteArray(FAKE_PROTOCOL.encode('ascii')), url_handler)
         s = ans.settings()
         s.setDefaultTextEncoding('utf-8')
-        s.setAttribute(s.FullScreenSupportEnabled, False)
-        s.setAttribute(s.LinksIncludedInFocusChain, False)
+        s.setAttribute(QWebEngineSettings.WebAttribute.FullScreenSupportEnabled, False)
+        s.setAttribute(QWebEngineSettings.WebAttribute.LinksIncludedInFocusChain, False)
         create_profile.ans = ans
     return ans
 
@@ -315,11 +316,12 @@ class WebPage(QWebEnginePage):
         prints('%s:%s: %s' % (source_id, linenumber, msg))
 
     def acceptNavigationRequest(self, url, req_type, is_main_frame):
-        if req_type == self.NavigationTypeReload:
+        if req_type == QWebEngineUrlRequestInfo.NavigationType.NavigationTypeReload:
             return True
         if url.scheme() in (FAKE_PROTOCOL, 'data'):
             return True
-        open_url(url)
+        if req_type == QWebEnginePage.NavigationType.NavigationTypeLinkClicked:
+            safe_open_url(url)
         return False
 
     def go_to_anchor(self, anchor):
@@ -339,7 +341,7 @@ class WebPage(QWebEnginePage):
             if lnum is None:
                 return
             tags = [x.lower() for x in tags]
-            self.bridge.go_to_sourceline_address.emit(lnum, tags)
+            self.bridge.go_to_sourceline_address.emit(lnum, tags, tprefs['preview_sync_context'])
 
     def split_mode(self, enabled):
         if self.bridge.ready:
@@ -458,8 +460,8 @@ class WebView(RestartingWebEngineView, OpenWithHandler):
         menu.addAction(actions['reload-preview'])
         menu.addAction(QIcon(I('debug.png')), _('Inspect element'), self.inspect)
         if url.partition(':')[0].lower() in {'http', 'https'}:
-            menu.addAction(_('Open link'), partial(open_url, data.linkUrl()))
-        if data.MediaTypeImage <= data.mediaType() <= data.MediaTypeFile:
+            menu.addAction(_('Open link'), partial(safe_open_url, data.linkUrl()))
+        if QWebEngineContextMenuData.MediaType.MediaTypeImage <= data.mediaType() <= QWebEngineContextMenuData.MediaType.MediaTypeFile:
             url = data.mediaUrl()
             if url.scheme() == FAKE_PROTOCOL:
                 href = url.path().lstrip('/')
@@ -468,7 +470,7 @@ class WebView(RestartingWebEngineView, OpenWithHandler):
                     resource_name = c.href_to_name(href)
                     if resource_name and c.exists(resource_name) and resource_name not in c.names_that_must_not_be_changed:
                         self.add_open_with_actions(menu, resource_name)
-                        if data.mediaType() == data.MediaTypeImage:
+                        if data.mediaType() == QWebEngineContextMenuData.MediaType.MediaTypeImage:
                             mime = c.mime_map[resource_name]
                             if mime.startswith('image/'):
                                 menu.addAction(_('Edit %s') % resource_name, partial(self.edit_image, resource_name))
@@ -500,7 +502,7 @@ class Preview(QWidget):
         self.setLayout(l)
         l.setContentsMargins(0, 0, 0, 0)
         self.stack = QStackedLayout(l)
-        self.stack.setStackingMode(self.stack.StackAll)
+        self.stack.setStackingMode(QStackedLayout.StackingMode.StackAll)
         self.current_sync_retry_count = 0
         self.view = WebView(self)
         self.view._page.bridge.request_sync.connect(self.request_sync)
@@ -744,17 +746,21 @@ class Preview(QWidget):
 
     def apply_settings(self):
         s = self.view.settings()
-        s.setFontSize(s.DefaultFontSize, tprefs['preview_base_font_size'])
-        s.setFontSize(s.DefaultFixedFontSize, tprefs['preview_mono_font_size'])
-        s.setFontSize(s.MinimumLogicalFontSize, tprefs['preview_minimum_font_size'])
-        s.setFontSize(s.MinimumFontSize, tprefs['preview_minimum_font_size'])
+        s.setFontSize(QWebEngineSettings.FontSize.DefaultFontSize, tprefs['preview_base_font_size'])
+        s.setFontSize(QWebEngineSettings.FontSize.DefaultFixedFontSize, tprefs['preview_mono_font_size'])
+        s.setFontSize(QWebEngineSettings.FontSize.MinimumLogicalFontSize, tprefs['preview_minimum_font_size'])
+        s.setFontSize(QWebEngineSettings.FontSize.MinimumFontSize, tprefs['preview_minimum_font_size'])
         sf, ssf, mf = tprefs['engine_preview_serif_family'], tprefs['engine_preview_sans_family'], tprefs['engine_preview_mono_family']
         if sf:
-            s.setFontFamily(s.SerifFont, sf)
+            s.setFontFamily(QWebEngineSettings.FontFamily.SerifFont, sf)
         if ssf:
-            s.setFontFamily(s.SansSerifFont, ssf)
+            s.setFontFamily(QWebEngineSettings.FontFamily.SansSerifFont, ssf)
         if mf:
-            s.setFontFamily(s.FixedFont, mf)
+            s.setFontFamily(QWebEngineSettings.FontFamily.FixedFont, mf)
         stdfnt = tprefs['preview_standard_font_family'] or 'serif'
-        stdfnt = getattr(s, {'serif': 'SerifFont', 'sans': 'SansSerifFont', 'mono': 'FixedFont'}[stdfnt])
-        s.setFontFamily(s.StandardFont, s.fontFamily(stdfnt))
+        stdfnt = {
+            'serif': QWebEngineSettings.FontFamily.SerifFont,
+            'sans': QWebEngineSettings.FontFamily.SansSerifFont,
+            'mono': QWebEngineSettings.FontFamily.FixedFont
+        }[stdfnt]
+        s.setFontFamily(QWebEngineSettings.FontFamily.StandardFont, s.fontFamily(stdfnt))

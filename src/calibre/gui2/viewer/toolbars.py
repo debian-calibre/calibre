@@ -9,7 +9,7 @@ from functools import partial
 from PyQt5.Qt import (
     QAction, QGroupBox, QHBoxLayout, QIcon, QKeySequence, QLabel, QListWidget,
     QListWidgetItem, QMenu, Qt, QToolBar, QToolButton, QVBoxLayout, pyqtSignal, QDialog,
-    QAbstractItemView
+    QAbstractItemView, QDialogButtonBox
 )
 from PyQt5.QtWebEngineWidgets import QWebEnginePage
 
@@ -67,6 +67,7 @@ def all_actions():
             'metadata': Action('metadata.png', _('Show book metadata'), 'metadata'),
             'toggle_read_aloud': Action('bullhorn.png', _('Read aloud'), 'toggle_read_aloud'),
             'toggle_highlights': Action('highlight_only_on.png', _('Browse highlights in book'), 'toggle_highlights'),
+            'select_all': Action('edit-select-all.png', _('Select all text in the current file')),
         }
         all_actions.ans = Actions(amap)
     return all_actions.ans
@@ -147,6 +148,8 @@ class ActionsToolBar(ToolBar):
         self.forward_action = page.action(QWebEnginePage.WebAction.Forward)
         self.forward_action.setIcon(aa.forward.icon)
         self.forward_action.setText(aa.forward.text)
+        self.select_all_action = a = page.action(QWebEnginePage.WebAction.SelectAll)
+        a.setIcon(aa.select_all.icon), a.setText(aa.select_all.text)
 
         self.open_action = a = QAction(aa.open.icon, aa.open.text, self)
         self.open_menu = m = QMenu(self)
@@ -320,7 +323,7 @@ class ActionsList(QListWidget):
         self.setDragEnabled(True)
         self.viewport().setAcceptDrops(True)
         self.setDropIndicatorShown(True)
-        self.setDragDropMode(self.InternalMove)
+        self.setDragDropMode(QAbstractItemView.DragDropMode.InternalMove)
         self.setDefaultDropAction(Qt.DropAction.CopyAction if ismacos else Qt.DropAction.MoveAction)
         self.setMinimumHeight(400)
         self.is_source = is_source
@@ -411,7 +414,7 @@ class ConfigureToolBar(Dialog):
         v.addWidget(self.current_actions)
         h.addLayout(bv), h.addWidget(rg)
         l.addWidget(self.bb)
-        self.rdb = b = self.bb.addButton(_('Restore defaults'), self.bb.ActionRole)
+        self.rdb = b = self.bb.addButton(_('Restore defaults'), QDialogButtonBox.ButtonRole.ActionRole)
         b.clicked.connect(self.restore_defaults)
 
     def remove_actions(self):

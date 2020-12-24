@@ -8,7 +8,7 @@ __copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
 import os, re, textwrap, time
 
 from PyQt5.Qt import (
-    QVBoxLayout, QStackedWidget, QSize, QPushButton, QIcon, QWidget, QListView,
+    QVBoxLayout, QStackedWidget, QSize, QPushButton, QIcon, QWidget, QListView, QItemSelectionModel,
     QHBoxLayout, QAbstractListModel, Qt, QLabel, QSizePolicy, pyqtSignal, QSortFilterProxyModel,
     QFormLayout, QSpinBox, QLineEdit, QGroupBox, QListWidget, QListWidgetItem,
     QToolButton, QTreeView, QDialog, QDialogButtonBox)
@@ -217,7 +217,7 @@ class RecipeList(QWidget):  # {{{
         if v.model().rowCount() > 0:
             idx = v.model().index(row)
             if idx.isValid():
-                v.selectionModel().select(idx, v.selectionModel().ClearAndSelect)
+                v.selectionModel().select(idx, QItemSelectionModel.SelectionFlag.ClearAndSelect)
                 v.setCurrentIndex(idx)
                 self.recipe_selected(idx)
 
@@ -303,7 +303,7 @@ class BasicRecipe(QWidget):  # {{{
     def __init__(self, parent):
         QWidget.__init__(self, parent)
         self.l = l = QFormLayout(self)
-        l.setFieldGrowthPolicy(l.ExpandingFieldsGrow)
+        l.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
 
         self.hm = hm = QLabel(_(
             'Create a basic news recipe, by adding RSS feeds to it.\n'
@@ -354,7 +354,7 @@ class BasicRecipe(QWidget):  # {{{
         self.afg = afg = QGroupBox(self)
         afg.setTitle(_('Add feed to recipe'))
         afg.l = QFormLayout(afg)
-        afg.l.setFieldGrowthPolicy(l.ExpandingFieldsGrow)
+        afg.l.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
         self.feed_title = ft = QLineEdit(self)
         afg.l.addRow(_('&Feed title:'), ft)
         self.feed_url = fu = QLineEdit(self)
@@ -583,9 +583,9 @@ class CustomRecipes(Dialog):
         bb = self.bb
         bb.clear()
         if index == 0:
-            bb.setStandardButtons(bb.Close)
+            bb.setStandardButtons(QDialogButtonBox.StandardButton.Close)
             for icon, text, tooltip, receiver in self.list_actions:
-                b = bb.addButton(text, bb.ActionRole)
+                b = bb.addButton(text, QDialogButtonBox.ButtonRole.ActionRole)
                 b.setIcon(QIcon(I(icon))), b.setToolTip(tooltip)
                 b.clicked.connect(receiver)
         else:
@@ -594,7 +594,7 @@ class CustomRecipes(Dialog):
                 text = _('S&witch to advanced mode')
                 tooltip = _('Edit this recipe in advanced mode')
                 receiver = self.switch_to_advanced
-                b = bb.addButton(text, bb.ActionRole)
+                b = bb.addButton(text, QDialogButtonBox.ButtonRole.ActionRole)
                 b.setToolTip(tooltip)
                 b.clicked.connect(receiver)
 

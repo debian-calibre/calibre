@@ -10,7 +10,7 @@ import functools
 from PyQt5.Qt import (
     QAction, QApplication, QIcon, QLabel, QMenu, QPainter, QSizePolicy, QSplitter,
     QStackedWidget, QStatusBar, QStyle, QStyleOption, Qt, QTabBar, QTimer,
-    QToolButton, QVBoxLayout, QWidget, QDialog
+    QToolButton, QVBoxLayout, QWidget, QDialog, QEvent
 )
 
 from calibre.constants import __appname__, get_version, ismacos
@@ -239,9 +239,9 @@ class VersionLabel(QLabel):  # {{{
     def event(self, ev):
         m = None
         et = ev.type()
-        if et == ev.Enter:
+        if et == QEvent.Type.Enter:
             m = True
-        elif et == ev.Leave:
+        elif et == QEvent.Type.Leave:
             m = False
         if m is not None and m != self.mouse_over:
             self.mouse_over = m
@@ -441,10 +441,10 @@ class VLTabs(QTabBar):  # {{{
         gprefs['vl_tabs_closable'] = True
         self.setTabsClosable(True)
         try:
-            self.tabButton(0, self.RightSide).setVisible(False)
+            self.tabButton(0, QTabBar.ButtonPosition.RightSide).setVisible(False)
         except AttributeError:
             try:
-                self.tabButton(0, self.LeftSide).setVisible(False)
+                self.tabButton(0, QTabBar.ButtonPosition.LeftSide).setVisible(False)
             except AttributeError:
                 # On some OS X machines (using native style) the tab button is
                 # on the left
@@ -509,10 +509,10 @@ class VLTabs(QTabBar):  # {{{
         if current_idx is None and current_lib:
             self.setTabText(all_idx, current_lib)
         try:
-            self.tabButton(all_idx, self.RightSide).setVisible(False)
+            self.tabButton(all_idx, QTabBar.ButtonPosition.RightSide).setVisible(False)
         except AttributeError:
             try:
-                self.tabButton(all_idx, self.LeftSide).setVisible(False)
+                self.tabButton(all_idx, QTabBar.ButtonPosition.LeftSide).setVisible(False)
             except AttributeError:
                 # On some OS X machines (using native style) the tab button is
                 # on the left

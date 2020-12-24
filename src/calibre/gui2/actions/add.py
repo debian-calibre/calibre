@@ -7,26 +7,27 @@ __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
 import os
-from functools import partial
 from collections import defaultdict
-
-from PyQt5.Qt import QPixmap, QTimer, QApplication, QDialog
+from functools import partial
+from PyQt5.Qt import QApplication, QDialog, QPixmap, QTimer
 
 from calibre import as_unicode, guess_type
-from calibre.gui2 import (error_dialog, choose_files, choose_dir,
-        warning_dialog, info_dialog, gprefs)
+from calibre.constants import iswindows
+from calibre.ebooks import BOOK_EXTENSIONS
+from calibre.ebooks.metadata import MetaInformation
+from calibre.gui2 import (
+    choose_dir, choose_files, error_dialog, gprefs, info_dialog, question_dialog,
+    warning_dialog
+)
+from calibre.gui2.actions import InterfaceAction
 from calibre.gui2.dialogs.add_empty_book import AddEmptyBookDialog
 from calibre.gui2.dialogs.confirm_delete import confirm
 from calibre.gui2.dialogs.progress import ProgressDialog
-from calibre.ebooks import BOOK_EXTENSIONS
+from calibre.ptempfile import PersistentTemporaryFile
 from calibre.utils.config_base import tweaks
 from calibre.utils.filenames import ascii_filename, make_long_path_useable
 from calibre.utils.icu import sort_key
-from calibre.gui2.actions import InterfaceAction
-from calibre.gui2 import question_dialog
-from calibre.ebooks.metadata import MetaInformation
-from calibre.ptempfile import PersistentTemporaryFile
-from polyglot.builtins import iteritems, string_or_bytes, range
+from polyglot.builtins import iteritems, range, string_or_bytes
 
 
 def get_filters():
@@ -430,6 +431,9 @@ class AddAction(InterfaceAction):
         formats = []
         from calibre.gui2.dnd import image_extensions
         image_exts = set(image_extensions()) - set(tweaks['cover_drop_exclude'])
+        if iswindows:
+            from calibre.gui2.add import resolve_windows_links
+            paths = list(resolve_windows_links(paths, hwnd=int(self.gui.effectiveWinId())))
         for path in paths:
             ext = os.path.splitext(path)[1].lower()
             if ext:
@@ -446,11 +450,16 @@ class AddAction(InterfaceAction):
                 accept = True
         if accept and event is not None:
             event.accept()
+        add_as_book = False
         if do_confirm and formats:
-            if not confirm(
+            ok, add_as_book = confirm(
                 _('You have dropped some files onto the book <b>%s</b>. This will'
                   ' add or replace the files for this book. Do you want to proceed?') % db.title(cid, index_is_id=True),
-                'confirm_drop_on_book', parent=self.gui):
+                'confirm_drop_on_book', parent=self.gui,
+                extra_button=ngettext('Add as new book', 'Add as new books', len(formats)))
+            if ok and add_as_book:
+                add_as_book = [path for ext, path in formats]
+            if not ok or add_as_book:
                 formats = []
         for ext, path in formats:
             db.add_format_with_hooks(cid, ext, path, index_is_id=True)
@@ -458,6 +467,8 @@ class AddAction(InterfaceAction):
             self.gui.library_view.model().current_changed(current_idx, current_idx)
         if cover_changed:
             self.gui.refresh_cover_browser()
+        if add_as_book:
+            self.files_dropped(add_as_book)
 
     def __add_filesystem_book(self, paths, allow_device=True):
         if isinstance(paths, string_or_bytes):

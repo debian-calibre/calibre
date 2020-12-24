@@ -11,7 +11,7 @@ from PyQt5.Qt import (
     QApplication, QCheckBox, QCursor, QDialog, QDialogButtonBox, QFrame, QGridLayout,
     QIcon, QInputDialog, QItemSelectionModel, QKeySequence, QLabel, QMenu,
     QPushButton, QScrollArea, QSize, QSizePolicy, QStackedWidget, Qt, QAbstractItemView,
-    QToolButton, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget, pyqtSignal
+    QToolButton, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget, pyqtSignal, QEvent
 )
 from threading import Thread
 
@@ -59,9 +59,9 @@ class XPathDialog(QDialog):  # {{{
         self.bb = bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok|QDialogButtonBox.StandardButton.Cancel)
         bb.accepted.connect(self.accept)
         bb.rejected.connect(self.reject)
-        self.ssb = b = bb.addButton(_('&Save settings'), bb.ActionRole)
+        self.ssb = b = bb.addButton(_('&Save settings'), QDialogButtonBox.ButtonRole.ActionRole)
         b.clicked.connect(self.save_settings)
-        self.load_button = b = bb.addButton(_('&Load settings'), bb.ActionRole)
+        self.load_button = b = bb.addButton(_('&Load settings'), QDialogButtonBox.ButtonRole.ActionRole)
         self.load_menu = QMenu(b)
         b.setMenu(self.load_menu)
         self.setup_load_button()
@@ -247,7 +247,7 @@ class ItemView(QStackedWidget):  # {{{
 
         # Item status
         ip.hl1 = hl =  QFrame()
-        hl.setFrameShape(hl.HLine)
+        hl.setFrameShape(QFrame.Shape.HLine)
         l.addWidget(hl, l.rowCount(), 0, 1, 2)
         self.icon_label = QLabel()
         self.status_label = QLabel()
@@ -255,7 +255,7 @@ class ItemView(QStackedWidget):  # {{{
         l.addWidget(self.icon_label, l.rowCount(), 0)
         l.addWidget(self.status_label, l.rowCount()-1, 1)
         ip.hl2 = hl =  QFrame()
-        hl.setFrameShape(hl.HLine)
+        hl.setFrameShape(QFrame.Shape.HLine)
         l.addWidget(hl, l.rowCount(), 0, 1, 2)
 
         # Edit/remove item
@@ -269,7 +269,7 @@ class ItemView(QStackedWidget):  # {{{
         l.addWidget(b, l.rowCount(), 0, 1, 2)
         b.clicked.connect(self.delete_item)
         ip.hl3 = hl =  QFrame()
-        hl.setFrameShape(hl.HLine)
+        hl.setFrameShape(QFrame.Shape.HLine)
         l.addWidget(hl, l.rowCount(), 0, 1, 2)
         l.setRowMinimumHeight(rs, 20)
 
@@ -292,7 +292,7 @@ class ItemView(QStackedWidget):  # {{{
         l.addWidget(b, l.rowCount()+1, 0, 1, 2)
 
         ip.hl4 = hl =  QFrame()
-        hl.setFrameShape(hl.HLine)
+        hl.setFrameShape(QFrame.Shape.HLine)
         l.addWidget(hl, l.rowCount(), 0, 1, 2)
         l.setRowMinimumHeight(rs, 20)
 
@@ -389,7 +389,7 @@ class TreeWidget(QTreeWidget):  # {{{
         self.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
         self.viewport().setAcceptDrops(True)
         self.setDropIndicatorShown(True)
-        self.setDragDropMode(self.InternalMove)
+        self.setDragDropMode(QAbstractItemView.DragDropMode.InternalMove)
         self.setAutoScroll(True)
         self.setAutoScrollMargin(ICON_SIZE*2)
         self.setDefaultDropAction(Qt.DropAction.MoveAction)
@@ -770,7 +770,7 @@ class TOCView(QWidget):  # {{{
         self.item_view.edit_item()
 
     def event(self, e):
-        if e.type() == e.StatusTip:
+        if e.type() == QEvent.Type.StatusTip:
             txt = unicode_type(e.tip()) or self.default_msg
             self.hl.setText(txt)
         return super(TOCView, self).event(e)
@@ -1019,7 +1019,7 @@ class TOCEditor(QDialog):  # {{{
         l.addWidget(bb)
         bb.accepted.connect(self.accept)
         bb.rejected.connect(self.reject)
-        self.undo_button = b = bb.addButton(_('&Undo'), bb.ActionRole)
+        self.undo_button = b = bb.addButton(_('&Undo'), QDialogButtonBox.ButtonRole.ActionRole)
         b.setToolTip(_('Undo the last action, if any'))
         b.setIcon(QIcon(I('edit-undo.png')))
         b.clicked.connect(self.toc_view.undo)

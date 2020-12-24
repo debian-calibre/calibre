@@ -5280,15 +5280,46 @@ var str = ρσ_str, repr = ρσ_repr;;
             __module__ : {value: null}
         });
 
-        function scroll_to_node(node) {
+        function line_height() {
+            var ans, ds, lh;
+            ans = line_height.ans;
+            if (!ans) {
+                ds = window.getComputedStyle(document.body);
+                try {
+                    lh = float(ds.lineHeight);
+                } catch (ρσ_Exception) {
+                    ρσ_last_exception = ρσ_Exception;
+                    {
+                        try {
+                            lh = 1.2 * float(ds.fontSize);
+                        } catch (ρσ_Exception) {
+                            ρσ_last_exception = ρσ_Exception;
+                            {
+                                lh = 15;
+                            } 
+                        }
+                    } 
+                }
+                ans = line_height.ans = max(5, lh);
+            }
+            return ans;
+        };
+        if (!line_height.__module__) Object.defineProperties(line_height, {
+            __module__ : {value: null}
+        });
+
+        function scroll_to_node(node, sync_context) {
             if (node === document.body) {
                 window.scrollTo(0, 0);
             } else {
                 node.scrollIntoView();
+                if (sync_context) {
+                    window.scrollBy(0, -sync_context * line_height());
+                }
             }
         };
         if (!scroll_to_node.__argnames__) Object.defineProperties(scroll_to_node, {
-            __argnames__ : {value: ["node"]},
+            __argnames__ : {value: ["node", "sync_context"]},
             __module__ : {value: null}
         });
 
@@ -5298,7 +5329,7 @@ var str = ρσ_str, repr = ρσ_repr;;
             ρσ_d["in_split_mode"] = false;
             return ρσ_d;
         }).call(this);
-        function go_to_line(lnum) {
+        function go_to_line(lnum, sync_context) {
             var node;
             var ρσ_Iter0 = ρσ_Iterable(document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", lnum) + "\"]"));
             for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
@@ -5306,18 +5337,18 @@ var str = ρσ_str, repr = ρσ_repr;;
                 if (is_hidden(node)) {
                     continue;
                 }
-                scroll_to_node(node);
+                scroll_to_node(node, sync_context);
                 break;
             }
         };
         if (!go_to_line.__argnames__) Object.defineProperties(go_to_line, {
-            __argnames__ : {value: ["lnum"]},
+            __argnames__ : {value: ["lnum", "sync_context"]},
             __module__ : {value: null}
         });
 
         
         var go_to_sourceline_address = from_python((function() {
-            var ρσ_anonfunc = function go_to_sourceline_address(sourceline, tags) {
+            var ρσ_anonfunc = function go_to_sourceline_address(sourceline, tags, sync_context) {
                 var nodes, node, index;
                 nodes = document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", sourceline) + "\"]");
                 for (var ρσ_Index1 = 0; ρσ_Index1 < nodes.length; ρσ_Index1++) {
@@ -5327,13 +5358,13 @@ var str = ρσ_str, repr = ρσ_repr;;
                         break;
                     }
                     if (ρσ_equals(index, tags.length - 1) && !is_hidden(node)) {
-                        return scroll_to_node(node);
+                        return scroll_to_node(node, sync_context);
                     }
                 }
-                go_to_line(sourceline);
+                go_to_line(sourceline, sync_context);
             };
             if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                __argnames__ : {value: ["sourceline", "tags"]},
+                __argnames__ : {value: ["sourceline", "tags", "sync_context"]},
                 __module__ : {value: null}
             });
             return ρσ_anonfunc;
