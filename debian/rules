@@ -1,8 +1,9 @@
 #!/usr/bin/make -f
 
-# try building with python3
-export CALIBRE_PY3_PORT=1
-SETUP=python3 setup.py
+# building with python3
+PYTHON=$(shell py3versions -r 3.8)
+PYTHON_PATH=$(shell which $(PYTHON))
+SETUP=$(PYTHON) setup.py
 
 # build options
 export DEB_BUILD_MAINT_OPTIONS=hardening=+all reproducible=+all
