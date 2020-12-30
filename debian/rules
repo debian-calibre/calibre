@@ -63,9 +63,9 @@ calibre_auto_install:
 	rm debian/tmp/usr/lib/python*/site-packages/init_calibre.py
 	rmdir debian/tmp/usr/share/desktop-directories
 #
-#	# do not ship a copy of fonts-liberation
+#	# do not ship a copy of fonts-liberation2
 	rm -r debian/tmp/usr/share/calibre/fonts/liberation/
-	ln -s /usr/share/fonts/truetype/liberation/ debian/tmp/usr/share/calibre/fonts/liberation
+	ln -s /usr/share/fonts/truetype/liberation2/ debian/tmp/usr/share/calibre/fonts/liberation
 #
 #	# do not install developer's script
 	rm debian/tmp/usr/lib/calibre/calibre/devices/mtp/unix/upstream/update.py
