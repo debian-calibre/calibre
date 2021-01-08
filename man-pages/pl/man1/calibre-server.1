@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "grudnia 24, 2020" "5.8.1" "calibre"
+.TH "CALIBRE-SERVER" "1" "stycznia 08, 2021" "5.9.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -56,12 +56,12 @@ Whenever you pass arguments to \fBcalibre\-server\fP that have spaces in them, e
 .INDENT 0.0
 .TP
 .B \-\-ajax\-timeout
-Time (in seconds) to wait for a response from the server when making queries.
+Czas (w sekundach) oczekiwania na odpowiedź z serwera podczas wykonywania zapytań.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Wybierz rodzaj używanego uwierzytelnienia.  Set the HTTP authentication mode used by the server. Set to \fB"\fPbasic\fB"\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB"\fPauto\fB"\fP, which will use \fB"\fPbasic\fB"\fP if SSL is configured otherwise it will use \fB"\fPdigest\fB"\fP\&.
+Wybierz rodzaj używanego uwierzytelnienia.  Ustaw tryb uwierzytelniania HTTP używany przez serwer. Ustaw jako „podstawowy”, jeśli umieszczasz ten serwer za proxy SSL. W przeciwnym razie pozostaw to jako „auto”, co spowoduje użycie „podstawowego”, jeśli skonfigurowano SSL, w przeciwnym razie użyje „podsumowania”.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -101,12 +101,12 @@ Uruchom proces w tle jako daemon (tylko Linux).
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-Ogranicz wyświetlane pól zdefiniowanych przez użytkownika.  Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
+Ogranicz wyświetlane pól zdefiniowanych przez użytkownika.  Rozdzielana przecinkami lista pól metadanych zdefiniowanych przez użytkownika, które będą wyświetlane przez serwer treści w widokach /opds i /mobile. Jeśli określisz tę opcję, żadne pola, których nie ma na tej liście, nie będą wyświetlane. Na przykład: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-allow\-socket\-preallocation, \-\-disable\-allow\-socket\-preallocation
-Socket pre\-allocation, for example, with systemd socket activation. Domyślnie ta opcja jest włączona.
+Wstępna alokacja gniazda, na przykład z aktywacją gniazda systemowego. Domyślnie ta opcja jest włączona.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -116,12 +116,12 @@ Uwierzytelnianie na podstawie hasła w celu uzyskania dostępu do serwera.    Do
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Powrót do automatycznie wykrywanego interfejsu.     If for some reason the server is unable to bind to the interface specified in the listen_on option, then it will try to detect an interface that connects to the outside world and bind to that. Domyślnie ta opcja jest włączona.
+Powrót do automatycznie wykrywanego interfejsu.     Jeśli z jakiegoś powodu serwer nie może połączyć się z interfejsem określonym w opcji Listen_on, spróbuje wykryć interfejs, który łączy się ze światem zewnętrznym i połączyć się z nim. Domyślnie ta opcja jest włączona.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Zezwalaj nieuwierzytelnionym połączeniom lokalnym na wprowadzanie zmian.    Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. Domyślnie ta opcja jest wyłączona.
+Zezwalaj nieuwierzytelnionym połączeniom lokalnym na wprowadzanie zmian.    Zwykle, jeśli nie włączysz uwierzytelniania, serwer działa w trybie tylko do odczytu, aby anonimowi użytkownicy nie mogli wprowadzać zmian w bibliotekach calibre. Ta opcja umożliwia każdemu łączącemu się z tego samego komputera, na którym działa serwer, wprowadzanie zmian. Jest to przydatne, jeśli chcesz uruchomić serwer bez uwierzytelniania, ale nadal używać programu calibredb do wprowadzania zmian w bibliotekach kalibru. Pamiętaj, że włączenie tej opcji oznacza, że każdy program uruchomiony na komputerze może wprowadzać zmiany w bibliotekach calibre. Domyślnie ta opcja jest wyłączona.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -131,12 +131,12 @@ Zapisuj do dziennika żądania HTTP 404 (Nie znaleziono).     Domyślnie serwer 
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
-Reklamuj kanały OPDS przez BonJour.         Advertise the OPDS feeds via the BonJour service, so that OPDS based reading apps can detect and connect to the server automatically. Domyślnie ta opcja jest włączona.
+Reklamuj kanały OPDS przez BonJour.         Reklamuj kanały OPDS za pośrednictwem usługi BonJour, aby aplikacje czytające oparte na OPDS mogły automatycznie wykrywać i łączyć się z serwerem. Domyślnie ta opcja jest włączona.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-Przesyłanie plików bez kopiowania w celu zwiększenia wydajności.    This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. Domyślnie ta opcja jest włączona.
+Przesyłanie plików bez kopiowania w celu zwiększenia wydajności.    Spowoduje to użycie transferów w jądrze bez kopiowania podczas wysyłania plików przez sieć, zwiększając wydajność. Jednak może to spowodować uszkodzone transfery plików w niektórych uszkodzonych systemach plików. Jeśli zauważysz uszkodzone transfery plików, wyłącz je. Domyślnie ta opcja jest włączona.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -151,7 +151,7 @@ Ignorowane pola metadanych.         Oddzielona przecinkami lista zdefiniowanych 
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-Interfejs, na którym będziemy nasłuchiwać połączeń.         The default is to listen on all available IPv4 interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
+Interfejs, na którym będziemy nasłuchiwać połączeń.         Domyślnie nasłuchuje na wszystkich dostępnych interfejsach IPv4. Możesz to zmienić na przykład na „127.0.0.1”, aby nasłuchiwać tylko połączeń z komputera lokalnego, lub na „::”, aby nasłuchiwać wszystkich przychodzących połączeń IPv6 i IPv4.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -171,22 +171,22 @@ Max. rozmiar pojedynczego nagłówka HTTP (w KB).
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-Maksymalny czas na procesy robocze.         Maximum amount of time worker processes are allowed to run (in minutes). Set to zero for no limit.
+Maksymalny czas na procesy robocze.         Maksymalny czas działania procesów roboczych (w minutach). Ustaw na zero bez ograniczeń.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-jobs
-Maksymalna liczba procesów roboczych.       Worker processes are launched as needed and used for large jobs such as preparing a book for viewing, adding books, converting, etc. Normally, the max. number of such processes is based on the number of CPU cores. You can control it by this setting.
+Maksymalna liczba procesów roboczych.       Procesy robocze są uruchamiane w razie potrzeby i wykorzystywane do dużych zadań, takich jak przygotowywanie książki do przeglądania, dodawanie książek, konwersja itp. Zwykle maks. liczba takich procesów zależy od liczby rdzeni procesora. Możesz kontrolować to za pomocą tego ustawienia.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-log\-size
-Maks. rozmiar pliku dziennika (w MB).       The maximum size of log files, generated by the server. When the log becomes larger than this size, it is automatically rotated. Set to zero to disable log rotation.
+Maks. rozmiar pliku dziennika (w MB).       Maksymalny rozmiar plików dziennika generowanych przez serwer. Kiedy dziennik staje się większy niż ten rozmiar, jest automatycznie obracany. Ustaw na zero, aby wyłączyć rotację dziennika.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-items
-Maksymalna liczba książek w kanałach OPDS.  The maximum number of books that the server will return in a single OPDS acquisition feed.
+Maksymalna liczba książek w kanałach OPDS.  Maksymalna liczba książek, które serwer zwróci w pojedynczym kanale pobierania OPDS.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -216,7 +216,7 @@ Port, na którym będziemy nasłuchiwać połączeń.
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-Path to a JSON file containing URLs for the \fB"\fPSearch the internet\fB"\fP feature. The easiest way to create such a file is to go to Preferences\-> Sharing over the net\->Search the internet in calibre, create the URLs and export them.
+Ścieżka do pliku JSON zawierającego adresy URL funkcji „Szukaj w internecie”. Najłatwiejszym sposobem utworzenia takiego pliku jest przejście do Preferencje\-> Udostępnianie przez sieć\-> Przeszukaj internet w kalibrze, utwórz adresy URL i wyeksportuj je.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -241,17 +241,17 @@ Czas (w sekundach), po którym bezczynne połączenie zostanie zamknięte.
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-Allow un\-authenticated connections from specific IP addresses to make changes.      Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
+Zezwalaj na nieuwierzytelnione połączenia z określonych adresów IP, aby wprowadzać zmiany.  Zwykle, jeśli nie włączysz uwierzytelniania, serwer działa w trybie tylko do odczytu, aby anonimowi użytkownicy nie mogli wprowadzać zmian w bibliotekach kalibru. Ta opcja umożliwia każdemu łączącemu się z określonych adresów IP wprowadzanie zmian. Musi to być lista adresów lub specyfikacji sieci oddzielonych przecinkami. Jest to przydatne, jeśli chcesz uruchomić serwer bez uwierzytelniania, ale nadal używać programu calibredb do wprowadzania zmian w bibliotekach calibre. Zwróć uwagę, że włączenie tej opcji oznacza, że każdy łączący się z określonych adresów IP może wprowadzać zmiany w bibliotekach calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-url\-prefix
-Prefiks poprzedzający wszystkie adresy URL.         Useful if you wish to run this server behind a reverse proxy. For example use, /calibre as the URL prefix.
+Prefiks poprzedzający wszystkie adresy URL.         Przydatne, jeśli chcesz uruchomić ten serwer za zwrotnym proxy. Na przykład użyj /calibre jako prefiksu adresu URL.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-userdb
-Path to the user database to use for authentication. The database is a SQLite file. To create it use \fI\%\-\-manage\-users\fP\&. You can read more about managing users at: \fI\%https://manual.calibre\-ebook.com/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
+Ścieżka do bazy danych użytkowników, która ma być używana do uwierzytelniania. Baza danych to plik SQLite. Aby go utworzyć, użyj \fI\%\-\-manage\-users\fP\&. Więcej informacji na temat zarządzania użytkownikami można znaleźć pod adresem: \fI\%https://manual.calibre\-ebook.com/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
 .UNINDENT
 .INDENT 0.0
 .TP

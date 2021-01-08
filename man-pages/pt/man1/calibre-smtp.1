@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "dezembro 24, 2020" "5.8.1" "calibre"
+.TH "CALIBRE-SMTP" "1" "janeiro 08, 2021" "5.9.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -57,7 +57,7 @@ Sempre que passar argumentos para o \fBcalibre\-smtp\fP que contenham espaços p
 .INDENT 0.0
 .TP
 .B \-\-fork, \-f
-Fork and deliver message in background. If you use this option, you should also use \fI\%\-\-outbox\fP to handle delivery failures.
+Criar um processo separado e entregar a mensagem nesse processo de segundo plano. Se usar esta opção, deve também usar \fI\%\-\-outbox\fP para lidar com as eventuais falhas de entrega.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -67,12 +67,12 @@ mostrar esta mensagem de ajuda e sair
 .INDENT 0.0
 .TP
 .B \-\-localhost, \-l
-Host name of localhost. Used when connecting to SMTP server.
+Nome do anfitrião local. Usado quando se efetua a ligação ao servidor de SMTP.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-outbox, \-o
-Path to maildir folder to store failed email messages in.
+Caminho para o diretório maildir onde são armazenadas as mensagens de email que falharam.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -91,7 +91,7 @@ mostrar o número da versão do programa e sair
 .UNINDENT
 .SS COMPOSE MAIL
 .sp
-Options to compose an email. Ignored if text is not specified
+Opções para compor um email. Ignorado se o texto não for especificado
 .INDENT 0.0
 .TP
 .B \-\-attachment, \-a
@@ -104,21 +104,21 @@ Assunto do email
 .UNINDENT
 .SS SMTP RELAY
 .sp
-Options to use an SMTP relay server to send mail. calibre will try to send the email directly unless \-\-relay is specified.
+Opções para usar um servidor de SMTP intermediário para enviar correio eletrónico. O Calibre tenta enviar o email diretamente a menos que a opção \-\-relay seja especificada.
 .INDENT 0.0
 .TP
 .B \-\-cafile
-Path to a file of concatenated CA certificates in PEM format, used to verify the server certificate when using TLS. By default, the system CA certificates are used.
+Caminho para um ficheiro contendo certificados CA concatenados no formato PEM. Usado para verificar o certificado do servidor quando se usa TLS. Por omissão, é usado o certificado CA do sistema.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-verify\-server\-certificate
-Do not verify the server certificate when connecting using TLS. This used to be the default behavior in calibre versions before 3.27. If you are using a relay with a self\-signed or otherwise invalid certificate, you can use this option to restore the pre 3.27 behavior
+Não efetuar a verificação do certificado do servidor quando se usa ligações com TLS. Tal costumava ser o comportamento por omissão nas versões do Calibre anteriores à 3.27. Se estiver a usar um servidor intermediário que tenha um certificado auto\-assinado ou inválido por qualquer outra razão, pode usar esta opção para obter o comportamento habitual das versões anteriores à 3.27
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-encryption\-method, \-e
-Encryption method to use when connecting to relay. Choices are TLS, SSL and NONE. Default is TLS. WARNING: Choosing NONE is highly insecure
+Método de encriptação a usar aquando da ligação ao intermediário. Escolhas possíveis são TLS, SSL e NONE. A predefinição é o uso de TLS. Escolher NONE é extremamente inseguro.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -128,12 +128,12 @@ Senha para retransmissão
 .INDENT 0.0
 .TP
 .B \-\-port
-Port to connect to on relay server. Default is to use 465 if encryption method is SSL and 25 otherwise.
+Porta TCP para ligação ao servidor intermediário. Por omissão é usada a porta 465 se o método de encriptação for SSL, ou a porta 25 nos restantes casos.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-relay, \-r
-An SMTP relay server to use to send mail.
+Um servidor intermediário de SMTP usado para enviar correio eletrónico.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "joulukuuta 24, 2020" "5.8.1" "calibre"
+.TH "CALIBREDB" "1" "tammikuuta 08, 2021" "5.9.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -180,7 +180,7 @@ Järjestä tulokset nousevaan järjestykseen
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Kentät, jotka näytetään kirjoja listattaessa, pilkuin erotettuina sarjana. Käytettävissä olevat kentät: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Oletus: %. Erikoiskentällä \fB"\fPall\fB"\fP valitaan kaikki kentät. Valmiiden listojen lisäksi, mukautettuja listoja voi kutsua *kentän_nimi, esimerkiksi mukautetun kentän #arvio voit kutsua nimellä: *arvio
+Kentät, jotka näytetään kirjoja listattaessa, pilkuin erotettuna sarjana. Käytettävissä olevat kentät: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Oletus: %. Erikoiskentällä \fB"\fPall\fB"\fP valitaan kaikki kentät. Valmiiden listojen lisäksi, mukautettuja listoja voi kutsua *kentän_nimi, esimerkiksi mukautetun kentän #arvio voit kutsua nimellä: *arvio
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -327,7 +327,7 @@ calibredb remove ids
 .UNINDENT
 .UNINDENT
 .sp
-Poista id:itä vastaavat kirjat tietokannasta. Id:t tulee listata pilkuin erotettuna sarjan id\-numeroita. Id:t löytyvät hakutoiminnolla. Esimerkki: 23,34,57\-85 (id\-välin viimeistä numeroa ei huomioida).
+Poista id:itä vastaavat kirjat tietokannasta. Id:t tulee listata pilkuin erotettuna sarjana. Id:t löytyvät hakutoiminnolla. Esimerkki: 23,34,57\-85 (id\-välin viimeistä numeroa ei huomioida).
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -678,7 +678,7 @@ Lista vaihtohtoja tämän sarakkeen tietojen käsittelyyn. Tämä on JSON lausek
 .INDENT 0.0
 .TP
 .B \-\-is\-multiple
-Tämä sarake tallentaa tägi\-tietoja (eli useita pilkulla erotettuja arvoja). Käytössä vain jos tietotyyppi on teksti.
+Tämä sarake tallentaa tagi\-tietoja (eli useita pilkuin erotettuja arvoja). Käytössä vain jos tietotyyppi on teksti.
 .UNINDENT
 .SH CUSTOM_COLUMNS
 .INDENT 0.0

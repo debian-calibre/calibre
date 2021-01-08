@@ -3,17 +3,20 @@
 # License: GPLv3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
 
 
+import bz2
 import os
-import json
-import gzip
-import io
+import sys
 from datetime import datetime
-
-from setup import download_securely
+from urllib.request import urlopen
 
 from polyglot.builtins import filter
+from setup import download_securely
 
-is_ci = os.environ.get('CI', '').lower() == 'true'
+
+def download_from_calibre_server(url):
+    ca = os.path.join(sys.resources_location, 'calibre-ebook-root-CA.crt')
+    with urlopen(url, cafile=ca) as f:
+        return f.read()
 
 
 def filter_ans(ans):
@@ -21,41 +24,19 @@ def filter_ans(ans):
 
 
 def common_user_agents():
-    if is_ci:
-        return [
-            # IE 11 - windows 10
-            'Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko',
-            # IE 11 - windows 8.1
-            'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko',
-            # IE 11 - windows 8
-            'Mozilla/5.0 (Windows NT 6.2; Trident/7.0; rv:11.0) like Gecko',
-            # IE 11 - windows 7
-            'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko',
-            # 32bit IE 11 on 64 bit win 10
-            'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko',
-            # 32bit IE 11 on 64 bit win 8.1
-            'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko',
-            # 32bit IE 11 on 64 bit win 7
-            'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko',
-        ]
     print('Getting recent UAs...')
-    raw = download_securely(
-        'https://raw.githubusercontent.com/intoli/user-agents/master/src/user-agents.json.gz')
-    data = json.loads(gzip.GzipFile(fileobj=io.BytesIO(raw)).read())
-    uas = []
-    for item in data:
-        ua = item['userAgent']
-        if not ua.startswith('Opera'):
-            uas.append(ua)
-    ans = filter_ans(uas)[:256]
-    if not ans:
-        raise ValueError('Failed to download list of common UAs')
-    return ans
+    raw = download_from_calibre_server('https://code.calibre-ebook.com/ua-popularity')
+    ans = {}
+    for line in bz2.decompress(raw).decode('utf-8').splitlines():
+        count, ua = line.partition(':')[::2]
+        count = int(count.strip())
+        ua = ua.strip()
+        if len(ua) > 20:
+            ans[ua] = count
+    return ans, list(sorted(ans, reverse=True, key=ans.__getitem__))
 
 
 def firefox_versions():
-    if is_ci:
-        return '51.0 50.0'.split()
     print('Getting firefox versions...')
     import html5lib
     raw = download_securely(
@@ -70,8 +51,6 @@ def firefox_versions():
 
 
 def chrome_versions():
-    if is_ci:
-        return []
     print('Getting chrome versions...')
     import html5lib
     raw = download_securely(
@@ -103,7 +82,7 @@ def chrome_versions():
 def all_desktop_platforms(user_agents):
     ans = set()
     for ua in user_agents:
-        if 'Mobile/' not in ua and ('Firefox/' in ua or 'Chrome/' in ua):
+        if ' Mobile ' not in ua and 'Mobile/' not in ua and ('Firefox/' in ua or 'Chrome/' in ua):
             plat = ua.partition('(')[2].partition(')')[0]
             parts = plat.split(';')
             if 'Firefox/' in ua:
@@ -113,10 +92,13 @@ def all_desktop_platforms(user_agents):
 
 
 def get_data():
+    ua_freq_map, common = common_user_agents()
     ans = {
         'chrome_versions': chrome_versions(),
         'firefox_versions': firefox_versions(),
-        'common_user_agents': common_user_agents(),
+        'common_user_agents': common,
+        'user_agents_popularity': ua_freq_map,
+        'timestamp': datetime.utcnow().isoformat() + '+00:00',
     }
     ans['desktop_platforms'] = list(all_desktop_platforms(ans['common_user_agents']))
     return ans

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "grudnia 24, 2020" "5.8.1" "calibre"
+.TH "CALIBREDB" "1" "stycznia 08, 2021" "5.9.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -140,7 +140,7 @@ Wyświetla ten tekst pomocy i kończy działanie
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \fI\%http://hostname:port/#library_id\fP for example, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
+Ścieżka do biblioteki calibre. Domyślnie używana jest ścieżka zapisana w ustawieniach. Możesz także połączyć się z serwerem zawartości kalibru, aby wykonywać działania na zdalnych bibliotekach. Aby to zrobić, użyj adresu URL w postaci: \fI\%http://nazwa_hosta:port/#id_biblioteki\fP, na przykład \fI\%http://localhost:8080/#mylibrary.id_biblioteki\fP to identyfikator biblioteki, z którą chcesz się połączyć na serwerze zawartości. Możesz użyć specjalnej wartości Library_id wynoszącej \-, aby uzyskać listę identyfikatorów bibliotek dostępnych na serwerze. Aby uzyskać szczegółowe informacje na temat konfigurowania dostępu przez serwer treści, zobacz \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -240,7 +240,7 @@ Określ autorów dodanych książek
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-If books with similar titles and authors are found, merge the incoming formats (files) automatically into existing book records. A value of \fB"\fPignore\fB"\fP means duplicate formats are discarded. A value of \fB"\fPoverwrite\fB"\fP means duplicate formats in the library are overwritten with the newly added files. A value of \fB"\fPnew_record\fB"\fP means duplicate formats are placed into a new book record.
+Jeśli zostaną znalezione książki o podobnych tytułach i autorach, automatycznie połącz przychodzące formaty (pliki) z istniejącymi rekordami książek. Wartość „ignoruj” oznacza, że zduplikowane formaty są odrzucane. Wartość „nadpisuj” oznacza, że zduplikowane formaty w bibliotece są nadpisywane nowo dodanymi plikami. Wartość „nowy_record” oznacza, że zduplikowane formaty są umieszczane w nowym rekordzie książki.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -446,7 +446,7 @@ Eksportuj wszystkie książki w bazie, ignoruj listę identyfikatorów.
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Have calibre convert all non English characters into English equivalents for the file names. This is useful if saving to a legacy filesystem without full support for Unicode filenames. Określając ten przełącznik wyłączysz to zachowanie
+Przekonwertuj wszystkie inne niż angielskie znaki Calibre na angielskie odpowiedniki nazw plików. Jest to przydatne, jeśli zapisujesz do starszego systemu plików bez pełnej obsługi nazw plików Unicode. Określając ten przełącznik wyłączysz to zachowanie
 .UNINDENT
 .INDENT 0.0
 .TP
