@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "grudnia 24, 2020" "5.8.1" "calibre"
+.TH "EBOOK-CONVERT" "1" "stycznia 08, 2021" "5.9.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -102,7 +102,7 @@ Lista wbudowanych źródeł. Korzystając ze źródła możesz utworzyć e\-book
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Określ profil wyjściowy. Profil wyjściowy informuje system konwersji, jak zoptymalizować stworzony dokument dla wybranego urządzenia (poprzez np. zmianę rozmiaru obrazów na pasujący do ekranu urządzenia). W niektórych przypadkach profil wyjściowy może posłużyć do optymalizacji dla szczególnego urządzenia, ale jest to rzadko wymagane. Do wyboru są: cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+Określ profil wyjściowy. Profil wyjściowy informuje system konwersji, jak zoptymalizować stworzony dokument dla wybranego urządzenia (poprzez np. zmianę rozmiaru obrazów na pasujący do ekranu urządzenia). W niektórych przypadkach profil wyjściowy może posłużyć do optymalizacji dla szczególnego urządzenia, ale jest to rzadko wymagane. Do wyboru są: cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, generic_eink, generic_eink_hd, generic_eink_large, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -186,7 +186,7 @@ Opcje umożliwiające kontrolę nad wyglądem pliku wyjściowego
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPМихаил Горбачёв\fB"\fP with \fB"\fPMikhail Gorbachiov\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Transliteracja znaków Unicode do reprezentacji ASCII. Używaj ostrożnie, ponieważ spowoduje to zastąpienie znaków Unicode ASCII. Na przykład zastąpi „Михаил Горбачёв” słowem „Michaił Gorbachiow”. Należy również zauważyć, że w przypadkach, gdy istnieje wiele reprezentacji znaku (na przykład znaki wspólne dla języka chińskiego i japońskiego), zostanie użyta reprezentacja oparta na bieżącym języku interfejsu calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -261,22 +261,22 @@ Niektóre źle zaprojektowane dokumenty używają tabel do rozmieszczenia tekstu
 .INDENT 0.0
 .TP
 .B \-\-margin\-bottom
-Set the bottom margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Ustaw dolny margines w pkt. Domyślnie jest %d to ustawienie domyślne. Ustawienie wartości mniejszej niż zero spowoduje, że margines nie zostanie ustawiony (ustawienie marginesu w oryginalnym dokumencie zostanie zachowane). Uwaga: formaty zorientowane na strony, takie jak PDF i DOCX, mają własne ustawienia marginesów, które mają pierwszeństwo.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-left
-Set the left margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Ustaw lewy margines w pkt. Domyślnie jest %d to ustawienie domyślne. Ustawienie wartości mniejszej niż zero spowoduje, że margines nie zostanie ustawiony (ustawienie marginesu w oryginalnym dokumencie zostanie zachowane). Uwaga: formaty zorientowane na strony, takie jak PDF i DOCX, mają własne ustawienia marginesów, które mają pierwszeństwo.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-right
-Set the right margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Ustaw prawy margines w pkt. Domyślnie jest %d to ustawienie domyślne. Ustawienie wartości mniejszej niż zero spowoduje, że margines nie zostanie ustawiony (ustawienie marginesu w oryginalnym dokumencie zostanie zachowane). Uwaga: formaty zorientowane na strony, takie jak PDF i DOCX, mają własne ustawienia marginesów, które mają pierwszeństwo.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-top
-Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Ustaw górny margines w pkt. Domyślnie jest %d to ustawienie domyślne. Ustawienie wartości mniejszej niż zero spowoduje, że margines nie zostanie ustawiony (ustawienie marginesu w oryginalnym dokumencie zostanie zachowane). Uwaga: formaty zorientowane na strony, takie jak PDF i DOCX, mają własne ustawienia marginesów, które mają pierwszeństwo.
 .UNINDENT
 .INDENT 0.0
 .TP

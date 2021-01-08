@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "ديسمبر 24, 2020" "5.8.1" "calibre"
+.TH "CALIBREDB" "1" "يناير 08, 2021" "5.9.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -223,14 +223,14 @@ The field by which to sort the results. Available fields: author_sort, authors, 
 .sp
 .nf
 .ft C
-calibredb add [options] file1 file2 file3 ...
+rog add [options] file1 file2 file3‎ ‎.‎.‎.‎%p
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Add the specified files as books to the database. You can also specify directories, see
-the directory related options below.
+أضف الملفات المحددة على أنها كتب إلى قاعدة البيانات. يمكنك أيضا تحديد أدلة ملفات، انظر
+الخيارات الخاصة بأدلة الملفات في أدناه.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -241,17 +241,17 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-If books with similar titles and authors are found, merge the incoming formats (files) automatically into existing book records. A value of \fB"\fPignore\fB"\fP means duplicate formats are discarded. A value of \fB"\fPoverwrite\fB"\fP means duplicate formats in the library are overwritten with the newly added files. A value of \fB"\fPnew_record\fB"\fP means duplicate formats are placed into a new book record.
+إذا وجدت كتب بنفس العناوين والمؤلفين، فادمج التنسيقات (الملفات) القادمة تلقائياً بقيود الكتب الموجودة. القيمة \fB"\fPتجاهل\fB"\fP \fB"\fPignore\fB"\fP تعني التخلي عن الصيغ المكررة. القيمة \fB"\fPالكتابة عليها\fB"\fP \fB"\fPoverwrite\fB"\fP تعني الكتابة على الصيغ المكررة في المكتبة بالملفات المضافة حديثاً. القيمة \fB"\fPقيد_جديد\fB"\fP \fB"\fPnew_record\fB"\fP تعني أنّ الصيغ المكررة توضع في قيد كتاب جديد.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-Path to the cover to use for the added book
+المسار إلى الغلاف الذي سيُستخدَم للكتاب المضاف
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Add books to database even if they already exist. Comparison is done based on book titles and authors. Note that the \fI\%\-\-automerge\fP option takes precedence.
+أضف الكتب إلى قاعدة البيانات حتى لو كانت موجودة مسبقاً. تُعمَل المقارنة استناداً إلى عناوين ومؤلفي الكتب. لاحظ أنّ الخيار \fI\%\-\-automerge\fP يأخذ الأسبقية.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -276,17 +276,17 @@ A comma separated list of languages (best to use ISO639 language codes, though s
 .INDENT 0.0
 .TP
 .B \-\-series, \-s
-Set the series of the added book(s)
+عيّن السلسلة للكتاب(الكتب) المضاف
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-series\-index, \-S
-Set the series number of the added book(s)
+عيّن رقم السلسلة للكتاب(الكتب) المضاف
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-tags, \-T
-Set the tags of the added book(s)
+عيّن الوسوم للكتاب(الكتب) المضاف
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -314,7 +314,7 @@ Assume that each directory has only a single logical book and that all files in 
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Process directories recursively
+معالجة القواميس تواترياً
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -684,7 +684,7 @@ A dictionary of options to customize how the data in this column will be interpr
 .INDENT 0.0
 .TP
 .B \-\-is\-multiple
-This column stores tag like data (i.e. multiple comma separated values). Only applies if datatype is text.
+هذا العمود يخزن بيانات بصورة مشابهة للوسوم (أي قيم متعددة مفصولة بفوارز). ينطبق فقد إذا كان نوع البيانات نصاً.
 .UNINDENT
 .SH CUSTOM_COLUMNS
 .INDENT 0.0

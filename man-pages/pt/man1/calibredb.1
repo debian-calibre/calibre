@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "dezembro 24, 2020" "5.8.1" "calibre"
+.TH "CALIBREDB" "1" "janeiro 08, 2021" "5.9.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -121,7 +121,7 @@ mostrar esta mensagem de ajuda e sair
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \fI\%http://hostname:port/#library_id\fP for example, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \fI\%https://manual.calibre\-ebook.com/pt/generated/pt/calibredb.html\fP\&.
+Caminho para a biblioteca do Calibre. Por omissão é usado o caminho armazenado nas definições. Pode também ligar\-se a um servidor de conteúdos Calibre para executar ações em bibliotecas remotas. Para tal, use um URL na forma: \fI\%http://hostname:port/#id_da_biblioteca\fP , por exemplo, \fI\%http://localhost:8080/#mylibrary\fP . id_da_biblioteca é o identificador da biblioteca à qual se pretende ligar no servidor de conteúdos. Pode usar o valor especial de id_da_bilbioteca \- para obter uma lista de identificadores de bibliotecas disponíveis no servidor. Para detalhes sobre como configurar o acesso através de um servidor de conteúdos, veja \fI\%https://manual.calibre\-ebook.com/pt/generated/pt/calibredb.html\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -279,12 +279,12 @@ Opções para controlar a inclusão de livros de pastas. Por predefinição só 
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning directories for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+Um padrão (glob) de nomes de ficheiros, em que os ficheiros que correspondam a este padrão serão adicionados quando se varrem diretórios em pesquisa de ficheiros, mesmo que não sejam de um tipo de ficheiro conhecido como ebook. Pode ser especificado múltiplas vezes para múltiplos padrões.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning directories for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all pdf files
+Uma matriz (glob) de nomes de ficheiros, em que os ficheiros que se conformem a esta matriz serão ignorados quando se varrem diretórios para efetuar a pesquisa de ficheiros. Pode ser especificado múltiplas vezes para múltiplas matrizes. Por ex.: *.pdf ignorará todos os ficheiros pdf
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -618,21 +618,20 @@ Substituir uma capa existente quando gerar o catálogo. Predefinição: \fB\(aq\
 .sp
 .nf
 .ft C
-calibredb saved_searches [options] (list|add|remove)
+calibredb saved_searches [opções] (list|add|remove)
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Manage the saved searches stored in this database.
-If you try to add a query with a name that already exists, it will be
-replaced.
+Gerir as pesquisas guardadas armazenadas nesta base de dados.
+Se tentar adicionar uma consulta com um nome que já exista, este será substituído.
 .sp
-Syntax for adding:
+Sintaxe para adicionar:
 .sp
 calibredb \fBsaved_searches\fP add search_name search_expression
 .sp
-Syntax for removing:
+Sintaxe para remover:
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
@@ -862,11 +861,9 @@ calibredb clone path/to/new/library
 .UNINDENT
 .UNINDENT
 .sp
-Create a \fBclone\fP of the current library. This creates a new, empty library that has all the
-same custom columns, Virtual libraries and other settings as the current library.
+Criar um \fBclone\fP da biblioteca atual. Isto cria uma nova biblioteca, vazia, mas que contém as mesmas colunas personalizadas, bibliotecas virtuais e outras configurações da biblioteca atual.
 .sp
-The cloned library will contain no books. If you want to create a full duplicate, including
-all books, then simply use your filesystem tools to copy the library folder.
+A biblioteca clonada não contém livros. Se quiser criar uma cópia completa, incluindo todos os livros, use as ferramentas do sistema operativo para copiar a pasta da biblioteca.
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
 .SH EMBED_METADATA
@@ -875,19 +872,14 @@ Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os e
 .sp
 .nf
 .ft C
-calibredb embed_metadata [options] book_id
+calibredb embed_metadata [opções] book_id
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Update the metadata in the actual book files stored in the calibre library from
-the metadata in the calibre database.  Normally, metadata is updated only when
-exporting files from calibre, this command is useful if you want the files to
-be updated in place. Note that different file formats support different amounts
-of metadata. You can use the special value \(aqall\(aq for book_id to update metadata
-in all books. You can also specify many book ids separated by spaces and id ranges
-separated by hyphens. For example: calibredb \fBembed_metadata\fP 1 2 10\-15 23
+Atualiza os metadados nos ficheiros atuais dos livros existentes na biblioteca do Calibre a partir dos metadados guardados na base de dados do Calibre.
+Normalmente, os metadados são atualizados apenas quando se exportam ficheiros a partir do Calibre, donde este comando é útil quando pretende que os ficheiros sejam atualizados na pasta onde estão guardados. Note que diferentes formatos de ficheiro suportam diferentes quantidades de metadados. Pode usar o valor especial \(aqall\(aq para o parâmetro book_id de modo a atualizar os metadados em todos os livros. Pode também especificar múltiplos ID de livros separando\-os com espaços ou usando gamas de ID, separados por hífenes. Por exemplo: calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
 .INDENT 0.0
@@ -901,18 +893,16 @@ Atualizar metadados apenas em ficheiros de formato especifico. Especifique\-o v�
 .sp
 .nf
 .ft C
-calibredb search [options] search expression
+calibredb search [opções] expressão_de_pesquisa
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Search the library for the specified \fBsearch\fP term, returning a comma separated
-list of book ids matching the \fBsearch\fP expression. The output format is useful
-to feed into other commands that accept a list of ids as input.
+Procura nesta biblioteca o termo de pesquisa especificado, devolvendo uma lista de ID de livros, separada por virgulas, que correspondem ao critério de pesquisa.
+O formato de saída é útil como fonte de dados para outros comandos que aceitem uma lista de ID como valor de entrada.
 .sp
-The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
-language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
+A expressão de pesquisa pode ser qualquer das possíveis construções da poderosa linguagem de queries de pesquisa do Calibre, como por exemplo: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
 .INDENT 0.0

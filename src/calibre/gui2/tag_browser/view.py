@@ -20,7 +20,7 @@ from calibre.constants import config_dir
 from calibre.ebooks.metadata import rating_to_stars
 from calibre.gui2.complete2 import EditWithComplete
 from calibre.gui2.tag_browser.model import (TagTreeItem, TAG_SEARCH_STATES,
-        TagsModel, DRAG_IMAGE_ROLE, COUNT_ROLE)
+        TagsModel, DRAG_IMAGE_ROLE, COUNT_ROLE, rename_only_in_vl_question)
 from calibre.gui2.widgets import EnLineEdit
 from calibre.gui2 import (config, gprefs, choose_files, pixmap_to_data,
                           rating_font, empty_index, question_dialog)
@@ -133,12 +133,7 @@ class TagDelegate(QStyledItemDelegate):  # {{{
         if not item.ignore_vl:
             if item.use_vl is None:
                 if self.tags_view.model().get_in_vl():
-                    item.use_vl = question_dialog(self.tags_view,
-                                      _('Rename in Virtual library'), '<p>' +
-                                      _('Do you want this rename to apply only to books '
-                                        'in the current Virtual library?') + '</p>',
-                                      yes_text=_('Yes, apply only in VL'),
-                                      no_text=_('No, apply in entire library'))
+                    item.use_vl = rename_only_in_vl_question(self.tags_view)
                 else:
                     item.use_vl = False
             elif not item.use_vl and self.tags_view.model().get_in_vl():
@@ -690,7 +685,9 @@ class TagsView(QTreeView):  # {{{
                 if tag:
                     # If the user right-clicked on an editable item, then offer
                     # the possibility of renaming that item.
-                    if fm['datatype'] != 'composite' and (tag.is_editable or tag.is_hierarchical):
+                    if (fm['datatype'] != 'composite' and
+                            (tag.is_editable or tag.is_hierarchical) and
+                            key != 'search'):
                         # Add the 'rename' items to both interior and leaf nodes
                         if fm['datatype'] != 'enumeration':
                             if self.model().get_in_vl():
@@ -785,11 +782,24 @@ class TagsView(QTreeView):  # {{{
                                 partial(self.context_menu_handler, action='search',
                                         search_state=TAG_SEARCH_STATES['mark_plus'],
                                         index=index))
+                        if add_child_search := (tag.is_hierarchical == '5state' and
+                                                len(tag_item.children)):
+                            search_submenu.addAction(self.search_icon,
+                                    _('Search for %s and its children')%display_name(tag),
+                                    partial(self.context_menu_handler, action='search',
+                                            search_state=TAG_SEARCH_STATES['mark_plusplus'],
+                                            index=index))
                         search_submenu.addAction(self.search_icon,
                                 _('Search for everything but %s')%display_name(tag),
                                 partial(self.context_menu_handler, action='search',
                                         search_state=TAG_SEARCH_STATES['mark_minus'],
                                         index=index))
+                        if add_child_search:
+                            search_submenu.addAction(self.search_icon,
+                                    _('Search for everything but %s and its children')%display_name(tag),
+                                    partial(self.context_menu_handler, action='search',
+                                            search_state=TAG_SEARCH_STATES['mark_minusminus'],
+                                            index=index))
                         if key == 'search':
                             search_submenu.addAction(self.search_copy_icon,
                                      _('Search using saved search expression'),
