@@ -1,0 +1,17 @@
+---
+ src/calibre/test_build.py |    4 ----
+ 1 file changed, 4 deletions(-)
+
+--- a/src/calibre/test_build.py
++++ b/src/calibre/test_build.py
+@@ -35,10 +35,6 @@ class BuildTest(unittest.TestCase):
+                 except Exception as err:
+                     self.assertTrue(False, 'Failed to load DLL %s with error: %s' % (x, err))
+ 
+-    def test_pycryptodome(self):
+-        from Crypto.Cipher import AES
+-        del AES
+-
+     @unittest.skipUnless(islinux, 'DBUS only used on linux')
+     def test_dbus(self):
+         import dbus
