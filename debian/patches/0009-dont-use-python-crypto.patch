@@ -1,7 +1,17 @@
+From: Norbert Preining <norbert@preining.info>
+Date: Mon, 11 Jan 2021 21:46:37 +0900
+Subject: Remove dependency on python3-crypto (Closes: #979734)
+
+Forwarded: not-needed
+Closes: #979734
+
+remove the one trivial crypto loading test from src/calibre/test_build.py
 ---
- src/calibre/test_build.py |    4 ----
+ src/calibre/test_build.py | 4 ----
  1 file changed, 4 deletions(-)
 
+diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
+index bcc8cf5..3af6e69 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
 @@ -35,10 +35,6 @@ class BuildTest(unittest.TestCase):
