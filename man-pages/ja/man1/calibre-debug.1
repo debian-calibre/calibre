@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "1月 08, 2021" "5.9.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "1月 22, 2021" "5.10.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -41,22 +41,21 @@ calibre\-debug [options]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre E\-book viewer and the calibre editor in debug mode.
+Calibre デバッグ用に有用なコマンドラインインタフェイス。
+オプションなしで実行すると内蔵のPythonインタプリタを起動します。
+ここからCalibreのGUI、ビューア、エディタをデバッグモードで起動できます。
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the E\-book diff tool and so
-on.
+また、フォントのサブセットや電子書籍の差分比較ツールなど、コマンドラインツールにない
+ちょっとしたインターフェイスが含まれています。
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+スタンドアロンスクリプトを実行するには、\fBcalibre\-debug\fP を使用します。使い方はこちら:
 .INDENT 0.0
 .INDENT 3.5
 \fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .UNINDENT
 .UNINDENT
 .sp
-Everything after the \fB\-\-\fP is passed to the script.
+”\-\-” の後に付けるとスクリプトに渡します。
 .sp
 スペースを含む引数を \fBcalibre\-debug\fP に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
 .SH [オプション]

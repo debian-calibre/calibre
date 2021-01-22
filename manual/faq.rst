@@ -18,7 +18,7 @@ What formats does calibre support conversion to/from?
 calibre supports the conversion of many input formats to many output formats.
 It can convert every input format in the following list, to every output format.
 
-*Input Formats:* AZW, AZW3, AZW4, CBZ, CBR, CBC, CHM, DJVU, DOCX, EPUB, FB2, FBZ, HTML, HTMLZ, LIT, LRF, MOBI, ODT, PDF, PRC, PDB, PML, RB, RTF, SNB, TCR, TXT, TXTZ
+*Input Formats:* AZW, AZW3, AZW4, CBZ, CBR, CB7, CBC, CHM, DJVU, DOCX, EPUB, FB2, FBZ, HTML, HTMLZ, LIT, LRF, MOBI, ODT, PDF, PRC, PDB, PML, RB, RTF, SNB, TCR, TXT, TXTZ
 
 *Output Formats:* AZW3, EPUB, DOCX, FB2, HTMLZ, OEB, LIT, LRF, MOBI, PDB, PMLZ, RB, PDF, RTF, SNB, TCR, TXT, TXTZ, ZIP
 
@@ -61,7 +61,7 @@ In the MOBI format, the situation is a little confused. This is because the MOBI
 
 Now it might well seem to you that the MOBI book has two identical ToCs. Remember that one is semantically a content ToC and the other is a metadata ToC, even though both might have exactly the same entries and look the same. One can be accessed directly from the Kindle's menus, the other cannot.
 
-When converting to MOBI, calibre detects the *metadata ToC* in the input document and generates an end-of-file ToC in the output MOBI file. You can turn this off by an option in the MOBI Output settings. You can also tell calibre whether to put it and the start or the end of the book via an option in the MOBI Output settings. Remember this ToC is semantically a *metadata ToC*, in any format other than MOBI it *cannot not be part of the text*. The fact that it is part of the text in MOBI is an accident caused by the limitations of MOBI. If you want a ToC at a particular location in your document text, create one by hand. So we strongly recommend that you leave the default as it is, i.e. with the metadata ToC at the end of the book. Also note that if you disable the generation of the end-of-file ToC the resulting MOBI file may not function correctly on a Kindle, since the Kindle's use the metadata ToC for many things, including the Page Flip feature.
+When converting to MOBI, calibre detects the *metadata ToC* in the input document and generates an end-of-file ToC in the output MOBI file. You can turn this off by an option in the MOBI Output settings. You can also tell calibre whether to put it at the start or the end of the book via an option in the MOBI Output settings. Remember this ToC is semantically a *metadata ToC*, in any format other than MOBI it *cannot not be part of the text*. The fact that it is part of the text in MOBI is an accident caused by the limitations of MOBI. If you want a ToC at a particular location in your document text, create one by hand. So we strongly recommend that you leave the default as it is, i.e. with the metadata ToC at the end of the book. Also note that if you disable the generation of the end-of-file ToC the resulting MOBI file may not function correctly on a Kindle, since the Kindle's use the metadata ToC for many things, including the Page Flip feature.
 
 If you have a hand edited ToC in the input document, you can use the ToC detection options in calibre to automatically generate the metadata ToC from it. See the conversion section of the User Manual for more details on how to use these options.
 
@@ -439,7 +439,7 @@ Why does calibre not support collections on the Kindle or shelves on the Nook?
 Neither the Kindle nor the Nook provide any way to manipulate collections over
 a USB connection.  If you really care about using collections, I would urge you
 to sell your Kindle/Nook and get a Kobo.  Only Kobo seems to understand that
-life is too short to be entering collections one by one on an e-ink screen :)
+life is too short to be entering collections one by one on an e-ink screen 😇
 
 Note that in the case of the Kindle, there is a way to manipulate collections
 via USB, but it requires that the Kindle be rebooted *every time* it is
@@ -513,7 +513,7 @@ you have found the problem book, delete it off the Kindle and do a MOBI to MOBI
 or MOBI to AZW3 conversion in calibre and then send it back. This will most
 likely take care of the problem.
 
-Library Management
+Library management
 ------------------
 
 .. contents:: Contents
@@ -845,6 +845,18 @@ Screen Reader.
 The only way to find the culprit is to eliminate the programs one by one and
 see which one is causing the issue. Basically, stop a program, run calibre,
 check for crashes. If they still happen, stop another program and repeat.
+
+
+The calibre E-book viewer and Edit book tools do not work on Windows?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+These two programs use hardware acceleration as they embed a version of the
+Chrome browser to render HTML. If they do not work it will be because of
+incompatibility with your system's GPU (graphics) drivers. Try updating these
+first, and reboot. If that does not fix it, you can set the
+``QTWEBENGINE_CHROMIUM_FLAGS`` environment variable to the value
+``--disable-gpu`` to turn off hardware acceleration. See
+`this page <https://doc.qt.io/qt-5/qtwebengine-debugging.html>`_ for details.
 
 
 Using the viewer or doing any conversions results in a permission denied error on Windows

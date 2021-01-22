@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "januari 08, 2021" "5.9.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "januari 22, 2021" "5.10.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -117,7 +117,7 @@ Lösenordsbaserad autentisering för att komma åt servern.    Normalt är serve
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Återgång till automatiskt detekterat gränssnitt.    Om av någon anledning servern inte kan binda till gränssnittet som anges i listen_on alternativet, så kommer det att försöka identifiera ett gränssnitt som ansluter till omvärlden och binda till det. Som standard är det här alternativet aktiverat.
+Återfall till automatiskt upptäckt gränssnitt.      Om av någon anledning servern inte kan binda till gränssnittet som anges i listen_on alternativet, så kommer det att försöka identifiera ett gränssnitt som ansluter till omvärlden och binda till det. Som standard är det här alternativet aktiverat.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -127,7 +127,7 @@ Tillåt icke\-autentiserade lokala anslutningar att göra ändringar.   Normalt,
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-Logga HTTP 404 (Inte hittad) förfrågningar.         Normalt loggar servern alla HTTP\-förfrågningar för resurser som inte finns. Detta kan generera en hel del skräploggar, om din server är inriktad från robotar. Använd det här alternativet för att stänga av dem. Som standard är det här alternativet aktiverat.
+Logga HTTP 404 (inte hittad)\-förfrågningar.         Normalt loggar servern alla HTTP\-förfrågningar för resurser som inte finns. Detta kan generera en hel del skräploggar, om din server är inriktad från robotar. Använd det här alternativet för att stänga av dem. Som standard är det här alternativet aktiverat.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -162,7 +162,7 @@ Sökväg till loggfil för servern. Denna loggfil innehåller serverinformation 
 .INDENT 0.0
 .TP
 .B \-\-manage\-users
-Hantera databasen av användare tillåtna att ansluta till denna server. Se också alternativet \fI\%\-\-userdb\fP\&.
+Hantera databasen över användare som får ansluta till denna server. Du kan använda den i automatiserat läge genom att lägga till en \-\-. Se calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help för mer information. Se även alternativet \fI\%\-\-userdb\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -66,7 +66,7 @@ class WSJ(BasicNewsRecipe):
             ' media-object-video article_tools nc-exp-artmeta category type-InsetArticlesRelatedByType media-object-rich-text'),
         dict(name='span', attrs={
              'data-country-code': True, 'data-ticker-code': True}),
-        dict(name='meta link'.split()),
+        dict(name='meta link button'.split()),
     ]
 
     def preprocess_soup(self, soup):
@@ -184,6 +184,8 @@ class WSJ(BasicNewsRecipe):
 
             articles.append({'title': title, 'url': url,
                              'description': desc, 'date': ''})
+            if self.test and len(articles) >= self.test[1]:
+                break
 
             self.log('\tFound article:', title)
             self.log('\t\t', desc)
@@ -192,7 +194,7 @@ class WSJ(BasicNewsRecipe):
 
     def wsj_find_wn_articles(self, feeds, root, CSSSelect):
         articles = []
-        for a in CSSSelect('.style--strap--3DsLojSy'):
+        for a in CSSSelect('.style--strap--ND8Cuaip'):
             if 'WHAT\'S NEWS' in self.tag_to_string(a).upper():
                 whats_news = a.getparent()
                 break
@@ -248,6 +250,8 @@ class WSJ(BasicNewsRecipe):
             self.wsj_add_feed(feeds, title, url)
             if frontpage:
                 self.wsj_find_wn_articles(feeds, root, CSSSelect)
+            if self.test and len(feeds) >= self.test[0]:
+                break
         return feeds
 
     def test_wsj_index(self):

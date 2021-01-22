@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "1月 08, 2021" "5.9.0" "calibre"
+.TH "CALIBREDB" "1" "1月 22, 2021" "5.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -250,7 +250,7 @@ If books with similar titles and authors are found, merge the incoming formats (
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Add books to database even if they already exist. Comparison is done based on book titles and authors. Note that the \fI\%\-\-automerge\fP option takes precedence.
+本がすでにデータベースに存在する場合でも追加します。本のタイトルと著者に基づいて比較します。\fI\%\-\-automerge\fP オプションが優先します。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -613,7 +613,7 @@ Descriptionヘッダに挿入するノートを格納したカスタムフィー
 .INDENT 0.0
 .TP
 .B \-\-merge\-comments\-rule
-#<custom field>:[before|after]:[True|False] specifying:  <custom field> Custom field containing notes to merge with comments  [before|after] Placement of notes with respect to comments  [True|False] \- A horizontal rule is inserted between notes and comments Default: \fB\(aq\fP::\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+#<custom field>:[before|after]:[True|False] の形式で指定。 <custom field> コメントにマージするノートを含むカスタムフィールド [before|after] コメントに関するノートの位置 [True|False] ノートとコメントの間に水平線を挿入するかどうか デフォルト: \fB\(aq\fP::\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -824,8 +824,7 @@ calibredb list_categories [options]
 .UNINDENT
 .UNINDENT
 .sp
-Produce a report of the category information in the database. The
-information is the equivalent of what is shown in the Tag browser.
+データベース中のカテゴリ情報のレポートを作成します。情報はタグブラウザに表示されるものと同等です。
 .sp
 スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
 .INDENT 0.0
@@ -891,11 +890,12 @@ calibredb clone path/to/new/library
 .UNINDENT
 .UNINDENT
 .sp
-Create a \fBclone\fP of the current library. This creates a new, empty library that has all the
-same custom columns, Virtual libraries and other settings as the current library.
+現在のライブラリの複製を作成します。現在のライブラリと
+列、仮想ライブラリ、その他の設定が同じである、新しい空の
+ライブラリが作成されます。
 .sp
-The cloned library will contain no books. If you want to create a full duplicate, including
-all books, then simply use your filesystem tools to copy the library folder.
+複製されたライブラリに本は含まれません。すべての本を含む複製を
+作成したい場合には、単にライブラリのフォルダをコピーしてください。
 .sp
 スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
 .SH EMBED_METADATA
@@ -939,12 +939,7 @@ calibredb search [options] search expression
 .UNINDENT
 .UNINDENT
 .sp
-Search the library for the specified \fBsearch\fP term, returning a comma separated
-list of book ids matching the \fBsearch\fP expression. The output format is useful
-to feed into other commands that accept a list of ids as input.
-.sp
-The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
-language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
+検索条件を指定してライブラリを検索し、結果を本のIDのカンマ区切りリストで返します。出力された結果は、本のIDを引数にとる他のコマンドの入力として使用するのに便利です。以下のようにCalibreの強力な検索用言語が使用できます。例: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
 .sp
 スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
 .INDENT 0.0

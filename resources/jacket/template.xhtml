@@ -39,6 +39,13 @@
                 </tr>
                 <tr data-calibre-jacket-searchable-tags="1" style="color:white; display:none"><td colspan="2">{searchable_tags}</td></tr>
             </table>
+			<!-- 
+                If you want to insert the identifiers you can do so either as a
+                comma separated list of links, just like they are displayed in
+                the Book details panel, or as individual entries, for example::
+				<div style="display: {display.identifiers}">{identifiers.links}</div>
+				<div style="display: {identifiers.display.isbn}">{identifiers.isbn}</div>
+			-->
             <div class="cbj_footer">{footer}</div>
         </div>
         <hr class="cbj_kindle_banner_hr" />
@@ -49,7 +56,9 @@
         label #genre, you can add it to this template with _genre_label and
         _genre. Note that the # is replaced by an underscore. For example
         
-        <div><b>{_genre_label}:</b> {_genre}</div>
+        <div style="display: display._genre"><b>{_genre_label}:</b> {_genre}</div>
+
+		If #genre is not set, then the entire <div> element will be hidden.
         -->
 
         <div class="cbj_comments">{comments}</div>

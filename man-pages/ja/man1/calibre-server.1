@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "1月 08, 2021" "5.9.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "1月 22, 2021" "5.10.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -151,7 +151,7 @@ BonJour経由でOPDSフィードを公開する.    BonJourサービス経由で
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-接続を待ち受けするインタフェース.   The default is to listen on all available IPv4 interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
+接続を待ち受けするインタフェース.   デフォルトでは、すべての利用可能なインタフェースで待ち受けします。これをたとえば \fB"\fP127.0.0.1\fB"\fP に変更するとローカルマシンからの接続に限定し、\fB"\fP::\fB"\fP に変更するとIPv6とIPv4の接続を待ち受けします。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -161,7 +161,7 @@ BonJour経由でOPDSフィードを公開する.    BonJourサービス経由で
 .INDENT 0.0
 .TP
 .B \-\-manage\-users
-サーバーに接続するユーザのデータベースを管理。オプション \fI\%\-\-userdb\fP も確認してください。
+Manage the database of users allowed to connect to this server. You can use it in automated mode by adding a \-\-. See calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help for details. See also the \fI\%\-\-userdb\fP option.
 .UNINDENT
 .INDENT 0.0
 .TP
