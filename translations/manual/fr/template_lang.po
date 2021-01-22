@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-06 13:34+0000\n"
-"PO-Revision-Date: 2021-01-06 12:43+0000\n"
+"POT-Creation-Date: 2021-01-20 14:41+0000\n"
+"PO-Revision-Date: 2021-01-18 12:35+0000\n"
 "Last-Translator: Ptit Prince <leporello1791@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/calibre/calibre/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -715,9 +715,9 @@ msgstr "``and(valeur, valeur, …)`` -- renvoie la chaîne \"1\" si toutes les v
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:349
 msgid ""
-"``add(x, y)`` -- returns x + y. Throws an exception if either x or y are not"
-" numbers."
-msgstr "``add(x, y)`` -- renvoie x + y. Renvoie une exception si x ou y ne sont pas des nombres."
+"``add(x, y, ...)`` -- returns the sum of its arguments. Throws an exception "
+"if an argument is not a number."
+msgstr "``add(x, y, ...)`` -- renvoie la somme de ses arguments. Lance une exception si un argument n'est pas un nombre."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:350
 msgid ""
@@ -857,6 +857,12 @@ msgstr "``field(name)`` -- renvoie le champ de métadonnée nommé par ``name``.
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:393
 msgid ""
+"``field_exists(field_name)`` -- checks if a field (column) named "
+"``field_name`` exists, returning '1' if so and '' if not."
+msgstr "``field_exists(field_name)`` -- vérifie si un champ (colonne) nommé ``field_name`` existe, en retournant '1' si oui et '' si non."
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:394
+msgid ""
 "``finish_formatting(val, fmt, prefix, suffix)`` -- apply the format, prefix,"
 " and suffix to a value in the same way as done in a template like "
 "``{series_index:05.2f| - |- }``. This function is provided to ease "
@@ -866,14 +872,14 @@ msgid ""
 "same output as the above template::"
 msgstr "``finish_formatting(val, fmt, prefix, suffix)`` -- applique le format, le préfixe et le suffixe à une valeur de la même manière que dans un modèle comme ``{series_index:05.2f| - |- }``. Cette fonction est fournie pour faciliter la conversion de modèles complexes en mode programme à fonction unique ou en mode programme-modèle en :ref:`Mode Programme Général<general_mode>` (voir ci-dessous) pour tirer parti de la compilation des modèles MPG. Par exemple, le programme suivant produit le même résultat que le modèle ci-dessus ::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:404
+#: ../../__w/calibre/calibre/manual/template_lang.rst:405
 msgid ""
 "Another example: for the template "
 "``{series:re(([^\\s])[^\\s]+(\\s|$),\\1)}{series_index:0>2s| - | - "
 "}{title}`` use::"
 msgstr "Un autre exemple: pour le modèle ``{series:re(([^\\s])[^\\s]+(\\s|$),\\1)}{series_index:0>2s| - | - }{title}`` utilisez::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:413
+#: ../../__w/calibre/calibre/manual/template_lang.rst:414
 msgid ""
 "``first_matching_cmp(val, cmp1, result1, cmp2, r2, ..., else_result)`` -- "
 "compares ``val < cmpN`` in sequence, returning resultN for the first "
@@ -881,33 +887,33 @@ msgid ""
 "Example::"
 msgstr "``first_matching_cmp(val, cmp1, result1, cmp2, r2, ..., else_result)`` -- compare ``val < cmpN`` dans la séquence, retourne resultN pour la première comparaison qui réussit. Retourne else_return si aucune comparaison ne réussit. Exemple::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:419
+#: ../../__w/calibre/calibre/manual/template_lang.rst:420
 msgid ""
 "returns \"large\". The same example with a first value of 16 returns "
 "\"giant\"."
 msgstr "renvoie \"large\". Le même exemple avec une première valeur à 16 renvoie \"géant\"."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:421
+#: ../../__w/calibre/calibre/manual/template_lang.rst:422
 msgid ""
 "``first_non_empty(value, value, ...)`` -- returns the first value that is "
 "not empty. If all values are empty, then the empty value is returned. You "
 "can have as many values as you want."
 msgstr "``first_non_empty(valeur, valeur, …)`` -- retourne la première valeur non vide. Si toutes les valeurs sont vides, la valeur vide est retournée. Vous pouvez avoir autant de valeurs que vous voulez."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:423
+#: ../../__w/calibre/calibre/manual/template_lang.rst:424
 msgid ""
 "``floor(x)`` -- returns the largest integer less than or equal to x. Throws "
 "an exception if x is not a number."
 msgstr "``floor(x)`` -- renvoie le plus grand entier inférieur ou égal à x. Envoie une exception si x n'est pas un nombre."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:424
+#: ../../__w/calibre/calibre/manual/template_lang.rst:425
 msgid ""
 "``format_date(val, format_string)`` -- format the value, which must be a "
 "date field, using the format_string, returning a string. The formatting "
 "codes are::"
 msgstr "``format_date(val, format_string)`` -- formate la valeur, qui doit être un champ date, en utilisant format_string, retournant une chaîne. Les codes de formatage sont::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:449
+#: ../../__w/calibre/calibre/manual/template_lang.rst:450
 msgid ""
 "You might get unexpected results if the date you are formatting contains "
 "localized month names, which can happen if you changed the format tweaks to "
@@ -916,7 +922,7 @@ msgid ""
 "Mode as in ``{:'format_date(raw_field('pubdate'),'yyyy')'}``."
 msgstr "Vous pouvez obtenir des résultats inattendus si la date que vous formatez contient des noms de mois localisés, ce qui peut arriver si vous avez modifié les réglages de format pour qu'ils contiennent ``MMMM``. Dans ce cas, au lieu d'utiliser quelque chose comme ``{pubdate:format_date(yyyy)}``, écrivez le modèle en utilisant le mode de programme modèle comme dans ``{:'format_date(raw_field('pubdate'),'yyyy')'}``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:452
+#: ../../__w/calibre/calibre/manual/template_lang.rst:453
 msgid ""
 "``formats_modtimes(format_string)`` -- return a comma-separated list of "
 "colon-separated items representing modification times for the formats of a "
@@ -926,7 +932,7 @@ msgid ""
 "are always uppercase, as in EPUB."
 msgstr "``formats_modtimes(format_string)`` -- retourne une liste séparée par des virgules d’éléments séparés par deux-points représentant les dates de modification pour les formats d’un livre. Le paramètre format_string indique comment la date doit être formatée. Voir la fonction  `format_date()` pour plus de détails. Vous pouvez utiliser la fonction select pour obtenir le moment de modification pour un format spécifique. Veuillez noter que les noms de format sont toujours en majuscules, comme dans EPUB."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:455
+#: ../../__w/calibre/calibre/manual/template_lang.rst:456
 msgid ""
 "``formats_paths()`` -- return a comma-separated list of colon-separated "
 "items representing full path to the formats of a book. You can use the "
@@ -934,7 +940,7 @@ msgid ""
 "names are always uppercase, as in EPUB."
 msgstr "``formats_paths()`` -- retourne une liste séparées par des virgules d'éléments séparés par deux points représentant le chemin absolu vers les formats d'un livre. Vous pouvez utiliser cette fonction pour obtenir le chemin d'un format spécifique. Notez que ces noms de formats sont toujours en majuscule, comme dans EPUB."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:457
+#: ../../__w/calibre/calibre/manual/template_lang.rst:458
 msgid ""
 "``formats_sizes()`` -- return a comma-separated list of colon-separated "
 "items representing sizes in bytes of the formats of a book. You can use the "
@@ -942,27 +948,27 @@ msgid ""
 "names are always uppercase, as in EPUB."
 msgstr "``formats_sizes()`` -- renvoie une liste séparée par des virgules correspondant à des articles représentant les tailles en octets des formats du livre. Vous pouvez utiliser la fonction select pour obtenir la taille d’un format spécifique. Notez que ces noms de formats sont toujours en majuscule, comme dans EPUB."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:459
+#: ../../__w/calibre/calibre/manual/template_lang.rst:460
 msgid ""
 "``fractional_part(x)`` -- returns the value after the decimal point. For "
 "example, ``fractional_part(3.14)`` returns ``0.14``. Throws an exception if "
 "``x`` is not a number."
 msgstr "``fractional_part(x)`` -- renvoie la valeur après la virgule. Par exemple, ``fractional_part(3.14)`` renvoie ``0.14``. Envoie une exception si ``x`` n'est pas un nombre."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:461
+#: ../../__w/calibre/calibre/manual/template_lang.rst:462
 msgid ""
 "``has_cover()`` -- return ``Yes`` if the book has a cover, otherwise return "
 "the empty string."
 msgstr "``has_cover()`` -- renvoie ``Yes`` si le livre a une couverture, sinon renvoie une chaîne vide"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:462
+#: ../../__w/calibre/calibre/manual/template_lang.rst:463
 msgid ""
 "``not(value)`` -- returns the string \"1\" if the value is empty, otherwise "
 "returns the empty string. This function works well with test or "
 "first_non_empty."
 msgstr "``not(value)`` -- renvoie la chaîne \"1\" si la valeur est vide, sinon renvoie la chaîne vide. Cette fonction fonctionne très bien avec test ou first_non_empty."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:464
+#: ../../__w/calibre/calibre/manual/template_lang.rst:465
 msgid ""
 "``list_difference(list1, list2, separator)`` -- return a list made by "
 "removing from `list1` any item found in `list2`, using a case-insensitive "
@@ -970,7 +976,7 @@ msgid ""
 "are the items in the returned list."
 msgstr "``list_difference(list1, list2, separator)`` -- restitue une liste en supprimant de ``list1`` tout élément trouvé dans ``list2 ``en utilisant une comparaison insensible à la casse. Les éléments dans ``list1`` et ``list2`` sont séparés par le séparateur, comme le sont les éléments dans la liste restituée."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:466
+#: ../../__w/calibre/calibre/manual/template_lang.rst:467
 msgid ""
 "``list_equals(list1, sep1, list2, sep2, yes_val, no_val)`` -- return "
 "`yes_val` if `list1` and `list2` contain the same items, otherwise return "
@@ -979,7 +985,7 @@ msgid ""
 "the lists is not relevant. The comparison is case-insensitive."
 msgstr "``list_equals(list1, sep1, list2, sep2, yes_val, no_val)`` --retourne `yes_val` si ``list1`` et ``list2`` contiennent les mêmes éléments, sinon renvoie ``no_val``. Les éléments sont déterminés en éclatant chaque liste à l’aide du séparateur approprié (`sep1` ou `sep2`). L’ordre des éléments dans la liste n’est pas pris en compte. La comparaison est insensible à la casse."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:469
+#: ../../__w/calibre/calibre/manual/template_lang.rst:470
 msgid ""
 "``list_intersection(list1, list2, separator)`` -- return a list made by "
 "removing from `list1` any item not found in `list2`, using a case-"
@@ -987,7 +993,7 @@ msgid ""
 "separator, as are the items in the returned list."
 msgstr "``list_intersection(list1, list2, separator)`` -- restitue une liste en supprimant de ``list1`` tout élément non trouvé dans ``list2 ``en utilisant une comparaison insensible à la casse. Les éléments dans ``list1`` et ``list2`` sont séparés par le séparateur, comme le sont les éléments dans la liste restituée."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:471
+#: ../../__w/calibre/calibre/manual/template_lang.rst:472
 msgid ""
 "``list_re(src_list, separator, include_re, opt_replace)`` -- Construct a "
 "list by first separating `src_list` into items using the `separator` "
@@ -997,7 +1003,7 @@ msgid ""
 "returned list."
 msgstr "``list_re(src_list, separator, include_re, opt_replace)`` -- Construit une liste en séparant d'abord `src_list` en éléments utilisant le caractère de séparation. Pour chaque élément dans la liste, vérifie s'il correspond à `include_re`. Si c'est le cas, alors il l'ajoute à la liste à renvoyer. Si `opt_replace` n'est pas une chaîne vide, alors effectue le remplacement avant d'ajouter l'élément à la liste renvoyée."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:474
+#: ../../__w/calibre/calibre/manual/template_lang.rst:475
 msgid ""
 "``list_re_group(src_list, separator, include_re, search_re, "
 "template_for_group_1, for_group_2, ...)`` -- Like list_re except "
@@ -1005,7 +1011,7 @@ msgid ""
 "...) when doing the replacements."
 msgstr "``list_re_group(src_list, separator, include_re, search_re, template_for_group_1, for_group_2, ...)`` -- Comme list_re excepté que les remplacements ne sont pas optionnels. Il utilise re_group(item, search_re, template ...) quand il effectue les remplacements."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:476
+#: ../../__w/calibre/calibre/manual/template_lang.rst:477
 msgid ""
 "``list_sort(list, direction, separator)`` -- return list sorted using a "
 "case-insensitive sort. If ``direction`` is zero, ``list`` is sorted "
@@ -1013,7 +1019,7 @@ msgid ""
 "as are the items in the returned list."
 msgstr "``list_sort(list, direction, separator) -- retourne une liste triée en utilisant un tri insensible à la casse. Si ``direction`` est zéro, ``list`` est triée de manière ascendante, sinon descendante. Les éléments sont séparés par le séparateur, comme ceux de la liste retournée."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:478
+#: ../../__w/calibre/calibre/manual/template_lang.rst:479
 msgid ""
 "``list_union(list1, list2, separator)`` -- return a list made by merging the"
 " items in ``list1`` and ``list2``, removing duplicate items using a case-"
@@ -1022,53 +1028,53 @@ msgid ""
 "as are the items in the returned list."
 msgstr "``list_union(list1, list2, separator)`` -- restitue une liste créée de la fusion des éléments dans ``list1`` et ``list2``, supprimant les doublons en utilisant une comparaison insensible à la casse. Si la casse des éléments diffère, celle de ``list1`` est utilisée. Les éléments dans ``list1`` et ``list2`` sont séparés par le séparateur, comme ceux de la liste restituée."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:481
+#: ../../__w/calibre/calibre/manual/template_lang.rst:482
 msgid ""
 "``mod(x)`` -- returns the remainder of ``x / y``, where ``x``, ``y``, and "
 "the result are integers. Throws an exception if either ``x`` or ``y`` is not"
 " a number."
 msgstr "``mod(x)`` -- renvoie le reste de ``x / y``, où ``x``, ``y``, et le résultat sont des entiers. Envoie une exception si ``x`` ou ``y`` n'est pas un nombre."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:483
-msgid ""
-"``multiply(x, y)`` -- returns x * y. Throws an exception if either x or y "
-"are not numbers."
-msgstr "``multiply(x, y)`` -- renvoie x * y. Renvoie une exception si x ou y ne sont pas des nombres."
-
 #: ../../__w/calibre/calibre/manual/template_lang.rst:484
+msgid ""
+"``multiply(x, y, ...)`` -- returns the product of its arguments. Throws an "
+"exception if any argument is not a number."
+msgstr "``Multiply(x, y, ...)`` -- renvoie le produit de ses arguments. Lance une exception si un argument n'est pas un nombre."
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:485
 msgid ""
 "``ondevice()`` -- return the string \"Yes\" if ``ondevice`` is set, "
 "otherwise return the empty string"
 msgstr "``ondevice()`` -- renvoie la chaîne \"Yes\" si ``ondevice`` est paramétré, sinon renvoie la chaîne vide"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:485
+#: ../../__w/calibre/calibre/manual/template_lang.rst:486
 msgid ""
 "``or(value, value, ...)`` -- returns the string ``\"1\"`` if any value is "
 "not empty, otherwise returns the empty string. This function works well with"
 " test or `first_non_empty`. You can have as many values as you want."
 msgstr "``or(value, value, …)`` -- renvoie la chaîne ``\"1\"`` si n'importe quelle valeur n’est pas vide, sinon renvoie la chaîne vide. Cette fonction fonctionne très bien avec test ou `first_non_empty`. Vous pouvez avoir autant de valeurs que vous voulez."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:487
+#: ../../__w/calibre/calibre/manual/template_lang.rst:488
 msgid ""
 "``print(a, b, ...)`` -- prints the arguments to standard output. Unless you "
 "start calibre from the command line (``calibre-debug -g``), the output will "
 "go to a black hole."
 msgstr "``print(a, b, …)`` -- affiche les arguments dans la console standard. Sauf si vous avez démarré calibre à partir de la ligne de commande (``calibre-debug -g``), la sortie ira dans un trou noir."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:489
+#: ../../__w/calibre/calibre/manual/template_lang.rst:490
 msgid ""
 "``raw_field(name)`` -- returns the metadata field named by name without "
 "applying any formatting."
 msgstr "``raw_field(name)`` -- renvoie le champ de métadonnée nommé par name sans appliquer aucun formatage."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:490
+#: ../../__w/calibre/calibre/manual/template_lang.rst:491
 msgid ""
 "``raw_list(name, separator)`` -- returns the metadata list named by name "
 "without applying any formatting or sorting and with items separated by "
 "separator."
 msgstr "``raw_field(name, separator)`` -- renvoie la liste de métadonnées nommée par name sans appliquer aucun formatage ou triage et avec les éléments séparés par separator."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:491
+#: ../../__w/calibre/calibre/manual/template_lang.rst:492
 msgid ""
 "``re_group(val, pattern, template_for_group_1, for_group_2, ...)`` --  "
 "return a string made by applying the regular expression pattern to the val "
@@ -1080,17 +1086,17 @@ msgid ""
 "series with more than one word and uppercases the first word::"
 msgstr "``re_group(val, pattern, template_for_group_1, for_group_2, ...)`` -- retourne une chaîne de caractères faite en appliquant le pattern d'expression régulière à la val et en remplaçant chaque instance correspondante par la chaîne de caractères calculée en remplaçant chaque groupe correspondant par la valeur retournée par le modèle correspondant. La valeur originale de la correspondance pour le groupe est disponible sous la forme ``$``. En Mode de Programme de Modèle, comme pour le modèle et les fonctions eval, vous utilisez [[ for { and ]] for }. L'exemple suivant en Mode Programme de Modèle recherche les séries comportant plus d'un mot et met le premier mot en majuscule ::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:498
+#: ../../__w/calibre/calibre/manual/template_lang.rst:499
 msgid ""
 "``round(x)`` -- returns the nearest integer to x. Throws an exception if x "
 "is not a number."
 msgstr "``round(x)`` -- renvoie l'entier le plus proche de x. Envoie une exception si x n'est pas un nombre."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:499
+#: ../../__w/calibre/calibre/manual/template_lang.rst:500
 msgid "``series_sort()`` -- returns the series sort value."
 msgstr "``series_sort()`` -- renvoie la valeur de tri des séries."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:500
+#: ../../__w/calibre/calibre/manual/template_lang.rst:501
 msgid ""
 "``'split(list_val, sep, id_prefix)`` -- splits the ``list_val`` into "
 "separate values using ``sep``, then assigns the values to variables named "
@@ -1099,17 +1105,17 @@ msgid ""
 "list. Example::"
 msgstr "``'split(list_val, sep, id_prefix)`` -- divise la ``list_val`` en valeurs séparées en utilisant ``sep``, puis assigne les valeurs aux variables nommées ``id_prefix_N`` où N est la position de la valeur dans la liste. Le premier élément a la position 0 (zéro). La fonction renvoie le dernier élément de la liste. Exemple ::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:506
+#: ../../__w/calibre/calibre/manual/template_lang.rst:507
 msgid "is equivalent to::"
 msgstr "est équivalent à ::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:512
+#: ../../__w/calibre/calibre/manual/template_lang.rst:513
 msgid ""
 "``strcat(a, b, ...)`` -- can take any number of arguments. Returns a string "
 "formed by concatenating all the arguments."
 msgstr "``strcat(a, b, …)`` -- peut avoir n'importe quel nombre d’arguments. Renvoie une chaine constituée par la concaténation de tous les arguments."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:513
+#: ../../__w/calibre/calibre/manual/template_lang.rst:514
 msgid ""
 "``strcat_max(max, string1, prefix2, string2, ...)`` -- Returns a string "
 "formed by concatenating the arguments. The returned value is initialized to "
@@ -1119,19 +1125,19 @@ msgid ""
 " ``prefix, string`` pairs as you wish."
 msgstr "``strcat_max(max, string1, prefix1, string2, …)`` -- Retourne la chaîne formée par la concaténation des arguments. La valeur retournée est initialisée à ``string1``. Les paires ``Prefix,string`` sont ajoutées à la fin de la valeur tant que la taille de la chaîne de sortie est plus petite que ``max``. ``string1`` est retournée même si ``string1`` est plus grande que ``max``. Vous pouvez passer autant de paires de ``prefix,string`` que vous le souhaitez."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:516
+#: ../../__w/calibre/calibre/manual/template_lang.rst:517
 msgid ""
 "``strcmp(x, y, lt, eq, gt)`` -- does a case-insensitive comparison ``x`` and"
 " ``y`` as strings. Returns ``lt`` if ``x < y``. Returns ``eq`` if ``x == "
 "y``. Otherwise returns ``gt``."
 msgstr "``strcmp(x, y, lt, eq, gt)`` -- effectue une comparaison insensible à la casse des chaines ``x`` et ``y``. Renvoie ``lt`` si ``x < y``. Renvoie ``eq`` si ``x == y``. Sinon renvoie ``gt``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:518
+#: ../../__w/calibre/calibre/manual/template_lang.rst:519
 msgid ""
 "``strlen(a)`` -- Returns the length of the string passed as the argument."
 msgstr "``strlen(a)`` -- Retourne la longueur de la chaîne de caractères passée en argument."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:519
+#: ../../__w/calibre/calibre/manual/template_lang.rst:520
 msgid ""
 "``substr(str, start, end)`` -- returns the ``start``'th through the "
 "``end``'th characters of ``str``. The first character in ``str`` is the "
@@ -1141,20 +1147,20 @@ msgid ""
 "and ``substr('12345', 1, -1)`` returns ``'234'``."
 msgstr "``substr(str, start, end)`` -- renvoie les caractères de début jusqu'à fin de ``str``. Le premier caractère dans ``str`` est le caractère zéro. Si end est négatif, cela indique que beaucoup de caractères sont comptés à partir de la droite. Si end est zéro, cela indique le dernier caractère. Par exemple, ``substr('12345', 1, 0)`` renvoie ``'2345'``, et ``substr('12345', 1, -1)`` renvoie ``'234'``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:522
+#: ../../__w/calibre/calibre/manual/template_lang.rst:523
 msgid ""
 "``subtract(x, y)`` -- returns ``x - y``. Throws an exception if either ``x``"
 " or ``y`` are not numbers."
 msgstr "``subtract(x, y)`` -- renvoie ``x - y``. Renvoie une exception si ``x`` ou ``y`` ne sont pas des nombres."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:523
+#: ../../__w/calibre/calibre/manual/template_lang.rst:524
 msgid ""
 "``today()`` -- return a date string for today. This value is designed for "
 "use in `format_date` or `days_between`, but can be manipulated like any "
 "other string. The date is in ISO format."
 msgstr "``today()`` -- renvoie une chaîne date pour aujourd’hui. Cette valeur est conçue pour être utiliser avec `format_date` ou `days_between`, mais peut être manipulée comme toute autre chaîne. La date est au format ISO."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:525
+#: ../../__w/calibre/calibre/manual/template_lang.rst:526
 msgid ""
 "``template(x)`` -- evaluates ``x`` as a template. The evaluation is done in "
 "its own context, meaning that variables are not shared between the caller "
@@ -1166,11 +1172,11 @@ msgid ""
 "the argument to this function when using Template Program Mode."
 msgstr "``Template(x)`` -- évalue ``x`` comme modèle. L'évaluation est faite dans son propre contexte, ce qui signifie que les variables ne sont pas partagées entre l'appelant et l'évaluation du modèle. Comme les caractères `{` et `}` sont spéciaux, vous devez utiliser `[[` pour le caractère `{` et `]]` pour le caractère '}' ; ils sont convertis automatiquement. Par exemple, ``template('[[title_sort]]]) va évaluer le modèle ``{title_sort}`` et retourner sa valeur. Notez également que les préfixes et les suffixes (la syntaxe `|prefix|suffix`) ne peuvent pas être utilisés dans l'argument de cette fonction lorsque vous utilisez le Mode de Programmation des Modèles."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:534
+#: ../../__w/calibre/calibre/manual/template_lang.rst:535
 msgid "Using General Program Mode"
 msgstr "Utilisation du Mode Programme Général"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:536
+#: ../../__w/calibre/calibre/manual/template_lang.rst:537
 msgid ""
 "For more complicated template programs it is often easier to avoid template "
 "syntax (all the `{` and `}` characters), instead writing a more classic-"
@@ -1180,14 +1186,14 @@ msgid ""
 "set."
 msgstr "Pour les programmes modèles plus complexes, il est souvent plus facile d'éviter la syntaxe des modèles (tous les caractères `{` et `}`), et d'écrire un programme d'apparence plus classique. Vous pouvez faire cela en commençant le modèle par `program:`. Le programme modèle est compilé et exécuté. Aucun traitement de modèle (par exemple, formatage, préfixes, suffixes) n'est effectué. La variable spéciale `$` n'est pas définie."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:540
+#: ../../__w/calibre/calibre/manual/template_lang.rst:541
 msgid ""
 "One advantage of `program:` mode is that braces are no longer special. For "
 "example, it is not necessary to use `[[` and `]]` when using the "
 "`template()` function. Another advantage is readability."
 msgstr "L'un des avantages du mode `programme:` est que les accolades ne sont plus spéciales. Par exemple, il n'est pas nécessaire d'utiliser les `[[` et `]]` lors de l'utilisation de la fonction `template()`. Un autre avantage est la lisibilité."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:543
+#: ../../__w/calibre/calibre/manual/template_lang.rst:544
 msgid ""
 "Template Program Mode and General Program Mode support classic **relational "
 "(comparison) operators**: ``==``, ``!=``, ``<``, ``<=``, ``>``, ``>=``. The "
@@ -1195,26 +1201,26 @@ msgid ""
 "insensitive string comparison using lexical order. Examples:"
 msgstr "Le Mode Programme de Modèle et le Mode Programme Général prennent en charge les **opérateurs relationnels (de comparaison) classiques ** : ``==``, ``!=``, ``<``, ``<=``, ``>``, ``>=``. Les opérateurs renvoient \"1\" s'ils évaluent à True, sinon ''. Ils font une comparaison de chaînes insensible à la casse en utilisant l'ordre lexical. Exemples :"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:547
+#: ../../__w/calibre/calibre/manual/template_lang.rst:548
 msgid ""
 "``program: field('series') == 'foo'`` returns '1' if the book's series is "
 "'foo'."
 msgstr "``program: field('series') == 'foo'`` returns '1' if the book's series is 'foo'."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:548
+#: ../../__w/calibre/calibre/manual/template_lang.rst:549
 msgid ""
 "``program: if field('series') != 'foo' then 'bar' else 'mumble' fi`` returns"
 " 'bar' if the book's series is not 'foo', else 'mumble'."
 msgstr "``program: if field('series') != 'foo' then 'bar' else 'mumble' fi`` returns 'bar' if the book's series is not 'foo', else 'mumble'."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:549
+#: ../../__w/calibre/calibre/manual/template_lang.rst:550
 msgid ""
 "``program: if or(field('series') == 'foo', field('series') == '1632') then "
 "'yes' else 'no' fi`` returns 'yes' if series is either 'foo' or '1632', "
 "otherwise 'no'."
 msgstr "``program: if or(field('series') == 'foo', field('series') == '1632') then 'yes' else 'no' fi`` returns 'yes' if series is either 'foo' or '1632', otherwise 'no'."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:551
+#: ../../__w/calibre/calibre/manual/template_lang.rst:552
 msgid ""
 "``program: if '11' > '2' then 'yes' else 'no' fi`` returns 'no' because it "
 "is doing a lexical comparison. If you want numeric comparison instead of "
@@ -1224,13 +1230,13 @@ msgid ""
 "error is raised."
 msgstr "``program: if '11' > '2' then 'oui' else 'no' fi`` renvoie \"non\" parce qu'il fait une comparaison lexicale. Si vous voulez une comparaison numérique au lieu d'une comparaison lexicale, utilisez les opérateurs ``==#``, ``=#``, ``<#``, ``<=#``, ``>#``, ``<=#``. Dans ce cas, les valeurs gauche et droite sont mises à zéro si elles sont indéfinies ou si la chaîne est vide. S'il ne s'agit pas de nombres, une erreur se produit."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:555
+#: ../../__w/calibre/calibre/manual/template_lang.rst:556
 msgid ""
 "Both General and Template Program Modes support **``if`` expressions** with "
 "the following syntax::"
 msgstr "Les Modes de Programme Général et Modèle prennent en charge **les expressions ``if``** avec la syntaxe suivante ::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:563
+#: ../../__w/calibre/calibre/manual/template_lang.rst:564
 msgid ""
 "The elif and else parts are optional. The words ``if``, ``then``, ``elif``, "
 "``else``, and ``fi`` are reserved; you cannot use them as identifier names. "
@@ -1240,50 +1246,50 @@ msgid ""
 "language expressions, including nested ifs. Examples:"
 msgstr "Les parties elif et else sont facultatives. Les mots ``if``, ``then``, ``elif``, ``else`` et ``fi`` sont réservés ; vous ne pouvez pas les utiliser comme noms d'identification. Vous pouvez mettre des lignes de rappel et des espaces partout où ils ont un sens. <<expression>> est une expression linguistique modèle ; les points-virgules ne sont pas autorisés. <<expression_list>> est une séquence d'expressions de langue modèle séparées par des points-virgules, y compris les ifs imbriqués. Exemples :"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:567
+#: ../../__w/calibre/calibre/manual/template_lang.rst:568
 msgid "``program: if field('series') then 'yes' else 'no' fi``"
 msgstr "``program: if field('series') then 'yes' else 'no' fi``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:568
+#: ../../__w/calibre/calibre/manual/template_lang.rst:569
 msgid ""
 "``program: if field('series') then a = 'yes'; b = 'no' else a = 'no'; "
 "b='yes' fi; strcat(a, '-', b)``"
 msgstr "``program: if field('series') then a = 'yes'; b = 'no' else a = 'no'; b='yes' fi; strcat(a, '-', b)``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:569
+#: ../../__w/calibre/calibre/manual/template_lang.rst:570
 msgid "Nested ``if`` example::"
 msgstr "Exemple de ``if`` imbriqué::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:584
+#: ../../__w/calibre/calibre/manual/template_lang.rst:585
 msgid ""
 "An ``if`` produces a value like any other language expression. This means "
 "that all the following are valid:"
 msgstr "Un ``if`` produit une valeur comme toute autre expression de langage. Cela signifie que tous les éléments suivants sont valables :"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:586
+#: ../../__w/calibre/calibre/manual/template_lang.rst:587
 msgid "``program: if field('series') then 'foo' else 'bar' fi``"
 msgstr "``program: if field('series') then 'foo' else 'bar' fi``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:587
+#: ../../__w/calibre/calibre/manual/template_lang.rst:588
 msgid "``program: if field('series') then a = 'foo' else a = 'bar' fi; a``"
 msgstr "``program: if field('series') then a = 'foo' else a = 'bar' fi; a``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:588
+#: ../../__w/calibre/calibre/manual/template_lang.rst:589
 msgid "``program: a = if field('series') then 'foo' else 'bar' fi; a``"
 msgstr "``program: a = if field('series') then 'foo' else 'bar' fi; a``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:589
+#: ../../__w/calibre/calibre/manual/template_lang.rst:590
 msgid ""
 "``program: a = field(if field('series') then 'series' else 'title' fi); a``"
 msgstr "``program: a = field(if field('series') then 'series' else 'title' fi); a``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:591
+#: ../../__w/calibre/calibre/manual/template_lang.rst:592
 msgid ""
 "The template language supports **``for`` expressions** with the following "
 "syntax::"
 msgstr "Le langage modèle prend en charge **les expressions ``for``** avec la syntaxe suivante :"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:597
+#: ../../__w/calibre/calibre/manual/template_lang.rst:598
 msgid ""
 "The expression must evaluate to either a metadata field lookup key, for "
 "example ``tags`` or ``#genre``, or a comma-separated list of values. If the "
@@ -1293,13 +1299,13 @@ msgid ""
 "evaluated."
 msgstr "L'expression doit évaluer soit une clé de recherche de champ de métadonnées, par exemple ``tags`` ou ``#genre``, soit une liste de valeurs séparées par des virgules. Si le résultat est un nom de recherche valide, la valeur du champ est récupérée, sinon la liste est divisée en ses valeurs individuelles. Chaque valeur résultante de la liste est attribuée à la variable \"id\", puis la \"liste d'expression\" est évaluée."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:602
+#: ../../__w/calibre/calibre/manual/template_lang.rst:603
 msgid ""
 "Example: This template removes the first hierarchical name for each value in"
 " Genre (``#genre``), constructing a list with the new names::"
 msgstr "Exemple : Ce modèle supprime le premier nom hiérarchique pour chaque valeur dans le genre (``#genre``), en construisant une liste avec les nouveaux noms ::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:613
+#: ../../__w/calibre/calibre/manual/template_lang.rst:614
 msgid ""
 "If the original Genre is ``History.Military, Science Fiction.Alternate "
 "History, ReadMe`` then the template returns ``Military, Alternate History, "
@@ -1309,18 +1315,18 @@ msgid ""
 "value to Genre."
 msgstr "Si le genre original est \"Histoire.Militaire, Science Fiction.Histoire alternative, Lisez-moi\", alors le modèle renvoie \"Militaire, Histoire alternative, Lisez-moi\". Vous pouvez utiliser ce modèle dans le calibre :guilabel:`Modifier les métadonnées par lot -> Rechercher & remplacer` avec :guilabel:`Rechercher for` set to ``template`` pour supprimer le premier niveau de la hiérarchie et attribuer la valeur résultante au Genre."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:618
+#: ../../__w/calibre/calibre/manual/template_lang.rst:619
 msgid ""
 "Note: the last line in the template, ``new_tags``, isn't necessary in this "
 "case because ``for`` returns the value of the last ``expression`` in the "
 "``expression list``."
 msgstr "Note : la dernière ligne du modèle, ``new_tags``, n'est pas nécessaire dans ce cas car ``for`` renvoie la valeur de la dernière ``expression`` dans la ``liste des expressions``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:622
+#: ../../__w/calibre/calibre/manual/template_lang.rst:623
 msgid "Stored General Program Mode Templates"
 msgstr "Modèles de Mode de Programme Général stockés"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:624
+#: ../../__w/calibre/calibre/manual/template_lang.rst:625
 msgid ""
 "General Program Mode supports saving templates and calling those templates "
 "from another template. You save templates using "
@@ -1331,24 +1337,24 @@ msgid ""
 "named ``foo``:"
 msgstr "Le Mode Programme Général permet d'enregistrer des modèles et de les appeler à partir d'un autre modèle. Vous enregistrez les modèles en utilisant :guilabel:`Préférences->Avancé->Modéles de fonctions`. Plus d'informations sont fournies dans cette boite de dialogue. Vous appelez un modèle de la même manière que vous appelez une fonction, en passant des arguments de position si vous le souhaitez. Un argument peut être n'importe quelle expression. Exemples d'appel d'un modèle, en supposant que le modèle stocké est nommé ``foo`` :"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:629
+#: ../../__w/calibre/calibre/manual/template_lang.rst:630
 msgid "``foo()`` -- call the template passing no arguments."
 msgstr "``foo()`` -- appelle le modèle en ne passant aucun argument."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:630
+#: ../../__w/calibre/calibre/manual/template_lang.rst:631
 msgid ""
 "``foo(a, b)`` call the template passing the values of the two variables "
 "``a`` and ``b``."
 msgstr "``foo(a, b)`` appelle le modèle en passant les valeurs des deux variables ``a`` et ``b``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:631
+#: ../../__w/calibre/calibre/manual/template_lang.rst:632
 msgid ""
 "``foo(if field('series') then field('series_index') else 0 fi)`` -- if the "
 "book has a ``series`` then pass the ``series_index``, otherwise pass the "
 "value ``0``."
 msgstr "``foo(if field('series') then field('series_index') else 0 fi)`` -- si le livre a ``series`` alors passez le ``series_index``, sinon passez la valeur ``0``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:633
+#: ../../__w/calibre/calibre/manual/template_lang.rst:634
 msgid ""
 "In the stored template you retrieve the arguments passed in the call using "
 "the ``arguments`` function. It both declares and initializes local "
@@ -1361,29 +1367,29 @@ msgid ""
 "``alternate``::"
 msgstr "Dans le modèle stocké, vous récupérez les arguments passés dans l'appel en utilisant la fonction ``arguments``. Elle déclare et initialise les variables locales, en fait des paramètres. Les variables sont positionnelles ; elles obtiennent la valeur de la valeur donnée dans l'appel dans la même position. Si le paramètre correspondant n'est pas fourni dans l'appel, alors la fonction ``arguments`` attribue à cette variable la valeur par défaut fournie. S'il n'y a pas de valeur par défaut, alors la variable est fixée à la chaîne vide. Par exemple, la fonction \"arguments\" suivante déclare 2 variables, ``key``, ``alternate``::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:641
+#: ../../__w/calibre/calibre/manual/template_lang.rst:642
 msgid "Examples, again assuming the stored template is named ``foo``:"
 msgstr "Par exemple, en supposant encore une fois que le modèle stocké est nommé ``foo`` :"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:643
+#: ../../__w/calibre/calibre/manual/template_lang.rst:644
 msgid ""
 "``foo('#myseries')`` -- argument ``key`` will have the value ``myseries`` "
 "and the argument ``alternate`` will have the value ``series``."
 msgstr "``foo('#myseries')`` -- l'argument ``key`` aura la valeur ``myseries`` et l'argument ``alternate`` aura la valeur ``series``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:644
+#: ../../__w/calibre/calibre/manual/template_lang.rst:645
 msgid ""
 "``foo('series', '#genre')`` the variable ``key`` is assigned the value "
 "``series`` and the variable ``alternate`` is assigned the value ``#genre``."
 msgstr "``foo('series', '#genre')`` la variable ``key`` prend la valeur ``series`` et la variable ``alternate`` prend la valeur ``#genre``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:645
+#: ../../__w/calibre/calibre/manual/template_lang.rst:646
 msgid ""
 "``foo()`` -- the variable ``key`` is assigned the empty string and the "
 "variable ``alternate`` is assigned the value ``#genre``."
 msgstr "``foo()`` -- la variable ``key`` se voit attribuer la chaîne vide et la variable ``alternate`` se voit attribuer la valeur ``#genre``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:647
+#: ../../__w/calibre/calibre/manual/template_lang.rst:648
 msgid ""
 "An easy way to test stored templates is using the ``Template tester`` "
 "dialog. Give it a keyboard shortcut in "
@@ -1392,11 +1398,11 @@ msgid ""
 "rapidly between the tester and editing the stored template's source code."
 msgstr "Une façon simple de tester les modèles stockés est d'utiliser le dialogue \"Testeur de modèle\". Donnez-lui un raccourci clavier dans :guilabel:`Préférences->Avancé->Raccourcis clavier->Tester le modèle``. Donner un raccourci au dialogue ``Modèles stockés`` aidera à passer plus rapidement du testeur à l'édition du code source du modèle stocké."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:652
+#: ../../__w/calibre/calibre/manual/template_lang.rst:653
 msgid "Providing additional information to templates"
 msgstr "Fournir des informations supplémentaires aux modèles"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:654
+#: ../../__w/calibre/calibre/manual/template_lang.rst:655
 msgid ""
 "A developer can choose to pass additional information to the template "
 "processor, such as application-specific book metadata or information about "
@@ -1404,11 +1410,11 @@ msgid ""
 "information and use it during the evaluation."
 msgstr "Un développeur peut choisir de transmettre des informations supplémentaires au processeur du modèle, telles que des métadonnées de livre spécifiques à l'application ou des informations sur ce qui est demandé au processeur. Un modèle peut accéder à ces informations et les utiliser pendant l'évaluation."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:658
+#: ../../__w/calibre/calibre/manual/template_lang.rst:659
 msgid "**Developer: how to pass additional information**"
 msgstr "**Développeur : comment transmettre des informations supplémentaires**"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:660
+#: ../../__w/calibre/calibre/manual/template_lang.rst:661
 msgid ""
 "The additional information is a python dictionary containing pairs "
 "``variable_name: variable_value`` where the values should be strings. The "
@@ -1419,27 +1425,27 @@ msgid ""
 "underscore."
 msgstr "L'information supplémentaire est un dictionnaire python contenant les paires ``variable_name: variable_value`` où les valeurs doivent être des chaînes de caractères. Le modèle peut accéder au dict, en créant des variables locales de modèle nommées ``variable_name`` contenant la valeur ``variable_value``. L'utilisateur ne peut pas changer le nom, il est donc préférable d'utiliser des noms qui n'entreront pas en collision avec d'autres variables locales du modèle, par exemple en préfixant le nom par un trait de soulignement."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:665
+#: ../../__w/calibre/calibre/manual/template_lang.rst:666
 msgid ""
 "This dict is passed to the template processor (the ``formatter``) using the "
 "named parameter ``global_vars=your_dict``. The full method signature is:"
 msgstr "Ce dict est passé au processeur de modèle (le \"formatter\") en utilisant le paramètre nommé \"global_vars=your_dict\". La signature complète de la méthode est :"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:672
+#: ../../__w/calibre/calibre/manual/template_lang.rst:673
 msgid "def safe_format(self, fmt, kwargs, error_value, book,"
 msgstr "def safe_format(self, fmt, kwargs, error_value, book,"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:669
+#: ../../__w/calibre/calibre/manual/template_lang.rst:670
 msgid ""
 "column_name=None, template_cache=None, strip_results=True, "
 "template_functions=None, global_vars={})"
 msgstr "column_name=None, template_cache=None, strip_results=True, template_functions=None, global_vars={})"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:674
+#: ../../__w/calibre/calibre/manual/template_lang.rst:675
 msgid "**Template writer: how to access the additional information**"
 msgstr "**Rédacteur de modèles : comment accéder aux informations complémentaires**"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:676
+#: ../../__w/calibre/calibre/manual/template_lang.rst:677
 msgid ""
 "You access the additional information in a template using the template "
 "function ``globals(id[=expression] [, id[=expression]]*)`` where ``id`` is "
@@ -1453,11 +1459,11 @@ msgid ""
 "variable."
 msgstr "Vous accédez aux informations supplémentaires dans un modèle en utilisant la fonction de modèle ``global(id[=expression] [, id[=expression]]*)*`` où ``id`` est un nom de variable légale quelconque. Cette fonction vérifie si les informations supplémentaires fournies par le développeur contiennent le nom. Si c'est le cas, la fonction attribue la valeur fournie à une variable locale modèle avec le nom donné. Si le nom ne figure pas dans les informations supplémentaires et si une \"expression\" est fournie, cette \"expression\" est évaluée et le résultat est attribué à la variable locale. Si ni une valeur ni une expression n'est fournie, la fonction attribue la chaîne vide (``''``) à la variable locale."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:685
+#: ../../__w/calibre/calibre/manual/template_lang.rst:686
 msgid "Notes on the difference between modes"
 msgstr "Notes sur la différence entre les modes"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:687
+#: ../../__w/calibre/calibre/manual/template_lang.rst:688
 msgid ""
 "The three program modes, Single Function Mode (SFM), Template Program Mode "
 "(TPM), and General Program Mode (GPM), work differently. SFM is intended to "
@@ -1467,35 +1473,35 @@ msgid ""
 "between variables and strings; all values are strings."
 msgstr "Les trois modes de programme, le mode de fonction unique (MFU), le mode de programme modèle (MPM) et le mode de programme général (MPG), fonctionnent différemment. Le MFU se veut 'simple' et cache donc beaucoup de bits du langage de programmation. Par exemple, la valeur de la colonne est toujours passée comme premier argument 'invisible' à une fonction incluse dans le modèle. La MPG ne prend pas non plus en charge la différence entre les variables et les chaînes de caractères ; toutes les valeurs sont des chaînes de caractères."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:693
+#: ../../__w/calibre/calibre/manual/template_lang.rst:694
 msgid ""
 "Example: the following SFM template returns either the series name or the "
 "string \"no series\"::"
 msgstr "Exemple : le modèle SFM suivant renvoie soit le nom de la série, soit la chaîne \"pas de série\" ::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:697
+#: ../../__w/calibre/calibre/manual/template_lang.rst:698
 msgid "The equivalent template in TPM is ::"
 msgstr "Le modèle équivalent dans MPM est ::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:701
+#: ../../__w/calibre/calibre/manual/template_lang.rst:702
 msgid "The equivalent template in GPM is::"
 msgstr "Le modèle équivalent dans MPG est ::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:705
+#: ../../__w/calibre/calibre/manual/template_lang.rst:706
 msgid ""
 "The first argument to ``ifempty`` is the value of the field ``series``. The "
 "second argument is the string ``no series``. In SFM the first argument, the "
 "value of the field, is automatically passed (the invisible argument)."
 msgstr "Le premier argument de ``ifempty`` est la valeur du champ ``série``. Le second argument est la chaîne ``no series``. Dans SFM, le premier argument, la valeur du champ, est automatiquement passé (l'argument invisible)."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:709
+#: ../../__w/calibre/calibre/manual/template_lang.rst:710
 msgid ""
 "Several template functions, for example ``booksize()`` and "
 "``current_library_name()``, take no arguments. Because of the 'invisible "
 "argument' you cannot use these functions in SFM."
 msgstr "Plusieurs fonctions du modèle, par exemple ``booksize()`` et ``current_library_name()``, ne prennent aucun argument. En raison de l'\"argument invisible\", vous ne pouvez pas utiliser ces fonctions dans SFM."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:712
+#: ../../__w/calibre/calibre/manual/template_lang.rst:713
 msgid ""
 "Nested functions, where a function calls another function to compute an "
 "argument, cannot be used in SFM. For example this template, intended to "
@@ -1503,20 +1509,20 @@ msgid ""
 "SFM::"
 msgstr "Les fonctions imbriquées, où une fonction appelle une autre fonction pour calculer un argument, ne peuvent pas être utilisées dans SFM. Par exemple, ce modèle, destiné à renvoyer les 5 premiers caractères de la valeur de la série en majuscules, ne fonctionnera pas dans SFM ::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:717
+#: ../../__w/calibre/calibre/manual/template_lang.rst:718
 msgid ""
 "TPM and GPM support nested functions. The above template in TPM would be::"
 msgstr "MPM et MPG soutiennent des fonctions imbriquées. Le modèle ci-dessus dans MPM serait: :"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:721
+#: ../../__w/calibre/calibre/manual/template_lang.rst:722
 msgid "In GPM it would be::"
 msgstr "Dans MPG, ce serait ::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:727
+#: ../../__w/calibre/calibre/manual/template_lang.rst:728
 msgid "User-defined Python template functions"
 msgstr "Fonctions des modèles Python définis par l'utilisateur"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:729
+#: ../../__w/calibre/calibre/manual/template_lang.rst:730
 msgid ""
 "You can add your own Python functions to the template processor. Such "
 "functions can be used in any of the three template programming modes. The "
@@ -1524,11 +1530,11 @@ msgid ""
 "Template functions`. Instructions are shown in that dialog."
 msgstr "Vous pouvez ajouter vos propres fonctions Python au processeur de modèles. Ces fonctions peuvent être utilisées dans l'un des trois modes de programmation du modèle. Les fonctions sont ajoutées en allant dans :guilabel:`Préférences -> Avancé -> Fonctions de modèle`. Les instructions sont affichées dans cette boite de dialogue."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:733
+#: ../../__w/calibre/calibre/manual/template_lang.rst:734
 msgid "Special notes for save/send templates"
 msgstr "Notes spéciales pour la sauvergarde/l'envoi des modèles"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:735
+#: ../../__w/calibre/calibre/manual/template_lang.rst:736
 msgid ""
 "Special processing is applied when a template is used in a `save to disk` or"
 " `send to device` template. The values of the fields are cleaned, replacing "
@@ -1539,18 +1545,18 @@ msgid ""
 "create variable-depth folder structure."
 msgstr "Un traitement spécial est appliqué quand un modèle est utilisé dans un modèle `Enregistrer sur le disque` ou `Envoyer au périphérique`. Les valeurs des champs sont nettoyées, les caractères qui sont propres aux systèmes de fichiers sont remplacées par des traits de soulignement, y compris les barres obliques. Cela signifie que le texte d'un champ ne peut pas être utilisé pour créer des dossiers. Toutefois, les barres obliques ne sont pas modifiés dans des chaînes préfixe ou suffixe. Vous pouvez donc insérer des barres obliques qui et provoquer ainsi la création de dossiers. Ainsi, vous pouvez créer une structure de dossier avec des profondeurs variables."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:740
+#: ../../__w/calibre/calibre/manual/template_lang.rst:741
 msgid ""
 "For example, assume we want the folder structure `series/series_index - "
 "title`, with the caveat that if series does not exist, then the title should"
 " be in the top folder. The template to do this is::"
 msgstr "Par exemple, supposons que nous voulons que la structure des dossiers soit `series/series_index - titre`, en prévoyant que si la série n'existe pas, alors le titre devrait être dans le dossier racine (le premier dossier, pas le sous-dossier). Le modèle pour faire cela est :"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:745
+#: ../../__w/calibre/calibre/manual/template_lang.rst:746
 msgid "The slash and the hyphen appear only if series is not empty."
 msgstr "La barre oblique et le trait d'union apparaissent uniquement si la série n'est pas vide."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:747
+#: ../../__w/calibre/calibre/manual/template_lang.rst:748
 msgid ""
 "The lookup function lets us do even fancier processing. For example, assume "
 "that if a book has a series, then we want the folder structure "
@@ -1560,25 +1566,25 @@ msgid ""
 "depending on the value of series."
 msgstr "La fonction de recherche nous permet de faire le traitement encore plus poussé. Par exemple, supposons que si un livre est dans une série, alors nous voulons que la structure soit la suivante : `series/series index - title.fmt`.. Si le livre n'est pas dans une série, alors nous voulons que la structure des dossiers soit  `genre/author_sort/title.fmt`. Si le livre n'a pas de genre, nous voulons utiliser 'Inconnu'. Nous voulons deux chemins de répertoire totalement différents en fonction de la valeur de la série."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:757
+#: ../../__w/calibre/calibre/manual/template_lang.rst:758
 msgid "To accomplish this, we:"
 msgstr "Pour accomplir cela, nous :"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:752
+#: ../../__w/calibre/calibre/manual/template_lang.rst:753
 msgid ""
 "Create a composite field (give it lookup name #AA) containing "
 "``{series}/{series_index} - {title}``. If the series is not empty, then this"
 " template will produce `series/series_index - title`."
 msgstr "Créons une colonne composite (appelons-la #AA) contenant ``{series}/{series_index} - {title}``. Si la série n'est pas vide, alors ce modèle produit `series/series_index - title`."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:754
+#: ../../__w/calibre/calibre/manual/template_lang.rst:755
 msgid ""
 "Create a composite field (give it lookup name #BB) containing "
 "``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. This template produces "
 "`genre/author_sort/title`, where an empty genre is replaced with `Unknown`."
 msgstr "Créons une champ composite (appelons-le #BB) contenant ``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. Ce modèle produit `genre/author_sort/title`, où un genre vide est remplacé par `Inconnu`."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:756
+#: ../../__w/calibre/calibre/manual/template_lang.rst:757
 msgid ""
 "Set the save template to ``{series:lookup(.,#AA,#BB)}``. This template "
 "chooses composite field #AA if series is not empty, and composite field #BB "
@@ -1586,11 +1592,11 @@ msgid ""
 "depending on whether or not `series` is empty."
 msgstr "Paramétrez le modèle de sauvegarde à ``{series:lookup(.,#AA,#BB)}``. Ce modèle choisit le champ composite #AA si série n'est pas vide, et le champ composite #BB si série est vide. Nous avons dès lors deux chemins de sauvegarde complètement différents, dépendant du fait que `series` soit vide ou pas."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:760
+#: ../../__w/calibre/calibre/manual/template_lang.rst:761
 msgid "Templates and plugboards"
 msgstr "Modèles et tableaux de connexions"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:762
+#: ../../__w/calibre/calibre/manual/template_lang.rst:763
 msgid ""
 "Plugboards are used for changing the metadata written into books during "
 "send-to-device and save-to-disk operations. A plugboard permits you to "
@@ -1601,7 +1607,7 @@ msgid ""
 "display issues."
 msgstr "Les tableaux de connexions sont utilisés pour modifier les métadonnées écrites dans les livres pendant l'envoi à une liseuse et les opérations de sauvegarde sur le disque. Le tableau de connexion vous permet de spécifier pour un modèle de lecteur précis quelles données à insérer dans les métadonnées du livre. Vous pouvez utiliser les tableaux de connexions pour modifier les champs suivants : authors, author_sort, language, publisher, tags, title, title_sort. Cette fonctionnalité aide ceux qui veulent utiliser les différentes métadonnées des livres pour contrôler le tri ou l'affichage des livres sur leurs périphériques."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:767
+#: ../../__w/calibre/calibre/manual/template_lang.rst:768
 msgid ""
 "When you create a plugboard, you specify the format and device for which the"
 " plugboard is to be used. A special device is provided, ``save_to_disk``, "
@@ -1612,7 +1618,7 @@ msgid ""
 "can, of course, use composite columns in these templates."
 msgstr "Lorsque vous créez un tableau de connexion, vous spécifiez le format et le périphérique pour lequel le tableau de connexion doit être utilisé. Un périphérique spécial est procuré, ``save_to_disk`` qui est utilisé lors de la sauvegarde de formats (en opposition à les envoyer vers le périphérique). Une fois que vous avez choisi le format et le périphérique, vous choisissez les champs de métadonnées à modifier, indiquez le modèle à appliquer pour fournir les nouvelles valeurs. Ces modèles sont `reliés` à leurs champs de destination, d'où le nom de `tableau de connexions`. Vous pouvez, bien sûr, utiliser des colonnes composites dans ces modèles."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:772
+#: ../../__w/calibre/calibre/manual/template_lang.rst:773
 msgid ""
 "When a plugboard might apply (Content server, save to disk, or send to "
 "device), calibre searches the defined plugboards to choose the correct one "
@@ -1621,29 +1627,29 @@ msgid ""
 " the plugboards using the following search order:"
 msgstr "Quand un tableau de connexion doit s'appliquer (Serveur de contenu, sauvegarde sur disque ou envoyer au périphérique), calibre recherche les tableau de connexions définis et celui qui est correct pour le format donné et le périphérique. Par exemple, pour trouver le tableau de connexion approprié pour un livre EPUB envoyé à un périphérique ANDROID, calibre recherche dans les tableaux de connexion dans l'ordre de recherche suivant :"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:776
+#: ../../__w/calibre/calibre/manual/template_lang.rst:777
 msgid ""
 "a plugboard with an exact match on format and device, e.g., ``EPUB`` and "
 "``ANDROID``"
 msgstr "un tableau de connexion avec une correspondance exacte sur le format et le périphérique, par ex., ``EPUB`` et ``ANDROID``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:777
+#: ../../__w/calibre/calibre/manual/template_lang.rst:778
 msgid ""
 "a plugboard with an exact match on format and the special ``any device`` "
 "choice, e.g., ``EPUB`` and ``any device``"
 msgstr "un tableau de connexion avec une correspondance exacte sur le format et le choix spécial ``n'importe quel périphérique``, par ex., ``EPUB`` et ``n'importe quel périphérique``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:778
+#: ../../__w/calibre/calibre/manual/template_lang.rst:779
 msgid ""
 "a plugboard with the special ``any format`` choice and an exact match on "
 "device, e.g., ``any format`` and ``ANDROID``"
 msgstr "un tableau de connexion avec le choix spécial ``n'importe quel format`` et une correspondance exacte sur le périphérique, par ex., ``n'importe quel format`` et ``ANDROID``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:779
+#: ../../__w/calibre/calibre/manual/template_lang.rst:780
 msgid "a plugboard with ``any format`` and ``any device``"
 msgstr "un tableau de conversion avec ``n'importe quel format`` et ``n'importe quel périphérique``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:781
+#: ../../__w/calibre/calibre/manual/template_lang.rst:782
 msgid ""
 "The tags and authors fields have special treatment, because both of these "
 "fields can hold more than one item. A book can have many tags and many "
@@ -1655,7 +1661,7 @@ msgid ""
 "comma in the middle of a tag."
 msgstr "Les étiquettes et les champs auteur ont un traitement spécial, parce que ces deux champs peuvent contenir plusieurs données. Un livre peut avoir plusieurs étiquettes et plusieurs auteurs. Lorsque vous spécifiez que l'un de ces deux champs doit être modifié, le résultat du modèle est examiné pour voir s'il y a plus d'un élément dedans. Pour les étiquettes, le résultat est découpé partout où calibre trouve une virgule. Par exemple, si le modèle produit les valeurs ``Thriller, Horreur``, alors ke résultat sera deux étiquettes, ``Thriller`` et ``Horreur``. Il n'est pas possible de mettre une virgule au milieu d'une étiquette."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:786
+#: ../../__w/calibre/calibre/manual/template_lang.rst:787
 msgid ""
 "The same thing happens for authors, but using a different character for the "
 "cut, a `&` (ampersand) instead of a comma. For example, if the template "
@@ -1665,7 +1671,7 @@ msgid ""
 "author with a rather strange name."
 msgstr "La même chose se produit pour les auteurs, mais en utilisant un caractère différent comme séparateur, le `&` (esperluette) au lieu d'une virgule. Par exemple, si le modèle produit la valeur ``Blogs, Joe&Posts, Susan``, alors le livre finira avec deux auteurs ``Blogs, Joe`` et ``Posts, Susan``. Si le modèle produit la valeur ``Blogs, Joe;Posts, Susan``, alors ce livre aura un auteur avec un nom assez étrange."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:790
+#: ../../__w/calibre/calibre/manual/template_lang.rst:791
 msgid ""
 "Plugboards affect the metadata written into the book when it is saved to "
 "disk or written to the device. Plugboards do not affect the metadata used by"
@@ -1674,39 +1680,39 @@ msgid ""
 "preferences window."
 msgstr "Les tableaux de connexions affectent les métadonnées écrites dans le livre quand il est sauvegardé sur le disque ou copié sur le périphérique. Les tableaux de connexions n'affecte pas les métadonnées utilisées par ``Enregistrer sur le disque`` et ``Envoyer au périphérique``. A la place, les noms de fichiers sont construits en utilisant les modèles entrés dans la fenêtre de préférence appropriée."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:795
+#: ../../__w/calibre/calibre/manual/template_lang.rst:796
 msgid "Tips"
 msgstr "Astuces"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:797
+#: ../../__w/calibre/calibre/manual/template_lang.rst:798
 msgid "You might find the following tips useful."
 msgstr "Vous devriez trouver les astuces suivantes utiles."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:799
+#: ../../__w/calibre/calibre/manual/template_lang.rst:800
 msgid ""
 "Use the Template Tester to test templates. Add the tester to the context "
 "menu for books in the library and/or give it a keyboard shortcut."
 msgstr "Utilisez le Testeur de Modèles pour tester les modèles. Ajoutez le testeur au menu contextuel des livres de la bibliothèque et/ou donnez-lui un raccourci clavier."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:800
+#: ../../__w/calibre/calibre/manual/template_lang.rst:801
 msgid ""
 "Templates can use other templates by referencing composite columns built "
 "with the desired template. Alternatively, you could use Stored Templates."
 msgstr "Les modèles peuvent utiliser d'autres modèles en faisant référence à des colonnes composites construites avec le modèle souhaité. Vous pouvez également utiliser des Modèles Stockés."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:802
+#: ../../__w/calibre/calibre/manual/template_lang.rst:803
 msgid ""
 "In a plugboard, you can set a field to empty (or whatever is equivalent to "
 "empty) by using the special template ``{}``. This template will always "
 "evaluate to an empty string."
 msgstr "Dans un tableau de connexions, vous pouvez paramétrer un champ à vide (ou quelque soit sont équivalent à vide) en utilisant le modèle spécial ``{}``. Ce modèle sera toujours évalué à une chaîne vide."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:804
+#: ../../__w/calibre/calibre/manual/template_lang.rst:805
 msgid ""
 "The technique described above to show numbers even if they have a zero value"
 " works with the standard field series_index."
 msgstr "La technique indiquée ci-dessus pour montrer les nombre même s'ils ont une valeur zéro fonctionne avec le champ standard series_index."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:809
+#: ../../__w/calibre/calibre/manual/template_lang.rst:810
 msgid "Function reference"
 msgstr "Référence de la fonction"

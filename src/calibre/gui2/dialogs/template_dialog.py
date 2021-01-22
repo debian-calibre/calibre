@@ -22,7 +22,7 @@ from calibre.ebooks.metadata.book.formatter import SafeFormat
 from calibre.library.coloring import (displayable_columns, color_row_key)
 from calibre.gui2 import error_dialog, choose_files, pixmap_to_data
 from calibre.utils.localization import localize_user_manual_link
-from polyglot.builtins import native_string_type, unicode_type
+from polyglot.builtins import unicode_type
 
 
 class ParenPosition:
@@ -46,7 +46,7 @@ class TemplateHighlighter(QSyntaxHighlighter):
 
     KEYWORDS = ["program", 'if', 'then', 'else', 'elif', 'fi']
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, builtin_functions=None):
         super(TemplateHighlighter, self).__init__(parent)
 
         self.initializeFormats()
@@ -56,7 +56,8 @@ class TemplateHighlighter(QSyntaxHighlighter):
                 "keyword"))
         TemplateHighlighter.Rules.append((QRegExp(
                 "|".join([r"\b%s\b" % builtin for builtin in
-                          formatter_functions().get_builtins()])),
+                          (builtin_functions if builtin_functions else
+                                                formatter_functions().get_builtins())])),
                 "builtin"))
 
         TemplateHighlighter.Rules.append((QRegExp(
@@ -214,7 +215,7 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
     def __init__(self, parent, text, mi=None, fm=None, color_field=None,
                  icon_field_key=None, icon_rule_kind=None, doing_emblem=False,
                  text_is_placeholder=False, dialog_is_st_editor=False,
-                 global_vars={}):
+                 global_vars={}, all_functions=None, builtin_functions=None):
         QDialog.__init__(self, parent)
         Ui_TemplateDialog.__init__(self)
         self.setupUi(self)
@@ -314,8 +315,11 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
         self.setWindowFlags(self.windowFlags()&(~Qt.WindowType.WindowContextHelpButtonHint))
         self.setWindowIcon(icon)
 
+        self.all_functions = all_functions if all_functions else formatter_functions().get_functions()
+        self.builtins = builtin_functions if builtin_functions else formatter_functions().get_builtins()
+
         self.last_text = ''
-        self.highlighter = TemplateHighlighter(self.textbox.document())
+        self.highlighter = TemplateHighlighter(self.textbox.document(), builtin_functions=self.builtins)
         self.textbox.cursorPositionChanged.connect(self.text_cursor_changed)
         self.textbox.textChanged.connect(self.textbox_changed)
 
@@ -342,15 +346,14 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
         except:
             self.builtin_source_dict = {}
 
-        self.funcs = formatter_functions().get_functions()
-        self.builtins = formatter_functions().get_builtins()
-
-        func_names = sorted(self.funcs)
+        func_names = sorted(self.all_functions)
         self.function.clear()
         self.function.addItem('')
-        self.function.addItems(func_names)
+        for f in func_names:
+            self.function.addItem('{}  --  {}'.format(f,
+                               self.function_type_string(f, longform=False)), f)
         self.function.setCurrentIndex(0)
-        self.function.currentIndexChanged[native_string_type].connect(self.function_changed)
+        self.function.currentIndexChanged.connect(self.function_changed)
         self.textbox_changed()
         self.rule = (None, '')
 
@@ -428,7 +431,8 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
             self.text_cursor_changed()
             self.template_value.setText(
                 SafeFormat().safe_format(cur_text, self.mi, _('EXCEPTION: '),
-                                         self.mi, global_vars=self.global_vars))
+                                         self.mi, global_vars=self.global_vars,
+                                         template_functions=self.all_functions))
 
     def text_cursor_changed(self):
         cursor = self.textbox.textCursor()
@@ -440,21 +444,28 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
             self.highlighter.check_cursor_pos(t[position-1], block_number,
                                               pos_in_block)
 
+    def function_type_string(self, name, longform=True):
+        if self.all_functions[name].is_python:
+            if name in self.builtins:
+                return (_('Built-in template function') if longform else
+                            _('Built-in function'))
+            return (_('User defined Python template function') if longform else
+                            _('User function'))
+        else:
+            return (_('Stored user defined template') if longform else _('Stored template'))
+
     def function_changed(self, toWhat):
-        name = unicode_type(toWhat)
+        name = unicode_type(self.function.itemData(toWhat))
         self.source_code.clear()
         self.documentation.clear()
         self.func_type.clear()
-        if name in self.funcs:
-            self.documentation.setPlainText(self.funcs[name].doc)
+        if name in self.all_functions:
+            self.documentation.setPlainText(self.all_functions[name].doc)
             if name in self.builtins and name in self.builtin_source_dict:
                 self.source_code.setPlainText(self.builtin_source_dict[name])
             else:
-                self.source_code.setPlainText(self.funcs[name].program_text)
-            if self.funcs[name].is_python:
-                self.func_type.setText(_('Template function in Python'))
-            else:
-                self.func_type.setText(_('Stored template'))
+                self.source_code.setPlainText(self.all_functions[name].program_text)
+            self.func_type.setText(self.function_type_string(name, longform=True))
 
     def accept(self):
         txt = unicode_type(self.textbox.toPlainText()).rstrip()

@@ -53,22 +53,35 @@ authors_completer_append_separator = False
 #  comma : use 'copy' if there is a ',' in the name, otherwise use 'invert'
 #  nocomma : "fn ln" -> "ln fn" (without the comma)
 # When this tweak is changed, the author_sort values stored with each author
-# must be recomputed by right-clicking on an author in the left-hand tags panel,
-# selecting 'manage authors', and pressing 'Recalculate all author sort values'.
-# The author name suffixes are words that are ignored when they occur at the
+# must be recomputed by right-clicking on an author in the left-hand tags
+# panel, selecting 'manage authors', and pressing
+# 'Recalculate all author sort values'.
+#
+# The author_name_suffixes are words that are ignored when they occur at the
 # end of an author name. The case of the suffix is ignored and trailing
-# periods are automatically handled. The same is true for prefixes.
-# The author name copy words are a set of words which if they occur in an
-# author name cause the automatically generated author sort string to be
-# identical to the author name. This means that the sort for a string like Acme
-# Inc. will be Acme Inc. instead of Inc., Acme
+# periods are automatically handled.
+#
+# The same is true for author_name_prefixes.
+#
+# The author_name_copywords are a set of words which, if they occur in an
+# author name, cause the automatically generated author sort string to be
+# identical to the author name. This means that the sort for a string like
+# "Acme Inc." will be "Acme Inc." instead of "Inc., Acme".
+#
+# If author_use_surname_prefixes is enabled, any of the words in
+# author_surname_prefixes will be treated as a prefix to the surname, if they
+# occur before the surname. So for example, "John von Neumann" would be sorted
+# as "von Neumann, John" and not "Neumann, John von".
 author_sort_copy_method = 'comma'
 author_name_suffixes = ('Jr', 'Sr', 'Inc', 'Ph.D', 'Phd',
                         'MD', 'M.D', 'I', 'II', 'III', 'IV',
                         'Junior', 'Senior')
 author_name_prefixes = ('Mr', 'Mrs', 'Ms', 'Dr', 'Prof')
-author_name_copywords = ('Corporation', 'Company', 'Co.', 'Agency', 'Council',
-        'Committee', 'Inc.', 'Institute', 'Society', 'Club', 'Team')
+author_name_copywords = ('Agency', 'Corporation', 'Company', 'Co.', 'Council',
+                         'Committee', 'Inc.', 'Institute', 'National',
+                         'Society', 'Club', 'Team')
+author_use_surname_prefixes = False
+author_surname_prefixes = ('da', 'de', 'di', 'la', 'le', 'van', 'von')
 
 #: Splitting multiple author names
 # By default, calibre splits a string containing multiple author names on
@@ -79,10 +92,10 @@ author_name_copywords = ('Corporation', 'Company', 'Co.', 'Agency', 'Council',
 authors_split_regex = r'(?i),?\s+(and|with)\s+'
 
 #: Use author sort in Tag browser
-# Set which author field to display in the tags panel (the list of authors,
+# Set which author field to display in the Tag browser (the list of authors,
 # series, publishers etc on the left hand side). The choices are author and
 # author_sort. This tweak affects only what is displayed under the authors
-# category in the tags panel and Content server. Please note that if you set this
+# category in the Tag browser and Content server. Please note that if you set this
 # to author_sort, it is very possible to see duplicate names in the list because
 # although it is guaranteed that author names are unique, there is no such
 # guarantee for author_sort values. Showing duplicates won't break anything, but
@@ -267,8 +280,8 @@ title_sort_articles=r'^(A|The|An)\s+'
 auto_connect_to_folder = ''
 
 #: Specify renaming rules for SONY collections
-# Specify renaming rules for sony collections. This tweak is only applicable if
-# metadata management is set to automatic. Collections on Sonys are named
+# Specify renaming rules for SONY collections. This tweak is only applicable if
+# metadata management is set to automatic. Collections on SONYs are named
 # depending upon whether the field is standard or custom. A collection derived
 # from a standard field is named for the value in that field. For example, if
 # the standard 'series' column contains the value 'Darkover', then the
@@ -320,7 +333,7 @@ sony_collection_renaming_rules={}
 sony_collection_name_template='{value}{category:| (|)}'
 
 #: Specify how SONY collections are sorted
-# Specify how sony collections are sorted. This tweak is only applicable if
+# Specify how SONY collections are sorted. This tweak is only applicable if
 # metadata management is set to automatic. You can indicate which metadata is to
 # be used to sort on a collection-by-collection basis. The format of the tweak
 # is a list of metadata fields from which collections are made, followed by the
@@ -466,7 +479,7 @@ save_original_format_when_polishing = True
 # how many should be shown, here.
 gui_view_history_size = 15
 
-#: Change the font size of book details in the interface
+#: Change the font size of the Book details panel in the interface
 # Change the font size at which book details are rendered in the side panel and
 # comments are rendered in the metadata edit dialog. Set it to a positive or
 # negative number to increase or decrease the font size.

@@ -1203,10 +1203,10 @@ class Application(QApplication):
     def setup_unix_signals(self):
         setup_unix_signals(self)
 
-    def signal_received(self, read_fd):
+    def signal_received(self):
         try:
-            os.read(read_fd, 1024)
-        except EnvironmentError:
+            os.read(self.signal_notifier.socket(), 1024)
+        except OSError:
             return
         self.shutdown_signal_received.emit()
 
@@ -1387,7 +1387,9 @@ def elided_text(text, font=None, width=300, pos='middle'):
     of the string with an ellipsis. Results in a string much closer to the
     limit than Qt's elidedText().'''
     from PyQt5.Qt import QFontMetrics, QApplication
-    fm = QApplication.fontMetrics() if font is None else (font if isinstance(font, QFontMetrics) else QFontMetrics(font))
+    if font is None:
+        font = QApplication.instance().font()
+    fm = (font if isinstance(font, QFontMetrics) else QFontMetrics(font))
     delta = 4
     ellipsis = '\u2026'
 

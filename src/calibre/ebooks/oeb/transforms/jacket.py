@@ -6,19 +6,24 @@ __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import sys, os, re
-from xml.sax.saxutils import escape
+import os
+import re
+import sys
 from string import Formatter
+from xml.sax.saxutils import escape
 
-from calibre import guess_type, strftime
+from calibre import guess_type, prepare_string_for_xml, strftime
 from calibre.constants import iswindows
-from calibre.ebooks.oeb.base import XPath, XHTML_NS, XHTML, xml2text, urldefrag, urlnormalize
-from calibre.library.comments import comments_to_html, markdown
-from calibre.utils.date import is_date_undefined, as_local_time
-from calibre.utils.icu import sort_key
 from calibre.ebooks.chardet import strip_encoding_declarations
 from calibre.ebooks.metadata import fmt_sidx, rating_to_stars
-from polyglot.builtins import unicode_type, map
+from calibre.ebooks.metadata.sources.identify import urls_from_identifiers
+from calibre.ebooks.oeb.base import (
+    XHTML, XHTML_NS, XPath, urldefrag, urlnormalize, xml2text
+)
+from calibre.library.comments import comments_to_html, markdown
+from calibre.utils.date import as_local_time, is_date_undefined
+from calibre.utils.icu import sort_key
+from polyglot.builtins import map, unicode_type
 
 JACKET_XPATH = '//h:meta[@name="calibre-content" and @content="jacket"]'
 
@@ -229,6 +234,30 @@ def postprocess_jacket(root, output_profile, has_data):
         extract_class('cbj_kindle_banner_hr')
 
 
+class Attributes:
+
+    def __getattr__(self, name):
+        return 'none'
+
+
+class Identifiers:
+
+    def __init__(self, idents):
+        self.identifiers = idents or {}
+        self.display = Attributes()
+        for k in self.identifiers:
+            setattr(self.display, k, 'initial')
+        links = []
+        for x in urls_from_identifiers(self.identifiers):
+            name, id_typ, id_val, url = (prepare_string_for_xml(e, True) for e in x)
+            links.append(f'<a href="{url}" title="{id_typ}:{id_val}">{name}</a>')
+        self.links = ', '.join(links)
+        self.display.links = 'initial' if self.links else 'none'
+
+    def __getattr__(self, name):
+        return self.identifiers.get(name, '')
+
+
 def render_jacket(mi, output_profile,
         alt_title=_('Unknown'), alt_tags=[], alt_comments='',
         alt_publisher='', rescale_fonts=False, alt_authors=None):
@@ -282,20 +311,23 @@ def render_jacket(mi, output_profile,
     has_data = {}
 
     def generate_html(comments):
+        display = Attributes()
         args = dict(xmlns=XHTML_NS,
-                    title_str=title_str,
-                    css=css,
-                    title=title,
-                    author=author,
-                    publisher=publisher,
-                    pubdate_label=_('Published'), pubdate=pubdate,
-                    series_label=ngettext('Series', 'Series', 1), series=series,
-                    rating_label=_('Rating'), rating=rating,
-                    tags_label=_('Tags'), tags=tags,
-                    comments=comments,
-                    footer='',
-                    searchable_tags=' '.join(escape(t)+'ttt' for t in tags.tags_list),
-                    )
+            title_str=title_str,
+            identifiers=Identifiers(mi.identifiers),
+            css=css,
+            title=title,
+            author=author,
+            publisher=publisher,
+            pubdate_label=_('Published'), pubdate=pubdate,
+            series_label=ngettext('Series', 'Series', 1), series=series,
+            rating_label=_('Rating'), rating=rating,
+            tags_label=_('Tags'), tags=tags,
+            comments=comments,
+            footer='',
+            display=display,
+            searchable_tags=' '.join(escape(t)+'ttt' for t in tags.tags_list),
+        )
         for key in mi.custom_field_keys():
             m = mi.get_user_metadata(key, False) or {}
             try:
@@ -322,6 +354,7 @@ def render_jacket(mi, output_profile,
                 else:
                     args[dkey] = escape(val)
                 args[dkey+'_label'] = escape(display_name)
+                setattr(display, dkey, 'none' if mi.is_null(key) else 'initial')
             except Exception:
                 # if the val (custom column contents) is None, don't add to args
                 pass
@@ -336,13 +369,18 @@ def render_jacket(mi, output_profile,
         # Don't change this unless you also change it in template.xhtml
         args['_genre_label'] = args.get('_genre_label', '{_genre_label}')
         args['_genre'] = args.get('_genre', '{_genre}')
-
-        formatter = SafeFormatter()
-        generated_html = formatter.format(template, **args)
         has_data['series'] = bool(series)
         has_data['tags'] = bool(tags)
         has_data['rating'] = bool(rating)
         has_data['pubdate'] = bool(pubdate)
+        for k, v in has_data.items():
+            setattr(display, k, 'initial' if v else 'none')
+        display.title = 'initial'
+        if mi.identifiers:
+            display.identifiers = 'initial'
+
+        formatter = SafeFormatter()
+        generated_html = formatter.format(template, **args)
 
         return strip_encoding_declarations(generated_html)
 

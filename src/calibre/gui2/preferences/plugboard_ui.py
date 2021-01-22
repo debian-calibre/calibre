@@ -118,7 +118,7 @@ class Ui_Form(object):
 "\n"
 "Often templates will contain simple references to composite columns, but this is not necessary. You can use any template in a source box that you can use elsewhere in calibre.\n"
 "\n"
-"One possible use for a plugboard is to alter the title to contain series information. Another would be to change the author sort, something that mobi users might do to force it to use the \';\' that the kindle requires. A third would be to specify the language."))
+"One possible use for a plugboard is to alter the title to contain series information. Another would be to change the author sort, something that MOBI users might do to force it to use the \';\' that the kindle requires. A third would be to specify the language."))
         self.label_6.setText(_("Format (choose first)"))
         self.label_7.setText(_("Device (choose second)"))
         self.label_5.setText(_("Add &new plugboard:"))

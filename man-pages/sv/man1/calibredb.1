@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "januari 08, 2021" "5.9.0" "calibre"
+.TH "CALIBREDB" "1" "januari 22, 2021" "5.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -195,7 +195,7 @@ Högsta antalet resultat att visa. Standard: alla
 .INDENT 0.0
 .TP
 .B \-\-line\-width, \-w
-Största bredd på en enskild rad i utmatning. Som standard används den detekterade skärmstorleken.
+Den största bredden på en enskild rad i utmatning. Standardinställningen är att upptäcka skärmstorlek.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -487,7 +487,7 @@ Exportera alla böcker till en enda katalog
 .INDENT 0.0
 .TP
 .B \-\-template
-Mallen för att styra filnamn och mappstruktur för de sparade filerna. Standard är \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP vilket sparar böcker i en undermapp per författare med filnamn bestående av titel och författare. Tillgängliga kontroller är: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+Mallen för att anpassa filnamn och mappstruktur för de sparade filerna. Standard är \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP vilket sparar böcker i en undermapp per författare med filnamn bestående av titel och författare. Tillgängliga kontroller är: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -562,7 +562,7 @@ Regex beskriver taggar för att utesluta som genrer. Standard: \fB\(aq\fP[.+]|^+
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Anger de regler som används för att utesluta böcker från den genererade katalogen. Modellen för en undantagsregel är antingen (\fB\(aq\fP<regel namn>\fB\(aq\fP,\fB\(aq\fPTaggar\fB"\fP,\fB\(aq\fP<komma\-separerad lista med taggar>\fB\(aq\fP) eller (\fB\(aq\fP<regel namn>\fB\(aq\fP,\fB\(aq\fP<anpassad column>\fB\(aq\fP,\fB\(aq\fP<mönster>\fB\(aq\fP). Till exempel: ((\fB"\fPArkiverade böcker\fB"\fP, \fB"\fP# status\fB"\fP, \fB"\fPArkiverade\fB"\fP),) kommer att utesluta en bok med ett värde på \fB"\fPstatus\fB"\fP \fB"\fPArkiverat\fB"\fP i den anpassade kolumnen. När flera regler är definierade, kommer alla regler tillämpas. Standard: \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
+Anger de regler som används för att utesluta böcker från den genererade katalogen. Modellen för en undantagsregel är antingen (\fB\(aq\fP<regel namn>\fB\(aq\fP,\fB\(aq\fPTaggar\fB\(aq\fP,\fB\(aq\fP<komma\-separerad lista med taggar>\fB\(aq\fP) eller (\fB\(aq\fP<regel namn>\fB\(aq\fP,\fB\(aq\fP<anpassad column>\fB\(aq\fP,\fB\(aq\fP<mönster>\fB\(aq\fP). Till exempel: ((\fB"\fPArkiverade böcker\fB"\fP, \fB"\fP# status\fB"\fP, \fB"\fPArkiverade\fB"\fP),) kommer att utesluta en bok med ett värde på \fB"\fPstatus\fB"\fP \fB"\fPArkiverat\fB"\fP i den anpassade kolumnen. När flera regler är definierade, kommer alla regler tillämpas. Standard: \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -602,7 +602,7 @@ Källfältet för \fB"\fPGenrer\fB"\fP sektion. Standard: \fB\(aq\fPTaggar\fB\(a
 .INDENT 0.0
 .TP
 .B \-\-header\-note\-source\-field
-Anpassat fält innehåller anmärkningstext att infoga i beskrivningsrubrik. Standard: \fB"\fP\fB"\fP  Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
+Anpassat fält innehåller anmärkningstext att infoga i beskrivningsrubrik. Standard: \fB\(aq\fP\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -851,7 +851,7 @@ Skriv ut endast antalet poster i en kategori istället för räkna per post inom
 .INDENT 0.0
 .TP
 .B \-\-width, \-w
-Största bredd på en enskild rad i utmatning. Som standard används den detekterade skärmstorleken.
+Den största bredden på en enskild rad i utmatning. Standardinställningen är att upptäcka skärmstorlek.
 .UNINDENT
 .SH BACKUP_METADATA
 .INDENT 0.0
