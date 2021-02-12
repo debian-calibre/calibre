@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "gennaio 22, 2021" "5.10.1" "calibre"
+.TH "EBOOK-CONVERT" "1" "febbraio 12, 2021" "5.11.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -203,12 +203,12 @@ Disabilita il ridimensionamento dei caratteri.
 .INDENT 0.0
 .TP
 .B \-\-embed\-all\-fonts
-Include qualsiasi font che sia presente ma non incorporato nel documento immesso. Verranno cercati i font nel sistema e, se trovati, verranno incorporati. L\fB\(aq\fPinclusione funziona solo se il formato di destinazione, come EPUB, AZW3, DOCX o PDF, supporta l\fB\(aq\fPincorporazione dei font, Assicurarsi di avere font con le licenze valide per l\fB\(aq\fPincorporamento.
+Incorpora qualsiasi carattere che sia referenziato ma non ancora incorporato nel documento di input. Verranno cercati i caratteri nel sistema e, se trovati, verranno incorporati. L\fB\(aq\fPincorporamento funziona solo se il formato di destinazione, come EPUB, AZW3, DOCX o PDF, supporta l\fB\(aq\fPincorporamento dei caratteri. Assicurati di avere una licenza valida per l\fB\(aq\fPincorporamento dei caratteri usati nel documento.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Includere il font nell\fB\(aq\fPebook. Permette di specificare il font di \fB"\fPbase\fB"\fP utilizzato per l\fB\(aq\fPebook. Il font \fB"\fPbase\fB"\fP potrebbe venir sostituito/ignorato da eventuali font già incorporati nel documento. Notare che l\fB\(aq\fPinclusione di font funziona solo con il salvataggio in formati specifici tra cui EPUB, AZW3 e DOCX.
+Incorpora la famiglia caratteri specificata nel libro. Permette di specificare il carattere di \fB"\fPbase\fB"\fP utilizzato per il libro. Se il documento di input specifica i propri caratteri, potrebbero sovrascrivere il carattere di base. Nota che l\fB\(aq\fPincorporamento dei caratteri funziona solo con alcuni formati di output, tra cui EPUB, AZW3 e DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -298,7 +298,7 @@ Convert plain quotes, dashes and ellipsis to their typographically correct equiv
 .INDENT 0.0
 .TP
 .B \-\-subset\-embedded\-fonts
-Sottoinsieme di tutti i caratteri integrati. Ogni carattere integrato è ridotto per contenere solo i glifi utilizzati in questo documento. Ciò riduce la dimensione dei file dei caratteri. Utile se stai integrando un carattere particolarmente grande con molti glifi non utilizzati.
+Crea un sottoinsieme di tutti i caratteri integrati. Ogni carattere integrato è ridotto per contenere solo i glifi utilizzati in questo documento. Ciò riduce la dimensione dei file dei caratteri. Utile se stai incorporando un carattere particolarmente grande con molti glifi non utilizzati.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -451,7 +451,7 @@ Remove the first image from the input e\-book. Useful if the input document has 
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+Un\fB\(aq\fPespressione XPath per rilevare la posizione nel document da cui cominciare la lettura. Alcuni programmi di lettura e\-book (in particolare Kindle) usano questa posizione come quella in cui il libro viene aperto. Vedi il tutorial XPath nel Manuale Utente di calibre per maggiori informazioni sull\fB\(aq\fPutilizzo di questa funzione.
 .UNINDENT
 .SH INDICE
 .sp

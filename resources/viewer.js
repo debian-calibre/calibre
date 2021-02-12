@@ -9659,6 +9659,7 @@ return this.__repr__();
             var tooltip = (arguments[3] === undefined || ( 3 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_button.__defaults__.tooltip : arguments[3];
             var highlight = (arguments[4] === undefined || ( 4 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_button.__defaults__.highlight : arguments[4];
             var download_filename = (arguments[5] === undefined || ( 5 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_button.__defaults__.download_filename : arguments[5];
+            var class_ = (arguments[6] === undefined || ( 6 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_button.__defaults__.class_ : arguments[6];
             var ρσ_kwargs_obj = arguments[arguments.length-1];
             if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
             if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "icon")){
@@ -9676,13 +9677,16 @@ return this.__repr__();
             if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "download_filename")){
                 download_filename = ρσ_kwargs_obj.download_filename;
             }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "class_")){
+                class_ = ρσ_kwargs_obj.class_;
+            }
             var ic, ans;
             ic = "";
             if (icon) {
                 ic = svgicon(icon);
                 text = " " + text;
             }
-            ans = ρσ_interpolate_kwargs.call(E, E.a, [ic, E.span(text)].concat([ρσ_desugar_kwargs({class_: "calibre-push-button", href: "javascript: void(0)", title: tooltip || ""})]));
+            ans = ρσ_interpolate_kwargs.call(E, E.a, [ic, E.span(text)].concat([ρσ_desugar_kwargs({class_: "calibre-push-button " + class_, href: "javascript: void(0)", role: "button", title: tooltip || ""})]));
             if (download_filename && "download" in ans) {
                 ans.setAttribute("download", download_filename);
             }
@@ -9708,9 +9712,9 @@ return this.__repr__();
             return ans;
         };
         if (!create_button.__defaults__) Object.defineProperties(create_button, {
-            __defaults__ : {value: {icon:null, action:null, tooltip:null, highlight:false, download_filename:null}},
+            __defaults__ : {value: {icon:null, action:null, tooltip:null, highlight:false, download_filename:null, class_:""}},
             __handles_kwarg_interpolation__ : {value: true},
-            __argnames__ : {value: ["text", "icon", "action", "tooltip", "highlight", "download_filename"]},
+            __argnames__ : {value: ["text", "icon", "action", "tooltip", "highlight", "download_filename", "class_"]},
             __module__ : {value: "widgets"}
         });
 
@@ -16695,7 +16699,7 @@ return this.__repr__();
 
         styles_id = "calibre-color-scheme-style-overrides";
         function apply_colors(is_content_popup) {
-            var elem, ss, text, c, ρσ_unpack, selbg, selfg;
+            var elem, ss, text, c, ρσ_unpack, selbg, selfg, hints_box_css;
             var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ document.documentElement, document.body ]));
             for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
                 elem = ρσ_Iter0[ρσ_Index0];
@@ -16732,7 +16736,9 @@ return this.__repr__();
                 text += "\nhtml, body { scrollbar-width: none !important }";
                 text += "\n\n\n        .crw-has-dot::after {\n            content: \"\";            vertical-align: text-top;            background-color: currentColor !important;            text-decoration: none !important;            display: inline-block;            height: 0.7ex;            width: 0.7ex;            border-radius: 50%;        }\n        ";
             }
-            text += "\n\n\n        .calibre-hint-visible::before {\n            content: attr(data-calibre-hint-render) !important;            display: inline-block !important;            position: absolute !important;            text-indent: 0 !important;            text-decoration: none !important;            font-weight: bold !important;            color: " + ρσ_str.format("{}", selfg) + " !important;            background: " + ρσ_str.format("{}", selbg) + " !important;            cursor: default !important;            padding: 1px !important;            border: solid 1px " + ρσ_str.format("{}", opts.color_scheme.foreground) + " !important;\n        }\n\n        .calibre-hint-enter::before {\n            background: #FF5733 !important;         }\n\n        .calibre-animated-hint {\n            animation-name: calibre-animate-hint;             animation-duration: 0.3s;             animation-timing-function: ease-out;             display: inline-block !important;             text-indent: 0 !important;         }\n        @keyframes calibre-animate-hint {\n            from { transform: scale(1); }\n            to { transform: scale(2); }\n        }\n    ";
+            hints_box_css = "\n            display: inline-block !important;            position: absolute !important;            text-indent: 0 !important;            text-decoration: none !important;            font-weight: bold !important;            color: " + ρσ_str.format("{}", selfg) + " !important;            background: " + ρσ_str.format("{}", selbg) + " !important;            cursor: default !important;            padding: 1px !important;            border: solid 1px " + ρσ_str.format("{}", opts.color_scheme.foreground) + " !important;    ";
+            text += "\n\n\n        .calibre-reference-mode [data-calibre-ref-num]::before {\n            content: attr(data-calibre-ref-num) !important;            " + ρσ_str.format("{}", hints_box_css) + "\n        }\n    ";
+            text += "\n\n\n        .calibre-hint-visible::before {\n            content: attr(data-calibre-hint-render) !important;            " + ρσ_str.format("{}", hints_box_css) + "\n        }\n\n        .calibre-hint-enter::before {\n            background: #FF5733 !important;         }\n\n        .calibre-animated-hint {\n            animation-name: calibre-animate-hint;             animation-duration: 0.3s;             animation-timing-function: ease-out;             display: inline-block !important;             text-indent: 0 !important;         }\n        @keyframes calibre-animate-hint {\n            from { transform: scale(1); }\n            to { transform: scale(2); }\n        }\n    ";
             ss.textContent = text;
         };
         if (!apply_colors.__argnames__) Object.defineProperties(apply_colors, {
@@ -18479,6 +18485,8 @@ return this.__repr__();
         var capital_letters, x;
         var _ = ρσ_modules.gettext.gettext;
 
+        var runtime = ρσ_modules["read_book.globals"].runtime;
+
         function parse_key_repr(sc) {
             var parts, key, ans, q, modifier;
             parts = sc.split("+");
@@ -18641,58 +18649,70 @@ return this.__repr__();
             __module__ : {value: "read_book.shortcuts"}
         });
 
+        function common_shortcuts() {
+            return (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["start_of_file"] = desc(['Ctrl+ArrowUp', 'Ctrl+ArrowLeft', 'Home'], "scroll", _("Scroll to the beginning of the current file"), _("When the e-book is made of multiple individual files, scroll to the start of the current file."));
+                ρσ_d["start_of_book"] = desc("Ctrl+Home", "scroll", _("Scroll to the beginning of the book"));
+                ρσ_d["end_of_book"] = desc("Ctrl+End", "scroll", _("Scroll to the end of the book"));
+                ρσ_d["end_of_file"] = desc(['Ctrl+ArrowDown', 'Ctrl+ArrowRight', 'End'], "scroll", _("Scroll to the end of the current file"), _("When the e-book is made of multiple individual files, scroll to the end of the current file."));
+                ρσ_d["up"] = desc("ArrowUp", "scroll", _("Scroll backwards smoothly (by screen-fulls in paged mode)"), _("Scroll backwards, smoothly in flow mode and by screen fulls in paged mode"));
+                ρσ_d["down"] = desc("ArrowDown", "scroll", _("Scroll forwards smoothly (by screen-fulls in paged mode)"), _("Scroll forwards, smoothly in flow mode and by screen fulls in paged mode"));
+                ρσ_d["left"] = desc("ArrowLeft", "scroll", _("Scroll left"), _("Scroll leftwards by a little in flow mode and by a page in paged mode"));
+                ρσ_d["right"] = desc("ArrowRight", "scroll", _("Scroll right"), _("Scroll rightwards by a little in flow mode and by a page in paged mode"));
+                ρσ_d["pageup"] = desc(['PageUp', 'Shift+ '], "scroll", _("Scroll backwards by screen-fulls"));
+                ρσ_d["pagedown"] = desc([' ', 'PageDown'], "scroll", _("Scroll forwards by screen-fulls"));
+                ρσ_d["previous_section"] = desc("Ctrl+PageUp", "scroll", _("Scroll to the previous section"));
+                ρσ_d["next_section"] = desc("Ctrl+PageDown", "scroll", _("Scroll to the next section"));
+                ρσ_d["back"] = desc(['Alt+ArrowLeft', 'Shift+ArrowLeft'], "scroll", _("Back"));
+                ρσ_d["forward"] = desc(['Alt+ArrowRight', 'Shift+ArrowRight'], "scroll", _("Forward"));
+                ρσ_d["toggle_toc"] = desc("Ctrl+t", "ui", _("Show/hide Table of Contents"));
+                ρσ_d["read_aloud"] = desc("Ctrl+s", "ui", _("Read aloud"));
+                ρσ_d["toggle_hints"] = desc("Alt+f", "ui", _("Follow links with the keyboard"));
+                ρσ_d["copy_to_clipboard"] = desc(['Ctrl+c', 'Meta+c'], "ui", _("Copy to clipboard"));
+                ρσ_d["copy_location_to_clipboard"] = desc(['Alt+c'], "ui", _("Copy current location to clipboard"));
+                ρσ_d["copy_location_as_url_to_clipboard"] = desc(['Ctrl+Shift+c'], "ui", _("Copy current location as calibre:// URL to clipboard"));
+                ρσ_d["start_search"] = desc(['/', 'Ctrl+f'], "ui", _("Start search"));
+                ρσ_d["next_match"] = desc(['F3', 'Enter'], "ui", _("Find next"));
+                ρσ_d["previous_match"] = desc(['Shift+F3'], "ui", _("Find previous"));
+                ρσ_d["increase_font_size"] = desc(['Ctrl+=', 'Ctrl++', 'Ctrl+Shift++', 'Ctrl+Shift+=', 'Meta++', 'Meta+Shift++', 'Meta+Shift+='], "ui", _("Increase font size"));
+                ρσ_d["decrease_font_size"] = desc(['Ctrl+-', 'Ctrl+_', 'Ctrl+Shift+-', 'Ctrl+Shift+_', 'Meta+-', 'Meta+_'], "ui", _("Decrease font size"));
+                ρσ_d["increase_number_of_columns"] = desc(['Ctrl+]'], "ui", _("Increase number of pages per screen"));
+                ρσ_d["decrease_number_of_columns"] = desc(['Ctrl+['], "ui", _("Decrease number of pages per screen"));
+                ρσ_d["reset_number_of_columns"] = desc(['Ctrl+Alt+c'], "ui", _("Make number of pages per screen automatic"));
+                ρσ_d["toggle_full_screen"] = desc(['F11', 'Ctrl+Shift+f'], "ui", _("Toggle full screen"));
+                ρσ_d["toggle_paged_mode"] = desc("Ctrl+m", "ui", _("Toggle between Paged mode and Flow mode for text layout"));
+                ρσ_d["toggle_scrollbar"] = desc("Ctrl+w", "ui", _("Toggle the scrollbar"));
+                ρσ_d["toggle_reference_mode"] = desc("Ctrl+x", "ui", _("Toggle the Reference mode"));
+                ρσ_d["toggle_bookmarks"] = desc(['Ctrl+b'], "ui", _("Show/hide bookmarks"));
+                ρσ_d["new_bookmark"] = desc(['Ctrl+Alt+b'], "ui", _("Create a new bookmark"));
+                ρσ_d["metadata"] = desc(['Ctrl+n', 'Ctrl+e'], "ui", _("Show the book metadata"));
+                ρσ_d["reload_book"] = desc(['F5', 'Ctrl+r'], "ui", _("Reload book"));
+                ρσ_d["extend_selection_by_word"] = desc(['Ctrl+Shift+ArrowRight'], "ui", _("Alter the current selection forward by a word"));
+                ρσ_d["shrink_selection_by_word"] = desc(['Ctrl+Shift+ArrowLeft'], "ui", _("Alter the current selection backwards by a word"));
+                ρσ_d["show_chrome"] = desc(['Escape', 'ContextMenu'], "ui", _("Show the E-book viewer controls"));
+                ρσ_d["preferences"] = desc(['Ctrl+,', 'Ctrl+Escape', 'Meta+Escape', 'Meta+,'], "ui", _("Show E-book viewer preferences"));
+                ρσ_d["goto_location"] = desc([';', ':', 'Shift+:', 'Shift+;', 'Ctrl+g'], "ui", _("Go to a specified book location or position"));
+                ρσ_d["toggle_autoscroll"] = desc("Ctrl+ ", "scroll", _("Toggle auto-scroll"));
+                ρσ_d["scrollspeed_increase"] = desc("Alt+ArrowUp", "scroll", _("Auto scroll faster"));
+                ρσ_d["scrollspeed_decrease"] = desc("Alt+ArrowDown", "scroll", _("Auto scroll slower"));
+                return ρσ_d;
+            }).call(this);
+        };
+        if (!common_shortcuts.__module__) Object.defineProperties(common_shortcuts, {
+            __module__ : {value: "read_book.shortcuts"}
+        });
+
         function shortcuts_definition() {
             var ans;
             ans = shortcuts_definition.ans;
             if (!ans) {
-                ans = shortcuts_definition.ans = (function(){
-                    var ρσ_d = Object.create(null);
-                    ρσ_d["start_of_file"] = desc(['Ctrl+ArrowUp', 'Ctrl+ArrowLeft', 'Home'], "scroll", _("Scroll to the beginning of the current file"), _("When the e-book is made of multiple individual files, scroll to the start of the current file."));
-                    ρσ_d["start_of_book"] = desc("Ctrl+Home", "scroll", _("Scroll to the beginning of the book"));
-                    ρσ_d["end_of_book"] = desc("Ctrl+End", "scroll", _("Scroll to the end of the book"));
-                    ρσ_d["end_of_file"] = desc(['Ctrl+ArrowDown', 'Ctrl+ArrowRight', 'End'], "scroll", _("Scroll to the end of the current file"), _("When the e-book is made of multiple individual files, scroll to the end of the current file."));
-                    ρσ_d["up"] = desc("ArrowUp", "scroll", _("Scroll backwards smoothly (by screen-fulls in paged mode)"), _("Scroll backwards, smoothly in flow mode and by screen fulls in paged mode"));
-                    ρσ_d["down"] = desc("ArrowDown", "scroll", _("Scroll forwards smoothly (by screen-fulls in paged mode)"), _("Scroll forwards, smoothly in flow mode and by screen fulls in paged mode"));
-                    ρσ_d["left"] = desc("ArrowLeft", "scroll", _("Scroll left"), _("Scroll leftwards by a little in flow mode and by a page in paged mode"));
-                    ρσ_d["right"] = desc("ArrowRight", "scroll", _("Scroll right"), _("Scroll rightwards by a little in flow mode and by a page in paged mode"));
-                    ρσ_d["pageup"] = desc(['PageUp', 'Shift+ '], "scroll", _("Scroll backwards by screen-fulls"));
-                    ρσ_d["pagedown"] = desc([' ', 'PageDown'], "scroll", _("Scroll forwards by screen-fulls"));
-                    ρσ_d["previous_section"] = desc("Ctrl+PageUp", "scroll", _("Scroll to the previous section"));
-                    ρσ_d["next_section"] = desc("Ctrl+PageDown", "scroll", _("Scroll to the next section"));
-                    ρσ_d["back"] = desc(['Alt+ArrowLeft', 'Shift+ArrowLeft'], "scroll", _("Back"));
-                    ρσ_d["forward"] = desc(['Alt+ArrowRight', 'Shift+ArrowRight'], "scroll", _("Forward"));
-                    ρσ_d["toggle_toc"] = desc("Ctrl+t", "ui", _("Show/hide Table of Contents"));
-                    ρσ_d["read_aloud"] = desc("Ctrl+s", "ui", _("Read aloud"));
-                    ρσ_d["toggle_hints"] = desc("Alt+f", "ui", _("Follow links with the keyboard"));
-                    ρσ_d["copy_to_clipboard"] = desc(['Ctrl+c', 'Meta+c'], "ui", _("Copy to clipboard"));
-                    ρσ_d["copy_location_to_clipboard"] = desc(['Alt+c'], "ui", _("Copy current location to clipboard"));
-                    ρσ_d["copy_location_as_url_to_clipboard"] = desc(['Ctrl+Shift+c'], "ui", _("Copy current location as calibre:// URL to clipboard"));
-                    ρσ_d["start_search"] = desc(['/', 'Ctrl+f'], "ui", _("Start search"));
-                    ρσ_d["next_match"] = desc(['F3', 'Enter'], "ui", _("Find next"));
-                    ρσ_d["previous_match"] = desc(['Shift+F3'], "ui", _("Find previous"));
-                    ρσ_d["increase_font_size"] = desc(['Ctrl+=', 'Ctrl++', 'Ctrl+Shift++', 'Ctrl+Shift+=', 'Meta++', 'Meta+Shift++', 'Meta+Shift+='], "ui", _("Increase font size"));
-                    ρσ_d["decrease_font_size"] = desc(['Ctrl+-', 'Ctrl+_', 'Ctrl+Shift+-', 'Ctrl+Shift+_', 'Meta+-', 'Meta+_'], "ui", _("Decrease font size"));
-                    ρσ_d["increase_number_of_columns"] = desc(['Ctrl+]'], "ui", _("Increase number of pages per screen"));
-                    ρσ_d["decrease_number_of_columns"] = desc(['Ctrl+['], "ui", _("Decrease number of pages per screen"));
-                    ρσ_d["reset_number_of_columns"] = desc(['Ctrl+Alt+c'], "ui", _("Make number of pages per screen automatic"));
-                    ρσ_d["toggle_full_screen"] = desc(['F11', 'Ctrl+Shift+f'], "ui", _("Toggle full screen"));
-                    ρσ_d["toggle_paged_mode"] = desc("Ctrl+m", "ui", _("Toggle between Paged mode and Flow mode for text layout"));
-                    ρσ_d["toggle_scrollbar"] = desc("Ctrl+w", "ui", _("Toggle the scrollbar"));
-                    ρσ_d["toggle_reference_mode"] = desc("Ctrl+x", "ui", _("Toggle the Reference mode"));
-                    ρσ_d["toggle_bookmarks"] = desc(['Ctrl+b'], "ui", _("Show/hide bookmarks"));
-                    ρσ_d["new_bookmark"] = desc(['Ctrl+Alt+b'], "ui", _("Create a new bookmark"));
-                    ρσ_d["metadata"] = desc(['Ctrl+n', 'Ctrl+e'], "ui", _("Show the book metadata"));
-                    ρσ_d["reload_book"] = desc(['F5', 'Ctrl+r'], "ui", _("Reload book"));
-                    ρσ_d["extend_selection_by_word"] = desc(['Ctrl+Shift+ArrowRight'], "ui", _("Alter the current selection forward by a word"));
-                    ρσ_d["shrink_selection_by_word"] = desc(['Ctrl+Shift+ArrowLeft'], "ui", _("Alter the current selection backwards by a word"));
-                    ρσ_d["show_chrome"] = desc(['Escape', 'ContextMenu'], "ui", _("Show the E-book viewer controls"));
-                    ρσ_d["preferences"] = desc(['Ctrl+,', 'Ctrl+Escape', 'Meta+Escape', 'Meta+,'], "ui", _("Show E-book viewer preferences"));
-                    ρσ_d["goto_location"] = desc([';', ':', 'Shift+:', 'Shift+;', 'Ctrl+g'], "ui", _("Go to a specified book location or position"));
-                    ρσ_d["toggle_autoscroll"] = desc("Ctrl+ ", "scroll", _("Toggle auto-scroll"));
-                    ρσ_d["scrollspeed_increase"] = desc("Alt+ArrowUp", "scroll", _("Auto scroll faster"));
-                    ρσ_d["scrollspeed_decrease"] = desc("Alt+ArrowDown", "scroll", _("Auto scroll slower"));
-                    return ρσ_d;
-                }).call(this);
+                ans = shortcuts_definition.ans = common_shortcuts();
+                if (runtime.is_standalone_viewer) {
+                    add_standalone_viewer_shortcuts(ans);
+                } else {
+                    ans["sync_book"] = desc([], "ui", _("Sync last read position/annotations"));
+                }
             }
             return ans;
         };
@@ -18717,10 +18737,9 @@ return this.__repr__();
             __module__ : {value: "read_book.shortcuts"}
         });
 
-        function add_standalone_viewer_shortcuts() {
-            var ismacos, sc, quit_shortcut;
+        function add_standalone_viewer_shortcuts(sc) {
+            var ismacos, quit_shortcut;
             ismacos = ρσ_in("macos", window.navigator.userAgent);
-            sc = shortcuts_definition();
             sc["toggle_inspector"] = desc(['Ctrl+i'], "ui", _("Show/hide Inspector"));
             sc["toggle_lookup"] = desc(['Ctrl+l'], "ui", _("Show/hide the word lookup panel"));
             quit_shortcut = (ismacos) ? "Meta+q" : "Ctrl+q";
@@ -18729,7 +18748,8 @@ return this.__repr__();
             sc["toggle_toolbar"] = desc("Ctrl+F11", "ui", _("Toggle the toolbar"));
             sc["toggle_highlights"] = desc("Ctrl+h", "ui", _("Toggle the highlights panel"));
         };
-        if (!add_standalone_viewer_shortcuts.__module__) Object.defineProperties(add_standalone_viewer_shortcuts, {
+        if (!add_standalone_viewer_shortcuts.__argnames__) Object.defineProperties(add_standalone_viewer_shortcuts, {
+            __argnames__ : {value: ["sc"]},
             __module__ : {value: "read_book.shortcuts"}
         });
 
@@ -18777,6 +18797,7 @@ return this.__repr__();
         ρσ_modules["read_book.shortcuts"].get_key_text = get_key_text;
         ρσ_modules["read_book.shortcuts"].keyevent_to_index = keyevent_to_index;
         ρσ_modules["read_book.shortcuts"].key_as_text = key_as_text;
+        ρσ_modules["read_book.shortcuts"].common_shortcuts = common_shortcuts;
         ρσ_modules["read_book.shortcuts"].shortcuts_definition = shortcuts_definition;
         ρσ_modules["read_book.shortcuts"].shortcuts_group_desc = shortcuts_group_desc;
         ρσ_modules["read_book.shortcuts"].add_standalone_viewer_shortcuts = add_standalone_viewer_shortcuts;
@@ -21745,13 +21766,35 @@ return this.__repr__();
         });
 
         function show_export_dialog(annotations_manager) {
-            var sd, fmt, all_highlights, ta_id, href, idx, current_query, link_prefix;
+            var sd, fmt, all_highlights, selected_highlight_items, key, e, h, ta_id, href, idx, current_query, link_prefix;
             sd = get_session_data();
             fmt = sd.get("highlights_export_format");
             if (['text', 'markdown', 'calibre_annotations_collection'].indexOf(fmt) < 0) {
                 fmt = "text";
             }
             all_highlights = annotations_manager.all_highlights();
+            selected_highlight_items = all_selected_entries();
+            if (selected_highlight_items.length) {
+                key = (function() {
+                    var ρσ_Iter = ρσ_Iterable(selected_highlight_items), ρσ_Result = Object.create(null), e;
+                    for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                        e = ρσ_Iter[ρσ_Index];
+                        ρσ_Result[e.dataset.uuid] = (true);
+                    }
+                    return ρσ_Result;
+                })();
+                all_highlights = (function() {
+                    var ρσ_Iter = ρσ_Iterable(all_highlights), ρσ_Result = [], h;
+                    for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                        h = ρσ_Iter[ρσ_Index];
+                        if (key[ρσ_bound_index(h.uuid, key)]) {
+                            ρσ_Result.push(h);
+                        }
+                    }
+                    ρσ_Result = ρσ_list_constructor(ρσ_Result);
+                    return ρσ_Result;
+                })();
+            }
             ta_id = unique_id();
             href = window.location.href;
             idx = href.indexOf("#");
@@ -21934,9 +21977,12 @@ return this.__repr__();
 
         add_extra_css((function() {
             var ρσ_anonfunc = function () {
-                var sel, ans, qsel, current;
-                sel = "#" + get_container_id() + " .toc-group";
+                var ans, sel, qsel, current;
                 ans = "";
+                sel = "#" + get_container_id();
+                ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .ac-button"].concat([ρσ_desugar_kwargs({margin_left: "1rem", margin_top: "1ex"})]));
+                ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .sel-button"].concat([ρσ_desugar_kwargs({display: "none"})]));
+                sel += " .toc-group";
                 ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " h3"].concat([ρσ_desugar_kwargs({display: "flex", align_items: "center", cursor: "pointer", margin_top: "1ex"})]));
                 ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".expanded .caret-right"].concat([ρσ_desugar_kwargs({display: "none"})]));
                 ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".collapsed .caret-down"].concat([ρσ_desugar_kwargs({display: "none"})]));
@@ -21946,6 +21992,7 @@ return this.__repr__();
                 ans += ρσ_interpolate_kwargs.call(this, build_rule, [qsel + " .notes"].concat([ρσ_desugar_kwargs({display: "none", margin_top: "1ex", max_height: "20ex", overflow: "auto"})]));
                 ans += ρσ_interpolate_kwargs.call(this, build_rule, [qsel + " .actions"].concat([ρσ_desugar_kwargs({display: "none", margin_top: "1ex", justify_content: "space-between"})]));
                 ans += ρσ_interpolate_kwargs.call(this, build_rule, [qsel + " .title"].concat([ρσ_desugar_kwargs({display: "flex", align_items: "center"})]));
+                ans += ρσ_interpolate_kwargs.call(this, build_rule, [qsel + " .title-row"].concat([ρσ_desugar_kwargs({display: "flex", align_items: "center", justify_content: "space-between"})]));
                 current = qsel + ".current";
                 ans += ρσ_interpolate_kwargs.call(this, build_rule, [current + " .title"].concat([ρσ_desugar_kwargs({font_weight: "bold", font_size: "larger"})]));
                 ans += ρσ_interpolate_kwargs.call(this, build_rule, [current + " .notes"].concat([ρσ_desugar_kwargs({display: "block"})]));
@@ -22072,6 +22119,90 @@ return this.__repr__();
             __module__ : {value: "read_book.highlights"}
         });
 
+        function all_selected_entries() {
+            return (function() {
+                var ρσ_Iter = ρσ_Iterable(document.querySelectorAll(".highlight input:checked")), ρσ_Result = [], e;
+                for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                    e = ρσ_Iter[ρσ_Index];
+                    ρσ_Result.push(e.closest(".highlight"));
+                }
+                ρσ_Result = ρσ_list_constructor(ρσ_Result);
+                return ρσ_Result;
+            })();
+        };
+        if (!all_selected_entries.__module__) Object.defineProperties(all_selected_entries, {
+            __module__ : {value: "read_book.highlights"}
+        });
+
+        function item_select_toggled() {
+            var entries, e;
+            entries = all_selected_entries();
+            var ρσ_Iter16 = ρσ_Iterable(document.querySelectorAll("#" + ρσ_str.format("{}", get_container_id()) + " .sel-button"));
+            for (var ρσ_Index16 = 0; ρσ_Index16 < ρσ_Iter16.length; ρσ_Index16++) {
+                e = ρσ_Iter16[ρσ_Index16];
+                e.style.display = (entries.length) ? "block" : "none";
+            }
+        };
+        if (!item_select_toggled.__module__) Object.defineProperties(item_select_toggled, {
+            __module__ : {value: "read_book.highlights"}
+        });
+
+        function clear_selection() {
+            var e;
+            var ρσ_Iter17 = ρσ_Iterable(document.querySelectorAll(".highlight input:checked"));
+            for (var ρσ_Index17 = 0; ρσ_Index17 < ρσ_Iter17.length; ρσ_Index17++) {
+                e = ρσ_Iter17[ρσ_Index17];
+                e.checked = false;
+            }
+            item_select_toggled();
+        };
+        if (!clear_selection.__module__) Object.defineProperties(clear_selection, {
+            __module__ : {value: "read_book.highlights"}
+        });
+
+        function select_all() {
+            var e;
+            var ρσ_Iter18 = ρσ_Iterable(document.querySelectorAll(".highlight input"));
+            for (var ρσ_Index18 = 0; ρσ_Index18 < ρσ_Iter18.length; ρσ_Index18++) {
+                e = ρσ_Iter18[ρσ_Index18];
+                e.checked = true;
+            }
+        };
+        if (!select_all.__module__) Object.defineProperties(select_all, {
+            __module__ : {value: "read_book.highlights"}
+        });
+
+        function delete_selection(annotations_manager, view) {
+            var selected_highlight_items, text;
+            selected_highlight_items = all_selected_entries();
+            if (!selected_highlight_items.length) {
+                return;
+            }
+            text = ngettext("Do you want to permanently delete the selected highlight?", "Do you want to permanently delete the {} selected highlights?", selected_highlight_items.length).format(selected_highlight_items.length);
+            question_dialog(_("Are you sure?"), text, (function() {
+                var ρσ_anonfunc = function (yes) {
+                    var entry;
+                    if (yes) {
+                        var ρσ_Iter19 = ρσ_Iterable(selected_highlight_items);
+                        for (var ρσ_Index19 = 0; ρσ_Index19 < ρσ_Iter19.length; ρσ_Index19++) {
+                            entry = ρσ_Iter19[ρσ_Index19];
+                            entry.style.display = "none";
+                            view.highlight_action(entry.dataset.uuid, "delete");
+                        }
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["yes"]},
+                    __module__ : {value: "read_book.highlights"}
+                });
+                return ρσ_anonfunc;
+            })());
+        };
+        if (!delete_selection.__argnames__) Object.defineProperties(delete_selection, {
+            __argnames__ : {value: ["annotations_manager", "view"]},
+            __module__ : {value: "read_book.highlights"}
+        });
+
         function highlight_entry(h, onclick, view) {
             var hs, swatch, ans;
             function action(func, ev) {
@@ -22094,7 +22225,16 @@ return this.__repr__();
             hs = new HighlightStyle(h.style);
             swatch = E.div();
             hs.make_swatch(swatch, is_dark_theme());
-            ans = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [swatch, E.div(" ", h.highlighted_text)].concat([ρσ_desugar_kwargs({class_: "title"})])), ρσ_interpolate_kwargs.call(E, E.div, [button(_("Show in book"), action.bind(null, show_in_text.bind(null, h.uuid))), E.span(" "), button(_("Edit notes"), edit_notes.bind(null, h.uuid, h.notes, view)), E.span(" "), button(_("Remove highlight"), remove_highlight.bind(null, h.uuid, view))].concat([ρσ_desugar_kwargs({class_: "actions"})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "notes"})])].concat([ρσ_desugar_kwargs({class_: "highlight", onclick: highlight_entry_clicked})]));
+            ans = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [swatch, ρσ_interpolate_kwargs.call(E, E.div, [h.highlighted_text].concat([ρσ_desugar_kwargs({style: "margin-left: 1rem"})]))].concat([ρσ_desugar_kwargs({class_: "title"})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "checkbox", onchange: item_select_toggled})])].concat([ρσ_desugar_kwargs({style: "margin-left: 1rem", onclick: (function() {
+                var ρσ_anonfunc = function (ev) {
+                    ev.stopPropagation();
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["ev"]},
+                    __module__ : {value: "read_book.highlights"}
+                });
+                return ρσ_anonfunc;
+            })()})]))].concat([ρσ_desugar_kwargs({class_: "title-row"})])), ρσ_interpolate_kwargs.call(E, E.div, [button(_("Show in book"), action.bind(null, show_in_text.bind(null, h.uuid))), E.span(" "), button(_("Edit notes"), edit_notes.bind(null, h.uuid, h.notes, view)), E.span(" "), button(_("Remove highlight"), remove_highlight.bind(null, h.uuid, view))].concat([ρσ_desugar_kwargs({class_: "actions"})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "notes"})])].concat([ρσ_desugar_kwargs({class_: "highlight", data_uuid: h.uuid, onclick: highlight_entry_clicked})]));
             if (h.notes) {
                 render_notes(h.notes, ans.querySelector(".notes"));
             }
@@ -22108,9 +22248,9 @@ return this.__repr__();
         });
 
         function create_highlights_panel(annotations_manager, book, container, onclick) {
-            var next_button, prev_button, sb, export_button, c, toc_groups, toc_tt, toc, lines, ρσ_unpack, i, node, tt, h, highlights, g, ic, group;
-            next_button = ρσ_interpolate_kwargs.call(E, E.div, [svgicon("chevron-down")].concat([ρσ_desugar_kwargs({style: "margin-left: 1rem", class_: "simple-link", title: _("Next match")})]));
-            prev_button = ρσ_interpolate_kwargs.call(E, E.div, [svgicon("chevron-up")].concat([ρσ_desugar_kwargs({style: "margin-left: 1rem", class_: "simple-link", title: _("Previous match")})]));
+            var next_button, prev_button, sb, clear_button, delete_button, all_button, export_button, c, toc_groups, toc_tt, toc, lines, ρσ_unpack, i, node, tt, h, highlights, g, ic, group;
+            next_button = ρσ_interpolate_kwargs.call(E, E.div, [svgicon("chevron-down")].concat([ρσ_desugar_kwargs({class_: "simple-link ac-button", title: _("Next match")})]));
+            prev_button = ρσ_interpolate_kwargs.call(E, E.div, [svgicon("chevron-up")].concat([ρσ_desugar_kwargs({class_: "simple-link ac-button", title: _("Previous match")})]));
             prev_button.addEventListener("click", (function() {
                 var ρσ_anonfunc = function (ev) {
                     find_previous();
@@ -22123,15 +22263,18 @@ return this.__repr__();
             })());
             sb = ρσ_interpolate_kwargs.call(this, create_search_bar, [find_next, "search-in-highlights"].concat([ρσ_desugar_kwargs({placeholder: _("Search") + "…", button: next_button, associated_widgets: ρσ_list_decorate([ prev_button ])})]));
             sb.style.flexGrow = "10";
-            export_button = create_button(_("Export"), "cloud-download", show_export_dialog.bind(null, annotations_manager));
-            export_button.style.marginLeft = "1rem";
-            c = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [sb, next_button, prev_button, export_button].concat([ρσ_desugar_kwargs({style: "display: flex"})]))].concat([ρσ_desugar_kwargs({style: "margin: 1rem", id: get_container_id()})]));
+            sb.classList.add("ac-button");
+            clear_button = ρσ_interpolate_kwargs.call(this, create_button, [_("Clear"), "close", clear_selection, _("Clear selection")].concat([ρσ_desugar_kwargs({class_: "ac-button sel-button"})]));
+            delete_button = ρσ_interpolate_kwargs.call(this, create_button, [_("Remove"), "trash", delete_selection.bind(null, annotations_manager, annotations_manager.view), _("Remove selected highlights")].concat([ρσ_desugar_kwargs({class_: "ac-button sel-button"})]));
+            all_button = ρσ_interpolate_kwargs.call(this, create_button, [_("All"), "plus", select_all, _("Select all highlights")].concat([ρσ_desugar_kwargs({class_: "ac-button sel-button"})]));
+            export_button = ρσ_interpolate_kwargs.call(this, create_button, [_("Export"), "cloud-download", show_export_dialog.bind(null, annotations_manager), _("Export all or selected highlights")].concat([ρσ_desugar_kwargs({class_: "ac-button"})]));
+            c = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [sb, next_button, prev_button, clear_button, all_button, delete_button, export_button].concat([ρσ_desugar_kwargs({style: "display: flex; flex-wrap: wrap; margin-top: -1ex; align-items: center"})]))].concat([ρσ_desugar_kwargs({style: "margin: 1rem", id: get_container_id()})]));
             container.appendChild(c);
             toc_groups = Object.create(null);
             toc_tt = Object.create(null);
-            var ρσ_Iter16 = ρσ_Iterable(annotations_manager.all_highlights());
-            for (var ρσ_Index16 = 0; ρσ_Index16 < ρσ_Iter16.length; ρσ_Index16++) {
-                h = ρσ_Iter16[ρσ_Index16];
+            var ρσ_Iter20 = ρσ_Iterable(annotations_manager.all_highlights());
+            for (var ρσ_Index20 = 0; ρσ_Index20 < ρσ_Iter20.length; ρσ_Index20++) {
+                h = ρσ_Iter20[ρσ_Index20];
                 toc = _("Unknown");
                 if (ρσ_exists.d(h.toc_family_titles).length) {
                     toc = (ρσ_expr_temp = h.toc_family_titles)[ρσ_expr_temp.length-1];
@@ -22140,9 +22283,9 @@ return this.__repr__();
                     toc_groups[(typeof toc === "number" && toc < 0) ? toc_groups.length + toc : toc] = [];
                     if (ρσ_exists.d(h.toc_family_titles).length) {
                         lines = [];
-                        var ρσ_Iter17 = ρσ_Iterable(enumerate(h.toc_family_titles));
-                        for (var ρσ_Index17 = 0; ρσ_Index17 < ρσ_Iter17.length; ρσ_Index17++) {
-                            ρσ_unpack = ρσ_Iter17[ρσ_Index17];
+                        var ρσ_Iter21 = ρσ_Iterable(enumerate(h.toc_family_titles));
+                        for (var ρσ_Index21 = 0; ρσ_Index21 < ρσ_Iter21.length; ρσ_Index21++) {
+                            ρσ_unpack = ρσ_Iter21[ρσ_Index21];
                             i = ρσ_unpack[0];
                             node = ρσ_unpack[1];
                             lines.push("  ".repeat(i) + "➤ " + node);
@@ -22165,9 +22308,9 @@ return this.__repr__();
                 __module__ : {value: "read_book.highlights"}
             });
 
-            var ρσ_Iter18 = ρσ_Iterable(Object.keys(toc_groups));
-            for (var ρσ_Index18 = 0; ρσ_Index18 < ρσ_Iter18.length; ρσ_Index18++) {
-                group = ρσ_Iter18[ρσ_Index18];
+            var ρσ_Iter22 = ρσ_Iterable(Object.keys(toc_groups));
+            for (var ρσ_Index22 = 0; ρσ_Index22 < ρσ_Iter22.length; ρσ_Index22++) {
+                group = ρσ_Iter22[ρσ_Index22];
                 highlights = toc_groups[(typeof group === "number" && group < 0) ? toc_groups.length + group : group];
                 g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.h3, [tree_icon("caret-right"), tree_icon("caret-down"), E.div(" " + group)].concat([ρσ_desugar_kwargs({title: toc_tt[(typeof group === "number" && group < 0) ? toc_tt.length + group : group] || "", onclick: (function() {
                     var ρσ_anonfunc = function (ev) {
@@ -22189,9 +22332,9 @@ return this.__repr__();
                 })()})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-left: 1rem"})])].concat([ρσ_desugar_kwargs({class_: "toc-group expanded"})]));
                 c.appendChild(g);
                 ic = g.lastChild;
-                var ρσ_Iter19 = ρσ_Iterable(highlights);
-                for (var ρσ_Index19 = 0; ρσ_Index19 < ρσ_Iter19.length; ρσ_Index19++) {
-                    h = ρσ_Iter19[ρσ_Index19];
+                var ρσ_Iter23 = ρσ_Iterable(highlights);
+                for (var ρσ_Index23 = 0; ρσ_Index23 < ρσ_Iter23.length; ρσ_Index23++) {
+                    h = ρσ_Iter23[ρσ_Index23];
                     ic.appendChild(highlight_entry(h, onclick, annotations_manager.view));
                 }
             }
@@ -22238,6 +22381,11 @@ return this.__repr__();
         ρσ_modules["read_book.highlights"].show_in_text = show_in_text;
         ρσ_modules["read_book.highlights"].remove_highlight = remove_highlight;
         ρσ_modules["read_book.highlights"].edit_notes = edit_notes;
+        ρσ_modules["read_book.highlights"].all_selected_entries = all_selected_entries;
+        ρσ_modules["read_book.highlights"].item_select_toggled = item_select_toggled;
+        ρσ_modules["read_book.highlights"].clear_selection = clear_selection;
+        ρσ_modules["read_book.highlights"].select_all = select_all;
+        ρσ_modules["read_book.highlights"].delete_selection = delete_selection;
         ρσ_modules["read_book.highlights"].highlight_entry = highlight_entry;
         ρσ_modules["read_book.highlights"].create_highlights_panel = create_highlights_panel;
     })();
@@ -23884,93 +24032,41 @@ return this.__repr__();
 
     (function(){
         var __name__ = "read_book.referencing";
-        var get_boss = ρσ_modules["read_book.globals"].get_boss;
+        var current_spine_item = ρσ_modules["read_book.globals"].current_spine_item;
 
         function elem_for_ref(refnum) {
-            var p;
             refnum = int(refnum);
-            p = (ρσ_expr_temp = document.getElementsByTagName("p"))[ρσ_bound_index(refnum - 1, ρσ_expr_temp)];
-            return p;
+            return (ρσ_expr_temp = document.getElementsByTagName("p"))[ρσ_bound_index(refnum - 1, ρσ_expr_temp)];
         };
         if (!elem_for_ref.__argnames__) Object.defineProperties(elem_for_ref, {
             __argnames__ : {value: ["refnum"]},
             __module__ : {value: "read_book.referencing"}
         });
 
-        function on_mouse_over(ev) {
-            var p, refnum;
-            p = this;
-            if (p.dataset.calibreRefNum) {
-                refnum = int(p.dataset.calibreRefNum);
-                get_boss().reference_item_changed(refnum);
-            }
-        };
-        if (!on_mouse_over.__argnames__) Object.defineProperties(on_mouse_over, {
-            __argnames__ : {value: ["ev"]},
-            __module__ : {value: "read_book.referencing"}
-        });
-
-        function on_mouse_out(ev) {
-            get_boss().reference_item_changed(null);
-        };
-        if (!on_mouse_out.__argnames__) Object.defineProperties(on_mouse_out, {
-            __argnames__ : {value: ["ev"]},
-            __module__ : {value: "read_book.referencing"}
-        });
-
         function start_reference_mode() {
-            var i, p;
-            i = 0;
-            var ρσ_Iter0 = ρσ_Iterable(document.getElementsByTagName("p"));
+            var si, ρσ_unpack, i, p;
+            si = current_spine_item().index;
+            var ρσ_Iter0 = ρσ_Iterable(enumerate(document.getElementsByTagName("p")));
             for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                p = ρσ_Iter0[ρσ_Index0];
-                i += 1;
-                if (!p.dataset.calibreRefNum) {
-                    p.dataset.calibreRefNum = i + "";
-                    p.addEventListener("mouseover", on_mouse_over, (function(){
-                        var ρσ_d = Object.create(null);
-                        ρσ_d["passive"] = true;
-                        return ρσ_d;
-                    }).call(this));
-                    p.addEventListener("mouseout", on_mouse_out, (function(){
-                        var ρσ_d = Object.create(null);
-                        ρσ_d["passive"] = true;
-                        return ρσ_d;
-                    }).call(this));
-                }
+                ρσ_unpack = ρσ_Iter0[ρσ_Index0];
+                i = ρσ_unpack[0];
+                p = ρσ_unpack[1];
+                p.dataset.calibreRefNum = "" + ρσ_str.format("{}", si) + "." + ρσ_str.format("{}", i + 1) + "";
             }
+            document.body.classList.add("calibre-reference-mode");
         };
         if (!start_reference_mode.__module__) Object.defineProperties(start_reference_mode, {
             __module__ : {value: "read_book.referencing"}
         });
 
         function end_reference_mode() {
-            var p;
-            var ρσ_Iter1 = ρσ_Iterable(document.getElementsByTagName("p"));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                p = ρσ_Iter1[ρσ_Index1];
-                if (p.dataset.calibreRefNum) {
-                    p.removeEventListener("mouseover", on_mouse_over, (function(){
-                        var ρσ_d = Object.create(null);
-                        ρσ_d["passive"] = true;
-                        return ρσ_d;
-                    }).call(this));
-                    p.removeEventListener("mouseout", on_mouse_out, (function(){
-                        var ρσ_d = Object.create(null);
-                        ρσ_d["passive"] = true;
-                        return ρσ_d;
-                    }).call(this));
-                    delete p.dataset.calibreRefNum;
-                }
-            }
+            document.body.classList.remove("calibre-reference-mode");
         };
         if (!end_reference_mode.__module__) Object.defineProperties(end_reference_mode, {
             __module__ : {value: "read_book.referencing"}
         });
 
         ρσ_modules["read_book.referencing"].elem_for_ref = elem_for_ref;
-        ρσ_modules["read_book.referencing"].on_mouse_over = on_mouse_over;
-        ρσ_modules["read_book.referencing"].on_mouse_out = on_mouse_out;
         ρσ_modules["read_book.referencing"].start_reference_mode = start_reference_mode;
         ρσ_modules["read_book.referencing"].end_reference_mode = end_reference_mode;
     })();
@@ -25413,10 +25509,14 @@ return this.__repr__();
                 if (start) {
                     if (r.startContainer !== p.offsetNode || r.startOffset !== p.offset) {
                         r.setStart(p.offsetNode, p.offset);
+                        sel.removeAllRanges();
+                        sel.addRange(r);
                     }
                 } else {
                     if (r.endContainer !== p.offsetNode || r.endOffset !== p.offset) {
                         r.setEnd(p.offsetNode, p.offset);
+                        sel.removeAllRanges();
+                        sel.addRange(r);
                     }
                 }
             }
@@ -25564,7 +25664,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.10.1";
+        CALIBRE_VERSION = "5.11.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -25719,7 +25819,6 @@ return this.__repr__();
             this.on_scroll_to_ref = IframeBoss.prototype.on_scroll_to_ref.bind(this);
             this.find = IframeBoss.prototype.find.bind(this);
             this.show_search_result = IframeBoss.prototype.show_search_result.bind(this);
-            this.reference_item_changed = IframeBoss.prototype.reference_item_changed.bind(this);
             this.set_reference_mode = IframeBoss.prototype.set_reference_mode.bind(this);
             this.annotations_msg_received = IframeBoss.prototype.annotations_msg_received.bind(this);
             this.apply_highlights_on_load = IframeBoss.prototype.apply_highlights_on_load.bind(this);
@@ -26791,14 +26890,6 @@ return this.__repr__();
         };
         if (!IframeBoss.prototype.show_search_result.__argnames__) Object.defineProperties(IframeBoss.prototype.show_search_result, {
             __argnames__ : {value: ["data", "from_load"]},
-            __module__ : {value: "read_book.iframe"}
-        });
-        IframeBoss.prototype.reference_item_changed = function reference_item_changed(ref_num_or_none) {
-            var self = this;
-            ρσ_interpolate_kwargs.call(self, self.send_message, ["reference_item_changed"].concat([ρσ_desugar_kwargs({refnum: ref_num_or_none, index: current_spine_item().index})]));
-        };
-        if (!IframeBoss.prototype.reference_item_changed.__argnames__) Object.defineProperties(IframeBoss.prototype.reference_item_changed, {
-            __argnames__ : {value: ["ref_num_or_none"]},
             __module__ : {value: "read_book.iframe"}
         });
         IframeBoss.prototype.set_reference_mode = function set_reference_mode(data) {
@@ -28285,14 +28376,16 @@ return this.__repr__();
             __module__ : {value: "read_book.prefs.head_foot"}
         });
 
-        function render_head_foot(div, which, region, metadata, current_toc_node, current_toc_toplevel_node, book_time, chapter_time, pos) {
+        function render_head_foot(div, which, region, metadata, current_toc_node, current_toc_toplevel_node, book_time, chapter_time, pos, override) {
             var template, field, interface_data, text, has_clock, percent, ival;
             template = get_session_data().get(which) || Object.create(null);
             field = template[(typeof region === "number" && region < 0) ? template.length + region : region] || "empty";
             interface_data = get_interface_data();
             text = "";
             has_clock = false;
-            if (field === "progress") {
+            if (override) {
+                text = override;
+            } else if (field === "progress") {
                 percent = min(100, max(Math.round(pos.progress_frac * 100), 0));
                 text = percent + "%";
             } else if (field === "title") {
@@ -28348,7 +28441,7 @@ return this.__repr__();
             return has_clock;
         };
         if (!render_head_foot.__argnames__) Object.defineProperties(render_head_foot, {
-            __argnames__ : {value: ["div", "which", "region", "metadata", "current_toc_node", "current_toc_toplevel_node", "book_time", "chapter_time", "pos"]},
+            __argnames__ : {value: ["div", "which", "region", "metadata", "current_toc_node", "current_toc_toplevel_node", "book_time", "chapter_time", "pos", "override"]},
             __module__ : {value: "read_book.prefs.head_foot"}
         });
 
@@ -28873,7 +28966,8 @@ return this.__repr__();
                     if (action !== null) {
                         a.addEventListener("click", (function() {
                             var ρσ_anonfunc = function (event) {
-                                [event.preventDefault(), action()];
+                                event.preventDefault();
+                                action.bind(event)();
                             };
                             if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
                                 __argnames__ : {value: ["event"]},
@@ -28886,7 +28980,8 @@ return this.__repr__();
                         a = a.nextSibling;
                         a.addEventListener("click", (function() {
                             var ρσ_anonfunc = function (event) {
-                                [event.preventDefault(), title_action()];
+                                event.preventDefault();
+                                title_action.bind(event)();
                             };
                             if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
                                 __argnames__ : {value: ["event"]},
@@ -38944,10 +39039,6 @@ return this.__repr__();
         var MAIN_OVERLAY_TS_CLASS, MAIN_OVERLAY_ACTIONS_CLASS;
         var E = ρσ_modules.elementmaker.E;
 
-        var _ = ρσ_modules.gettext.gettext;
-
-        var short_uuid = ρσ_modules.uuid.short_uuid;
-
         var BD_CLASS_NAME = ρσ_modules["book_list.book_details"].CLASS_NAME;
         var render_metadata = ρσ_modules["book_list.book_details"].render_metadata;
 
@@ -38961,6 +39052,8 @@ return this.__repr__();
 
         var get_color = ρσ_modules["book_list.theme"].get_color;
 
+        var create_top_bar = ρσ_modules["book_list.top_bar"].create_top_bar;
+
         var query_as_href = ρσ_modules["book_list.ui"].query_as_href;
         var show_panel = ρσ_modules["book_list.ui"].show_panel;
 
@@ -38971,6 +39064,8 @@ return this.__repr__();
         var set_css = ρσ_modules.dom.set_css;
         var svgicon = ρσ_modules.dom.svgicon;
         var unique_id = ρσ_modules.dom.unique_id;
+
+        var _ = ρσ_modules.gettext.gettext;
 
         var error_dialog = ρσ_modules.modals.error_dialog;
 
@@ -38994,14 +39089,16 @@ return this.__repr__();
 
         var create_word_actions_panel = ρσ_modules["read_book.word_actions"].create_word_actions_panel;
 
-        var get_device_uuid = ρσ_modules.session.get_device_uuid;
         var session_defaults = ρσ_modules.session.defaults;
+        var get_device_uuid = ρσ_modules.session.get_device_uuid;
 
         var default_context_menu_should_be_allowed = ρσ_modules.utils.default_context_menu_should_be_allowed;
         var full_screen_element = ρσ_modules.utils.full_screen_element;
         var full_screen_supported = ρσ_modules.utils.full_screen_supported;
         var is_ios = ρσ_modules.utils.is_ios;
         var safe_set_inner_html = ρσ_modules.utils.safe_set_inner_html;
+
+        var short_uuid = ρσ_modules.uuid.short_uuid;
 
         var create_button = ρσ_modules.widgets.create_button;
         var create_spinner = ρσ_modules.widgets.create_spinner;
@@ -39317,18 +39414,17 @@ return this.__repr__();
         })());
         function simple_overlay_title(title, overlay, container) {
             container.style.backgroundColor = get_color("window-background");
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [svgicon("close")].concat([ρσ_desugar_kwargs({style: "cursor:pointer", onclick: (function() {
-                var ρσ_anonfunc = function (event) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    overlay.hide_current_panel(event);
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["event"]},
-                    __module__ : {value: "read_book.overlay"}
-                });
-                return ρσ_anonfunc;
-            })(), class_: "simple-link"})])), ρσ_interpolate_kwargs.call(E, E.h2, [title].concat([ρσ_desugar_kwargs({style: "margin-left: 1ex"})]))].concat([ρσ_desugar_kwargs({style: "padding: 1ex 1em; border-bottom: solid 1px currentColor; display:flex; justify-content: flex-start"})])));
+            function action() {
+                var event;
+                event = this;
+                event.stopPropagation();
+                overlay.hide_current_panel(event);
+            };
+            if (!action.__module__) Object.defineProperties(action, {
+                __module__ : {value: "read_book.overlay"}
+            });
+
+            ρσ_interpolate_kwargs.call(this, create_top_bar, [container].concat([ρσ_desugar_kwargs({title: title, icon: "close", action: action})]));
         };
         if (!simple_overlay_title.__argnames__) Object.defineProperties(simple_overlay_title, {
             __argnames__ : {value: ["title", "overlay", "container"]},
@@ -39659,6 +39755,7 @@ return this.__repr__();
         MainOverlay.prototype.back = function back() {
             var self = this;
             window.history.back();
+            self.overlay.hide();
         };
         if (!MainOverlay.prototype.back.__module__) Object.defineProperties(MainOverlay.prototype.back, {
             __module__ : {value: "read_book.overlay"}
@@ -39666,6 +39763,7 @@ return this.__repr__();
         MainOverlay.prototype.forward = function forward() {
             var self = this;
             window.history.forward();
+            self.overlay.hide();
         };
         if (!MainOverlay.prototype.forward.__module__) Object.defineProperties(MainOverlay.prototype.forward, {
             __module__ : {value: "read_book.overlay"}
@@ -41975,6 +42073,7 @@ return this.__repr__();
             this.on_report_cfi = View.prototype.on_report_cfi.bind(this);
             this.on_update_progress_frac = View.prototype.on_update_progress_frac.bind(this);
             this.on_update_cfi = View.prototype.on_update_cfi.bind(this);
+            this.show_status_message = View.prototype.show_status_message.bind(this);
             this.update_header_footer = View.prototype.update_header_footer.bind(this);
             this.on_update_toc_position = View.prototype.on_update_toc_position.bind(this);
             this.show_spine_item = View.prototype.show_spine_item.bind(this);
@@ -41986,7 +42085,6 @@ return this.__repr__();
             this.update_scroll_speed = View.prototype.update_scroll_speed.bind(this);
             this.update_color_scheme = View.prototype.update_color_scheme.bind(this);
             this.toggle_reference_mode = View.prototype.toggle_reference_mode.bind(this);
-            this.on_reference_item_changed = View.prototype.on_reference_item_changed.bind(this);
             this.show_search_result = View.prototype.show_search_result.bind(this);
             this.highlight_action = View.prototype.highlight_action.bind(this);
         }});
@@ -41996,14 +42094,6 @@ return this.__repr__();
                 "get": function iframe() {
                     var self = this;
                     return self.iframe_wrapper.iframe;
-                }, 
-                "set": function () { throw new AttributeError("can't set attribute") }
-            }, 
-            "reference_mode_overlay": {
-                "enumerable": true, 
-                "get": function reference_mode_overlay() {
-                    var self = this;
-                    return document.getElementById("reference-mode-overlay");
                 }, 
                 "set": function () { throw new AttributeError("can't set attribute") }
             }, 
@@ -42048,6 +42138,7 @@ return this.__repr__();
                 ρσ_d["pages_per_screen"] = 1;
                 return ρσ_d;
             }).call(this);
+            self.current_status_message = "";
             self.current_toc_node = self.current_toc_toplevel_node = null;
             self.current_toc_families = [];
             self.report_cfi_callbacks = Object.create(null);
@@ -42073,7 +42164,7 @@ return this.__repr__();
             if (runtime.is_standalone_viewer) {
                 sandbox += "  allow-same-origin";
             }
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [left_margin, ρσ_interpolate_kwargs.call(E, E.div, [margin_elem(sd, "margin_top", "book-top-margin", self.top_margin_clicked, self.margin_context_menu.bind(null, "top")), ρσ_interpolate_kwargs.call(E, E.iframe, [ρσ_desugar_kwargs({id: iframe_id, seamless: true, sandbox: sandbox, style: "flex-grow: 2", allowfullscreen: "true"})]), margin_elem(sd, "margin_bottom", "book-bottom-margin", self.bottom_margin_clicked, self.margin_context_menu.bind(null, "bottom"))].concat([ρσ_desugar_kwargs({style: "flex-grow:2; display:flex; align-items:stretch; flex-direction: column"})])), right_margin, self.book_scrollbar.create(), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none;", id: "book-selection-bar-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none;", id: "book-read-aloud-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none;", id: "book-hints-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; pointer-events:none; display:none", id: "book-search-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "book-content-popup-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; overflow: auto; display:none", id: "book-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "controls-help-overlay"})])].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; flex-grow: 2; display:flex; align-items: stretch"})]))].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; display: flex; flex-direction: column; align-items: stretch; flex-grow:2"})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "color: " + ρσ_str.format("{}", get_color("window-foreground")) + "; background: " + ρσ_str.format("{}", get_color("window-background")) + ";" + "position: absolute; display: none; left: 0; top: 0; padding: 0.5ex; border: solid 2px; z-index: 3000", id: "reference-mode-overlay"})])].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: stretch", oncontextmenu: (function() {
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [left_margin, ρσ_interpolate_kwargs.call(E, E.div, [margin_elem(sd, "margin_top", "book-top-margin", self.top_margin_clicked, self.margin_context_menu.bind(null, "top")), ρσ_interpolate_kwargs.call(E, E.iframe, [ρσ_desugar_kwargs({id: iframe_id, seamless: true, sandbox: sandbox, style: "flex-grow: 2", allowfullscreen: "true"})]), margin_elem(sd, "margin_bottom", "book-bottom-margin", self.bottom_margin_clicked, self.margin_context_menu.bind(null, "bottom"))].concat([ρσ_desugar_kwargs({style: "flex-grow:2; display:flex; align-items:stretch; flex-direction: column"})])), right_margin, self.book_scrollbar.create(), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none;", id: "book-selection-bar-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none;", id: "book-read-aloud-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none;", id: "book-hints-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; pointer-events:none; display:none", id: "book-search-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "book-content-popup-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; overflow: auto; display:none", id: "book-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "controls-help-overlay"})])].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; flex-grow: 2; display:flex; align-items: stretch"})]))].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; display: flex; flex-direction: column; align-items: stretch; flex-grow:2"})]))].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: stretch", oncontextmenu: (function() {
                 var ρσ_anonfunc = function (ev) {
                     if (!default_context_menu_should_be_allowed(ev)) {
                         ev.preventDefault();
@@ -42122,7 +42213,6 @@ return this.__repr__();
                 ρσ_d["next_spine_item"] = self.on_next_spine_item;
                 ρσ_d["print"] = self.on_print;
                 ρσ_d["ready"] = self.on_iframe_ready;
-                ρσ_d["reference_item_changed"] = self.on_reference_item_changed;
                 ρσ_d["report_cfi"] = self.on_report_cfi;
                 ρσ_d["request_size"] = self.on_request_size;
                 ρσ_d["scroll_to_anchor"] = self.on_scroll_to_anchor;
@@ -42582,6 +42672,8 @@ return this.__repr__();
                 self.toggle_read_aloud();
             } else if (data.name === "reload_book") {
                 ui_operations.reload_book();
+            } else if (data.name === "sync_book") {
+                self.overlay.sync_book();
             } else if (data.name === "next_section") {
                 self.on_next_section((function(){
                     var ρσ_d = Object.create(null);
@@ -42865,7 +42957,6 @@ return this.__repr__();
             self.overlay.hide();
             self.search_overlay.hide();
             self.content_popup_overlay.hide();
-            self.reference_mode_overlay.style.display = "none";
             self.focus_iframe();
         };
         if (!View.prototype.hide_overlays.__module__) Object.defineProperties(View.prototype.hide_overlays, {
@@ -43564,7 +43655,7 @@ return this.__repr__();
             __argnames__ : {value: ["data"]},
             __module__ : {value: "read_book.view"}
         });
-        View.prototype.goto_cfi = function goto_cfi(bookpos) {
+        View.prototype.goto_cfi = function goto_cfi(bookpos, add_to_history) {
             var self = this;
             var ρσ_unpack, cfiname, internal_cfi, pos, name;
             ρσ_unpack = self.parse_cfi(bookpos, self.book);
@@ -43574,7 +43665,7 @@ return this.__repr__();
             if (cfiname && internal_cfi) {
                 pos = (function(){
                     var ρσ_d = Object.create(null);
-                    ρσ_d["replace_history"] = true;
+                    ρσ_d["replace_history"] = !add_to_history;
                     return ρσ_d;
                 }).call(this);
                 name = cfiname;
@@ -43587,7 +43678,7 @@ return this.__repr__();
             return false;
         };
         if (!View.prototype.goto_cfi.__argnames__) Object.defineProperties(View.prototype.goto_cfi, {
-            __argnames__ : {value: ["bookpos"]},
+            __argnames__ : {value: ["bookpos", "add_to_history"]},
             __module__ : {value: "read_book.view"}
         });
         View.prototype.goto_reference = function goto_reference(reference) {
@@ -43878,26 +43969,50 @@ return this.__repr__();
             __argnames__ : {value: ["data"]},
             __module__ : {value: "read_book.view"}
         });
+        View.prototype.show_status_message = function show_status_message(msg) {
+            var self = this;
+            self.current_status_message = msg || "";
+            self.update_header_footer();
+            if (self.current_status_message) {
+                window.setTimeout((function() {
+                    var ρσ_anonfunc = function () {
+                        self.show_status_message();
+                    };
+                    if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                        __module__ : {value: "read_book.view"}
+                    });
+                    return ρσ_anonfunc;
+                })(), 1e4);
+            }
+        };
+        if (!View.prototype.show_status_message.__argnames__) Object.defineProperties(View.prototype.show_status_message, {
+            __argnames__ : {value: ["msg"]},
+            __module__ : {value: "read_book.view"}
+        });
         View.prototype.update_header_footer = function update_header_footer() {
             var self = this;
             var sd, has_clock, pos, book_length, chapter_length, book_time, chapter_time, div, tname, edge;
             sd = get_session_data();
             has_clock = false;
             pos = self.current_position_data;
+            if (!self.book) {
+                return;
+            }
             book_length = pos.book_length * max(0, 1 - pos.progress_frac);
             chapter_length = pos.chapter_length * max(0, 1 - pos.file_progress_frac);
             book_time = self.timers.time_for(book_length);
             chapter_time = self.timers.time_for(chapter_length);
-            function render_template(div, sz_attr, name) {
-                var c, b, a, mi, hca, hcb, hcc;
+            function render_template(div, edge, name) {
+                var c, b, a, mi, override, hca, hcb, hcc;
                 c = div.lastChild;
                 b = c.previousSibling;
                 a = b.previousSibling;
-                if (sd.get(sz_attr, 20) > 5) {
+                if (sd.get("margin_" + ρσ_str.format("{}", edge) + "", 20) > 5) {
                     mi = self.book.metadata;
-                    hca = render_head_foot(a, name, "left", mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos);
-                    hcb = render_head_foot(b, name, "middle", mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos);
-                    hcc = render_head_foot(c, name, "right", mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos);
+                    override = (edge === "bottom") ? self.current_status_message : "";
+                    hca = render_head_foot(a, name, "left", mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos, override);
+                    hcb = render_head_foot(b, name, "middle", mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos, "");
+                    hcc = render_head_foot(c, name, "right", mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos, "");
                     if (hca || hcb || hcc) {
                         has_clock = true;
                     }
@@ -43906,7 +44021,7 @@ return this.__repr__();
                 }
             };
             if (!render_template.__argnames__) Object.defineProperties(render_template, {
-                __argnames__ : {value: ["div", "sz_attr", "name"]},
+                __argnames__ : {value: ["div", "edge", "name"]},
                 __module__ : {value: "read_book.view"}
             });
 
@@ -43923,7 +44038,7 @@ return this.__repr__();
                         ρσ_d["bottom"] = "footer";
                         return ρσ_d;
                     }).call(this))[(typeof edge === "number" && edge < 0) ? ρσ_expr_temp.length + edge : edge];
-                    render_template(div, "margin_" + ρσ_str.format("{}", edge) + "", tname);
+                    render_template(div, edge, tname);
                 }
             }
             if (has_clock) {
@@ -43985,6 +44100,7 @@ return this.__repr__();
         View.prototype.show_spine_item_stage2 = function show_spine_item_stage2(resource_data) {
             var self = this;
             self.processing_spine_item_display = true;
+            self.current_status_message = "";
             self.iframe.style.visibility = "hidden";
             ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_unencrypted_message, ["display"].concat([ρσ_desugar_kwargs({resource_data: resource_data, book: self.book, name: self.currently_showing.name, initial_position: self.currently_showing.initial_position, settings: self.currently_showing.settings, reference_mode_enabled: self.reference_mode_enabled, is_titlepage: self.currently_showing.name === self.book.manifest.title_page_name, highlights: self.annotations_manager.highlights_for_currently_showing()})]));
         };
@@ -44007,7 +44123,6 @@ return this.__repr__();
             self.hide_loading();
             self.set_progress_frac(data.progress_frac, data.file_progress_frac, data.page_counts);
             self.update_header_footer();
-            self.on_reference_item_changed();
             window.scrollTo(0, 0);
             if (self.book_load_started) {
                 self.book_load_started = false;
@@ -44071,37 +44186,12 @@ return this.__repr__();
         View.prototype.toggle_reference_mode = function toggle_reference_mode() {
             var self = this;
             self.reference_mode_enabled = !self.reference_mode_enabled;
-            self.on_reference_item_changed();
             ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["set_reference_mode"].concat([ρσ_desugar_kwargs({enabled: self.reference_mode_enabled})]));
             if (ui_operations.reference_mode_changed) {
                 ui_operations.reference_mode_changed(self.reference_mode_enabled);
             }
         };
         if (!View.prototype.toggle_reference_mode.__module__) Object.defineProperties(View.prototype.toggle_reference_mode, {
-            __module__ : {value: "read_book.view"}
-        });
-        View.prototype.on_reference_item_changed = function on_reference_item_changed(data) {
-            var self = this;
-            var ρσ_unpack, refnum, index, div;
-            data = data || (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["refnum"] = null;
-                ρσ_d["index"] = null;
-                return ρσ_d;
-            }).call(this);
-            ρσ_unpack = [data.refnum, data.index];
-            refnum = ρσ_unpack[0];
-            index = ρσ_unpack[1];
-            div = self.reference_mode_overlay;
-            if (refnum === null) {
-                div.style.display = "none";
-            } else {
-                div.style.display = "block";
-                div.textContent = "" + ρσ_str.format("{}", index) + "." + ρσ_str.format("{}", refnum) + "";
-            }
-        };
-        if (!View.prototype.on_reference_item_changed.__argnames__) Object.defineProperties(View.prototype.on_reference_item_changed, {
-            __argnames__ : {value: ["data"]},
             __module__ : {value: "read_book.view"}
         });
         View.prototype.show_search_result = function show_search_result(sr) {
@@ -44150,7 +44240,7 @@ return this.__repr__();
             } else if (which === "goto") {
                 cfi = self.annotations_manager.cfi_for_highlight(uuid, spine_index);
                 if (cfi) {
-                    self.goto_cfi(cfi);
+                    self.goto_cfi(cfi, true);
                 }
             }
         };
@@ -44165,7 +44255,6 @@ return this.__repr__();
             return this.__repr__();
         };
         Object.defineProperty(View.prototype, "__bases__", {value: []});
-        
         
         
 
@@ -44222,8 +44311,6 @@ return this.__repr__();
         var default_color_schemes = ρσ_modules["read_book.globals"].default_color_schemes;
 
         var iframe_main = ρσ_modules["read_book.iframe"].main;
-
-        var add_standalone_viewer_shortcuts = ρσ_modules["read_book.shortcuts"].add_standalone_viewer_shortcuts;
 
         var View = ρσ_modules["read_book.view"].View;
 
@@ -44598,6 +44685,9 @@ return this.__repr__();
                 if (which === "set-notes-in-highlight") {
                     view.set_notes_for_highlight(data.uuid, data.notes || "");
                 }
+                if (which === "show-status-message") {
+                    view.show_status_message(data.text);
+                }
             };
             if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
                 __argnames__ : {value: ["which", "data"]},
@@ -44805,7 +44895,6 @@ return this.__repr__();
             if (TRANSLATIONS_DATA) {
                 install(TRANSLATIONS_DATA);
             }
-            add_standalone_viewer_shortcuts();
             ui_operations.get_file = get_file;
             ui_operations.get_mathjax_files = get_mathjax_files;
             ui_operations.update_url_state = update_url_state;
@@ -45300,7 +45389,6 @@ return this.__repr__();
             } else {
                 iframe_main();
             }
-            add_standalone_viewer_shortcuts();
         }
     })();
 })();

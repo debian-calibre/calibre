@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-POLISH" "1" "gennaio 22, 2021" "5.10.1" "calibre"
+.TH "EBOOK-POLISH" "1" "febbraio 12, 2021" "5.11.0" "calibre"
 .SH NAME
 ebook-polish \- ebook-polish
 .
@@ -73,7 +73,7 @@ Path to a cover image. Changes the cover specified in the e\-book. If no cover i
 .INDENT 0.0
 .TP
 .B \-\-embed\-fonts, \-e
-Incorpora tutti i font che sono riportati nel documento ma non ancora incorporati. Verranno cercati i font nel computer e, se trovati, verranno incorporati nel documento. Assicurarsi di avere le corrette licenze per incorporare i font le documento .
+Incorpora tutti i caratteri che sono referenziati nel documento ma non ancora incorporati. Verranno cercati i caratteri nel computer e, se trovati, verranno incorporati nel documento. Assicurati di avere una licenza valida per l\fB\(aq\fPincorporamento dei caratteri usati nel documento.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -83,7 +83,7 @@ mostra questo messaggio di aiuto ed esci
 .INDENT 0.0
 .TP
 .B \-\-jacket, \-j
-Inserisci una \fB"\fPpagina di copertina\fB"\fP all\fB\(aq\fPinizio del libro che contiene tutti i metadati come titolo, tag, autori, serie, commenti, ecc. Ogni copertina precedente sarà rimpiazzata./p>
+Inserisci una pagina di \fB"\fPsovracopertina\fB"\fP all\fB\(aq\fPinizio del libro che contiene tutti i metadati del libro come titolo, tag, autori, serie, commenti, ecc. Ogni sovracopertina precedente sarà rimpiazzata.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -93,12 +93,12 @@ Percorso a un file OPF. I metadati nel libro sono aggiornati dal file OPF.
 .INDENT 0.0
 .TP
 .B \-\-remove\-jacket
-Rimuovi una copertina inserita precedentemente
+Rimuovi una sovracopertina inserita precedentemente.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-soft\-hyphens
-Remove soft hyphens from all text in the book.
+Rimuovi i trattini morbidi da tutto il testo del libro.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -113,12 +113,12 @@ Converti trattini, parentesi, apici, apostrofi, ecc. nelle loro rispettive forme
 .INDENT 0.0
 .TP
 .B \-\-subset\-fonts, \-f
-Sottoinsieme di caratteri significa fare in modo che un carattere integrato contenga solo i simboli utilizzati da quel carattere nel libro. Ciò riduce molto la dimensione dei file dei caratteri (è comune dimezzarne la dimensione). Ad esempio, se il libro usa un carattere specifico per i titoli, la riduzione farà si che quel carattere contenga solo i simboli presenti attualmente nei titoli del libro. Oppure se il libro contiene la versione in corsivo e in grassetto di un carattere, ma il testo in grassetto o in corsivo è relativamente raro, oppure completamente assente, allora i caratteri in corsivo e grassetto possono essere ridotti a solamente alcuni simboli, oppure completamente eliminati. L\fB\(aq\fPunico svantaggio del ridurre i caratteri è che, se in seguito vuoi aggiungere altro testo al tuo libro, per il testo aggiunto potrebbero non essere sufficienti i caratteri integrati
+Creare un sottoinsieme dei caratteri significa fare in modo che un carattere integrato contenga solo i simboli utilizzati da quel carattere nel libro. Ciò riduce di molto la dimensione dei file dei caratteri (è comune dimezzarne la dimensione). Ad esempio, se il libro usa un carattere specifico per i titoli, la riduzione farà si che quel carattere contenga solo i simboli presenti attualmente nei titoli del libro. Oppure se il libro contiene la versione in corsivo e in grassetto di un carattere, ma il testo in grassetto o in corsivo è relativamente raro, oppure completamente assente, allora i caratteri in corsivo e grassetto possono essere ridotti a solamente alcuni simboli, oppure completamente eliminati. L\fB\(aq\fPunico svantaggio del ridurre i caratteri è che, se in seguito vuoi aggiungere altro testo al tuo libro, per il testo aggiunto potrebbero non essere sufficienti i caratteri integrati
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-upgrade\-book, \-U
-Upgrade the internal structures of the book, if possible. For instance, upgrades EPUB 2 books to EPUB 3 books.
+Aggiorna la struttura interna del libro, se possibile. Per esempio, aggiorna libri in formato EPUB 2 a EPUB3.
 .UNINDENT
 .INDENT 0.0
 .TP

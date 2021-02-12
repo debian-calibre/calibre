@@ -91,9 +91,9 @@ These buttons behave just like those in a web browser.
 Reference mode
 ^^^^^^^^^^^^^^^^^
 
-calibre also has a very handy :guilabel:`Reference mode`.  You can turn it on
+calibre also has a very handy :guilabel:`Reference mode`. You can turn it on
 by clicking the :guilabel:`Reference mode` button in the viewer controls.  Once
-you do this, every mouse over a paragraph, calibre will display a unique number
+you do this, every paragraph will have a unique number displayed at the start,
 made up of the section and paragraph numbers.
 
 You can use this number to unambiguously refer to parts of the books when

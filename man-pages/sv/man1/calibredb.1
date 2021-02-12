@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "januari 22, 2021" "5.10.1" "calibre"
+.TH "CALIBREDB" "1" "februari 12, 2021" "5.11.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -146,6 +146,11 @@ Sökväg till calibre\-biblioteket. Standard är att använda sökvägen lagrad 
 .TP
 .B \-\-password
 Lösenord för anslutning till en calibre Innehållsservern. För att läsa lösenordet från standardinmatning, använd specialvärdet: <stdin>. För att läsa lösenordet från en fil, använd: <f:/path/to/file> (d.v.s. <f: följt av hela sökvägen till filen och en efterföljande>). Vinkelparenteserna ovan är nödvändiga, kom ihåg att undkomma dem eller använd citat för din shell.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timeout
+Tidsgränsen, i sekunder, när du ansluter till ett calibre\-bibliotek via nätverket. Standard är två minuter.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -354,7 +359,7 @@ När du skickar argument till calibredb som har mellanslag i dem, bifoga argumen
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
-Ersätt inte formatet om det redan existerar
+Ersätt inte formatet om det redan finns
 .UNINDENT
 .SH REMOVE_FORMAT
 .INDENT 0.0
@@ -415,7 +420,7 @@ När du skickar argument till calibredb som har mellanslag i dem, bifoga argumen
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-Fältet för att ställa in. Format är field_name:value, till exempel: \fI\%\-\-field\fP tags:tag1,tag2. Använd \fI\%\-\-list\-fields\fP för att få en lista med alla fältnamn. Du kan ange det här alternativet flera gånger för att ställa in flera fält. Observera: För språk du måste använda ISO639\-språkkoder (t.ex. en för engelska, fr för franska och så vidare). För identifierare, är syntaxen \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. För boolean (ja/nej) fält använder sann och falsk eller ja och nej.
+Fältet för att ställa in. Format är field_name:value, till exempel: \fI\%\-\-field\fP tags:tag1,tag2. Använd \fI\%\-\-list\-fields\fP för att få en lista över alla fältnamn. Du kan ange det här alternativet flera gånger för att ställa in flera fält. Observera: För språk du måste använda ISO639\-språkkoder (t.ex. en för engelska, fr för franska och så vidare). För identifierare, är syntaxen \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. För boolean (ja/nej) fält använder sann och falsk eller ja och nej.
 .UNINDENT
 .INDENT 0.0
 .TP

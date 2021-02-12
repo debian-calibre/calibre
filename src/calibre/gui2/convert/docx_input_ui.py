@@ -36,5 +36,5 @@ class Ui_Form(object):
 
         Form.setWindowTitle(_("Form"))
         self.opt_docx_no_cover.setText(_("Do not try to autodetect a &cover from images in the document"))
-        self.opt_docx_no_pagebreaks_between_notes.setText(_("Do not add a page after every &endnote"))
+        self.opt_docx_no_pagebreaks_between_notes.setText(_("Do not add a page break after every &endnote"))
         self.opt_docx_inline_subsup.setText(_("Render &superscripts and subscripts so that they do not affect the line height."))

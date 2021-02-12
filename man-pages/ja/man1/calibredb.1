@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "1月 22, 2021" "5.10.1" "calibre"
+.TH "CALIBREDB" "1" "2月 12, 2021" "5.11.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -146,6 +146,11 @@ Calibreライブラリへのpath。デフォルトでは設定画面で指定さ
 .TP
 .B \-\-password
 Calibreコンテンツサーバ接続用パスワード。標準入力からパスワードを読み取るには、特殊文字 <stdin> を使ってください。パスワードをファイルから読み込むには <f:/path/to/file> を使ってください。 (例えば先頭の <f: に続けてファイルへのフルパスを記述し、最後に > で閉じます。) カギ括弧は必須です。使用するシェルによっては、必要に応じてエスケープしたり引用符で囲ってください。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timeout
+The timeout, in seconds, when connecting to a calibre library over the network. The default is two minutes.
 .UNINDENT
 .INDENT 0.0
 .TP

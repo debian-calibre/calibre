@@ -209,6 +209,7 @@ class View:
         self.loaded_resources = {}
         self.current_progress_frac = self.current_file_progress_frac = 0
         self.current_page_counts = {'current': 0, 'total': 0, 'pages_per_screen': 1}
+        self.current_status_message = ''
         self.current_toc_node = self.current_toc_toplevel_node = None
         self.current_toc_families = v'[]'
         self.report_cfi_callbacks = {}
@@ -254,11 +255,6 @@ class View:
                         E.div(style='position: absolute; top:0; left:0; width: 100%; height: 100%; display:none', id='controls-help-overlay'),  # controls help overlay
                     )
                 ),
-                E.div(
-                    style=f'color: {get_color("window-foreground")}; background: {get_color("window-background")};' +
-                    'position: absolute; display: none; left: 0; top: 0; padding: 0.5ex; border: solid 2px; z-index: 3000',
-                    id='reference-mode-overlay'
-                ),
             ),
         )
         handlers = {
@@ -280,7 +276,6 @@ class View:
             'next_spine_item': self.on_next_spine_item,
             'print': self.on_print,
             'ready': self.on_iframe_ready,
-            'reference_item_changed': self.on_reference_item_changed,
             'report_cfi': self.on_report_cfi,
             'request_size': self.on_request_size,
             'scroll_to_anchor': self.on_scroll_to_anchor,
@@ -332,10 +327,6 @@ class View:
     @property
     def iframe(self):
         return self.iframe_wrapper.iframe
-
-    @property
-    def reference_mode_overlay(self):
-        return document.getElementById('reference-mode-overlay')
 
     def copy_to_clipboard(self):
         self.iframe_wrapper.send_message('copy_selection')
@@ -540,6 +531,8 @@ class View:
             self.toggle_read_aloud()
         elif data.name is 'reload_book':
             ui_operations.reload_book()
+        elif data.name is 'sync_book':
+            self.overlay.sync_book()
         elif data.name is 'next_section':
             self.on_next_section({'forward': True})
         elif data.name is 'previous_section':
@@ -694,7 +687,6 @@ class View:
         self.overlay.hide()
         self.search_overlay.hide()
         self.content_popup_overlay.hide()
-        self.reference_mode_overlay.style.display = 'none'
         self.focus_iframe()
 
     def focus_iframe(self):
@@ -1084,12 +1076,12 @@ class View:
     def on_scroll_to_anchor(self, data):
         self.show_name(data.name, initial_position={'type':'anchor', 'anchor':data.frag, 'replace_history':False})
 
-    def goto_cfi(self, bookpos):
+    def goto_cfi(self, bookpos, add_to_history):
         cfiname, internal_cfi = self.parse_cfi(bookpos, self.book)
         if cfiname and internal_cfi:
-            # replace_history has to be true here otherwise forward does not
-            # work after back, as back uses goto_cfi
-            pos = {'replace_history': True}
+            # Note that goto_cfi is used by back() so it must not add to
+            # history by default, otherwise forward() will not work
+            pos = {'replace_history': not add_to_history}
             name = cfiname
             pos.type, pos.cfi = 'cfi', internal_cfi
             self.show_name(name, initial_position=pos)
@@ -1253,26 +1245,35 @@ class View:
         }
         return pos
 
+    def show_status_message(self, msg):
+        self.current_status_message = msg or ''
+        self.update_header_footer()
+        if self.current_status_message:
+            window.setTimeout(def(): self.show_status_message();, 10000)
+
     def update_header_footer(self):
         sd = get_session_data()
         has_clock = False
         pos = self.current_position_data
+        if not self.book:
+            return
 
         book_length = pos.book_length * max(0, 1 - pos.progress_frac)
         chapter_length =  pos.chapter_length * max(0, 1 - pos.file_progress_frac)
         book_time = self.timers.time_for(book_length)
         chapter_time = self.timers.time_for(chapter_length)
 
-        def render_template(div, sz_attr, name):
+        def render_template(div, edge, name):
             nonlocal has_clock
             c = div.lastChild
             b = c.previousSibling
             a = b.previousSibling
-            if sd.get(sz_attr, 20) > 5:
+            if sd.get(f'margin_{edge}', 20) > 5:
                 mi = self.book.metadata
-                hca = render_head_foot(a, name, 'left', mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos)
-                hcb = render_head_foot(b, name, 'middle', mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos)
-                hcc = render_head_foot(c, name, 'right', mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos)
+                override = self.current_status_message if edge is 'bottom' else ''
+                hca = render_head_foot(a, name, 'left', mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos, override)
+                hcb = render_head_foot(b, name, 'middle', mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos, '')
+                hcc = render_head_foot(c, name, 'right', mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos, '')
                 if hca or hcb or hcc:
                     has_clock = True
             else:
@@ -1282,7 +1283,7 @@ class View:
             div = document.getElementById(f'book-{edge}-margin')
             if div:
                 tname = {'left':'left-margin', 'right': 'right-margin', 'top': 'header', 'bottom': 'footer'}[edge]
-                render_template(div, f'margin_{edge}', tname)
+                render_template(div, edge, tname)
         if has_clock:
             if not self.timer_ids.clock:
                 self.timer_ids.clock = window.setInterval(self.update_header_footer, 60000)
@@ -1319,6 +1320,7 @@ class View:
         # We cannot encrypt this message because the resource data contains
         # Blob objects which do not survive encryption
         self.processing_spine_item_display = True
+        self.current_status_message = ''
         self.iframe.style.visibility = 'hidden'
         self.iframe_wrapper.send_unencrypted_message('display',
             resource_data=resource_data, book=self.book, name=self.currently_showing.name,
@@ -1337,7 +1339,6 @@ class View:
         self.hide_loading()
         self.set_progress_frac(data.progress_frac, data.file_progress_frac, data.page_counts)
         self.update_header_footer()
-        self.on_reference_item_changed()
         window.scrollTo(0, 0)  # ensure window is at 0 on mobile where the navbar causes issues
         if self.book_load_started:
             self.book_load_started = False
@@ -1369,20 +1370,9 @@ class View:
 
     def toggle_reference_mode(self):
         self.reference_mode_enabled = not self.reference_mode_enabled
-        self.on_reference_item_changed()
         self.iframe_wrapper.send_message('set_reference_mode', enabled=self.reference_mode_enabled)
         if ui_operations.reference_mode_changed:
             ui_operations.reference_mode_changed(self.reference_mode_enabled)
-
-    def on_reference_item_changed(self, data):
-        data = data or {'refnum': None, 'index': None}
-        refnum, index = data.refnum, data.index
-        div = self.reference_mode_overlay
-        if refnum is None:
-            div.style.display = 'none'
-        else:
-            div.style.display = 'block'
-            div.textContent = f'{index}.{refnum}'
 
     def show_search_result(self, sr):
         if self.currently_showing.name is sr.file_name:
@@ -1407,4 +1397,4 @@ class View:
         elif which is 'goto':
             cfi = self.annotations_manager.cfi_for_highlight(uuid, spine_index)
             if cfi:
-                self.goto_cfi(cfi)
+                self.goto_cfi(cfi, True)
