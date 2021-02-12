@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "1月 22, 2021" "5.10.1" "calibre"
+.TH "CALIBREDB" "1" "2月 12, 2021" "5.11.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -146,6 +146,11 @@ Path to the calibre library. Default is to use the path stored in the settings. 
 .TP
 .B \-\-password
 用來連線至 calibre 伺服器的密碼。要使用標準輸入中讀取密碼，請使用特殊值:<stdin>。如果要從檔案中讀取密碼，請使用:<f:/path/to/file>( 例如: <f: 檔案的完整路徑以及後置 >)。前方所寫的角括號是必須使用的，請記得在命令介面中使用跳脫字元或是引號。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timeout
+The timeout, in seconds, when connecting to a calibre library over the network. The default is two minutes.
 .UNINDENT
 .INDENT 0.0
 .TP

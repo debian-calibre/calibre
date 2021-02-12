@@ -5,7 +5,7 @@
 # Translators:
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2020
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2016-2017
-# efef6ec5b435a041fce803c7f8af77d2_2341d43, 2018-2021
+# Jonatan Nyberg <jonatan.nyberg.karl@gmail.com>, 2018-2021
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017-2018
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017
 # Merarom <merarom@yahoo.es>, 2014-2015,2017
@@ -14,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-20 14:41+0000\n"
-"PO-Revision-Date: 2021-01-17 07:31+0000\n"
-"Last-Translator: efef6ec5b435a041fce803c7f8af77d2_2341d43\n"
+"POT-Creation-Date: 2021-02-06 07:28+0000\n"
+"PO-Revision-Date: 2021-02-06 08:51+0000\n"
+"Last-Translator: Jonatan Nyberg <jonatan.nyberg.karl@gmail.com>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -58,7 +58,7 @@ msgid ""
 "regular expressions really well have trouble reading the more complex ones, "
 "but writing them isn't as difficult- you construct the expression step by "
 "step. So, take a step and follow me into the rabbit hole."
-msgstr "Detta kommer, oundvikligen, att vara något tekniska trots allt, reguljära uttryck är ett tekniskt verktyg för att göra tekniska saker. Jag kommer att behöva använda en del jargong och begrepp som kan verka komplicerat och invecklat. Jag ska försöka förklara dessa begrepp så tydligt som jag kan, men egentligen kan jag inte göra det utan att använda dem alla. Med detta sagt, förkasta inte detta på grund av all jargong, jag har försökt att förklara allt nytt. Och medan reguljära uttryck själva kan verka som en svårbegripliga, svart magi (eller för att vara mer prosaisk, en slumpmässig sträng av rappakalja bokstäver och tecken), jag lovar att det är inte så komplicerat. Även de som förstår vanliga uttryck riktigt bra kan ha problem med att läsa de mer komplexa, men att skriva dem är inte så svårt - du konstruerar uttrycket steg för steg. Så, ta ett steg och följa mig in i kaninhålet."
+msgstr "Detta kommer, oundvikligen, att vara något tekniska trots allt, reguljära uttryck är ett tekniskt verktyg för att göra tekniska saker. Jag kommer att behöva använda en del jargong och begrepp som kan verka komplicerat och invecklat. Jag ska försöka förklara dessa begrepp så tydligt som jag kan, men egentligen kan jag inte göra det utan att använda dem alla. Med detta sagt, förkasta inte detta på grund av all jargong, jag har försökt att förklara allt nytt. Och medan reguljära uttryck själva kan verka som en svårbegripliga, svart magi (eller för att vara mer prosaisk, en slumpad sträng av rappakalja bokstäver och tecken), jag lovar att det är inte så komplicerat. Även de som förstår vanliga uttryck riktigt bra kan ha problem med att läsa de mer komplexa, men att skriva dem är inte så svårt - du konstruerar uttrycket steg för steg. Så, ta ett steg och följa mig in i kaninhålet."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:19
 msgid "Where in calibre can you use regular expressions?"
@@ -407,7 +407,7 @@ msgid ""
 "calibre provides, you need to add the file extension to your testing "
 "filename, otherwise you won't get any matches at all, despite using a "
 "working expression."
-msgstr "En annan sak du kan använda reguljära uttryck för är att utvinna metadata från filnamn. Du hittar den här funktionen \"Lägga till böcker\" i en del av inställningarna. Det finns en speciell funktion här: Du kan använda fältnamn för metadatafält, till exempel ``(?P<titel>)`` tyder på att calibre använder denna del av strängen som boktiteln. De tillåtna fält namn upptas i fönstren, tillsammans med en annan trevlig testfält. Ett exempel: Säg att du vill importera en hel massa filer namnges som ``Klassiska texter: Den gudomliga komedin av Dante Alighieri.mobi``. (Uppenbarligen är detta redan i ditt bibliotek, eftersom vi alla älskar klassisk italiensk poesi) eller ``Science Fiction epos: The Foundation Trilogy av Isaac Asimov.epub``. Detta är naturligtvis ett namngivningssystem som calibre inte kommer att packa några meningsfulla uppgifter ur sitt standarduttryck för att extrahera metadata är ``(?P<title>.+) - (?P<author>[^_]+)``. Ett reguljärt uttryck som fungerar här skulle vara ``[a-zA-Z]+: (?P<title>.+) by (?P<author>.+)``. Observera att inom gruppen för metadatafält, måste du använda uttryck för att beskriva vad fältet verkligen ska matcha. Och observera också att vid användning av testfältet calibre tillhandahåller, måste du lägga till filändelsen till ditt provfilnamn, annars kommer du inte få några matchningar alls, trots användningen av ett fungerande uttryck."
+msgstr "En annan sak du kan använda reguljära uttryck för är att utvinna metadata från filnamn. Du hittar den här funktionen \"Lägga till böcker\" i en del av inställningarna. Det finns en speciell funktion här: Du kan använda fältnamn för metadatafält, till exempel ``(?P<titel>)`` tyder på att calibre använder denna del av strängen som boktiteln. De tillåtna fält namn upptas i fönstren, tillsammans med en annan trevlig testfält. Ett exempel: Säg att du vill importera en hel massa filer namnges som ``Klassiska texter: Den gudomliga komedin av Dante Alighieri.mobi``. (Uppenbarligen är detta redan i ditt bibliotek, eftersom vi alla älskar klassisk italiensk poesi) eller ``Science Fiction epos: The Foundation Trilogy av Isaac Asimov.epub``. Detta är naturligtvis ett namngivningssystem som calibre inte kommer att packa några meningsfulla uppgifter ur sitt standarduttryck för att packa upp metadata är ``(?P<title>.+) - (?P<author>[^_]+)``. Ett reguljärt uttryck som fungerar här skulle vara ``[a-zA-Z]+: (?P<title>.+) by (?P<author>.+)``. Observera att inom gruppen för metadatafält, måste du använda uttryck för att beskriva vad fältet verkligen ska matcha. Och observera också att vid användning av testfältet calibre tillhandahåller, måste du lägga till filändelsen till ditt provfilnamn, annars kommer du inte få några matchningar alls, trots användningen av ett fungerande uttryck."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:119
 msgid "Bulk editing metadata"

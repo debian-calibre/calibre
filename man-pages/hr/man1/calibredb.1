@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "siječnja 22, 2021" "5.10.1" "calibre"
+.TH "CALIBREDB" "1" "veljače 12, 2021" "5.11.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -146,6 +146,11 @@ Path to the calibre library. Default is to use the path stored in the settings. 
 .TP
 .B \-\-password
 Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file> (i.e. <f: followed by the full path to the file and a trailing >). The angle brackets in the above are required, remember to escape them or use quotes for your shell.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timeout
+The timeout, in seconds, when connecting to a calibre library over the network. The default is two minutes.
 .UNINDENT
 .INDENT 0.0
 .TP

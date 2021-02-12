@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "gennaio 22, 2021" "5.10.1" "calibre"
+.TH "CALIBREDB" "1" "febbraio 12, 2021" "5.11.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -41,42 +41,46 @@ calibredb command [opzioni] [argomenti]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP is the command line interface to the calibre database. It has
-several sub\-commands, documented below.
+\fBcalibredb\fP è l\(aqinterfaccia da linea di comando che agisce sul database di calibre. Possiede
+molti sotto\-comandi, descritti più sotto
 .sp
-\fBcalibredb\fP can be used to manipulate either a calibre database
-specified by path or a calibre Content server running either on
-the local machine or over the internet. You can start a calibre
-Content server using either the \fBcalibre\-server\fP
-program or in the main calibre program click Connect/share  → 
-Start Content server\&. Since \fBcalibredb\fP can make changes to your
-calibre libraries, you must setup authentication on the server first. There
-are two ways to do that:
+\fBcalibredb\fP può essere usato per manipolare un database di calibre
+identificato da un percorso oppure da un Server dei contenuti di calibre in esecuzione sulla
+macchina locale o su internet. Puoi avviare un
+Server dei contenuti di calibre con il comando \fBcalibre\-server\fP
+oppure cliccando nell\(aqinterfaccia principale di calibre Connetti/condividi  → 
+Avvia Server di contenuti\&. Dato che \fBcalibredb\fP può modificare le tue
+biblioteche di calibre, devi prima impostare un\(aqautenticazione per il server. Ci
+sono due modi per farlo:
 .INDENT 0.0
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-If you plan to connect only to a server running on the same computer,
-you can simply use the \fB\-\-enable\-local\-write\fP option of the
-content server, to allow any program, including calibredb, running on
-the local computer to make changes to your calibre data. When running
-the server from the main calibre program, this option is in
-Preferences → Sharing over the net → Advanced\&.
-.IP \(bu 2
-If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
-options to \fBcalibredb\fP to give it access. You can setup
-user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
-option and using \fB\-\-manage\-users\fP to create the user accounts.
-If you are running the server from the main calibre program, use
-Preferences → Sharing over the net → Require username/password\&.
+Se intendi connetterti solamente a un server in esecuzione sul computer stesso,
 .UNINDENT
 .UNINDENT
 .UNINDENT
 .sp
-To connect to a running Content server, pass the URL of the server to the
-\fI\%\-\-with\-library\fP option, see the documentation of that option for
-details and examples.
+puoi semplicemente usare l\(aqopzione \fB\-\-enable\-local\-write\fP del
+server dei contenuti, per permettere ad ogni programma, calibredb incluso, in esecuzione
+sul computer locale di  modificare i tuoi dati di calibre. Se il server
+è avviato dall\(aqinterfaccia principale di calibre, questa opzione si trova
+in Preferenze → Condivisione via rete → Avanzate\&.
+.INDENT 0.0
+.IP \(bu 2
+Se vuoi invece abilitare l\(aqaccesso via internet, dovresti impostare
+.UNINDENT
+.sp
+degli utenti per il server e usare le opzioni \fI\%\-\-username\fP e \fI\%\-\-password\fP
+con \fBcalibredb\fP per permettergli di accedere. Puoi impostare
+l\(aqautenticazione utente per \fBcalibre\-server\fP usando l\(aqopzione \fB\-\-enable\-auth\fP
+e usando \fB\-\-manage\-users\fP per creare gli utenti.
+Se hai avviato il server dall\(aqinterfaccia principale di calibre, usa
+Preferenze → Condivisione via rete → Richiedi nome utente/password\&.
+.sp
+Per connetterti a un Server dei contenuti in esecuzione, inserisci l\(aqURL del server dopo l\(aqopzione
+\fI\%\-\-with\-library\fP, vedi la documentazione dell\(aqopzione per
+dettagli ed esempi.
 .INDENT 0.0
 .IP \(bu 2
 \fI\%OPZIONI GLOBALI\fP
@@ -146,6 +150,11 @@ Path to the calibre library. Default is to use the path stored in the settings. 
 .TP
 .B \-\-password
 Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file> (i.e. <f: followed by the full path to the file and a trailing >). The angle brackets in the above are required, remember to escape them or use quotes for your shell.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timeout
+Il timeout, in secondi, della connessione a una biblioteca di calibre in rete. Il tempo predefinito è di due minuti.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -241,7 +250,7 @@ Imposta gli autori dei libri aggiunti
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-If books with similar titles and authors are found, merge the incoming formats (files) automatically into existing book records. A value of \fB"\fPignore\fB"\fP means duplicate formats are discarded. A value of \fB"\fPoverwrite\fB"\fP means duplicate formats in the library are overwritten with the newly added files. A value of \fB"\fPnew_record\fB"\fP means duplicate formats are placed into a new book record.
+Se vengono trovati libri con titoli e autori simili, unisci automaticamente i formati (file) in arrivo con record di libri già esistenti. Un valore di \fB"\fPignora\fB"\fP significa che i formati duplicati vengono scartati. Un valore di \fB"\fPoverwrite\fB"\fP significa che i formati duplicati nella biblioteca vengono sovrascritti dai nuovi file aggiunti. Un valore di \fB"\fPnew_record\fB"\fP significa che i formati duplicati sono inseriti in un nuovo record libro.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -251,7 +260,7 @@ Percorso della copertina da utilizzare per il libro aggiunto
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Add books to database even if they already exist. Comparison is done based on book titles and authors. Note that the \fI\%\-\-automerge\fP option takes precedence.
+Aggiungi libri al database anche se esistono già. Il confronto è basato su titoli e autori dei libri. Nota che l\fB\(aq\fPopzione \fI\%\-\-automerge\fP ha la precedenza.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -824,14 +833,14 @@ calibredb list_categories [options]
 .UNINDENT
 .UNINDENT
 .sp
-Produce a report of the category information in the database. The
-information is the equivalent of what is shown in the Tag browser.
+Crea un rapporto delle informazione sulle categorie del database.
+Le informazioni sono equivalenti a ciò che è mostrato nel navigatore dei Tag.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
-Elenco separato da virgole di nomi di ricerca per categorie. Predefinito: tutti
+Elenco separato da virgole di nomi di riferimento per categorie. Predefinito: tutti
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -884,14 +893,17 @@ Di solito, questo comando opera solo su libri che hanno file OPF datati. Questa 
 .sp
 .nf
 .ft C
-Crea un clone della libreria attuale.
+calibredb clone percorso/della/nuova/biblioteca
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Questo crea una nuova libreria vuota che ha tutte le stesse colonne personalizzate, librerie virtuali e altre impostazioni della libreria corrente.
-La libreria clonata non conterrà libri. Se si desidera creare un duplicato completo, inclusi tutti i libri, è sufficiente utilizzare gli strumenti del filesystem per copiare la cartella della libreria.
+Crea un \fBclone\fP della biblioteca corrente. Questo crea una nuova biblioteca, vuota, che ha tutte le
+stesse colonne personalizzate, biblioteche virtuali e altre impostazioni della biblioteca corrente.
+.sp
+La biblioteca clonata non conterrà libri. Se desideri creare un duplicato completo, che includa
+tutti i libri, è sufficiente usare gli strumenti del filesystem per copiare la cartella della biblioteca.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH EMBED_METADATA

@@ -4,7 +4,7 @@
 # 
 # Translators:
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2016-2017
-# efef6ec5b435a041fce803c7f8af77d2_2341d43, 2018-2021
+# Jonatan Nyberg <jonatan.nyberg.karl@gmail.com>, 2018-2021
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017-2018
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017
 # Merarom <merarom@yahoo.es>, 2014-2017
@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-20 14:41+0000\n"
-"PO-Revision-Date: 2021-01-17 14:10+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2021-02-06 07:28+0000\n"
+"PO-Revision-Date: 2021-02-06 16:50+0000\n"
+"Last-Translator: Jonatan Nyberg <jonatan.nyberg.karl@gmail.com>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -398,7 +398,7 @@ msgid ""
 "equal to key, and return the corresponding value. This function is "
 "particularly useful for extracting a value such as an ISBN from the set of "
 "identifiers for a book."
-msgstr "``select(key)`` -- tolka fältet som en kommaseparerad lista över poster, med posterna som formen \"id:värde\". Hitta paret med id som är lika med nyckeln och återge motsvarande värde. Denna funktion är särskilt användbar för att extrahera ett värde som en ISBN från uppsättningen identifierare för en bok."
+msgstr "``select(key)`` -- tolka fältet som en kommaseparerad lista över poster, med posterna som formen \"id:värde\". Hitta paret med id som är lika med nyckeln och återge motsvarande värde. Denna funktion är särskilt användbar för att packa upp ett värde som en ISBN från uppsättningen identifierare för en bok."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:188
 msgid ""
@@ -438,7 +438,7 @@ msgid ""
 "of zero. If an index is negative, then it counts from the end of the list. "
 "As a special case, an end_index of zero is assumed to be the length of the "
 "list. Examples::"
-msgstr "``subitems(start_index, end_index)`` -- Denna funktion används för att bryta isär listor över tagglika hierarkiska post såsom genrer. Det tolkar fältet som en kommaseparerad lista över taggliknande post, där varje post är en period separerad lista. Återger en ny lista görs genom att först hitta alla period separerad tagg liknande föremål, därefter för varje sådan post extrahera komponenterna från `start_index` till` end_index`, sedan kombinera resultaten tillbaka tillsammans. Den första komponenten i en period separerad lista har ett index på noll. Om ett index är negativ, så det räknas från slutet av listan. Som ett special fall är en END_INDEX av noll antas vara längden av listan. Exempel::"
+msgstr "``subitems(start_index, end_index)`` -- Denna funktion används för att bryta isär listor över tagglika hierarkiska post såsom genrer. Det tolkar fältet som en kommaseparerad lista över taggliknande post, där varje post är en period separerad lista. Återger en ny lista görs genom att först hitta alla period separerad tagg liknande föremål, därefter för varje sådan post packa upp komponenterna från `start_index` till` end_index`, sedan kombinera resultaten tillbaka tillsammans. Den första komponenten i en period separerad lista har ett index på noll. Om ett index är negativ, så det räknas från slutet av listan. Som ett special fall är en END_INDEX av noll antas vara längden av listan. Exempel::"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:214
 msgid ""
@@ -615,7 +615,7 @@ msgid ""
 "start is 0, and the end is 6. In this case it will return the first 6 "
 "characters of the string returned by ``strcat``, which must be evaluated "
 "before substr can return."
-msgstr "anrop av ``substr`` funktionen, som tar 3 parametrar ``(str, start, slut) ``. Den återger en sträng som bildas genom att extrahera start genom sluttecken från strängen, nollbaserad (det första tecknet är tecknet noll). I detta fall strängen kommer att beräknas av ``strcat`` funktionen, är början 0, och slutet är 6. I detta fall den ger de 6 första tecknen i strängen som återges av ``strcat``, vilket måste utvärderas innan substr kan återvända."
+msgstr "anrop av ``substr`` funktionen, som tar 3 parametrar ``(str, start, slut) ``. Den återger en sträng som bildas genom att packa upp start genom sluttecken från strängen, nollbaserad (det första tecknet är tecknet noll). I detta fall strängen kommer att beräknas av ``strcat`` funktionen, är början 0, och slutet är 6. I detta fall den ger de 6 första tecknen i strängen som återges av ``strcat``, vilket måste utvärderas innan substr kan återvända."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:313
 msgid ""
@@ -1550,7 +1550,7 @@ msgid ""
 "For example, assume we want the folder structure `series/series_index - "
 "title`, with the caveat that if series does not exist, then the title should"
 " be in the top folder. The template to do this is::"
-msgstr "Antag till exempel att vi vill ha mappstrukturen  `series/series_index - title`, med förbehållet att om serien inte existerar, så bör titeln vara i topp-mappen. Mallen för att göra detta är::"
+msgstr "Antag till exempel att vi vill ha mappstrukturen  `series/series_index - title`, med förbehållet att om serien inte finns, så bör titeln vara i översta mappen. Mallen för att göra detta är::"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:746
 msgid "The slash and the hyphen appear only if series is not empty."
@@ -1682,7 +1682,7 @@ msgstr "Pluggbrädor påverkar metadata som skrivs in i boken när den sparas ti
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:796
 msgid "Tips"
-msgstr ""
+msgstr "Tips"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:798
 msgid "You might find the following tips useful."

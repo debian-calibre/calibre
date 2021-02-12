@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "januari 22, 2021" "5.10.1" "calibre"
+.TH "EBOOK-CONVERT" "1" "februari 12, 2021" "5.11.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -153,7 +153,7 @@ Versionen av EPUB\-filen som ska genereras. EPUB 2 är den mest kompatibla, anv�
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extrahera innehållet i den genererade EPUB filen till den angivna katalogen. Innehållet i katalogen först tas bort, så var försiktig.
+Packa upp innehållet i den genererade EPUB filen till den angivna katalogen. Innehållet i katalogen först tas bort, så var försiktig.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -236,7 +236,7 @@ En kommaseparerad lista över CSS\-egenskaper som kommer att tas bort från alla
 .INDENT 0.0
 .TP
 .B \-\-font\-size\-mapping
-Omvandlar CSS\-teckensnittsnamn till teckenstorlekar i punkter. En exempelinställning är 12,12,14,16,18,20,22,24. Detta konverterar storlekarna xx\-liten till xx\-stor, den sista storleken används för enorma teckensnitt. Omskalningsalgoritmen använder dessa storlekar för att på ett smart sätt skala om teckensnitten. Som standard används en kartläggning baserad på din valda utmatningsprofil.
+Kartlägger CSS\-teckensnittsnamn till teckenstorlekar i punkter. En exempelinställning är 12,12,14,16,18,20,22,24. Detta konverterar storlekarna xx\-liten till xx\-stor, den sista storleken används för enorma teckensnitt. Omskalningsalgoritmen använder dessa storlekar för att på ett smart sätt skala om teckensnitten. Som standard används en kartläggning baserad på din valda utmatningsprofil.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -261,7 +261,7 @@ Radavståndet i punkter. Anpassar avståndet mellan på varandra följande textr
 .INDENT 0.0
 .TP
 .B \-\-linearize\-tables
-Vissa dokument med dålig formgivning använder tabeller för att anpassa textflödet på sidan. När dessa dokument konverteras finns ofta text som går utanför sidan och andra artefakter. Det här alternativet kommer att extrahera innehållet från tabellerna och presentera det linjärt.
+Vissa dokument med dålig formgivning använder tabeller för att anpassa textflödet på sidan. När dessa dokument konverteras finns ofta text som går utanför sidan och andra artefakter. Det här alternativet kommer att packa upp innehållet från tabellerna och presentera det linjärt.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -301,7 +301,7 @@ När calibre tar bort tomma rader mellan stycken, anger det automatiskt ett styc
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Omvandla rena citat, bindestreck och ellips till deras typografiskt korrekta motsvarigheter. För detaljer, se \fI\%https://daringfireball.net/projects/smartypants\fP
+Konvertera rena citat, bindestreck och ellips till deras typografiskt korrekta motsvarigheter. För detaljer, se \fI\%https://daringfireball.net/projects/smartypants\fP
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -603,7 +603,7 @@ Alternativ för att hjälpa till att felsöka konverteringen
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Spara utmatning från olika skeden i konverteringssekvensen till den angivna mappen. Användbart om du är osäker i vilket skede av konverteringsprocessen ett fel uppstår.
+Spara utmatning från olika skeden av konverteringssekvensen till den angivna mappen. Användbart om du är osäker i vilket skede av konverteringsprocessen ett fel uppstår.
 .UNINDENT
 .INDENT 0.0
 .TP
