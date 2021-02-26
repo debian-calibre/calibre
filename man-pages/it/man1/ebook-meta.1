@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-META" "1" "febbraio 12, 2021" "5.11.0" "calibre"
+.TH "EBOOK-META" "1" "febbraio 26, 2021" "5.12.0" "calibre"
 .SH NAME
 ebook-meta \- ebook-meta
 .
@@ -41,14 +41,14 @@ ebook\-meta ebook_file [opzioni]
 .UNINDENT
 .UNINDENT
 .sp
-Leggi/Scrivi metadata da/su file e\-book.
+Leggi/Scrivi metadati da/su file e\-book.
 .sp
-Formati supportati per la lettura dei metadata: azw, azw1, azw3, azw4, cb7, cbr, cbz, chm, docx, epub, fb2, fbz, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
+Formati supportati per la lettura dei metadati: azw, azw1, azw3, azw4, cb7, cbr, cbz, chm, docx, epub, fb2, fbz, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
 .sp
-Formati supportati per la scrittura dei metadata: azw, azw1, azw3, azw4, docx, epub, fb2, fbz, htmlz, lrf, mobi, odt, pdb, pdf, prc, rtf, tpz, txtz
+Formati supportati per la scrittura dei metadati: azw, azw1, azw3, azw4, docx, epub, fb2, fbz, htmlz, lrf, mobi, odt, pdb, pdf, prc, rtf, tpz, txtz
 .sp
-Formati di file differenti supportano diversi tipi di metadata. Se imposti
-alcuni metadata in un file che non li supporta, i metadata saranno
+Tipi di file differenti supportano differenti tipi di metadati. Se imposti
+alcuni metadati in un tipo di file che non li supporta, i metadati saranno
 ignorati silenziosamente.
 .sp
 Whenever you pass arguments to \fBebook\-meta\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
@@ -91,7 +91,7 @@ Imposta la data di pubblicazione.
 .INDENT 0.0
 .TP
 .B \-\-from\-opf
-Leggi metadata dal file OPF specificato e usalo per impostare i metadata nell\fB\(aq\fPebook. I metadata specificati nella linea di comando sovrascriranno quelli letti nel file OPF
+Leggi i metadati dal file OPF specificato e usalo per impostare i metadati nell\fB\(aq\fPebook. I metadati specificati da linea di comando sovrascriveranno quelli letti dal file OPF
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -111,7 +111,7 @@ Set the identifiers for the book, can be specified multiple times. For example: 
 .INDENT 0.0
 .TP
 .B \-\-index, \-i
-Imposta l\fB\(aq\fPindice analitico del libro in questa serie.
+Imposta la numerazione del libro in questa serie.
 .UNINDENT
 .INDENT 0.0
 .TP

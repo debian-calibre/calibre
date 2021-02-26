@@ -455,13 +455,17 @@ class BuiltinField(BuiltinFormatterFunction):
 
 class BuiltinRawField(BuiltinFormatterFunction):
     name = 'raw_field'
-    arg_count = 1
+    arg_count = -1
     category = 'Get values from metadata'
-    __doc__ = doc = _('raw_field(name) -- returns the metadata field named by name '
-            'without applying any formatting.')
+    __doc__ = doc = _('raw_field(name [, optional_default]) -- returns the '
+            'metadata field named by name without applying any formatting. '
+            'It evaluates and returns the optional second argument '
+            "'default' if the field is undefined ('None').")
 
-    def evaluate(self, formatter, kwargs, mi, locals, name):
+    def evaluate(self, formatter, kwargs, mi, locals, name, default=None):
         res = getattr(mi, name, None)
+        if res is None and default is not None:
+            return default
         if isinstance(res, list):
             fm = mi.metadata_for_field(name)
             if fm is None:
@@ -628,7 +632,8 @@ class BuiltinInList(BuiltinFormatterFunction):
             'not_found_val. The pattern and found_value can be repeated as '
             'many times as desired, permitting returning different values '
             'depending on the search. The patterns are checked in order. The '
-            'first match is returned.')
+            'first match is returned. Aliases: in_list(), list_contains()')
+    aliases = ['list_contains']
 
     def evaluate(self, formatter, kwargs, mi, locals, val, sep, *args):
         if (len(args) % 2) != 1:
@@ -813,13 +818,35 @@ class BuiltinCount(BuiltinFormatterFunction):
     name = 'count'
     arg_count = 2
     category = 'List manipulation'
+    aliases = ['list_count']
+
     __doc__ = doc = _('count(val, separator) -- interprets the value as a list of items '
             'separated by `separator`, returning the number of items in the '
             'list. Most lists use a comma as the separator, but authors '
-            'uses an ampersand. Examples: {tags:count(,)}, {authors:count(&)}')
+            'uses an ampersand. Examples: {tags:count(,)}, {authors:count(&)}. '
+            'Aliases: count(), list_count()')
 
     def evaluate(self, formatter, kwargs, mi, locals, val, sep):
         return unicode_type(len([v for v in val.split(sep) if v]))
+
+
+class BuiltinListCountMatching(BuiltinFormatterFunction):
+    name = 'list_count_matching'
+    arg_count = 3
+    category = 'List manipulation'
+    aliases = ['count_matching']
+
+    __doc__ = doc = _('list_count_matching(list, pattern, separator) -- '
+            "interprets 'list' as a list of items separated by 'separator', "
+            'returning the number of items in the list that match the regular '
+            "expression 'pattern'. Aliases: list_count_matching(), count_matching()")
+
+    def evaluate(self, formatter, kwargs, mi, locals, list_, pattern, sep):
+        res = 0
+        for v in [x.strip() for x in list_.split(sep) if x.strip()]:
+            if re.search(pattern, v, flags=re.I):
+                res += 1
+        return unicode_type(res)
 
 
 class BuiltinListitem(BuiltinFormatterFunction):
@@ -1078,9 +1105,11 @@ class BuiltinSubitems(BuiltinFormatterFunction):
                 components = [item]
             try:
                 if ei == 0:
-                    rv.add('.'.join(components[si:]))
+                    t = '.'.join(components[si:]).strip()
                 else:
-                    rv.add('.'.join(components[si:ei]))
+                    t = '.'.join(components[si:ei]).strip()
+                if t:
+                    rv.add(t)
             except:
                 pass
         return ', '.join(sorted(rv, key=sort_key))
@@ -1227,6 +1256,27 @@ class BuiltinAnnotationCount(BuiltinFormatterFunction):
         return _('This function can be used only in the GUI')
 
 
+class BuiltinIsMarked(BuiltinFormatterFunction):
+    name = 'is_marked'
+    arg_count = 0
+    category = 'Get values from metadata'
+    __doc__ = doc = _("is_marked() -- check whether the book is 'marked' in "
+                      "calibre. If it is then return the value of the mark, "
+                      "either 'true' or the comma-separated list of named "
+                      "marks. Returns '' if the book is not marked.")
+
+    def evaluate(self, formatter, kwargs, mi, locals):
+        if hasattr(mi, '_proxy_metadata'):
+            try:
+                from calibre.gui2.ui import get_gui
+                c = get_gui().current_db.data.get_marked(mi.id)
+                return c if c else ''
+            except:
+                return _('Failed to get marked status')
+            return ''
+        return _('This function can be used only in the GUI')
+
+
 class BuiltinSeriesSort(BuiltinFormatterFunction):
     name = 'series_sort'
     arg_count = 0
@@ -1328,12 +1378,31 @@ class BuiltinListUnion(BuiltinFormatterFunction):
             'removing duplicate items using a case-insensitive comparison. If '
             'items differ in case, the one in list1 is used. '
             'The items in list1 and list2 are separated by separator, as are '
-            'the items in the returned list.')
+            'the items in the returned list. Aliases: list_union(), merge_lists()')
     aliases = ['merge_lists']
 
     def evaluate(self, formatter, kwargs, mi, locals, list1, list2, separator):
         res = {icu_lower(l.strip()): l.strip() for l in list2.split(separator) if l.strip()}
         res.update({icu_lower(l.strip()): l.strip() for l in list1.split(separator) if l.strip()})
+        if separator == ',':
+            separator = ', '
+        return separator.join(res.values())
+
+
+class BuiltinListRemoveDuplicates(BuiltinFormatterFunction):
+    name = 'list_remove_duplicates'
+    arg_count = 2
+    category = 'List manipulation'
+    __doc__ = doc = _('list_remove_duplicates(list, separator) -- '
+            'return a list made by removing duplicate items in the source list. '
+            'If items differ only in case, the last of them is returned. '
+            'The items in source list are separated by separator, as are '
+            'the items in the returned list.')
+
+    def evaluate(self, formatter, kwargs, mi, locals, list_, separator):
+        res = {icu_lower(l.strip()): l.strip() for l in list_.split(separator) if l.strip()}
+        if separator == ',':
+            separator = ', '
         return separator.join(res.values())
 
 
@@ -1895,6 +1964,24 @@ class BuiltinGlobals(BuiltinFormatterFunction):
         raise NotImplementedError()
 
 
+class BuiltinSetGlobals(BuiltinFormatterFunction):
+    name = 'set_globals'
+    arg_count = -1
+    category = 'other'
+    __doc__ = doc = _('globals(id[=expression] [, id[=expression]]*) '
+                      '-- Retrieves "global variables" that can be passed into '
+                      'the formatter. It both declares and initializes local '
+                      'variables with the names of the global variables passed '
+                      'in. If the corresponding variable is not provided in '
+                      'the passed-in globals then it assigns that variable the '
+                      'provided default value. If there is no default value '
+                      'then the variable is set to the empty string.')
+
+    def evaluate(self, formatter, kwargs, mi, locals, *args):
+        # The globals function is implemented in-line in the formatter
+        raise NotImplementedError()
+
+
 class BuiltinFieldExists(BuiltinFormatterFunction):
     name = 'field_exists'
     arg_count = 1
@@ -1924,14 +2011,15 @@ _formatter_builtins = [
     BuiltinGlobals(),
     BuiltinHasCover(), BuiltinHumanReadable(), BuiltinIdentifierInList(),
     BuiltinIfempty(), BuiltinLanguageCodes(), BuiltinLanguageStrings(),
-    BuiltinInList(), BuiltinListDifference(), BuiltinListEquals(),
+    BuiltinInList(), BuiltinIsMarked(), BuiltinListCountMatching(),
+    BuiltinListDifference(), BuiltinListEquals(),
     BuiltinListIntersection(), BuiltinListitem(), BuiltinListRe(),
-    BuiltinListReGroup(), BuiltinListSort(), BuiltinListSplit(), BuiltinListUnion(),
-    BuiltinLookup(),
+    BuiltinListReGroup(), BuiltinListRemoveDuplicates(), BuiltinListSort(),
+    BuiltinListSplit(), BuiltinListUnion(),BuiltinLookup(),
     BuiltinLowercase(), BuiltinMod(), BuiltinMultiply(), BuiltinNot(), BuiltinOndevice(),
     BuiltinOr(), BuiltinPrint(), BuiltinRatingToStars(), BuiltinRawField(), BuiltinRawList(),
     BuiltinRe(), BuiltinReGroup(), BuiltinRound(), BuiltinSelect(), BuiltinSeriesSort(),
-    BuiltinShorten(), BuiltinStrcat(), BuiltinStrcatMax(),
+    BuiltinSetGlobals(), BuiltinShorten(), BuiltinStrcat(), BuiltinStrcatMax(),
     BuiltinStrcmp(), BuiltinStrInList(), BuiltinStrlen(), BuiltinSubitems(),
     BuiltinSublist(),BuiltinSubstr(), BuiltinSubtract(), BuiltinSwapAroundArticles(),
     BuiltinSwapAroundComma(), BuiltinSwitch(),

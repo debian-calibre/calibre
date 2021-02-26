@@ -25664,7 +25664,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.11.0";
+        CALIBRE_VERSION = "5.12.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -25761,6 +25761,34 @@ return this.__repr__();
         
         
 
+        function FullBookSearch() {
+            if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
+            FullBookSearch.prototype.__init__.apply(this, arguments);
+        }
+        FullBookSearch.prototype.__init__ = function __init__() {
+            var self = this;
+            var start_spine_index;
+            start_spine_index = ρσ_exists.d(current_spine_item()).index;
+            if (!(typeof start_spine_index !== "undefined" && start_spine_index !== null)) {
+                start_spine_index = -1;
+            }
+            self.start_spine_index = start_spine_index;
+            self.progress_frac_at_start = progress_frac();
+            self.first_result_shown = false;
+        };
+        if (!FullBookSearch.prototype.__init__.__module__) Object.defineProperties(FullBookSearch.prototype.__init__, {
+            __module__ : {value: "read_book.iframe"}
+        });
+        FullBookSearch.__argnames__ = FullBookSearch.prototype.__init__.__argnames__;
+        FullBookSearch.__handles_kwarg_interpolation__ = FullBookSearch.prototype.__init__.__handles_kwarg_interpolation__;
+        FullBookSearch.prototype.__repr__ = function __repr__ () {
+                        return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
+        };
+        FullBookSearch.prototype.__str__ = function __str__ () {
+            return this.__repr__();
+        };
+        Object.defineProperty(FullBookSearch.prototype, "__bases__", {value: []});
+
         function IframeBoss() {
             if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
             IframeBoss.prototype.__bind_methods__.call(this);
@@ -25843,6 +25871,7 @@ return this.__repr__();
             self.content_ready = false;
             self.last_window_width = self.last_window_height = -1;
             self.forward_keypresses = false;
+            self.full_book_search_in_progress = null;
             set_boss(self);
             handlers = (function(){
                 var ρσ_d = Object.create(null);
@@ -26324,7 +26353,7 @@ return this.__repr__();
         });
         IframeBoss.prototype.content_loaded_stage2 = function content_loaded_stage2() {
             var self = this;
-            var csi, ipos, spine, files, spine_index, si, i;
+            var csi, ipos, spine, files, spine_index, si, i, load_event;
             reset_find_caches();
             self.connect_links();
             if (runtime.is_standalone_viewer) {
@@ -26384,6 +26413,9 @@ return this.__repr__();
             reset_touch_handlers();
             window.setTimeout(self.update_cfi, 0);
             window.setTimeout(self.update_toc_position, 0);
+            load_event = document.createEvent("Event");
+            load_event.initEvent("load", false, false);
+            window.dispatchEvent(load_event);
         };
         if (!IframeBoss.prototype.content_loaded_stage2.__module__) Object.defineProperties(IframeBoss.prototype.content_loaded_stage2, {
             __module__ : {value: "read_book.iframe"}
@@ -26881,9 +26913,31 @@ return this.__repr__();
         });
         IframeBoss.prototype.show_search_result = function show_search_result(data, from_load) {
             var self = this;
+            var sr, ρσ_unpack, x, y, discovered;
+            sr = data.search_result;
+            if (sr.on_discovery) {
+                if (sr.result_num === 1) {
+                    self.full_book_search_in_progress = new FullBookSearch;
+                } else if (ρσ_exists.d(self.full_book_search_in_progress).first_result_shown) {
+                    return;
+                }
+            }
             self.last_search_at = window.performance.now();
-            if (select_search_result(data.search_result)) {
+            ρσ_unpack = [scroll_viewport.x(), scroll_viewport.y()];
+            x = ρσ_unpack[0];
+            y = ρσ_unpack[1];
+            if (select_search_result(sr)) {
                 self.ensure_selection_visible();
+                if (self.full_book_search_in_progress && !self.full_book_search_in_progress.first_result_shown && sr.on_discovery) {
+                    discovered = false;
+                    if (progress_frac() >= self.full_book_search_in_progress.progress_frac_at_start || current_spine_item().index !== self.full_book_search_in_progress.start_spine_index) {
+                        self.full_book_search_in_progress.first_result_shown = true;
+                        discovered = true;
+                    } else {
+                        scroll_viewport.scroll_to(x, y);
+                    }
+                    ρσ_interpolate_kwargs.call(self, self.send_message, ["search_result_discovered"].concat([ρσ_desugar_kwargs({search_result: data.search_result, discovered: discovered})]));
+                }
             } else {
                 ρσ_interpolate_kwargs.call(self, self.send_message, ["search_result_not_found"].concat([ρσ_desugar_kwargs({search_result: data.search_result})]));
             }
@@ -27274,6 +27328,7 @@ return this.__repr__();
         ρσ_modules["read_book.iframe"].layout_style = layout_style;
         ρσ_modules["read_book.iframe"].cancel_drag_scroll = cancel_drag_scroll;
         ρσ_modules["read_book.iframe"].EPUBReadingSystem = EPUBReadingSystem;
+        ρσ_modules["read_book.iframe"].FullBookSearch = FullBookSearch;
         ρσ_modules["read_book.iframe"].IframeBoss = IframeBoss;
         ρσ_modules["read_book.iframe"].main = main;
     })();
@@ -34066,14 +34121,14 @@ return this.__repr__();
                 }
             }
             var ρσ_Iter11 = ρσ_Iterable(ρσ_list_decorate([ [_("Goodreads"), "https://www.goodreads.com/book/author/{author}"], [_("Wikipedia"), 
-            "https://en.wikipedia.org/w/index.php?search={author}"], [_("Google books"), "https://www.google.com/search?tbm=bks&q=inauthor:%22{author}%22"] ]));
+            "https://en.wikipedia.org/w/index.php?search={author}"], [_("Google Books"), "https://www.google.com/search?tbm=bks&q=inauthor:%22{author}%22"] ]));
             for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
                 ρσ_unpack = ρσ_Iter11[ρσ_Index11];
                 name = ρσ_unpack[0];
                 url = ρσ_unpack[1];
                 author_links.appendChild(E.li(link_for(name, url)));
             }
-            var ρσ_Iter12 = ρσ_Iterable(ρσ_list_decorate([ [_("Goodreads"), "https://www.goodreads.com/search?q={author}+{title}&search%5Bsource%5D=goodreads&search_type=books&tab=books"], [_("Google books"), 
+            var ρσ_Iter12 = ρσ_Iterable(ρσ_list_decorate([ [_("Goodreads"), "https://www.goodreads.com/search?q={author}+{title}&search%5Bsource%5D=goodreads&search_type=books&tab=books"], [_("Google Books"), 
             "https://www.google.com/search?tbm=bks&q=inauthor:%22{author}%22+intitle:%22{title}%22"], [_("Amazon"), 
             "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Dstripbooks&field-keywords={author}+{title}"] ]));
             for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
@@ -36860,7 +36915,7 @@ return this.__repr__();
                 has_space_below = end.y + end.height < container.offsetHeight - bar_height - buffer;
                 put_below = has_space_below;
             } else {
-                has_space_above = end.y + bar_height - buffer > 0;
+                has_space_above = end.y - bar_height - buffer > 0;
                 put_below = !has_space_above;
             }
             top = place_vertically((put_below) ? end.y + end.height : end.y, put_below);
@@ -39068,6 +39123,7 @@ return this.__repr__();
         var _ = ρσ_modules.gettext.gettext;
 
         var error_dialog = ρσ_modules.modals.error_dialog;
+        var question_dialog = ρσ_modules.modals.question_dialog;
 
         var create_bookmarks_panel = ρσ_modules["read_book.bookmarks"].create_bookmarks_panel;
 
@@ -39655,11 +39711,22 @@ return this.__repr__();
                     return ρσ_anonfunc;
                 })(), "bug"), ac(_("Reset interface"), _("Reset E-book viewer panels, toolbars and scrollbars to defaults"), (function() {
                     var ρσ_anonfunc = function () {
-                        var sd;
-                        self.overlay.hide();
-                        ui_operations.reset_interface();
-                        sd = get_session_data();
-                        sd.set("skipped_dialogs", session_defaults.skipped_dialogs);
+                        question_dialog(_("Are you sure?"), _("Are you sure you want to reset the viewer interface to its default appearance?"), (function() {
+                            var ρσ_anonfunc = function (yes) {
+                                var sd;
+                                if (yes) {
+                                    self.overlay.hide();
+                                    ui_operations.reset_interface();
+                                    sd = get_session_data();
+                                    sd.set("skipped_dialogs", session_defaults.skipped_dialogs);
+                                }
+                            };
+                            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                                __argnames__ : {value: ["yes"]},
+                                __module__ : {value: "read_book.overlay"}
+                            });
+                            return ρσ_anonfunc;
+                        })());
                     };
                     if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
                         __module__ : {value: "read_book.overlay"}
@@ -42085,6 +42152,10 @@ return this.__repr__();
             this.update_scroll_speed = View.prototype.update_scroll_speed.bind(this);
             this.update_color_scheme = View.prototype.update_color_scheme.bind(this);
             this.toggle_reference_mode = View.prototype.toggle_reference_mode.bind(this);
+            this.discover_search_result = View.prototype.discover_search_result.bind(this);
+            this.handle_search_result_discovery = View.prototype.handle_search_result_discovery.bind(this);
+            this.search_result_discovered = View.prototype.search_result_discovered.bind(this);
+            this.search_result_not_found = View.prototype.search_result_not_found.bind(this);
             this.show_search_result = View.prototype.show_search_result.bind(this);
             this.highlight_action = View.prototype.highlight_action.bind(this);
         }});
@@ -42224,18 +42295,8 @@ return this.__repr__();
                 ρσ_d["update_cfi"] = self.on_update_cfi;
                 ρσ_d["update_progress_frac"] = self.on_update_progress_frac;
                 ρσ_d["update_toc_position"] = self.on_update_toc_position;
-                ρσ_d["search_result_not_found"] = (function() {
-                    var ρσ_anonfunc = function (data) {
-                        if (ui_operations.search_result_not_found) {
-                            ui_operations.search_result_not_found(data.search_result);
-                        }
-                    };
-                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                        __argnames__ : {value: ["data"]},
-                        __module__ : {value: "read_book.view"}
-                    });
-                    return ρσ_anonfunc;
-                })();
+                ρσ_d["search_result_not_found"] = self.search_result_not_found;
+                ρσ_d["search_result_discovered"] = self.search_result_discovered;
                 ρσ_d["annotations"] = self.on_annotations_message;
                 ρσ_d["tts"] = self.on_tts_message;
                 ρσ_d["hints"] = self.on_hints_message;
@@ -44194,6 +44255,65 @@ return this.__repr__();
         if (!View.prototype.toggle_reference_mode.__module__) Object.defineProperties(View.prototype.toggle_reference_mode, {
             __module__ : {value: "read_book.view"}
         });
+        View.prototype.discover_search_result = function discover_search_result(sr) {
+            var self = this;
+            if (sr.result_num === 1) {
+                self.search_result_discovery = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["queue"] = [];
+                    ρσ_d["on_discovery"] = sr.on_discovery;
+                    ρσ_d["in_flight"] = null;
+                    ρσ_d["discovered"] = false;
+                    return ρσ_d;
+                }).call(this);
+            }
+            if (!self.search_result_discovery || self.search_result_discovery.discovered || self.search_result_discovery.on_discovery !== sr.on_discovery) {
+                return;
+            }
+            self.search_result_discovery.queue.push(sr);
+            if (!self.search_result_discovery.in_flight) {
+                self.show_search_result(self.search_result_discovery.queue.shift());
+            }
+        };
+        if (!View.prototype.discover_search_result.__argnames__) Object.defineProperties(View.prototype.discover_search_result, {
+            __argnames__ : {value: ["sr"]},
+            __module__ : {value: "read_book.view"}
+        });
+        View.prototype.handle_search_result_discovery = function handle_search_result_discovery(sr, discovered) {
+            var self = this;
+            if (ρσ_exists.d(self.search_result_discovery).on_discovery === sr.on_discovery) {
+                self.search_result_discovery.in_flight = null;
+                if (discovered) {
+                    self.search_result_discovery.discovered = true;
+                    ui_operations.search_result_discovered(sr);
+                } else if (!self.search_result_discovery.discovered && self.search_result_discovery.queue.length) {
+                    self.show_search_result(self.search_result_discovery.queue.shift());
+                }
+            }
+        };
+        if (!View.prototype.handle_search_result_discovery.__argnames__) Object.defineProperties(View.prototype.handle_search_result_discovery, {
+            __argnames__ : {value: ["sr", "discovered"]},
+            __module__ : {value: "read_book.view"}
+        });
+        View.prototype.search_result_discovered = function search_result_discovered(data) {
+            var self = this;
+            self.handle_search_result_discovery(data.search_result, data.discovered);
+        };
+        if (!View.prototype.search_result_discovered.__argnames__) Object.defineProperties(View.prototype.search_result_discovered, {
+            __argnames__ : {value: ["data"]},
+            __module__ : {value: "read_book.view"}
+        });
+        View.prototype.search_result_not_found = function search_result_not_found(data) {
+            var self = this;
+            if (ui_operations.search_result_not_found) {
+                ui_operations.search_result_not_found(data.search_result);
+            }
+            self.handle_search_result_discovery(data.search_result, false);
+        };
+        if (!View.prototype.search_result_not_found.__argnames__) Object.defineProperties(View.prototype.search_result_not_found, {
+            __argnames__ : {value: ["data"]},
+            __module__ : {value: "read_book.view"}
+        });
         View.prototype.show_search_result = function show_search_result(sr) {
             var self = this;
             if (self.currently_showing.name === sr.file_name) {
@@ -44206,6 +44326,9 @@ return this.__repr__();
                     ρσ_d["replace_history"] = true;
                     return ρσ_d;
                 }).call(this)})]));
+            }
+            if (ρσ_exists.d(self.search_result_discovery).on_discovery === sr.on_discovery) {
+                self.search_result_discovery.in_flight = sr.result_num;
             }
         };
         if (!View.prototype.show_search_result.__argnames__) Object.defineProperties(View.prototype.show_search_result, {
@@ -44834,7 +44957,11 @@ return this.__repr__();
         var show_search_result = from_python((function() {
             var ρσ_anonfunc = function show_search_result(sr) {
                 if (view) {
-                    view.show_search_result(sr);
+                    if (sr.on_discovery) {
+                        view.discover_search_result(sr);
+                    } else {
+                        view.show_search_result(sr);
+                    }
                 }
             };
             if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
@@ -45309,6 +45436,16 @@ return this.__repr__();
             ui_operations.search_result_not_found = (function() {
                 var ρσ_anonfunc = function (sr) {
                     to_python.search_result_not_found(sr);
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["sr"]},
+                    __module__ : {value: null}
+                });
+                return ρσ_anonfunc;
+            })();
+            ui_operations.search_result_discovered = (function() {
+                var ρσ_anonfunc = function (sr) {
+                    to_python.search_result_discovered(sr);
                 };
                 if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
                     __argnames__ : {value: ["sr"]},

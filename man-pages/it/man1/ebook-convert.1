@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "febbraio 12, 2021" "5.11.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "febbraio 26, 2021" "5.12.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -218,7 +218,7 @@ Per impostazione predefinita, Calibre utilizza la forma abbreviata per varie pro
 .INDENT 0.0
 .TP
 .B \-\-extra\-css
-Questo può essere il percorso a un documento di stile CSS o al codice CSS. Il CSS verrà aggiunto agli stili del documento sorgente e pertanto può essere usato per ridefinire gli stili esistenti.
+Questo può essere il percorso di un foglio di stile CSS o semplice codice CSS. Il CSS verrà unito alle regole di stile del file sorgente e pertanto può essere usato per prevalere su di esse.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -416,7 +416,7 @@ Controlla il rilevamento automatico della struttura del documento.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP as chapter titles as well as any tags that have class=\fB"\fPchapter\fB"\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB"\fP/\fB"\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+Un\fB\(aq\fPespressione XPath per rilevare i titoli dei capitoli. Per impostazione predefinita si considerano come titoli di capitolo i tag <h1> o <h2> che contengono le parole \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP o \fB"\fPpart\fB"\fP, così come ogni tag che contenga class=\fB"\fPchapter\fB"\fP\&. L\fB\(aq\fPespressione usata deve restituire un elenco di elementi. Per disabilitare la rilevazione dei capitoli, usa l\fB\(aq\fPespressione \fB"\fP/\fB"\fP\&. Vedi il Tutorial XPath nel Manuale utente di Calibre per ulteriore aiuto nell\fB\(aq\fPusare questa funzione.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -451,7 +451,7 @@ Remove the first image from the input e\-book. Useful if the input document has 
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-Un\fB\(aq\fPespressione XPath per rilevare la posizione nel document da cui cominciare la lettura. Alcuni programmi di lettura e\-book (in particolare Kindle) usano questa posizione come quella in cui il libro viene aperto. Vedi il tutorial XPath nel Manuale Utente di calibre per maggiori informazioni sull\fB\(aq\fPutilizzo di questa funzione.
+Un\fB\(aq\fPespressione XPath per rilevare la posizione nel documento da cui cominciare la lettura. Alcuni programmi di lettura e\-book (in particolare Kindle) usano questa posizione come quella in cui il libro viene aperto. Vedi il tutorial XPath nel Manuale Utente di calibre per maggiori informazioni sull\fB\(aq\fPutilizzo di questa funzione.
 .UNINDENT
 .SH INDICE
 .sp
@@ -479,7 +479,7 @@ L\fB\(aq\fPespressione XPath che specifica tutti i tag che devono essere aggiunt
 .INDENT 0.0
 .TP
 .B \-\-max\-toc\-links
-Massimo numero di link da inserire nell\fB\(aq\fPindice. Impostare a 0 per disabilitarlo. Il default è 50. I link sono aggiunti all\fB\(aq\fPindice soltanto se non è già stato raggiunto il numero di capitoli impostati.
+Massimo numero di collegamenti da inserire nell\fB\(aq\fPindice. Inserisci 0 per disabilitare. Il valore predefinito è 50. I collegamenti sono aggiunti all\fB\(aq\fPindice soltanto se non viene raggiunto il valore soglia dei capitoli.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -494,7 +494,7 @@ Rimuovi dall\fB\(aq\fPindice le voci il cui titolo corrisponde alla espressione 
 .INDENT 0.0
 .TP
 .B \-\-toc\-threshold
-Se viene rilevato un numero di capitoli inferiore a questo, i collegamenti saranno aggiunti all\fB\(aq\fPindice. Predefinito: 6
+Se viene rilevato un numero di capitoli inferiore a questo numero, i collegamenti interni al libro saranno aggiunti all\fB\(aq\fPindice. Predefinito: 6
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -567,7 +567,7 @@ Imposta la serie alla quale questo e\-book appartiene.
 .INDENT 0.0
 .TP
 .B \-\-series\-index
-Imposta l\fB\(aq\fPindice analitico del libro in questa serie.
+Imposta la numerazione del libro in questa serie.
 .UNINDENT
 .INDENT 0.0
 .TP

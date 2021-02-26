@@ -156,7 +156,8 @@ The functions available are listed below. Note that the definitive documentation
     * ``contains(pattern, text if match, text if not match)`` -- checks if field contains matches for the regular expression `pattern`.
       Returns `text if match` if matches are found, otherwise it returns `text if no match`.
     * ``count(separator)`` -- interprets the value as a list of items separated by `separator`, returning the number of items in the list.
-      Most lists use a comma as the separator, but authors uses an ampersand. Examples: `{tags:count(,)}`, `{authors:count(&)}`
+      Most lists use a comma as the separator, but authors uses an ampersand. Examples: `{tags:count(,)}`, `{authors:count(&)}`.
+      Aliases: ``count()``, ``list_count()``
     * ``format_number(template)`` -- interprets the field as a number and format that number using a Python formatting template such as
       "{0:5.2f}" or "{0:,d}" or "${0:5,.2f}". The field_name part of the template must be a 0 (zero) (the "{0:" in the above examples).
       You can leave off the leading "{0:" and trailing "}" if the template contains only a format. See the template language and Python
@@ -276,7 +277,7 @@ The syntax of the language is shown by the following grammar. For a discussion o
     expression      ::= identifier | constant | function | assignment | compare | if_expression
     function        ::= identifier '(' expression [ ',' expression ]* ')'
     compare         ::= expression compare_op expression
-    compare_op      ::= '==' | '!=' | '>=' | '>' | '<=' | '<' | '==#' | '!=#' | '>=#' | '>#' | '<=#' | '<#'
+    compare_op      ::= '==' | '!=' | '>=' | '>' | '<=' | '<' | 'in' | '==#' | '!=#' | '>=#' | '>#' | '<=#' | '<#'
     if_expression   ::= 'if' expression 'then' expression_list [elif_expression] ['else' expression_list] 'fi'
     elif_expression ::= 'elif' expression 'then' expression_list elif_expression | ''
     assignment      ::= identifier '=' expression
@@ -460,8 +461,19 @@ parameters can be statements (sequences of expressions). Note that the definitiv
     * ``fractional_part(x)`` -- returns the value after the decimal point. For example, ``fractional_part(3.14)`` returns ``0.14``.
       Throws an exception if ``x`` is not a number.
     * ``has_cover()`` -- return ``Yes`` if the book has a cover, otherwise return the empty string.
-    * ``not(value)`` -- returns the string "1" if the value is empty, otherwise returns the empty string. This function works well
-      with test or first_non_empty.
+    * ``is_marked()`` -- check whether the book is `marked` in calibre. If it is then return the value of the mark,
+      either `true` (lower case) or the comma-separated list of named marks. Returns '' (the empty string) if the book is not marked.
+      This function works only in the GUI.
+    * ``list_contains(separator, pattern, found_val, ..., not_found_val)`` -- (Alias of ``in_list``) Interpret the field as a list
+      of items separated by `separator`, evaluating the `pattern` against each value in the list. If the `pattern` matches a value,
+      return `found_val`, otherwise return `not_found_val`. The `pattern` and `found_value` can be repeated as many times as desired,
+      permitting returning different values depending on the search. The patterns are checked in order. The first match is returned.
+      Aliases: ``in_list()``, ``list_contains()``
+    * ``list_count(separator)`` -- interprets the value as a list of items separated by `separator`, returning the number of items
+      in the list. Aliases: ``count()``, ``list_count()``
+    * ``list_count_matching(list, pattern, separator)`` -- interprets ``list`` as a list of items separated by ``separator``,
+      returning the number of items in the list that match the regular expression ``pattern``.
+      Aliases: ``list_count_matching()``, ``count_matching()``
     * ``list_difference(list1, list2, separator)`` -- return a list made by removing from `list1` any item found in `list2`,
       using a case-insensitive comparison. The items in `list1` and `list2` are separated by separator, as are the items in the returned list.
     * ``list_equals(list1, sep1, list2, sep2, yes_val, no_val)`` -- return `yes_val` if `list1` and `list2` contain the same items,
@@ -474,20 +486,27 @@ parameters can be statements (sequences of expressions). Note that the definitiv
       If `opt_replace` is not the empty string, then apply the replacement before adding the item to the returned list.
     * ``list_re_group(src_list, separator, include_re, search_re, template_for_group_1, for_group_2, ...)`` -- Like list_re except
       replacements are not optional. It uses re_group(item, search_re, template ...) when doing the replacements.
+    * ``list_remove_duplicates(list, separator)`` -- return a list made by removing duplicate items in the source list. If items
+      differ only in case, the last of them is returned. The items in source list are separated by separator, as are
+      the items in the returned list.
     * ``list_sort(list, direction, separator)`` -- return list sorted using a case-insensitive sort. If ``direction`` is zero, ``list`` is
       sorted ascending, otherwise descending. The list items are separated by separator, as are the items in the returned list.
-    * ``list_union(list1, list2, separator)`` -- return a list made by merging the items in ``list1`` and ``list2``, removing duplicate items using
-      a case-insensitive comparison. If items differ in case, the one in ``list1`` is used. The items in ``list1`` and ``list2`` are separated by
-      ``separator``, as are the items in the returned list.
+    * ``list_union(list1, list2, separator)`` -- return a list made by merging the items in ``list1`` and ``list2``, removing
+      duplicate items using a case-insensitive comparison. If items differ in case, the one in ``list1`` is used. The items
+      in ``list1`` and ``list2`` are separated by ``separator``, as are the items in the returned list.
+      Aliases: ``merge_lists()``, ``list_union()``
     * ``mod(x)`` -- returns the remainder of ``x / y``, where ``x``, ``y``, and the result are integers. Throws an exception if either ``x`` or
       ``y`` is not a number.
     * ``multiply(x, y, ...)`` -- returns the product of its arguments. Throws an exception if any argument is not a number.
+    * ``not(value)`` -- returns the string "1" if the value is empty, otherwise returns the empty string. This function works well
+      with test or first_non_empty.
     * ``ondevice()`` -- return the string "Yes" if ``ondevice`` is set, otherwise return the empty string
     * ``or(value, value, ...)`` -- returns the string ``"1"`` if any value is not empty, otherwise returns the empty string. This function works
       well with test or `first_non_empty`. You can have as many values as you want.
     * ``print(a, b, ...)`` -- prints the arguments to standard output. Unless you start calibre from the command line (``calibre-debug -g``),
       the output will go to a black hole.
-    * ``raw_field(name)`` -- returns the metadata field named by name without applying any formatting.
+    * ``raw_field(name [, optional_default]))`` -- returns the metadata field named by name without applying any formatting.
+      It evaluates and returns the optional second argument ``default`` if the field is undefined (``None``).
     * ``raw_list(name, separator)`` -- returns the metadata list named by name without applying any formatting or sorting and with items separated by separator.
     * ``re_group(val, pattern, template_for_group_1, for_group_2, ...)`` --  return a string made by applying the regular expression pattern to
       the val and replacing each matched instance with the string computed by replacing each matched group by the value returned by the corresponding
@@ -534,31 +553,19 @@ parameters can be statements (sequences of expressions). Note that the definitiv
 Using General Program Mode
 -----------------------------------
 
-For more complicated template programs it is often easier to avoid template syntax (all the `{` and `}` characters), instead writing a more
-classic-looking program. You can do this by beginning the template with `program:`. The template program is compiled and executed. No template
-processing (e.g., formatting, prefixes, suffixes) is done. The special variable `$` is not set.
+For more complicated template programs it is often easier to avoid template syntax (all the `{` and `}` characters), instead writing
+a more classic-looking program. You can do this by beginning the template with `program:`. The template program is compiled
+and executed. No template processing (e.g., formatting, prefixes, suffixes) is done. The special variable `$` is not set.
 
 One advantage of `program:` mode is that braces are no longer special. For example, it is not necessary to use `[[` and `]]` when using the
 `template()` function. Another advantage is readability.
 
-Template Program Mode and General Program Mode support classic **relational (comparison) operators**: ``==``, ``!=``, ``<``,
-``<=``, ``>``, ``>=``. The operators return '1' if they evaluate to True, otherwise ''. They do case-insensitive
-string comparison using lexical order. Examples:
-
-    * ``program: field('series') == 'foo'`` returns '1' if the book's series is 'foo'.
-    * ``program: if field('series') != 'foo' then 'bar' else 'mumble' fi`` returns 'bar' if the book's series is not 'foo', else 'mumble'.
-    * ``program: if or(field('series') == 'foo', field('series') == '1632') then 'yes' else 'no' fi`` returns 'yes' if series is either 'foo'
-      or '1632', otherwise 'no'.
-    * ``program: if '11' > '2' then 'yes' else 'no' fi`` returns 'no' because it is doing a lexical comparison. If you want numeric comparison
-      instead of lexical comparison, use the operators ``==#``, ``!=#``, ``<#``, ``<=#``, ``>#``, ``>=#``. In this case the left and right values
-      are set to zero if they are undefined or the empty string. If they are not numbers then an error is raised.
-
-Both General and Template Program Modes support **``if`` expressions** with the following syntax::
+General and Template Program Modes both support **``if`` expressions** with the following syntax::
 
     if <<expression>> then
         <<expression_list>>
     [elif <<expression>> then <<expression_list>>]*
-    [else <<expression_list>> ]
+    [else <<expression_list>>]
     fi
 
 The elif and else parts are optional. The words ``if``, ``then``, ``elif``, ``else``, and ``fi`` are reserved; you cannot use them as
@@ -589,16 +596,37 @@ An ``if`` produces a value like any other language expression. This means that a
     * ``program: a = if field('series') then 'foo' else 'bar' fi; a``
     * ``program: a = field(if field('series') then 'series' else 'title' fi); a``
 
+Both modes support classic **relational (comparison) operators**: ``==``, ``!=``, ``<``,
+``<=``, ``>``, ``>=``. The operators return '1' if they evaluate to True, otherwise ''. They do case-insensitive
+string comparison using lexical order. The binary operator ``in`` is supported. The left hand expression is interpreted
+as a regular expression pattern. The ``in`` operator evaluates to '1' if the pattern matches the value of the right hand expression.
+The match is case-insensitive.
+
+    Examples:
+
+    * ``program: field('series') == 'foo'`` returns '1' if the book's series is 'foo', otherwise ''.
+    * ``program: 'f.o' in field('series')`` returns '1' if the book's series matches the regular expression ``f.o``, otherwise ''.
+    * ``program: if field('series') != 'foo' then 'bar' else 'mumble' fi`` returns 'bar' if the book's series is not 'foo', else 'mumble'.
+    * ``program: if or(field('series') == 'foo', field('series') == '1632') then 'yes' else 'no' fi`` returns 'yes' if series is either
+      'foo' or '1632', otherwise 'no'.
+    * ``program: if '^(foo|1632)$' in field('series') then 'yes' else 'no' fi`` returns 'yes' if series is either 'foo' or '1632',
+      otherwise 'no'.
+    * ``program: if '11' > '2' then 'yes' else 'no' fi`` returns 'no' because it is doing a lexical comparison. If you want numeric
+      comparison instead of lexical comparison, use the operators ``==#``, ``!=#``, ``<#``, ``<=#``, ``>#``, ``>=#``. In this case
+      the left and right values are set to zero if they are undefined or the empty string. If they are not numbers
+      then an error is raised.
+
 The template language supports **``for`` expressions** with the following syntax::
 
-    for <<id>> in <<expression>>:
+    for <<id>> in <<expression>> [separator <<expression>>]:
         <<expression_list>>
     rof
 
-The expression must evaluate to either a metadata field lookup key, for example ``tags`` or ``#genre``, or a comma-separated list of
-values. If the result is a valid lookup name then the field's value is fetched, otherwise the list is broken into its
-individual values. Each resulting value in the list is assigned to the variable ``id`` then the ``expression_list``
-is evaluated.
+The expression must evaluate to either a metadata field lookup key, for example ``tags`` or ``#genre``, or a list of
+values. If the result is a valid lookup name then the field's value is fetched and the separator specified for that field type
+is used. If the result isn't a valid lookup name then it is assumed to be a list of values. If the optional keyword ``separator``
+is supplied then the list values must be separated by the result of evaluating the second ``expression``. If the separator is not specified then the list values must be separated by commas. Each resulting value in the list is assigned to the
+variable ``id`` then the ``expression_list`` is evaluated.
 
 Example: This template removes the first hierarchical name for each value in Genre (``#genre``), constructing a list with
 the new names::
@@ -658,7 +686,7 @@ and use it during the evaluation.
 
 **Developer: how to pass additional information**
 
-The additional information is a python dictionary containing pairs ``variable_name: variable_value`` where the values
+The additional information is a Python dictionary containing pairs ``variable_name: variable_value`` where the values
 should be strings. The template can access the dict, creating template local variables named ``variable_name`` containing the
 value ``variable_value``. The user cannot change the name so it is best to use names that won't collide with other
 template local variables, for example by prefixing the name with an underscore.
@@ -674,12 +702,18 @@ The full method signature is:
 
 **Template writer: how to access the additional information**
 
-You access the additional information in a template using the template function ``globals(id[=expression] [, id[=expression]]*)``
+You access the additional information (the ``globals`` dict) in a template using the template function
+``globals(id[=expression] [, id[=expression]]*)``
 where ``id`` is any legal variable name. This function checks whether the additional information provided by the developer
-contains the name. If it does then the function assigns the provided value to a template local variable with the given name.
+contains the name. If it does then the function assigns the provided value to a template local variable with that name.
 If the name is not in the additional information and if an ``expression`` is provided, the ``expression`` is evaluated and
 the result is assigned to the local variable. If neither a value nor an expression is provided, the function assigns
 the empty string (``''``) to the local variable.
+
+A template can set a value in the ``globals`` dict using the template function
+``set_globals(id[=expression] [, id[=expression]]*)``. This function sets the ``globals`` dict key:value pair ``id:value`` where
+``value`` is the value of the template local variable ``id``. If that local variable doesn't exist then ``value`` is
+set to the result of evaluating ``expression``.
 
 
 Notes on the difference between modes

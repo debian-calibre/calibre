@@ -33,7 +33,8 @@ class Node(object):
     NODE_FIRST_NON_EMPTY = 12
     NODE_FOR = 13
     NODE_GLOBALS = 14
-    NODE_CONTAINS = 15
+    NODE_SET_GLOBALS = 15
+    NODE_CONTAINS = 16
 
 
 class IfNode(Node):
@@ -46,11 +47,12 @@ class IfNode(Node):
 
 
 class ForNode(Node):
-    def __init__(self, variable, list_field_expr, block):
+    def __init__(self, variable, list_field_expr, separator, block):
         Node.__init__(self)
         self.node_type = self.NODE_FOR
         self.variable = variable
         self.list_field_expr = list_field_expr
+        self.separator = separator
         self.block = block
 
 
@@ -89,6 +91,13 @@ class GlobalsNode(Node):
     def __init__(self, expression_list):
         Node.__init__(self)
         self.node_type = self.NODE_GLOBALS
+        self.expression_list = expression_list
+
+
+class SetGlobalsNode(Node):
+    def __init__(self, expression_list):
+        Node.__init__(self)
+        self.node_type = self.NODE_SET_GLOBALS
         self.expression_list = expression_list
 
 
@@ -132,10 +141,11 @@ class FieldNode(Node):
 
 
 class RawFieldNode(Node):
-    def __init__(self, expression):
+    def __init__(self, expression, default=None):
         Node.__init__(self)
         self.node_type = self.NODE_RAW_FIELD
         self.expression = expression
+        self.default = default
 
 
 class FirstNonEmptyNode(Node):
@@ -311,6 +321,13 @@ class _Parser(object):
         except:
             return False
 
+    def token_is_separator(self):
+        try:
+            token = self.prog[self.lex_pos]
+            return token[1] == 'separator' and token[0] == self.LEX_ID
+        except:
+            return False
+
     def token_is_constant(self):
         try:
             return self.prog[self.lex_pos][0] == self.LEX_CONST
@@ -374,6 +391,11 @@ class _Parser(object):
             self.error(_("Missing 'in' in for statement"))
         self.consume()
         list_expr = self.infix_expr()
+        if self.token_is_separator():
+            self.consume()
+            separator = self.expr()
+        else:
+            separator = None
         if not self.token_op_is_colon():
             self.error(_("Missing colon (':') in for statement"))
         self.consume()
@@ -381,11 +403,11 @@ class _Parser(object):
         if not self.token_is_rof():
             self.error(_("Missing 'rof' in for statement"))
         self.consume()
-        return ForNode(variable, list_expr, block)
+        return ForNode(variable, list_expr, separator, block)
 
     def infix_expr(self):
         left = self.expr()
-        if self.token_op_is_string_infix_compare():
+        if self.token_op_is_string_infix_compare() or self.token_is_in():
             operator = self.token()
             return StringInfixNode(operator, left, self.expr())
         if self.token_op_is_numeric_infix_compare():
@@ -439,15 +461,15 @@ class _Parser(object):
                 self.error(_('Missing closing parenthesis'))
             if id_ == 'field' and len(arguments) == 1:
                 return FieldNode(arguments[0])
-            if id_ == 'raw_field' and len(arguments) == 1:
-                return RawFieldNode(arguments[0])
+            if id_ == 'raw_field' and (len(arguments) in (1, 2)):
+                return RawFieldNode(*arguments)
             if id_ == 'test' and len(arguments) == 3:
                 return IfNode(arguments[0], (arguments[1],), (arguments[2],))
             if id_ == 'first_non_empty' and len(arguments) > 0:
                 return FirstNonEmptyNode(arguments)
             if (id_ == 'assign' and len(arguments) == 2 and arguments[0].node_type == Node.NODE_RVALUE):
                 return AssignNode(arguments[0].name, arguments[1])
-            if id_ == 'arguments' or id_ == 'globals':
+            if id_ == 'arguments' or id_ == 'globals' or id_ == 'set_globals':
                 new_args = []
                 for arg in arguments:
                     if arg.node_type not in (Node.NODE_ASSIGN, Node.NODE_RVALUE):
@@ -458,6 +480,8 @@ class _Parser(object):
                     new_args.append(arg)
                 if id_ == 'arguments':
                     return ArgumentsNode(new_args)
+                if id_ == 'set_globals':
+                    return SetGlobalsNode(new_args)
                 return GlobalsNode(new_args)
             if id_ == 'contains' and len(arguments) == 4:
                 return ContainsNode(arguments)
@@ -503,6 +527,7 @@ class _Interpreter(object):
         "<=": lambda x, y: strcmp(x, y) <= 0,
         ">": lambda x, y: strcmp(x, y) > 0,
         ">=": lambda x, y: strcmp(x, y) >= 0,
+        "in": lambda x, y: re.search(x, y, flags=re.I),
         }
 
     def do_node_string_infix(self, prog):
@@ -585,6 +610,12 @@ class _Interpreter(object):
             res = self.locals[arg.left] = self.global_vars.get(arg.left, self.expr(arg.right))
         return res
 
+    def do_node_set_globals(self, prog):
+        res = ''
+        for arg in prog.expression_list:
+            res = self.global_vars[arg.left] = self.locals.get(arg.left, self.expr(arg.right))
+        return res
+
     def do_node_constant(self, prog):
         return prog.value
 
@@ -604,6 +635,8 @@ class _Interpreter(object):
         try:
             name = self.expr(prog.expression)
             res = getattr(self.parent_book, name, None)
+            if res is None and prog.default is not None:
+                return self.expr(prog.default)
             if res is not None:
                 if isinstance(res, list):
                     fm = self.parent_book.metadata_for_field(name)
@@ -629,12 +662,13 @@ class _Interpreter(object):
 
     def do_node_for(self, prog):
         try:
+            separator = ',' if prog.separator is None else self.expr(prog.separator)
             v = prog.variable
             f = self.expr(prog.list_field_expr)
             res = getattr(self.parent_book, f, f)
             if res is not None:
                 if not isinstance(res, list):
-                    res = res.split(',')
+                    res = [r.strip() for r in res.split(separator) if r.strip()]
                 ret = ''
                 for x in res:
                     self.locals[v] = x
@@ -668,6 +702,7 @@ class _Interpreter(object):
         Node.NODE_FIRST_NON_EMPTY:do_node_first_non_empty,
         Node.NODE_FOR:            do_node_for,
         Node.NODE_GLOBALS:        do_node_globals,
+        Node.NODE_SET_GLOBALS:    do_node_set_globals,
         Node.NODE_CONTAINS:       do_node_contains,
         }
 

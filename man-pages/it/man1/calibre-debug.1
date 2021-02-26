@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "febbraio 12, 2021" "5.11.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "febbraio 26, 2021" "5.12.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -41,22 +41,22 @@ calibre\-debug [opzioni]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre E\-book viewer and the calibre editor in debug mode.
+Diverse interfacce da linea di comando utili per il debug di calibre. Senza opzioni,
+questo comando avvia un interprete Python integrato. Puoi anche avviare l\(aqinterfaccia
+principale di calibre, il lettore di e\-book di calibre e l\(aqeditor di calibre in modalità debug.
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the E\-book diff tool and so
-on.
+Contiene anche interfacce per diverse parti di calibre che non hanno
+strumenti da linea di comando specifici, come la riduzione dei caratteri, lo strumento di
+comparazione e\-book, ecc.
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+Puoi anche usare \fBcalibre\-debug\fP per avviare script stand\-alone. Per farlo segui queste istruzioni:
 .INDENT 0.0
 .INDENT 3.5
 \fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .UNINDENT
 .UNINDENT
 .sp
-Everything after the \fB\-\-\fP is passed to the script.
+Tutto ciò che segue i \fB\-\-\fP è passato allo script.
 .sp
 Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH [OPZIONI]
@@ -98,7 +98,7 @@ Esegui codice Python nel file.
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Explode the book into the specified directory. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
+Esplodi il libro nella cartella specificata. Utilizzo: \-x file.epub cartella_di_output Esporta il libro come collezione di file HTML e metadati, che puoi modificare usando strumenti tipici dell\fB\(aq\fPHTML. Funziona con i file EPUB, AZW3, HTMLZ e DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
