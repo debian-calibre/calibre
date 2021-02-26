@@ -1,0 +1,27 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 26 Feb 2021 21:33:16 +0900
+Subject: Restore "chardet" module support
+
+Forwarded: not-needed
+
+Current Debian doesn't have "cchardet" module.
+---
+ src/calibre/test_build.py | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
+index c896fd1..f49776c 100644
+--- a/src/calibre/test_build.py
++++ b/src/calibre/test_build.py
+@@ -69,7 +69,10 @@ class BuildTest(unittest.TestCase):
+         del CHMFile, chmlib
+ 
+     def test_chardet(self):
+-        from cchardet import detect
++        try:
++            from cchardet import detect
++        except ImportError:
++            from  chardet import detect
+         raw = 'mūsi Füße'.encode('utf-8')
+         data = detect(raw)
+         self.assertEqual(data['encoding'].lower(), 'utf-8')
