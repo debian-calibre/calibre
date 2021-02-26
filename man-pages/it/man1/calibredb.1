@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "febbraio 12, 2021" "5.11.0" "calibre"
+.TH "CALIBREDB" "1" "febbraio 26, 2021" "5.12.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -371,13 +371,13 @@ Non sostituire il formato se esiste già
 .sp
 .nf
 .ft C
-calibredb remove_format [options] id fmt
+calibredb remove_format [opzioni] id fmt
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Remove the format fmt from the logical book identified by id. You can get id by using the search command. fmt should be a file extension like LRF or TXT or EPUB. If the logical book does not have fmt available, do nothing.
+Rimuovi il formato fmt identificato da id dal libro logico. Puoi ottenere l\(aqid usando il comando search. fmt deve essere un\(aqestensione di file come LRF, TXT o EPUB. Se il libro logico non ha un fmt disponibile, non fa niente.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH SHOW_METADATA
@@ -392,8 +392,8 @@ calibredb show_metadata [opzioni] id
 .UNINDENT
 .UNINDENT
 .sp
-Mostra i metadati salvati nel database di calibre per il libro identificato con id.
-id è un numero dal comando di ricerca.
+Mostra i metadati salvati nel database di calibre per il libro identificato da id.
+id è un numero identificativo del comando di ricerca.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -437,15 +437,15 @@ Elenca i nomi dei campi di metadati che possono essere utilizzati con l\fB\(aq\f
 .sp
 .nf
 .ft C
-calibredb export [options] ids
+calibredb export [opzioni] id
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Export the books specified by ids (a comma separated list) to the filesystem.
-The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
-an opf file). You can get id numbers from the search command.
+Esporta i libri specificati da id (una lista separata da virgole) su disco.
+L\(aqoperazione di esportazione salva tutti i formati del libro, la copertina e i metadati
+(in un file opf). Puoi ottenere i numeri di id dal comando cerca.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -721,14 +721,14 @@ Mostra i dettagli per ogni colonna
 .sp
 .nf
 .ft C
-calibredb remove_custom_column [options] label
+calibredb remove_custom_column [opzioni] etichetta
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Remove the custom column identified by label. You can see available
-columns with the custom_columns command.
+Rimuove la colonna personalizzata identificata dall\(aqetichetta. Puoi
+vedere le colonne disponibili con il comando custom_columns.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -868,18 +868,18 @@ La larghezza massima di una singola riga nell\fB\(aq\fPoutput. L\fB\(aq\fPimpost
 .sp
 .nf
 .ft C
-calibredb backup_metadata [options]
+calibredb backup_metadata [opzioni]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Effettua il backup dei metadati presenti nel database in un file OPF dedicato nella directory di
-ogni libro. Normalmente avviene in maniera automatica ma puoi eseguire questo
-commando per forzare una nuova creazione dei files OPF, con l\(aqopzione \-\-all.
+Effettua il backup dei metadati presenti nel database in file OPF dedicati nella cartella di
+ogni libro. Normalmente questo avviene in maniera automatica ma puoi eseguire questo
+comando per forzare una nuova creazione dei file OPF, con l\(aqopzione \-\-all.
 .sp
-Nota che normalmente non è necessario farlo dato che il backup dei files OPF viene effettuato
-automaticamente ogni volta che i metadati cambiano.
+Nota che normalmente non è necessario farlo dato che il backup dei file OPF viene
+effettuato automaticamente ogni volta che i metadati cambiano.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -930,7 +930,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
-Aggiorna i metadata nei file del formato selezionato. Specificarlo diverse volte per formati multipli. Di default vengono aggiornati tutti i formati.
+Aggiorna i metadati solamente nei file del formato specificato. Specificalo più volte per più formati. Per impostazione predefinita vengono aggiornati tutti i formati.
 .UNINDENT
 .SH SEARCH
 .INDENT 0.0

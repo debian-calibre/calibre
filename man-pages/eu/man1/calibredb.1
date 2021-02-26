@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "otsailak 12, 2021" "5.11.0" "calibre"
+.TH "CALIBREDB" "1" "otsailak 26, 2021" "5.12.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -190,7 +190,7 @@ The fields to display when listing books in the database. Should be a comma sepa
 .INDENT 0.0
 .TP
 .B \-\-for\-machine
-Generate output in JSON format, which is more suitable for machine parsing. Causes the line width and separator options to be ignored.
+Sortu irteera JSON formatuan,  makinen analisirako egokiagoa dena. Lerro zabalera eta bereizgailuaren aukerak baztertzea eragiten du.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -220,7 +220,7 @@ Eremuak bereizteko erabiltzen den testua. Lehenetsia: espazio bat.
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-The field by which to sort the results. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Default: id
+Emaitzak ordenatzeko eremua. Eskuragarri dauden eremuak: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Lehenetsia: id
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -246,7 +246,7 @@ Ezarri gehitutako liburu(ar)en egile izena
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-If books with similar titles and authors are found, merge the incoming formats (files) automatically into existing book records. A value of \fB"\fPignore\fB"\fP means duplicate formats are discarded. A value of \fB"\fPoverwrite\fB"\fP means duplicate formats in the library are overwritten with the newly added files. A value of \fB"\fPnew_record\fB"\fP means duplicate formats are placed into a new book record.
+Antzeko izenburuak eta egileak dituzten liburuak aurkitzen badira, batu automatikoki sarrerako formatuak (fitxategiak)  dauden liburuen erregistroetan. \fB"\fPEz ikusi egin\fB"\fP balioarekin bikoiztutako formatuak baztertu egiten dira. \fB"\fPGainidatzi\fB"\fP balioarekin liburutegian bikoiztu diren formatuak gehitu berri diren fitxategiekin gainidatzi egiten dira. \fB"\fPErregistro_berria\fB"\fP  balioak bikoiztutako formatuak liburu erregistro berri batean jartzen direla esan nahi du.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -256,7 +256,7 @@ Liburu\-azaleko lasterbidea gehitutako liburuan erabiltzeko
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Add books to database even if they already exist. Comparison is done based on book titles and authors. Note that the \fI\%\-\-automerge\fP option takes precedence.
+Gehitu liburuak datu\-basera, lehendik badaude ere. Konparazioa liburuen izenburuetan eta egileetan oinarrituta egiten da. Kontuan izan \fI\%\-\-automerge\fP aukerak lehentasuna duela.
 .UNINDENT
 .INDENT 0.0
 .TP

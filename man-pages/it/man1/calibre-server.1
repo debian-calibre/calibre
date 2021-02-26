@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "febbraio 12, 2021" "5.11.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "febbraio 26, 2021" "5.12.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -56,12 +56,12 @@ Path to the access log file. This log contains information about clients connect
 .INDENT 0.0
 .TP
 .B \-\-ajax\-timeout
-Time (in seconds) to wait for a response from the server when making queries.
+Tempo (in secondi) di attesa di risposta dal server dopo una richiesta.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Scegli il tipo di autenticazione adoperata.         Set the HTTP authentication mode used by the server. Set to \fB"\fPbasic\fB"\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB"\fPauto\fB"\fP, which will use \fB"\fPbasic\fB"\fP if SSL is configured otherwise it will use \fB"\fPdigest\fB"\fP\&.
+Scegli il tipo di autenticazione adoperato.         Set the HTTP authentication mode used by the server. Set to \fB"\fPbasic\fB"\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB"\fPauto\fB"\fP, which will use \fB"\fPbasic\fB"\fP if SSL is configured otherwise it will use \fB"\fPdigest\fB"\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -81,7 +81,7 @@ Banna gli indirizzi IP che hanno fallito più volte ad eseguire il login.    Blo
 .INDENT 0.0
 .TP
 .B \-\-book\-list\-mode
-Choose the default book list mode.  Set the default book list mode that will be used for new users. Individual users can override the default in their own settings. The default is to use a cover grid.
+Scegli la modalità predefinita per l\fB\(aq\fPelenco dei libri.      Set the default book list mode that will be used for new users. Individual users can override the default in their own settings. The default is to use a cover grid.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -101,7 +101,7 @@ Run process in background as a daemon (Linux only).
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-Restrict displayed user\-defined fields.     Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
+Limita i campi definiti dall\fB\(aq\fPutente mostrati.       Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -116,7 +116,7 @@ Password based authentication to access the server.         Normally, the server
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Fallback to auto\-detected interface.        If for some reason the server is unable to bind to the interface specified in the listen_on option, then it will try to detect an interface that connects to the outside world and bind to that. Questa opzione è abilitata come predefinita
+Interfaccia rilevata automaticamente come ripiego.  If for some reason the server is unable to bind to the interface specified in the listen_on option, then it will try to detect an interface that connects to the outside world and bind to that. Questa opzione è abilitata come predefinita
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -126,17 +126,17 @@ Consenti alle connessioni locali non autenticate di apportare modifiche.    Norm
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-Registra le richieste HTTP 404 (Non Trovata).       Normally, the server logs all HTTP requests for resources that are not found. This can generate a lot of log spam, if your server is targeted by bots. Use this option to turn it off. Questa opzione è abilitata come predefinita
+Registra le richieste HTTP 404 (Non Trovato).       Normally, the server logs all HTTP requests for resources that are not found. This can generate a lot of log spam, if your server is targeted by bots. Use this option to turn it off. Questa opzione è abilitata come predefinita
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
-Advertise OPDS feeds via BonJour.   Advertise the OPDS feeds via the BonJour service, so that OPDS based reading apps can detect and connect to the server automatically. Questa opzione è abilitata come predefinita
+Pubblicizza i feed OPDS con BonJour.        Advertise the OPDS feeds via the BonJour service, so that OPDS based reading apps can detect and connect to the server automatically. Questa opzione è abilitata come predefinita
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-Zero copy file transfers for increased performance.         This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. Questa opzione è abilitata come predefinita
+Trasferimenti di file in zero copy per prestazioni migliorate.      This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. Questa opzione è abilitata come predefinita
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -146,12 +146,12 @@ mostra questo messaggio di aiuto ed esci
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-Alcuni campi di metadata definiti dall\fB\(aq\fPutente sono stati ignorati.  Comma separated list of user\-defined metadata fields that will not be displayed by the Content server in the /opds and /mobile views. For example: my_rating,my_tags
+Campi di metadati dell\fB\(aq\fPutente da ignorare.  Comma separated list of user\-defined metadata fields that will not be displayed by the Content server in the /opds and /mobile views. For example: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-L\fB\(aq\fP interfaccia sulla quale rimanere in ascolto aspettando connessioni.      The default is to listen on all available IPv4 interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
+L\fB\(aq\fPinterfaccia su cui ascoltare in attesa di connessioni.    The default is to listen on all available IPv4 interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -166,42 +166,42 @@ Manage the database of users allowed to connect to this server. You can use it i
 .INDENT 0.0
 .TP
 .B \-\-max\-header\-line\-size
-Max. size of single HTTP header (in KB).
+Dimensione massima del singolo header HTTP (in KB).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-Maximum time for worker processes.  Maximum amount of time worker processes are allowed to run (in minutes). Set to zero for no limit.
+Tempo massimo dei processi di lavoro.       Maximum amount of time worker processes are allowed to run (in minutes). Set to zero for no limit.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-jobs
-Maximum number of worker processes.         I processi di lavoro vengono avviati in base alle necessità e utilizzati per lavori di grandi dimensioni come la preparazione di un libro per la visualizzazione, l\fB\(aq\fPaggiunta di libri, la conversione, ecc. Normalmente, il numero massimo di tali processi si basa sul numero di core della CPU. È possibile controllarlo con questa impostazione.
+Numero massimo di processi di lavoro.       I processi di lavoro vengono avviati in base alle necessità e utilizzati per lavori di grandi dimensioni come la preparazione di un libro per la visualizzazione, l\fB\(aq\fPaggiunta di libri, la conversione, ecc. Normalmente, il numero massimo di tali processi si basa sul numero di core della CPU. È possibile controllarlo con questa impostazione.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-log\-size
-Massima dimensione del log file (in MB).    The maximum size of log files, generated by the server. When the log becomes larger than this size, it is automatically rotated. Set to zero to disable log rotation.
+Dimensione massima del file di log (in MB).         The maximum size of log files, generated by the server. When the log becomes larger than this size, it is automatically rotated. Set to zero to disable log rotation.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-items
-Maximum number of books in OPDS feeds.      The maximum number of books that the server will return in a single OPDS acquisition feed.
+Numero massimo di libri nei feed OPDS.      The maximum number of books that the server will return in a single OPDS acquisition feed.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-ungrouped\-items
-Maximum number of ungrouped items in OPDS feeds.    Group items in categories such as author/tags by first letter when there are more than this number of items. Set to zero to disable.
+Numero massimo di elementi non raggruppati nei feed OPDS.   Group items in categories such as author/tags by first letter when there are more than this number of items. Set to zero to disable.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-request\-body\-size
-Max. allowed size for files uploaded to the server (in MB).
+Dimensione massima consentita per file caricati sul server (in MB).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-num\-per\-page
-Number of books to show in a single page.   The number of books to show in a single page in the browser.
+Numero di libri da mostrare in una pagina singola.  The number of books to show in a single page in the browser.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -211,7 +211,7 @@ Scrivi il PID di processo nel file specificato
 .INDENT 0.0
 .TP
 .B \-\-port
-The port on which to listen for connections.
+La porta di ascolto per la connessione.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -221,7 +221,7 @@ Path to a JSON file containing URLs for the \fB"\fPSearch the internet\fB"\fP fe
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-timeout
-Total time in seconds to wait for clean shutdown.
+Tempo totale in secondi da aspettare per un arresto pulito.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -236,7 +236,7 @@ Percorso del file della chiave privata SSL.
 .INDENT 0.0
 .TP
 .B \-\-timeout
-Time (in seconds) after which an idle connection is closed.
+Tempo (in secondi) dopo il quale una connessione inattiva viene chiusa.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -246,7 +246,7 @@ Consenti a connessioni non autenticate da indirizzi IP specifici di apportare mo
 .INDENT 0.0
 .TP
 .B \-\-url\-prefix
-A prefix to prepend to all URLs.    Useful if you wish to run this server behind a reverse proxy. For example use, /calibre as the URL prefix.
+Un prefisso da anteporre a tutti gli URL.   Useful if you wish to run this server behind a reverse proxy. For example use, /calibre as the URL prefix.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -261,7 +261,7 @@ mostra la versione del programma ed esci
 .INDENT 0.0
 .TP
 .B \-\-worker\-count
-Number of worker threads used to process requests.
+Numero di thread di lavoro utilizzati per elaborare le richieste.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

@@ -168,6 +168,7 @@ class EbookViewer(MainWindow):
         self.web_view.find_next.connect(self.search_widget.find_next_requested)
         self.search_widget.show_search_result.connect(self.web_view.show_search_result)
         self.web_view.search_result_not_found.connect(self.search_widget.search_result_not_found)
+        self.web_view.search_result_discovered.connect(self.search_widget.search_result_discovered)
         self.web_view.toggle_bookmarks.connect(self.toggle_bookmarks)
         self.web_view.toggle_highlights.connect(self.toggle_highlights)
         self.web_view.new_bookmark.connect(self.bookmarks_widget.create_new_bookmark)
@@ -297,7 +298,10 @@ class EbookViewer(MainWindow):
         self.inspector_dock.setVisible(not visible)
 
     def toggle_toc(self):
-        self.toc_dock.setVisible(not self.toc_dock.isVisible())
+        is_visible = self.toc_dock.isVisible()
+        self.toc_dock.setVisible(not is_visible)
+        if not is_visible:
+            self.toc.scroll_to_current_toc_node()
 
     def show_search(self, text, trigger=False):
         self.search_dock.setVisible(True)

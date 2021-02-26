@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "februari 12, 2021" "5.11.0" "calibre"
+.TH "CALIBREDB" "1" "februari 26, 2021" "5.12.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -45,11 +45,11 @@ calibredb command [options] [arguments]
 flera underkommandon, dokumenterade nedan.
 .sp
 \fBcalibredb\fP kan användas för att manipulera antingen en calibre\-databas
-anges per sökväg eller en calibre Innehållsserver körs antingen på
-den lokala maskinen eller över internet. Du kan starta en calibre
-Innehållsserver med antingen \fBcalibre\-server\fP
+anges per sökväg eller en calibre\-innehållsserver körs antingen på
+den lokala maskinen eller över internet. Du kan starta en
+calibre\-Innehållsserver \(gamed antingen :command:\(gacalibre\-server
 programmet eller klicka på i calibre\-huvudprogrammet Anslut/dela  → 
-Starta Innehållsserver\&. Eftersom \fBcalibredb\fP kan göra ändringar i ditt
+Starta innehållsservern\&. Eftersom \fBcalibredb\fP kan göra ändringar i ditt
 calibre\-bibliotek måste du först ställa in autentisering på servern. Det
 finns två sätt att göra det:
 .INDENT 0.0
@@ -58,7 +58,7 @@ finns två sätt att göra det:
 .IP \(bu 2
 Om du planerar att bara ansluta till en server som körs på samma dator,
 kan du helt enkelt använda flaggan \fB\-\-enable\-local\-write\fP av
-Innehållsserver, så att alla program, inklusive calibredb, körs på
+innehållsservern, så att alla program, inklusive calibredb, körs på
 den lokala datorn för att göra ändringar i dina calibre\-data. När du kör
 servern från calibre\-huvudprogrammet är det här alternativet i
 Inställningar → Dela via nätet → Avancerat\&.
@@ -140,12 +140,12 @@ visa denna hjälptext och avsluta
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Sökväg till calibre\-biblioteket. Standard är att använda sökvägen lagrad i inställningarna. Du kan också ansluta till en calibre\-Innehållsserver för att utföra åtgärder på fjärrbibliotek. Så här använder du en webbadress i formuläret: \fI\%http://hostname:port/#bibliotek_id\fP till exempel \fI\%http://localhost:8080/#mittbibliotek\fP\&. Bibliotek_id är bibliotekets ID för det bibliotek du vill ansluta till på Innehållsservern. Du kan använda det speciella bibliotek_id\-värdet för att få en lista över biblioteks\-id:n tillgängliga på servern. Mer information om hur du konfigurerar åtkomst via en Innehållsserver finns i https://manual.calibre\-ebook.com/sv/generated/sv/calibredb.html.
+Sökväg till calibre\-biblioteket. Standard är att använda sökvägen lagrad i inställningarna. Du kan också ansluta till en calibre\-innehållsserver för att utföra åtgärder på fjärrbibliotek. Så här använder du en webbadress i formuläret: \fI\%http://hostname:port/#bibliotek_id\fP till exempel \fI\%http://localhost:8080/#mittbibliotek\fP\&. Bibliotek_id är bibliotekets ID för det bibliotek du vill ansluta till på innehållsservern. Du kan använda det speciella bibliotek_id\-värdet för att få en lista över biblioteks\-id:n tillgängliga på servern. Mer information om hur du konfigurerar åtkomst via en innehållsserver finns i https://manual.calibre\-ebook.com/sv/generated/sv/calibredb.html.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password
-Lösenord för anslutning till en calibre Innehållsservern. För att läsa lösenordet från standardinmatning, använd specialvärdet: <stdin>. För att läsa lösenordet från en fil, använd: <f:/path/to/file> (d.v.s. <f: följt av hela sökvägen till filen och en efterföljande>). Vinkelparenteserna ovan är nödvändiga, kom ihåg att undkomma dem eller använd citat för din shell.
+Lösenord för anslutning till en calibre\-innehållsservern. För att läsa lösenordet från standardinmatning, använd specialvärdet: <stdin>. För att läsa lösenordet från en fil, använd: <f:/path/to/file> (d.v.s. <f: följt av hela sökvägen till filen och en efterföljande>). Vinkelparenteserna ovan är nödvändiga, kom ihåg att undkomma dem eller använd citat för din shell.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -155,7 +155,7 @@ Tidsgränsen, i sekunder, när du ansluter till ett calibre\-bibliotek via nätv
 .INDENT 0.0
 .TP
 .B \-\-username
-Användarnamn för anslutning till en calibre Innehållsserver
+Användarnamn för anslutning till en calibre\-innehållsserver
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -830,7 +830,7 @@ calibredb list_categories [options]
 .UNINDENT
 .sp
 Skapa en rapport om kategoriinformationen i databasen.
-Informationen motsvarar vad som visas i Taggbläddraren.
+Informationen motsvarar vad som visas i taggbläddraren.
 .sp
 När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .INDENT 0.0
