@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "Februari 26, 2021" "5.12.0" "calibre"
+.TH "CALIBREDB" "1" "Mac 10, 2021" "5.13.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -228,14 +228,14 @@ Medan yang mana mengisih keputusan. Medan tersedia: author_sort, authors, commen
 .sp
 .nf
 .ft C
-calibredb add [options] fail1 fail2 fail3 ...
+calibredb add [options] file1 file2 file3 ...
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Tambah fail dinyatakan sebagai buku ke pangkalan data. Anda juga boleh nyatakan
-direktori, sila rujuk pilihan berkenaan direktori di bawah.
+Add the specified files as books to the database. You can also specify folders, see
+the folder related options below.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -304,22 +304,22 @@ Pilihan untuk mengawal penambahan buku dari direktori. Secara lalai hanya fail y
 .INDENT 0.0
 .TP
 .B \-\-add
-Satu pola (glob) nama fail, fail yang sepadan dengan pola ini akan diabaikan bila mengimbas direktori untuk dapatkan fail, walaupun jika ia bukanlah jenis fail e\-buku yang dikenali. Boleh dinyatakan lebih dari sekali untuk pola berbilang.
+A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-Satu pola (glob) nama fail, fail yang sepadan dengan pola ini akan diabaikan bila mengimbas direktori untuk dapatkan fail. Boleh dinyatakan lebih dari sekali untuk pola berbilang. Sebagai contoh: *.pdf akan abaikan semua fail pdf
+A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all PDF files
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Anggap setiap direktori hanya mempunyai satu buku logikal dan semua fail berada di dalamnya adalah format ebuku yang berlainan bagi buku tersebut
+Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Proses direktori secara rekursif
+Process folders recursively
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -489,12 +489,12 @@ Ganti ruang putih dengan underscore.
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Eksport semua buku ke dalam satu direktori
+Export all books into a single folder
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-Templat yang mengawal nama fail dan struktur fail tersimpan. Lalai ialah \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP yang akan menyimpan buku ke dalam sub\-direktori per\-pengarang dengan nama fail yang mengandungi tajuk dan pengarang. Kawalan yang tersedia adalah: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -504,7 +504,7 @@ Format yang memaparkan tarikh. %d \- hari, %b \- bulan, %m \- nombor bulan, %Y \
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Eksport buku ke direktori yang dinyatakan, Lalai ialah .
+Export books to the specified folder. Default is .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -559,7 +559,7 @@ Cipta rujukan\-silang pada seksyen Pengarang bagi buku dengan pengarang berbilan
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Simpan output dari tahap berlainan bagi penukaran talian paip ke direktori yang dinyatakan. Berguna jika anda tidak pasti pada tahap manakah proses penukaran yang mana berlakunya pepijat. Lalai: \fB\(aq\fPNone\fB\(aq\fP Dilaksana pada: format output AZW3, EPUB, MOBI
+Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -771,14 +771,14 @@ calibredb restore_database [options]
 .UNINDENT
 .UNINDENT
 .sp
-Pulih pangkalan data ini dari data meta tersimpan dalam fail OPF dalam
-setiap direktori bagi pustaka calibre. Ia berguna jika fail metadat.db anda
-mengalami kerosakan.
+Restore this database from the metadata stored in OPF files in each
+folder of the calibre library. This is useful if your metadata.db file
+has been corrupted.
 .sp
-AMARAN: Perintah ini sepenuhnya jana semula pangkalan data anda. Anda
-akan kehilangan semua gelintar tersimpan, kategori pengguna, papan palam,
-tetapan penukaran per\-buku tersimpan, dan resepi suai. Data meta tersimpan
-hanya benar\-benar tepat sepertimana yang ditemui dalam fail OPF.
+WARNING: This command completely regenerates your database. You will lose
+all saved searches, user categories, plugboards, stored per\-book conversion
+settings, and custom recipes. Restored metadata will only be as accurate as
+what is found in the OPF files.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "otsailak 26, 2021" "5.12.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "martxoak 10, 2021" "5.13.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -153,7 +153,7 @@ The version of the EPUB file to generate. EPUB 2 is the most widely compatible, 
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extract the contents of the generated EPUB file to the specified directory. The contents of the directory are first deleted, so be careful.
+Extract the contents of the generated EPUB file to the specified folder. The contents of the folder are first deleted, so be careful.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -191,7 +191,7 @@ Outputaren, irteerako emaitzaren, itxura osoa kontrolatzeko aukerak
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPМихаил Горбачёв\fB"\fP with \fB"\fPMikhail Gorbachiov\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPPelé\fB"\fP with \fB"\fPPele\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -599,7 +599,7 @@ Bihurketaren arazketarekin laguntzeko aukerak
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Gorde itzazu zehaztutako direktorioan bihurketa prozesuaren atal guztien outputak, irteera\-emaitzak. Erabilgarria ez badakizu prozesuaren zein unetan gertatu egiten den errorea.
+Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring.
 .UNINDENT
 .INDENT 0.0
 .TP

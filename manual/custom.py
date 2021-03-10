@@ -11,11 +11,6 @@ from sphinx.util.logging import getLogger
 
 from calibre.linux import cli_index_strings, entry_points
 from epub import EPUBHelpBuilder
-from latex import LaTeXHelpBuilder
-
-
-def substitute(app, doctree):
-    pass
 
 
 def info(*a):
@@ -83,14 +78,14 @@ CLI_PREAMBLE='''\
 '''
 
 
-def titlecase(app, x):
-    if x and app.config.language == 'en':
+def titlecase(language, x):
+    if x and language == 'en':
         from calibre.utils.titlecase import titlecase as tc
         x = tc(x)
     return x
 
 
-def generate_calibredb_help(preamble, app):
+def generate_calibredb_help(preamble, language):
     from calibre.db.cli.main import COMMANDS, option_parser_for, get_parser
     preamble = preamble[:preamble.find('\n\n\n', preamble.find('code-block'))]
     preamble += '\n\n'
@@ -130,14 +125,14 @@ details and examples.
     global_parser = get_parser('')
     groups = []
     for grp in global_parser.option_groups:
-        groups.append((titlecase(app, grp.title), grp.description, grp.option_list))
+        groups.append((titlecase(language, grp.title), grp.description, grp.option_list))
 
     global_options = '\n'.join(render_options('calibredb', groups, False, False))
 
     lines = []
     for cmd in COMMANDS:
         parser = option_parser_for(cmd)()
-        lines += ['.. _calibredb-%s-%s:' % (app.config.language, cmd), '']
+        lines += ['.. _calibredb-%s-%s:' % (language, cmd), '']
         lines += [cmd, '~'*20, '']
         usage = parser.usage.strip()
         usage = [i for i in usage.replace('%prog', 'calibredb').splitlines()]
@@ -153,11 +148,11 @@ details and examples.
         for group in parser.option_groups:
             if not getattr(group, 'is_global_options', False):
                 lines.extend(render_options(
-                    'calibredb_' + cmd, [[titlecase(app, group.title), group.description, group.option_list]], False, False, header_level='^'))
+                    'calibredb_' + cmd, [[titlecase(language, group.title), group.description, group.option_list]], False, False, header_level='^'))
         lines += ['']
 
     raw = preamble + '\n\n'+'.. contents::\n  :local:'+ '\n\n' + global_options+'\n\n'+'\n'.join(lines)
-    update_cli_doc('calibredb', raw, app)
+    update_cli_doc('calibredb', raw, language)
 
 
 def generate_ebook_convert_help(preamble, app):
@@ -196,10 +191,10 @@ def generate_ebook_convert_help(preamble, app):
     update_cli_doc('ebook-convert', raw, app)
 
 
-def update_cli_doc(name, raw, app):
+def update_cli_doc(name, raw, language):
     if isinstance(raw, bytes):
         raw = raw.decode('utf-8')
-    path = 'generated/%s/%s.rst' % (app.config.language, name)
+    path = 'generated/%s/%s.rst' % (language, name)
     old_raw = open(path, encoding='utf-8').read() if os.path.exists(path) else ''
     if not os.path.exists(path) or old_raw != raw:
         import difflib
@@ -274,7 +269,7 @@ def get_cli_docs():
     return documented_cmds, undocumented_cmds
 
 
-def cli_docs(app):
+def cli_docs(language):
     info(bold('creating CLI documentation...'))
     documented_cmds, undocumented_cmds = get_cli_docs()
 
@@ -288,7 +283,7 @@ def cli_docs(app):
             undocumented='\n'.join(undocumented))
     if not os.path.exists('cli'):
         os.makedirs('cli')
-    update_cli_doc('cli-index', raw, app)
+    update_cli_doc('cli-index', raw, language)
 
     for cmd, parser in documented_cmds:
         usage = [mark_options(i) for i in parser.usage.replace('%prog', cmd).splitlines()]
@@ -296,11 +291,11 @@ def cli_docs(app):
         usage = usage[1:]
         usage = [i.replace(cmd, ':command:`%s`'%cmd) for i in usage]
         usage = '\n'.join(usage)
-        preamble = CLI_PREAMBLE.format(cmd=cmd, cmdref=cmd + '-' + app.config.language, cmdline=cmdline, usage=usage)
+        preamble = CLI_PREAMBLE.format(cmd=cmd, cmdref=cmd + '-' + language, cmdline=cmdline, usage=usage)
         if cmd == 'ebook-convert':
-            generate_ebook_convert_help(preamble, app)
+            generate_ebook_convert_help(preamble, language)
         elif cmd == 'calibredb':
-            generate_calibredb_help(preamble, app)
+            generate_calibredb_help(preamble, language)
         else:
             groups = [(None, None, parser.option_list)]
             for grp in parser.option_groups:
@@ -308,18 +303,18 @@ def cli_docs(app):
             raw = preamble
             lines = render_options(cmd, groups)
             raw += '\n'+'\n'.join(lines)
-            update_cli_doc(cmd, raw, app)
+            update_cli_doc(cmd, raw, language)
 
 
-def generate_docs(app):
-    cli_docs(app)
-    template_docs(app)
+def generate_docs(language):
+    cli_docs(language)
+    template_docs(language)
 
 
-def template_docs(app):
+def template_docs(language):
     from template_ref_generate import generate_template_language_help
-    raw = generate_template_language_help(app.config.language)
-    update_cli_doc('template_ref', raw, app)
+    raw = generate_template_language_help(language)
+    update_cli_doc('template_ref', raw, language)
 
 
 def localized_path(app, langcode, pagename):
@@ -354,31 +349,13 @@ def setup_man_pages(app):
     app.config['man_pages'] = man_pages
 
 
-def monkey_patch_docutils():
-    # fixes a bug in sphinx https://github.com/sphinx-doc/sphinx/issues/5150
-    from docutils import nodes
-
-    orig_method = nodes.document.set_duplicate_name_id
-
-    def set_duplicate_name_id(*a):
-        try:
-            return orig_method(*a)
-        except KeyError:
-            pass
-
-    nodes.document.set_duplicate_name_id = set_duplicate_name_id
-
-
 def setup(app):
     from docutils.parsers.rst import roles
-    monkey_patch_docutils()
     setup_man_pages(app)
+    generate_docs(app.config.language)
     app.add_css_file('custom.css')
     app.add_builder(EPUBHelpBuilder)
-    app.add_builder(LaTeXHelpBuilder)
     app.connect('source-read', source_read_handler)
-    app.connect('doctree-read', substitute)
-    app.connect('builder-inited', generate_docs)
     app.connect('html-page-context', add_html_context)
     app.connect('build-finished', finished)
     roles.register_local_role('guilabel', guilabel_role)

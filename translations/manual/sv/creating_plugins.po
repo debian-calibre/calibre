@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-24 22:00+0530\n"
-"PO-Revision-Date: 2021-02-18 20:11+0000\n"
+"POT-Creation-Date: 2021-03-08 15:24+0000\n"
+"PO-Revision-Date: 2021-03-08 15:15+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan.nyberg.karl@gmail.com>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -22,11 +22,11 @@ msgstr ""
 "Language: sv\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:4
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:4
 msgid "Writing your own plugins to extend calibre's functionality"
 msgstr "Skriv dina egna insticksmoduler för att utöka calibres funktionalitet"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:6
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:6
 msgid ""
 "calibre has a very modular design. Almost all functionality in calibre comes"
 " in the form of plugins. Plugins are used for conversion, for downloading "
@@ -36,32 +36,32 @@ msgid ""
 "plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
 msgstr "calibre är en väldigt modulär konstruktion. Nästan alla funktioner i calibre kommer i form av insticksmoduler. Insticksmoduler används för konvertering, för hämtning av nyheter (även om dessa kallas för recept), för diverse komponenter av användargränssnitt, för anslutning av olika enheter, för bearbetning av filer när de läggs till calibre och så vidare. Du kan få en komplett lista med alla inbyggda insticksmoduler i calibre genom att gå till :guilabel:`Inställningar->Avancerat->Insticksmoduler`."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:8
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:8
 msgid ""
 "Here, we will teach you how to create your own plugins to add new features "
 "to calibre."
 msgstr "Här kommer vi att lära dig att skapa dina egna insticksmoduler för att lägga till nya funktioner i calibre."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:13
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:13
 msgid "Contents"
 msgstr "Innehåll"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:15
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:15
 msgid "This only applies to calibre releases >= 0.8.60"
 msgstr "Detta gäller bara calibre utgåvor >= 0.8.60"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:18
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:18
 msgid "Anatomy of a calibre plugin"
 msgstr "Anatomi av en calibre insticksmodul"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:20
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:20
 msgid ""
 "A calibre plugin is very simple, it's just a ZIP file that contains some "
 "Python code and any other resources like image files needed by the plugin. "
 "Without further ado, let's see a basic example."
 msgstr "En calibre insticksmodul är mycket enkel, det är bara en ZIP-fil som innehåller en del Pythonkod och alla andra resurser som bildfiler som behövs av insticksmodulen. Utan vidare väsen, låt oss se ett grundläggande exempel."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:24
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:24
 msgid ""
 "Suppose you have an installation of calibre that you are using to self "
 "publish various e-documents in EPUB and MOBI formats. You would like all "
@@ -71,26 +71,26 @@ msgid ""
 "enter the following Python code into it:"
 msgstr "Anta att du har en installation av calibre som du använder för att själv publicera olika e-dokument i EPUB- och MOBI-format. Du vill att alla filer som genereras av calibre har förläggaren inställd som \"Hej världen\", här är hur man gör det. Skapa en fil med namnet :file:`__init __ py` (detta är ett speciellt namn och ska alltid användas för huvudfilen för din insticksmodul) och ange följande Pythonkod i den:"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:32
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:32
 msgid ""
 "That's all. To add this code to calibre as a plugin, simply run the "
-"following in the directory in which you created :file:`__init__.py`::"
-msgstr "Det är allt. För att lägga till den här koden i calibre som en insticksmodul, kör du bara följande i katalogen där du skapade :file:`__init__.py`::"
+"following in the folder in which you created :file:`__init__.py`::"
+msgstr "Det är allt. För att lägga till den här koden i calibre som en insticksmodul, kör du bara följande i mappen där du skapade :file:`__init__.py`::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:38
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:38
 msgid ""
 "On macOS, the command line tools are inside the calibre bundle, for example,"
 " if you installed calibre in :file:`/Applications` the command line tools "
 "are in :file:`/Applications/calibre.app/Contents/MacOS/`."
 msgstr "På macOS finns kommandoradsverktygen inuti calibre paketet, till exempel om du installerade calibre i :file:`/Applications` kommandoradsverktygen finns i :file:`/Applications/calibre.app/Contents/MacOS/`."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:42
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:42
 msgid ""
 "You can download the Hello World plugin from `helloworld_plugin.zip  <https"
 "://calibre-ebook.com/downloads/helloworld_plugin.zip>`_."
 msgstr "Du kan hämtar insticksmodulen Hello World från `helloworld_plugin.zip <https://calibre-ebook.com/downloads/helloworld_plugin.zip>`_."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:45
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:45
 msgid ""
 "Every time you use calibre to convert a book, the plugin's :meth:`run` "
 "method will be called and the converted book will have its publisher set to "
@@ -98,37 +98,37 @@ msgid ""
 "example that actually adds a component to the user interface."
 msgstr "Varje gång du använder calibre att konvertera en bok, kommer insticksmodulens :meth:`run` metod att anropas och den konverterade boken kommer att ha sin förläggare satt till \"Hello World\". Denna är en trivial insticksmodul, låt oss gå vidare till ett mer komplext exempel som faktiskt lägger till en komponent till användargränssnittet."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:50
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:50
 msgid "A User Interface plugin"
 msgstr "En användargränssnitts insticksmodul"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:52
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:52
 msgid ""
 "This plugin will be spread over a few files (to keep the code clean). It "
 "will show you how to get resources (images or data files) from the plugin "
 "ZIP file, allow users to configure your plugin, how to create elements in "
 "the calibre user interface and how to access and query the books database in"
 " calibre."
-msgstr "Denna insticksmodul kommer att spridas över några filer (för att hålla koden ren). Det kommer att visa dig hur du får resurser (bilder eller datafiler) från insticksmodulens ZIP-fil, tillåta användare att konfigurera din insticksmodul, hur man skapar element i calibre användargränssnittet och hur man kommer åt och söka i böcker databasen i calibre."
+msgstr "Denna insticksmodul kommer att spridas över några filer (för att hålla koden ren). Det kommer att visa dig hur du får resurser (bilder eller datafiler) från insticksmodulens ZIP-fil, tillåta användare att anpassa din insticksmodul, hur man skapar element i calibre användargränssnittet och hur man kommer åt och söka i böcker databasen i calibre."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:57
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:57
 msgid ""
 "You can download this plugin from `interface_demo_plugin.zip <https"
 "://calibre-ebook.com/downloads/interface_demo_plugin.zip>`_"
 msgstr "Du kan hämtar denna insticksmodul från  `interface_demo_plugin.zip <https://calibre-ebook.com/downloads/interface_demo_plugin.zip>`_"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:61
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:61
 msgid ""
 "The first thing to note is that this ZIP file has a lot more files in it, "
 "explained below, pay particular attention to ``plugin-import-name-"
 "interface_demo.txt``."
 msgstr "Det första att observera är att denna ZIP-filen har många fler filer i sig, som förklaras nedan, ta särskild hänsyn till ``plugin-import-name-interface_demo.txt``."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:77
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:77
 msgid "**plugin-import-name-interface_demo.txt**"
 msgstr "**plugin-import-name-interface_demo.txt**"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:65
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:65
 msgid ""
 "An empty text file used to enable the multi-file plugin magic. This file "
 "must be present in all plugins that use more than one .py file. It should be"
@@ -138,87 +138,87 @@ msgid ""
 "like::"
 msgstr "En tom textfil som används för att göra det möjligt för multifilinsticksmodulsmagi. Filen måste finnas i alla insticksmoduler som använder mer än en .py-fil. Den ska vara tom och filnamnet måste ha formen: ``plugin-import-name-**some_name**.txt``. Förekomsten av denna fil tillåter dig att importera koden från .py filerna som finns inne i ZIP-filen, med hjälp av ett uttalande likt::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:71
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:71
 msgid ""
 "The prefix ``calibre_plugins`` must always be present. ``some_name`` comes "
 "from the filename of the empty text file. ``some_module`` refers to  "
 ":file:`some_module.py` file inside the ZIP file. Note that this importing is"
 " just as powerful as regular Python imports. You can create packages and "
 "subpackages of .py modules inside the ZIP file, just like you would normally"
-" (by defining __init__.py in each sub-directory), and everything should "
-"\"just work\"."
-msgstr "Prefixet ``calibre_plugins`` måste alltid vara närvarande. ``some_name`` kommer från filnamnet på den tomma textfilen. ``some_module`` avser :file:`some_module.py` fil inuti ZIP-filen. Observera att denna import är lika kraftfull som vanlig Python importering. Du kan skapa paket och underpaket för .py moduler inuti ZIP filen, precis som du normalt skulle (genom att definiera __init__.py i varje underkatalog), och allt ska bara fungera."
+" (by defining __init__.py in each sub-folder), and everything should \"just "
+"work\"."
+msgstr "Prefixet ``calibre_plugins`` måste alltid vara närvarande. ``some_name`` kommer från filnamnet på den tomma textfilen. ``some_module`` avser :file:`some_module.py` fil inuti ZIP-filen. Observera att denna import är lika kraftfull som vanlig Python importering. Du kan skapa paket och underpaket för .py moduler inuti ZIP filen, precis som du normalt skulle (genom att definiera __init__.py i varje undermapp), och allt ska bara fungera."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:76
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:76
 msgid ""
 "The name you use for ``some_name`` enters a global namespace shared by all "
 "plugins, **so make it as unique as possible**. But remember that it must be "
 "a valid Python identifier (only alphabets, numbers and the underscore)."
 msgstr "Namnet du använda för ``some_name`` går in i en globala namnrymden delas av alla insticksmodul, **så gör det så unikt som möjligt**. Men kom ihåg att det måste vara en giltigt Python-identifierare (endast alfabet, siffror och understreck)."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:80
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:80
 msgid "**__init__.py**"
 msgstr "**__init__.py**"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:80
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:80
 msgid "As before, the file that defines the plugin class"
 msgstr "Liksom tidigare filen som definierar insticksmodul klassen"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:83
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:83
 msgid "**main.py**"
 msgstr "**main.py**"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:83
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:83
 msgid "This file contains the actual code that does something useful"
 msgstr "Den här filen innehåller den faktiska koden som gör något nyttigt"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:86
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:86
 msgid "**ui.py**"
 msgstr "**ui.py**"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:86
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:86
 msgid "This file defines the interface part of the plugin"
 msgstr "Denna fil definierar gränssnittsdelen av insticksmodulen"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:89
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:89
 msgid "**images/icon.png**"
 msgstr "**bilder/ikon.png**"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:89
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:89
 msgid "The icon for this plugin"
 msgstr "Ikonen för detta insticksmodul"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:92
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:92
 msgid "**about.txt**"
 msgstr "**about.txt**"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:92
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:92
 msgid "A text file with information about the plugin"
 msgstr "En textfil med information om insticksmodulen"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:97
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:97
 msgid "**translations**"
 msgstr "**översättningar**"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:95
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:95
 msgid ""
 "A folder containing .mo files with the translations of the user interface of"
 " your plugin into different languages. See below for details."
 msgstr "En mapp innehåller .mo-filer med översättningar av användargränssnittet av din insticksmodul till olika språk. Se nedan för detaljer."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:99
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:99
 msgid "Now let's look at the code."
 msgstr "Låt oss nu titta på koden."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:102
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:102
 msgid "__init__.py"
 msgstr "__init__.py"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:104
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:104
 msgid "First, the obligatory ``__init__.py`` to define the plugin metadata:"
 msgstr "Först det obligatoriska ``__init__.py`` för att definiera insticksmodulens metadata:"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:109
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:109
 msgid ""
 "The only noteworthy feature is the field :attr:`actual_plugin`. Since "
 "calibre has both command line and GUI interfaces, GUI plugins like this one "
@@ -228,112 +228,112 @@ msgid ""
 "context."
 msgstr "Det enda anmärkningsvärda funktionen är fältet :attr:`actual_plugin`. Eftersom calibre har både kommandorad och användargränssnitt bör användargränssnittsinsticksmoduler som denna inte läsa in några biblioteketsanvändargränssnitt i __init__.py. Fältet actual_plugin gör detta åt dig, genom att berätta för calibre att den egentliga insticksmodulen finns i en annan fil i ditt ZIP-arkiv, som endast kommer att läsas in i ett användargränssnittssammanhang."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:114
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:114
 msgid ""
 "Remember that for this to work, you must have a plugin-import-name-"
 "some_name.txt file in your plugin ZIP file, as discussed above."
 msgstr "Kom ihåg att för att detta ska fungera måste du ha en plugin-import-name-some_name.txt fil i din insticksmoduls ZIP-fil, som diskuterats ovan."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:117
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:117
 msgid ""
 "Also there are a couple of methods for enabling user configuration of the "
 "plugin. These are discussed below."
 msgstr "Också finns det ett par olika metoder för att möjliggöra användarkonfiguration av insticksmodulen. Dessa diskuteras nedan."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:120
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:120
 msgid "ui.py"
 msgstr "ui.py"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:122
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:122
 msgid ""
 "Now let's look at ui.py which defines the actual GUI plugin. The source code"
 " is heavily commented and should be self explanatory:"
 msgstr "Låt oss nu titta på ui.py som definierar själva användargränssnitts insticksmodul. Källkoden är kraftigt kommenterade och bör vara självförklarande:"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:128
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:212
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:128
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:212
 msgid "main.py"
 msgstr "main.py"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:130
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:130
 msgid "The actual logic to implement the Interface Plugin Demo dialog."
 msgstr "Själva logiken för att implementera gränssnittsdialogen för insticksmodul demodialogen."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:136
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:136
 msgid "Getting resources from the plugin ZIP file"
 msgstr "Få resurser från insticksmodulens ZIP-fil."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:138
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:138
 msgid ""
 "calibre's plugin loading system defines a couple of built-in functions that "
 "allow you to conveniently get files from the plugin ZIP file."
 msgstr "calibres insticksmoduls laddningsssystem definierar ett par inbyggda funktioner som gör att du bekvämt hämtar filer från insticksmodulens ZIP-fil."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:145
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:145
 msgid "**get_resources(name_or_list_of_names)**"
 msgstr "**get_resources(name_or_list_of_names)**"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:141
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:141
 msgid ""
 "This function should be called with a list of paths to files inside the ZIP "
-"file. For example to access the file icon.png in the directory images in the"
-" ZIP file, you would use: ``images/icon.png``. Always use a forward slash as"
-" the path separator, even on Windows. When you pass in a single name, the "
+"file. For example to access the file icon.png in the folder images in the "
+"ZIP file, you would use: ``images/icon.png``. Always use a forward slash as "
+"the path separator, even on Windows. When you pass in a single name, the "
 "function will return the raw bytes of that file or None if the name was not "
 "found in the ZIP file. If you pass in more than one name then it returns a "
 "dict mapping the names to bytes. If a name is not found, it will not be "
 "present in the returned dict."
 msgstr "Den här funktionen bör anropas med en lista av sökvägar till filer i ZIP-filen. Till exempel för att komma åt filen icon.png i mappen bilder i ZIP-filen, skulle du använda: ``images/icon.png``. Använd alltid ett framåt snedstreck som sökvägsavskiljare, även i Windows. När du anger ett enda namn kommer funktionen att återge råa bytes för filen eller None om namnet inte hittades i ZIP-filen. Om du anger mer än ett namn så återges en dict-kartläggning med namn till bytes. Om ett namn inte hittas kommer det inte att finnas i den återgivna listan."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:149
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:149
 msgid "**get_icons(name_or_list_of_names)**"
 msgstr "**get_icons(name_or_list_of_names)**"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:148
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:148
 msgid ""
 "A convenience wrapper for get_resources() that creates QIcon objects from "
 "the raw bytes returned by get_resources. If a name is not found in the ZIP "
 "file the corresponding QIcon will be null."
 msgstr "Ett bekvämligt omslag för get_resources() som skapar QIcon objekt från rådata återgivna av get_resources. Om ett namn inte finns i ZIP-filen blir motsvarande QIcon null."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:152
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:152
 msgid "Enabling user configuration of your plugin"
 msgstr "Aktivera användarkonfiguration för din insticksmodul"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:154
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:154
 msgid ""
 "To allow users to configure your plugin, you must define three methods in "
 "your base plugin class, **is_customizable**, **config_widget** and "
 "**save_settings** as shown below:"
-msgstr "För att tillåta användare att konfigurera din insticksmodul måste du definiera tre metoder i din bas insticksmodulsklass, **is_customizable**, **config_widget** och **save_settings** enligt nedan:"
+msgstr "För att tillåta användare att anpassa din insticksmodul måste du definiera tre metoder i din bas insticksmodulsklass, **is_customizable**, **config_widget** och **save_settings** enligt nedan:"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:165
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:165
 msgid ""
 "calibre has many different ways to store configuration data (a legacy of its"
 " long history). The recommended way is to use the **JSONConfig** class, "
 "which stores your configuration information in a .json file."
 msgstr "calibre har många olika sätt att lagra konfigurationsdata (ett arv av sin långa historia). Det rekommenderade sättet är att använda **JSONConfig** klass, som lagrar konfigurationsinformationen i en .json-fil."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:167
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:167
 msgid ""
 "The code to manage configuration data in the demo plugin is in config.py:"
 msgstr "Koden för att hantera konfigurationsdata i demo-insticksmodulen finns i config.py:"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:172
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:172
 msgid ""
 "The ``prefs`` object is now available throughout the plugin code by a "
 "simple::"
 msgstr "``prefs``-objekt äret nu tillgängligt i hela insticksmodulskoden med en enkel::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:177
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:177
 msgid "You can see the ``prefs`` object being used in main.py:"
 msgstr "Du kan se ``prefs``-objekt användas i main.py:"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:184
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:184
 msgid "Edit book plugins"
 msgstr "Redigera bokinsticksmodul"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:186
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:186
 msgid ""
 "Now let's change gears for a bit and look at creating a plugin to add tools "
 "to the calibre book editor. The plugin is available here: "
@@ -341,20 +341,20 @@ msgid ""
 "ebook.com/downloads/editor_demo_plugin.zip>`_."
 msgstr "Låt oss nu byta växel för ett tag och se hur man skapar en insticksmodul för att lägga till verktyg till calibres bokredigerare. Instickmodulen finns här: `editor_demo_plugin.zip <https://calibre-ebook.com/downloads/editor_demo_plugin.zip> '_."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:190
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:190
 msgid ""
 "The first step, as for all plugins is to create the import name empty txt "
 "file, as described :ref:`above <import_name_txt>`. We shall name the file "
 "``plugin-import-name-editor_plugin_demo.txt``."
 msgstr "Det första steget, som för alla insticksmodul är att skapa importnamnet tom TXT-fil, som beskrivs :ref:`ovan <import_name_txt>`. Vi ska namnge filen ``plugin-import-name-editor_plugin_demo.txt``."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:194
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:194
 msgid ""
 "Now we create the mandatory ``__init__.py`` file that contains metadata "
 "about the plugin -- its name, author, version, etc."
 msgstr "Nu skapar vi den obligatoriska ``__init __ py`` filen som innehåller metadata om insticksmodulen -- dess namn, utvecklare, version, o.s.v."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:200
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:200
 msgid ""
 "A single editor plugin can provide multiple tools each tool corresponds to a"
 " single button in the toolbar and entry in the :guilabel:`Plugins` menu in "
@@ -362,7 +362,7 @@ msgid ""
 "actions."
 msgstr "En enda insticksmodul redigerare kan ge flera verktyg varje verktyg motsvarar en knapp i verktygsfältet och posten i :guilabel:`Insticksmoduler`-menyn i redigeraren. Dessa kan ha undermenyer om verktyget har flera relaterade åtgärder."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:204
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:204
 msgid ""
 "The tools must all be defined in the file ``main.py`` in your plugin. Every "
 "tool is a class that inherits from the "
@@ -372,7 +372,7 @@ msgid ""
 ":class:`calibre.gui2.tweak_book.plugin.Tool` class for more details."
 msgstr "Verktygen bör definieras i filen ``main.py`` i din insticksmodul. Varje verktyg är en klass som ärvs från klassen :class:`calibre.gui2.tweak_book.plugin.Tool`. Låt oss titta på ``main.py`` från demo-insticksmodulen, källkoden är tungt kommenterade och bör vara självförklarande. Läs API-dokumenten av klassen :class:`calibre.gui2.tweak_book.plugin.Tool` för mer detaljer."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:214
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:214
 msgid ""
 "Here we will see the definition of a single tool that will multiply all font"
 " sizes in the book by a number provided by the user. This tool demonstrates "
@@ -380,20 +380,20 @@ msgid ""
 "plugins, so you should read the (heavily commented) source code carefully."
 msgstr "Här kommer vi att se definitionen av ett enda verktyg som kommer att multiplicera alla teckenstorlekar i boken av ett nummer som användaren ger. Detta verktyg visar olika viktiga begrepp som du behöver för att utveckla dina egna insticksmodul, så du bör läsa (tungt kommenterade) källkoden noggrant."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:222
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:222
 msgid ""
 "Let's break down ``main.py``. We see that it defines a single tool, named "
 "*Magnify fonts*. This tool will ask the user for a number and multiply all "
 "font sizes in the book by that number."
 msgstr "Låt oss bryta ner ``main.py``. Vi ser att den definierar ett enda verktyg, som heter *Förstora teckensnitt*. Detta verktyg kommer att be användaren om ett nummer och multiplicera alla teckenstorlekar i boken med det numret."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:226
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:226
 msgid ""
 "The first important thing is the tool name which you must set to some "
 "relatively unique string as it will be used as the key for this tool."
 msgstr "Det första viktiga är verktygsnamnet som du måste ställa in till någon relativt unik sträng som den kommer att användas som nyckel för detta verktyg."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:229
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:229
 msgid ""
 "The next important entry point is the "
 ":meth:`calibre.gui2.tweak_book.plugin.Tool.create_action`. This method "
@@ -404,7 +404,7 @@ msgid ""
 "runs the magnification code."
 msgstr "Nästa viktiga startpunkt är :meth:`calibre.gui2.tweak_book.plugin.Tool.create_action`. Denna metod skapar QAction-objekt som visas i insticksmodulsverktygsfältet och insticksmodulsmenyn. Den tilldelar också valfritt en tangentbordsgenväg som användaren kan skräddarsy. Den utlösta signalen från QAction är ansluten till  metoden ask_user() som frågar användaren om teckenstorlekensmultiplikatorn och sedan kör förstoringskoden."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:237
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:237
 msgid ""
 "The magnification code is well commented and fairly simple. The main things "
 "to note are that you get a reference to the editor window as ``self.gui`` "
@@ -413,7 +413,7 @@ msgid ""
 "documented in the :class:`calibre.gui2.tweak_book.boss.Boss` class."
 msgstr "Förstoringskoden är väl kommenterad och ganska enkel. De viktigaste sakerna att observera är att du får en referens till redigeringsfönstret som ``self.gui`` och redigeraren *Boss* som ``self.boss``. *Boss* är objektet som styr redigerarens användargränssnitt. Den har många användbara metoder, som dokumenteras klassen i :class:`calibre.gui2.tweak_book.boss.Boss`."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:243
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:243
 msgid ""
 "Finally, there is ``self.current_container`` which is a reference to the "
 "book being edited as a "
@@ -424,53 +424,53 @@ msgid ""
 "plugin code are documented in :ref:`polish_api`."
 msgstr "Slutligen finns det ``self.current_container`` som är en referens till boken som redigeras som :class:`calibre.ebooks.oeb.polish.container.Container` objekt. Detta representerar boken som en samling av sina konstituerande HTML/CSS/bildfiler och har bekvämliga metoder för att göra många användbara saker. Objektbehållaren och olika användbara nyttofunktioner som kan återanvändas i din insticksmodulskod är dokumenterade i :ref:`polish_api`."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:252
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:252
 msgid "Running User Interface plugins in a separate process"
 msgstr "Kör användargränssnittsinsticksmoduler i en separat process"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:254
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:254
 msgid ""
 "If you are writing a user interface plugin that needs to make use of Qt "
 "WebEngine, it cannot be run in the main calibre process as it is not "
 "possible to use WebEngine there. Instead you can copy the data your plugin "
-"needs to a temporary directory and run the plugin with that data in a "
-"separate process. A simple example plugin follows that shows how to do this."
-msgstr "Om du skriver ett användargränssnittsinsticksmodul som behöver använda Qt WebEngine, det kan inte köras i calibre-huvudprocessen eftersom det inte är möjligt att använda WebEngine där. Istället kan du kopiera data din insticksmodul behöver en tillfällig katalog och köra insticksmodulen med dessa data i en separat process. Ett enkelt insticksmodulsexempel följer som visar hur man gör detta."
+"needs to a temporary folder and run the plugin with that data in a separate "
+"process. A simple example plugin follows that shows how to do this."
+msgstr "Om du skriver ett användargränssnittsinsticksmodul som behöver använda Qt WebEngine, det kan inte köras i calibre-huvudprocessen eftersom det inte är möjligt att använda WebEngine där. Istället kan du kopiera data din insticksmodul behöver en tillfällig mapp och köra insticksmodulen med dessa data i en separat process. Ett enkelt insticksmodulsexempel följer som visar hur man gör detta."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:261
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:261
 msgid ""
 "You can download the plugin from `webengine_demo_plugin.zip  <https"
 "://calibre-ebook.com/downloads/webengine_demo_plugin.zip>`_."
 msgstr "Du kan hämta insticksmodulen från `webengine_demo_plugin.zip  <https://calibre-ebook.com/downloads/webengine_demo_plugin.zip>`_."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:264
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:264
 msgid "The important part of the plugin is in two functions:"
 msgstr "Den viktiga delen av insticksmodulen är i två funktioner:"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:273
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:273
 msgid ""
 "The ``show_demo()`` function asks the user for a URL and then runs the "
 "``main()`` function passing it that URL. The ``main()`` function displays "
 "the URL in a ``QWebEngineView``."
 msgstr "Funktionen ``show_demo()`` frågar användaren om en webbadress och kör sedan funktionen ``main()`` som skickar den till webbadressen. Funktionen ``main()`` visar webbadressen i en ``QWebEngineView``."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:279
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:279
 msgid "Adding translations to your plugin"
 msgstr "Lägga till översättningar till din insticksmodul"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:281
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:281
 msgid ""
 "You can have all the user interface strings in your plugin translated and "
 "displayed in whatever language is set for the main calibre user interface."
 msgstr "Du kan ha alla användargränssnittsträngar i din insticksmodul översatta och visas på vilket språk som är inställt för huvudanvändargränssnittet i calibre."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:284
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:284
 msgid ""
 "The first step is to go through your plugin's source code and mark all user "
 "visible strings as translatable, by surrounding them in _(). For example::"
 msgstr "Det första steget är att gå igenom din insticksmoduls källkod och markera alla användarsynliga strängar som översättningsbara, genom att omge dem _(). Till exempel::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:289
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:289
 msgid ""
 "Then use some program to generate .po files from your plugin source code. "
 "There should be one .po file for every language you want to translate into. "
@@ -478,17 +478,17 @@ msgid ""
 "`Poedit <https://poedit.net/>`_ program for this."
 msgstr "Använd sedan något program för att generera .po-filer från din insticksmodulskällkod. Det bör finnas en .po-fil för varje språk du vill översätta till. Till exempel: de.po för tyska, fr.po för franska och så vidare. Du kan använda programmet `Poedit <https://poedit.net/>` _ för detta."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:294
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:294
 msgid ""
 "Send these .po files to your translators. Once you get them back, compile "
 "them into .mo files. You can again use Poedit for that, or just do::"
 msgstr "Skicka dessa .po filer till översättarna. När du får tillbaka dem, sammanställ dem i .mo filer. Du kan återigen använda Poedit för det, eller bara göra::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:299
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:299
 msgid "Put the .mo files into the ``translations`` folder in your plugin."
 msgstr "Placera .mo-filer i ``translations``-mappen i din insticksmodul."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:301
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:301
 msgid ""
 "The last step is to simply call the function `load_translations()` at the "
 "top of your plugin's .py files. For performance reasons you should only call"
@@ -497,23 +497,23 @@ msgid ""
 "``ui.py`` but not ``__init__.py``."
 msgstr "Det sista steget är att helt enkelt kalla funktionen `load_translations()` högst upp av dina insticksmoduls .py-filer. Av prestandaskäl bör du bara kalla denna funktion i de .py filer som faktiskt har översättbara strängar. Så i ett typiskt användargränssnitts insticksmodul som du skulle kalla det högst upp i ``ui.py`` men inte `` __init __. py``."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:307
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:307
 msgid ""
 "You can test the translations of your plugins by changing the user interface"
 " language in calibre under :guilabel:`Preferences->Interface->Look & feel` "
 "or by running calibre like this::"
 msgstr "Du kan testa översättningarna av dina insticksmodul genom att ändra språk i användargränssnittet i calibre i :guilabel:`Inställningar->Gränssnitt->Utseende & känsla' eller genom att köra calibre så här::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:313
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:313
 msgid ""
 "Replace ``de`` with the language code of the language you want to test."
 msgstr "Ersätt ``sv`` med språkkoden för det språk som du vill testa."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:316
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:316
 msgid "The plugin API"
 msgstr "Insticksmoduls API:n"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:318
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:318
 msgid ""
 "As you may have noticed above, a plugin in calibre is a class. There are "
 "different classes for the different types of plugins in calibre. Details on "
@@ -521,36 +521,36 @@ msgid ""
 ":ref:`plugins`."
 msgstr "Som ni kanske har märkt ovan, en insticksmodul i calibre är en klass. Det finns olika klasser för de olika typerna av insticksmoduler i calibre. Detaljer om varje klass, inklusive basklassen för alla insticksmoduler kan hittas i :ref:`plugin`."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:321
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:321
 msgid ""
 "Your plugin is almost certainly going to use code from calibre. To learn how"
 " to find various bits of functionality in the calibre code base, read the "
 "section on the calibre :ref:`code_layout`."
 msgstr "Din insticksmodul kommer nästan säkert att använda kod från calibre. Om du vill veta hur man hittar olika bitar av funktionalitet i calibre kodbas, läs avsnittet om calibre :ref:`code_layout`."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:326
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:326
 msgid "Debugging plugins"
 msgstr "Felsöka insticksmodul"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:328
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:328
 msgid ""
 "The first, most important step is to run calibre in debug mode. You can do "
 "this from the command line with::"
 msgstr "Den första och viktigaste steget är att köra calibre i felsökningsläge. Du kan göra det från kommandoraden med::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:332
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:332
 msgid ""
 "Or from within calibre by right-clicking the :guilabel:`Preferences` button "
 "or using the :kbd:`Ctrl+Shift+R` keyboard shortcut."
 msgstr "Eller inifrån calibre genom att högerklicka på :guilabel:`Inställningar` eller genom att använda tangentbordsgenvägen :kbd:`Ctrl+Skift+R`."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:334
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:334
 msgid ""
 "When running from the command line, debug output will be printed to the "
 "console, when running from within calibre the output will go to a txt file."
 msgstr "När du kör från kommandoraden, kommer felsökningsutmatning skrivas till konsolen, när man kör inifrån calibre kommer utmatning gå till en TXT-fil."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:336
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:336
 msgid ""
 "You can insert print statements anywhere in your plugin code, they will be "
 "output in debug mode. Remember, this is Python, you really shouldn't need "
@@ -558,33 +558,33 @@ msgid ""
 "using just this debugging technique."
 msgstr "Du kan sätta in utskriftssatser var som helst i din insticksmodulkod, de kommer att vara utmatning i felsökningsläge. Kom ihåg att det här är Python, du borde verkligen inte behöver något mer än utskriftssatser för att felsöka ;) jag har utvecklat hela calibre med att använda just denna felsökningsteknik."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:338
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:338
 msgid ""
 "You can quickly test changes to your plugin by using the following command "
 "line::"
 msgstr "Du kan snabbt testa ändringar i din insticksmodul med hjälp av följande kommandorad::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:343
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:343
 msgid ""
 "This will shutdown a running calibre, wait for the shutdown to complete, "
 "then update your plugin in calibre and relaunch calibre."
 msgstr "Detta kommer att stänga en körande calibre, vänta på avstängning är slutförd och sedan uppdatera din insticksmodul i calibre och starta om calibre."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:346
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:346
 msgid "More plugin examples"
 msgstr "Fler insticksmodul exempel"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:348
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:348
 msgid ""
 "You can find a list of many, sophisticated calibre plugins `here "
 "<https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 msgstr "Du hittar en lista över många, avancerade calibre insticksmodul `här <https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:351
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:351
 msgid "Sharing your plugins with others"
 msgstr "Dela dina insticksmodul med andra"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:353
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:353
 msgid ""
 "If you would like to share the plugins you have created with other users of "
 "calibre, post your plugin in a new thread in the `calibre plugins forum "

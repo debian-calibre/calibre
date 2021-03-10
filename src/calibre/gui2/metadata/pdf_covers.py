@@ -10,14 +10,10 @@ import sys, shutil, os
 from threading import Thread
 from glob import glob
 
-from PyQt5.Qt import (
+from qt.core import (
     QDialog, QApplication, QLabel, QVBoxLayout, QDialogButtonBox, Qt, QAbstractItemView, QListView,
-    pyqtSignal, QListWidget, QListWidgetItem, QSize, QPixmap, QStyledItemDelegate
+    pyqtSignal, QListWidget, QListWidgetItem, QSize, QPixmap, QStyledItemDelegate, sip
 )
-try:
-    from PyQt5 import sip
-except ImportError:
-    import sip
 
 from calibre import as_unicode
 from calibre.ebooks.metadata.pdf import page_images

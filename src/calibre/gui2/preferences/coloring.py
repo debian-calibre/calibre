@@ -8,7 +8,7 @@ __docformat__ = 'restructuredtext en'
 
 import os, textwrap, json
 
-from PyQt5.Qt import (QWidget, QDialog, QLabel, QGridLayout, QComboBox, QSize,
+from qt.core import (QWidget, QDialog, QLabel, QGridLayout, QComboBox, QSize,
         QLineEdit, QIntValidator, QDoubleValidator, QFrame, Qt, QIcon, QHBoxLayout,
         QScrollArea, QPushButton, QVBoxLayout, QDialogButtonBox, QToolButton, QItemSelectionModel,
         QListView, QAbstractListModel, pyqtSignal, QSizePolicy, QSpacerItem, QPalette,
@@ -964,7 +964,7 @@ class EditRules(QWidget):  # {{{
         hb.addWidget(b)
         hb.addStretch(10)
         self.open_icon_folder_button = b = QPushButton(QIcon(I('icon_choose.png')),
-                _('Open icon directory'), self)
+                _('Open icon folder'), self)
         connect_lambda(b.clicked, self,
                        lambda _: open_local_file(os.path.join(config_dir, 'cc_icons')))
         hb.addWidget(b)

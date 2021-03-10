@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "február 26, 2021" "5.12.0" "calibre"
+.TH "CALIBREDB" "1" "március 10, 2021" "5.13.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -232,14 +232,14 @@ The field by which to sort the results. Available fields: author_sort, authors, 
 .sp
 .nf
 .ft C
-calibredb add [kapcsolók] fájl1 fájl2 fájl3 ...
+calibredb add [options] file1 file2 file3 ...
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-A megadott fájlok könyvként kerülnek az adatbázisba. Mappákat is megadhat.
-Lásd, mappákhoz köthető kapcsolók.
+Add the specified files as books to the database. You can also specify folders, see
+the folder related options below.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -308,22 +308,22 @@ Könyvek könyvtárakból történő hozzáadásának ellenőrzése. Alapértelm
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning directories for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-Fájlnév (glob) minta, a mintához illeszkedő fájlok figyelmen kívül lesznek hagyva a keresés során. Többször is megadható az összetett mintákhoz. Például a *.pdf figyelmen kívül hagyja a pdf fájlokat.
+A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all PDF files
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Feltéve, hogy minden mappa egy könyv különböző formátumait tartalmazza
+Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Az összes almappát is beleértve
+Process folders recursively
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -491,12 +491,12 @@ Szóközök helyettesítése alul\-vonással
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Minden könyv exportálása egy mappába
+Export all books into a single folder
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-A mentett fájlok fájlnevének és mappaszerkezetének sablonja. Az alapérték \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP, ami a könyveket szerzőnként külön almappába helyezi, a fájl neve pedig tartalmazza a címet és a szerzőt. Engedélyezett változók:  {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -506,7 +506,7 @@ A megjelenítendő dátum formázása. %d \- nap, %b \- hónap, %m \- hónap sz�
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Az adatbázisban lévő könyvek exportálása egy meghatározott mappába. Alapértelmezett: .
+Export books to the specified folder. Default is .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -561,7 +561,7 @@ Create cross\-references in Authors section for books with multiple authors. Def
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Save the output from different stages of the conversion pipeline to the specified directory. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -766,19 +766,20 @@ Ha az oszlop több értéket tárol, akkor a megadott értéket adja a meglévő
 .sp
 .nf
 .ft C
-calibredb restore_database [kapcsolók]
+calibredb restore_database [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Ez a művelet újraépíti az adatbázist az egyes könyvekhez tartozó metaadat
-fájlokból. Ez akkor lehet hasznos, ha valamilyen okból kifolyólag sérült az adatbázisfájl.
+Restore this database from the metadata stored in OPF files in each
+folder of the calibre library. This is useful if your metadata.db file
+has been corrupted.
 .sp
-FIGYELEM: ez a parancs teljesen újraépíti az adatbázist. Minden mentett keresés,
-felhasználói kategória, metaadat kapcsolat, könyvenként tárolt konvertálási információ
-és felhasználói hírösszeállítás törölve lesz. Az új metaadatok csak az OPF fájlokban
-tároltak szerint jelennek meg az újraépített adatbázisban.
+WARNING: This command completely regenerates your database. You will lose
+all saved searches, user categories, plugboards, stored per\-book conversion
+settings, and custom recipes. Restored metadata will only be as accurate as
+what is found in the OPF files.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0

@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-06 07:28+0000\n"
-"PO-Revision-Date: 2021-01-28 16:45+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2021-03-08 15:24+0000\n"
+"PO-Revision-Date: 2021-03-03 18:20+0000\n"
+"Last-Translator: ashed <craysy@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/calibre/calibre/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -466,7 +466,7 @@ msgid ""
 "<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ `Tag` and extract"
 " the text from it recursively, including any CDATA sections and alt tag "
 "attributes. Return a possibly empty Unicode string."
-msgstr ""
+msgstr "Удобный метод, позволяющий взять `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ `Tag` и рекурсивно извлечь из него текст, включая любые разделы CDATA и атрибуты тегов alt. Вернуть возможно пустую строку Юникода."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:6
@@ -482,14 +482,14 @@ msgid ""
 "<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ `Tag`"
 msgstr "`tag`: `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ `Tag`"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.articles_are_obfuscated:1
 msgid ""
 "Set to True and implement :meth:`get_obfuscated_article` to handle websites "
 "that try to make it difficult to scrape content."
 msgstr "Установите значение True и реализуйте :meth:`get_obfuscated_article` для обработки веб-сайтов, пытающихся затруднить очистку содержимого."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.auto_cleanup:1
 msgid ""
 "Automatically extract all the text from downloaded article pages. Uses the "
@@ -498,20 +498,20 @@ msgid ""
 "(though manual cleanup will always be superior)."
 msgstr "Автоматически извлечь весь текст со страниц загруженных статей. Использует алгоритмы из проекта удобочитаемости. Установить значение в True чтобы не чистить загруженный HTML вручную (хотя ручная очистка всегда будет лучше)."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.auto_cleanup_keep:1
 msgid ""
 "Specify elements that the auto cleanup algorithm should never remove. The "
 "syntax is a XPath expression. For example::"
 msgstr "Укажите элементы, которые алгоритм автоматической очистки никогда не должен удалять. Синтаксис - это выражение XPath. Например::"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.center_navbar:1
 msgid ""
 "If True the navigation bar is center aligned, otherwise it is left aligned"
 msgstr " Если True, панель навигации выравнивается по центру, в противном случае - по левому краю"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images:1
 msgid ""
 "Set this to False to ignore all scaling and compression parameters and pass "
@@ -521,7 +521,7 @@ msgid ""
 "(w * h)/16 where w x h are the scaled image dimensions."
 msgstr "Установите значение False, чтобы игнорировать все параметры масштабирования и сжатия и передавать изображения без изменений. Если True и другие параметры сжатия оставлены в значениях по умолчанию, изображения JPEG будут масштабированы, чтобы соответствовать размерам экрана, установленным выходным профилем, и сжиматься до размера не более (w * h) / 16, где w x h - размеры масштабированного изображения. ."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images_auto_size:1
 msgid ""
 "The factor used when auto compressing JPEG images. If set to None, auto "
@@ -537,7 +537,7 @@ msgid ""
 "other words, this compression happens after scaling."
 msgstr "Коэффициент, используемый при автоматическом сжатии изображений JPEG. Если установлено значение «Нет», автоматическое сжатие отключено. В противном случае изображения будут уменьшены в размере до (w * h) / compress_news_images_auto_size байтов, если это возможно, за счет снижения уровня качества, где w x h - размеры изображения в пикселях. Минимальное качество JPEG будет 5/100, поэтому м.б. это ограничение не будет выполнено. Этот параметр можно переопределить с помощью параметра compress_news_images_max_size, обеспечивающего фиксированный максимальный размер изображений. Обратите внимание: если вы включите scale_news_images_to_device, изображение сначала будет масштабировано, а затем его качество будет снижено до тех пор, пока его размер не станет меньше, чем (w * h) / factor, где w и h теперь являются * масштабированными * размерами изображения. Другими словами, это сжатие происходит после масштабирования."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images_max_size:1
 msgid ""
 "Set JPEG quality so images do not exceed the size given (in KBytes). If set,"
@@ -546,7 +546,7 @@ msgid ""
 " is possible this constraint will not be met."
 msgstr "Установить качество JPEG, чтобы изображения не превышали указанный размер (в килобайтах). Если установлено, этот параметр отменяет автоматическое сжатие через compress_news_images_auto_size. Минимальное качество JPEG будет 5/100, поэтому м.б. это ограничение не будет выполнено."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.conversion_options:1
 msgid ""
 "Recipe specific options to control the conversion of the downloaded content "
@@ -554,7 +554,7 @@ msgid ""
 "only use if absolutely necessary. For example::"
 msgstr "Определенные параметры рецепта для управления преобразованием загруженного содержимого в электронную книгу. Они переопределят любые значения, указанные пользователем или плагином, поэтому используйте их только в случае крайней необходимости. Например::"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.cover_margins:1
 msgid ""
 "By default, the cover image returned by get_cover_url() will be used as the "
@@ -567,21 +567,21 @@ msgid ""
 "white does not always work in Windows. Use #ffffff instead"
 msgstr "По умолчанию изображение обложки, возвращаемое функцией get_cover_url (), будет использоваться в качестве обложки для журнала. При переопределении в рецепте calibre будет рендерить загруженную обложку в рамку, ширина и высота - это процент от загруженной обложки. cover_margins = (10, 15, '#ffffff') дополняет обложку белым полем 10 пикселей слева и справа, 15 пикселей сверху и снизу. Названия цветов определены на https://www.imagemagick.org/script/color.php. Обратите внимание, что по какой-то причине белый цвет не всегда работает в Windows. Вместо этого используйте #ffffff"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.delay:1
 msgid ""
 "Delay between consecutive downloads in seconds. The argument may be a "
 "floating point number to indicate a more precise time."
 msgstr " Задержка между последовательными загрузками в секундах. Аргумент может быть числом с плавающей запятой, чтобы указать более точное время."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.description:1
 msgid ""
 "A couple of lines that describe the content this recipe downloads. This will"
 " be used primarily in a GUI that presents a list of recipes."
 msgstr " Пара строк, описывающих содержимое, которое загружается по этому рецепту. Это будет использоваться в основном в графическом интерфейсе, который представляет список рецептов."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.encoding:1
 msgid ""
 "Specify an override encoding for sites that have an incorrect charset "
@@ -591,7 +591,7 @@ msgid ""
 "be decoded. It must return the decoded source."
 msgstr "Указать переопределяемую кодировку для сайтов с неправильным указанием кодировки. Чаще всего указывается latin1 и используется cp1252. Если None, попробует определить кодировку. Объект вызывается с двумя аргументами: объектом рецепта и источником для декодирования. Он должен возвращать декодированный источник."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.extra_css:1
 msgid ""
 "Specify any extra :term:`CSS` that should be added to downloaded "
@@ -602,42 +602,42 @@ msgid ""
 ":meth:`get_extra_css()` method instead. For example::"
 msgstr "Указать любую дополнительную :term: `CSS`, которая д. б. добавлена к загружаемым :term:`HTML` файлам. Она будет вставлена в `<style>`теги `непосредственно перед закрывающим `</head>`тегом, переопределив все :term:`CSS`, за исключением той, которая объявлена с использованием стилевого атрибута в отдельных тегах :term:`HTML`. Обратите внимание: если вы хотите программно сгенерировать extra_css, вместо этого переопределите метод :meth:`get_extra_css ()`. Например::"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.feeds:1
 msgid ""
 "List of feeds to download. Can be either ``[url1, url2, ...]`` or "
 "``[('title1', url1), ('title2', url2),...]``"
 msgstr " Список каналов для загрузки. Может быть ``[url1, url2, ...]`` или ``[('title1', url1), ('title2', url2),...]``"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.filter_regexps:1
 msgid ""
 "List of regular expressions that determines which links to ignore. If empty "
 "it is ignored. Used only if is_link_wanted is not implemented. For example::"
 msgstr "Список регулярных выражений, определяющий, какие ссылки игнорировать. Если пустой - игнорируется. Используется, только если is_link_wanted не реализован. Например::"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.filter_regexps:7
 msgid "will remove all URLs that have `ads.doubleclick.net` in them."
 msgstr " удалит все URL-адреса, в которых есть `ads.doubleclick.net`."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.filter_regexps:9
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.match_regexps:9
 msgid ""
 "Only one of :attr:`BasicNewsRecipe.match_regexps` or "
 ":attr:`BasicNewsRecipe.filter_regexps` should be defined."
 msgstr "Должен быть определен только один из :attr:`BasicNewsRecipe.match_regexps` или :attr:`BasicNewsRecipe.filter_regexps`."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.handle_gzip:1
 msgid ""
 "Set to True if you want to use gziped transfers. Note that some old servers "
 "flake out with this so it is off by default."
 msgstr "Установить True, если вы хотите использовать передачу в формате gziped. Обратите внимание, что некоторые старые серверы с этим не работают, поэтому по умолчанию он отключен."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:1
 msgid ""
 "Ignore duplicates of articles that are present in more than one section. A "
@@ -645,17 +645,17 @@ msgid ""
 "ignore articles with the same title, set this to::"
 msgstr "Игнорировать дубликаты статей, которые присутствуют более чем в одном разделе. Дублирующаяся статья - это статья с таким же названием и/или URL. Чтобы игнорировать статьи с таким же названием, установите для этого параметра значение::"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:7
 msgid "To use URLs instead, set it to::"
 msgstr "Для использования URL-адресов вместо этого, установите значение::"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:11
 msgid "To match on title or URL, set it to::"
 msgstr "Для соответствия заголовку или URL, установите значение::"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.keep_only_tags:1
 msgid ""
 "Keep only the specified tags and their children. For the format for "
@@ -664,28 +664,28 @@ msgid ""
 " that match the entries in this list. For example::"
 msgstr "Оставить только указанные теги и их дочерние элементы. Формат указания тега см. :attr:`BasicNewsRecipe.remove_tags`. Если этот список не пуст, то `<body>` тег будет очищен и повторно заполнен тегами, соответствующими записям в этом списке. Например::"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.keep_only_tags:8
 msgid ""
 "will keep only tags that have an `id` attribute of `\"content\"` or "
 "`\"heading\"`."
 msgstr "сохранить только теги, у которых есть атрибут `id` `\"content\"` или `\"heading\"`."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.language:1
 msgid ""
 "The language that the news is in. Must be an ISO-639 code either two or "
 "three characters long"
 msgstr "Язык новостей. Должен быть двух- или трёхзначным кодом ISO-639."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.masthead_url:1
 msgid ""
 "By default, calibre will use a default image for the masthead (Kindle only)."
 " Override this in your recipe to provide a url to use as a masthead."
 msgstr "По умолчанию calibre будет использовать изображение по умолчанию для шапки (только Kindle). Переопределите это в своем рецепте, чтобы указать URL-адрес для использования в качестве шапки."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.match_regexps:1
 msgid ""
 "List of regular expressions that determines which links to follow. If empty,"
@@ -693,12 +693,12 @@ msgid ""
 "example::"
 msgstr " Список регулярных выражений, определяющий, по каким ссылкам следовать. Если пусто, игнорируется. Используется, только если is_link_wanted не реализован. Например::"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.match_regexps:7
 msgid "will match all URLs that have `page=some number` in them."
 msgstr "будет соответствовать всем URL-адресам, в которых есть `page = some number`."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.max_articles_per_feed:1
 msgid ""
 "Maximum number of articles to download from each feed. This is primarily "
@@ -706,7 +706,7 @@ msgid ""
 "use :attr:`BasicNewsRecipe.oldest_article`"
 msgstr "Максимальное количество статей для загрузки из каждого канала. Это в первую очередь полезно для каналов, в которых нет дат статьи. Для большинства каналов вы должны использовать :attr:`BasicNewsRecipe.oldest_article`"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.needs_subscription:1
 msgid ""
 "If True the GUI will ask the user for a username and password to use while "
@@ -714,7 +714,7 @@ msgid ""
 "becomes optional"
 msgstr "Если True, графический интерфейс запросит у пользователя имя пользователя и пароль для использования при загрузке. Если установлено значение 'optional', использование имени пользователя и пароля становится необязательным."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.no_stylesheets:1
 msgid ""
 "Convenient flag to disable loading of stylesheets for websites that have "
@@ -722,12 +722,12 @@ msgid ""
 "True stylesheets are not downloaded and processed"
 msgstr " Удобный флаг для отключения загрузки таблиц стилей для веб-сайтов, со слишком сложными таблицами стилей, непригодными для преобразования в электронные книги. Если True таблицы стилей не загружаются и не обрабатываются"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.oldest_article:1
 msgid "Oldest article to download from this news source. In days."
 msgstr "Самая старая статья для загрузки из этого источника новостей. В днях."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_regexps:1
 msgid ""
 "List of :term:`regexp` substitution rules to run on the downloaded "
@@ -737,36 +737,36 @@ msgid ""
 "replace the match. For example::"
 msgstr "Список правил подстановки :term:`regexp` для запуска в загруженном :term:`HTML`. Каждый элемент списка должен быть двухэлементным кортежем. Первый элемент кортежа должен быть скомпилированным регулярным выражением, а второй - вызываемым, который принимает единственный соответствующий объект и возвращает строку для замены совпадения. Например::"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_regexps:12
 msgid "will remove everything from `<!--Article ends here-->` to `</body>`."
 msgstr "удалит все от <!--Article ends here-->` до `</body>`."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.publication_type:1
 msgid ""
 "Publication type Set to newspaper, magazine or blog. If set to None, no "
 "publication type metadata will be written to the opf file."
 msgstr "Тип публикации Газета, журнал или блог. Если установлено значение Нет, метаданные типа публикации не будут записываться в файл opf."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.recipe_disabled:1
 msgid ""
 "Set to a non empty string to disable this recipe. The string will be used as"
 " the disabled message"
 msgstr "Установите непустую строку, чтобы отключить этот рецепт. Строка будет использоваться как отключенное сообщение"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.recursions:1
 msgid "Number of levels of links to follow on article webpages"
 msgstr "Количество уровней ссылок для перехода на веб-страницах статей"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_attributes:1
 msgid "List of attributes to remove from all tags. For example::"
 msgstr "Список атрибутов, которые нужно удалить из всех тегов. Например::"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_empty_feeds:1
 msgid ""
 "If True empty feeds are removed from the output. This option has no effect "
@@ -775,19 +775,19 @@ msgid ""
 "used if you use the ignore_duplicate_articles option."
 msgstr "Если True, пустые каналы удаляются из вывода. Эта опция не действует, если parse_index переопределен в подклассе. Он предназначен только для рецептов, которые возвращают список каналов с использованием `feeds` или :meth:`get_feeds`. Он также используется, с опцией ignore_duplicate_articles."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_javascript:1
 msgid "Convenient flag to strip all JavaScript tags from the downloaded HTML"
 msgstr " Удобный флаг для удаления всех тегов JavaScript из загруженного HTML"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags:1
 msgid ""
 "List of tags to be removed. Specified tags are removed from downloaded HTML."
 " A tag is specified as a dictionary of the form::"
 msgstr "Список удаляемых тегов. Указанные теги удаляются из загруженного HTML. Тег задается как словарь формы::"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags:9
 msgid ""
 "All keys are optional. For a full explanation of the search criteria, see "
@@ -795,43 +795,43 @@ msgid ""
 "/#searching-the-tree>`__ A common example::"
 msgstr "Все ключи необязательны. Полное объяснение критериев поиска см. В `Beautiful Soup https://www.crummy.com/software/BeautifulSoup/bs4/doc/#searching-the-tree`__ A common example::"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags:15
 msgid ""
 "This will remove all `<div class=\"advert\">` tags and all their children "
 "from the downloaded :term:`HTML`."
 msgstr "Это приведет к удалению всех тегов `<div class=\"advert\">` и всех их дочерних элементов из загруженного :term:`HTML`."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_after:1
 msgid ""
 "Remove all tags that occur after the specified tag. For the format for "
 "specifying a tag see :attr:`BasicNewsRecipe.remove_tags`. For example::"
 msgstr "Удалить все теги, появляющиеся после указанного тега. Формат указания тега см. В :attr:`BasicNewsRecipe.remove_tags`. Например::"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_after:7
 msgid "will remove all tags after the first element with `id=\"content\"`."
 msgstr "удалит все теги после первого элемента с `id=\"content\"`."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_before:1
 msgid ""
 "Remove all tags that occur before the specified tag. For the format for "
 "specifying a tag see :attr:`BasicNewsRecipe.remove_tags`. For example::"
 msgstr "Удалить все теги, появляющиеся перед указанным тегом. Формат указания тега см. В :attr:`BasicNewsRecipe.remove_tags`. Например::"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_before:7
 msgid "will remove all tags before the first element with `id=\"content\"`."
 msgstr "удалит все теги перед первым элементом с `id=\"content\"`."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.requires_version:1
 msgid "Minimum calibre version needed to use this recipe"
 msgstr "Минимальная версия calibre, необходимая для использования этого рецепта"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.resolve_internal_links:1
 msgid ""
 "If set to True then links in downloaded articles that point to other "
@@ -841,12 +841,12 @@ msgid ""
 "URL scheme of your particular website."
 msgstr "Если установлено значение True, то ссылки в загруженных статьях, которые указывают на другие загруженные статьи, изменяются, чтобы указывать на загруженную копию статьи, а не на ее исходный веб-URL. При установке значения True, вам также может потребоваться реализовать :meth:`canonicalize_internal_url` для работы со схемой URL-адресов вашего конкретного веб-сайта."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.reverse_article_order:1
 msgid "Reverse the order of articles in each feed"
 msgstr "Измените порядок статей в каждом фиде"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.scale_news_images:1
 msgid ""
 "Maximum dimensions (w,h) to scale images to. If scale_news_images_to_device "
@@ -855,26 +855,26 @@ msgid ""
 " value it has been assigned (default None)."
 msgstr "Максимальные размеры (ширина, высота) для масштабирования изображений. Если scale_news_images_to_device имеет значение True, для него устанавливаются размеры экрана устройства, заданные выходным профилем, если профиль не задан, и в этом случае он остается в том значении, которое было назначено (по умолчанию None)."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.scale_news_images_to_device:1
 msgid ""
 "Rescale images to fit in the device screen dimensions set by the output "
 "profile. Ignored if no output profile is set."
 msgstr " Изменить масштаб изображений, чтобы они соответствовали размерам экрана устройства в профиле вывода. Игнорируется, если выходной профиль не задан."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.simultaneous_downloads:1
 msgid ""
 "Number of simultaneous downloads. Set to 1 if the server is picky. "
 "Automatically reduced to 1 if :attr:`BasicNewsRecipe.delay` > 0"
 msgstr "Количество одновременных загрузок. Установите 1, если сервер придирчив. Автоматически уменьшается до 1, если :attr:`BasicNewsRecipe.delay` > 0"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.summary_length:1
 msgid "Max number of characters in the short description"
 msgstr "Максимальное количество символов в кратком описании"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.template_css:1
 msgid ""
 "The CSS that is used to style the templates, i.e., the navigation bars and "
@@ -882,24 +882,24 @@ msgid ""
 " `extra_css` in your recipe to customize look and feel."
 msgstr " CSS, который используется для стилизации шаблонов, то есть панелей навигации и оглавлений. Вместо переопределения этой переменной используйте в своем рецепте `extra_css` для настройки внешнего вида."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.timefmt:1
 msgid ""
 "The format string for the date shown on the first page. By default: "
 "Day_Name, Day_Number Month_Name Year"
 msgstr "Строка формата даты, показанной на первой странице. По умолчанию: Day_Name, Day_Number Month_Name Year"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.timeout:1
 msgid "Timeout for fetching files from server in seconds"
 msgstr "Таймаут для загрузки файлов с сервера в секундах"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.title:1
 msgid "The title to use for the e-book"
 msgstr "Название для электронной книги"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.use_embedded_content:1
 msgid ""
 "Normally we try to guess if a feed has full articles embedded in it based on"

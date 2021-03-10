@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "febrúar 26, 2021" "5.12.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "mars 10, 2021" "5.13.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -145,7 +145,7 @@ Setja innfellt efnisyfirlit aftast í bókina í stað fremst.
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Setja innihaldið í tilbúnu EPUB skránni í tilgreinda möppu. Farið varlega, því innihald möppunnar er fyrst fjarlægt.
+Extract the contents of the generated EPUB file to the specified folder. The contents of the folder are first deleted, so be careful.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -183,7 +183,7 @@ Stillingar á útliti og framsetningu úttaks
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPМихаил Горбачёв\fB"\fP with \fB"\fPMikhail Gorbachiov\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPPelé\fB"\fP with \fB"\fPPele\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -591,7 +591,7 @@ Valkostir til að hjálpa við villuleit í umbreytingunni
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Vista úttakið á mismunandi stigum við umbreytingu í tilgreinda möppu. Notadrjúgt ef óvissa ríkir um hvar villa á sér stað í umbreytingarferlinu.
+Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring.
 .UNINDENT
 .INDENT 0.0
 .TP

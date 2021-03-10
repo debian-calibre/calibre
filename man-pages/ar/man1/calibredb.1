@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "فبراير 26, 2021" "5.12.0" "calibre"
+.TH "CALIBREDB" "1" "مارس 10, 2021" "5.13.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -41,38 +41,43 @@ calibredb command [options] [arguments]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP هو واجهة موجه الأوامر لقاعدة بيانات كاليبر.
-لهذه الواجهة عدة أوامر فرعية، مشروحة تالياً.
+‎:‎command:
+.nf
+\(ga
+.fi
+calibredb\(ga‎ هو واجهة موجه الأوامر لقاعدة بيانات كاليبر. لهذه
+الواجهة عدة أوامر فرعية، مشروحة تالياً.
 .sp
-\fBcalibredb\fP يمكن استخدامه لمعالجة إمّا قاعدة بيانات كاليبر محددة بمسار أو بخادوم محتوى
-كاليبر Content server يشتغل إمّا على جهاز محلي و على النت.
-يمكنك بدء خادوم محتوى كاليبر
-Content server باستخدام إمّا أمر برنامج \fBcalibre\-server\fP
-أو من الواجهة الرئيسية لبرنامج كاليبر
-انقر على Connect/share  →  Start Content server\&.
-حيث أنّ \fBcalibredb\fP يمكنه أن يُجري تغييرات على مكتبات كاليبر ،
-فيتوجب عليك إعداد إستيثاق أولاً على الخادوم. توجد طريقتان لفعل ذلك:
+‎:‎command:\fIcalibredb\(ga‎ يمكن استخدامه لمعالجة إمّا قاعدة بيانات كاليبر محددة بمسار
+أو بخادوم محتوى كاليبر :guilabel:\(gaContent server\fP يشتغل إمّا على جهاز محلي أو على
+النت. يمكنك بدء خادوم محتوى كاليبر ‎:‎guilabel:‎\(ga‎Content server\(ga‎ باستخدام
+إمّا أمر البرنامج ‎:command:‎\(ga‎calibre\-server\(ga‎ أو
+من الواجهة الرئيسية لبرنامج كاليبر انقر
+على اتصال/مشاركة  →  بدأ خادوم المحتوى\&.
+حيث أنّ قاعدة البيانات ‎:command:‎\(ga‎calibredb\(ga‎ يمكنها أن تُجري
+تغييرات على مكتبات كاليبر، فيتوجب عليك إعداد إستيثاق أولاً على
+الخادوم. توجد طريقتان لفعل ذلك:
+.INDENT 0.0
+.INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
 إذا كنت تنوي الإرتباط فقط إلى خادوم يشتغل على نفس الحاسوب،فيمكنك
-.UNINDENT
-.sp
 ببساطة استخدام خيار \fB\-\-enable\-local\-write\fP في خادوم المحتوى، للسماح
 لأي برنامج، ومنها قواعد بيانات كاليبر calibredb، يشتغل على الحاوب المحلي بأن يُجري
 تغييرات على بياناتك في كاليبر.
 عند تشغيل الخادوم من برنامج كاليبر الرئيسي، فإن هذا الخيار موجود في
-Preferences → Sharing over the net → Advanced\&.
-.INDENT 0.0
+التفضيلات → المشاركة على النت → متقدم\&.
 .IP \(bu 2
 إذا أردت تمكين الدخول عبر النت، إذن ينبغي عليك إعداد حسابات مستخدمين على الخادوم واستخدام الخيارات
-.UNINDENT
-.sp
 \fI\%\-\-username\fP و \fI\%\-\-password\fP
 في الأمر \fBcalibredb\fP لمنحه الدخول.
-يمكنك إعداد استيثاق للمستخدمين للأمر \fBcalibre\-server\fP
+يمكنك إعداد استيثاق للمستخدمين للخادوم \fBcalibre\-server\fP
 باستخدام الخيار \fB\-\-enable\-auth\fP واستخدام\(ga\(ga\-\-manage\-users\(ga\(ga لإنشاء حسابات المستخدمين.
 إذا كنت تشغّل الخادوم من برنامج كاليبر الرئيسي، فاستخدم
 Preferences → Sharing over the net → Require username/password\&.
+.UNINDENT
+.UNINDENT
+.UNINDENT
 .sp
 للإرتباط بخادوم محتوى مشتغل، مرّر رابط URL الخادوم إلى الخيار
 \fI\%\-\-with\-library\fP، راجع شرح ذلك الخيار
@@ -228,14 +233,14 @@ The field by which to sort the results. Available fields: author_sort, authors, 
 .sp
 .nf
 .ft C
-rog add [options] file1 file2 file3‎ ‎.‎.‎.‎%p
+calibredb add [options] file1 file2 file3 ...
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-أضف الملفات المحددة على أنها كتب إلى قاعدة البيانات. يمكنك أيضا تحديد أدلة ملفات، انظر
-الخيارات الخاصة بأدلة الملفات في أدناه.
+Add the specified files as books to the database. You can also specify folders, see
+the folder related options below.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -304,22 +309,22 @@ A comma separated list of languages (best to use ISO639 language codes, though s
 .INDENT 0.0
 .TP
 .B \-\-add
-نمط (glob) لإسم الملف، الملفات التي تُطابِق هذا النمط ستُضاف عند فحص المجلدات بحثا عن ملفات، حتى لو لم تكن من نوع ملف معروف للكتب الالكترونية. يمكن تحديده مرات متعددة لأنماط متعددة.
+A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning directories for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all pdf files
+A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all PDF files
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Assume that each directory has only a single logical book and that all files in it are different e\-book formats of that book
+Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-معالجة القواميس تواترياً
+Process folders recursively
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -487,12 +492,12 @@ Replace whitespace with underscores.
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Export all books into a single directory
+Export all books into a single folder
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to control the filename and directory structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subdirectory with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -502,7 +507,7 @@ The format in which to display dates. %d \- day, %b \- month, %m \- month number
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Export books to the specified directory. Default is .
+Export books to the specified folder. Default is .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -557,7 +562,7 @@ Create cross\-references in Authors section for books with multiple authors. Def
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Save the output from different stages of the conversion pipeline to the specified directory. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -768,7 +773,7 @@ calibredb restore_database [options]
 .UNINDENT
 .sp
 Restore this database from the metadata stored in OPF files in each
-directory of the calibre library. This is useful if your metadata.db file
+folder of the calibre library. This is useful if your metadata.db file
 has been corrupted.
 .sp
 WARNING: This command completely regenerates your database. You will lose

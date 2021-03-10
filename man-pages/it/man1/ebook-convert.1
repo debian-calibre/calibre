@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "febbraio 26, 2021" "5.12.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "marzo 10, 2021" "5.13.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -120,7 +120,7 @@ Opzioni per controllare l\(aqelaborazione dell\(aqoutput epub
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
-Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+Disattiva la divisione dei file alle interruzioni di pagina. Normalmente i file di input sono automaticamente divisi a ogni interruzione di pagina in due file. Ciò dà in output un e\-book che può essere decodificato più velocemente e con minore uso di risorse. Tuttavia, la suddivisione è lenta e se il tuo file sorgente contiene un gran numero di interruzioni di pagina, è consigliabile disattivare la suddivisione alle interruzioni di pagina.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -135,7 +135,7 @@ Inserisci un indice che apparirà come parte del contenuto principale del libro
 .INDENT 0.0
 .TP
 .B \-\-epub\-toc\-at\-end
-Inserire la tabella dei contenuti alla fine del libro al posto che alla fine
+Metti l\fB\(aq\fPindice in linea inserito alla fine del libro invece che all\fB\(aq\fPinizio.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -145,7 +145,7 @@ La versione del file EPUB da generare. EPUB 2 è quello largamente compatibile, 
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Estrae il contenuto del file EPUB generato nella cartella selezionata. Il contenuto della cartella viene prima eliminato, quindi fate attenzione.
+Extract the contents of the generated EPUB file to the specified folder. The contents of the folder are first deleted, so be careful.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -175,7 +175,7 @@ Se specificato, il plugin tenta di creare un output il più leggibile possibile.
 .INDENT 0.0
 .TP
 .B \-\-toc\-title
-Titolo per ogni indice in\-line generato.
+Titolo per ogni indice in linea generato.
 .UNINDENT
 .SH IMPRESSIONE VISIVA
 .sp
@@ -183,7 +183,7 @@ Opzioni per controllare l\(aqaspetto dell\(aqoutput
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPМихаил Горбачёв\fB"\fP with \fB"\fPMikhail Gorbachiov\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Converti i caratteri Unicode in una rappresentazione ASCII. Usa con attenzione perchè sostituirà i caratteri Unicode con caratteri ASCII. Per esempio sostituirà \fB"\fPPelé\fB"\fP con \fB"\fPPele\fB"\fP\&. In più, nota che nei casi in cui ci sia più di una rappresentazione per un carattere (caratteri presenti sia in cinese che in giapponese per esempio) la rappresentazione basata sul linguaggio corrente dell\fB\(aq\fPinterfaccia di calibre sarà usata.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -293,7 +293,7 @@ Quando calibre rimuove le righe vuote tra paragrafi, imposta automaticamente un 
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP
+Converti virgolette, trattini e puntini di sospensione semplici nei loro equivalenti tipografici corretti. Per dettagli, vedi \fI\%https://daringfireball.net/projects/smartypants\fP
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -595,7 +595,7 @@ Opzioni per aiutare a individuare problemi con la conversione
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Salva l\fB\(aq\fPoutput dei differenti stadi di conversione raggiunti nella cartella specificata. Utile se non si conosce in quale stadio del processo di conversione si verifica l\fB\(aq\fPerrore.
+Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring.
 .UNINDENT
 .INDENT 0.0
 .TP

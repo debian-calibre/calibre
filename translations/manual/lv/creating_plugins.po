@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-26 07:03+0000\n"
-"PO-Revision-Date: 2020-11-22 15:44+0000\n"
+"POT-Creation-Date: 2021-03-08 15:24+0000\n"
+"PO-Revision-Date: 2021-03-08 13:17+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Latvian (http://www.transifex.com/calibre/calibre/language/lv/)\n"
 "MIME-Version: 1.0\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Language: lv\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:4
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:4
 msgid "Writing your own plugins to extend calibre's functionality"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:6
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:6
 msgid ""
 "calibre has a very modular design. Almost all functionality in calibre comes"
 " in the form of plugins. Plugins are used for conversion, for downloading "
@@ -32,32 +32,32 @@ msgid ""
 "plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:8
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:8
 msgid ""
 "Here, we will teach you how to create your own plugins to add new features "
 "to calibre."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:13
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:13
 msgid "Contents"
 msgstr "Saturs"
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:15
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:15
 msgid "This only applies to calibre releases >= 0.8.60"
 msgstr "Tas attiecas tikai uz calibre laidieniem >= 0.8.60"
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:18
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:18
 msgid "Anatomy of a calibre plugin"
 msgstr "Calibre spraudņu anatomija"
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:20
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:20
 msgid ""
 "A calibre plugin is very simple, it's just a ZIP file that contains some "
 "Python code and any other resources like image files needed by the plugin. "
 "Without further ado, let's see a basic example."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:24
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:24
 msgid ""
 "Suppose you have an installation of calibre that you are using to self "
 "publish various e-documents in EPUB and MOBI formats. You would like all "
@@ -67,26 +67,26 @@ msgid ""
 "enter the following Python code into it:"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:32
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:32
 msgid ""
 "That's all. To add this code to calibre as a plugin, simply run the "
-"following in the directory in which you created :file:`__init__.py`::"
+"following in the folder in which you created :file:`__init__.py`::"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:38
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:38
 msgid ""
 "On macOS, the command line tools are inside the calibre bundle, for example,"
 " if you installed calibre in :file:`/Applications` the command line tools "
 "are in :file:`/Applications/calibre.app/Contents/MacOS/`."
 msgstr "MacOS komandrindas rīki atrodas calibre komplektā, piemēram, ja calibre esat instalējis failā: `/Lietojumprogrammas', komandrindas rīki atrodas failā:`/Lietojumprogrammas /calibre.app/Saturs/MacOS/ `."
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:42
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:42
 msgid ""
 "You can download the Hello World plugin from `helloworld_plugin.zip  <https"
 "://calibre-ebook.com/downloads/helloworld_plugin.zip>`_."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:45
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:45
 msgid ""
 "Every time you use calibre to convert a book, the plugin's :meth:`run` "
 "method will be called and the converted book will have its publisher set to "
@@ -94,11 +94,11 @@ msgid ""
 "example that actually adds a component to the user interface."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:50
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:50
 msgid "A User Interface plugin"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:52
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:52
 msgid ""
 "This plugin will be spread over a few files (to keep the code clean). It "
 "will show you how to get resources (images or data files) from the plugin "
@@ -107,24 +107,24 @@ msgid ""
 " calibre."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:57
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:57
 msgid ""
 "You can download this plugin from `interface_demo_plugin.zip <https"
 "://calibre-ebook.com/downloads/interface_demo_plugin.zip>`_"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:61
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:61
 msgid ""
 "The first thing to note is that this ZIP file has a lot more files in it, "
 "explained below, pay particular attention to ``plugin-import-name-"
 "interface_demo.txt``."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:77
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:77
 msgid "**plugin-import-name-interface_demo.txt**"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:65
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:65
 msgid ""
 "An empty text file used to enable the multi-file plugin magic. This file "
 "must be present in all plugins that use more than one .py file. It should be"
@@ -134,87 +134,87 @@ msgid ""
 "like::"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:71
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:71
 msgid ""
 "The prefix ``calibre_plugins`` must always be present. ``some_name`` comes "
 "from the filename of the empty text file. ``some_module`` refers to  "
 ":file:`some_module.py` file inside the ZIP file. Note that this importing is"
 " just as powerful as regular Python imports. You can create packages and "
 "subpackages of .py modules inside the ZIP file, just like you would normally"
-" (by defining __init__.py in each sub-directory), and everything should "
-"\"just work\"."
+" (by defining __init__.py in each sub-folder), and everything should \"just "
+"work\"."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:76
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:76
 msgid ""
 "The name you use for ``some_name`` enters a global namespace shared by all "
 "plugins, **so make it as unique as possible**. But remember that it must be "
 "a valid Python identifier (only alphabets, numbers and the underscore)."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:80
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:80
 msgid "**__init__.py**"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:80
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:80
 msgid "As before, the file that defines the plugin class"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:83
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:83
 msgid "**main.py**"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:83
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:83
 msgid "This file contains the actual code that does something useful"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:86
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:86
 msgid "**ui.py**"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:86
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:86
 msgid "This file defines the interface part of the plugin"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:89
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:89
 msgid "**images/icon.png**"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:89
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:89
 msgid "The icon for this plugin"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:92
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:92
 msgid "**about.txt**"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:92
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:92
 msgid "A text file with information about the plugin"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:97
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:97
 msgid "**translations**"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:95
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:95
 msgid ""
 "A folder containing .mo files with the translations of the user interface of"
 " your plugin into different languages. See below for details."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:99
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:99
 msgid "Now let's look at the code."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:102
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:102
 msgid "__init__.py"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:104
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:104
 msgid "First, the obligatory ``__init__.py`` to define the plugin metadata:"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:109
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:109
 msgid ""
 "The only noteworthy feature is the field :attr:`actual_plugin`. Since "
 "calibre has both command line and GUI interfaces, GUI plugins like this one "
@@ -224,112 +224,112 @@ msgid ""
 "context."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:114
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:114
 msgid ""
 "Remember that for this to work, you must have a plugin-import-name-"
 "some_name.txt file in your plugin ZIP file, as discussed above."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:117
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:117
 msgid ""
 "Also there are a couple of methods for enabling user configuration of the "
 "plugin. These are discussed below."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:120
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:120
 msgid "ui.py"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:122
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:122
 msgid ""
 "Now let's look at ui.py which defines the actual GUI plugin. The source code"
 " is heavily commented and should be self explanatory:"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:128
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:212
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:128
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:212
 msgid "main.py"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:130
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:130
 msgid "The actual logic to implement the Interface Plugin Demo dialog."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:136
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:136
 msgid "Getting resources from the plugin ZIP file"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:138
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:138
 msgid ""
 "calibre's plugin loading system defines a couple of built-in functions that "
 "allow you to conveniently get files from the plugin ZIP file."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:145
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:145
 msgid "**get_resources(name_or_list_of_names)**"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:141
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:141
 msgid ""
 "This function should be called with a list of paths to files inside the ZIP "
-"file. For example to access the file icon.png in the directory images in the"
-" ZIP file, you would use: ``images/icon.png``. Always use a forward slash as"
-" the path separator, even on Windows. When you pass in a single name, the "
+"file. For example to access the file icon.png in the folder images in the "
+"ZIP file, you would use: ``images/icon.png``. Always use a forward slash as "
+"the path separator, even on Windows. When you pass in a single name, the "
 "function will return the raw bytes of that file or None if the name was not "
 "found in the ZIP file. If you pass in more than one name then it returns a "
 "dict mapping the names to bytes. If a name is not found, it will not be "
 "present in the returned dict."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:149
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:149
 msgid "**get_icons(name_or_list_of_names)**"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:148
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:148
 msgid ""
 "A convenience wrapper for get_resources() that creates QIcon objects from "
 "the raw bytes returned by get_resources. If a name is not found in the ZIP "
 "file the corresponding QIcon will be null."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:152
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:152
 msgid "Enabling user configuration of your plugin"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:154
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:154
 msgid ""
 "To allow users to configure your plugin, you must define three methods in "
 "your base plugin class, **is_customizable**, **config_widget** and "
 "**save_settings** as shown below:"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:165
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:165
 msgid ""
 "calibre has many different ways to store configuration data (a legacy of its"
 " long history). The recommended way is to use the **JSONConfig** class, "
 "which stores your configuration information in a .json file."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:167
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:167
 msgid ""
 "The code to manage configuration data in the demo plugin is in config.py:"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:172
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:172
 msgid ""
 "The ``prefs`` object is now available throughout the plugin code by a "
 "simple::"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:177
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:177
 msgid "You can see the ``prefs`` object being used in main.py:"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:184
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:184
 msgid "Edit book plugins"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:186
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:186
 msgid ""
 "Now let's change gears for a bit and look at creating a plugin to add tools "
 "to the calibre book editor. The plugin is available here: "
@@ -337,20 +337,20 @@ msgid ""
 "ebook.com/downloads/editor_demo_plugin.zip>`_."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:190
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:190
 msgid ""
 "The first step, as for all plugins is to create the import name empty txt "
 "file, as described :ref:`above <import_name_txt>`. We shall name the file "
 "``plugin-import-name-editor_plugin_demo.txt``."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:194
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:194
 msgid ""
 "Now we create the mandatory ``__init__.py`` file that contains metadata "
 "about the plugin -- its name, author, version, etc."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:200
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:200
 msgid ""
 "A single editor plugin can provide multiple tools each tool corresponds to a"
 " single button in the toolbar and entry in the :guilabel:`Plugins` menu in "
@@ -358,7 +358,7 @@ msgid ""
 "actions."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:204
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:204
 msgid ""
 "The tools must all be defined in the file ``main.py`` in your plugin. Every "
 "tool is a class that inherits from the "
@@ -368,7 +368,7 @@ msgid ""
 ":class:`calibre.gui2.tweak_book.plugin.Tool` class for more details."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:214
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:214
 msgid ""
 "Here we will see the definition of a single tool that will multiply all font"
 " sizes in the book by a number provided by the user. This tool demonstrates "
@@ -376,20 +376,20 @@ msgid ""
 "plugins, so you should read the (heavily commented) source code carefully."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:222
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:222
 msgid ""
 "Let's break down ``main.py``. We see that it defines a single tool, named "
 "*Magnify fonts*. This tool will ask the user for a number and multiply all "
 "font sizes in the book by that number."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:226
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:226
 msgid ""
 "The first important thing is the tool name which you must set to some "
 "relatively unique string as it will be used as the key for this tool."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:229
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:229
 msgid ""
 "The next important entry point is the "
 ":meth:`calibre.gui2.tweak_book.plugin.Tool.create_action`. This method "
@@ -400,7 +400,7 @@ msgid ""
 "runs the magnification code."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:237
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:237
 msgid ""
 "The magnification code is well commented and fairly simple. The main things "
 "to note are that you get a reference to the editor window as ``self.gui`` "
@@ -409,7 +409,7 @@ msgid ""
 "documented in the :class:`calibre.gui2.tweak_book.boss.Boss` class."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:243
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:243
 msgid ""
 "Finally, there is ``self.current_container`` which is a reference to the "
 "book being edited as a "
@@ -420,53 +420,53 @@ msgid ""
 "plugin code are documented in :ref:`polish_api`."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:252
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:252
 msgid "Running User Interface plugins in a separate process"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:254
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:254
 msgid ""
 "If you are writing a user interface plugin that needs to make use of Qt "
 "WebEngine, it cannot be run in the main calibre process as it is not "
 "possible to use WebEngine there. Instead you can copy the data your plugin "
-"needs to a temporary directory and run the plugin with that data in a "
-"separate process. A simple example plugin follows that shows how to do this."
+"needs to a temporary folder and run the plugin with that data in a separate "
+"process. A simple example plugin follows that shows how to do this."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:261
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:261
 msgid ""
 "You can download the plugin from `webengine_demo_plugin.zip  <https"
 "://calibre-ebook.com/downloads/webengine_demo_plugin.zip>`_."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:264
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:264
 msgid "The important part of the plugin is in two functions:"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:273
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:273
 msgid ""
 "The ``show_demo()`` function asks the user for a URL and then runs the "
 "``main()`` function passing it that URL. The ``main()`` function displays "
 "the URL in a ``QWebEngineView``."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:279
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:279
 msgid "Adding translations to your plugin"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:281
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:281
 msgid ""
 "You can have all the user interface strings in your plugin translated and "
 "displayed in whatever language is set for the main calibre user interface."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:284
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:284
 msgid ""
 "The first step is to go through your plugin's source code and mark all user "
 "visible strings as translatable, by surrounding them in _(). For example::"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:289
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:289
 msgid ""
 "Then use some program to generate .po files from your plugin source code. "
 "There should be one .po file for every language you want to translate into. "
@@ -474,17 +474,17 @@ msgid ""
 "`Poedit <https://poedit.net/>`_ program for this."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:294
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:294
 msgid ""
 "Send these .po files to your translators. Once you get them back, compile "
 "them into .mo files. You can again use Poedit for that, or just do::"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:299
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:299
 msgid "Put the .mo files into the ``translations`` folder in your plugin."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:301
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:301
 msgid ""
 "The last step is to simply call the function `load_translations()` at the "
 "top of your plugin's .py files. For performance reasons you should only call"
@@ -493,23 +493,23 @@ msgid ""
 "``ui.py`` but not ``__init__.py``."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:307
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:307
 msgid ""
 "You can test the translations of your plugins by changing the user interface"
 " language in calibre under :guilabel:`Preferences->Interface->Look & feel` "
 "or by running calibre like this::"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:313
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:313
 msgid ""
 "Replace ``de`` with the language code of the language you want to test."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:316
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:316
 msgid "The plugin API"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:318
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:318
 msgid ""
 "As you may have noticed above, a plugin in calibre is a class. There are "
 "different classes for the different types of plugins in calibre. Details on "
@@ -517,36 +517,36 @@ msgid ""
 ":ref:`plugins`."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:321
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:321
 msgid ""
 "Your plugin is almost certainly going to use code from calibre. To learn how"
 " to find various bits of functionality in the calibre code base, read the "
 "section on the calibre :ref:`code_layout`."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:326
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:326
 msgid "Debugging plugins"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:328
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:328
 msgid ""
 "The first, most important step is to run calibre in debug mode. You can do "
 "this from the command line with::"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:332
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:332
 msgid ""
 "Or from within calibre by right-clicking the :guilabel:`Preferences` button "
 "or using the :kbd:`Ctrl+Shift+R` keyboard shortcut."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:334
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:334
 msgid ""
 "When running from the command line, debug output will be printed to the "
 "console, when running from within calibre the output will go to a txt file."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:336
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:336
 msgid ""
 "You can insert print statements anywhere in your plugin code, they will be "
 "output in debug mode. Remember, this is Python, you really shouldn't need "
@@ -554,33 +554,33 @@ msgid ""
 "using just this debugging technique."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:338
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:338
 msgid ""
 "You can quickly test changes to your plugin by using the following command "
 "line::"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:343
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:343
 msgid ""
 "This will shutdown a running calibre, wait for the shutdown to complete, "
 "then update your plugin in calibre and relaunch calibre."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:346
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:346
 msgid "More plugin examples"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:348
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:348
 msgid ""
 "You can find a list of many, sophisticated calibre plugins `here "
 "<https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:351
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:351
 msgid "Sharing your plugins with others"
 msgstr ""
 
-#: ../../home/runner/work/calibre/calibre/manual/creating_plugins.rst:353
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:353
 msgid ""
 "If you would like to share the plugins you have created with other users of "
 "calibre, post your plugin in a new thread in the `calibre plugins forum "

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "февраля 26, 2021" "5.12.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "марта 10, 2021" "5.13.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -141,7 +141,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Извлечь содержимое созданного файла EPUB в указанную директорию. Имейте в виду, что содержимое директории будет удалено.
+Extract the contents of the generated EPUB file to the specified folder. The contents of the folder are first deleted, so be careful.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -179,7 +179,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Транслитерация знаков Юникода в ASCII. Используйте с осторожностью, символы Юникода будут замены символами ASCII. Например, «Михаил Горбачёв» изменится на «Mikhail Gorbachiov». Если существует несколько вариантов символа (например, знаки общие для японского и китайского языков), будет использована замена, основанная на текущем языке интерфейса calibre.
+Транслитерировать символы Unicode в ASCII. Используйте с осторожностью, символы Unicode будут заменены на ASCII. Например,  \fB\(aq\fPPelé\fB\(aq\fP заменится на \fB\(aq\fPPele\fB\(aq\fP\&. Также обратите внимание, что в случаях, когда существует несколько представлений символа (например, символов, используемых в китайском и японском языках), будет использоваться представление, основанное на текущем языке интерфейса calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -591,7 +591,7 @@ XPath\-выражение, которое определяет все теги, 
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Сохранять вывод после различных стадий конвертации в указанную директорию. Полезно если вы не уверены, на какой стадии процесса конвертации происходит ошибка.
+Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring.
 .UNINDENT
 .INDENT 0.0
 .TP

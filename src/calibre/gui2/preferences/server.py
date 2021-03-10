@@ -10,11 +10,11 @@ import sys
 import textwrap
 import time
 
-from PyQt5.Qt import (
+from qt.core import (
     QCheckBox, QComboBox, QDialog, QDialogButtonBox, QDoubleSpinBox, QFormLayout,
     QFrame, QHBoxLayout, QIcon, QLabel, QLineEdit, QListWidget, QPlainTextEdit, QLayout,
     QPushButton, QScrollArea, QSize, QSizePolicy, QSpinBox, Qt, QTabWidget, QTimer,
-    QToolButton, QUrl, QVBoxLayout, QWidget, pyqtSignal
+    QToolButton, QUrl, QVBoxLayout, QWidget, pyqtSignal, sip
 )
 
 from calibre import as_unicode
@@ -36,11 +36,6 @@ from calibre.srv.users import (
 from calibre.utils.icu import primary_sort_key
 from calibre.utils.shared_file import share_open
 from polyglot.builtins import as_bytes, unicode_type
-
-try:
-    from PyQt5 import sip
-except ImportError:
-    import sip
 
 
 if iswindows and not isportable:
@@ -400,7 +395,7 @@ class MainTab(QWidget):  # {{{
 
     def change_auth_desc(self):
         self.auth_desc.setText(
-            _('Remember to create some user accounts in the "User accounts" tab')
+            _('Remember to create at least one user account in the "User accounts" tab')
             if self.opt_auth.isChecked() else _(
                 'Requiring a username/password prevents unauthorized people from'
                 ' accessing your calibre library. It is also needed for some features'

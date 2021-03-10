@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "helmikuuta 26, 2021" "5.12.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "maaliskuuta 10, 2021" "5.13.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -98,12 +98,12 @@ Suorita tiedoston Python\-koodi.
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Räjäytä kirja osoitettuun kansioon. Käyttö: \-x tiedosto.epub kohdekansio Vie kirjan kokoelmana HTML\-tiedostoja ja metatietoja, joita voit editoida HTML\-editoreilla. Yhteensopiva EPUB, AZW3, HTMLZ ja DOCX formaattien kanssa.
+Explode the book into the specified folder. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Vie kaikki calibre\-tiedot (kirjat/asetukset/lisäosat). Kysyy kohdekansiota ja vietäviä kirjastoja, mutta voit ohittaa kysymykset syöttämällä tiedot komentorivillä. Käytä absoluuttisia polkuja kohdekansiolle ja lähdekirjastoille. Avainsana \fB"\fPall\fB"\fP vie kaikki kirjastot.
+Export all calibre data (books/settings/plugins). Normally, you will be asked for the export folder and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export folder and libraries. The special keyword \fB"\fPall\fB"\fP can be used to export all libraries.
 .UNINDENT
 .INDENT 0.0
 .TP

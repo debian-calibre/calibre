@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "Februar 26, 2021" "5.12.0" "calibre"
+.TH "CALIBREDB" "1" "März 10, 2021" "5.13.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -228,14 +228,14 @@ Das Feld, nach dem die Ergebnisse sortiert werden. Verfügbare Felder: author_so
 .sp
 .nf
 .ft C
-calibredb add [Optionen] Datei1 Datei2 Datei3\ …
+calibredb add [options] file1 file2 file3 ...
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Hinzufügen der angegebenen Dateien als Bücher zur Datenbank.
-Sie können auch Verzeichnisse angeben \- vergleichen Sie hierfür die auf Verzeichnisse bezogenen Optionen unten.
+Add the specified files as books to the database. You can also specify folders, see
+the folder related options below.
 .sp
 Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .INDENT 0.0
@@ -304,22 +304,22 @@ Optionen, um das Hinzufügen von Büchern aus Verzeichnissen zu steuern. Standar
 .INDENT 0.0
 .TP
 .B \-\-add
-Ein Dateinamenmuster (glob\-Muster). Mit diesem Muster übereinstimmende Dateien werden beim Durchsuchen von Verzeichnissen nach Dateien hinzugefügt \fB\-\-\fP selbst dann, falls diese keinem bekannten eBook\-Dateityp entsprechen. Kann mehrmals für mehrere Muster angegeben werden.
+A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-Ein Dateinamenmuster (glob\-Muster). Mit diesem Muster übereinstimmende Dateien werden beim Durchsuchen von Verzeichnissen nach Dateien ignoriert. Kann mehrmals für mehrere Muster angegeben werden. Beispielsweise ignoriert \fB"\fP*.pdf\fB"\fP alle PDF\-Dateien.
+A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all PDF files
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Vorausgesetzt jedes Verzeichnis beinhaltet nur ein einziges logisches Buch und alle Dateien in diesem Verzeichnis sind verschiedene eBook\-Formate dieses einzelnen Buches
+Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Verzeichnisse rekursiv verarbeiten
+Process folders recursively
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -486,12 +486,12 @@ Leerzeichen mit Unterstrichen ersetzen.
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Alle Bücher in ein einziges Verzeichnis exportieren
+Export all books into a single folder
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-Vorlage, um den Dateinamen und die Verzeichnisstruktur der gespeicherten Dateien anzupassen. Standard ist \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP, welche Bücher in ein Unterverzeichnis je Autor speichert, und die Dateinamen Titel und Autor enthalten. Mögliche Anpassungen sind: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -501,7 +501,7 @@ Das Format, in dem Kalenderdaten angezeigt werden sollen. %d \- Tag, %b \- Monat
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Bücher in das angegebene Verzeichnis exportieren. Standardeinstellung ist .
+Export books to the specified folder. Default is .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -556,7 +556,7 @@ Querverweise im Abschnitt \fB"\fPAutoren\fB"\fP für Bücher mit unterschiedlich
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Ausgabe verschiedener Stufen der Konvertierungs\-Pipeline im angegebenen Verzeichnis abspeichern. Nützlich, wenn Sie unsicher sind, bei welcher Stufe des Konvertierungsprozesses ein Fehler auftritt. Standard: \fB"\fPNone\fB"\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
+Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -759,17 +759,20 @@ Wenn die Spalte mehrere Werte speichert, sollen die angegebenen Werte zu den bes
 .sp
 .nf
 .ft C
-calibredb restore_database [Optionen]
+calibredb restore_database [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Wiederherstellen dieser Datenbank aus den Metadaten, die in den OPF\-Dateien in jedem Verzeichnis der Calibre\-Datenbank gespeichert sind.
-Hilfreich, falls die Datei metadata.db beschädigt ist.
+Restore this database from the metadata stored in OPF files in each
+folder of the calibre library. This is useful if your metadata.db file
+has been corrupted.
 .sp
-ACHTUNG: Dieser Befehl baut Ihre Datenbank vollständig neu auf. Sie verlieren dadurch alle gespeicherten Suchen, benutzerdefinierte Kategorien, Schalttafeln, individuell je Buch gespeicherte Konvertierungseinstellungen und benutzerdefinierte Schemata.
-Wiederhergestellte Metadaten werden nur so präzise sein, wie die in den OPF\-Dateien vorgefundenen Daten.
+WARNING: This command completely regenerates your database. You will lose
+all saved searches, user categories, plugboards, stored per\-book conversion
+settings, and custom recipes. Restored metadata will only be as accurate as
+what is found in the OPF files.
 .sp
 Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .INDENT 0.0

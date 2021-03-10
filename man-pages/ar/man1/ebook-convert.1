@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "فبراير 26, 2021" "5.12.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "مارس 10, 2021" "5.13.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -75,19 +75,19 @@ options specific to every input and output format.
 .IP \(bu 2
 \fI\%خيارات الخرج\fP
 .IP \(bu 2
-\fI\%LOOK AND FEEL\fP
+\fI\%المظهر والتأثير\fP
 .IP \(bu 2
-\fI\%HEURISTIC PROCESSING\fP
+\fI\%معالجة إرشادية\fP
 .IP \(bu 2
-\fI\%SEARCH AND REPLACE\fP
+\fI\%بحث إبدال\fP
 .IP \(bu 2
-\fI\%STRUCTURE DETECTION\fP
+\fI\%كشف البِنية\fP
 .IP \(bu 2
-\fI\%TABLE OF CONTENTS\fP
+\fI\%جدول المحتويات\fP
 .IP \(bu 2
-\fI\%METADATA\fP
+\fI\%البيانات الوصفية\fP
 .IP \(bu 2
-\fI\%DEBUG\fP
+\fI\%تنقيح\fP
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -107,7 +107,7 @@ List builtin recipe names. You can create an e\-book from a builtin recipe like 
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device (such as by resizing images for the device screen size). In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:generic_eink_large, cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, generic_eink, generic_eink_hd, tablet
+Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device (such as by resizing images for the device screen size). In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, generic_eink, generic_eink_hd, generic_eink_large, tablet
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -116,7 +116,7 @@ show program\fB\(aq\fPs version number and exit
 .UNINDENT
 .SH خيارات الدخل
 .sp
-خيارات للتحكم في معالجة الملف المدخل  mobi .
+خيارات للتحكم في معالجة ملف mobi المُدخل.
 .INDENT 0.0
 .TP
 .B \-\-input\-encoding
@@ -124,7 +124,7 @@ show program\fB\(aq\fPs version number and exit
 .UNINDENT
 .SH خيارات الخرج
 .sp
-خيارات للتحكم في معالجة الملف المُخرج  epub .
+خيارات للتحكم في معالجة ملف epub المُخرَج.
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
@@ -153,7 +153,7 @@ The version of the EPUB file to generate. EPUB 2 is the most widely compatible, 
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extract the contents of the generated EPUB file to the specified directory. The contents of the directory are first deleted, so be careful.
+Extract the contents of the generated EPUB file to the specified folder. The contents of the folder are first deleted, so be careful.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -185,13 +185,13 @@ Split all HTML files larger than this size (in KB). This is necessary as most EP
 .B \-\-toc\-title
 Title for any generated in\-line table of contents.
 .UNINDENT
-.SH LOOK AND FEEL
+.SH المظهر والتأثير
 .sp
-خيارات للتحكم في الشكل و المظهر للمُخرجات .
+خيارات للتحكم في شكل و مظهر المُخرجات
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPМихаил Горбачёв\fB"\fP with \fB"\fPMikhail Gorbachiov\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPPelé\fB"\fP with \fB"\fPPele\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -318,7 +318,7 @@ Path to a file containing rules to transform the CSS styles in this book. The ea
 .B \-\-unsmarten\-punctuation
 Convert fancy quotes, dashes and ellipsis to their plain equivalents.
 .UNINDENT
-.SH HEURISTIC PROCESSING
+.SH معالجة إرشادية
 .sp
 Modify the document text and structure using common patterns. Disabled by default. Use \-\-enable\-heuristics to enable.  Individual actions can be disabled with the \-\-disable\-* options.
 .INDENT 0.0
@@ -376,7 +376,7 @@ Left aligned scene break markers are center aligned. Replace soft scene breaks t
 .B \-\-replace\-scene\-breaks
 استبدال فواصل المشهد مع النص المحدد. افتراضيا، يتم استخدام النص من مستند الإدخال.
 .UNINDENT
-.SH SEARCH AND REPLACE
+.SH بحث إبدال
 .sp
 تعديل نص الوثيقة وهيكل استخدام أنماط يحددها المستخدم.
 .INDENT 0.0
@@ -414,9 +414,9 @@ Path to a file containing search and replace regular expressions. The file must 
 .B \-\-sr3\-search
 ليحل محله نمط البحث  (تعبير العادية) مع استبدال\-SR3.
 .UNINDENT
-.SH STRUCTURE DETECTION
+.SH كشف البِنية
 .sp
-تحكّم بالكشف الآلي لبناء المستند
+تحكّم بالكشف الآلي لبناء المستند.
 .INDENT 0.0
 .TP
 .B \-\-chapter
@@ -457,7 +457,7 @@ Remove the first image from the input e\-book. Useful if the input document has 
 .B \-\-start\-reading\-at
 An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
 .UNINDENT
-.SH TABLE OF CONTENTS
+.SH جدول المحتويات
 .sp
 السيطرة على الجيل التلقائي لجدول المحتويات. افتراضيا، إذا كان الملف المصدر يحتوي على جدول المحتويات، سيتم استخدامه في تفضيل واحدة ولدت تلقائياً.
 .INDENT 0.0
@@ -505,9 +505,9 @@ Remove entries from the Table of Contents whose titles match the specified regul
 .B \-\-use\-auto\-toc
 عادةً، إذا يوجد قائمة محتويات في الملف المصدر، يتم استخدامه بدلاً من القائمة التي تم إنشاءه آلياً. بهذا الخيار، يتم استخدام القائمة المنشئة آلياً دوماً.
 .UNINDENT
-.SH METADATA
+.SH البيانات الوصفية
 .sp
-خيارات لوضع البيانات الوصفية في المُخرجات .
+خيارات لوضع البيانات الوصفية في المُخرجات
 .INDENT 0.0
 .TP
 .B \-\-author\-sort
@@ -536,7 +536,7 @@ Set the e\-book description.
 .INDENT 0.0
 .TP
 .B \-\-isbn
-تعيين ISBN للكتاب
+تعيين ISBN للكتاب.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -593,13 +593,13 @@ Set the book timestamp (no longer used anywhere)
 .B \-\-title\-sort
 The version of the title to be used for sorting.
 .UNINDENT
-.SH DEBUG
+.SH تنقيح
 .sp
-خيارات للمساعدة في تصحيح التحويل .
+خيارات للمساعدة في تصحيح التحويل
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-احفظ المخرجات في مراحل مختلفة من عملية التحويل إلى الدليل المقصود . مفيدة إذا كنت عاطفية تعلم في عاطفية مرحلة من مراحل التحويل تظهر العلة .
+Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring.
 .UNINDENT
 .INDENT 0.0
 .TP

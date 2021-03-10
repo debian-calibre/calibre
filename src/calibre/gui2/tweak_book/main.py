@@ -7,8 +7,8 @@ import os
 import sys
 import time
 
-from PyQt5.Qt import QIcon
-from PyQt5.QtWebEngineCore import QWebEngineUrlScheme
+from qt.core import QIcon
+from qt.webengine import QWebEngineUrlScheme
 
 from calibre.constants import EDITOR_APP_UID, FAKE_PROTOCOL, islinux
 from calibre.ebooks.oeb.polish.check.css import shutdown as shutdown_css_check_pool
@@ -34,6 +34,7 @@ files inside the book which will be opened for editing automatically.
         )
     )
     setup_gui_option_parser(parser)
+    parser.add_option('--select-text', default=None, help=_('The text to select in the book when it is opened for editing'))
     return parser
 
 
@@ -79,7 +80,7 @@ def _run(args, notify=None):
     main.show()
     app.shutdown_signal_received.connect(main.boss.quit)
     if len(args) > 1:
-        main.boss.open_book(args[1], edit_file=args[2:], clear_notify_data=False)
+        main.boss.open_book(args[1], edit_file=args[2:], clear_notify_data=False, search_text=opts.select_text)
     else:
         for path in reversed(app.file_event_hook.events):
             main.boss.open_book(path)
