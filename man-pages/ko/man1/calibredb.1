@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "2월 26, 2021" "5.12.0" "calibre"
+.TH "CALIBREDB" "1" "3월 10, 2021" "5.13.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -234,8 +234,8 @@ calibredb add [options] file1 file2 file3 ...
 .UNINDENT
 .UNINDENT
 .sp
-Add the specified files as books to the database. You can also specify directories, see
-the directory related options below.
+Add the specified files as books to the database. You can also specify folders, see
+the folder related options below.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -304,22 +304,22 @@ Add books to database even if they already exist. Comparison is done based on bo
 .INDENT 0.0
 .TP
 .B \-\-add
-파일명(전역) 패턴, 이 패턴과 일치하는 파일은 알려진 전자책 파일 유형이 아닌 경우에도, 폴더에서 파일 스캔시 추가됩니다. 여러 패던에 대해 여러 번 지정할 수 있습니다.
+A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-파일명(전역) 패턴, 이 패턴과 일치하는 파일은 폴더에서 파일 스캔시 무시됩니다. 여러 패턴에 대해 여러 번 지정할 수 있습니다. 예: *.pdf는 모든 pdf 파일을 무시합니다.
+A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all PDF files
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-각 폴더에는 하나의 논리적인 책만 있고 그 폴더 안의 모든 파일은 해당 책의 다른 전자책 형식이라고 가정합니다
+Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-재귀적으로 폴더 처리하기
+Process folders recursively
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -487,12 +487,12 @@ Report progress
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-모든 책들을 하나의 디렉토리에 내보냅니다
+Export all books into a single folder
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-저장되는 파일의 파일명과 폴더 구조를 제어하는 템플릿입니다. 기본값은 \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP이고, 제목과 저자명을 포함하는 파일명으로 저자별 하위 폴더에 저장하게 됩니다. 사용가능한 필드: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -502,7 +502,7 @@ Report progress
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Export books to the specified directory. Default is .
+Export books to the specified folder. Default is .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -557,7 +557,7 @@ Create cross\-references in Authors section for books with multiple authors. Def
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Save the output from different stages of the conversion pipeline to the specified directory. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -768,7 +768,7 @@ calibredb restore_database [options]
 .UNINDENT
 .sp
 Restore this database from the metadata stored in OPF files in each
-directory of the calibre library. This is useful if your metadata.db file
+folder of the calibre library. This is useful if your metadata.db file
 has been corrupted.
 .sp
 WARNING: This command completely regenerates your database. You will lose

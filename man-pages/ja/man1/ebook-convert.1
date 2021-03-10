@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "2月 26, 2021" "5.12.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "3月 10, 2021" "5.13.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -149,7 +149,7 @@ epub出力処理をコントロールするためのオプション
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-生成した EPUB ファイルの内容を指定したディレクトリに展開する。最初にディレクトリの内容が消されるので、注意してください。
+Extract the contents of the generated EPUB file to the specified folder. The contents of the folder are first deleted, so be careful.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -187,7 +187,7 @@ SVGの表紙を使う場合、このオプションはアスペクト比（縦�
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Unicode文字をASCII表記に翻訳します。Unicode文字がASCIIで置き換わることになるため注意して使ってください。例えば “Михаил Горбачёв” は ”Mikhail Gorbachiov” に置換されます。また文字に複数の表記がある場合（例えば中国語と日本語で共有されている文字）、表記は現在のCalibreのインタフェース言語が使われます。
+Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPPelé\fB"\fP with \fB"\fPPele\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -595,7 +595,7 @@ XPath式を指定します。XPathで指定された要素の直前にページ�
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-指定したディレクトリに変換の各ステージでの出力を保存します。変換プロセスのどのステージでバグが起こっているのか確信がない場合に便利です。
+Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring.
 .UNINDENT
 .INDENT 0.0
 .TP

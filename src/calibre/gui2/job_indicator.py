@@ -6,7 +6,7 @@ __license__   = 'GPL v3'
 __copyright__ = '2012, Kovid Goyal <kovid at kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-from PyQt5.Qt import (
+from qt.core import (
     QAbstractAnimation, QBrush, QColor, QEasingCurve, QPainter, QPainterPath,
     QPalette, QPoint, QPointF, QPropertyAnimation, QRect, Qt, QWidget
 )
@@ -43,7 +43,7 @@ class Pointer(QWidget):
         self.color.setAlpha(100)
         self.brush = QBrush(self.color, Qt.BrushStyle.SolidPattern)
 
-        # from PyQt5.Qt import QTimer
+        # from qt.core import QTimer
         # QTimer.singleShot(1000, self.start)
 
     @property

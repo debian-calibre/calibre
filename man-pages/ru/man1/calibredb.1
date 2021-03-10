@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "февраля 26, 2021" "5.12.0" "calibre"
+.TH "CALIBREDB" "1" "марта 10, 2021" "5.13.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -228,14 +228,14 @@ calibredb список [options]
 .sp
 .nf
 .ft C
-calibredb add [опции] файл1 файл2 файл3 …
+calibredb add [options] file1 file2 file3 ...
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Добавить указанные файлы как книги в базу данных. Также можно указать директории, смотрите
-связанные с ними опции ниже.
+Add the specified files as books to the database. You can also specify folders, see
+the folder related options below.
 .sp
 Когда вы передаёте аргументы с пробелами в calibredb, заключайте их в кавычки. Например: "/some path/with spaces"
 .INDENT 0.0
@@ -304,22 +304,22 @@ calibredb add [опции] файл1 файл2 файл3 …
 .INDENT 0.0
 .TP
 .B \-\-add
-Шаблон имени файла (glob), файлы, соответствующие этому шаблону, будут добавлены при сканировании директорий, даже если файлы не являются известным типом электронной книги. Может быть указан несколько раз для нескольких шаблонов.
+A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-Шаблон имени файла, файлы, соответствующие этому шаблону, будут игнорироваться во время сканирования директорий. Может быть задан несколько раз для разных шаблонов. Например: *.pdf будет игнорировать все файлы pdf
+A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all PDF files
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Считать, что в каждой директории только одна логическая книга и все файлы — разные электронные форматы этой книги.
+Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Обрабатывать рекурсивно
+Process folders recursively
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -486,12 +486,12 @@ calibre преобразует все неанглийские символы в
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Экспортировать все книги в одну директорию
+Export all books into a single folder
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-Шаблон для управления названием файла и структурой папки с сохранёнными файлами. По умолчанию \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP будет сохранять книги в подпапку с именем автора и названиями файлов включающими название и автора. Доступные настройки: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -501,7 +501,7 @@ calibre преобразует все неанглийские символы в
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Экспортировать книги в  указанную директорию. По умолчанию .
+Export books to the specified folder. Default is .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -556,7 +556,7 @@ see the different options, specify the name of the output file and then the
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Сохранить вывод разных этапов конвейера конвертации в указанную директорию. Полезно для выявления этапа конвертации с ошибкой. По умолчанию: \fB\(aq\fPNone\fB\(aq\fP Применяется к: AZW3, EPUB, MOBI форматам вывода
+Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -757,21 +757,20 @@ custom_columns
 .sp
 .nf
 .ft C
-calibredb restore_database [настройки]
+calibredb restore_database [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Восстанавить текущую базу данных из метаданных хранящихся
-в OPF файлах в каждой папке библиотеки. Это полезно если
-был повреждён файл metadata.db.
+Restore this database from the metadata stored in OPF files in each
+folder of the calibre library. This is useful if your metadata.db file
+has been corrupted.
 .sp
-ВНИМАНИЕ: Эта команда полностью пересоздаёт вашу базу данных.
-Вы потеряете все сохранённые поиски, пользовательские категории,
-коммутации метаданных, настройки конвертации каждой книги,
-и пользовательские рецепты. Восстановленные метаданные будут
-полностью зависеть от того, что будет найдено в файлах OPF.
+WARNING: This command completely regenerates your database. You will lose
+all saved searches, user categories, plugboards, stored per\-book conversion
+settings, and custom recipes. Restored metadata will only be as accurate as
+what is found in the OPF files.
 .sp
 Когда вы передаёте аргументы с пробелами в calibredb, заключайте их в кавычки. Например: "/some path/with spaces"
 .INDENT 0.0

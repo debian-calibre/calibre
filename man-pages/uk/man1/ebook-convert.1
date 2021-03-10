@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "лютого 26, 2021" "5.12.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "березня 10, 2021" "5.13.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -143,7 +143,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Видобути вміст створеного файла EPUB до вказаного каталогу. Перед видобуванням вміст каталогу буде вилучено, тому вам слід бути обережними.
+Extract the contents of the generated EPUB file to the specified folder. The contents of the folder are first deleted, so be careful.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -181,7 +181,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Перетворити символи Unicode на символи ASCII. Будьте обережні з використанням цієї можливості, оскільки всі символи Unicode буде замінено на символи ASCII. Наприклад, «Михаил Горбачёв» буде замінено на «Mikhail Gorbachiov». Крім того, зауважте, що якщо у певного символу є декілька представлень (наприклад, спільні символи китайської та японської мов), представлення буде виконано відповідно до поточної мови інтерфейсу calibre.
+Перетворити символи Unicode на символи ASCII. Будьте обережні з використанням цієї можливості, оскільки всі символи Unicode буде замінено на символи ASCII. Наприклад, «Pelé» буде замінено на «Pele». Крім того, зауважте, що якщо у певного символу є декілька представлень (наприклад, спільні символи китайської та японської мов), представлення буде виконано відповідно до поточної мови інтерфейсу calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -593,7 +593,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Зберігати виведені дані на різних кроках перетворення до вказаного каталогу. Корисно, якщо ви не впевнені, на якому кроці сталася помилка.
+Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring.
 .UNINDENT
 .INDENT 0.0
 .TP

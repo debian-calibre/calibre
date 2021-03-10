@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "2月 26, 2021" "5.12.0" "calibre"
+.TH "CALIBREDB" "1" "3月 10, 2021" "5.13.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -234,7 +234,8 @@ calibredb add [options] file1 file2 file3 ...
 .UNINDENT
 .UNINDENT
 .sp
-將特定檔案當作書本加入至資料庫，亦可選擇目錄，請檢閱下方目錄相關選項。
+Add the specified files as books to the database. You can also specify folders, see
+the folder related options below.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -303,22 +304,22 @@ Add books to database even if they already exist. Comparison is done based on bo
 .INDENT 0.0
 .TP
 .B \-\-add
-檔案名（glob）模式，當掃描檔案目錄時，即使是未知電子書檔案類型，與此模式相符者依然會被加入，可以同時指定多個模式。
+A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-檔案名（glob）模式，當掃描檔案目錄時，與此模式相符者將被忽略。可以同時指定多個模式，例如：* .pdf將會忽略所有pdf檔案
+A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all PDF files
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-假定每個目錄只有一本書，而在其中的所有檔案都是那本書的不同電子書格式
+Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-遞迴地處理目錄
+Process folders recursively
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -486,12 +487,12 @@ Normally, calibre will save the cover in a separate file along with the actual e
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-將所有書本匯出到單一目錄
+Export all books into a single folder
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to control the filename and directory structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subdirectory with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -501,7 +502,7 @@ The template to control the filename and directory structure of the saved files.
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-將書本匯出到指定的目錄。預設值為 .
+Export books to the specified folder. Default is .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -556,7 +557,7 @@ Create cross\-references in Authors section for books with multiple authors. Def
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Save the output from different stages of the conversion pipeline to the specified directory. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -765,7 +766,7 @@ calibredb restore_database [options]
 .UNINDENT
 .sp
 Restore this database from the metadata stored in OPF files in each
-directory of the calibre library. This is useful if your metadata.db file
+folder of the calibre library. This is useful if your metadata.db file
 has been corrupted.
 .sp
 WARNING: This command completely regenerates your database. You will lose

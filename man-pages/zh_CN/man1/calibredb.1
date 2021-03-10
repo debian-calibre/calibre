@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "二月 26, 2021" "5.12.0" "calibre"
+.TH "CALIBREDB" "1" "三月 10, 2021" "5.13.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -237,13 +237,14 @@ calibredb list [选项]
 .sp
 .nf
 .ft C
-calibredb add [选项] file1 file2 file3 ...
+calibredb add [options] file1 file2 file3 ...
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-添加指定文件为书籍到数据库。你可以指定目录，请查看下面目录相关选项。
+Add the specified files as books to the database. You can also specify folders, see
+the folder related options below.
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
 .INDENT 0.0
@@ -316,22 +317,22 @@ If books with similar titles and authors are found, merge the incoming formats (
 .INDENT 0.0
 .TP
 .B \-\-add
-文件名 (glob) 模式，与此模式匹配的文件将在扫描文件目录时添加，即使它们不是已知的电子书文件类型。可以为多个模式多次指定。
+A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-文件名 (glob) 模式，与此模式匹配的文件将在扫描文件目录时被忽略。可以为多个模式多次指定。例如：*.pdf将忽略所有PDF文件。
+A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all PDF files
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-假设每个目录只有一本逻辑书籍，而所有文件均是该书的不同格式电子书
+Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-递归处理目录
+Process folders recursively
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -501,12 +502,12 @@ calibredb export [options] ids
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-导出所有书籍到单个目录
+Export all books into a single folder
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-模板用来控制保存到设备的文件的文件名和目录结构。默认是\fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP，它将把书籍保存到包含标题和作者的文件名的每个作者目录中。可用的控制项是: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -516,7 +517,7 @@ calibredb export [options] ids
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-导出书籍到指定目录。默认为 .
+Export books to the specified folder. Default is .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -571,7 +572,7 @@ see the different options, specify the name of the output file and then the
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-在转换过程的不同阶段分别保存输出到指定目录。 默认: \fB\(aq\fPNone\fB\(aq\fP 适用于: AZW3, EPUB, MOBI 的输出格式
+Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -771,13 +772,20 @@ calibredb set_custom [options] column id value
 .sp
 .nf
 .ft C
-从calibre书库每个目录中OPF文件含有的元数据恢复此数据库，如果你的metadata.db文件已损坏，此方法很有用。
+calibredb restore_database [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-警告：此命令会完全重新生成数据库。你会丢失所有已保存的搜索，用户类别，插板，已保存的每本书的版本设置和自定义配方。恢复的元数据和OPF文件中的一样准确。
+Restore this database from the metadata stored in OPF files in each
+folder of the calibre library. This is useful if your metadata.db file
+has been corrupted.
+.sp
+WARNING: This command completely regenerates your database. You will lose
+all saved searches, user categories, plugboards, stored per\-book conversion
+settings, and custom recipes. Restored metadata will only be as accurate as
+what is found in the OPF files.
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
 .INDENT 0.0

@@ -14,7 +14,7 @@ from polyglot.builtins import (
 from itertools import product
 from copy import copy, deepcopy
 
-from PyQt5.Qt import (
+from qt.core import (
     QDialog, QGridLayout, QStackedWidget, QDialogButtonBox, QListWidget,
     QListWidgetItem, QIcon, QWidget, QSize, QFormLayout, Qt, QSpinBox, QListView,
     QCheckBox, pyqtSignal, QDoubleSpinBox, QComboBox, QLabel, QFont, QApplication,
@@ -348,7 +348,7 @@ class PreviewSettings(BasicSettings):  # {{{
         self.setLayout(l)
 
         def default_font(which):
-            from PyQt5.QtWebEngineWidgets import QWebEngineSettings
+            from qt.webengine import QWebEngineSettings
             s = QWebEngineSettings.defaultSettings()
             which = getattr(s, {'serif': 'SerifFont', 'sans': 'SansSerifFont', 'mono': 'FixedFont'}[which])
             return s.fontFamily(which)
@@ -479,6 +479,8 @@ class ToolbarSettings(QWidget):
         gb2.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         l.addWidget(gb1, 0, 0, -1, 1), l.addWidget(gb2, 0, 2, -1, 1)
         self.available, self.current = ToolbarList(self), ToolbarList(self)
+        self.available.itemDoubleClicked.connect(self.add_single_action)
+        self.current.itemDoubleClicked.connect(self.remove_single_action)
         self.ub = b = QToolButton(self)
         connect_lambda(b.clicked, self, lambda self: self.move(up=True))
         b.setToolTip(_('Move selected action up')), b.setIcon(QIcon(I('arrow-up.png')))
@@ -600,11 +602,17 @@ class ToolbarSettings(QWidget):
         self.changed_signal.emit()
 
     def add_action(self):
+        self._add_action(self.available.selectedItems())
+
+    def add_single_action(self, item):
+        self._add_action([item])
+
+    def _add_action(self, items):
         try:
             s = self.current_settings[self.current_name]
         except KeyError:
             return
-        names = [unicode_type(i.data(Qt.ItemDataRole.UserRole) or '') for i in self.available.selectedItems()]
+        names = [unicode_type(i.data(Qt.ItemDataRole.UserRole) or '') for i in items]
         if not names:
             return
         for n in names:
@@ -613,11 +621,17 @@ class ToolbarSettings(QWidget):
         self.changed_signal.emit()
 
     def remove_action(self):
+        self._remove_action(self.current.selectedItems())
+
+    def remove_single_action(self, item):
+        self._remove_action([item])
+
+    def _remove_action(self, items):
         try:
             s = self.current_settings[self.current_name]
         except KeyError:
             return
-        rows = sorted({self.current.row(i) for i in self.current.selectedItems()}, reverse=True)
+        rows = sorted({self.current.row(i) for i in items}, reverse=True)
         if not rows:
             return
         for r in rows:

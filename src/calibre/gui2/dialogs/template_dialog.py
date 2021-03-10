@@ -7,7 +7,7 @@ __license__   = 'GPL v3'
 
 import json, os, traceback
 
-from PyQt5.Qt import (Qt, QDialog, QDialogButtonBox, QSyntaxHighlighter, QFont,
+from qt.core import (Qt, QDialog, QDialogButtonBox, QSyntaxHighlighter, QFont,
                       QRegExp, QApplication, QTextCharFormat, QColor, QCursor,
                       QIcon, QSize, QPalette)
 
@@ -372,6 +372,7 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
 
         self.font_size_box.setValue(gprefs['gpm_template_editor_font_size'])
         self.font_size_box.valueChanged.connect(self.font_size_changed)
+        self.textbox.setFocus()
 
     def font_size_changed(self, toWhat):
         gprefs['gpm_template_editor_font_size'] = toWhat

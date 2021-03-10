@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "otsailak 26, 2021" "5.12.0" "calibre"
+.TH "CALIBREDB" "1" "martxoak 10, 2021" "5.13.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -228,14 +228,14 @@ Emaitzak ordenatzeko eremua. Eskuragarri dauden eremuak: author_sort, authors, c
 .sp
 .nf
 .ft C
-calibredb add [aukerak] fitxategi1 fitxategi2 fitxategi3 ...
+calibredb add [options] file1 file2 file3 ...
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Gehitu zehaztutako fitxategiak datu basera. Direktorioak ere zehaztu daitezke, ikus itzazu
-direktorioei buruzko aukerak beherago.
+Add the specified files as books to the database. You can also specify folders, see
+the folder related options below.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -304,22 +304,22 @@ Aukerak direktorioetatik liburuen gehiketa kontrolatzeko. Lehenetsita datorren a
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning directories for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning directories for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all pdf files
+A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all PDF files
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Onartu direktorio bakoitzak liburu bakarra daukala loturik eta beraz karpetako fitxategi guztiak liburu beraren formatu desberdinak direla
+Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Prozesatu direktorioak modu errekurtsiboan
+Process folders recursively
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -487,12 +487,12 @@ Ordeztu espazio zuriak azpiko marrekin.
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Esportatu liburu guztiak direktorio sinple batera
+Export all books into a single folder
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-Gordetako fitxategien izena eta direktorioaren egitura kontrolatzeko erabiltzen den txantiloia. Lehenetsita: \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP\&. Honekin, liburuak egileen araberako azpi\-direktorioan  antolatuko dira izenburua eta egilea dituzten fitxategi\-izenekin. Eskuragarri dauden kontrolak: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -502,7 +502,7 @@ Datak erakusteko formatua.  %Y \- urtea, %b \- hilabetea,  %m \- hilabeteko egun
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Esportatu liburua zehaztutako direktoriora. Lehenetsita hauxe: .
+Export books to the specified folder. Default is .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -557,7 +557,7 @@ Create cross\-references in Authors section for books with multiple authors. Def
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Save the output from different stages of the conversion pipeline to the specified directory. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -767,12 +767,14 @@ calibredb restore_database [options]
 .UNINDENT
 .UNINDENT
 .sp
-Berrezarri datu base hau OPF fitxategietan gordetako metadatuetatik
-calibre liburutegian dagoen direktorio bakoitzetik abiatuz. Erabilgarria zure metadata.db fitxategia hondatu bada.
+Restore this database from the metadata stored in OPF files in each
+folder of the calibre library. This is useful if your metadata.db file
+has been corrupted.
 .sp
-KONTUZ: Agindu honek zure datu basea goitik behera berreraikiko du. Galduko dituzu
-gordetako guztiak: bilaketak, erabiltzaile kategoriak, konexio\-taulak, liburu bihurketak
-ezarpenak eta errezetak. \(aqBerrezarri metadatuak\(aq aginduak izango duen zehaztasuna OPF fitxategietan (OPEN Process Framework) topatzen denaren menpe geratuko da.
+WARNING: This command completely regenerates your database. You will lose
+all saved searches, user categories, plugboards, stored per\-book conversion
+settings, and custom recipes. Restored metadata will only be as accurate as
+what is found in the OPF files.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0

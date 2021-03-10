@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "2月 26, 2021" "5.12.0" "calibre"
+.TH "CALIBREDB" "1" "3月 10, 2021" "5.13.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -234,7 +234,8 @@ calibredb add [options] file1 file2 file3 ...
 .UNINDENT
 .UNINDENT
 .sp
-指定したファイルをデータベースに追加する。ディレクトリを追加することもできます。下のディレクトリ関連オプションも参照してください。
+Add the specified files as books to the database. You can also specify folders, see
+the folder related options below.
 .sp
 スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
 .INDENT 0.0
@@ -303,22 +304,22 @@ If books with similar titles and authors are found, merge the incoming formats (
 .INDENT 0.0
 .TP
 .B \-\-add
-ファイル名のglobパターンを指定し、ディレクトリからファイルを読み込むときに、指定パターンに一致したファイルは既知の電子書籍のファイルタイプでなくても追加します。複数のパターンを指定するために、複数回指定可能です。
+A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-ファイル名のglobパターンを指定し、パターンに一致したファイルはディレクトリからファイルを読み込むときに無視します。複数のパターンを指定するために複数回指定可能です。たちとえば、*.pdf と指定するとすべてのPDFファイルを無視します。
+A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all PDF files
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-各ディレクトリには1つの本しかなく、すべてのファイルは、その本の違ったフォーマットである、と仮定します。
+Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-ディレクトリを再帰的に処理する
+Process folders recursively
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -489,12 +490,12 @@ Have calibre convert all non English characters into English equivalents for the
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-ディレクトリにすべての本をエクスポート
+Export all books into a single folder
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-保存されるファイルの、ファイル名とディレクトリ構造を指定するテンプレート。デフォルトは\fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fPで、これは本を著者別のディレクトリに入れ、タイトルと著者名のファイル名をつけます。使用可能な操作は：{author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -504,7 +505,7 @@ Have calibre convert all non English characters into English equivalents for the
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-本を指定したディレクトリにエクスポートします。デフォルト: .
+Export books to the specified folder. Default is .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -563,7 +564,7 @@ see the different options, specify the name of the output file and then the
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-指定したディレクトリに変換パイプライン中の異なるステージのアウトプットを保存。変換プロセスのどこでバグが発生しているのかわからないときに有用です。 デフォルト: \fB\(aq\fPNone\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
+Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -771,10 +772,14 @@ calibredb restore_database [options]
 .UNINDENT
 .UNINDENT
 .sp
-Calibreライブラリの各ディレクトリに保存されているOPFファイルから書誌情報を読み取り、データベースをリストアします。
-これはmetadata.dbファイルが壊れてしまった時に有用です。
+Restore this database from the metadata stored in OPF files in each
+folder of the calibre library. This is useful if your metadata.db file
+has been corrupted.
 .sp
-注意: このコマンドを実行すると、データベースを完全に再生成します。すべての保存済み検索条件、ユーザカテゴリ、書誌情報変換ルール、書誌ごとの変換設定、カスタムレシピは失われます。リストアされる書誌情報は、OPFファイルの内容と同等となります。
+WARNING: This command completely regenerates your database. You will lose
+all saved searches, user categories, plugboards, stored per\-book conversion
+settings, and custom recipes. Restored metadata will only be as accurate as
+what is found in the OPF files.
 .sp
 スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
 .INDENT 0.0

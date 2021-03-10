@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 5.12.0\n"
+"Project-Id-Version: calibre 5.13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-26 08:36+0530\n"
+"POT-Creation-Date: 2021-03-10 08:45+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,7 +49,7 @@ msgid "Suppose you have an installation of calibre that you are using to self pu
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:32
-msgid "That's all. To add this code to calibre as a plugin, simply run the following in the directory in which you created :file:`__init__.py`::"
+msgid "That's all. To add this code to calibre as a plugin, simply run the following in the folder in which you created :file:`__init__.py`::"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:38
@@ -89,7 +89,7 @@ msgid "An empty text file used to enable the multi-file plugin magic. This file 
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:71
-msgid "The prefix ``calibre_plugins`` must always be present. ``some_name`` comes from the filename of the empty text file. ``some_module`` refers to  :file:`some_module.py` file inside the ZIP file. Note that this importing is just as powerful as regular Python imports. You can create packages and subpackages of .py modules inside the ZIP file, just like you would normally (by defining __init__.py in each sub-directory), and everything should \"just work\"."
+msgid "The prefix ``calibre_plugins`` must always be present. ``some_name`` comes from the filename of the empty text file. ``some_module`` refers to  :file:`some_module.py` file inside the ZIP file. Note that this importing is just as powerful as regular Python imports. You can create packages and subpackages of .py modules inside the ZIP file, just like you would normally (by defining __init__.py in each sub-folder), and everything should \"just work\"."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:76
@@ -198,7 +198,7 @@ msgid "**get_resources(name_or_list_of_names)**"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:141
-msgid "This function should be called with a list of paths to files inside the ZIP file. For example to access the file icon.png in the directory images in the ZIP file, you would use: ``images/icon.png``. Always use a forward slash as the path separator, even on Windows. When you pass in a single name, the function will return the raw bytes of that file or None if the name was not found in the ZIP file. If you pass in more than one name then it returns a dict mapping the names to bytes. If a name is not found, it will not be present in the returned dict."
+msgid "This function should be called with a list of paths to files inside the ZIP file. For example to access the file icon.png in the folder images in the ZIP file, you would use: ``images/icon.png``. Always use a forward slash as the path separator, even on Windows. When you pass in a single name, the function will return the raw bytes of that file or None if the name was not found in the ZIP file. If you pass in more than one name then it returns a dict mapping the names to bytes. If a name is not found, it will not be present in the returned dict."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:149
@@ -286,7 +286,7 @@ msgid "Running User Interface plugins in a separate process"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:254
-msgid "If you are writing a user interface plugin that needs to make use of Qt WebEngine, it cannot be run in the main calibre process as it is not possible to use WebEngine there. Instead you can copy the data your plugin needs to a temporary directory and run the plugin with that data in a separate process. A simple example plugin follows that shows how to do this."
+msgid "If you are writing a user interface plugin that needs to make use of Qt WebEngine, it cannot be run in the main calibre process as it is not possible to use WebEngine there. Instead you can copy the data your plugin needs to a temporary folder and run the plugin with that data in a separate process. A simple example plugin follows that shows how to do this."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:261

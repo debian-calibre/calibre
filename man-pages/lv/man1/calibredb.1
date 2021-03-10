@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "februāris 26, 2021" "5.12.0" "calibre"
+.TH "CALIBREDB" "1" "marts 10, 2021" "5.13.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -228,14 +228,14 @@ Lauks, pēc kura kārtot rezultātus. Pieejamie lauki: author_sort, authors, com
 .sp
 .nf
 .ft C
-calibredb pievienot [options] file1 file2 file3 ...
+calibredb add [options] file1 file2 file3 ...
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Pievienojiet norādītos failus kā grāmatas datu bāzē. Varat arī norādīt direktorijus, skatīt
-ar direktoriju saistītās opcijas zemāk.
+Add the specified files as books to the database. You can also specify folders, see
+the folder related options below.
 .sp
 Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .INDENT 0.0
@@ -304,22 +304,22 @@ Opcija, lai kontrolētu, pievienojot grāmatas no katalogiem. Pēc noklusējuma 
 .INDENT 0.0
 .TP
 .B \-\-add
-Faila nosaukuma šablons, faili, kas atbilst šim šablonam, tiks pievienoti skenējot kataloga failiem, pat tad, ja tie nav zināmi e\-grāmatu faila tipi. Var norādīt vairākas reizes vairākus šablonus.
+A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-Faila nosaukuma šablons, faili, kas atbilst šim šablonam tiks ignorēti, skenējot failu direktoriju. Var norādīt vairākas reizes vairākus šablonus. Par piem: *. pdf, ignorēs visus pdf failus
+A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all PDF files
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Pieņemt, ka katrā katalogā ir tikai viena loģiskā grāmata, un visi tajā esošie faili ir dažādi e\-grāmatu formāti
+Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Apstrādāt mapes rekursīvi
+Process folders recursively
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -487,12 +487,12 @@ Aizvietot atstarpes ar apakšsvītrām
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Eksportēt visas grāmatas vienā mapē
+Export all books into a single folder
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-Šablons, lai kontrolētu saglabāto failu nosaukumu un direktoriju struktūru. Noklusējums ir \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP, kas ietaupīs grāmatas katra autora apakšdirektorijā ar faila nosaukumiem, kas satur nosaukumu un autoru. Pieejamā kontrole ir: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -502,7 +502,7 @@ Datumu attēlošanas formāts. %d \- diena, %b \- mēnesis, %m \- mēneša kārt
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Eksportēt grāmatas norādītajā mapē. Noklusētā ir .
+Export books to the specified folder. Default is .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -561,7 +561,7 @@ Iekšējās atsauces var veidot ar vairāku autoru grāmatām, sadaļā autori. 
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Saglabājiet izvadi no dažādiem konveijera pārveidošanas posmiem uz norādīto direktoriju. Noderīgi, ja neesat pārliecināts, kurā pārvēršanas procesa posmā rodas kļūda. Noklusējums: \fB\(aq\fPNone\fB\(aq\fP Attiecas uz: AZW3, EPUB, MOBI izejas formātiem
+Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -765,20 +765,20 @@ Ja slejā tiek saglabātas vairākas vērtības, pievienot tām esošās vērtī
 .sp
 .nf
 .ft C
-calibredb restore_database [opcijas]
+calibredb restore_database [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Atjaunojiet šo datubāzi no metadatiem, kas tiek glabāti OPF failos katrā
-calibre bibliotēkas direktorijā. Tas ir noderīgi, ja jūsu metadata.db fails
-ir bojāts.
+Restore this database from the metadata stored in OPF files in each
+folder of the calibre library. This is useful if your metadata.db file
+has been corrupted.
 .sp
-BRĪDINĀJUMS: Šī komanda pilnīgi atjauno jūsu datubāzi. Jūs zaudēsiet
-visus saglabātos meklējumus, lietotāju kategorijas, spraudņus, grāmatas pārveidošanas
-iestatījumus un pielāgotās receptes. Atjaunotie metadati būs tikpat precīzi kā tie
-kas būs atrodami OPF failos.
+WARNING: This command completely regenerates your database. You will lose
+all saved searches, user categories, plugboards, stored per\-book conversion
+settings, and custom recipes. Restored metadata will only be as accurate as
+what is found in the OPF files.
 .sp
 Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .INDENT 0.0

@@ -9,12 +9,8 @@ import sys
 from collections import namedtuple
 from itertools import repeat
 
-try:
-    from PyQt5 import sip
-except ImportError:
-    import sip
-from PyQt5.Qt import QApplication, QEventLoop, pyqtSignal
-from PyQt5.QtWebEngineWidgets import (
+from qt.core import QApplication, QEventLoop, pyqtSignal, sip
+from qt.webengine import (
     QWebEnginePage, QWebEngineProfile, QWebEngineScript
 )
 

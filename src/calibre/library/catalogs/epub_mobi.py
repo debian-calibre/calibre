@@ -26,7 +26,7 @@ class EPUB_MOBI(CatalogPlugin):
     'EPUB catalog generator'
 
     name = 'Catalog_EPUB_MOBI'
-    description = 'AZW3/EPUB/MOBI catalog generator'
+    description = _('AZW3/EPUB/MOBI catalog generator')
     supported_platforms = ['windows', 'osx', 'linux']
     minimum_calibre_version = (0, 7, 40)
     author = 'Greg Riker'
@@ -56,7 +56,7 @@ class EPUB_MOBI(CatalogPlugin):
                            action=None,
                            help=_("Save the output from different stages of the conversion "
                            "pipeline to the specified "
-                           "directory. Useful if you are unsure at which stage "
+                           "folder. Useful if you are unsure at which stage "
                            "of the conversion process a bug is occurring.\n"
                            "Default: '%default'\n"
                            "Applies to: AZW3, EPUB, MOBI output formats")),

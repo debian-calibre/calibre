@@ -2,14 +2,14 @@
 # vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2018, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 import json
 import os
 import re
 import sys
+import time
 from collections import defaultdict, namedtuple
 from hashlib import sha256
-from PyQt5.Qt import (
+from qt.core import (
     QApplication, QCursor, QDockWidget, QEvent, QMainWindow, QMenu, QMimeData,
     QModelIndex, QPixmap, Qt, QTimer, QToolBar, QUrl, QVBoxLayout, QWidget,
     pyqtSignal
@@ -17,14 +17,14 @@ from PyQt5.Qt import (
 from threading import Thread
 
 from calibre import prints
-from calibre.constants import DEBUG
+from calibre.constants import ismacos
 from calibre.customize.ui import available_input_formats
 from calibre.db.annotations import merge_annotations
-from calibre.gui2 import choose_files, error_dialog
+from calibre.gui2 import choose_files, error_dialog, sanitize_env_vars
 from calibre.gui2.dialogs.drm_error import DRMErrorMessage
 from calibre.gui2.image_popup import ImagePopup
 from calibre.gui2.main_window import MainWindow
-from calibre.gui2.viewer import get_current_book_data
+from calibre.gui2.viewer import get_current_book_data, performance_monitor
 from calibre.gui2.viewer.annotations import (
     AnnotationsSaveWorker, annotations_dir, parse_annotations
 )
@@ -44,7 +44,6 @@ from calibre.gui2.viewer.web_view import WebView, get_path_for_name, set_book_pa
 from calibre.utils.date import utcnow
 from calibre.utils.img import image_from_path
 from calibre.utils.ipc.simple_worker import WorkerError
-from calibre.utils.monotonic import monotonic
 from polyglot.builtins import as_bytes, as_unicode, iteritems, itervalues
 
 
@@ -191,6 +190,7 @@ class EbookViewer(MainWindow):
         self.web_view.scrollbar_context_menu.connect(self.scrollbar_context_menu)
         self.web_view.close_prep_finished.connect(self.close_prep_finished)
         self.web_view.highlights_changed.connect(self.highlights_changed)
+        self.web_view.edit_book.connect(self.edit_book)
         self.actions_toolbar.initialize(self.web_view, self.search_dock.toggleViewAction())
         self.setCentralWidget(self.web_view)
         self.loading_overlay = LoadingOverlay(self)
@@ -411,6 +411,7 @@ class EbookViewer(MainWindow):
         if msg:
             self.loading_overlay(msg)
         else:
+            performance_monitor('loading finished')
             self.loading_overlay.hide()
 
     def show_error(self, title, msg, details):
@@ -456,6 +457,7 @@ class EbookViewer(MainWindow):
             self.load_ebook(entry['pathtoebook'])
 
     def load_ebook(self, pathtoebook, open_at=None, reload_book=False):
+        performance_monitor('Load of book started', reset=True)
         self.web_view.show_home_page_on_ready = False
         if open_at:
             self.pending_open_at = open_at
@@ -474,8 +476,6 @@ class EbookViewer(MainWindow):
             self.load_ebook(self.current_book_data['pathtoebook'], reload_book=True)
 
     def _load_ebook_worker(self, pathtoebook, open_at, reload_book):
-        if DEBUG:
-            start_time = monotonic()
         try:
             ans = prepare_book(pathtoebook, force=reload_book, prepare_notify=self.prepare_notify)
         except WorkerError as e:
@@ -484,8 +484,7 @@ class EbookViewer(MainWindow):
             import traceback
             self.book_prepared.emit(False, {'exception': e, 'tb': traceback.format_exc(), 'pathtoebook': pathtoebook})
         else:
-            if DEBUG:
-                print('Book prepared in {:.2f} seconds'.format(monotonic() - start_time))
+            performance_monitor('prepared emitted')
             self.book_prepared.emit(True, {'base': ans, 'pathtoebook': pathtoebook, 'open_at': open_at, 'reloaded': reload_book})
 
     def prepare_notify(self):
@@ -546,6 +545,7 @@ class EbookViewer(MainWindow):
         highlights = self.current_book_data['annotations_map']['highlight']
         self.highlights_widget.load(highlights)
         self.web_view.start_book_load(initial_position=initial_position, highlights=highlights, current_book_data=self.current_book_data)
+        performance_monitor('webview loading requested')
 
     def load_book_data(self, calibre_book_data=None):
         self.current_book_data['book_library_details'] = get_book_library_details(self.current_book_data['pathtoebook'])
@@ -640,6 +640,36 @@ class EbookViewer(MainWindow):
         amap['highlight'] = highlights
         self.highlights_widget.refresh(highlights)
         self.save_annotations()
+
+    def edit_book(self, file_name, progress_frac, selected_text):
+        import subprocess
+
+        from calibre.ebooks.oeb.polish.main import SUPPORTED
+        from calibre.utils.ipc.launch import exe_path, macos_edit_book_bundle_path
+        try:
+            path = set_book_path.pathtoebook
+        except AttributeError:
+            return error_dialog(self, _('Cannot edit book'), _(
+                'No book is currently open'), show=True)
+        fmt = path.rpartition('.')[-1].upper().replace('ORIGINAL_', '')
+        if fmt not in SUPPORTED:
+            return error_dialog(self, _('Cannot edit book'), _(
+                'The book must be in the %s formats to edit.'
+                '\n\nFirst convert the book to one of these formats.'
+            ) % (_(' or ').join(SUPPORTED)), show=True)
+        exe = 'ebook-edit'
+        if ismacos:
+            exe = os.path.join(macos_edit_book_bundle_path(), exe)
+        else:
+            exe = exe_path(exe)
+        cmd = [exe]
+        if selected_text:
+            cmd += ['--select-text', selected_text]
+        from calibre.gui2.tweak_book.widgets import BusyCursor
+        with sanitize_env_vars():
+            subprocess.Popen(cmd + [path, file_name])
+            with BusyCursor():
+                time.sleep(2)
 
     def save_state(self):
         with vprefs:

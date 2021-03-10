@@ -7,15 +7,15 @@ import os
 import shutil
 import sys
 from itertools import count
-from PyQt5.Qt import (
+from qt.core import (
     QT_VERSION, QApplication, QBuffer, QByteArray, QEvent, QFontDatabase, QFontInfo,
     QHBoxLayout, QIODevice, QLocale, QMimeData, QPalette, QSize, Qt, QTimer, QUrl,
-    QWidget, pyqtSignal
+    QWidget, pyqtSignal, sip
 )
-from PyQt5.QtWebEngineCore import (
+from qt.webengine import (
     QWebEngineUrlRequestInfo, QWebEngineUrlRequestJob, QWebEngineUrlSchemeHandler
 )
-from PyQt5.QtWebEngineWidgets import (
+from qt.webengine import (
     QWebEnginePage, QWebEngineProfile, QWebEngineScript, QWebEngineSettings,
     QWebEngineView
 )
@@ -28,7 +28,7 @@ from calibre.constants import (
 from calibre.ebooks.metadata.book.base import field_metadata
 from calibre.ebooks.oeb.polish.utils import guess_type
 from calibre.gui2 import choose_images, error_dialog, safe_open_url
-from calibre.gui2.viewer import link_prefix_for_location_links
+from calibre.gui2.viewer import link_prefix_for_location_links, performance_monitor
 from calibre.gui2.viewer.config import viewer_config_dir, vprefs
 from calibre.gui2.viewer.tts import TTS
 from calibre.gui2.webengine import (
@@ -40,11 +40,6 @@ from calibre.utils.serialize import json_loads
 from calibre.utils.shared_file import share_open
 from polyglot.builtins import as_bytes, iteritems, unicode_type
 from polyglot.functools import lru_cache
-
-try:
-    from PyQt5 import sip
-except ImportError:
-    import sip
 
 SANDBOX_HOST = FAKE_HOST.rpartition('.')[0] + '.sandbox'
 
@@ -278,6 +273,7 @@ class ViewerBridge(Bridge):
     open_url = from_js(object)
     speak_simple_text = from_js(object)
     tts = from_js(object, object)
+    edit_book = from_js(object, object, object)
 
     create_view = to_js()
     start_book_load = to_js()
@@ -477,6 +473,7 @@ class WebView(RestartingWebEngineView):
     scrollbar_context_menu = pyqtSignal(object, object, object)
     close_prep_finished = pyqtSignal(object)
     highlights_changed = pyqtSignal(object)
+    edit_book = pyqtSignal(object, object, object)
     shortcuts_changed = pyqtSignal(object)
     paged_mode_changed = pyqtSignal()
     standalone_misc_settings_changed = pyqtSignal(object)
@@ -537,6 +534,7 @@ class WebView(RestartingWebEngineView):
         self.bridge.scrollbar_context_menu.connect(self.scrollbar_context_menu)
         self.bridge.close_prep_finished.connect(self.close_prep_finished)
         self.bridge.highlights_changed.connect(self.highlights_changed)
+        self.bridge.edit_book.connect(self.edit_book)
         self.bridge.open_url.connect(safe_open_url)
         self.bridge.speak_simple_text.connect(self.tts.speak_simple_text)
         self.bridge.tts.connect(self.tts.action)
@@ -623,6 +621,7 @@ class WebView(RestartingWebEngineView):
         }
         self.bridge.create_view(
             vprefs['session_data'], vprefs['local_storage'], field_metadata.all_metadata(), ui_data)
+        performance_monitor('bridge ready')
         for func, args in iteritems(self.pending_bridge_ready_actions):
             getattr(self.bridge, func)(*args)
 

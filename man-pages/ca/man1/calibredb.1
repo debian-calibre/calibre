@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "de febrer 26, 2021" "5.12.0" "calibre"
+.TH "CALIBREDB" "1" "de març 10, 2021" "5.13.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -228,14 +228,14 @@ Camps pels quals s\fB\(aq\fPordenaran els resultats. Camps disponibles: author_s
 .sp
 .nf
 .ft C
-calibredb add [opcions] fitxer1 fitxer2 fitxer3 ...
+calibredb add [options] file1 file2 file3 ...
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Afegeix els fitxers especificats com a llibres a la base de dades. Podeu  indicar també
-directoris, vegeu les opcions relacionades amb els directoris més avall.
+Add the specified files as books to the database. You can also specify folders, see
+the folder related options below.
 .sp
 Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0
@@ -304,22 +304,22 @@ Opcions per controlar l\(aqaddició de llibres des dels directoris. Per defecte 
 .INDENT 0.0
 .TP
 .B \-\-add
-Un patró (glob) de nom de fitxer, els fitxers que coincideixin amb aquest patró seran afegits quan s\fB\(aq\fPexplorin els directoris per als fitxers, encara que no siguin d\fB\(aq\fPun tipus de fitxer de llibres electrònics conegut. Es pot especificar diverses vegades per a diversos patrons.
+A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-Un patró de nom de fitxer (glob), els fitxers que coincideixin amb aquest patró s’ignoraran quan s’escanegi el directori per fitxers. Es pot especificar diverses vegades per diversos patrons. Per exemple: *.pdf ignorarà tots els fitxers pdf
+A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all PDF files
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Assumeix que cada directori conté un sol llibre lògic i que tots els fitxers que hi ha són diferents formats del mateix llibre electrònic
+Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Processa els directoris de forma recursiva
+Process folders recursively
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -487,12 +487,12 @@ Reemplaça els espais en blanc amb guions baixos.
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Exporta tots els llibres a un únic directori
+Export all books into a single folder
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-La plantilla per controlar el nom de fitxer i l\fB\(aq\fPestructura dels directoris dels fitxers desats. Per defecte és «{author_sort}/{title}/{title} \- {authors}», que desa els llibres en un subdirectori per autor amb noms de fitxer que contenen el títol i l\fB\(aq\fPautor. Es disposa dels controls: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -502,7 +502,7 @@ El format en què es visualitzaran les dates. %d: dia, %b: mes, %m: nombre del m
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Exporta els llibres al directori que s\fB\(aq\fPindica. Per defecte és .
+Export books to the specified folder. Default is .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -557,7 +557,7 @@ Crea referències creuades a la secció dels autors per als llibres amb diversos
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Desa la sortida de les diferents etapes de la canonada de conversió al directori especificat. És útil si no esteu segur en quina etapa del procés de conversió hi ha un error. Per defecte: «None» S\fB\(aq\fPaplica als formats de sortida: AZW3, EPUB i MOBI
+Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -759,19 +759,20 @@ Si la columna emmagatzema diversos valors, annexa els valors especificats als ja
 .sp
 .nf
 .ft C
-calibredb restore_database [opcions]
+calibredb restore_database [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Recupera la base de dades a partir de les metadades dels fitxers OPF de cada
-carpeta de la biblioteca de calibre. És útil quan el fitxer metadata.db està malmès.
+Restore this database from the metadata stored in OPF files in each
+folder of the calibre library. This is useful if your metadata.db file
+has been corrupted.
 .sp
-ATENCIÓ: Aquesta ordre torna a generar completament la vostra base de
-dades. Perdreu totes les cerques desades, categories d\(aqusuari, taulers de connexions,
-ajusts de conversió per a llibres individuals i receptes personalitzades. Les
-metadades que es recuperin seran tan acurades com el que hi hagi als fitxers OPF.
+WARNING: This command completely regenerates your database. You will lose
+all saved searches, user categories, plugboards, stored per\-book conversion
+settings, and custom recipes. Restored metadata will only be as accurate as
+what is found in the OPF files.
 .sp
 Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0
