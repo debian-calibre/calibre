@@ -10,12 +10,12 @@ disable unrar test since the module is not in Debian main
  1 file changed, 5 insertions(+)
 
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index adcbfe4..4aa012b 100644
+index f3a0e62..5162852 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
-@@ -17,6 +17,10 @@ from polyglot.builtins import iteritems, map, unicode_type, getenv
- 
+@@ -18,6 +18,10 @@ from polyglot.builtins import iteritems, map, unicode_type, getenv
  is_ci = os.environ.get('CI', '').lower() == 'true'
+ is_sanitized = 'libasan' in os.environ.get('LD_PRELOAD', '')
  
 +try:
 +    import unrardll
@@ -24,7 +24,7 @@ index adcbfe4..4aa012b 100644
  
  class BuildTest(unittest.TestCase):
  
-@@ -369,6 +373,7 @@ class BuildTest(unittest.TestCase):
+@@ -372,6 +376,7 @@ class BuildTest(unittest.TestCase):
          from calibre.gui2.win_file_dialogs import test
          test()
  

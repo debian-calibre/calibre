@@ -14,10 +14,10 @@ Treat Debian package builder as CI system.
  4 files changed, 15 insertions(+), 15 deletions(-)
 
 diff --git a/src/calibre/srv/tests/base.py b/src/calibre/srv/tests/base.py
-index a2a7ca6..f1c3ffa 100644
+index 865f139..05e2da7 100644
 --- a/src/calibre/srv/tests/base.py
 +++ b/src/calibre/srv/tests/base.py
-@@ -107,7 +107,7 @@ class TestServer(Thread):
+@@ -110,7 +110,7 @@ class TestServer(Thread):
          self.log = self.loop.log
  
      def setup_defaults(self, kwargs):
@@ -129,7 +129,7 @@ index c0547d9..dae78ef 100644
              service = b.services[0]
              self.ae(service.type, '_calibre._tcp.local.')
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index 4aa012b..30e5cb2 100644
+index 5162852..d3fa89d 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
 @@ -15,7 +15,7 @@ import os, ctypes, sys, unittest, time, shutil
@@ -138,10 +138,10 @@ index 4aa012b..30e5cb2 100644
  
 -is_ci = os.environ.get('CI', '').lower() == 'true'
 +is_ci = os.environ.get('SCHROOT_USER', None) != None
+ is_sanitized = 'libasan' in os.environ.get('LD_PRELOAD', '')
  
  try:
-     import unrardll
-@@ -341,7 +341,7 @@ class BuildTest(unittest.TestCase):
+@@ -344,7 +344,7 @@ class BuildTest(unittest.TestCase):
  
              p.runJavaScript('1 + 1', callback)
              p.printToPdf(print_callback)
