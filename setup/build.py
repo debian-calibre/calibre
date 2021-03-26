@@ -50,6 +50,8 @@ class Extension(object):
         self.cflags = d['cflags'] = kwargs.get('cflags', [])
         if iswindows:
             self.cflags.append('/DCALIBRE_MODINIT_FUNC=PyMODINIT_FUNC')
+            if self.needs_cxx and kwargs.get('needs_c++14'):
+                self.cflags.insert(0, '/std:c++14')
         else:
             return_type = 'PyObject*'
             extern_decl = 'extern "C"' if self.needs_cxx else ''
@@ -58,10 +60,14 @@ class Extension(object):
                 '-DCALIBRE_MODINIT_FUNC='
                 '{} __attribute__ ((visibility ("default"))) {}'.format(extern_decl, return_type))
 
-            if not self.needs_cxx and kwargs.get('needs_c99'):
-                self.cflags.insert(0, '-std=c99')
-            if self.needs_cxx and kwargs.get('needs_c++11'):
-                self.cflags.insert(0, '-std=c++11')
+            if self.needs_cxx:
+                if kwargs.get('needs_c++11'):
+                    self.cflags.insert(0, '-std=c++11')
+                elif kwargs.get('needs_c++14'):
+                    self.cflags.insert(0, '-std=c++14')
+            else:
+                if kwargs.get('needs_c99'):
+                    self.cflags.insert(0, '-std=c99')
 
         self.ldflags = d['ldflags'] = kwargs.get('ldflags', [])
         self.optional = d['options'] = kwargs.get('optional', False)
@@ -159,23 +165,25 @@ def read_extensions():
     return ans
 
 
-def init_env():
-    from setup.build_environment import msvc, is64bit, win_inc, win_lib, NMAKE
+def init_env(debug=False, sanitize=False):
+    from setup.build_environment import win_ld, is64bit, win_inc, win_lib, NMAKE, win_cc
     from distutils import sysconfig
     linker = None
     if isunix:
         cc = os.environ.get('CC', 'gcc')
         cxx = os.environ.get('CXX', 'g++')
-        debug = ''
-        # debug = '-ggdb'
+        debug = '-ggdb' if debug else ''
         cflags = os.environ.get('OVERRIDE_CFLAGS',
-            '-Wall -DNDEBUG %s -fno-strict-aliasing -pipe' % debug)
+            f'-Wall -DNDEBUG {debug} -fno-strict-aliasing -pipe')
         cflags = shlex.split(cflags) + ['-fPIC']
         ldflags = os.environ.get('OVERRIDE_LDFLAGS', '-Wall')
         ldflags = shlex.split(ldflags)
         cflags += shlex.split(os.environ.get('CFLAGS', ''))
         ldflags += shlex.split(os.environ.get('LDFLAGS', ''))
         cflags += ['-fvisibility=hidden']
+        if sanitize:
+            cflags.append('-fsanitize-address')
+            ldflags.append('-shared-libasan')
 
     if islinux:
         cflags.append('-pthread')
@@ -205,9 +213,14 @@ def init_env():
         cflags.append('-I'+sysconfig.get_python_inc())
 
     if iswindows:
-        cc = cxx = msvc.cc
-        cflags = '/c /nologo /MD /W3 /EHsc /utf-8 /DNDEBUG'.split()
-        ldflags = '/DLL /nologo /INCREMENTAL:NO /NODEFAULTLIB:libcmt.lib'.split()
+        cc = cxx = win_cc
+        cflags = '/c /nologo /W3 /EHsc /utf-8'.split()
+        cflags.append('/Zi' if debug else '/DNDEBUG')
+        suffix = ('d' if debug else '')
+        cflags.append('/MD' + suffix)
+        ldflags = f'/DLL /nologo /INCREMENTAL:NO /NODEFAULTLIB:libcmt{suffix}.lib'.split()
+        if debug:
+            ldflags.append('/DEBUG')
         # cflags = '/c /nologo /Ox /MD /W3 /EHsc /Zi'.split()
         # ldflags = '/DLL /nologo /INCREMENTAL:NO /DEBUG'.split()
         if is64bit:
@@ -220,7 +233,7 @@ def init_env():
                 ldflags.append('/LIBPATH:'+p)
         cflags.append('-I%s'%sysconfig.get_python_inc())
         ldflags.append('/LIBPATH:'+os.path.join(sysconfig.PREFIX, 'libs'))
-        linker = msvc.linker
+        linker = win_ld
     return namedtuple('Environment', 'cc cxx cflags ldflags linker make')(
         cc=cc, cxx=cxx, cflags=cflags, ldflags=ldflags, linker=linker, make=NMAKE if iswindows else 'make')
 
@@ -260,13 +273,17 @@ class Build(Command):
             help='Path to directory in which to place object files during the build process, defaults to "build"')
         parser.add_option('--output-dir', default=None,
             help='Path to directory in which to place the built extensions. Defaults to src/calibre/plugins')
+        parser.add_option('--debug', default=False, action='store_true',
+            help='Build in debug mode')
+        parser.add_option('--sanitize', default=False, action='store_true',
+            help='Build with sanitization support. Run with LD_PRELOAD=$(gcc -print-file-name=libasan.so)')
 
     def run(self, opts):
         from setup.parallel_build import parallel_build, create_job
         if opts.no_compile:
             self.info('--no-compile specified, skipping compilation')
             return
-        self.env = init_env()
+        self.env = init_env(debug=opts.debug)
         all_extensions = map(parse_extension, filter(is_ext_allowed, read_extensions()))
         self.build_dir = os.path.abspath(opts.build_dir or self.DEFAULT_BUILDDIR)
         self.output_dir = os.path.abspath(opts.output_dir or self.DEFAULT_OUTPUTDIR)
@@ -399,7 +416,7 @@ class Build(Command):
 
         If something is missing (qmake e.g.) you get a non-informative error
          self.check_call(qmc + [ext.name+'.pro'])
-         so you would have to look a the source to see the actual command.
+         so you would have to look at the source to see the actual command.
         """
         try:
             subprocess.check_call(*args, **kwargs)

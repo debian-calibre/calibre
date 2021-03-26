@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "März 10, 2021" "5.13.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "März 26, 2021" "5.14.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -35,21 +35,21 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-ebook\-convert Quelldatei Ausgabedatei [Optionen]
+ebook\-convert input_file output_file [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Ein eBook von einem Format in ein anderes konvertieren.
+Convert an e\-book from one format to another.
 .sp
-Quelldatei ist die Eingabe, Ausgabedatei die Ausgabe. Beide müssen dem Befehl als die ersten beiden Argumente übergeben werden.
+input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
 .sp
-Das Zielformat wird durch die Dateiendung von Ausgabedatei bestimmt. Ausgabedatei kann auch das Spezialformat .EXT besitzen, wobei EXT die gewünschte Dateinamenerweiterung ist. In diesem Fall wird der Name der Ausgabedatei aus dem Namen der Quelldatei abgeleitet. Bitte beachten: Die Dateinamen dürfen nicht mit einem Bindestrich beginnen. Zu guter Letzt, falls Ausgabedatei keine Dateinamenerweiterung besitzt, wird der Name als Verzeichnis behandelt, und ein "open ebook" (OEB), das aus HTML\-Dateien besteht, wird in dieses Verzeichnis geschrieben. Diese Dateien sind jene, die normalerweise an die Ausgabe\-Erweiterung übergeben würden.
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an "open e\-book" (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
 .sp
-Nach der Angabe von Quell\- und Ausgabedatei kann die Konvertierung noch durch die Angabe verschiedener Optionen angepasst werden.  Welche Optionen hier zur Verfügung stehen, hängt von den Dateitypen der Quell\- und Ausgabedateien ab.  Um dazu Hilfe zu erhalten, geben Sie die Quell\- und Ausgabedatei gefolgt von der Option \-h an.
+After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
-Die komplette Dokumentation des Konvertierungssystems findet sich unter
+For full documentation of the conversion system see
 conversion
 .sp
 Wann immer Sie Argumente mit Leerzeichen an \fBebook\-convert\fP weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
@@ -143,7 +143,7 @@ Die zu generierende Version der EPUB\-Datei. EPUB 2 ist am besten kompatibel. Ve
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extract the contents of the generated EPUB file to the specified folder. The contents of the folder are first deleted, so be careful.
+Entpacke den Inhalt der erstellten EPUB Dateien in den angegebenen Ordner. Der Inhalt des Ordners wird zuvor gelöscht. Vorsicht !
 .UNINDENT
 .INDENT 0.0
 .TP

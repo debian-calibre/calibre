@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "marzo 10, 2021" "5.13.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "marzo 26, 2021" "5.14.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -35,21 +35,21 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-ebook\-convert input_file output_file [options]
+ebook\-convert file_di_input file_di_output [opzioni]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Convert an e\-book from one format to another.
+Converti un e\-book da un formato a un altro.
 .sp
-input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+file_di_input è il file da convertire e file_di_output è il file convertito. Entrambi devono essere specificati come primi due argomenti del comando.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an "open e\-book" (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
+Il formato di output viene dedotto dall\(aqestensione del file convertito file_di_output. file_di_output può anche essere del formato speciale .EXT dove EXT è l\(aqestensione del file di output. In questo caso il nome del file di output è derivato dal nome del file di input. Nota che i nomi dei file non devono cominciare un un trattino. Infine, se file_di_output non ha estensione verrà trattato come cartella e un "open e\-book" (OEB) formato da file HTML viene inserito nella cartella. Questi file HTML sono quelli che normalmente sarebbero stati passati al plugin atto a generare l\(aqoutput.
 .sp
-After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+Dopo aver specificato i file di input e output è possibile personalizzare la conversione specificando varie opzioni. Le opzioni disponibili dipendono dal tipo di file di input e output. Per avere maggiori informazioni sulle opzioni specifiche, indica i file di input e output e poi inserisci l\(aqopzione \-h.
 .sp
-For full documentation of the conversion system see
+Per la documentazione completa sul sistema di conversione, vedi
 conversion
 .sp
 Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
@@ -145,7 +145,7 @@ La versione del file EPUB da generare. EPUB 2 è quello largamente compatibile, 
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extract the contents of the generated EPUB file to the specified folder. The contents of the folder are first deleted, so be careful.
+Estrai i contenuti del file EPUB generato nella cartella selezionata. I contenuti della cartella vengono prima eliminati, quindi fai attenzione.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -542,7 +542,7 @@ Imposta la lingua.
 .INDENT 0.0
 .TP
 .B \-\-pubdate
-Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+Imposta la data di pubblicazione (viene usata l\fB\(aq\fPora locale, a meno che il fuso orario non sia specificato esplicitamente)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -595,7 +595,7 @@ Opzioni per aiutare a individuare problemi con la conversione
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring.
+Salva l\fB\(aq\fPoutput dei differenti stadi di conversione raggiunti nella cartella specificata. Utile se non si conosce in quale stadio del processo di conversione si verifica l\fB\(aq\fPerrore.
 .UNINDENT
 .INDENT 0.0
 .TP

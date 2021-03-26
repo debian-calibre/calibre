@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "三月 10, 2021" "5.13.0" "calibre"
+.TH "CALIBREDB" "1" "三月 26, 2021" "5.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -875,16 +875,18 @@ information is the equivalent of what is shown in the Tag browser.
 .sp
 .nf
 .ft C
-calibredb backup_metadata [选项]
+calibredb backup_metadata [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-单独备份元数据储存到数据库到每个 OPF 文件书库。
-此项默认自动发生,但是你可以运行此命令来重新生成 OPF 文件,还可以用 \-\-all 选项.
+Backup the metadata stored in the database into individual OPF files in each
+books folder. This normally happens automatically, but you can run this
+command to force re\-generation of the OPF files, with the \-\-all option.
 .sp
-注意，通常不需要这样做，因为OPF文件是备份的自动地，每次元数据更改时。
+Note that there is normally no need to do this, as the OPF files are backed up
+automatically, every time metadata is changed.
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
 .INDENT 0.0

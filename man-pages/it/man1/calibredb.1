@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "marzo 10, 2021" "5.13.0" "calibre"
+.TH "CALIBREDB" "1" "marzo 26, 2021" "5.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -232,14 +232,14 @@ Il campo con cui ordinare i risultati. Campi disponibili: author_sort, authors, 
 .sp
 .nf
 .ft C
-calibredb add [options] file1 file2 file3 ...
+calibredb add [opzioni] file1 file2 file3 ...
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Add the specified files as books to the database. You can also specify folders, see
-the folder related options below.
+Aggiungi come libri i file specificati nel database. Puoi anche specificare delle cartelle,
+vedi le opzioni riferite alle cartelle qui sotto.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -308,22 +308,22 @@ Opzioni per controllare l\(aqaggiunta dei libri dalle cartelle. Per impostazione
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+Uno schema per il nome del file (glob pattern), i file che corrispondono a questo schema saranno aggiunti durante la scansione delle cartelle, anche se il loro tipo di file non è quello tipico di un e\-book. Può essere specificato più volte per schemi multipli.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all PDF files
+Uno schema per il nome del file (glob pattern), i file che corrispondono a questo schema saranno ignorati durante la scansione delle cartelle. Può essere specificato più volte per schemi multipli. Ad es.: *.pdf escluderà tutti i file PDF
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
+Assumi che ogni cartella abbia un solo libro \fB"\fPlogico\fB"\fP e che tutti i file in essa contenuti siano differenti formati e\-book dello stesso libro
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Process folders recursively
+Controlla cartelle ricorsivamente
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -491,12 +491,12 @@ Sostituisci gli spazi con trattini bassi.
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Export all books into a single folder
+Esporta tutti i libri in una singola cartella
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+Lo schema che controlla i nomi di file e l\fB\(aq\fPalbero delle cartelle dei file salvati. Il valore predefinito è \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP che salva i libri in una sottocartella per autore mentre i nomi di file contengono titolo e autore. I controli disponibili sono: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -506,7 +506,7 @@ Il formato di visualizzazione delle date. %d \- giorno, %b \- mese, %m \- numero
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Export books to the specified folder. Default is .
+Esporta i libri nella cartella specificata. Il valore predefinito è .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -561,7 +561,7 @@ Create cross\-references in Authors section for books with multiple authors. Def
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Salva l\fB\(aq\fPoutput dei differenti stadi di conversione raggiunti nella cartella specificata. Utile se non si conosce in quale stadio del processo di conversione si verifica l\fB\(aq\fPerrore. Valore predefinito: \fB\(aq\fPNone\fB\(aq\fP Si applica a: formati di output AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -765,20 +765,20 @@ Se la colonna salva più valori, aggiunge i valori specificati a quelli esistent
 .sp
 .nf
 .ft C
-calibredb restore_database [options]
+calibredb restore_database [opzioni]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Restore this database from the metadata stored in OPF files in each
-folder of the calibre library. This is useful if your metadata.db file
-has been corrupted.
+Ripristina il database a partire dai metadati conservati nei file OPF in
+ognuna delle cartelle della biblioteca di calibre. Utile se il tuo file
+metadata.db si è corrotto.
 .sp
-WARNING: This command completely regenerates your database. You will lose
-all saved searches, user categories, plugboards, stored per\-book conversion
-settings, and custom recipes. Restored metadata will only be as accurate as
-what is found in the OPF files.
+ATTENZIONE: Questo comando rigenera completamente il database. Perderai
+tutte le ricerche salvate, le categorie utente, i pannelli di controllo, le impostazioni
+di conversione per singolo libro e le ricette personalizzate. I metadati recuperati
+saranno accurati solo quanto lo erano i file OPF.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0

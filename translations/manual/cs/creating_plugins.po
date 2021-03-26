@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Trottel <trottel09@gmail.com>, 2014-2017,2019-2020
+# Trottel <trottel09@gmail.com>, 2014-2017,2019-2021
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-08 15:24+0000\n"
-"PO-Revision-Date: 2021-03-08 13:17+0000\n"
+"POT-Creation-Date: 2021-03-23 06:27+0000\n"
+"PO-Revision-Date: 2021-03-16 06:54+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Czech (http://www.transifex.com/calibre/calibre/language/cs/)\n"
 "MIME-Version: 1.0\n"
@@ -71,7 +71,7 @@ msgstr "Předpokládejme, že máte instalaci Calibre, kterou používáte pro v
 msgid ""
 "That's all. To add this code to calibre as a plugin, simply run the "
 "following in the folder in which you created :file:`__init__.py`::"
-msgstr ""
+msgstr "To je vše. Pro přidání tohoto kódu do Calibre jako modulu stačí spustit následující ve složce, ve které jste vytvořili :file:`__init__.py`::"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:38
 msgid ""
@@ -143,7 +143,7 @@ msgid ""
 "subpackages of .py modules inside the ZIP file, just like you would normally"
 " (by defining __init__.py in each sub-folder), and everything should \"just "
 "work\"."
-msgstr ""
+msgstr "Předpona ``calibre_plugins`` musí být vždy přítomná. ``some_name`` pochází z názvu prázdného textového souboru. ``some_module`` odkazuje na soubor :file:`some_module.py` uvnitř souboru ZIP. Pamatujte, že toto importování je právě tak výkonné jako obyčejné importy Pythonu. Uvnitř souboru ZIP můžete vytvářet balíčky a podbalíčky modulů .py, jako byste to dělali normálně (definováním __init__.py v každé podsložce) a všechno by mělo „prostě fungovat."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:76
 msgid ""
@@ -279,7 +279,7 @@ msgid ""
 "found in the ZIP file. If you pass in more than one name then it returns a "
 "dict mapping the names to bytes. If a name is not found, it will not be "
 "present in the returned dict."
-msgstr ""
+msgstr "Tato funkce by měla být volána se seznamem cest k souborům uvnitř souboru ZIP. Například pro přístup k souboru icon.png ve složce images v souboru ZIP byste použili: ``images/icon.png``. Jako oddělovač cesty používejte vždy lomítko, a to i ve Windows. Pokud předáte jeden název, funkce vrátí nezpracované bajty tohoto souboru nebo Žádné, pokud název nebyl v souboru ZIP nalezen. Pokud předáte více než jeden název, vrátí příkaz mapující názvy na bajty. Pokud nějaký název není nalezen, nebude přítomen ve vráceném příkazu."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:149
 msgid "**get_icons(name_or_list_of_names)**"
@@ -333,9 +333,9 @@ msgstr "Moduly pro úpravu knihy"
 msgid ""
 "Now let's change gears for a bit and look at creating a plugin to add tools "
 "to the calibre book editor. The plugin is available here: "
-"`editor_demo_plugin.zip  <https://calibre-"
+"`editor_demo_plugin.zip <https://calibre-"
 "ebook.com/downloads/editor_demo_plugin.zip>`_."
-msgstr "Nyní pojďme na chvíli přeřadit a podívejme se na vytvoření modulu pro přidání nástrojů do editoru knih Calibre. Modul je dostupný zde: `editor_demo_plugin.zip <https://calibre-ebook.com/downloads/editor_demo_plugin.zip>`_."
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:190
 msgid ""
@@ -431,7 +431,7 @@ msgid ""
 "possible to use WebEngine there. Instead you can copy the data your plugin "
 "needs to a temporary folder and run the plugin with that data in a separate "
 "process. A simple example plugin follows that shows how to do this."
-msgstr ""
+msgstr "Pokud píšete modul uživatelského rozhraní, který potřebuje využívat Qt WebEngine, nelze jej spustit v hlavním procesu Calibre, protože tam není možné použít WebEngine. Místo toho můžete zkopírovat data, která váš modul potřebuje, do dočasné složky a spustit modul s těmito daty v samostatném procesu. Následuje jednoduchý příklad modulu, který ukazuje, jak to udělat."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:261
 msgid ""

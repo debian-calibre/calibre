@@ -6,26 +6,41 @@ __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import os, subprocess, re
-from distutils.spawn import find_executable
+import os, subprocess, re, shutil
 
 from setup import ismacos, iswindows, is64bit, islinux, ishaiku
-is64bit
 
-NMAKE = RC = msvc = MT = win_inc = win_lib = None
+NMAKE = RC = msvc = MT = win_inc = win_lib = win_cc = win_ld = None
+
+
+def merge_paths(a, b):
+    a = [os.path.normcase(os.path.normpath(x)) for x in a.split(os.pathsep)]
+    for q in b.split(os.pathsep):
+        q = os.path.normcase(os.path.normpath(q))
+        if q not in a:
+            a.append(q)
+    return os.pathsep.join(a)
+
+
 if iswindows:
-    from distutils import msvc9compiler
-    msvc = msvc9compiler.MSVCCompiler()
-    msvc.initialize()
-    NMAKE = msvc.find_exe('nmake.exe')
-    RC = msvc.find_exe('rc.exe')
-    MT = msvc.find_exe('mt.exe')
-    win_inc = [x for x in os.environ['include'].split(';') if x]
-    win_lib = [x for x in os.environ['lib'].split(';') if x]
+    from setup.vcvars import query_vcvarsall
+    env = query_vcvarsall(is64bit)
+    win_path = env['PATH']
+    os.environ['PATH'] = merge_paths(env['PATH'], os.environ['PATH'])
+    NMAKE = 'nmake.exe'
+    RC = 'rc.exe'
+    MT = 'mt.exe'
+    win_cc = 'cl.exe'
+    win_ld = 'link.exe'
+    win_inc = [x for x in env['INCLUDE'].split(os.pathsep) if x]
+    win_lib = [x for x in env['LIB'].split(os.pathsep) if x]
+    for key in env:
+        if key != 'PATH':
+            os.environ[key] = env[key]
 
 QMAKE = 'qmake'
 for x in ('qmake-qt5', 'qt5-qmake', 'qmake'):
-    q = find_executable(x)
+    q = shutil.which(x)
     if q:
         QMAKE = q
         break
@@ -33,7 +48,7 @@ QMAKE = os.environ.get('QMAKE', QMAKE)
 if iswindows and not QMAKE.lower().endswith('.exe'):
     QMAKE += '.exe'
 
-PKGCONFIG = find_executable('pkg-config')
+PKGCONFIG = shutil.which('pkg-config')
 PKGCONFIG = os.environ.get('PKG_CONFIG', PKGCONFIG)
 if (islinux or ishaiku) and not PKGCONFIG:
     raise SystemExit('Failed to find pkg-config on your system. You can use the environment variable PKG_CONFIG to point to the pkg-config executable')

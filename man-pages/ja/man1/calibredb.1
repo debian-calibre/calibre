@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "3月 10, 2021" "5.13.0" "calibre"
+.TH "CALIBREDB" "1" "3月 26, 2021" "5.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -874,13 +874,12 @@ calibredb backup_metadata [options]
 .UNINDENT
 .UNINDENT
 .sp
-データベースに保存された書誌情報のバックアップを、それぞれの本の
-ディレクトリに個別のOPFファイルとして保存します。
-通常この処理は自動的に行われますが、\-\-allオプションを
-つけて実行すると、強制的にOPFファイルの再生成が実行できます。
+Backup the metadata stored in the database into individual OPF files in each
+books folder. This normally happens automatically, but you can run this
+command to force re\-generation of the OPF files, with the \-\-all option.
 .sp
-通常は書誌情報を更新する毎にOPFファイルへのバックアップが自動的に
-行われるため、このコマンドを実行する必要はありません。
+Note that there is normally no need to do this, as the OPF files are backed up
+automatically, every time metadata is changed.
 .sp
 スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
 .INDENT 0.0

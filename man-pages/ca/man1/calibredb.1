@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "de març 10, 2021" "5.13.0" "calibre"
+.TH "CALIBREDB" "1" "de març 26, 2021" "5.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -862,19 +862,18 @@ Amplada màxima d\fB\(aq\fPuna línia a la sortida. Per defecte es detecta la mi
 .sp
 .nf
 .ft C
-calibredb backup_metadata [opcions]
+calibredb backup_metadata [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Fa una còpia de seguretat de les metadades de la base de dades en fitxers OPF
-individuals a cada directori del llibre. Això normalment es fa automàticament però
-podeu executar aquesta ordre per forçar que es tornin a regenerar els fitxers
-OPF amb l\(aqopció «\-\-all».
+Backup the metadata stored in the database into individual OPF files in each
+books folder. This normally happens automatically, but you can run this
+command to force re\-generation of the OPF files, with the \-\-all option.
 .sp
-Tingueu en compte que normalment no hi ha necessitat de fer això, ja que es fa
-una còpia de seguretat dels fitxers OPF cada vegada que es canvien les metadades.
+Note that there is normally no need to do this, as the OPF files are backed up
+automatically, every time metadata is changed.
 .sp
 Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0

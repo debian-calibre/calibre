@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "martxoak 10, 2021" "5.13.0" "calibre"
+.TH "CALIBREDB" "1" "martxoak 26, 2021" "5.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -870,9 +870,12 @@ calibredb backup_metadata [options]
 .UNINDENT
 .UNINDENT
 .sp
-Datu\-basean gordeta dauden metadatuen babeskopia egin liburu bakoitzeko direktorioetan gordeko diren OPF fitxategietan. Orokorrean, babeskopia hauek automatikoki egiten dira, baina komando hau erabili dezakezu OPF fitxategiak berriro sortu daitezen behartzeko. \(aq\-\-all\(aq aukera erabili horretarako.
+Backup the metadata stored in the database into individual OPF files in each
+books folder. This normally happens automatically, but you can run this
+command to force re\-generation of the OPF files, with the \-\-all option.
 .sp
-Kontuan izan normalean ez dela zertan egin behar hau, metadatuak aldatzen diren bakoitzeko OPF fitxategien babeskopia egiten baita automatikoki.
+Note that there is normally no need to do this, as the OPF files are backed up
+automatically, every time metadata is changed.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0

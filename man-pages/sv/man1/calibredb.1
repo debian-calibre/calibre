@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "mars 10, 2021" "5.13.0" "calibre"
+.TH "CALIBREDB" "1" "mars 26, 2021" "5.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -47,7 +47,7 @@ flera underkommandon, dokumenterade nedan.
 \fBcalibredb\fP kan användas för att manipulera antingen en calibre\-databas
 anges per sökväg eller en calibre\-innehållsserver körs antingen på
 den lokala maskinen eller över internet. Du kan starta en
-calibre\-Innehållsserver \(gamed antingen :command:\(gacalibre\-server
+calibre\-Innehållsserver \(gamed antingen :command:\(gacalibre server
 programmet eller klicka på i calibre\-huvudprogrammet Anslut/dela  → 
 Starta innehållsserver\&. Eftersom \fBcalibredb\fP kan göra ändringar i ditt
 calibre\-bibliotek måste du först ställa in autentisering på servern. Det
@@ -66,7 +66,7 @@ Inställningar → Dela via nätet → Avancerat\&.
 Om du vill aktivera åtkomst via internet bör du ställa in
 användarkonton på servern och använda \fI\%\-\-username\fP eller \fI\%\-\-password\fP
 flaggorna för \fBcalibredb\fP för att ge den åtkomst. Du kan ställa in
-användarautentisering för \fBcalibre\-server\fP genom att använda \fB\-\-enable\-auth\fP
+användarautentisering för \fBcalibre server\fP genom att använda \fB\-\-enable\-auth\fP
 flaggan och använda \fB\-\-manage\-users\fP för att skapa användarkonton.
 Om du kör servern från calibre\-huvudprogrammet använder du
 Inställningar → Dela via nätet → Kräv användarnamn/lösenord\&.
@@ -145,7 +145,7 @@ Sökväg till calibre\-biblioteket. Standard är att använda sökvägen lagrad 
 .INDENT 0.0
 .TP
 .B \-\-password
-Lösenord för anslutning till en calibre\-innehållsservern. För att läsa lösenordet från standardinmatning, använd specialvärdet: <stdin>. För att läsa lösenordet från en fil, använd: <f:/path/to/file> (d.v.s. <f: följt av hela sökvägen till filen och en efterföljande>). Vinkelparenteserna ovan är nödvändiga, kom ihåg att undkomma dem eller använd citat för din shell.
+Lösenord för anslutning till en calibre innehållsservern. För att läsa lösenordet från standardinmatning, använd specialvärdet: <stdin>. För att läsa lösenordet från en fil, använd: <f:/path/to/file> (d.v.s. <f: följt av hela sökvägen till filen och en efterföljande>). Vinkelparenteserna ovan är nödvändiga, kom ihåg att undkomma dem eller använd citat för din shell.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -234,8 +234,8 @@ calibredb add [options] file1 file2 file3 ...
 .UNINDENT
 .UNINDENT
 .sp
-Add the specified files as books to the database. You can also specify folders, see
-the folder related options below.
+Lägg till de angivna filerna som böcker i databasen. Du kan även ange mappar, se
+mapprelaterade alternativ nedan.
 .sp
 När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .INDENT 0.0
@@ -304,22 +304,22 @@ Alternativ för att anpassa tilläggningen av böcker från mappar. Som standard
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+Ett filnamn (glob) mönster, kommer matcha filer som detta mönster läggas till vid genomsökning av mappar efter filer, även om de inte är av en känd e\-bok filtyp. Kan anges flera gånger för flera mönster.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all PDF files
+Ett filnamn (glob) mönster, kommer filer som matchar detta mönster ignoreras vid genomsökning av mappar efter filer. Kan anges flera gånger för flera mönster. För t.ex.: *.pdf kommer att ignorera alla PDF\-filer
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
+Antag att varje mapp bara har en enda logisk bok och att alla filer i den är samma e\-bok i olika format.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Process folders recursively
+Bearbeta mappar rekursivt
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -487,12 +487,12 @@ Ersätt whitespace med understreck.
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Export all books into a single folder
+Exportera alla böcker till en enda mapp
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+Mallen för att anpassa filnamn och mappstruktur för de sparade filerna. Standard är \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP vilket sparar böcker i en undermapp per författare med filnamn bestående av titel och författare. Tillgängliga kontroller är: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -502,7 +502,7 @@ Format för datumvisning. %d \- dag, %b \- månad, %m \- månadsnummer, %Y \- å
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Export books to the specified folder. Default is .
+Exportera böcker till den angivna mappen. Standard är .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -557,7 +557,7 @@ Skapa korsreferenser i författarsektionen för böcker med flera författare. S
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Spara utmatning från olika stadier av konverteringen till den angivna mappen. Användbart om du är osäker på i vilket stadium av konverteringsprocessen ett fel sker. Standard: \fB\(aq\fPNone\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -767,14 +767,14 @@ calibredb restore_database [options]
 .UNINDENT
 .UNINDENT
 .sp
-Restore this database from the metadata stored in OPF files in each
-folder of the calibre library. This is useful if your metadata.db file
-has been corrupted.
+Återställ denna databas från metadata som lagras i OPF\-filer i varje
+mapp i calibre\-biblioteket. Det här är användbart om din metadata.db\-fil
+har skadats.
 .sp
-WARNING: This command completely regenerates your database. You will lose
-all saved searches, user categories, plugboards, stored per\-book conversion
-settings, and custom recipes. Restored metadata will only be as accurate as
-what is found in the OPF files.
+VARNING: Det här kommandot återskapar din databas hlet. Du förlorar
+alla sparade sökningar, användarkategorier, pluggbrädor, lagrade
+konverterings inställningar per bok och anpassade recept. Återställda metadata är
+bara så exakta som det som finns i OPF\-filerna.
 .sp
 När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .INDENT 0.0
@@ -871,7 +871,7 @@ calibredb backup_metadata [options]
 .UNINDENT
 .sp
 Säkerhetskopierade metadata lagras i databasen inuti individuella OPF\-filer i varje
-bokkatalog. Detta sker normalt automatiskt, men du kan köra det här
+bokmapp. Detta sker normalt automatiskt, men du kan köra det här
 kommando för att tvinga ny generering av OPF\-filer med flaggan \-\-all.
 .sp
 Observera att det är normalt ingen anledning att göra detta, eftersom de OPF\-filer säkerhetskopieras automatiskt, varje gång metadata ändras.

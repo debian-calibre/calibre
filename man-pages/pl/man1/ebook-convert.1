@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "marca 10, 2021" "5.13.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "marca 26, 2021" "5.14.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -35,21 +35,21 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-ebook\-convert plik_wejściowy plik_wyjściowy [opcje]
+ebook\-convert input_file output_file [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Konwersja e\-booka z jednego formatu do innego.
+Convert an e\-book from one format to another.
 .sp
-plik_wejściowy to plik konwertowany, a plik_wyjściowy to wynik konwersji. Oba muszą być podane jako dwa pierwsze argumenty polecenia.
+input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
 .sp
-Format pliku wyjściowego e\-booka jest ustalany na podstawie podanego rozszerzenia plik wyjściowego. Plik wyjściowy może mieć również specjalny format .EXT, gdzie EXT to rozszerzenie pliku. W tym przypadku nazwa pliku wyjściowego jest pobierana z pliku wejściowego. Nazwy plików nie mogą rozpoczynać się od myślnika. Jeśli plik wyjściowy nie ma rozszerzenia to jest traktowany jako katalog, do którego zapisywana jest książka "open book" (OEB), składająca się z plików HTML. Są to pliki, które mogą zostać przekazane do wtyczki tworzącej plik wyjściowy.
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an "open e\-book" (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
 .sp
-Po podaniu nazw plików: wejściowego i wyjściowego można dostosować sposób konwersji ustawiając różne opcje. Dostępność poszczególnych opcji jest zależna od rodzaju plików: wejściowego i wyjściowego. Aby dowiedzieć się jakie opcje konwersji są dostępne podaj obie nazwy plików i użyj opcję \-h.
+After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
-Pełna dokumentacja systemu konwersji znajduje się pod adresem
+For full documentation of the conversion system see
 conversion
 .sp
 Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"

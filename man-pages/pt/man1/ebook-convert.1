@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "março 10, 2021" "5.13.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "março 26, 2021" "5.14.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -189,12 +189,12 @@ Opções para controlar o visual e funcionamento do ficheiro de destino
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPPelé\fB"\fP with \fB"\fPPele\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Transliterar caracteres Unicode para uma representação em ASCII. Utilize com cuidado porque irá substituir os caracteres Unicode por ASCII. Por exemplo, irá substituir \fB"\fPPelé\fB"\fP por \fB"\fPPele\fB"\fP\&. Note também que em certos casos onde existem representações múltiplas de um carácter (por exemplo caracteres partilhados pelo Chinês e Japonês) será utilizada a representação baseada no idioma da interface atual do Calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-base\-font\-size
-O tamanho do tipo de letra padrão em pts. Todos os tamanhos dos tipos de letra no livro produzido vão ser alterados proporcionalmente baseados neste tamanho. Ao escolher um tamanho maior os tipos de letra no ficheiro de destino serão maiores e vice versa. Por predefinição, se o valor for zero, o tamanho base do tipo de letra é escolhido baseado no perfil de destino que escolheu.
+O tamanho base do tipo de letra em pts. Todos os tamanhos dos tipos de letra no livro produzido vão ser alterados proporcionalmente, baseados neste tamanho. Ao escolher um tamanho maior os tipos de letra no ficheiro de destino serão maiores e vice versa. Por predefinição, se o valor for zero, o tamanho base do tipo de letra é escolhido baseado no perfil de destino que escolheu.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -597,7 +597,7 @@ Opções para ajudar com a depuração da conversão
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring.
+Guarda o resultado, na pasta especificada, dos diferentes estágios da cadeia de conversão. Será útil se não tem a certeza em que etapa do processo de conversão é que está a ocorrer o erro.
 .UNINDENT
 .INDENT 0.0
 .TP

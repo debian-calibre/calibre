@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "mars 10, 2021" "5.13.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "mars 26, 2021" "5.14.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -41,7 +41,7 @@ calibre\-server [options] [path to library folder...]
 .UNINDENT
 .UNINDENT
 .sp
-Starta calibre\-innehållsservern. calibre\-innehållsservern exponerar
+Starta calibre innehållsservern. calibre innehållsservern exponerar
 dina calibre\-bibliotek över internet. Du kan ange sökvägen
 till biblioteksmappar som argument till \fBcalibre\-server\fP\&. Om du inte
 anger några vägar, kommer alla biblioteken som i calibre\-
@@ -62,7 +62,7 @@ Tid (i sekunder) att vänta på ett svar från servern när förfrågningar gör
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Välj typen av autentisering att användas.   Ställ in HTTP\-autentiseringsläget som används av servern. Ställ in på \fB"\fPbasic\fB"\fP om du placerar den här servern bakom en SSL\-proxy. Annars lämnar du det som \fB"\fPauto\fB"\fP, vilket kommer att använda \fB"\fPbasic\fB"\fP om SSL är anpassat, annars använder det \fB"\fPdigest\fB"\fP\&.
+Välj typ av autentisering att använda.      Ställ in HTTP\-autentiseringsläget som används av servern. Ställ in på \fB"\fPbasic\fB"\fP om du placerar den här servern bakom en SSL\-proxy. Annars lämnar du det som \fB"\fPauto\fB"\fP, vilket kommer att använda \fB"\fPbasic\fB"\fP om SSL är anpassat, annars använder det \fB"\fPdigest\fB"\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -172,7 +172,7 @@ Största storlek på enskild HTTP\-rubrik (i KB).
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-Längsta tid för arbetarprocesser.   Högsta tiden arbetsprocesser tillåts att köra (i minuter). Sätt till noll för ingen tidsbegränsning.
+Längst tid för arbetarprocesser.    Högsta tiden arbetsprocesser tillåts att köra (i minuter). Sätt till noll för ingen tidsbegränsning.
 .UNINDENT
 .INDENT 0.0
 .TP

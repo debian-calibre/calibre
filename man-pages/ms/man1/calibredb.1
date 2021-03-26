@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "Mac 10, 2021" "5.13.0" "calibre"
+.TH "CALIBREDB" "1" "Mac 26, 2021" "5.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -874,13 +874,12 @@ calibredb backup_metadata [options]
 .UNINDENT
 .UNINDENT
 .sp
-Sandar data meta tersimpan dalam pangkalan data ke dalam fail OPF secara
-individu dalam setiap direktori buku. Ia biasanya berlaku secara automatik,
-tetapi anda boleh jalankan perintah ini untuk paksa penjanaan\-semula fail
-OPF, dengan pilihan \-\-all.
+Backup the metadata stored in the database into individual OPF files in each
+books folder. This normally happens automatically, but you can run this
+command to force re\-generation of the OPF files, with the \-\-all option.
 .sp
-Perhatian kebiasaannya tidak perlu membuatnya, kerana fail OPF disandar
-secara automatik, setiap kali data meta berubah.
+Note that there is normally no need to do this, as the OPF files are backed up
+automatically, every time metadata is changed.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0

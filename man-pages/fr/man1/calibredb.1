@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "mars 10, 2021" "5.13.0" "calibre"
+.TH "CALIBREDB" "1" "mars 26, 2021" "5.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -873,13 +873,12 @@ calibredb backup_metadata [options]
 .UNINDENT
 .UNINDENT
 .sp
-Sauvegarde les métadonnées stockées dans la base de données dans les fichiers OPF
-individuels dans chaque dossier de livres. Ceci se fait normalement automatiquement,
-mais vous pouvez lancer cette commande pour forcer la régénération des fichiers OPF,
-avec l\(aqoption \-\-all.
+Backup the metadata stored in the database into individual OPF files in each
+books folder. This normally happens automatically, but you can run this
+command to force re\-generation of the OPF files, with the \-\-all option.
 .sp
-Notez qu\(aqil y a normalement aucun besoin de faire ceci, car les fichiers OPF sont mis à jour
-automatiquement, chaque fois que les métadonnées sont changées.
+Note that there is normally no need to do this, as the OPF files are backed up
+automatically, every time metadata is changed.
 .sp
 Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .INDENT 0.0

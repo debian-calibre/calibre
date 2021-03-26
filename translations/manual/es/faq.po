@@ -21,13 +21,14 @@
 # Milagro <mb.riverarojas@gmail.com>, 2015
 # Qualified Projects <drako.cjs@gmail.com>, 2015
 # Ramiro Chaidez, 2014
+# Walter Paterno <walter.paterno@gmail.com>, 2021
 # Yllelder, 2015-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-08 15:24+0000\n"
-"PO-Revision-Date: 2021-03-05 03:49+0000\n"
+"POT-Creation-Date: 2021-03-23 06:27+0000\n"
+"PO-Revision-Date: 2021-03-20 14:51+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Spanish (http://www.transifex.com/calibre/calibre/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -139,7 +140,7 @@ msgid ""
 "first. Note that when converting HTML files, leave the input encoding "
 "setting mentioned above blank. This is because the :guilabel:`HTML to ZIP` "
 "plugin automatically converts the HTML files to a standard encoding (UTF-8)."
-msgstr ""
+msgstr "Al añadir archivos HTML a calibre, puede ser necesario indicarle la codificación que usan. Para hacerlo, vaya a :gulabel:`Preferencias > Avanzado > Complementos > Complementos de tipo de archivo` y personalice el complemento HTML2Zip, indicando la codificación de los archivos HTML. A partir de ahora al añadir archivos HTML se procesarán correctamente. Los archivos HTML de diferentes fuentes suelen tener codificaciones diferentes, así que puede que sea necesario cambiar la configuración varias veces. Una codificación habitual para archivos de la web es ``cp1252``, así que sugerimos que pruebe con ésta primero. Al convertir archivos HTML, deje el campo de codificación de entrada mencionado anteriormente en blanco. Esto es porque el complemento HTML2Zip convierte automáticamente los HTML añadidos a una codificación estándar (utf-8)."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:54
 msgid "What's the deal with Table of Contents in MOBI files?"
@@ -301,7 +302,7 @@ msgid ""
 "files in *breadth first* order. Do this by going to "
 ":guilabel:`Preferences->Advanced->Plugins->File type` and customizing the "
 ":guilabel:`HTML to ZIP` plugin."
-msgstr ""
+msgstr "De manera predeterminada, al añadir archivos HTML, calibre sigue enlaces en los archivos en el orden *de profundidad*. Esto quiere decir que si el archivo A.html enlaza a B.html, C.html y D.html, pero B.html también enlaza a D.html, entonces los archivos estarán en el orden A.html, B.html, D.html, C.html. Si por el contrario desea que el orden sea A.html, B.html, C.html, D.html deberá indicar a calibre que los añada en el orden *de anchura*. Puede hacerlo yendo a :guilabel:`Preferencias > Avanzado > Complementos` y personalizando el complemento HTML2ZIP."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:142
 msgid "The EPUB I produced with calibre is not valid?"
@@ -368,8 +369,8 @@ msgstr "Lista completa de los formatos de libro electrónico compatibles con el 
 
 #: ../../__w/calibre/calibre/manual/faq.rst:189
 msgid ""
-"Is there a special directory on the device in which all e-book files should "
-"be placed? Also does the device detect files placed in sub-directories?"
+"Is there a special folder on the device in which all e-book files should be "
+"placed? Also does the device detect files placed in sub-folders?"
 msgstr "¿Hay algún directorio especial del dispositivo en el que se deban poner los archivos? ¿El dispositivo detecta archivos en subdirectorios?"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:190
@@ -1152,22 +1153,22 @@ msgid ""
 msgstr "Revise los autores para asegurarse de que está satisfecho. Aún puede pulsar :guilabel:`Cancelar` para abandonar los cambios. Una vez que presione :guilabel:`Aceptar`, no hay posibilidad de deshacer. "
 
 #: ../../__w/calibre/calibre/manual/faq.rst:590
-msgid "Why doesn't calibre let me store books in my own directory structure?"
+msgid "Why doesn't calibre let me store books in my own folder structure?"
 msgstr "¿Por qué calibre no me deja guardar mis libros en mi propia estructura de directorios?"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:592
 msgid ""
 "The whole point of calibre's library management features is that they "
 "provide a search and sort based interface for locating books that is *much* "
-"more efficient than any possible directory scheme you could come up with for"
-" your collection. Indeed, once you become comfortable using calibre's "
+"more efficient than any possible folder scheme you could come up with for "
+"your collection. Indeed, once you become comfortable using calibre's "
 "interface to find, sort and browse your collection, you wont ever feel the "
 "need to hunt through the files on your disk to find a book again. By "
-"managing books in its own directory structure of Author -> Title -> Book "
-"files, calibre is able to achieve a high level of reliability and "
-"standardization. To illustrate why a search/tagging based interface is "
-"superior to folders, consider the following. Suppose your book collection is"
-" nicely sorted into folders with the following scheme::"
+"managing books in its own folder structure of Author -> Title -> Book files,"
+" calibre is able to achieve a high level of reliability and standardization."
+" To illustrate why a search/tagging based interface is superior to folders, "
+"consider the following. Suppose your book collection is nicely sorted into "
+"folders with the following scheme::"
 msgstr "La ventaja de las funciones de administración de biblioteca en calibre es que proporcionan una interfaz de búsqueda y ordenación para encontrar libros que es *mucho* más eficiente que cualquier esquema de directorios que pueda pensarse para la colección. De hecho, una vez que se sienta cómodo usando la interfaz de calibre para buscar, clasificar y explorar la colección, no sentirá de nuevo la necesidad de buscar por los archivos en el disco para encontrar un libro. Mediante la gestión de los libros en su propia estructura de directorios Autor > Aítulo > Archivos del libro, calibre es capaz de lograr un alto nivel de fiabilidad y estandarización. Para ilustrar por qué una interfaz basada en la búsqueda y etiquetado es superior a las carpetas, considere lo siguiente. Supongamos que su colección de libros está muy bien ordenada en carpetas con el siguiente esquema::"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:596
@@ -1318,9 +1319,9 @@ msgid ""
 "library. Point it to the previously copied folder. If the computer you are "
 "transferring to already has a calibre installation, then the "
 ":guilabel:`Welcome wizard` wont run. In that case, right-click the calibre "
-"icon in the toolbar and point it to the newly copied directory. You will now"
-" have two calibre libraries on your computer and you can switch between them"
-" by clicking the calibre icon on the toolbar. Transferring your library in "
+"icon in the toolbar and point it to the newly copied folder. You will now "
+"have two calibre libraries on your computer and you can switch between them "
+"by clicking the calibre icon on the toolbar. Transferring your library in "
 "this manner preserver all your metadata, tags, custom columns, etc."
 msgstr "Después, en el nuevo equipo, inicie calibre por primera vez. Se ejecutará el :guilabel:`Asistente de bienvenida`, que le pedirá la ubicación de la biblioteca de calibre. Señale la carpeta previamente copiada. Si el equipo al que va a transferir la biblioteca ya cuenta con una instalación de calibre, el :guilabel:`Asistente de bienvenida` no se ejecutará. En ese caso, pulse con el botón derecho sobre el icono de calibre en la barra de herramientas y diríjalo al directorio recién copiado. Ahora tendrá dos bibliotecas de calibre en el equipo y podrá cambiar entre ellas pulsando sobre el icono de calibre en la barra de herramientas. Al transferir la biblioteca de esta manera se conservan todos los metadatos, etiquetas, columnas personalizadas, etc."
 
@@ -1474,7 +1475,7 @@ msgid ""
 "macOS systems are in .dfont format, thus they cannot be embedded. calibre "
 "shows only TrueType and OpenType fonts found on your system. You can obtain "
 "many such fonts on the web. Simply download the .ttf/.otf files and add them"
-" to the Library/Fonts directory in your home directory."
+" to the Library/Fonts folder in your home folder."
 msgstr "calibre incrusta tipos de letra en los archivos que crea. Los archivos de libro electrónico sólo admiten la incrustación de tipos de letra TrueType y OpenType (.ttf y .otf). La mayoría de los tipos de letra en sistemas macOS están en el formato .dfont, por lo que no pueden ser incrustados. calibre sólo muestra los tipos de letra TrueType y OpenType que encuentra en el sistema. Puede obtener muchos tipos de letra en Internet. Simplemente descargue los archivos .ttf u .otf y añádalos al directorio Library/Fonts en su directorio base."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:777
@@ -1610,8 +1611,8 @@ msgstr "Si el error ocurre cuando intenta copiar texto del visor de libros de ca
 #: ../../__w/calibre/calibre/manual/faq.rst:833
 msgid ""
 "If the crashes happen specifically when you are using a file dialog, like "
-"clicking on the :guilabel:`Add books` button or the :guilabel:`Save to Disk "
-"button`, then you have some software that has installed broken Shell "
+"clicking on the :guilabel:`Add books` button or the :guilabel:`Save to Disk`"
+" button, then you have some software that has installed broken Shell "
 "extensions on your computer. Known culprits include: *SpiderOak*, *odrive "
 "sync* and *Dell Backup and Recovery* and *NetDrive*. If you have one of "
 "these, uninstall them and you will be fine. You can also use the `NirSoft "
@@ -1620,7 +1621,7 @@ msgid ""
 "individually, if you don't want to uninstall the full program.  Remember to "
 "use \"Restart Explorer\" or reboot your computer after disabling the shell "
 "extensions."
-msgstr "Si los fallos ocurren específicamente cuando usa un cuadro de diálogo de archivos, como al pulsar el botón :guilabel:`Añadir libros` o :guilabel:`Guardar a disco`, entonces tiene algún programa que ha instalado extensiones de consola defectuosas. Algunas posibilidades conocidas son: *SpiderOak*, *odrive sync*, *Dell Backup and Recovery* y *NetDrive*. Si tiene alguno de éstos, desinstálelo y todo irá bien. También puede usar la utilidad `NirSoft Shell Extension Viewer <https://www.nirsoft.net/utils/shexview.html>`_ para ver qué extensiones de consola hay instaladas en el sistema y desactivarlas individualmente si no desea desinstalar el programa completo. Recuerde usar la opción «Restart Explorer» o reiniciar el equipo después de desactivar las extensiones de consola."
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/faq.rst:845
 msgid ""
@@ -1769,7 +1770,7 @@ msgstr "Pruebe una instalación limpia. Esto es, desinstale calibre, elimine :fi
 #: ../../__w/calibre/calibre/manual/faq.rst:926
 msgid ""
 "Try downloading the installer with an alternate browser. For example if you "
-"are using Internet Explorer, try using Firefox or Chrome instead."
+"are using Microsoft Edge, try using Firefox or Chrome instead."
 msgstr "Pruebe a descargar el instalador desde otro navegador. Por ejemplo, si está usando Internet Explorer, pruebe con Firefox o Chrome en su lugar."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:927
@@ -1841,11 +1842,11 @@ msgstr "Puede hacer que calibre cambie a una copia de la carpeta de la bibliotec
 #: ../../__w/calibre/calibre/manual/faq.rst:962
 msgid ""
 "If you want to backup the calibre configuration/plugins, you have to backup "
-"the config directory. You can find this config directory via "
+"the config folder. You can find this config folder via "
 ":guilabel:`Preferences->Miscellaneous`. Note that restoring configuration "
-"directories is not officially supported, but should work in most cases. Just"
-" copy the contents of the backup directory into the current configuration "
-"directory to restore."
+"folders is not officially supported, but should work in most cases. Just "
+"copy the contents of the backup folder into the current configuration folder"
+" to restore."
 msgstr "Si desea hacer copias de seguridad de los complementos y de la configuración de calibre, tiene que realizar una copia de seguridad del directorio de configuración. Puede encontrar este directorio en :guilabel:`Preferencias > Miscelánea`. Tenga en cuenta que la restauración de directorios de configuración no tiene soporte oficial, pero debería funcionar en la mayoría de los casos. Para restaurar sólo tiene que copiar el contenido del directorio de copia de seguridad en el directorio de configuración actual."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:965
@@ -1953,9 +1954,9 @@ msgstr "¿Cómo hago que calibre utilice mi proxy HTTP?"
 msgid ""
 "By default, calibre uses whatever proxy settings are set in your OS. "
 "Sometimes these are incorrect, for example, on Windows if you don't use "
-"Internet Explorer then the proxy settings may not be up to date. You can "
-"tell calibre to use a particular proxy server by setting the ``http_proxy`` "
-"and ``https_proxy`` environment variables. The format of the variable is: "
+"Microsoft Edge then the proxy settings may not be up to date. You can tell "
+"calibre to use a particular proxy server by setting the ``http_proxy`` and "
+"``https_proxy`` environment variables. The format of the variable is: "
 "``http://username:password@servername`` you should ask your network "
 "administrator to give you the correct value for this variable.  Note that "
 "calibre only supports HTTP proxies not SOCKS proxies. You can see the "

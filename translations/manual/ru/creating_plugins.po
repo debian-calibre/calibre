@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# ashed <craysy@gmail.com>, 2020
+# ashed <craysy@gmail.com>, 2020-2021
 # Родион Р., 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-08 15:24+0000\n"
-"PO-Revision-Date: 2021-03-08 13:17+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2021-03-23 06:27+0000\n"
+"PO-Revision-Date: 2021-03-20 14:33+0000\n"
+"Last-Translator: ashed <craysy@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/calibre/calibre/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -72,7 +72,7 @@ msgstr "Предположим, у вас установлена calibre, кот
 msgid ""
 "That's all. To add this code to calibre as a plugin, simply run the "
 "following in the folder in which you created :file:`__init__.py`::"
-msgstr ""
+msgstr "Вот и всё. Чтобы добавить этот код в calibre как плагин, просто запустите в папке, в которой вы создали, следующее :file:`__init __.py`::"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:38
 msgid ""
@@ -144,7 +144,7 @@ msgid ""
 "subpackages of .py modules inside the ZIP file, just like you would normally"
 " (by defining __init__.py in each sub-folder), and everything should \"just "
 "work\"."
-msgstr ""
+msgstr "Всегда должен присутствовать префикс calibre_plugins. ``some_name`` происходит от имени пустого текстового файла. ``some_module`` относится к файлу :file:`some_module.py` внутри ZIP-файла. Обратите внимание, что этот импорт столь же эффективен, как и обычный импорт Python. Вы можете создавать пакеты и подпакеты модулей .py внутри ZIP-файла, как обычно (путем определения __init__.py в каждой подпапке), и все должно «просто работать»."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:76
 msgid ""
@@ -280,7 +280,7 @@ msgid ""
 "found in the ZIP file. If you pass in more than one name then it returns a "
 "dict mapping the names to bytes. If a name is not found, it will not be "
 "present in the returned dict."
-msgstr ""
+msgstr "Эта функция должна вызываться со списком путей к файлам внутри ZIP-файла. Например, чтобы получить доступ к файлу icon.png в папке images в ZIP-файле, вы должны использовать: ``images/icon.png``. Всегда используйте косую черту в качестве разделителя пути, даже в Windows. Когда вы передаете одно имя, функция вернет необработанные байты этого файла или None, если имя не было найдено в ZIP-файле. Если вы передаете более одного имени, он возвращает dict, сопоставляющий имена с байтами. Если имя не найдено, его не будет в возвращаемом dict."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:149
 msgid "**get_icons(name_or_list_of_names)**"
@@ -334,9 +334,9 @@ msgstr "Редактировать книжные плагины"
 msgid ""
 "Now let's change gears for a bit and look at creating a plugin to add tools "
 "to the calibre book editor. The plugin is available here: "
-"`editor_demo_plugin.zip  <https://calibre-"
+"`editor_demo_plugin.zip <https://calibre-"
 "ebook.com/downloads/editor_demo_plugin.zip>`_."
-msgstr "Теперь давайте немного изменим механизм и посмотрим на создание плагина для добавления инструментов в редактор книг calibre. Плагин доступен здесь: `editor_demo_plugin.zip <https://calibre-ebook.com/downloads/editor_demo_plugin.zip>`_."
+msgstr "Теперь давайте немного поменяем механизмы и посмотрим на создание плагина для добавления инструментов в редактор книг calibre. Плагин доступен здесь: `editor_demo_plugin.zip <https://calibre-ebook.com/downloads/editor_demo_plugin.zip>`_."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:190
 msgid ""
@@ -432,7 +432,7 @@ msgid ""
 "possible to use WebEngine there. Instead you can copy the data your plugin "
 "needs to a temporary folder and run the plugin with that data in a separate "
 "process. A simple example plugin follows that shows how to do this."
-msgstr ""
+msgstr "Если вы пишете подключаемый модуль пользовательского интерфейса, который должен использовать Qt WebEngine, его нельзя запустить в процессе основного калибра, так как там невозможно использовать WebEngine. Вместо этого вы можете скопировать данные, необходимые вашему плагину, во временную папку и запустить плагин с этими данными в отдельном процессе. Далее следует простой пример плагина, который показывает, как это сделать."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:261
 msgid ""

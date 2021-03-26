@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "março 10, 2021" "5.13.0" "calibre"
+.TH "CALIBREDB" "1" "março 26, 2021" "5.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -209,14 +209,13 @@ O campo pelo qual ordenar os resultados. Campos disponíveis:author_sort, author
 .sp
 .nf
 .ft C
-calibredb add [options] file1 file2 file3 ...
+calibredb add [options] ficheiro1 ficheiro2 ficheiro3 ...
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Add the specified files as books to the database. You can also specify folders, see
-the folder related options below.
+Adicionar os ficheiros especificados à base de dados. Também pode especificar pastas: ver abaixo as opções relativas às pastas.
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
 .INDENT 0.0
@@ -285,22 +284,22 @@ Opções para controlar a inclusão de livros de pastas. Por predefinição só 
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+Um padrão (glob) de nomes de ficheiros, em que os ficheiros que correspondam a este padrão serão adicionados quando se varrem pastas na pesquisa de ficheiros, mesmo que não sejam de um tipo de ficheiro conhecido como ebook. Pode ser especificado múltiplas vezes para múltiplos padrões.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all PDF files
+Um padrão (glob) de nomes de ficheiros, em que os ficheiros que correspondam a este padrão serão ignorados quando se varrem pastas na pesquisa de ficheiros. Pode ser especificado múltiplas vezes para múltiplos padrões. Por ex.: *.pdf ignorará todos os ficheiros pdf
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
+Assumir que cada pasta tem um único livro lógico e que todos os ficheiros nela contidos são formatos diferentes desse livro
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Process folders recursively
+Processar pastas recursivamente
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -466,7 +465,7 @@ Substituir espaços por sobtraços
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Export all books into a single folder
+Exportar todos os livros para uma única pasta
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -481,7 +480,7 @@ O formato para exibir datas. %d \- dia, %b \- mês, %m \- número do mês, %Y \-
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Export books to the specified folder. Default is .
+Exportar livros para a pasta especificada. O predefinido é .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -847,12 +846,12 @@ calibredb backup_metadata [options]
 .UNINDENT
 .UNINDENT
 .sp
-Cópia de segurança dos metadados armazenados na base de dados em ficheiros OPF individuais em cada
-diretório de livros. Isto normalmente acontece automaticamente, mas pode executar este
-comando para forçar uma nova geração dos ficheiros OPF, com a opção \-\-all.
+Backup the metadata stored in the database into individual OPF files in each
+books folder. This normally happens automatically, but you can run this
+command to force re\-generation of the OPF files, with the \-\-all option.
 .sp
-Note que normalmente não há necessidade de fazer isto, pois os ficheiros OPF são copiados
-automaticamente, sempre que os metadados sejam alterados.
+Note that there is normally no need to do this, as the OPF files are backed up
+automatically, every time metadata is changed.
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
 .INDENT 0.0

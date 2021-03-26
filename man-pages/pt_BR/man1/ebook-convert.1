@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "março 10, 2021" "5.13.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "março 26, 2021" "5.14.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -45,7 +45,7 @@ Converta um e\-book de um formato para outro.
 .sp
 arquivo_entrada é a entrada e arquivo_saída é a saída. Ambos devem ser especificados como os dois primeiros argumentos para o comando.
 .sp
-O formato de e\-book de saída é adivinhado a partir da extensão de arquivo do arquivo_saída. O arquivo_saída também pode ser do formato especial .EXT, em que EXT é a extensão do arquivo de saída. Nesse caso, o nome do arquivo de saída é derivado do nome do arquivo de entrada. Observe que os nomes dos arquivos não devem começar com um hífen. Finalmente, se o arquivo_saida não tiver nenhuma extensão, ele será tratado como um diretório e um "e\-book aberto" (OEB), consistindo de arquivos HTML, será gravado nesse diretório. Esses arquivos são os arquivos que normalmente teriam sido passados ​​para o plugin de saída.
+O formato de e\-book de saída é adivinhado a partir da extensão de arquivo do arquivo_saída. O arquivo_saída também pode ser do formato especial .EXT, em que EXT é a extensão do arquivo de saída. Nesse caso, o nome do arquivo de saída é derivado do nome do arquivo de entrada. Observe que os nomes dos arquivos não devem começar com um hífen. Finalmente, se o arquivo_saida não tiver nenhuma extensão, ele será tratado como uma pasta e um "e\-book aberto" (OEB), consistindo de arquivos HTML, será gravado nessa pasta. Esses arquivos são os arquivos que normalmente teriam sido passados ​​para o plugin de saída.
 .sp
 Depois de especificar o arquivo de entrada e saída, você pode personalizar a conversão especificando várias opções. As opções disponíveis dependem dos tipos de arquivo de entrada e saída. Para obter ajuda sobre eles, especifique o arquivo de entrada e saída e, em seguida, use a opção \-h.
 .sp
@@ -153,7 +153,7 @@ A versão do arquivo EPUB para ser gerado. O EPUB 2 é o mais compatível, use a
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extract the contents of the generated EPUB file to the specified folder. The contents of the folder are first deleted, so be careful.
+Extraia os conteúdo do arquivo EPUB gerado para a pasta especificada. O conteúdo da pasta é apagado primeiro, então tenha cuidado.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -599,7 +599,7 @@ Opções para auxiliar no debugging da conversão
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring.
+Salvar o resultado de diferentes etapas do processo de conversão para a pasta especificada. Útil se você não tem certeza em que etapa do processo de conversão está ocorrendo um erro.
 .UNINDENT
 .INDENT 0.0
 .TP

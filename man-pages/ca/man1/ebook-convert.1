@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "de març 10, 2021" "5.13.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "de març 26, 2021" "5.14.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -41,15 +41,15 @@ ebook\-convert input_file output_file [options]
 .UNINDENT
 .UNINDENT
 .sp
-Conversió d\(aqun format de llibre a un altre.
+Convert an e\-book from one format to another.
 .sp
-input_file és el fitxer d\(aqentrada i output_file el de sortida. S\(aqhan d\(aqespecificar els dos com als primers dos arguments de l\(aqordre.
+input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
 .sp
-El format de llibre de sortida es dedueix de l\(aqextensió d\(aqoutput_file. output_file també pot ser del format especial .EXT on EXT és l\(aqextensió del fitxer de sortida. En aquest cas, el nom del fitxer de sortida es deriva del nom del fitxer d\(aqentrada. Tingueu en compte que els noms de fitxer no poden començar amb un guió. Per acabar, si output_file no té extensió, es tracta com una carpeta i es desa un "open book" (OEB) format per fitxers HTML a la carpeta. Aquests fitxers són els que normalment haurien passat al connector de sortida.
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an "open e\-book" (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
 .sp
-Després d\(aqespecificar el fitxer d\(aqentrada i de sortida podeu personalitzar la conversió especificant diverses opcions. Les opcions disponibles depenen dels tipus de fitxer d\(aqentrada i de sortida. Per obtenir ajuda d\(aqaixò, especifiqueu el fitxer d\(aqentrada i de sortida amb l\(aqopció \-h.
+After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
-Per a la documentació completa del sistema de conversió vegeu
+For full documentation of the conversion system see
 conversion
 .sp
 Sempre que passeu arguments a \fBebook\-convert\fP i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"

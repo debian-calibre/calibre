@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "Μαρτίου 10, 2021" "5.13.0" "calibre"
+.TH "CALIBREDB" "1" "Μαρτίου 26, 2021" "5.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -41,42 +41,40 @@ calibredb command [options] [arguments]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP is the command line interface to the calibre database. It has
-several sub\-commands, documented below.
+Το πρόγραμμα \fBcalibredb\fP είναι η γραμμή εντολής για την βάση δεδομένων του calibre. Διαθέτει
+πολλές υποεντολές οι οποίες τεκμηριώνονται παρακάτω.
 .sp
-\fBcalibredb\fP can be used to manipulate either a calibre database
-specified by path or a calibre Content server running either on
-the local machine or over the internet. You can start a calibre
-Content server using either the \fBcalibre\-server\fP
-program or in the main calibre program click Connect/share  → 
-Start Content server\&. Since \fBcalibredb\fP can make changes to your
-calibre libraries, you must setup authentication on the server first. There
-are two ways to do that:
-.INDENT 0.0
-.INDENT 3.5
-.INDENT 0.0
-.IP \(bu 2
-If you plan to connect only to a server running on the same computer,
-you can simply use the \fB\-\-enable\-local\-write\fP option of the
-content server, to allow any program, including calibredb, running on
-the local computer to make changes to your calibre data. When running
-the server from the main calibre program, this option is in
-Preferences → Sharing over the net → Advanced\&.
-.IP \(bu 2
-If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
-options to \fBcalibredb\fP to give it access. You can setup
-user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
-option and using \fB\-\-manage\-users\fP to create the user accounts.
-If you are running the server from the main calibre program, use
-Preferences → Sharing over the net → Require username/password\&.
-.UNINDENT
-.UNINDENT
-.UNINDENT
+Το \fBcalibredb\fP για τον χειρισμό είτε της βάσης δεδομένων του calibre
+καθορισμένης από διαδρομή είτε του Εξυπηρετητή περιεχομένου ο οποίος εκτελείται είτε
+στην τοπική συσκευή είτε στο διαδίκτυο. Μπορείτε να εκκινήσετε έναν
+Εξυπηρετητή περιεχομένου χρησιμοποιώντας είτε το πρόγραμμα \fBcalibre\-server\fP
+είτε μέσα από το κυρίως πρόγραμμα του calibre να επιλέξετε Σύνδεση/διαμοιρασμός \- >
+Εκκινηση εξυπηρετητή περιεχομένου\&. Εφόσον το πρόγραμμα :command:calibredb\(ga μπορεί να κάνει αλλαγές στις
+βιβλιοθήκες του calibre, πρώτα πρέπει να ρυθμίσετε την επαλήθευση της ταυτότητάς σας στον εξυπηρετητή. Υπάρχουν
+δυο τρόποι για να γίνει αυτό:
 .sp
-To connect to a running Content server, pass the URL of the server to the
-\fI\%\-\-with\-library\fP option, see the documentation of that option for
-details and examples.
+
+.nf
+*
+.fi
+Αν σκοπεύετε να συνδεθείτε μόνο σε εξυπηρετητή που εκτελείται στον ίδιο υπολογιστή
+μπορείτε απλώς να χρησιμοποιήσετε την επιλογή \fB\-\-enable\-locale\-write\fP του
+εξυπηρετητή περιεχομένου ώστε να επιτρέπεται σε κάθε πρόγραμμα και στο calibredb να εκτελείται
+στον τοπικό υπολογιστή προκειμένου να γίνουν οι αλλαγές στα δεδομένα του calibre. Όταν εκτελείτε
+τον εξυπηρετητή από το κυρίως πρόγραμμα του calibre, η επιλογή αυτή βρίσκεται στο μενού Προτιμήσεις → Διαμοιρασμός στο δίκτυο → Προχωρημένες ρυθμίσεις\&.
+.sp
+
+.nf
+*
+.fi
+Αν θέλετε να ενεργοποιήσετε την πρόσβαση μέσω διαδικτύου τότε πρέπει να ρυθμίσετε
+λογαριασμούς χρηστών στον εξυπηρετητή και να χρησιμοποιήσετε τις επιλογές \fI\%\-\-username\fP και \fBpassword\fP ώστε να δώσετε πρόσβαση στο \fBcalibredb\fP\&. Μπορείτε να ρυθμίσετε
+την εξακρίβωση χρήστη για τον \fBcalibre\-server\fP μέσω της επιλογής \fB\-\-enable\-auth\fP και μέσω της \fB\-\-manage\-users\fP να δημιουργήσετε λογαριασμούς χρηστών.
+Αν εκκινείτε τον εξυπηρετητή από το κυρίως πρόγραμμα, χρησιμοποιήστε το μενού
+Προτιμήσεις → Διαμοιρασμός μέσω δικτύου → Αίτημα ονόματος χρήστη/κωδικού
+.sp
+Για να συνδεθείτε σε έναν εξυπηρετητή περιεχομένου που ήδη εκτελείται, περάστε την διεύθυνση URL του εξυπηρετητή στην επιλογή
+\fI\%\-\-with\-library\fP\&. Για σχετικές λεπτομέρειες και παραδείγματα δείτε την τεκμηρίωση για αυτή την επιλογή.
 .INDENT 0.0
 .IP \(bu 2
 \fI\%ΓΕΝΙΚΕΣ ΕΠΙΛΟΓΕΣ\fP
@@ -234,8 +232,7 @@ calibredb add [options] file1 file2 file3 ...
 .UNINDENT
 .UNINDENT
 .sp
-Add the specified files as books to the database. You can also specify folders, see
-the folder related options below.
+Προσθήκη των καθορισμένων αρχείων ως βιβλίων στην βάση δεδομένων. Μπορείτε επίσης να καθορίσετε και καταλόγους. Δείτε τις επιλογές για καταλόγους, παρακάτω.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -246,7 +243,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-If books with similar titles and authors are found, merge the incoming formats (files) automatically into existing book records. A value of \fB"\fPignore\fB"\fP means duplicate formats are discarded. A value of \fB"\fPoverwrite\fB"\fP means duplicate formats in the library are overwritten with the newly added files. A value of \fB"\fPnew_record\fB"\fP means duplicate formats are placed into a new book record.
+Αν βρεθούν βιβλία με παρόμοιους τίτλους και συγγραφείς, αυτόματη συγχώνευση των εισερχόμενων μορφών (αρχείων) με υπάρχουσες εγγραφές βιβλίων. Η τιμή «αγνόηση» σημαίνει ότι οι διπλότυπες μορφές θα απορρίπτονται. Η τιμή «αντικατάσταση» σημαίνει ότι οι διπλότυπτες μορφές στην βιβλιοθήκη θα επανεγγράφονται από τα αρχεία που μόλις προστέθηκαν. Η τιμή «νέα_εγγραφή» σημαίνει ότι οι διπλότυπες μορφές αποθηκεύονται σε μια νέα εγγραφή βιβλίου.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -256,7 +253,7 @@ If books with similar titles and authors are found, merge the incoming formats (
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Add books to database even if they already exist. Comparison is done based on book titles and authors. Note that the \fI\%\-\-automerge\fP option takes precedence.
+Προσθήκη βιβλίων στην βάση δεδομένων ακόμη και αν αυτά υπάρχουν ήδη. Η σύγκριση γίνεται βάσει τίτλου και συγγραφέα. Σημειώστε η επιλογή \fI\%\-\-automerge\fP έχει προτεραιότητα.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -304,22 +301,22 @@ Add books to database even if they already exist. Comparison is done based on bo
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+Πρότυπο ονόματος αρχείου (glob). Τα αρχεία που ακολουθούν αυτό το πρότυπο θα προστίθενται όταν σαρώνονται οι κατάλογοι, ακόμη και αν δεν είναι γνωστού τύπου αρχείου ηλεκτρονικού βιβλίου. Μπορεί να ορισθεί πολλές φορές για πολλαπλά πρότυπα.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all PDF files
+Πρότυπο ονόματος αρχείου (glob). Τα αρχεία που ακολουθούν αυτό το πρότυπο θα αγνοούνται όταν οι κατάλογοι σαρώνονται για αρχεία. Μπορεί να ορισθεί πολλές φορές για πολλαπλά πρότυπα. Για παράδειγμα: το πρότυπο *.pdf θα αγνοήσει όλα τα αρχεία PDF
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
+Να θεωρείται ότι κάθε κατάλογος έχει μόνο ένα λογικό βιβλίο και ότι όλα τα αρχεία σε αυτόν είναι διαφορετικές μορφές του βιβλίου αυτού.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Process folders recursively
+Κατ\fB\(aq\fP επανάληψη επεξεργασία καταλόγων
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -676,9 +673,9 @@ calibredb add_custom_column [options] label name datatype
 .UNINDENT
 .UNINDENT
 .sp
-Create a custom column. label is the machine friendly name of the column. Should
-not contain spaces or colons. name is the human friendly name of the column.
-datatype is one of: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
+Δημιουργία προσαρμοσμένης στήλης. label είναι το ψηφιακό φιλικό όνομα για την στήλη.Δεν πρέπει
+να περιέχει διαστήματα ή ελληνικά ερωτηματικά. name είναι το ανθρώπινο φιλικό όνομα της στήλης.
+datatype είναι ένα από: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -871,7 +868,7 @@ calibredb backup_metadata [options]
 .UNINDENT
 .sp
 Backup the metadata stored in the database into individual OPF files in each
-books directory. This normally happens automatically, but you can run this
+books folder. This normally happens automatically, but you can run this
 command to force re\-generation of the OPF files, with the \-\-all option.
 .sp
 Note that there is normally no need to do this, as the OPF files are backed up

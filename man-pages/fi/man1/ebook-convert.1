@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "maaliskuuta 10, 2021" "5.13.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "maaliskuuta 26, 2021" "5.14.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -35,21 +35,21 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-ebook\-convert lähdetiedosto kohdetiedosto [vaihtoehdot]
+ebook\-convert input_file output_file [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Muunna ekirja formaatista toiseen.
+Convert an e\-book from one format to another.
 .sp
-Lähdetiedosto on alkupiste ja kohdetiedosto on tulos. Molemmat on ilmoitettava komennon alkuarvoina.
+input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
 .sp
-Ekirjan formaatti päätellään kohdetiedoston nimen tiedostopäätteestä. Kohdetiedoston voi määritellä myös arvolla .PÄÄTE, jolloin PÄÄTE on haluttu kohdetiedoston tiedostoformaattipääte, ja tiedoston nimi muodostetaan lähdetiedostosta. Huomaa, että tiedostojen nimet eivät saa alkaa väliviivalla. Jos kohdetiedostolle ei ilmoiteta formaattia, se tulkitaan kansioksi, ja tulos on "avoin ekirja" (OEB) joka koostuu HTML\-tiedostoista tuossa kansiossa. Nämä tiedostot vietäisiin normaalisti edelleen kohdetiedostoformaattiin.
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an "open e\-book" (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
 .sp
-Lähde\- ja kohdetiedostojen jälkeen voit asettaa komentoon vaihtoehtoja toiminnon mukauttamiseksi. Vaihtoehdot riippuvat tiedostoformaateista. Saat tietoja niistä asettamalla lähde\- ja kohdetiedostojen jälkeen valinta \-h.
+After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
-Täysi dokumentaatio toiminnolle
+For full documentation of the conversion system see
 conversion
 .sp
 Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
