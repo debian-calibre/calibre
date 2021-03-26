@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "mars 10, 2021" "5.13.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "mars 26, 2021" "5.14.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -45,7 +45,7 @@ Konvertera en e\-bok från ett format till ett annat.
 .sp
 input_file är inmatningsfilen och output_file är utmatningsfilen. Båda måste anges som de två första argumenten i kommandot.
 .sp
-Utmatningsformatet för e\-boken uppskattas utifrån filändelsen i output_file. output_file kan även ges specialformatet .EXT, där EXT är utmatningsfilsändelsen. Om det används kommer namnet på utmatningsfilen att härledas från namnet på inmatningsfilen. Observera att filnamnen inte får börja med bindestreck. Om ingen filinsticksmodul har angivits för utmatningsfilen, så behandlas den som en katalog till vilken en "Öppen e\-bok" (OEB) bestående av HTML filer kommer att skrivas. Dessa filer är de filer som normalt sett skulle ha skickats till utmatningsinsticksmodulen.
+Utmatningsformatet för e\-boken uppskattas utifrån filändelsen i output_file. output_file kan även ges specialformatet .EXT, där EXT är utmatningsfilsändelsen. Om det används kommer namnet på utmatningsfilen att härledas från namnet på inmatningsfilen. Observera att filnamnen inte får börja med bindestreck. Om ingen filinsticksmodul har angivits för utmatningsfilen, så behandlas den som en mapp till vilken en "Öppen e\-bok" (OEB) bestående av HTML filer kommer att skrivas till den mappen. Dessa filer är de filer som normalt sett skulle ha skickats till utmatningsinsticksmodulen.
 .sp
 Efter att ha angivit in\- och utmatningsfilerna kan du anpassa konverteringen genom att ange olika alternativ. Vilka alternativ som är tillgängliga beror på in\- och utmatningsfiltyperna. För att få hjälp med dem, ange in\- och utmatningsfilerna och lägg därefter till alternativet \-h.
 .sp
@@ -153,7 +153,7 @@ Versionen av EPUB\-filen som ska genereras. EPUB 2 är den mest kompatibla, anv�
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extract the contents of the generated EPUB file to the specified folder. The contents of the folder are first deleted, so be careful.
+Packa upp innehållet i den genererade EPUB\-filen till den angivna mappen. Innehållet i mappen tas bort först, så var försiktig.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -246,7 +246,7 @@ Infoga en blankrad mellan stycken. Fungerar inte om källfilen inte använder st
 .INDENT 0.0
 .TP
 .B \-\-insert\-blank\-line\-size
-Ställ in höjden på infogade tomma rader (i EM). Höjden på raderna mellan punkterna blir det dubbla av värdet som ställs in här.
+Ställ in höjden på de infogade tomma raderna (i em). Höjden på raderna mellan styckena kommer att vara det dubbla av det här värdet.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -256,7 +256,7 @@ Bevara ligaturer som finns i inmatningsdokumentet. En ligatur är en speciell fr
 .INDENT 0.0
 .TP
 .B \-\-line\-height
-Radavståndet i punkter. Anpassar avståndet mellan på varandra följande textrader. Gäller endast element som inte definierar sitt eget radavstånd. I de flesta fall är det minsta radavståndet valet mer användbart. Som standard utför ingen ändring i radavstånd.
+Radavståndet i punkter. Anpassar mellanrum mellan på varandra följande textrader. Gäller endast element som inte definierar sitt eget radavstånd. I de flesta fall är det minsta radavståndet valet mer användbart. Som standard utför ingen ändring i radavstånd.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -291,7 +291,7 @@ Den minsta radavståndet, som andel av elementets beräknat m.h.a. teckenstorlek
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing
-Ta bort avståndet mellan styckena. Drar även in första raden på det nya stycket med 1,5 em. Avståndsavlägsnande fungerar inte om källfilen inte använder stycken (<p> eller <div> taggar).
+Ta bort mellanrum mellan stycken. Drar även in första raden på det nya stycket med 1,5 em. Mellanrumsavlägsnande fungerar inte om källfilen inte använder stycken (<p> eller <div> taggar).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -333,12 +333,12 @@ Analysera avstavade ord i hela dokumentet. Själva dokumentet används som en or
 .INDENT 0.0
 .TP
 .B \-\-disable\-delete\-blank\-paragraphs
-Ta bort tomma stycken ur dokumentet när de finns mellan varannan paragraf
+Ta bort tomma stycken från dokumentet när de förekommer mellan vartannat stycke
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-fix\-indents
-Vändningsindrag som skapats från flera icke\-brytande mellanslag enheter i CSS indrag.
+Vändningsindrag som skapats från flera icke\-brytande mellanslagsenheter i CSS\-indrag.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -424,17 +424,17 @@ Anpassa automatisk identifiering av dokumentets struktur.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Ett XPath\-uttryck för att upptäcka kapitelrubrikerna. Standardinställningen är att överväga <h1>\- eller <h2>\-markeringar som innehåller orden \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP eller \fB"\fPpart\fB"\fP som kapitelrubriker samt eventuella markeringar som har class=\fB"\fPchapter\fB"\fP\&. Uttrycket som används måste utvärderas till en lista med element. För att inaktivera upptäckt av kapitel, använd uttrycket \fB"\fP/\fB"\fP\&. Se XPath\-introduktionen i användarhandboken för calibre för ytterligare hjälp med att använda den här funktionen.
+Ett XPath\-uttryck för att identifiera kapitelrubrikerna. Standard är att betrakta <h1>\- eller <h2>\-taggar som innehåller orden \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP eller \fB"\fPpart\fB"\fP som kapitelrubriker samt alla taggar som har class=\fB"\fPchapter\fB"\fP\&. Uttrycket som används måste utvärderas till en lista med element. För att inaktivera kapitelidentifiering, använd uttrycket \fB"\fP/\fB"\fP\&. Se XPath\-handledningen i användarhandboken för calibre för ytterligare hjälp med att använda den här funktionen.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Anger hur upptäckta kapitel markeras. Värdet \fB"\fPpagebreak\fB"\fP infogar en sidbrytning före kapitel. Värdet \fB"\fPrule\fB"\fP infogar en blankrad före kapitel. Värdet \fB"\fPnone\fB"\fP inaktiverar kapitelmarkering och om värdet \fB"\fPboth\fB"\fP anges kommer både sidbrytningar och blankrader att markera kapitel.
+Anger hur identifierade kapitel markeras. Värdet \fB"\fPpagebreak\fB"\fP infogar en sidbrytning före kapitel. Värdet \fB"\fPrule\fB"\fP infogar en blankrad före kapitel. Värdet \fB"\fPnone\fB"\fP inaktiverar kapitelmarkering och om värdet \fB"\fPboth\fB"\fP anges kommer både sidbrytningar och blankrader att markera kapitel.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-remove\-fake\-margins
-Vissa dokument anger sidmarginaler genom att ange en vänster\- och höger marginal på varje enskild punkt. calibre kommer att försöka upptäcka och ta bort dessa marginaler. Ibland kan detta orsaka avlägsnande av marginaler som inte borde ha tagits bort. I detta fall kan du inaktivera borttagning.
+Vissa dokument anger sidmarginaler genom att ange en vänster\- och höger marginal på varje enskild punkt. calibre kommer att försöka identifiera och ta bort dessa marginaler. Ibland kan detta orsaka avlägsnande av marginaler som inte borde ha tagits bort. I detta fall kan du inaktivera borttagning.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -459,7 +459,7 @@ Ta bort den första bilden från den inmatade e\-boken. Praktiskt om inmatningsd
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-Ett XPath\-uttryck för att upptäcka den plats i dokumentet där du vill börja läsa. Vissa e\-bokläsarprogram (framförallt Kindle) använder denna plats som position för att öppna boken. Se XPath\-introduktionen i användarhandboken för calibre för ytterligare hjälp med att använda den här funktionen.
+Ett XPath\-uttryck för att identifiera platsen i dokumentet där du ska börja läsa. Vissa e\-bokläsningsprogram (framförallt Kindle) använder denna plats som position för att öppna boken. Se XPath\-handledningen i användarhandboken för calibre för ytterligare hjälp med att använda den här funktionen.
 .UNINDENT
 .SH INNEHÅLLSFÖRTECKNING
 .sp
@@ -472,22 +472,22 @@ När du skapar en innehållsförteckning från länkar i inmatningsdokumentet, t
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-XPath\-uttryck som anger alla markeringar som ska läggas till i innehållsförteckningen på nivå ett. Om detta anges, får de prioritet över andra former av automatisk detektering. Se XPath\-introduktionen i användarhandboken för calibre för exempel.
+XPath\-uttryck som anger alla taggar som ska läggas till i innehållsförteckningen på nivå ett. Om detta anges har det företräde framför andra former av automatisk detektering. Se XPath\-handledningen i användarhandboken för calibre för exempel.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-XPath\-uttryck som anger alla markeringar som ska läggas till i innehållsförteckningen på nivå två. Varje post läggs till under den tidigare nivån en post. Se XPath\-introduktionen i användarhandboken för calibre för exempel.
+XPath\-uttryck som anger alla taggar som ska läggas till i innehållsförteckningen på nivå två. Varje post läggs till under föregående nivå en. Se XPath\-handledningen i användarhandboken för calibre för exempel.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-XPath\-uttryck som anger alla markeringar som ska läggas till i innehållsförteckningen på nivå tre. Varje post läggs till under den tidigare nivån två post. Se XPath introduktionen i användarhandboken för calibre för exempel.
+XPath\-uttryck som anger alla taggar som ska läggas till i innehållsförteckningen på nivå tre. Varje post läggs till under föregående nivå två. Se XPath\-handledningen i användarhandboken för calibre för exempel.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-toc\-links
-Högst antal länkar för att infoga i innehållsförteckningen. Ställ in på 0 för att inaktivera. Standard är: 50. Länkarna läggs endast till innehållsförteckningen om antalet upptäckta kapitel är lägre än tröskelvärdet.
+Högst antal länkar för att infoga i innehållsförteckningen. Ställ in på 0 för att inaktivera. Standard är: 50. Länkarna läggs endast till innehållsförteckningen om antalet identifierade kapitel är lägre än tröskelvärdet.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -603,7 +603,7 @@ Alternativ för att hjälpa till att felsöka konverteringen
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring.
+Spara utmatning från olika skeden av konverteringssekvensen till den angivna mappen. Användbart om du är osäker i vilket skede av konverteringsprocessen ett problem uppstår.
 .UNINDENT
 .INDENT 0.0
 .TP

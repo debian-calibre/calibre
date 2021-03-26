@@ -1,5 +1,125 @@
 [
     {
+        "version": "5.14.0",
+        "date": "2021-03-26",
+        "new features": [
+            {
+                "title": "Edit book: When right clicking on a class in a HTML file, add an option to rename the class throughout the book"
+            },
+            {
+                "tickets": [
+                    1919103
+                ],
+                "title": "Adding from ISBN: Add an option to check if there are existing books with the specified ISBNs already in the library"
+            },
+            {
+                "tickets": [
+                    1920576
+                ],
+                "title": "Template tester: Instead of next/last, the template tester now shows the template values for selected books"
+            },
+            {
+                "tickets": [
+                    1918047
+                ],
+                "title": "Content server: Allow swiping left and right to show next/previous book on the book details page"
+            },
+            {
+                "tickets": [
+                    1919072
+                ],
+                "title": "E-book viewer: Make the commonly used shift+arrow key shortcuts for modifying selections using the keyboard work. Also add shorcuts for selecting by character, line and paragraph."
+            }
+        ],
+        "bug fixes": [
+            {
+                "tickets": [
+                    1920613
+                ],
+                "title": "MOBI Output: Fix latest kindle firmware not displaying select publisher font option for calibre produced azw3 files"
+            },
+            {
+                "tickets": [
+                    1919033
+                ],
+                "title": "E-book viewer: Fix errors when viewing books with mathematics that are split over multiple internal files"
+            },
+            {
+                "tickets": [
+                    1918436
+                ],
+                "title": "Content server viewer: Fix highlights not sorted correctly in the highlights panel"
+            },
+            {
+                "tickets": [
+                    1918737
+                ],
+                "title": "Get books: Fix smashwords plugin not working because of website changes"
+            },
+            {
+                "tickets": [
+                    1920733
+                ],
+                "title": "Improve the performance of QuickView especially when using composite columns"
+            },
+            {
+                "tickets": [
+                    1918428
+                ],
+                "title": "Improve performance of the virtual_libraries() template function"
+            },
+            {
+                "tickets": [
+                    1920250
+                ],
+                "title": "Browser viewer: Fix Go to Location not working for positions"
+            },
+            {
+                "tickets": [
+                    1905257
+                ],
+                "title": "E-book viewer: Fix searching in the Table of Contents not working"
+            },
+            {
+                "tickets": [
+                    1918105
+                ],
+                "title": "E-book viewer: In paged mode, fix scrolling not working correctly when margins are set to zero"
+            },
+            {
+                "tickets": [
+                    1918437
+                ],
+                "title": "E-book viewer: Fix incorrect ToC navigation in books that link the entries to inline tags that wrap block tags that span multiple pages"
+            },
+            {
+                "tickets": [
+                    1920592
+                ],
+                "title": "Category editor: Searching in library shouldn't automatically opens Quickview"
+            },
+            {
+                "tickets": [
+                    1919260
+                ],
+                "title": "Conversion: Fix a hang caused by long sequences of non-word characters when heuristics are enabled, either explicitly or for some input formats such as TXT"
+            },
+            {
+                "title": "Fix a regression in calibre 5 that broke --explode-book and --implode-book actions for calibre-debug.exe"
+            },
+            {
+                "title": "Fix a regression in calibre 5 that broke setting metadata in RTF files"
+            }
+        ],
+        "improved recipes": [],
+        "new recipes": [
+            {
+                "title": "ZackZack.at",
+                "author": "Dirk Gomez"
+            }
+        ]
+    },
+    {
         "version": "5.13.0",
         "date": "2021-03-10",
         "new features": [
@@ -7,7 +127,7 @@
                 "tickets": [
                     1917967
                 ],
-                "title": "E-book Viewer: Allow editing the current book by pressing Ctrl+Alt+e or adding a button for it to the viewer tool bar"
+                "title": "E-book Viewer: Allow editing the current book by pressing Ctrl+d or adding a button for it to the viewer tool bar"
             },
             {
                 "title": "Edit book: Add a command line flag to allow selecting the specified text when opening a book"
@@ -585,7 +705,7 @@
                 "tickets": [
                     1904310
                 ],
-                "title": "Windows: Fix calibre portable launcher not working correctly from root directory in calibre 5.5"
+                "title": "Windows: Fix calibre portable launcher not working correctly from root folder in calibre 5.5"
             },
             {
                 "tickets": [
@@ -773,7 +893,7 @@
                 "tickets": [
                     1900761
                 ],
-                "title": "Windows: Allow adding of books to calibre from directories whose path length is larger than 260 characters"
+                "title": "Windows: Allow adding of books to calibre from folders whose path length is larger than 260 characters"
             },
             {
                 "title": "Tag browser: Add an option in Preferences->Look & feel->Tag browser to allow the tag browser to get keyboard focus"
@@ -869,7 +989,7 @@
                 "tickets": [
                     1901278
                 ],
-                "title": "Conversion: Fix regression in calibre 5 in the handling of @import() rules in stylesheets that import from directories above themselves."
+                "title": "Conversion: Fix regression in calibre 5 in the handling of @import() rules in stylesheets that import from folders above themselves."
             },
             {
                 "tickets": [
@@ -2706,7 +2826,7 @@
                 "title": "Viewer: Fix opening .txt files in the standalone viewer leaving behind a temporary index.html file in the folder of the txt file."
             },
             {
-                "title": "Linux: Make some cache removal code robust against un-decodeable filenames in the cache directories"
+                "title": "Linux: Make some cache removal code robust against un-decodeable filenames in the cache folders"
             },
             {
                 "tickets": [
@@ -3198,7 +3318,7 @@
                 "title": "Comments editor: Workaround for Qt converting ids into anchors"
             },
             {
-                "title": "Possible workaround for some Windows machines where the viewer is getting access denied errors while renaming a directory"
+                "title": "Possible workaround for some Windows machines where the viewer is getting access denied errors while renaming a folder"
             },
             {
                 "title": "Viewer: When there is empty text for an header footer section render it as blank instead of moving the remaining sections to the left"

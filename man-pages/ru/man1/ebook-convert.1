@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "марта 10, 2021" "5.13.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "марта 26, 2021" "5.14.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -41,15 +41,15 @@ ebook\-convert input_file output_file [options]
 .UNINDENT
 .UNINDENT
 .sp
-Конвертирование электронной книги из одного формата в другой.
+Convert an e\-book from one format to another.
 .sp
-input_file \- это входной и output_file \- выходной файл. Оба должны быть указаны в качестве первых двух аргументов команды.
+input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
 .sp
-Формат выходных электронных книг угадывается из расширения файла output_file. Output_file также может быть специального формата .EXT, где EXT \- это расширение выходного файла. В этом случае имя выходного файла выводится из имени входного файла. Обратите внимание, что имена файлов не должны начинаться с дефиса. Наконец, если output_file не имеет расширения, то он рассматривается как директория, и в эту директорию записывается «открытая электронная книга» (OEB), состоящая из файлов HTML. Эти файлы \- это файлы, которые обычно передаются в выходной плагин.
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an "open e\-book" (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
 .sp
-После указания входного и выходного файлов вы можете настроить конвертирование, указав различные параметры. Доступные параметры зависят от типов входных и выходных файлов. Чтобы получить справку по ним, укажите входной и выходной файл, а затем используйте параметр \-h.
+After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
-Для полной документации по системе конвертирования см.
+For full documentation of the conversion system see
 conversion
 .sp
 Когда вы передаёте аргументы с пробелами в \fBebook\-convert\fP, заключайте их в кавычки. Например: "/some path/with spaces"

@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-08 15:24+0000\n"
-"PO-Revision-Date: 2021-03-08 15:16+0000\n"
+"POT-Creation-Date: 2021-03-23 06:27+0000\n"
+"PO-Revision-Date: 2021-03-16 13:33+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan.nyberg.karl@gmail.com>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -403,7 +403,7 @@ msgid ""
 "If you re-implement this method in your subclass, the user will be asked to "
 "enter a string as customization for this plugin. The customization string "
 "will be available as ``self.site_customization``."
-msgstr "Om du åter-implementera den här metoden i din underklass, kommer användaren att bli ombedd att skriva in en sträng som anpassning för detta insticksmodul. Den anpassning strängen kommer att finnas tillgänglig som ``self.site_customization``."
+msgstr "Om du återimplementerar den här metoden i din underklass, kommer användaren att bli ombedd att skriva in en sträng som anpassning för detta insticksmodul. Den anpassning strängen kommer att finnas tillgänglig som ``self.site_customization``."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.customization_help:10
@@ -921,7 +921,7 @@ msgid ""
 " cached so that a subsequent call to the get covers API with the same "
 "ISBN/special identifier does not need to get the cover URL again. Use the "
 "caching API for this."
-msgstr "Om den här metadatakällan också innehåller omslag, bör webbadressen till omslaget cachelagras så att ett efterföljande anrop till skaffa omslags-API:n med samma ISBN/specialidentifiering inte behöver hämta omslagsadresser igen. Använd cache-API:n för detta."
+msgstr "Om den här metadatakällan också innehåller omslag, bör webbadressen till omslaget mellanlagras så att ett efterföljande anrop till skaffa omslags-API:n med samma ISBN/specialidentifiering inte behöver hämta omslagsadresser igen. Använd cache-API:n för detta."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:13
@@ -1131,7 +1131,7 @@ msgid ""
 "Options shared by all Input format plugins. Do not override in sub-classes. "
 "Use :attr:`options` instead. Every option must be an instance of "
 ":class:`OptionRecommendation`."
-msgstr "Alternativ som delas av alla inmatning format insticksmodul. Överrids inte i underklasser. Användning :attr:`options` istället. Varje alternativ ska vara en instans av :class:`OptionRecommendation`."
+msgstr "Alternativ som delas av alla inmatningsformatsinsticksmoduler. Åsidostätt inte i underklasser. Använd :attr:`options` istället. Varje alternativ ska vara en instans av :class:`OptionRecommendation`."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.conversion.InputFormatPlugin.options:1
@@ -1164,10 +1164,10 @@ msgstr "Återge en lista med absoluta sökvägar till bilderna, om denna inmatni
 msgid ""
 "This method must be implemented in sub-classes. It must return the path to "
 "the created OPF file or an :class:`OEBBook` instance. All output should be "
-"contained in the current directory. If this plugin creates files outside the"
-" current directory they must be deleted/marked for deletion before this "
-"method returns."
-msgstr "Denna metod måste implementeras i underklasser. Den måste återge sökvägen till den skapade OPF-filen eller en :class:`OEBBook` instans. All utmatning ska ingå i den aktuella katalogen. Om denna insticksmodul skapar filer utanför den aktuella katalogen som de måste raderas/markeras för borttagning innan denna metod avslutas."
+"contained in the current folder. If this plugin creates files outside the "
+"current folder they must be deleted/marked for deletion before this method "
+"returns."
+msgstr "Denna metod måste implementeras i underklasser. Den måste återge sökvägen till den skapade OPF-filen eller en :class:`OEBBook`-instans. All utmatning ska ingå i den aktuella mappen. Om denna insticksmodul skapar filer utanför den aktuella mappen måste de tas bort/markeras för borttagning innan denna metod avslutas."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring of
 #: calibre.customize.conversion.InputFormatPlugin.convert:8
@@ -1277,7 +1277,7 @@ msgstr "Återge innehållet i `oeb_book` (som är en instans av: :class:`calibre
 msgid ""
 "Either a file like object or a string. If it is a string it is the path to a"
 " folder that may or may not exist. The output plugin should write its output"
-" into that directory. If it is a file like object, the output plugin should "
+" into that folder. If it is a file like object, the output plugin should "
 "write its output into the file."
 msgstr "Antingen en fil som ett objekt eller en sträng. Om det är en sträng är det sökvägen till en mapp som kanske eller kanske inte finns. Utmatningsinsticksmodulen ska skriva dess utmatning till den mappen. Om det är en fil som objekt ska utmatningsinsticksmodulen skriva dess utmatning till filen."
 
@@ -2439,8 +2439,8 @@ msgstr "Överför bokomslag till enheten. Standard implementationen gör ingenti
 
 #: ../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring of
 #: calibre.devices.usbms.driver.USBMS.upload_cover:3
-msgid "The full path to the directory where the associated book is located."
-msgstr "Den fullständiga sökvägen till katalogen där den tillhörande boken är placerad."
+msgid "The full path to the folder where the associated book is located."
+msgstr "Den fullständiga sökvägen till mappen där den tillhörande boken är placerad."
 
 #: ../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring of
 #: calibre.devices.usbms.driver.USBMS.upload_cover:4
@@ -2463,7 +2463,7 @@ msgid "Return path with platform native path separators"
 msgstr "Återge sökväg med plattformsursprungliga sökvägsavskiljare"
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:157
-msgid "User Interface Actions"
+msgid "User interface actions"
 msgstr "Användargränssnittsåtgärder"
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:159
@@ -2525,7 +2525,7 @@ msgid ""
 "attribute, this attribute only becomes available after the plugin has been "
 "initialized. Useful if you want to use methods from the plugin class like "
 "do_user_config()."
-msgstr "För att komma åt själva insticksmodulen, använd :attr:`interface_action_base_plugin` attribut, detta attribut blir först tillgänglig efter insticksmodulen har initierats. Användbart om du vill använda metoder från insticksmodul klassen som do_user_config()."
+msgstr "För att få åktomst till själva insticksmodulen, använd attributet :attr:`interface_action_base_plugin`, detta attribut blir först tillgänglig efter att insticksmodulen har initierats. Användbart om du vill använda metoder från insticksmodulsklassen som do_user_config()."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction:27
@@ -2664,8 +2664,8 @@ msgstr "Texten för denna åtgärd."
 #: calibre.gui2.actions.InterfaceAction.create_menu_action:11
 msgid ""
 "Either a QIcon or a file name. The file name is passed to the I() builtin, "
-"so you do not need to pass the full path to the images directory."
-msgstr "Antingen en QIcon eller ett filnamn. Filnamnet skickas till inbyggda I(), så du behöver inte ange den fullständiga sökvägen till bildkatalogen."
+"so you do not need to pass the full path to the images folder."
+msgstr "Antingen en QIcon eller ett filnamn. Filnamnet skickas till inbyggda I(), så du behöver inte ange den fullständiga sökvägen till bildmappen."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction.create_menu_action:14
@@ -2700,7 +2700,7 @@ msgid ""
 "Shortcuts for actions that don't always appear, or are library dependent, "
 "may disappear when other keyboard shortcuts are edited unless "
 "```persist_shortcut``` is set True."
-msgstr "Kortkommandon för åtgärder som inte alltid visas eller är biblioteksberoende kan försvinna när andra kortkommandon redigeras om inte '' persist_shortcut '' är inställt som True."
+msgstr "Kortkommandon för åtgärder som inte alltid visas eller är biblioteksberoende kan försvinna när andra kortkommandon redigeras om inte ```persist_shortcut``` är inställt som True."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction.load_resources:12
@@ -2946,7 +2946,7 @@ msgid ""
 "If your config widget inherits from this class but includes setting that are"
 " not registered, you should override the :class:`ConfigWidgetInterface` "
 "methods and call the base class methods inside the overrides."
-msgstr "Om din konfigureringsgränssnittskomponent ärver från denna klass men inkluderar inställning som inte är registrerade, bör du åsidosätta :class:`ConfigWidgetInterface` metoder och kallar basklassmetoder inuti överridningarna."
+msgstr "Om din konfigureringsgränssnittskomponent ärver från denna klass men inkluderar inställning som inte är registrerad, bör du åsidosätta :class:`ConfigWidgetInterface`-metoder och anropa basklassmetoder inuti åsidosättningarna."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase.register:1

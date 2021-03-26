@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "března 10, 2021" "5.13.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "března 26, 2021" "5.14.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -45,7 +45,7 @@ Převeďte e\-knihu z jednoho formátu do jiného.
 .sp
 input_file je vstup a output_file je výstup. Oba musí být zadány jako první dva parametry příkazu.
 .sp
-Výstupní formát e\-knihy je odhadnut z příponou output_file. output_file může být také speciálního formátu .EXT, kde EXT je přípona výstupního souboru. V tomto případě je název výstupního souboru odvozen od názvu vstupního souboru. Pamatujte, že názvy souborů nesmí začínat pomlčkou. A konečně, pokud output_file nemá žádnou příponu, pak je s ním zacházeno jako s adresářem a do tohoto adresáře je zapsána „otevřená e\-kniha“ (OEB) sestávající ze souborů HTML. Tyto soubory jsou soubory, které by obyčejně byly předány výstupnímu modulu.
+Výstupní formát e\-knihy je odhadnut z příponou output_file. output_file může být také speciálního formátu .EXT, kde EXT je přípona výstupního souboru. V tomto případě je název výstupního souboru odvozen od názvu vstupního souboru. Pamatujte, že názvy souborů nesmí začínat pomlčkou. A konečně, pokud output_file nemá žádnou příponu, pak je s ním zacházeno jako se složkou a do této složky je zapsána „otevřená e\-kniha“ (OEB) sestávající ze souborů HTML. Tyto soubory jsou soubory, které by obyčejně byly předány výstupnímu modulu.
 .sp
 Po zadání vstupního a výstupního souboru můžete přizpůsobit převod zadáním různých voleb. Dostupné volby závisí na typech vstupních a výstupních souborů. Pro získání nápovědy k nim zadejte vstupní a výstupní soubor a použijte volbu \-h.
 .sp
@@ -145,7 +145,7 @@ Verze souboru EPUB, který chcete vygenerovat. EPUB 2 je nejkompatibilnější, 
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extract the contents of the generated EPUB file to the specified folder. The contents of the folder are first deleted, so be careful.
+Rozbalit obsah vygenerovaného souboru EPUB do zadané složky. Obsah složky je nejdříve odstraněn, takže buďte opatrní.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -183,7 +183,7 @@ Volby pro ovládání vzheldu a chování výstupu
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPPelé\fB"\fP with \fB"\fPPele\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Překódovat znaky Unicode do ASCII. Používejte opatrně, protože to nahradí znaky Unicode za ASCII. Například to nahradí \fB"\fPPelé\fB"\fP za \fB"\fPPele\fB"\fP\&. Také pamatujte, že v případech, kdy je více zastoupení znaku (například znaky společné pro čínštinu a japonštinu), bude použito zastoupení podle aktuálního jazyku rozhraní Calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -595,7 +595,7 @@ Volby pro pomoc s laděním převodu
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring.
+Uložit výstup z rozdílných fází převodního řetězce do zadané složky. Užitečné, pokud si nejste jisti, v jaké fázi zpracování převodu se objevuje chyba.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "března 10, 2021" "5.13.0" "calibre"
+.TH "CALIBREDB" "1" "března 26, 2021" "5.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -228,14 +228,13 @@ Pole, podle kterého řadit výsledky. Dostupná pole: author_sort, authors, com
 .sp
 .nf
 .ft C
-calibredb add [options] file1 file2 file3 ...
+calibredb add [options] file1 file2 file3...
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Add the specified files as books to the database. You can also specify folders, see
-the folder related options below.
+Přidat zadané soubory jako knihy do databáze. Můžete také zadat složky, podívejte se na volby související s následující složkou.
 .sp
 Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
 .INDENT 0.0
@@ -304,22 +303,22 @@ Volby pro ovládání přidávání knih z adresářů. Ve výchozím nastavení
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+Vzor názvu souboru (glob), soubory odpovídající tomuto vzoru budou přidány při prohledávání souborů ve složkách, dokonce i když nejsou známého typu souboru e\-knihy. Může být zadáno vícekrát pro více vzorů.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all PDF files
+Vzor názvu souboru (glob), soubory odpovídající tomuto vzoru budou ignorovány při prohledávání souborů ve složkách. Může být zadáno vícekrát pro více vzorů: Např.: *.pdf bude ignorovat všechny soubory PDF
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
+Předpokládat, že každá složka má pouze jednu logickou knihu, a že všechny soubory v ní jsou různé formáty e\-knih této knihy
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Process folders recursively
+Zpracuj složky rekurzivně
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -487,12 +486,12 @@ Nahradit prázdné znaky podtržítky.
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Export all books into a single folder
+Exportovat všechny knihy do jedné složky
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+Šablona pro ovládání názvu souboru a struktury složekukládaných souborů. Výchozí je \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP, což uloží knihy do podsložky podle autora s názvy souborů obsahujícími název a autora. Dostupné ovládací prvky jsou: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -502,7 +501,7 @@ Formát, ve kterém zobrazovat data. %d \- den, %b \- měsíc, %m \- číslo mě
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Export books to the specified folder. Default is .
+Exportovat knihy do zadané složky. Výchozí je .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -557,7 +556,7 @@ Vytvořit křížové odkazy v oddílu Autoři pro knihy s více autory. Výchoz
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Uložit výstup z různých stavů převodního řetězce do zadané složky. Užitečné, pokud si nejste jisti, ve kterém stavu procesu převodu se objevuje chyba. Výchozí: \fB\(aq\fPNone\fB\(aq\fP Použije se na: výstupní formáty AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -766,14 +765,14 @@ calibredb restore_database [options]
 .UNINDENT
 .UNINDENT
 .sp
-Restore this database from the metadata stored in OPF files in each
-folder of the calibre library. This is useful if your metadata.db file
-has been corrupted.
+Obnovit tuto databázi z metadat uložených v souborech OPF v každé
+složce knihovny Calibre. To je užitečné, pokud byl váš soubor
+meatadata.db poškozen.
 .sp
-WARNING: This command completely regenerates your database. You will lose
-all saved searches, user categories, plugboards, stored per\-book conversion
-settings, and custom recipes. Restored metadata will only be as accurate as
-what is found in the OPF files.
+VAROVÁNÍ: Tento příkaz znovu úplně vygeneruje vaši databázi. Ztratíte
+všechna uložená hledání, uživatelské katalogy, zásuvné panely, uložená
+nastavení převodu pro knihu a vlastní předpisy. Obnovená metadata budou
+pouze tak přesná, jako to, co je nalezeno v souborech OPF.
 .sp
 Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
 .INDENT 0.0
@@ -870,8 +869,8 @@ calibredb backup_metadata [options]
 .UNINDENT
 .UNINDENT
 .sp
-Zálohovat metadata uložená v databázi do jednotlivých souborů OPF v každém
-adresáři knih. Toto se normálně děje automaticky, ale můžete tento příkaz spustit
+Zálohovat metadata uložená v databázi do jednotlivých souborů OPF v každé
+složce knih. Toto se normálně děje automaticky, ale můžete tento příkaz spustit
 s volbou \-\-all, abyste vynutili opětovné vygenerování souborů OPF.
 .sp
 Pamatujte, že normálně není vůbec potřeba toto dělat, protože soubory OPF

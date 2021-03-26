@@ -13,12 +13,13 @@
 # Nelson Contreras <nealcobu@gmail.com>, 2014
 # psss <facevedo@openmailbox.org>, 2017
 # Deigo Ramírez <ramirezjuandiego@gmail.com>, 2014
+# Walter Paterno <walter.paterno@gmail.com>, 2021
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-08 15:24+0000\n"
-"PO-Revision-Date: 2021-03-04 16:23+0000\n"
+"POT-Creation-Date: 2021-03-23 06:27+0000\n"
+"PO-Revision-Date: 2021-03-16 06:55+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Spanish (http://www.transifex.com/calibre/calibre/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -74,28 +75,27 @@ msgstr "|adbi| La acción :guilabel:`Añadir libros` tiene siete variantes acces
 
 #: ../../__w/calibre/calibre/manual/gui.rst:48
 msgid ""
-"**Add books from a single directory**: Opens a file chooser dialog and "
-"allows you to specify which books in a directory should be added. This "
-"action is *context sensitive*, i.e. it depends on which :ref:`catalog "
-"<catalogs>` you have selected. If you have selected the :guilabel:`Library`,"
-" books will be added to the library. If you have selected the e-book reader "
-"device, the books will be uploaded to the device, and so on."
+"**Add books from a single folder**: Opens a file chooser dialog and allows "
+"you to specify which books in a folder should be added. This action is "
+"*context sensitive*, i.e. it depends on which :ref:`catalog <catalogs>` you "
+"have selected. If you have selected the :guilabel:`Library`, books will be "
+"added to the library. If you have selected the e-book reader device, the "
+"books will be uploaded to the device, and so on."
 msgstr "**Añadir libros desde un único directorio**: Abre un diálogo de selección de archivo y le permite especificar qué libros de un directorio añadir. Esta acción es *sensible al contexto*, es decir, depende de qué :ref:`catálogo <catalogs>` esté seleccionado. Si está seleccionada la :guilabel:`Biblioteca`, los libros se añadirán a la biblioteca. Si está seleccionado el dispositivo de lectura, los libros se copiarán al dispositivo, etc."
 
 #: ../../__w/calibre/calibre/manual/gui.rst:50
 msgid ""
-"**Add books from directories and sub-directories**: Allows you to choose a "
-"directory. The directory and all its sub-directories are scanned "
-"recursively, and any e-books found are added to the library. You can choose "
-"whether to have calibre add all files present in a single directory to a "
-"single book record or multiple book records. calibre assumes that each "
-"directory contains a single book. All e-book files in a directory are "
-"assumed to be the same book in different formats. This action is the inverse"
-" of the :ref:`Save to disk <save_to_disk_multiple>` action, i.e. you can "
-":guilabel:`Save to disk`, delete the books and re-add them in single book "
-"per directory mode, with no lost information except for the date (this "
-"assumes you have not changed any of the setting for the Save to disk "
-"action)."
+"**Add books from folders and sub-folders**: Allows you to choose a folder. "
+"The folder and all its sub-folders are scanned recursively, and any e-books "
+"found are added to the library. You can choose whether to have calibre add "
+"all files present in a single folder to a single book record or multiple "
+"book records. calibre assumes that each folder contains a single book. All "
+"e-book files in a folder are assumed to be the same book in different "
+"formats. This action is the inverse of the :ref:`Save to disk "
+"<save_to_disk_multiple>` action, i.e. you can :guilabel:`Save to disk`, "
+"delete the books and re-add them in single book per folder mode, with no "
+"lost information except for the date (this assumes you have not changed any "
+"of the setting for the Save to disk action)."
 msgstr "**Añadir libros de directorios y subdirectorios**: Le permite elegir un directorio. Se buscará en el directorio y todos sus subdirectorios de manera recursiva y todos los libros que se encuentren se añadirán a la biblioteca. Puede elegir si calibre añadirá todos los archivos presentes en un directorio a un único registro de libro o a múltiples registros. calibre asume que cada directorio contiene un único libro y que todos los archivos de libro en el directorio corresponden al mismo libro en distintos formatos. Esta acción es la inversa de la acción :ref:`Guardar en el disco <save_to_disk_multiple>`, es decir, puede :ref:`Guardar en el disco`, eliminar los libros y volver a añadirlos en el modo de un libro por directorio, sin pérdida de información excepto por la fecha (suponiendo que no haya modificado ninguna configuración de la acción :ref:`Guardar en el disco`)."
 
 #: ../../__w/calibre/calibre/manual/gui.rst:52
@@ -266,13 +266,13 @@ msgstr "Mostrar"
 #: ../../__w/calibre/calibre/manual/gui.rst:123
 msgid ""
 "|vi| The :guilabel:`View` action displays the book in an e-book viewer "
-"program. calibre has a built-in viewer for many e-book formats.  For other "
+"program. calibre has a built-in viewer for many e-book formats. For other "
 "formats it uses the default operating system application. You can configure "
 "which formats should open with the internal viewer via "
 ":guilabel:`Preferences->Interface->Behavior`. If a book has more than one "
 "format, you can view a particular format by doing a right-click on the "
 "button."
-msgstr "|vi| La acción :guilabel:`Mostrar` abre el libro en un programa visualizador de libros electrónicos. calibre tiene un visor incorporado para muchos formatos de libro electrónico. Para otros formatos usa la aplicación predeterminada del sistema operativo. Puede configurar qué formatos se abren con el visor interno en :guilabel:`Preferencias > Interfaz > Comportamiento`. Si un libro tiene más de un formato, puede abrir un formato específico pulsando con el botón derecho sobre el botón de la acción."
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/gui.rst:134
 #: ../../__w/calibre/calibre/manual/gui.rst:694
@@ -499,8 +499,8 @@ msgstr "|svdi| La acción :guilabel:`Guardar en el disco` tiene cinco variantes,
 
 #: ../../__w/calibre/calibre/manual/gui.rst:214
 msgid ""
-"**Save to disk**: Saves the selected books to disk organized in directories."
-" The directory structure looks like::"
+"**Save to disk**: Saves the selected books to disk organized in folders. The"
+" folder structure looks like::"
 msgstr "**Guardar en el disco**: Guarda los libros seleccionados en el disco, organizados por directorios. La estructura de directorios es algo así::"
 
 #: ../../__w/calibre/calibre/manual/gui.rst:220
@@ -512,8 +512,8 @@ msgstr "Puede controlar el nombre de archivo y la estructura de carpetas de los 
 
 #: ../../__w/calibre/calibre/manual/gui.rst:225
 msgid ""
-"**Save to disk in a single directory**: Saves the selected books to disk in "
-"a single directory."
+"**Save to disk in a single folder**: Saves the selected books to disk in a "
+"single folder."
 msgstr "**Guardar en el disco, en un único directorio**: Guarda los libros seleccionados en el disco, en un único directorio."
 
 #: ../../__w/calibre/calibre/manual/gui.rst:227
@@ -527,24 +527,24 @@ msgstr "Con las opciones 1 y 2 se guardan en el disco todos los formatos, inclui
 #: ../../__w/calibre/calibre/manual/gui.rst:229
 msgid ""
 "**Save only *<your preferred>* format to disk**: Saves the selected books to"
-" disk in the directory structure as shown in (1.) but only in your preferred"
-" e-book format. You can set your preferred format in "
+" disk in the folder structure as shown in (1.) but only in your preferred "
+"e-book format. You can set your preferred format in "
 ":guilabel:`Preferences->Interface->Behaviour->Preferred output format`"
 msgstr "**Guardar solamente el formato *<principal>* en disco**: Guarda los libros seleccionados en el disco con la estructura de directorios mostrada en (1), pero sólo en el formato principal. Puede establecer el formato preferido en :guilabel:`Preferencias > Interfaz > Comportamiento > Formato de salida principal`."
 
 #: ../../__w/calibre/calibre/manual/gui.rst:231
 msgid ""
-"**Save only *<your preferred>* format to disk in a single directory**: Saves"
-" the selected books to disk in a single directory but only in your preferred"
-" e-book format. You can set your preferred format in "
+"**Save only *<your preferred>* format to disk in a single folder**: Saves "
+"the selected books to disk in a single folder but only in your preferred "
+"e-book format. You can set your preferred format in "
 ":guilabel:`Preferences->Interface->Behaviour->Preferred output format`"
 msgstr "**Guardar sólo el formato *<principal>* en un único directorio**: Guarda los libros seleccionados en el disco, en un único directorio, pero sólo en el formato principal. "
 
 #: ../../__w/calibre/calibre/manual/gui.rst:233
 msgid ""
 "**Save single format to disk...**: Saves the selected books to disk in the "
-"directory structure as shown in (1.) but only in the format you select from "
-"the pop-out list."
+"folder structure as shown in (1.) but only in the format you select from the"
+" popup list."
 msgstr "**Guardar un solo formato en disco...**: Guarda los libros seleccionados en el disco con la estructura de directorios mostrada en (1), pero sólo en el formato que seleccione en la lista emergente."
 
 #: ../../__w/calibre/calibre/manual/gui.rst:238
@@ -1120,7 +1120,7 @@ msgid ""
 " the configuration dialog, you can specify a regular expression that calibre"
 " will use to try and guess metadata from the names of e-book files that you "
 "add to the library. The default regular expression is::"
-msgstr ""
+msgstr "También puede controlar cómo se leen los metadatos desde el nombre del archivo utilizando expresiones regulares (ver :doc:`regexp`). En la sección :guilabel:`Añadir libros` del cuadro de diálogo de configuración, puede especificar una expresión regular que calibre utilizará para tratar de adivinar los metadatos a partir de los nombres de los archivos de libro electrónico que se añaden a la biblioteca. La expresión regular predeterminada es::"
 
 #: ../../__w/calibre/calibre/manual/gui.rst:505
 msgid ""

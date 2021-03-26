@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "Mart 10, 2021" "5.13.0" "calibre"
+.TH "CALIBREDB" "1" "Mart 26, 2021" "5.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -863,18 +863,18 @@ Girdideki bir satırın en fazla genişliği. Varsayılanı ekranın boyutunu al
 .sp
 .nf
 .ft C
-calibredb backup_metadata [seçenekler]
+calibredb backup_metadata [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Her kitabın kaydedilmiş üstbilgisini kendi dizinine ayrı OPF dosyasına yedekle.
-Bu normalde otomatik olarak yapılır ama OPF dosyalarının yeniden oluşturulmasını
-zorlamak için \-\-all seçeneğini kullanabilirsiniz.
+Backup the metadata stored in the database into individual OPF files in each
+books folder. This normally happens automatically, but you can run this
+command to force re\-generation of the OPF files, with the \-\-all option.
 .sp
-Üst verinin her değişmesinde OPF dosyaları otomatik olarak yedeklendiğinden
-bunu yapmanıza gerek kalmayacağını unutmayın.
+Note that there is normally no need to do this, as the OPF files are backed up
+automatically, every time metadata is changed.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0

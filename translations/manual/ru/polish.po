@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-08 15:24+0000\n"
-"PO-Revision-Date: 2021-03-08 13:16+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2021-03-23 06:27+0000\n"
+"PO-Revision-Date: 2021-03-20 14:36+0000\n"
+"Last-Translator: ashed <craysy@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/calibre/calibre/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -50,26 +50,25 @@ msgstr "Объект контейнера"
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:1
 msgid ""
-"A container represents an Open E-Book as a directory full of files and an "
-"opf file. There are two important concepts:"
-msgstr "Контейнер представляет действие Открыть электронную книгу как каталог, наполненный файлами и файл opf. Есть два важных понятия:"
+"A container represents an open e-book as a folder full of files and an OPF "
+"file. There are two important concepts:"
+msgstr "Контейнер представляет собой открытую электронную книгу в виде папки, полной файлов и файла OPF. Есть два важных понятия:"
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:4
 msgid ""
 "The root folder. This is the base of the e-book. All the e-books files are "
-"inside this directory or in its sub-directories."
-msgstr ""
+"inside this folder or in its sub-folders."
+msgstr "Корневая папка. Это основа электронной книги. Все файлы электронных книг находятся внутри этой папки или в ее подпапках."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:7
 msgid ""
-"Names: These are paths to the books' files relative to the root directory. "
-"They always contain POSIX separators and are unquoted. They can be thought "
-"of as canonical identifiers for files in the book. Most methods on the "
-"container object work with names. Names are always in the NFC unicode normal"
-" form."
-msgstr "Имена: это пути к файлам книг относительно корневого каталога. Они всегда содержат разделители POSIX и не заключаются в кавычки. Их можно рассматривать как канонические идентификаторы файлов в книге. Большинство методов объекта-контейнера работают с именами. Имена всегда имеют нормальную форму NFC Юникод."
+"Names: These are paths to the books' files relative to the root folder. They"
+" always contain POSIX separators and are unquoted. They can be thought of as"
+" canonical identifiers for files in the book. Most methods on the container "
+"object work with names. Names are always in the NFC Unicode normal form."
+msgstr "Имена: это пути к файлам книг относительно корневой папки. Они всегда содержат разделители POSIX и не заключаются в кавычки. Их можно рассматривать как канонические идентификаторы файлов в книге. Большинство методов объекта-контейнера работают с именами. Имена всегда в нормальной форме NFC Unicode."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:13
@@ -135,8 +134,8 @@ msgstr "Параметры"
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.abspath_to_name:3
 msgid ""
-"The base directory. By default the root for this container object is used."
-msgstr "Базовый каталог. По умолчанию используется корень для этого объекта-контейнера."
+"The base folder. By default the root for this container object is used."
+msgstr "Базовая папка. По умолчанию используется корень для этого объекта-контейнера."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.add_file:1
@@ -208,12 +207,12 @@ msgstr "Отметить проанализированный объект, со
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.exists:1
 msgid ""
-"True iff a file/directory corresponding to the canonical name exists. Note "
-"that this function suffers from the limitations of the underlying OS "
-"filesystem, in particular case (in)sensitivity. So on a case insensitive "
-"filesystem this will return True even if the case of name is different from "
-"the case of the underlying filesystem file. See also :meth:`has_name`"
-msgstr "True, если существует файл/каталог, соответствующий каноническому имени. Обратите внимание, что эта функция страдает от ограничений базовой файловой системы ОС, в частности (не) чувствительности к регистру. Таким образом, в файловой системе, нечувствительной к регистру, это вернет True, даже если регистр имени отличается от регистра файла базовой файловой системы. См. Также :meth:`has_name`"
+"True iff a file/folder corresponding to the canonical name exists. Note that"
+" this function suffers from the limitations of the underlying OS filesystem,"
+" in particular case (in)sensitivity. So on a case insensitive filesystem "
+"this will return True even if the case of name is different from the case of"
+" the underlying filesystem file. See also :meth:`has_name`"
+msgstr "Истинно, только если существует файл/папка, соответствующие каноническому имени. Обратите внимание, что эта функция страдает от ограничений базовой файловой системы ОС, в частности из-за (не) чувствительности. Таким образом, в файловой системе, нечувствительной к регистру, это вернет True, даже если регистр имени отличается от регистра файла базовой файловой системы. См. Также :meth:`has_name`"
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.filesize:1
@@ -461,10 +460,10 @@ msgstr "Удалить из этого контейнера элемент, ук
 #: of calibre.ebooks.oeb.polish.container.Container.rename:1
 msgid ""
 "Renames a file from current_name to new_name. It automatically rebases all "
-"links inside the file if the directory the file is in changes. Note however,"
-" that links are not updated in the other files that could reference this "
+"links inside the file if the folder the file is in changes. Note however, "
+"that links are not updated in the other files that could reference this "
 "file. This is for performance, such updates should be done once, in bulk."
-msgstr "Переименовать файл с current_name в new_name. Также автоматически переустановить все ссылки внутри файла, если каталог, в котором находится файл, изменяется. Однако обратите внимание, что ссылки не обновляются в других файлах, которые могут ссылаться на этот файл. Это для производительности, такие обновления нужно делать один раз, массово."
+msgstr "Переименовывает файл с current_name в new_name. Он автоматически переустанавливает все ссылки внутри файла, если папка, в которой находится файл, изменяется. Однако обратите внимание, что ссылки не обновляются в других файлах, которые могут ссылаться на этот файл. Это для производительности, такие обновления нужно делать один раз, массово."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.replace:1

@@ -171,13 +171,13 @@ def common_shortcuts():  # {{{
     ),
 
     'back': desc(
-        v"['Alt+ArrowLeft', 'Shift+ArrowLeft']",
+        v"['Alt+ArrowLeft']",
         'scroll',
         _('Back'),
     ),
 
     'forward': desc(
-        v"['Alt+ArrowRight', 'Shift+ArrowRight']",
+        v"['Alt+ArrowRight']",
         'scroll',
         _('Forward'),
     ),
@@ -325,6 +325,43 @@ def common_shortcuts():  # {{{
         'ui',
         _('Alter the current selection backwards by a word'),
     ),
+
+    'extend_selection_by_character': desc(
+        v"['Shift+ArrowRight']",
+        'ui',
+        _('Alter the current selection forward by a character'),
+    ),
+
+    'shrink_selection_by_character': desc(
+        v"['Shift+ArrowLeft']",
+        'ui',
+        _('Alter the current selection backwards by a character'),
+    ),
+
+    'extend_selection_by_line': desc(
+        v"['Shift+ArrowDown']",
+        'ui',
+        _('Alter the current selection forward by a line'),
+    ),
+
+    'shrink_selection_by_line': desc(
+        v"['Shift+ArrowUp']",
+        'ui',
+        _('Alter the current selection backwards by a line'),
+    ),
+
+    'extend_selection_by_paragraph': desc(
+        v"['Ctrl+Shift+ArrowDown']",
+        'ui',
+        _('Alter the current selection forward by a paragraph'),
+    ),
+
+    'shrink_selection_by_paragraph': desc(
+        v"['Ctrl+Shift+ArrowUp']",
+        'ui',
+        _('Alter the current selection backwards by a paragraph'),
+    ),
+
 
     'show_chrome': desc(
         v"['Escape', 'ContextMenu']",

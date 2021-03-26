@@ -9,7 +9,8 @@ import json, os, traceback
 
 from qt.core import (Qt, QDialog, QDialogButtonBox, QSyntaxHighlighter, QFont,
                       QRegExp, QApplication, QTextCharFormat, QColor, QCursor,
-                      QIcon, QSize, QPalette)
+                      QIcon, QSize, QPalette, QLineEdit, QByteArray,
+                      QFontInfo, QFontDatabase)
 
 from calibre import sanitize_file_name
 from calibre.constants import config_dir
@@ -81,8 +82,15 @@ class TemplateHighlighter(QSyntaxHighlighter):
         self.highlighted_paren = False
 
     def initializeFormats(self):
+        font_name = gprefs.get('gpm_template_editor_font', None)
+        size = gprefs['gpm_template_editor_font_size']
+        if font_name is None:
+            font = QFont()
+            font.setFixedPitch(True)
+            font.setPointSize(size)
+            font_name = font.family()
         Config = self.Config
-        Config["fontfamily"] = "monospace"
+        Config["fontfamily"] = font_name
         pal = QApplication.instance().palette()
         for name, color, bold, italic in (
                 ("normal", None, False, False),
@@ -98,7 +106,7 @@ class TemplateHighlighter(QSyntaxHighlighter):
             Config["%sfontitalic" % name] = italic
         baseFormat = QTextCharFormat()
         baseFormat.setFontFamily(Config["fontfamily"])
-        Config["fontsize"] = gprefs['gpm_template_editor_font_size']
+        Config["fontsize"] = size
         baseFormat.setFontPointSize(Config["fontsize"])
 
         for name in ("normal", "keyword", "builtin", "comment",
@@ -290,16 +298,17 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
             self.template_name.setVisible(False)
 
         if mi:
-            self.mi = mi
+            if not isinstance(mi, list):
+                mi = (mi, )
         else:
-            self.mi = Metadata(_('Title'), [_('Author')])
-            self.mi.author_sort = _('Author Sort')
-            self.mi.series = ngettext('Series', 'Series', 1)
-            self.mi.series_index = 3
-            self.mi.rating = 4.0
-            self.mi.tags = [_('Tag 1'), _('Tag 2')]
-            self.mi.languages = ['eng']
-            self.mi.id = 1
+            mi = Metadata(_('Title'), [_('Author')])
+            mi.author_sort = _('Author Sort')
+            mi.series = ngettext('Series', 'Series', 1)
+            mi.series_index = 3
+            mi.rating = 4.0
+            mi.tags = [_('Tag 1'), _('Tag 2')]
+            mi.languages = ['eng']
+            mi.id = 1
             if fm is not None:
                 self.mi.set_all_user_metadata(fm.custom_field_metadata())
             else:
@@ -308,10 +317,44 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
                 # the columns will all be empty, which in some very unusual
                 # cases might cause formatter errors. We can live with that.
                 from calibre.gui2.ui import get_gui
-                self.mi.set_all_user_metadata(
+                mi.set_all_user_metadata(
                       get_gui().current_db.new_api.field_metadata.custom_field_metadata())
-            for col in self.mi.get_all_user_metadata(False):
-                self.mi.set(col, (col,), 0)
+            for col in mi.get_all_user_metadata(False):
+                mi.set(col, (col,), 0)
+            mi = (mi, )
+        self.mi = mi
+
+        # Set up the display table
+        self.table_column_widths = None
+        try:
+            self.table_column_widths = \
+                        gprefs.get('template_editor_table_widths', None)
+        except:
+            pass
+        tv = self.template_value
+        tv.setRowCount(len(mi))
+        tv.setColumnCount(2)
+        tv.setHorizontalHeaderLabels((_('Book title'), _('Template value')))
+        tv.horizontalHeader().setStretchLastSection(True)
+        tv.horizontalHeader().sectionResized.connect(self.table_column_resized)
+        # Set the height of the table
+        h = tv.rowHeight(0) * min(len(mi), 5)
+        h += 2 * tv.frameWidth() + tv.horizontalHeader().height()
+        tv.setMinimumHeight(h)
+        tv.setMaximumHeight(h)
+        # Set the size of the title column
+        if self.table_column_widths:
+            tv.setColumnWidth(0, self.table_column_widths[0])
+        else:
+            tv.setColumnWidth(0, tv.fontMetrics().averageCharWidth() * 10)
+        # Use our own widget to get rid of elision. setTextElideMode() doesn't work
+        for r in range(0, len(mi)):
+            w = QLineEdit(tv)
+            w.setReadOnly(True)
+            tv.setCellWidget(r, 0, w)
+            w = QLineEdit(tv)
+            w.setReadOnly(True)
+            tv.setCellWidget(r, 1, w)
 
         # Remove help icon on title bar
         icon = self.windowIcon()
@@ -336,8 +379,11 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
             if text_is_placeholder:
                 self.textbox.setPlaceholderText(text)
                 self.textbox.clear()
+                text = ''
             else:
                 self.textbox.setPlainText(text)
+        else:
+            text = ''
         self.buttonBox.button(QDialogButtonBox.StandardButton.Ok).setText(_('&OK'))
         self.buttonBox.button(QDialogButtonBox.StandardButton.Cancel).setText(_('&Cancel'))
         self.color_copy_button.clicked.connect(self.color_to_clipboard)
@@ -358,7 +404,7 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
                                self.function_type_string(f, longform=False)), f)
         self.function.setCurrentIndex(0)
         self.function.currentIndexChanged.connect(self.function_changed)
-        self.textbox_changed()
+        self.display_values(text)
         self.rule = (None, '')
 
         tt = _('Template language tutorial')
@@ -370,9 +416,40 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
             '<a href="%s">%s</a>' % (
                 localize_user_manual_link('https://manual.calibre-ebook.com/generated/en/template_ref.html'), tt))
 
-        self.font_size_box.setValue(gprefs['gpm_template_editor_font_size'])
-        self.font_size_box.valueChanged.connect(self.font_size_changed)
+        self.set_up_font_boxes()
         self.textbox.setFocus()
+        # Now geometry
+        try:
+            geom = gprefs.get('template_editor_dialog_geometry', None)
+            if geom is not None:
+                QApplication.instance().safe_restore_geometry(self, QByteArray(geom))
+        except Exception:
+            pass
+
+    def set_up_font_boxes(self):
+        font_name = gprefs.get('gpm_template_editor_font', None)
+        size = gprefs['gpm_template_editor_font_size']
+        if font_name is None:
+            font = QFont()
+            font.setFixedPitch(True)
+            font.setPointSize(size)
+        else:
+            font = QFont(font_name, pointSize=size)
+        self.font_box.setWritingSystem(QFontDatabase.Latin)
+        self.font_box.setCurrentFont(font)
+        self.font_box.setEditable(False)
+        gprefs['gpm_template_editor_font'] = unicode_type(font.family())
+        self.font_size_box.setValue(size)
+        self.font_box.currentFontChanged.connect(self.font_changed)
+        self.font_size_box.valueChanged.connect(self.font_size_changed)
+        self.highlighter.initializeFormats()
+        self.highlighter.rehighlight()
+
+    def font_changed(self, font):
+        fi = QFontInfo(font)
+        gprefs['gpm_template_editor_font'] = unicode_type(fi.family())
+        self.highlighter.initializeFormats()
+        self.highlighter.rehighlight()
 
     def font_size_changed(self, toWhat):
         gprefs['gpm_template_editor_font_size'] = toWhat
@@ -434,10 +511,20 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
             self.last_text = cur_text
             self.highlighter.regenerate_paren_positions()
             self.text_cursor_changed()
-            self.template_value.setText(
-                SafeFormat().safe_format(cur_text, self.mi, _('EXCEPTION: '),
-                                         self.mi, global_vars=self.global_vars,
-                                         template_functions=self.all_functions))
+            self.display_values(cur_text)
+
+    def display_values(self, txt):
+        tv = self.template_value
+        for r,mi in enumerate(self.mi):
+            w = tv.cellWidget(r, 0)
+            w.setText(mi.title)
+            w.setCursorPosition(0)
+            v = SafeFormat().safe_format(txt, mi, _('EXCEPTION: '),
+                                         mi, global_vars=self.global_vars,
+                                         template_functions=self.all_functions)
+            w = tv.cellWidget(r, 1)
+            w.setText(v)
+            w.setCursorPosition(0)
 
     def text_cursor_changed(self):
         cursor = self.textbox.textCursor()
@@ -472,6 +559,15 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
                 self.source_code.setPlainText(self.all_functions[name].program_text)
             self.func_type.setText(self.function_type_string(name, longform=True))
 
+    def table_column_resized(self, col, old, new):
+        self.table_column_widths = []
+        for c in range(0, self.template_value.columnCount()):
+            self.table_column_widths.append(self.template_value.columnWidth(c))
+
+    def save_geometry(self):
+        gprefs['template_editor_table_widths'] = self.table_column_widths
+        gprefs['template_editor_dialog_geometry'] = bytearray(self.saveGeometry())
+
     def accept(self):
         txt = unicode_type(self.textbox.toPlainText()).rstrip()
         if self.coloring:
@@ -496,6 +592,7 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
             self.rule = ('icon', 'title', txt)
         else:
             self.rule = ('', txt)
+        self.save_geometry()
         QDialog.accept(self)
 
     def reject(self):

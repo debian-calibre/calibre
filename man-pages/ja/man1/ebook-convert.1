@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "3月 10, 2021" "5.13.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "3月 26, 2021" "5.14.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -35,17 +35,21 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-ebook\-convert 電子書籍のフォーマットを変換します。
+ebook\-convert input_file output_file [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-出力する電子書籍のフォーマットは、出力ファイルの拡張子から推測されます。出力ファイルの拡張子をEXTとして、output_file は特別な形式 .EXT と指定することも可能です。この場合、出力ファイル名の本体部分は、入力ファイル名のものが使用されます。ファイル名の先頭にハイフンは使えませんので注意してください。output_file に拡張子をつけなかった場合、出力ファイル名はディレクトリとして見なされ、HTMLファイルで構成されれる "open ebook" (OEB) フォーマットで、指定したディレクトリに出力されます。
+Convert an e\-book from one format to another.
 .sp
-入力ファイルと出力ファイルを指定した後ろに、変換をカスタマイズするための様々なオプションを指定することができます。使用可能なオプションは、入出力のファイルタイプに依存します。使用可能なオプションとその使い方を見るためには、入出力のファイルを指定した後ろに、\-h オプションを指定してください。
+input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
 .sp
-電子書籍変換システムについての完全なドキュメントは下記を参照してください
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an "open e\-book" (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
+.sp
+After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+.sp
+For full documentation of the conversion system see
 conversion
 .sp
 スペースを含む引数を \fBebook\-convert\fP に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "三月 10, 2021" "5.13.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "三月 26, 2021" "5.14.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -41,15 +41,15 @@ ebook\-convert input_file output_file [options]
 .UNINDENT
 .UNINDENT
 .sp
-转换不同格式的电子书。
+Convert an e\-book from one format to another.
 .sp
-input_file 表示输入文件，output_file 表示输出文件。这两者作为命令行参数必须指定到最前面。
+input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
 .sp
-输出的电子书格式可由 output_file 的扩展名得到。同时 output_file 也可以是一种以 .EXT 为扩展名的特殊格式。在这种情况下，输出文件的名称则使用输入文件的名称。注意：文件名不能以连字号作为开头。如果 output_file 不含扩展名，那么它将被视为一个目录并将会在该目录下生成 HTML 格式的“开放式电子书(OEB)”。这些文件会被视为正常文件而被输出插件所识别。
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an "open e\-book" (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
 .sp
-在指定输入和输出文件后，你可以自定义特定的转换选项。根据输入和输出文件的类型不同可用的转换选项也不同。如需获取针对输入和输出文件的帮助，请在命令行中输入 \-h。
+After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
-对于转换系统的完整文档请查阅
+For full documentation of the conversion system see
 conversion
 .sp
 每当向具有它们自己空间的:command:

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "marts 10, 2021" "5.13.0" "calibre"
+.TH "CALIBREDB" "1" "marts 26, 2021" "5.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -868,18 +868,18 @@ Maksimālais rindas platums izvadē. Noklusētais \- mēģināt noteikt ekrāna 
 .sp
 .nf
 .ft C
-calibredb backup_metadata [opcijas]
+calibredb backup_metadata [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Dublē metadatus, kas tiek glabāti datubāzē, atsevišķos OPF failos
-katras grāmatas mapē. Tas parasti notiek automātiski, bet var palaist
-komandu, lai piespiestu atkārtotu OPF failu rašanos opciju \-\-all.
+Backup the metadata stored in the database into individual OPF files in each
+books folder. This normally happens automatically, but you can run this
+command to force re\-generation of the OPF files, with the \-\-all option.
 .sp
-Ņemiet vērā, ka parasti nav nepieciešams veikt šo darbību, jo OPF tiek dublēti
-automātiski katru reizi, kad tiek mainīti metadati.
+Note that there is normally no need to do this, as the OPF files are backed up
+automatically, every time metadata is changed.
 .sp
 Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .INDENT 0.0

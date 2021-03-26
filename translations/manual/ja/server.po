@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-20 14:41+0000\n"
-"PO-Revision-Date: 2021-01-08 13:59+0000\n"
-"Last-Translator: toshi oota <ppp15479@gmail.com>\n"
+"POT-Creation-Date: 2021-03-23 06:27+0000\n"
+"PO-Revision-Date: 2021-03-11 16:23+0000\n"
+"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Japanese (http://www.transifex.com/calibre/calibre/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -303,12 +303,10 @@ msgid ""
 "The new calibre server makes lots of use of advanced HTML 5 and CSS 3 "
 "features. As such it requires an up-to-date browser to use. It has been "
 "tested on Android Chrome and iOS Safari as well as Chrome and Firefox on the"
-" desktop. It is known not to work with Internet Explorer and Microsoft Edge "
-"(hopefully Edge will start working when Microsoft gets around to "
-"implementing a few missing standards)."
+" desktop."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:201
+#: ../../__w/calibre/calibre/manual/server.rst:198
 msgid ""
 "The server is careful to use functionality that has either been already "
 "standardised or is on the standards track. As such if it does not currently "
@@ -316,14 +314,14 @@ msgid ""
 "caught up."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:206
+#: ../../__w/calibre/calibre/manual/server.rst:203
 msgid ""
 "If you are using a particularly old or limited browser or you don't like to "
 "run JavaScript, you can use the *mobile* view, by simply adding ``/mobile`` "
 "to the the server address."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:211
+#: ../../__w/calibre/calibre/manual/server.rst:208
 msgid ""
 "On iOS, Apple allows only a single browser engine, so Firefox, Chrome and "
 "Safari are all actually the same browser under the hood. The new server "
@@ -331,11 +329,11 @@ msgid ""
 "tested with Chrome version 58 and newer."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:217
+#: ../../__w/calibre/calibre/manual/server.rst:214
 msgid "Enabling offline support"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:219
+#: ../../__w/calibre/calibre/manual/server.rst:216
 msgid ""
 "Browser makers have been trying to force people to use SSL by disabling "
 "advanced features in their browsers for plain HTTP connections. One such "
@@ -345,11 +343,11 @@ msgid ""
 "toggle it to ``true``."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:227
+#: ../../__w/calibre/calibre/manual/server.rst:224
 msgid "Managing user accounts from the command-line only"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:229
+#: ../../__w/calibre/calibre/manual/server.rst:226
 msgid ""
 "The calibre program has a nice section in :guilabel:`Preferences` to allow "
 "you to manage user accounts for the server. However, if you want to run the "
@@ -358,28 +356,28 @@ msgid ""
 "line."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:234
+#: ../../__w/calibre/calibre/manual/server.rst:231
 msgid ""
 "You can manage user accounts using the ``--manage-users`` option to the "
 "standalone ``calibre-server`` program. Suppose you want to store the user "
-"database in the directory ``/srv/calibre``, then you create it by running::"
+"database in the folder ``/srv/calibre``, then you create it by running::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:241
+#: ../../__w/calibre/calibre/manual/server.rst:238
 msgid ""
 "Just follow the prompts to create user accounts, set their permission, etc. "
 "Once you are done, you can run the server as::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:246
+#: ../../__w/calibre/calibre/manual/server.rst:243
 msgid "It will use the user accounts you created in the previous step."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:250
+#: ../../__w/calibre/calibre/manual/server.rst:247
 msgid "Integrating the calibre Content server into other servers"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:252
+#: ../../__w/calibre/calibre/manual/server.rst:249
 msgid ""
 "Here, we will show you how to integrate the calibre Content server into "
 "another server. The most common reason for this is to make use of SSL or to "
@@ -388,7 +386,7 @@ msgid ""
 "server."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:257
+#: ../../__w/calibre/calibre/manual/server.rst:254
 msgid ""
 "A reverse proxy is when your normal server accepts incoming requests and "
 "passes them onto the calibre server. It then reads the response from the "
@@ -397,36 +395,36 @@ msgid ""
 "with your main server."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:264
+#: ../../__w/calibre/calibre/manual/server.rst:261
 msgid "Using a full virtual host"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:266
+#: ../../__w/calibre/calibre/manual/server.rst:263
 msgid ""
 "The simplest configuration is to dedicate a full virtual host to the calibre"
 " server. In this case, run the calibre server as::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:271
+#: ../../__w/calibre/calibre/manual/server.rst:268
 msgid ""
 "Now setup the virtual host in your main server, for example, for nginx::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:282
+#: ../../__w/calibre/calibre/manual/server.rst:283
 msgid "Or, for Apache::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:297
+#: ../../__w/calibre/calibre/manual/server.rst:298
 msgid "Using a URL prefix"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:299
+#: ../../__w/calibre/calibre/manual/server.rst:300
 msgid ""
 "If you do not want to dedicate a full virtual host to calibre, you can have "
 "it use a URL prefix. Start the calibre server as::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:304
+#: ../../__w/calibre/calibre/manual/server.rst:305
 msgid ""
 "The key parameter here is ``--url-prefix /calibre``. This causes the Content"
 " server to serve all URLs prefixed by ``/calibre``. To see this in action, "
@@ -434,17 +432,17 @@ msgid ""
 "normal Content server website, but now it will run under ``/calibre``."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:306
+#: ../../__w/calibre/calibre/manual/server.rst:307
 msgid "With nginx, the required configuration is::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:319
+#: ../../__w/calibre/calibre/manual/server.rst:324
 msgid ""
 "For Apache, first enable the proxy modules in Apache, by adding the "
 "following to :file:`httpd.conf`::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:324
+#: ../../__w/calibre/calibre/manual/server.rst:329
 msgid ""
 "The exact technique for enabling the proxy modules will vary depending on "
 "your Apache installation. Once you have the proxy modules enabled, add the "
@@ -452,7 +450,7 @@ msgid ""
 "the conf file for the virtual host in question)::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:331
+#: ../../__w/calibre/calibre/manual/server.rst:336
 msgid ""
 "That's all, you will now be able to access the calibre Content server under "
 "the ``/calibre`` URL in your main server. The above rules pass all requests "
@@ -461,7 +459,7 @@ msgid ""
 "transparently."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:336
+#: ../../__w/calibre/calibre/manual/server.rst:341
 msgid ""
 "When using a reverse proxy, you should tell the calibre Content server to "
 "only listen on localhost, by using ``--listen-on 127.0.0.1``. That way, the "
@@ -469,7 +467,7 @@ msgid ""
 "from the reverse proxy."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:343
+#: ../../__w/calibre/calibre/manual/server.rst:348
 msgid ""
 "If you have setup SSL for your main server, you should tell the calibre "
 "server to use basic authentication instead of digest authentication, as it "
@@ -477,11 +475,11 @@ msgid ""
 "server``."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:352
+#: ../../__w/calibre/calibre/manual/server.rst:357
 msgid "Creating a service for the calibre server on a modern Linux system"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:354
+#: ../../__w/calibre/calibre/manual/server.rst:359
 msgid ""
 "You can easily create a service to run calibre at boot on a modern (`systemd"
 " <https://www.freedesktop.org/wiki/Software/systemd/>`_) based Linux system."
@@ -489,35 +487,35 @@ msgid ""
 "the contents shown below::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:373
+#: ../../__w/calibre/calibre/manual/server.rst:378
 msgid ""
 "Change ``mylinuxuser`` and ``mylinuxgroup`` to whatever user and group you "
 "want the server to run as. This should be the same user and group that own "
-"the files in the calibre library directory. Note that it is generally not a "
+"the files in the calibre library folder. Note that it is generally not a "
 "good idea to run the server as root. Also change the path to the calibre "
-"library directory to suit your system. You can add multiple libraries if "
+"library folder to suit your system. You can add multiple libraries if "
 "needed. See the help for the ``calibre-server`` command."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:380
+#: ../../__w/calibre/calibre/manual/server.rst:385
 msgid "Now run::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:384
+#: ../../__w/calibre/calibre/manual/server.rst:389
 msgid "to start the server. Check its status with::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:388
+#: ../../__w/calibre/calibre/manual/server.rst:393
 msgid "To make it start at boot, run::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:394
+#: ../../__w/calibre/calibre/manual/server.rst:399
 msgid ""
 "The calibre server *does not* need a running X server, but it does need the "
 "X libraries installed as some components it uses link against them."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:399
+#: ../../__w/calibre/calibre/manual/server.rst:404
 msgid ""
 "The calibre server also supports systemd socket activation, so you can use "
 "that, if needed, as well."
