@@ -6,9 +6,26 @@ Forwarded: not-needed
 
 Current Debian doesn't have "cchardet" module.
 ---
- src/calibre/test_build.py | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ src/calibre/ebooks/chardet.py | 5 ++++-
+ src/calibre/test_build.py     | 5 ++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
+diff --git a/src/calibre/ebooks/chardet.py b/src/calibre/ebooks/chardet.py
+index 7d7adc2..55c1680 100644
+--- a/src/calibre/ebooks/chardet.py
++++ b/src/calibre/ebooks/chardet.py
+@@ -106,7 +106,10 @@ _CHARSET_ALIASES = {"macintosh" : "mac-roman", "x-sjis" : "shift-jis"}
+ 
+ 
+ def detect(bytestring):
+-    from cchardet import detect as implementation
++    try:
++        from cchardet import detect as implementation
++    except ImportError:
++        from  chardet import detect as implementation
+     ans = implementation(bytestring)
+     enc = ans.get('encoding')
+     if enc:
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
 index 238b2d3..7c706b6 100644
 --- a/src/calibre/test_build.py
