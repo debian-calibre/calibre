@@ -1,3 +1,7 @@
+---
+title: Markdown input
+---
+
 # head 1
 
 head 1 text
