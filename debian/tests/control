@@ -9,6 +9,14 @@ Features: test-name=smoke-ebook-convert
 Test-Command: ebook-convert --version
 Restrictions: superficial
 
-# Simple format conversion test
+Features: test-name=smoke-ebook-meta
+Test-Command: ebook-meta --version
+Restrictions: superficial
+
+Features: test-name=smoke-ebook-polish
+Test-Command: ebook-polish --version
+Restrictions: superficial
+
+# Format conversion test
 Tests: convert-md-epub.sh
 Depends: epubcheck
