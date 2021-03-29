@@ -8,7 +8,7 @@ unset XDG_SESSION_TYPE
 ################
 # ebook-convert
 ################
-echo "ebook-convert"
+echo "Test: ebook-convert"
 
 mdown=debian/tests/data/markdown.md
 epub=${AUTOPKGTEST_ARTIFACTS}/convert-md-epub.epub
@@ -18,7 +18,7 @@ ebook-convert ${mdown} ${epub}
 #############
 # ebook-meta
 #############
-echo "ebook-meta"
+echo "Test: ebook-meta"
 
 title_mdown=$(cat ${mdown}      | grep '^title' | cut -d : -f 2 | sed -e 's/^ \+//')
 title_epub=$(ebook-meta ${epub} | grep '^Title' | cut -d : -f 2 | sed -e 's/^ \+//')
@@ -35,7 +35,7 @@ epubcheck ${epub}
 ###############
 # ebook-polish
 ###############
-echo "ebook-polish"
+echo "Test: ebook-polish"
 
 epub_polished=${AUTOPKGTEST_ARTIFACTS}/convert-md-epub_pol.epub
 
