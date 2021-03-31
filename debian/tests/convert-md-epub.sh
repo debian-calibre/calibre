@@ -30,7 +30,7 @@ if [ "${title_mdown}" != "${title_epub}" ] ; then
     exit 1
 fi
 
-jarwrapper /usr/bin/epubcheck ${epub}
+java -Xss1024k -jar /usr/share/java/epubcheck.jar ${epub}
 
 ###############
 # ebook-polish
@@ -41,4 +41,4 @@ epub_polished=${AUTOPKGTEST_ARTIFACTS}/convert-md-epub_pol.epub
 
 ebook-polish --add-soft-hyphens --compress-images --remove-unused-css ${epub} ${epub_polished}
 
-jarwrapper /usr/bin/epubcheck ${epub_polished}
+java -Xss1024k -jar /usr/share/java/epubcheck.jar ${epub_polished}
