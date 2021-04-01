@@ -15,6 +15,8 @@ epub=${AUTOPKGTEST_ARTIFACTS}/convert-md-epub.epub
 
 ebook-convert ${mdown} ${epub}
 
+java -Xss1024k -jar /usr/share/java/epubcheck.jar ${epub}
+
 #############
 # ebook-meta
 #############
@@ -29,8 +31,6 @@ echo "ePub     title : ${title_epub}"
 if [ "${title_mdown}" != "${title_epub}" ] ; then
     exit 1
 fi
-
-java -Xss1024k -jar /usr/share/java/epubcheck.jar ${epub}
 
 ###############
 # ebook-polish
