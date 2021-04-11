@@ -3,21 +3,20 @@
 # smoke test
 Features: test-name=smoke-calibre
 Test-Command: calibre --version
-Restrictions: superficial, skip-not-installable
+Restrictions: superficial
 
 Features: test-name=smoke-ebook-convert
 Test-Command: ebook-convert --version
-Restrictions: superficial, skip-not-installable
+Restrictions: superficial
 
 Features: test-name=smoke-ebook-meta
 Test-Command: ebook-meta --version
-Restrictions: superficial, skip-not-installable
+Restrictions: superficial
 
 Features: test-name=smoke-ebook-polish
 Test-Command: ebook-polish --version
-Restrictions: superficial, skip-not-installable
+Restrictions: superficial
 
 # Format conversion test
 Tests: convert-md-epub.sh
 Depends: @, epubcheck, default-jre
-Restrictions: skip-not-installable
