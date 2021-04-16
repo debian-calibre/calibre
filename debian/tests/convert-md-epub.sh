@@ -13,9 +13,14 @@ echo "Test: ebook-convert"
 mdown=debian/tests/data/markdown.md
 epub=${AUTOPKGTEST_ARTIFACTS}/convert-md-epub.epub
 
+
+echo "#### ebook-convert ${mdown} ${epub}"
 ebook-convert ${mdown} ${epub}
 
+echo "#### epubcheck ${epub}"
 java -Xss1024k -jar /usr/share/java/epubcheck.jar ${epub}
+
+echo ":::: end"
 
 #############
 # ebook-meta
@@ -32,6 +37,8 @@ if [ "${title_mdown}" != "${title_epub}" ] ; then
     exit 1
 fi
 
+echo ":::: end"
+
 ###############
 # ebook-polish
 ###############
@@ -39,6 +46,10 @@ echo "Test: ebook-polish"
 
 epub_polished=${AUTOPKGTEST_ARTIFACTS}/convert-md-epub_pol.epub
 
+echo "#### ebook-polish ${epub} ${epub_polished}"
 ebook-polish --add-soft-hyphens --compress-images --remove-unused-css ${epub} ${epub_polished}
 
+echo "#### epubcheck ${epub_polished}"
 java -Xss1024k -jar /usr/share/java/epubcheck.jar ${epub_polished}
+
+echo ":::: end"
