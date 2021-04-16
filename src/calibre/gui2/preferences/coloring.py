@@ -6,26 +6,33 @@ __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import os, textwrap, json
+import json
+import os
+import textwrap
+from qt.core import (
+    QAbstractItemView, QAbstractListModel, QApplication, QCheckBox, QComboBox,
+    QDialog, QDialogButtonBox, QDoubleValidator, QFrame, QGridLayout, QIcon,
+    QIntValidator, QItemSelectionModel, QLabel, QLineEdit, QListView, QMenu,
+    QPalette, QPushButton, QScrollArea, QSize, QSizePolicy, QSpacerItem,
+    QStandardItem, QStandardItemModel, Qt, QToolButton, QVBoxLayout, QWidget,
+    pyqtSignal
+)
 
-from qt.core import (QWidget, QDialog, QLabel, QGridLayout, QComboBox, QSize,
-        QLineEdit, QIntValidator, QDoubleValidator, QFrame, Qt, QIcon, QHBoxLayout,
-        QScrollArea, QPushButton, QVBoxLayout, QDialogButtonBox, QToolButton, QItemSelectionModel,
-        QListView, QAbstractListModel, pyqtSignal, QSizePolicy, QSpacerItem, QPalette,
-        QApplication, QStandardItem, QStandardItemModel, QCheckBox, QMenu, QAbstractItemView)
-
-from calibre import prepare_string_for_xml, sanitize_file_name, as_unicode
+from calibre import as_unicode, prepare_string_for_xml, sanitize_file_name
 from calibre.constants import config_dir
-from calibre.utils.icu import sort_key
-from calibre.gui2 import (error_dialog, choose_files, pixmap_to_data, gprefs,
-                          choose_save_file, open_local_file)
+from calibre.gui2 import (
+    choose_files, choose_save_file, error_dialog, gprefs, open_local_file,
+    pixmap_to_data
+)
 from calibre.gui2.dialogs.template_dialog import TemplateDialog
 from calibre.gui2.metadata.single_download import RichTextDelegate
-from calibre.gui2.widgets2 import ColorButton
-from calibre.library.coloring import (Rule, conditionable_columns,
-    displayable_columns, rule_from_template, color_row_key)
+from calibre.gui2.widgets2 import ColorButton, FlowLayout, Separator
+from calibre.library.coloring import (
+    Rule, color_row_key, conditionable_columns, displayable_columns,
+    rule_from_template
+)
+from calibre.utils.icu import lower, sort_key
 from calibre.utils.localization import lang_map
-from calibre.utils.icu import lower
 from polyglot.builtins import iteritems, unicode_type
 
 all_columns_string = _('All columns')
@@ -949,7 +956,7 @@ class EditRules(QWidget):  # {{{
         self.add_advanced_button = b = QPushButton(QIcon(I('plus.png')),
                 _('Add ad&vanced rule'), self)
         b.clicked.connect(self.add_advanced)
-        self.hb = hb = QHBoxLayout()
+        self.hb = hb = FlowLayout()
         l.addLayout(hb, l.rowCount(), 0, 1, 2)
         hb.addWidget(b)
         self.duplicate_rule_button = b = QPushButton(QIcon(I('edit-copy.png')),
@@ -962,13 +969,16 @@ class EditRules(QWidget):  # {{{
         b.clicked.connect(self.convert_to_advanced)
         b.setEnabled(False)
         hb.addWidget(b)
-        hb.addStretch(10)
+        sep = Separator(self, b)
+        hb.addWidget(sep)
+
         self.open_icon_folder_button = b = QPushButton(QIcon(I('icon_choose.png')),
                 _('Open icon folder'), self)
         connect_lambda(b.clicked, self,
                        lambda _: open_local_file(os.path.join(config_dir, 'cc_icons')))
         hb.addWidget(b)
-        hb.addStretch(10)
+        sep = Separator(self, b)
+        hb.addWidget(sep)
         self.export_button = b = QPushButton(_('E&xport'), self)
         b.clicked.connect(self.export_rules)
         b.setToolTip(_('Export these rules to a file'))

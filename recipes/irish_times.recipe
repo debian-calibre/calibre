@@ -70,7 +70,7 @@ class IrishTimes(BasicNewsRecipe):
         raw = r.read()
         data = json.loads(raw)
         # print(data)
-        if r.code != 200 or 'user_id' not in raw:
+        if r.code != 200 or b'user_id' not in raw:
             raise ValueError('Failed to log in check username/password')
 
         # Set cookie
@@ -98,6 +98,6 @@ class IrishTimes(BasicNewsRecipe):
             content.p.insert(0, pic)
 
         self.temp_files.append(PersistentTemporaryFile('_fa.html'))
-        self.temp_files[-1].write(content.prettify())
+        self.temp_files[-1].write(content.prettify().encode('utf-8'))
         self.temp_files[-1].close()
         return self.temp_files[-1].name

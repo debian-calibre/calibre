@@ -4,15 +4,15 @@
 # 
 # Translators:
 # Darío Hereñú, 2014
-# Jellby <jellby@yahoo.com>, 2014-2017,2019-2020
+# Jellby <jellby@yahoo.com>, 2014-2017,2019-2021
 # Walter Paterno <walter.paterno@gmail.com>, 2021
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-23 06:27+0000\n"
-"PO-Revision-Date: 2021-03-16 06:54+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2021-04-07 15:55+0000\n"
+"PO-Revision-Date: 2021-03-31 18:46+0000\n"
+"Last-Translator: Jellby <jellby@yahoo.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/calibre/calibre/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -73,7 +73,7 @@ msgstr "Supongamos que está usando una instalación de calibre publicar sus pro
 msgid ""
 "That's all. To add this code to calibre as a plugin, simply run the "
 "following in the folder in which you created :file:`__init__.py`::"
-msgstr "Eso es todo. Para agregar este código a calibre como un complemento, simplemente ejecute lo siguiente en la carpeta en la que lo creó: archivo: `__init __. Py` ::"
+msgstr "Eso es todo. Para agregar este código a calibre como un complemento, simplemente ejecute lo siguiente en la carpeta donde reside el archivo :file:`__init__.py`::"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:38
 msgid ""
@@ -145,7 +145,7 @@ msgid ""
 "subpackages of .py modules inside the ZIP file, just like you would normally"
 " (by defining __init__.py in each sub-folder), and everything should \"just "
 "work\"."
-msgstr "El prefijo ``calibre_plugins`` siempre debe estar presente. ``some_name`` proviene del nombre del archivo de texto vacío. ``some_module`` se refiere al archivo :file:`some_module.py` dentro del archivo ZIP. Tenga en cuenta que esta importación es tan potente como las importaciones normales en Python. Puede crear paquetes y subpaquetes de módulos .py dentro del archivo ZIP, igual que lo haría normalmente (definiendo __init__.py en cada subdirectorio), y todo «debería funcionar»."
+msgstr "El prefijo ``calibre_plugins`` siempre debe estar presente. ``some_name`` proviene del nombre del archivo de texto vacío. ``some_module`` se refiere al archivo :file:`some_module.py` dentro del archivo ZIP. Tenga en cuenta que esta importación es tan potente como las importaciones normales en Python. Puede crear paquetes y subpaquetes de módulos .py dentro del archivo ZIP, igual que lo haría normalmente (definiendo __init__.py en cada subcarpeta), y todo «debería funcionar»."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:76
 msgid ""
@@ -281,7 +281,7 @@ msgid ""
 "found in the ZIP file. If you pass in more than one name then it returns a "
 "dict mapping the names to bytes. If a name is not found, it will not be "
 "present in the returned dict."
-msgstr "Esta función debe ejecutarse con una lista de rutas de acceso a archivos dentro del archivo ZIP. Por ejemplo, para acceder al archivo icon.png en la images del archivo ZIP, utilizaría: ``images/icon.png``. Use siempre una barra inclinada a la derecha como separador de ruta, incluso en windows. Cuando se pasa un solo nombre, la función devolverá los bytes en bruto de ese archivo o None si el nombre no se encuentra en el archivo ZIP. Si se pasa más de un nombre, entonces devuelve un diccionario de mapeo de nombres a bytes. Si no se encuentra un nombre, no estará presente en el diccionario devuelto."
+msgstr "Esta función debe ejecutarse con una lista de rutas de acceso a archivos dentro del archivo ZIP. Por ejemplo, para acceder al archivo icon.png en la carpeta images del archivo ZIP, utilizaría: ``images/icon.png``. Use siempre una barra inclinada a la derecha como separador de ruta, incluso en windows. Cuando se pasa un solo nombre, la función devolverá los bytes en bruto de ese archivo o None si el nombre no se encuentra en el archivo ZIP. Si se pasa más de un nombre, entonces devuelve un diccionario de mapeo de nombres a bytes. Si no se encuentra un nombre, no estará presente en el diccionario devuelto."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:149
 msgid "**get_icons(name_or_list_of_names)**"
@@ -337,7 +337,7 @@ msgid ""
 "to the calibre book editor. The plugin is available here: "
 "`editor_demo_plugin.zip <https://calibre-"
 "ebook.com/downloads/editor_demo_plugin.zip>`_."
-msgstr ""
+msgstr "Vamos a cambiar de tercio y enfocarnos en la creación de un complemento para añadir herramientas al editor de libros de calibre. El complemento está disponible aquí: `editor_demo_plugin.zip <https://calibre-ebook.com/downloads/editor_demo_plugin.zip>`_."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:190
 msgid ""
@@ -433,7 +433,7 @@ msgid ""
 "possible to use WebEngine there. Instead you can copy the data your plugin "
 "needs to a temporary folder and run the plugin with that data in a separate "
 "process. A simple example plugin follows that shows how to do this."
-msgstr "Si está escribiendo un complemento de interfaz de usuario que necesita hacer uso de Qt WebEngine, no se puede ejecutar en el proceso principal de calibre, ya que no es posible usar WebEngine allí. En su lugar, puede copiar los datos que su complemento necesita en una carpeta temporal y ejecutar el complemento con esos datos en un proceso separado. A continuación, se muestra un complemento de ejemplo simple que muestra cómo hacer esto."
+msgstr "Si está creando un complemento de interfaz de usuario que hace uso de Qt WebEngine, no puede ejecutarse en el proceso principal de calibre, puesto que no es posible usar WebEngine ahí. En lugar de ello, puede copiar los datos que necesite el complemento a una carpeta temporal y ejecutar el complemento con esos datos en un proceso aparte. A continuación se muestra un complemento de ejemplo que muestra cómo hacerlo."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:261
 msgid ""
@@ -574,7 +574,7 @@ msgstr "Más ejemplos de complementos"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:348
 msgid ""
-"You can find a list of many, sophisticated calibre plugins `here "
+"You can find a list of many sophisticated calibre plugins `here "
 "<https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 msgstr "Puede encontrar una lista de muchos complementos de calibre más complejos `aqui <https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 

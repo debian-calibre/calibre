@@ -431,7 +431,7 @@ class BuiltinListSplit(BuiltinFormatterFunction):
                     "of the value in the list. The first item has position 0 (zero). "
                     "The function returns the last element in the list. "
                     "Example: split('one:two:foo', ':', 'var') is equivalent "
-                    "to var_0 = 'one'; var_1 = 'two'; var_3 = 'foo'.")
+                    "to var_0 = 'one'; var_1 = 'two'; var_2 = 'foo'.")
 
     def evaluate(self, formatter, kwargs, mi, locals, list_val, sep, id_prefix):
         l = [v.strip() for v in list_val.split(sep)]
@@ -1714,7 +1714,9 @@ class BuiltinVirtualLibraries(BuiltinFormatterFunction):
 
     def evaluate(self, formatter, kwargs, mi, locals_):
         if hasattr(mi, '_proxy_metadata'):
-            return mi._proxy_metadata.virtual_libraries
+            from calibre.gui2.ui import get_gui
+            a = get_gui().current_db.data.get_virtual_libraries_for_books((mi.id,))
+            return ', '.join(a[mi.id])
         return _('This function can be used only in the GUI')
 
 

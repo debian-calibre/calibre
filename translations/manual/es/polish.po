@@ -6,7 +6,7 @@
 # Adrián López Galera <adrian_201@hotmail.es>, 2015
 # Darío Hereñú, 2014
 # David Martínez <jokerdm@gmail.com>, 2015
-# Jellby <jellby@yahoo.com>, 2014-2017,2019-2020
+# Jellby <jellby@yahoo.com>, 2014-2017,2019-2021
 # Jorge Toriz <yo@jorgetoriz.com>, 2015
 # Juan Jaramillo <juanda097@protonmail.ch>, 2014
 # Lalo Cabrera <laloogcabrera@yahoo.com.mx>, 2014
@@ -16,9 +16,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-23 06:27+0000\n"
-"PO-Revision-Date: 2021-03-14 19:34+0000\n"
-"Last-Translator: Walter Paterno <walter.paterno@gmail.com>\n"
+"POT-Creation-Date: 2021-04-07 15:55+0000\n"
+"PO-Revision-Date: 2021-03-27 17:52+0000\n"
+"Last-Translator: Jellby <jellby@yahoo.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/calibre/calibre/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -59,14 +59,14 @@ msgstr "El objeto contenedor"
 msgid ""
 "A container represents an open e-book as a folder full of files and an OPF "
 "file. There are two important concepts:"
-msgstr "Un contenedor representa un libro electrónico abierto como una carpeta llena de archivos y un archivo OPF. Hay dos conceptos importantes:"
+msgstr "Un contenedor representa un libro electrónico abierto como una carpeta con archivos más un archivo opf. Hay varios conceptos importantes:"
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:4
 msgid ""
 "The root folder. This is the base of the e-book. All the e-books files are "
 "inside this folder or in its sub-folders."
-msgstr "La carpeta raíz. Esta es la base del libro electrónico. Todos los archivos de libros electrónicos están dentro de esta carpeta o en sus subcarpetas."
+msgstr "La carpeta raíz. Ésta es la base del libro electrónico. Todos los archivos del libro se encuentran en esta carpeta o en sus subcarpetas."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:7
@@ -75,7 +75,7 @@ msgid ""
 " always contain POSIX separators and are unquoted. They can be thought of as"
 " canonical identifiers for files in the book. Most methods on the container "
 "object work with names. Names are always in the NFC Unicode normal form."
-msgstr "Nombres: son rutas a los archivos de los libros en relación con la carpeta raíz. Siempre contienen separadores POSIX y no están entre comillas. Se pueden considerar como identificadores canónicos de archivos del libro. La mayoría de los métodos del objeto contenedor funcionan con nombres. Los nombres siempre están en la forma normal NFC Unicode."
+msgstr "Nombres: Son rutas a los archivos del libro con respecto a la carpeta raíz. Siempre contienen separadores POSIX, sin comillas. Pueden considerarse como identificadores canónicos para los archivos del libro. La mayoría de los métodos en el objeto contenedor trabajan con nombres. Los nombres están siempre en la forma normalizada Unicode NFC."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:13
@@ -142,7 +142,7 @@ msgstr "Parámetros"
 #: of calibre.ebooks.oeb.polish.container.Container.abspath_to_name:3
 msgid ""
 "The base folder. By default the root for this container object is used."
-msgstr "La carpeta base. De forma predeterminada, se utiliza la raíz de este objeto contenedor."
+msgstr "La carpeta base. De manera predeterminada se usa la raíz del objeto contenedor. "
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.add_file:1
@@ -219,7 +219,7 @@ msgid ""
 " in particular case (in)sensitivity. So on a case insensitive filesystem "
 "this will return True even if the case of name is different from the case of"
 " the underlying filesystem file. See also :meth:`has_name`"
-msgstr "Verdadero si existe un archivo / carpeta correspondiente al nombre canónico. Tenga en cuenta que esta función adolece de las limitaciones del sistema de archivos del sistema operativo subyacente, en particular, la (in) sensibilidad. Entonces, en un sistema de archivos que no distingue entre mayúsculas y minúsculas, esto devolverá True incluso si el caso del nombre es diferente del caso del archivo del sistema de archivos subyacente. Ver también: meth: `has_name`"
+msgstr "True si y sólo si existe un archivo o carpeta que corresponde con el nombre canónico ``name``. Tenga en cuenta que esta función sufre de las limitaciones del sistema operativo subyacente, en particular la distinción o no entre mayúsculas y minúsculas. En un sistema operative que no distingue entre mayúsculas y minúsculas, esta función devuelve True incluso si ``name`` y el archivo en el sistema de archivos difieren en mayúsculas y minúsculas. Véase también :meth:`has_name`."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.filesize:1
@@ -470,7 +470,7 @@ msgid ""
 "links inside the file if the folder the file is in changes. Note however, "
 "that links are not updated in the other files that could reference this "
 "file. This is for performance, such updates should be done once, in bulk."
-msgstr "Cambia el nombre de un archivo de current_name a new_name. Rebasa automáticamente todos los enlaces dentro del archivo si cambia la carpeta en la que se encuentra el archivo. Sin embargo, tenga en cuenta que los enlaces no se actualizan en los otros archivos que podrían hacer referencia a este archivo. Esto es por rendimiento, dichas actualizaciones deben realizarse una vez, de forma masiva."
+msgstr "Cambia el nombre de un archivo de ``current_name`` a ``new_name``. Cambia automáticamente la base de todos los enlaces en el archivo si cambia la carpeta en que se encuentra el archivo. Tenga en cuenta, no obstante, que no se actualizan los enlaces en otros archivos que puedan hacer referencia a éste. Esto es así por motivos de rendimiento, tales actualizaciones deben hacerse una sola vez en masa."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.replace:1
@@ -944,8 +944,8 @@ msgstr "Devuelve el objeto :class:`calibre.ebooks.oeb.polish.container.Container
 msgid ""
 "Register a keyboard shortcut that will trigger the specified ``qaction``. "
 "This keyboard shortcut will become automatically customizable by the user in"
-" the Keyboard section of the editor preferences."
-msgstr "Registra un atajo de teclado que ejecutará la ``qaction`` especificada. Este atajo de teclado será automáticamente personalizable por el usuario a través de la sección Teclado de las preferencias del editor."
+" the Keyboard shortcuts section of the editor preferences."
+msgstr "Registra un atajo de teclado que ejecutará la ``qaction`` especificada. Este atajo de teclado será automáticamente personalizable por el usuario a través de la sección Atajos de teclado de las preferencias del editor."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
 #: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:4

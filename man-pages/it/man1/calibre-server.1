@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "marzo 26, 2021" "5.14.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "aprile 16, 2021" "5.15.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -46,7 +46,7 @@ calibre libraries over the internet. You can specify the path to the library
 folders as arguments to \fBcalibre\-server\fP\&. If you do not specify any paths, all the
 libraries that the main calibre program knows about will be used.
 .sp
-Whenever you pass arguments to \fBcalibre\-server\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a \fBcalibre\-server\fP, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .SH [OPZIONI]
 .INDENT 0.0
 .TP
@@ -61,7 +61,7 @@ Tempo (in secondi) di attesa di risposta dal server dopo una richiesta.
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Scegli il tipo di autenticazione adoperato.         Set the HTTP authentication mode used by the server. Set to \fB"\fPbasic\fB"\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB"\fPauto\fB"\fP, which will use \fB"\fPbasic\fB"\fP if SSL is configured otherwise it will use \fB"\fPdigest\fB"\fP\&.
+Scegli il tipo di autenticazione adoperato.         Imposta la modalità di autenticazione HTTP usata dal server. Imposta su \fB"\fPbasic\fB"\fP se terrai questo server dietro un proxy SSL. Altrimenti lascia su \fB"\fPauto\fB"\fP, che utilizzerà \fB"\fPbasic\fB"\fP se SSL è configurato e \fB"\fPdigest\fB"\fP altrimenti.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -71,7 +71,7 @@ Ricarica automaticamente il server quando il codice sorgente è cambiato. Utile 
 .INDENT 0.0
 .TP
 .B \-\-ban\-after
-Numero di login falliti necessari per il ban.       The number of login failures after which an IP address is banned
+Numero di login falliti necessari per il ban.       Il numero di login falliti dopo i quali un indirizzo IP viene bloccato
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -81,7 +81,7 @@ Banna gli indirizzi IP che hanno fallito più volte ad eseguire il login.    Blo
 .INDENT 0.0
 .TP
 .B \-\-book\-list\-mode
-Scegli la modalità predefinita per l\fB\(aq\fPelenco dei libri.      Set the default book list mode that will be used for new users. Individual users can override the default in their own settings. The default is to use a cover grid.
+Scegli la modalità predefinita per l\fB\(aq\fPelenco dei libri.      Imposta la modalità predefinita per l\fB\(aq\fPelenco dei libri che saraìà usata per i nuovi utenti. I singoli utenti possono cambiare l\fB\(aq\fPimpostazione predefinita nelle loro impostazioni personali. Come impostazione predefinita è usata la griglia delle copertine.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -101,7 +101,7 @@ Esegui processo in backgroud come daemon (solo Linux).
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-Limita i campi definiti dall\fB\(aq\fPutente mostrati.       Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
+Limita i campi definiti dall\fB\(aq\fPutente mostrati.       Lista separata da virgole di campi di metadati definiti dall\fB\(aq\fPutente che saranno mostrati dal Server dei Contenuti nelle interfacce /opds e /mobile. Se questa opzione è specificata, ogni campo assente da questa lista non sarà mostrato. Per esempio: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -126,17 +126,17 @@ Consenti alle connessioni locali non autenticate di apportare modifiche.    Norm
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-Registra le richieste HTTP 404 (Non Trovato).       Normally, the server logs all HTTP requests for resources that are not found. This can generate a lot of log spam, if your server is targeted by bots. Use this option to turn it off. Per impostazione predefinita, questa opzione è abilitata.
+Registra le richieste HTTP 404 (Non Trovato).       Di norma, il server registra tutte le richieste HTTP dirette a risorse non trovate. Questo può generare una quantità esagerata di avvisi se il tuo server è preso di mira da bot. Usa questa opzione per disattivarli. Per impostazione predefinita, questa opzione è abilitata.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
-Pubblicizza i feed OPDS con BonJour.        Advertise the OPDS feeds via the BonJour service, so that OPDS based reading apps can detect and connect to the server automatically. Per impostazione predefinita, questa opzione è abilitata.
+Pubblicizza i feed OPDS con BonJour.        Pubblicizza il feed OPDS attraverso il servizio BonJour, così da permettere alle app di lettura basate su OPDS di rilevare e di connettersi al server automaticamente. Per impostazione predefinita, questa opzione è abilitata.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-Trasferimenti di file in zero copy per prestazioni migliorate.      This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. Per impostazione predefinita, questa opzione è abilitata.
+Trasferimenti di file in zero copy per prestazioni migliorate.      Questa opzione abilita i trasferimenti di file in zero copy nel kernel per inviare file via rete, migliorando le prestazioni. Questo, tuttavia, può essere causa di trasferimenti di file corrotti in alcuni file system malfunzionanti. Se avvengono trasferimenti corrotti, disattiva questa opzione. Per impostazione predefinita, questa opzione è abilitata.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -146,7 +146,7 @@ mostra questo messaggio di aiuto ed esci
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-Campi di metadati dell\fB\(aq\fPutente da ignorare.  Comma separated list of user\-defined metadata fields that will not be displayed by the Content server in the /opds and /mobile views. For example: my_rating,my_tags
+Campi di metadati dell\fB\(aq\fPutente da ignorare.  Lista separata da virgole di campi di metadati definiti dall\fB\(aq\fPutente che non saranno mostrati dal Server dei Contenuti nelle interfacce /opds e /mobile. Per esempio: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -161,7 +161,7 @@ Path to log file for server log. This log contains server information and errors
 .INDENT 0.0
 .TP
 .B \-\-manage\-users
-Manage the database of users allowed to connect to this server. You can use it in automated mode by adding a \-\-. See calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help for details. See also the \fI\%\-\-userdb\fP option.
+Gestisci il database degli utenti abilitati a collegarsi a questo server. Puoi usarlo in modalità automatica aggiungendo un \-\-. Vedi calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help per dettagli. Vedi anche l\fB\(aq\fPopzione \fI\%\-\-userdb\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -171,7 +171,7 @@ Dimensione massima del singolo header HTTP (in KB).
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-Tempo massimo dei processi di lavoro.       Maximum amount of time worker processes are allowed to run (in minutes). Set to zero for no limit.
+Tempo massimo dei processi di lavoro.       Tempo massimo di esecuzione per i processi di lavoro (in minuti). Imposta a 0 per non dare limiti.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -181,7 +181,7 @@ Numero massimo di processi di lavoro.       I processi di lavoro vengono avviati
 .INDENT 0.0
 .TP
 .B \-\-max\-log\-size
-Dimensione massima del file di log (in MB).         The maximum size of log files, generated by the server. When the log becomes larger than this size, it is automatically rotated. Set to zero to disable log rotation.
+Dimensione massima file di log (in MB).     La massima dimensione dei registri (log) generati dal server. Quando un file di registro supera questa dimensione, è automaticamente ruotato. Imposta a zero per disattivare la rotazione dei registri.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -191,7 +191,7 @@ Numero massimo di libri nei feed OPDS.      The maximum number of books that the
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-ungrouped\-items
-Numero massimo di elementi non raggruppati nei feed OPDS.   Group items in categories such as author/tags by first letter when there are more than this number of items. Set to zero to disable.
+Numero massimo di elementi non raggruppati nei feed OPDS.   Raggruppa gli elementi in categorie come autore/tag in base alla prima lettera quando il numero di elementi è maggiore di questo numero. Imposta a zero per disattivare.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -201,7 +201,7 @@ Dimensione massima consentita per file caricati sul server (in MB).
 .INDENT 0.0
 .TP
 .B \-\-num\-per\-page
-Numero di libri da mostrare in una pagina singola.  The number of books to show in a single page in the browser.
+Numero di libri da mostrare in una pagina singola.  Il numero di libri da mostrare un una singola pagina del browser.
 .UNINDENT
 .INDENT 0.0
 .TP

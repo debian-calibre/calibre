@@ -14,6 +14,7 @@ from qt.core import (Qt, QModelIndex, QAbstractItemModel, QIcon,
 
 from calibre.gui2.preferences import ConfigWidgetBase, test_widget
 from calibre.gui2.preferences.plugins_ui import Ui_Form
+from calibre.customize import PluginInstallationType
 from calibre.customize.ui import (initialized_plugins, is_disabled, enable_plugin,
                                  disable_plugin, plugin_customization, add_plugin,
                                  remove_plugin, NameConflict)
@@ -53,7 +54,7 @@ class PluginModel(QAbstractItemModel, AdaptSQP):  # {{{
     def populate(self):
         self._data = {}
         for plugin in initialized_plugins():
-            if (getattr(plugin, 'plugin_path', None) is None and self.show_only_user_plugins):
+            if (getattr(plugin, 'installation_type', None) is not PluginInstallationType.EXTERNAL and self.show_only_user_plugins):
                 continue
             if plugin.type not in self._data:
                 self._data[plugin.type] = [plugin]
@@ -211,6 +212,8 @@ class PluginModel(QAbstractItemModel, AdaptSQP):  # {{{
                     ans += _('\nCustomization: ')+c
                 if disabled:
                     ans += _('\n\nThis plugin has been disabled')
+                if plugin.installation_type is PluginInstallationType.SYSTEM:
+                    ans += _('\n\nThis plugin is installed system-wide and can not be managed from within calibre')
                 return (ans)
             if role == Qt.ItemDataRole.DecorationRole:
                 return self.disabled_icon if disabled else self.icon

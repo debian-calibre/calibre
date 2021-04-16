@@ -566,6 +566,23 @@ def snap_to_selection():
         # selection
         scroll_to_pos(pos+5)
 
+
+def ensure_selection_boundary_visible(use_end):
+    sel = window.getSelection()
+    rr = sel.getRangeAt(0)
+    if rr:
+        r = rr.getBoundingClientRect()
+        if r:
+            cnum = column_at_current_scroll_offset()
+            scroll_to_column(cnum)
+            node = sel.focusNode if use_end else sel.anchorNode
+            # Columns are in the inline direction, so get the beginning of the element in the inline
+            x = scroll_viewport.rect_inline_end(r) if use_end else scroll_viewport.rect_inline_start(r)
+            if x < 0 or x >= scroll_viewport.inline_size():
+                pos = scroll_viewport.viewport_to_document_inline(x, doc=node.ownerDocument)
+                scroll_to_pos(pos+5)
+
+
 def jump_to_cfi(cfi):
     # Jump to the position indicated by the specified conformal fragment
     # indicator.
@@ -624,12 +641,12 @@ def progress_frac(frac):
     if in_paged_mode():
         limit = scroll_viewport.paged_content_inline_size() - scroll_viewport.inline_size()
         if limit <= 0:
-            return 0.0
+            return 1  # ensures that if the book ends with a single page file the last shown percentage is 100%
         return current_scroll_offset() / limit
     # In flow mode, we scroll in the block direction, so use that
     limit = scroll_viewport.document_block_size() - scroll_viewport.block_size()
     if limit <= 0:
-        return 0.0
+        return 1
     return Math.max(0, Math.min(scroll_viewport.block_pos() / limit, 1))
 
 

@@ -2,7 +2,7 @@
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
 
-import os, sys, zipfile, importlib
+import os, sys, zipfile, importlib, enum
 
 from calibre.constants import numeric_version, iswindows, ismacos
 from calibre.ptempfile import PersistentTemporaryFile
@@ -24,10 +24,17 @@ class InvalidPlugin(ValueError):
     pass
 
 
+class PluginInstallationType(enum.IntEnum):
+    EXTERNAL = 1
+    SYSTEM = 2
+    BUILTIN = 3
+
+
 class Plugin(object):  # {{{
     '''
     A calibre plugin. Useful members include:
 
+       * ``self.installation_type``: Stores how the plugin was installed.
        * ``self.plugin_path``: Stores path to the ZIP file that contains
                                this plugin or None if it is a builtin
                                plugin
@@ -72,6 +79,9 @@ class Plugin(object):  # {{{
 
     #: The earliest version of calibre this plugin requires
     minimum_calibre_version = (0, 4, 118)
+
+    #: The way this plugin is installed
+    installation_type  = None
 
     #: If False, the user will not be able to disable this plugin. Use with
     #: care.
@@ -290,14 +300,14 @@ class Plugin(object):  # {{{
                     if not zip_safe:
                         break
                 if zip_safe:
-                    sys.path.insert(0, self.plugin_path)
+                    sys.path.append(self.plugin_path)
                     self.sys_insertion_path = self.plugin_path
                 else:
                     from calibre.ptempfile import TemporaryDirectory
                     self._sys_insertion_tdir = TemporaryDirectory('plugin_unzip')
                     self.sys_insertion_path = self._sys_insertion_tdir.__enter__(*args)
                     zf.extractall(self.sys_insertion_path)
-                    sys.path.insert(0, self.sys_insertion_path)
+                    sys.path.append(self.sys_insertion_path)
 
     def __exit__(self, *args):
         ip, it = getattr(self, 'sys_insertion_path', None), getattr(self,

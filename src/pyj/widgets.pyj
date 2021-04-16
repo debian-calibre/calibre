@@ -214,6 +214,16 @@ add_extra_css(def():
     ans += create_button.style + '\n'
     ans += create_spinner.style + '\n'
     ans += Breadcrumbs.STYLE_RULES + '\n'
+    # Chrome hardcodes the size of these to 13.3px. In safari on some devices
+    # the font size is smaller than the body font size and small enough to
+    # trigger page zooms. So set it to 1em so they scale with body font size.
+    ans += '''
+        select, textarea, input[type="text"], input[type="password"],
+        input[type="datetime"], input[type="datetime-local"],
+        input[type="date"], input[type="month"], input[type="time"],
+        input[type="week"], input[type="number"], input[type="email"],
+        input[type="url"], input[type="search"] { font-size: 1em }
+    '''
     return ans
 )
 

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "março 26, 2021" "5.14.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "abril 16, 2021" "5.15.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -91,12 +91,12 @@ Executar o código Python no ficheiro.
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Explode the book into the specified folder. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
+Desconstruir o livro para a pasta especificada. Uso: \-x file.epub output_dir Exporta o livro sob a forma de uma coleção de ficheiros HTML e metadados, que poderá editar utilizando ferramentas adequadas à edição de HTML. Aplicável a ficheiros no formato EPUB, AZW3, HTMLZ e DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Export all calibre data (books/settings/plugins). Normally, you will be asked for the export folder and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export folder and libraries. The special keyword \fB"\fPall\fB"\fP can be used to export all libraries.
+Exportar todos os dados do Calibre (livros/configurações/plugins). Normalmente, ser\-lhe\-á pedido para definir uma pasta para onde exportar e quais as bibliotecas a exportar. Também pode fazer essa especificação por argumentos em linha de comandos e assim saltar as perguntas. Use caminhos absolutos para indicar a pasta para onde exportar e as bibliotecas a incluir. O termo especial \fB"\fPall\fB"\fP pode ser usado para exportar todas as bibliotecas.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -121,7 +121,7 @@ mostrar esta mensagem de ajuda e sair
 .INDENT 0.0
 .TP
 .B \-\-implode\-book, \-i
-Implode um livro previamente explodido. Uso: \-i output_dir file.epub Importa o livro a partir dos ficheiros que se encontram na output_dir que foram criados por uma invocação prévia de \fI\%\-\-explode\-book\fP\&. Assegure\-se de que especifica o mesmo tipo de ficheiro que usou aquando da explosão.
+Implodir um livro previamente desconstruído. Uso: \-i output_dir file.epub Importa o livro a partir dos ficheiros que se encontram na output_dir que foram criados por uma invocação prévia de \fI\%\-\-explode\-book\fP\&. Assegure\-se de que especifica o mesmo tipo de ficheiro que usou aquando da desconstrução (explosão).
 .UNINDENT
 .INDENT 0.0
 .TP

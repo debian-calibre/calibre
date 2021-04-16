@@ -345,7 +345,7 @@ class BasicNewsRecipe(Recipe):
     #: are expressed as a percentage of the downloaded cover.
     #: cover_margins = (10, 15, '#ffffff') pads the cover with a white margin
     #: 10px on the left and right, 15px on the top and bottom.
-    #: Color names defined at https://www.imagemagick.org/script/color.php
+    #: Color names are defined `here <https://www.imagemagick.org/script/color.php>`_.
     #: Note that for some reason, white does not always work in Windows. Use
     #: #ffffff instead
     cover_margins = (0, 0, '#ffffff')
@@ -1709,14 +1709,14 @@ class BasicNewsRecipe(Recipe):
         '''
         Convenience method to take a
         `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_
-        `Tag` and extract the text from it recursively, including any CDATA sections
+        :code:`Tag` and extract the text from it recursively, including any CDATA sections
         and alt tag attributes. Return a possibly empty Unicode string.
 
         `use_alt`: If `True` try to use the alt attribute for tags that don't
         have any textual content
 
         `tag`: `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_
-        `Tag`
+        :code:`Tag`
         '''
         if tag is None:
             return ''

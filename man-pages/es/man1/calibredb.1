@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "marzo 26, 2021" "5.14.0" "calibre"
+.TH "CALIBREDB" "1" "abril 16, 2021" "5.15.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -65,7 +65,7 @@ Para conectar con un servidor de contenidos en ejecución, pase el URL del servi
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%AÑADIR DE DIRECTORIOS\fP
+\fI\%AÑADIR DE CARPETAS\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -207,14 +207,14 @@ El campo por el que se ordenan los resultados. Campos disponibles: author_sort, 
 .sp
 .nf
 .ft C
-calibredb agregar [opciones] archivo1 archivo2 archivo3 ...
+calibredb add [opciones] archivo1 archivo2 archivo3 ...
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Agregue los archivos especificados como libros a la base de datos. También puede especificar carpetas, consulte
-las opciones relacionadas con la carpeta a continuación.
+Añadir los archivos especificados a la base de datos. También pueden especificarse
+carpetas, ver las opciones relativas a carpetas más abajo.
 .sp
 Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .INDENT 0.0
@@ -277,28 +277,28 @@ Establece las etiquetas de los libros añadidos
 .B \-\-title, \-t
 Establece el título de los libros añadidos
 .UNINDENT
-.SS AÑADIR DE DIRECTORIOS
+.SS AÑADIR DE CARPETAS
 .sp
-Opciones para controlar la adición de libros de directorios. De manera predeterminada sólo se añaden los archivos con extensiones de tipos de libro electrónico conocidos.
+Opciones para controlar la adición de libros de carpetas. De manera predeterminada sólo se añaden los archivos con extensiones de tipos de libro electrónico conocidos.
 .INDENT 0.0
 .TP
 .B \-\-add
-Un patrón de nombre de archivo (glob), los archivos que coincidan con este patrón se añadirán al buscar archivos en los directorios, incluso si no son de un tipo de libro electrónico conocido. Se puede especificar varias veces con distintos patrones.
+Un patrón de nombre de archivo (glob), los archivos que coincidan con este patrón se añadirán al buscar archivos en las carpetas, incluso si no son de un tipo de libro electrónico conocido. Se puede especificar varias veces con distintos patrones.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-Un patrón de nombre de archivo (glob), los archivos que coincidan con este patrón se ignorarán al buscar archivos en los directorios. Se puede especificar varias veces con distintos patrones. Por ejemplo: *.pdf ignorará todos los archivos pdf
+Un patrón de nombre de archivo (glob), los archivos que coincidan con este patrón se ignorarán al buscar archivos en las carpetas. Se puede especificar varias veces con distintos patrones. Por ejemplo: *.pdf ignorará todos los archivos PDF
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Suponga que cada carpeta tiene un solo libro lógico y que todos los archivos que contiene son diferentes formatos de libros electrónicos de ese libro.
+Asumir que cada directorio tiene un solo libro y que todos los archivos de la carpeta son diferentes formatos del mismo libro
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Procesar carpetas de forma recursiva
+Procesar carpetas recursivamente
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -458,12 +458,12 @@ Sustituir espacios en blanco con guiones bajos.
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Exportar todos los libros en un solo directorio
+Exportar todos los libros en una sola carpeta
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-La plantilla para controlar el nombre de archivo y la estructura de carpetas de los archivos guardados. El valor predeterminado es \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP, que guardará los libros en una subcarpeta por autor con nombres de archivo que contienen el título y el autor. Los controles disponibles son: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+La plantilla para controlar el nombre y la estructura de carpetas de los archivos guardados. El valor predeterminado es «{author_sort}/{title}/{title} \- {authors}», lo que guardará los libros en una subcarpeta por autor con nombres de archivo que contienen el título y el autor. Las variables de control disponibles son: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -473,7 +473,7 @@ El formato para mostrar las fechas. %d: día, %b: mes, %m: número del mes, %Y: 
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Exportar los libros al directorio especificado. El valor predeterminado es .
+Exportar los libros a la carpeta especificada. El valor predeterminado es .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -528,7 +528,7 @@ Crear referencias cruzadas en la sección Autores para libros con varios autores
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Guarde el resultado de las diferentes etapas de la canalización de conversión en la carpeta especificada. Útil si no está seguro en qué etapa del proceso de conversión se está produciendo un error. Predeterminado: \fB\(aq\fPNone\fB\(aq\fP Se aplica a: formatos de salida AZW3, EPUB, MOBI
+Guardar la salida de las distintas fases del proceso de conversión en la carpeta especificada. Es útil si no está seguro de en qué etapa del proceso ocurre un fallo. Valor predeterminado: «None» Se aplica a: formatos de salida AZW3, EPUB y MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -734,7 +734,7 @@ calibredb restore_database [options]
 .UNINDENT
 .sp
 Recupera la base de datos a partir de los metadatos almacenados en los
-archivos OPF en cada directorio de la biblioteca de calibre. Esto resulta útil
+archivos OPF en cada carpeta de la biblioteca de calibre. Esto resulta útil
 si su archivo metadata.db se ha dañado.
 .sp
 ADVERTENCIA: Esta orden regenera completamente la base de datos. Se perderán
@@ -837,7 +837,7 @@ calibredb backup_metadata [opciones]
 .UNINDENT
 .sp
 Hace una copia de respaldo de los metadatos almacenados en la base de datos
-en ficheros OPF individuales en cada directorio de libro. Esto se lleva a cabo
+en ficheros OPF individuales en cada carpeta de libro. Esto se lleva a cabo
 normalmente de manera automática, pero puede ejecutar esta orden para
 forzar la regeneración de los ficheros OPF, con la opción \-\-all.
 .sp

@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-23 06:27+0000\n"
-"PO-Revision-Date: 2021-03-20 08:09+0000\n"
+"POT-Creation-Date: 2021-04-15 04:32+0000\n"
+"PO-Revision-Date: 2021-04-12 17:52+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan.nyberg.karl@gmail.com>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -81,7 +81,7 @@ msgid ""
 "any query parameters, fragments, etc. The canonical representations must be "
 "unique across all URLs for this news source. If they are not, then internal "
 "links may be resolved incorrectly."
-msgstr "Återge en uppsättning kanoniska representationer av ``url``. Grundinställningen använder bara servervärdnamn och sökväg för URL, ignorerar eventuella frågeparametrar, fragment, o.s.v. kanoniska representationer måste vara unika för alla webbadresser till den här nyhetskällan. Om de inte är det, så interna länkar kan lösas felaktigt."
+msgstr "Återge en uppsättning kanoniska representationer av ``url``. Grundinställningen använder bara servervärdnamn och sökväg för URL, ignorerar eventuella frågeparametrar, fragment o.s.v. kanoniska representationer måste vara unika för alla webbadresser till den här nyhetskällan. Om de inte är det, så interna länkar kan lösas felaktigt."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:0
@@ -241,7 +241,7 @@ msgstr "Denna metod är oftast användbart för webbplatser som försöker göra
 msgid ""
 "Perform some processing on image urls (perhaps removing size restrictions "
 "for dynamically generated images, etc.) and return the precessed URL."
-msgstr "Utför någon behandling på bildwebbadresser (kanske ta bort storleksbegränsningar för dynamiskt genererade bilder, o.s.v.) och återger bearbetad URL."
+msgstr "Utför någon behandling på bildwebbadresser (kanske ta bort storleksbegränsningar för dynamiskt genererade bilder o.s.v.) och återger bearbetad URL."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:1
@@ -465,10 +465,10 @@ msgstr "`weights`: En ordlista som översätter vikt mot titel. Om något titeli
 #: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:1
 msgid ""
 "Convenience method to take a `BeautifulSoup "
-"<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ `Tag` and extract"
-" the text from it recursively, including any CDATA sections and alt tag "
-"attributes. Return a possibly empty Unicode string."
-msgstr "Bekväm metod som använder en `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ `tagg` och packa upp text från den rekursivt, inkluderande godtycklig CDATA-sektion och alt tagg-attribut. Återge en möjlig tom Unicode-sträng."
+"<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag` and "
+"extract the text from it recursively, including any CDATA sections and alt "
+"tag attributes. Return a possibly empty Unicode string."
+msgstr "Bekväm metod som använder en `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tagga` och packa upp texten från den rekursivt, inklusive godtyckliga CDATA-sektioner och alt-tagg-attribut. Återge en eventuellt tom Unicode-sträng."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:6
@@ -481,8 +481,8 @@ msgstr "`use_alt`: Om `True` försök använd alt attribut för taggar som inte 
 #: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:9
 msgid ""
 "`tag`: `BeautifulSoup "
-"<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ `Tag`"
-msgstr "`tagg`: `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ `tagg`"
+"<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag`"
+msgstr "`tagg`: `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ `Tagg`"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.articles_are_obfuscated:1
@@ -505,7 +505,7 @@ msgstr "Automatiskt packa upp all text från hämtade artikelsidor. Använder al
 msgid ""
 "Specify elements that the auto cleanup algorithm should never remove. The "
 "syntax is a XPath expression. For example::"
-msgstr " Ange element som den automatiska rensningen algoritmen aldrig ska ta bort. Syntaxen är ett XPath-uttryck. Exempelvis::"
+msgstr "Ange element som den automatiska rensningsalgoritmen aldrig ska ta bort. Syntaxen är ett XPath-uttryck. Exempelvis::"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.center_navbar:1
@@ -521,7 +521,7 @@ msgid ""
 "left at their default values, JPEG images will be scaled to fit in the "
 "screen dimensions set by the output profile and compressed to size at most "
 "(w * h)/16 where w x h are the scaled image dimensions."
-msgstr "Ställ in det här till Falsk för att ignorera alla skalnings- och komprimeringsparametrar och passera bilder igenom omodifierade. Om Sann och andra komprimeringsparametrar behåller sina standardvärden, skalas JPEG-bilder för att passa in skärmdimensionerna som fastställts av utmatningsprofilen och komprimeras till storlek som mest (b * h)/16 där b x h är de skalade bilddimensionerna."
+msgstr "Ställ in det här till Falsk för att ignorera alla skalnings- och komprimeringsparametrar och passera bilder igenom omodifierade. Om True och andra komprimeringsparametrar behåller sina standardvärden, skalas JPEG-bilder för att passa in skärmdimensionerna som fastställts av utmatningsprofilen och komprimeras till storlek som mest (b * h)/16 där b x h är de skalade bilddimensionerna."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images_auto_size:1
@@ -564,10 +564,10 @@ msgid ""
 "to render the downloaded cover into a frame whose width and height are "
 "expressed as a percentage of the downloaded cover. cover_margins = (10, 15, "
 "'#ffffff') pads the cover with a white margin 10px on the left and right, "
-"15px on the top and bottom. Color names defined at "
-"https://www.imagemagick.org/script/color.php Note that for some reason, "
-"white does not always work in Windows. Use #ffffff instead"
-msgstr "Som standard återges omslagsbild av get_cover_url () och kommer att användas som omslag för tidskriften. Åsidosätta detta i ditt recept instruerar calibre att framställa det hämtade omslaget i en ram vars bredd och höjd uttrycks som en procentandel av den hämtade omslaget. cover_margins = (10, 15, \"#ffffff\") fyller omslaget med en vit marginal 10 pixlar på vänster och höger, 15 pixlar på toppen och botten. Färgnamn som fastställts på https://www.imagemagick.org/script/color.php Observera att av någon anledning, vitt fungerar inte alltid i Windows. Använd #ffffff istället"
+"15px on the top and bottom. Color names are defined `here "
+"<https://www.imagemagick.org/script/color.php>`_. Note that for some reason,"
+" white does not always work in Windows. Use #ffffff instead"
+msgstr "Som standard används omslagsbilden som återges av get_cover_url() som omslaget för tidskriften. Att åsidosätta detta i ditt recept instruerar calibre att göra det hämtade omslaget till en ram vars bredd och höjd uttrycks i procent av det hämtade omslaget. cover_margins = (10, 15, '#ffffff') fyller omslaget med en vit marginal 10 pixlar till vänster och höger, 15 pixlar på toppen och botten. Färgnamn definieras på `här <https://www.imagemagick.org/script/color.php>`_. Observera att vit av någon anledning inte alltid fungerar i Windows. Använd istället #ffffff"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.delay:1
@@ -616,7 +616,7 @@ msgstr "Förteckning över flöden att hämtar. Kan vara antingen ``[url1, url2,
 msgid ""
 "List of regular expressions that determines which links to ignore. If empty "
 "it is ignored. Used only if is_link_wanted is not implemented. For example::"
-msgstr "Lista med reguljära uttryck som avgör vilka länkar att ignorera. Om den är tom ignoreras det. Endast användas om is_link_wanted inte implementeras. Exempelvis:: "
+msgstr "Lista med reguljära uttryck som avgör vilka länkar att ignorera. Om den är tom ignoreras den. Används endast om is_link_wanted inte implementeras. Exempelvis::"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.filter_regexps:7
@@ -882,7 +882,7 @@ msgid ""
 "The CSS that is used to style the templates, i.e., the navigation bars and "
 "the Tables of Contents. Rather than overriding this variable, you should use"
 " `extra_css` in your recipe to customize look and feel."
-msgstr "CSS som används för att utforma mallar, d.v.s. navigeringsfältet och innehållsförteckningen. Istället för att åsidosätta denna variabel bör du använda `extra_css` i receptet för att anpassa utseende och känsla."
+msgstr "CSS som används för att utforma mallar, d.v.s. navigeringsfältet och innehållsförteckningen. Istället för att åsidosätta denna variabel bör du använda `extra_css` i ditt recept för att anpassa utseende och känsla."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.timefmt:1

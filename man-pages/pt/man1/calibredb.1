@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "março 26, 2021" "5.14.0" "calibre"
+.TH "CALIBREDB" "1" "abril 16, 2021" "5.15.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -280,7 +280,7 @@ Definir o título do(s) livro(s) adicionado(s)
 .UNINDENT
 .SS Adicionar a partir de pastas
 .sp
-Opções para controlar a inclusão de livros de pastas. Por predefinição só os ficheiros com extensões conhecidas de formatos de livros é que serão adicionados.
+Opções para controlar a inclusão de livros a partir de pastas. Por predefinição só serão adicionados ficheiros com extensões conhecidas de formatos de livros.
 .INDENT 0.0
 .TP
 .B \-\-add
@@ -470,7 +470,7 @@ Exportar todos os livros para uma única pasta
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+Modelo para controlar a estrutura do nome de ficheiro e pastas para os ficheiros exportados. A predefinição é \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP, o que vai guardar os livros numa subpasta por autor com o nome dos ficheiros contendo título e autor. As variáveis disponíveis são: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -535,7 +535,7 @@ Criar referências cruzadas na secção de autores para livros com múltiplos au
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Guarda o resultado, na pasta especificada, dos diferentes estágios da cadeia de conversão. Será útil se não tiver a certeza onde é que está a ocorrer o erro do processo de conversão. Predefinição: \fB\(aq\fPNone\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -743,14 +743,9 @@ calibredb restore_database [options]
 .UNINDENT
 .UNINDENT
 .sp
-Restore this database from the metadata stored in OPF files in each
-folder of the calibre library. This is useful if your metadata.db file
-has been corrupted.
+Restaurar esta base de dados a partir dos metadados armazenados nos ficheiros OPF em cada pasta da biblioteca do Calibre. Isto é útil apenas se o seu ficheiro metadata.db tiver sido corrompido.
 .sp
-WARNING: This command completely regenerates your database. You will lose
-all saved searches, user categories, plugboards, stored per\-book conversion
-settings, and custom recipes. Restored metadata will only be as accurate as
-what is found in the OPF files.
+AVISO: Este comando regenera completamente a sua base de dados. Vai perder todas as pesquisas guardadas, categorias do utilizador, conectores, preferências de conversão por livro e receitas personalizadas. Os metadados restaurados serão tão exatos quanto os encontrados nos ficheiros OPF.
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
 .INDENT 0.0
@@ -846,12 +841,9 @@ calibredb backup_metadata [options]
 .UNINDENT
 .UNINDENT
 .sp
-Backup the metadata stored in the database into individual OPF files in each
-books folder. This normally happens automatically, but you can run this
-command to force re\-generation of the OPF files, with the \-\-all option.
+Cópia de segurança dos metadados armazenados na base de dados em ficheiros OPF individuais em cada diretório de livros. Normalmente isto acontece automaticamente, mas pode executar este comando para forçar uma recriação dos ficheiros OPF, com a opção \-\-all.
 .sp
-Note that there is normally no need to do this, as the OPF files are backed up
-automatically, every time metadata is changed.
+Note que normalmente não há necessidade de fazer isto, pois os ficheiros OPF são copiados automaticamente sempre que os metadados sejam alterados.
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
 .INDENT 0.0

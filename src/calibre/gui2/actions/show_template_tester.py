@@ -25,6 +25,9 @@ class ShowTemplateTesterAction(InterfaceAction):
         self.first_time = True
         self.qaction.triggered.connect(self.show_template_editor)
 
+    def last_template_text(self):
+        return self.previous_text
+
     def show_template_editor(self, *args):
         view = self.gui.current_view()
         if view is not self.gui.library_view:
@@ -35,7 +38,7 @@ class ShowTemplateTesterAction(InterfaceAction):
         rows = view.selectionModel().selectedRows()
         if not rows:
             return error_dialog(self.gui, _('No books selected'),
-                    _('One book must be selected'), show=True)
+                    _('At least one book must be selected'), show=True)
         mi = []
         db = view.model().db
         for row in rows:

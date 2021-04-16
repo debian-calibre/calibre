@@ -533,9 +533,10 @@ class CoverDelegate(QStyledItemDelegate):
             for i, (kind, column, rule) in enumerate(emblem_rules):
                 icon_name, mi = self.render_emblem(book_id, rule, i, m.cover_grid_emblem_cache, mi, db, m.formatter, m.cover_grid_template_cache)
                 if icon_name is not None:
-                    pixmap = self.cached_emblem(m.cover_grid_bitmap_cache, icon_name)
-                    if pixmap is not None:
-                        emblems.append(pixmap)
+                    for one_icon in filter(None, (i.strip() for i in icon_name.split(':'))):
+                        pixmap = self.cached_emblem(m.cover_grid_bitmap_cache, one_icon)
+                        if pixmap is not None:
+                            emblems.append(pixmap)
             if marked:
                 emblems.insert(0, self.cached_emblem(m.cover_grid_bitmap_cache, ':marked', m.marked_icon))
             if on_device:
@@ -780,10 +781,13 @@ class GridView(QListView):
 
     def double_clicked(self, index):
         self.start_view_animation(index)
-        if tweaks['doubleclick_on_library_view'] == 'open_viewer':
+        tval = tweaks['doubleclick_on_library_view']
+        if tval == 'open_viewer':
             self.gui.iactions['View'].view_triggered(index)
-        elif tweaks['doubleclick_on_library_view'] in {'edit_metadata', 'edit_cell'}:
+        elif tval in {'edit_metadata', 'edit_cell'}:
             self.gui.iactions['Edit Metadata'].edit_metadata(False, False)
+        elif tval == 'show_book_details':
+            self.gui.iactions['Show Book Details'].show_book_info()
 
     def animation_value_changed(self, value):
         if self.delegate.animating is not None:

@@ -218,7 +218,7 @@ General Program Mode
     and_expression  ::= not_expression [ '&&' not_expression ]*
     not_expression  ::= [ '!' not_expression ]* | compare_exp
     compare_expr    ::= add_sub_expr [ compare_op add_sub_expr ]
-    compare_op      ::= '==' | '!=' | '>=' | '>' | '<=' | '<' | 'in' |
+    compare_op      ::= '==' | '!=' | '>=' | '>' | '<=' | '<' | 'in' | 'inlist' |
                         '==#' | '!=#' | '>=#' | '>#' | '<=#' | '<#'
     add_sub_expr    ::= times_div_expr [ add_sub_op times_div_expr ]*
     add_sub_op      ::= '+' | '-'
@@ -226,7 +226,8 @@ General Program Mode
     times_div_op    ::= '*' | '/'
     unary_op_expr   ::= [ add_sub_op unary_op_expr ]* | expression
     expression      ::= identifier | constant | function | assignment | field_reference |
-                        if_expression | for_expression | '(' expression_list ')'
+                        if_expr | for_expr | break_expr | continue_expr |
+                        '(' expression_list ')'
     field_reference ::= '$' [ '$' ] [ '#' ] identifier
     identifier      ::= id_start [ id_rest ]*
     id_start        ::= letter | underscore
@@ -234,13 +235,15 @@ General Program Mode
     constant        ::= " string " | ' string ' | number
     function        ::= identifier '(' expression_list [ ',' expression_list ]* ')'
     assignment      ::= identifier '=' top_expression
-    if_expression   ::= 'if' condition 'then' expression_list
-                        [ elif_expression ] [ 'else' expression_list ] 'fi'
+    if_expr         ::= 'if' condition 'then' expression_list
+                        [ elif_expr ] [ 'else' expression_list ] 'fi'
     condition       ::= top_expression
-    elif_expression ::= 'elif' condition 'then' expression_list elif_expression | ''
-    for_expression  ::= 'for' identifier 'in' list_expression
+    elif_expr       ::= 'elif' condition 'then' expression_list elif_expr | ''
+    for_expr        ::= 'for' identifier 'in' list_expr
                         [ 'separator' separator_expr ] ':' expression_list 'rof'
-    list_expression ::= top_expression
+    list_expr       ::= top_expression
+    break_expr      ::= 'break'
+    continue_expr   ::= 'continue'
     separator_expr  ::= top_expression
 
 Notes:
@@ -317,7 +320,7 @@ As a last example, this program returns the value of the ``series`` column if th
 
 **For Expressions**
 
-The ``for`` expression iterates over a list of values, processing them one at a time. The ``list_expression`` must evaluate to either a metadata field ``lookup name``, for example ``tags`` or ``#genre``, or a list of values. If the result is a valid ``lookup name`` then the field's value is fetched and the separator specified for that field type is used. If the result isn't a valid lookup name then it is assumed to be a list of values. The list is assumed to be separated by commas unless the optional keyword ``separator`` is supplied, in which case the list values must be separated by the result of evaluating the ``separator_expr``. Each value in the list is assigned to the specified variable then the ``expression_list`` is evaluated.
+The ``for`` expression iterates over a list of values, processing them one at a time. The ``list_expression`` must evaluate to either a metadata field ``lookup name``, for example ``tags`` or ``#genre``, or a list of values. If the result is a valid ``lookup name`` then the field's value is fetched and the separator specified for that field type is used. If the result isn't a valid lookup name then it is assumed to be a list of values. The list is assumed to be separated by commas unless the optional keyword ``separator`` is supplied, in which case the list values must be separated by the result of evaluating the ``separator_expr``. Each value in the list is assigned to the specified variable then the ``expression_list`` is evaluated. You can use ``break`` to jump out of the loop, and ``continue`` to jump to the beginning of the loop for the next iteration.
 
 Example: This template removes the first hierarchical name for each value in Genre (``#genre``), constructing a list with the new names::
 
@@ -340,8 +343,8 @@ Relational operators return ``'1'`` if the comparison is true, otherwise the emp
 
 There are two forms of relational operators: string comparisons and numeric comparisons.
 
-String comparisons do case-insensitive string comparison using lexical order. The supported string comparison operators are ``==``, ``!=``, ``<``, ``<=``, ``>``, ``>=``, and ``in``.
-For the ``in`` operator, the result of the left hand expression is interpreted as a regular expression pattern. The ``in`` operator is True if the value of left-hand expression interpreted as a regular expression matches the value of the right hand expression. The match is case-insensitive.
+String comparisons do case-insensitive string comparison using lexical order. The supported string comparison operators are ``==``, ``!=``, ``<``, ``<=``, ``>``, ``>=``, ``in``, and ``inlist``.
+For the ``in`` operator, the result of the left hand expression is interpreted as a regular expression pattern. The ``in`` operator is True if the value of left-hand regular expression matches the value of the right hand expression. The ``inlist`` operator is true if the left hand regular expression matches any one of the items in the right hand list where the items in the list are separated by commas. The matches are case-insensitive.
 
 The numeric comparison operators are ``==#``, ``!=#``, ``<#``, ``<=#``, ``>#``, ``>=#``. The left and right expressions must evaluate to numeric values with two exceptions: both the string value "None" (undefined field) and the empty string evaluate to the value zero.
 
@@ -349,6 +352,8 @@ Examples:
 
   * ``program: field('series') == 'foo'`` returns ``'1'`` if the book's series is 'foo', otherwise ``''``.
   * ``program: 'f.o' in field('series')`` returns ``'1'`` if the book's series matches the regular expression ``f.o`` (e.g., `foo`, `Off Onyx`, etc.), otherwise ``''``.
+  * ``program: 'science' inlist field('#genre')`` returns ``'1'`` if any of the book's genres match the regular expression ``science``, e.g., `Science`, `History of Science`, `Science Fiction` etc.), otherwise ``''``.
+  * ``program: '^science$' inlist field('#genre')`` returns ``'1'`` if any of the book's genres exactly match the regular expression ``^science$``, e.g., `Science`. The genres `History of Science` and `Science Fiction` don't match. If there isn't a match then returns ``''``.
   * ``program: if field('series') != 'foo' then 'bar' else 'mumble' fi`` returns ``'bar'`` if the book's series is not ``foo``. Otherwise it returns ``'mumble'``.
   * ``program: if field('series') == 'foo' || field('series') == '1632' then 'yes' else 'no' fi`` returns ``'yes'`` if series is either ``'foo'`` or ``'1632'``, otherwise ``'no'``.
   * ``program: if '^(foo|1632)$' in field('series') then 'yes' else 'no' fi`` returns ``'yes'`` if series is either ``'foo'`` or ``'1632'``, otherwise ``'no'``.
@@ -469,7 +474,7 @@ In `GPM` the functions described in `Single Function Mode` all require an additi
 
     var_0 = 'one';
     var_1 = 'two';
-    var_3 = 'foo
+    var_2 = 'foo
 
 * ``list_union(list1, list2, separator)`` -- return a list made by merging the items in ``list1`` and ``list2``, removing duplicate items using a case-insensitive comparison. If items differ in case, the one in ``list1`` is used. The items in ``list1`` and ``list2`` are separated by ``separator``, as are the items in the returned list. Aliases: ``merge_lists()``, ``list_union()``
 * ``mod(x, y)`` -- returns the ``floor`` of the remainder of ``x / y``. Throws an exception if either ``x`` or ``y`` is not a number.

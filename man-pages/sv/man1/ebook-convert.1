@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "mars 26, 2021" "5.14.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "april 16, 2021" "5.15.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -163,7 +163,7 @@ Dela alla HTML\-filer som är större än denna storlek (i KiB). Detta är nödv
 .INDENT 0.0
 .TP
 .B \-\-no\-default\-epub\-cover
-Om inmatningsfilen inte har något omslag och du inte anger ett, skapas normalt ett standardomslag genererats med titel, författare, o.s.v. Med det här alternativet aktiverat skapas inga standardomslag.
+Om inmatningsfilen inte har något omslag och du inte anger ett, skapas normalt ett standardomslag genererats med titel, författare o.s.v. Med det här alternativet aktiverat skapas inga standardomslag.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -173,7 +173,7 @@ Använd inte SVG\-grafik till omslag. Använd om din EPUB\-fil kommer att använ
 .INDENT 0.0
 .TP
 .B \-\-preserve\-cover\-aspect\-ratio
-När man använder ett SVG\-omslag kommer det här alternativet att leda till att omslaget skalas om för att täcka det tillgängliga skärmområdet, men bevarar fortfarande dess bildförhållande (förhållande mellan bredd och höjd). Det innebär att det kan finnas vita kanter på sidorna eller på toppen och botten av bilden, men bilden kommer aldrig att förvrängas. Om det här alternativet inaktiveras, kan bilden bli en aning förvrängd, men det kommer inte finnas några ramar.
+När man använder ett SVG\-omslag kommer det här alternativet att få omslaget att skalas om för att täcka det tillgängliga skärmområdet, men bevarar fortfarande dess bildförhållande (förhållandet mellan bredd och höjd). Det innebär att det kan finnas vita kanter på sidorna eller på toppen och botten av bilden, men bilden kommer aldrig att förvrängas. Om det här alternativet inaktiveras, kan bilden bli en aning förvrängd, men det kommer inte finnas några ramar.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -311,7 +311,7 @@ Använd delmängd av alla inbäddade teckensnitt. Varje inbäddat teckensnitt re
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Sökvägen till en fil som innehåller regler för att förändra CSS\-format i denna bok. Det enklaste sättet att skapa en sådan fil är att använda guiden för att skapa regler i calibre gränssnittet. Gå till det i \fB"\fPUtseende och känsla\->Omvandla format\fB"\fP avsnittet i konverteringsdialogrutan. När du har skapat reglerna, kan du använda knappen \fB"\fPExportera\fB"\fP för att spara dem till en fil.
+Sökvägen till en fil som innehåller regler för att förändra CSS\-format i denna bok. Det enklaste sättet att skapa en sådan fil är att använda guiden för att skapa regler i det grafiska gränssnittet för calibre. Gå till det i \fB"\fPUtseende och känsla\->Omvandla format\fB"\fP avsnittet i konverteringsdialogrutan. När du har skapat reglerna, kan du använda knappen \fB"\fPExportera\fB"\fP för att spara dem till en fil.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -343,7 +343,7 @@ Vändningsindrag som skapats från flera icke\-brytande mellanslagsenheter i CSS
 .INDENT 0.0
 .TP
 .B \-\-disable\-format\-scene\-breaks
-Vänsterjusterade scenbrytningsmarkörer är centrerade. Ersätt mjuka scenbrytningar som använder flera tomma rader med horisontella linjer.
+Vänsterjusterade scenbrytningsmarkörer är centrerade. Ersätt mjuka scenbrytningar som använder flera tomma rader med horisontella regler.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -373,7 +373,7 @@ Aktivera heuristisk bearbetning. Denna möjlighet måste anges för någon heuri
 .INDENT 0.0
 .TP
 .B \-\-html\-unwrap\-factor
-Skala som används för att bestämma längden på vilken en rad ska radbrytas. Giltiga värden är ett decimaltal mellan 0 och 1. Standard är 0,4, precis under medianlinjelängden. Om bara några få rader i dokumentet kräver radbrytning bör detta värde minskas
+Skala som används för att bestämma längden på vilken en rad ska radbrytas. Giltiga värden är ett decimaltal mellan 0 och 1. Standard är 0,4, precis under medianradens längd. Om bara ett fåtal rader i dokumentet kräver radbrytning bör detta värde minskas
 .UNINDENT
 .INDENT 0.0
 .TP

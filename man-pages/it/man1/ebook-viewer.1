@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-VIEWER" "1" "marzo 26, 2021" "5.14.0" "calibre"
+.TH "EBOOK-VIEWER" "1" "aprile 16, 2021" "5.15.0" "calibre"
 .SH NAME
 ebook-viewer \- ebook-viewer
 .
@@ -35,15 +35,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-ebook\-viewer [options] file
+ebook\-viewer [opzioni] file
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-View an e\-book.
+Vedi un e\-book.
 .sp
-Whenever you pass arguments to \fBebook\-viewer\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a \fBebook\-viewer\fP, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .SH [OPZIONI]
 .INDENT 0.0
 .TP
@@ -53,7 +53,7 @@ Continua lettura dal libro aperto precedentemente
 .INDENT 0.0
 .TP
 .B \-\-detach
-Detach from the controlling terminal, if any (Linux only)
+Scollega dal terminale di controllo, se presente (solo su Linux)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -63,7 +63,7 @@ Ricarica forzatamente tutti i libri aperti
 .INDENT 0.0
 .TP
 .B \-\-full\-screen, \-\-fullscreen, \-f
-If specified, the E\-book viewer window will try to open full screen when started.
+Se selezionato, la finestra del lettore e\-book proverà ad aprirsi a schermo intero all\fB\(aq\fPavvio.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -73,12 +73,12 @@ mostra questo messaggio di aiuto ed esci
 .INDENT 0.0
 .TP
 .B \-\-open\-at
-The position at which to open the specified book. The position is a location or position you can get by using the Go to\->Location action in the viewer controls. Alternately, you can use the form toc:something and it will open at the location of the first Table of Contents entry that contains the string \fB"\fPsomething\fB"\fP\&. The form toc\-href:something will match the href (internal link destination) of toc nodes. The matching is exact, If you want to match a substring, use the form toc\-href\-contains:something. The form ref:something will use Reference mode references.
+La posizione alla quale aprire il libro specificato. La posizione è una collocazione o posizione a cui puoi recarti usando l\fB\(aq\fPazione Vai a\->Collocazione nei controlli del lettore. In alternativa puoi usare la forma toc:qualcosa e si aprirà alla collocazione della prima voce dell\fB\(aq\fPindice che contenga la stringa \fB"\fPqualcosa\fB"\fP\&. La forma toc\-href:qualcosa cercherà nello href (destinazione interna del link) degli elementi dell\fB\(aq\fPindice. La corrispondenza è esatta, per trovare una sottostringa, usa la forma toc\-href\-contains:qualcosa. La forma ref:qualcosa userà i riferimenti della Modalità Riferimento.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-raise\-window
-If specified, the E\-book viewer window will try to come to the front when started.
+Se selezionato, la finestra del lettore e\-book provera a portarsi in primo piano all\fB\(aq\fPavvio.
 .UNINDENT
 .INDENT 0.0
 .TP

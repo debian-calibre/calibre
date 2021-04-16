@@ -215,6 +215,20 @@ class Worker(Thread):  # Get details {{{
                 11: ['noviembre'],
                 12: ['diciembre'],
             },
+            'se': {
+                1: ['januari'],
+                2: ['februari'],
+                3: ['mars'],
+                4: ['april'],
+                5: ['maj'],
+                6: ['juni'],
+                7: ['juli'],
+                8: ['augusti'],
+                9: ['september'],
+                10: ['oktober'],
+                11: ['november'],
+                12: ['december'],
+            },
             'jp': {
                 1: ['1月'],
                 2: ['2月'],
@@ -260,13 +274,14 @@ class Worker(Thread):  # Get details {{{
                     starts-with(text(), "Editor:") or \
                     starts-with(text(), "Editora:") or \
                     starts-with(text(), "Uitgever:") or \
+                    starts-with(text(), "Utgivare:") or \
                     starts-with(text(), "出版社:")]
             '''
         self.pubdate_xpath = '''
             descendant::*[starts-with(text(), "Publication Date:") or \
                     starts-with(text(), "Audible.com Release Date:")]
         '''
-        self.publisher_names = {'Publisher', 'Uitgever', 'Verlag',
+        self.publisher_names = {'Publisher', 'Uitgever', 'Verlag', 'Utgivare',
                                 'Editore', 'Editeur', 'Editor', 'Editora', '出版社'}
 
         self.language_xpath =    '''
@@ -278,10 +293,11 @@ class Worker(Thread):  # Get details {{{
                 or text() = "Idioma:" \
                 or starts-with(text(), "Langue") \
                 or starts-with(text(), "言語") \
+                or starts-with(text(), "Språk") \
                 or starts-with(text(), "语种")
                 ]
             '''
-        self.language_names = {'Language', 'Sprache',
+        self.language_names = {'Language', 'Sprache', 'Språk',
                                'Lingua', 'Idioma', 'Langue', '言語', 'Taal', '语种'}
 
         self.tags_xpath = '''
@@ -297,12 +313,14 @@ class Worker(Thread):  # Get details {{{
         '''
 
         self.ratings_pat = re.compile(
-            r'([0-9.,]+) ?(out of|von|van|su|étoiles sur|つ星のうち|de un máximo de|de) ([\d\.]+)( (stars|Sternen|stelle|estrellas|estrelas|sterren)){0,1}')
+            r'([0-9.,]+) ?(out of|von|van|su|étoiles sur|つ星のうち|de un máximo de|de|av) '
+            r'([\d\.]+)( (stars|Sternen|stelle|estrellas|estrelas|sterren|stjärnor)){0,1}'
+        )
         self.ratings_pat_cn = re.compile('平均([0-9.]+)')
         self.ratings_pat_jp = re.compile(r'\d+つ星のうち([\d\.]+)')
 
         lm = {
-            'eng': ('English', 'Englisch', 'Engels'),
+            'eng': ('English', 'Englisch', 'Engels', 'Engelska'),
             'fra': ('French', 'Français'),
             'ita': ('Italian', 'Italiano'),
             'deu': ('German', 'Deutsch'),
@@ -311,6 +329,7 @@ class Worker(Thread):  # Get details {{{
             'por': ('Portuguese', 'Português'),
             'nld': ('Dutch', 'Nederlands',),
             'chs': ('Chinese', '中文', '简体中文'),
+            'swe': ('Swedish', 'Svenska'),
         }
         self.lang_map = {}
         for code, names in lm.items():
@@ -425,15 +444,19 @@ class Worker(Thread):  # Get details {{{
             self.cover_url = self.cover_url_processor(self.cover_url)
         mi.has_cover = bool(self.cover_url)
 
+        detail_bullets = root.xpath('//*[@data-feature-name="detailBullets"]')
         non_hero = tuple(self.selector(
-            'div#bookDetails_container_div div#nonHeroSection'))
-        if non_hero:
-            # New style markup
+            'div#bookDetails_container_div div#nonHeroSection')) or tuple(self.selector(
+                '#productDetails_techSpec_sections'))
+        if detail_bullets:
+            self.parse_detail_bullets(root, mi, detail_bullets[0])
+        elif non_hero:
             try:
                 self.parse_new_details(root, mi, non_hero[0])
             except:
                 self.log.exception(
                     'Failed to parse new-style book details section')
+
         else:
             pd = root.xpath(self.pd_xpath)
             if pd:
@@ -524,6 +547,7 @@ class Worker(Thread):  # Get details {{{
                 '#byline .author a.a-link-normal',
                 '#bylineInfo .author .contributorNameID',
                 '#bylineInfo .author a.a-link-normal',
+                '#bylineInfo #bylineContributor',
         ):
             matches = tuple(self.selector(sel))
             if matches:
@@ -668,6 +692,10 @@ class Worker(Thread):  # Get details {{{
                 except Exception as e:
                     self.log.warn(
                         'Parsing of obfuscated product description failed with error: %s' % as_unicode(e))
+            else:
+                desc = root.xpath('//div[@id="productDescription_fullView"]')
+                if desc:
+                    ans += self._render_comments(desc[0])
 
         return ans
 
@@ -691,6 +719,23 @@ class Worker(Thread):  # Get details {{{
                             s[0], encoding='unicode', method='text', with_tail=False).strip()
                         if series:
                             ans = (series, series_index)
+        else:
+            series = root.xpath('//div[@id="seriesBullet_feature_div"]')
+            if series:
+                series = series[0]
+                spans = series.xpath('descendant::span')
+                if spans:
+                    span = spans[0]
+                    b = span.xpath('./b')
+                    a = span.xpath('./a')
+                    if a and b:
+                        series = self.tostring(a[0], encoding='unicode', method='text', with_tail=False).strip()
+                        if series:
+                            raw = self.tostring(b[0], encoding='unicode', method='text', with_tail=False).strip()
+                            m = re.search(r'[0-9.]+', raw)
+                            if m is not None:
+                                ans = (series, float(m.group()))
+
         # This is found on Kindle edition pages on amazon.com
         if ans == (None, None):
             for span in root.xpath('//div[@id="aboutEbooksSection"]//li/span'):
@@ -823,36 +868,46 @@ class Worker(Thread):  # Get details {{{
                 if url:
                     return url
 
+    def parse_detail_bullets(self, root, mi, container):
+        ul = next(self.selector('.detail-bullet-list', root=container))
+        for span in self.selector('.a-list-item', root=ul):
+            cells = span.xpath('./span')
+            if len(cells) >= 2:
+                self.parse_detail_cells(mi, cells[0], cells[1])
+
     def parse_new_details(self, root, mi, non_hero):
         table = non_hero.xpath('descendant::table')[0]
         for tr in table.xpath('descendant::tr'):
-            cells = tr.xpath('descendant::td')
+            cells = tr.xpath('descendant::*[local-name()="td" or local-name()="th"]')
             if len(cells) == 2:
-                name = self.totext(cells[0])
-                val = self.totext(cells[1])
-                if not val:
-                    continue
-                if name in self.language_names:
-                    ans = self.lang_map.get(val, None)
-                    if not ans:
-                        ans = canonicalize_lang(val)
-                    if ans:
-                        mi.language = ans
-                elif name in self.publisher_names:
-                    pub = val.partition(';')[0].partition('(')[0].strip()
-                    if pub:
-                        mi.publisher = pub
-                    date = val.rpartition('(')[-1].replace(')', '').strip()
-                    try:
-                        from calibre.utils.date import parse_only_date
-                        date = self.delocalize_datestr(date)
-                        mi.pubdate = parse_only_date(date, assume_utc=True)
-                    except:
-                        self.log.exception('Failed to parse pubdate: %s' % val)
-                elif name in {'ISBN', 'ISBN-10', 'ISBN-13'}:
-                    ans = check_isbn(val)
-                    if ans:
-                        self.isbn = mi.isbn = ans
+                self.parse_detail_cells(mi, cells[0], cells[1])
+
+    def parse_detail_cells(self, mi, c1, c2):
+        name = self.totext(c1).strip().strip(':').strip()
+        val = self.totext(c2)
+        if not val:
+            return
+        if name in self.language_names:
+            ans = self.lang_map.get(val, None)
+            if not ans:
+                ans = canonicalize_lang(val)
+            if ans:
+                mi.language = ans
+        elif name in self.publisher_names:
+            pub = val.partition(';')[0].partition('(')[0].strip()
+            if pub:
+                mi.publisher = pub
+            date = val.rpartition('(')[-1].replace(')', '').strip()
+            try:
+                from calibre.utils.date import parse_only_date
+                date = self.delocalize_datestr(date)
+                mi.pubdate = parse_only_date(date, assume_utc=True)
+            except:
+                self.log.exception('Failed to parse pubdate: %s' % val)
+        elif name in {'ISBN', 'ISBN-10', 'ISBN-13'}:
+            ans = check_isbn(val)
+            if ans:
+                self.isbn = mi.isbn = ans
 
     def parse_isbn(self, pd):
         items = pd.xpath(
@@ -908,7 +963,7 @@ class Worker(Thread):  # Get details {{{
 class Amazon(Source):
 
     name = 'Amazon.com'
-    version = (1, 2, 15)
+    version = (1, 2, 18)
     minimum_calibre_version = (2, 82, 0)
     description = _('Downloads metadata and covers from Amazon')
 
@@ -933,6 +988,7 @@ class Amazon(Source):
         'nl': _('Netherlands'),
         'cn': _('China'),
         'ca': _('Canada'),
+        'se': _('Sweden'),
     }
 
     SERVERS = {
@@ -1178,9 +1234,6 @@ class Amazon(Source):
         if not for_amazon:
             return terms, domain
 
-        if domain == 'jp':
-            # magic parameter to enable Japanese Shift_JIS encoding.
-            q['__mk_ja_JP'] = 'カタカナ'
         if domain == 'nl':
             q['__mk_nl_NL'] = 'ÅMÅŽÕÑ'
             if 'field-keywords' not in q:
@@ -1189,17 +1242,15 @@ class Amazon(Source):
                 q['field-keywords'] += ' ' + q.pop(f, '')
             q['field-keywords'] = q['field-keywords'].strip()
 
-        encode_to = 'Shift_JIS' if domain == 'jp' else 'utf-8'
-        encoded_q = dict([(x.encode(encode_to, 'ignore'), y.encode(encode_to,
-                                                                'ignore')) for x, y in q.items()])
+        encoded_q = dict([(x.encode('utf-8', 'ignore'), y.encode(
+            'utf-8', 'ignore')) for x, y in q.items()])
         url_query = urlencode(encoded_q)
-        if encode_to == 'utf-8':
-            # amazon's servers want IRIs with unicode characters not percent esaped
-            parts = []
-            for x in url_query.split(b'&' if isinstance(url_query, bytes) else '&'):
-                k, v = x.split(b'=' if isinstance(x, bytes) else '=', 1)
-                parts.append('{}={}'.format(iri_quote_plus(unquote_plus(k)), iri_quote_plus(unquote_plus(v))))
-            url_query = '&'.join(parts)
+        # amazon's servers want IRIs with unicode characters not percent esaped
+        parts = []
+        for x in url_query.split(b'&' if isinstance(url_query, bytes) else '&'):
+            k, v = x.split(b'=' if isinstance(x, bytes) else '=', 1)
+            parts.append('{}={}'.format(iri_quote_plus(unquote_plus(k)), iri_quote_plus(unquote_plus(v))))
+        url_query = '&'.join(parts)
         url = 'https://www.amazon.%s/s/?' % self.get_website_domain(
             domain) + url_query
         return url, domain
@@ -1556,7 +1607,7 @@ def manual_tests(domain, **kw):  # {{{
         (   # Paperback with series
             {'identifiers': {'amazon': '1423146786'}},
             [title_test('The Heroes of Olympus, Book Five The Blood of Olympus',
-                        exact=True), series_test('Heroes of Olympus', 5)]
+                        exact=True), series_test('The Heroes of Olympus', 5)]
         ),
 
         (   # Kindle edition with series
@@ -1592,7 +1643,7 @@ def manual_tests(domain, **kw):  # {{{
         (  # No specific problems
             {'identifiers': {'isbn': '0743273567'}},
             [title_test('The great gatsby', exact=True),
-             authors_test(['F. Scott Fitzgerald'])]
+             authors_test(['Francis Scott Fitzgerald'])]
         ),
 
     ]
@@ -1656,6 +1707,16 @@ def manual_tests(domain, **kw):  # {{{
         (
             {'identifiers': {'isbn': '8483460831'}},
             [title_test('Tiempos Interesantes',
+                        exact=False), authors_test(['Terry Pratchett'])
+             ]
+
+        ),
+    ]  # }}}
+
+    all_tests['se'] = [  # {{{
+        (
+            {'identifiers': {'isbn': '9780552140287'}},
+            [title_test('Men At Arms: A Discworld Novel: 14',
                         exact=False), authors_test(['Terry Pratchett'])
              ]
 

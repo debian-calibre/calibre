@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "março 26, 2021" "5.14.0" "calibre"
+.TH "CALIBREDB" "1" "abril 16, 2021" "5.15.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -86,7 +86,7 @@ detalhes e exemplos.
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ADICIONAR A PARTIR DE DIRETÓRIOS\fP
+\fI\%ADICIONAR A PARTIR DE PASTAS\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -295,9 +295,9 @@ Configure as etiquetas do(s) livro(s) adicionado(s)
 .B \-\-title, \-t
 Configure o título do(s) livro(s) adicionado(s)
 .UNINDENT
-.SS ADICIONAR A PARTIR DE DIRETÓRIOS
+.SS ADICIONAR A PARTIR DE PASTAS
 .sp
-Opções para controlar a adição de livros a partir de diretórios. Por padrão, apenas os arquivos que tem uma extensão de e\-book conhecida são adicionados.
+Opções para controlar a adição de livros a partir de pastas. Por padrão, apenas os arquivos que tem uma extensão de e\-book conhecida são adicionados.
 .INDENT 0.0
 .TP
 .B \-\-add
@@ -489,7 +489,7 @@ Exportar todos os livros para uma única pasta
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+Modelo para controlar a estrutura de nome do arquivo e pasta dos arquivos salvos. O padrão é \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP, que vai salvar os livros em uma subpasta por autor com nomes de arquivos contendo título e autor. Os controles disponíveis são: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -554,7 +554,7 @@ Criar referências cruzadas na seção Autores de livros com vários autores. Pa
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Salvar a saída de diferentes estágios do processo de conversão para a pasta especificada. Útil se você não tem certeza em que fase do processo de conversão um erro está ocorrendo. Padrão: \fB\(aq\fPNone\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP

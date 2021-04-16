@@ -151,42 +151,201 @@
        <item>
         <layout class="QGridLayout" name="gridLayout">
          <item row="0" column="0">
-          <widget class="QLabel" name="template_name_label">
-           <property name="text">
-            <string>Template &amp;name:</string>
-           </property>
-           <property name="buddy">
-            <cstring>template_name</cstring>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout">
+           <item>
+            <widget class="QLabel" name="template_name_label">
+             <property name="text">
+              <string>Template &amp;name:</string>
+             </property>
+             <property name="buddy">
+              <cstring>template_name</cstring>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="template_name">
+             <property name="editable">
+              <bool>true</bool>
+             </property>
+             <property name="toolTip">
+              <string>The name of the callable template</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
-         <item row="0" column="1">
-          <widget class="QComboBox" name="template_name">
-           <property name="editable">
-            <bool>true</bool>
-           </property>
+         <item row="1" column="0" colspan="3">
+          <layout class="FlowLayout">
+           <item>
+            <widget class="QLabel">
+             <property name="text">
+              <string>T&amp;emplate:</string>
+             </property>
+             <property name="buddy">
+              <cstring>textbox</cstring>
+             </property>
+             <property name="toolTip">
+              <string>The text of the template program goes into the box below</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel">
+             <property name="text">
+              <string>        </string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="break_box">
+             <property name="text">
+              <string>Enable &amp;breakpoints</string>
+             </property>
+             <property name="toolTip">
+              <string>&lt;p&gt;If checked, the template evaluator will stop when it
+evaluates an expression on a double-clicked line number, opening a dialog showing
+you the value as well as all the local variables&lt;/p&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="Separator">
+             <property name="buddy">
+              <cstring>go_button</cstring>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="go_button">
+             <property name="text">
+              <string>&amp;Go</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../resources/images.qrc">
+               <normaloff>:/images/sync-right.png</normaloff>:/images/sync-right.png</iconset>
+             </property>
+             <property name="toolButtonStyle">
+              <set>Qt::ToolButtonTextBesideIcon</set>
+             </property>
+             <property name="toolTip">
+              <string>If 'Enable breakpoints' is checked then click this button to run your template</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="Separator">
+             <property name="buddy">
+              <cstring>go_button</cstring>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="breakpoint_line_box_label">
+             <property name="text">
+              <string>&amp;Line:</string>
+             </property>
+             <property name="buddy">
+              <cstring>breakpoint_line_box</cstring>
+             </property>
+             <property name="toolTip">
+              <string>Line number to toggle</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="breakpoint_line_box">
+             <property name="toolTip">
+              <string>Line number to toggle</string>
+             </property>
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <number>999</number>
+             </property>
+             <property name="value">
+              <number>1</number>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="toggle_button">
+             <property name="text">
+              <string>&amp;Toggle</string>
+             </property>
+             <property name="toolButtonStyle">
+              <set>Qt::ToolButtonTextBesideIcon</set>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../resources/images.qrc">
+               <normaloff>:/images/swap.png</normaloff>:/images/swap.png</iconset>
+             </property>
+             <property name="toolTip">
+              <string>Toggle the breakpoint on the line number in the box</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="Separator">
+             <property name="buddy">
+              <cstring>go_button</cstring>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="remove_all_button">
+             <property name="text">
+              <string>&amp;Remove all</string>
+             </property>
+             <property name="toolButtonStyle">
+              <set>Qt::ToolButtonTextBesideIcon</set>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../resources/images.qrc">
+               <normaloff>:/images/list_remove.png</normaloff>:/images/list_remove.png</iconset>
+             </property>
+             <property name="toolTip">
+              <string>Remove all breakpoints</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="set_all_button">
+             <property name="text">
+              <string>&amp;Set all</string>
+             </property>
+             <property name="toolButtonStyle">
+              <set>Qt::ToolButtonTextBesideIcon</set>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../resources/images.qrc">
+               <normaloff>:/images/plus.png</normaloff>:/images/plus.png</iconset>
+             </property>
+             <property name="toolTip">
+              <string>Set breakpoint on every line</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="2" column="0" colspan="3">
+          <widget class="CodeEditor" name="textbox">
            <property name="toolTip">
-            <string>The name of the callable template</string>
+            <string>&lt;p&gt;The text of the template program goes in this box.
+            Don't forget that a General Program Mode template must begin with
+            the word "program:".&lt;/p&gt;</string>
            </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel">
-           <property name="text">
-            <string>T&amp;emplate:</string>
-           </property>
-           <property name="buddy">
-            <cstring>textbox</cstring>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0" colspan="4">
-          <widget class="QPlainTextEdit" name="textbox">
-           <property name="toolTip">
-            <string>The template program text</string>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+             <horstretch>0</horstretch>
+             <verstretch>1</verstretch>
+            </sizepolicy>
            </property>
           </widget>
          </item>
@@ -203,14 +362,14 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="1">
+         <item row="4" column="0" colspan="3">
           <widget class="QTextEdit" name="new_doc">
            <property name="toolTip">
             <string>Documentation for the function being defined or edited</string>
            </property>
           </widget>
          </item>
-         <item row="5" column="0">
+         <item row="7" column="0">
           <widget class="QLabel">
            <property name="text">
             <string>Template value:</string>
@@ -223,7 +382,7 @@
            </property>
           </widget>
          </item>
-         <item row="6" column="0" colspan="4">
+         <item row="8" column="0" colspan="3">
           <widget class="QTableWidget" name="template_value">
           </widget>
          </item>
@@ -376,16 +535,12 @@
            </property>
           </widget>
          </item>
-         <item row="19" column="1">
-          <layout class="BoxLayout" name="user_layout_9" dir="TopToBottom">
-          </layout>
-         </item>
-         <item row="20" column="0" colspan="2">
+         <item row="24" column="0" colspan="3">
           <layout class="QHBoxLayout">
            <item>
             <widget class="QLabel" name="font_name_label">
              <property name="text">
-              <string>Current font:</string>
+              <string>Font:</string>
              </property>
              <property name="buddy">
               <cstring>font_box</cstring>
@@ -416,26 +571,85 @@
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="QFrame" name="frame">
+             <property name="frameShape">
+              <enum>QFrame::VLine</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <property name="lineWidth">
+              <number>3</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="load_button">
+             <property name="text">
+              <string>Lo&amp;ad</string>
+             </property>
+             <property name="toolTip">
+              <string>Load the template from a file</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="save_button">
+             <property name="text">
+              <string>Sa&amp;ve</string>
+             </property>
+             <property name="toolTip">
+              <string>Save the template in a file</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="frame">
+             <property name="frameShape">
+              <enum>QFrame::VLine</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <property name="lineWidth">
+              <number>3</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>10</width>
+               <height>0</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QDialogButtonBox" name="buttonBox">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="standardButtons">
+              <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+             </property>
+            </widget>
+           </item>
           </layout>
          </item>
-         <item row="20" column="3">
-          <widget class="QDialogButtonBox" name="buttonBox">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="standardButtons">
-            <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-           </property>
-          </widget>
-         </item>
-         <item row="21" column="0" colspan="4">
+         <item row="25" column="0" colspan="3">
           <widget class="QFrame">
            <property name="frameShape">
             <enum>QFrame::HLine</enum>
            </property>
           </widget>
          </item>
-         <item row="22" column="0" colspan="4">
+         <item row="30" column="0" colspan="3">
           <layout class="QGridLayout">
            <item row="0" column="0" colspan="2">
             <widget class="QLabel" name="label">
@@ -554,9 +768,24 @@
    <header>calibre/gui2/widgets2.h</header>
   </customwidget>
   <customwidget>
+   <class>FlowLayout</class>
+   <extends>QLayout</extends>
+   <header>calibre/gui2/widgets2.h</header>
+  </customwidget>
+  <customwidget>
    <class>BoxLayout</class>
    <extends>QBoxLayout</extends>
    <header>calibre/gui2/dialogs/template_dialog_box_layout.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Separator</class>
+   <extends>QWidget</extends>
+   <header>calibre/gui2/widgets2.h</header>
+  </customwidget>
+  <customwidget>
+   <class>CodeEditor</class>
+   <extends>QPlainTextEdit</extends>
+   <header>calibre/gui2/dialogs/template_dialog_code_widget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

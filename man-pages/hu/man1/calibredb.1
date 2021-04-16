@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "március 26, 2021" "5.14.0" "calibre"
+.TH "CALIBREDB" "1" "április 16, 2021" "5.15.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -86,7 +86,7 @@ details and examples.
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%HOZZÁADÁS KÖNYVTÁRAKBÓL\fP
+\fI\%HOZZÁADÁS MAPPÁKBÓL\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -224,7 +224,7 @@ A mezők elválasztására szolgáló karakter vagy szöveg. Alapbeállítás a 
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-The field by which to sort the results. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Default: id
+A mező, ami alapján az eredmény rendezve lesz. Elérhető mezők:  author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Alapértelmezett:  id
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -302,9 +302,9 @@ A hozzáadott könyv(ek) címkéinek megadása
 .B \-\-title, \-t
 A hozzáadott könyv(ek) címének megadása
 .UNINDENT
-.SS HOZZÁADÁS KÖNYVTÁRAKBÓL
+.SS HOZZÁADÁS MAPPÁKBÓL
 .sp
-Könyvek könyvtárakból történő hozzáadásának ellenőrzése. Alapértelmezés szerint csak azokat a fájlokat adja hozzá, amelyek kiterjesztése egyezik az ismert e\-könyvek fájltípusaival.
+Options to control the adding of books from folders. By default only files that have extensions of known e\-book file types are added.
 .INDENT 0.0
 .TP
 .B \-\-add
@@ -481,7 +481,7 @@ A mentendő formátumok vesszővel tagolt listája. Alapesetben \fB\(aq\fPall\fB
 .INDENT 0.0
 .TP
 .B \-\-progress
-Report progress
+Folyamatjelentés
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -491,7 +491,7 @@ Szóközök helyettesítése alul\-vonással
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Export all books into a single folder
+Minden könyv exportálása külön mappába
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -506,7 +506,7 @@ A megjelenítendő dátum formázása. %d \- nap, %b \- hónap, %m \- hónap sz�
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Export books to the specified folder. Default is .
+Könyvek exportálása egy meghatározott mappába. Alapértelmezett: .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -708,7 +708,7 @@ calibredb custom_columns [options]
 .UNINDENT
 .UNINDENT
 .sp
-List available custom columns. Shows column labels and ids.
+Az elérhető oszlopok kilistázása. Megjeleníti az oszlop tárolt címét és azonosítóját.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0

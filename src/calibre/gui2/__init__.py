@@ -124,7 +124,8 @@ def create_defs():
             'Edit Metadata', 'Send To Device', 'Save To Disk',
             'Connect Share', 'Copy To Library', None,
             'Convert Books', 'View', 'Open Folder', 'Show Book Details',
-            'Similar Books', 'Tweak ePub', None, 'Remove Books',
+            'Similar Books', 'Tweak ePub', None, 'Remove Books', None,
+            'Autoscroll Books'
             )
 
     defs['show_splash_screen'] = True
@@ -198,6 +199,7 @@ def create_defs():
     defs['browse_annots_restrict_to_type'] = None
     defs['browse_annots_use_stemmer'] = True
     defs['annots_export_format'] = 'txt'
+    defs['books_autoscroll_time'] = 2.0
 
 
 create_defs()
@@ -233,7 +235,7 @@ def _config():  # {{{
     c.add_opt('LRF_ebook_viewer_options', default=None,
               help=_('Options for the LRF e-book viewer'))
     c.add_opt('internally_viewed_formats', default=['LRF', 'EPUB', 'LIT',
-        'MOBI', 'PRC', 'POBI', 'AZW', 'AZW3', 'HTML', 'FB2', 'PDB', 'RB',
+        'MOBI', 'PRC', 'POBI', 'AZW', 'AZW3', 'HTML', 'FB2', 'FBZ', 'PDB', 'RB',
         'SNB', 'HTMLZ', 'KEPUB'], help=_(
             'Formats that are viewed using the internal viewer'))
     c.add_opt('column_map', default=ALL_COLUMNS,
@@ -307,7 +309,7 @@ def _config():  # {{{
     # This option is no longer used. It remains for compatibility with upgrades
     # so the value can be migrated
     c.add_opt('tag_browser_hidden_categories', default=set(),
-            help=_('tag browser categories not to display'))
+            help=_('Tag browser categories not to display'))
 
     c.add_opt
     return ConfigProxy(c)
@@ -412,11 +414,12 @@ def question_dialog(parent, title, msg, det_msg='', show_copy_button=False,
     yes_text=None, no_text=None, yes_icon=None, no_icon=None,
 ):
     from calibre.gui2.dialogs.message_box import MessageBox
+    prefs = gui_prefs()
 
     if not isinstance(skip_dialog_name, unicode_type):
         skip_dialog_name = None
     try:
-        auto_skip = set(gprefs.get('questions_to_auto_skip', ()))
+        auto_skip = set(prefs.get('questions_to_auto_skip', ()))
     except Exception:
         auto_skip = set()
     if (skip_dialog_name is not None and skip_dialog_name in auto_skip):
@@ -438,7 +441,7 @@ def question_dialog(parent, title, msg, det_msg='', show_copy_button=False,
 
     if skip_dialog_name is not None and not d.toggle_checkbox.isChecked():
         auto_skip.add(skip_dialog_name)
-        gprefs.set('questions_to_auto_skip', list(auto_skip))
+        prefs.set('questions_to_auto_skip', list(auto_skip))
 
     return ret
 
