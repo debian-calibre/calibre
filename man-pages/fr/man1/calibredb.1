@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "mars 26, 2021" "5.14.0" "calibre"
+.TH "CALIBREDB" "1" "avril 16, 2021" "5.15.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -86,7 +86,7 @@ des détails et exemples.
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%AJOUTER A PARTIR DES REPERTOIRES\fP
+\fI\%AJOUTER A PARTIR DES DOSSIERS\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -228,14 +228,13 @@ Le champ utilisé pour trier les résultats. Champs disponibles : author_sort,
 .sp
 .nf
 .ft C
-calibredb add [options] file1 file2 file3 ...
+calibredb add [options] fichier1 fichier2 fichier3 …
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Add the specified files as books to the database. You can also specify folders, see
-the folder related options below.
+Ajouter les fichiers spécifiés comme livre numérique à la base de données. Vous pouvez aussi spécifier des dossiers, voir ci\-dessous les options relatives aux dossiers.
 .sp
 Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .INDENT 0.0
@@ -298,28 +297,28 @@ Définir les étiquettes du(es) livre(s) ajouté(s)
 .B \-\-title, \-t
 Définir le titre du(es) livre(s) ajouté(s)
 .UNINDENT
-.SS AJOUTER A PARTIR DES REPERTOIRES
+.SS AJOUTER A PARTIR DES DOSSIERS
 .sp
 Options pour contrôler l\(aqajout de livres à partir de dossiers. Par défaut seuls les fichiers qui ont des extensions de type livre numérique connues sont ajoutés.
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+Un motif de nom de fichier (glob), les fichiers correspondant à ce motif seront ajoutés lors de la recherche de fichiers dans les dossiers, même s\fB\(aq\fPils ne sont pas d\fB\(aq\fPun type de fichier de livre numérique connu. Peut être spécifié plusieurs fois pour plusieurs motifs.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all PDF files
+Un motif de nom de fichier (glob), les fichiers correspondant à ce motif seront ignorés lors de la recherche de fichiers dans les dossiers. Peut être spécifié plusieurs fois pour plusieurs motifs. Par exemple : *.pdf ignorera tous les fichiers PDF
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
+Suppose que chaque dossier dispose d’un seul livre logique et que tous les fichiers dans celui\-ci sont des formats différents de ce même livre.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Process folders recursively
+Traite les dossiers récursivement
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -489,7 +488,7 @@ Remplacer les espaces par des underscores.
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Export all books into a single folder
+Exporter tous les livres vers un dossier unique
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -504,7 +503,7 @@ Le format suivant lequel afficher les dates. %d \- jour, %b \- mois, %m \- numé
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Export books to the specified folder. Default is .
+Exporter les livres vers le dossier spécifié. Par défaut : .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -770,14 +769,14 @@ calibredb restore_database [options]
 .UNINDENT
 .UNINDENT
 .sp
-Restore this database from the metadata stored in OPF files in each
-folder of the calibre library. This is useful if your metadata.db file
-has been corrupted.
+Restaure la base de données à partir des métadonnées stockées
+dans les fichiers OPF présents dans chaque dossier de la bibliothèque calibre.
+Ceci est utile si votre fichier metadata.db a été corrompu.
 .sp
-WARNING: This command completely regenerates your database. You will lose
-all saved searches, user categories, plugboards, stored per\-book conversion
-settings, and custom recipes. Restored metadata will only be as accurate as
-what is found in the OPF files.
+ATTENTION : cette commande régénère complètement votre base de données.
+Vous perdrez toutes les recherches sauvegardées, les catégories utilisateur,
+les tableaux de connexions, les réglages de conversion par livre et les recettes personnalisées.
+Les métadonnées restaurées seront aussi précises que ce qui sera trouvé dans les fichiers OPF.
 .sp
 Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .INDENT 0.0
@@ -873,12 +872,13 @@ calibredb backup_metadata [options]
 .UNINDENT
 .UNINDENT
 .sp
-Backup the metadata stored in the database into individual OPF files in each
-books folder. This normally happens automatically, but you can run this
-command to force re\-generation of the OPF files, with the \-\-all option.
+Sauvegarde les métadonnées stockées dans la base de données dans les fichiers OPF
+individuels dans chaque dossier de livres. Ceci se fait normalement automatiquement,
+mais vous pouvez lancer cette commande pour forcer la régénération des fichiers OPF,
+avec l\(aqoption \-\-all.
 .sp
-Note that there is normally no need to do this, as the OPF files are backed up
-automatically, every time metadata is changed.
+Notez qu\(aqil y a normalement aucun besoin de faire ceci, car les fichiers OPF sont mis à jour
+automatiquement, chaque fois que les métadonnées sont changées.
 .sp
 Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .INDENT 0.0

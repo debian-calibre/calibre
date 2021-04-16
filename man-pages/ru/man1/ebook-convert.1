@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "марта 26, 2021" "5.14.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "апреля 16, 2021" "5.15.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -35,21 +35,21 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-ebook\-convert input_file output_file [options]
+ebook\-convert input_file output_file [параметры]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Convert an e\-book from one format to another.
+Преобразовать электронную книгу из одного формата в другой.
 .sp
-input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+input_file \- это вход, а output_file \- это выход. Оба должны быть указаны в качестве первых двух аргументов команды.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an "open e\-book" (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
+Выходной формат электронной книги определяется расширением файла output_file. Выходной_файл также может иметь специальный формат .EXT, где EXT \- это расширение выходного файла. В этом случае имя выходного файла происходит от имени входного файла. Обратите внимание, что имена файлов не должны начинаться с дефиса. Наконец, если output_file не имеет расширения, он рассматривается как папка, и в эту папку записывается «открытая электронная книга» (OEB), состоящая из файлов HTML. Эти файлы \- это файлы, которые обычно передаются в плагин вывода.
 .sp
-After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+После указания файла ввода и вывода вы можете настроить конвертацию, указав различные параметры. Доступные параметры зависят от типов входных и выходных файлов. Чтобы получить справку по ним, укажите входной и выходной файл, а затем используйте параметр \-h.
 .sp
-For full documentation of the conversion system see
+Полную документацию по системе конвертации см.
 conversion
 .sp
 Когда вы передаёте аргументы с пробелами в \fBebook\-convert\fP, заключайте их в кавычки. Например: "/some path/with spaces"
@@ -141,7 +141,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extract the contents of the generated EPUB file to the specified folder. The contents of the folder are first deleted, so be careful.
+Распакуйте содержимое сгенерированного EPUB файла в указанную папку. Содержимое папки сначала удаляется, так что будьте осторожны.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -591,7 +591,7 @@ XPath\-выражение, которое определяет все теги, 
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring.
+Сохранить вывод из разных этапов конвейера конвертации в указанную папку. Полезно, если вы не уверены, на каком этапе процесса конвертации возникает ошибка.
 .UNINDENT
 .INDENT 0.0
 .TP

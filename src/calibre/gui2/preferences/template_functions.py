@@ -2,11 +2,11 @@
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 # License: GPLv3 Copyright: 2010, Kovid Goyal <kovid at kovidgoyal.net>
 
-import json
-import traceback
-from qt.core import QDialogButtonBox
+import copy, json, traceback
+from qt.core import QDialogButtonBox, QDialog
 
 from calibre.gui2 import error_dialog, warning_dialog
+from calibre.gui2.dialogs.template_dialog import TemplateDialog
 from calibre.gui2.preferences import ConfigWidgetBase, test_widget
 from calibre.gui2.preferences.template_functions_ui import Ui_Form
 from calibre.gui2.widgets import PythonHighlighter
@@ -74,18 +74,66 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         </p>
         ''')
         self.textBrowser.setHtml(help_text)
-        help_text = '<p>' + _('''
-        Here you can add and remove stored templates used in template processing.
-        You use a stored template in another template with the '{0}' template
-        function, as in '{0}(some_name, arguments...)'. Stored templates must use
-        General Program Mode -- they must begin with the text '{1}'.
-        In the stored template you retrieve the arguments using the '{2}()'
-        template function, as in '{2}(var1, var2, ...)'. The calling arguments
-        are copied to the named variables. See the template language tutorial
-        for more information.
-        ''') + '</p>'
-        self.st_textBrowser.setHtml(help_text.format('call', 'program:', 'arguments'))
+        self.textBrowser_showing = True
+        self.textBrowser.adjustSize()
+        self.show_hide_help_button.clicked.connect(self.show_hide_help)
+        help_text = _('''
+        <p>
+        Here you can create, edit (replace), and delete stored templates used
+        in template processing. You use a stored template in another template as
+        if it were a template function, for example 'some_name(arg1, arg2...)'.</p>
+
+        <p>Stored templates must use General Program Mode -- they must begin with
+        the text '{0}'. You retrieve arguments passed to a stored template using
+        the '{1}()' template function, as in '{1}(var1, var2, ...)'. The passed
+        arguments are copied to the named variables.</p>
+
+        <p>For example, this stored template checks if any items are in a
+        list, returning '1' if any are found and '' if not.</p>
+        <p>
+        Template name: items_in_list<br>
+        Template contents:<pre>
+        program:
+            arguments(lst='No list argument given', items='');
+            r = '';
+            for l in items:
+                if str_in_list(lst, ',', l, '1', '') then
+                    r = '1';
+                    break
+                fi
+            rof;
+            r</pre>
+        You call the stored template like this:<pre>
+        program: items_in_list($#genre, 'comics, foo')</pre>
+        See the template language tutorial for more information.</p>
+        </p>
+        ''')
+        self.st_textBrowser.setHtml(help_text.format('program:', 'arguments'))
+        self.st_textBrowser_showing = True
         self.st_textBrowser.adjustSize()
+        self.st_show_hide_help_button.clicked.connect(self.st_show_hide_help)
+
+    def st_show_hide_help(self):
+        if self.st_textBrowser_showing:
+            self.st_textBrowser_height = self.st_textBrowser.height()
+            self.st_textBrowser.setMaximumHeight(self.st_show_hide_help_button.height())
+            self.st_textBrowser_showing = False
+            self.st_show_hide_help_button.setText(_('Show help'))
+        else:
+            self.st_textBrowser.setMaximumHeight(self.st_textBrowser_height)
+            self.st_textBrowser_showing = True
+            self.st_show_hide_help_button.setText(_('Hide help'))
+
+    def show_hide_help(self):
+        if self.textBrowser_showing:
+            self.textBrowser_height = self.textBrowser.height()
+            self.textBrowser.setMaximumHeight(self.show_hide_help_button.height())
+            self.textBrowser_showing = False
+            self.show_hide_help_button.setText(_('Show help'))
+        else:
+            self.textBrowser.setMaximumHeight(self.textBrowser_height)
+            self.textBrowser_showing = True
+            self.show_hide_help_button.setText(_('Hide help'))
 
     def initialize(self):
         try:
@@ -121,21 +169,43 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         self.program.setTabStopWidth(20)
         self.highlighter = PythonHighlighter(self.program.document())
 
+        self.te_textbox = self.template_editor.textbox
+        self.te_name = self.template_editor.template_name
         self.st_build_function_names_box()
-        self.template_editor.template_name.currentIndexChanged[native_string_type].connect(self.st_function_index_changed)
-        self.template_editor.template_name.editTextChanged.connect(self.st_template_name_edited)
+        self.te_name.currentIndexChanged[native_string_type].connect(self.st_function_index_changed)
+        self.te_name.editTextChanged.connect(self.st_template_name_edited)
         self.st_create_button.clicked.connect(self.st_create_button_clicked)
         self.st_delete_button.clicked.connect(self.st_delete_button_clicked)
         self.st_create_button.setEnabled(False)
         self.st_delete_button.setEnabled(False)
         self.st_replace_button.setEnabled(False)
+        self.st_test_template_button.setEnabled(False)
         self.st_clear_button.clicked.connect(self.st_clear_button_clicked)
+        self.st_test_template_button.clicked.connect(self.st_test_template)
         self.st_replace_button.clicked.connect(self.st_replace_button_clicked)
+
+        self.st_current_program_name = ''
+        self.st_current_program_text = ''
+        self.st_previous_text = ''
+        self.st_first_time = False
 
         self.st_button_layout.insertSpacing(0, 90)
         self.template_editor.new_doc.setFixedHeight(50)
 
-    # Python funtion tab
+        # get field metadata and selected books
+        view = self.gui.current_view()
+        rows = view.selectionModel().selectedRows()
+        self.mi = []
+        if rows:
+            db = view.model().db
+            self.fm = db.field_metadata
+            for row in rows:
+                if row.isValid():
+                    self.mi.append(db.new_api.get_proxy_metadata(db.data.index_to_id(row.row())))
+
+            self.template_editor.set_mi(self.mi[0], self.fm)
+
+    # Python function tab
 
     def enable_replace_button(self):
         self.replace_button.setEnabled(self.delete_button.isEnabled())
@@ -197,7 +267,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
                          _('Argument count should be -1 or greater than zero. '
                            'Setting it to zero means that this function cannot '
                            'be used in single function mode.'), det_msg='',
-                         show=False)
+                         show=False, show_copy_button=False)
             box.bb.setStandardButtons(box.bb.standardButtons() | QDialogButtonBox.StandardButton.Cancel)
             box.det_msg_toggle.setVisible(False)
             if not box.exec_():
@@ -259,48 +329,67 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
 
     # Stored template tab
 
+    def st_test_template(self):
+        if self.mi:
+            self.st_replace_button_clicked()
+            all_funcs = copy.copy(formatter_functions().get_functions())
+            for n,f in self.st_funcs.items():
+                all_funcs[n] = f
+            t = TemplateDialog(self.gui, self.st_previous_text,
+                   mi=self.mi, fm=self.fm, text_is_placeholder=self.st_first_time,
+                   all_functions=all_funcs)
+            t.setWindowTitle(_('Template tester'))
+            if t.exec_() == QDialog.DialogCode.Accepted:
+                self.st_previous_text = t.rule[1]
+                self.st_first_time = False
+        else:
+            error_dialog(self.gui, _('Template functions'),
+                         _('Cannot "test" when no books are selected'), show=True)
+
     def st_clear_button_clicked(self):
         self.st_build_function_names_box()
-        self.template_editor.textbox.clear()
+        self.te_textbox.clear()
         self.template_editor.new_doc.clear()
         self.st_create_button.setEnabled(False)
         self.st_delete_button.setEnabled(False)
 
     def st_build_function_names_box(self, scroll_to=''):
-        self.template_editor.template_name.blockSignals(True)
+        self.te_name.blockSignals(True)
         func_names = sorted(self.st_funcs)
-        self.template_editor.template_name.clear()
-        self.template_editor.template_name.addItem('')
-        self.template_editor.template_name.addItems(func_names)
-        self.template_editor.template_name.setCurrentIndex(0)
-        self.template_editor.template_name.blockSignals(False)
+        self.te_name.setMinimumContentsLength(40)
+        self.te_name.clear()
+        self.te_name.addItem('')
+        self.te_name.addItems(func_names)
+        self.te_name.setCurrentIndex(0)
+        self.te_name.blockSignals(False)
         if scroll_to:
-            idx = self.template_editor.template_name.findText(scroll_to)
+            idx = self.te_name.findText(scroll_to)
             if idx >= 0:
-                self.template_editor.template_name.setCurrentIndex(idx)
+                self.te_name.setCurrentIndex(idx)
 
     def st_delete_button_clicked(self):
-        name = unicode_type(self.template_editor.template_name.currentText())
+        name = unicode_type(self.te_name.currentText())
         if name in self.st_funcs:
             del self.st_funcs[name]
             self.changed_signal.emit()
             self.st_create_button.setEnabled(True)
             self.st_delete_button.setEnabled(False)
             self.st_build_function_names_box()
-            self.template_editor.textbox.setReadOnly(False)
+            self.te_textbox.setReadOnly(False)
+            self.st_current_program_name = ''
         else:
             error_dialog(self.gui, _('Stored templates'),
                          _('Function not defined'), show=True)
 
     def st_create_button_clicked(self, use_name=None):
         self.changed_signal.emit()
-        name = use_name if use_name else unicode_type(self.template_editor.template_name.currentText())
+        name = use_name if use_name else unicode_type(self.te_name.currentText())
         for k,v in formatter_functions().get_functions().items():
             if k == name and v.is_python:
                 error_dialog(self.gui, _('Stored templates'),
                          _('The name {} is already used for template function').format(name), show=True)
         try:
-            prog = unicode_type(self.template_editor.textbox.toPlainText())
+            prog = unicode_type(self.te_textbox.toPlainText())
             if not prog.startswith('program:'):
                 error_dialog(self.gui, _('Stored templates'),
                          _('The stored template must begin with "program:"'), show=True)
@@ -319,22 +408,40 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         self.st_create_button.setEnabled(not b)
         self.st_replace_button.setEnabled(b)
         self.st_delete_button.setEnabled(b)
-        self.template_editor.textbox.setReadOnly(False)
+        self.st_test_template_button.setEnabled(b)
+        self.te_textbox.setReadOnly(False)
 
     def st_function_index_changed(self, txt):
         txt = unicode_type(txt)
+        if self.st_current_program_name:
+            if self.st_current_program_text != self.te_textbox.toPlainText():
+                box = warning_dialog(self.gui, _('Template functions'),
+                         _('Changes to the current template will be lost. OK?'), det_msg='',
+                         show=False, show_copy_button=False)
+                box.bb.setStandardButtons(box.bb.standardButtons() |
+                                          QDialogButtonBox.StandardButton.Cancel)
+                box.det_msg_toggle.setVisible(False)
+                if not box.exec_():
+                    self.te_name.blockSignals(True)
+                    dex = self.te_name.findText(self.st_current_program_name)
+                    self.te_name.setCurrentIndex(dex)
+                    self.te_name.blockSignals(False)
+                    return
         self.st_create_button.setEnabled(False)
+        self.st_current_program_name = txt
         if not txt:
-            self.template_editor.textbox.clear()
+            self.te_textbox.clear()
             self.template_editor.new_doc.clear()
             return
         func = self.st_funcs[txt]
+        self.st_current_program_text = func.program_text
         self.template_editor.new_doc.setPlainText(func.doc)
-        self.template_editor.textbox.setPlainText(func.program_text)
+        self.te_textbox.setPlainText(func.program_text)
         self.st_template_name_edited(txt)
 
     def st_replace_button_clicked(self):
-        name = unicode_type(self.template_editor.template_name.currentText())
+        name = unicode_type(self.te_name.currentText())
+        self.st_current_program_text = self.te_textbox.toPlainText()
         self.st_delete_button_clicked()
         self.st_create_button_clicked(use_name=name)
 

@@ -210,7 +210,7 @@ Follow these steps to find the problem:
       no longer allows third party software to connect to their devices using a
       USB cable. Instead use a wireless connection, via the calibre Content
       server.
-    * If you are connecting a Kindle Fire HD or other Android device, read the note
+    * If you are connecting a Kindle Fire or other Android device, read the note
       under :ref:`android_usb`.
     * On macOS if you get permission errors when connecting a device to calibre, you can
       fix that by looking under :guilabel:`System Preferences > Security and
@@ -357,7 +357,7 @@ right IP address to use.
 
 You can now browse your book collection and download books from calibre
 to your device to open with whatever e-book reading software you have on your
-android device.
+Android device.
 
 Calibre Companion and many reading apps support browsing the calibre library
 directly. For example, in Aldiko, click My Catalogs, then + to add a catalog,
@@ -549,7 +549,7 @@ author names. The first thing to understand is that books and authors are
 separate entities in calibre. A book can have more than one author, and an
 author can have more than one book. You can manage the authors of a book by the
 edit metadata dialog. You can manage individual authors by right clicking on
-the author in the Tag browser on the left of the main calibre screen and
+the author in the Tag browser on the left of the main calibre window and
 selecting :guilabel:`Manage authors`. Using this dialog you can change the name
 of an author and also how that name is sorted. This will automatically change
 the name of the author in all the books of that author. When a book has
@@ -1006,7 +1006,7 @@ I want some feature added to calibre. What can I do?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 You have two choices:
  1. Create a patch by hacking on calibre and send it to me for review and inclusion. See `Development <https://calibre-ebook.com/get-involved>`_.
- 2. `Open a bug requesting the feature <https://calibre-ebook.com/bugs>`_ . Remember that while you may think your feature request is extremely important/essential, calibre developers might not agree. Fortunately, calibre is open source, which means you always have the option of implementing your feature yourself, or hiring someone to do it for you. Furthermore, calibre has a comprehensive plugin architecture, so you might be able to develop your feature as a plugin, see :ref:`pluginstutorial`.
+ 2. `Open a bug requesting the feature <https://calibre-ebook.com/bugs>`_. Remember that while you may think your feature request is extremely important/essential, calibre developers might not agree. Fortunately, calibre is open source, which means you always have the option of implementing your feature yourself, or hiring someone to do it for you. Furthermore, calibre has a comprehensive plugin architecture, so you might be able to develop your feature as a plugin, see :ref:`pluginstutorial`.
 
 Why doesn't calibre have an automatic update?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

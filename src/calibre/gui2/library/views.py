@@ -51,8 +51,8 @@ class HeaderView(QHeaderView):  # {{{
         if self.orientation() == Qt.Orientation.Horizontal:
             self.setSectionsMovable(True)
             self.setSectionsClickable(True)
-            self.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
             self.setTextElideMode(Qt.TextElideMode.ElideRight)
+        self.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         self.hover = -1
         self.current_font = QFont(self.font())
         self.current_font.setBold(True)
@@ -239,12 +239,16 @@ class BooksView(QTableView):  # {{{
                 wv.setHorizontalScrollMode(QAbstractItemView.ScrollMode.ScrollPerPixel)
 
             wv.setEditTriggers(QAbstractItemView.EditTrigger.EditKeyPressed)
-            if tweaks['doubleclick_on_library_view'] == 'edit_cell':
+            tval = tweaks['doubleclick_on_library_view']
+            if tval == 'edit_cell':
                 wv.setEditTriggers(QAbstractItemView.EditTrigger.DoubleClicked|wv.editTriggers())
-            elif tweaks['doubleclick_on_library_view'] == 'open_viewer':
+            elif tval == 'open_viewer':
                 wv.setEditTriggers(QAbstractItemView.EditTrigger.SelectedClicked|wv.editTriggers())
                 wv.doubleClicked.connect(parent.iactions['View'].view_triggered)
-            elif tweaks['doubleclick_on_library_view'] == 'edit_metadata':
+            elif tval == 'show_book_details':
+                wv.setEditTriggers(QAbstractItemView.EditTrigger.SelectedClicked|wv.editTriggers())
+                wv.doubleClicked.connect(parent.iactions['Show Book Details'].show_book_info)
+            elif tval == 'edit_metadata':
                 # Must not enable single-click to edit, or the field will remain
                 # open in edit mode underneath the edit metadata dialog
                 if use_edit_metadata_dialog:
@@ -315,6 +319,7 @@ class BooksView(QTableView):  # {{{
             self.pin_view.column_header.customContextMenuRequested.connect(partial(self.show_column_header_context_menu, view=self.pin_view))
         self.row_header = HeaderView(Qt.Orientation.Vertical, self)
         self.row_header.setSectionResizeMode(QHeaderView.ResizeMode.Fixed)
+        self.row_header.customContextMenuRequested.connect(self.show_row_header_context_menu)
         self.setVerticalHeader(self.row_header)
         # }}}
 
@@ -493,6 +498,15 @@ class BooksView(QTableView):  # {{{
             ans.addAction(
                     QIcon(I('column.png')), _('Add your own columns'), partial(handler, action='addcustcol'))
         return ans
+
+    def show_row_header_context_menu(self, pos):
+        menu = QMenu(self)
+        menu.addAction(_('Hide row numbers'), self.hide_row_numbers)
+        menu.popup(self.mapToGlobal(pos))
+
+    def hide_row_numbers(self):
+        gprefs['row_numbers_in_book_list'] = False
+        self.set_row_header_visibility()
 
     def show_column_header_context_menu(self, pos, view=None):
         view = view or self
@@ -1275,6 +1289,14 @@ class BooksView(QTableView):  # {{{
             if m.id(row) == val:
                 self.set_current_row(row, select=False)
                 break
+
+    def show_next_book(self):
+        ci = self.currentIndex()
+        if not ci.isValid():
+            self.set_current_row()
+            return
+        n = (ci.row() + 1) % self.model().rowCount(QModelIndex())
+        self.set_current_row(n)
 
     @property
     def next_id(self):

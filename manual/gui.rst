@@ -420,7 +420,7 @@ Searching for ``no`` or ``unchecked`` will find all books with ``No`` in the col
 
 Hierarchical items (e.g. A.B.C) use an extended syntax to match initial parts of the hierarchy. This is done by adding a period between the exact match indicator (=) and the text. For example, the query ``tags:=.A`` will find the tags `A` and `A.B`, but will not find the tags `AA` or `AA.B`. The query ``tags:=.A.B`` will find the tags `A.B` and `A.B.C`, but not the tag `A`.
 
-Identifiers (e.g., ISBN, doi, lccn etc) also use an extended syntax. First, note that an identifier has the form ``type:value``, as in ``isbn:123456789``. The extended syntax permits you to specify independently which type and value to search for. Both the type and the value parts of the query can use `equality`, `contains`, or `regular expression` matches. Examples:
+Identifiers (e.g., ISBN, DOI, LCCN, etc.) also use an extended syntax. First, note that an identifier has the form ``type:value``, as in ``isbn:123456789``. The extended syntax permits you to specify independently which type and value to search for. Both the type and the value parts of the query can use `equality`, `contains`, or `regular expression` matches. Examples:
 
     * ``identifiers:true`` will find books with any identifier.
     * ``identifiers:false`` will find books with no identifier.
@@ -529,8 +529,8 @@ page for the author.  This can be customized by right clicking on the author
 name and selecting Manage this author.
 
 Similarly, if you download metadata for the book, the Book details panel will
-automatically show you links pointing to the web pages for the book on amazon,
-worldcat, etc. from where the metadata was downloaded.
+automatically show you links pointing to the web pages for the book on Amazon,
+WorldCat, etc. from where the metadata was downloaded.
 
 You can right click on individual e-book formats in the Book details panel to
 delete them, compare them to their original versions, save them to disk, open
@@ -782,3 +782,5 @@ calibre has several keyboard shortcuts to save you time and mouse movement. Thes
       - Re-apply the current sort
     * - :kbd:`Ctrl+Q`
       - Quit calibre
+    * - :kbd:`X`
+      - Toggle autoscroll of the book list

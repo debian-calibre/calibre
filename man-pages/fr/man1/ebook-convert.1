@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "mars 26, 2021" "5.14.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "avril 16, 2021" "5.15.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -41,15 +41,15 @@ ebook\-convert input_file output_file [options]
 .UNINDENT
 .UNINDENT
 .sp
-Convert an e\-book from one format to another.
+Convertir un livre numérique d\(aqun format à un autre.
 .sp
-input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+input_file est l\(aqentrée output_file est la sortie. Chacun des deux doit être spécifié comme premiers arguments de la commande.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an "open e\-book" (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
+Le format de livre numérique de sortie est défini par l\(aqextension du fichier output_file. output_file peut également être un format spécial .EXT où EXT est l\(aqextension du fichier de sortie. Dans ce cas, le nom du fichier de sortie est dérivé du nom du fichier d\(aqentrée. Notez que les noms de fichier ne doivent pas commencer par un trait d\(aqunion. Pour finir, si output_file n\(aqa pas d\(aqextension, il est traité comme un dossier et un «open e\-book » (OEB) se composant des fichiers HTML est écrit dans ce dossier. Ces fichiers sont les fichiers qui auraient été normalement traité par l\(aqextension de sortie.
 .sp
-After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+Après avoir spécifié le fichier d\(aqentrée et de sortie vous pouvez adapter la conversion en spécifiant diverses options. Les options disponibles dépendent des types de fichier d\(aqentrée et de sortie. Pour obtenir de l\(aqaide sur celles\-ci, spécifiez le fichier d\(aqentrée et de sortie et puis employez l\(aqoption \-h.
 .sp
-For full documentation of the conversion system see
+Pour la documentation complète du système de conversion voir
 conversion
 .sp
 Chaque fois que vous passez à \fBebook\-convert\fP des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
@@ -153,7 +153,7 @@ La version du fichier EPUB à générer. EPUB 2 est le plus largement compatible
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extract the contents of the generated EPUB file to the specified folder. The contents of the folder are first deleted, so be careful.
+Extrait le contenu du fichier EPUB généré vers le dossier spécifié. Le contenu du dossier sera d’abord effacé, donc faites attention.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -191,7 +191,7 @@ Options pour contrôler l’apparence de la sortie
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPPelé\fB"\fP with \fB"\fPPele\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Translittère les caractères Unicode en une représentation ASCII. A utiliser avec précaution car cela remplacera les caractères Unicode par des caractères ASCII. Par exemple, elle remplacera \fB"\fPPelé\fB"\fP par \fB"\fPPele\fB"\fP\&. Notez également que dans les cas où il existe plusieurs représentations d\fB\(aq\fPun caractère (caractères partagés par le chinois et le japonais par exemple), la représentation basée sur la langue de l\fB\(aq\fPinterface actuelle de calibre sera utilisée.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -603,7 +603,7 @@ Options pour aider au débogage de la conversion
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring.
+Enregistre le résultat des différents cycles du processus de conversion dans le dossier spécifié. Utile si vous ne savez pas à quel moment du cycle de conversion le bug est généré.
 .UNINDENT
 .INDENT 0.0
 .TP

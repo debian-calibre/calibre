@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "marzo 26, 2021" "5.14.0" "calibre"
+.TH "CALIBREDB" "1" "aprile 16, 2021" "5.15.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -149,7 +149,7 @@ Path to the calibre library. Default is to use the path stored in the settings. 
 .INDENT 0.0
 .TP
 .B \-\-password
-Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file> (i.e. <f: followed by the full path to the file and a trailing >). The angle brackets in the above are required, remember to escape them or use quotes for your shell.
+La password per connettersi a un Server dei Contenuti di calibre. Pe leggere la password dallo standard input, usa il valore speciale: <stdin>. Per leggere la password da un file, usa <f:/path/to/file> (ovvero <f: followed by the full path to the file and a trailing >). Le parentesi angolari di cui sopra sono richieste, ricordati di anteporre un carattere di escape o di usare le virgolette nel tuo terminale.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -180,7 +180,7 @@ calibredb list [opzioni]
 .sp
 Elenca i libri disponibili nel database di calibre.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -189,7 +189,7 @@ Ordina i risultati in ordine crescente
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-The fields to display when listing books in the database. Should be a comma separated list of fields. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Default: title,authors. The special field \fB"\fPall\fB"\fP can be used to select all fields. In addition to the builtin fields above, custom fields are also available as *field_name, for example, for a custom field #rating, use the name: *rating
+I campi da mostrare quando sono elencati i libri del database. Dovrebbe essere una lista separata da virgole di campi. Campi disponibili: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Valore predefinito: %predefinito. Il campo speciale \fB"\fPall\fB"\fP può essere usato per selezionare tutti i campi. Oltre ai campi integrati di cui sopra, sono disponibili anche campi personalizzati scritti come *nome_campo; per esempio, per un campo personalizzato #valutazione, usa il nome: *rating
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -241,7 +241,7 @@ calibredb add [opzioni] file1 file2 file3 ...
 Aggiungi come libri i file specificati nel database. Puoi anche specificare delle cartelle,
 vedi le opzioni riferite alle cartelle qui sotto.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -304,7 +304,7 @@ Imposta il titolo dei libri aggiunti
 .UNINDENT
 .SS AGGIUNTA DA CARTELLE
 .sp
-Opzioni per controllare l\(aqaggiunta dei libri dalle cartelle. Per impostazione predefinita vengono aggiunti solo file che hanno estensioni conosciute.
+Opzioni per controllare l\(aqaggiunta di libri dalle cartelle. Per impostazione predefinita solo i file con estensioni di e\-book note sono aggiunti.
 .INDENT 0.0
 .TP
 .B \-\-add
@@ -331,15 +331,15 @@ Controlla cartelle ricorsivamente
 .sp
 .nf
 .ft C
-calibredb remove ids
+calibredb remove id
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Remove the books identified by ids from the database. ids should be a comma separated list of id numbers (you can get id numbers by using the search command). For example, 23,34,57\-85 (when specifying a range, the last number in the range is not included).
+Rimuove dal database i libri identificati dagli id. Gli id dovrebbero essere una lista separata da virgole di numeri id (puoi ottenere i numeri id usando il comando search). Per esempio, 23,34,57\-85 (quando si specifica un intervallo, l\(aqultimo numero dell\(aqintervallo è escluso).
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-permanent
@@ -359,7 +359,7 @@ calibredb add_format [options] id ebook_file
 .sp
 Aggiungi l\(aq e\-book in ebook_file ai formati disponibili per il libro identificato per id. Puoi trovare l\(aqid usando il comando cerca, se il formato è già presente verrà sostituito a meno che l\(aqopzione \(aqnon sostituire\(aq non sia stata specificata.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -379,7 +379,7 @@ calibredb remove_format [opzioni] id fmt
 .sp
 Rimuovi il formato fmt identificato da id dal libro logico. Puoi ottenere l\(aqid usando il comando search. fmt deve essere un\(aqestensione di file come LRF, TXT o EPUB. Se il libro logico non ha un fmt disponibile, non fa niente.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -395,7 +395,7 @@ calibredb show_metadata [opzioni] id
 Mostra i metadati salvati nel database di calibre per il libro identificato da id.
 id è un numero identificativo del comando di ricerca.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -420,7 +420,7 @@ show_metadata command. You can also set the metadata of individual fields with
 the \-\-field option. If you use the \-\-field option, there is no need to specify
 an OPF file.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
@@ -447,7 +447,7 @@ Esporta i libri specificati da id (una lista separata da virgole) su disco.
 L\(aqoperazione di esportazione salva tutti i formati del libro, la copertina e i metadati
 (in un file opf). Puoi ottenere i numeri di id dal comando cerca.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -531,7 +531,7 @@ Note that different \fBcatalog\fP formats support different sets of options. To
 see the different options, specify the name of the output file and then the
 \-\-help option.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
@@ -551,12 +551,12 @@ Mostra un output dettagliato. Utile per il debug
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title
-Title of generated catalog used as title in metadata. Default: \fB\(aq\fPMy Books\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Titolo del catalogo generato usato come titolo nei metadati. Valore predefinito: \fB\(aq\fPMy Books\fB\(aq\fP Si applica a: formati di output AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cross\-reference\-authors
-Create cross\-references in Authors section for books with multiple authors. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Crea riferimenti incroiciati nella sezione Autori per libri con autori multipli. Valore predefinito: \fB\(aq\fPFalse\fB\(aq\fP Si applica a: formati di output AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -566,82 +566,82 @@ Salva l\fB\(aq\fPoutput dei differenti stadi di conversione raggiunti nella cart
 .INDENT 0.0
 .TP
 .B \-\-exclude\-genre
-Regex describing tags to exclude as genres. Default: \fB\(aq\fP[.+]|^+$\fB\(aq\fP excludes bracketed tags, e.g. \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, and \fB\(aq\fP+\fB\(aq\fP, the default tag for read books. Applies to: AZW3, EPUB, MOBI output formats
+Regex che descrive i tag da escludere come generi. Valore predefinito: \fB\(aq\fP[.+]|^+$\fB\(aq\fP esclude i tag tra parentesi quadre, p. es. \fB\(aq\fP[Progetto Gutenberg]\fB\(aq\fP, e \fB\(aq\fP+\fB\(aq\fP, il tag predefinito per i libri letti. Si applica a: formati di output AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Specifies the rules used to exclude books from the generated catalog. The model for an exclusion rule is either (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) or (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). For example: ((\fB\(aq\fPArchived books\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) will exclude a book with a value of \fB\(aq\fPArchived\fB\(aq\fP in the custom column \fB\(aq\fPstatus\fB\(aq\fP\&. When multiple rules are defined, all rules will be applied. Default:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Applies to: AZW3, EPUB, MOBI output formats
+Specifica le regole usate per escludere i libri dal catalogo generato. Il modello per una regola di esclusione è o (\fB\(aq\fP<nome regola>\fB\(aq\fP,\fB\(aq\fPTag\fB\(aq\fP,\fB\(aq\fP<lista di tag separati da virgola>\fB\(aq\fP) o (\fB\(aq\fP<nome regola>\fB\(aq\fP,\fB\(aq\fP<colonna personalizzata>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). Ad Esempio: ((\fB\(aq\fPLibri archiviati\fB\(aq\fP,\fB\(aq\fP#stato,\fB\(aq\fPArchiviato\fB\(aq\fP),) escluderà un libro con valore \fB\(aq\fPArchiviato\fB\(aq\fP nella colonna personalizzata \fB\(aq\fPstato\fB\(aq\fP\&. Tutte le regole specificate verranno applicate. Valore predefinito:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Si applica a: formati di output AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-authors
-Include \fB\(aq\fPAuthors\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Includi la sezione \fB\(aq\fPAutori\fB\(aq\fP nel catalogo. Valore predefinito: \fB\(aq\fPFalse\fB\(aq\fP Si applica a: formati di output AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-descriptions
-Include \fB\(aq\fPDescriptions\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Includi la sezione \fB\(aq\fPDescrizioni\fB\(aq\fP nel catalogo. Valore predefinito: \fB\(aq\fPFalse\fB\(aq\fP Si applica a: formati di output AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-genres
-Include \fB\(aq\fPGenres\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Includi la sezione \fB\(aq\fPGeneri\fB\(aq\fP nel catalogo. Valore predefinito: \fB\(aq\fPFalse\fB\(aq\fP Si applica a: formati di output AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-recently\-added
-Include \fB\(aq\fPRecently Added\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Includi la sezione \fB\(aq\fPAggiunti di recente\fB\(aq\fP nel catalogo. Valore predefinito: \fB\(aq\fPFalse\fB\(aq\fP Si applica a: formati di output AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-series
-Include \fB\(aq\fPSeries\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Includi la sezione \fB\(aq\fPSerie\fB\(aq\fP nel catalogo. Valore predefinito: \fB\(aq\fPFalse\fB\(aq\fP Si applica a: formati di output AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-titles
-Include \fB\(aq\fPTitles\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Includi la sezione \fB\(aq\fPTitoli\fB\(aq\fP nel catalogo. Valore predefinito: \fB\(aq\fPFalse\fB\(aq\fP Si applica a: formati di output AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-genre\-source\-field
-Source field for \fB\(aq\fPGenres\fB\(aq\fP section. Default: \fB\(aq\fPTag\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Campo sorgente per la sezione Generi. Valore predefinito: \fB\(aq\fPTag\fB\(aq\fP Si applica a: formati di output AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-header\-note\-source\-field
-Custom field containing note text to insert in Description header. Default: \fB\(aq\fP\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Campo personalizzato che contiene una nota di testo da inserire nell\fB\(aq\fPintestazione della Descrizione. Valore predefinito: \fB\(aq\fP\fB\(aq\fP Si applica a: formati di output AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-merge\-comments\-rule
-#<custom field>:[before|after]:[True|False] specifying:  <custom field> Custom field containing notes to merge with comments  [before|after] Placement of notes with respect to comments  [True|False] \- A horizontal rule is inserted between notes and comments Default: \fB\(aq\fP::\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+#<custom field>:[before|after]:[True|False] specificando:  <custom field> Campo personalizzato contenente note da unire ai commenti  [before|after] Posizione delle note rispetto ai commenti (prima o dopo)  [True|False] \- Viene inserita una riga orizzontale tra le note e i commenti Valore predefinito: \fB\(aq\fP::\fB\(aq\fP Si applica a: formati di output AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specifies the output profile. In some cases, an output profile is required to optimize the catalog for the device. For example, \fB\(aq\fPkindle\fB\(aq\fP or \fB\(aq\fPkindle_dx\fB\(aq\fP creates a structured Table of Contents with Sections and Articles. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Specifica il profilo di output. In alcuni casi un profilo di output è richiesto per ottimizzare il catalogo per il dispositivo. Ad esempio \fB\(aq\fPkindle\fB\(aq\fP o \fB\(aq\fPkindle_dx\fB\(aq\fP creano un Indice strutturato con Sezioni e Articoli. Valore predefinito: \fB\(aq\fPNone\fB\(aq\fP Si applica a: formati di output AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-Specifies the rules used to include prefixes indicating read books, wishlist items and other user\-specified prefixes. The model for a prefix rule is (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). When multiple rules are defined, the first matching rule will be used. Default: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Applies to: AZW3, EPUB, MOBI output formats
+Specifica le regole utilizzate per includere i prefissi che indicano i libri letti, gli elementi della lista dei desideri e altri prefissi specificati dall\fB\(aq\fPutente. Il modello per una regola di prefisso è (\fB\(aq\fP<nome regola>\fB\(aq\fP,\fB\(aq\fP<campo sorgente>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefisso>\fB\(aq\fP). Quando più regole sono definite viene applicata la prima regola che ha una corrispondenza basata sul pattern. Valore predefinito: \fB\(aq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(aq\fP Si applica a: formati di output AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-preset
-Use a named preset created with the GUI catalog builder. A preset specifies all settings for building a catalog. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Usa un profilo con nome creato con l\fB\(aq\fPinterfaccia di costruzione catalogo. Un profilo specifica tutte le impostazioni necessarie per costruire un catalogo. Valore predefinito: \fB\(aq\fPNone\fB\(aq\fP Si applica a: formati di output AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-thumb\-width
-Size hint (in inches) for book covers in catalog. Range: 1.0 \- 2.0 Default: \fB\(aq\fP1.0\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Suggerimento di dimensione (in pollici) per le copertine dei libri nel catalogo. Intervallo: 1.0 \- 2.0 Valore predefinito: \fB\(aq\fP1.0\fB\(aq\fP Si applica a: formati di output AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-use\-existing\-cover
-Replace existing cover when generating the catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Sostituisci la copertina esistente quando generi il catalogo. Valore predefinito: \fB\(aq\fPFalse\fB\(aq\fP Si applica a: formati di output AZW3, EPUB, MOBI
 .UNINDENT
 .SH SAVED_SEARCHES
 .INDENT 0.0
@@ -649,25 +649,25 @@ Replace existing cover when generating the catalog. Default: \fB\(aq\fPFalse\fB\
 .sp
 .nf
 .ft C
-calibredb saved_searches [options] (list|add|remove)
+calibredb saved_searches [opzioni] (list|add|remove)
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Manage the saved searches stored in this database.
-If you try to add a query with a name that already exists, it will be
-replaced.
+Gestisci le ricerche salvate conservate in questo database.
+Se provi ad aggiungere una ricerca con un nome già esistente, sarà
+sostituita.
 .sp
-Syntax for adding:
+Sintassi per aggiungere:
 .sp
-calibredb \fBsaved_searches\fP add search_name search_expression
+calibredb \fBsaved_searches\fP add nome_ricerca espressione_di_ricerca
 .sp
-Syntax for removing:
+Sintassi per rimuovere:
 .sp
-calibredb \fBsaved_searches\fP remove search_name
+calibredb \fBsaved_searches\fP remove nome_ricerca
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -684,7 +684,7 @@ Crea una colonna personalizzata. etichetta è il nome amichevole della macchina 
 deve contenere spazi o punteggiatura. nome è il nome amichevole della colonna.
 tipo è uno di: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-display
@@ -709,7 +709,7 @@ calibredb custom_columns [options]
 .sp
 Elenca le colonne personalizzate disponibili. Mostra le etichette delle colonne e gli ID.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -730,7 +730,7 @@ calibredb remove_custom_column [opzioni] etichetta
 Rimuove la colonna personalizzata identificata dall\(aqetichetta. Puoi
 vedere le colonne disponibili con il comando custom_columns.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -742,18 +742,18 @@ Non chiedere conferma
 .sp
 .nf
 .ft C
-calibredb set_custom [options] column id value
+calibredb set_custom [opzioni] colonna id valore
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Set the value of a custom column for the book identified by id.
-You can get a list of ids using the search command.
-You can get a list of custom column names using the custom_columns
-command.
+Imposta il valore di una colonna personalizzata per il libro identificato da id.
+Puoi ottenere una lista di id usando il comando search.
+Puoi ottenere una lista dei nomi delle colonne personalizzate usando il comando
+custom_columns.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -780,7 +780,7 @@ tutte le ricerche salvate, le categorie utente, i pannelli di controllo, le impo
 di conversione per singolo libro e le ricette personalizzate. I metadati recuperati
 saranno accurati solo quanto lo erano i file OPF.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -800,7 +800,7 @@ calibredb check_library [opzioni]
 .sp
 Esegue alcuni controlli sul filesystem che rappresenta la biblioteca. I resoconti sono invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -836,7 +836,7 @@ calibredb list_categories [options]
 Crea un rapporto delle informazione sulle categorie del database.
 Le informazioni sono equivalenti a ciò che è mostrato nel navigatore dei Tag.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
@@ -881,7 +881,7 @@ comando per forzare una nuova creazione dei file OPF, con l\(aqopzione \-\-all.
 Nota che normalmente non è necessario farlo dato che il backup dei file OPF viene
 effettuato automaticamente ogni volta che i metadati cambiano.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -905,28 +905,29 @@ stesse colonne personalizzate, biblioteche virtuali e altre impostazioni della b
 La biblioteca clonata non conterrà libri. Se desideri creare un duplicato completo, che includa
 tutti i libri, è sufficiente usare gli strumenti del filesystem per copiare la cartella della biblioteca.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
-calibredb embed_metadata [options] book_id
+calibredb embed_metadata [opzioni] id_libro
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Update the metadata in the actual book files stored in the calibre library from
-the metadata in the calibre database.  Normally, metadata is updated only when
-exporting files from calibre, this command is useful if you want the files to
-be updated in place. Note that different file formats support different amounts
-of metadata. You can use the special value \(aqall\(aq for book_id to update metadata
-in all books. You can also specify many book ids separated by spaces and id ranges
-separated by hyphens. For example: calibredb \fBembed_metadata\fP 1 2 10\-15 23
+Aggiorna i metadati dentro i file dei libri conservati nella biblioteca di calibre
+con i metadati del database di calibre. Normalmente i metadati sono aggiornati solo
+quando vengono esportati file da calibre, questo comando è utile se vuoi che
+i file siano aggiornati dove si trovano. Tieni presente che formati di file
+differenti supportano diversi livelli di metadati. Puoi usare il valore speciale
+\(aqall\(aq come id_libro per aggiornare i metadati in tutti i libri. Puoi anche specificare
+più id libro separati da spazi e intervalli di id separati da trattini. Per esempio:
+calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
@@ -938,20 +939,21 @@ Aggiorna i metadati solamente nei file del formato specificato. Specificalo più
 .sp
 .nf
 .ft C
-calibredb search [options] search expression
+calibredb search [opzioni] espressione di ricerca
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Search the library for the specified \fBsearch\fP term, returning a comma separated
-list of book ids matching the \fBsearch\fP expression. The output format is useful
-to feed into other commands that accept a list of ids as input.
+Cerca nella biblioteca il termine di ricerca specificato, restituisce una lista
+separata da virgole di id libro che risultano dall\(aqespressione di ricerca.
+Il formato di uscita è comodo da usare in altri comandi che accettano
+una lista di id in ingresso.
 .sp
-The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
-language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
+L\(aqespressione di ricerca può essere qualsiasi cosa che rispetti il potente
+linguaggio di ricerca di calibre, ad esempio: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l

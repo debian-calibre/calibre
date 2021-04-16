@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "марта 26, 2021" "5.14.0" "calibre"
+.TH "CALIBREDB" "1" "апреля 16, 2021" "5.15.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -86,7 +86,7 @@ options to: command: \fIcalibredb\fP, чтобы предоставить дос
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ДОБАВЛЕНИЕ ИЗ ДИРЕКТОРИЙ\fP
+\fI\%ДОБАВЛЕНИЕ ИЗ ПАПОК\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -298,7 +298,7 @@ calibredb добавить [параметры] файл1 файл2 файл3 ..
 .B \-\-title, \-t
 Установить название добавляемой книги (книг)
 .UNINDENT
-.SS ДОБАВЛЕНИЕ ИЗ ДИРЕКТОРИЙ
+.SS ДОБАВЛЕНИЕ ИЗ ПАПОК
 .sp
 Опции для управления добавлением книг из директорий. По умолчанию добавляются только файлы с расширениями известных форматов электронных книг.
 .INDENT 0.0
@@ -491,7 +491,7 @@ calibre преобразует все неанглийские символы в
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+Шаблон для управления именем файла и структурой папок сохраненных файлов. По умолчанию это \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP, при котором книги будут сохраняться в подпапку для каждого автора с именами файлов, содержащими название и автора. Доступные элементы управления: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -556,7 +556,7 @@ see the different options, specify the name of the output file and then the
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Сохранить вывод из разных этапов конвейера преобразования в указанную папку. Полезно, если вы не уверены, на каком этапе процесса преобразования возникает ошибка. По умолчанию: \fB\(aq\fPNone\fB\(aq\fP Применимо к: выходным форматам AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP

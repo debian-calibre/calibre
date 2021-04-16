@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "marzo 26, 2021" "5.14.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "abril 16, 2021" "5.15.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -45,7 +45,7 @@ Convertir un libro electrónico de un formato a otro.
 .sp
 archivo_entrada es la entrada y archivo_salida es la salida. Deben indicarse ambos como los dos primeros argumentos de la orden.
 .sp
-El formato del libro electrónico de salida se define a partir de la extensión de archivo_salida. archivo_salida puede también tener el formato especial .EXT, donde EXT es la extensión del archivo de salida. En este caso, el nombre del archivo de salida se obtiene a partir del nombre del archivo de entrada. Tenga en cuenta que los nombres de archivo no deben comenzar con guión. Por último, si archivo_salida no tiene extensión, se interpreta como un directorio y se generará un «open eBook» (OEB), formado por un conjunto de archivos HTML, en ese directorio. Estos archivos son los que normalmente se habrían pasado al complemento de salida.
+El formato del libro electrónico de salida se define a partir de la extensión de archivo_salida. archivo_salida puede también tener el formato especial .EXT, donde EXT es la extensión del archivo de salida. En este caso, el nombre del archivo de salida se obtiene a partir del nombre del archivo de entrada. Tenga en cuenta que los nombres de archivo no deben comenzar con guión. Por último, si archivo_salida no tiene extensión, se interpreta como una carpeta y se generará un «open eBook» (OEB), formado por un conjunto de archivos HTML, en esa carpeta. Estos archivos son los que normalmente se habrían pasado al complemento de salida.
 .sp
 Tras especificar los archivos de entrada y salida, se puede personalizar la conversión indicando varias opciones. Las opciones disponibles dependen de los tipos de archivo de entrada y salida. Para obtener ayuda sobre estas opciones, especifique los nombres de archivo de entrada y salida y después use la opción \-h.
 .sp
@@ -145,7 +145,7 @@ La versión de EPUB del archivo que se genera. EPUB 2 es la más ampliamente com
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extraer los contenidos del archivo generado EPUB al directorio especificado. Los contenidos del directorio primero son eliminados, así que tenga cuidado.
+Extraer los contenidos del archivo generado EPUB a la carpeta especificada. Los contenidos de la carpeta  primero son eliminados, así que tenga cuidado.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -183,7 +183,7 @@ Opciones para controlar el aspecto de la salida
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Translitere caracteres Unicode a una representación ASCII. Úselo con cuidado porque esto reemplazará los caracteres Unicode con ASCII. Por ejemplo, reemplazará \fB"\fPPelé\fB"\fP por \fB"\fPPele\fB"\fP\&. Además, tenga en cuenta que en los casos en que haya varias representaciones de un carácter (caracteres compartidos por el chino y el japonés, por ejemplo), se utilizará la representación basada en el idioma de interfaz de calibre actual.
+Transliterar caracteres Unicode a la representación ASCII. Tenga cuidado al usar esta opción, ya que reemplazará los caracteres Unicode con ASCII. Por ejemplo, sustituirá «Pelé» por «Pele». Tenga en cuenta también que en los casos en los que existen múltiples representaciones para un carácter determinado (por ejemplo, caracteres compartidos por la escritura china y japonesa) se usará la representación basada en el idioma de la interfaz de calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -595,7 +595,7 @@ Opciones para ayudar con la depuración de la conversión
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Guarde el resultado de las diferentes etapas de la canalización de conversión en la carpeta especificada. Útil si no está seguro en qué etapa del proceso de conversión se está produciendo un error.
+Guardar la salida de las distintas etapas del proceso de conversión en la carpeta especificada. Útil si no está seguro de en qué punto del proceso de conversión está ocurriendo un error.
 .UNINDENT
 .INDENT 0.0
 .TP

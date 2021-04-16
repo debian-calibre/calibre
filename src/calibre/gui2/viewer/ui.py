@@ -688,6 +688,10 @@ class EbookViewer(MainWindow):
         if state:
             self.restoreState(state, self.MAIN_WINDOW_STATE_VERSION)
             self.inspector_dock.setVisible(False)
+            if not get_session_pref('restore_docks', True):
+                for dock_def in self.dock_defs.values():
+                    d = getattr(self, '{}_dock'.format(dock_def.name.partition('-')[0]))
+                    d.setVisible(False)
 
     def quit(self):
         self.close()

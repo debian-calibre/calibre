@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "mars 26, 2021" "5.14.0" "calibre"
+.TH "CALIBREDB" "1" "april 16, 2021" "5.15.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -47,7 +47,7 @@ flera underkommandon, dokumenterade nedan.
 \fBcalibredb\fP kan användas för att manipulera antingen en calibre\-databas
 anges per sökväg eller en calibre\-innehållsserver körs antingen på
 den lokala maskinen eller över internet. Du kan starta en
-calibre\-Innehållsserver \(gamed antingen :command:\(gacalibre server
+calibre\-Innehållsserver med antingen \fBcalibre server\fP
 programmet eller klicka på i calibre\-huvudprogrammet Anslut/dela  → 
 Starta innehållsserver\&. Eftersom \fBcalibredb\fP kan göra ändringar i ditt
 calibre\-bibliotek måste du först ställa in autentisering på servern. Det
@@ -86,7 +86,7 @@ detaljer och exempel.
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%LÄGGER TILL FRÅN MAPPAR\fP
+\fI\%TILLÄGGNING TILL FRÅN MAPPAR\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -298,7 +298,7 @@ Ange taggar i den tillagda boken eller de tillagda böckerna
 .B \-\-title, \-t
 Ange namn på den tillagda boken eller de tillagda böckerna
 .UNINDENT
-.SS LÄGGER TILL FRÅN MAPPAR
+.SS TILLÄGGNING TILL FRÅN MAPPAR
 .sp
 Alternativ för att anpassa tilläggningen av böcker från mappar. Som standard läggs endast filer som har ändelser av kända e\-bokfiltyper till.
 .INDENT 0.0
@@ -314,7 +314,7 @@ Ett filnamn (glob) mönster, kommer filer som matchar detta mönster ignoreras v
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Antag att varje mapp bara har en enda logisk bok och att alla filer i den är samma e\-bok i olika format.
+Antag att varje mapp bara har en enda logisk bok och att alla filer i den är samma e\-bok i olika format
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -467,7 +467,7 @@ Normalt kommer calibre att uppdatera metadata i de sparade filerna utifrån det 
 .INDENT 0.0
 .TP
 .B \-\-dont\-write\-opf
-Normalt kommer calibre skriva metadata i en separat OPF\-fil tillsammans med själva e\-bokfilerna. Om denna växel aktiveras, kommer detta beteende att stängas av.
+Normalt kommer calibre att skriva metadata i en separat OPF\-fil tillsammans med själva e\-bokfilerna. Om denna växel aktiveras, kommer detta beteende att stängas av.
 .UNINDENT
 .INDENT 0.0
 .TP

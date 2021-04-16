@@ -33,9 +33,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-23 06:27+0000\n"
-"PO-Revision-Date: 2021-03-16 12:53+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2021-04-15 04:32+0000\n"
+"PO-Revision-Date: 2021-04-09 11:21+0000\n"
+"Last-Translator: Jellby <jellby@yahoo.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/calibre/calibre/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -63,57 +63,62 @@ msgid "A calibre plugin. Useful members include:"
 msgstr "Un complemento de calibre. Los miembros útiles incluyen:"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.Plugin:4
+#: calibre.customize.Plugin:3
+msgid "``self.installation_type``: Stores how the plugin was installed."
+msgstr "``self.installation_type``: Almacena cómo se instaló el complemento."
+
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.Plugin:5
 msgid "``self.plugin_path``: Stores path to the ZIP file that contains"
 msgstr "``self.plugin_path``: Almacena la ubicación del archivo ZIP que contiene"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.Plugin:4
+#: calibre.customize.Plugin:5
 msgid "this plugin or None if it is a builtin plugin"
 msgstr "este complemento o None si es un complemento predefinido"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.Plugin:7
+#: calibre.customize.Plugin:8
 msgid "``self.site_customization``: Stores a customization string entered"
 msgstr "``self.site_customization``: Guarda un texto de personalización introducido"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.Plugin:7
+#: calibre.customize.Plugin:8
 msgid "by the user."
 msgstr "por el usuario."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.Plugin:9
+#: calibre.customize.Plugin:10
 msgid "Methods that should be overridden in sub classes:"
 msgstr "Métodos que deben reemplazarse en subclases:"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.Plugin:11
+#: calibre.customize.Plugin:12
 msgid ":meth:`initialize`"
 msgstr ":meth:`initialize`"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.Plugin:12
+#: calibre.customize.Plugin:13
 msgid ":meth:`customization_help`"
 msgstr ":meth:`customization_help`"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.Plugin:14
+#: calibre.customize.Plugin:15
 msgid "Useful methods:"
 msgstr "Métodos útiles:"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.Plugin:16
+#: calibre.customize.Plugin:17
 msgid ":meth:`temporary_file`"
 msgstr ":meth:`temporary_file`"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.Plugin:17
+#: calibre.customize.Plugin:18
 msgid ":meth:`__enter__`"
 msgstr ":meth:`__enter__`"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.Plugin:18
+#: calibre.customize.Plugin:19
 msgid ":meth:`load_resources`"
 msgstr ":meth:`load_resources`"
 
@@ -159,6 +164,11 @@ msgstr "Cuando existe más de un complemento para un tipo de archivo, los comple
 #: calibre.customize.Plugin.minimum_calibre_version:1
 msgid "The earliest version of calibre this plugin requires"
 msgstr "La versión más antigua requerida por este complemento"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.Plugin.installation_type:1
+msgid "The way this plugin is installed"
+msgstr "La manera en que se instaló este complemento"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.Plugin.can_be_disabled:1
@@ -1186,7 +1196,7 @@ msgid ""
 "contained in the current folder. If this plugin creates files outside the "
 "current folder they must be deleted/marked for deletion before this method "
 "returns."
-msgstr "Este método debe ser implementado en subclases. Debe volver la ruta al archivo OPF creado o un ejemplar :class:`OEBBook`. Toda la salida debe estar contenida en el directorio actual. Si este complemento crea archivos fuera del directorio actual, deben ser eliminados o marcados para su eliminación antes de que termine este método."
+msgstr "Este método debe ser implementado en subclases. Debe volver la ruta al archivo OPF creado o un ejemplar :class:`OEBBook`. Toda la salida debe estar contenida en la carpeta actual. Si este complemento crea archivos fuera de la carpeta actual, deben ser eliminados o marcados para su eliminación antes de que termine este método."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring of
 #: calibre.customize.conversion.InputFormatPlugin.convert:8
@@ -1298,7 +1308,7 @@ msgid ""
 " folder that may or may not exist. The output plugin should write its output"
 " into that folder. If it is a file like object, the output plugin should "
 "write its output into the file."
-msgstr "Un objeto de tipo archivo o un texto. Si es un texto es la ruta a un directorio que puede existir o no. El complemento de salida debe escribir su resultado en este directorio. Si es un objeto de tipo archivo, el complemento de salida debe escribir su resultado en el archivo."
+msgstr "Un objeto de tipo archivo o un texto. Si es un texto es la ruta a una carpeta que puede existir o no. El complemento de salida debe escribir su resultado en esta carpeta. Si es un objeto de tipo archivo, el complemento de salida debe escribir su resultado en el archivo."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring of
 #: calibre.customize.conversion.OutputFormatPlugin.convert:8
@@ -2459,7 +2469,7 @@ msgstr "Envía una portada de libro al dispositivo. La implementación predeterm
 #: ../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring of
 #: calibre.devices.usbms.driver.USBMS.upload_cover:3
 msgid "The full path to the folder where the associated book is located."
-msgstr "La ruta completa a la carpeta donde se encuentra el libro asociado."
+msgstr "La ruta completa de la carpeta donde se encuentra el libro asociado."
 
 #: ../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring of
 #: calibre.devices.usbms.driver.USBMS.upload_cover:4
@@ -2483,7 +2493,7 @@ msgstr "Devuelve path con los separadores de ruta propios de la plataforma"
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:157
 msgid "User interface actions"
-msgstr ""
+msgstr "Acciones de interfaz de usuario"
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:159
 msgid ""
@@ -2684,7 +2694,7 @@ msgstr "El texto de la acción."
 msgid ""
 "Either a QIcon or a file name. The file name is passed to the I() builtin, "
 "so you do not need to pass the full path to the images folder."
-msgstr "Un QIcon o un nombre de archivo. El nombre de archivo se pasa al ``I()`` predefinido, así que no necesita pasar la ruta completa al directorio de imágenes."
+msgstr "Un QIcon o un nombre de archivo. El nombre de archivo se pasa al ``I()`` predefinido, así que no necesita pasar la ruta completa a la carpeta de imágenes."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction.create_menu_action:14
