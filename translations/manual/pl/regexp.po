@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-08 15:24+0000\n"
-"PO-Revision-Date: 2021-02-26 03:06+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2021-04-19 02:55+0000\n"
+"PO-Revision-Date: 2021-04-18 08:15+0000\n"
+"Last-Translator: Andrzej Symonowicz <asymonowicz@yahoo.com>\n"
 "Language-Team: Polish (http://www.transifex.com/calibre/calibre/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -224,17 +224,41 @@ msgid ""
 "``[a-z]`` matching a single lowercase letter, ``[A-Z]`` matching a single "
 "uppercase letter, ``[a-zA-Z]`` matching a single letter and ``[a-zA-Z0-9]`` "
 "matching a single letter or number. You can also use an escape sequence as "
-"shorthand::"
-msgstr "Wiedziałem, że zapytasz. Niektóre z nich to ``[0-9]``, oznaczające pojedynczą cyfrę, ``[a-z]``, oznaczające pojedynczą małą literę, ``[A-Z]`` to pojedyncza wielka litera, ``[a-zA-Z]`` pasuje do pojedynczej dowolnej litery, a ``[a-zA-Z0-9]`` do pojedynczej litery lub cyfry. Możesz również użyć sekwencji unikowej jako skrótu:"
+"shorthand:"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/regexp.rst:66
+msgid "``\\d``"
+msgstr "``\\d``"
+
+#: ../../__w/calibre/calibre/manual/regexp.rst:66
+msgid "is equivalent to ``[0-9]``"
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:70
+msgid "``\\w``"
+msgstr "``\\w``"
+
+#: ../../__w/calibre/calibre/manual/regexp.rst:69
+msgid "is equivalent to ``[a-zA-Z0-9_]``"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/regexp.rst:73
+msgid "``\\s``"
+msgstr "``\\s``"
+
+#: ../../__w/calibre/calibre/manual/regexp.rst:73
+msgid "is equivalent to any whitespace"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/regexp.rst:76
 msgid ""
 "\"Whitespace\" is a term for anything that won't be printed. These "
-"characters include space, tabulator, line feed, form feed and carriage "
-"return."
-msgstr "\"Białe znaki\" to termin oznaczające to, co się nie drukuje. Obejmuje on spację, tabulator, znak akapitu, przełamania wiersza i karetki."
+"characters include space, tabulator, line feed, form feed, carriage return, "
+"non-breaking spaces, etc."
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:72
+#: ../../__w/calibre/calibre/manual/regexp.rst:78
 msgid ""
 "As a last note on sets, you can also define a set as any character *but* "
 "those in the set. You do that by including the character ``\"^\"`` as the "
@@ -249,13 +273,13 @@ msgid ""
 "bracket."
 msgstr "Na koniec informacji o zestawach - możesz również zdefiniować wszystkie znaki *oprócz* tych ujętych w zestawie. Robi się to poprzez dodanie znaku ``\"^\"`` jako *pierwszego znaku w zestawie*. Tak więc ``[^a]`` dopasuje każdy znak oprócz \"a\". Nazywane jest to uzupełnianiem zestawu. Sekwencje unikowe, o których pisaliśmy wcześniej również mogą być w ten sposób uzupełniane: ``\"\\D\"`` oznacza dowolny znak nienumeryczny, jest więc ekwiwalentem ``[^0-9]``. Inne skróty, jak się zapewne spodziewasz, mogą również być uzupełniane poprzez wielką literę zamiast małej. Powracając do przykładu ``<p[^>]*>`` z poprzedniego rozdziału rozumiesz już, że w tym przypadku zestaw jest używany do dopasowania dowolnego znaku oprócz zamykającego nawiasu ostrego."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:75
+#: ../../__w/calibre/calibre/manual/regexp.rst:81
 msgid ""
 "But if I had a few varying strings I wanted to match, things get "
 "complicated?"
 msgstr "A gdybym miał kilka różnych ciągów, które chciałbym dopasować, to czy byłoby to skomplikowane?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:77
+#: ../../__w/calibre/calibre/manual/regexp.rst:83
 msgid ""
 "Fear not, life still is good and easy. Consider this example: The book "
 "you're converting has \"Title\" written on every odd page and \"Author\" "
@@ -271,7 +295,7 @@ msgid ""
 "the even pages). Well, wasn't that easy?"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:79
+#: ../../__w/calibre/calibre/manual/regexp.rst:85
 msgid ""
 "You can, of course, use the vertical bar without using grouping parentheses,"
 " as well. Remember when I said that quantifiers repeat the element preceding"
@@ -287,11 +311,11 @@ msgid ""
 "short: If in doubt, use grouping together with the vertical bar."
 msgstr "Możesz oczywiście użyć pionowej kreski bez grupujących nawiasów. Pamiętasz, że kwantyfikatory powtarzają poprzedzający je znak? Pionowa kreska działa nieco inaczej: wyrażenie \"Tytuł|Autor\" także dopasuje ciąg \"Tytuł\" albo ciąg \"Autor\", tak jak w poprzednim przykładzie, gdzie użyliśmy nawiasów. *Pionowa kreska obejmuje swoim działaniem całe wyrażenie przed i za nią*. Tak więc jeśli chcesz odnaleźć ciąg \"Calibre\" i \"calibre\", wybierając pomiędzy małym a wielkim \"C\", musisz użyć wyrażenia ``(c|C)alibre``, w którym grupowanie oznacza, że wybór dotyczy wyłącznie \"c\". Gdybyś użył ``c|Calibre`` to dopasowany zostałby ciąg \"c\" albo ciąg \"Calibre\", co jest nieprawidłowe. W skrócie: jeśli masz wątpliwości, grupuj wyrażenia, jeśli używasz pionowej kreski."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:82
+#: ../../__w/calibre/calibre/manual/regexp.rst:88
 msgid "You missed..."
 msgstr "Zapomniałem..."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:84
+#: ../../__w/calibre/calibre/manual/regexp.rst:90
 msgid ""
 "... wait just a minute, there's one last, really neat thing you can do with "
 "groups. If you have a group that you previously matched, you can use "
@@ -302,13 +326,13 @@ msgid ""
 "match the whole string!"
 msgstr "...moment, jest jeszcze jedna, naprawdę użyteczna funkcja grup. Jeśli w wyrażeniu jest grupa, która została dopasowana, możesz się do niej odnieść później w tym wyrażeniu: grupy są numerowane, począwszy od 1, możesz użyć tych numerów, poprzedzając je backslashem, tak więc piąta grupa będzie oznaczona przez ``\\5``. Jeśli więc szukasz ``([^ ]+)\\1`` otrzymasz cały ciąg!"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:88
+#: ../../__w/calibre/calibre/manual/regexp.rst:94
 msgid ""
 "In the beginning, you said there was a way to make a regular expression case"
 " insensitive?"
 msgstr "Na początku powiedziałeś, że w wyrażeniach regularnych wielkość liter może nie mieć znaczenia?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:90
+#: ../../__w/calibre/calibre/manual/regexp.rst:96
 msgid ""
 "Yes, I did, thanks for paying attention and reminding me. You can tell "
 "calibre how you want certain things handled by using something called flags."
@@ -319,7 +343,7 @@ msgid ""
 "\"Test\", \"tEst\", \"TEst\" and any case variation you could think of."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:92
+#: ../../__w/calibre/calibre/manual/regexp.rst:98
 msgid ""
 "Another useful flag lets the dot match any character at all, *including* the"
 " newline, the flag ``s``. If you want to use multiple flags in an "
@@ -328,17 +352,17 @@ msgid ""
 "``(?si)`` would be equivalent to the above."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:95
+#: ../../__w/calibre/calibre/manual/regexp.rst:101
 msgid ""
 "I think I'm beginning to understand these regular expressions now... how do "
 "I use them in calibre?"
 msgstr "Zaczynam chyba rozumieć, o co chodzi w wyrażeniach regularnych, a teraz... jak ich użyć w calibre?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:98
+#: ../../__w/calibre/calibre/manual/regexp.rst:104
 msgid "Conversions"
 msgstr "Konwertowanie"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:100
+#: ../../__w/calibre/calibre/manual/regexp.rst:106
 msgid ""
 "Let's begin with the conversion settings, which is really neat. In the "
 ":guilabel:`Search & replace` part, you can input a regexp (short for regular"
@@ -354,7 +378,7 @@ msgid ""
 "convert. Be careful if your conversion source has tags like this example::"
 msgstr "Zacznijmy od ustawień konwertowania, co jest dość przyjemne. W części :guilabel:„Znajdź i zamień” możesz wprowadzić wyrażenie regularne opisujące napis, który zostanie podmieniony w trakcie konwertowania książki. Tu z pomocą przychodzi kreator. Naciśnij przycisk kreatora, a zobaczysz podgląd tego, jak calibre „widzi” książkę podczas konwertowania. Przewiń tekst do napisu, który chcesz usunąć, zaznacz go, skopiuj i wklej do pola wyrażenia regularnego na górze okna. Jeśli napis zawiera części zmienne, takie jak numery stron itp., możesz użyć zbiorów i kwantyfikatorów, by je wychwycić. Skoro już przy tym jesteśmy, pamiętaj, by poprzedzić jakiekolwiek znaki specjalne znakiem modyfikacji (tj. odwrotnym ukośnikiem). Naciśnij przycisk :guilabel:„Test”, a calibre wyróżni części, które zastąpiłby podczas konwertowania. Kiedy już będziesz gotowy, naciśnij OK, by rozpocząć konwertowanie. Pamiętaj, że jeżeli źródło konwertowania zawiera znaczniki, jak w poniższym przykładzie:"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:110
+#: ../../__w/calibre/calibre/manual/regexp.rst:116
 msgid ""
 "(shamelessly ripped out of `this thread "
 "<https://www.mobileread.com/forums/showthread.php?t=75594\">`_). You'd have "
@@ -381,11 +405,11 @@ msgid ""
 " removal."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:113
+#: ../../__w/calibre/calibre/manual/regexp.rst:119
 msgid "Adding books"
 msgstr "Dodawanie książek"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:115
+#: ../../__w/calibre/calibre/manual/regexp.rst:121
 msgid ""
 "Another thing you can use regular expressions for is to extract metadata "
 "from filenames. You can find this feature in the \"Adding books\" part of "
@@ -408,11 +432,11 @@ msgid ""
 "working expression."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:119
+#: ../../__w/calibre/calibre/manual/regexp.rst:125
 msgid "Bulk editing metadata"
 msgstr "Masowa edycja metadanych"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:121
+#: ../../__w/calibre/calibre/manual/regexp.rst:127
 msgid ""
 "The last part is regular expression :guilabel:`Search and replace` in "
 "metadata fields. You can access this by selecting multiple books in the "
@@ -438,7 +462,7 @@ msgid ""
 " behaviour here."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:123
+#: ../../__w/calibre/calibre/manual/regexp.rst:129
 msgid ""
 "Well, that just about concludes the very short introduction to regular "
 "expressions. Hopefully I'll have shown you enough to at least get you "
@@ -447,7 +471,7 @@ msgid ""
 "<https://docs.python.org/library/re.html>`_."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:125
+#: ../../__w/calibre/calibre/manual/regexp.rst:131
 msgid ""
 "One last word of warning, though: Regexps are powerful, but also really easy"
 " to get wrong. calibre provides really great testing possibilities to see if"
@@ -457,47 +481,47 @@ msgid ""
 "learn from it."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:129
+#: ../../__w/calibre/calibre/manual/regexp.rst:135
 msgid "Quick reference"
 msgstr "Szybkie odniesienie"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:137
+#: ../../__w/calibre/calibre/manual/regexp.rst:143
 msgid "Credits"
 msgstr "Uznanie"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:139
+#: ../../__w/calibre/calibre/manual/regexp.rst:145
 msgid "Thanks for helping with tips, corrections and such:"
 msgstr "Dzięki za pomocne rady, korekty itp.:"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:141
+#: ../../__w/calibre/calibre/manual/regexp.rst:147
 msgid "ldolse"
 msgstr "Idolse"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:142
+#: ../../__w/calibre/calibre/manual/regexp.rst:148
 msgid "kovidgoyal"
 msgstr "kovidgoyal"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:143
+#: ../../__w/calibre/calibre/manual/regexp.rst:149
 msgid "chaley"
 msgstr "chaley"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:144
+#: ../../__w/calibre/calibre/manual/regexp.rst:150
 msgid "dwanthny"
 msgstr "dwanthny"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:145
+#: ../../__w/calibre/calibre/manual/regexp.rst:151
 msgid "kacir"
 msgstr "kacir"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:146
+#: ../../__w/calibre/calibre/manual/regexp.rst:152
 msgid "Starson17"
 msgstr "Starson17"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:147
+#: ../../__w/calibre/calibre/manual/regexp.rst:153
 msgid "Orpheu"
 msgstr "Orpheu"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:149
+#: ../../__w/calibre/calibre/manual/regexp.rst:155
 msgid ""
 "For more about regexps see `The Python User Manual "
 "<https://docs.python.org/library/re.html>`_. The actual regular expression "

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "四月 16, 2021" "5.15.0" "calibre"
+.TH "CALIBREDB" "1" "四月 19, 2021" "5.16.1" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -95,7 +95,7 @@ calibre书库，必须首先在服务器上设置身份验证。这里
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ADDING FROM FOLDERS\fP
+\fI\%正在从文件夹中添加\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -237,14 +237,13 @@ calibredb list [选项]
 .sp
 .nf
 .ft C
-calibredb add [options] file1 file2 file3 ...
+calibredb add [选项] file1 file2 file3 ...
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Add the specified files as books to the database. You can also specify folders, see
-the folder related options below.
+添加指定文件为书籍到数据库。你可以指定目录，请查看下面目录相关选项。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
 .INDENT 0.0
@@ -311,7 +310,7 @@ If books with similar titles and authors are found, merge the incoming formats (
 .B \-\-title, \-t
 设置已添加书籍的标题
 .UNINDENT
-.SS ADDING FROM FOLDERS
+.SS 正在从文件夹中添加
 .sp
 Options to control the adding of books from folders. By default only files that have extensions of known e\-book file types are added.
 .INDENT 0.0

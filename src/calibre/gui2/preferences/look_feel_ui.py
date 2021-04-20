@@ -739,7 +739,7 @@ class Ui_Form(object):
         self.opt_cb_preserve_aspect_ratio.setText(_("Preserve &aspect ratio of covers"))
         self.label_23.setText(_("&Template for caption:"))
         self.label_24.setText(_("Fie&ld for sub-title:"))
-        self.fs_help_msg.setText(_("You can press the %s keys to toggle full screen mode."))
+        self.fs_help_msg.setText(_("You can press the %s key to toggle full screen mode."))
         self.label_26.setText(_("Show ne&xt cover during auto scroll after:"))
         self.opt_books_autoscroll_time.setSuffix(_(" seconds"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.cover_browser_tab), _("Cover &browser"))

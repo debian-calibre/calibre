@@ -240,8 +240,8 @@ class CBDialog(QDialog):
 
     closed = pyqtSignal()
 
-    def __init__(self, parent, cover_flow):
-        QDialog.__init__(self, parent)
+    def __init__(self, gui, cover_flow):
+        QDialog.__init__(self, gui)
         self._layout = QStackedLayout()
         self.setLayout(self._layout)
         self.setWindowTitle(_('Browse by covers'))
@@ -253,8 +253,7 @@ class CBDialog(QDialog):
             self.resize(w, h)
         self.action_fs_toggle = a = QAction(self)
         self.addAction(a)
-        a.setShortcuts([QKeySequence('F11', QKeySequence.SequenceFormat.PortableText),
-            QKeySequence('Ctrl+Shift+F', QKeySequence.SequenceFormat.PortableText)])
+        a.setShortcuts([QKeySequence(QKeySequence.StandardKey.FullScreen)])
         a.triggered.connect(self.toggle_fullscreen)
         self.action_esc_fs = a = QAction(self)
         a.triggered.connect(self.show_normal)
@@ -264,11 +263,17 @@ class CBDialog(QDialog):
         self.pre_fs_geom = None
         cover_flow.setFocus(Qt.FocusReason.OtherFocusReason)
         self.view_action = a = QAction(self)
-        iactions = parent.iactions
+        iactions = gui.iactions
         self.addAction(a)
         a.setShortcuts(list(iactions['View'].menuless_qaction.shortcuts())+
                 [QKeySequence(Qt.Key.Key_Space)])
         a.triggered.connect(iactions['View'].menuless_qaction.trigger)
+
+        self.auto_scroll_action = a = QAction(self)
+        a.setShortcuts(list(iactions['Autoscroll Books'].menuless_qaction.shortcuts()))
+        self.addAction(a)
+        a.triggered.connect(iactions['Autoscroll Books'].menuless_qaction.trigger)
+
         self.sd_action = a = QAction(self)
         self.addAction(a)
         a.setShortcuts(list(iactions['Send To Device'].
