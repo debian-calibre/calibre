@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-08 15:24+0000\n"
-"PO-Revision-Date: 2021-02-26 05:38+0000\n"
+"POT-Creation-Date: 2021-04-19 02:55+0000\n"
+"PO-Revision-Date: 2021-04-18 10:22+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
 "MIME-Version: 1.0\n"
@@ -221,17 +221,41 @@ msgid ""
 "``[a-z]`` matching a single lowercase letter, ``[A-Z]`` matching a single "
 "uppercase letter, ``[a-zA-Z]`` matching a single letter and ``[a-zA-Z0-9]`` "
 "matching a single letter or number. You can also use an escape sequence as "
-"shorthand::"
-msgstr "Ми знали, що ви про це запитаєте. Серед корисних наборів символів є набір ``[0-9]``, який відповідає будь-якій цифрі, набір ``[a-z]``, який відповідає будь-якій латинській літері нижнього регістру, набір ``[A-Z]``, який відповідає будь-якій латинській літері верхнього регістру, набір ``[a-zA-Z]``, який відповідає будь-якій латинській літері, та набір ``[a-zA-Z0-9]``, який відповідає будь-якій латинській літері або цифрі. Ви також можете використовувати такі екрановані послідовності::"
+"shorthand:"
+msgstr "Ми знали, що ви про це запитаєте. Серед корисних наборів символів є набір ``[0-9]``, який відповідає будь-якій цифрі, набір ``[a-z]``, який відповідає будь-якій латинській літері нижнього регістру, набір ``[A-Z]``, який відповідає будь-якій латинській літері верхнього регістру, набір ``[a-zA-Z]``, який відповідає будь-якій латинській літері, та набір ``[a-zA-Z0-9]``, який відповідає будь-якій латинській літері або цифрі. Ви також можете використовувати такі екрановані послідовності:"
+
+#: ../../__w/calibre/calibre/manual/regexp.rst:66
+msgid "``\\d``"
+msgstr "``\\d``"
+
+#: ../../__w/calibre/calibre/manual/regexp.rst:66
+msgid "is equivalent to ``[0-9]``"
+msgstr "є рівнозначним ``[0-9]``"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:70
+msgid "``\\w``"
+msgstr "``\\w``"
+
+#: ../../__w/calibre/calibre/manual/regexp.rst:69
+msgid "is equivalent to ``[a-zA-Z0-9_]``"
+msgstr "є рівнозначним ``[a-zA-Z0-9_]``"
+
+#: ../../__w/calibre/calibre/manual/regexp.rst:73
+msgid "``\\s``"
+msgstr "``\\s``"
+
+#: ../../__w/calibre/calibre/manual/regexp.rst:73
+msgid "is equivalent to any whitespace"
+msgstr "є рівнозначним будь-якому пробілу"
+
+#: ../../__w/calibre/calibre/manual/regexp.rst:76
 msgid ""
 "\"Whitespace\" is a term for anything that won't be printed. These "
-"characters include space, tabulator, line feed, form feed and carriage "
-"return."
-msgstr "«Пробілами» вважаються будь-які символи, які не можна надрукувати. Такими символами є звичайні пробіли, символи табуляції, символи заповнення рядка, заповнення форми та символи повернення каретки."
+"characters include space, tabulator, line feed, form feed, carriage return, "
+"non-breaking spaces, etc."
+msgstr "«Пробілами» вважаються будь-які символи, які не можна надрукувати. Такими символами є звичайні пробіли, символи табуляції, символи заповнення рядка, заповнення форми, символи повернення каретки, нерозривні пробіли тощо."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:72
+#: ../../__w/calibre/calibre/manual/regexp.rst:78
 msgid ""
 "As a last note on sets, you can also define a set as any character *but* "
 "those in the set. You do that by including the character ``\"^\"`` as the "
@@ -246,13 +270,13 @@ msgid ""
 "bracket."
 msgstr "На завершення розмови про набори, — ви також можете визначити набір як будь-який символ, *окрім* символів у вказаному наборі. Для цього слід додати символ ``^`` як *найперший символ у наборі*. Таким чином, ``[^a]`` відповідає будь-якому символу, окрім символу «a». Така дія називається доповненням набору. Керівні послідовності, які ми розглядали вище, також можна використовувати для доповнення: ``\\D`` відповідає будь-якому нецифровому символу, отже, є еквівалентом ``[^0-9]``. Інші скорочені форми доповнень, як ви вже могли здогадатися, створюються використанням літери верхнього регістру замість літери нижнього регістру. Отже, повертаючись до прикладу із ``<p[^>]*>`` з попереднього розділу, можемо бачити, що набір символів, який у ньому використано, відповідає будь-якому символу, окрім кінцевої кутової дужки."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:75
+#: ../../__w/calibre/calibre/manual/regexp.rst:81
 msgid ""
 "But if I had a few varying strings I wanted to match, things get "
 "complicated?"
 msgstr "Що якщо потрібно знайти якийсь із декількох рядків? Все значно ускладниться?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:77
+#: ../../__w/calibre/calibre/manual/regexp.rst:83
 msgid ""
 "Fear not, life still is good and easy. Consider this example: The book "
 "you're converting has \"Title\" written on every odd page and \"Author\" "
@@ -268,7 +292,7 @@ msgid ""
 "the even pages). Well, wasn't that easy?"
 msgstr "Не бійтеся, життя є простим і прекрасним. Розгляньмо приклад: на сторінках книги, перетворення якої ви хочете виконати, назву книги написано у верхньому колонтитулі кожної непарної сторінки, а імена авторів — у верхньому колонтитулі парних сторінок. Друкована книга виглядає чудово, але для електронної книги усі ці дані є зайвими. Ви можете згрупувати вирази для колонтитулів у звичайних круглих дужках і скористатися символом ``|`` для встановлення відповідності *будь-якому* з виразів, які розташовано з *обох* боків від цього символу. Поєднайте рядки для парних і непарних сторінок, і справу буде зроблено. Надто швидко для вас, не зрозуміли? Гаразд, спочатку ми згрупуємо вирази для непарних і парних сторінок, отримавши ``(Назва)(Автор)`` для двох відповідних виразів. Далі, спростимо речі, скориставшись символом вертикальної риски (``|`` називається символом вертикальної риски): якщо буде використано вираз ``(Назва|Автор)`` під час пошуку відповідність встановлюватиметься або для рядка «Назва» (на непарних сторінках) або для рядка «Автор» (на парних сторінках). Гаразд, хіба це не просто?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:79
+#: ../../__w/calibre/calibre/manual/regexp.rst:85
 msgid ""
 "You can, of course, use the vertical bar without using grouping parentheses,"
 " as well. Remember when I said that quantifiers repeat the element preceding"
@@ -284,11 +308,11 @@ msgid ""
 "short: If in doubt, use grouping together with the vertical bar."
 msgstr "Звичайно ж, ви можете скористатися вертикальною рискою без групування за допомогою дужок. Пам’ятаєте, ми згадували, що квантори повторюють елемент, який їм передує? Гаразд, вертикальна риска працює трохи інакше: вираз «Назва|Автор» також відповідає або рядку «Назва», або рядку «Автор», як і у наведеному вище прикладі із групуванням. *За допомогою вертикальної риски можна зробити варіантами для вибору вираз, який передує їй і вираз, який розташовано після вертикальної риски*. Отже, якщо ви хочете знайти рядок «Calibre» і рядок «calibre», де змінюється лише регістр початкової літери «c», варто скористатися виразом ``(c|C)alibre``, де групування забезпечує вибір лише між різними регістрами літери «c». Якщо б ви використали вираз ``c|Calibre``, варіантами б були рядки «c» і «Calibre», тобто не ті рядки, які нам потрібні. Якщо коротко: не бійтеся використовувати групування для того, щоб уникнути двозначності у виразі."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:82
+#: ../../__w/calibre/calibre/manual/regexp.rst:88
 msgid "You missed..."
 msgstr "Ви пропустили…"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:84
+#: ../../__w/calibre/calibre/manual/regexp.rst:90
 msgid ""
 "... wait just a minute, there's one last, really neat thing you can do with "
 "groups. If you have a group that you previously matched, you can use "
@@ -299,13 +323,13 @@ msgid ""
 "match the whole string!"
 msgstr "...зачекайте, ще одна остання дуже цікава річ, пов’язана із групами. Якщо у виразі є група, з якою встановлюється відповідність рядка пошуку, ви можете посилатися на цю групу далі у виразі. Групи нумеруються, починаючи з 1, а посилаються на них додаючи символ екранування до номера групи. Отже, на п’яту групу посилаються за допомогою послідовності ``\\5``. Таким чином, якщо виконуватиметься пошук за виразом ``([^ ]+) \\1`` у рядку «Тест Тест», буде встановлено відповідність формального виразу усьому рядку!"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:88
+#: ../../__w/calibre/calibre/manual/regexp.rst:94
 msgid ""
 "In the beginning, you said there was a way to make a regular expression case"
 " insensitive?"
 msgstr "На початку була згадка про те, що формальні вирази можна зробити незалежними від регістру символів. Як це зробити?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:90
+#: ../../__w/calibre/calibre/manual/regexp.rst:96
 msgid ""
 "Yes, I did, thanks for paying attention and reminding me. You can tell "
 "calibre how you want certain things handled by using something called flags."
@@ -316,7 +340,7 @@ msgid ""
 "\"Test\", \"tEst\", \"TEst\" and any case variation you could think of."
 msgstr "Так, ми про це згадували. Дякуємо, що були уважними і нагадали про це. Ви можете повідомити calibre про те, як обробляти певні речі, за допомогою так званих прапорців. Включити прапорці до вашого виразу можна за допомогою спеціальної конструкції ``(?тут вказують прапорці)``, у якій, звичайно ж, вам слід замінити рядок «тут вказують прапорці» на потрібний вам вираз прапорців. Якщо слід ігнорувати регістр символів, маємо вказати прапорець ``i``, тобто включити ``(?i)`` до вашого виразу. Таким чином, за допомогою виразу ``(?i)тест`` можна знайти рядки «Тест», «тЕст», «ТЕст» та усі інші рядки, які утворюються зміною регістру символів з рядка «тест»."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:92
+#: ../../__w/calibre/calibre/manual/regexp.rst:98
 msgid ""
 "Another useful flag lets the dot match any character at all, *including* the"
 " newline, the flag ``s``. If you want to use multiple flags in an "
@@ -325,17 +349,17 @@ msgid ""
 "``(?si)`` would be equivalent to the above."
 msgstr "Ще один корисний прапорець надає змогу наказати програмі вважати крапку будь-яким символом, *включно* із символом розриву рядка. Це прапорець ``s``. Якщо ви хочете використати у виразі декілька прапорців, просто напишіть їх поряд у одній інструкції: використання ``(?is)`` призведе до ігнорування регістру символів і заміни крапки будь-яким символом. Не має значення, який із прапорців ви вказали першим — вираз ``(?si)`` є рівнозначним до виразу ``(?is)``."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:95
+#: ../../__w/calibre/calibre/manual/regexp.rst:101
 msgid ""
 "I think I'm beginning to understand these regular expressions now... how do "
 "I use them in calibre?"
 msgstr "Здається, починаю розуміти для чого усі ці формальні вирази… Але як ними скористатися у calibre?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:98
+#: ../../__w/calibre/calibre/manual/regexp.rst:104
 msgid "Conversions"
 msgstr "Перетворення"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:100
+#: ../../__w/calibre/calibre/manual/regexp.rst:106
 msgid ""
 "Let's begin with the conversion settings, which is really neat. In the "
 ":guilabel:`Search & replace` part, you can input a regexp (short for regular"
@@ -351,7 +375,7 @@ msgid ""
 "convert. Be careful if your conversion source has tags like this example::"
 msgstr "Почнімо з параметрів перетворення, які є добре продуманими. На панелі пошуку з заміною ви можете ввести формальний вираз, який описує рядок, який буде замінено під час перетворення. Найпродуманішою частиною діалогового вікна є майстер перетворення. Після натискання кнопки майстра ви зможете переглянути, як для calibre «виглядає» процедура перетворення. Погортайте текст до рядка, який ви хочете вилучити, позначте його і скопіюйте. Вставте його до поля формального виразу у верхній частині вікна. Якщо у ньому мають бути змінні частини, наприклад номери сторінок, скористайтеся наборами та кванторами для заміни цих частин. Роблячи це, не забувайте про екранування спеціальних символів, якщо вони є у виразі. Натисніть кнопку з міткою :guilabel:`Тест`, і calibre позначить фрагменти тексту, які було б замінено, якби було використано формальний вираз. Якщо все гаразд, натисніть кнопку :guilabel:`Гаразд` і виконайте перетворення. Будьте обережні, якщо у початковому тексті містяться мітки, як у цьому прикладі::"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:110
+#: ../../__w/calibre/calibre/manual/regexp.rst:116
 msgid ""
 "(shamelessly ripped out of `this thread "
 "<https://www.mobileread.com/forums/showthread.php?t=75594\">`_). You'd have "
@@ -378,11 +402,11 @@ msgid ""
 " removal."
 msgstr "(безсовісно запозичено з `цього обговорення <https://www.mobileread.com/forums/showthread.php?t=75594\">`_). Вам варто також вилучити і ці теґи. У цьому прикладі рекомендуємо почати з теґу ``<b class=\"calibre2\">``. Далі, вам слід розібратися із відповідним кінцевим теґом (початковими теґами є теґи ``<теґ>``, а кінцевими теґами є теґи ``</теґ>``), яким у нашому прикладі є теґи ``</b>``. (Зверніться до підручника з HTML або запитайте на форумі, якщо маєте якісь питання щодо теґів.) Початковий теґ можна описати як ``<b.*?>``, а кінцевий теґ — ``</b>``. Таким чином, ми можемо вилучити усі дані між цими двома теґами за допомогою виразу ``<b.*?>.*?</b>``. Але не варто користуватися цим виразом, оскільки його використання призведе до вилучення усіх даних у теґах <b> (який, до речі, використовується для позначення тексту напівжирною гарнітурою). Можна закладатися, що таким чином ми вилучимо частину тексту книги. Замість цього, варто включити початок рядка у тезі, створивши формальний вираз ``<b.*?>\\s*Generated\\s+by\\s+ABC\\s+Amber\\s+LIT.*?</b>`` Керівну послідовність ``\\s`` із кванторами використано замість явного використання пробілів, щоб знайти усі варіанти рядка, які може бути використано у тексті книги. Не забудьте, перевірити, що саме calibre вилучить, щоб переконатися, що не буде вилучено нічого зайвого, виконавши тестування виразу. Якщо ви перевірите лише один відповідник формального виразу, може так статися, що небажаний ефект все ж трапиться у якомусь іншому місці тексту. Також зауважте, що якщо випадково буде вилучено більше або менше теґів, ніж ви хотіли б вилучити, calibre спробує виправити некоректний код після вилучення."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:113
+#: ../../__w/calibre/calibre/manual/regexp.rst:119
 msgid "Adding books"
 msgstr "Додавання книг"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:115
+#: ../../__w/calibre/calibre/manual/regexp.rst:121
 msgid ""
 "Another thing you can use regular expressions for is to extract metadata "
 "from filenames. You can find this feature in the \"Adding books\" part of "
@@ -405,11 +429,11 @@ msgid ""
 "working expression."
 msgstr "Ще одним випадком використання формальних виразів є видобування метаданих з назв файлів. Доступ до цієї можливості здійснюється за допомогою розділу «Додавання книг» параметрів програми. Тут є особлива можливість: ви можете скористатися назвами полів метаданих, наприклад, ``(?P<title>)`` позначає, що calibre має використати цю частину рядка як назву (заголовок) книги. Доступні назви полів показано у списку разом із ще одним чудовим полем для тестування. Приклад: припустімо, ви хочете імпортувати багато файлів із назвами, які подібні до ``Класика: Божественна комедія написана Данте Аліг’єрі.mobi`` (звичайно ж, ця книга вже є у вашій бібліотеці, оскільки усі ми закохані у італійську поезію) або ``Класика наукової фантастики: Трилогія Фундація написана Айзек Азімов.epub``. Очевидно, така схема найменування не дасть типовій програмі calibre видобути корисні дані — стандартним є такий вираз для видобування метаданих: ``(?P<title>.+) - (?P<author>[^_]+)``. Формальним виразом, який спрацює є такий: ``[а-яґіїєА-ЯҐІЇЄ]+: (?P<title>.+) написана (?P<author>.+)``. Будь ласка, зауважте, що всередині групи для поля метаданих вам слід скористатися виразами для опису відповідного поля. Також зауважте, що при використанні поля тестування calibre вам слід додати суфікс назви файла до тестової назви, інакше відповідників не буде знайдено взагалі, хоча вираз і буде працездатним."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:119
+#: ../../__w/calibre/calibre/manual/regexp.rst:125
 msgid "Bulk editing metadata"
 msgstr "Пакетне редагування метаданих"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:121
+#: ../../__w/calibre/calibre/manual/regexp.rst:127
 msgid ""
 "The last part is regular expression :guilabel:`Search and replace` in "
 "metadata fields. You can access this by selecting multiple books in the "
@@ -435,7 +459,7 @@ msgid ""
 " behaviour here."
 msgstr "Останнім розглянемо використання формальних виразів для пошуку із заміною у полях метаданих. Отримати доступ до цього інструмента можна позначивши декілька книг у списку бібліотеки і натиснувши кнопку пакетного редагування метаданих. Будьте обережні з використанням пакетного редагування, оскільки помилки у ньому можуть призвести до **дуже поганих наслідків** для вашої бібліотеки! Двічі перевірте, чи правильно працюють ваші вирази, за допомогою полів тестування. Позначайте лише ті книги, які дійсно потребують змін! У режимі пошуку за формальними виразами ви можете виконувати пошук у одному полі, замінювати чимось текст і навіть записувати результат заміни до іншого поля. Приклад з практики: припустімо, у вашій бібліотеці є книги з циклу «Дюна» Френка Герберта, як названо так: ``Дюна 1 - Дюна``, ``Дюна 2 - Месія Дюни`` тощо. Вам потрібно записати у поле циклу рядок ``Дюна``. Зробити це можна, виконавши пошук ``(.*?) \\d+ - .*`` у полі назви книги із заміною вмісту поля циклу на ``\\1``. Зрозуміли, як усе зроблено? Ми замінюємо вміст поля циклу на посилання на першу групу з поля назви. Тепер, коли дані записано до поля циклу, можна виконати ще один пошук ``.*? -`` у полі назви і замінити знайдену назву циклу на ``\"\"`` (порожній рядок). Після цього метадані ваших книг набудуть послідовного та компактного вигляду. Хіба це не чудово? До речі, замість заміни усього поля, ви можете дописати до його поточного вмісту дані на початку або наприкінці. Отже, якщо ви *хочете* дописати перед назвою книги назву циклу, це також можна зробити. Як ви вже, поза всяким сумнівом, знаєте, у вікні є пункт :guilabel:`З урахуванням регістру`, отже для зміни поведінки засобу обробки формальних виразів немає потреби у використанні прапорців."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:123
+#: ../../__w/calibre/calibre/manual/regexp.rst:129
 msgid ""
 "Well, that just about concludes the very short introduction to regular "
 "expressions. Hopefully I'll have shown you enough to at least get you "
@@ -444,7 +468,7 @@ msgid ""
 "<https://docs.python.org/library/re.html>`_."
 msgstr "Гаразд, на цьому можна і завершити дуже короткий вступ щодо формальних виразів. Сподіваємося, ми показали вам достатньо, щоб принаймні створити початкові враження і уможливити ваше подальше самостійне навчання. Продовжити вивчення формальних виразів можна за допомогою `документації з формальних виразів у Python <https://docs.python.org/library/re.html>`_."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:125
+#: ../../__w/calibre/calibre/manual/regexp.rst:131
 msgid ""
 "One last word of warning, though: Regexps are powerful, but also really easy"
 " to get wrong. calibre provides really great testing possibilities to see if"
@@ -454,47 +478,47 @@ msgid ""
 "learn from it."
 msgstr "Втім, наостанок маємо вас попередити: формальні вирази є потужним, але дуже примхливим інструментом. У calibre передбачено справді чудові можливості для перегляду результатів роботи ваших виразів. Скористайтеся ними. Намагайтеся не прострелити собі ногу (Боже, як мені подобається цей вираз...) Якщо ж, попри це попередження, трапляться якісь неприємності, лікуйте вашу ногу (або інші частини тіла), намагайтеся вивчити навчитися і з невдач."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:129
+#: ../../__w/calibre/calibre/manual/regexp.rst:135
 msgid "Quick reference"
 msgstr "Короткий довідник"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:137
+#: ../../__w/calibre/calibre/manual/regexp.rst:143
 msgid "Credits"
 msgstr "Подяки"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:139
+#: ../../__w/calibre/calibre/manual/regexp.rst:145
 msgid "Thanks for helping with tips, corrections and such:"
 msgstr "Дякуємо за підказки, виправлення та настанови:"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:141
+#: ../../__w/calibre/calibre/manual/regexp.rst:147
 msgid "ldolse"
 msgstr "ldolse"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:142
+#: ../../__w/calibre/calibre/manual/regexp.rst:148
 msgid "kovidgoyal"
 msgstr "kovidgoyal"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:143
+#: ../../__w/calibre/calibre/manual/regexp.rst:149
 msgid "chaley"
 msgstr "chaley"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:144
+#: ../../__w/calibre/calibre/manual/regexp.rst:150
 msgid "dwanthny"
 msgstr "dwanthny"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:145
+#: ../../__w/calibre/calibre/manual/regexp.rst:151
 msgid "kacir"
 msgstr "kacir"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:146
+#: ../../__w/calibre/calibre/manual/regexp.rst:152
 msgid "Starson17"
 msgstr "Starson17"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:147
+#: ../../__w/calibre/calibre/manual/regexp.rst:153
 msgid "Orpheu"
 msgstr "Orpheu"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:149
+#: ../../__w/calibre/calibre/manual/regexp.rst:155
 msgid ""
 "For more about regexps see `The Python User Manual "
 "<https://docs.python.org/library/re.html>`_. The actual regular expression "

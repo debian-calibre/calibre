@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "aprile 16, 2021" "5.15.0" "calibre"
+.TH "CALIBREDB" "1" "aprile 19, 2021" "5.16.1" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -407,18 +407,18 @@ Stampa i metadati in formato OPF (XML)
 .sp
 .nf
 .ft C
-calibredb set_metadata [options] id [/path/to/metadata.opf]
+calibredb set_metadata [opzioni] id [/percorso/dei/metadati.opf]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Set the metadata stored in the calibre database for the book identified by id
-from the OPF file metadata.opf. id is an id number from the search command. You
-can get a quick feel for the OPF format by using the \-\-as\-opf switch to the
-show_metadata command. You can also set the metadata of individual fields with
-the \-\-field option. If you use the \-\-field option, there is no need to specify
-an OPF file.
+Inserisce i metadati nel database di calibre per il libro identificato da id
+dal file OPF metadati.opf. id è un numero ottenuto con il comando di ricerca.
+Puoi capire meglio com\(aqè fatto il formato OPF usando l\(aqopzione \-\-as\-opf del
+comando show_metadata. Puoi anche inserire i metadati in campi individuali con
+l\(aqopzione \-\-field. Se usi quest\(aqultima opzione, non c\(aqè bisogno di specificare
+un file OPF.
 .sp
 Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .INDENT 0.0

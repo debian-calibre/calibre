@@ -19339,7 +19339,7 @@ return this.__repr__();
                     if (scroll_viewport.vertical_writing_mode && scroll_viewport.rtl) {
                         q = -q;
                     }
-                    if (q < scroll_viewport.block_pos()) {
+                    if (q + 1 < scroll_viewport.block_pos()) {
                         return -1;
                     }
                     if (q <= scroll_viewport.block_pos() + scroll_viewport.block_size()) {
@@ -19430,7 +19430,14 @@ return this.__repr__();
         function ensure_selection_boundary_visible(use_end) {
             var sel, rr, r, node, x, y;
             sel = window.getSelection();
-            rr = sel.getRangeAt(0);
+            try {
+                rr = sel.getRangeAt(0);
+            } catch (ρσ_Exception) {
+                ρσ_last_exception = ρσ_Exception;
+                {
+                    rr = null;
+                } 
+            }
             if (rr) {
                 r = rr.getBoundingClientRect();
                 if (r) {
@@ -24397,7 +24404,14 @@ return this.__repr__();
         function ensure_selection_boundary_visible(use_end) {
             var sel, rr, r, cnum, node, x, pos;
             sel = window.getSelection();
-            rr = sel.getRangeAt(0);
+            try {
+                rr = sel.getRangeAt(0);
+            } catch (ρσ_Exception) {
+                ρσ_last_exception = ρσ_Exception;
+                {
+                    rr = null;
+                } 
+            }
             if (rr) {
                 r = rr.getBoundingClientRect();
                 if (r) {
@@ -26773,7 +26787,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.15.0";
+        CALIBRE_VERSION = "5.16.1";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -36764,7 +36778,8 @@ return this.__repr__();
         function close_customize_shortcut(apply_changes) {
             var container, q, item, shortcuts, sc, x, sc_name;
             container = get_container();
-            container.firstChild.style.display = "block";
+            container.firstChild.style.display = "flex";
+            container.firstChild.nextSibling.style.display = "block";
             container.lastChild.style.display = "none";
             if (close_customize_shortcut.shortcut_being_customized) {
                 var ρσ_Iter2 = ρσ_Iterable(container.firstChild.querySelectorAll("[data-user-data]"));
@@ -36849,6 +36864,7 @@ return this.__repr__();
             var container, shortcuts, q, item, sc, key_con, key;
             container = get_container();
             container.firstChild.style.display = "none";
+            container.firstChild.nextSibling.style.display = "none";
             container.lastChild.style.display = "block";
             close_customize_shortcut.shortcut_being_customized = sc_name;
             shortcuts = [];
@@ -38658,7 +38674,7 @@ return this.__repr__();
                     self.cite();
                     return;
                 }
-                if (k === "Delete") {
+                if (k === "delete") {
                     self.remove_highlight();
                     return;
                 }
@@ -40629,6 +40645,8 @@ return this.__repr__();
 
         var create_font_size_panel = ρσ_modules["read_book.prefs.font_size"].create_font_size_panel;
 
+        var time_formatter = ρσ_modules["read_book.prefs.head_foot"].time_formatter;
+
         var create_prefs_panel = ρσ_modules["read_book.prefs.main"].create_prefs_panel;
 
         var create_toc_panel = ρσ_modules["read_book.toc"].create_toc_panel;
@@ -41270,7 +41288,7 @@ return this.__repr__();
                     actions_div.appendChild(copy_actions);
                 }
             }
-            container.appendChild(ρσ_interpolate_kwargs.call(this, set_css, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, set_css, [E.div(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_exists.d(ρσ_exists.d(self.overlay.view.book).metadata).title || _("Unknown")].concat([ρσ_desugar_kwargs({style: "max-width: 90%; text-overflow: ellipsis; font-weight: bold; white-space: nowrap; overflow: hidden"})])), ρσ_interpolate_kwargs.call(E, E.div, [self.date_formatter.format(new Date)].concat([ρσ_desugar_kwargs({id: timer_id(), style: "max-width: 9%; white-space: nowrap; overflow: hidden"})])))].concat([ρσ_desugar_kwargs({display: "flex", justify_content: "space-between", align_items: "baseline", font_size: "smaller", padding: "0.5ex 1ex", border_bottom: "solid 1px currentColor"})])), actions_div].concat([ρσ_desugar_kwargs({class_: MAIN_OVERLAY_TS_CLASS, onclick: (function() {
+            container.appendChild(ρσ_interpolate_kwargs.call(this, set_css, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, set_css, [E.div(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_exists.d(ρσ_exists.d(self.overlay.view.book).metadata).title || _("Unknown")].concat([ρσ_desugar_kwargs({style: "max-width: 90%; text-overflow: ellipsis; font-weight: bold; white-space: nowrap; overflow: hidden"})])), ρσ_interpolate_kwargs.call(E, E.div, [time_formatter.format(new Date)].concat([ρσ_desugar_kwargs({id: timer_id(), style: "max-width: 9%; white-space: nowrap; overflow: hidden"})])))].concat([ρσ_desugar_kwargs({display: "flex", justify_content: "space-between", align_items: "baseline", font_size: "smaller", padding: "0.5ex 1ex", border_bottom: "solid 1px currentColor"})])), actions_div].concat([ρσ_desugar_kwargs({class_: MAIN_OVERLAY_TS_CLASS, onclick: (function() {
                 var ρσ_anonfunc = function (evt) {
                     evt.stopPropagation();
                 };
