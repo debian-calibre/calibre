@@ -184,17 +184,17 @@ def all_actions():
 
     if not all_actions.ans:
         all_actions.ans = {
-            'copy': a('copy', _('Copy to clipboard') + ' [Ctrl+c]', 'copy_to_clipboard'),
-            'lookup': a('library', _('Lookup/search selected word') + ' [l]', 'lookup'),
-            'quick_highlight': a('highlight', _('Quick highlight in current style') + ' [q]', 'quick_highlight'),
-            'highlight': a('highlight', _('Highlight selection') + ' [h]', 'create_highlight'),
-            'search': a('search', _('Search for selection in the book') + ' [f]', 'book_search'),
-            'bookmark': a('bookmark', _('Create a bookmark') + ' [Ctrl+Alt+b]', 'new_bookmark'),
-            'search_net': a('global-search', _('Search for selection on the net') + ' [s]', 'internet_search'),
+            'copy': a('copy', _('Copy to clipboard') + ' [Ctrl+C]', 'copy_to_clipboard'),
+            'lookup': a('library', _('Lookup/search selected word') + ' [L]', 'lookup'),
+            'quick_highlight': a('highlight', _('Quick highlight in current style') + ' [Q]', 'quick_highlight'),
+            'highlight': a('highlight', _('Highlight selection') + ' [H]', 'create_highlight'),
+            'search': a('search', _('Search for selection in the book') + ' [F]', 'book_search'),
+            'bookmark': a('bookmark', _('Create a bookmark') + ' [Ctrl+Alt+B]', 'new_bookmark'),
+            'search_net': a('global-search', _('Search for selection on the net') + ' [S]', 'internet_search'),
             'remove_highlight': a('trash', _('Remove this highlight') + ' [Delete]', 'remove_highlight', True),
             'clear': a('close', _('Clear selection') + ' [Esc]', 'clear_selection'),
-            'speak': a('bullhorn', _('Read aloud') + ' [t]', 'speak_aloud'),
-            'cite': a('reference-mode', _('Copy citation to clipboard') + ' [x]', 'cite'),
+            'speak': a('bullhorn', _('Read aloud') + ' [T]', 'speak_aloud'),
+            'cite': a('reference-mode', _('Copy citation to clipboard') + ' [X]', 'cite'),
         }
         qh = all_actions.ans.quick_highlight
         qh.icon_function = quick_highlight_icon.bind(None, qh.icon, qh.text)
@@ -245,6 +245,7 @@ class SelectionBar:
         container = self.container
         container.style.overflow = 'hidden'
         container.addEventListener('click', self.container_clicked, {'passive': False})
+        container.addEventListener('contextmenu', self.container_context_menu_requested, {'passive': False})
         container.addEventListener('mouseup', self.mouseup_on_container, {'passive': False})
         container.addEventListener('mousemove', self.mousemove_on_container, {'passive': False})
         container.addEventListener('touchmove', self.touchmove_on_container, {'passive': False})
@@ -279,6 +280,7 @@ class SelectionBar:
         editor_div = E.div(id=self.editor_id, style='position: absolute')
         container.appendChild(editor_div)
         editor_div.addEventListener('click', self.editor_container_clicked, {'passive': False})
+        editor_div.addEventListener('wheel', def(ev):ev.stopPropagation();, {'passive': True})
 
     # bar and handles markup {{{
 
@@ -295,7 +297,7 @@ class SelectionBar:
         bar_container.style.maxWidth = 'min(50rem, 90vw)' if self.supports_css_min_max else '50rem'
         bar_container.style.backgroundColor = get_color("window-background")
         notes_container = E.div()
-        notes_container.addEventListener('wheel', def(evt): evt.stopPropagation();, {'passive': True})
+        notes_container.addEventListener('wheel', def(evt): evt.stopPropagation();, {'passive': False})
         for x in [
             E.div(style='height: 4ex; display: flex; align-items: center; padding: 5px; justify-content: center'),
 
@@ -473,6 +475,11 @@ class SelectionBar:
         r = handle.getBoundingClientRect()
         self.position_in_handle.x = Math.round(ev.clientX - r.left)
         self.position_in_handle.y = Math.round(ev.clientY - r.top)
+
+    def container_context_menu_requested(self, ev):
+        pos = {'x': ev.clientX, 'y': ev.clientY}
+        map_to_iframe_coords(pos, get_margins())
+        self.send_message('extend-to-point', pos=pos)
 
     def container_clicked(self, ev):
         ev.stopPropagation(), ev.preventDefault()
@@ -1020,12 +1027,16 @@ class SelectionBar:
         cs = self.view.currently_showing.selection
         if cs.text:
             if cs.annot_id:
-                self.create_highlight()
+                am = self.annotations_manager
+                self.current_notes = am.notes_for_highlight(cs.annot_id) or ''
+                self.send_message(
+                    'apply-highlight', style=self.current_highlight_style.style, uuid=short_uuid(), existing=cs.annot_id, has_notes=v'!!self.current_notes'
+        )
             else:
                 self.current_notes = ''
                 self.send_message('apply-highlight', style=self.current_highlight_style.style, uuid=short_uuid(), has_notes=False)
-                self.state = WAITING
-                self.update_position()
+            self.state = WAITING
+            self.update_position()
 
     def quick_highlight_with_style(self, hs):
         self.current_highlight_style = hs

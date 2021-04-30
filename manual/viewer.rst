@@ -111,7 +111,7 @@ highlight. You can add notes and change the color of the highlight. On a touch
 screen, long tap a word to select it and show the popup bar. Once in highlight
 mode you can change what text is selected, using touch screen friendly selection
 handles. Drag the handles to the top or bottom margins to scroll while selecting.
-You can also hold the :kbd:`Shift` key and click to extend the selection,
+You can also :kbd:`Shift+click` or :kbd:`right click` to extend the selection,
 particularly useful for multi-page selections.
 
 You can use the :guilabel:`Highlights` button in the viewer
@@ -202,9 +202,9 @@ custom stylesheets used by calibre's users, see `the forums
 Dictionary lookup
 -------------------
 
-You can look up the meaning of words in the current book by opening the
-:guilabel:`Lookup/search word panel` via the viewer controls. Then simply double
-click on any word and its definition will be displayed in the Lookup panel.
+You can look up the meaning of words in the current book by double clicking
+or long tapping the word you want to lookup and then clicking the lookup button
+that looks like a library.
 
 
 Copying text and images

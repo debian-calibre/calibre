@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "aprile 19, 2021" "5.16.1" "calibre"
+.TH "CALIBRE-SMTP" "1" "aprile 30, 2021" "5.17.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -35,22 +35,22 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-calibre\-smtp [options] [from to text]
+calibre\-smtp [opzioni] [da a testo]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Send mail using the SMTP protocol. \fBcalibre\-smtp\fP has two modes of operation. In the
-compose mode you specify from to and text and these are used to build and
-send an email message. In the filter mode, \fBcalibre\-smtp\fP reads a complete email
-message from STDIN and sends it.
+Invia posta usando il protocollo SMTP. \fBcalibre\-smtp\fP ha due modalità di funziomento.
+Nella modalità componi vanno specificati da, a e testo, usati per costruire e
+inviare un messaggio email. Nella modalità filtra, \fBcalibre\-smtp\fP legge un messaggio
+email completo da STDIN e lo invia.
 .sp
-text is the body of the email message.
-If text is not specified, a complete email message is read from STDIN.
-from is the email address of the sender and to is the email address
-of the recipient. When a complete email is read from STDIN, from and to
-are only used in the SMTP negotiation, the message headers are not modified.
+testo è il corpo del messaggio email.
+Se testo non viene specificato, un messaggio email completo è letto da STDIN.
+da è l\(aqindirizzo email del mittente, a l\(aqindirizzo email del destinatario.
+Quando un\(aqemail completa viene letta da STDIN, da e a sono usati solo
+durante la negoziazione SMTP, le intestazioni del messaggio non sono modificate.
 .sp
 Ogni qualvolta vengono passati argomenti con degli spazi a \fBcalibre\-smtp\fP, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .SH [OPZIONI]

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "aprile 19, 2021" "5.16.1" "calibre"
+.TH "CALIBREDB" "1" "aprile 30, 2021" "5.17.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -144,7 +144,7 @@ mostra questo messaggio di aiuto ed esci
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \fI\%http://hostname:port/#library_id\fP for example, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
+Percorso della biblioteca di calibre. Per impostazione predefinita viene usato il percorso salvato nelle impostazioni. Puoi anche connetterti a un Server dei Contenuti di calibre ed eseguire azioni su biblioteche remote. Per fare ciò usa un URL di formato: \fI\%http://nomehost:porta/#id_biblioteca\fP per esempio \fI\%http://localhost:8080/#lamiabiblioteca\fP\&. id_biblioteca è l\fB\(aq\fPid della biblioteca a cui ti vuoi connettere nel Server dei Contenuti. Puoi usare il valore speciale di id_biblioteca di \- per ottenere un elenco di id biblioteca disponibili nel server. Per dettagli su come impostare l\fB\(aq\fPaccesso attraverso un Server dei Contenuti, vedi \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -424,7 +424,7 @@ Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessa
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-The field to set. Format is field_name:value, for example: \fI\%\-\-field\fP tags:tag1,tag2. Use \fI\%\-\-list\-fields\fP to get a list of all field names. You can specify this option multiple times to set multiple fields. Note: For languages you must use the ISO639 language codes (e.g. en for English, fr for French and so on). For identifiers, the syntax is \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. For boolean (yes/no) fields use true and false or yes and no.
+Il campo da impostare. Il formato è nome_campo:valore, per esempio: \fI\%\-\-field\fP tags:tag1,tag2. Usa \fI\%\-\-list\-fields\fP per ottenere una lista di tutti i nomi dei campi. Puoi specificare questa opzione più volte per impostare più di un campo. Nota bene: per le lingue devi usare i codici lingua ISO639 (p. es. en per Inglese, it per Italiano e così via). Per gli identificatori, la sintassi è \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Per campi booleani (sì/no) usa true e false oppure yes e no.
 .UNINDENT
 .INDENT 0.0
 .TP

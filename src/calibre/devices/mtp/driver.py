@@ -560,7 +560,8 @@ class MTP_DEVICE(BASE):
     # }}}
 
 
-if __name__ == '__main__':
+def main():
+    import io
     dev = MTP_DEVICE(None)
     dev.startup()
     try:
@@ -574,6 +575,20 @@ if __name__ == '__main__':
         dev.set_progress_reporter(prints)
         dev.open(cd, None)
         dev.filesystem_cache.dump()
-        print('Prefix for main mem:', dev.prefix_for_location(None))
+        print('Prefix for main mem:', dev.prefix_for_location(None), flush=True)
+        raw = os.urandom(32 * 1024)
+        folder = dev.create_folder(dev.filesystem_cache.entries[0], 'developing-mtp-driver')
+        f = dev.put_file(folder, 'developing-mtp-driver.bin', io.BytesIO(raw), len(raw))
+        print('Put file:', f, flush=True)
+        buf = io.BytesIO()
+        dev.get_file(f.mtp_id_path, buf)
+        if buf.getvalue() != raw:
+            raise ValueError('Getting previously put file did not return expected data')
+        print('Successfully got previously put file', flush=True)
+        dev.recursive_delete(f)
     finally:
         dev.shutdown()
+
+
+if __name__ == '__main__':
+    main()

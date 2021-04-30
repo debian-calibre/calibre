@@ -377,10 +377,10 @@ class KINDLE2(KINDLE):
             ' default one selected above.  Specify the name of the custom'
             ' column here, for example, #pagemethod. The custom column should have the '
             ' values: fast, accurate or pagebreak.'),
-        _('Overwrite existing apnx on device') + ':::' + _(
-            'Uncheck this option to allow an apnx file existing on the device'
+        _('Overwrite existing APNX on device') + ':::' + _(
+            'Uncheck this option to allow an APNX file existing on the device'
             ' to have priority over the version which calibre would send.'
-            ' Since apnx files are usually deleted when a book is removed from'
+            ' Since APNX files are usually deleted when a book is removed from'
             ' the Kindle, this is mostly useful when resending a book to the'
             ' device which is already on the device (e.g. after making a'
             ' modification.)'),

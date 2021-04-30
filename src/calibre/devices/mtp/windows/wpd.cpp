@@ -13,25 +13,62 @@ using namespace wpd;
 PyObject *wpd::WPDError = NULL, *wpd::NoWPD = NULL, *wpd::WPDFileBusy = NULL;
 
 // The global device manager
-IPortableDeviceManager *wpd::portable_device_manager = NULL;
+CComPtr<IPortableDeviceManager> wpd::portable_device_manager = NULL;
 
 // Flag indicating if COM has been initialized
 static int _com_initialized = 0;
 // Application Info
-wpd::ClientInfo wpd::client_info = {NULL, 0, 0, 0};
+class ClientInfo {
+    public:
+        wchar_raii name;
+        unsigned int major_version;
+        unsigned int minor_version;
+        unsigned int revision;
+        ClientInfo() : name(), major_version(0), minor_version(0), revision(0) {}
+};
+static ClientInfo client_info;
 
-extern IPortableDeviceValues* wpd::get_client_information();
-extern IPortableDevice* wpd::open_device(const wchar_t *pnp_id, IPortableDeviceValues *client_information);
-extern PyObject* wpd::get_device_information(IPortableDevice *device, IPortableDevicePropertiesBulk **bulk_properties);
+IPortableDeviceValues* wpd::get_client_information() { // {{{
+    HRESULT hr;
+
+    ENSURE_WPD(NULL);
+    CComPtr<IPortableDeviceValues> client_information;
+
+    Py_BEGIN_ALLOW_THREADS;
+	hr = client_information.CoCreateInstance(CLSID_PortableDeviceValues, NULL, CLSCTX_INPROC_SERVER);
+    Py_END_ALLOW_THREADS;
+    if (FAILED(hr)) { hresult_set_exc("Failed to create IPortableDeviceValues", hr); return NULL; }
+
+    Py_BEGIN_ALLOW_THREADS;
+    hr = client_information->SetStringValue(WPD_CLIENT_NAME, client_info.name.ptr());
+    Py_END_ALLOW_THREADS;
+    if (FAILED(hr)) { hresult_set_exc("Failed to set client name", hr); return NULL; }
+    Py_BEGIN_ALLOW_THREADS;
+    hr = client_information->SetUnsignedIntegerValue(WPD_CLIENT_MAJOR_VERSION, client_info.major_version);
+    Py_END_ALLOW_THREADS;
+    if (FAILED(hr)) { hresult_set_exc("Failed to set major version", hr); return NULL; }
+    Py_BEGIN_ALLOW_THREADS;
+    hr = client_information->SetUnsignedIntegerValue(WPD_CLIENT_MINOR_VERSION, client_info.minor_version);
+    Py_END_ALLOW_THREADS;
+    if (FAILED(hr)) { hresult_set_exc("Failed to set minor version", hr); return NULL; }
+    Py_BEGIN_ALLOW_THREADS;
+    hr = client_information->SetUnsignedIntegerValue(WPD_CLIENT_REVISION, client_info.revision);
+    Py_END_ALLOW_THREADS;
+    if (FAILED(hr)) { hresult_set_exc("Failed to set revision", hr); return NULL; }
+    //  Some device drivers need to impersonate the caller in order to function correctly.  Since our application does not
+    //  need to restrict its identity, specify SECURITY_IMPERSONATION so that we work with all devices.
+    Py_BEGIN_ALLOW_THREADS;
+    hr = client_information->SetUnsignedIntegerValue(WPD_CLIENT_SECURITY_QUALITY_OF_SERVICE, SECURITY_IMPERSONATION);
+    Py_END_ALLOW_THREADS;
+    if (FAILED(hr)) { hresult_set_exc("Failed to set quality of service", hr); return NULL; }
+    return client_information.Detach();
+} // }}}
 
 // Module startup/shutdown {{{
 static PyObject *
 wpd_init(PyObject *self, PyObject *args) {
     HRESULT hr;
-    PyObject *o;
-    if (!PyArg_ParseTuple(args, "OIII", &o, &client_info.major_version, &client_info.minor_version, &client_info.revision)) return NULL;
-    client_info.name = unicode_to_wchar(o);
-    if (client_info.name == NULL) return NULL;
+    if (!PyArg_ParseTuple(args, "O&III", py_to_wchar_no_none, &client_info.name, &client_info.major_version, &client_info.minor_version, &client_info.revision)) return NULL;
 
     if (!_com_initialized) {
         Py_BEGIN_ALLOW_THREADS;
@@ -41,14 +78,13 @@ wpd_init(PyObject *self, PyObject *args) {
         else {PyErr_SetString(WPDError, "Failed to initialize COM"); return NULL;}
     }
 
-    if (portable_device_manager == NULL) {
+    if (!portable_device_manager) {
         Py_BEGIN_ALLOW_THREADS;
-        hr = CoCreateInstance(CLSID_PortableDeviceManager, NULL,
-                CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&portable_device_manager));
+        hr = portable_device_manager.CoCreateInstance(CLSID_PortableDeviceManager, NULL, CLSCTX_INPROC_SERVER);
         Py_END_ALLOW_THREADS;
 
         if (FAILED(hr)) {
-            portable_device_manager = NULL;
+            portable_device_manager.Release();
             PyErr_SetString((hr == REGDB_E_CLASSNOTREG) ? NoWPD : WPDError, (hr == REGDB_E_CLASSNOTREG) ?
                 "This computer is not running the Windows Portable Device framework. You may need to install Windows Media Player 11 or newer." :
                 "Failed to create the WPD device manager interface");
@@ -61,11 +97,10 @@ wpd_init(PyObject *self, PyObject *args) {
 
 static PyObject *
 wpd_uninit(PyObject *self, PyObject *args) {
-    if (portable_device_manager != NULL) {
+    if (portable_device_manager) {
         Py_BEGIN_ALLOW_THREADS;
-        portable_device_manager->Release();
+        portable_device_manager.Release();
         Py_END_ALLOW_THREADS;
-        portable_device_manager = NULL;
     }
 
     if (_com_initialized) {
@@ -75,7 +110,7 @@ wpd_uninit(PyObject *self, PyObject *args) {
         _com_initialized = 0;
     }
 
-    if (client_info.name != NULL) { free(client_info.name); }
+    client_info.name.release();
     // hresult_set_exc("test", HRESULT_FROM_WIN32(ERROR_ACCESS_DENIED)); return NULL;
 
     Py_RETURN_NONE;
@@ -97,9 +132,11 @@ wpd_enumerate_devices(PyObject *self, PyObject *args) {
     Py_END_ALLOW_THREADS;
     if (FAILED(hr)) return hresult_set_exc("Failed to refresh the list of portable devices", hr);
 
+    Py_BEGIN_ALLOW_THREADS;
     hr = portable_device_manager->GetDevices(NULL, &num_of_devices);
-    num_of_devices += 15; // Incase new devices were connected between this call and the next
+    Py_END_ALLOW_THREADS;
     if (FAILED(hr)) return hresult_set_exc("Failed to get number of devices on the system", hr);
+    num_of_devices += 15; // Incase new devices were connected between this call and the next
     pnp_device_ids = (PWSTR*)calloc(num_of_devices, sizeof(PWSTR));
     if (pnp_device_ids == NULL) return PyErr_NoMemory();
 
@@ -111,7 +148,7 @@ wpd_enumerate_devices(PyObject *self, PyObject *args) {
         ans = PyTuple_New(num_of_devices);
         if (ans != NULL) {
             for(i = 0; i < num_of_devices; i++) {
-                temp = PyUnicode_FromWideChar(pnp_device_ids[i], wcslen(pnp_device_ids[i]));
+                temp = PyUnicode_FromWideChar(pnp_device_ids[i], -1);
                 if (temp == NULL) { PyErr_NoMemory(); Py_DECREF(ans); ans = NULL; break;}
                 PyTuple_SET_ITEM(ans, i, temp);
             }
@@ -129,35 +166,29 @@ wpd_enumerate_devices(PyObject *self, PyObject *args) {
     pnp_device_ids = NULL;
     Py_END_ALLOW_THREADS;
 
-    return Py_BuildValue("N", ans);
+    return ans;
 } // }}}
 
 // device_info() {{{
 static PyObject *
 wpd_device_info(PyObject *self, PyObject *args) {
-    PyObject *py_pnp_id, *ans = NULL;
-    wchar_t *pnp_id;
-    IPortableDeviceValues *client_information = NULL;
-    IPortableDevice *device = NULL;
+    PyObject *ans = NULL;
+    CComPtr<IPortableDevice> device = NULL;
 
     ENSURE_WPD(NULL);
 
-    if (!PyArg_ParseTuple(args, "O", &py_pnp_id)) return NULL;
-    pnp_id = unicode_to_wchar(py_pnp_id);
-    if (wcslen(pnp_id) < 1) { PyErr_SetString(WPDError, "The PNP id must not be empty."); return NULL; }
-    if (pnp_id == NULL) return NULL;
+    wchar_raii pnp_id;
+    if (!PyArg_ParseTuple(args, "O&", py_to_wchar_no_none, &pnp_id)) return NULL;
+    if (wcslen(pnp_id.ptr()) < 1) { PyErr_SetString(WPDError, "The PNP id must not be empty."); return NULL; }
 
-    client_information = get_client_information();
-    if (client_information != NULL) {
-        device = open_device(pnp_id, client_information);
-        if (device != NULL) {
-            ans = get_device_information(device, NULL);
-        }
+    CComPtr<IPortableDeviceValues> client_information = get_client_information();
+    if (client_information) {
+        device = open_device(pnp_id.ptr(), client_information);
+        CComPtr<IPortableDevicePropertiesBulk> properties_bulk;
+        if (device) ans = get_device_information(device, properties_bulk);
     }
 
-    if (pnp_id != NULL) free(pnp_id);
-    if (client_information != NULL) client_information->Release();
-    if (device != NULL) {device->Close(); device->Release();}
+    if (device) device->Close();
     return ans;
 } // }}}
 
