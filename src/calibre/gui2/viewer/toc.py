@@ -148,7 +148,8 @@ class TOCSearch(QWidget):
     def do_search(self, text):
         if not text or not text.strip():
             return
-        index = self.toc_view.model().search(text)
+        delta = -1 if QApplication.instance().keyboardModifiers() & Qt.KeyboardModifier.ShiftModifier else 1
+        index = self.toc_view.model().search(text, delta=delta)
         if index.isValid():
             self.toc_view.scrollTo(index)
             self.toc_view.searched.emit(index)
@@ -226,7 +227,6 @@ class TOC(QStandardItemModel):
             for t in toc['children']:
                 self.appendRow(TOCItem(t, 0, depth_first, normal_font, emphasis_font))
         self.node_id_map = {x.node_id: x for x in self.all_items}
-        self.currently_viewed_entry = None
 
     def find_items(self, query):
         for item in self.all_items:
@@ -244,15 +244,16 @@ class TOC(QStandardItemModel):
             if (exact and query == href) or (not exact and query in href):
                 return item.node_id
 
-    def search(self, query):
+    def search(self, query, delta=1):
         cq = self.current_query
         if cq['items'] and -1 < cq['index'] < len(cq['items']):
             cq['items'][cq['index']].set_current_search_result(False)
         if cq['text'] != query:
             items = tuple(self.find_items(query))
             cq.update({'text':query, 'items':items, 'index':-1})
-        if len(cq['items']) > 0:
-            cq['index'] = (cq['index'] + 1) % len(cq['items'])
+        num = len(cq['items'])
+        if num > 0:
+            cq['index'] = (cq['index'] + delta + num) % num
             item = cq['items'][cq['index']]
             item.set_current_search_result(True)
             index = self.indexFromItem(item)
@@ -281,6 +282,12 @@ class TOC(QStandardItemModel):
 
     def viewed_nodes(self):
         return tuple(node for node in self.all_items if node.is_being_viewed)
+
+    @property
+    def title_for_current_node(self):
+        for node in reversed(self.all_items):
+            if node.is_being_viewed:
+                return node.title
 
     @property
     def as_plain_text(self):

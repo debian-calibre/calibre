@@ -247,6 +247,8 @@ class DateDelegate(QStyledItemDelegate, UpdateEditorGeometry):  # {{{
             val = now()
         else:
             val = index.data(Qt.ItemDataRole.EditRole)
+            if is_date_undefined(val):
+                val = now()
         editor.setDateTime(val)
 
 # }}}
@@ -356,6 +358,8 @@ class CompleteDelegate(QStyledItemDelegate, UpdateEditorGeometry):  # {{{
                     m.setData(index, self.sep.join(d.tags), Qt.ItemDataRole.EditRole)
                 return None
             editor = EditWithComplete(parent)
+            if col == 'tags':
+                editor.set_elide_mode(Qt.TextElideMode.ElideMiddle)
             editor.set_separator(self.sep)
             editor.set_space_before_sep(self.space_before_sep)
             if self.sep == '&':

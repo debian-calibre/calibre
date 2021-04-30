@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-15 04:32+0000\n"
-"PO-Revision-Date: 2021-04-12 17:52+0000\n"
+"POT-Creation-Date: 2021-04-29 01:07+0000\n"
+"PO-Revision-Date: 2021-04-28 06:13+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan.nyberg.karl@gmail.com>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -353,7 +353,7 @@ msgid ""
 "it in a linear fashion.  Note that this option linearizes *all* tables, so "
 "only use it if you are sure the input document does not use tables for "
 "legitimate purposes, like presenting tabular information."
-msgstr "Ett annat användbart alternativ är :guilabel:`Konvertera data i tabeller till linjära data`. Några dåligt utformade dokument använder tabeller för att anpassa utformningen på texten på sidan. Vid konvertering har dessa dokument ofta text som rinner ut från sidan och andra artefakter. Det här alternativet kommer att packa upp innehållet från tabellerna och presentera den på ett linjärt sätt. Observera att det här alternativet linjärisera *alla* bord, så att använd bara den om du är säker inmatningsdokumentet använder inte tabeller för verkliga ändamål, som att presentera tabellinformation."
+msgstr "Ett annat användbart alternativ är :guilabel:`Konvertera data i tabeller till linjära data`.  Vissa dåligt utformade dokument använder tabeller för att anpassa utformningen för texten på sidan.  Vid konvertering har dessa dokument ofta text som går utanför sidan och andra artefakter. Detta alternativ extraherar innehållet från tabellerna och presenterar det linjärt. Observera att det här alternativet linjäriserar *alla* tabeller, så använd det bara om du är säker på att inmatningsdokumentet inte använder tabeller för legitima ändamål, som att presentera tabellinformation."
 
 #: ../../__w/calibre/calibre/manual/conversion.rst:220
 msgid "Styling"
@@ -413,7 +413,7 @@ msgid ""
 "profile. Both sets of profiles basically deal with how to interpret "
 "measurements in the input/output documents, screen sizes and default font "
 "rescaling keys."
-msgstr ":guilabel:`Sidinställnings`alternativen är till för att anpassa skärmlayout, som marginaler och skärmstorlekar. Det finns alternativ till sidmarginalsinställningar, som kommer att användas av utmatning insticksmodulen, om det valda utmatningsformatet stödjer sidmarginaler. Dessutom bör du välja en inmatningsprofil och en utskriftsprofil. Båda uppsättningarna av profiler i princip behandlar hur man ska tolka mått i dokumentets inmatning/utmatning, skärmstorlekar och standardteckensnitts omskalningsnycklar."
+msgstr ":guilabel:`Sidinställnings`alternativen är till för att anpassa skärmutformning, som marginaler och skärmstorlekar. Det finns alternativ till sidmarginalsinställningar, som kommer att användas av utmatning insticksmodulen, om det valda utmatningsformatet stödjer sidmarginaler. Dessutom bör du välja en inmatningsprofil och en utskriftsprofil. Båda uppsättningarna av profiler i princip behandlar hur man ska tolka mått i dokumentets inmatning/utmatning, skärmstorlekar och standardteckensnitts omskalningsnycklar."
 
 #: ../../__w/calibre/calibre/manual/conversion.rst:266
 msgid ""
@@ -571,7 +571,7 @@ msgid ""
 "If this option is configured then calibre will replace scene break markers "
 "it finds with the replacement text specified by the user.  Please note that "
 "some ornamental characters may not be supported across all reading devices."
-msgstr "Om det här alternativet anpassas sedan ersätter calibre scenbrytningsmarkörer som hittas med den nya texten som anges av användaren. Observera att vissa prydnadstecken kanske inte stöds i alla läser enheter."
+msgstr "Om det här alternativet är anpassat kommer calibre att ersätta scenbrytningsmarkörer som den hittar med den ersättningstext som användaren angett. Vänligen observera att vissa prydnadstecken kanske inte stöds på alla läsenheter."
 
 #: ../../__w/calibre/calibre/manual/conversion.rst:347
 msgid ""
@@ -620,7 +620,7 @@ msgid ""
 "without a hyphen in the document.  The second pass analyzes all hyphenated "
 "words throughout the document, hyphens are removed if the word exists "
 "elsewhere in the document without a match."
-msgstr "calibre analyserar allt bindestreckinnehåll i dokumentet när detta alternativ är aktiverat. Själva dokumentet används som en ordlista för analys.  Detta gör det möjligt för calibre att noggrant ta bort bindestreck för alla ord i dokumentet på vilket språk som helst, tillsammans med påhittade och dunkla vetenskapliga ord. Den främsta nackdelen är att ord som bara visas en gång i dokumentet inte kommer att ändras. Analys sker i två pass, det första passet analyserar radslut. Rader bryts endast om ordet finns med eller utan bindestreck i dokumentet. Det andra passet analyserar alla ord med bindestreck i hela dokumentet, bindestreck tas bort om ordet finns någon annanstans i dokumentet utan matchning."
+msgstr "calibre analyserar allt bindestreckinnehåll i dokumentet när detta alternativ är aktiverat. Själva dokumentet används som en ordbok för analys.  Detta gör det möjligt för calibre att noggrant ta bort bindestreck för alla ord i dokumentet på vilket språk som helst, tillsammans med påhittade och dunkla vetenskapliga ord. Den främsta nackdelen är att ord som bara visas en gång i dokumentet inte kommer att ändras. Analys sker i två pass, det första passet analyserar radslut. Rader bryts endast om ordet finns med eller utan bindestreck i dokumentet. Det andra passet analyserar alla ord med bindestreck i hela dokumentet, bindestreck tas bort om ordet finns någon annanstans i dokumentet utan matchning."
 
 #: ../../__w/calibre/calibre/manual/conversion.rst:369
 msgid ":guilabel:`Italicize common words and patterns`"
@@ -928,8 +928,8 @@ msgid ""
 msgstr "Ändra :guilabel:`Nivå 1 TOC` inställning till ``//h:h2/@titel``. Då tar calibre titeln från värdet på ``titel`` attribut på ``<h2>`` taggar, istället för att använda texten i taggen. Observera den avslutande ``/@titel`` på XPath-uttryck kan du använda det här formuläret för att berätta calibre för att få text från alla attribut du vill."
 
 #: ../../__w/calibre/calibre/manual/conversion.rst:590
-msgid "How options are set/saved for Conversion"
-msgstr "Hur alternativen är inställda/sparade för Konvertering"
+msgid "How options are set/saved for conversion"
+msgstr "Hur alternativ ställs in/sparas för konvertering"
 
 #: ../../__w/calibre/calibre/manual/conversion.rst:592
 msgid ""

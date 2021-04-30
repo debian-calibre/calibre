@@ -76,7 +76,7 @@ def create_search_internet_menu(callback, author=None):
     m = QMenu((
         _('Search the internet for the author {}').format(author)
         if author is not None else
-        _('Search the internet for this book')) + '…'
+        _('Search the internet for this book'))
     )
     m.menuAction().setIcon(QIcon(I('search.png')))
     items = all_book_searches() if author is None else all_author_searches()
@@ -441,11 +441,11 @@ def details_context_menu_event(view, ev, book_info, add_popup_action=False, edit
         if not ac.isEnabled():
             menu.removeAction(ac)
     menu.addSeparator()
+    from calibre.gui2.ui import get_gui
     if add_popup_action:
-        ac = menu.addAction(_('Open the Book details window'))
-        ac.triggered.connect(book_info.show_book_info)
+        ema = get_gui().iactions['Show Book Details'].menuless_qaction
+        menu.addAction(_('Open the Book details window') + '\t' + ema.shortcut().toString(QKeySequence.SequenceFormat.NativeText), book_info.show_book_info)
     else:
-        from calibre.gui2.ui import get_gui
         ema = get_gui().iactions['Edit Metadata'].menuless_qaction
         menu.addAction(_('Open the Edit metadata window') + '\t' + ema.shortcut().toString(QKeySequence.SequenceFormat.NativeText), edit_metadata)
     if len(menu.actions()) > 0:

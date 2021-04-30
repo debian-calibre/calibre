@@ -969,11 +969,13 @@ class IframeBoss:
             sel = window.getSelection()
             sel.removeAllRanges()
             self.send_message('tts', type='text-extracted', marked_text=marked_text, pos=data.pos)
+        elif data.type is 'trigger-shortcut':
+            self.on_handle_navigation_shortcut(data)
 
     def mark_word_being_spoken(self, occurrence_number):
         self.last_search_at = window.performance.now()
         if select_tts_mark(occurrence_number):
-            self.ensure_selection_visible()
+            self.ensure_selection_boundary_visible()
 
     def hints_msg_received(self, data):
         if data.type is 'show':

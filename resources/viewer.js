@@ -18612,7 +18612,7 @@ return this.__repr__();
         });
 
         function tts_word_regex() {
-            return /[\p{Letter}\p{Mark}\p{Number}\p{Punctuation}]{1,50}/gu;
+            return /[\p{Letter}\p{Mark}\p{Number}\p{Punctuation}\p{Cf}]{1,50}/gu;
         };
         if (!tts_word_regex.__module__) Object.defineProperties(tts_word_regex, {
             __module__ : {value: "read_book.find"}
@@ -20986,7 +20986,7 @@ return this.__repr__();
             remove_button.classList.add("remove-custom-color");
             apply_button = create_button((self.annot_id) ? _("Apply") : _("Create"), "check", finish, ((self.annot_id) ? _("Finish editing highlight") : _("Create highlight")) + " [Ctrl+Enter]", true);
             apply_button.style.marginLeft = apply_button.style.marginTop = "auto";
-            c = ρσ_interpolate_kwargs.call(E, E.div, [E.div(ρσ_interpolate_kwargs.call(E, E.textarea, [current_notes || ""].concat([ρσ_desugar_kwargs({placeholder: _("Add notes for this highlight. Double click or long tap on a highlight to read its notes."), rows: "10", spellcheck: "true", style: "resize: none; width: 90%;", onkeydown: handle_keypress})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "color-block", style: "display: flex; flex-wrap: wrap; width: 100%; justify-content: center"})]), ρσ_interpolate_kwargs.call(E, E.div, [create_button(_("Cancel"), "close", abort, _("Abort") + " [Esc]"), E.span(" "), remove_button, apply_button].concat([ρσ_desugar_kwargs({style: "width: 100%; display: flex; flex-wrap: wrap"})])))].concat([ρσ_desugar_kwargs({style: "background: " + ρσ_str.format("{}", get_color("window-background")) + "; margin: auto; text-align: center; padding: 1ex;", onclick: (function() {
+            c = ρσ_interpolate_kwargs.call(E, E.div, [E.div(ρσ_interpolate_kwargs.call(E, E.textarea, [current_notes || ""].concat([ρσ_desugar_kwargs({placeholder: _("Add notes for this highlight. Double click or long tap on a highlight to read its notes."), rows: "10", spellcheck: "true", style: "width: 90%;", onkeydown: handle_keypress})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "color-block", style: "display: flex; flex-wrap: wrap; width: 100%; justify-content: center"})]), ρσ_interpolate_kwargs.call(E, E.div, [create_button(_("Cancel"), "close", abort, _("Abort") + " [Esc]"), E.span(" "), remove_button, apply_button].concat([ρσ_desugar_kwargs({style: "width: 100%; display: flex; flex-wrap: wrap"})])))].concat([ρσ_desugar_kwargs({style: "background: " + ρσ_str.format("{}", get_color("window-background")) + "; margin: auto; text-align: center; padding: 1ex;", onclick: (function() {
                 var ρσ_anonfunc = function (ev) {
                     ev.stopPropagation();
                 };
@@ -22136,6 +22136,7 @@ return this.__repr__();
                 ρσ_d["previous_match"] = desc(['Shift+F3'], "ui", _("Find previous"));
                 ρσ_d["increase_font_size"] = desc(['Ctrl+=', 'Ctrl++', 'Ctrl+Shift++', 'Ctrl+Shift+=', 'Meta++', 'Meta+Shift++', 'Meta+Shift+='], "ui", _("Increase font size"));
                 ρσ_d["decrease_font_size"] = desc(['Ctrl+-', 'Ctrl+_', 'Ctrl+Shift+-', 'Ctrl+Shift+_', 'Meta+-', 'Meta+_'], "ui", _("Decrease font size"));
+                ρσ_d["default_font_size"] = desc("Ctrl+0", "ui", _("Restore default font size"));
                 ρσ_d["increase_number_of_columns"] = desc(['Ctrl+]'], "ui", _("Increase number of pages per screen"));
                 ρσ_d["decrease_number_of_columns"] = desc(['Ctrl+['], "ui", _("Decrease number of pages per screen"));
                 ρσ_d["reset_number_of_columns"] = desc(['Ctrl+Alt+c'], "ui", _("Make number of pages per screen automatic"));
@@ -25958,7 +25959,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.16.1";
+        CALIBRE_VERSION = "5.17.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -27572,6 +27573,8 @@ return this.__repr__();
                 sel = window.getSelection();
                 sel.removeAllRanges();
                 ρσ_interpolate_kwargs.call(self, self.send_message, ["tts"].concat([ρσ_desugar_kwargs({type: "text-extracted", marked_text: marked_text, pos: data.pos})]));
+            } else if (data.type === "trigger-shortcut") {
+                self.on_handle_navigation_shortcut(data);
             }
         };
         if (!IframeBoss.prototype.tts_msg_received.__argnames__) Object.defineProperties(IframeBoss.prototype.tts_msg_received, {
@@ -27582,7 +27585,7 @@ return this.__repr__();
             var self = this;
             self.last_search_at = window.performance.now();
             if (select_tts_mark(occurrence_number)) {
-                self.ensure_selection_visible();
+                self.ensure_selection_boundary_visible();
             }
         };
         if (!IframeBoss.prototype.mark_word_being_spoken.__argnames__) Object.defineProperties(IframeBoss.prototype.mark_word_being_spoken, {
@@ -34847,6 +34850,8 @@ return this.__repr__();
 
         var create_button = ρσ_modules.widgets.create_button;
 
+        var defaults = ρσ_modules.session.defaults;
+
         CONTAINER = unique_id("font-size-prefs");
         MIN_FONT_SIZE = 8;
         MAX_FONT_SIZE = 80;
@@ -34920,6 +34925,13 @@ return this.__repr__();
         };
         if (!change_font_size_by.__argnames__) Object.defineProperties(change_font_size_by, {
             __argnames__ : {value: ["frac"]},
+            __module__ : {value: "read_book.prefs.font_size"}
+        });
+
+        function restore_default_font_size() {
+            change_font_size(defaults.base_font_size);
+        };
+        if (!restore_default_font_size.__module__) Object.defineProperties(restore_default_font_size, {
             __module__ : {value: "read_book.prefs.font_size"}
         });
 
@@ -35043,6 +35055,7 @@ return this.__repr__();
         ρσ_modules["read_book.prefs.font_size"].apply_font_size = apply_font_size;
         ρσ_modules["read_book.prefs.font_size"].set_quick_size = set_quick_size;
         ρσ_modules["read_book.prefs.font_size"].change_font_size_by = change_font_size_by;
+        ρσ_modules["read_book.prefs.font_size"].restore_default_font_size = restore_default_font_size;
         ρσ_modules["read_book.prefs.font_size"].display_changed_font_size = display_changed_font_size;
         ρσ_modules["read_book.prefs.font_size"].create_font_size_panel = create_font_size_panel;
         ρσ_modules["read_book.prefs.font_size"].develop = develop;
@@ -36545,11 +36558,11 @@ return this.__repr__();
             sd = get_session_data();
             function cb(name, text) {
                 var ans;
-                ans = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "checkbox", name: name})]);
+                ans = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "checkbox", name: name, style: "margin-left: 0"})]);
                 if (sd.get(name)) {
                     ans.checked = true;
                 }
-                return ρσ_interpolate_kwargs.call(E, E.div, [E.label(ans, " " + text)].concat([ρσ_desugar_kwargs({style: "margin-top:1ex"})]));
+                return ρσ_interpolate_kwargs.call(E, E.div, [E.label(ans, text)].concat([ρσ_desugar_kwargs({style: "margin-top:1ex"})]));
             };
             if (!cb.__argnames__) Object.defineProperties(cb, {
                 __argnames__ : {value: ["name", "text"]},
@@ -36581,16 +36594,20 @@ return this.__repr__();
             });
 
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Control how scrolling works in paged mode")].concat([ρσ_desugar_kwargs({style: "margin-top:1ex"})])));
-            container.appendChild(cb("paged_wheel_scrolls_by_screen", _("Mouse wheel scrolls by screen fulls instead of pages")));
-            container.appendChild(cb("paged_margin_clicks_scroll_by_screen", _("Clicking on the margins scrolls by screen fulls instead of pages")));
-            container.appendChild(cb("paged_taps_scroll_by_screen", _("Tapping scrolls by screen fulls instead of pages")));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, ρσ_interpolate_kwargs.call(this, spinner, ["paged_pixel_scroll_threshold", _("Pixel scroll threshold:")].concat([ρσ_desugar_kwargs({title: _("When using a touchpad or mouse wheel that produces scroll events in pixels, set the number of pixels before a page turn is triggered"), step: 5, min: 0, max: 1e3})])).concat([ρσ_desugar_kwargs({style: "display:grid;margin-top:1ex;align-items:center;grid-template-columns:auto min-content;grid-gap:1ex; max-width: 30em"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-left: 1rem"})]));
+            container.lastChild.appendChild(cb("paged_wheel_scrolls_by_screen", _("Mouse wheel scrolls by screen fulls instead of pages")));
+            container.lastChild.appendChild(cb("paged_margin_clicks_scroll_by_screen", _("Clicking on the margins scrolls by screen fulls instead of pages")));
+            container.lastChild.appendChild(cb("paged_taps_scroll_by_screen", _("Tapping scrolls by screen fulls instead of pages")));
+            container.lastChild.appendChild(ρσ_interpolate_kwargs.call(E, E.div, ρσ_interpolate_kwargs.call(this, spinner, ["paged_pixel_scroll_threshold", " " + _("Pixel scroll threshold:")].concat([ρσ_desugar_kwargs({title: _("When using a touchpad or mouse wheel that produces scroll events in pixels, set the number of pixels before a page turn is triggered"), step: 5, min: 0, max: 1e3})])).concat([ρσ_desugar_kwargs({style: "display:grid;margin-top:1ex;align-items:center;grid-template-columns:auto min-content;grid-gap:1ex; max-width: 30em"})])));
             container.appendChild(E.hr());
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Control how smooth scrolling works in flow mode")].concat([ρσ_desugar_kwargs({style: "margin-top:1ex"})])));
-            container.appendChild(cb("scroll_stop_boundaries", _("Stop at internal file boundaries when smooth scrolling by holding down the scroll key")));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, ρσ_interpolate_kwargs.call(this, spinner, ["lines_per_sec_smooth", _("Smooth scrolling speed in lines/sec:")].concat([ρσ_desugar_kwargs({step: 5, min: MIN_SCROLL_SPEED_SMOOTH, max: MAX_SCROLL_SPEED_SMOOTH})])).concat(ρσ_interpolate_kwargs.call(this, spinner, ["lines_per_sec_auto", _("Auto scrolling speed in lines/sec:")].concat([ρσ_desugar_kwargs({step: .05, min: MIN_SCROLL_SPEED_AUTO, max: MAX_SCROLL_SPEED_AUTO})]))).concat(ρσ_interpolate_kwargs.call(this, spinner, ["scroll_auto_boundary_delay", _("Seconds to pause before auto-scrolling past internal file boundaries:")].concat([ρσ_desugar_kwargs({title: _("Use negative values to not auto-scroll past internal file boundaries"), step: .25, min: MIN_SCROLL_AUTO_DELAY, max: MAX_SCROLL_AUTO_DELAY})]))).concat([ρσ_desugar_kwargs({style: "display:grid;margin-top:1ex;align-items:center;grid-template-columns:auto min-content;grid-gap:1ex; max-width: 30em"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-left: 1rem"})]));
+            container.lastChild.appendChild(cb("scroll_stop_boundaries", _("Stop at internal file boundaries when smooth scrolling by holding down the scroll key")));
+            container.lastChild.appendChild(ρσ_interpolate_kwargs.call(E, E.div, ρσ_interpolate_kwargs.call(this, spinner, ["lines_per_sec_smooth", _("Smooth scrolling speed in lines/sec:")].concat([ρσ_desugar_kwargs({step: 5, min: MIN_SCROLL_SPEED_SMOOTH, max: MAX_SCROLL_SPEED_SMOOTH})])).concat(ρσ_interpolate_kwargs.call(this, spinner, ["lines_per_sec_auto", _("Auto scrolling speed in lines/sec:")].concat([ρσ_desugar_kwargs({step: .05, min: MIN_SCROLL_SPEED_AUTO, max: MAX_SCROLL_SPEED_AUTO})]))).concat(ρσ_interpolate_kwargs.call(this, spinner, ["scroll_auto_boundary_delay", _("Seconds to pause before auto-scrolling past internal file boundaries:")].concat([ρσ_desugar_kwargs({title: _("Use negative values to not auto-scroll past internal file boundaries"), step: .25, min: MIN_SCROLL_AUTO_DELAY, max: MAX_SCROLL_AUTO_DELAY})]))).concat([ρσ_desugar_kwargs({style: "display:grid;margin-top:1ex;align-items:center;grid-template-columns:auto min-content;grid-gap:1ex; max-width: 30em"})])));
             container.appendChild(E.hr());
-            container.appendChild(cb("book_scrollbar", _("Show a scrollbar")));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Miscellaneous")].concat([ρσ_desugar_kwargs({style: "margin-top:1ex"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-left: 1rem"})]));
+            container.lastChild.appendChild(cb("book_scrollbar", _("Show a scrollbar")));
             container.appendChild(create_button_box(restore_defaults, apply_func, cancel_func));
         };
         if (!create_scrolling_panel.__argnames__) Object.defineProperties(create_scrolling_panel, {
@@ -36975,17 +36992,17 @@ return this.__repr__();
             if (!all_actions.ans) {
                 all_actions.ans = (function(){
                     var ρσ_d = Object.create(null);
-                    ρσ_d["copy"] = a("copy", _("Copy to clipboard") + " [Ctrl+c]", "copy_to_clipboard");
-                    ρσ_d["lookup"] = a("library", _("Lookup/search selected word") + " [l]", "lookup");
-                    ρσ_d["quick_highlight"] = a("highlight", _("Quick highlight in current style") + " [q]", "quick_highlight");
-                    ρσ_d["highlight"] = a("highlight", _("Highlight selection") + " [h]", "create_highlight");
-                    ρσ_d["search"] = a("search", _("Search for selection in the book") + " [f]", "book_search");
-                    ρσ_d["bookmark"] = a("bookmark", _("Create a bookmark") + " [Ctrl+Alt+b]", "new_bookmark");
-                    ρσ_d["search_net"] = a("global-search", _("Search for selection on the net") + " [s]", "internet_search");
+                    ρσ_d["copy"] = a("copy", _("Copy to clipboard") + " [Ctrl+C]", "copy_to_clipboard");
+                    ρσ_d["lookup"] = a("library", _("Lookup/search selected word") + " [L]", "lookup");
+                    ρσ_d["quick_highlight"] = a("highlight", _("Quick highlight in current style") + " [Q]", "quick_highlight");
+                    ρσ_d["highlight"] = a("highlight", _("Highlight selection") + " [H]", "create_highlight");
+                    ρσ_d["search"] = a("search", _("Search for selection in the book") + " [F]", "book_search");
+                    ρσ_d["bookmark"] = a("bookmark", _("Create a bookmark") + " [Ctrl+Alt+B]", "new_bookmark");
+                    ρσ_d["search_net"] = a("global-search", _("Search for selection on the net") + " [S]", "internet_search");
                     ρσ_d["remove_highlight"] = a("trash", _("Remove this highlight") + " [Delete]", "remove_highlight", true);
                     ρσ_d["clear"] = a("close", _("Clear selection") + " [Esc]", "clear_selection");
-                    ρσ_d["speak"] = a("bullhorn", _("Read aloud") + " [t]", "speak_aloud");
-                    ρσ_d["cite"] = a("reference-mode", _("Copy citation to clipboard") + " [x]", "cite");
+                    ρσ_d["speak"] = a("bullhorn", _("Read aloud") + " [T]", "speak_aloud");
+                    ρσ_d["cite"] = a("reference-mode", _("Copy citation to clipboard") + " [X]", "cite");
                     return ρσ_d;
                 }).call(this);
                 qh = all_actions.ans.quick_highlight;
@@ -37046,6 +37063,7 @@ return this.__repr__();
             this.mousedown_on_handle = SelectionBar.prototype.mousedown_on_handle.bind(this);
             this.touchstart_on_handle = SelectionBar.prototype.touchstart_on_handle.bind(this);
             this.start_handle_drag = SelectionBar.prototype.start_handle_drag.bind(this);
+            this.container_context_menu_requested = SelectionBar.prototype.container_context_menu_requested.bind(this);
             this.container_clicked = SelectionBar.prototype.container_clicked.bind(this);
             this.mousemove_on_container = SelectionBar.prototype.mousemove_on_container.bind(this);
             this.touchmove_on_container = SelectionBar.prototype.touchmove_on_container.bind(this);
@@ -37269,6 +37287,11 @@ return this.__repr__();
                 ρσ_d["passive"] = false;
                 return ρσ_d;
             }).call(this));
+            container.addEventListener("contextmenu", self.container_context_menu_requested, (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["passive"] = false;
+                return ρσ_d;
+            }).call(this));
             container.addEventListener("mouseup", self.mouseup_on_container, (function(){
                 var ρσ_d = Object.create(null);
                 ρσ_d["passive"] = false;
@@ -37344,6 +37367,20 @@ return this.__repr__();
                 ρσ_d["passive"] = false;
                 return ρσ_d;
             }).call(this));
+            editor_div.addEventListener("wheel", (function() {
+                var ρσ_anonfunc = function (ev) {
+                    ev.stopPropagation();
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["ev"]},
+                    __module__ : {value: "read_book.selection_bar"}
+                });
+                return ρσ_anonfunc;
+            })(), (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["passive"] = true;
+                return ρσ_d;
+            }).call(this));
         };
         if (!SelectionBar.prototype.__init__.__argnames__) Object.defineProperties(SelectionBar.prototype.__init__, {
             __argnames__ : {value: ["view"]},
@@ -37385,7 +37422,7 @@ return this.__repr__();
                 return ρσ_anonfunc;
             })(), (function(){
                 var ρσ_d = Object.create(null);
-                ρσ_d["passive"] = true;
+                ρσ_d["passive"] = false;
                 return ρσ_d;
             }).call(this));
             var ρσ_Iter2 = ρσ_Iterable(ρσ_list_decorate([ ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "height: 4ex; display: flex; align-items: center; padding: 5px; justify-content: center"})]), ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "border-top: solid 1px; margin: 0; padding: 0; display: none"})]), ρσ_interpolate_kwargs.call(E, E.div, [notes_container].concat([ρσ_desugar_kwargs({style: "display: none; padding: 5px;"})])) ]));
@@ -37542,6 +37579,22 @@ return this.__repr__();
         };
         if (!SelectionBar.prototype.start_handle_drag.__argnames__) Object.defineProperties(SelectionBar.prototype.start_handle_drag, {
             __argnames__ : {value: ["ev", "handle"]},
+            __module__ : {value: "read_book.selection_bar"}
+        });
+        SelectionBar.prototype.container_context_menu_requested = function container_context_menu_requested(ev) {
+            var self = this;
+            var pos;
+            pos = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["x"] = ev.clientX;
+                ρσ_d["y"] = ev.clientY;
+                return ρσ_d;
+            }).call(this);
+            map_to_iframe_coords(pos, get_margins());
+            ρσ_interpolate_kwargs.call(self, self.send_message, ["extend-to-point"].concat([ρσ_desugar_kwargs({pos: pos})]));
+        };
+        if (!SelectionBar.prototype.container_context_menu_requested.__argnames__) Object.defineProperties(SelectionBar.prototype.container_context_menu_requested, {
+            __argnames__ : {value: ["ev"]},
             __module__ : {value: "read_book.selection_bar"}
         });
         SelectionBar.prototype.container_clicked = function container_clicked(ev) {
@@ -38356,17 +38409,19 @@ return this.__repr__();
         });
         SelectionBar.prototype.quick_highlight = function quick_highlight() {
             var self = this;
-            var cs;
+            var cs, am;
             cs = self.view.currently_showing.selection;
             if (cs.text) {
                 if (cs.annot_id) {
-                    self.create_highlight();
+                    am = self.annotations_manager;
+                    self.current_notes = am.notes_for_highlight(cs.annot_id) || "";
+                    ρσ_interpolate_kwargs.call(self, self.send_message, ["apply-highlight"].concat([ρσ_desugar_kwargs({style: self.current_highlight_style.style, uuid: short_uuid(), existing: cs.annot_id, has_notes: !!self.current_notes})]));
                 } else {
                     self.current_notes = "";
                     ρσ_interpolate_kwargs.call(self, self.send_message, ["apply-highlight"].concat([ρσ_desugar_kwargs({style: self.current_highlight_style.style, uuid: short_uuid(), has_notes: false})]));
-                    self.state = WAITING;
-                    self.update_position();
                 }
+                self.state = WAITING;
+                self.update_position();
             }
         };
         if (!SelectionBar.prototype.quick_highlight.__module__) Object.defineProperties(SelectionBar.prototype.quick_highlight, {
@@ -40033,8 +40088,8 @@ return this.__repr__();
                 sel += "> li";
                 style += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({border_right: "1px solid currentColor", padding: "0.5em 1ex", display: "flex", flex_wrap: "wrap", align_items: "center", cursor: "pointer"})]));
                 style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ":last-child"].concat([ρσ_desugar_kwargs({border_right_style: "none"})]));
-                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ":hover > *:first-child"].concat([ρσ_desugar_kwargs({color: get_color("window-hover-foreground")})]));
-                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ":active > *:first-child"].concat([ρσ_desugar_kwargs({transform: "scale(1.8)"})]));
+                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ":hover > *:first-child, .main-overlay-button:hover > *:first-child"].concat([ρσ_desugar_kwargs({color: get_color("window-hover-foreground")})]));
+                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ":active > *:first-child, .main-overlay-button:active > *:first-child"].concat([ρσ_desugar_kwargs({transform: "scale(1.8)"})]));
                 style += "@media screen and (max-width: 350px) { #" + ρσ_str.format("{}", timer_id()) + " { display: none; } }";
                 return style;
             };
@@ -40365,7 +40420,7 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })()})]))].concat([ρσ_desugar_kwargs({user_select: "none", background_color: get_color("window-background")})])));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [svgicon("close", icon_size, icon_size), " ", _("Close")].concat([ρσ_desugar_kwargs({style: "display: flex; align-items: center; cursor: pointer; padding: 0.5ex 1rem"})])), ρσ_interpolate_kwargs.call(E, E.div, [" "].concat([ρσ_desugar_kwargs({style: "padding: 0.5ex 1rem"})])), ρσ_interpolate_kwargs.call(E, E.div, [" "].concat([ρσ_desugar_kwargs({style: "padding: 0.5ex 1rem"})]))].concat([ρσ_desugar_kwargs({style: "position: fixed; width: 100%; bottom: 0; display: flex; justify-content: space-between; align-items: center;user-select: none; background-color: {}".format(get_color("window-background"))})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [svgicon("close", icon_size, icon_size), " ", _("Close")].concat([ρσ_desugar_kwargs({style: "display: flex; align-items: center; cursor: pointer; padding: 0.5ex 1rem", class_: "main-overlay-button"})])), ρσ_interpolate_kwargs.call(E, E.div, [" "].concat([ρσ_desugar_kwargs({style: "padding: 0.5ex 1rem"})])), ρσ_interpolate_kwargs.call(E, E.div, [" "].concat([ρσ_desugar_kwargs({style: "padding: 0.5ex 1rem"})]))].concat([ρσ_desugar_kwargs({style: "position: fixed; width: 100%; bottom: 0; display: flex; justify-content: space-between; align-items: center;user-select: none; background-color: {}".format(get_color("window-background"))})])));
             renderer = self.overlay.view.create_template_renderer();
             if (renderer) {
                 c = container.lastChild.lastChild;
@@ -42427,6 +42482,7 @@ return this.__repr__();
         var resolve_color_scheme = ρσ_modules["read_book.prefs.colors"].resolve_color_scheme;
 
         var change_font_size_by = ρσ_modules["read_book.prefs.font_size"].change_font_size_by;
+        var restore_default_font_size = ρσ_modules["read_book.prefs.font_size"].restore_default_font_size;
 
         var current_zoom_step_size = ρσ_modules["read_book.prefs.fonts"].current_zoom_step_size;
 
@@ -43321,6 +43377,8 @@ return this.__repr__();
                     ρσ_d["increase"] = false;
                     return ρσ_d;
                 }).call(this));
+            } else if (data.name === "default_font_size") {
+                restore_default_font_size();
             } else if (data.name === "toggle_full_screen") {
                 ui_operations.toggle_full_screen();
             } else if (data.name === "toggle_reference_mode") {
@@ -44639,11 +44697,14 @@ return this.__repr__();
             __argnames__ : {value: ["data"]},
             __module__ : {value: "read_book.view"}
         });
-        View.prototype.show_status_message = function show_status_message(msg) {
+        View.prototype.show_status_message = function show_status_message(msg, timeout) {
             var self = this;
             self.current_status_message = msg || "";
             self.update_header_footer();
             if (self.current_status_message) {
+                if (!(typeof timeout !== "undefined" && timeout !== null)) {
+                    timeout = 1e4;
+                }
                 window.setTimeout((function() {
                     var ρσ_anonfunc = function () {
                         self.show_status_message();
@@ -44652,11 +44713,11 @@ return this.__repr__();
                         __module__ : {value: "read_book.view"}
                     });
                     return ρσ_anonfunc;
-                })(), 1e4);
+                })(), timeout);
             }
         };
         if (!View.prototype.show_status_message.__argnames__) Object.defineProperties(View.prototype.show_status_message, {
-            __argnames__ : {value: ["msg"]},
+            __argnames__ : {value: ["msg", "timeout"]},
             __module__ : {value: "read_book.view"}
         });
         View.prototype.create_template_renderer = function create_template_renderer() {
@@ -45608,6 +45669,19 @@ return this.__repr__();
                     view.prepare_for_close();
                 } else {
                     ui_operations.close_prep_finished(null);
+                }
+            };
+            if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                __module__ : {value: null}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var repair_after_fullscreen_switch = from_python((function() {
+            var ρσ_anonfunc = function repair_after_fullscreen_switch() {
+                if (view) {
+                    view.show_status_message("...", 200);
                 }
             };
             if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {

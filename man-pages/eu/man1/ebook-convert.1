@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "apirilak 19, 2021" "5.16.1" "calibre"
+.TH "EBOOK-CONVERT" "1" "apirilak 30, 2021" "5.17.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -35,21 +35,21 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-ebook\-convert input_file output_file [options]
+ebook\-convert sarrera_fitxategia irteera_fitxategia [aukerak]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Convert an e\-book from one format to another.
+eLiburua formatu batetik bestera bihurtu
 .sp
-input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+sarrera_fitxategia sartutako fitxategia da eta irteera_fitxategia irteerako fitxategia da. Biak zehaztu behar dira komandoaren lehenengo argumentu bien modura.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an "open e\-book" (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
+Irteerako eLiburuaren formatua irteera_fitxategiaren fitxategi\-luzapenaren arabera asmatzen da. irteera_fitxategia .EXT luzapen berezia izan dezake baita ere. Kasu honetan irteera fitxategiaren izena sarrera fitxategiaren izenetik eratorriko da. Kontuan izan fitxategien izenak ezin dira marrarekin hasi. Irteerako fitxategiak ez baldin badu fitxategi\-luzapenik direktorio modura hartuko da eta HTML fitxategiak gehituko zaizkio liburu irekia (OEB, "Open Book") sortze aldera.
 .sp
-After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+Sarrera eta irteera fitxategiak zehaztu ostean, bihurketa pertsonalizatu daiteke hainbat aukera zehaztuz. Aukerak sarrera eta irteera fitxategi moten arabera izango dira. Informazio gehiago eta laguntza, sarrera eta irteera fitxategiak zehaztuz \-h aukera erabiliz.
 .sp
-For full documentation of the conversion system see
+Bihurketaren dokumentazio osorako ikus
 conversion
 .sp
 Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
@@ -102,12 +102,12 @@ Zehaztu input profila. Input profilak ematen dizu bihurketa sistemari buruzko in
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+Zerrendatu \fB"\fPbuiltin\fB"\fP formula izenak. Liburu digital bat sortu dezakezu \fB"\fPbuiltin\fB"\fP formula batetik honen bidez: ebook\-convert \fB"\fPFormula Izena.recipe\fB"\fP irteera.epub
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device (such as by resizing images for the device screen size). In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, generic_eink_hd, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet, generic_eink_large, generic_eink
+Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device (such as by resizing images for the device screen size). In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, generic_eink_hd, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet, generic_eink_large, generic_eink
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -128,7 +128,7 @@ Output epub fitxategiaren prozesamendua kontrolatzeko aukerak
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
-Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+Bertan behera uzten ditu orrialde\-jauziek egiten dituzten orrien arteko bereizketak. Normalean, sorburu fitxategiak automatikoki bereizten dira bi fitxategietan orri\-jauzi bakoitzarekin. Honek ematen du azkarrago azter daitekeen irteera e\-liburu bat eta errekurtso gutxiago behar ditu. Gerta liteke, orrialdeen arteko bereizketa motelegia izatea. Zure sorburu fitxategiak orrialde\-jauzi pilo bat izango balit, behar bada hobe zenuke bertan behera uztea orrialde\-jauzien bereizketa egiteko aukera.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -435,7 +435,7 @@ Dokumentu batzuen orrien marjinak paragrafo bakoitzean zehaztutako ezker\-eskuma
 .INDENT 0.0
 .TP
 .B \-\-insert\-metadata
-Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
+Txertatu  liburuaren metadatu guztiak liburuaren hasieran. Aukera hau erabilgarria izango da zure irakurgailuak ez badie metadatuen  erakusten/bilatzen aukerari eusten, ez badauka erakusten/bilatzen aukera, metadatuak zuzenean bilatzeko eta erakusteko.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -450,12 +450,12 @@ Erabil ezazu  sorburu fitxategitik detektatu den liburu\-azala, zehaztutako libu
 .INDENT 0.0
 .TP
 .B \-\-remove\-first\-image
-Remove the first image from the input e\-book. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+Ezabatu sarrera liburuaren lehenengo irudia. Erabilgarria baldin eta sarrera\-fitxategiak azala bezala antzeman ez den irudia baldin badu. Calibren irudiren bat ezarriz azala modura, irteera\-fitxategiak azala irudi birekin amaituko luke aukera honegatik ez balitz.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+Irakurtzen hasteko kokalekua atzemateko XPath adierazpena. liburu elektronikoak irakurtzeko programa batzuek (Kindle bereziki) kokaleku hau erabiltzen dute liburua non zabaldu jakiteko. Adibideak Calibre erabiltzailearen eskuliburuan, XPath tutorial atalean.
 .UNINDENT
 .SH AURKIBIDEA
 .sp
@@ -526,7 +526,7 @@ Ezarri ezazu liburuaren ekoizlea.
 .INDENT 0.0
 .TP
 .B \-\-comments
-Set the e\-book description.
+Jarri liburu elektronikoaren deskripzioa.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -551,7 +551,7 @@ Set the publication date (assumed to be in the local timezone, unless the timezo
 .INDENT 0.0
 .TP
 .B \-\-publisher
-Set the e\-book publisher.
+Jarri liburu digitalaren argitaletxea.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -566,7 +566,7 @@ Irakur itzazu metadatuak zehaztutako OPF fitxategietatik Fitxategi honetatik ira
 .INDENT 0.0
 .TP
 .B \-\-series
-Set the series this e\-book belongs to.
+Jarri liburu elektroniko hau zein sailaren barruan dagoen.
 .UNINDENT
 .INDENT 0.0
 .TP

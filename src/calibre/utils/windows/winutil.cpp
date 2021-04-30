@@ -61,7 +61,7 @@ PyGUID_dealloc(PyGUID *self) { }
 static PyObject*
 PyGUID_repr(PyGUID *self) {
 	com_wchar_raii s;
-	HRESULT hr = StringFromIID(self->guid, s.address());
+	HRESULT hr = StringFromIID(self->guid, s.unsafe_address());
 	if (FAILED(hr)) return error_from_hresult(hr);
 	return PyUnicode_FromWideChar(s.ptr(), -1);
 }
@@ -317,7 +317,7 @@ known_folder_path(PyObject *self, PyObject *args) {
 	DWORD flags = KF_FLAG_DEFAULT;
 	if (!PyArg_ParseTuple(args, "O!|k", &PyGUIDType, &id, &flags)) return NULL;
 	com_wchar_raii path;
-	HRESULT hr = SHGetKnownFolderPath(id->guid, flags, NULL, path.address());
+	HRESULT hr = SHGetKnownFolderPath(id->guid, flags, NULL, path.unsafe_address());
 	return PyUnicode_FromWideChar(path.ptr(), -1);
 }
 
@@ -832,8 +832,7 @@ get_long_path_name(PyObject *self, PyObject *args) {
     Py_END_ALLOW_THREADS
     if (needed_size >= current_size - 32) {
         current_size = needed_size + 32;
-        PyMem_Free(buf.ptr());
-        buf.set_ptr((wchar_t*)PyMem_Malloc(current_size * sizeof(wchar_t)));
+        buf.attach((wchar_t*)PyMem_Malloc(current_size * sizeof(wchar_t)));
         if (!buf) return PyErr_NoMemory();
         Py_BEGIN_ALLOW_THREADS
         needed_size = GetLongPathNameW(path.ptr(), buf.ptr(), current_size);
