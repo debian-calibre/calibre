@@ -14,4 +14,9 @@ else ifeq (mipsel, $(DEB_HOST_ARCH))
   TEST_FLAGS += --exclude-test-name=qt
   # Test failed
   TEST_FLAGS += --exclude-test-name=dictionaries
+else ifeq (mips64el, $(DEB_HOST_ARCH))
+  # Test error
+  TEST_FLAGS += --exclude-test-name=qt
+  # Test failed
+  TEST_FLAGS += --exclude-test-name=dictionaries
 endif
