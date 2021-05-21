@@ -67,6 +67,14 @@ def new_book(key, metadata):
 DB_NAME = 'calibre'
 DB_VERSION = 1
 
+
+def indexed_db_api():
+    if window?:
+        return window.indexedDB
+    if self?:
+        return self.indexedDB
+
+
 class DB:
 
     def __init__(self, callback, show_read_book_error):
@@ -78,22 +86,23 @@ class DB:
         self.initialize_stage1()
 
     def show_error(self, title, msg, det_msg):
-        if is_reading_book():
+        if not window? or is_reading_book():
             self.show_read_book_error(title, msg, det_msg)
         else:
             error_dialog(title, msg, det_msg)
 
     def initialize_stage1(self):
-        if not window.indexedDB:
+        idb = indexed_db_api()
+        if not idb:
             self.initialize_error_msg = _('Your browser does not support IndexedDB. Cannot read books. Consider using a modern browser, such as Chrome or Firefox.')
             self.initialized = True
             # Callers assume __init__ has finished before the callback is
             # called, since we are called in __init__, only callback after
             # event loop ticks over
-            window.setTimeout(self.callback, 0)
+            setTimeout(self.callback, 0)
             return
 
-        request = window.indexedDB.open(DB_NAME, DB_VERSION)
+        request = idb.open(DB_NAME, DB_VERSION)
 
         request.onupgradeneeded = def(event):
             upgrade_schema(event.target.result, event.oldVersion, event.newVersion, event.target.transaction)
@@ -160,19 +169,7 @@ class DB:
         store = store or stores[0]
         if op is 'get':
             transaction = self.idb.transaction(stores)
-            # Microsoft Edge currently does not support complex keys so the
-            # next line will throw a DataError in Edge when data is an
-            # object key like an array.
-            # https://gist.github.com/nolanlawson/a841ee23436410f37168
-            try:
-                req = transaction.objectStore(store).get(data)
-            except:
-                if /Edge\/\d+/.test(window.navigator.userAgent):
-                    self.show_error(_('Cannot read book'), _(
-                        'Reading of books is not supported on Microsoft Edge. Use a better'
-                        ' browser such as Google Chrome or Mozilla Firefox'))
-                    return
-                raise
+            req = transaction.objectStore(store).get(data)
             req.onsuccess = def(event):
                 proceed(req.result)
         elif op is 'put':
@@ -349,6 +346,24 @@ class DB:
                 result = Blob([base64decode(result)], {'type':mt})
             proceed(result, name, mt, book)
         )
+
+    def get_book_file(self, book_hash, stored_files, name, proceed):
+        stores = ['files']
+        key = file_store_name({'book_hash': book_hash}, name)
+        transaction = self.idb.transaction(stores)
+        req = transaction.objectStore(stores[0]).get(key)
+        req.onsuccess = def(event):
+            if not req.result:
+                proceed({'ok': False, 'name': name, 'details': 'ENOENT'})
+                return
+            fdata = stored_files[key]
+            mt = fdata.mimetype or 'application/octet-stream'
+            if fdata.encoded:
+                result = Blob([base64decode(result)], {'type':mt})
+            proceed({'ok': True, 'result': req.result, 'name': name, 'mt': mt})
+        req.onerror = def(event):
+            details = get_error_details(event)
+            proceed({'ok': False, 'name': name, 'details': details})
 
     def get_mathjax_files(self, proceed):
         c = self.idb.transaction('mathjax').objectStore('mathjax').openCursor()

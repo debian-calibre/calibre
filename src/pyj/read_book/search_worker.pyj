@@ -1,0 +1,281 @@
+# vim:fileencoding=utf-8
+# License: GPL v3 Copyright: 2021, Kovid Goyal <kovid at kovidgoyal.net>
+from __python__ import bound_methods, hash_literals
+
+from read_book.db import DB
+from read_book.resources import text_from_serialized_html
+from traceback import format_exception
+
+GET_SPINE_FAILED = 1
+CONNECT_FAILED = 2
+UNHANDLED_ERROR = 3
+DB_ERROR = 4
+
+_RE_ESCAPE = /[-\/\\^$*+?.()|[\]{}]/g
+quote_map = {'"': '"“”', "'": "'‘’"}
+qpat = /(['"])/g
+spat = /(\s+)/g
+invisible_chars = '(?:[\u00ad\u200c\u200d]{0,1})'
+
+def escape(string):
+    return string.replace(_RE_ESCAPE, '\\$&')
+
+
+def split_string(pat, string):
+    pat.lastIndex = 0
+    return string.split(pat)
+
+
+def text_to_regex(text):
+    if text and not text.strip():
+        return r'\s+'
+    has_leading = text.lstrip() is not text
+    has_trailing = text.rstrip() is not text
+    ans = v'["\s+"]' if has_leading else v'[]'
+    for wpart in split_string(spat, text.strip()):
+        if not wpart.strip():
+            ans.push(r'\s+')
+        else:
+            for part in split_string(qpat, wpart):
+                r = quote_map[part]
+                if r:
+                    ans.push('[' + r + ']')
+                else:
+                    chars = v'[]'
+                    for ch in part:
+                        chars.push(escape(ch))
+                    chars.join(invisible_chars)
+                    ans.push(part)
+    if has_trailing:
+        ans.push(r'\s+')
+    return ans.join('')
+
+
+class ToCOffsetMap:
+
+    def __init__(self, toc_nodes, offset_map, previous_toc_node, parent_map):
+        self.toc_nodes = toc_nodes or v'[]'
+        self.offset_map = offset_map or {}
+        self.previous_toc_node = previous_toc_node or None
+        self.parent_map = parent_map or {}
+
+    def toc_nodes_for_offset(self, offset):
+        matches = v'[]'
+        for node in self.toc_nodes:
+            q = self.offset_map[node.id]
+            if q?:
+                if q > offset:
+                    break
+                matches.push(node)
+        if not matches and self.previous_toc_node:
+            matches.push(self.previous_toc_node)
+        ans = v'[]'
+        if matches.length:
+            ancestors = v'[]'
+            node = matches[-1]
+            parent = self.parent_map[node.id]
+            while parent?:
+                ancestors.push(parent)
+                parent = self.parent_map[parent.id]
+            if ancestors.length > 1:
+                # last item in ancestors is the root node
+                for v'var i = ancestors.length - 1; i-- > 0;':
+                    ans.push(ancestors[i].id)
+            ans.push(node.id)
+        return ans
+
+
+def toc_offset_map_for_name(name):
+    if wc.toc_offset_map_cache[name]:
+        return wc.toc_offset_map_cache[name]
+    anchor_map = wc.text_cache[name][1]
+    toc_data = wc.current_book.toc_data
+    idx = toc_data.spine_idx_map[name]
+    toc_nodes = toc_data.spine_toc_map[name]
+    if not idx? or idx < 0:
+        wc.toc_offset_map_cache[name] = ToCOffsetMap()
+        return wc.toc_offset_map_cache[name]
+    offset_map = {}
+    for node in toc_nodes:
+        node_id = node.id
+        if node_id?:
+            aid = node.frag
+            offset = anchor_map[aid] or 0
+            offset_map[node_id] = offset
+    prev_toc_node = None
+    for v'var i = idx; i-- > 0;':
+        spine_name = wc.current_book.spine[i]
+        ptn = toc_data.spine_toc_map[spine_name]
+        if ptn?:
+            prev_toc_node = ptn[-1]
+            break
+    wc.toc_offset_map_cache[name] = ToCOffsetMap(toc_nodes, offset_map, prev_toc_node, toc_data.parent_map)
+    return wc.toc_offset_map_cache[name]
+
+
+def toc_nodes_for_search_result(sr):
+    sidx = sr.spine_idx
+    name = wc.current_book.spine[sidx]
+    if not name:
+        return v'[]'
+    tmap = toc_offset_map_for_name(name)
+    return tmap.toc_nodes_for_offset(sr.offset)
+
+
+class Worker:
+
+    def __init__(self):
+        self.db = None
+        self.connected_to_db = False
+        self.pending_search = None
+        self.searching = False
+        self.current_query = None
+        self.current_query_id = None
+        self.current_book = None
+        self.regex = None
+        self.result_num = 0
+        self.clear_caches()
+
+    @property
+    def initialize_error_msg(self):
+        return self.db?.initialize_error_msg
+
+    def clear_caches(self):
+        self.text_cache = {}
+        self.toc_offset_map_cache = {}
+
+
+wc = Worker()
+
+
+def send_search_complete():
+    self.postMessage({'type': 'search_complete', 'id': wc.current_query_id})
+    wc.current_query = wc.current_query_id = None
+
+
+def search_in_text_of(name):
+    ctx_size = 75
+    r = wc.regex
+    r.lastIndex = 0
+    haystack = wc.text_cache[name][0] or ''
+    match_counts = {}
+    spine_idx = wc.current_book.spine.indexOf(name)
+    while True:
+        m = r.exec(haystack)
+        if not m:
+            break
+        text = m[0]
+        start, end = m.index, r.lastIndex
+        before = haystack[Math.max(0, start - ctx_size):start]
+        after = haystack[end:end+ctx_size]
+        q = (before or '')[-5:] + text + (after or '')[:5]
+        match_counts[q] = match_counts[q] or 0
+        wc.result_num += 1
+        result = {
+            'file_name': name, 'spine_idx': spine_idx, 'index': match_counts[q], 'offset': start,
+            'text': text, 'before': before, 'after': after, 'mode': wc.current_query.query.mode,
+            'q': q, 'result_num': wc.result_num, 'on_discovery': wc.current_query_id,
+        }
+        result.toc_nodes = toc_nodes_for_search_result(result)
+        self.postMessage({'type': 'search_result', 'id': wc.current_query_id, 'result': result})
+        match_counts[q] += 1
+
+
+def queue_next_spine_item(spine_idx, allow_current_name):
+    spine_idx %= wc.current_book.spine.length
+    name = wc.current_book.spine[spine_idx]
+    if not name or (not allow_current_name and name is wc.current_query.current_name):
+        send_search_complete()
+        return
+    if wc.text_cache[name]:
+        search_in_text_of(name)
+        setTimeout(queue_next_spine_item.bind(None, spine_idx + 1), 0)
+        return
+    query = wc.current_query
+    wc.db.get_book_file(wc.current_book.book_hash, wc.current_book.stored_files, name, got_spine_item.bind(None, query.id, spine_idx))
+
+
+def got_spine_item(query_id, spine_idx, result):
+    if query_id is not wc.current_query_id:
+        return
+    if result.ok:
+        name = wc.current_book.spine[spine_idx]
+        wc.text_cache[name] = text_from_serialized_html(result.result, True)
+        search_in_text_of(name)
+        setTimeout(queue_next_spine_item.bind(None, spine_idx + 1), 0)
+    else:
+        if result.details is 'ENOENT':
+            queue_next_spine_item(spine_idx + 1)
+        else:
+            send_error(GET_SPINE_FAILED, result.details)
+            wc.current_query = wc.current_query_id = None
+
+
+def regex_for_query(query):
+    expr = query.text
+    flags = 'umg'
+    if not query.case_sensitive:
+        flags += 'i'
+    if query.mode is not 'regex':
+        if query.mode is 'word':
+            words = v'[]'
+            for part in expr.split(' '):
+                words.push(r'\b' + text_to_regex(part) + r'\b')
+            expr = words.join(r'\s+')
+        else:
+            expr = text_to_regex(expr)
+    return new RegExp(expr, flags)
+
+
+def perform_search(query):
+    wc.current_query = query
+    wc.current_query_id = query.id
+    wc.result_num = 0
+    if not wc.current_book or not wc.current_book.spine?.length or not query.query.text:
+        send_search_complete()
+        return
+    wc.regex = regex_for_query(query.query)
+
+    idx = wc.current_book.spine.indexOf(query.current_name)
+    if idx < 0:
+        idx = 0
+    queue_next_spine_item(idx, True)
+
+
+def worker_connection_done():
+    wc.connected_to_db = True
+    if not wc.initialize_error_msg:
+        if wc.pending_search:
+            s = wc.pending_search
+            wc.pending_search = None
+            perform_search(s)
+
+
+def send_error(code, msg, error):
+    self.postMessage({'type': 'error', 'code': code, 'msg': msg, 'id': wc.current_query_id, 'error': error})
+
+
+def on_worker_db_error(title, msg, details):
+    send_error(DB_ERROR, msg, {'title': title, 'msg': msg, 'details': details})
+
+
+def worker_main():
+    wc.db = DB(worker_connection_done, on_worker_db_error)
+
+    self.onmessage = def(e):
+        if e.data.type is 'search':
+            wc.current_query_id = e.data.id
+            if wc.connected_to_db:
+                if wc.initialize_error_msg:
+                    send_error(CONNECT_FAILED, wc.initialize_error_msg)
+                else:
+                    perform_search(e.data)
+            else:
+                wc.pending_search = e.data
+        elif e.data.type is 'clear_caches':
+            wc.clear_caches()
+            wc.current_book = e.data.book
+
+    self.addEventListener('error', def (e):
+        send_error(UNHANDLED_ERROR, f'{e.lineno}:{e.message}' + '\n\n' + format_exception(e.error).join(''))
+    )

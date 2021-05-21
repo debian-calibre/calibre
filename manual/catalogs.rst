@@ -28,7 +28,7 @@ To begin catalog generation, select the menu item :guilabel:`Convert books > Cre
 In :guilabel:`Catalog options`, select **AZW3, EPUB or MOBI** as the Catalog format. In the :guilabel:`Catalog title` field, provide a name that will be used for the generated catalog. If a catalog of the same name and format already exists, it will be replaced with the newly-generated catalog.
 
 .. image:: images/catalog_send_to_device.png
-    :alt: Catalog send to device
+    :alt: Catalog: send to device automatically option
     :align: center
 
 Enabling :guilabel:`Send catalog to device automatically` will download the generated catalog to a connected device upon completion.
@@ -110,7 +110,7 @@ Other options
     :alt: Other options
     :align: center
 
-:guilabel:`Catalog cover` specifies whether to generate a new cover or use an existing cover. It is possible to create a custom cover for your catalogs - see :ref:`Custom catalog covers` for more information. If you have created a custom cover that you want to reuse, select :guilabel:`Use existing cover`. Otherwise, select :guilabel:`Generate new cover`.
+:guilabel:`Catalog cover` specifies whether to generate a new cover or use an existing cover. It is possible to create a custom cover for your catalogs - see :ref:`custom_catalog_covers` for more information. If you have created a custom cover that you want to reuse, select :guilabel:`Use existing cover`. Otherwise, select :guilabel:`Generate new cover`.
 
 :guilabel:`Extra Description note` specifies a custom column's contents to be inserted into the Description page, next to the cover thumbnail. For example, you might want to display the date you last read a book using a :guilabel:`Last Read` custom column. For advanced use of the Description note feature, see `this post in the calibre forum <https://www.mobileread.com/forums/showpost.php?p=1335767&postcount=395>`_.
 
@@ -118,7 +118,7 @@ Other options
 
 :guilabel:`Merge with comments` specifies a custom column whose content will be non-destructively merged with the comments metadata during catalog generation. For example, you might have a custom column :guilabel:`Author bio` that you'd like to append to the comments metadata. You can choose to insert the custom column contents *before or after* the comments section, and optionally separate the appended content with a horizontal rule separator. Eligible custom column types include ``text, comments, and composite``.
 
-.. _Custom catalog covers:
+.. _custom_catalog_covers:
 
 Custom catalog covers
 -----------------------

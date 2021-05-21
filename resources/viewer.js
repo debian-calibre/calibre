@@ -4455,6 +4455,8 @@ var str = ρσ_str, repr = ρσ_repr;;
     ρσ_modules["read_book.overlay"] = {};
     ρσ_modules["read_book.read_aloud"] = {};
     ρσ_modules["read_book.scrollbar"] = {};
+    ρσ_modules["read_book.search_worker"] = {};
+    ρσ_modules.worker = {};
     ρσ_modules["read_book.search"] = {};
     ρσ_modules["read_book.timers"] = {};
     ρσ_modules["read_book.view"] = {};
@@ -6953,6 +6955,8 @@ return parser;
             ρσ_d["tts"] = {};
             ρσ_d["tts_backend"] = {};
             ρσ_d["fullscreen_when_opening"] = "auto";
+            ρσ_d["book_search_mode"] = "contains";
+            ρσ_d["book_search_case_sensitive"] = false;
             return ρσ_d;
         }).call(this);
         is_local_setting = (function(){
@@ -6987,6 +6991,8 @@ return parser;
             ρσ_d["tts_backend"] = true;
             ρσ_d["fullscreen_when_opening"] = true;
             ρσ_d["highlights_export_format"] = true;
+            ρσ_d["book_search_mode"] = true;
+            ρσ_d["book_search_case_sensitive"] = true;
             return ρσ_d;
         }).call(this);
         function session_defaults() {
@@ -7676,7 +7682,7 @@ return this.__repr__();
         var get_font_family = ρσ_modules["book_list.theme"].get_font_family;
 
         is_ios = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
-        if (!is_ios && window.navigator.platform === "MacIntel" && window.navigator.maxTouchPoints > 1) {
+        if (!is_ios && !!navigator.platform && (typeof window !== "undefined" && window !== null) && window.navigator.platform === "MacIntel" && window.navigator.maxTouchPoints > 1) {
             is_ios = true;
         }
         function default_context_menu_should_be_allowed(evt) {
@@ -8842,7 +8848,7 @@ return this.__repr__();
 
     (function(){
         var __name__ = "dom";
-        var simple_vendor_prefixes, extra_css;
+        var simple_vendor_prefixes, extra_css, add_extra_css;
         simple_vendor_prefixes = (function(){
             var ρσ_d = Object.create(null);
             ρσ_d["animation"] = ['webkit', 'moz', 'o'];
@@ -9100,16 +9106,16 @@ return this.__repr__();
         });
 
         extra_css = [];
-        function add_extra_css(func) {
-            extra_css.push(func());
-        };
-        if (!add_extra_css.__argnames__) Object.defineProperties(add_extra_css, {
-            __argnames__ : {value: ["func"]},
-            __module__ : {value: "dom"}
-        });
-
+        add_extra_css = extra_css.push.bind(extra_css);
         function get_widget_css() {
-            return extra_css.join("\n");
+            var ans, func;
+            ans = [];
+            var ρσ_Iter7 = ρσ_Iterable(extra_css);
+            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                func = ρσ_Iter7[ρσ_Index7];
+                ans.push(func());
+            }
+            return ans.join("\n");
         };
         if (!get_widget_css.__module__) Object.defineProperties(get_widget_css, {
             __module__ : {value: "dom"}
@@ -9118,9 +9124,9 @@ return this.__repr__();
         function set_radio_group_value(parent, name, val) {
             var changed, inp;
             changed = false;
-            var ρσ_Iter7 = ρσ_Iterable(parent.querySelectorAll("input[name=" + ρσ_str.format("{}", name) + "]"));
-            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                inp = ρσ_Iter7[ρσ_Index7];
+            var ρσ_Iter8 = ρσ_Iterable(parent.querySelectorAll("input[name=" + ρσ_str.format("{}", name) + "]"));
+            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
+                inp = ρσ_Iter8[ρσ_Index8];
                 inp.checked = inp.value === val;
                 changed = true;
             }
@@ -9135,6 +9141,7 @@ return this.__repr__();
 
         ρσ_modules.dom.simple_vendor_prefixes = simple_vendor_prefixes;
         ρσ_modules.dom.extra_css = extra_css;
+        ρσ_modules.dom.add_extra_css = add_extra_css;
         ρσ_modules.dom.set_css = set_css;
         ρσ_modules.dom.build_rule = build_rule;
         ρσ_modules.dom.clear = clear;
@@ -9147,7 +9154,6 @@ return this.__repr__();
         ρσ_modules.dom.rule = rule;
         ρσ_modules.dom.unique_id = unique_id;
         ρσ_modules.dom.ensure_id = ensure_id;
-        ρσ_modules.dom.add_extra_css = add_extra_css;
         ρσ_modules.dom.get_widget_css = get_widget_css;
         ρσ_modules.dom.set_radio_group_value = set_radio_group_value;
     })();
@@ -15257,6 +15263,18 @@ return this.__repr__();
 
         DB_NAME = "calibre";
         DB_VERSION = 1;
+        function indexed_db_api() {
+            if ((typeof window !== "undefined" && window !== null)) {
+                return window.indexedDB;
+            }
+            if ((typeof self !== "undefined" && self !== null)) {
+                return self.indexedDB;
+            }
+        };
+        if (!indexed_db_api.__module__) Object.defineProperties(indexed_db_api, {
+            __module__ : {value: "read_book.db"}
+        });
+
         function DB() {
             if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
             DB.prototype.__bind_methods__.call(this);
@@ -15282,6 +15300,7 @@ return this.__repr__();
             this.update_metadata = DB.prototype.update_metadata.bind(this);
             this.update_annotations_data_from_key = DB.prototype.update_annotations_data_from_key.bind(this);
             this.get_file = DB.prototype.get_file.bind(this);
+            this.get_book_file = DB.prototype.get_book_file.bind(this);
             this.get_mathjax_files = DB.prototype.get_mathjax_files.bind(this);
             this.get_recently_read_books = DB.prototype.get_recently_read_books.bind(this);
             this.has_book_matching = DB.prototype.has_book_matching.bind(this);
@@ -15305,7 +15324,7 @@ return this.__repr__();
         DB.__handles_kwarg_interpolation__ = DB.prototype.__init__.__handles_kwarg_interpolation__;
         DB.prototype.show_error = function show_error(title, msg, det_msg) {
             var self = this;
-            if (is_reading_book()) {
+            if (!(typeof window !== "undefined" && window !== null) || is_reading_book()) {
                 self.show_read_book_error(title, msg, det_msg);
             } else {
                 error_dialog(title, msg, det_msg);
@@ -15317,14 +15336,15 @@ return this.__repr__();
         });
         DB.prototype.initialize_stage1 = function initialize_stage1() {
             var self = this;
-            var request;
-            if (!window.indexedDB) {
+            var idb, request;
+            idb = indexed_db_api();
+            if (!idb) {
                 self.initialize_error_msg = _("Your browser does not support IndexedDB. Cannot read books. Consider using a modern browser, such as Chrome or Firefox.");
                 self.initialized = true;
-                window.setTimeout(self.callback, 0);
+                setTimeout(self.callback, 0);
                 return;
             }
-            request = window.indexedDB.open(DB_NAME, DB_VERSION);
+            request = idb.open(DB_NAME, DB_VERSION);
             request.onupgradeneeded = (function() {
                 var ρσ_anonfunc = function (event) {
                     upgrade_schema(event.target.result, event.oldVersion, event.newVersion, event.target.transaction);
@@ -15485,18 +15505,7 @@ return this.__repr__();
             store = store || stores[0];
             if (op === "get") {
                 transaction = self.idb.transaction(stores);
-                try {
-                    req = transaction.objectStore(store).get(data);
-                } catch (ρσ_Exception) {
-                    ρσ_last_exception = ρσ_Exception;
-                    {
-                        if (/Edge\/\d+/.test(window.navigator.userAgent)) {
-                            self.show_error(_("Cannot read book"), _("Reading of books is not supported on Microsoft Edge. Use a better browser such as Google Chrome or Mozilla Firefox"));
-                            return;
-                        }
-                        throw ρσ_Exception;
-                    } 
-                }
+                req = transaction.objectStore(store).get(data);
                 req.onsuccess = (function() {
                     var ρσ_anonfunc = function (event) {
                         proceed(req.result);
@@ -15891,6 +15900,77 @@ return this.__repr__();
             __argnames__ : {value: ["book", "name", "proceed"]},
             __module__ : {value: "read_book.db"}
         });
+        DB.prototype.get_book_file = function get_book_file(book_hash, stored_files, name, proceed) {
+            var self = this;
+            var stores, key, transaction, req;
+            stores = ρσ_list_decorate([ "files" ]);
+            key = file_store_name((function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["book_hash"] = book_hash;
+                return ρσ_d;
+            }).call(this), name);
+            transaction = self.idb.transaction(stores);
+            req = transaction.objectStore(stores[0]).get(key);
+            req.onsuccess = (function() {
+                var ρσ_anonfunc = function (event) {
+                    var fdata, mt, result;
+                    if (!req.result) {
+                        proceed((function(){
+                            var ρσ_d = Object.create(null);
+                            ρσ_d["ok"] = false;
+                            ρσ_d["name"] = name;
+                            ρσ_d["details"] = "ENOENT";
+                            return ρσ_d;
+                        }).call(this));
+                        return;
+                    }
+                    fdata = stored_files[(typeof key === "number" && key < 0) ? stored_files.length + key : key];
+                    mt = fdata.mimetype || "application/octet-stream";
+                    if (fdata.encoded) {
+                        result = new Blob(ρσ_list_decorate([ base64decode(result) ]), (function(){
+                            var ρσ_d = Object.create(null);
+                            ρσ_d["type"] = mt;
+                            return ρσ_d;
+                        }).call(this));
+                    }
+                    proceed((function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["ok"] = true;
+                        ρσ_d["result"] = req.result;
+                        ρσ_d["name"] = name;
+                        ρσ_d["mt"] = mt;
+                        return ρσ_d;
+                    }).call(this));
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["event"]},
+                    __module__ : {value: "read_book.db"}
+                });
+                return ρσ_anonfunc;
+            })();
+            req.onerror = (function() {
+                var ρσ_anonfunc = function (event) {
+                    var details;
+                    details = get_error_details(event);
+                    proceed((function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["ok"] = false;
+                        ρσ_d["name"] = name;
+                        ρσ_d["details"] = details;
+                        return ρσ_d;
+                    }).call(this));
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["event"]},
+                    __module__ : {value: "read_book.db"}
+                });
+                return ρσ_anonfunc;
+            })();
+        };
+        if (!DB.prototype.get_book_file.__argnames__) Object.defineProperties(DB.prototype.get_book_file, {
+            __argnames__ : {value: ["book_hash", "stored_files", "name", "proceed"]},
+            __module__ : {value: "read_book.db"}
+        });
         DB.prototype.get_mathjax_files = function get_mathjax_files(proceed) {
             var self = this;
             var c, data;
@@ -16152,6 +16232,7 @@ return this.__repr__();
         ρσ_modules["read_book.db"].file_store_name = file_store_name;
         ρσ_modules["read_book.db"].get_error_details = get_error_details;
         ρσ_modules["read_book.db"].new_book = new_book;
+        ρσ_modules["read_book.db"].indexed_db_api = indexed_db_api;
         ρσ_modules["read_book.db"].DB = DB;
         ρσ_modules["read_book.db"].get_db = get_db;
     })();
@@ -16159,12 +16240,11 @@ return this.__repr__();
     (function(){
         var __name__ = "iframe_comm";
         var LOADING_DOC;
-        var traceback = ρσ_modules.traceback;
-
         var GCM = ρσ_modules.aes.GCM;
 
-        var _ = ρσ_modules.gettext.gettext;
-        var install = ρσ_modules.gettext.install;
+        var E = ρσ_modules.elementmaker.E;
+
+        var traceback = ρσ_modules.traceback;
 
         var get_translations = ρσ_modules["book_list.globals"].get_translations;
         var main_js = ρσ_modules["book_list.globals"].main_js;
@@ -16173,18 +16253,10 @@ return this.__repr__();
 
         var ensure_id = ρσ_modules.dom.ensure_id;
 
-        LOADING_DOC = "\n<!DOCTYPE html>\n<html>\n<head>\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, user-scalable=no\">\n<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n<script type=\"text/javascript\" id=\"bootstrap\">\nwindow.iframe_entry_point = '__ENTRY_POINT__';  // different in different iframes\nwindow.default_font_family = '__FONT__';  // from the theme\n__SCRIPT__\nend_script\n</head>\n<body>\n<div style=\"font-size:larger; font-weight: bold; margin-top:48vh; text-align:center\">\n__BS__\n</div>\n</body>\n</html>\n".replace("end_script", "<" + "/script>");
-        function iframe_js() {
-            if (!iframe_js.ans) {
-                iframe_js.ans = main_js().replace(/is_running_in_iframe\s*=\s*false/, "is_running_in_iframe = true");
-                main_js(null);
-            }
-            return iframe_js.ans;
-        };
-        if (!iframe_js.__module__) Object.defineProperties(iframe_js, {
-            __module__ : {value: "iframe_comm"}
-        });
+        var _ = ρσ_modules.gettext.gettext;
+        var install = ρσ_modules.gettext.install;
 
+        LOADING_DOC = "\n<!DOCTYPE html>\n<html>\n<head>\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, user-scalable=no\">\n<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n<script type=\"text/javascript\" id=\"bootstrap\">\nwindow.iframe_entry_point = '__ENTRY_POINT__';  // different in different iframes\nwindow.default_font_family = '__FONT__';  // from the theme\n__SCRIPT__\nend_script\n</head>\n<body>\n<div style=\"font-size:larger; font-weight: bold; margin-top:48vh; text-align:center\">\n__BS__\n</div>\n</body>\n</html>\n".replace("end_script", "<" + "/script>");
         function Messenger() {
             if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
             Messenger.prototype.__bind_methods__.call(this);
@@ -16263,18 +16335,25 @@ return this.__repr__();
                 "set": function () { throw new AttributeError("can't set attribute") }
             }, 
         });
-        IframeWrapper.prototype.__init__ = function __init__(handlers, iframe, entry_point, bootstrap_text, url) {
+        IframeWrapper.prototype.__init__ = function __init__(handlers, iframe, entry_point, bootstrap_text) {
             var self = this;
             var k;
             self.messenger = new Messenger;
             self.iframe_id = ensure_id(iframe, "content-iframe");
-            self.needs_init = true;
+            if (ρσ_in(":", entry_point)) {
+                self.needs_init = false;
+                self.srcdoc_created = true;
+                self.constructor_url = entry_point;
+                self.entry_point = null;
+            } else {
+                self.needs_init = true;
+                self.srcdoc_created = false;
+                self.constructor_url = null;
+                self.entry_point = entry_point;
+            }
             self.ready = false;
             self.encrypted_communications = false;
-            self.srcdoc_created = false;
-            self.constructor_url = url;
-            self.entry_point = entry_point;
-            self.bootstrap_text = bootstrap_text;
+            self.bootstrap_text = bootstrap_text || "";
             self.handlers = (function() {
                 var ρσ_Iter = ρσ_Iterable(handlers), ρσ_Result = Object.create(null), k;
                 for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
@@ -16288,7 +16367,7 @@ return this.__repr__();
             window.addEventListener("message", self.handle_message, false);
         };
         if (!IframeWrapper.prototype.__init__.__argnames__) Object.defineProperties(IframeWrapper.prototype.__init__, {
-            __argnames__ : {value: ["handlers", "iframe", "entry_point", "bootstrap_text", "url"]},
+            __argnames__ : {value: ["handlers", "iframe", "entry_point", "bootstrap_text"]},
             __module__ : {value: "iframe_comm"}
         });
         IframeWrapper.__argnames__ = IframeWrapper.prototype.__init__.__argnames__;
@@ -16308,7 +16387,7 @@ return this.__repr__();
                 data = (function(){
                     var ρσ_d = Object.create(null);
                     ρσ_d["BS"] = self.bootstrap_text;
-                    ρσ_d["SCRIPT"] = iframe_js();
+                    ρσ_d["SCRIPT"] = main_js();
                     ρσ_d["FONT"] = get_font_family();
                     ρσ_d["ENTRY_POINT"] = self.entry_point;
                     return ρσ_d;
@@ -16482,6 +16561,21 @@ return this.__repr__();
         Object.defineProperty(IframeWrapper.prototype, "__bases__", {value: []});
         
 
+        function create_wrapped_iframe(handlers, bootstrap_text, entry_point, kw) {
+            var iframe, ans;
+            if (ρσ_in(":", entry_point)) {
+                kw.src = entry_point;
+                kw.sandbox = (kw.sandbox || "") + " allow-same-origin";
+            }
+            iframe = ρσ_interpolate_kwargs.call(E, E.iframe, [ρσ_desugar_kwargs(kw)]);
+            ans = new IframeWrapper(handlers, iframe, entry_point, bootstrap_text);
+            return [iframe, ans];
+        };
+        if (!create_wrapped_iframe.__argnames__) Object.defineProperties(create_wrapped_iframe, {
+            __argnames__ : {value: ["handlers", "bootstrap_text", "entry_point", "kw"]},
+            __module__ : {value: "iframe_comm"}
+        });
+
         function IframeClient() {
             if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
             IframeClient.prototype.__bind_methods__.call(this);
@@ -16630,9 +16724,9 @@ return this.__repr__();
         Object.defineProperty(IframeClient.prototype, "__bases__", {value: []});
 
         ρσ_modules.iframe_comm.LOADING_DOC = LOADING_DOC;
-        ρσ_modules.iframe_comm.iframe_js = iframe_js;
         ρσ_modules.iframe_comm.Messenger = Messenger;
         ρσ_modules.iframe_comm.IframeWrapper = IframeWrapper;
+        ρσ_modules.iframe_comm.create_wrapped_iframe = create_wrapped_iframe;
         ρσ_modules.iframe_comm.IframeClient = IframeClient;
     })();
 
@@ -17519,8 +17613,8 @@ return this.__repr__();
             __module__ : {value: "read_book.resources"}
         });
 
-        function text_from_serialized_html(data) {
-            var serialized_data, tag_map, ans, stack, child, ignore_text, node, src;
+        function text_from_serialized_html(data, get_anchor_offset_map) {
+            var serialized_data, tag_map, ans, stack, child, ignore_text, anchor_offset_map, text_pos, node, src, x, aid;
             serialized_data = JSON.parse(data);
             tag_map = serialized_data.tag_map;
             ans = [];
@@ -17543,10 +17637,13 @@ return this.__repr__();
                 ρσ_d["title"] = true;
                 return ρσ_d;
             }).call(this);
+            anchor_offset_map = Object.create(null);
+            text_pos = 0;
             while (stack.length) {
                 node = stack.pop();
                 if (typeof node === "string") {
                     ans.push(node);
+                    text_pos += node.length;
                     continue;
                 }
                 if (tag_map) {
@@ -17554,8 +17651,20 @@ return this.__repr__();
                 } else {
                     src = node;
                 }
+                if (get_anchor_offset_map && src.a) {
+                    for (var i = 0; i < src.a.length; i++) {
+                        x = (ρσ_expr_temp = src.a)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i];
+                        if (x[0] === "id") {
+                            aid = x[1];
+                            if (typeof anchor_offset_map[(typeof aid === "number" && aid < 0) ? anchor_offset_map.length + aid : aid] !== "number") {
+                                anchor_offset_map[(typeof aid === "number" && aid < 0) ? anchor_offset_map.length + aid : aid] = text_pos;
+                            }
+                        }
+                    }
+                }
                 if (src.n && !ignore_text[ρσ_bound_index(src.n, ignore_text)] && src.x) {
                     ans.push(src.x);
+                    text_pos += src.x.length;
                 }
                 if (src.l) {
                     stack.push(src.l);
@@ -17572,10 +17681,14 @@ return this.__repr__();
                     }
                 }
             }
-            return ans.join("");
+            ans = ans.join("");
+            if (get_anchor_offset_map) {
+                return [ans, anchor_offset_map];
+            }
+            return ans;
         };
         if (!text_from_serialized_html.__argnames__) Object.defineProperties(text_from_serialized_html, {
-            __argnames__ : {value: ["data"]},
+            __argnames__ : {value: ["data", "get_anchor_offset_map"]},
             __module__ : {value: "read_book.resources"}
         });
 
@@ -19189,6 +19302,7 @@ return this.__repr__();
 
         function layout(is_single_page) {
             var body_style;
+            add_visibility_listener();
             line_height(true);
             rem_size(true);
             ρσ_interpolate_kwargs.call(this, set_css, [document.body].concat([ρσ_desugar_kwargs({margin: "0", border_width: "0", padding: "0"})]));
@@ -19209,19 +19323,29 @@ return this.__repr__();
             __module__ : {value: "read_book.flow_mode"}
         });
 
-        document.addEventListener("visibilitychange", (function() {
-            var ρσ_anonfunc = function () {
-                if (document.visibilityState === "visible") {
-                    scroll_animator.sync();
-                } else {
-                    scroll_animator.pause();
-                }
-            };
-            if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
-                __module__ : {value: "read_book.flow_mode"}
-            });
-            return ρσ_anonfunc;
-        })());
+        function add_visibility_listener() {
+            if (add_visibility_listener.done) {
+                return;
+            }
+            add_visibility_listener.done = true;
+            document.addEventListener("visibilitychange", (function() {
+                var ρσ_anonfunc = function () {
+                    if (document.visibilityState === "visible") {
+                        scroll_animator.sync();
+                    } else {
+                        scroll_animator.pause();
+                    }
+                };
+                if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                    __module__ : {value: "read_book.flow_mode"}
+                });
+                return ρσ_anonfunc;
+            })());
+        };
+        if (!add_visibility_listener.__module__) Object.defineProperties(add_visibility_listener, {
+            __module__ : {value: "read_book.flow_mode"}
+        });
+
         function cancel_scroll() {
             scroll_animator.stop();
         };
@@ -19921,6 +20045,7 @@ return this.__repr__();
         ρσ_modules["read_book.flow_mode"].handle_shortcut = handle_shortcut;
         ρσ_modules["read_book.flow_mode"].layout = layout;
         ρσ_modules["read_book.flow_mode"].auto_scroll_resume = auto_scroll_resume;
+        ρσ_modules["read_book.flow_mode"].add_visibility_listener = add_visibility_listener;
         ρσ_modules["read_book.flow_mode"].cancel_scroll = cancel_scroll;
         ρσ_modules["read_book.flow_mode"].is_scroll_end = is_scroll_end;
         ρσ_modules["read_book.flow_mode"].ScrollAnimator = ScrollAnimator;
@@ -19999,7 +20124,7 @@ return this.__repr__();
                 onenterkey = ρσ_kwargs_obj.onenterkey;
             }
             var inpt;
-            inpt = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: input_type, name: name, title: tooltip || "", placeholder: placeholder || ""})]);
+            inpt = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: input_type, name: name, title: tooltip || "", placeholder: placeholder || "", autocomplete: "off"})]);
             self.input_id = ensure_id(inpt);
             self.onenterkey = onenterkey;
             self.completion_popup = ρσ_interpolate_kwargs_constructor.call(Object.create(CompletionPopup.prototype), false, CompletionPopup, [ρσ_desugar_kwargs({parent: parent, onselect: self.apply_completion})]);
@@ -20986,7 +21111,7 @@ return this.__repr__();
             remove_button.classList.add("remove-custom-color");
             apply_button = create_button((self.annot_id) ? _("Apply") : _("Create"), "check", finish, ((self.annot_id) ? _("Finish editing highlight") : _("Create highlight")) + " [Ctrl+Enter]", true);
             apply_button.style.marginLeft = apply_button.style.marginTop = "auto";
-            c = ρσ_interpolate_kwargs.call(E, E.div, [E.div(ρσ_interpolate_kwargs.call(E, E.textarea, [current_notes || ""].concat([ρσ_desugar_kwargs({placeholder: _("Add notes for this highlight. Double click or long tap on a highlight to read its notes."), rows: "10", spellcheck: "true", style: "width: 90%;", onkeydown: handle_keypress})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "color-block", style: "display: flex; flex-wrap: wrap; width: 100%; justify-content: center"})]), ρσ_interpolate_kwargs.call(E, E.div, [create_button(_("Cancel"), "close", abort, _("Abort") + " [Esc]"), E.span(" "), remove_button, apply_button].concat([ρσ_desugar_kwargs({style: "width: 100%; display: flex; flex-wrap: wrap"})])))].concat([ρσ_desugar_kwargs({style: "background: " + ρσ_str.format("{}", get_color("window-background")) + "; margin: auto; text-align: center; padding: 1ex;", onclick: (function() {
+            c = ρσ_interpolate_kwargs.call(E, E.div, [E.div(ρσ_interpolate_kwargs.call(E, E.textarea, [ρσ_desugar_kwargs({placeholder: _("Add notes for this highlight. Double click or long tap on a highlight to read its notes."), rows: "10", spellcheck: "true", style: "width: 90%;", onkeydown: handle_keypress})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "color-block", style: "display: flex; flex-wrap: wrap; width: 100%; justify-content: center"})]), ρσ_interpolate_kwargs.call(E, E.div, [create_button(_("Cancel"), "close", abort, _("Abort") + " [Esc]"), E.span(" "), remove_button, apply_button].concat([ρσ_desugar_kwargs({style: "width: 100%; display: flex; flex-wrap: wrap"})])))].concat([ρσ_desugar_kwargs({style: "background: " + ρσ_str.format("{}", get_color("window-background")) + "; margin: auto; text-align: center; padding: 1ex;", onclick: (function() {
                 var ρσ_anonfunc = function (ev) {
                     ev.stopPropagation();
                 };
@@ -21043,6 +21168,9 @@ return this.__repr__();
             })()})])));
             self.set_visibility_of_remove_button();
             window.setTimeout(self.notes_edit.focus.bind(self.notes_edit), 0);
+            if (current_notes) {
+                self.notes_edit.value = current_notes;
+            }
         };
         if (!EditNotesAndColors.prototype.__init__.__argnames__) Object.defineProperties(EditNotesAndColors.prototype.__init__, {
             __argnames__ : {value: ["container", "is_dark_theme", "current_notes", "current_style", "annot_id", "close_editor"]},
@@ -22153,6 +22281,8 @@ return this.__repr__();
                 ρσ_d["extend_selection_by_character"] = desc(['Shift+ArrowRight'], "ui", _("Alter the current selection forward by a character"));
                 ρσ_d["shrink_selection_by_character"] = desc(['Shift+ArrowLeft'], "ui", _("Alter the current selection backwards by a character"));
                 ρσ_d["extend_selection_by_line"] = desc(['Shift+ArrowDown'], "ui", _("Alter the current selection forward by a line"));
+                ρσ_d["extend_selection_to_start_of_line"] = desc(['Shift+Home'], "ui", _("Extend the current selection to the start of the line"));
+                ρσ_d["extend_selection_to_end_of_line"] = desc(['Shift+End'], "ui", _("Extend the current selection to the end of the line"));
                 ρσ_d["select_all"] = desc(["Ctrl+a"], "ui", _("Select all"));
                 ρσ_d["shrink_selection_by_line"] = desc(['Shift+ArrowUp'], "ui", _("Alter the current selection backwards by a line"));
                 ρσ_d["extend_selection_by_paragraph"] = desc(['Ctrl+Shift+ArrowDown'], "ui", _("Alter the current selection forward by a paragraph"));
@@ -25457,7 +25587,7 @@ return this.__repr__();
     (function(){
         var __name__ = "select";
         var caret_position_from_point, safe_nodes;
-        if (document.caretPositionFromPoint) {
+        if ((typeof document !== "undefined" && document !== null ? document : Object.create(null)).caretPositionFromPoint) {
             caret_position_from_point = document.caretPositionFromPoint.bind(document);
         } else {
             caret_position_from_point = (function() {
@@ -25796,7 +25926,7 @@ return this.__repr__();
                     } else if (r.compareBoundaryPoints(window.Range.END_TO_END, q) <= 0) {
                         start = false;
                     } else {
-                        return;
+                        start = false;
                     }
                 }
                 if (start) {
@@ -25959,7 +26089,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.17.0";
+        CALIBRE_VERSION = "5.18.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -26140,7 +26270,6 @@ return this.__repr__();
             this.scroll_to_anchor = IframeBoss.prototype.scroll_to_anchor.bind(this);
             this.scroll_to_ref = IframeBoss.prototype.scroll_to_ref.bind(this);
             this.on_scroll_to_ref = IframeBoss.prototype.on_scroll_to_ref.bind(this);
-            this.find = IframeBoss.prototype.find.bind(this);
             this.show_search_result = IframeBoss.prototype.show_search_result.bind(this);
             this.set_reference_mode = IframeBoss.prototype.set_reference_mode.bind(this);
             this.annotations_msg_received = IframeBoss.prototype.annotations_msg_received.bind(this);
@@ -26177,7 +26306,6 @@ return this.__repr__();
                 ρσ_d["number_of_columns_changed"] = self.number_of_columns_changed;
                 ρσ_d["change_scroll_speed"] = self.change_scroll_speed;
                 ρσ_d["display"] = self.display;
-                ρσ_d["find"] = self.find;
                 ρσ_d["gesture_from_margin"] = self.gesture_from_margin;
                 ρσ_d["get_current_cfi"] = self.get_current_cfi;
                 ρσ_d["initialize"] = self.initialize;
@@ -26693,8 +26821,6 @@ return this.__repr__();
                     self.jump_to_cfi(ipos.cfi);
                 } else if (ipos.type === "search_result") {
                     self.show_search_result(ipos, true);
-                } else if (ipos.type === "search") {
-                    self.find(ipos.search_data, true);
                 } else if (ipos.type === "edit_annotation") {
                     window.setTimeout((function() {
                         var ρσ_anonfunc = function () {
@@ -27195,43 +27321,13 @@ return this.__repr__();
             __argnames__ : {value: ["data"]},
             __module__ : {value: "read_book.iframe"}
         });
-        IframeBoss.prototype.find = function find(data, from_load) {
-            var self = this;
-            var wrap_search, found, prev_range, sel, msg_type;
-            self.last_search_at = window.performance.now();
-            if (data.searched_in_spine) {
-                window.getSelection().removeAllRanges();
-            }
-            wrap_search = from_load && data.backwards;
-            found = window.find(data.text, false, data.backwards, wrap_search);
-            if (!found && wrap_search) {
-                prev_range = null;
-                while (window.find(data.text, false)) {
-                    prev_range = window.getSelection().getRangeAt(0);
-                }
-                if (prev_range) {
-                    sel = window.getSelection();
-                    sel.removeAllRanges();
-                    sel.addRange(prev_range);
-                    found = window.find(data.text, false, true);
-                }
-            }
-            if (found) {
-                if (current_layout_mode() !== "flow") {
-                    snap_to_selection();
-                }
-            } else {
-                msg_type = (from_load) ? "invisible_text" : "find_in_spine";
-                ρσ_interpolate_kwargs.call(self, self.send_message, [msg_type].concat([ρσ_desugar_kwargs({text: data.text, backwards: data.backwards, searched_in_spine: data.searched_in_spine})]));
-            }
-        };
-        if (!IframeBoss.prototype.find.__argnames__) Object.defineProperties(IframeBoss.prototype.find, {
-            __argnames__ : {value: ["data", "from_load"]},
-            __module__ : {value: "read_book.iframe"}
-        });
         IframeBoss.prototype.show_search_result = function show_search_result(data, from_load) {
             var self = this;
             var sr, ρσ_unpack, x, y, discovered;
+            if (self.load_search_result_timer) {
+                window.clearTimeout(self.load_search_result_timer);
+                self.load_search_result_timer = null;
+            }
             sr = data.search_result;
             if (sr.on_discovery) {
                 if (sr.result_num === 1) {
@@ -27245,7 +27341,10 @@ return this.__repr__();
             x = ρσ_unpack[0];
             y = ρσ_unpack[1];
             if (select_search_result(sr)) {
-                self.ensure_selection_visible();
+                self.ensure_selection_boundary_visible();
+                if (from_load && current_layout_mode() === "paged") {
+                    self.load_search_result_timer = window.setTimeout(self.ensure_selection_boundary_visible, 750);
+                }
                 if (self.full_book_search_in_progress && !self.full_book_search_in_progress.first_result_shown && sr.on_discovery) {
                     discovered = false;
                     if (progress_frac() >= self.full_book_search_in_progress.progress_frac_at_start || current_spine_item().index !== self.full_book_search_in_progress.start_spine_index) {
@@ -28203,7 +28302,7 @@ return this.__repr__();
         var clear = ρσ_modules.dom.clear;
         var svgicon = ρσ_modules.dom.svgicon;
 
-        var IframeWrapper = ρσ_modules.iframe_comm.IframeWrapper;
+        var create_wrapped_iframe = ρσ_modules.iframe_comm.create_wrapped_iframe;
 
         var runtime = ρσ_modules["read_book.globals"].runtime;
         var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
@@ -28241,6 +28340,8 @@ return this.__repr__();
             ContentPopupOverlay.prototype.__init__.apply(this, arguments);
         }
         Object.defineProperty(ContentPopupOverlay.prototype, "__bind_methods__", {value: function () {
+            this.reset = ContentPopupOverlay.prototype.reset.bind(this);
+            this.create_iframe = ContentPopupOverlay.prototype.create_iframe.bind(this);
             this.hide = ContentPopupOverlay.prototype.hide.bind(this);
             this.show = ContentPopupOverlay.prototype.show.bind(this);
             this.on_iframe_ready = ContentPopupOverlay.prototype.on_iframe_ready.bind(this);
@@ -28281,17 +28382,12 @@ return this.__repr__();
         });
         ContentPopupOverlay.prototype.__init__ = function __init__(view) {
             var self = this;
-            var c, sandbox, iframe, handlers, entry_point;
+            var c;
             self.view = view;
             self.loaded_resources = Object.create(null);
             c = self.container;
             c.classList.add(CLASS_NAME);
-            sandbox = "allow-scripts";
-            if (runtime.is_standalone_viewer) {
-                sandbox += " allow-same-origin";
-            }
-            iframe = ρσ_interpolate_kwargs.call(E, E.iframe, [ρσ_desugar_kwargs({seamless: true, sandbox: sandbox, style: "width: 100%; max-height: 70vh"})]);
-            c.appendChild(E.div(E.div(), iframe));
+            c.appendChild(E.div(E.div()));
             c.addEventListener("click", self.hide);
             c.firstChild.addEventListener("click", (function() {
                 var ρσ_anonfunc = function (ev) {
@@ -28303,15 +28399,6 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })());
-            handlers = (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["ready"] = self.on_iframe_ready;
-                ρσ_d["error"] = self.view.on_iframe_error;
-                ρσ_d["content_loaded"] = self.on_content_loaded;
-                return ρσ_d;
-            }).call(this);
-            entry_point = (runtime.is_standalone_viewer) ? null : "read_book.footnotes";
-            self.iframe_wrapper = new IframeWrapper(handlers, iframe, entry_point, _("Loading data, please wait..."), "" + ρσ_str.format("{}", runtime.FAKE_PROTOCOL) + "://" + ρσ_str.format("{}", runtime.SANDBOX_HOST) + "/book/__popup__");
             self.pending_load = null;
         };
         if (!ContentPopupOverlay.prototype.__init__.__argnames__) Object.defineProperties(ContentPopupOverlay.prototype.__init__, {
@@ -28320,6 +28407,47 @@ return this.__repr__();
         });
         ContentPopupOverlay.__argnames__ = ContentPopupOverlay.prototype.__init__.__argnames__;
         ContentPopupOverlay.__handles_kwarg_interpolation__ = ContentPopupOverlay.prototype.__init__.__handles_kwarg_interpolation__;
+        ContentPopupOverlay.prototype.reset = function reset() {
+            var self = this;
+            if (self.iframe_wrapper) {
+                self.iframe_wrapper.reset();
+            }
+        };
+        if (!ContentPopupOverlay.prototype.reset.__module__) Object.defineProperties(ContentPopupOverlay.prototype.reset, {
+            __module__ : {value: "read_book.content_popup"}
+        });
+        ContentPopupOverlay.prototype.create_iframe = function create_iframe() {
+            var self = this;
+            var handlers, iframe_kw, entry_point, ρσ_unpack, iframe, c;
+            handlers = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["ready"] = self.on_iframe_ready;
+                ρσ_d["error"] = self.view.on_iframe_error;
+                ρσ_d["content_loaded"] = self.on_content_loaded;
+                return ρσ_d;
+            }).call(this);
+            iframe_kw = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["seamless"] = true;
+                ρσ_d["sandbox"] = "allow-scripts";
+                ρσ_d["style"] = "width: 100%; max-height: 70vh";
+                return ρσ_d;
+            }).call(this);
+            if (runtime.is_standalone_viewer) {
+                entry_point = "" + ρσ_str.format("{}", runtime.FAKE_PROTOCOL) + "://" + ρσ_str.format("{}", runtime.SANDBOX_HOST) + "/book/__popup__";
+            } else {
+                entry_point = "read_book.footnotes";
+            }
+            ρσ_unpack = create_wrapped_iframe(handlers, _("Loading data, please wait..."), entry_point, iframe_kw);
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+            iframe = ρσ_unpack[0];
+            self.iframe_wrapper = ρσ_unpack[1];
+            c = self.container;
+            c.firstChild.appendChild(iframe);
+        };
+        if (!ContentPopupOverlay.prototype.create_iframe.__module__) Object.defineProperties(ContentPopupOverlay.prototype.create_iframe, {
+            __module__ : {value: "read_book.content_popup"}
+        });
         ContentPopupOverlay.prototype.hide = function hide() {
             var self = this;
             self.container.style.display = "none";
@@ -28399,6 +28527,9 @@ return this.__repr__();
         ContentPopupOverlay.prototype.show_footnote = function show_footnote(data) {
             var self = this;
             var width, c, header;
+            if (!self.iframe_wrapper) {
+                self.create_iframe();
+            }
             self.current_footnote_data = data;
             width = Math.floor(100 / data.cols_per_screen);
             c = self.container.firstChild;
@@ -28700,7 +28831,7 @@ return this.__repr__();
             __module__ : {value: "read_book.prefs.head_foot"}
         });
 
-        if (ρσ_exists.d(window.Intl).DateTimeFormat) {
+        if (ρσ_exists.d((typeof window !== "undefined" && window !== null ? window : Object.create(null)).Intl).DateTimeFormat) {
             time_formatter = window.Intl.DateTimeFormat(undefined, (function(){
                 var ρσ_d = Object.create(null);
                 ρσ_d["hour"] = "numeric";
@@ -33473,7 +33604,9 @@ return this.__repr__();
             __module__ : {value: "book_list.book_details"}
         });
 
-        window.addEventListener("resize", debounce(adjust_all_iframes, 250));
+        if ((typeof window !== "undefined" && window !== null)) {
+            window.addEventListener("resize", debounce(adjust_all_iframes, 250));
+        }
         function adjusting_sandboxed_html(html, extra_css) {
             var color, css, ans;
             color = get_color_as_rgba("window-foreground");
@@ -34095,7 +34228,7 @@ return this.__repr__();
                 button_style += "display: none;";
             }
             function prev_next_button(is_prev) {
-                return ρσ_interpolate_kwargs.call(E, E.div, [svgicon((is_prev) ? "chevron-left" : "chevron-right")].concat([ρσ_desugar_kwargs({style: button_style, title: (is_prev) ? _("Previous book") : _("Next book"), class_: "next-book-button", onclick: next_book.bind(null, book_id, (is_prev) ? -1 : 1)})]));
+                return ρσ_interpolate_kwargs.call(E, E.div, [svgicon((is_prev) ? "chevron-left" : "chevron-right")].concat([ρσ_desugar_kwargs({style: button_style, title: (is_prev) ? _("Previous book [Ctrl+Left]") : _("Next book [Ctrl+Right]"), class_: "next-book-button", onclick: next_book.bind(null, book_id, (is_prev) ? -1 : 1)})]));
             };
             if (!prev_next_button.__argnames__) Object.defineProperties(prev_next_button, {
                 __argnames__ : {value: ["is_prev"]},
@@ -37746,7 +37879,9 @@ return this.__repr__();
         SelectionBar.prototype.on_wheel = function on_wheel(ev) {
             var self = this;
             [ev.stopPropagation(), ev.preventDefault()];
-            self.view.send_wheel_event_to_iframe(ev, "selection-mode");
+            if (self.state !== EDITING) {
+                self.view.send_wheel_event_to_iframe(ev, "selection-mode");
+            }
         };
         if (!SelectionBar.prototype.on_wheel.__argnames__) Object.defineProperties(SelectionBar.prototype.on_wheel, {
             __argnames__ : {value: ["ev"]},
@@ -37808,6 +37943,8 @@ return this.__repr__();
                 ρσ_d["toggle_highlights"] = true;
                 ρσ_d["edit_book"] = true;
                 ρσ_d["select_all"] = true;
+                ρσ_d["extend_selection_to_end_of_line"] = true;
+                ρσ_d["extend_selection_to_start_of_line"] = true;
                 return ρσ_d;
             }).call(this);
             if (sc_name === "show_chrome") {
@@ -40187,15 +40324,15 @@ return this.__repr__();
             sync_action = ac(_("Sync"), _("Get last read position and annotations from the server"), self.overlay.sync_book, "cloud-download");
             delete_action = ac(_("Delete"), _("Delete this book from local storage"), self.overlay.delete_book, "trash");
             reload_action = ac(_("Reload"), _("Reload this book from the {}").format((runtime.is_standalone_viewer) ? _("computer") : _("server")), self.overlay.reload_book, "refresh");
-            back_action = ac(_("Back"), null, self.back, "arrow-left");
-            forward_action = ac(_("Forward"), null, self.forward, "arrow-right");
+            back_action = ac(_("Back"), _("Go back"), self.back, "arrow-left");
+            forward_action = ac(_("Forward"), _("Go forward"), self.forward, "arrow-right");
             nav_actions = E.ul(back_action, forward_action);
             if (runtime.is_standalone_viewer) {
                 reload_actions = E.ul(ac(_("Open book"), _("Open a book"), self.overlay.open_book, "book"), reload_action);
             } else {
                 reload_actions = E.ul(sync_action, delete_action, reload_action);
             }
-            bookmarks_action = ac(_("Bookmarks"), null, self.overlay.show_bookmarks, "bookmark");
+            bookmarks_action = ac(_("Bookmarks"), _("Browse all bookmarks"), self.overlay.show_bookmarks, "bookmark");
             highlights_action = ac(_("Highlights"), _("Browse all highlights"), (function() {
                 var ρσ_anonfunc = function () {
                     self.overlay.show_highlights();
@@ -40205,7 +40342,7 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })(), "image");
-            toc_actions = E.ul(ac(_("Table of Contents"), null, self.overlay.show_toc, "toc"));
+            toc_actions = E.ul(ac(_("Table of Contents"), _("Browse the Table of Contents"), self.overlay.show_toc, "toc"));
             toc_actions.appendChild(ac(_("Reference mode"), _("Toggle the Reference mode"), self.overlay.toggle_reference_mode, "reference-mode"));
             actions_div = ρσ_interpolate_kwargs.call(E, E.div, [nav_actions, E.ul(ac(_("Search"), _("Search for text in this book"), self.overlay.show_search, "search"), ac(_("Go to"), _("Go to a specific location in the book"), self.overlay.show_goto, "chevron-right")), reload_actions, toc_actions, E.ul(highlights_action, bookmarks_action), E.ul(ac(_("Font size"), _("Change text size"), self.overlay.show_font_size_chooser, "Aa", true), ac(_("Preferences"), _("Configure the E-book viewer"), self.overlay.show_prefs, "cogs"))].concat([ρσ_desugar_kwargs({class_: MAIN_OVERLAY_ACTIONS_CLASS})]));
             if (!runtime.is_standalone_viewer) {
@@ -40225,7 +40362,7 @@ return this.__repr__();
             full_screen_actions = ρσ_list_decorate([]);
             if (runtime.is_standalone_viewer) {
                 text = (runtime.viewer_in_full_screen) ? _("Exit full screen") : _("Enter full screen");
-                full_screen_actions.push(ac(text, "", (function() {
+                full_screen_actions.push(ac(text, _("Toggle full screen mode"), (function() {
                     var ρσ_anonfunc = function () {
                         [self.overlay.hide(), ui_operations.toggle_full_screen()];
                     };
@@ -40420,7 +40557,7 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })()})]))].concat([ρσ_desugar_kwargs({user_select: "none", background_color: get_color("window-background")})])));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [svgicon("close", icon_size, icon_size), " ", _("Close")].concat([ρσ_desugar_kwargs({style: "display: flex; align-items: center; cursor: pointer; padding: 0.5ex 1rem", class_: "main-overlay-button"})])), ρσ_interpolate_kwargs.call(E, E.div, [" "].concat([ρσ_desugar_kwargs({style: "padding: 0.5ex 1rem"})])), ρσ_interpolate_kwargs.call(E, E.div, [" "].concat([ρσ_desugar_kwargs({style: "padding: 0.5ex 1rem"})]))].concat([ρσ_desugar_kwargs({style: "position: fixed; width: 100%; bottom: 0; display: flex; justify-content: space-between; align-items: center;user-select: none; background-color: {}".format(get_color("window-background"))})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [svgicon("close", icon_size, icon_size), " ", _("Close")].concat([ρσ_desugar_kwargs({style: "display: flex; align-items: center; cursor: pointer; padding: 0.5ex 1rem", class_: "main-overlay-button", title: _("Close the viewer controls")})])), ρσ_interpolate_kwargs.call(E, E.div, [" "].concat([ρσ_desugar_kwargs({style: "padding: 0.5ex 1rem"})])), ρσ_interpolate_kwargs.call(E, E.div, [" "].concat([ρσ_desugar_kwargs({style: "padding: 0.5ex 1rem"})]))].concat([ρσ_desugar_kwargs({style: "position: fixed; width: 100%; bottom: 0; display: flex; justify-content: space-between; align-items: center;user-select: none; background-color: {}".format(get_color("window-background"))})])));
             renderer = self.overlay.view.create_template_renderer();
             if (renderer) {
                 c = container.lastChild.lastChild;
@@ -42037,69 +42174,769 @@ return this.__repr__();
     })();
 
     (function(){
-        var __name__ = "read_book.search";
-        var CLASS_NAME;
-        var E = ρσ_modules.elementmaker.E;
-
-        var _ = ρσ_modules.gettext.gettext;
-
-        var get_color = ρσ_modules["book_list.theme"].get_color;
-
-        var create_search_bar = ρσ_modules.complete.create_search_bar;
-
-        var add_extra_css = ρσ_modules.dom.add_extra_css;
-        var build_rule = ρσ_modules.dom.build_rule;
-        var svgicon = ρσ_modules.dom.svgicon;
-
-        var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
+        var __name__ = "read_book.search_worker";
+        var GET_SPINE_FAILED, CONNECT_FAILED, UNHANDLED_ERROR, DB_ERROR, _RE_ESCAPE, quote_map, qpat, spat, invisible_chars, wc;
+        var DB = ρσ_modules["read_book.db"].DB;
 
         var text_from_serialized_html = ρσ_modules["read_book.resources"].text_from_serialized_html;
 
+        var format_exception = ρσ_modules.traceback.format_exception;
+
+        GET_SPINE_FAILED = 1;
+        CONNECT_FAILED = 2;
+        UNHANDLED_ERROR = 3;
+        DB_ERROR = 4;
+        _RE_ESCAPE = /[-\/\\^$*+?.()|[\]{}]/g;
+        quote_map = (function(){
+            var ρσ_d = Object.create(null);
+            ρσ_d["\""] = "\"“”";
+            ρσ_d["'"] = "'‘’";
+            return ρσ_d;
+        }).call(this);
+        qpat = /(['"])/g;
+        spat = /(\s+)/g;
+        invisible_chars = "(?:[\u00ad\u200c\u200d]{0,1})";
+        function escape(string) {
+            return string.replace(_RE_ESCAPE, "\\$&");
+        };
+        if (!escape.__argnames__) Object.defineProperties(escape, {
+            __argnames__ : {value: ["string"]},
+            __module__ : {value: "read_book.search_worker"}
+        });
+
+        function split_string(pat, string) {
+            pat.lastIndex = 0;
+            return string.split(pat);
+        };
+        if (!split_string.__argnames__) Object.defineProperties(split_string, {
+            __argnames__ : {value: ["pat", "string"]},
+            __module__ : {value: "read_book.search_worker"}
+        });
+
+        function text_to_regex(text) {
+            var has_leading, has_trailing, ans, r, chars, ch, part, wpart;
+            if (text && !text.strip()) {
+                return "\\s+";
+            }
+            has_leading = text.lstrip() !== text;
+            has_trailing = text.rstrip() !== text;
+            ans = (has_leading) ? ["\s+"] : [];
+            var ρσ_Iter0 = ρσ_Iterable(split_string(spat, text.strip()));
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                wpart = ρσ_Iter0[ρσ_Index0];
+                if (!wpart.strip()) {
+                    ans.push("\\s+");
+                } else {
+                    var ρσ_Iter1 = ρσ_Iterable(split_string(qpat, wpart));
+                    for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                        part = ρσ_Iter1[ρσ_Index1];
+                        r = quote_map[(typeof part === "number" && part < 0) ? quote_map.length + part : part];
+                        if (r) {
+                            ans.push("[" + r + "]");
+                        } else {
+                            chars = [];
+                            var ρσ_Iter2 = ρσ_Iterable(part);
+                            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                                ch = ρσ_Iter2[ρσ_Index2];
+                                chars.push(escape(ch));
+                            }
+                            chars.join(invisible_chars);
+                            ans.push(part);
+                        }
+                    }
+                }
+            }
+            if (has_trailing) {
+                ans.push("\\s+");
+            }
+            return ans.join("");
+        };
+        if (!text_to_regex.__argnames__) Object.defineProperties(text_to_regex, {
+            __argnames__ : {value: ["text"]},
+            __module__ : {value: "read_book.search_worker"}
+        });
+
+        function ToCOffsetMap() {
+            if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
+            ToCOffsetMap.prototype.__bind_methods__.call(this);
+            ToCOffsetMap.prototype.__init__.apply(this, arguments);
+        }
+        Object.defineProperty(ToCOffsetMap.prototype, "__bind_methods__", {value: function () {
+            this.toc_nodes_for_offset = ToCOffsetMap.prototype.toc_nodes_for_offset.bind(this);
+        }});
+        ToCOffsetMap.prototype.__init__ = function __init__(toc_nodes, offset_map, previous_toc_node, parent_map) {
+            var self = this;
+            self.toc_nodes = toc_nodes || [];
+            self.offset_map = offset_map || Object.create(null);
+            self.previous_toc_node = previous_toc_node || null;
+            self.parent_map = parent_map || Object.create(null);
+        };
+        if (!ToCOffsetMap.prototype.__init__.__argnames__) Object.defineProperties(ToCOffsetMap.prototype.__init__, {
+            __argnames__ : {value: ["toc_nodes", "offset_map", "previous_toc_node", "parent_map"]},
+            __module__ : {value: "read_book.search_worker"}
+        });
+        ToCOffsetMap.__argnames__ = ToCOffsetMap.prototype.__init__.__argnames__;
+        ToCOffsetMap.__handles_kwarg_interpolation__ = ToCOffsetMap.prototype.__init__.__handles_kwarg_interpolation__;
+        ToCOffsetMap.prototype.toc_nodes_for_offset = function toc_nodes_for_offset(offset) {
+            var self = this;
+            var matches, q, node, ans, ancestors, parent;
+            matches = [];
+            var ρσ_Iter3 = ρσ_Iterable(self.toc_nodes);
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                node = ρσ_Iter3[ρσ_Index3];
+                q = (ρσ_expr_temp = self.offset_map)[ρσ_bound_index(node.id, ρσ_expr_temp)];
+                if ((typeof q !== "undefined" && q !== null)) {
+                    if (q > offset) {
+                        break;
+                    }
+                    matches.push(node);
+                }
+            }
+            if (!matches && self.previous_toc_node) {
+                matches.push(self.previous_toc_node);
+            }
+            ans = [];
+            if (matches.length) {
+                ancestors = [];
+                node = matches[matches.length-1];
+                parent = (ρσ_expr_temp = self.parent_map)[ρσ_bound_index(node.id, ρσ_expr_temp)];
+                while ((typeof parent !== "undefined" && parent !== null)) {
+                    ancestors.push(parent);
+                    parent = (ρσ_expr_temp = self.parent_map)[ρσ_bound_index(parent.id, ρσ_expr_temp)];
+                }
+                if (ancestors.length > 1) {
+                    for (var i = ancestors.length - 1; i-- > 0;) {
+                        ans.push(ancestors[(typeof i === "number" && i < 0) ? ancestors.length + i : i].id);
+                    }
+                }
+                ans.push(node.id);
+            }
+            return ans;
+        };
+        if (!ToCOffsetMap.prototype.toc_nodes_for_offset.__argnames__) Object.defineProperties(ToCOffsetMap.prototype.toc_nodes_for_offset, {
+            __argnames__ : {value: ["offset"]},
+            __module__ : {value: "read_book.search_worker"}
+        });
+        ToCOffsetMap.prototype.__repr__ = function __repr__ () {
+                        return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
+        };
+        ToCOffsetMap.prototype.__str__ = function __str__ () {
+            return this.__repr__();
+        };
+        Object.defineProperty(ToCOffsetMap.prototype, "__bases__", {value: []});
+
+        function toc_offset_map_for_name(name) {
+            var anchor_map, toc_data, idx, toc_nodes, offset_map, node_id, aid, offset, node, prev_toc_node, spine_name, ptn;
+            if ((ρσ_expr_temp = wc.toc_offset_map_cache)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name]) {
+                return (ρσ_expr_temp = wc.toc_offset_map_cache)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name];
+            }
+            anchor_map = (ρσ_expr_temp = wc.text_cache)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name][1];
+            toc_data = wc.current_book.toc_data;
+            idx = (ρσ_expr_temp = toc_data.spine_idx_map)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name];
+            toc_nodes = (ρσ_expr_temp = toc_data.spine_toc_map)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name];
+            if (!(typeof idx !== "undefined" && idx !== null) || idx < 0) {
+                (ρσ_expr_temp = wc.toc_offset_map_cache)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name] = new ToCOffsetMap;
+                return (ρσ_expr_temp = wc.toc_offset_map_cache)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name];
+            }
+            offset_map = Object.create(null);
+            var ρσ_Iter4 = ρσ_Iterable(toc_nodes);
+            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                node = ρσ_Iter4[ρσ_Index4];
+                node_id = node.id;
+                if ((typeof node_id !== "undefined" && node_id !== null)) {
+                    aid = node.frag;
+                    offset = anchor_map[(typeof aid === "number" && aid < 0) ? anchor_map.length + aid : aid] || 0;
+                    offset_map[(typeof node_id === "number" && node_id < 0) ? offset_map.length + node_id : node_id] = offset;
+                }
+            }
+            prev_toc_node = null;
+            for (var i = idx; i-- > 0;) {
+                spine_name = (ρσ_expr_temp = wc.current_book.spine)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i];
+                ptn = (ρσ_expr_temp = toc_data.spine_toc_map)[(typeof spine_name === "number" && spine_name < 0) ? ρσ_expr_temp.length + spine_name : spine_name];
+                if ((typeof ptn !== "undefined" && ptn !== null)) {
+                    prev_toc_node = ptn[ptn.length-1];
+                    break;
+                }
+            }
+            (ρσ_expr_temp = wc.toc_offset_map_cache)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name] = new ToCOffsetMap(toc_nodes, offset_map, prev_toc_node, toc_data.parent_map);
+            return (ρσ_expr_temp = wc.toc_offset_map_cache)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name];
+        };
+        if (!toc_offset_map_for_name.__argnames__) Object.defineProperties(toc_offset_map_for_name, {
+            __argnames__ : {value: ["name"]},
+            __module__ : {value: "read_book.search_worker"}
+        });
+
+        function toc_nodes_for_search_result(sr) {
+            var sidx, name, tmap;
+            sidx = sr.spine_idx;
+            name = (ρσ_expr_temp = wc.current_book.spine)[(typeof sidx === "number" && sidx < 0) ? ρσ_expr_temp.length + sidx : sidx];
+            if (!name) {
+                return [];
+            }
+            tmap = toc_offset_map_for_name(name);
+            return tmap.toc_nodes_for_offset(sr.offset);
+        };
+        if (!toc_nodes_for_search_result.__argnames__) Object.defineProperties(toc_nodes_for_search_result, {
+            __argnames__ : {value: ["sr"]},
+            __module__ : {value: "read_book.search_worker"}
+        });
+
+        function Worker() {
+            if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
+            Worker.prototype.__bind_methods__.call(this);
+            Worker.prototype.__init__.apply(this, arguments);
+        }
+        Object.defineProperty(Worker.prototype, "__bind_methods__", {value: function () {
+            this.clear_caches = Worker.prototype.clear_caches.bind(this);
+        }});
+        Object.defineProperties(Worker.prototype,  {
+            "initialize_error_msg": {
+                "enumerable": true, 
+                "get": function initialize_error_msg() {
+                    var self = this;
+                    return ρσ_exists.d(self.db).initialize_error_msg;
+                }, 
+                "set": function () { throw new AttributeError("can't set attribute") }
+            }, 
+        });
+        Worker.prototype.__init__ = function __init__() {
+            var self = this;
+            self.db = null;
+            self.connected_to_db = false;
+            self.pending_search = null;
+            self.searching = false;
+            self.current_query = null;
+            self.current_query_id = null;
+            self.current_book = null;
+            self.regex = null;
+            self.result_num = 0;
+            self.clear_caches();
+        };
+        if (!Worker.prototype.__init__.__module__) Object.defineProperties(Worker.prototype.__init__, {
+            __module__ : {value: "read_book.search_worker"}
+        });
+        Worker.__argnames__ = Worker.prototype.__init__.__argnames__;
+        Worker.__handles_kwarg_interpolation__ = Worker.prototype.__init__.__handles_kwarg_interpolation__;
+        Worker.prototype.clear_caches = function clear_caches() {
+            var self = this;
+            self.text_cache = Object.create(null);
+            self.toc_offset_map_cache = Object.create(null);
+        };
+        if (!Worker.prototype.clear_caches.__module__) Object.defineProperties(Worker.prototype.clear_caches, {
+            __module__ : {value: "read_book.search_worker"}
+        });
+        Worker.prototype.__repr__ = function __repr__ () {
+                        return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
+        };
+        Worker.prototype.__str__ = function __str__ () {
+            return this.__repr__();
+        };
+        Object.defineProperty(Worker.prototype, "__bases__", {value: []});
+        
+
+        wc = new Worker;
+        function send_search_complete() {
+            self.postMessage((function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["type"] = "search_complete";
+                ρσ_d["id"] = wc.current_query_id;
+                return ρσ_d;
+            }).call(this));
+            wc.current_query = wc.current_query_id = null;
+        };
+        if (!send_search_complete.__module__) Object.defineProperties(send_search_complete, {
+            __module__ : {value: "read_book.search_worker"}
+        });
+
+        function search_in_text_of(name) {
+            var ctx_size, r, haystack, match_counts, spine_idx, m, text, ρσ_unpack, start, end, before, after, q, result;
+            ctx_size = 75;
+            r = wc.regex;
+            r.lastIndex = 0;
+            haystack = (ρσ_expr_temp = wc.text_cache)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name][0] || "";
+            match_counts = Object.create(null);
+            spine_idx = wc.current_book.spine.indexOf(name);
+            while (true) {
+                m = r.exec(haystack);
+                if (!m) {
+                    break;
+                }
+                text = m[0];
+                ρσ_unpack = [m.index, r.lastIndex];
+                start = ρσ_unpack[0];
+                end = ρσ_unpack[1];
+                before = haystack.slice(Math.max(0, start - ctx_size), start);
+                after = haystack.slice(end, end + ctx_size);
+                q = (before || "").slice(-5) + text + (after || "").slice(0, 5);
+                match_counts[(typeof q === "number" && q < 0) ? match_counts.length + q : q] = match_counts[(typeof q === "number" && q < 0) ? match_counts.length + q : q] || 0;
+                wc.result_num += 1;
+                result = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["file_name"] = name;
+                    ρσ_d["spine_idx"] = spine_idx;
+                    ρσ_d["index"] = match_counts[(typeof q === "number" && q < 0) ? match_counts.length + q : q];
+                    ρσ_d["offset"] = start;
+                    ρσ_d["text"] = text;
+                    ρσ_d["before"] = before;
+                    ρσ_d["after"] = after;
+                    ρσ_d["mode"] = wc.current_query.query.mode;
+                    ρσ_d["q"] = q;
+                    ρσ_d["result_num"] = wc.result_num;
+                    ρσ_d["on_discovery"] = wc.current_query_id;
+                    return ρσ_d;
+                }).call(this);
+                result.toc_nodes = toc_nodes_for_search_result(result);
+                self.postMessage((function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["type"] = "search_result";
+                    ρσ_d["id"] = wc.current_query_id;
+                    ρσ_d["result"] = result;
+                    return ρσ_d;
+                }).call(this));
+                match_counts[(typeof q === "number" && q < 0) ? match_counts.length + q : q] += 1;
+            }
+        };
+        if (!search_in_text_of.__argnames__) Object.defineProperties(search_in_text_of, {
+            __argnames__ : {value: ["name"]},
+            __module__ : {value: "read_book.search_worker"}
+        });
+
+        function queue_next_spine_item(spine_idx, allow_current_name) {
+            var name, query;
+            spine_idx %= wc.current_book.spine.length;
+            name = (ρσ_expr_temp = wc.current_book.spine)[(typeof spine_idx === "number" && spine_idx < 0) ? ρσ_expr_temp.length + spine_idx : spine_idx];
+            if (!name || !allow_current_name && name === wc.current_query.current_name) {
+                send_search_complete();
+                return;
+            }
+            if ((ρσ_expr_temp = wc.text_cache)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name]) {
+                search_in_text_of(name);
+                setTimeout(queue_next_spine_item.bind(null, spine_idx + 1), 0);
+                return;
+            }
+            query = wc.current_query;
+            wc.db.get_book_file(wc.current_book.book_hash, wc.current_book.stored_files, name, got_spine_item.bind(null, query.id, spine_idx));
+        };
+        if (!queue_next_spine_item.__argnames__) Object.defineProperties(queue_next_spine_item, {
+            __argnames__ : {value: ["spine_idx", "allow_current_name"]},
+            __module__ : {value: "read_book.search_worker"}
+        });
+
+        function got_spine_item(query_id, spine_idx, result) {
+            var name;
+            if (query_id !== wc.current_query_id) {
+                return;
+            }
+            if (result.ok) {
+                name = (ρσ_expr_temp = wc.current_book.spine)[(typeof spine_idx === "number" && spine_idx < 0) ? ρσ_expr_temp.length + spine_idx : spine_idx];
+                (ρσ_expr_temp = wc.text_cache)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name] = text_from_serialized_html(result.result, true);
+                search_in_text_of(name);
+                setTimeout(queue_next_spine_item.bind(null, spine_idx + 1), 0);
+            } else {
+                if (result.details === "ENOENT") {
+                    queue_next_spine_item(spine_idx + 1);
+                } else {
+                    send_error(GET_SPINE_FAILED, result.details);
+                    wc.current_query = wc.current_query_id = null;
+                }
+            }
+        };
+        if (!got_spine_item.__argnames__) Object.defineProperties(got_spine_item, {
+            __argnames__ : {value: ["query_id", "spine_idx", "result"]},
+            __module__ : {value: "read_book.search_worker"}
+        });
+
+        function regex_for_query(query) {
+            var expr, flags, words, part;
+            expr = query.text;
+            flags = "umg";
+            if (!query.case_sensitive) {
+                flags += "i";
+            }
+            if (query.mode !== "regex") {
+                if (query.mode === "word") {
+                    words = [];
+                    var ρσ_Iter5 = ρσ_Iterable(expr.split(" "));
+                    for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                        part = ρσ_Iter5[ρσ_Index5];
+                        words.push("\\b" + text_to_regex(part) + "\\b");
+                    }
+                    expr = words.join("\\s+");
+                } else {
+                    expr = text_to_regex(expr);
+                }
+            }
+            return new RegExp(expr, flags);
+        };
+        if (!regex_for_query.__argnames__) Object.defineProperties(regex_for_query, {
+            __argnames__ : {value: ["query"]},
+            __module__ : {value: "read_book.search_worker"}
+        });
+
+        function perform_search(query) {
+            var idx;
+            wc.current_query = query;
+            wc.current_query_id = query.id;
+            wc.result_num = 0;
+            if (!wc.current_book || !ρσ_exists.d(wc.current_book.spine).length || !query.query.text) {
+                send_search_complete();
+                return;
+            }
+            wc.regex = regex_for_query(query.query);
+            idx = wc.current_book.spine.indexOf(query.current_name);
+            if (idx < 0) {
+                idx = 0;
+            }
+            queue_next_spine_item(idx, true);
+        };
+        if (!perform_search.__argnames__) Object.defineProperties(perform_search, {
+            __argnames__ : {value: ["query"]},
+            __module__ : {value: "read_book.search_worker"}
+        });
+
+        function worker_connection_done() {
+            var s;
+            wc.connected_to_db = true;
+            if (!wc.initialize_error_msg) {
+                if (wc.pending_search) {
+                    s = wc.pending_search;
+                    wc.pending_search = null;
+                    perform_search(s);
+                }
+            }
+        };
+        if (!worker_connection_done.__module__) Object.defineProperties(worker_connection_done, {
+            __module__ : {value: "read_book.search_worker"}
+        });
+
+        function send_error(code, msg, error) {
+            self.postMessage((function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["type"] = "error";
+                ρσ_d["code"] = code;
+                ρσ_d["msg"] = msg;
+                ρσ_d["id"] = wc.current_query_id;
+                ρσ_d["error"] = error;
+                return ρσ_d;
+            }).call(this));
+        };
+        if (!send_error.__argnames__) Object.defineProperties(send_error, {
+            __argnames__ : {value: ["code", "msg", "error"]},
+            __module__ : {value: "read_book.search_worker"}
+        });
+
+        function on_worker_db_error(title, msg, details) {
+            send_error(DB_ERROR, msg, (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["title"] = title;
+                ρσ_d["msg"] = msg;
+                ρσ_d["details"] = details;
+                return ρσ_d;
+            }).call(this));
+        };
+        if (!on_worker_db_error.__argnames__) Object.defineProperties(on_worker_db_error, {
+            __argnames__ : {value: ["title", "msg", "details"]},
+            __module__ : {value: "read_book.search_worker"}
+        });
+
+        function worker_main() {
+            wc.db = new DB(worker_connection_done, on_worker_db_error);
+            self.onmessage = (function() {
+                var ρσ_anonfunc = function (e) {
+                    if (e.data.type === "search") {
+                        wc.current_query_id = e.data.id;
+                        if (wc.connected_to_db) {
+                            if (wc.initialize_error_msg) {
+                                send_error(CONNECT_FAILED, wc.initialize_error_msg);
+                            } else {
+                                perform_search(e.data);
+                            }
+                        } else {
+                            wc.pending_search = e.data;
+                        }
+                    } else if (e.data.type === "clear_caches") {
+                        wc.clear_caches();
+                        wc.current_book = e.data.book;
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["e"]},
+                    __module__ : {value: "read_book.search_worker"}
+                });
+                return ρσ_anonfunc;
+            })();
+            self.addEventListener("error", (function() {
+                var ρσ_anonfunc = function (e) {
+                    send_error(UNHANDLED_ERROR, "" + ρσ_str.format("{}", e.lineno) + ":" + ρσ_str.format("{}", e.message) + "" + "\n\n" + format_exception(e.error).join(""));
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["e"]},
+                    __module__ : {value: "read_book.search_worker"}
+                });
+                return ρσ_anonfunc;
+            })());
+        };
+        if (!worker_main.__module__) Object.defineProperties(worker_main, {
+            __module__ : {value: "read_book.search_worker"}
+        });
+
+        ρσ_modules["read_book.search_worker"].GET_SPINE_FAILED = GET_SPINE_FAILED;
+        ρσ_modules["read_book.search_worker"].CONNECT_FAILED = CONNECT_FAILED;
+        ρσ_modules["read_book.search_worker"].UNHANDLED_ERROR = UNHANDLED_ERROR;
+        ρσ_modules["read_book.search_worker"].DB_ERROR = DB_ERROR;
+        ρσ_modules["read_book.search_worker"]._RE_ESCAPE = _RE_ESCAPE;
+        ρσ_modules["read_book.search_worker"].quote_map = quote_map;
+        ρσ_modules["read_book.search_worker"].qpat = qpat;
+        ρσ_modules["read_book.search_worker"].spat = spat;
+        ρσ_modules["read_book.search_worker"].invisible_chars = invisible_chars;
+        ρσ_modules["read_book.search_worker"].wc = wc;
+        ρσ_modules["read_book.search_worker"].escape = escape;
+        ρσ_modules["read_book.search_worker"].split_string = split_string;
+        ρσ_modules["read_book.search_worker"].text_to_regex = text_to_regex;
+        ρσ_modules["read_book.search_worker"].ToCOffsetMap = ToCOffsetMap;
+        ρσ_modules["read_book.search_worker"].toc_offset_map_for_name = toc_offset_map_for_name;
+        ρσ_modules["read_book.search_worker"].toc_nodes_for_search_result = toc_nodes_for_search_result;
+        ρσ_modules["read_book.search_worker"].Worker = Worker;
+        ρσ_modules["read_book.search_worker"].send_search_complete = send_search_complete;
+        ρσ_modules["read_book.search_worker"].search_in_text_of = search_in_text_of;
+        ρσ_modules["read_book.search_worker"].queue_next_spine_item = queue_next_spine_item;
+        ρσ_modules["read_book.search_worker"].got_spine_item = got_spine_item;
+        ρσ_modules["read_book.search_worker"].regex_for_query = regex_for_query;
+        ρσ_modules["read_book.search_worker"].perform_search = perform_search;
+        ρσ_modules["read_book.search_worker"].worker_connection_done = worker_connection_done;
+        ρσ_modules["read_book.search_worker"].send_error = send_error;
+        ρσ_modules["read_book.search_worker"].on_worker_db_error = on_worker_db_error;
+        ρσ_modules["read_book.search_worker"].worker_main = worker_main;
+    })();
+
+    (function(){
+        var __name__ = "worker";
+        var main_js = ρσ_modules["book_list.globals"].main_js;
+
+        function worker_js_url(entry_point) {
+            if (!worker_js_url.ans) {
+                worker_js_url.ans = window.URL.createObjectURL(new Blob(ρσ_list_decorate([ main_js() ])), (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["type"] = "text/javascript";
+                    return ρσ_d;
+                }).call(this));
+            }
+            return worker_js_url.ans + "#" + entry_point;
+        };
+        if (!worker_js_url.__argnames__) Object.defineProperties(worker_js_url, {
+            __argnames__ : {value: ["entry_point"]},
+            __module__ : {value: "worker"}
+        });
+
+        function start_worker(entry_point) {
+            return new window.Worker(worker_js_url(entry_point));
+        };
+        if (!start_worker.__argnames__) Object.defineProperties(start_worker, {
+            __argnames__ : {value: ["entry_point"]},
+            __module__ : {value: "worker"}
+        });
+
+        ρσ_modules.worker.worker_js_url = worker_js_url;
+        ρσ_modules.worker.start_worker = start_worker;
+    })();
+
+    (function(){
+        var __name__ = "read_book.search";
+        var main;
+        var E = ρσ_modules.elementmaker.E;
+
+        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
+
+        var get_color = ρσ_modules["book_list.theme"].get_color;
+
+        var create_top_bar = ρσ_modules["book_list.top_bar"].create_top_bar;
+
+        var create_search_bar = ρσ_modules.complete.create_search_bar;
+
+        var clear = ρσ_modules.dom.clear;
+        var add_extra_css = ρσ_modules.dom.add_extra_css;
+        var build_rule = ρσ_modules.dom.build_rule;
+
+        var _ = ρσ_modules.gettext.gettext;
+        var ngettext = ρσ_modules.gettext.ngettext;
+
+        var error_dialog = ρσ_modules.modals.error_dialog;
+
+        var current_book = ρσ_modules["read_book.globals"].current_book;
+        var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
+
+        var CONNECT_FAILED = ρσ_modules["read_book.search_worker"].CONNECT_FAILED;
+        var DB_ERROR = ρσ_modules["read_book.search_worker"].DB_ERROR;
+        var GET_SPINE_FAILED = ρσ_modules["read_book.search_worker"].GET_SPINE_FAILED;
+        var UNHANDLED_ERROR = ρσ_modules["read_book.search_worker"].UNHANDLED_ERROR;
+        var worker_main = ρσ_modules["read_book.search_worker"].worker_main;
+
         var shortcut_for_key_event = ρσ_modules["read_book.shortcuts"].shortcut_for_key_event;
 
-        CLASS_NAME = "book-search-container";
-        add_extra_css((function() {
-            var ρσ_anonfunc = function () {
-                var sel, style;
-                sel = "." + CLASS_NAME;
-                style = ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({text_align: "right", user_select: "none"})]));
-                sel += " > div ";
-                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({display: "inline-flex", align_items: "center", pointer_events: "auto", background_color: get_color("window-background"), padding: "1ex"})]));
-                return style;
+        var create_button = ρσ_modules.widgets.create_button;
+        var create_spinner = ρσ_modules.widgets.create_spinner;
+
+        var start_worker = ρσ_modules.worker.start_worker;
+
+        function get_toc_data(book) {
+            var spine, spine_toc_map, name, parent_map, toc_id_map, toc;
+            spine = book.manifest.spine;
+            spine_toc_map = (function() {
+                var ρσ_Iter = ρσ_Iterable(spine), ρσ_Result = Object.create(null), name;
+                for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                    name = ρσ_Iter[ρσ_Index];
+                    ρσ_Result[name] = ([]);
+                }
+                return ρσ_Result;
+            })();
+            parent_map = Object.create(null);
+            toc_id_map = Object.create(null);
+            function process_node(node) {
+                var items, children, child;
+                toc_id_map[ρσ_bound_index(node.id, toc_id_map)] = node;
+                items = spine_toc_map[ρσ_bound_index(node.dest, spine_toc_map)];
+                if (items) {
+                    items.push(node);
+                }
+                children = node.children;
+                if (children) {
+                    var ρσ_Iter0 = ρσ_Iterable(children);
+                    for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                        child = ρσ_Iter0[ρσ_Index0];
+                        parent_map[ρσ_bound_index(child.id, parent_map)] = node;
+                        process_node(child);
+                    }
+                }
             };
-            if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+            if (!process_node.__argnames__) Object.defineProperties(process_node, {
+                __argnames__ : {value: ["node"]},
                 __module__ : {value: "read_book.search"}
             });
-            return ρσ_anonfunc;
-        })());
+
+            toc = book.manifest.toc;
+            if (toc) {
+                process_node(toc);
+            }
+            return (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["spine"] = spine;
+                ρσ_d["spine_toc_map"] = spine_toc_map;
+                ρσ_d["spine_idx_map"] = (function() {
+                    var ρσ_Iter = ρσ_Iterable(enumerate(spine)), ρσ_Result = Object.create(null), idx, name;
+                    for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                        ρσ_unpack = ρσ_Iter[ρσ_Index];
+                        idx = ρσ_unpack[0];
+                        name = ρσ_unpack[1];
+                        ρσ_Result[name] = (idx);
+                    }
+                    return ρσ_Result;
+                })();
+                ρσ_d["parent_map"] = parent_map;
+                ρσ_d["toc_id_map"] = toc_id_map;
+                return ρσ_d;
+            }).call(this);
+        };
+        if (!get_toc_data.__argnames__) Object.defineProperties(get_toc_data, {
+            __argnames__ : {value: ["book"]},
+            __module__ : {value: "read_book.search"}
+        });
+
         function SearchOverlay() {
             if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
             SearchOverlay.prototype.__bind_methods__.call(this);
             SearchOverlay.prototype.__init__.apply(this, arguments);
         }
         Object.defineProperty(SearchOverlay.prototype, "__bind_methods__", {value: function () {
+            this.show_wait = SearchOverlay.prototype.show_wait.bind(this);
+            this.show_results = SearchOverlay.prototype.show_results.bind(this);
+            this.clear_results = SearchOverlay.prototype.clear_results.bind(this);
+            this.queue_search = SearchOverlay.prototype.queue_search.bind(this);
+            this.set_original_pos = SearchOverlay.prototype.set_original_pos.bind(this);
+            this.return_to_original_position = SearchOverlay.prototype.return_to_original_position.bind(this);
+            this.on_worker_message = SearchOverlay.prototype.on_worker_message.bind(this);
+            this.result_received = SearchOverlay.prototype.result_received.bind(this);
+            this.make_query_programmatically = SearchOverlay.prototype.make_query_programmatically.bind(this);
+            this.make_result_current = SearchOverlay.prototype.make_result_current.bind(this);
+            this.search_result_discovered = SearchOverlay.prototype.search_result_discovered.bind(this);
+            this.search_result_not_found = SearchOverlay.prototype.search_result_not_found.bind(this);
+            this.select_search_result_in_book = SearchOverlay.prototype.select_search_result_in_book.bind(this);
+            this.result_clicked = SearchOverlay.prototype.result_clicked.bind(this);
+            this.clear_caches = SearchOverlay.prototype.clear_caches.bind(this);
+            this.next_match = SearchOverlay.prototype.next_match.bind(this);
+            this.onkeyup = SearchOverlay.prototype.onkeyup.bind(this);
             this.onkeydown = SearchOverlay.prototype.onkeydown.bind(this);
+            this.find_next = SearchOverlay.prototype.find_next.bind(this);
             this.set_text = SearchOverlay.prototype.set_text.bind(this);
             this.hide = SearchOverlay.prototype.hide.bind(this);
             this.show = SearchOverlay.prototype.show.bind(this);
-            this.find = SearchOverlay.prototype.find.bind(this);
-            this.find_next = SearchOverlay.prototype.find_next.bind(this);
-            this.find_previous = SearchOverlay.prototype.find_previous.bind(this);
+            this.run_search = SearchOverlay.prototype.run_search.bind(this);
         }});
         Object.defineProperties(SearchOverlay.prototype,  {
+            "current_query": {
+                "enumerable": true, 
+                "get": function current_query() {
+                    var self = this;
+                    var c;
+                    c = self.container;
+                    return (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["mode"] = c.querySelector("select[name=mode]").value;
+                        ρσ_d["case_sensitive"] = c.querySelector("input[name=case_sensitive]").checked;
+                        ρσ_d["text"] = c.querySelector("input[type=search]").value;
+                        return ρσ_d;
+                    }).call(this);
+                }, 
+                "set": function current_query(q) {
+                    var self = this;
+                    var c;
+                    c = self.container;
+                    c.querySelector("select[name=mode]").value = q.mode || "contains";
+                    c.querySelector("input[name=case_sensitive]").checked = bool(q.case_sensitive);
+                    c.querySelector("input[type=search]").value = q.text || "";
+                }
+            }, 
+            "bottom_container": {
+                "enumerable": true, 
+                "get": function bottom_container() {
+                    var self = this;
+                    return self.container.lastChild;
+                }, 
+                "set": function () { throw new AttributeError("can't set attribute") }
+            }, 
+            "results_container": {
+                "enumerable": true, 
+                "get": function results_container() {
+                    var self = this;
+                    return self.bottom_container.lastChild;
+                }, 
+                "set": function () { throw new AttributeError("can't set attribute") }
+            }, 
+            "worker": {
+                "enumerable": true, 
+                "get": function worker() {
+                    var self = this;
+                    if (!self._worker) {
+                        self._worker = start_worker("read_book.search");
+                        self._worker.onmessage = self.on_worker_message;
+                        self.clear_caches();
+                    }
+                    return self._worker;
+                }, 
+                "set": function () { throw new AttributeError("can't set attribute") }
+            }, 
+            "current_result_container": {
+                "enumerable": true, 
+                "get": function current_result_container() {
+                    var self = this;
+                    return self.container.querySelector(".current");
+                }, 
+                "set": function () { throw new AttributeError("can't set attribute") }
+            }, 
             "container": {
                 "enumerable": true, 
                 "get": function container() {
                     var self = this;
-                    return document.getElementById("book-search-overlay");
-                }, 
-                "set": function () { throw new AttributeError("can't set attribute") }
-            }, 
-            "search_text": {
-                "enumerable": true, 
-                "get": function search_text() {
-                    var self = this;
-                    return self.container.querySelector("input").value;
+                    return document.getElementById(self.CONTAINER_ID);
                 }, 
                 "set": function () { throw new AttributeError("can't set attribute") }
             }, 
@@ -42114,39 +42951,62 @@ return this.__repr__();
         });
         SearchOverlay.prototype.__init__ = function __init__(view) {
             var self = this;
-            var c, next_button, prev_button, close_button;
+            var c, search_button, sd, mode, child;
             self.view = view;
-            c = self.container;
-            c.classList.add(CLASS_NAME);
-            next_button = ρσ_interpolate_kwargs.call(E, E.div, [svgicon("chevron-down")].concat([ρσ_desugar_kwargs({class_: "simple-link", title: _("Next match")})]));
-            prev_button = ρσ_interpolate_kwargs.call(E, E.div, [svgicon("chevron-up")].concat([ρσ_desugar_kwargs({class_: "simple-link", title: _("Previous match")})]));
-            prev_button.addEventListener("click", (function() {
-                var ρσ_anonfunc = function (ev) {
-                    self.find_previous();
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["ev"]},
-                    __module__ : {value: "read_book.search"}
-                });
-                return ρσ_anonfunc;
-            })());
-            close_button = ρσ_interpolate_kwargs.call(E, E.div, [svgicon("close")].concat([ρσ_desugar_kwargs({style: "cursor:pointer", title: _("Close Search bar")})]));
-            close_button.addEventListener("click", (function() {
-                var ρσ_anonfunc = function (ev) {
-                    window.setTimeout(self.hide, 0);
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["ev"]},
-                    __module__ : {value: "read_book.search"}
-                });
-                return ρσ_anonfunc;
-            })());
-            c.appendChild(E.div(svgicon("search"), " ", ρσ_interpolate_kwargs.call(this, create_search_bar, [self.find_next, "search-in-book"].concat([ρσ_desugar_kwargs({placeholder: _("Search") + "…", button: next_button, associated_widgets: ρσ_list_decorate([ prev_button, close_button ])})])), " ", next_button, " ", prev_button, " ", close_button));
-            c.firstChild.addEventListener("keydown", self.onkeydown, (function(){
+            self.search_in_flight = (function(){
                 var ρσ_d = Object.create(null);
-                ρσ_d["passive"] = false;
+                ρσ_d["id"] = null;
+                ρσ_d["mode"] = "contains";
+                ρσ_d["case_sensitive"] = false;
                 return ρσ_d;
-            }).call(this));
+            }).call(this);
+            self._worker = null;
+            self.request_counter = 0;
+            self.result_map = Object.create(null);
+            c = self.container;
+            c.style.backgroundColor = get_color("window-background");
+            c.style.maxHeight = "100vh";
+            c.style.minHeight = "100vh";
+            c.style.flexDirection = "column";
+            c.style.alignItems = "stretch";
+            c.style.overflow = "hidden";
+            c.style.userSelect = "none";
+            c.addEventListener("keydown", self.onkeydown);
+            c.addEventListener("keyup", self.onkeyup);
+            ρσ_interpolate_kwargs.call(this, create_top_bar, [c].concat([ρσ_desugar_kwargs({title: _("Search in book"), action: self.hide, icon: "close"})]));
+            search_button = create_button(_("Search"), "search");
+            c.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, create_search_bar, [self.run_search, "search-in-book"].concat([ρσ_desugar_kwargs({button: search_button})])), E.div("  "), search_button].concat([ρσ_desugar_kwargs({style: "display: flex; padding: 1rem; padding-bottom: 0.5rem; overflow: hidden"})])));
+            c.lastChild.firstChild.style.flexGrow = "100";
+            sd = get_session_data();
+            mode = sd.get("book_search_mode");
+            c.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.label(_("Search type:") + " ", ρσ_interpolate_kwargs.call(E, E.select, [ρσ_interpolate_kwargs.call(E, E.option, [_("Contains")].concat([ρσ_desugar_kwargs({value: "contains", selected: (mode === "contains" || typeof mode === "object" && ρσ_equals(mode, "contains"))})])), ρσ_interpolate_kwargs.call(E, E.option, [_("Whole words")].concat([ρσ_desugar_kwargs({value: "word", selected: (mode === "word" || typeof mode === "object" && ρσ_equals(mode, "word"))})])), ρσ_interpolate_kwargs.call(E, E.option, [_("Regex")].concat([ρσ_desugar_kwargs({value: "regex", selected: (mode === "regex" || typeof mode === "object" && ρσ_equals(mode, "regex"))})]))].concat([ρσ_desugar_kwargs({name: "mode", title: _("Type of search:\n\n                    Contains: Search for the entered text anywhere\n\n                    Whole words: Search for whole words that equal the entered text\n\n                    Regex: Interpret the entered text as a regular expression\n                    "), onchange: (function() {
+                var ρσ_anonfunc = function (event) {
+                    get_session_data().set("book_search_mode", event.target.value);
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["event"]},
+                    __module__ : {value: "read_book.search"}
+                });
+                return ρσ_anonfunc;
+            })()})]))), E.div("  "), ρσ_interpolate_kwargs.call(E, E.label, [ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "checkbox", name: "case_sensitive", checked: bool(sd.get("book_search_case_sensitive"))})]), _("Case sensitive")].concat([ρσ_desugar_kwargs({onchange: (function() {
+                var ρσ_anonfunc = function (event) {
+                    get_session_data().set("book_search_case_sensitive", event.target.checked);
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["event"]},
+                    __module__ : {value: "read_book.search"}
+                });
+                return ρσ_anonfunc;
+            })()})])), E.div("  "), ρσ_interpolate_kwargs.call(this, create_button, [_("Return"), "chevron-left"].concat([ρσ_desugar_kwargs({action: self.return_to_original_position, tooltip: _("Go back to where you were before searching")})]))].concat([ρσ_desugar_kwargs({style: "display: flex; padding: 1rem; padding-top: 0.5rem; padding-bottom: 0; align-items: center; overflow: hidden"})])));
+            c.appendChild(E.hr());
+            c.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [E.div(create_spinner("4em", "4em")), ρσ_interpolate_kwargs.call(E, E.div, [_("Searching, please wait…")].concat([ρσ_desugar_kwargs({style: "margin-top: 1ex"})]))].concat([ρσ_desugar_kwargs({style: "text-align: center"})])), E.div()].concat([ρσ_desugar_kwargs({style: "display: none; overflow: auto", tabindex: "0"})])));
+            var ρσ_Iter1 = ρσ_Iterable(c.childNodes);
+            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                child = ρσ_Iter1[ρσ_Index1];
+                if (child !== c.lastChild) {
+                    child.style.flexShrink = "0";
+                }
+            }
         };
         if (!SearchOverlay.prototype.__init__.__argnames__) Object.defineProperties(SearchOverlay.prototype.__init__, {
             __argnames__ : {value: ["view"]},
@@ -42154,23 +43014,323 @@ return this.__repr__();
         });
         SearchOverlay.__argnames__ = SearchOverlay.prototype.__init__.__argnames__;
         SearchOverlay.__handles_kwarg_interpolation__ = SearchOverlay.prototype.__init__.__handles_kwarg_interpolation__;
+        SearchOverlay.prototype.show_wait = function show_wait() {
+            var self = this;
+            var c;
+            c = self.bottom_container;
+            c.style.display = "block";
+            c.firstChild.style.display = "block";
+            c.lastChild.style.display = "none";
+        };
+        if (!SearchOverlay.prototype.show_wait.__module__) Object.defineProperties(SearchOverlay.prototype.show_wait, {
+            __module__ : {value: "read_book.search"}
+        });
+        SearchOverlay.prototype.show_results = function show_results() {
+            var self = this;
+            var c;
+            c = self.bottom_container;
+            c.style.display = "block";
+            c.firstChild.style.display = "none";
+            c.lastChild.style.display = "block";
+            c.focus();
+        };
+        if (!SearchOverlay.prototype.show_results.__module__) Object.defineProperties(SearchOverlay.prototype.show_results, {
+            __module__ : {value: "read_book.search"}
+        });
+        SearchOverlay.prototype.clear_results = function clear_results() {
+            var self = this;
+            clear(self.results_container);
+            self.result_map = Object.create(null);
+        };
+        if (!SearchOverlay.prototype.clear_results.__module__) Object.defineProperties(SearchOverlay.prototype.clear_results, {
+            __module__ : {value: "read_book.search"}
+        });
+        SearchOverlay.prototype.queue_search = function queue_search(query, book, current_name) {
+            var self = this;
+            self.request_counter += 1;
+            self.original_position = self.view.currently_showing.bookpos;
+            self.view.get_current_cfi("search-original-pos", self.set_original_pos);
+            self.search_in_flight.id = self.request_counter;
+            self.worker.postMessage((function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["type"] = "search";
+                ρσ_d["current_name"] = current_name;
+                ρσ_d["id"] = self.request_counter;
+                ρσ_d["query"] = query;
+                return ρσ_d;
+            }).call(this));
+            self.clear_results();
+            self.show_wait();
+        };
+        if (!SearchOverlay.prototype.queue_search.__argnames__) Object.defineProperties(SearchOverlay.prototype.queue_search, {
+            __argnames__ : {value: ["query", "book", "current_name"]},
+            __module__ : {value: "read_book.search"}
+        });
+        SearchOverlay.prototype.set_original_pos = function set_original_pos(request_id, data) {
+            var self = this;
+            self.original_position = data.cfi;
+        };
+        if (!SearchOverlay.prototype.set_original_pos.__argnames__) Object.defineProperties(SearchOverlay.prototype.set_original_pos, {
+            __argnames__ : {value: ["request_id", "data"]},
+            __module__ : {value: "read_book.search"}
+        });
+        SearchOverlay.prototype.return_to_original_position = function return_to_original_position() {
+            var self = this;
+            if (self.original_position) {
+                self.view.goto_cfi(self.original_position);
+            }
+            self.hide();
+        };
+        if (!SearchOverlay.prototype.return_to_original_position.__module__) Object.defineProperties(SearchOverlay.prototype.return_to_original_position, {
+            __module__ : {value: "read_book.search"}
+        });
+        SearchOverlay.prototype.on_worker_message = function on_worker_message(evt) {
+            var self = this;
+            var msg, details, emsg;
+            msg = evt.data;
+            if (msg.type === "error") {
+                details = msg.msg;
+                emsg = _("Unknown error");
+                if (msg.code === GET_SPINE_FAILED) {
+                    emsg = _("Loading text from the book failed.");
+                } else if (msg.code === CONNECT_FAILED) {
+                    emsg = _("Connecting to database storing the local copy of the book failed in the worker thread.");
+                } else if (msg.code === UNHANDLED_ERROR) {
+                    emsg = _("There was an unhandled error while searching.");
+                } else if (msg.code === DB_ERROR) {
+                    emsg = msg.error.msg;
+                    details = msg.error.details;
+                }
+                error_dialog(_("Could not search"), emsg, details);
+            } else if (msg.id === self.search_in_flight.id) {
+                if (msg.type === "search_complete") {
+                    self.search_in_flight.id = null;
+                } else if (msg.type === "search_result") {
+                    self.result_received(msg.result);
+                }
+            }
+        };
+        if (!SearchOverlay.prototype.on_worker_message.__argnames__) Object.defineProperties(SearchOverlay.prototype.on_worker_message, {
+            __argnames__ : {value: ["evt"]},
+            __module__ : {value: "read_book.search"}
+        });
+        SearchOverlay.prototype.result_received = function result_received(result) {
+            var self = this;
+            var sr, toc_node_id, toc_node, c, group, appended, csi, child, ul, tt, lines, ρσ_unpack, i, node_id, rnum, entry;
+            self.show_results();
+            (ρσ_expr_temp = self.result_map)[ρσ_bound_index(result.result_num, ρσ_expr_temp)] = result;
+            sr = Object.assign(Object.create(null), result);
+            self.view.discover_search_result(sr);
+            toc_node_id = (result.toc_nodes.length) ? result.toc_nodes[0] : -1;
+            toc_node = (ρσ_expr_temp = self.toc_data.toc_id_map)[(typeof toc_node_id === "number" && toc_node_id < 0) ? ρσ_expr_temp.length + toc_node_id : toc_node_id];
+            c = self.results_container;
+            group = c.querySelector("[data-toc-node-id=\"" + ρσ_str.format("{}", toc_node_id) + "\"]");
+            if (!group) {
+                group = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.span, ["+ "].concat([ρσ_desugar_kwargs({style: "display: none"})])), E.span((typeof toc_node !== "undefined" && toc_node !== null ? toc_node : Object.create(null)).title || _("Unknown"))].concat([ρσ_desugar_kwargs({title: _("Click to show/hide the results in this chapter"), onclick: (function() {
+                    var ρσ_anonfunc = function (ev) {
+                        ev.target.closest("[data-toc-node-id]").classList.toggle("collapsed");
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["ev"]},
+                        __module__ : {value: "read_book.search"}
+                    });
+                    return ρσ_anonfunc;
+                })()})])), E.ul()].concat([ρσ_desugar_kwargs({data_toc_node_id: toc_node_id + "", data_spine_index: result.spine_idx + ""})]));
+                appended = false;
+                var ρσ_Iter2 = ρσ_Iterable(c.querySelectorAll("[data-spine-index]"));
+                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                    child = ρσ_Iter2[ρσ_Index2];
+                    csi = parseInt(child.dataset.spineIndex);
+                    if (csi > result.spine_idx) {
+                        appended = true;
+                        c.insertBefore(group, child);
+                        break;
+                    }
+                }
+                if (!appended) {
+                    c.appendChild(group);
+                }
+            }
+            ul = group.getElementsByTagName("ul")[0];
+            tt = "";
+            if (result.toc_nodes.length) {
+                lines = [];
+                var ρσ_Iter3 = ρσ_Iterable(enumerate(result.toc_nodes));
+                for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                    ρσ_unpack = ρσ_Iter3[ρσ_Index3];
+                    i = ρσ_unpack[0];
+                    node_id = ρσ_unpack[1];
+                    lines.push("  ".repeat(i) + "➤ " + (ρσ_exists.d((ρσ_expr_temp = self.toc_data.toc_id_map)[(typeof node_id === "number" && node_id < 0) ? ρσ_expr_temp.length + node_id : node_id]).title || _("Unknown")));
+                }
+                tt = ngettext("Table of Contents section:", "Table of Contents sections:", lines.length);
+                tt += "\n" + lines.join("\n");
+            }
+            rnum = result.result_num;
+            entry = ρσ_interpolate_kwargs.call(E, E.li, [ρσ_desugar_kwargs({title: tt, data_result_num: rnum + "", onclick: self.result_clicked.bind(null, rnum)})]);
+            if (result.before) {
+                entry.appendChild(E.span("…" + result.before));
+            }
+            entry.appendChild(E.strong(result.text));
+            if (result.after) {
+                entry.appendChild(E.span(result.after + "…"));
+            }
+            ul.appendChild(entry);
+        };
+        if (!SearchOverlay.prototype.result_received.__argnames__) Object.defineProperties(SearchOverlay.prototype.result_received, {
+            __argnames__ : {value: ["result"]},
+            __module__ : {value: "read_book.search"}
+        });
+        SearchOverlay.prototype.make_query_programmatically = function make_query_programmatically(text, mode, case_sensitive) {
+            var self = this;
+            self.current_query = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["text"] = text;
+                ρσ_d["mode"] = mode;
+                ρσ_d["case_sensitive"] = case_sensitive;
+                return ρσ_d;
+            }).call(this);
+            self.show();
+            self.run_search();
+        };
+        if (!SearchOverlay.prototype.make_query_programmatically.__argnames__) Object.defineProperties(SearchOverlay.prototype.make_query_programmatically, {
+            __argnames__ : {value: ["text", "mode", "case_sensitive"]},
+            __module__ : {value: "read_book.search"}
+        });
+        SearchOverlay.prototype.make_result_current = function make_result_current(result_num) {
+            var self = this;
+            var q, li;
+            q = result_num + "";
+            var ρσ_Iter4 = ρσ_Iterable(self.container.querySelectorAll("[data-result-num]"));
+            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                li = ρσ_Iter4[ρσ_Index4];
+                if (li.dataset.resultNum === q) {
+                    li.classList.add("current");
+                    li.scrollIntoView();
+                } else {
+                    li.classList.remove("current");
+                }
+            }
+        };
+        if (!SearchOverlay.prototype.make_result_current.__argnames__) Object.defineProperties(SearchOverlay.prototype.make_result_current, {
+            __argnames__ : {value: ["result_num"]},
+            __module__ : {value: "read_book.search"}
+        });
+        SearchOverlay.prototype.search_result_discovered = function search_result_discovered(sr) {
+            var self = this;
+            self.make_result_current(sr.result_num);
+        };
+        if (!SearchOverlay.prototype.search_result_discovered.__argnames__) Object.defineProperties(SearchOverlay.prototype.search_result_discovered, {
+            __argnames__ : {value: ["sr"]},
+            __module__ : {value: "read_book.search"}
+        });
+        SearchOverlay.prototype.search_result_not_found = function search_result_not_found(sr) {
+            var self = this;
+            if (sr.on_discovery) {
+                return;
+            }
+            error_dialog(_("Search result not found"), _("This search result matches text that is hidden in the book and cannot be displayed"));
+            self.show();
+        };
+        if (!SearchOverlay.prototype.search_result_not_found.__argnames__) Object.defineProperties(SearchOverlay.prototype.search_result_not_found, {
+            __argnames__ : {value: ["sr"]},
+            __module__ : {value: "read_book.search"}
+        });
+        SearchOverlay.prototype.select_search_result_in_book = function select_search_result_in_book(result_num) {
+            var self = this;
+            var sr;
+            sr = Object.assign(Object.create(null), (ρσ_expr_temp = self.result_map)[(typeof result_num === "number" && result_num < 0) ? ρσ_expr_temp.length + result_num : result_num]);
+            sr.on_discovery = 0;
+            self.view.show_search_result(sr);
+        };
+        if (!SearchOverlay.prototype.select_search_result_in_book.__argnames__) Object.defineProperties(SearchOverlay.prototype.select_search_result_in_book, {
+            __argnames__ : {value: ["result_num"]},
+            __module__ : {value: "read_book.search"}
+        });
+        SearchOverlay.prototype.result_clicked = function result_clicked(rnum) {
+            var self = this;
+            self.make_result_current(rnum);
+            self.select_search_result_in_book(rnum);
+            self.hide();
+        };
+        if (!SearchOverlay.prototype.result_clicked.__argnames__) Object.defineProperties(SearchOverlay.prototype.result_clicked, {
+            __argnames__ : {value: ["rnum"]},
+            __module__ : {value: "read_book.search"}
+        });
+        SearchOverlay.prototype.clear_caches = function clear_caches(book) {
+            var self = this;
+            var data;
+            self.clear_results();
+            self.bottom_container.style.display = "none";
+            if (self._worker) {
+                book = book || current_book();
+                self.toc_data = get_toc_data(book);
+                data = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["book_hash"] = book.book_hash;
+                    ρσ_d["stored_files"] = book.stored_files;
+                    ρσ_d["spine"] = book.manifest.spine;
+                    ρσ_d["toc_data"] = self.toc_data;
+                    return ρσ_d;
+                }).call(this);
+                self.worker.postMessage((function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["type"] = "clear_caches";
+                    ρσ_d["book"] = data;
+                    return ρσ_d;
+                }).call(this));
+            }
+        };
+        if (!SearchOverlay.prototype.clear_caches.__argnames__) Object.defineProperties(SearchOverlay.prototype.clear_caches, {
+            __argnames__ : {value: ["book"]},
+            __module__ : {value: "read_book.search"}
+        });
+        SearchOverlay.prototype.next_match = function next_match(delta) {
+            var self = this;
+            var num_of_results, c, rnum, cr;
+            delta = delta || 1;
+            num_of_results = Object.keys(self.result_map).length;
+            c = self.current_result_container;
+            if (c) {
+                rnum = parseInt(c.dataset.resultNum) - 1;
+                rnum = (rnum + delta + num_of_results) % num_of_results;
+                rnum += 1;
+            } else {
+                rnum = 1;
+            }
+            self.make_result_current(rnum);
+            self.results_container.focus();
+            cr = self.current_result_container;
+            if (cr) {
+                self.select_search_result_in_book(cr.dataset.resultNum);
+            }
+        };
+        if (!SearchOverlay.prototype.next_match.__argnames__) Object.defineProperties(SearchOverlay.prototype.next_match, {
+            __argnames__ : {value: ["delta"]},
+            __module__ : {value: "read_book.search"}
+        });
+        SearchOverlay.prototype.onkeyup = function onkeyup(event) {
+            var self = this;
+            if (event.key === "Escape" || event.key === "Esc") {
+                self.hide();
+                [event.stopPropagation(), event.preventDefault()];
+            }
+        };
+        if (!SearchOverlay.prototype.onkeyup.__argnames__) Object.defineProperties(SearchOverlay.prototype.onkeyup, {
+            __argnames__ : {value: ["event"]},
+            __module__ : {value: "read_book.search"}
+        });
         SearchOverlay.prototype.onkeydown = function onkeydown(event) {
             var self = this;
             var sc_name;
-            if (event.key === "Escape" || event.key === "Esc") {
-                self.hide();
-                [event.preventDefault(), event.stopPropagation()];
-                return;
-            }
             sc_name = shortcut_for_key_event(event, self.view.keyboard_shortcut_map);
             if (sc_name === "next_match") {
-                self.find_next();
-                [event.preventDefault(), event.stopPropagation()];
+                self.next_match(1);
+                [event.stopPropagation(), event.preventDefault()];
                 return;
             }
             if (sc_name === "previous_match") {
-                self.find_previous();
-                [event.preventDefault(), event.stopPropagation()];
+                self.next_match(-1);
+                [event.stopPropagation(), event.preventDefault()];
                 return;
             }
         };
@@ -42178,9 +43338,17 @@ return this.__repr__();
             __argnames__ : {value: ["event"]},
             __module__ : {value: "read_book.search"}
         });
+        SearchOverlay.prototype.find_next = function find_next(backwards) {
+            var self = this;
+            self.next_match((backwards) ? -1 : 1);
+        };
+        if (!SearchOverlay.prototype.find_next.__argnames__) Object.defineProperties(SearchOverlay.prototype.find_next, {
+            __argnames__ : {value: ["backwards"]},
+            __module__ : {value: "read_book.search"}
+        });
         SearchOverlay.prototype.set_text = function set_text(text) {
             var self = this;
-            self.container.querySelector("input").value = text || "";
+            self.container.querySelector("input[type=search]").value = text || "";
         };
         if (!SearchOverlay.prototype.set_text.__argnames__) Object.defineProperties(SearchOverlay.prototype.set_text, {
             __argnames__ : {value: ["text"]},
@@ -42198,44 +43366,25 @@ return this.__repr__();
             var self = this;
             var c, inp;
             c = self.container;
-            c.style.display = "block";
+            c.style.display = self.display_type;
             inp = c.querySelector("input");
             [inp.focus(), inp.select()];
         };
         if (!SearchOverlay.prototype.show.__module__) Object.defineProperties(SearchOverlay.prototype.show, {
             __module__ : {value: "read_book.search"}
         });
-        SearchOverlay.prototype.find = function find(text, backwards) {
+        SearchOverlay.prototype.run_search = function run_search() {
             var self = this;
-            if (!text) {
-                return;
-            }
-            self.view.find(text, backwards);
-        };
-        if (!SearchOverlay.prototype.find.__argnames__) Object.defineProperties(SearchOverlay.prototype.find, {
-            __argnames__ : {value: ["text", "backwards"]},
-            __module__ : {value: "read_book.search"}
-        });
-        SearchOverlay.prototype.find_next = function find_next() {
-            var self = this;
-            if (ui_operations.find_next) {
-                ui_operations.find_next(false);
+            var q;
+            q = self.current_query;
+            if (!q.text) {
+                self.clear_results();
+                self.show_results();
             } else {
-                self.find(self.search_text, false);
+                self.queue_search(q, current_book(), self.view.currently_showing.name);
             }
         };
-        if (!SearchOverlay.prototype.find_next.__module__) Object.defineProperties(SearchOverlay.prototype.find_next, {
-            __module__ : {value: "read_book.search"}
-        });
-        SearchOverlay.prototype.find_previous = function find_previous() {
-            var self = this;
-            if (ui_operations.find_next) {
-                ui_operations.find_next(true);
-            } else {
-                self.find(self.search_text, true);
-            }
-        };
-        if (!SearchOverlay.prototype.find_previous.__module__) Object.defineProperties(SearchOverlay.prototype.find_previous, {
+        if (!SearchOverlay.prototype.run_search.__module__) Object.defineProperties(SearchOverlay.prototype.run_search, {
             __module__ : {value: "read_book.search"}
         });
         SearchOverlay.prototype.__repr__ = function __repr__ () {
@@ -42245,58 +43394,41 @@ return this.__repr__();
             return this.__repr__();
         };
         Object.defineProperty(SearchOverlay.prototype, "__bases__", {value: []});
+        SearchOverlay.prototype.display_type = "flex";
+        SearchOverlay.prototype.CONTAINER_ID = "book-search-overlay";
+        
+        
+        
+        
+        
         
         
         
 
-        function find_in_serialized_html(data, text) {
-            var haystack;
-            haystack = text_from_serialized_html(data);
-            return haystack.toLowerCase().indexOf(text) > -1;
-        };
-        if (!find_in_serialized_html.__argnames__) Object.defineProperties(find_in_serialized_html, {
-            __argnames__ : {value: ["data", "text"]},
-            __module__ : {value: "read_book.search"}
-        });
-
-        function find_in_spine(names, book, text, proceed) {
-            text = text.toLowerCase();
-            function got_one(data, name, mimetype) {
-                if (find_in_serialized_html(data, text)) {
-                    proceed(name);
-                } else {
-                    do_one();
-                }
+        add_extra_css((function() {
+            var ρσ_anonfunc = function () {
+                var css, sel;
+                css = "";
+                sel = "#" + ρσ_str.format("{}", SearchOverlay.prototype.CONTAINER_ID) + " ";
+                sel += " div[data-toc-node-id]";
+                css += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({margin: "1rem"})]));
+                css += sel + ".collapsed > div > span { display: inline !important; }";
+                css += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".collapsed > ul"].concat([ρσ_desugar_kwargs({display: "none"})]));
+                css += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " > div"].concat([ρσ_desugar_kwargs({font_style: "italic", font_weight: "bold", cursor: "pointer"})]));
+                css += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " li"].concat([ρσ_desugar_kwargs({list_style_type: "none", margin: "1rem", margin_right: "0", cursor: "pointer"})]));
+                css += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " li.current"].concat([ρσ_desugar_kwargs({border_left: "solid 2px " + get_color("link-foreground"), padding_left: "2px"})]));
+                css += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " li strong"].concat([ρσ_desugar_kwargs({color: get_color("link-foreground"), font_style: "italic"})]));
+                return css;
             };
-            if (!got_one.__argnames__) Object.defineProperties(got_one, {
-                __argnames__ : {value: ["data", "name", "mimetype"]},
+            if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
                 __module__ : {value: "read_book.search"}
             });
-
-            function do_one() {
-                var name;
-                name = names.shift();
-                if (name) {
-                    ui_operations.get_file(book, name, got_one);
-                } else {
-                    proceed(null);
-                }
-            };
-            if (!do_one.__module__) Object.defineProperties(do_one, {
-                __module__ : {value: "read_book.search"}
-            });
-
-            do_one();
-        };
-        if (!find_in_spine.__argnames__) Object.defineProperties(find_in_spine, {
-            __argnames__ : {value: ["names", "book", "text", "proceed"]},
-            __module__ : {value: "read_book.search"}
-        });
-
-        ρσ_modules["read_book.search"].CLASS_NAME = CLASS_NAME;
+            return ρσ_anonfunc;
+        })());
+        main = worker_main;
+        ρσ_modules["read_book.search"].main = main;
+        ρσ_modules["read_book.search"].get_toc_data = get_toc_data;
         ρσ_modules["read_book.search"].SearchOverlay = SearchOverlay;
-        ρσ_modules["read_book.search"].find_in_serialized_html = find_in_serialized_html;
-        ρσ_modules["read_book.search"].find_in_spine = find_in_spine;
     })();
 
     (function(){
@@ -42449,7 +43581,7 @@ return this.__repr__();
 
         var _ = ρσ_modules.gettext.gettext;
 
-        var IframeWrapper = ρσ_modules.iframe_comm.IframeWrapper;
+        var create_wrapped_iframe = ρσ_modules.iframe_comm.create_wrapped_iframe;
 
         var error_dialog = ρσ_modules.modals.error_dialog;
         var warning_dialog = ρσ_modules.modals.warning_dialog;
@@ -42498,7 +43630,6 @@ return this.__repr__();
         var BookScrollbar = ρσ_modules["read_book.scrollbar"].BookScrollbar;
 
         var SearchOverlay = ρσ_modules["read_book.search"].SearchOverlay;
-        var find_in_spine = ρσ_modules["read_book.search"].find_in_spine;
 
         var SelectionBar = ρσ_modules["read_book.selection_bar"].SelectionBar;
 
@@ -42744,9 +43875,7 @@ return this.__repr__();
             this.toggle_paged_mode = View.prototype.toggle_paged_mode.bind(this);
             this.toggle_autoscroll = View.prototype.toggle_autoscroll.bind(this);
             this.toggle_toolbar = View.prototype.toggle_toolbar.bind(this);
-            this.find = View.prototype.find.bind(this);
             this.on_invisible_text = View.prototype.on_invisible_text.bind(this);
-            this.on_find_in_spine = View.prototype.on_find_in_spine.bind(this);
             this.bump_font_size = View.prototype.bump_font_size.bind(this);
             this.on_show_footnote = View.prototype.on_show_footnote.bind(this);
             this.hide_overlays = View.prototype.hide_overlays.bind(this);
@@ -42853,7 +43982,7 @@ return this.__repr__();
         });
         View.prototype.__init__ = function __init__(container) {
             var self = this;
-            var sd, left_margin, right_margin, iframe_id, sandbox, handlers, entry_point;
+            var sd, left_margin, right_margin, handlers, iframe_id, entry_point, iframe_kw, ρσ_unpack, iframe;
             self.timers = new Timers;
             self.reference_mode_enabled = false;
             self.loaded_resources = Object.create(null);
@@ -42886,23 +44015,6 @@ return this.__repr__();
             set_left_margin_handler(left_margin);
             right_margin = side_margin_elem(self, sd, "right");
             set_right_margin_handler(right_margin);
-            iframe_id = unique_id("read-book-iframe");
-            sandbox = "allow-popups allow-scripts allow-popups-to-escape-sandbox";
-            if (runtime.is_standalone_viewer) {
-                sandbox += "  allow-same-origin";
-            }
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [left_margin, ρσ_interpolate_kwargs.call(E, E.div, [margin_elem(sd, "margin_top", "book-top-margin", self.top_margin_clicked, self.margin_context_menu.bind(null, "top")), ρσ_interpolate_kwargs.call(E, E.iframe, [ρσ_desugar_kwargs({id: iframe_id, seamless: true, sandbox: sandbox, style: "flex-grow: 2", allowfullscreen: "true"})]), margin_elem(sd, "margin_bottom", "book-bottom-margin", self.bottom_margin_clicked, self.margin_context_menu.bind(null, "bottom"))].concat([ρσ_desugar_kwargs({style: "flex-grow:2; display:flex; align-items:stretch; flex-direction: column"})])), right_margin, self.book_scrollbar.create(), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none;", id: "book-selection-bar-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none;", id: "book-read-aloud-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none;", id: "book-hints-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; pointer-events:none; display:none", id: "book-search-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "book-content-popup-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; overflow: auto; display:none", id: "book-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "controls-help-overlay"})])].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; flex-grow: 2; display:flex; align-items: stretch"})]))].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; display: flex; flex-direction: column; align-items: stretch; flex-grow:2"})]))].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: stretch", oncontextmenu: (function() {
-                var ρσ_anonfunc = function (ev) {
-                    if (!default_context_menu_should_be_allowed(ev)) {
-                        ev.preventDefault();
-                    }
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["ev"]},
-                    __module__ : {value: "read_book.view"}
-                });
-                return ρσ_anonfunc;
-            })()})])));
             handlers = (function(){
                 var ρσ_d = Object.create(null);
                 ρσ_d["autoscroll_state_changed"] = (function() {
@@ -42921,7 +44033,6 @@ return this.__repr__();
                 ρσ_d["bump_font_size"] = self.bump_font_size;
                 ρσ_d["content_loaded"] = self.on_content_loaded;
                 ρσ_d["error"] = self.on_iframe_error;
-                ρσ_d["find_in_spine"] = self.on_find_in_spine;
                 ρσ_d["invisible_text"] = self.on_invisible_text;
                 ρσ_d["goto_doc_boundary"] = (function() {
                     var ρσ_anonfunc = function (data) {
@@ -42980,7 +44091,37 @@ return this.__repr__();
                 })();
                 return ρσ_d;
             }).call(this);
-            entry_point = (runtime.is_standalone_viewer) ? null : "read_book.iframe";
+            iframe_id = unique_id("read-book-iframe");
+            if (runtime.is_standalone_viewer) {
+                entry_point = "" + ρσ_str.format("{}", runtime.FAKE_PROTOCOL) + "://" + ρσ_str.format("{}", runtime.SANDBOX_HOST) + "/book/__index__";
+            } else {
+                entry_point = "read_book.iframe";
+            }
+            iframe_kw = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["id"] = iframe_id;
+                ρσ_d["seamless"] = true;
+                ρσ_d["sandbox"] = "allow-popups allow-scripts allow-popups-to-escape-sandbox";
+                ρσ_d["style"] = "flex-grow: 2";
+                ρσ_d["allowfullscreen"] = "true";
+                return ρσ_d;
+            }).call(this);
+            ρσ_unpack = create_wrapped_iframe(handlers, _("Bootstrapping book reader..."), entry_point, iframe_kw);
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+            iframe = ρσ_unpack[0];
+            self.iframe_wrapper = ρσ_unpack[1];
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [left_margin, ρσ_interpolate_kwargs.call(E, E.div, [margin_elem(sd, "margin_top", "book-top-margin", self.top_margin_clicked, self.margin_context_menu.bind(null, "top")), iframe, margin_elem(sd, "margin_bottom", "book-bottom-margin", self.bottom_margin_clicked, self.margin_context_menu.bind(null, "bottom"))].concat([ρσ_desugar_kwargs({style: "flex-grow:2; display:flex; align-items:stretch; flex-direction: column"})])), right_margin, self.book_scrollbar.create(), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none;", id: "book-selection-bar-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none;", id: "book-read-aloud-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none;", id: "book-hints-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height:100%; display:none", id: SearchOverlay.prototype.CONTAINER_ID})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "book-content-popup-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; overflow: auto; display:none", id: "book-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "controls-help-overlay"})])].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; flex-grow: 2; display:flex; align-items: stretch"})]))].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; display: flex; flex-direction: column; align-items: stretch; flex-grow:2"})]))].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: stretch", oncontextmenu: (function() {
+                var ρσ_anonfunc = function (ev) {
+                    if (!default_context_menu_should_be_allowed(ev)) {
+                        ev.preventDefault();
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["ev"]},
+                    __module__ : {value: "read_book.view"}
+                });
+                return ρσ_anonfunc;
+            })()})])));
             self.current_color_scheme = resolve_color_scheme();
             if (runtime.is_standalone_viewer) {
                 document.documentElement.addEventListener("keydown", self.handle_keypress, (function(){
@@ -42991,7 +44132,6 @@ return this.__repr__();
                 set_ui_colors(self.current_color_scheme.is_dark_theme);
             }
             is_dark_theme(self.current_color_scheme.is_dark_theme);
-            self.iframe_wrapper = new IframeWrapper(handlers, document.getElementById(iframe_id), entry_point, _("Bootstrapping book reader..."), "" + ρσ_str.format("{}", runtime.FAKE_PROTOCOL) + "://" + ρσ_str.format("{}", runtime.SANDBOX_HOST) + "/book/__index__");
             self.search_overlay = new SearchOverlay(self);
             self.content_popup_overlay = new ContentPopupOverlay(self);
             self.overlay = new Overlay(self);
@@ -43362,9 +44502,9 @@ return this.__repr__();
             } else if (data.name === "start_search") {
                 self.show_search();
             } else if (data.name === "next_match") {
-                self.search_overlay.find_next();
+                ui_operations.find_next();
             } else if (data.name === "previous_match") {
-                self.search_overlay.find_previous();
+                ui_operations.find_next(true);
             } else if (data.name === "increase_font_size") {
                 self.bump_font_size((function(){
                     var ρσ_d = Object.create(null);
@@ -43433,6 +44573,10 @@ return this.__repr__();
                 ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["modify_selection"].concat([ρσ_desugar_kwargs({direction: "backward", granularity: (ρσ_expr_temp = data.name.rpartition("_"))[ρσ_expr_temp.length-1]})]));
             } else if (data.name.startsWith("extend_selection_by_")) {
                 ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["modify_selection"].concat([ρσ_desugar_kwargs({direction: "forward", granularity: (ρσ_expr_temp = data.name.rpartition("_"))[ρσ_expr_temp.length-1]})]));
+            } else if (data.name === "extend_selection_to_start_of_line") {
+                ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["modify_selection"].concat([ρσ_desugar_kwargs({direction: "backward", granularity: "lineboundary"})]));
+            } else if (data.name === "extend_selection_to_end_of_line") {
+                ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["modify_selection"].concat([ρσ_desugar_kwargs({direction: "forward", granularity: "lineboundary"})]));
             } else if (data.name === "scrollspeed_increase") {
                 self.update_scroll_speed(SCROLL_SPEED_STEP);
             } else if (data.name === "scrollspeed_decrease") {
@@ -43563,14 +44707,6 @@ return this.__repr__();
         if (!View.prototype.toggle_toolbar.__module__) Object.defineProperties(View.prototype.toggle_toolbar, {
             __module__ : {value: "read_book.view"}
         });
-        View.prototype.find = function find(text, backwards) {
-            var self = this;
-            ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["find"].concat([ρσ_desugar_kwargs({text: text, backwards: backwards, searched_in_spine: false})]));
-        };
-        if (!View.prototype.find.__argnames__) Object.defineProperties(View.prototype.find, {
-            __argnames__ : {value: ["text", "backwards"]},
-            __module__ : {value: "read_book.view"}
-        });
         View.prototype.on_invisible_text = function on_invisible_text(data) {
             var self = this;
             ρσ_interpolate_kwargs.call(this, warning_dialog, [_("Not found"), _("The text: <i>{}</i> is present on this page but not visible").format(html_escape(data.text))].concat([ρσ_desugar_kwargs({on_close: (function() {
@@ -43584,71 +44720,6 @@ return this.__repr__();
             })()})]));
         };
         if (!View.prototype.on_invisible_text.__argnames__) Object.defineProperties(View.prototype.on_invisible_text, {
-            __argnames__ : {value: ["data"]},
-            __module__ : {value: "read_book.view"}
-        });
-        View.prototype.on_find_in_spine = function on_find_in_spine(data) {
-            var self = this;
-            var spine, idx, names, item_groups, i, items;
-            if (data.searched_in_spine) {
-                ρσ_interpolate_kwargs.call(this, warning_dialog, [_("Not found"), _("The text: <i>{}</i> was not found in this book").format(html_escape(data.text))].concat([ρσ_desugar_kwargs({on_close: (function() {
-                    var ρσ_anonfunc = function () {
-                        self.search_overlay.show();
-                    };
-                    if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
-                        __module__ : {value: "read_book.view"}
-                    });
-                    return ρσ_anonfunc;
-                })()})]));
-                return;
-            }
-            spine = self.book.manifest.spine;
-            idx = spine.indexOf(self.currently_showing.name);
-            if (idx < 0) {
-                ρσ_interpolate_kwargs.call(this, error_dialog, [_("Missing file"), _("Could not search as the spine item {} is missing from the book").format(self.currently_showing.name)].concat([ρσ_desugar_kwargs({on_close: (function() {
-                    var ρσ_anonfunc = function () {
-                        self.search_overlay.show();
-                    };
-                    if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
-                        __module__ : {value: "read_book.view"}
-                    });
-                    return ρσ_anonfunc;
-                })()})]));
-                return;
-            }
-            names = [];
-            item_groups = (data.backwards) ? ρσ_list_decorate([ range(idx - 1, -1, -1), range(spine.length - 1, idx, -1) ]) : ρσ_list_decorate([ range(idx + 1, spine.length), range(idx) ]);
-            var ρσ_Iter2 = ρσ_Iterable(item_groups);
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                items = ρσ_Iter2[ρσ_Index2];
-                var ρσ_Iter3 = ρσ_Iterable(items);
-                for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                    i = ρσ_Iter3[ρσ_Index3];
-                    names.push(spine[(typeof i === "number" && i < 0) ? spine.length + i : i]);
-                }
-            }
-            find_in_spine(names, self.book, data.text, (function() {
-                var ρσ_anonfunc = function (found_in) {
-                    if (found_in) {
-                        ρσ_interpolate_kwargs.call(self, self.show_name, [found_in].concat([ρσ_desugar_kwargs({initial_position: (function(){
-                            var ρσ_d = Object.create(null);
-                            ρσ_d["type"] = "search";
-                            ρσ_d["search_data"] = data;
-                            ρσ_d["replace_history"] = true;
-                            return ρσ_d;
-                        }).call(this)})]));
-                    } else {
-                        ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["find"].concat([ρσ_desugar_kwargs({text: data.text, backwards: data.backwards, searched_in_spine: true})]));
-                    }
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["found_in"]},
-                    __module__ : {value: "read_book.view"}
-                });
-                return ρσ_anonfunc;
-            })());
-        };
-        if (!View.prototype.on_find_in_spine.__argnames__) Object.defineProperties(View.prototype.on_find_in_spine, {
             __argnames__ : {value: ["data"]},
             __module__ : {value: "read_book.view"}
         });
@@ -43688,9 +44759,9 @@ return this.__repr__();
         View.prototype.focus_iframe = function focus_iframe() {
             var self = this;
             var x;
-            var ρσ_Iter4 = ρσ_Iterable(self.modal_overlays);
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                x = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter2 = ρσ_Iterable(self.modal_overlays);
+            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                x = ρσ_Iter2[ρσ_Index2];
                 if (x.is_visible) {
                     x.focus();
                     return;
@@ -43704,9 +44775,9 @@ return this.__repr__();
         View.prototype.start_read_aloud = function start_read_aloud(dont_start_talking) {
             var self = this;
             var x;
-            var ρσ_Iter5 = ρσ_Iterable(self.modal_overlays);
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                x = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter3 = ρσ_Iterable(self.modal_overlays);
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                x = ρσ_Iter3[ρσ_Index3];
                 if (x !== self.read_aloud) {
                     x.hide();
                 }
@@ -43737,9 +44808,9 @@ return this.__repr__();
             if (self.hints.is_visible) {
                 self.hints.hide();
             } else {
-                var ρσ_Iter6 = ρσ_Iterable(self.modal_overlays);
-                for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                    x = ρσ_Iter6[ρσ_Index6];
+                var ρσ_Iter4 = ρσ_Iterable(self.modal_overlays);
+                for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                    x = ρσ_Iter4[ρσ_Index4];
                     if (x !== self.hints) {
                         x.hide();
                     }
@@ -43924,9 +44995,9 @@ return this.__repr__();
                 set_ui_colors(self.current_color_scheme.is_dark_theme);
             }
             is_dark_theme(self.current_color_scheme.is_dark_theme);
-            var ρσ_Iter7 = ρσ_Iterable("left top right bottom".split(" "));
-            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                which = ρσ_Iter7[ρσ_Index7];
+            var ρσ_Iter5 = ρσ_Iterable("left top right bottom".split(" "));
+            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                which = ρσ_Iter5[ρσ_Index5];
                 m = document.getElementById("book-{}-margin".format(which));
                 s = m.style;
                 mc = ans[ρσ_bound_index("margin_" + ρσ_str.format("{}", which) + "", ans)];
@@ -44070,10 +45141,11 @@ return this.__repr__();
             self.book_load_started = true;
             if (!is_current_book) {
                 self.iframe_wrapper.reset();
-                self.content_popup_overlay.iframe_wrapper.reset();
+                self.content_popup_overlay.reset();
                 self.loaded_resources = Object.create(null);
                 self.content_popup_overlay.loaded_resources = Object.create(null);
                 self.timers.start_book(book);
+                self.search_overlay.clear_caches(book);
             }
             unkey = username_key(get_interface_data().username);
             self.book = current_book.book = book;
@@ -44322,9 +45394,9 @@ return this.__repr__();
             page = total_length * frac;
             chapter_frac = 0;
             chapter_name = null;
-            var ρσ_Iter8 = ρσ_Iterable(self.book.manifest.spine);
-            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                name = ρσ_Iter8[ρσ_Index8];
+            var ρσ_Iter6 = ρσ_Iterable(self.book.manifest.spine);
+            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                name = ρσ_Iter6[ρσ_Index6];
                 chapter_length = ρσ_exists.d((ρσ_expr_temp = self.book.manifest.files)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name]).length || 0;
                 chapter_end_page = chapter_start_page + chapter_length;
                 if (chapter_start_page <= page && page <= chapter_end_page) {
@@ -44489,9 +45561,9 @@ return this.__repr__();
                     found = true;
                     return;
                 }
-                var ρσ_Iter9 = ρσ_Iterable(x.children);
-                for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                    c = ρσ_Iter9[ρσ_Index9];
+                var ρσ_Iter7 = ρσ_Iterable(x.children);
+                for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                    c = ρσ_Iter7[ρσ_Index7];
                     process_node(c);
                 }
             };
@@ -44776,9 +45848,9 @@ return this.__repr__();
                 __module__ : {value: "read_book.view"}
             });
 
-            var ρσ_Iter10 = ρσ_Iterable(ρσ_list_decorate([ "left", "right", "top", "bottom" ]));
-            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                edge = ρσ_Iter10[ρσ_Index10];
+            var ρσ_Iter8 = ρσ_Iterable(ρσ_list_decorate([ "left", "right", "top", "bottom" ]));
+            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
+                edge = ρσ_Iter8[ρσ_Index8];
                 div = document.getElementById("book-" + ρσ_str.format("{}", edge) + "-margin");
                 if (div) {
                     tname = (ρσ_expr_temp = (function(){
@@ -44820,9 +45892,9 @@ return this.__repr__();
             }
             if (runtime.is_standalone_viewer) {
                 r = [];
-                var ρσ_Iter11 = ρσ_Iterable(self.current_toc_families);
-                for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
-                    fam = ρσ_Iter11[ρσ_Index11];
+                var ρσ_Iter9 = ρσ_Iterable(self.current_toc_families);
+                for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
+                    fam = ρσ_Iter9[ρσ_Index9];
                     if (fam.length) {
                         r.push(fam[fam.length-1].id);
                     }
@@ -44862,9 +45934,9 @@ return this.__repr__();
         View.prototype.on_content_loaded = function on_content_loaded(data) {
             var self = this;
             var x;
-            var ρσ_Iter12 = ρσ_Iterable(self.modal_overlays);
-            for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
-                x = ρσ_Iter12[ρσ_Index12];
+            var ρσ_Iter10 = ρσ_Iterable(self.modal_overlays);
+            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
+                x = ρσ_Iter10[ρσ_Index10];
                 if (!x.dont_hide_on_content_loaded) {
                     x.hide();
                 }
@@ -44974,8 +46046,10 @@ return this.__repr__();
             if (ρσ_exists.d(self.search_result_discovery).on_discovery === sr.on_discovery) {
                 self.search_result_discovery.in_flight = null;
                 if (discovered) {
-                    self.search_result_discovery.discovered = true;
-                    ui_operations.search_result_discovered(sr);
+                    if (!self.search_result_discovery.discovered) {
+                        self.search_result_discovery.discovered = true;
+                        ui_operations.search_result_discovered(sr);
+                    }
                 } else if (!self.search_result_discovery.discovered && self.search_result_discovery.queue.length) {
                     self.show_search_result(self.search_result_discovery.queue.shift());
                 }

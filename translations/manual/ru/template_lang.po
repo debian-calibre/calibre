@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-29 01:07+0000\n"
-"PO-Revision-Date: 2021-04-21 15:54+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2021-05-20 11:33+0000\n"
+"PO-Revision-Date: 2021-05-05 11:38+0000\n"
+"Last-Translator: ashed <craysy@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/calibre/calibre/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -64,7 +64,7 @@ msgid ""
 msgstr "Язык построен на понятии «шаблон», который определяет, какие метаданные книги использовать, вычисления над этими метаданными и способ их форматирования."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:17
-msgid "Basic Templates"
+msgid "Basic templates"
 msgstr "Базовые шаблоны"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:19
@@ -277,12 +277,12 @@ msgstr "``{series_index: 05.2f}`` - пять символов, состоящи�
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:103
 msgid "If you want only the first two letters of the data, use:"
-msgstr ""
+msgstr "Если вам нужны только первые две буквы данных, используйте:"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:105
 msgid ""
 "``{author_sort:.2}`` - Only the first two letters of the author sort name"
-msgstr ""
+msgstr "``{author_sort:.2}`` - Только первые две буквы сортировочного имени автора"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:107
 msgid ""
@@ -290,11 +290,11 @@ msgid ""
 " details on the syntax of these advanced formatting operations see the "
 "`Python documentation "
 "<https://docs.python.org/3/library/string.html#formatstrings>`_."
-msgstr ""
+msgstr "Большая часть форматирования языка шаблонов calibre из Python. Дополнительные сведения о синтаксисе расширенных операций форматирования см. в `Python documentation <https://docs.python.org/3/library/string.html#formatstrings>`_."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:111
 msgid "Using templates to define custom columns"
-msgstr ""
+msgstr "Использование шаблонов для определения пользовательских столбцов"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:113
 msgid ""
@@ -308,11 +308,11 @@ msgid ""
 "ISBN, create the column and enter ``{identifiers:select(isbn)}`` in the "
 "template box. To display a column containing the values of two series custom"
 " columns, separated by a comma, use ``{#series1:||,}{#series2}``."
-msgstr ""
+msgstr "Шаблоны могут использоваться для отображения информации, которая не входит в метаданные calibre, или для отображения метаданных, отличных от обычного формата calibre. Например, чтобы отобразить ``ISBN``, поле, которое штатно не отображается в calibre. Создайте настраиваемый столбец с типом `Столбец, построенный из других столбцов` (в дальнейшем называемый `составные столбцы`) и предоставьте шаблон для генерации отображаемого текста. В столбце отобразится результат оценки шаблона. Чтобы отобразить ISBN, создайте составной столбец и введите ``{identifiers:select (isbn)}`` в поле шаблона. Чтобы отобразить столбец, содержащий значения двух пользовательских столбцов серий, разделённых запятой, используйте ``{#series1:||,}{#series2}``."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:115
 msgid "Composite columns can use any template option, including formatting."
-msgstr ""
+msgstr "В составных столбцах можно использовать любой параметр шаблона, включая форматирование."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:117
 msgid ""
@@ -320,11 +320,11 @@ msgid ""
 "edit the source columns. If you edit a composite column, for example by "
 "double-clicking it, calibre will open the template for editing, not the "
 "underlying data."
-msgstr ""
+msgstr "Примечание. Вы не можете редактировать данные, отображаемые в составном столбце. Вместо этого вы редактируете исходные столбцы. Если вы редактируете составной столбец, например, дважды щелкнув по нему, calibre откроет для редактирования шаблон, а не базовые данные."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:122
 msgid "Using functions in templates - Single Function Mode"
-msgstr ""
+msgstr "Использование функций в шаблонах - режим одной функции"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:124
 msgid ""
@@ -333,7 +333,7 @@ msgid ""
 " For example, to display the title in upper case use the ``uppercase`` "
 "function, as in ``{title:uppercase()}``. To display it in title case, use "
 "``{title:titlecase()}``."
-msgstr ""
+msgstr "Предположим, вы хотите отобразить значение поля в верхнем регистре, когда это поле обычно находится в регистре заголовков. Вы можете сделать это с помощью шаблонных функций. Например, чтобы отобразить заголовок в верхнем регистре, используйте функцию ``uppercase``, как в ``{title:uppercase()}``. Чтобы отобразить его в регистре заголовка, используйте ``{title:titlecase()}``."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:126
 msgid ""
@@ -342,11 +342,11 @@ msgid ""
 "you have both a format and a function reference, the function comes after a "
 "second ``:``.  Functions return the value of the column specified in the "
 "template, suitably modified."
-msgstr ""
+msgstr "Функции входят в форматную часть шаблона после ``:`` и перед первым ``|`` или закрывающим ``}``, если не используется префикс/суффикс. Если у вас есть и формат, и ссылка на функцию, функция появляется после второго ``:``. Функции возвращают соответствующее измененное значение столбца, указанного в шаблоне."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:128
 msgid "The syntax for using functions is one of::"
-msgstr ""
+msgstr "Синтаксис использования функций - один из::"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:135
 msgid ""
@@ -355,13 +355,13 @@ msgid ""
 "parentheses. Arguments are separated by commas. Literal commas (commas as "
 "text, not argument separators) must be preceded by a backslash (``\\``) . "
 "The last (or only) argument cannot contain a textual closing parenthesis."
-msgstr ""
+msgstr "За именами функций всегда должны стоять открывающие и закрывающие круглые скобки. Некоторым функциям требуются дополнительные значения (аргументы), и они заключаются в круглые скобки. Аргументы разделяются запятыми. Буквальным запятым (запятым как тексту, а не разделителям аргументов) должна предшествовать обратная косая черта (``\\\\``). Последний (или единственный) аргумент не может содержать закрывающую текстовую скобку."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:137
 msgid ""
 "Functions are evaluated before format specifications and the prefix/suffix. "
 "See further down for an example of using both a format and a function."
-msgstr ""
+msgstr "Функции оцениваются до спецификации формата и префикса/суффикса. См. Ниже пример использования формата и функции."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:139
 msgid ""
@@ -369,20 +369,20 @@ msgid ""
 "syntax in `Single Function Mode` is not what you expect. Strings are not "
 "quoted and spaces are significant. All arguments are considered to be "
 "constants; there are no expressions."
-msgstr ""
+msgstr "**Важно**: если у вас есть опыт программирования, обратите внимание, что синтаксис в `Single Function Mode` не соответствует вашим ожиданиям. Строки не заключаются в кавычки, а пробелы имеют значение. Все аргументы считаются константами; нет выражений."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:141
 msgid ""
 "**Do not use subtemplates (`{ ... }`) as function arguments.** Instead, use "
 ":ref:`Template Program Mode <template_mode>` and :ref:`General Program Mode "
 "<general_mode>`."
-msgstr ""
+msgstr "**Не используйте подшаблоны (`{ ... }`) в качестве аргументов функции.** Вместо этого используйте :ref:`Template Program Mode <template_mode>` и :ref:`General Program Mode <general_mode>`."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:143
 msgid ""
 "Some functions require regular expressions. In the template language regular"
 " expression matching is case-insensitive."
-msgstr ""
+msgstr "Для некоторых функций требуются регулярные выражения. В языке шаблонов сопоставление регулярных выражений производится без учета регистра."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:145
 msgid ""
@@ -390,17 +390,17 @@ msgid ""
 "that ``something`` can be repeated zero or more times. The notation "
 "``[something]+`` means that the ``something`` is repeated one or more times "
 "(must exist at least one time)."
-msgstr ""
+msgstr "В документации по функциям ниже обозначение ``[something]*`` означает, что ``something`` может повторяться ноль или более раз. Обозначение ``[что-то]+`` означает, что ``что-то`` повторяется один или несколько раз (должно существовать хотя бы один раз)."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:147
 msgid "The functions intended for use in Single Function Mode are:"
-msgstr ""
+msgstr "Функции, предназначенные для использования в режиме одной функции:"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:150
 msgid ""
 "``capitalize()`` -- returns the value with the first letter upper case and "
 "the rest lower case."
-msgstr ""
+msgstr "``capitalize()`` -- возвращает значение, в котором первая буква в верхнем регистре, а остальные в нижнем регистре."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:151
 msgid ""
@@ -408,7 +408,7 @@ msgid ""
 "value is matched by the regular expression ``pattern``. Returns ``text if "
 "match`` if the pattern matches the value, otherwise returns ``text if no "
 "match``."
-msgstr ""
+msgstr "``содержит (шаблон, текст в случае совпадения, текст в случае несовпадения)`` - проверяет, соответствует ли значение регулярному выражению ``паттерн``. Возвращает ``текст при совпадении``, если паттерн соответствует значению, в противном случае возвращает ``текст при отсутствии совпадения``."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:152
 msgid ""
@@ -724,8 +724,8 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:257
-msgid "**Operator Precedence**"
-msgstr "**Приоритет операторов**"
+msgid "**Operator precedence**"
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:259
 msgid ""
@@ -797,8 +797,8 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:272
-msgid "**Field References**"
-msgstr "**Ссылки на поля**"
+msgid "**Field references**"
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:274
 msgid ""
@@ -809,7 +809,7 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:281
-msgid "**If Expressions**"
+msgid "**If expressions**"
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:283
@@ -849,7 +849,7 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:321
-msgid "**For Expressions**"
+msgid "**For expressions**"
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:323
@@ -894,7 +894,7 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:340
-msgid "**Relational Operators**"
+msgid "**Relational operators**"
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:342
@@ -992,7 +992,7 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:363
-msgid "**Additional Available Functions**"
+msgid "**Additional available functions**"
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:365
@@ -1747,7 +1747,7 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:534
-msgid "Stored General Program Mode Templates"
+msgid "Stored general program mode templates"
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:536

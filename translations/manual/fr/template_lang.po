@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-29 01:07+0000\n"
-"PO-Revision-Date: 2021-04-26 13:15+0000\n"
+"POT-Creation-Date: 2021-05-20 11:33+0000\n"
+"PO-Revision-Date: 2021-05-18 12:01+0000\n"
 "Last-Translator: Ptit Prince <leporello1791@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/calibre/calibre/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -64,8 +64,8 @@ msgid ""
 msgstr "Le langage est construit autour de la notion de `modèle`, qui spécifie les métadonnées du livre à utiliser, les calculs sur ces métadonnées, et la façon dont elles doivent être formatées."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:17
-msgid "Basic Templates"
-msgstr "Modèles de Base"
+msgid "Basic templates"
+msgstr "Modèles de base"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:19
 msgid ""
@@ -724,8 +724,8 @@ msgid ""
 msgstr "Les commentaires sont des lignes commençant par le caractère \"#\". Les commentaires commençant plus loin dans une ligne ne sont pas pris en charge."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:257
-msgid "**Operator Precedence**"
-msgstr "**Préséance de l'Opérateur**"
+msgid "**Operator precedence**"
+msgstr "**Préséance de l'opérateur**"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:259
 msgid ""
@@ -797,7 +797,7 @@ msgid ""
 msgstr "Logique ou (``||``). Cet opérateur renvoie ``'1'`` si l'expression de gauche ou de droite est vraie, ou ``''`` si les deux sont fausses. Il est associatif, s'évalue de gauche à droite, et fait du `court-circuitage <https://chortle.ccsu.edu/java5/Notes/chap40/ch40_2.html>`_. C'est un `or inclusif`, qui renvoie \"1\" si les deux expressions de gauche et de droite sont vraies."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:272
-msgid "**Field References**"
+msgid "**Field references**"
 msgstr "**Références des champs**"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:274
@@ -809,8 +809,8 @@ msgid ""
 msgstr "Un \"field_reference\" est évalué à la valeur du champ de métadonnées nommé par le nom de la consultation qui suit le \"$\" ou le \"$$\". L'utilisation de ``$`` équivaut à l'utilisation de la fonction ``field()``. L'utilisation de ``$$`` équivaut à l'utilisation de la fonction ``raw_field``. Exemples ::"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:281
-msgid "**If Expressions**"
-msgstr "**Expressions If**"
+msgid "**If expressions**"
+msgstr "**Expressions if**"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:283
 msgid ""
@@ -849,8 +849,8 @@ msgid ""
 msgstr "Comme dernier exemple, ce programme retourne la valeur de la colonne ``series`` si le livre a une série, sinon la valeur de la colonne ``title`` ::"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:321
-msgid "**For Expressions**"
-msgstr "**Expressions For**"
+msgid "**For expressions**"
+msgstr "**Expressions for**"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:323
 msgid ""
@@ -894,8 +894,8 @@ msgid ""
 msgstr "Note : la dernière ligne du modèle, ``new_tags``, n'est pas strictement nécessaire dans ce cas car ``for`` renvoie la valeur de la dernière top_expression de la liste d'expressions. La valeur d'une affectation est la valeur de son expression, donc la valeur de l'instruction ``for`` est ce qui a été affecté à ``new_tags``."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:340
-msgid "**Relational Operators**"
-msgstr "**Opérateurs Relationnels**"
+msgid "**Relational operators**"
+msgstr "**Opérateurs relationnels**"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:342
 msgid ""
@@ -992,8 +992,8 @@ msgid ""
 msgstr "``Program: if 11 ># 2 then 'yes' else 'no' fi`` renvoie ``'yes'`` parce que l'opérateur ``>#`` effectue une comparaison numérique."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:363
-msgid "**Additional Available Functions**"
-msgstr "**Fonctions Supplémentaires Disponibles**"
+msgid "**Additional available functions**"
+msgstr "**Fonctions supplémentaires disponibles**"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:365
 msgid ""
@@ -1148,7 +1148,7 @@ msgstr "``current_library_name()`` -- renvoie le dernier nom sur le chemin de la
 msgid ""
 "``current_library_path()`` -- return the full path to the current calibre "
 "library."
-msgstr ""
+msgstr "``current_library_path()`` -- renvoie le chemin complet vers la bibliothèque calibre actuelle."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:392
 msgid ""
@@ -1163,7 +1163,7 @@ msgid ""
 "``divide(x, y)`` -- returns ``x / y``. Throws an exception if either ``x`` "
 "or ``y`` are not numbers. This function can usually be replaced by the ``/``"
 " operator."
-msgstr ""
+msgstr "``divide(x, y)`` -- renvoie ``x / y``. Lance une exception si ``x`` ou ``y`` ne sont pas des nombres. Cette fonction peut généralement être remplacée par l'opérateur ``/``."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:394
 msgid ""
@@ -1176,20 +1176,20 @@ msgid ""
 "prefixes and suffixes (the `|prefix|suffix` syntax) cannot be used in the "
 "argument to this function when using :ref:`Template Program Mode "
 "<template_mode>`."
-msgstr ""
+msgstr "``eval(string)`` -- évalue la chaîne comme un programme, en passant les variables locales. Cela permet d'utiliser le processeur de modèles pour construire des résultats complexes à partir de variables locales. En :ref:`Mode Modèle de Programme<template_mode>`, comme les caractères `{` et `}` sont interprétés avant l'évaluation du modèle, vous devez utiliser `[[`] pour le caractère `{` et `]]` pour le caractère ``}``. Ils sont convertis automatiquement. Notez également que les préfixes et les suffixes (la syntaxe `|prefix|suffix`) ne peuvent pas être utilisés dans l'argument de cette fonction lors de l'utilisation de :ref:`Mode Modèle de Programme<template_mode>`."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:395
 msgid ""
 "``field(lookup_name)`` -- returns the value of the metadata field with "
 "lookup name ``lookup_name``."
-msgstr ""
+msgstr "``field(lookup_name)`` -- renvoie la valeur du champ de métadonnées avec le nom de recherche ``lookup_name``."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:396
 msgid ""
 "``field_exists(field_name)`` -- checks if a field (column) with the lookup "
 "name ``field_name`` exists, returning ``'1'`` if so and the empty string if "
 "not."
-msgstr ""
+msgstr "``field_exists(field_name)`` -- vérifie si un champ (colonne) avec le nom de recherche ``field_name`` existe, retournant `'1'`` si c'est le cas et la chaîne vide si non."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:397
 msgid ""
@@ -1199,7 +1199,7 @@ msgid ""
 "conversion of complex single-function- or template-program-mode templates to"
 " `GPM` Templates. For example, the following program produces the same "
 "output as the above template::"
-msgstr ""
+msgstr "``finish_formatting(val, fmt, prefix, suffix)`` -- applique le format, le préfixe et le suffixe à une valeur de la même manière que dans un modèle comme ``{series_index:05.2f| - |- }``. Cette fonction est fournie pour faciliter la conversion des modèles complexes single-function- ou modèles template-program-mode en modèles `MGP`. Par exemple, le programme suivant produit la même sortie que le modèle ci-dessus ::"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:401
 msgid ""
@@ -1214,26 +1214,26 @@ msgid ""
 " < cmp`` in sequence, returning the associated result for the first "
 "comparison that succeeds. Returns else_result if no comparison succeeds. "
 "Example::"
-msgstr ""
+msgstr "``first_matching_cmp(val, [ cmp, result, ]* else_result)`` -- compare ``val < cmp`` en séquence, en retournant le résultat associé à la première comparaison qui réussit. Retourne else_result si aucune comparaison ne réussit. Exemple ::"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:415
 msgid ""
 "returns ``\"large\"``. The same example with a first value of 16 returns "
 "``\"giant\"``."
-msgstr ""
+msgstr "renvoie ``\"grand\"``. Le même exemple avec une première valeur de 16 renvoie ``\"géant\"``."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:417
 msgid ""
 "``first_non_empty(value [, value]*)`` -- returns the first ``value`` that is"
 " not empty. If all values are empty, then the empty string is returned. You "
 "can have as many values as you want."
-msgstr ""
+msgstr "``first_non_empty(value [, value]*)`` -- retourne la première valeur non vide. Si toutes les valeurs sont vides, alors la chaîne vide est retournée. Vous pouvez avoir autant de valeurs que vous voulez."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:418
 msgid ""
 "``floor(x)`` -- returns the largest integer less than or equal to ``x``. "
 "Throws an exception if ``x`` is not a number."
-msgstr ""
+msgstr "``floor(x)`` -- renvoie le plus grand entier inférieur ou égal à ``x``. Envoie une exception si ``x`` n'est pas un nombre."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:419
 msgid ""
@@ -1747,8 +1747,8 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:534
-msgid "Stored General Program Mode Templates"
-msgstr "Modèles de Mode de Programme Général stockés"
+msgid "Stored general program mode templates"
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:536
 msgid ""

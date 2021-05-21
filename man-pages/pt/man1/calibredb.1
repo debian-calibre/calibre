@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "abril 30, 2021" "5.17.0" "calibre"
+.TH "CALIBREDB" "1" "maio 21, 2021" "5.18.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -46,12 +46,12 @@ calibredb comando [options] [arguments]
 \fBcalibredb\fP pode ser usado para manipular quer uma base de dados Calibre especificada por caminho quer um Servidor de conteúdos  Calibre em execução em máquina local ou na internet.
 Você pode iniciar um :guilabel: \fIServidor de conteúdos\fP Calibre usando o programa \fBcalibre\-server\fP ou, no programa principal Calibre, clicar em Ligar/Partilhar \-> Iniciar servidor de conteúdos\(ga.
 Como o \fBcalibredb\fP pode efetuar alterações nas suas bibliotecas Calibre, primeiro você deve configurar a autenticação no servidor.
-Existem duas maneiras de fazer isso:
+Existem duas maneiras de o fazer:
 .INDENT 0.0
 .IP \(bu 2
-Se planeia ligar\-se apenas a um servidor rodando no mesmo computador, você pode simplesmente usar a opção \fB\-\-enable\-local\-write\fP do servidor de conteúdos, para permitir que qualquer programa que seja executado no computador local, incluindo o calibredb, possa fazer alterações nos seus dados Calibre. Ao executar o servidor a partir do programa principal do Calibre, esta opção está em Preferências → Partilhar na rede → Avançado\&.
+Se planeia ligar\-se apenas a um servidor a funcionar no mesmo computador, você pode simplesmente usar a opção \fB\-\-enable\-local\-write\fP do servidor de conteúdos, para permitir que qualquer programa que seja executado no computador local, incluindo o calibredb, possa fazer alterações nos seus dados Calibre. Ao executar o servidor a partir do programa principal do Calibre, esta opção está em Preferências → Partilhar na rede → Avançado\&.
 .IP \(bu 2
-Se você deseja ativar o acesso pela internet, então deve configurar contas de utilizador no servidor e usar as opções :option: \fI\-\-username\fP e :option:\(ga \-\-password\(ga para :command: \fIcalibredb\fP para fornecer acesso.
+Se deseja ativar o acesso pela internet então deve configurar contas de utilizador no servidor e usar as opções :option: \fI\-\-username\fP e :option:\(ga \-\-password\(ga para :command: \fIcalibredb\fP para fornecer acesso.
 .UNINDENT
 .sp
 Você pode configurar a autenticação de utilizadores para :command: \fIcalibre\-server\fP usando a opção \fB\-\-enable\-auth\fP e usando \fB\-\-manage\-users\fP para criar as contas de utilizador.

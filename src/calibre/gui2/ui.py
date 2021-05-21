@@ -488,7 +488,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                 except EnvironmentError:
                     pass
                 warning_dialog(self, _('Content server changed!'), _(
-                    'calibre 3 comes with a completely re-written content server.'
+                    'calibre 3 comes with a completely re-written Content server.'
                     ' As such any custom configuration you have for the content'
                     ' server no longer applies. You should check and refresh your'
                     ' settings in Preferences->Sharing->Sharing over the net'), show=True)
@@ -976,7 +976,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                 your e-book reader may have trouble with the EPUB.
                         ''')
                 if not minz:
-                    d = error_dialog(self, _('Conversion Failed'), msg,
+                    d = error_dialog(self, _('Conversion failed'), msg,
                             det_msg=job.details)
                     d.setModal(False)
                     d.show()
@@ -1091,8 +1091,8 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
 
         from calibre.db.delete_service import has_jobs
         if has_jobs():
-            msg = _('Some deleted books are still being moved to the Recycle '
-                    'Bin, if you quit now, they will be left behind. Are you '
+            msg = _('Some deleted books are still being moved to the recycle '
+                    'bin, if you quit now, they will be left behind. Are you '
                     'sure you want to quit?')
             if not question_dialog(self, _('Active jobs'), msg):
                 return False

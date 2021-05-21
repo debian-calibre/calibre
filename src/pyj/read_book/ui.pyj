@@ -87,6 +87,9 @@ class ReadUI:
         ui_operations.view_image = self.view_image.bind(self)
         ui_operations.speak_simple_text = self.speak_simple_text.bind(self)
         ui_operations.tts = self.tts.bind(self)
+        ui_operations.search_result_discovered = self.view.search_overlay.search_result_discovered
+        ui_operations.search_result_not_found = self.view.search_overlay.search_result_not_found
+        ui_operations.find_next = self.view.search_overlay.find_next
         ui_operations.open_url = def(url):
             window.open(url, '_blank')
         ui_operations.copy_selection = def(text, html):
@@ -329,7 +332,7 @@ class ReadUI:
             return
         if end_type is not 'load':
             return self.show_error(_('Failed to load book manifest'),
-                _('The book manifest failed to load, click "Show Details" for more information.').format(title=self.current_metadata.title),
+                _('The book manifest failed to load, click "Show details" for more information.').format(title=self.current_metadata.title),
                                 xhr.error_html)
         try:
             manifest = JSON.parse(xhr.responseText)
@@ -474,7 +477,7 @@ class ReadUI:
                 return
             if end_type is not 'load':
                 return self.show_error(_('Failed to load MathJax manifest'),
-                    _('The MathJax manifest failed to load, click "Show Details" for more information.').format(title=self.current_metadata.title),
+                    _('The MathJax manifest failed to load, click "Show details" for more information.').format(title=self.current_metadata.title),
                                     xhr.error_html)
             try:
                 manifest = JSON.parse(xhr.responseText)

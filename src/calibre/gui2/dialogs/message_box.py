@@ -82,8 +82,13 @@ class MessageBox(QDialog):  # {{{
                  q_icon=None,
                  show_copy_button=True,
                  parent=None, default_yes=True,
-                 yes_text=None, no_text=None, yes_icon=None, no_icon=None):
+                 yes_text=None, no_text=None, yes_icon=None, no_icon=None,
+                 add_abort_button=False,
+                 only_copy_details=False
+    ):
         QDialog.__init__(self, parent)
+        self.only_copy_details = only_copy_details
+        self.aborted = False
         if q_icon is None:
             icon = {
                     self.ERROR : 'error',
@@ -139,11 +144,17 @@ class MessageBox(QDialog):  # {{{
         else:
             self.bb.button(QDialogButtonBox.StandardButton.Ok).setDefault(True)
 
+        if add_abort_button:
+            self.bb.addButton(QDialogButtonBox.StandardButton.Abort).clicked.connect(self.on_abort)
+
         if not det_msg:
             self.det_msg_toggle.setVisible(False)
 
         self.resize_needed.connect(self.do_resize, type=Qt.ConnectionType.QueuedConnection)
         self.do_resize()
+
+    def on_abort(self):
+        self.aborted = True
 
     def sizeHint(self):
         ans = QDialog.sizeHint(self)
@@ -161,11 +172,10 @@ class MessageBox(QDialog):  # {{{
         self.resize(self.sizeHint())
 
     def copy_to_clipboard(self, *args):
-        QApplication.clipboard().setText(
-                'calibre, version %s\n%s: %s\n\n%s' %
-                (__version__, unicode_type(self.windowTitle()),
-                    unicode_type(self.msg.text()),
-                    unicode_type(self.det_msg.toPlainText())))
+        text = self.det_msg.toPlainText()
+        if not self.only_copy_details:
+            text = f'calibre, version {__version__}\n{self.windowTitle()}: {self.msg.text()}\n\n{text}'
+        QApplication.clipboard().setText(text)
         if hasattr(self, 'ctc_button'):
             self.ctc_button.setText(_('Copied'))
 

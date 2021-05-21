@@ -200,7 +200,7 @@ class Ui_Form(object):
         self.label.setBuddy(self.opt_auto_add_path)
 
         self.retranslateUi(Form)
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(0)
         self.opt_add_formats_to_existing.toggled['bool'].connect(self.opt_automerge.setEnabled)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
@@ -219,11 +219,8 @@ class Ui_Form(object):
         self.opt_manual_add_auto_convert.setText(_("Automatically &convert added books to the preferred output format"))
         self.opt_auto_convert_same_fmt.setToolTip(_("This will force an automatic conversion even if the file being added is the same format as the output format. For example, if you set your output format to EPUB and add an EPUB file, an EPUB to EPUB conversion will be run."))
         self.opt_auto_convert_same_fmt.setText(_("When auto-converting, convert even if the format being added is the &same as the output format"))
-        self.opt_add_formats_to_existing.setToolTip(_("Auto-merge: If books with similar titles and authors are found, merge the incoming formats automatically into\n"
-"existing book records. The box to the right controls what happens when an existing record already has\n"
-"the incoming format. Note that this option also affects the Copy to library action.\n"
-"\n"
-"Title match ignores leading indefinite articles (\"the\", \"a\", \"an\"), punctuation, case, etc. Author match is exact."))
+        self.opt_add_formats_to_existing.setToolTip(_("<p>Auto-merge: If books with similar titles and authors are found, merge the incoming formats automatically into existing book records. The box to the right controls what happens when an existing record already has the incoming format. Note that this option also affects the Copy to library action.</p>\n"
+"<p>Title match ignores leading indefinite articles (\"the\", \"a\", \"an\"), punctuation, case, etc. Author match is exact.</p>"))
         self.opt_add_formats_to_existing.setText(_("&Auto-merge added books if they already exist:"))
         self.opt_automerge.setToolTip(_("Auto-merge: If books with similar titles and authors are found, merge the incoming formats (files) automatically into\n"
 "existing book records. This box controls what happens when an existing record already has\n"
