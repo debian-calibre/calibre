@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "aprill 30, 2021" "5.17.0" "calibre"
+.TH "CALIBREDB" "1" "mai 21, 2021" "5.18.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -58,7 +58,7 @@ are two ways to do that:
 .IP \(bu 2
 If you plan to connect only to a server running on the same computer,
 you can simply use the \fB\-\-enable\-local\-write\fP option of the
-content server, to allow any program, including calibredb, running on
+Content server, to allow any program, including calibredb, running on
 the local computer to make changes to your calibre data. When running
 the server from the main calibre program, this option is in
 Preferences → Sharing over the net → Advanced\&.
@@ -86,7 +86,7 @@ details and examples.
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ADDING FROM FOLDERS\fP
+\fI\%LISAMINE KAUSTADEST\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -228,14 +228,14 @@ Väli, mille põhjal tulemusi järjestada. Saadaovallevad väljad: author_sort, 
 .sp
 .nf
 .ft C
-calibredb add [options] file1 file2 file3 ...
+calibredb add [suvandid] fail1 fail2 fail3 ...
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Add the specified files as books to the database. You can also specify folders, see
-the folder related options below.
+Lisa määratletud failid raamatuna andmebaasi. Määrata saab ka kaustad,
+vaata allolevaid kaustaga seotud suvandeid.
 .sp
 Alati kui edastad programmile calibredb tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: "/some path/with spaces"
 .INDENT 0.0
@@ -298,28 +298,28 @@ Määra lisatud raamatu(te) sildid
 .B \-\-title, \-t
 Määra lisatud raamatu(te) pealkiri
 .UNINDENT
-.SS ADDING FROM FOLDERS
+.SS LISAMINE KAUSTADEST
 .sp
-Options to control the adding of books from folders. By default only files that have extensions of known e\-book file types are added.
+Sätted raamatute kaustadest lisamise juhtimiseks. Vaikimisi lisatakse ainult tuntud e\-raamatu failitüübi laiendiga failid.
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+Failinime (glob) muster, sellele mustrile vastavad failid lisatakse kaustadest failide skannimisel, isegi kui need ei ole tuntud e\-raamatute faili tüübid. Saab mitme mustri jaoks määratleda mitu korda.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all PDF files
+Failinime (glob) muster, sellele mustrile vastavaid faile eiratakse kaustadest failide skannimisel. Saab mitme mustri jaoks määratleda mitu korda. Näiteks: *.pdf eirab kõiki PDF\-faile
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
+Eelda, et igas kaustas on ainult üks loogiline raamat ja kõik selles olevad failid on tolle raamatu erinevad e\-raamatu formaadid
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Process folders recursively
+Töötle kaustu rekursiivselt
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -487,7 +487,7 @@ Asenda tühikud allkriipsudega.
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Export all books into a single folder
+Ekspordi kõik raamatud ühte kausta
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -502,7 +502,7 @@ Kuupäevade näitamise vorming. %d \- päev, %b \- kuu, %m \- kuu järjekorranum
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Export books to the specified folder. Default is .
+Ekspordi raamatud määratud kausta. Vaikimisi on .
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -469,6 +469,8 @@ class Boss(QObject):
             self.gui.update_window_title()
 
     def reorder_spine(self, items):
+        if not self.ensure_book():
+            return
         self.add_savepoint(_('Before: Re-order text'))
         c = current_container()
         c.set_spine(items)
@@ -554,6 +556,8 @@ class Boss(QObject):
                 show_font_face_rule_for_font_files(c, added_fonts, self.gui)
 
     def add_cover(self):
+        if not self.ensure_book():
+            return
         d = AddCover(current_container(), self.gui)
         d.import_requested.connect(self.do_add_file)
         try:
@@ -567,7 +571,8 @@ class Boss(QObject):
         finally:
             d.import_requested.disconnect()
 
-    def ensure_book(self, msg):
+    def ensure_book(self, msg=None):
+        msg = msg or _('No book is currently open. You must first open a book.')
         if current_container() is None:
             error_dialog(self.gui, _('No book open'), msg, show=True)
             return False
@@ -588,6 +593,8 @@ class Boss(QObject):
             self.gui.file_list.build(current_container())
 
     def insert_inline_toc(self):
+        if not self.ensure_book():
+            return
         self.commit_all_editors_to_container()
         self.add_savepoint(_('Before: Insert inline Table of Contents'))
         name = create_inline_toc(current_container())
@@ -601,6 +608,8 @@ class Boss(QObject):
         self.edit_file(name, 'html')
 
     def polish(self, action, name, parent=None):
+        if not self.ensure_book():
+            return
         from calibre.gui2.tweak_book.polish import get_customization, show_report
         customization = get_customization(action, name, parent or self.gui)
         if customization is None:
@@ -667,6 +676,8 @@ class Boss(QObject):
             self.rewind_savepoint()
 
     def manage_fonts(self):
+        if not self.ensure_book(_('No book is currently open. You must first open a book to manage fonts.')):
+            return
         self.commit_all_editors_to_container()
         self.gui.manage_fonts.display()
 
@@ -680,6 +691,8 @@ class Boss(QObject):
     # Renaming {{{
 
     def rationalize_folders(self):
+        if not self.ensure_book():
+            return
         c = current_container()
         if not c.SUPPORTS_FILENAMES:
             return error_dialog(self.gui, _('Not supported'),
@@ -735,7 +748,7 @@ class Boss(QObject):
     def rename_done(self, name_map, job, from_filelist=None):
         if job.traceback is not None:
             return error_dialog(self.gui, _('Failed to rename files'),
-                    _('Failed to rename files, click Show details for more information.'),
+                    _('Failed to rename files, click "Show details" for more information.'),
                                 det_msg=job.traceback, show=True)
         self.gui.file_list.build(current_container())
         self.set_modified()
@@ -846,6 +859,8 @@ class Boss(QObject):
             self.show_current_diff(allow_revert=allow_revert, to_container=to_container)
 
     def compare_book(self):
+        if not self.ensure_book():
+            return
         self.commit_all_editors_to_container()
         c = current_container()
         path = choose_files(self.gui, 'select-book-for-comparison', _('Choose book'), filters=[
@@ -973,6 +988,8 @@ class Boss(QObject):
                     'No class {} found to change').format(class_name), show=True)
 
     def set_semantics(self):
+        if not self.ensure_book():
+            return
         self.commit_all_editors_to_container()
         c = current_container()
         if c.book_type == 'azw3':
@@ -1261,7 +1278,7 @@ class Boss(QObject):
     def copy_saved(self, job):
         if job.traceback is not None:
             return error_dialog(self.gui, _('Failed to save copy'),
-                    _('Failed to save copy, click Show details for more information.'), det_msg=job.traceback, show=True)
+                    _('Failed to save copy, click "Show details" for more information.'), det_msg=job.traceback, show=True)
         msg = _('Copy saved to %s') % job.result
         info_dialog(self.gui, _('Copy saved'), msg, show=True)
         self.gui.show_status_message(msg, 5)

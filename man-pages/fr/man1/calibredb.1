@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "avril 30, 2021" "5.17.0" "calibre"
+.TH "CALIBREDB" "1" "mai 21, 2021" "5.18.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -57,7 +57,7 @@ il y a deux façons de le faire :
 Si vous prévoyez de vous connecter uniquement à un serveur fonctionnant sur le même ordinateur,
 .UNINDENT
 .sp
-vous pouvez simplement utiliser l\(aqoption "\-\-enable\-local\-write" du serveur de contenu
+vous pouvez simplement utiliser l\(aqoption "\-\-enable\-local\-write" du Serveur de contenu
 pour permettre à tout programme, y compris calibredb, de fonctionner sur
 l\(aqordinateur local pour apporter des modifications aux données de calibre. Lors de l\(aqexécution
 le serveur du programme principal de calibre, cette option se trouve sous
@@ -493,7 +493,7 @@ Exporter tous les livres vers un dossier unique
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+Modèle pour contrôler le nom des fichier et la structure des dossiers d’enregistrement des fichiers. Par défaut : \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP qui va sauvegarder les livres dans un sous\-dossier par auteur avec des noms de fichiers contenant le titre et l’auteur. Les variables disponibles sont  : {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -558,7 +558,7 @@ Crée des références croisées dans la section Auteurs pour les livres avec de
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Enregistre la sortie à différentes étapes du processus de conversion vers le dossier spécifié. Utile si vous n\fB\(aq\fPêtes pas sûr de l\fB\(aq\fPétape de la conversion à laquelle se produit le bogue. Par défaut\ : \fB\(aq\fPNone\fB\(aq\fP S’applique aux formats de sortie\ : AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP

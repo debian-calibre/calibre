@@ -5,7 +5,7 @@
 # Translators:
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2020
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2016-2017
-# Jonatan Nyberg <jonatan.nyberg.karl@gmail.com>, 2018-2021
+# Jonatan Nyberg <jonatan@autistici.org>, 2018-2021
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017-2018
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017
 # Merarom <merarom@yahoo.es>, 2014-2016
@@ -14,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-29 01:07+0000\n"
-"PO-Revision-Date: 2021-04-28 06:13+0000\n"
-"Last-Translator: Jonatan Nyberg <jonatan.nyberg.karl@gmail.com>\n"
+"POT-Creation-Date: 2021-05-20 11:33+0000\n"
+"PO-Revision-Date: 2021-05-09 16:14+0000\n"
+"Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/conversion.rst:4
 msgid "E-book conversion"
-msgstr "E-bokkonvertering"
+msgstr "Konvertering av e-bok"
 
 #: ../../__w/calibre/calibre/manual/conversion.rst:6
 msgid ""
@@ -53,6 +53,10 @@ msgid ""
 "by holding your mouse over it, a tooltip will appear describing the setting."
 msgstr "Detta dokument kommer avser främst konverteringsinställningarna som finns i dialogrutan konverteringen, bilden nedan. Alla dessa inställningar är även tillgängliga via kommandoraden för  konvertering, dokumenterat på :doc:`generated/sv/ebook-convert`. I calibre, kan du få hjälp av någon enskild inställning genom att hålla din mus över det, då kommer ett verktygstips visas som beskriver inställningen."
 
+#: ../../__w/calibre/calibre/manual/conversion.rstNone
+msgid "E-book conversion dialog"
+msgstr "Dialogruta för konvertering av e-bok"
+
 #: ../../__w/calibre/calibre/manual/conversion.rst:31
 #: ../../__w/calibre/calibre/manual/conversion.rst:95
 msgid "Contents"
@@ -62,11 +66,20 @@ msgstr "Innehåll"
 msgid "Introduction"
 msgstr "Introduktion"
 
+#: ../../__w/calibre/calibre/manual/conversion.rst:38
+#: ../../__w/calibre/calibre/manual/conversion.rst:38
+msgid "Debug icon"
+msgstr "Felsökningsikon"
+
 #: ../../__w/calibre/calibre/manual/conversion.rst:42
 msgid ""
 "The first thing to understand about the conversion system is that it is "
 "designed as a pipeline. Schematically, it looks like this:"
 msgstr "Det första man måste förstå om konverteringssystemet är att det är utmatningsformat som en rörledning. Schematiskt ser det ut så här:"
+
+#: ../../__w/calibre/calibre/manual/conversion.rstNone
+msgid "The conversion pipeline"
+msgstr "Konverteringen"
 
 #: ../../__w/calibre/calibre/manual/conversion.rst:49
 msgid ""
@@ -210,7 +223,7 @@ msgid ""
 "Normally, calibre will automatically choose a base font size appropriate to "
 "the output profile you have chosen (see :ref:`page-setup`). However, you can"
 " override this here in case the default is not suitable for you."
-msgstr "Normalt kommer calibre automatiskt att välja en grundteckenstorlek som är lämplig för utmatningsprofilen du har valt (se :ref:`page-setup`). Du kan dock åsidosätta detta här ifall standarden inte är lämplig för dig."
+msgstr "Normalt valjer calibre automatiskt en grundteckenstorlek som är lämplig för utmatningsprofilen du har valt (se :ref:`page-setup`). Du kan dock åsidosätta detta här om standardvärdet inte är lämplig för dig."
 
 #: ../../__w/calibre/calibre/manual/conversion.rst:121
 msgid ""
@@ -307,7 +320,7 @@ msgid ""
 " a particular character encoding by using this setting.  `cp1252` is a "
 "common encoding for documents produced using Windows software. You should "
 "also read :ref:`char-encoding-faq` for more on encoding issues."
-msgstr "Avslutningsvis finns :guilabel:`Inmatningsteckenkodning`. Äldre dokument anger ibland inte deras teckenkodning. Vid konvertering kan detta resultera i icke-engelska tecken eller specialtecken som smarta citat skadas. calibre försöker att automatiskt upptäcka källdokumentets teckenkodning, men det lyckas inte alltid. Du kan tvinga den att anta en viss teckenkodning med den här inställningen. `cp1252` är en vanlig kodning för dokument som produceras med Windows-mjukvara. Du bör också läsa :ref:`char-kodning-faq` för mer information om kodningsfrågor."
+msgstr "Slutligen finns det :guilabel:`Inmatningsteckenkodning`. Äldre dokument anger ibland inte deras teckenkodning. Vid konvertering kan detta leda till att icke-engelska tecken eller specialtecken som smarta citat skadas. calibre försöker att automatiskt upptäcka källdokumentets teckenkodning, men det lyckas inte alltid. Du kan tvinga den att anta en viss teckenkodning med den här inställningen. `cp1252` är en vanlig kodning för dokument som produceras med Windows-programvara. Du bör också läsa :ref:`char-encoding-faq` för mer om kodningsfrågor."
 
 #: ../../__w/calibre/calibre/manual/conversion.rst:188
 msgid "Layout"
@@ -712,7 +725,7 @@ msgid ""
 "in the :ref:`conversion-introduction` to figure out the appropriate settings"
 " for your book. There is also a button for a XPath wizard to help with the "
 "generation of simple XPath expressions."
-msgstr "calibre använder *XPath*, ett kraftfullt språk för att göra det möjligt för användaren att specificera kapitelgränser/sidbrytningar. XPath kan verka lite skrämmande att använda i början, lyckligtvis finns det en :ref:`conversion-introduction` i användarhandboken. Kom ihåg att Strukturdetektering fungerar på tillfällig XHTML producerad av konverteringsrörledningen. Använd felsökningsalternativet beskrivs i :ref:`conversion-introduction` att räkna ut lämpliga inställningar för din bok. Det finns också en knapp för en XPath-guide för att hjälpa till med generering av enkla XPath-uttryck."
+msgstr "calibre använder *XPath*, ett kraftfullt språk för att göra det möjligt för användaren att specificera kapitelgränser/sidbrytningar. XPath kan verka lite skrämmande att använda i början, lyckligtvis finns det en :ref:`XPath-handledning <xpath-tutorial>` i användarhandboken. Kom ihåg att strukturdetektering fungerar på den mellanliggande XHTML producerad av konverteringsrörledningen. Använd felsökningsalternativet som beskrivs i :ref:`conversion-introduction` för att ta reda på lämpliga inställningar för din bok. Det finns också en knapp för en XPath-guide som hjälper till med generering av enkla XPath-uttryck."
 
 #: ../../__w/calibre/calibre/manual/conversion.rst:417
 msgid ""
@@ -896,15 +909,15 @@ msgstr "Använda bilder som kapitelrubriker vid konvertering av HTML-inmatningsd
 msgid ""
 "Suppose you want to use an image as your chapter title, but still want "
 "calibre to be able to automatically generate a Table of Contents for you "
-"from the chapter titles. Use the following HTML markup to achieve this"
-msgstr "Anta att du vill använda en bild som din kapitelrubrik, men ändå vill att calibre automatiskt kan generera en innehållsförteckning åt dig från kapiteltitlarna. Använd följande HTML-markering för att uppnå detta"
+"from the chapter titles. Use the following HTML markup to achieve this:"
+msgstr "Anta att du vill använda en bild som din kapitelrubrik, men ändå vill att calibre automatiskt ska kunna skapa en innehållsförteckning åt dig från kapitelrubrikerna. Använd följande HTML-markering för att uppnå detta:"
 
 #: ../../__w/calibre/calibre/manual/conversion.rst:563
 msgid ""
 "Set the :guilabel:`Level 1 TOC` setting to ``//h:h2``. Then, for chapter "
 "two, calibre will take the title from the value of the ``title`` attribute "
 "on the ``<h2>`` tag, since the tag has no text."
-msgstr "Ändra :guilabel:`Nivå 1 innehållsförteckning` inställning till ``//h:h2``. Då, för kapitel två, kommer calibre ta titeln från värdet av ``titel``-attribut på ``<h2> `` tagg, eftersom taggen inte har någon text."
+msgstr "Ställ in inställningen :guilabel:`Nivå 1 innehållsförteckning` till ``//h:h2``. Då, i kapitel två, tar calibre titeln från värdet av attributet ``title`` på ``<h2>``-taggen, eftersom taggen inte har någon text."
 
 #: ../../__w/calibre/calibre/manual/conversion.rst:566
 msgid ""
@@ -1052,7 +1065,7 @@ msgid ""
 "Another alternative is to use the free OpenOffice. Open your .doc file in "
 "OpenOffice and save it in OpenOffice's format .odt. calibre can directly "
 "convert .odt files."
-msgstr "Ett annat alternativ är att använda fria Openoffice som är gratis. Öppna din DOC fil i Openoffice och spara den i Openoffice formatet .odt. calibre kan direkt konvertera .odt filer."
+msgstr "Ett annat alternativ är att använda fria OpenOffice. Öppna din .doc-fil i OpenOffice och spara den i OpenOffices formatet .odt. calibre kan direkt konvertera .odt-filer."
 
 #: ../../__w/calibre/calibre/manual/conversion.rst:671
 msgid "Convert TXT documents"
@@ -1390,7 +1403,7 @@ msgid ""
 "code that get rendered in the header and footer locations. For example, to "
 "display page numbers centered at the bottom of every page, in green, use the"
 " following footer template::"
-msgstr "Du kan infoga godtyckliga sidhuvud och sidfot på varje sida i PDF-filen genom att ange sidhuvuds- och sidfotsmallar. Mallar är bara texturval av HTML-kod som blir återgivna i sidhuvuds- och sidfotsplatser. Till exempel för att visa sidnummer centrerade längst ner på varje sida, i grönt, använd följande sidfotsmall::"
+msgstr "Du kan infoga godtyckliga sidhuvud och sidfot på varje sida i PDF-filen genom att ange sidhuvuds- och sidfotsmallar. Mallar är bara kodavsnitt av HTML-kod som blir återgivna i sidhuvuds- och sidfotsplatser. Till exempel för att visa sidnummer centrerade längst ner på varje sida, i grönt, använd följande sidfotsmall::"
 
 #: ../../__w/calibre/calibre/manual/conversion.rst:854
 msgid ""
@@ -1511,4 +1524,4 @@ msgid ""
 "Then, in the PDF output section of the conversion dialog, turn on the option"
 " to :guilabel:`Use page margins from the document being converted`. Now all "
 "pages generated from this HTML file will have ``10pt`` margins."
-msgstr "Sedan, i PDF-utmatningsdelen i konverteringsdialogrutan, slå på alternativet till :guilabel:`Använd sidmarginaler från dokumentet som konverteras`. Nu kommer alla sidor som genereras från denna HTML-fil kommer att ha ``10pt`` marginaler."
+msgstr "Aktivera sedan alternativet :guilabel:`Använd sidmarginaler från dokumentet som konverteras` i PDF-utmatningsavsnittet av konverteringsdialogen. Nu kommer alla sidor som skapas från denna HTML-fil att ha ``10pt`` marginaler."

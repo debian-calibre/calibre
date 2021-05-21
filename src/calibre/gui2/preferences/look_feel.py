@@ -118,6 +118,8 @@ class IdLinksRuleEdit(Dialog):
         title = _('Edit rule') if key else _('Create a new rule')
         Dialog.__init__(self, title=title, name='id-links-rule-editor', parent=parent)
         self.key.setText(key), self.nw.setText(name), self.template.setText(template or 'https://example.com/{id}')
+        if self.size().height() < self.sizeHint().height():
+            self.resize(self.sizeHint())
 
     @property
     def rule(self):
@@ -135,7 +137,10 @@ class IdLinksRuleEdit(Dialog):
         self.nw = n = QLineEdit(self)
         l.addRow(_('&Name:'), n)
         la = QLabel(_(
-            'The template used to create the link. The placeholder {id} in the template will be replaced with the actual identifier value.'))
+            'The template used to create the link.'
+            ' The placeholder {0} in the template will be replaced'
+            ' with the actual identifier value. Use {1} to avoid the value'
+            ' being quoted.').format('{id}', '{id_unquoted}'))
         la.setWordWrap(True)
         l.addRow(la)
         self.template = t = QLineEdit(self)
@@ -566,7 +571,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         b.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         l.addWidget(b, 1, 1)
         b.clicked.connect(self.change_cover_grid_texture)
-        self.cover_grid_default_appearance_button = b = QPushButton(_('Restore &default appearance'), self)
+        self.cover_grid_default_appearance_button = b = QPushButton(_('Restore default &appearance'), self)
         b.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         l.addWidget(b, 2, 1)
         b.clicked.connect(self.restore_cover_grid_appearance)

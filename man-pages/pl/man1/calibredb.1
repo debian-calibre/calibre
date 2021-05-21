@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "kwietnia 30, 2021" "5.17.0" "calibre"
+.TH "CALIBREDB" "1" "maja 21, 2021" "5.18.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -41,24 +41,42 @@ calibredb polecenie [opcje] [argumenty]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP jest interfejsem wiersza poleceń do bazy danych calibre. Można wywołać z nim wiele opcji, udokumentowanych poniżej.
+\fBcalibredb\fP is the command line interface to the calibre database. It has
+several sub\-commands, documented below.
 .sp
-\fBcalibredb\fP moze byc uzyty do manipulacji albo bazy danych calibre wskazanej za pomocą ścieżki dostępu
-albo calibre Content server działający na lokalnej
-maszynie albo w sieci. Możesz uruchomić calibre
-Content server używając albo \fBcalibre\-server\fP
-lub w programie calibre kliknac Connect/share  → 
-Start Content server\&. Przez to, ze \fBcalibredb\fP może dokonywać zmian w twoich
-bibliotekach calibre, musisz najpierw skonfigurować authentication na serwerze. Sa
-dwa sposoby aby to zrobic:
+\fBcalibredb\fP can be used to manipulate either a calibre database
+specified by path or a calibre Content server running either on
+the local machine or over the internet. You can start a calibre
+Content server using either the \fBcalibre\-server\fP
+program or in the main calibre program click Connect/share  → 
+Start Content server\&. Since \fBcalibredb\fP can make changes to your
+calibre libraries, you must setup authentication on the server first. There
+are two ways to do that:
 .INDENT 0.0
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-Jesli planujesz laczyc sie tylko z srwerem uruchomionym na lokalnej maszynie mozesz po prostu uzyc opcji \fB\-\-enable\-local\-write\fP w serwerze zasobow aby zezwolic wszystkim programom  to allow any program, including calibredb, running on the local computer to make changes to your calibre data. When running the server from the main
+If you plan to connect only to a server running on the same computer,
+you can simply use the \fB\-\-enable\-local\-write\fP option of the
+Content server, to allow any program, including calibredb, running on
+the local computer to make changes to your calibre data. When running
+the server from the main calibre program, this option is in
+Preferences → Sharing over the net → Advanced\&.
+.IP \(bu 2
+If you want to enable access over the internet, then you should setup
+user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
+options to \fBcalibredb\fP to give it access. You can setup
+user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
+option and using \fB\-\-manage\-users\fP to create the user accounts.
+If you are running the server from the main calibre program, use
+Preferences → Sharing over the net → Require username/password\&.
 .UNINDENT
 .UNINDENT
 .UNINDENT
+.sp
+To connect to a running Content server, pass the URL of the server to the
+\fI\%\-\-with\-library\fP option, see the documentation of that option for
+details and examples.
 .INDENT 0.0
 .IP \(bu 2
 \fI\%OPCJE GLOBALNE\fP

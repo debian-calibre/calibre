@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "april 30, 2021" "5.17.0" "calibre"
+.TH "CALIBREDB" "1" "maj 21, 2021" "5.18.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -41,41 +41,42 @@ calibredb kommando [valgmuligheder] [argumenter]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP er kommandolinjegrænsefladen til Calibres database. Den har
-flere underkommandoer, dokumenteret nedenfor.
+\fBcalibredb\fP is the command line interface to the calibre database. It has
+several sub\-commands, documented below.
 .sp
-\fBcalibredb\fP kan bruges til at manipulere enten en Calibredatabase
-angivet ved sti eller en Indholdsserver for Calibre der afvikles enten på
-den lokale maskine eller over internettet. Du kan starte en
-Indholdsserver for Calirbe via enten programmet \fBcalibre\-server\fP
-eller i Calibres hovedprogram Connect/share  → 
-Start indholdsserver\&. Da \fBcalibredb\fP kan foretage ændringer i dine
-Calibrebiblioteket, skal du opsætte godkendelse på serveren først. Der
-er to måder at gøre dette på:
+\fBcalibredb\fP can be used to manipulate either a calibre database
+specified by path or a calibre Content server running either on
+the local machine or over the internet. You can start a calibre
+Content server using either the \fBcalibre\-server\fP
+program or in the main calibre program click Connect/share  → 
+Start Content server\&. Since \fBcalibredb\fP can make changes to your
+calibre libraries, you must setup authentication on the server first. There
+are two ways to do that:
 .INDENT 0.0
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-Hvis du plnalægger kun at forbinde til en server på den samme computer,
-kan du bare bruge tilvalget \fB\-\-enable\-local\-write\fP for
-indholdsserveren, så ethvert program, inklusive  calibredb, der afvikles på den
-lokale computer for at lave ændringer i dine Calibredata. Når serveren
-afvikles fra Calibres hovedprogram, er dette tilvalg i
-Præferencer → Deling over nettet → Avanceret\&.
+If you plan to connect only to a server running on the same computer,
+you can simply use the \fB\-\-enable\-local\-write\fP option of the
+Content server, to allow any program, including calibredb, running on
+the local computer to make changes to your calibre data. When running
+the server from the main calibre program, this option is in
+Preferences → Sharing over the net → Advanced\&.
 .IP \(bu 2
-Hvis du ønsker at aktivere adgang over internettet, så skal du opsætte
-brugerkonti på serveren og bruge tilvalgene  \fI\%\-\-username\fP og \fI\%\-\-password\fP
-til \fBcalibredb\fP for at få adgang. Du kan opsætte
-brugergodkendelse for \fBcalibre\-server\fP ved at bruge tilvalget \fB\-\-enable\-auth\fP
-og bruge \fB\-\-manage\-users\fP til at oprette brugerkonti.
-Hvis du afvikler serveren fra Calibres hovedprogram, så brug
-Præferencer → Deling over nettet → Kræv brugernavn/adgangskode\&.
+If you want to enable access over the internet, then you should setup
+user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
+options to \fBcalibredb\fP to give it access. You can setup
+user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
+option and using \fB\-\-manage\-users\fP to create the user accounts.
+If you are running the server from the main calibre program, use
+Preferences → Sharing over the net → Require username/password\&.
 .UNINDENT
 .UNINDENT
 .UNINDENT
 .sp
-For at forbinde til en aktiv indholdsserver sendes adressen for serveren til tilvalget
-\fI\%\-\-with\-library\fP, se dokumentationen for dette tilvalg for detaljer og eksempler.
+To connect to a running Content server, pass the URL of the server to the
+\fI\%\-\-with\-library\fP option, see the documentation of that option for
+details and examples.
 .INDENT 0.0
 .IP \(bu 2
 \fI\%GLOBAL OPTIONS\fP

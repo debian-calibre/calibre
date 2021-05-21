@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "四月 30, 2021" "5.17.0" "calibre"
+.TH "CALIBREDB" "1" "五月 21, 2021" "5.18.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -41,51 +41,42 @@ calibredb command [选项] [参数]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP 是calibre数据库的命令行接口。它有
-几个子命令，记录如下。
+\fBcalibredb\fP is the command line interface to the calibre database. It has
+several sub\-commands, documented below.
 .sp
-\fBcalibredb\fP 可以用来操作一个calibre数据库
-由运行在上的calibre或calibre:guilabel:\fI内容服务器\(ga指定
-本地机器或通过互联网。你可以运行一个calibre
-:guilabel:\(ga内容服务器\fP 使用：命令：\fIcalibre\-server\fP
-程序或在主calibre程序中单击:guilabel:\fI连接/共享 \->
-启动内容服务器\fP\&. 因为:command:\fIcalibredb\fP 可以更改
-calibre书库，必须首先在服务器上设置身份验证。这里
-有两种方法：
+\fBcalibredb\fP can be used to manipulate either a calibre database
+specified by path or a calibre Content server running either on
+the local machine or over the internet. You can start a calibre
+Content server using either the \fBcalibre\-server\fP
+program or in the main calibre program click Connect/share  → 
+Start Content server\&. Since \fBcalibredb\fP can make changes to your
+calibre libraries, you must setup authentication on the server first. There
+are two ways to do that:
 .INDENT 0.0
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-如果您计划只连接到运行在同一台计算机上的服务器，
-则只需使用内容服务器的 \fB\-\-enable\-local\-write\fP 选项，
-允许本地计算机上运行的任何程序，包括calibredb，
-对calibre数据进行更改。从主calibre程序运行服务器时，
-此选项位于：guilabel:\fI首选项\->通过网络共享\->高级\fP。
+If you plan to connect only to a server running on the same computer,
+you can simply use the \fB\-\-enable\-local\-write\fP option of the
+Content server, to allow any program, including calibredb, running on
+the local computer to make changes to your calibre data. When running
+the server from the main calibre program, this option is in
+Preferences → Sharing over the net → Advanced\&.
 .IP \(bu 2
-如果要启用权限通过Internet的访问，则应在服务器上
-设置用户帐户，并使用：选项：\fI\-\-用户名\fP 和：
-选项：\fI\-\-密码\fP，命令：\fIcalibredb\fP 选项授予访问权限。
-您可以为命令：\fIcalibre\-server\(ga设置用户身份验证，
-方法是使用 \(ga\fP\-\-enable\-auth\(ga\(ga选项并使用
-.INDENT 2.0
-.INDENT 3.5
-
-.nf
-\(ga\(ga
-.fi
-\-\-manage\-users\(ga\(ga创建用户帐户。
-如果从主calibre程序运行服务器，请使用：
-.UNINDENT
-.UNINDENT
-.sp
-首选项 → 通过网络共享 → 需要用户名/密码。
+If you want to enable access over the internet, then you should setup
+user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
+options to \fBcalibredb\fP to give it access. You can setup
+user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
+option and using \fB\-\-manage\-users\fP to create the user accounts.
+If you are running the server from the main calibre program, use
+Preferences → Sharing over the net → Require username/password\&.
 .UNINDENT
 .UNINDENT
 .UNINDENT
 .sp
-要连接到正在运行的内容服务器，请将服务器的URL传递给：
-选项：\fI\-\-with\-library\fP 选项，有关详细信息和示例，
-请参阅该选项的文档。
+To connect to a running Content server, pass the URL of the server to the
+\fI\%\-\-with\-library\fP option, see the documentation of that option for
+details and examples.
 .INDENT 0.0
 .IP \(bu 2
 \fI\%全局选项\fP

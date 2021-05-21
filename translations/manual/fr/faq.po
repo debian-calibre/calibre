@@ -17,9 +17,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-07 15:55+0000\n"
-"PO-Revision-Date: 2021-04-06 03:42+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2021-05-20 11:33+0000\n"
+"PO-Revision-Date: 2021-05-18 05:47+0000\n"
+"Last-Translator: Ptit Prince <leporello1791@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/calibre/calibre/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -130,7 +130,7 @@ msgid ""
 "first. Note that when converting HTML files, leave the input encoding "
 "setting mentioned above blank. This is because the :guilabel:`HTML to ZIP` "
 "plugin automatically converts the HTML files to a standard encoding (UTF-8)."
-msgstr ""
+msgstr "Lors de l'ajout de fichiers HTML dans calibre, vous devrez peut-être indiquer à calibre quel est l'encodage des fichiers. Pour ce faire, allez dans :guilabel:`Préférences->Avancé-> Extensions->extensions->Type de fichier`, et personnalisez l'extension :guilabel:`HTML to ZIP` en lui indiquant quel encodage de caractère vous avez dans vos fichiers HTML Maintenant lorsque vous ajoutez des fichiers HTML dans calibre, ils seront traités correctement. Les fichiers HTML provenant de différentes sources ont souvent des encodages différents, de sorte que vous pouvez avoir à modifier ce paramètre à plusieurs reprises. Un codage courant pour beaucoup de fichiers sur le Web est ``cp1252`` et je vous suggère de commencer par celui-là. Notez que, lors de la conversion des fichiers HTML, laissez le paramètre d'encodage d'entrée mentionnée ci-dessus à blanc. Car l'extension :guilabel:`HTML to ZIP` convertit automatiquement les fichiers HTML selon une norme d'encodage (utf-8)."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:54
 msgid "What's the deal with Table of Contents in MOBI files?"
@@ -292,7 +292,7 @@ msgid ""
 "files in *breadth first* order. Do this by going to "
 ":guilabel:`Preferences->Advanced->Plugins->File type` and customizing the "
 ":guilabel:`HTML to ZIP` plugin."
-msgstr ""
+msgstr "Par défaut, lorsque vous ajoutez des fichiers HTML, calibre suit les liens dans les fichiers en adoptant un parcours en profondeur *depth first order*. Cela signifie que si A.html pointe vers B.html, C.html et D.html, mais que B.html a également un lien vers D.html, les fichiers seront dans l’ordre suivant : A.html, B.html, D.html, C.html. Si vous voulez l'ordre A.html, B.html, C.html, D.html alors vous devez dire à calibre d'ajouter vos fichiers dans un parcours en largeur *breadth first order*. Pour ce faire, allez dans :guilabel:`Préférences->Avancé-> Extensions` et personnalisez le module :guilabel:`HTML to ZIP`."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:142
 msgid "The EPUB I produced with calibre is not valid?"
@@ -361,7 +361,7 @@ msgstr "La liste complète des formats de livre numérique que votre périphéri
 msgid ""
 "Is there a special folder on the device in which all e-book files should be "
 "placed? Also does the device detect files placed in sub-folders?"
-msgstr ""
+msgstr "Il y a-t'il un dossier spécial dans lequel tous les fichiers livre numérique devront être placés ? Est-ce que le périphérique détecte les fichiers placés dans les sous-dossiers ?"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:190
 msgid ""
@@ -385,8 +385,8 @@ msgid ""
 "Once you send us the output for a particular operating system, support for "
 "the device in that operating system will appear in the next release of "
 "calibre. To send us the output, open a bug report and attach the output to "
-"it. See `calibre bugs <https://calibre-ebook.com/bugs>`_."
-msgstr "Une fois que vous nous envoyez les informations sur un système d'exploitation particulier, la prise en charge pour ce périphérique dans ce système d'exploitation apparaîtra dans la prochaine version de calibre. Pour nous envoyer les fichiers, ouvrez un rapport de bug et attachez vos informations en pièces jointes. Voir `calibre bugs <https://calibre-ebook.com/bugs>`_."
+"it. See `how to report bugs <https://calibre-ebook.com/bugs>`_."
+msgstr "Une fois que vous nous envoyez les informations sur un système d'exploitation particulier, la prise en charge pour ce périphérique dans ce système d'exploitation apparaîtra dans la prochaine version de calibre. Pour nous envoyer les fichiers, ouvrez un rapport de bug et attachez vos informations en pièces jointes. Voir `comment rapporter des bugs <https://calibre-ebook.com/bugs>`_."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:202
 msgid "My device is not being detected by calibre?"
@@ -414,7 +414,7 @@ msgstr "Si vous connectez un iDevice Apple  (iPad, iPod Touch, iPhone), Apple ne
 msgid ""
 "If you are connecting a Kindle Fire or other Android device, read the note "
 "under :ref:`android_usb`."
-msgstr ""
+msgstr "Si vous connectez un Kindle Fire ou un autre appareil Android, lisez la note sous :ref:`android_usb`."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:215
 #: ../../__w/calibre/calibre/manual/faq.rst:974
@@ -666,7 +666,7 @@ msgid ""
 "You can now browse your book collection and download books from calibre to "
 "your device to open with whatever e-book reading software you have on your "
 "Android device."
-msgstr ""
+msgstr "Vous pouvez maintenant naviguer dans votre bibliothèque de livres et télécharger les livres depuis calibre sur votre périphérique pour les ouvrir avec n'importe quel logiciel de lecture de livre numérique que vous avez préalablement installé sur votre périphérique Android."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:362
 msgid ""
@@ -702,9 +702,9 @@ msgstr "Certains périphériques, comme le Kindle (1/2/DX), ne permettent pas d'
 #: ../../__w/calibre/calibre/manual/faq.rst:378
 msgid ""
 "Also some devices do not have browsers advanced enough to run the app-like "
-"interface used by the content server. For such devices, you can simply add "
+"interface used by the Content server. For such devices, you can simply add "
 "``/mobile`` to the server URL to get a simplified, non-JavaScript interface."
-msgstr "De plus, le navigateurs de certains périphériques n'est pas assez perfectionné pour faire fonctionner l'interface utilisée par le serveur de contenu. Pour de tels appareils, vous pouvez simplement ajouter ``/mobile`` à l'URL du serveur pour obtenir une interface simplifiée et non Javascript."
+msgstr "De plus, le navigateur de certains périphériques n'est pas assez perfectionné pour faire fonctionner l'interface utilisée par le Serveur de contenu. Pour de tels appareils, vous pouvez simplement ajouter ``/mobile`` à l'URL du serveur pour obtenir une interface simplifiée et non Javascript."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:384
 msgid "I cannot send emails using calibre?"
@@ -1012,7 +1012,7 @@ msgid ""
 "author and also how that name is sorted. This will automatically change the "
 "name of the author in all the books of that author. When a book has multiple"
 " authors, separate their names using the & character."
-msgstr ""
+msgstr "Les noms d'auteur sont complexes, particulièrement au travers des cultures `voir la note <https://www.w3.org/International/questions/qa-personal-names.fr>`_ pour certaines de ces complexités. calibre a une stratégie très flexible pour gérer les noms d'auteur. La première chose à comprendre est que livres et auteurs sont des entités différentes dans calibre. Un livre peut avoir plus d'un auteur, et un auteur peut peut avoir plus d'un livre. Vous pouvez gérer les auteurs d'un livre par la boite de dialogue d'édition des métadonnées. Vous pouvez gérer les auteurs individuellement en faisant un clic-droit sur un auteur dans le Navigateur d'étiquettes sur la droite de la fenêtre principale de calibre et en sélectionnant :guilabel:`Gérer les auteurs`. En utilisant cette boîte de dialogue vous pouvez changer le nom d'un auteur et également comment ce nom est trié. Ceci changera automatiquement le nom d'un auteur dans tous les livres de cet auteur. Quand un livre a de multiples auteurs, séparer leurs noms en utilisant le caractère &."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:558
 msgid "Now coming to author name sorting:"
@@ -1144,7 +1144,7 @@ msgstr "Vérifiez les auteurs pour être sûr du résultat. Vous pouvez toujours
 
 #: ../../__w/calibre/calibre/manual/faq.rst:590
 msgid "Why doesn't calibre let me store books in my own folder structure?"
-msgstr ""
+msgstr "Pourquoi Calibre ne me laisse-t-il pas stocker mes livres dans ma propre structure de dossiers ?"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:592
 msgid ""
@@ -1159,7 +1159,7 @@ msgid ""
 " To illustrate why a search/tagging based interface is superior to folders, "
 "consider the following. Suppose your book collection is nicely sorted into "
 "folders with the following scheme::"
-msgstr ""
+msgstr "Le point essentiel de la gestion de la bibliothèque calibre, c’est qu'il fournit une interface de recherche et de tri pour localiser les livres beaucoup plus efficace que n'importe lequel des système de répertoire que vous pourriez concevoir pour votre collection. En effet, une fois que vous serez à l'aise avec l'interface de calibre pour trouver, trier et parcourir votre bibliothèque, vous ne ressentirez plus le besoin de faire la chasse à vos livres sur votre disque dur pour les retrouver. En gérant les livres selon sa propre structure de dossier Auteur -> Titre -> Fichiers du livre, calibre est capable d'atteindre un haut niveau de fiabilité et de standardisation. Pour illustrer pourquoi une interface de recherche/étiquetage est supérieure à la gestion des dossiers, considérez ce qui suit. Supposons que votre collection de livre est bien classée dans des dossiers avec le schéma suivant :"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:596
 msgid ""
@@ -1313,7 +1313,7 @@ msgid ""
 "have two calibre libraries on your computer and you can switch between them "
 "by clicking the calibre icon on the toolbar. Transferring your library in "
 "this manner preserver all your metadata, tags, custom columns, etc."
-msgstr ""
+msgstr "Sur le nouvel ordinateur, démarrez calibre pour la première fois. Il va exécuter :guilabel:`l'Assistant de bienvenue` qui vous demandera de spécifier l'emplacement de la bibliothèque de calibre. Sélectionnez le dossier précédemment copié. Si l'ordinateur où vous avez transféré la bibliothèque a déjà une installation de calibre, :guilabel:`l'Assistant de bienvenue` ne se lancera pas. Dans ce cas, faites un clic droit sur l'icône calibre de la barre d’outils et sélectionnez le nouveau dossier copié. Vous aurez maintenant deux bibliothèques calibre sur votre ordinateur et vous pouvez basculer de l’une à l’autre en cliquant sur l'icône calibre dans la barre d'outils. Le transfert de votre bibliothèque de cette façon préservera toutes vos métadonnées, les étiquettes, les colonnes personnalisées, etc."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:683
 msgid "The list of books in calibre is blank!"
@@ -1466,7 +1466,7 @@ msgid ""
 "shows only TrueType and OpenType fonts found on your system. You can obtain "
 "many such fonts on the web. Simply download the .ttf/.otf files and add them"
 " to the Library/Fonts folder in your home folder."
-msgstr ""
+msgstr "calibre incorpore les polices dans les fichiers de livre numérique qu'il crée. Les fichiers de livre numérique gèrent uniquement les polices TrueType et Open Type (.ttf et .otf) incorporées. La plupart des polices sur les systèmes macOS sont au format .dfont, donc elles ne peuvent pas être incorporées. calibre affiche uniquement les polices TrueType et Open Type trouvées sur votre système. Vous pouvez obtenir beaucoup de telles polices sur le web. Il vous suffit de télécharger les fichiers .ttf/.otf et de les ajouter au dossier Library/Fonts dans votre dossier principal."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:777
 msgid "calibre is not starting on Windows?"
@@ -1611,7 +1611,7 @@ msgid ""
 "individually, if you don't want to uninstall the full program.  Remember to "
 "use \"Restart Explorer\" or reboot your computer after disabling the shell "
 "extensions."
-msgstr ""
+msgstr "Si le plantage survient spécifiquement quand vous utilisez le dialogue de fichier, comme cliquer sur le bouton :guilabel:`Ajouter des livres` ou le bouton :guilabel:`Enregistrer sur le disque`, alors vous avez certains programmes qui ont installé des extensions Shell endommagées sur votre ordinateur. Les responsables connus comprennent : *SpiderOak*, *odrive sync* et *Dell Backup and Recovery* et *Netdrive*. Si vous avez l'un de ceux-là, désinstallez-les et tout ira bien. Vous pouvez également utiliser l'utilitaire `NirSoft Shell Extension Viewer <https://www.nirsoft.net/utils/shexview.html>`_ pour voir quelles extensions Shell sont installées sur votre système et les désactiver individuellement, si vous ne voulez pas complètement désinstaller le programme. Rappelez-vous d'utiliser \"Redémarrer Explorer\" ou redémarrer votre ordinateur après avoir désactivé les extensions Shell."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:845
 msgid ""
@@ -1761,7 +1761,7 @@ msgstr "Essayez une installation propre, C'est-à-dire, désinstallez calibre, s
 msgid ""
 "Try downloading the installer with an alternate browser. For example if you "
 "are using Microsoft Edge, try using Firefox or Chrome instead."
-msgstr ""
+msgstr "Essayez de télécharger le programme d'installation avec un autre navigateur. Par exemple, si vous utilisez Microsoft Edge, essayez d'utiliser Firefox ou Chrome à la place."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:927
 msgid ""
@@ -1837,7 +1837,7 @@ msgid ""
 "folders is not officially supported, but should work in most cases. Just "
 "copy the contents of the backup folder into the current configuration folder"
 " to restore."
-msgstr ""
+msgstr "Si vous souhaitez sauvegarder les extensions de configuration calibre, vous devez sauvegarder le dossier config. Vous pouvez trouver ce dossier config via :guilabel:`Préférences->Divers`. Notez que la restauration des dossiers de configuration n'est pas officiellement supportée, mais devrait fonctionner dans la plupart des cas. Il suffit de copier le contenu du dossier de sauvegarde dans le répertoire de configuration à restaurer."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:965
 msgid ""
@@ -1951,7 +1951,7 @@ msgid ""
 "administrator to give you the correct value for this variable.  Note that "
 "calibre only supports HTTP proxies not SOCKS proxies. You can see the "
 "current proxies used by calibre in Preferences->Miscellaneous."
-msgstr ""
+msgstr "Par défaut, calibre utilise tous les paramètres de proxy définis dans votre OS. Parfois, ceux-ci sont incorrects, par exemple, sous Windows, si vous n'utilisez pas Microsoft Edge alors les paramètres de proxy peuvent ne pas être à jour. Vous pouvez dire à calibre pour utiliser un serveur proxy notamment en réglant les variables d'environnement `` http_proxy`` et `` https_proxy``. Le format de la variable est : ``http://username:password@servername`` vous devriez demander à votre administrateur réseau de vous donner la valeur correcte pour cette variable. Notez que calibre ne prend en charge que les proxies HTTP et non les proxies SOCKS. Vous pouvez voir les proxies actuellement utilisés par calibre dans Préférences->Divers."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1006
 msgid "I want some feature added to calibre. What can I do?"
@@ -1976,7 +1976,7 @@ msgid ""
 "implementing your feature yourself, or hiring someone to do it for you. "
 "Furthermore, calibre has a comprehensive plugin architecture, so you might "
 "be able to develop your feature as a plugin, see :ref:`pluginstutorial`."
-msgstr ""
+msgstr "`Ouvrir un bug demandant la fonctionnalité <https://calibre-ebook.com/bugs>`_.  Rappelez-vous que même si vous pensez que votre demande de fonctionnalité est extrêmement importante/essentielle, les développeurs de calibre peuvent ne pas être d'accord. Heureusement, calibre est open source, ce qui signifie que vous avez toujours la possibilité de mettre en œuvre votre fonction vous-même, ou d'embaucher quelqu'un pour le faire pour vous. En outre, calibre a une architecture d'extension compréhensive, vous devriez donc être en mesure de développer votre fonctionnalité en tant qu'extension, voir :ref:`pluginstutorial`."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1012
 msgid "Why doesn't calibre have an automatic update?"

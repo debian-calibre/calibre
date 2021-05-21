@@ -145,7 +145,6 @@ class IframeBoss:
             'number_of_columns_changed': self.number_of_columns_changed,
             'change_scroll_speed': self.change_scroll_speed,
             'display': self.display,
-            'find': self.find,
             'gesture_from_margin': self.gesture_from_margin,
             'get_current_cfi': self.get_current_cfi,
             'initialize':self.initialize,
@@ -464,8 +463,6 @@ class IframeBoss:
                 self.jump_to_cfi(ipos.cfi)
             elif ipos.type is 'search_result':
                 self.show_search_result(ipos, True)
-            elif ipos.type is 'search':
-                self.find(ipos.search_data, True)
             elif ipos.type is 'edit_annotation':
                 window.setTimeout(def():
                     self.annotations_msg_received({'type': 'edit-highlight', 'uuid': ipos.uuid})
@@ -752,30 +749,10 @@ class IframeBoss:
         if refnum?:
             self.scroll_to_ref(refnum)
 
-    def find(self, data, from_load):
-        self.last_search_at = window.performance.now()
-        if data.searched_in_spine:
-            window.getSelection().removeAllRanges()
-        wrap_search = from_load and data.backwards
-        found = window.find(data.text, False, data.backwards, wrap_search)
-        if not found and wrap_search:
-            # wrapping is not implemented on Firefox
-            prev_range = None
-            while window.find(data.text, False):
-                prev_range = window.getSelection().getRangeAt(0)
-            if prev_range:
-                sel = window.getSelection()
-                sel.removeAllRanges()
-                sel.addRange(prev_range)
-                found = window.find(data.text, False, True)
-        if found:
-            if current_layout_mode() is not 'flow':
-                snap_to_selection()
-        else:
-            msg_type = 'invisible_text' if from_load else 'find_in_spine'
-            self.send_message(msg_type, text=data.text, backwards=data.backwards, searched_in_spine=data.searched_in_spine)
-
     def show_search_result(self, data, from_load):
+        if self.load_search_result_timer:
+            window.clearTimeout(self.load_search_result_timer)
+            self.load_search_result_timer = None
         sr = data.search_result
         if sr.on_discovery:
             if sr.result_num is 1:
@@ -785,7 +762,11 @@ class IframeBoss:
         self.last_search_at = window.performance.now()
         x, y = scroll_viewport.x(), scroll_viewport.y()
         if select_search_result(sr):
-            self.ensure_selection_visible()
+            self.ensure_selection_boundary_visible()
+            if from_load and current_layout_mode() is 'paged':
+                # workaround bug in chrome where sizes are incorrect in paged
+                # mode on initial load for some books
+                self.load_search_result_timer = window.setTimeout(self.ensure_selection_boundary_visible, 750)
             if self.full_book_search_in_progress and not self.full_book_search_in_progress.first_result_shown and sr.on_discovery:
                 discovered = False
                 if progress_frac() >= self.full_book_search_in_progress.progress_frac_at_start or current_spine_item().index is not self.full_book_search_in_progress.start_spine_index:

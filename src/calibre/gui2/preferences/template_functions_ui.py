@@ -153,6 +153,6 @@ class Ui_Form(object):
         self.replace_button.setText(_("Replace"))
         self.create_button.setText(_("C&reate"))
         self.label_41.setText(_("P&rogram code (Follow Python indenting rules):"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab1), _("&Template Functions"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab1), _("&Template functions"))
 from calibre.gui2.dialogs.template_dialog import EmbeddedTemplateDialog
 from calibre.gui2.widgets2 import ScrollingTabWidget

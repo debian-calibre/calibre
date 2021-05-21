@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "april 30, 2021" "5.17.0" "calibre"
+.TH "CALIBREDB" "1" "maj 21, 2021" "5.18.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -47,7 +47,7 @@ flera underkommandon, dokumenterade nedan.
 \fBcalibredb\fP kan användas för att manipulera antingen en calibre\-databas
 anges per sökväg eller en calibre\-innehållsserver körs antingen på
 den lokala maskinen eller över internet. Du kan starta en
-calibre\-Innehållsserver med antingen \fBcalibre server\fP
+calibre\-Innehållsserver med antingen \fBcalibre\-server\fP
 programmet eller klicka på i calibre\-huvudprogrammet Anslut/dela  → 
 Starta innehållsserver\&. Eftersom \fBcalibredb\fP kan göra ändringar i ditt
 calibre\-bibliotek måste du först ställa in autentisering på servern. Det
@@ -74,8 +74,8 @@ Inställningar → Dela via nätet → Kräv användarnamn/lösenord\&.
 .UNINDENT
 .UNINDENT
 .sp
-För att ansluta till en körande innehållsserver, skicka serverns webbadress till
-\fI\%\-\-with\-library\fP flaggan, se dokumentationen för det alternativet för
+För att ansluta till en körande innehållsserver, skicka serverwebbadressen med
+flaggan \fI\%\-\-with\-library\fP, se dokumentationen för den flaggan för
 detaljer och exempel.
 .INDENT 0.0
 .IP \(bu 2
@@ -304,12 +304,12 @@ Alternativ för att anpassa tilläggningen av böcker från mappar. Som standard
 .INDENT 0.0
 .TP
 .B \-\-add
-Ett filnamn (glob) mönster, kommer matcha filer som detta mönster läggas till vid genomsökning av mappar efter filer, även om de inte är av en känd e\-bok filtyp. Kan anges flera gånger för flera mönster.
+Ett filnamn (glob) mönster, kommer matcha filer som detta mönster läggas till vid skanning av mappar efter filer, även om de inte är av en känd e\-bok filtyp. Kan anges flera gånger för flera mönster.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-Ett filnamn (glob) mönster, kommer filer som matchar detta mönster ignoreras vid genomsökning av mappar efter filer. Kan anges flera gånger för flera mönster. För t.ex.: *.pdf kommer att ignorera alla PDF\-filer
+Ett filnamn (glob) mönster, kommer filer som matchar detta mönster ignoreras vid skanning av mappar efter filer. Kan anges flera gånger för flera mönster. För t.ex.: *.pdf kommer att ignorera alla PDF\-filer
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -482,7 +482,7 @@ Rapportera framsteg
 .INDENT 0.0
 .TP
 .B \-\-replace\-whitespace
-Ersätt whitespace med understreck.
+Ersätt \fB"\fPwhitespace\fB"\fP med understreck.
 .UNINDENT
 .INDENT 0.0
 .TP

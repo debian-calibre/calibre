@@ -9,7 +9,7 @@ __docformat__ = 'restructuredtext en'
 from qt.core import (
     QApplication, QCheckBox, QDialog, QDialogButtonBox, QHBoxLayout, QIcon, QImage,
     QLabel, QPainter, QPalette, QPixmap, QScrollArea, QSize, QSizePolicy,
-    QSvgRenderer, Qt, QTransform, QUrl, QVBoxLayout
+    QSvgRenderer, Qt, QTransform, QUrl, QVBoxLayout, pyqtSignal
 )
 
 from calibre import fit_image
@@ -38,6 +38,8 @@ def render_svg(widget, path):
 
 
 class Label(QLabel):
+
+    toggle_fit = pyqtSignal()
 
     def __init__(self, scrollarea):
         super().__init__(scrollarea)
@@ -82,12 +84,17 @@ class Label(QLabel):
         if v.isVisible():
             v.setValue(v.value() - dy)
 
+    def mouseDoubleClickEvent(self, ev):
+        if ev.button() == Qt.MouseButton.LeftButton:
+            self.toggle_fit.emit()
+
 
 class ImageView(QDialog):
 
     def __init__(self, parent, current_img, current_url, geom_name='viewer_image_popup_geometry'):
         QDialog.__init__(self)
         self.current_image_name = ''
+        self.maximized_at_last_fullscreen = False
         self.setWindowFlag(Qt.WindowType.WindowMinimizeButtonHint)
         self.setWindowFlag(Qt.WindowType.WindowMaximizeButtonHint)
         dw = QApplication.instance().desktop()
@@ -101,6 +108,7 @@ class ImageView(QDialog):
         sa.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
         sa.setBackgroundRole(QPalette.ColorRole.Dark)
         self.label = l = Label(sa)
+        l.toggle_fit.connect(self.toggle_fit)
         sa.setWidget(l)
 
         self.bb = bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Close)
@@ -110,14 +118,18 @@ class ImageView(QDialog):
         self.zo_button = zo = bb.addButton(_('Zoom &out'), QDialogButtonBox.ButtonRole.ActionRole)
         self.save_button = so = bb.addButton(_('&Save as'), QDialogButtonBox.ButtonRole.ActionRole)
         self.rotate_button = ro = bb.addButton(_('&Rotate'), QDialogButtonBox.ButtonRole.ActionRole)
+        self.fullscreen_buton = fo = bb.addButton(_('&Full screen'), QDialogButtonBox.ButtonRole.ActionRole)
         zi.setIcon(QIcon(I('plus.png')))
         zo.setIcon(QIcon(I('minus.png')))
         so.setIcon(QIcon(I('save.png')))
         ro.setIcon(QIcon(I('rotate-right.png')))
+        fo.setIcon(QIcon(I('page.png')))
         zi.clicked.connect(self.zoom_in)
         zo.clicked.connect(self.zoom_out)
         so.clicked.connect(self.save_image)
         ro.clicked.connect(self.rotate_image)
+        fo.setCheckable(True)
+        fo.toggled.connect(self.toggle_fullscreen)
 
         self.l = l = QVBoxLayout(self)
         l.addWidget(sa)
@@ -189,6 +201,9 @@ class ImageView(QDialog):
             self.factor = 1
             self.adjust_image(1)
 
+    def toggle_fit(self):
+        self.fit_image.toggle()
+
     def adjust_image(self, factor):
         if self.fit_image.isChecked():
             self.set_to_viewport_size()
@@ -241,6 +256,17 @@ class ImageView(QDialog):
         gprefs[self.geom_name] = bytearray(self.saveGeometry())
         return QDialog.done(self, e)
 
+    def toggle_fullscreen(self):
+        on = not self.isFullScreen()
+        if on:
+            self.maximized_at_last_fullscreen = self.isMaximized()
+            self.showFullScreen()
+        else:
+            if self.maximized_at_last_fullscreen:
+                self.showMaximized()
+            else:
+                self.showNormal()
+
     def wheelEvent(self, event):
         d = event.angleDelta().y()
         if abs(d) > 0 and not self.scrollarea.verticalScrollBar().isVisible():
@@ -272,6 +298,7 @@ class ImagePopup(object):
 
 if __name__ == '__main__':
     import sys
+
     from calibre.gui2 import Application
     app = Application([])
     p = QPixmap()

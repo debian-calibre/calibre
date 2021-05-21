@@ -4,8 +4,8 @@
 # 
 # Translators:
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2020
-# efef6ec5b435a041fce803c7f8af77d2_2341d43, 2016-2017
-# Jonatan Nyberg <jonatan.nyberg.karl@gmail.com>, 2018-2021
+# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021
+# Jonatan Nyberg <jonatan@autistici.org>, 2018-2021
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017-2018
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017
 # Merarom <merarom@yahoo.es>, 2014-2015,2017
@@ -14,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-29 01:07+0000\n"
-"PO-Revision-Date: 2021-04-22 23:01+0000\n"
-"Last-Translator: Jonatan Nyberg <jonatan.nyberg.karl@gmail.com>\n"
+"POT-Creation-Date: 2021-05-20 11:33+0000\n"
+"PO-Revision-Date: 2021-05-12 15:58+0000\n"
+"Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -404,7 +404,7 @@ msgid ""
 "note that should you accidentally remove more or fewer tags than you "
 "actually wanted to, calibre tries to repair the damaged code after doing the"
 " removal."
-msgstr "(pinsamt utslitet från `denna tråd <https://www.mobileread.com/forums/showthread.php?t=75594\">`_). Du skulle behöva ta bort en del av taggarna också. I detta exempel jag skulle rekommendera börjar med taggen ``<b class=\"calibre2\">``, nu måste du sluta med motsvarande sluttagg (öppningstaggar är ``<tag>``, sluttagg är ``</tag>``), vilket är helt enkelt nästa ``</b>`` i detta fall. (Se en bra HTML-handboken eller fråga i forumet om du är osäker på den här punkten.) öppningstaggen kan vara beskrivas med ``<b.*?>``, den avslutande taggen med hjälp av ``</b>``, vilket vi kunde ta bort allt mellan dessa taggar med ``<b.*?>.*?</b>``. Men att använda detta uttryck skulle vara en dålig idé, eftersom det tar bort allt omges av <b>- taggar (som förresten, återger den medföljande texten i fetstil), och det är en rimlig satsning som vi tar bort delar av boken på detta sätt. Istället inkluderar början av den medföljande strängen också, vilket gör det reguljära uttrycket ``<b.*?>\\s*Generera\\s+genom\\s+ABC\\s+Amber\\s+LIT.*?</b>`` Den ``\\s`` med kvantifierare som ingår här i stället för explicit använda mellanslag som sedda i strängen för att fånga några varianter av strängen som kan uppstå. Kom ihåg att kontrollera vad calibre kommer att ta bort för att se till att du inte bort några delar som du vill behålla om du testar ett nytt uttryck. Om du bara kontrollera en händelse, kanske du missar en obalans någon annanstans i texten. Observera också att om du av misstag tar bort fler eller färre taggar än du faktiskt ville försöker calibre för att reparera den skadade koden efter att ha gjort borttagningen."
+msgstr "(skamlöst utslitet från `denna tråd <https://www.mobileread.com/forums/showthread.php?t=75594\">`_). Du skulle behöva ta bort en del av taggarna också. I detta exempel jag skulle rekommendera börjar med taggen ``<b class=\"calibre2\">``, nu måste du sluta med motsvarande sluttagg (öppningstaggar är ``<tag>``, sluttaggar är ``</tag>``), vilket är helt enkelt nästa ``</b>`` i detta fall. (Se en bra HTML-handboken eller fråga i forumet om du är osäker på den här punkten.) öppningstaggen kan vara beskrivas med ``<b.*?>``, den avslutande taggen med hjälp av ``</b>``, vilket vi kunde ta bort allt mellan dessa taggar med ``<b.*?>.*?</b>``. Men att använda detta uttryck skulle vara en dålig idé, eftersom det tar bort allt omges av <b>- taggar (som förresten, återger den medföljande texten i fetstil), och det är en rimlig satsning som vi tar bort delar av boken på detta sätt. Istället inkluderar början av den medföljande strängen också, vilket gör det reguljära uttrycket ``<b.*?>\\s*Generera\\s+genom\\s+ABC\\s+Amber\\s+LIT.*?</b>`` Den ``\\s`` med kvantifierare som ingår här i stället för explicit använda mellanslag som sedda i strängen för att fånga några varianter av strängen som kan uppstå. Kom ihåg att kontrollera vad calibre kommer att ta bort för att se till att du inte bort några delar som du vill behålla om du testar ett nytt uttryck. Om du bara kontrollera en händelse, kanske du missar en obalans någon annanstans i texten. Observera också att om du av misstag tar bort fler eller färre taggar än du faktiskt ville försöker calibre för att reparera den skadade koden efter att ha gjort borttagningen."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:119
 msgid "Adding books"
@@ -461,7 +461,7 @@ msgid ""
 "do that as well. As you by now have undoubtedly noticed, there's a checkbox "
 "labeled :guilabel:`Case sensitive`, so you won't have to use flags to select"
 " behaviour here."
-msgstr "Den sista delen är reguljära uttryck :guilabel:`Sök och ersätt` i metadatafält. Du kan komma åt detta genom att välja flera böcker i biblioteket och genom massmetadataredigering. Var mycket försiktig när du använder denna sista funktion, eftersom det kan göra **Mycket dåliga saker** till ditt bibliotek! Dubbelkolla att dina uttryck verkligen gör vad du vill att de ska med hjälp av testfält, och bara välja de böcker du verkligen vill förändra! I det reguljära uttrycket sökläget kan du söka i ett fält, ersätta texten med något och till och med skriva in resultatet i ett annat fält. Ett praktiskt exempel: Anta ditt bibliotek innehöll böcker av Frank Herberts Dune-serien, uppkallad efter stilen ``Dune 1 - Dune``, ``Dune 2 - Dune Messiah`` o.s.v. Nu vill du få ``Dune`` in i serien fältet. Du kan göra det genom att söka efter ``\\d+(*.?) -.*`` I titelfältet och ersätta den med ``\\1`` i serien fältet. Se vad jag gjorde där? Det är en referens till den första gruppen som du ersätter seriefält med. Nu när du har serien allt klart, bara måste du göra en ny sökning efter ``.*? -``  I titelfältet och ersätta den med ``\"\"`` (en tom sträng), en gång i titelfältet, och ditt metadata är allt snyggt och prydligt. Är inte det bra? Förresten, istället för att ersätta hela fältet, kan du också lägga till eller låta föregå fältet, så, om du *ville* att bok titeln ska infogas med serier information, kan du göra det också. Som ni nu har utan tvivel märkt, det finns en kryssruta markerad :guilabel:`Skiftlägeskänslig`, så att du inte behöver använda flaggor för att välja beteende här."
+msgstr "Den sista delen är reguljära uttryck :guilabel:`Sök och ersätt` i metadatafält. Du kan komma åt detta genom att välja flera böcker i biblioteket och genom massmetadataredigering. Var mycket försiktig när du använder denna sista funktion, eftersom det kan göra **Mycket dåliga saker** till ditt bibliotek! Dubbelkontrollera att dina uttryck verkligen gör vad du vill att de ska med hjälp av testfält, och bara välja de böcker du verkligen vill förändra! I det reguljära uttrycket sökläget kan du söka i ett fält, ersätta texten med något och till och med skriva in resultatet i ett annat fält. Ett praktiskt exempel: Anta ditt bibliotek innehöll böcker av Frank Herberts Dune-serien, uppkallad efter stilen ``Dune 1 - Dune``, ``Dune 2 - Dune Messiah`` o.s.v. Nu vill du få ``Dune`` in i serien fältet. Du kan göra det genom att söka efter ``\\d+(*.?) -.*`` I titelfältet och ersätta den med ``\\1`` i serien fältet. Se vad jag gjorde där? Det är en referens till den första gruppen som du ersätter seriefält med. Nu när du har serien allt klart, bara måste du göra en ny sökning efter ``.*? -``  I titelfältet och ersätta den med ``\"\"`` (en tom sträng), en gång i titelfältet, och ditt metadata är allt snyggt och prydligt. Är inte det bra? Förresten, istället för att ersätta hela fältet, kan du också lägga till eller låta föregå fältet, så, om du *ville* att bok titeln ska infogas med serier information, kan du göra det också. Som ni nu har utan tvivel märkt, det finns en kryssruta markerad :guilabel:`Skiftlägeskänslig`, så att du inte behöver använda flaggor för att välja beteende här."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:129
 msgid ""

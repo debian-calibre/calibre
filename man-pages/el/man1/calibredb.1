@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "Απριλίου 30, 2021" "5.17.0" "calibre"
+.TH "CALIBREDB" "1" "Μαΐου 21, 2021" "5.18.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -41,40 +41,42 @@ calibredb command [options] [arguments]
 .UNINDENT
 .UNINDENT
 .sp
-Το πρόγραμμα \fBcalibredb\fP είναι η γραμμή εντολής για την βάση δεδομένων του calibre. Διαθέτει
-πολλές υποεντολές οι οποίες τεκμηριώνονται παρακάτω.
+\fBcalibredb\fP is the command line interface to the calibre database. It has
+several sub\-commands, documented below.
 .sp
-Το \fBcalibredb\fP για τον χειρισμό είτε της βάσης δεδομένων του calibre
-καθορισμένης από διαδρομή είτε του Εξυπηρετητή περιεχομένου ο οποίος εκτελείται είτε
-στην τοπική συσκευή είτε στο διαδίκτυο. Μπορείτε να εκκινήσετε έναν
-Εξυπηρετητή περιεχομένου χρησιμοποιώντας είτε το πρόγραμμα \fBcalibre\-server\fP
-είτε μέσα από το κυρίως πρόγραμμα του calibre να επιλέξετε Σύνδεση/διαμοιρασμός \- >
-Εκκινηση εξυπηρετητή περιεχομένου\&. Εφόσον το πρόγραμμα :command:calibredb\(ga μπορεί να κάνει αλλαγές στις
-βιβλιοθήκες του calibre, πρώτα πρέπει να ρυθμίσετε την επαλήθευση της ταυτότητάς σας στον εξυπηρετητή. Υπάρχουν
-δυο τρόποι για να γίνει αυτό:
+\fBcalibredb\fP can be used to manipulate either a calibre database
+specified by path or a calibre Content server running either on
+the local machine or over the internet. You can start a calibre
+Content server using either the \fBcalibre\-server\fP
+program or in the main calibre program click Connect/share  → 
+Start Content server\&. Since \fBcalibredb\fP can make changes to your
+calibre libraries, you must setup authentication on the server first. There
+are two ways to do that:
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+If you plan to connect only to a server running on the same computer,
+you can simply use the \fB\-\-enable\-local\-write\fP option of the
+Content server, to allow any program, including calibredb, running on
+the local computer to make changes to your calibre data. When running
+the server from the main calibre program, this option is in
+Preferences → Sharing over the net → Advanced\&.
+.IP \(bu 2
+If you want to enable access over the internet, then you should setup
+user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
+options to \fBcalibredb\fP to give it access. You can setup
+user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
+option and using \fB\-\-manage\-users\fP to create the user accounts.
+If you are running the server from the main calibre program, use
+Preferences → Sharing over the net → Require username/password\&.
+.UNINDENT
+.UNINDENT
+.UNINDENT
 .sp
-
-.nf
-*
-.fi
-Αν σκοπεύετε να συνδεθείτε μόνο σε εξυπηρετητή που εκτελείται στον ίδιο υπολογιστή
-μπορείτε απλώς να χρησιμοποιήσετε την επιλογή \fB\-\-enable\-locale\-write\fP του
-εξυπηρετητή περιεχομένου ώστε να επιτρέπεται σε κάθε πρόγραμμα και στο calibredb να εκτελείται
-στον τοπικό υπολογιστή προκειμένου να γίνουν οι αλλαγές στα δεδομένα του calibre. Όταν εκτελείτε
-τον εξυπηρετητή από το κυρίως πρόγραμμα του calibre, η επιλογή αυτή βρίσκεται στο μενού Προτιμήσεις → Διαμοιρασμός στο δίκτυο → Προχωρημένες ρυθμίσεις\&.
-.sp
-
-.nf
-*
-.fi
-Αν θέλετε να ενεργοποιήσετε την πρόσβαση μέσω διαδικτύου τότε πρέπει να ρυθμίσετε
-λογαριασμούς χρηστών στον εξυπηρετητή και να χρησιμοποιήσετε τις επιλογές \fI\%\-\-username\fP και \fBpassword\fP ώστε να δώσετε πρόσβαση στο \fBcalibredb\fP\&. Μπορείτε να ρυθμίσετε
-την εξακρίβωση χρήστη για τον \fBcalibre\-server\fP μέσω της επιλογής \fB\-\-enable\-auth\fP και μέσω της \fB\-\-manage\-users\fP να δημιουργήσετε λογαριασμούς χρηστών.
-Αν εκκινείτε τον εξυπηρετητή από το κυρίως πρόγραμμα, χρησιμοποιήστε το μενού
-Προτιμήσεις → Διαμοιρασμός μέσω δικτύου → Αίτημα ονόματος χρήστη/κωδικού
-.sp
-Για να συνδεθείτε σε έναν εξυπηρετητή περιεχομένου που ήδη εκτελείται, περάστε την διεύθυνση URL του εξυπηρετητή στην επιλογή
-\fI\%\-\-with\-library\fP\&. Για σχετικές λεπτομέρειες και παραδείγματα δείτε την τεκμηρίωση για αυτή την επιλογή.
+To connect to a running Content server, pass the URL of the server to the
+\fI\%\-\-with\-library\fP option, see the documentation of that option for
+details and examples.
 .INDENT 0.0
 .IP \(bu 2
 \fI\%ΓΕΝΙΚΕΣ ΕΠΙΛΟΓΕΣ\fP
@@ -84,7 +86,7 @@ calibredb command [options] [arguments]
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ADDING FROM FOLDERS\fP
+\fI\%ΠΡΟΣΘΗΚΗ ΑΠΟ ΦΑΚΕΛΟΥΣ\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -295,9 +297,9 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .B \-\-title, \-t
 Καθορισμός του τίτλου του προστιθέμενου βιβλίου(ων)
 .UNINDENT
-.SS ADDING FROM FOLDERS
+.SS ΠΡΟΣΘΗΚΗ ΑΠΟ ΦΑΚΕΛΟΥΣ
 .sp
-Options to control the adding of books from folders. By default only files that have extensions of known e\-book file types are added.
+Επιλογές για τον έλεγχο της προσθήκης βιβλίων από φακέλους. Εξ ορισμού, μόνο αρχεία με επεκτάσεις που αντιστοιχούν σε γνωστές μορφές ψηφιακών βιβλίων προστίθενται.
 .INDENT 0.0
 .TP
 .B \-\-add
@@ -484,7 +486,7 @@ Have calibre convert all non English characters into English equivalents for the
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Export all books into a single folder
+Εξαγωγή όλων των βιβλίων στον ίδιο φάκελο
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -499,7 +501,7 @@ The template to control the filename and folder structure of the saved files. De
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Export books to the specified folder. Default is .
+Εξαγωγή των βιβλίων στον καθορισμένο φάκελο. Εξ ορισμού  .
 .UNINDENT
 .INDENT 0.0
 .TP

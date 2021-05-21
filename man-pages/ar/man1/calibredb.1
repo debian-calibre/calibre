@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "أبريل 30, 2021" "5.17.0" "calibre"
+.TH "CALIBREDB" "1" "مايو 21, 2021" "5.18.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -41,47 +41,42 @@ calibredb command [options] [arguments]
 .UNINDENT
 .UNINDENT
 .sp
-‎:‎command:
-.nf
-\(ga
-.fi
-calibredb\(ga‎ هو واجهة موجه الأوامر لقاعدة بيانات كاليبر. لهذه
-الواجهة عدة أوامر فرعية، مشروحة تالياً.
+\fBcalibredb\fP is the command line interface to the calibre database. It has
+several sub\-commands, documented below.
 .sp
-‎:‎command:\fIcalibredb\(ga‎ يمكن استخدامه لمعالجة إمّا قاعدة بيانات كاليبر محددة بمسار
-أو بخادوم محتوى كاليبر :guilabel:\(gaContent server\fP يشتغل إمّا على جهاز محلي أو على
-النت. يمكنك بدء خادوم محتوى كاليبر ‎:‎guilabel:‎\(ga‎Content server\(ga‎ باستخدام
-إمّا أمر البرنامج ‎:command:‎\(ga‎calibre\-server\(ga‎ أو
-من الواجهة الرئيسية لبرنامج كاليبر انقر
-على اتصال/مشاركة  →  بدأ خادوم المحتوى\&.
-حيث أنّ قاعدة البيانات ‎:command:‎\(ga‎calibredb\(ga‎ يمكنها أن تُجري
-تغييرات على مكتبات كاليبر، فيتوجب عليك إعداد إستيثاق أولاً على
-الخادوم. توجد طريقتان لفعل ذلك:
+\fBcalibredb\fP can be used to manipulate either a calibre database
+specified by path or a calibre Content server running either on
+the local machine or over the internet. You can start a calibre
+Content server using either the \fBcalibre\-server\fP
+program or in the main calibre program click Connect/share  → 
+Start Content server\&. Since \fBcalibredb\fP can make changes to your
+calibre libraries, you must setup authentication on the server first. There
+are two ways to do that:
 .INDENT 0.0
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-إذا كنت تنوي الإرتباط فقط إلى خادوم يشتغل على نفس الحاسوب،فيمكنك
-ببساطة استخدام خيار \fB\-\-enable\-local\-write\fP في خادوم المحتوى، للسماح
-لأي برنامج، ومنها قواعد بيانات كاليبر calibredb، يشتغل على الحاوب المحلي بأن يُجري
-تغييرات على بياناتك في كاليبر.
-عند تشغيل الخادوم من برنامج كاليبر الرئيسي، فإن هذا الخيار موجود في
-التفضيلات → المشاركة على النت → متقدم\&.
+If you plan to connect only to a server running on the same computer,
+you can simply use the \fB\-\-enable\-local\-write\fP option of the
+Content server, to allow any program, including calibredb, running on
+the local computer to make changes to your calibre data. When running
+the server from the main calibre program, this option is in
+Preferences → Sharing over the net → Advanced\&.
 .IP \(bu 2
-إذا أردت تمكين الدخول عبر النت، إذن ينبغي عليك إعداد حسابات مستخدمين على الخادوم واستخدام الخيارات
-\fI\%\-\-username\fP و \fI\%\-\-password\fP
-في الأمر \fBcalibredb\fP لمنحه الدخول.
-يمكنك إعداد استيثاق للمستخدمين للخادوم \fBcalibre\-server\fP
-باستخدام الخيار \fB\-\-enable\-auth\fP واستخدام\(ga\(ga\-\-manage\-users\(ga\(ga لإنشاء حسابات المستخدمين.
-إذا كنت تشغّل الخادوم من برنامج كاليبر الرئيسي، فاستخدم
+If you want to enable access over the internet, then you should setup
+user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
+options to \fBcalibredb\fP to give it access. You can setup
+user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
+option and using \fB\-\-manage\-users\fP to create the user accounts.
+If you are running the server from the main calibre program, use
 Preferences → Sharing over the net → Require username/password\&.
 .UNINDENT
 .UNINDENT
 .UNINDENT
 .sp
-للإرتباط بخادوم محتوى مشتغل، مرّر رابط URL الخادوم إلى الخيار
-\fI\%\-\-with\-library\fP، راجع شرح ذلك الخيار
-للتفاصيل والأمثلة.
+To connect to a running Content server, pass the URL of the server to the
+\fI\%\-\-with\-library\fP option, see the documentation of that option for
+details and examples.
 .INDENT 0.0
 .IP \(bu 2
 \fI\%GLOBAL OPTIONS\fP
