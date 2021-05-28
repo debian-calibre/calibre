@@ -126,8 +126,8 @@ def sorted_items(items):
             cfi = x.get('start_cfi')
             if cfi:
                 spine_idx = x.get('spine_index', def_spine)
-                cfi = f'/{spine_idx}/{cfi}'
-                return cfi_sort_key(cfi, only_path=False)
+                cfi = f'/{spine_idx}{cfi}'
+                return cfi_sort_key(cfi)
         elif atype == 'bookmark':
             if x.get('pos_type') == 'epubcfi':
                 return cfi_sort_key(x['pos'], only_path=False)
@@ -758,7 +758,8 @@ class DetailsPanel(QWidget):
         if annot['type'] == 'bookmark':
             p(annot['title'])
         elif annot['type'] == 'highlight':
-            p(annot['highlighted_text'])
+            for line in annot['highlighted_text'].splitlines():
+                p(line)
             notes = annot.get('notes')
             if notes:
                 paras.append('<h4>{} (<a title="{}" href="calibre://edit_result">{}</a>)</h4>'.format(

@@ -9842,6 +9842,7 @@ return parser;
             ρσ_d["fullscreen_when_opening"] = "auto";
             ρσ_d["book_search_mode"] = "contains";
             ρσ_d["book_search_case_sensitive"] = false;
+            ρσ_d["reverse_page_turn_zones"] = false;
             return ρσ_d;
         }).call(this);
         is_local_setting = (function(){
@@ -9878,6 +9879,7 @@ return parser;
             ρσ_d["highlights_export_format"] = true;
             ρσ_d["book_search_mode"] = true;
             ρσ_d["book_search_case_sensitive"] = true;
+            ρσ_d["reverse_page_turn_zones"] = true;
             return ρσ_d;
         }).call(this);
         function session_defaults() {
@@ -18342,6 +18344,7 @@ return this.__repr__();
             opts.paged_taps_scroll_by_screen = !!settings.paged_taps_scroll_by_screen;
             opts.scroll_auto_boundary_delay = settings.scroll_auto_boundary_delay;
             opts.scroll_stop_boundaries = !!settings.scroll_stop_boundaries;
+            opts.reverse_page_turn_zones = !!settings.reverse_page_turn_zones;
             opts.user_stylesheet = settings.user_stylesheet;
         };
         if (!update_settings.__argnames__) Object.defineProperties(update_settings, {
@@ -25614,7 +25617,7 @@ return this.__repr__();
         });
 
         function create_toc_panel(book, container, onclick) {
-            var toc_panel, toc_panel_id, search_button, t, search_bar;
+            var toc_panel, toc_panel_id, search_button, t, search_bar, child;
             function handle_click(event, li) {
                 if (event.button === 0) {
                     onclick(li.dataset.tocDest, li.dataset.tocFrag);
@@ -25627,7 +25630,7 @@ return this.__repr__();
 
             toc_panel = create_toc_tree(book.manifest.toc, handle_click);
             toc_panel_id = ensure_id(toc_panel);
-            ρσ_interpolate_kwargs.call(this, set_css, [container].concat([ρσ_desugar_kwargs({display: "flex", flex_direction: "column"})]));
+            ρσ_interpolate_kwargs.call(this, set_css, [container].concat([ρσ_desugar_kwargs({display: "flex", flex_direction: "column", height: "100%", min_height: "100%", overflow: "hidden", max_height: "100vh", max_width: "100vw"})]));
             ρσ_interpolate_kwargs.call(this, set_css, [toc_panel].concat([ρσ_desugar_kwargs({flex_grow: "10"})]));
             container.appendChild(toc_panel);
             search_button = ρσ_interpolate_kwargs.call(E, E.div, [svgicon("search")].concat([ρσ_desugar_kwargs({class_: "simple-link"})]));
@@ -25635,6 +25638,14 @@ return this.__repr__();
             search_bar = ρσ_interpolate_kwargs.call(this, create_search_bar, [do_search.bind(toc_panel_id), "search-book-toc"].concat([ρσ_desugar_kwargs({button: search_button, placeholder: t})]));
             ρσ_interpolate_kwargs.call(this, set_css, [search_bar].concat([ρσ_desugar_kwargs({flex_grow: "10", margin_right: "1em"})]));
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [search_bar, search_button].concat([ρσ_desugar_kwargs({style: "margin: 1ex 1em; display: flex; align-items: center"})])));
+            var ρσ_Iter5 = ρσ_Iterable(container.childNodes);
+            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                child = ρσ_Iter5[ρσ_Index5];
+                child.style.flexShrink = "0";
+            }
+            toc_panel.style.flexGrow = "100";
+            toc_panel.style.flexShrink = "1";
+            toc_panel.style.overflow = "auto";
         };
         if (!create_toc_panel.__argnames__) Object.defineProperties(create_toc_panel, {
             __argnames__ : {value: ["book", "container", "onclick"]},
@@ -25649,9 +25660,9 @@ return this.__repr__();
                 am = Object.create(null);
                 anchors = [];
                 pos_map = Object.create(null);
-                var ρσ_Iter5 = ρσ_Iterable(enumerate(tam[(typeof name === "number" && name < 0) ? tam.length + name : name] || []));
-                for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                    ρσ_unpack = ρσ_Iter5[ρσ_Index5];
+                var ρσ_Iter6 = ρσ_Iterable(enumerate(tam[(typeof name === "number" && name < 0) ? tam.length + name : name] || []));
+                for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                    ρσ_unpack = ρσ_Iter6[ρσ_Index6];
                     i = ρσ_unpack[0];
                     anchor = ρσ_unpack[1];
                     val = anchor_funcs.pos_for_elem();
@@ -25699,9 +25710,9 @@ return this.__repr__();
             before = after = null;
             visible_anchors = Object.create(null);
             has_visible = false;
-            var ρσ_Iter6 = ρσ_Iterable(tam.sorted_anchors);
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                anchor_id = ρσ_Iter6[ρσ_Index6];
+            var ρσ_Iter7 = ρσ_Iterable(tam.sorted_anchors);
+            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                anchor_id = ρσ_Iter7[ρσ_Index7];
                 pos = (ρσ_expr_temp = tam.pos_map)[(typeof anchor_id === "number" && anchor_id < 0) ? ρσ_expr_temp.length + anchor_id : anchor_id];
                 visibility = anchor_funcs.visibility(pos);
                 if (visibility < 0) {
@@ -25744,9 +25755,9 @@ return this.__repr__();
                     }
                     return ρσ_Result;
                 })();
-                var ρσ_Iter7 = ρσ_Iterable(tam.sorted_anchors);
-                for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                    anchor_id = ρσ_Iter7[ρσ_Index7];
+                var ρσ_Iter8 = ρσ_Iterable(tam.sorted_anchors);
+                for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
+                    anchor_id = ρσ_Iter8[ρσ_Index8];
                     anchor = amap[(typeof anchor_id === "number" && anchor_id < 0) ? amap.length + anchor_id : anchor_id];
                     is_before = true;
                     if (anchor.frag) {
@@ -25797,6 +25808,8 @@ return this.__repr__();
         var ltr_page_progression = ρσ_modules["read_book.globals"].ltr_page_progression;
 
         var scroll_viewport = ρσ_modules["read_book.viewport"].scroll_viewport;
+
+        var opts = ρσ_modules["read_book.settings"].opts;
 
         HOLD_THRESHOLD = 750;
         TAP_THRESHOLD = 8;
@@ -26281,7 +26294,7 @@ return this.__repr__();
                         if (gesture.viewport_y < min(100, scroll_viewport.height() / 4)) {
                             gesture.type = "show-chrome";
                         } else {
-                            if (ltr_page_progression()) {
+                            if (ltr_page_progression() && !opts.reverse_page_turn_zones) {
                                 if (gesture.viewport_x < min(100, scroll_viewport.width() / 4)) {
                                     gesture.type = "prev-page";
                                 } else {
@@ -26735,6 +26748,30 @@ return this.__repr__();
             __module__ : {value: "select"}
         });
 
+        function is_start_closer_to_point(pos) {
+            var sel, p, r, sr, er;
+            sel = window.getSelection();
+            if (!sel.rangeCount) {
+                return;
+            }
+            p = caret_position_from_point(pos.x, pos.y);
+            if (p) {
+                r = sel.getRangeAt(0);
+                sr = document.createRange();
+                sr.setStart(r.startContainer, r.startOffset);
+                sr.setEnd(p.offsetNode, p.offset);
+                er = document.createRange();
+                er.setStart(p.offsetNode, p.offset);
+                er.setEnd(r.endContainer, r.endOffset);
+                return sr.toString().length < er.toString().length;
+            }
+            return false;
+        };
+        if (!is_start_closer_to_point.__argnames__) Object.defineProperties(is_start_closer_to_point, {
+            __argnames__ : {value: ["pos"]},
+            __module__ : {value: "select"}
+        });
+
         function move_end_of_selection(pos, start) {
             var sel, p, r, q;
             sel = window.getSelection();
@@ -26786,6 +26823,7 @@ return this.__repr__();
         ρσ_modules.select.get_selection_node_at_boundary = get_selection_node_at_boundary;
         ρσ_modules.select.range_extents = range_extents;
         ρσ_modules.select.selection_extents = selection_extents;
+        ρσ_modules.select.is_start_closer_to_point = is_start_closer_to_point;
         ρσ_modules.select.move_end_of_selection = move_end_of_selection;
     })();
 
@@ -26908,6 +26946,7 @@ return this.__repr__();
         var scroll_viewport = ρσ_modules["read_book.viewport"].scroll_viewport;
 
         var first_visible_word = ρσ_modules.select.first_visible_word;
+        var is_start_closer_to_point = ρσ_modules.select.is_start_closer_to_point;
         var move_end_of_selection = ρσ_modules.select.move_end_of_selection;
         var selection_extents = ρσ_modules.select.selection_extents;
         var word_at_point = ρσ_modules.select.word_at_point;
@@ -26916,7 +26955,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.18.0";
+        CALIBRE_VERSION = "5.19.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -28243,7 +28282,7 @@ return this.__repr__();
                     } 
                 }
             } else if (dtype === "extend-to-point") {
-                move_end_of_selection(data.pos, null);
+                move_end_of_selection(data.pos, is_start_closer_to_point(data.pos));
             } else if (dtype === "drag-scroll") {
                 self.scroll_to_extend_annotation(data.backwards);
             } else if (dtype === "edit-highlight") {
@@ -37620,16 +37659,16 @@ return this.__repr__();
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: CONTAINER, style: "margin: 1rem"})]));
             container = container.lastChild;
             sd = get_session_data();
-            function cb(name, text) {
+            function cb(name, text, title) {
                 var ans;
                 ans = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "checkbox", name: name, style: "margin-left: 0"})]);
                 if (sd.get(name)) {
                     ans.checked = true;
                 }
-                return ρσ_interpolate_kwargs.call(E, E.div, [E.label(ans, text)].concat([ρσ_desugar_kwargs({style: "margin-top:1ex"})]));
+                return ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.label, [ans, text].concat([ρσ_desugar_kwargs({title: title || ""})]))].concat([ρσ_desugar_kwargs({style: "margin-top:1ex"})]));
             };
             if (!cb.__argnames__) Object.defineProperties(cb, {
-                __argnames__ : {value: ["name", "text"]},
+                __argnames__ : {value: ["name", "text", "title"]},
                 __module__ : {value: "read_book.prefs.scrolling"}
             });
 
@@ -37672,6 +37711,7 @@ return this.__repr__();
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Miscellaneous")].concat([ρσ_desugar_kwargs({style: "margin-top:1ex"})])));
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-left: 1rem"})]));
             container.lastChild.appendChild(cb("book_scrollbar", _("Show a scrollbar")));
+            container.lastChild.appendChild(cb("reverse_page_turn_zones", _("Invert the page turn tap areas"), _("Have tapping on the left side turn the page forward and the right side backwards")));
             container.appendChild(create_button_box(restore_defaults, apply_func, cancel_func));
         };
         if (!create_scrolling_panel.__argnames__) Object.defineProperties(create_scrolling_panel, {
@@ -40925,6 +40965,7 @@ return this.__repr__();
         }
         Object.defineProperty(DeleteBook.prototype, "__bind_methods__", {value: function () {
             this.show = DeleteBook.prototype.show.bind(this);
+            this.focus_me = DeleteBook.prototype.focus_me.bind(this);
             this.show_working = DeleteBook.prototype.show_working.bind(this);
             this.on_container_click = DeleteBook.prototype.on_container_click.bind(this);
             this.delete_book = DeleteBook.prototype.delete_book.bind(this);
@@ -40948,10 +40989,33 @@ return this.__repr__();
             var self = this;
             self.container_id = container.getAttribute("id");
             ρσ_interpolate_kwargs.call(this, set_css, [container].concat([ρσ_desugar_kwargs({background_color: get_color("window-background")})]));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [E.h2(self.question), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, create_button, [self.ok_text, self.ok_icon].concat([ρσ_desugar_kwargs({action: self.delete_book, highlight: true})])), E.span(" "), ρσ_interpolate_kwargs.call(this, create_button, [_("Cancel")].concat([ρσ_desugar_kwargs({action: self.cancel})]))].concat([ρσ_desugar_kwargs({style: "display:flex; justify-content:flex-end; margin-top:1rem"})]))].concat([ρσ_desugar_kwargs({style: "margin:1ex 1em; max-width: 80%"})]))].concat([ρσ_desugar_kwargs({style: "display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [E.h2(self.question), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, create_button, [self.ok_text, self.ok_icon].concat([ρσ_desugar_kwargs({action: self.delete_book, highlight: true})])), E.span(" "), ρσ_interpolate_kwargs.call(this, create_button, [_("Cancel")].concat([ρσ_desugar_kwargs({action: self.cancel})]))].concat([ρσ_desugar_kwargs({style: "display:flex; justify-content:flex-end; margin-top:1rem"})]))].concat([ρσ_desugar_kwargs({style: "margin:1ex 1em; max-width: 80%"})]))].concat([ρσ_desugar_kwargs({style: "display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%", tabindex: "0", onkeyup: (function() {
+                var ρσ_anonfunc = function (ev) {
+                    if (ev.key === "Escape") {
+                        [ev.stopPropagation(), ev.preventDefault()];
+                        self.cancel();
+                    } else if (ev.key === "Enter" || ev.key === "Return") {
+                        [ev.stopPropagation(), ev.preventDefault()];
+                        self.delete_book();
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["ev"]},
+                    __module__ : {value: "read_book.overlay"}
+                });
+                return ρσ_anonfunc;
+            })()})])));
+            window.setTimeout(self.focus_me, 0);
         };
         if (!DeleteBook.prototype.show.__argnames__) Object.defineProperties(DeleteBook.prototype.show, {
             __argnames__ : {value: ["container"]},
+            __module__ : {value: "read_book.overlay"}
+        });
+        DeleteBook.prototype.focus_me = function focus_me() {
+            var self = this;
+            document.getElementById(self.container_id).lastChild.focus();
+        };
+        if (!DeleteBook.prototype.focus_me.__module__) Object.defineProperties(DeleteBook.prototype.focus_me, {
             __module__ : {value: "read_book.overlay"}
         });
         DeleteBook.prototype.show_working = function show_working() {
@@ -41618,6 +41682,8 @@ return this.__repr__();
         TOCOverlay.__handles_kwarg_interpolation__ = TOCOverlay.prototype.__init__.__handles_kwarg_interpolation__;
         TOCOverlay.prototype.show = function show(container) {
             var self = this;
+            container.appendChild(E.div());
+            container = container.firstChild;
             simple_overlay_title(self.title, self.overlay, container);
             self.create_func(self.overlay.view.book, container, self.handle_activate);
         };
@@ -42952,9 +43018,9 @@ return this.__repr__();
                 bob_top = b.offsetTop;
                 bob_bottom = bob_top + b.offsetHeight;
                 if (evt.clientY < bob_top) {
-                    self.view.left_margin_clicked(evt);
+                    self.view.side_margin_clicked("left", evt);
                 } else if (evt.clientY > bob_bottom) {
-                    self.view.right_margin_clicked(evt);
+                    self.view.side_margin_clicked("right", evt);
                 }
             }
         };
@@ -44757,13 +44823,13 @@ return this.__repr__();
             __module__ : {value: "read_book.view"}
         });
 
-        function side_margin_elem(self, sd, which) {
+        function side_margin_elem(self, sd, which, icon) {
             var ans;
-            ans = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [svgicon("caret-" + ρσ_str.format("{}", which) + "", "100%", "100%")].concat([ρσ_desugar_kwargs({class_: "arrow", style: "order: 3"})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "order:1"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "order:2", class_: "not-arrow"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "order:4"})])].concat([ρσ_desugar_kwargs({style: "width:{}px; user-select: none".format(sd.get("margin_" + ρσ_str.format("{}", which) + "", 20)), class_: "book-side-margin", id: "book-" + ρσ_str.format("{}", which) + "-margin", onclick: self.side_margin_clicked.bind(null, which), oncontextmenu: self.margin_context_menu.bind(null, which), onwheel: self.on_margin_wheel.bind(null, which)})]));
+            ans = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [svgicon("caret-" + ρσ_str.format("{}", icon) + "", "100%", "100%")].concat([ρσ_desugar_kwargs({class_: "arrow", style: "order: 3"})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "order:1"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "order:2", class_: "not-arrow"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "order:4"})])].concat([ρσ_desugar_kwargs({style: "width:{}px; user-select: none".format(sd.get("margin_" + ρσ_str.format("{}", which) + "", 20)), class_: "book-side-margin", id: "book-" + ρσ_str.format("{}", which) + "-margin", onclick: self.side_margin_clicked.bind(null, which), oncontextmenu: self.margin_context_menu.bind(null, which), onwheel: self.on_margin_wheel.bind(null, which)})]));
             return ans;
         };
         if (!side_margin_elem.__argnames__) Object.defineProperties(side_margin_elem, {
-            __argnames__ : {value: ["self", "sd", "which"]},
+            __argnames__ : {value: ["self", "sd", "which", "icon"]},
             __module__ : {value: "read_book.view"}
         });
 
@@ -44781,8 +44847,6 @@ return this.__repr__();
             this.on_annotations_message = View.prototype.on_annotations_message.bind(this);
             this.on_tts_message = View.prototype.on_tts_message.bind(this);
             this.on_hints_message = View.prototype.on_hints_message.bind(this);
-            this.left_margin_clicked = View.prototype.left_margin_clicked.bind(this);
-            this.right_margin_clicked = View.prototype.right_margin_clicked.bind(this);
             this.side_margin_clicked = View.prototype.side_margin_clicked.bind(this);
             this.top_margin_clicked = View.prototype.top_margin_clicked.bind(this);
             this.bottom_margin_clicked = View.prototype.bottom_margin_clicked.bind(this);
@@ -44942,9 +45006,9 @@ return this.__repr__();
             if (ui_operations.export_shortcut_map) {
                 ui_operations.export_shortcut_map(self.keyboard_shortcut_map);
             }
-            left_margin = side_margin_elem(self, sd, "left");
+            left_margin = side_margin_elem(self, sd, "left", (sd.get("reverse_page_turn_zones")) ? "right" : "left");
             set_left_margin_handler(left_margin);
-            right_margin = side_margin_elem(self, sd, "right");
+            right_margin = side_margin_elem(self, sd, "right", (sd.get("reverse_page_turn_zones")) ? "left" : "right");
             set_right_margin_handler(right_margin);
             handlers = (function(){
                 var ρσ_d = Object.create(null);
@@ -45176,43 +45240,22 @@ return this.__repr__();
             __argnames__ : {value: ["data"]},
             __module__ : {value: "read_book.view"}
         });
-        View.prototype.left_margin_clicked = function left_margin_clicked(event) {
-            var self = this;
-            var sd;
-            if (event.button === 0) {
-                [event.preventDefault(), event.stopPropagation()];
-                sd = get_session_data();
-                ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["next_screen"].concat([ρσ_desugar_kwargs({backwards: true, flip_if_rtl_page_progression: true, all_pages_on_screen: sd.get("paged_margin_clicks_scroll_by_screen")})]));
-            } else if (event.button === 2) {
-                [event.preventDefault(), event.stopPropagation()];
-                window.setTimeout(self.show_chrome, 0);
-            }
-            self.focus_iframe();
-        };
-        if (!View.prototype.left_margin_clicked.__argnames__) Object.defineProperties(View.prototype.left_margin_clicked, {
-            __argnames__ : {value: ["event"]},
-            __module__ : {value: "read_book.view"}
-        });
-        View.prototype.right_margin_clicked = function right_margin_clicked(event) {
-            var self = this;
-            var sd;
-            if (event.button === 0) {
-                [event.preventDefault(), event.stopPropagation()];
-                sd = get_session_data();
-                ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["next_screen"].concat([ρσ_desugar_kwargs({backwards: false, flip_if_rtl_page_progression: true, all_pages_on_screen: sd.get("paged_margin_clicks_scroll_by_screen")})]));
-            } else if (event.button === 2) {
-                [event.preventDefault(), event.stopPropagation()];
-                window.setTimeout(self.show_chrome, 0);
-            }
-            self.focus_iframe();
-        };
-        if (!View.prototype.right_margin_clicked.__argnames__) Object.defineProperties(View.prototype.right_margin_clicked, {
-            __argnames__ : {value: ["event"]},
-            __module__ : {value: "read_book.view"}
-        });
         View.prototype.side_margin_clicked = function side_margin_clicked(which, event) {
             var self = this;
-            (which === "left") ? self.left_margin_clicked(event) : self.right_margin_clicked(event);
+            var backwards, sd;
+            backwards = which === "left";
+            if (get_session_data().get("reverse_page_turn_zones")) {
+                backwards = !backwards;
+            }
+            if (event.button === 0) {
+                [event.preventDefault(), event.stopPropagation()];
+                sd = get_session_data();
+                ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["next_screen"].concat([ρσ_desugar_kwargs({backwards: backwards, flip_if_rtl_page_progression: true, all_pages_on_screen: sd.get("paged_margin_clicks_scroll_by_screen")})]));
+            } else if (event.button === 2) {
+                [event.preventDefault(), event.stopPropagation()];
+                window.setTimeout(self.show_chrome, 0);
+            }
+            self.focus_iframe();
         };
         if (!View.prototype.side_margin_clicked.__argnames__) Object.defineProperties(View.prototype.side_margin_clicked, {
             __argnames__ : {value: ["which", "event"]},
@@ -46225,6 +46268,7 @@ return this.__repr__();
                 ρσ_d["lines_per_sec_smooth"] = sd.get("lines_per_sec_smooth");
                 ρσ_d["scroll_auto_boundary_delay"] = sd.get("scroll_auto_boundary_delay");
                 ρσ_d["scroll_stop_boundaries"] = sd.get("scroll_stop_boundaries");
+                ρσ_d["reverse_page_turn_zones"] = sd.get("reverse_page_turn_zones");
                 return ρσ_d;
             }).call(this);
         };
