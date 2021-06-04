@@ -18,8 +18,8 @@ calibre binary: package-contains-documentation-outside-usr-share-doc usr/share/c
 calibre binary: package-contains-documentation-outside-usr-share-doc usr/share/calibre/viewer.html
 
 # Use specific Python version
-calibre binary: unusual-interpreter usr/bin/* *!/usr/bin/python3.9
-calibre binary: unusual-interpreter usr/lib/calibre/calibre/devices/cli.py *!/usr/bin/python3.9
+calibre binary: unusual-interpreter usr/bin/* /usr/bin/python3.9
+calibre binary: unusual-interpreter usr/lib/calibre/calibre/devices/cli.py /usr/bin/python3.9
 
 # Temporary fix: Use embedded MathJax v3 font until Debian releases MathJax v3
 calibre binary: font-in-non-font-package usr/share/calibre/mathjax/output/chtml/fonts/woff-v2/*.woff
