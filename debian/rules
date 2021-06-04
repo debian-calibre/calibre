@@ -73,12 +73,9 @@ calibre_auto_install:
 	find debian/tmp/usr/lib/calibre debian/tmp/usr/share/calibre -name '*.py' -print | xargs --no-run-if-empty sed --separate --file=debian/fix-python-shebang.sed --in-place
 
 override_dh_installman:
-#	# Create and install some of the man pages
-	ln -sf $(CURDIR)/man-pages debian/man
-	dh_installman
+	debian/install-manpages.sh
 
 override_dh_auto_clean:
-	rm -f  debian/man
 	[ ! -d build ] || $(SETUP) build -c
 	$(SETUP) mathjax --clean
 	$(SETUP) liberation_fonts --clean
