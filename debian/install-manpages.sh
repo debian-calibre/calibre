@@ -1,9 +1,14 @@
 #!/bin/sh
+#
+# Install manpages with Debian packaging style
+#
 
 set -eu
 
-dh_installman -pcalibre --language=C man-pages/man1/*.1
+# default language
+dh_installman --package=calibre --language=C man-pages/man1/*.1
 
+# each languages
 for i in man-pages/*
 do
     lang=$(basename ${i})
@@ -12,5 +17,5 @@ do
 	continue
     fi
 
-    dh_installman -pcalibre --language=${lang} ${i}/man1/*.1
+    dh_installman --package=calibre --language=${lang} ${i}/man1/*.1
 done
