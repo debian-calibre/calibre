@@ -725,7 +725,7 @@ class Ui_Form(object):
 "a click on the selected item. The keyboard shortcut \'Tag browser /\n"
 "Give the Tag browser keyboard focus\' changes the keyboard focus without\n"
 "using the mouse.</p>"))
-        self.opt_tag_browser_allow_keyboard_focus.setText(_("Allow the Tag browser to have keyboard focus"))
+        self.opt_tag_browser_allow_keyboard_focus.setText(_("Allow the Tag browser to have keyboard &focus"))
         self.tb_focus_label.setText(_("<p style=\"text-indent: 2em; font-size:smaller\">If you enable this option then you should set a keyboard shortcut to focus the Tag browser under <code>Preferences-&gt;Shortcuts-&gt;Tag browser-&gt;Give the Tag browser keyboard focus</code>"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tag_browser_tab), _("&Tag browser"))
         self.opt_cb_fullscreen.setText(_("When showing in a separate window, show it &fullscreen"))

@@ -224,7 +224,7 @@ class Ui_Form(object):
         self.label.setText(_("When you enter a search term without a prefix, by default calibre will search all metadata for matches. For example, entering, \"asimov\" will search not just authors but title/tags/series/comments/etc. Use these options if you would like to change this behavior."))
         self.opt_limit_search_columns.setText(_("&Limit the searched metadata"))
         self.label_2.setText(_("&Columns that non-prefixed searches are limited to:"))
-        self.label_3.setText(_("Note that this option affects all searches, including saved searches and restrictions. Therefore, if you use this option, it is best to ensure that you always use prefixes in your saved searches. For example, use \"series:Foundation\" rather than just \"Foundation\" in  a saved search"))
+        self.label_3.setText(_("Note that this option affects all searches, including saved searches and restrictions. Therefore, if you use this option, it is best to ensure that you always use prefixes in your saved searches. For example, use \"series:Foundation\" rather than just \"Foundation\" in a saved search."))
         self.opt_search_as_you_type.setText(_("Search as you &type"))
         self.opt_case_sensitive.setText(_("Case &sensitive searching"))
         self.opt_highlight_search_matches.setText(_("&Highlight search results instead of restricting the book list to the results"))

@@ -123,7 +123,7 @@ class ImageView(QDialog):
         self.zo_button = zo = bb.addButton(_('Zoom &out'), QDialogButtonBox.ButtonRole.ActionRole)
         self.save_button = so = bb.addButton(_('&Save as'), QDialogButtonBox.ButtonRole.ActionRole)
         self.rotate_button = ro = bb.addButton(_('&Rotate'), QDialogButtonBox.ButtonRole.ActionRole)
-        self.fullscreen_buton = fo = bb.addButton(_('&Full screen'), QDialogButtonBox.ButtonRole.ActionRole)
+        self.fullscreen_button = fo = bb.addButton(_('&Full screen'), QDialogButtonBox.ButtonRole.ActionRole)
         zi.setIcon(QIcon(I('plus.png')))
         zo.setIcon(QIcon(I('minus.png')))
         so.setIcon(QIcon(I('save.png')))
@@ -134,7 +134,6 @@ class ImageView(QDialog):
         so.clicked.connect(self.save_image)
         ro.clicked.connect(self.rotate_image)
         fo.setCheckable(True)
-        fo.toggled.connect(self.toggle_fullscreen)
 
         self.l = l = QVBoxLayout(self)
         l.addWidget(sa)
@@ -151,6 +150,8 @@ class ImageView(QDialog):
         geom = gprefs.get(self.geom_name)
         if geom is not None:
             self.restoreGeometry(geom)
+        fo.setChecked(self.isFullScreen())
+        fo.toggled.connect(self.toggle_fullscreen)
 
     def set_to_viewport_size(self):
         page_size = self.scrollarea.size()
@@ -250,7 +251,10 @@ class ImageView(QDialog):
             self.current_image_name = unicode_type(self.current_url.toString(NO_URL_FORMATTING)).rpartition('/')[-1]
         except AttributeError:
             self.current_image_name = self.current_url
-        title = _('View image: %s')%self.current_image_name
+        reso = ''
+        if self.current_img and not self.current_img.isNull():
+            reso = f'[{self.current_img.width()}x{self.current_img.height()}]'
+        title = _('Image: {name} {resolution}').format(name=self.current_image_name, resolution=reso)
         self.setWindowTitle(title)
         if use_exec:
             self.exec_()

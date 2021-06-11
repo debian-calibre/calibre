@@ -6970,7 +6970,6 @@ return parser;
             ρσ_d["columns_per_screen"] = true;
             ρσ_d["controls_help_shown_count"] = true;
             ρσ_d["controls_help_shown_count_rtl_page_progression"] = true;
-            ρσ_d["current_color_scheme"] = true;
             ρσ_d["lines_per_sec_auto"] = true;
             ρσ_d["lines_per_sec_smooth"] = true;
             ρσ_d["margin_bottom"] = true;
@@ -6979,7 +6978,6 @@ return parser;
             ρσ_d["margin_top"] = true;
             ρσ_d["max_text_height"] = true;
             ρσ_d["max_text_width"] = true;
-            ρσ_d["override_book_colors"] = true;
             ρσ_d["read_mode"] = "paged";
             ρσ_d["scroll_auto_boundary_delay"] = true;
             ρσ_d["scroll_stop_boundaries"] = true;
@@ -26198,7 +26196,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.20.0";
+        CALIBRE_VERSION = "5.21.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -26651,9 +26649,9 @@ return this.__repr__();
                 return ρσ_d;
             }).call(this));
             self.last_cfi = null;
-            var ρσ_Iter9 = ρσ_Iterable(self.blob_url_map);
-            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                name = ρσ_Iter9[ρσ_Index9];
+            var ρσ_Iter0 = ρσ_Iterable(self.blob_url_map);
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                name = ρσ_Iter0[ρσ_Index0];
                 window.URL.revokeObjectURL((ρσ_expr_temp = self.blob_url_map)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name]);
             }
             document.body.style.removeProperty("font-family");
@@ -26955,8 +26953,8 @@ return this.__repr__();
             spine_index = csi.index;
             self.length_before = 0;
             if (spine_index > -1) {
-                for (var ρσ_Index10 = 0; ρσ_Index10 < spine_index; ρσ_Index10++) {
-                    i = ρσ_Index10;
+                for (var ρσ_Index1 = 0; ρσ_Index1 < spine_index; ρσ_Index1++) {
+                    i = ρσ_Index1;
                     si = spine[(typeof i === "number" && i < 0) ? spine.length + i : i];
                     if (si) {
                         self.length_before += ρσ_exists.d(files[(typeof si === "number" && si < 0) ? files.length + si : si]).length || 0;
@@ -27293,15 +27291,15 @@ return this.__repr__();
         IframeBoss.prototype.connect_links = function connect_links() {
             var self = this;
             var a;
-            var ρσ_Iter11 = ρσ_Iterable(document.body.querySelectorAll("a[" + ρσ_str.format("{}", self.link_attr) + "]"));
-            for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
-                a = ρσ_Iter11[ρσ_Index11];
+            var ρσ_Iter2 = ρσ_Iterable(document.body.querySelectorAll("a[" + ρσ_str.format("{}", self.link_attr) + "]"));
+            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                a = ρσ_Iter2[ρσ_Index2];
                 a.addEventListener("click", self.link_activated);
             }
             if (runtime.is_standalone_viewer) {
-                var ρσ_Iter12 = ρσ_Iterable(document.body.querySelectorAll("a[target]"));
-                for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
-                    a = ρσ_Iter12[ρσ_Index12];
+                var ρσ_Iter3 = ρσ_Iterable(document.body.querySelectorAll("a[target]"));
+                for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                    a = ρσ_Iter3[ρσ_Index3];
                     a.removeAttribute("target");
                 }
             }
@@ -27312,9 +27310,9 @@ return this.__repr__();
         IframeBoss.prototype.listen_for_image_double_clicks = function listen_for_image_double_clicks() {
             var self = this;
             var img;
-            var ρσ_Iter13 = ρσ_Iterable(document.querySelectorAll("img, image"));
-            for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
-                img = ρσ_Iter13[ρσ_Index13];
+            var ρσ_Iter4 = ρσ_Iterable(document.querySelectorAll("img, image"));
+            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                img = ρσ_Iter4[ρσ_Index4];
                 img.addEventListener("dblclick", self.image_double_clicked, (function(){
                     var ρσ_d = Object.create(null);
                     ρσ_d["passive"] = true;
@@ -27657,9 +27655,9 @@ return this.__repr__();
                         intersecting_wrappers = [];
                     }
                     removed_highlights = Object.create(null);
-                    var ρσ_Iter14 = ρσ_Iterable(intersecting_wrappers);
-                    for (var ρσ_Index14 = 0; ρσ_Index14 < ρσ_Iter14.length; ρσ_Index14++) {
-                        crw = ρσ_Iter14[ρσ_Index14];
+                    var ρσ_Iter5 = ρσ_Iterable(intersecting_wrappers);
+                    for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                        crw = ρσ_Iter5[ρσ_Index5];
                         unwrap_crw(crw);
                         if (annot_id_uuid_map[(typeof crw === "number" && crw < 0) ? annot_id_uuid_map.length + crw : crw] && annot_id_uuid_map[(typeof crw === "number" && crw < 0) ? annot_id_uuid_map.length + crw : crw] !== data.uuid) {
                             removed_highlights[ρσ_bound_index(annot_id_uuid_map[(typeof crw === "number" && crw < 0) ? annot_id_uuid_map.length + crw : crw], removed_highlights)] = true;
@@ -27705,9 +27703,9 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })());
-            var ρσ_Iter15 = ρσ_Iterable(highlights);
-            for (var ρσ_Index15 = 0; ρσ_Index15 < ρσ_Iter15.length; ρσ_Index15++) {
-                h = ρσ_Iter15[ρσ_Index15];
+            var ρσ_Iter6 = ρσ_Iterable(highlights);
+            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                h = ρσ_Iter6[ρσ_Index6];
                 r = range_from_cfi(h.start_cfi, h.end_cfi);
                 if (!r) {
                     continue;
@@ -27720,9 +27718,9 @@ return this.__repr__();
                 intersecting_wrappers = ρσ_unpack[1];
                 if (annot_id !== null) {
                     annot_id_uuid_map[(typeof annot_id === "number" && annot_id < 0) ? annot_id_uuid_map.length + annot_id : annot_id] = h.uuid;
-                    var ρσ_Iter16 = ρσ_Iterable(intersecting_wrappers);
-                    for (var ρσ_Index16 = 0; ρσ_Index16 < ρσ_Iter16.length; ρσ_Index16++) {
-                        crw = ρσ_Iter16[ρσ_Index16];
+                    var ρσ_Iter7 = ρσ_Iterable(intersecting_wrappers);
+                    for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                        crw = ρσ_Iter7[ρσ_Index7];
                         unwrap_crw(crw);
                         delete annot_id_uuid_map[crw];
                     }
@@ -27783,8 +27781,8 @@ return this.__repr__();
             text = s.toString();
             if (text) {
                 container = document.createElement("div");
-                for (var ρσ_Index17 = 0; ρσ_Index17 < s.rangeCount; ρσ_Index17++) {
-                    i = ρσ_Index17;
+                for (var ρσ_Index8 = 0; ρσ_Index8 < s.rangeCount; ρσ_Index8++) {
+                    i = ρσ_Index8;
                     container.appendChild(s.getRangeAt(i).cloneContents());
                 }
                 ρσ_interpolate_kwargs.call(self, self.send_message, ["copy_text_to_clipboard"].concat([ρσ_desugar_kwargs({text: text, html: container.innerHTML})]));
@@ -44487,9 +44485,9 @@ return this.__repr__();
                 ρσ_d["location"] = location;
                 return ρσ_d;
             }).call(this);
-            var ρσ_Iter18 = ρσ_Iterable(ρσ_list_decorate([ "deltaX", "deltaY", "deltaMode", "altKey", "ctrlKey", "shiftKey", "metaKey" ]));
-            for (var ρσ_Index18 = 0; ρσ_Index18 < ρσ_Iter18.length; ρσ_Index18++) {
-                attr = ρσ_Iter18[ρσ_Index18];
+            var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ "deltaX", "deltaY", "deltaMode", "altKey", "ctrlKey", "shiftKey", "metaKey" ]));
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                attr = ρσ_Iter0[ρσ_Index0];
                 evt[(typeof attr === "number" && attr < 0) ? evt.length + attr : attr] = event[(typeof attr === "number" && attr < 0) ? event.length + attr : attr];
             }
             ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["fake_wheel_event"].concat([ρσ_desugar_kwargs({evt: evt})]));
@@ -44595,9 +44593,9 @@ return this.__repr__();
                 ui_operations.overlay_visibility_changed(visible);
             }
             if (visible) {
-                var ρσ_Iter19 = ρσ_Iterable(self.modal_overlays);
-                for (var ρσ_Index19 = 0; ρσ_Index19 < ρσ_Iter19.length; ρσ_Index19++) {
-                    x = ρσ_Iter19[ρσ_Index19];
+                var ρσ_Iter1 = ρσ_Iterable(self.modal_overlays);
+                for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                    x = ρσ_Iter1[ρσ_Index1];
                     x.hide();
                 }
             } else {
@@ -44908,9 +44906,9 @@ return this.__repr__();
         View.prototype.focus_iframe = function focus_iframe() {
             var self = this;
             var x;
-            var ρσ_Iter20 = ρσ_Iterable(self.modal_overlays);
-            for (var ρσ_Index20 = 0; ρσ_Index20 < ρσ_Iter20.length; ρσ_Index20++) {
-                x = ρσ_Iter20[ρσ_Index20];
+            var ρσ_Iter2 = ρσ_Iterable(self.modal_overlays);
+            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                x = ρσ_Iter2[ρσ_Index2];
                 if (x.is_visible) {
                     x.focus();
                     return;
@@ -44924,9 +44922,9 @@ return this.__repr__();
         View.prototype.start_read_aloud = function start_read_aloud(dont_start_talking) {
             var self = this;
             var x;
-            var ρσ_Iter21 = ρσ_Iterable(self.modal_overlays);
-            for (var ρσ_Index21 = 0; ρσ_Index21 < ρσ_Iter21.length; ρσ_Index21++) {
-                x = ρσ_Iter21[ρσ_Index21];
+            var ρσ_Iter3 = ρσ_Iterable(self.modal_overlays);
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                x = ρσ_Iter3[ρσ_Index3];
                 if (x !== self.read_aloud) {
                     x.hide();
                 }
@@ -44957,9 +44955,9 @@ return this.__repr__();
             if (self.hints.is_visible) {
                 self.hints.hide();
             } else {
-                var ρσ_Iter22 = ρσ_Iterable(self.modal_overlays);
-                for (var ρσ_Index22 = 0; ρσ_Index22 < ρσ_Iter22.length; ρσ_Index22++) {
-                    x = ρσ_Iter22[ρσ_Index22];
+                var ρσ_Iter4 = ρσ_Iterable(self.modal_overlays);
+                for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                    x = ρσ_Iter4[ρσ_Index4];
                     if (x !== self.hints) {
                         x.hide();
                     }
@@ -45156,9 +45154,9 @@ return this.__repr__();
                 set_ui_colors(self.current_color_scheme.is_dark_theme);
             }
             is_dark_theme(self.current_color_scheme.is_dark_theme);
-            var ρσ_Iter23 = ρσ_Iterable("left top right bottom".split(" "));
-            for (var ρσ_Index23 = 0; ρσ_Index23 < ρσ_Iter23.length; ρσ_Index23++) {
-                which = ρσ_Iter23[ρσ_Index23];
+            var ρσ_Iter5 = ρσ_Iterable("left top right bottom".split(" "));
+            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                which = ρσ_Iter5[ρσ_Index5];
                 m = document.getElementById("book-{}-margin".format(which));
                 s = m.style;
                 mc = ans[ρσ_bound_index("margin_" + ρσ_str.format("{}", which) + "", ans)];
@@ -45556,9 +45554,9 @@ return this.__repr__();
             page = total_length * frac;
             chapter_frac = 0;
             chapter_name = null;
-            var ρσ_Iter24 = ρσ_Iterable(self.book.manifest.spine);
-            for (var ρσ_Index24 = 0; ρσ_Index24 < ρσ_Iter24.length; ρσ_Index24++) {
-                name = ρσ_Iter24[ρσ_Index24];
+            var ρσ_Iter6 = ρσ_Iterable(self.book.manifest.spine);
+            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                name = ρσ_Iter6[ρσ_Index6];
                 chapter_length = ρσ_exists.d((ρσ_expr_temp = self.book.manifest.files)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name]).length || 0;
                 chapter_end_page = chapter_start_page + chapter_length;
                 if (chapter_start_page <= page && page <= chapter_end_page) {
@@ -45723,9 +45721,9 @@ return this.__repr__();
                     found = true;
                     return;
                 }
-                var ρσ_Iter25 = ρσ_Iterable(x.children);
-                for (var ρσ_Index25 = 0; ρσ_Index25 < ρσ_Iter25.length; ρσ_Index25++) {
-                    c = ρσ_Iter25[ρσ_Index25];
+                var ρσ_Iter7 = ρσ_Iterable(x.children);
+                for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                    c = ρσ_Iter7[ρσ_Index7];
                     process_node(c);
                 }
             };
@@ -46010,9 +46008,9 @@ return this.__repr__();
                 __module__ : {value: "read_book.view"}
             });
 
-            var ρσ_Iter26 = ρσ_Iterable(ρσ_list_decorate([ "left", "right", "top", "bottom" ]));
-            for (var ρσ_Index26 = 0; ρσ_Index26 < ρσ_Iter26.length; ρσ_Index26++) {
-                edge = ρσ_Iter26[ρσ_Index26];
+            var ρσ_Iter8 = ρσ_Iterable(ρσ_list_decorate([ "left", "right", "top", "bottom" ]));
+            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
+                edge = ρσ_Iter8[ρσ_Index8];
                 div = document.getElementById("book-" + ρσ_str.format("{}", edge) + "-margin");
                 if (div) {
                     tname = (ρσ_expr_temp = (function(){
@@ -46054,9 +46052,9 @@ return this.__repr__();
             }
             if (runtime.is_standalone_viewer) {
                 r = [];
-                var ρσ_Iter27 = ρσ_Iterable(self.current_toc_families);
-                for (var ρσ_Index27 = 0; ρσ_Index27 < ρσ_Iter27.length; ρσ_Index27++) {
-                    fam = ρσ_Iter27[ρσ_Index27];
+                var ρσ_Iter9 = ρσ_Iterable(self.current_toc_families);
+                for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
+                    fam = ρσ_Iter9[ρσ_Index9];
                     if (fam.length) {
                         r.push(fam[fam.length-1].id);
                     }
@@ -46096,9 +46094,9 @@ return this.__repr__();
         View.prototype.on_content_loaded = function on_content_loaded(data) {
             var self = this;
             var x;
-            var ρσ_Iter28 = ρσ_Iterable(self.modal_overlays);
-            for (var ρσ_Index28 = 0; ρσ_Index28 < ρσ_Iter28.length; ρσ_Index28++) {
-                x = ρσ_Iter28[ρσ_Index28];
+            var ρσ_Iter10 = ρσ_Iterable(self.modal_overlays);
+            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
+                x = ρσ_Iter10[ρσ_Index10];
                 if (!x.dont_hide_on_content_loaded) {
                     x.hide();
                 }
