@@ -5,17 +5,18 @@
 import json
 import regex
 from collections import Counter, OrderedDict
+from html import escape
 from qt.core import (
     QCheckBox, QComboBox, QFont, QHBoxLayout, QIcon, QLabel, Qt, QToolButton,
     QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget, pyqtSignal
 )
 from threading import Thread
-from html import escape
 
 from calibre.ebooks.conversion.search_replace import REGEX_FLAGS
 from calibre.gui2 import warning_dialog
 from calibre.gui2.progress_indicator import ProgressIndicator
-from calibre.gui2.viewer.web_view import get_data, get_manifest, vprefs
+from calibre.gui2.viewer.config import vprefs
+from calibre.gui2.viewer.web_view import get_data, get_manifest
 from calibre.gui2.viewer.widgets import ResultsDelegate, SearchBox
 from polyglot.builtins import iteritems, map, unicode_type
 from polyglot.functools import lru_cache
@@ -331,6 +332,7 @@ class SearchInput(QWidget):  # {{{
         sb.initialize('viewer-{}-panel-expression'.format(panel_name))
         sb.item_selected.connect(self.saved_search_selected)
         sb.history_saved.connect(self.history_saved)
+        sb.history_cleared.connect(self.history_cleared)
         sb.cleared.connect(self.cleared)
         sb.lineEdit().returnPressed.connect(self.find_next)
         h.addWidget(sb)
@@ -386,6 +388,9 @@ class SearchInput(QWidget):  # {{{
             history = frozenset(history)
             sss = {k: v for k, v in iteritems(sss) if k in history}
             vprefs['saved-{}-settings'.format(self.panel_name)] = sss
+
+    def history_cleared(self):
+        vprefs['saved-{}-settings'.format(self.panel_name)] = {}
 
     def save_search_type(self):
         text = self.search_box.currentText()

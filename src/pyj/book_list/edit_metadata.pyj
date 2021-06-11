@@ -2,10 +2,9 @@
 # License: GPL v3 Copyright: 2018, Kovid Goyal <kovid at kovidgoyal.net>
 from __python__ import bound_methods, hash_literals
 
-import traceback
 from elementmaker import E
-from gettext import gettext as _
 
+import traceback
 from ajax import ajax_send
 from book_list.book_details import (
     add_stars_to, basic_table_rules, fetch_metadata, field_sorter, no_book,
@@ -29,7 +28,8 @@ from dom import add_extra_css, build_rule, clear, svgicon
 from file_uploads import (
     update_status_widget, upload_files_widget, upload_status_widget
 )
-from modals import error_dialog
+from gettext import gettext as _
+from modals import error_dialog, question_dialog
 from session import get_interface_data
 from utils import (
     conditional_timeout, fmt_sidx, parse_url_params, safe_set_inner_html
@@ -52,7 +52,7 @@ add_extra_css(def():
     style += build_rule(sel + 'table.metadata tr:hover', color='red')
     style += build_rule(sel + 'table.metadata tr:active', transform='scale(1.5)')
 
-    style += build_rule(sel + '.completions', display='flex', flex_wrap='wrap', align_items='center')
+    style += build_rule(sel + '.completions', display='flex', flex_wrap='wrap', align_items='center', margin_bottom='0.5ex')
     style += build_rule(sel + '.completions > div', margin='0.5ex 0.5rem', margin_left='0', padding='0.5ex 0.5rem', border='solid 1px currentColor', border_radius='1ex', cursor='pointer')
     style += build_rule(sel + '.completions > div:active', transform='scale(1.5)')
     style += build_rule(sel + '.completions > div:hover', background=get_color('window-foreground'), color=get_color('window-background'))
@@ -237,6 +237,19 @@ def number_edit(container_id, book_id, field, fm, div, mi):
 
 # Line edit with completions {{{
 
+def remove_item(container_id, name):
+    c = document.getElementById(container_id)
+    if not c:
+        return
+    le = c.querySelector('[data-ctype="edit"] input')
+    val = le.value or ''
+    val = value_to_json(val)
+    val = [x for x in val if x is not name]
+    le.value = val.join(update_completions.list_to_ui)
+    le.focus()
+    line_edit_updated(container_id, le.dataset.field)
+
+
 def add_completion(container_id, name):
     c = document.getElementById(container_id)
     if not c:
@@ -253,14 +266,17 @@ def add_completion(container_id, name):
             val.push(name)
         le.value = val.join(update_completions.list_to_ui) + update_completions.list_to_ui
     le.focus()
+    line_edit_updated(container_id, le.dataset.field)
 
 
 def show_completions(container_id, div, field, prefix, names):
     clear(div)
     completions = E.div(class_='completions')
+    if names.length:
+        div.appendChild(E.div(_('Tap to add:')))
     div.appendChild(completions)
     for i, name in enumerate(names):
-        completions.appendChild(E.div(name, onclick=add_completion.bind(None, container_id, name)))
+        completions.appendChild(E.div(E.span(style='color: green', svgicon('plus'), '\xa0'), name, onclick=add_completion.bind(None, container_id, name)))
         if i >= 50:
             break
 
@@ -271,6 +287,28 @@ def query_contains(haystack, needle):
 
 def query_startswitch(haystack, needle):
     return haystack.toLowerCase().indexOf(needle) is 0
+
+
+def update_removals(container_id):
+    c = document.getElementById(container_id)
+    if not c:
+        return
+    d = c.querySelector('div[data-ctype="edit"]')
+    if not d or d.style.display is not 'block':
+        return
+    div = d.lastChild.previousSibling
+    clear(div)
+    val = d.querySelector('input').value or ''
+    val = value_to_json(val)
+    if jstype(val) is 'string' or not val.length:
+        return
+    div.appendChild(E.div(_('Tap to remove:')))
+    removals = E.div(class_='completions')
+    div.appendChild(removals)
+    for i, name in enumerate(val):
+        removals.appendChild(E.div(E.span(style='color: ' + get_color('window-error-foreground'), svgicon('eraser'), '\xa0'), name, onclick=remove_item.bind(None, container_id, name)))
+        if i >= 50:
+            break
 
 
 def update_completions(container_id, ok, field, names):
@@ -303,7 +341,7 @@ def update_completions(container_id, ok, field, names):
         interface_data = get_interface_data()
         universe = update_completions.names if update_completions.prefix and needle.startswith(update_completions.prefix.toLowerCase()) else names
         q = query_contains if interface_data.completion_mode is 'contains' else query_startswitch
-        matching_names = [x for x in universe if q(x, needle)]
+        matching_names = [x for x in universe if q(x, needle) and x is not prefix]
     else:
         matching_names = []
     update_completions.prefix = prefix
@@ -318,13 +356,18 @@ update_completions.prefix = ''
 
 def line_edit_updated(container_id, field):
     field_names_for(field, update_completions.bind(None, container_id))
+    update_removals(container_id)
 
 
 def multiple_line_edit(list_to_ui, ui_to_list, container_id, book_id, field, fm, div, mi):
     nonlocal value_to_json
     update_completions.list_to_ui = list_to_ui
     name = fm.name or field
-    le = E.input(type='text', name=name.replace('#', '_c_'), style='width: 100%', oninput=line_edit_updated.bind(None, container_id, field))
+    le = E.input(
+        type='text', name=name.replace('#', '_c_'),
+        style='width: 100%', autocomplete='off', data_field=field,
+        oninput=line_edit_updated.bind(None, container_id, field)
+    )
     val = (resolved_metadata(mi, field) or v'[]')
     if field is 'languages':
         val = [mi.lang_names[l] or l for l in val]
@@ -339,6 +382,7 @@ def multiple_line_edit(list_to_ui, ui_to_list, container_id, book_id, field, fm,
         div.appendChild(E.div(style='margin: 0.5ex 1rem', _(
             'Edit the "{0}" below.').format(name)))
     div.appendChild(E.div(style='margin: 0.5ex 1rem', form))
+    div.appendChild(E.div(style='margin: 0.5ex 1rem'))
     div.appendChild(E.div(E.span(_('Loading all {}...').format(name)), style='margin: 0.5ex 1rem'))
     le.focus(), le.select()
     if list_to_ui:
@@ -353,6 +397,7 @@ def multiple_line_edit(list_to_ui, ui_to_list, container_id, book_id, field, fm,
     else:
         value_to_json = identity
     field_names_for(field, update_completions.bind(None, container_id))
+    update_removals(container_id)
 # }}}
 
 # Series edit {{{
@@ -1001,6 +1046,7 @@ def on_close(container_id):
                 clear(d), clear(d.previousSibling)
                 q = parse_url_params()
                 show_book(container_id, int(q.book_id))
+                c.querySelector(f'.{CLASS_NAME}').focus()
                 return
         cq = get_current_query()
         if cq.from_read_book:
@@ -1009,7 +1055,15 @@ def on_close(container_id):
                 document.location.protocol + '//' + document.location.host
             )
         else:
-            back()
+            if has_changes:
+                question_dialog(_('Are you sure'), _(
+                    'Any changes you have made will be discarded.'
+                    ' Do you wish to discard all changes?'), def (yes):
+                        if yes:
+                            back()
+                )
+            else:
+                back()
 
 
 def proceed_after_succesful_fetch_metadata(container_id, book_id):

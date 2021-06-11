@@ -9857,7 +9857,6 @@ return parser;
             ρσ_d["columns_per_screen"] = true;
             ρσ_d["controls_help_shown_count"] = true;
             ρσ_d["controls_help_shown_count_rtl_page_progression"] = true;
-            ρσ_d["current_color_scheme"] = true;
             ρσ_d["lines_per_sec_auto"] = true;
             ρσ_d["lines_per_sec_smooth"] = true;
             ρσ_d["margin_bottom"] = true;
@@ -9866,7 +9865,6 @@ return parser;
             ρσ_d["margin_top"] = true;
             ρσ_d["max_text_height"] = true;
             ρσ_d["max_text_width"] = true;
-            ρσ_d["override_book_colors"] = true;
             ρσ_d["read_mode"] = "paged";
             ρσ_d["scroll_auto_boundary_delay"] = true;
             ρσ_d["scroll_stop_boundaries"] = true;
@@ -27025,7 +27023,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.20.0";
+        CALIBRE_VERSION = "5.21.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -50414,11 +50412,9 @@ return this.__repr__();
     (function(){
         var __name__ = "book_list.edit_metadata";
         var CLASS_NAME, IGNORED_FIELDS, value_to_json, changes, has_changes;
-        var traceback = ρσ_modules.traceback;
-
         var E = ρσ_modules.elementmaker.E;
 
-        var _ = ρσ_modules.gettext.gettext;
+        var traceback = ρσ_modules.traceback;
 
         var ajax_send = ρσ_modules.ajax.ajax_send;
 
@@ -50467,7 +50463,10 @@ return this.__repr__();
         var upload_files_widget = ρσ_modules.file_uploads.upload_files_widget;
         var upload_status_widget = ρσ_modules.file_uploads.upload_status_widget;
 
+        var _ = ρσ_modules.gettext.gettext;
+
         var error_dialog = ρσ_modules.modals.error_dialog;
+        var question_dialog = ρσ_modules.modals.question_dialog;
 
         var get_interface_data = ρσ_modules.session.get_interface_data;
 
@@ -50516,7 +50515,7 @@ return this.__repr__();
                 style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + "table.metadata td"].concat([ρσ_desugar_kwargs({padding_bottom: "0.5ex", padding_top: "0.5ex", cursor: "pointer"})]));
                 style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + "table.metadata tr:hover"].concat([ρσ_desugar_kwargs({color: "red"})]));
                 style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + "table.metadata tr:active"].concat([ρσ_desugar_kwargs({transform: "scale(1.5)"})]));
-                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".completions"].concat([ρσ_desugar_kwargs({display: "flex", flex_wrap: "wrap", align_items: "center"})]));
+                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".completions"].concat([ρσ_desugar_kwargs({display: "flex", flex_wrap: "wrap", align_items: "center", margin_bottom: "0.5ex"})]));
                 style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".completions > div"].concat([ρσ_desugar_kwargs({margin: "0.5ex 0.5rem", margin_left: "0", padding: "0.5ex 0.5rem", border: "solid 1px currentColor", border_radius: "1ex", cursor: "pointer"})]));
                 style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".completions > div:active"].concat([ρσ_desugar_kwargs({transform: "scale(1.5)"})]));
                 style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".completions > div:hover"].concat([ρσ_desugar_kwargs({background: get_color("window-foreground"), color: get_color("window-background")})]));
@@ -50781,6 +50780,35 @@ return this.__repr__();
             __module__ : {value: "book_list.edit_metadata"}
         });
 
+        function remove_item(container_id, name) {
+            var c, le, val, x;
+            c = document.getElementById(container_id);
+            if (!c) {
+                return;
+            }
+            le = c.querySelector("[data-ctype=\"edit\"] input");
+            val = le.value || "";
+            val = value_to_json(val);
+            val = (function() {
+                var ρσ_Iter = ρσ_Iterable(val), ρσ_Result = [], x;
+                for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                    x = ρσ_Iter[ρσ_Index];
+                    if (x !== name) {
+                        ρσ_Result.push(x);
+                    }
+                }
+                ρσ_Result = ρσ_list_constructor(ρσ_Result);
+                return ρσ_Result;
+            })();
+            le.value = val.join(update_completions.list_to_ui);
+            le.focus();
+            line_edit_updated(container_id, le.dataset.field);
+        };
+        if (!remove_item.__argnames__) Object.defineProperties(remove_item, {
+            __argnames__ : {value: ["container_id", "name"]},
+            __module__ : {value: "book_list.edit_metadata"}
+        });
+
         function add_completion(container_id, name) {
             var c, le, val;
             c = document.getElementById(container_id);
@@ -50801,6 +50829,7 @@ return this.__repr__();
                 le.value = val.join(update_completions.list_to_ui) + update_completions.list_to_ui;
             }
             le.focus();
+            line_edit_updated(container_id, le.dataset.field);
         };
         if (!add_completion.__argnames__) Object.defineProperties(add_completion, {
             __argnames__ : {value: ["container_id", "name"]},
@@ -50811,13 +50840,16 @@ return this.__repr__();
             var completions, ρσ_unpack, i, name;
             clear(div);
             completions = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "completions"})]);
+            if (names.length) {
+                div.appendChild(E.div(_("Tap to add:")));
+            }
             div.appendChild(completions);
             var ρσ_Iter2 = ρσ_Iterable(enumerate(names));
             for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
                 ρσ_unpack = ρσ_Iter2[ρσ_Index2];
                 i = ρσ_unpack[0];
                 name = ρσ_unpack[1];
-                completions.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [name].concat([ρσ_desugar_kwargs({onclick: add_completion.bind(null, container_id, name)})])));
+                completions.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.span, [svgicon("plus"), " "].concat([ρσ_desugar_kwargs({style: "color: green"})])), name].concat([ρσ_desugar_kwargs({onclick: add_completion.bind(null, container_id, name)})])));
                 if (i >= 50) {
                     break;
                 }
@@ -50841,6 +50873,42 @@ return this.__repr__();
         };
         if (!query_startswitch.__argnames__) Object.defineProperties(query_startswitch, {
             __argnames__ : {value: ["haystack", "needle"]},
+            __module__ : {value: "book_list.edit_metadata"}
+        });
+
+        function update_removals(container_id) {
+            var c, d, div, val, removals, ρσ_unpack, i, name;
+            c = document.getElementById(container_id);
+            if (!c) {
+                return;
+            }
+            d = c.querySelector("div[data-ctype=\"edit\"]");
+            if (!d || d.style.display !== "block") {
+                return;
+            }
+            div = d.lastChild.previousSibling;
+            clear(div);
+            val = d.querySelector("input").value || "";
+            val = value_to_json(val);
+            if (typeof val === "string" || !val.length) {
+                return;
+            }
+            div.appendChild(E.div(_("Tap to remove:")));
+            removals = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "completions"})]);
+            div.appendChild(removals);
+            var ρσ_Iter3 = ρσ_Iterable(enumerate(val));
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                ρσ_unpack = ρσ_Iter3[ρσ_Index3];
+                i = ρσ_unpack[0];
+                name = ρσ_unpack[1];
+                removals.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.span, [svgicon("eraser"), " "].concat([ρσ_desugar_kwargs({style: "color: " + get_color("window-error-foreground")})])), name].concat([ρσ_desugar_kwargs({onclick: remove_item.bind(null, container_id, name)})])));
+                if (i >= 50) {
+                    break;
+                }
+            }
+        };
+        if (!update_removals.__argnames__) Object.defineProperties(update_removals, {
+            __argnames__ : {value: ["container_id"]},
             __module__ : {value: "book_list.edit_metadata"}
         });
 
@@ -50881,7 +50949,7 @@ return this.__repr__();
                     var ρσ_Iter = ρσ_Iterable(universe), ρσ_Result = [], x;
                     for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
                         x = ρσ_Iter[ρσ_Index];
-                        if (q(x, needle)) {
+                        if (q(x, needle) && x !== prefix) {
                             ρσ_Result.push(x);
                         }
                     }
@@ -50905,6 +50973,7 @@ return this.__repr__();
         update_completions.prefix = "";
         function line_edit_updated(container_id, field) {
             field_names_for(field, update_completions.bind(null, container_id));
+            update_removals(container_id);
         };
         if (!line_edit_updated.__argnames__) Object.defineProperties(line_edit_updated, {
             __argnames__ : {value: ["container_id", "field"]},
@@ -50915,7 +50984,7 @@ return this.__repr__();
             var name, le, val, l, form;
             update_completions.list_to_ui = list_to_ui;
             name = fm.name || field;
-            le = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "text", name: name.replace("#", "_c_"), style: "width: 100%", oninput: line_edit_updated.bind(null, container_id, field)})]);
+            le = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "text", name: name.replace("#", "_c_"), style: "width: 100%", autocomplete: "off", data_field: field, oninput: line_edit_updated.bind(null, container_id, field)})]);
             val = resolved_metadata(mi, field) || [];
             if (field === "languages") {
                 val = (function() {
@@ -50939,6 +51008,7 @@ return this.__repr__();
                 div.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Edit the \"{0}\" below.").format(name)].concat([ρσ_desugar_kwargs({style: "margin: 0.5ex 1rem"})])));
             }
             div.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [form].concat([ρσ_desugar_kwargs({style: "margin: 0.5ex 1rem"})])));
+            div.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin: 0.5ex 1rem"})]));
             div.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.span(_("Loading all {}...").format(name))].concat([ρσ_desugar_kwargs({style: "margin: 0.5ex 1rem"})])));
             [le.focus(), le.select()];
             if (list_to_ui) {
@@ -50947,7 +51017,7 @@ return this.__repr__();
                         var seen, ans, x;
                         seen = Object.create(null);
                         ans = [];
-                        var ρσ_Iter3 = ρσ_Iterable((function() {
+                        var ρσ_Iter4 = ρσ_Iterable((function() {
                             var ρσ_Iter = ρσ_Iterable(raw.split(ui_to_list)), ρσ_Result = [], a;
                             for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
                                 a = ρσ_Iter[ρσ_Index];
@@ -50958,8 +51028,8 @@ return this.__repr__();
                             ρσ_Result = ρσ_list_constructor(ρσ_Result);
                             return ρσ_Result;
                         })());
-                        for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                            x = ρσ_Iter3[ρσ_Index3];
+                        for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                            x = ρσ_Iter4[ρσ_Index4];
                             if (!seen[(typeof x === "number" && x < 0) ? seen.length + x : x]) {
                                 seen[(typeof x === "number" && x < 0) ? seen.length + x : x] = true;
                                 ans.push(x);
@@ -50977,6 +51047,7 @@ return this.__repr__();
                 value_to_json = identity;
             }
             field_names_for(field, update_completions.bind(null, container_id));
+            update_removals(container_id);
         };
         if (!multiple_line_edit.__argnames__) Object.defineProperties(multiple_line_edit, {
             __argnames__ : {value: ["list_to_ui", "ui_to_list", "container_id", "book_id", "field", "fm", "div", "mi"]},
@@ -51102,9 +51173,9 @@ return this.__repr__();
         function identifiers_get_value(container) {
             var ans, ρσ_unpack, n, v, li;
             ans = Object.create(null);
-            var ρσ_Iter4 = ρσ_Iterable(container.querySelectorAll(".identifiers-edit > li"));
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                li = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter5 = ρσ_Iterable(container.querySelectorAll(".identifiers-edit > li"));
+            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                li = ρσ_Iter5[ρσ_Index5];
                 ρσ_unpack = li.querySelectorAll("input");
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
                 n = ρσ_unpack[0];
@@ -51134,9 +51205,9 @@ return this.__repr__();
             bc.insertBefore(document.createTextNode(" "), bc.lastChild);
             div.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Edit the \"{}\" below.").format(name)].concat([ρσ_desugar_kwargs({style: "margin: 0.5ex 1rem"})])));
             div.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [form].concat([ρσ_desugar_kwargs({style: "margin: 0.5ex 1rem"})])));
-            var ρσ_Iter5 = ρσ_Iterable(Object.keys(val));
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                k = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter6 = ρσ_Iterable(Object.keys(val));
+            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                k = ρσ_Iter6[ρσ_Index6];
                 add_identifier(container_id, k, val[(typeof k === "number" && k < 0) ? val.length + k : k]);
             }
             value_to_json = identity;
@@ -51157,9 +51228,9 @@ return this.__repr__();
         function set_rating(evt) {
             var li, nli;
             li = evt.currentTarget;
-            var ρσ_Iter6 = ρσ_Iterable(li.closest("ul").childNodes);
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                nli = ρσ_Iter6[ρσ_Index6];
+            var ρσ_Iter7 = ρσ_Iterable(li.closest("ul").childNodes);
+            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                nli = ρσ_Iter7[ρσ_Index7];
                 nli.classList.remove("current-rating");
             }
             li.classList.add("current-rating");
@@ -51175,9 +51246,9 @@ return this.__repr__();
             numbers = (ρσ_exists.d(fm.display).allow_half_stars) ? list(range(11)) : list(range(0, 11, 2));
             name = fm.name || field;
             c = ρσ_interpolate_kwargs.call(E, E.ul, [ρσ_desugar_kwargs({class_: "rating-edit-container"})]);
-            var ρσ_Iter7 = ρσ_Iterable(numbers);
-            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                n = ρσ_Iter7[ρσ_Index7];
+            var ρσ_Iter8 = ρσ_Iterable(numbers);
+            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
+                n = ρσ_Iter8[ρσ_Index8];
                 s = ρσ_interpolate_kwargs.call(E, E.li, [ρσ_desugar_kwargs({data_rating: n + "", onclick: set_rating})]);
                 c.appendChild(s);
                 if (n === val) {
@@ -51212,9 +51283,9 @@ return this.__repr__();
             val = resolved_metadata(mi, field) || "";
             name = fm.name || field;
             c = ρσ_interpolate_kwargs.call(E, E.ul, [ρσ_desugar_kwargs({class_: "rating-edit-container"})]);
-            var ρσ_Iter8 = ρσ_Iterable([""].concat(fm.display.enum_values));
-            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                n = ρσ_Iter8[ρσ_Index8];
+            var ρσ_Iter9 = ρσ_Iterable([""].concat(fm.display.enum_values));
+            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
+                n = ρσ_Iter9[ρσ_Index9];
                 s = ρσ_interpolate_kwargs.call(E, E.li, [ρσ_desugar_kwargs({data_rating: n + "", onclick: set_rating})]);
                 c.appendChild(s);
                 if (n === val) {
@@ -51253,9 +51324,9 @@ return this.__repr__();
                 ρσ_d["n"] = _("No");
                 return ρσ_d;
             }).call(this);
-            var ρσ_Iter9 = ρσ_Iterable(['', 'y', 'n']);
-            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                n = ρσ_Iter9[ρσ_Index9];
+            var ρσ_Iter10 = ρσ_Iterable(['', 'y', 'n']);
+            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
+                n = ρσ_Iter10[ρσ_Index10];
                 s = ρσ_interpolate_kwargs.call(E, E.li, [ρσ_desugar_kwargs({data_rating: n + "", onclick: set_rating})]);
                 c.appendChild(s);
                 if (n === val) {
@@ -51338,9 +51409,9 @@ return this.__repr__();
                 return;
             }
             added = changes.added_formats || [];
-            var ρσ_Iter10 = ρσ_Iterable(files);
-            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                file = ρσ_Iter10[ρσ_Index10];
+            var ρσ_Iter11 = ρσ_Iterable(files);
+            for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
+                file = ρσ_Iter11[ρσ_Index11];
                 ext = (ρσ_expr_temp = file.name.rpartition("."))[ρσ_expr_temp.length-1];
                 data = (function(){
                     var ρσ_d = Object.create(null);
@@ -51392,9 +51463,9 @@ return this.__repr__();
             ρσ_interpolate_kwargs.call(this, upload_files_widget, [div, format_added.bind(null, container_id, book_id), _("Add a format by <a>selecting the book file</a> or drag and drop of the book file here.")].concat([ρσ_desugar_kwargs({single_file: true})]));
             remove_buttons = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "padding: 1rem; display: flex; flex-wrap: wrap; align-content: flex-start"})]);
             formats = resolved_formats(mi.formats);
-            var ρσ_Iter11 = ρσ_Iterable(enumerate(formats));
-            for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
-                ρσ_unpack = ρσ_Iter11[ρσ_Index11];
+            var ρσ_Iter12 = ρσ_Iterable(enumerate(formats));
+            for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
+                ρσ_unpack = ρσ_Iter12[ρσ_Index12];
                 i = ρσ_unpack[0];
                 fmt = ρσ_unpack[1];
                 remove_buttons.appendChild(ρσ_interpolate_kwargs.call(this, create_button, [_("Remove {}").format(fmt.upper())].concat([ρσ_desugar_kwargs({action: remove_format.bind(null, container_id, book_id, fmt.upper())})])));
@@ -51558,9 +51629,9 @@ return this.__repr__();
                 added_fields.title = true;
                 fields.insert(0, "title");
             }
-            var ρσ_Iter12 = ρσ_Iterable(Object.keys(library_data.field_metadata));
-            for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
-                other_field = ρσ_Iter12[ρσ_Index12];
+            var ρσ_Iter13 = ρσ_Iterable(Object.keys(library_data.field_metadata));
+            for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
+                other_field = ρσ_Iter13[ρσ_Index13];
                 if (!added_fields[(typeof other_field === "number" && other_field < 0) ? added_fields.length + other_field : other_field] && allowed_fields(other_field) && !ρσ_in(other_field, IGNORED_FIELDS)) {
                     fields.push(other_field);
                 }
@@ -51604,9 +51675,9 @@ return this.__repr__();
                     if (!join) {
                         add_val(val);
                     } else {
-                        var ρσ_Iter13 = ρσ_Iterable(val);
-                        for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
-                            v = ρσ_Iter13[ρσ_Index13];
+                        var ρσ_Iter14 = ρσ_Iterable(val);
+                        for (var ρσ_Index14 = 0; ρσ_Index14 < ρσ_Iter14.length; ρσ_Index14++) {
+                            v = ρσ_Iter14[ρσ_Index14];
                             add_val(v);
                             if (v !== val[val.length-1]) {
                                 table.lastChild.lastChild.appendChild(document.createTextNode(join));
@@ -51660,8 +51731,8 @@ return this.__repr__();
                 stars = E.span();
                 val = int(val || 0);
                 if (val > 0) {
-                    for (var ρσ_Index14 = 0; ρσ_Index14 < Math.floor(val / 2); ρσ_Index14++) {
-                        i = ρσ_Index14;
+                    for (var ρσ_Index15 = 0; ρσ_Index15 < Math.floor(val / 2); ρσ_Index15++) {
+                        i = ρσ_Index15;
                         stars.appendChild(svgicon("star"));
                     }
                     if (fm.display.allow_half_stars && val % 2) {
@@ -51684,9 +51755,9 @@ return this.__repr__();
                     if (keys.length) {
                         table.appendChild(ρσ_interpolate_kwargs.call(E, E.tr, [E.td(name + ":"), E.td()].concat([ρσ_desugar_kwargs({onclick: current_edit_action})])));
                         td = table.lastChild.lastChild;
-                        var ρσ_Iter15 = ρσ_Iterable(keys);
-                        for (var ρσ_Index15 = 0; ρσ_Index15 < ρσ_Iter15.length; ρσ_Index15++) {
-                            k = ρσ_Iter15[ρσ_Index15];
+                        var ρσ_Iter16 = ρσ_Iterable(keys);
+                        for (var ρσ_Index16 = 0; ρσ_Index16 < ρσ_Iter16.length; ρσ_Index16++) {
+                            k = ρσ_Iter16[ρσ_Index16];
                             if (td.childNodes.length) {
                                 td.appendChild(document.createTextNode(", "));
                             }
@@ -51707,9 +51778,9 @@ return this.__repr__();
                 if (val && val.length) {
                     table.appendChild(ρσ_interpolate_kwargs.call(E, E.tr, [E.td(name + ":"), E.td()].concat([ρσ_desugar_kwargs({onclick: current_edit_action})])));
                     td = table.lastChild.lastChild;
-                    var ρσ_Iter16 = ρσ_Iterable(val);
-                    for (var ρσ_Index16 = 0; ρσ_Index16 < ρσ_Iter16.length; ρσ_Index16++) {
-                        k = ρσ_Iter16[ρσ_Index16];
+                    var ρσ_Iter17 = ρσ_Iterable(val);
+                    for (var ρσ_Index17 = 0; ρσ_Index17 < ρσ_Iter17.length; ρσ_Index17++) {
+                        k = ρσ_Iter17[ρσ_Index17];
                         lang = (ρσ_expr_temp = mi.lang_names)[(typeof k === "number" && k < 0) ? ρσ_expr_temp.length + k : k] || k;
                         td.appendChild(document.createTextNode(lang));
                         if (k !== val[val.length-1]) {
@@ -51842,9 +51913,9 @@ return this.__repr__();
                 __module__ : {value: "book_list.edit_metadata"}
             });
 
-            var ρσ_Iter17 = ρσ_Iterable(fields);
-            for (var ρσ_Index17 = 0; ρσ_Index17 < ρσ_Iter17.length; ρσ_Index17++) {
-                field = ρσ_Iter17[ρσ_Index17];
+            var ρσ_Iter18 = ρσ_Iterable(fields);
+            for (var ρσ_Index18 = 0; ρσ_Index18 < ρσ_Iter18.length; ρσ_Index18++) {
+                field = ρσ_Iter18[ρσ_Index18];
                 fm = field_metadata[(typeof field === "number" && field < 0) ? field_metadata.length + field : field];
                 if (!fm) {
                     continue;
@@ -51931,9 +52002,9 @@ return this.__repr__();
                     return ρσ_d;
                 }).call(this), document.location.protocol + "//" + document.location.host);
             } else {
-                var ρσ_Iter18 = ρσ_Iterable(dirtied);
-                for (var ρσ_Index18 = 0; ρσ_Index18 < ρσ_Iter18.length; ρσ_Index18++) {
-                    bid = ρσ_Iter18[ρσ_Index18];
+                var ρσ_Iter19 = ρσ_Iterable(dirtied);
+                for (var ρσ_Index19 = 0; ρσ_Index19 < ρσ_Iter19.length; ρσ_Index19++) {
+                    bid = ρσ_Iter19[ρσ_Index19];
                     set_book_metadata(bid, dirtied[(typeof bid === "number" && bid < 0) ? dirtied.length + bid : bid]);
                 }
             }
@@ -52019,6 +52090,7 @@ return this.__repr__();
                         [clear(d), clear(d.previousSibling)];
                         q = parse_url_params();
                         show_book(container_id, int(q.book_id));
+                        c.querySelector("." + ρσ_str.format("{}", CLASS_NAME) + "").focus();
                         return;
                     }
                 }
@@ -52031,7 +52103,22 @@ return this.__repr__();
                         return ρσ_d;
                     }).call(this), document.location.protocol + "//" + document.location.host);
                 } else {
-                    back();
+                    if (has_changes) {
+                        question_dialog(_("Are you sure"), _("Any changes you have made will be discarded. Do you wish to discard all changes?"), (function() {
+                            var ρσ_anonfunc = function (yes) {
+                                if (yes) {
+                                    back();
+                                }
+                            };
+                            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                                __argnames__ : {value: ["yes"]},
+                                __module__ : {value: "book_list.edit_metadata"}
+                            });
+                            return ρσ_anonfunc;
+                        })());
+                    } else {
+                        back();
+                    }
                 }
             }
         };
@@ -52153,10 +52240,12 @@ return this.__repr__();
         ρσ_modules["book_list.edit_metadata"].html_edit = html_edit;
         ρσ_modules["book_list.edit_metadata"].number_edit_get_value = number_edit_get_value;
         ρσ_modules["book_list.edit_metadata"].number_edit = number_edit;
+        ρσ_modules["book_list.edit_metadata"].remove_item = remove_item;
         ρσ_modules["book_list.edit_metadata"].add_completion = add_completion;
         ρσ_modules["book_list.edit_metadata"].show_completions = show_completions;
         ρσ_modules["book_list.edit_metadata"].query_contains = query_contains;
         ρσ_modules["book_list.edit_metadata"].query_startswitch = query_startswitch;
+        ρσ_modules["book_list.edit_metadata"].update_removals = update_removals;
         ρσ_modules["book_list.edit_metadata"].update_completions = update_completions;
         ρσ_modules["book_list.edit_metadata"].line_edit_updated = line_edit_updated;
         ρσ_modules["book_list.edit_metadata"].multiple_line_edit = multiple_line_edit;

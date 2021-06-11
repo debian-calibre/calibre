@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "六月 04, 2021" "5.20.0" "calibre"
+.TH "CALIBREDB" "1" "六月 11, 2021" "5.21.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -150,7 +150,7 @@ calibre 库的路径。默认是使用存储在设置中的路径。您还可以
 .INDENT 0.0
 .TP
 .B \-\-timeout
-The timeout, in seconds, when connecting to a calibre library over the network. The default is two minutes.
+通过网络连接到calibre书库时的超时时间，以秒为单位。默认值为两分钟。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -245,7 +245,7 @@ calibredb add [选项] file1 file2 file3 ...
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-If books with similar titles and authors are found, merge the incoming formats (files) automatically into existing book records. A value of \fB"\fPignore\fB"\fP means duplicate formats are discarded. A value of \fB"\fPoverwrite\fB"\fP means duplicate formats in the library are overwritten with the newly added files. A value of \fB"\fPnew_record\fB"\fP means duplicate formats are placed into a new book record.
+如果找到具有相似标题和作者的图书，请自动将传入格式(文件)合并到现有图书记录中。值“Ignore”表示丢弃重复的格式。值“overwrite”表示库中的重复格式将被新添加的文件覆盖。值“new_record”表示将重复的格式放入新的图书记录中。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -307,7 +307,7 @@ Options to control the adding of books from folders. By default only files that 
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+文件名(glob)模式，在扫描文件夹中的文件时将添加与此模式匹配的文件，即使这些文件不是已知的电子书文件类型。可以为多个模式多次指定。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -492,7 +492,7 @@ calibredb export [options] ids
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Export all books into a single folder
+导出所有书籍到单个文件夹
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -507,7 +507,7 @@ The template to control the filename and folder structure of the saved files. De
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Export books to the specified folder. Default is .
+导出书籍到指定文件夹。默认为 .
 .UNINDENT
 .INDENT 0.0
 .TP
