@@ -1,9 +1,11 @@
-from __future__ import with_statement
-__license__ = 'GPL 3'
-__copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
+#!/usr/bin/env python
+# vim:fileencoding=utf-8
+# License: GPLv3 Copyright: 2009, Kovid Goyal <kovid at kovidgoyal.net>
 
-from calibre.web.feeds.news import BasicNewsRecipe
 import string
+
+from calibre import entity_to_unicode
+from calibre.web.feeds.news import BasicNewsRecipe
 
 
 def classes(classes):
@@ -15,19 +17,33 @@ def classes(classes):
 class TheHindu(BasicNewsRecipe):
     title = u'The Hindu'
     language = 'en_IN'
+    epaper_url = 'https://epaper.thehindu.com'
 
     oldest_article = 1
     __author__ = 'Kovid Goyal'
     max_articles_per_feed = 100
     no_stylesheets = True
     remove_attributes = ['style']
+    extra_css = '.lead-img-cont { text-align: center; } ' \
+                '.lead-img-caption { font-size: small; font-style: italic; } ' \
+                '.mobile-author-cont { font-size: small; text-transform: uppercase; } ' \
+                '.intro ~ .intro, .update-time, .ksl-time-stamp * { display: none; } '
 
     ignore_duplicate_articles = {'title', 'url'}
     keep_only_tags = [
         dict(name='h1', attrs={'class': ['title', 'special-article-heading']}),
-        classes('author-nm lead-img-cont mobile-author-cont photo-collage intro'),
+        classes('lead-img-cont mobile-author-cont photo-collage intro'),
         dict(id=lambda x: x and x.startswith('content-body-')),
     ]
+
+    def get_browser(self):
+        br = BasicNewsRecipe.get_browser(self)
+        br.addheaders += [('Referer', self.epaper_url)]     # needed for fetching cover
+        return br
+
+    def get_cover_url(self):
+        url = self.index_to_soup(self.epaper_url + '/Login/DefaultImage', raw=True)
+        return url.replace(br'\\', b'/').decode('utf-8')[1:-1]
 
     def preprocess_html(self, soup):
         img = soup.find('img', attrs={'class': 'lead-img'})
@@ -38,9 +54,15 @@ class TheHindu(BasicNewsRecipe):
                 source.extract()
         except Exception:
             pass
-        # Remove duplicate intro
-        for h in soup.findAll('h2', attrs={'class': 'intro'})[1:]:
-            h.extract()
+        # Place intro beneath the title, skip duplicates
+        try:
+            soup.h1.insert_after(soup.find('h2', attrs={'class': 'intro'}))
+        except Exception:
+            pass
+        # Remove ',' from location tag
+        ts = soup.find('span', attrs={'class': 'ksl-time-stamp'})
+        if ts and ts.string:
+            ts.string = ts.string.split(',')[0]
         return soup
 
     def populate_article_metadata(self, article, soup, first):
@@ -48,7 +70,7 @@ class TheHindu(BasicNewsRecipe):
             desc = soup.find('meta', attrs={'name': 'description'}).get('content')
             if not desc.startswith('Todays paper'):
                 desc += '...' if len(desc) >= 199 else ''   # indicate truncation
-                article.text_summary = article.summary = desc
+                article.text_summary = article.summary = entity_to_unicode(desc)
         except AttributeError:
             return
 

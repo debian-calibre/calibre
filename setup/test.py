@@ -39,8 +39,8 @@ class TestImports(unittest.TestCase):
         return count
 
     def test_import_of_all_python_modules(self):
-        exclude_modules = {'calibre.gui2.dbus_export.demo', 'calibre.gui2.dbus_export.gtk'}
         exclude_packages = {'calibre.devices.mtp.unix.upstream'}
+        exclude_modules = set()
         if not iswindows:
             exclude_modules |= {'calibre.utils.iphlpapi', 'calibre.utils.open_with.windows', 'calibre.devices.winusb'}
             exclude_packages |= {'calibre.utils.winreg', 'calibre.utils.windows'}
@@ -48,11 +48,10 @@ class TestImports(unittest.TestCase):
             exclude_modules.add('calibre.utils.open_with.osx')
         if not islinux:
             exclude_modules |= {
-                    'calibre.utils.dbus_service', 'calibre.linux',
+                    'calibre.linux',
                     'calibre.utils.linux_trash', 'calibre.utils.open_with.linux',
                     'calibre.gui2.linux_file_dialogs'
             }
-            exclude_packages.add('calibre.gui2.dbus_export')
         self.assertGreater(self.base_check(os.path.join(SRC, 'odf'), exclude_packages, exclude_modules), 10)
         base = os.path.join(SRC, 'calibre')
         self.assertGreater(self.base_check(base, exclude_packages, exclude_modules), 1000)
@@ -169,7 +168,7 @@ class Test(Command):
         parser.add_option('--test-verbosity', type=int, default=4, help='Test verbosity (0-4)')
         parser.add_option('--test-module', '--test-group', default=[], action='append', type='choice', choices=sorted(map(str, TEST_MODULES)),
                           help='The test module to run (can be specified more than once for multiple modules). Choices: %s' % ', '.join(sorted(TEST_MODULES)))
-        parser.add_option('--test-name', default=[], action='append',
+        parser.add_option('--test-name', '-n', default=[], action='append',
                           help='The name of an individual test to run. Can be specified more than once for multiple tests. The name of the'
                           ' test is the name of the test function without the leading test_. For example, the function test_something()'
                           ' can be run by specifying the name "something".')
