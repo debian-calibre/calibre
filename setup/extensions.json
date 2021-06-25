@@ -72,6 +72,16 @@
         "inc_dirs": "!sqlite_inc_dirs"
     },
     {
+        "name": "sqlite_extension",
+        "headers": "calibre/utils/cpp_binding.h",
+        "sources": "calibre/db/sqlite_extension.cpp",
+		"needs_c++14": true,
+        "libraries": "icudata icui18n icuuc icuio stemmer",
+        "windows_libraries": "icudt icuin icuuc icuio libstemmer",
+        "lib_dirs": "!icu_lib_dirs",
+        "inc_dirs": "!icu_inc_dirs !sqlite_inc_dirs"
+    },
+    {
         "name": "lzx",
         "sources": "calibre/utils/lzx/lzxmodule.c calibre/utils/lzx/compressor.c calibre/utils/lzx/lzxd.c calibre/utils/lzx/lzc.c calibre/utils/lzx/lzxc.c",
         "inc_dirs": "calibre/utils/lzx",
@@ -116,7 +126,7 @@
     },
     {
         "name": "fast_css_transform",
-        "headers": "calibre/utils/cpp_binding.h",
+        "headers": "calibre/utils/cpp_binding.h calibre/utils/stb_sprintf.h",
         "sources": "calibre/srv/fast_css_transform.cpp",
 		"inc_dirs": "perfect-hashing",
 		"needs_c++14": true

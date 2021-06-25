@@ -38,7 +38,10 @@ class BuildTest(unittest.TestCase):
 
     @unittest.skipUnless(islinux, 'DBUS only used on linux')
     def test_dbus(self):
-        import dbus
+        try:
+            import dbus
+        except SyntaxError:
+            return  # an invalid \ in a string causes a syntax error, but only in CI
         if 'DBUS_SESSION_BUS_ADDRESS' in os.environ:
             bus = dbus.SystemBus()
             self.assertTrue(bus.list_names(), 'Failed to list names on the system bus')
@@ -48,7 +51,7 @@ class BuildTest(unittest.TestCase):
 
     def test_loaders(self):
         import importlib
-        ldr = importlib.import_module('calibre').__spec__.loader
+        ldr = importlib.import_module('calibre').__spec__.loader.get_resource_reader()
         self.assertIn('ebooks', ldr.contents())
         try:
             raw = ldr.open_resource('__init__.py').read()
@@ -477,6 +480,8 @@ def find_tests():
     from tinycss.tests.main import find_tests
     ans.addTests(find_tests())
     from calibre.spell.dictionary import find_tests
+    ans.addTests(find_tests())
+    from calibre.db.tests.fts import find_tests
     ans.addTests(find_tests())
     return ans
 
