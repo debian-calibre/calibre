@@ -1,0 +1,45 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Sat, 26 Jun 2021 02:02:25 +0900
+Subject: Use <stdint.h> to support MIPS64
+
+---
+ src/calibre/utils/stb_sprintf.h | 23 ++++++++---------------
+ 1 file changed, 8 insertions(+), 15 deletions(-)
+
+diff --git a/src/calibre/utils/stb_sprintf.h b/src/calibre/utils/stb_sprintf.h
+index 0635360..3d5d2ed 100644
+--- a/src/calibre/utils/stb_sprintf.h
++++ b/src/calibre/utils/stb_sprintf.h
+@@ -202,24 +202,17 @@ STBSP__PUBLICDEF void STB_SPRINTF_DECORATE(set_separators)(char comma, char peri
+ 
+ #include <stdlib.h> // for va_arg()
+ 
+-#define stbsp__uint32 unsigned int
+-#define stbsp__int32 signed int
++#include <stdint.h>
++#define stbsp__uint32 uint32_t
++#define stbsp__int32   int32_t
+ 
+-#ifdef _MSC_VER
+-#define stbsp__uint64 unsigned __int64
+-#define stbsp__int64 signed __int64
+-#else
+-#define stbsp__uint64 unsigned long long
+-#define stbsp__int64 signed long long
+-#endif
+-#define stbsp__uint16 unsigned short
++#define stbsp__uint64 uint64_t
++#define stbsp__int64   int64_t
++
++#define stbsp__uint16 uint16_t
+ 
+ #ifndef stbsp__uintptr
+-#if defined(__ppc64__) || defined(__powerpc64__) || defined(__aarch64__) || defined(_M_X64) || defined(__x86_64__) || defined(__x86_64)
+-#define stbsp__uintptr stbsp__uint64
+-#else
+-#define stbsp__uintptr stbsp__uint32
+-#endif
++#define stbsp__uintptr uintptr_t
+ #endif
+ 
+ #ifndef STB_SPRINTF_MSVC_MODE // used for MSVC2013 and earlier (MSVC2015 matches GCC)
