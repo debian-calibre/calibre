@@ -10,10 +10,10 @@ Allow hardening flags from debhelper.
  1 file changed, 18 insertions(+), 1 deletion(-)
 
 diff --git a/setup/build.py b/setup/build.py
-index eaea80a..4e7d512 100644
+index bc49cb4..c87814f 100644
 --- a/setup/build.py
 +++ b/setup/build.py
-@@ -179,6 +179,7 @@ def init_env(debug=False, sanitize=False):
+@@ -181,6 +181,7 @@ def init_env(debug=False, sanitize=False):
          ldflags = os.environ.get('OVERRIDE_LDFLAGS', '-Wall')
          ldflags = shlex.split(ldflags)
          cflags += shlex.split(os.environ.get('CFLAGS', ''))
@@ -21,7 +21,7 @@ index eaea80a..4e7d512 100644
          ldflags += shlex.split(os.environ.get('LDFLAGS', ''))
          cflags += ['-fvisibility=hidden']
          if sanitize:
-@@ -466,9 +467,16 @@ class Build(Command):
+@@ -482,9 +483,16 @@ class Build(Command):
              INCLUDEPATH += {freetype}
              DESTDIR = {destdir}
              CONFIG -= create_cmake  # Prevent qmake from generating a cmake build file which it puts in the calibre src directory
@@ -39,7 +39,7 @@ index eaea80a..4e7d512 100644
          bdir = self.j(self.build_dir, 'headless')
          if not os.path.exists(bdir):
              os.makedirs(bdir)
-@@ -547,6 +555,15 @@ sip-file = "{os.path.basename(sipf)}"
+@@ -563,6 +571,15 @@ sip-file = "{os.path.basename(sipf)}"
          cwd = os.getcwd()
          try:
              os.chdir(os.path.join(src_dir, 'build'))
