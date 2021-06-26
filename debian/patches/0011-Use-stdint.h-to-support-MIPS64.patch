@@ -2,6 +2,9 @@ From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
 Date: Sat, 26 Jun 2021 02:02:25 +0900
 Subject: Use <stdint.h> to support MIPS64
 
+stb library dosen't know MIPS 64 architecture.
+It makes pointer size to 32 bits.
+Use <stdint.h> and "uintptr_t" to tell proper pointer size.
 ---
  src/calibre/utils/stb_sprintf.h | 23 ++++++++---------------
  1 file changed, 8 insertions(+), 15 deletions(-)
