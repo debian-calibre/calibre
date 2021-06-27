@@ -2,9 +2,19 @@ From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
 Date: Sat, 26 Jun 2021 02:02:25 +0900
 Subject: Use <stdint.h> to support MIPS64
 
+Forwarded: not-needed
+
 stb library dosen't know MIPS 64 architecture.
 It makes pointer size to 32 bits.
 Use <stdint.h> and "uintptr_t" to tell proper pointer size.
+
+This patch will not forward to upstream because they don't want this fix.
+
+https://github.com/nothings/stb/blob/master/README.md#why-not-c99-stdinth-declare-anywhere-etc
+> #### Why not C99? stdint.h, declare-anywhere, etc.
+>
+> I still use MSVC 6 (1998) as my IDE because it has better human factors
+> for me than later versions of MSVC.
 ---
  src/calibre/utils/stb_sprintf.h | 23 ++++++++---------------
  1 file changed, 8 insertions(+), 15 deletions(-)
