@@ -129,7 +129,7 @@ index c0547d9..dae78ef 100644
              service = b.services[0]
              self.ae(service.type, '_calibre._tcp.local.')
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index 8d3d71c..4210e64 100644
+index 6287ccc..abeaf77 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
 @@ -15,7 +15,7 @@ import os, ctypes, sys, unittest, time, shutil
@@ -141,7 +141,7 @@ index 8d3d71c..4210e64 100644
  is_sanitized = 'libasan' in os.environ.get('LD_PRELOAD', '')
  
  try:
-@@ -347,7 +347,7 @@ class BuildTest(unittest.TestCase):
+@@ -346,7 +346,7 @@ class BuildTest(unittest.TestCase):
  
              p.runJavaScript('1 + 1', callback)
              p.printToPdf(print_callback)

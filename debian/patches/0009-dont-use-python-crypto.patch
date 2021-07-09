@@ -11,7 +11,7 @@ remove the one trivial crypto loading test from src/calibre/test_build.py
  1 file changed, 4 deletions(-)
 
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index 4210e64..5c1dcdc 100644
+index abeaf77..8d30ce3 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
 @@ -36,10 +36,6 @@ class BuildTest(unittest.TestCase):
@@ -24,4 +24,4 @@ index 4210e64..5c1dcdc 100644
 -
      @unittest.skipUnless(islinux, 'DBUS only used on linux')
      def test_dbus(self):
-         try:
+         from jeepney.io.blocking import open_dbus_connection
