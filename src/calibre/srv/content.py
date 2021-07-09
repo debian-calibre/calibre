@@ -8,6 +8,7 @@ __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
 import os, errno
 from io import BytesIO
 from threading import Lock
+from contextlib import suppress
 from polyglot.builtins import map, unicode_type
 from functools import partial
 
@@ -37,14 +38,11 @@ lock = Lock()
 
 # Get book formats/cover as a cached filesystem file {{{
 
-# We cannot store mtimes in the filesystem since some operating systems (OS X)
-# have only one second precision for mtimes
-mtimes = {}
 rename_counter = 0
 
 
 def reset_caches():
-    mtimes.clear()
+    pass
 
 
 def open_for_write(fname):
@@ -77,9 +75,14 @@ def create_file_copy(ctx, rd, prefix, library_id, book_id, ext, mtime, copy_func
     fname = os.path.join(base, bname)
     used_cache = 'no'
 
+    def safe_mtime():
+        with suppress(OSError):
+            return os.path.getmtime(fname)
+
+    mt = mtime if isinstance(mtime, (int, float)) else timestampfromdt(mtime)
     with lock:
-        previous_mtime = mtimes.get(bname)
-        if previous_mtime is None or previous_mtime < mtime:
+        previous_mtime = safe_mtime()
+        if previous_mtime is None or previous_mtime < mt:
             if previous_mtime is not None:
                 # File exists and may be open, so we cannot change its
                 # contents, as that would lead to corrupted downloads in any
@@ -94,7 +97,6 @@ def create_file_copy(ctx, rd, prefix, library_id, book_id, ext, mtime, copy_func
                 else:
                     os.remove(fname)
             ans = open_for_write(fname)
-            mtimes[bname] = mtime
             copy_func(ans)
             ans.seek(0)
         else:
@@ -105,13 +107,12 @@ def create_file_copy(ctx, rd, prefix, library_id, book_id, ext, mtime, copy_func
                 if err.errno != errno.ENOENT:
                     raise
                 ans = open_for_write(fname)
-                mtimes[bname] = mtime
                 copy_func(ans)
                 ans.seek(0)
         if ctx.testing:
             rd.outheaders['Used-Cache'] = used_cache
             rd.outheaders['Tempfile'] = as_hex_unicode(fname)
-        return rd.filesystem_file_with_custom_etag(ans, prefix, library_id, book_id, mtime, extra_etag_data)
+        return rd.filesystem_file_with_custom_etag(ans, prefix, library_id, book_id, mt, extra_etag_data)
 
 
 def write_generated_cover(db, book_id, width, height, destf):

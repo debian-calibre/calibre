@@ -535,7 +535,7 @@ def render_book(container_id, book_id):
         imgdiv
     ))
     container = c.lastChild.firstChild
-    read_button = create_button(_('Read'), 'book', read_book.bind(None, book_id), _('Read this book'))
+    read_button = create_button(_('Read'), 'book', read_book.bind(None, book_id), _('Read this book [V]'))
     fmt = preferred_format(book_id, True)
     download_button = create_button(_('Download'), 'cloud-download', download_url(book_id, fmt),
         _('Download this book in the {0} format ({1})').format(fmt, human_readable(metadata.format_sizes[fmt] or 0)),
@@ -556,8 +556,8 @@ def add_top_bar_buttons(container_id):
     container = document.getElementById(container_id)
     if container:
         clear_buttons(container)
-        add_button(container, 'convert', action=convert_book, tooltip=_('Convert this book to another format'))
-        add_button(container, 'edit', action=edit_metadata, tooltip=_('Edit the metadata for this book'))
+        add_button(container, 'convert', action=convert_book, tooltip=_('Convert this book to another format [C]'))
+        add_button(container, 'edit', action=edit_metadata, tooltip=_('Edit the metadata for this book [E]'))
         add_button(container, 'trash', action=delete_book, tooltip=_('Delete this book'))
         book_id = parse_url_params().book_id
         if book_id is '0':
@@ -724,6 +724,10 @@ def onkeydown(container_id, close_action, ev):
                 delete_book()
             elif ev.key is 'v' or ev.key is 'V':
                 read_book(render_book.book_id)
+            elif ev.key is 'c' or ev.key is 'C':
+                convert_book()
+            elif ev.key is 'e' or ev.key is 'E':
+                edit_metadata()
 
 
 def init(container_id):

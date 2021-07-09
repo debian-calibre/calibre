@@ -732,7 +732,7 @@ class Ui_Form(object):
         self.opt_separate_cover_flow.setText(_("Show in a &separate window (needs restart)"))
         self.label_6.setText(_("&Number of covers to show in browse mode (needs restart):"))
         self.cover_browser_title_template_button.setText(_("Template &editor"))
-        self.opt_cover_browser_title_template.setToolTip(_("The template used to generate the text below the covers. Uses the same syntax as save templates. Defaults to just the book title. Note that this setting is per-library, which means that you have to set it again for every different calibre library you use."))
+        self.opt_cover_browser_title_template.setToolTip(_("The template used to generate the text below the covers. Uses the same syntax as save templates. Defaults to just the book title. Note that this setting is per-library, which means that you have to set it again for every different calibre library you use. Use an empty template for no text."))
         self.opt_cover_browser_reflections.setText(_("Show &reflections"))
         self.opt_cb_preserve_aspect_ratio.setToolTip(_("Show covers in their original aspect ratio instead of resizing\n"
 "them to all have the same width and height"))
