@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "juni 26, 2021" "5.22.1" "calibre"
+.TH "CALIBREDB" "1" "juli 09, 2021" "5.23.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -41,42 +41,42 @@ calibredb \- calibredb
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP is the command line interface to the calibre database. It has
-several sub\-commands, documented below.
+\fBcalibredb\fP is de opdrachtregelinterface naar de calibre gegevensbank. Het heeft
+verschillende sub\-commando\(aqs, hieronder gedocumenteerd.
 .sp
-\fBcalibredb\fP can be used to manipulate either a calibre database
-specified by path or a calibre Content server running either on
-the local machine or over the internet. You can start a calibre
-Content server using either the \fBcalibre\-server\fP
-program or in the main calibre program click Connect/share  → 
-Start Content server\&. Since \fBcalibredb\fP can make changes to your
-calibre libraries, you must setup authentication on the server first. There
-are two ways to do that:
-.INDENT 0.0
-.INDENT 3.5
+\fBcalibredb\fP kan worden gebruikt om een Calibre\-gegevensbank te manipuleren
+gespecificeerd door het pad of een Calibre Contentserver die draait op
+de lokale machine of op het internet. Je kunt een Calibre
+Contentserver starten met het \fBcalibre\-server\fP
+programma of in het hoofdprogramma van Calibre op Connect/share  → 
+Start de inhoudsserver\&. Aangezien \fBcalibredb\fP wijzigingen kan aanbrengen in uw
+calibre bibliotheken, moet je eerst de authenticatie op de server instellen. Er
+zijn twee manieren om dat te doen:
 .INDENT 0.0
 .IP \(bu 2
-If you plan to connect only to a server running on the same computer,
-you can simply use the \fB\-\-enable\-local\-write\fP option of the
-Content server, to allow any program, including calibredb, running on
-the local computer to make changes to your calibre data. When running
-the server from the main calibre program, this option is in
-Preferences → Sharing over the net → Advanced\&.
-.IP \(bu 2
-If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
-options to \fBcalibredb\fP to give it access. You can setup
-user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
-option and using \fB\-\-manage\-users\fP to create the user accounts.
-If you are running the server from the main calibre program, use
-Preferences → Sharing over the net → Require username/password\&.
-.UNINDENT
-.UNINDENT
+Als je van plan bent om alleen verbinding te maken met een server die op dezelfde computer draait,
 .UNINDENT
 .sp
-To connect to a running Content server, pass the URL of the server to the
-\fI\%\-\-with\-library\fP option, see the documentation of that option for
-details and examples.
+kun je gewoon de \fB\-\-enable\-local\-write\fP optie gebruiken van de
+Content server, om toe te staan dat elk programma, inclusief calibredb, dat draait op
+de lokale computer om wijzigingen aan te brengen in uw Calibre gegevens. Wanneer u
+de server vanuit het hoofd Calibre programma, staat deze optie in
+Guilabel:\fIVoorkeuren\->Delen over het net\->Geavanceerd\fP\&.
+.INDENT 0.0
+.IP \(bu 2
+Als je toegang via het internet wilt mogelijk maken, dan moet je
+.UNINDENT
+.sp
+gebruikersaccounts op de server instellen en gebruik maken van de \fB\-\-gebruikersnaam\fP en \fB\-\-wachtwoord\fP
+opties aan \fBcalibredb\fP om het toegang te geven. U kunt
+gebruikersauthenticatie instellen voor \fBcalibre\-server\fP door gebruik te maken van de \fB\-\-enable\-auth\fP
+optie en door \fB\-\-gebruikersbeheer\fP te gebruiken om de gebruikersaccounts aan te maken.
+Als u de server vanuit het hoofdprogramma van Calibre uitvoert, gebruik dan
+guilabel:\fIVoorkeuren\->Delen over het net\->Gebruikersnaam/wachtwoord vereisen\fP\&.
+.sp
+Om verbinding te maken met een lopende Content server, geef je de URL van de server door aan de
+\fI\%\-\-with\-library\fP optie, zie de documentatie van die optie voor
+details en voorbeelden.
 .INDENT 0.0
 .IP \(bu 2
 \fI\%ALGEMENE OPTIES\fP

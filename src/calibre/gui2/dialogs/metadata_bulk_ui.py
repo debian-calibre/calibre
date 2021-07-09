@@ -55,6 +55,7 @@ class Ui_MetadataBulkDialog(object):
         self.label_8.setObjectName("label_8")
         self.gridLayout.addWidget(self.label_8, 2, 0, 1, 1)
         self.author_sort = EnLineEdit(self.btab)
+        self.author_sort.setClearButtonEnabled(True)
         self.author_sort.setObjectName("author_sort")
         self.gridLayout.addWidget(self.author_sort, 2, 1, 1, 1)
         self.label_6 = QtWidgets.QLabel(self.btab)

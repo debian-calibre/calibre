@@ -13720,7 +13720,7 @@ return this.__repr__();
                 i = ρσ_Index2;
                 node = nodes[(typeof i === "number" && i < 0) ? nodes.length + i : i];
                 is_element = node.nodeType === Node.ELEMENT_NODE;
-                if (is_element && node.dataset.calibreRangeWrapper) {
+                if (is_element && ρσ_exists.d(node.dataset).calibreRangeWrapper) {
                     ρσ_unpack = node_at_index(unwrapped_nodes(node), target, index, iter_text_nodes);
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
                     q = ρσ_unpack[0];
@@ -22397,10 +22397,10 @@ return this.__repr__();
         function common_shortcuts() {
             return (function(){
                 var ρσ_d = Object.create(null);
-                ρσ_d["start_of_file"] = desc(['Ctrl+ArrowUp', 'Ctrl+ArrowLeft', 'Home'], "scroll", _("Scroll to the beginning of the current file"), _("When the e-book is made of multiple individual files, scroll to the start of the current file."));
+                ρσ_d["start_of_file"] = desc(['Ctrl+ArrowUp', 'Ctrl+ArrowLeft', 'Home'], "scroll", _("Scroll to the beginning of the current file"), _("When the e-book is made of multiple individual files, scroll to the start of the current file"));
                 ρσ_d["start_of_book"] = desc("Ctrl+Home", "scroll", _("Scroll to the beginning of the book"));
                 ρσ_d["end_of_book"] = desc("Ctrl+End", "scroll", _("Scroll to the end of the book"));
-                ρσ_d["end_of_file"] = desc(['Ctrl+ArrowDown', 'Ctrl+ArrowRight', 'End'], "scroll", _("Scroll to the end of the current file"), _("When the e-book is made of multiple individual files, scroll to the end of the current file."));
+                ρσ_d["end_of_file"] = desc(['Ctrl+ArrowDown', 'Ctrl+ArrowRight', 'End'], "scroll", _("Scroll to the end of the current file"), _("When the e-book is made of multiple individual files, scroll to the end of the current file"));
                 ρσ_d["up"] = desc("ArrowUp", "scroll", _("Scroll backwards smoothly (by screen-fulls in paged mode)"), _("Scroll backwards, smoothly in flow mode and by screen fulls in paged mode"));
                 ρσ_d["down"] = desc("ArrowDown", "scroll", _("Scroll forwards smoothly (by screen-fulls in paged mode)"), _("Scroll forwards, smoothly in flow mode and by screen fulls in paged mode"));
                 ρσ_d["left"] = desc("ArrowLeft", "scroll", _("Scroll left"), _("Scroll leftwards by a little in flow mode and by a page in paged mode"));
@@ -26279,7 +26279,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.22.1";
+        CALIBRE_VERSION = "5.23.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -34505,7 +34505,7 @@ return this.__repr__();
             c = c.lastChild;
             c.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-right: 1em; flex-grow: 3; max-width: 500px", data_book_id: "" + book_id})]), imgdiv].concat([ρσ_desugar_kwargs({style: "display:flex; padding: 1ex 1em; align-items: flex-start; justify-content: flex-start; flex-wrap: wrap"})])));
             container = c.lastChild.firstChild;
-            read_button = create_button(_("Read"), "book", read_book.bind(null, book_id), _("Read this book"));
+            read_button = create_button(_("Read"), "book", read_book.bind(null, book_id), _("Read this book [V]"));
             fmt = preferred_format(book_id, true);
             download_button = ρσ_interpolate_kwargs.call(this, create_button, [_("Download"), "cloud-download", download_url(book_id, fmt), _("Download this book in the {0} format ({1})").format(fmt, human_readable((ρσ_expr_temp = metadata.format_sizes)[(typeof fmt === "number" && fmt < 0) ? ρσ_expr_temp.length + fmt : fmt] || 0))].concat([ρσ_desugar_kwargs({download_filename: "" + ρσ_str.format("{}", metadata.title) + "." + ρσ_str.format("{}", fmt.toLowerCase()) + ""})]));
             row = ρσ_interpolate_kwargs.call(E, E.div, [read_button, "   ", download_button].concat([ρσ_desugar_kwargs({style: "margin-bottom: 1ex"})]));
@@ -34529,8 +34529,8 @@ return this.__repr__();
             container = document.getElementById(container_id);
             if (container) {
                 clear_buttons(container);
-                ρσ_interpolate_kwargs.call(this, add_button, [container, "convert"].concat([ρσ_desugar_kwargs({action: convert_book, tooltip: _("Convert this book to another format")})]));
-                ρσ_interpolate_kwargs.call(this, add_button, [container, "edit"].concat([ρσ_desugar_kwargs({action: edit_metadata, tooltip: _("Edit the metadata for this book")})]));
+                ρσ_interpolate_kwargs.call(this, add_button, [container, "convert"].concat([ρσ_desugar_kwargs({action: convert_book, tooltip: _("Convert this book to another format [C]")})]));
+                ρσ_interpolate_kwargs.call(this, add_button, [container, "edit"].concat([ρσ_desugar_kwargs({action: edit_metadata, tooltip: _("Edit the metadata for this book [E]")})]));
                 ρσ_interpolate_kwargs.call(this, add_button, [container, "trash"].concat([ρσ_desugar_kwargs({action: delete_book, tooltip: _("Delete this book")})]));
                 book_id = parse_url_params().book_id;
                 if (book_id === "0") {
@@ -34785,6 +34785,10 @@ return this.__repr__();
                         delete_book();
                     } else if (ev.key === "v" || ev.key === "V") {
                         read_book(render_book.book_id);
+                    } else if (ev.key === "c" || ev.key === "C") {
+                        convert_book();
+                    } else if (ev.key === "e" || ev.key === "E") {
+                        edit_metadata();
                     }
                 }
             }
