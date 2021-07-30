@@ -3,9 +3,9 @@
 # License: GPLv3 Copyright: 2013, Kovid Goyal <kovid at kovidgoyal.net>
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+
 # Imports {{{
-
-
+import argparse
 import ast
 import atexit
 import bz2
@@ -55,7 +55,6 @@ except Exception:
 USER_AGENT = 'calibre mirror'
 MR_URL = 'https://www.mobileread.com/forums/'
 IS_PRODUCTION = os.path.exists('/srv/plugins')
-WORKDIR = '/srv/plugins' if IS_PRODUCTION else '/t/plugins'
 PLUGINS = 'plugins.json.bz2'
 INDEX = MR_URL + 'showpost.php?p=1362767&postcount=1'
 # INDEX = 'file:///t/raw.html'
@@ -308,39 +307,56 @@ def parse_metadata(raw, namelist, zf):
     raise ValueError('Could not find plugin class')
 
 
-def get_plugin_info(raw):
-    metadata = None
-    with zipfile.ZipFile(io.BytesIO(raw)) as zf:
-        names = {x.decode('utf-8') if isinstance(x, bytes) else x : x for x in zf.namelist()}
-        inits = [x for x in names if x.rpartition('/')[-1] == '__init__.py']
-        inits.sort(key=lambda x:x.count('/'))
-        if inits and inits[0] == '__init__.py':
-            metadata = names[inits[0]]
-        else:
-            # Legacy plugin
-            for name, val in names.items():
-                if name.endswith('plugin.py'):
-                    metadata = val
-                    break
-        if metadata is None:
-            raise ValueError('No __init__.py found in plugin')
-        raw = zf.open(metadata).read()
-        ans = parse_metadata(raw, names, zf)
-        if isinstance(ans, dict):
-            return ans
-        # The plugin is importing its base class from somewhere else, le sigh
-        for mod, _ in ans:
-            mod = mod.split('.')
-            if mod[0] == 'calibre_plugins':
-                mod = mod[2:]
-            mod = '/'.join(mod) + '.py'
-            if mod in names:
-                raw = zf.open(names[mod]).read()
-                ans = parse_metadata(raw, names, zf)
-                if isinstance(ans, dict):
-                    return ans
+def parse_plugin(raw, names, zf):
+    ans = parse_metadata(raw, names, zf)
+    if isinstance(ans, dict):
+        return ans
+    # The plugin is importing its base class from somewhere else, le sigh
+    for mod, _ in ans:
+        mod = mod.split('.')
+        if mod[0] == 'calibre_plugins':
+            mod = mod[2:]
+        mod = '/'.join(mod) + '.py'
+        if mod in names:
+            raw = zf.open(names[mod]).read()
+            ans = parse_metadata(raw, names, zf)
+            if isinstance(ans, dict):
+                return ans
 
     raise ValueError('Failed to find plugin class')
+
+
+def get_plugin_init(zf):
+    metadata = None
+    names = {x.decode('utf-8') if isinstance(x, bytes) else x : x for x in zf.namelist()}
+    inits = [x for x in names if x.rpartition('/')[-1] == '__init__.py']
+    inits.sort(key=lambda x:x.count('/'))
+    if inits and inits[0] == '__init__.py':
+        metadata = names[inits[0]]
+    else:
+        # Legacy plugin
+        for name, val in names.items():
+            if name.endswith('plugin.py'):
+                metadata = val
+                break
+    if metadata is None:
+        raise ValueError('No __init__.py found in plugin')
+    return zf.open(metadata).read(), names
+
+
+def get_plugin_info(raw_zip):
+    with zipfile.ZipFile(io.BytesIO(raw_zip)) as zf:
+        raw, names = get_plugin_init(zf)
+        try:
+            return parse_plugin(raw, names, zf)
+        except (SyntaxError, TabError, IndentationError):
+            with tempfile.NamedTemporaryFile(suffix='.zip') as f:
+                f.write(raw_zip)
+                f.flush()
+                res = subprocess.run(['python2', __file__, f.name], stdout=subprocess.PIPE)
+                if res.returncode == 0:
+                    return json.loads(res.stdout)
+            raise
 
 
 # }}}
@@ -597,18 +613,27 @@ def update_stats():
     return stats
 
 
+def parse_single_plugin(zipfile_path):
+    with zipfile.ZipFile(zipfile_path) as zf:
+        raw, names = get_plugin_init(zf)
+        ans = parse_plugin(raw, names, zf)
+        sys.stdout.write(json.dumps(ans, ensure_ascii=True))
+
+
 def main():
-    try:
-        os.chdir(WORKDIR)
-    except OSError as err:
-        if err.errno == errno.ENOENT:
-            try:
-                os.makedirs(WORKDIR)
-            except EnvironmentError:
-                pass
-            os.chdir(WORKDIR)
-        else:
-            raise
+    p = argparse.ArgumentParser(
+        description='Mirror calibre plugins from the forums. Or parse a single plugin zip file'
+        ' if specified on the command line'
+    )
+    p.add_argument('plugin_path', nargs='?', default='', help='Path to plugin zip file to parse')
+    WORKDIR = '/srv/plugins' if IS_PRODUCTION else '/t/plugins'
+    p.add_argument('-o', '--output-dir', default=WORKDIR, help='Where to place the mirrored plugins. Default is: ' + WORKDIR)
+    args = p.parse_args()
+    if args.plugin_path:
+        return parse_single_plugin(args.plugin_path)
+
+    os.makedirs(args.output_dir, exist_ok=True)
+    os.chdir(args.output_dir)
     if os.geteuid() == 0 and not singleinstance():
         print('Another instance of plugins-mirror is running', file=sys.stderr)
         raise SystemExit(1)
@@ -618,7 +643,9 @@ def main():
         plugins_index = load_plugins_index()
         plugins_index = fetch_plugins(plugins_index)
         create_index(plugins_index, stats)
-    except:
+    except KeyboardInterrupt:
+        raise SystemExit('Exiting on user interrupt')
+    except Exception:
         import traceback
         log('Failed to run at:', datetime.utcnow().isoformat())
         log(traceback.format_exc())

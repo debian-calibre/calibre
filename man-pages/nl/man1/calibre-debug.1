@@ -1,5 +1,8 @@
 .\" Man page generated from reStructuredText.
 .
+.TH "CALIBRE-DEBUG" "1" "juli 30, 2021" "5.24.0" "calibre"
+.SH NAME
+calibre-debug \- calibre-debug
 .
 .nr rst2man-indent-level 0
 .
@@ -27,9 +30,6 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "juli 09, 2021" "5.23.0" "calibre"
-.SH NAME
-calibre-debug \- calibre-debug
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -73,22 +73,22 @@ Python code uitvoeren.
 .INDENT 0.0
 .TP
 .B \-\-debug\-device\-driver, \-d
-Fouten in apparaatdetectie zoeken
+Fouten in toesteldetectie zoeken
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-default\-programs
-Calibre (af)melden als Windows standaard programma. \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
+calibre (af)melden als Windows standaard programma. \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-diff
-Draait de Calibre diff tool. Bijvoorbeeld: Calibre\-debug \fI\%\-\-diff\fP bestand1 bestand2
+Draait de calibre diff tool. Bijvoorbeeld: calibre\-debug \fI\%\-\-diff\fP bestand1 bestand2
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-edit\-book, \-t
-Start het Calibre \fB"\fPBewerk Boek\fB"\fP tool in debug modus.
+Start het calibre \fB"\fPBewerk Boek\fB"\fP tool in debug modus.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -118,7 +118,7 @@ Start de GUI met de probleemoplosser ingeschakeld. De output wordt afgedrukt naa
 .INDENT 0.0
 .TP
 .B \-\-gui\-debug
-Start de GUI met de probleemoplosser console, logging naar het gespecificeerd pad. Wanneer alleen voor intern gebruik, gebruik dan de \-g optie om de GUI in debug modus te draaien.
+Voer de GUI uit met de debug console, log naar het gespecificeerd pad. Enkel intern gebruik, gebruik de \-g optie om de GUI in debug modus uit te voeren
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -133,7 +133,7 @@ Opnieuw comprimeren van een eerder gedecomprimeerd boek. Gebruik: \-i output_dir
 .INDENT 0.0
 .TP
 .B \-\-import\-calibre\-data
-Importeer eerder geëxporteerde Calibre gegevens
+Importeer eerder geëxporteerde calibre gegevens
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -143,27 +143,27 @@ Inspecteer MOBI\-bestand(en) in opgegeven pad(en)
 .INDENT 0.0
 .TP
 .B \-\-paths
-Output van de paden de nodig zijn voor de installatie van de Calibre omgeving
+Output van de paden de nodig zijn voor de installatie van de calibre omgeving
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-reinitialize\-db
-Opnieuw initiëren van de sqlite Calibre gegevensbank op het opgegeven pad. Nuttig om te herstellen van een corrupte gegevensbank.
+Opnieuw initiëren van de sqlite calibre database op het opgegeven pad. Nuttig om te herstellen van een corrupte database.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-Voer een plugin uit welke via opdracht\-prompt kan starten. Bijvoorbeeld: Calibre\-debug \-r \fB"\fPAdd Books\fB"\fP \fB\-\-\fP bestand1 \fB\-\-option1\fP Alles na de \fB\-\-\fP zal worden meegegeven aan de plugin als argumenten.
+Voer een plugin uit welke via opdracht\-prompt kan starten. Bijvoorbeeld: calibre\-debug \-r \fB"\fPAdd Books\fB"\fP \fB\-\-\fP bestand1 \fB\-\-option1\fP Alles na de \fB\-\-\fP zal worden meegegeven aan de plugin als argumenten.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-running\-calibre, \-s
-Sluit, indien aanwezig, een actieve Calibre\-instantie af. Bedenk dat eventuele draaiende taken zonder melding worden afgebroken. Gebruik deze optie voorzichtig.
+Sluit, indien aanwezig, een actieve calibre\-instantie af. Bedenk dat eventuele draaiende taken zonder melding worden afgebroken. Gebruik deze optie voorzichtig.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-subset\-font, \-f
-Verklein het gespecifieerde lettertype. Gebruik \fB\-\-\fP na deze optie om opties door te geven naar het lettertype aanpassings programma
+Wissel het gespecifieerde lettertype. Gebruik \fB\-\-\fP na deze optie om optie door te geven naar lettertype wisselprogramma.
 .UNINDENT
 .INDENT 0.0
 .TP

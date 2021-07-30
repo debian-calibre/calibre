@@ -5,15 +5,16 @@
 # 
 # Translators:
 # Kovid Goyal <kovid@kovidgoyal.net>, 2020
+# peter <petertje@tuta.io>, 2021
 # 
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 5.8.1\n"
+"Project-Id-Version: calibre 5.23.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-06 13:34+0000\n"
+"POT-Creation-Date: 2021-07-28 14:48+0000\n"
 "PO-Revision-Date: 2020-11-12 05:43+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>, 2020\n"
+"Last-Translator: peter <petertje@tuta.io>, 2021\n"
 "Language-Team: Dutch (https://www.transifex.com/calibre/teams/19337/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,7 +24,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:2
 msgid "The calibre:// URL scheme"
-msgstr ""
+msgstr "Het calibre:// URL schema"
 
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:4
 msgid ""
@@ -32,6 +33,10 @@ msgid ""
 "etc from other programs/documents or via the command line. For example, "
 "running the following at the command line::"
 msgstr ""
+"calibre registreert zichzelf als het programma voor calibre:// URLs. U kan "
+"deze dus gebruiken voor acties als boeken openen, zoeken naar boeken, enz "
+"van andere programma's/documenten of via de opdrachtregel. Bijvoorbeeld, het"
+" volgende uitvoeren via de opdrachtregel::"
 
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:11
 msgid ""
@@ -40,6 +45,10 @@ msgid ""
 "The special value ``_`` means the current library. The various types of URLs"
 " are documented below."
 msgstr ""
+"Opent calibre met de bibliotheek ``Some Library``. Bibliotheek namen zijn de"
+" mapnaam van de bibliotheekmap met spaties vervangen door onderliggende "
+"streepjes. De speciale waarde ``_`` betekent huidige bibliotheek. De "
+"verschillende URL types zijn hieronder gedocumenteerd."
 
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:16
 msgid ""
@@ -47,17 +56,20 @@ msgid ""
 "similar and the operating system will automatically run calibre to perform "
 "the specified action."
 msgstr ""
+"U kan deze links zelfs in HTML bestanden of Word documenten zetten en het "
+"besturingssysteem zal automatisch calibre starten om de gespecificeerde "
+"actie uit te voeren."
 
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:26
 msgid "Switch to a specific library"
-msgstr ""
+msgstr "Wissen naar een specifieke bibliotheek"
 
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:28
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:47
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:63
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:77
 msgid "The URL syntax is::"
-msgstr ""
+msgstr "De URL syntax is ::"
 
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:32
 msgid ""
@@ -67,16 +79,24 @@ msgid ""
 " library names have special characters that would otherwise require URL "
 "encoding. Hex encoded library names look like::"
 msgstr ""
+"Bibliotheeknamen zijn de mapnaam van de bibliotheek, spaties vervangen door "
+"onderliggende streepjes. Speciale waarde ``_`` betekent huidige bibliotheek."
+" U kan ook :ref:`hex codering <hex_encoding>` voor de bibliotheeknamen "
+"gebruiken, nuttig als de bibliotheek namen speciale karakters bevatten die "
+"anders URL codering nodig hebben. Hex gecodeerde bibliotheeknamen lijken "
+"op::"
 
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:40
 msgid ""
 "Where the part after the ``_hex_-`` prefix is the library name encoded as "
 "UTF-8 and every byte represented by two hexadecimal characters."
 msgstr ""
+"Waar het deel na de ``_hex_-`` prefix is de bibliotheeknaam in UTF-8 en elke"
+" byte voorgesteld wordt door 2 hexadecimale karakters."
 
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:45
 msgid "Show a specific book in calibre"
-msgstr ""
+msgstr "Toon een specifiek boek in calibre"
 
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:51
 msgid ""
@@ -85,6 +105,10 @@ msgid ""
 ":guilabel:`Click to open` link in the :guilabel:`Book details` panel, it is "
 "the number in brackets at the end of the path to the book folder."
 msgstr ""
+"Dit toont het boek met ``book_id`` (een nummer) in calibre. De boeken ids "
+"zijn zichtbaar in de calibre interface door over de :guilabel:`Klik om te "
+"openen` link in het :guilabel:`Boek details` paneel te hoveren, het is het "
+"nummer tussen haakjes aan het einde van het pad naar de boekmap."
 
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:56
 msgid ""
@@ -92,10 +116,13 @@ msgid ""
 "clicking the :guilabel:`Book details` panel and choosing :guilabel:`Copy "
 "link to book`."
 msgstr ""
+"U kan een link naar het nu getoonde boek in calibre kopiëren door rechts te "
+"klikken op het :guilabel:`Boek details` paneel en :guilabel:`Kopieer link "
+"naar boek` te kiezen."
 
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:61
 msgid "Open a specific book in the E-book viewer at a specific position"
-msgstr ""
+msgstr "Open een specifiek boek in de e-boek viewer op een specifieke plaats"
 
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:67
 msgid ""
@@ -105,6 +132,11 @@ msgid ""
 "viewer controls select :guilabel:`Go to->Location` and there such a link "
 "will be given that you can copy/paste elsewhere."
 msgstr ""
+"Hier is ``book_format`` het formaat van het boek, bv. ``EPUB`` or ``MOBI`` "
+"en de ``locatie`` is een optionele locatie in het boek. De gemakkelijkste "
+"manier om deze links te krijgen is door het boek te openen in de viewer, "
+"selecteer dan in de viewer controls :guilabel:`Ga naar->Locatie` en daar "
+"vindt u zo'n link die u naar ergens kan kopiëren/plakken."
 
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:75
 msgid "Searching for books"
@@ -117,6 +149,10 @@ msgid ""
 "<hex_encoding>` and use ``eq`` instead. Leaving out the query will cause the"
 " current search to be cleared."
 msgstr ""
+"Zoeken is hier elke geldige :ref:`search expression <search_interface>`. Als"
+" de zoekuitdrukking ingewikkeld is, :ref:`codeer als hex string "
+"<hex_encoding>` en gebruik ``eq`` in de plaats. De zoekopdracht leeg laten "
+"zal de huidige zoekopdracht wissen."
 
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:87
 msgid ""
@@ -124,14 +160,17 @@ msgid ""
 "doing the search to ensure all books are found. If you want to preserve the "
 "Virtual library, use::"
 msgstr ""
+"Als een Virtuele bibliotheek is geselecteerd,zal calibre ze standaard "
+"leegmaken voor het zoeken zodat alle boeken zeker gevonden worden. Als u de "
+"Virtuele bibliotheek wil behouden, gebruik::"
 
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:93
 msgid "If you want to switch to a particular Virtual library, use::"
-msgstr ""
+msgstr "Als u naar een bepaalde Virtuele bibliotheek wil schakelen, gebruik::"
 
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:99
 msgid "replacing spaces in the Virtual library name by ``%20``."
-msgstr ""
+msgstr "vervang spaties in naam Virtuele bibliotheek door \"%20\"."
 
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:101
 msgid ""
@@ -139,10 +178,13 @@ msgid ""
 "can do so by right clicking the search bar and choosing :guilabel:`Copy "
 "search as URL`."
 msgstr ""
+"Als u in calibre zoekt en een link wil genereren daarvoor, kan u dat doen "
+"door rechts te klikken op de zoekbalk en :guilabel:`Kopieer zoekopdracht als"
+" URL` te kiezen."
 
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:109
 msgid "Hex encoding of URL parameters"
-msgstr ""
+msgstr "Hex codering van URL parameters"
 
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:111
 msgid ""
@@ -151,3 +193,7 @@ msgid ""
 "representing the byte. For example, the string ``abc`` is the bytes ``0x61 "
 "0x62 and 0x63`` in UTF-8, so the encoded version is the string: ``616263``."
 msgstr ""
+"Hex codering van URL parameters gebeurt door eerst de parameter als UTF-8 "
+"bytes te coderen en dan elke byte te vervangen door twee hex karakters die "
+"de byte voorstellen. Bv. de string ``abc`` zijn de bytes ``0x61 0x62 en "
+"0x63`` in UTF-8, dus de gecodeerde versie is de string: ``616263``."

@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-03 03:59+0000\n"
-"PO-Revision-Date: 2021-05-28 02:27+0000\n"
+"POT-Creation-Date: 2021-07-28 14:48+0000\n"
+"PO-Revision-Date: 2021-07-19 08:11+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -2426,7 +2426,7 @@ msgstr "Lösa upp path_map till annotation_map filer som finns på enheten"
 #: ../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring of
 #: calibre.devices.usbms.device.Device.add_annotation_to_library:1
 msgid "Add an annotation to the calibre library"
-msgstr "Lägg till en anteckning till calibre-biblioteket"
+msgstr "Lägg till en notering i calibre-biblioteket"
 
 #: ../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring of
 #: calibre.devices.usbms.driver.USBMS:1
@@ -2487,7 +2487,7 @@ msgstr "Om du lägger till din egen insticksmodul i en ZIP-fil, bör du underkla
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction:1
 msgid "Bases: :class:`PyQt5.QtCore.QObject`"
-msgstr "Bas: :class:`PyQt5.QtCore.QObject`"
+msgstr "Baser: :class:`PyQt5.QtCore.QObject`"
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction:1
@@ -2517,9 +2517,10 @@ msgstr "Om två :class:`InterfaceAction` objekt har samma namn, tar den med hög
 #: calibre.gui2.actions.InterfaceAction:13
 msgid ""
 "Sub-classes should implement the :meth:`genesis`, :meth:`library_changed`, "
-":meth:`location_selected` :meth:`shutting_down` and "
-":meth:`initialization_complete` methods."
-msgstr "Underklasser bör implementera :meth:`genesis`, :meth:`library_changed`, :meth:`location_selected` :meth:`shutting_down` och :meth:`initialization_complete`  metoder."
+":meth:`location_selected`, :meth:`shutting_down`, "
+":meth:`initialization_complete` and :meth:`tag_browser_context_action` "
+"methods."
+msgstr "Underklasser bör implementera :meth:`genesis`, :meth:`library_changed`, :meth:`location_selected`, :meth:`shutting_down`, :meth:`initialization_complete` och :meth:`tag_browser_context_action` metoder."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction:17
@@ -2642,7 +2643,7 @@ msgid ""
 "You should not perform blocking/long operations in this function. Instead "
 "emit a signal or use QTimer.singleShot and return quickly. See the builtin "
 "actions for examples."
-msgstr "Denna metod bör utföra några användbara åtgärder och återge True om endast om denna gränssnittsåtgärd kan hantera händelsen \"drop\". Anropa inte acceptera/ignorera vid händelsen, som kommer att tas om hand av calibre-användargränssnittet. Du bör inte utföra blockerade/långa operationer i denna funktion. Sänd istället en signal eller använd QTimer.singleShot och gå snabbt tillbaka. Se de inbyggda åtgärderna för exempel."
+msgstr "Denna metod bör utföra några användbara åtgärder och återge True om endast om denna gränssnittsåtgärd kan hantera händelsen \"drop\". Anropa inte acceptera/ignorera vid händelsen, som kommer att tas om hand av calibre-användargränssnittet. Du bör inte utföra blockerade/långa operationer i denna funktion. Sänd istället en signal eller använd QTimer.singleShot och återvänd snabbt. Se de inbyggda åtgärderna för exempel."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction.create_menu_action:1
@@ -2764,6 +2765,16 @@ msgstr "Anropas en gång per åtgärd när layouten för huvudgränssnittet är 
 msgid ""
 "Called once per action when the initialization of the main GUI is completed."
 msgstr "Anropas en gång per åtgärd när installationen av huvud-GUI är färdigt."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
+#: calibre.gui2.actions.InterfaceAction.tag_browser_context_action:1
+msgid ""
+"Called when displaying the context menu in the Tag browser. ``index`` is the"
+" QModelIndex that points to the Tag browser item that was right clicked. "
+"Test it for validity with index.valid() and get the underlying TagTreeItem "
+"object with index.data(Qt.ItemDataRole.UserRole). Any action objects yielded"
+" by this method will be added to the context menu."
+msgstr "Anropas när snabbmenyn visas i taggbläddraren. ``index`` är QModelIndex som pekar på taggbläddrarposterna som högerklickades. Testa giltigheten med index.valid() och få den underliggande TagTreeItem-posten med index.data(Qt.ItemDataRole.UserRole). Eventuella åtgärdsobjekt som ges av denna metod läggs till i snabbmenyn."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction.shutting_down:1
