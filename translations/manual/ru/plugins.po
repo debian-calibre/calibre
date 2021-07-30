@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-26 16:50+0000\n"
-"PO-Revision-Date: 2021-05-23 08:12+0000\n"
+"POT-Creation-Date: 2021-07-28 14:48+0000\n"
+"PO-Revision-Date: 2021-07-22 18:38+0000\n"
 "Last-Translator: ashed <craysy@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/calibre/calibre/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -2516,9 +2516,10 @@ msgstr "Если два объекта :class:`InterfaceAction` имеют од�
 #: calibre.gui2.actions.InterfaceAction:13
 msgid ""
 "Sub-classes should implement the :meth:`genesis`, :meth:`library_changed`, "
-":meth:`location_selected` :meth:`shutting_down` and "
-":meth:`initialization_complete` methods."
-msgstr "Подклассы должны реализовывать методы :meth:`genesis`, :meth:`library_changed`, :meth:`location_selected` :meth:`shutting_down` и :meth:`initialization_complete`."
+":meth:`location_selected`, :meth:`shutting_down`, "
+":meth:`initialization_complete` and :meth:`tag_browser_context_action` "
+"methods."
+msgstr "Подклассы должны реализовывать методы :meth:`genesis`, :meth:`library_changed`, :meth:`location_selected`, :meth:`shutting_down`, :meth:`initialization_complete` и :meth:`tag_browser_context_action` "
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction:17
@@ -2763,6 +2764,16 @@ msgstr "Вызывается один раз за действие, когда �
 msgid ""
 "Called once per action when the initialization of the main GUI is completed."
 msgstr "Вызывается один раз для каждого действия после завершения инициализации основного графического интерфейса."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
+#: calibre.gui2.actions.InterfaceAction.tag_browser_context_action:1
+msgid ""
+"Called when displaying the context menu in the Tag browser. ``index`` is the"
+" QModelIndex that points to the Tag browser item that was right clicked. "
+"Test it for validity with index.valid() and get the underlying TagTreeItem "
+"object with index.data(Qt.ItemDataRole.UserRole). Any action objects yielded"
+" by this method will be added to the context menu."
+msgstr "Вызывается при отображении контекстного меню в браузере тегов. index - это QModelIndex, который указывает на элемент браузера тегов, нажатый правой кнопкой мыши. Проверьте его на достоверность с помощью index.valid () и получите базовый объект TagTreeItem с помощью index.data (Qt.ItemDataRole.UserRole). Любые объекты действия, полученные этим методом, будут добавлены в контекстное меню."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction.shutting_down:1

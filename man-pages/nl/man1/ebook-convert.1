@@ -1,5 +1,8 @@
 .\" Man page generated from reStructuredText.
 .
+.TH "EBOOK-CONVERT" "1" "juli 30, 2021" "5.24.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
 .
 .nr rst2man-indent-level 0
 .
@@ -27,9 +30,6 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "juli 09, 2021" "5.23.0" "calibre"
-.SH NAME
-ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -99,7 +99,7 @@ Namen van ingebouwde recepten weergeven. U kunt de volgende opdracht gebruiken o
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specificeer het uitvoerprofiel. Het uitvoerprofiel bepaalt hoe het conversiesysteem het aangemaakte document optimaliseert voor het gespecificeerde apparaat (zoals bij het aanpassen van afbeeldingen voor de schermresolutie van het apparaat). In sommige gevallen kan een uitvoerprofiel worden gebruikt om de uitvoer naar een bepaald apparaat te optimaliseren, maar dat is zelden nodig. Keuzes zijn:cybookg3, cybook_opus, default, generic_eink, generic_eink_large, generic_eink_hd, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+Specificeer het uitvoerprofiel. Het uitvoerprofiel bepaalt hoe het conversiesysteem het aangemaakte document optimaliseert voor het gespecificeerde toestel (zoals bij het aanpassen van afbeeldingen voor de schermresolutie van het toestel). In sommige gevallen kan een uitvoerprofiel worden gebruikt om de uitvoer naar een bepaald toestel te optimaliseren, maar dat is zelden nodig. Keuzes zijn:cybookg3, cybook_opus, default, generic_eink, generic_eink_large, generic_eink_hd, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -160,7 +160,7 @@ Als het invoerbestand geen omslag bevat en er niet expliciet een is opgegeven za
 .INDENT 0.0
 .TP
 .B \-\-no\-svg\-cover
-Gebruik geen SVG voor de omslag van het boek. Gebruik deze optie als uw EPUB gebruikt gaat worden op een apparaat dat SVG niet ondersteunt, zoals de iPhone of de JetBook Lite. Zonder deze optie zullen deze apparaten de omslag van het boek als een lege pagina laten zien.
+Gebruik geen SVG voor de omslag van het boek. Gebruik deze optie als uw EPUB gebruikt gaat worden op een toestel dat SVG niet ondersteunt, zoals de iPhone of de JetBook Lite. Zonder deze optie zullen deze toestellen de omslag van het boek als een lege pagina laten zien.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -203,7 +203,7 @@ Geen herschaling van lettergrootte.
 .INDENT 0.0
 .TP
 .B \-\-embed\-all\-fonts
-Alle lettertypes invoegen, waaraan in het input\-document wordt gerefereerd, maar nog niet zijn toegevoegd. Dit zal uw systeem doorzoeken naar de lettertypes, en indien gevonden, zullen ze toegevoegd worden. Toevoegen zal alleen werken als het formaat waarnaar u wilt converteren ingebouwde fonts ondersteunt, zoals EPUB, AZW3, DOCX of PDF. Gelieve er op toe te zien dat u de nodige licenties bezit om lettertypes toe te voegen aan dit document
+Alle lettertypes invoegen waaraan in het input\-document wordt gerefereerd maar nog niet ingevoegd. Dit zal uw systeem doorzoeken naar de lettertypes, en indien gevonden, zullen ze ingevoegd worden. Invoegen zal alleen werken als het formaat waarnaar u converteert ingebouwde fonts ondersteunt, zoals EPUB, AZW3, DOCX of PDF. Let aub op dat u de nodige licentie bezit om de in dit document gebruikte lettertypes in te voegen.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -213,7 +213,7 @@ Het gespecificeerde lettertype wordt ingebed in het boek. Dit bepaalt het \fB"\f
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-Standaard gebruikt Calibre het steno\-formaat voor verschillende CSS\-eigenschappen zoals margins, padding, border, enz. Deze optie zorgt ervoor dat het in plaats daarvan het volledige formaat gebruikt. Houd er rekening mee dat CSS altijd wordt uitgebreid bij het genereren van EPUB\-bestanden met het uitvoerprofiel ingesteld op een van de Nook\-profielen, aangezien de Nook geen steno\-CSS kan verwerken.
+Standaard gebruikt calibre het steno\-formaat voor verschillende CSS\-eigenschappen zoals margins, padding, border, enz. Deze optie zorgt ervoor dat het in plaats daarvan het volledige formaat gebruikt. Houd er rekening mee dat CSS altijd wordt uitgebreid bij het genereren van EPUB\-bestanden met het uitvoerprofiel ingesteld op een van de Nook\-profielen, aangezien de Nook geen steno\-CSS kan verwerken.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -223,7 +223,7 @@ Het pad naar een CSS\-Stylesheet, of raw CSS. Deze CSS zal worden toegevoegd aan
 .INDENT 0.0
 .TP
 .B \-\-filter\-css
-Een door komma\fB\(aq\fPs gescheiden lijst van CSS\-eigenschappen die zullen worden verwijderd uit alle CSS\-stijlregels. Dit is handig als de aanwezigheid van enkele stijl informatie voorkomt dat het wordt overschreven op uw apparaat. Bijvoorbeeld: font\-family, kleur, margin\-left, margin\-right
+Een door komma\fB\(aq\fPs gescheiden lijst van CSS\-eigenschappen die zullen worden verwijderd uit alle CSS\-stijlregels. Dit is handig als de aanwezigheid van enkele stijl informatie voorkomt dat het wordt overschreven op uw toestel. Bijvoorbeeld: font\-family, kleur, margin\-left, margin\-right
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -243,7 +243,7 @@ Stel de hoogte van de ingevoegde blanco regels in (in em). De hoogte van de rege
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Behoud aanwezige bindingen in het invoer document. Een binding is een speciale weergave van een tekenpaar zoals ff, fi, fl enz. De meeste e\-readers bieden geen ondersteuning voor bindingen in hun standaard lettertypes, dus worden ze waarschijnlijk niet juist weergegeven. Standaard zal Calibre een ligatuur omzetten in het overeenkomstige paar normale tekens. Deze optie wordt daarna behouden.
+Behoud aanwezige bindingen in het invoer document. Een binding is een speciale weergave van een tekenpaar zoals ff, fi, fl enz. De meeste e\-readers bieden geen ondersteuning voor bindingen in hun standaard lettertypes, dus worden ze waarschijnlijk niet juist weergegeven. Standaard zal calibre een ligatuur omzetten in het overeenkomstige paar normale tekens. Deze optie wordt daarna behouden.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -278,7 +278,7 @@ Zet de bovenmarge in punten. Standaard is 5.0. Bij een negatieve waarde wordt er
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-De minimale hoogte van een regel, als percentage van de berekende lettergrootte van het element. Calibre zorgt ervoor dat ieder element een regelhoogte heeft van op zijn minst deze instelling, onafhankelijk van wat het ingevoerde document specificeert. Zet op nul om te negeren. De standaardwaarde is 120%. Gebruik deze instelling liever dan de rechtstreekse regelhoogte\-instelling, tenzij u weet wat u doet. Om bijvoorbeeld dubbele regelafstand te verkrijgen zet u deze instelling op 240.
+De minimale hoogte van een regel, als percentage van de berekende lettergrootte van het element. calibre zorgt ervoor dat ieder element een regelhoogte heeft van op zijn minst deze instelling, onafhankelijk van wat het ingevoerde document specificeert. Zet op nul om te negeren. De standaardwaarde is 120%. Gebruik deze instelling liever dan de rechtstreekse regelhoogte\-instelling, tenzij u weet wat u doet. Om bijvoorbeeld dubbele regelafstand te verkrijgen zet u deze instelling op 240.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -288,7 +288,7 @@ Verwijder witregels tussen alinea\fB\(aq\fPs. Stelt ook inspringen met 1.5em in 
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing\-indent\-size
-Als Calibre lege regels tussen paragrafen verwijderd, zal automatisch een paragraaf insprong worden toegevoegd om de paragraaf makkelijk te kunnen onderscheiden. Deze optie stelt de breedte van die insprong (in em) in. Als y deze waarde negatief instelt, zal de insprong\-waarde gebruikt worden die is opgegeven in het bestand. Oftewel, Calibre zal de insprong niet aanpassen.
+Als calibre lege regels tussen paragrafen verwijderd, zal automatisch een paragraaf insprong worden toegevoegd om de paragraaf makkelijk te kunnen onderscheiden. Deze optie stelt de breedte van die insprong (in em) in. Als y deze waarde negatief instelt, zal de insprong\-waarde gebruikt worden die is opgegeven in het bestand. Oftewel, calibre zal de insprong niet aanpassen.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -303,7 +303,7 @@ Uitdunnen van alle ingebedde lettertypes. Elk ingebed lettertype is beperkt tot 
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Pad naar een bestand met regels om de CSS\-stijlen in dit boek te transformeren. De eenvoudigste manier om een dergelijk bestand te maken is om de wizard te gebruiken voor het maken van regels in de GUI van Calibre. Open het in de \fB"\fPUitstraling & gevoel\-> Transformeer stijlen\fB"\fP sectie van het conversie dialoogvenster. Nadat u de regels hebt gemaakt, kunt u de knop \fB"\fPExporteren\fB"\fP gebruiken om ze in een bestand op te slaan.
+Pad naar een bestand met regels om de CSS\-stijlen in dit boek te transformeren. De eenvoudigste manier om een dergelijk bestand te maken is om de wizard te gebruiken voor het maken van regels in de GUI van calibre. Open het in de \fB"\fPUitstraling & gevoel\-> Transformeer stijlen\fB"\fP sectie van het conversie dialoogvenster. Nadat u de regels hebt gemaakt, kunt u de knop \fB"\fPExporteren\fB"\fP gebruiken om ze in een bestand op te slaan.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -356,7 +356,7 @@ Verwijder harde regeleinden op basis van interpunctie en andere opmaak hints.
 .INDENT 0.0
 .TP
 .B \-\-enable\-heuristics
-Heuristische verwerking gebruiken. Zonder deze optie wordt geen enkele heuristische verwerking uitgevoerd.
+Heuristische verwerking inschakelen. Zonder deze optie wordt geen enkele heuristische verwerking uitgevoerd.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -379,7 +379,7 @@ Pad naar een bestand dat zoek en vervang reguliere expressies bevat. Het bestand
 .INDENT 0.0
 .TP
 .B \-\-sr1\-replace
-sr1 vervangen door.
+Vervanging voor vervangen van tekst gevonden met sr1\-zoeken.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -389,7 +389,7 @@ Zoekpatroon (regexp) dat vervangen moet worden door sr1.
 .INDENT 0.0
 .TP
 .B \-\-sr2\-replace
-sr2 vervangen door.
+Vervanging voor vervangen van tekst gevonden met sr2\-zoeken.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -399,7 +399,7 @@ Zoekpatroon (regexp) dat vervangen moet worden door sr2.
 .INDENT 0.0
 .TP
 .B \-\-sr3\-replace
-sr3 vervangen door.
+Vervanging voor vervangen van tekst gevonden met sr3\-zoeken.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -412,7 +412,7 @@ Stel de auto\-detectie van de documentstructuur in.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Een XPath\-expressie om hoofdstuktitels te detecteren. De standaard is om  <h1>te overwegen of <h2>labels die de woorden \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP  als hoofdstuktitels bevatten, evenals labels met class = \fB"\fPchapter\fB"\fP\&. De gebruikte uitdrukking moet resulteren in een lijst met elementen. Gebruik de uitdrukking \fB"\fP/\fB"\fP om hoofdstukdetectie uit te schakelen. Raadpleeg de XPath\-zelfstudie in de Calibre gebruikershandleiding voor meer hulp bij het gebruik van deze functie.
+Een XPath\-expressie om hoofdstuktitels te detecteren. De standaard is om  <h1>te overwegen of <h2>labels die de woorden \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP  als hoofdstuktitels bevatten, evenals labels met class = \fB"\fPchapter\fB"\fP\&. De gebruikte uitdrukking moet resulteren in een lijst met elementen. Gebruik de uitdrukking \fB"\fP/\fB"\fP om hoofdstukdetectie uit te schakelen. Raadpleeg de XPath\-zelfstudie in de calibre gebruikershandleiding voor meer hulp bij het gebruik van deze functie.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -422,12 +422,12 @@ Specificeer hoe gedetecteerde hoofdstukken moeten worden gemarkeerd. Een waarde 
 .INDENT 0.0
 .TP
 .B \-\-disable\-remove\-fake\-margins
-In sommige documenten worden voor elke alinea apart linker\- en rechtermarges opgegeven. Calibre tracht deze te verwijderen, maar soms worden daardoor marges verwijderd die niet weg mogen. In dat geval kan margeverwijdering uitgeschakeld worden.
+In sommige documenten worden voor elke alinea apart linker\- en rechtermarges opgegeven. calibre tracht deze te verwijderen, maar soms worden daardoor marges verwijderd die niet weg mogen. In dat geval kan margeverwijdering uitgeschakeld worden.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-insert\-metadata
-Voeg de boek\-metagegevens in aan het begin van het boek. Dit is nuttig als uw e\-boeklezer de directie manier van tonen/zoeken van metagegevens niet ondersteunt.
+Voeg de boek\-metadata  in aan het begin van het boek. Dit is nuttig als uw e\-boeklezer de directie manier van tonen/zoeken van metadata  niet ondersteunt.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -442,12 +442,12 @@ Gebruik de in het bronbestand gedetecteerde omslag en niet de opgegeven omslag.
 .INDENT 0.0
 .TP
 .B \-\-remove\-first\-image
-Verwijder de eerste afbeelding van het oorspronkelijke e\-boek. Nuttig als het  brondocument een omslagfoto heeft dat niet wordt herkent als omslag. In dat geval als u een omslag heeft ingesteld in Calibre zal het e\-book twee omslagfoto\fB\(aq\fPs laten zien mits u deze optie niet instelt.
+Verwijder de eerste afbeelding van het oorspronkelijke e\-boek. Nuttig als het  brondocument een omslagfoto heeft dat niet wordt herkent als omslag. In dat geval als u een omslag heeft ingesteld in calibre zal het e\-book twee omslagfoto\fB\(aq\fPs laten zien mits u deze optie niet instelt.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-Een XPath\-expressie om de locatie in het document te detecteren waar te beginnen met lezen. Sommige e\-book leesprogramma\fB\(aq\fPs (vooral de Kindle) gebruiken deze locatie als de positie om het boek te openen. Raadpleeg de XPath\-zelfstudie in de Calibre gebruikershandleiding voor meer hulp bij het gebruik van deze functie.
+Een XPath\-expressie om de locatie in het document te detecteren waar te beginnen met lezen. Sommige e\-book leesprogramma\fB\(aq\fPs (vooral de Kindle) gebruiken deze locatie als de positie om het boek te openen. Raadpleeg de XPath\-zelfstudie in de calibre gebruikershandleiding voor meer hulp bij het gebruik van deze functie.
 .UNINDENT
 .SH INHOUDSOPGAVE
 .sp
@@ -455,22 +455,22 @@ Configureer het automatisch aanmaken van de inhoudsopgave. Standaard zal, indien
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc
-Als een inhoudsopgave wordt gemaakt uit links in het invoer\-bestand zijn
+Laat dubbele invoer toe bij creëren van een inhoudstabel vanuit links in het invoer document, i.e. laat meer dan één invoer toe met dezelfde tekst indien ze verwijzen naar een verschillende locatie.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-XPath\-expressie waarmee alle labels worden toegevoegd aan de inhoudsopgave op niveau een. Deze optie gaat boven andere vormen van auto\-detectie. Zie ook de voorbeelden in de XPath\-handleiding in de Calibre\-handleiding.
+XPath\-expressie waarmee alle labels worden toegevoegd aan de inhoudsopgave op niveau een. Deze optie gaat boven andere vormen van auto\-detectie. Zie ook de voorbeelden in de XPath\-handleiding in de calibre\-handleiding.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-XPath\-expressie waarmee alle labels worden toegevoegd aan de inhoudsopgave op niveau twee. Elke toevoeging komt onder de vorige vermelding op niveau een. Zie ook de voorbeelden in de XPath\-handleiding in de Calibre\-handleiding.
+XPath\-expressie waarmee alle labels worden toegevoegd aan de inhoudsopgave op niveau twee. Elke toevoeging komt onder de vorige vermelding op niveau een. Zie ook de voorbeelden in de XPath\-handleiding in de calibre\-handleiding.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-XPath\-expressie waarmee alle labels worden toegevoegd aan de inhoudsopgave op niveau drie. Elke toevoeging komt onder de vorige vermelding op niveau twee. Zie ook de voorbeelden in de XPath\-handleiding in de Calibre\-handleiding.
+XPath\-expressie waarmee alle labels worden toegevoegd aan de inhoudsopgave op niveau drie. Elke toevoeging komt onder de vorige vermelding op niveau twee. Zie ook de voorbeelden in de XPath\-handleiding in de calibre\-handleiding.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -553,7 +553,7 @@ Waardering geven. Moet een getal tussen de 1 en 5 zijn.
 .INDENT 0.0
 .TP
 .B \-\-read\-metadata\-from\-opf, \-\-from\-opf, \-m
-Lees metagegevens uit het opgegeven OPF\-bestand. Metagegevens die hieruit worden gelezen krijgt voorrang over metagegevens uit het bronbestand.
+Lees metadata  uit het opgegeven OPF\-bestand. Metadata  die hieruit worden gelezen krijgt voorrang over metadata  uit het bronbestand.
 .UNINDENT
 .INDENT 0.0
 .TP

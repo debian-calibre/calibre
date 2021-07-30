@@ -469,7 +469,7 @@ class Ui_Form(object):
         self.cover_browser_title_template_button = QtWidgets.QPushButton(self.cover_browser_tab)
         self.cover_browser_title_template_button.setObjectName("cover_browser_title_template_button")
         self.gridLayout_11.addWidget(self.cover_browser_title_template_button, 7, 2, 1, 1)
-        spacerItem8 = QtWidgets.QSpacerItem(690, 283, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem8 = QtWidgets.QSpacerItem(690, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.gridLayout_11.addItem(spacerItem8, 11, 0, 1, 2)
         self.opt_cover_browser_title_template = QtWidgets.QLineEdit(self.cover_browser_tab)
         self.opt_cover_browser_title_template.setObjectName("opt_cover_browser_title_template")
@@ -503,6 +503,9 @@ class Ui_Form(object):
         self.opt_books_autoscroll_time.setMaximum(100000.0)
         self.opt_books_autoscroll_time.setObjectName("opt_books_autoscroll_time")
         self.gridLayout_11.addWidget(self.opt_books_autoscroll_time, 9, 1, 1, 1)
+        self.opt_cb_double_click_to_activate = QtWidgets.QCheckBox(self.cover_browser_tab)
+        self.opt_cb_double_click_to_activate.setObjectName("opt_cb_double_click_to_activate")
+        self.gridLayout_11.addWidget(self.opt_cb_double_click_to_activate, 6, 0, 1, 2)
         icon8 = QtGui.QIcon()
         icon8.addPixmap(QtGui.QPixmap(I("cover_flow.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.tabWidget.addTab(self.cover_browser_tab, icon8, "")
@@ -742,6 +745,7 @@ class Ui_Form(object):
         self.fs_help_msg.setText(_("You can press the %s key to toggle full screen mode."))
         self.label_26.setText(_("Show ne&xt cover during auto scroll after:"))
         self.opt_books_autoscroll_time.setSuffix(_(" seconds"))
+        self.opt_cb_double_click_to_activate.setText(_("&Double click to view the central book, instead of single click"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.cover_browser_tab), _("Cover &browser"))
         self.opt_qv_respects_vls.setToolTip(_("Check this box to make Quickview show books only in the\n"
 "current Virtual library. If unchecked, Quickview ignores Virtual libraries. If\n"
