@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-28 14:48+0000\n"
-"PO-Revision-Date: 2021-07-19 08:11+0000\n"
+"POT-Creation-Date: 2021-08-12 03:11+0000\n"
+"PO-Revision-Date: 2021-08-10 18:27+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -687,7 +687,7 @@ msgid ""
 "If plugin is not a built-in, copy the plugin's .ui and .py files from the "
 "ZIP file to $TMPDIR. Tab will be dynamically generated and added to the "
 "Catalog Options dialog in calibre.gui2.dialogs.catalog.py:Catalog"
-msgstr "Om insticksmodulen inte är ett inbyggt, kopiera insticksmodulens .ui- och .py-filer från ZIP-filen till $TMPDIR. Flik kommer att genereras dynamiskt och läggas till dialogrutan Katalogalternativ i calibre.gui2.dialogs.catalog.py:Catalog"
+msgstr "Om insticksmodulen inte är ett inbyggt, kopiera insticksmodulens .ui- och .py-filer från ZIP-filen till $TMPDIR. Flik kommer att skapas dynamiskt och läggas till dialogrutan Katalogalternativ i calibre.gui2.dialogs.catalog.py:Catalog"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.CatalogPlugin.run:1
@@ -696,19 +696,19 @@ msgid ""
 "catalog in the format specified in file_types, returning the absolute path "
 "to the generated catalog file. If an error is encountered it should raise an"
 " Exception."
-msgstr "Kör insticksmodulen. Måste implementeras i underklasser. Det ska generera katalogen i det format som anges i file_types, återvänder den absoluta sökvägen till den genererade katalogfilen. Om ett fel inträffar bör det signalera ett undantag."
+msgstr "Kör insticksmodulen. Måste implementeras i underklasser. Det ska generera katalogen i det format som anges i file_types, återvänder den absoluta sökvägen till den skapade katalogfilen. Om ett fel inträffar bör det signalera ett undantag."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.CatalogPlugin.run:7
 msgid ""
 "The generated catalog file should be created with the :meth:`temporary_file`"
 " method."
-msgstr "Den genererade katalogfilen ska skapas med :meth:`temporary_file`-metoden."
+msgstr "Den skapade katalogfilen ska skapas med :meth:`temporary_file`-metoden."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.CatalogPlugin.run:10
 msgid "Absolute path to the generated catalog file."
-msgstr "Absoluta sökvägen till den genererade katalogfilen."
+msgstr "Absoluta sökvägen till den skapade katalogfilen."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.CatalogPlugin.run:11
@@ -931,7 +931,7 @@ msgid ""
 " cached so that a subsequent call to the get covers API with the same "
 "ISBN/special identifier does not need to get the cover URL again. Use the "
 "caching API for this."
-msgstr "Om den här metadatakällan också innehåller omslag, bör webbadressen till omslaget mellanlagras så att ett efterföljande anrop till skaffa omslags-API:n med samma ISBN/specialidentifiering inte behöver hämta omslagsadresser igen. Använd cache-API:n för detta."
+msgstr "Om den här metadatakällan också innehåller omslag, bör webbadressen till omslaget cachas så att ett efterföljande anrop till skaffa omslags-API:n med samma ISBN/specialidentifiering inte behöver hämta omslagsadresser igen. Använd cache-API:n för detta."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:13
@@ -1646,7 +1646,7 @@ msgid ""
 "method :meth:`calibre.devices.usbms.device.Device.open` has an "
 "implementation of this function that should serve as a good example for USB "
 "Mass storage devices."
-msgstr "Utför specifik initiering på alla enheter. Anropas efter att enheten identifieras men innan några andra funktioner kommunicerar med enheten. Till exempel: För enheter som presenterar sig som USB-masslagringsenheter, skulle denna metod vara ansvarig för montering av enheten eller om enheten har en automatisk montering, för att ta reda på var det har monterats. Metoden :meth:`calibre.devices.usbms.device.Device.open` har en implementering av denna funktion som bör tjäna som ett gott exempel för USB-masslagringsenheter."
+msgstr "Utför specifik initiering på alla enheter. Anropas efter att enheten har upptäckts men innan några andra funktioner kommunicerar med enheten. Till exempel: För enheter som presenterar sig som USB-masslagringsenheter, skulle denna metod vara ansvarig för montering av enheten eller om enheten har en automatisk montering, för att ta reda på var det har monterats. Metoden :meth:`calibre.devices.usbms.device.Device.open` har en implementering av denna funktion som bör tjäna som ett gott exempel för USB-masslagringsenheter."
 
 #: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.open:11
@@ -2889,7 +2889,7 @@ msgstr "Ändra till True om och endast om metoden :meth:`restore_to_defaults` ä
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.gui2.preferences.ConfigWidgetInterface.restore_defaults_desc:1
 msgid "The tooltip for the \"Restore defaults\" button"
-msgstr "Verktygstipset för knappen \"Återställ till grundinställningar\""
+msgstr "Verktygstipset för knappen \"Återställ till standardvärden\""
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.gui2.preferences.ConfigWidgetInterface.restart_critical:1
@@ -2925,7 +2925,7 @@ msgstr "Bör ställa in alla konfigurationsvärden till sina ursprungliga värde
 #: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase.restore_defaults:1
 msgid "Should set all config values to their defaults."
-msgstr "Bör sätta alla konfigureringsvärden till deras grundinställningar."
+msgstr "Bör sätta alla konfigureringsvärden till deras standardvärden."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetInterface.commit:1

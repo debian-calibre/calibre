@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-20 14:41+0000\n"
-"PO-Revision-Date: 2021-01-20 09:40+0000\n"
+"POT-Creation-Date: 2021-08-12 03:11+0000\n"
+"PO-Revision-Date: 2021-08-10 13:54+0000\n"
 "Last-Translator: Jellby <jellby@yahoo.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/calibre/calibre/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -52,6 +52,11 @@ msgid ""
 "All table reading/sorting/searching/caching logic is re-implemented. This "
 "was necessary for maximum performance and flexibility."
 msgstr "SQLite se usa simplemente como una manera de leer y escribir eficientemente metadata.db. Toda la lógica de lectura, clasificación, búsqueda y almacenamiento en la memoria caché de las tablas está desarrallada de nuevo. Esto fue necesario para obtener el máximo rendimiento y flexibilidad."
+
+#: ../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
+#: calibre.db.listeners.EventType:1
+msgid "An enumeration."
+msgstr "Una enumeración."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_books:1
@@ -126,6 +131,14 @@ msgstr "Si es True, los complementos de tipo de archivo se ejecutarán sobre el 
 #: calibre.db.cache.Cache.add_format:5
 msgid "Internal use only."
 msgstr "Solo para uso interno."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.add_listener:1
+msgid ""
+"Register a callback function that will be called after certain actions are "
+"taken on this database. The function must take three arguments: "
+"(:class:`EventType`, library_id, event_type_specific_data)"
+msgstr "Registra una función que se ejecutará después de ciertas acciones sobre esta base de datos. La función debe aceptar tres argumentos (:class:`EventType`, id_de_biblioteca, datos_específicos_de_EventType)"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_book_ids:1

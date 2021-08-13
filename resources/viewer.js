@@ -16804,14 +16804,20 @@ return this.__repr__();
 
         styles_id = "calibre-color-scheme-style-overrides";
         function apply_colors(is_content_popup) {
-            var elem, ss, text, c, ρσ_unpack, selbg, selfg, hints_box_css;
+            var des, elem, ss, text, c, ρσ_unpack, selbg, selfg, hints_box_css;
+            des = document.documentElement.style;
+            des.setProperty("--calibre-viewer-background-color", opts.color_scheme.background);
+            des.setProperty("--calibre-viewer-foreground-color", opts.color_scheme.foreground);
+            if (opts.color_scheme.link) {
+                des.setProperty("--calibre-viewer-link-color", opts.color_scheme.link);
+            }
             var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ document.documentElement, document.body ]));
             for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
                 elem = ρσ_Iter0[ρσ_Index0];
                 elem.style.color = opts.color_scheme.foreground;
                 elem.style.backgroundColor = "transparent";
             }
-            document.documentElement.style.backgroundColor = opts.bg_image_fade;
+            des.backgroundColor = opts.bg_image_fade;
             ss = document.getElementById("calibre-color-scheme-style-overrides");
             if (!ss) {
                 ss = ρσ_interpolate_kwargs.call(E, E.style, [ρσ_desugar_kwargs({id: styles_id, type: "text/css"})]);
@@ -16892,6 +16898,7 @@ return this.__repr__();
         });
 
         function set_color_scheme_class() {
+            document.documentElement.classList.add("is-calibre-viewer");
             if (opts.is_dark_theme) {
                 document.body.classList.add("calibre-viewer-dark-colors");
                 document.body.classList.remove("calibre-viewer-light-colors");
@@ -26279,7 +26286,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.24.0";
+        CALIBRE_VERSION = "5.25.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -27478,7 +27485,7 @@ return this.__repr__();
         });
         IframeBoss.prototype.on_fake_popup_activation = function on_fake_popup_activation(data) {
             var self = this;
-            ρσ_interpolate_kwargs.call(self, self.send_message, ["show_footnote"].concat([ρσ_desugar_kwargs({name: data.name, frag: data.frag, title: data.title, cols_per_screen: calc_columns_per_screen()})]));
+            ρσ_interpolate_kwargs.call(self, self.send_message, ["show_footnote"].concat([ρσ_desugar_kwargs({name: data.name, frag: data.frag, title: data.title, cols_per_screen: calc_columns_per_screen(), rtl: scroll_viewport.rtl, vertical_writing_mode: scroll_viewport.vertical_writing_mode})]));
         };
         if (!IframeBoss.prototype.on_fake_popup_activation.__argnames__) Object.defineProperties(IframeBoss.prototype.on_fake_popup_activation, {
             __argnames__ : {value: ["data"]},
@@ -28562,7 +28569,7 @@ return this.__repr__();
                 sel += " > div";
                 style += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({border_radius: "8px", border: "solid currentColor 2px", margin: "1rem", padding: "0.5rem", box_shadow: "2px 2px 4px currentColor"})]));
                 sel += " > div";
-                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({padding_bottom: "1ex", margin_bottom: "1ex", border_bottom: "solid currentColor 2px", display: "flex", justify_content: "space-between", align_items: "center"})]));
+                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({display: "flex", justify_content: "space-between", align_items: "center"})]));
                 sel += " > div";
                 style += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({display: "flex", justify_content: "space-between", align_items: "center"})]));
                 sel += " > a";
@@ -28788,18 +28795,38 @@ return this.__repr__();
         });
         ContentPopupOverlay.prototype.show_footnote = function show_footnote(data) {
             var self = this;
-            var width, c, header;
+            var c, header, s, bs;
             if (!self.iframe_wrapper) {
                 self.create_iframe();
             }
             self.current_footnote_data = data;
-            width = Math.floor(100 / data.cols_per_screen);
             c = self.container.firstChild;
-            c.style.width = "" + ρσ_str.format("{}", width) + "vw";
             header = c.firstChild;
+            s = header.style;
+            s.paddingLeft = s.paddingRight = s.paddingBottom = s.paddingTop = "0";
+            s.marginLeft = s.marginRight = s.marginBottom = s.marginTop = "0";
+            s.borderBottom = s.borderTop = s.borderLeft = s.borderRight = "solid currentColor 0";
+            bs = "solid currentColor 2px";
+            if (self.current_footnote_data.vertical_writing_mode) {
+                c.style.width = str(Math.floor(50 / data.cols_per_screen)) + "vw";
+                self.iframe.style.height = "80vh";
+                c.style.writingMode = (self.current_footnote_data.rtl) ? "vertical-rl" : "vertical-lr";
+                if (self.current_footnote_data.rtl) {
+                    s.paddingLeft = s.marginLeft = "1ex";
+                    s.borderLeft = bs;
+                } else {
+                    s.paddingRight = s.marginRight = "1ex";
+                    s.borderRight = bs;
+                }
+            } else {
+                c.style.width = str(Math.floor(100 / data.cols_per_screen)) + "vw";
+                self.iframe.style.height = "12ex";
+                c.style.writingMode = (self.current_footnote_data.rtl) ? "horizontal-rl" : "horizontal-lr";
+                s.paddingBottom = s.marginBottom = "1ex";
+                s.borderBottom = bs;
+            }
             self.create_footnote_header(header);
             self.load_doc(data.name, self.show_footnote_item);
-            self.iframe.style.height = "12ex";
             ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["clear"].concat([ρσ_desugar_kwargs({text: _("Loading note, please wait...")})]));
         };
         if (!ContentPopupOverlay.prototype.show_footnote.__argnames__) Object.defineProperties(ContentPopupOverlay.prototype.show_footnote, {

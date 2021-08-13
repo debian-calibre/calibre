@@ -58,12 +58,17 @@ styles_id = 'calibre-color-scheme-style-overrides'
 
 
 def apply_colors(is_content_popup):
+    des = document.documentElement.style
+    des.setProperty('--calibre-viewer-background-color', opts.color_scheme.background)
+    des.setProperty('--calibre-viewer-foreground-color', opts.color_scheme.foreground)
+    if opts.color_scheme.link:
+        des.setProperty('--calibre-viewer-link-color', opts.color_scheme.link)
     for elem in (document.documentElement, document.body):
         elem.style.color = opts.color_scheme.foreground
         # set background color to transparent so that the users background
         # color which is set on the iframe is used instead
         elem.style.backgroundColor = 'transparent'
-    document.documentElement.style.backgroundColor = opts.bg_image_fade
+    des.backgroundColor = opts.bg_image_fade
     ss = document.getElementById('calibre-color-scheme-style-overrides')
     if not ss:
         ss = E.style(id=styles_id, type='text/css')
@@ -176,6 +181,7 @@ def set_selection_style(style):
 
 
 def set_color_scheme_class():
+    document.documentElement.classList.add('is-calibre-viewer')
     if opts.is_dark_theme:
         document.body.classList.add('calibre-viewer-dark-colors')
         document.body.classList.remove('calibre-viewer-light-colors')
