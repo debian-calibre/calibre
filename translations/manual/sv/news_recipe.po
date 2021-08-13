@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-20 11:33+0000\n"
-"PO-Revision-Date: 2021-05-12 16:13+0000\n"
+"POT-Creation-Date: 2021-08-12 03:11+0000\n"
+"PO-Revision-Date: 2021-08-10 18:24+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -81,7 +81,7 @@ msgid ""
 "any query parameters, fragments, etc. The canonical representations must be "
 "unique across all URLs for this news source. If they are not, then internal "
 "links may be resolved incorrectly."
-msgstr "Återge en uppsättning kanoniska representationer av ``url``. Grundinställningen använder bara servervärdnamn och sökväg för URL, ignorerar eventuella frågeparametrar, fragment o.s.v. kanoniska representationer måste vara unika för alla webbadresser till den här nyhetskällan. Om de inte är det, så interna länkar kan lösas felaktigt."
+msgstr "Återge en uppsättning kanoniska representationer av ``url``. Standardimplementeringen använder bara serverns värdnamn och sökväg för webbadressen, utan att ignorerar eventuella frågeparametrar, fragment o.s.v. De kanoniska representationerna måste vara unika för alla webbadresser för den här nyhetskällan. Om de inte är det kan interna länkar lösas felaktigt."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:0
@@ -241,7 +241,7 @@ msgstr "Denna metod är oftast användbart för webbplatser som försöker göra
 msgid ""
 "Perform some processing on image urls (perhaps removing size restrictions "
 "for dynamically generated images, etc.) and return the precessed URL."
-msgstr "Utför någon behandling på bildwebbadresser (kanske ta bort storleksbegränsningar för dynamiskt genererade bilder o.s.v.) och återger bearbetad webbadress."
+msgstr "Utför någon behandling på bildwebbadresser (kanske ta bort storleksbegränsningar för dynamiskt skapade bilder o.s.v.) och återger bearbetad webbadress."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:1
@@ -635,9 +635,9 @@ msgstr "Bara en av :attr:`BasicNewsRecipe.match_regexps` eller :attr:`BasicNewsR
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.handle_gzip:1
 msgid ""
-"Set to True if you want to use gziped transfers. Note that some old servers "
-"flake out with this so it is off by default."
-msgstr "Ställ in till True om du vill använda gzippade överföringar. Observera att vissa gamla servrar fungerar dåligt med detta så den är avstängd som standard."
+"Set to False if you dont want to use gziped transfers. Note that some old "
+"servers flake out with gzip"
+msgstr "Ställ in på False om du inte vill använda gzippade överföringar. Observera att vissa gamla servrar fungerar dåligt med gzip"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:1

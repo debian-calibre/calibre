@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "juli 30, 2021" "5.24.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "augusti 13, 2021" "5.25.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -148,12 +148,12 @@ Lägg den infogade innehållsförteckningen i slutet av boken istället för i b
 .INDENT 0.0
 .TP
 .B \-\-epub\-version
-Versionen av EPUB\-filen som ska genereras. EPUB 2 är den mest kompatibla, använd endast EPUB 3 om du vet att du faktiskt behöver det.
+Versionen av EPUB\-filen som ska skapas. EPUB 2 är den mest kompatibla, använd endast EPUB 3 om du vet att du faktiskt behöver det.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Packa upp innehållet i den genererade EPUB\-filen till den angivna mappen. Innehållet i mappen tas bort först, så var försiktig.
+Packa upp innehållet i den skapade EPUB\-filen till den angivna mappen. Innehållet i mappen tas bort först, så var försiktig.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -183,7 +183,7 @@ Om detta anges, kommer insticksmodulen att försöka skapa utskrifter som är s�
 .INDENT 0.0
 .TP
 .B \-\-toc\-title
-Titel för alla genererade infogade innehållsförteckningar.
+Titel för alla skapade infogade innehållsförteckningar.
 .UNINDENT
 .SH UTSEENDE OCH KÄNSLA
 .sp
@@ -358,7 +358,7 @@ Identifiera oformaterade huvud\- och underrubriker. Ändra dem till H2\- och H3\
 .INDENT 0.0
 .TP
 .B \-\-disable\-renumber\-headings
-Letar efter förekomster av sekventiella <h1> eller <h2>\-taggar. Taggarna ska numreras för att förhindra uppdelning i mitten av kapitelrubrikerna.
+Letar efter förekomster av sekventiella <h1>\- eller <h2>\-taggar. Taggarna numreras om för att förhindra uppdelning i mitten av kapitelrubrikerna.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -429,7 +429,7 @@ Ett XPath\-uttryck för att identifiera kapitelrubrikerna. Standard är att betr
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Anger hur identifierade kapitel markeras. Värdet \fB"\fPpagebreak\fB"\fP infogar en sidbrytning före kapitel. Värdet \fB"\fPrule\fB"\fP infogar en blankrad före kapitel. Värdet \fB"\fPnone\fB"\fP inaktiverar kapitelmarkering och om värdet \fB"\fPboth\fB"\fP anges kommer både sidbrytningar och blankrader att markera kapitel.
+Anger hur upptäckta kapitel markeras. Värdet \fB"\fPpagebreak\fB"\fP infogar en sidbrytning före kapitel. Värdet \fB"\fPrule\fB"\fP infogar en blankrad före kapitel. Värdet \fB"\fPnone\fB"\fP inaktiverar kapitelmarkering och om värdet \fB"\fPboth\fB"\fP anges kommer både sidbrytningar och blankrader att markera kapitel.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -449,7 +449,7 @@ Ett XPath\-uttryck. Sidbrytningar infogas före de angivna elementen. För att i
 .INDENT 0.0
 .TP
 .B \-\-prefer\-metadata\-cover
-Använd omslag från källfilen istället för det angivna omslaget.
+Använd omslaget som upptäckts från källfilen framför det angivna omslaget.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -463,7 +463,7 @@ Ett XPath\-uttryck för att identifiera platsen i dokumentet där du ska börja 
 .UNINDENT
 .SH INNEHÅLLSFÖRTECKNING
 .sp
-Anpassa hur innehållsförteckningen genereras. Om källfilen har en innehållsförteckning, kommer denna att användas istället för den automatiskt genererade.
+Anpassa hur innehållsförteckningen skapas. Om källfilen har en innehållsförteckning, kommer denna att användas istället för den automatiskt skapade.
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc
@@ -487,12 +487,12 @@ XPath\-uttryck som anger alla taggar som ska läggas till i innehållsförteckni
 .INDENT 0.0
 .TP
 .B \-\-max\-toc\-links
-Högst antal länkar för att infoga i innehållsförteckningen. Ställ in på 0 för att inaktivera. Standard är: 50. Länkarna läggs endast till innehållsförteckningen om antalet identifierade kapitel är lägre än tröskelvärdet.
+Högst antal länkar för att infoga i innehållsförteckningen. Ställ in på 0 för att inaktivera. Standard är: 50. Länkarna läggs endast till innehållsförteckningen om antalet upptäckta kapitel är lägre än tröskelvärdet.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-no\-chapters\-in\-toc
-Lägg inte till automatiskt identifierade kapitel i innehållsförteckningen.
+Lägg inte till automatiskt upptäckta kapitel i innehållsförteckningen.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -502,12 +502,12 @@ Ta bort poster från innehållsförteckningen vilkas titlar matchar det angivna 
 .INDENT 0.0
 .TP
 .B \-\-toc\-threshold
-Om färre än detta antal kapitel identifieras, så läggs länkar i innehållsförteckningen. Default: 6
+Om färre än detta antal kapitel upptäcks läggs länkar till i innehållsförteckningen. Standard: 6
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-use\-auto\-toc
-Om källfilen redan har en innehållsförteckning, används normalt denna i stället för den automatiskt genererade. Med det här alternativet används alltid den automatiskt genererade.
+Om källfilen redan har en innehållsförteckning, används normalt denna i stället för den automatiskt skapade. Med det här alternativet används alltid den automatiskt skapade.
 .UNINDENT
 .SH METADATA
 .sp

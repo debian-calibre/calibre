@@ -86,8 +86,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2021-07-28 14:49+UTC\n"
-"PO-Revision-Date: 2021-07-28 02:19+0000\n"
+"POT-Creation-Date: 2021-08-12 03:12+UTC\n"
+"PO-Revision-Date: 2021-08-11 04:51+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: German (http://www.transifex.com/calibre/calibre/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -167,18 +167,18 @@ msgstr "Macht rein gar nichts"
 #: /__w/calibre/calibre/src/calibre/db/__init__.py:107
 #: /__w/calibre/calibre/src/calibre/db/backend.py:1264
 #: /__w/calibre/calibre/src/calibre/db/backend.py:1289
-#: /__w/calibre/calibre/src/calibre/db/cache.py:311
 #: /__w/calibre/calibre/src/calibre/db/cache.py:314
-#: /__w/calibre/calibre/src/calibre/db/cache.py:325
-#: /__w/calibre/calibre/src/calibre/db/cache.py:1240
-#: /__w/calibre/calibre/src/calibre/db/cache.py:1242
-#: /__w/calibre/calibre/src/calibre/db/cache.py:1244
-#: /__w/calibre/calibre/src/calibre/db/cache.py:1415
-#: /__w/calibre/calibre/src/calibre/db/cache.py:1513
-#: /__w/calibre/calibre/src/calibre/db/cache.py:1515
-#: /__w/calibre/calibre/src/calibre/db/cache.py:1517
-#: /__w/calibre/calibre/src/calibre/db/cache.py:1702
-#: /__w/calibre/calibre/src/calibre/db/cache.py:1704
+#: /__w/calibre/calibre/src/calibre/db/cache.py:317
+#: /__w/calibre/calibre/src/calibre/db/cache.py:328
+#: /__w/calibre/calibre/src/calibre/db/cache.py:1257
+#: /__w/calibre/calibre/src/calibre/db/cache.py:1259
+#: /__w/calibre/calibre/src/calibre/db/cache.py:1261
+#: /__w/calibre/calibre/src/calibre/db/cache.py:1432
+#: /__w/calibre/calibre/src/calibre/db/cache.py:1530
+#: /__w/calibre/calibre/src/calibre/db/cache.py:1532
+#: /__w/calibre/calibre/src/calibre/db/cache.py:1534
+#: /__w/calibre/calibre/src/calibre/db/cache.py:1721
+#: /__w/calibre/calibre/src/calibre/db/cache.py:1723
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:131
 #: /__w/calibre/calibre/src/calibre/db/lazy.py:287
 #: /__w/calibre/calibre/src/calibre/db/lazy.py:288
@@ -1360,14 +1360,14 @@ msgid "Restoring database from SQL"
 msgstr "Datenbank wird aus SQL wiederhergestellt"
 
 #: /__w/calibre/calibre/src/calibre/db/backend.py:2098
-#: /__w/calibre/calibre/src/calibre/db/cache.py:2421
-#: /__w/calibre/calibre/src/calibre/db/cache.py:2546
+#: /__w/calibre/calibre/src/calibre/db/cache.py:2446
+#: /__w/calibre/calibre/src/calibre/db/cache.py:2571
 #: /__w/calibre/calibre/src/calibre/utils/exim.py:206
 #: /__w/calibre/calibre/src/calibre/utils/exim.py:372
 msgid "Completed"
 msgstr "Abgeschlossen"
 
-#: /__w/calibre/calibre/src/calibre/db/cache.py:202
+#: /__w/calibre/calibre/src/calibre/db/cache.py:205
 #: /__w/calibre/calibre/src/calibre/gui2/search_box.py:564
 #: /__w/calibre/calibre/src/calibre/gui2/search_restriction_mixin.py:138
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:48
@@ -1378,7 +1378,7 @@ msgstr "Abgeschlossen"
 msgid "Saved searches"
 msgstr "Gespeicherte Suchen"
 
-#: /__w/calibre/calibre/src/calibre/db/cache.py:344
+#: /__w/calibre/calibre/src/calibre/db/cache.py:347
 #: /__w/calibre/calibre/src/calibre/db/lazy.py:223
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/base.py:682
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:214
@@ -1392,17 +1392,17 @@ msgstr "Gespeicherte Suchen"
 msgid "Yes"
 msgstr "Ja"
 
-#: /__w/calibre/calibre/src/calibre/db/cache.py:2273
+#: /__w/calibre/calibre/src/calibre/db/cache.py:2298
 #, python-brace-format
 msgid "[Error in Virtual library {0}: {1}]"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/db/cache.py:2536
+#: /__w/calibre/calibre/src/calibre/db/cache.py:2561
 #, python-format
 msgid "Cover for %s"
 msgstr "Titelbild für %s"
 
-#: /__w/calibre/calibre/src/calibre/db/cache.py:2540
+#: /__w/calibre/calibre/src/calibre/db/cache.py:2565
 #, python-brace-format
 msgid "{0} format for {1}"
 msgstr "{0} formatieren für {1}"
@@ -7945,51 +7945,61 @@ msgstr "Titelbild eingefügt"
 msgid "Cover updated"
 msgstr "Titelbild aktualisiert"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.py:242
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.py:271
 msgid "Removed one unused CSS style rule"
 msgid_plural "Removed {} unused CSS style rules"
 msgstr[0] "Eine nicht verwendete CSS-Style-Regel entfernt"
 msgstr[1] "{} nicht verwendete CSS-Style-Regeln entfernt"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.py:245
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.py:274
 msgid "Removed one unused CSS selector"
 msgid_plural "Removed {} unused CSS selectors"
 msgstr[0] "Ungenutzen CSS selector entfernt"
 msgstr[1] "Ungenutzte {} CSS Selectoren entfernt"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.py:248
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.py:277
 msgid "Removed one unused class from the HTML"
 msgid_plural "Removed {} unused classes from the HTML"
 msgstr[0] "Ein nicht verwendetes class-Attribut aus dem HTML-Code entfernt"
 msgstr[1] "{} nicht verwendete class-Attribute aus dem HTML-Code entfernt"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.py:251
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.py:280
 msgid "Merged one CSS style rule with identical selectors"
 msgid_plural "Merged {} CSS style rules with identical selectors"
 msgstr[0] "Eine CSS Style Regel mit gleichem Selektor wurde zusammengeführt"
 msgstr[1] "Die {} CSS Style Regeln mit den selben Selektoren wurden zusammengeführt"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.py:254
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.py:283
 msgid "Merged one CSS style rule with identical properties"
 msgid_plural "Merged {} CSS style rules with identical properties"
 msgstr[0] "Eine CSS Style Regel mit den selben Eigenschaften wurde zusammengeführt"
 msgstr[1] "Die {} CSS Style Regeln mit den selben Eigenschaften wurden zusammengeführt"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.py:257
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.py:286
+msgid "Removed one unreferenced stylesheet"
+msgid_plural "Removed {} unreferenced stylesheets"
+msgstr[0] ""
+msgstr[1] ""
+
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.py:289
 msgid "No unused CSS style rules found"
 msgstr "Es wurden keine ungenutzten CSS-Style-Regeln gefunden"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.py:259
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.py:291
 msgid "No unused CSS selectors found"
 msgstr "Nicht benutzte CSS Selectoren gefunden"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.py:261
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.py:293
 msgid "No unused class attributes found"
 msgstr "Keine ungenutzten class-Attribute gefunden"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.py:263
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.py:295
 msgid "No style rules that could be merged found"
 msgstr "Keine zusammenführbaren Style-Regeln gefunden"
+
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.py:297
+msgid "No unused stylesheets found"
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/embed.py:41
 #, python-format
@@ -8049,7 +8059,7 @@ msgstr "Die Dateigröße wurde von {0} zu {1} [{2:.1%} reduziert, {3} Bild umgew
 msgid "Images are already fully optimized"
 msgstr "Bilder sind bereits vollständig optimiert"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:54
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:55
 #, python-format, python-brace-format
 msgid ""
 "<p><i>Polishing books</i> is all about putting the shine of perfection onto\n"
@@ -8065,7 +8075,7 @@ msgid ""
 "<p>Note that polishing only works on files in the %s formats.</p>"
 msgstr "<p>Bei <i>Bücher perfektionieren</i> dreht sich alles um den Feinschliff und die Perfektionierung des sorgfältig gestalteten Buches.</p>\n\n<p>Perfektionieren verändert den Code im Buch nur minimal. Im Gegensatz zur Konvertierung findet hierbei <i>keine</i> Änderung von CSS-Struktur, Dateinamen, Schriftgrößen, Rändern usw. statt. \nJede Aktion führt nur ein Mindestmaß  an Korrekturen für den gewünschten Effekt aus</p>\n\n<p>Dieses Werkzeug sollte als letzter Schritt bei der Erstellung Ihres eBooks eingesetzt werden.</p>\n{0}\n<p>\"Bücher perfektionieren\" funktioniert nur bei Büchern in den Formaten %s.</p>"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:66
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:67
 #: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:493
 #: /__w/calibre/calibre/src/calibre/gui2/actions/toc_edit.py:117
 #: /__w/calibre/calibre/src/calibre/gui2/actions/tweak_epub.py:124
@@ -8075,7 +8085,7 @@ msgstr "<p>Bei <i>Bücher perfektionieren</i> dreht sich alles um den Feinschlif
 msgid " or "
 msgstr " oder "
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:68
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:69
 msgid ""
 "<p>Embed all fonts that are referenced in the document and are not already embedded.\n"
 "This will scan your computer for the fonts, and if they are found, they will be\n"
@@ -8083,7 +8093,7 @@ msgid ""
 "<p>Please ensure that you have the proper license for embedding the fonts used in this document.</p>\n"
 msgstr "<p>Alle Schriftarten einbetten, die im Dokument referenziert, aber bisher noch nicht eingebettet sind. \nHierbei werden Schriftarten auf Ihrem System gesucht und im Dokument eingebettet, wenn sie gefunden werden.</p>\n<p>Bitte stellen Sie sicher, dass Sie über die richtige Lizenz für die Einbettung dieser Schriftarten verfügen.</p>\n"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:75
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:76
 msgid ""
 "<p>Subsetting fonts means reducing an embedded font to contain\n"
 "only the characters used from that font in the book. This\n"
@@ -8103,18 +8113,18 @@ msgid ""
 "text might not be covered by the subset font.</p>\n"
 msgstr "<p>Eine \"Schrift reduzieren\" heißt, eine eingebettete Schrift\nauf die Buchstaben zu reduzieren, welche im Buch tatsächlich verwendet werden.\nDiese Option vermindert die Größe der Schriftartendatei enorm (die\nDateigröße zu halbieren ist fast immer möglich).</p>\n\n<p>Wenn ein Buch zum Beispiel eine spezielle Schrift für Überschriften benutzt,\ndann wird \"Schrift reduzieren\" nur die Buchstaben in die eingebettete Schrift übernehmen,\ndie tatsächlich in den Überschriften verwendet werden. \nGenau so wird, wenn die Schrift auch kursive oder fette Buchstaben enthält,\ndiese aber selten oder gar nicht verwendet werden, diese Schrift auf die wirklich benutzten Zeichen reduziert oder sogar komplett entfernt werden.</p>\n\n<p>Der einzige Nachteil von \"Schrift reduzieren\" ist, \ndass ein nachträglich hinzugefügter Text möglicherweise nicht ganz durch die\nreduzierte Schrift abgedeckt wird.</p>\n"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:94
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:95
 msgid ""
 "<p>Insert a \"book jacket\" page at the start of the book that contains\n"
 "all the book metadata such as title, tags, authors, series, comments,\n"
 "etc. Any previous book jacket will be replaced.</p>"
 msgstr "<p>\"Buchumschlag\" als erste Seite des Buches einfügen, welche alle Metadaten des Buches wie Titel, Schlagwörter, Autoren, Serie, Kommentare usw. beinhaltet. Jeder bisherige Buchumschlag wird ersetzt.</p>"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:99
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:100
 msgid "<p>Remove a previous inserted book jacket page.</p>\n"
 msgstr "<p>Zuvor eingefügte Buchumschlagseite entfernen.</p>\n"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:103
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:104
 msgid ""
 "<p>Convert plain text dashes, ellipsis, quotes, multiple hyphens, etc. into their\n"
 "typographically correct equivalents.</p>\n"
@@ -8122,7 +8132,7 @@ msgid ""
 "when single quotes at the start of contractions are involved.</p>\n"
 msgstr "<p>Gewöhnliche Gedankenstriche, Auslassungspunkte, Anführungszeichen, mehrere Bindestriche in Folge usw. in ihre typografisch korrekten Entsprechungen umwandeln.</p>\n<p>Beachten Sie, dass der Algorithmus manchmal zu falschen Ergebnissen führen kann, insbesondere dann, wenn einfache Anführungszeichen am Beginn von Kontraktionen verwendet werden.</p>\n"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:110
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:111
 msgid ""
 "<p>Remove all unused CSS rules from stylesheets and &lt;style&gt; tags. Some books\n"
 "created from production templates can have a large number of extra CSS rules\n"
@@ -8130,146 +8140,146 @@ msgid ""
 "that need to parse them all.</p>\n"
 msgstr "<p>Alle nicht genutzten CSS Regeln vom Stylesheets und &lt;Style&gt; tags entfernt. Einige Bücher\ndie von Templates abhängen könnten eine Menge extra CSS Regeln enthalten\ndie mit im aktuellen Inhalt nicht verwendet werden. Diese extra Regeln könnten Betrachter\nverlangsamen weil sie das alles verarbeiten müssen.</p>\n"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:117
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:118
 msgid ""
 "<p>Losslessly compress images in the book, to reduce the filesize, without\n"
 "affecting image quality.</p>\n"
 msgstr "<p>Komprimieren Sie verlustfrei die Bilder im Buch, um die Dateigröße zu reduzieren,\nohne die Bildqualität zu beeinflussen.</p>\n"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:122
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:123
 msgid ""
 "<p>Upgrade the internal structures of the book, if possible. For instance,\n"
 "upgrades EPUB 2 books to EPUB 3 books.</p>\n"
 msgstr "<p>Interne Buchstrukturen upgraden, falls möglich. Wandelt beispielsweise EPUB-2-Bücher in EPUB-3-Bücher um.</p>\n"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:127
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:128
 msgid ""
 "<p>Add soft hyphens to all words in the book. This allows the book to be rendered\n"
 "better when the text is justified, in readers that do not support hyphenation.</p>\n"
 msgstr "<p>Weiche Trennzeichen zu allen Wörtern des Buchs hinzufügen. Bei bündig ausgerichtetem Text ermöglicht dies eine bessere Darstellung, falls das Lesegerät keine Silbentrennung unterstützt.</p>\n"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:132
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:133
 msgid "<p>Remove soft hyphens from all text in the book.</p>\n"
 msgstr "<p>Weiche Trennzeichen von sämtlichem Text des Buchs entfernen.</p>\n"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:178
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:179
 msgid "Updating metadata"
 msgstr "Metadaten werden aktualisiert"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:183
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:184
 msgid "Updated metadata jacket"
 msgstr "Metadatenumschlag aktualisiert"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:184
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:185
 msgid "Metadata updated\n"
 msgstr "Metadaten aktualisiert\n"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:188
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:189
 msgid "Setting cover"
 msgstr "Titelbild wird festgelegt"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:194
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:195
 msgid "Inserting metadata jacket"
 msgstr "Metadatenumschlag wird eingefügt"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:197
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:201
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:198
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:202
 msgid "Existing metadata jacket replaced"
 msgstr "Vorhandener Metadatenumschlag ersetzt"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:199
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:200
 msgid "Metadata jacket inserted"
 msgstr "Metadatenumschlag eingefügt"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:205
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:206
 msgid "Removing metadata jacket"
 msgstr "Metadatenumschlag wird entfernt"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:207
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:208
 msgid "Metadata jacket removed"
 msgstr "Metadatenumschlag entfernt"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:210
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:211
 msgid "No metadata jacket found"
 msgstr "Kein Metadatenumschlag gefunden"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:214
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:215
 msgid "Smartening punctuation"
 msgstr "Satzzeichen werden typografisiert"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:220
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:221
 msgid "Embedding referenced fonts"
 msgstr "Referenzierte Schriftarten werden eingebettet"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:228
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:229
 msgid "Subsetting embedded fonts"
 msgstr "Eingebettete Schriftarten werden reduziert"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:232
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:233
 msgid "No embedded fonts to subset"
 msgstr "Keine eingebettete Schriften zum Reduzieren vorhanden"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:236
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:237
 msgid "Removing unused CSS rules"
 msgstr "Nicht verwendete CSS-Regeln werden entfernt"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:247
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:249
 msgid "Losslessly compressing images"
 msgstr "Bilder werden verlustfrei komprimiert"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:253
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:255
 msgid "Upgrading book, if possible"
 msgstr "Upgraden des Buches, falls möglich"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:259
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:261
 msgid "Removing soft hyphens"
 msgstr "Entfernen weicher Trennzeichen"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:263
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:265
 msgid "Adding soft hyphens"
 msgstr "Hinzufügen weicher Trennzeichen"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:273
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:275
 #, python-format
 msgid "## Polishing: %s"
 msgstr "## Perfektionieren: %s"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:278
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:280
 #, python-format
 msgid "Polishing took: %.1f seconds"
 msgstr "Perfektionieren dauerte: %.1f Sekunden"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:317
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:319
 msgid ""
 "%prog [options] input_file [output_file]\n"
 "\n"
 msgstr "%prog [Optionen] Quelldatei [Ausgabedatei]\n\n"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:325
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:327
 msgid ""
 "Path to a cover image. Changes the cover specified in the e-book. If no "
 "cover is present, or the cover is not properly identified, inserts a new "
 "cover."
 msgstr "Pfad zu einem Titelbild. Ändert das im eBook festgelegte Titelbild. Falls kein Titelbild vorhanden oder dieses nicht korrekt identifiziert ist, wird ein neues Titelbild eingefügt."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:328
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:330
 msgid ""
 "Path to an OPF file. The metadata in the book is updated from the OPF file."
 msgstr "Pfad zu einer OPF-Datei. Die Metadaten in dem Buch werden aus der OPF-Datei aktualisiert."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:338
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:340
 msgid "Produce more verbose output, useful for debugging."
 msgstr "Umfangreichere Ausgabe erzeugen. Nützlich für die Fehlerdiagnose."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:349
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:351
 msgid "You must provide the input file to polish"
 msgstr "Sie müssen die zu perfektionierende Quelldatei angeben"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:353
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:355
 msgid "Unknown extra arguments"
 msgstr "Unbekannte Extra-Argumente"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:371
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:373
 msgid "You must specify at least one action to perform"
 msgstr "Sie müssen mindestens eine durchzuführende Aktion festlegen"
 
@@ -9394,7 +9404,7 @@ msgstr "Die Bibliothek %s wurde aus Calibre entfernt. Die Dateien verbleiben auf
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:87
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:207
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:348
-#: /__w/calibre/calibre/src/calibre/gui2/metadata/diff.py:660
+#: /__w/calibre/calibre/src/calibre/gui2/metadata/diff.py:665
 msgid "&OK"
 msgstr "&OK"
 
@@ -9518,7 +9528,7 @@ msgid "Create a catalog of the books in your calibre library"
 msgstr "Bücherkatalog Ihrer Calibre-Bibliothek erstellen"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/convert.py:151
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:954
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:964
 msgid "Cannot convert"
 msgstr "Konvertierung nicht möglich"
 
@@ -9660,7 +9670,7 @@ msgstr "Kei&ne auswählen"
 #: /__w/calibre/calibre/src/calibre/gui2/proceed.py:120
 #: /__w/calibre/calibre/src/calibre/gui2/proceed.py:237
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/function_replace.py:120
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:120
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:127
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:462
 msgid "&Copy to clipboard"
 msgstr "In &Zwischenablage kopieren"
@@ -11114,7 +11124,7 @@ msgstr "Bücher anzeigen, die diesem Buch ähneln"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/similar_books.py:19
 msgid "Similar books"
-msgstr ""
+msgstr "Ähnliche Bücher"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/similar_books.py:27
 msgid "Books by same author"
@@ -12324,7 +12334,7 @@ msgstr "Ausgabe"
 #: /__w/calibre/calibre/src/calibre/gui2/convert/lrf_output_ui.py:119
 #: /__w/calibre/calibre/src/calibre/gui2/convert/metadata_ui.py:158
 #: /__w/calibre/calibre/src/calibre/gui2/convert/mobi_output_ui.py:79
-#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:123
+#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:125
 #: /__w/calibre/calibre/src/calibre/gui2/convert/pdb_output_ui.py:46
 #: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_input_ui.py:41
 #: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:173
@@ -13406,10 +13416,10 @@ msgstr "Schriftgrößenschl&üssel:"
 #: /__w/calibre/calibre/src/calibre/gui2/convert/lrf_output_ui.py:122
 #: /__w/calibre/calibre/src/calibre/gui2/convert/lrf_output_ui.py:124
 #: /__w/calibre/calibre/src/calibre/gui2/convert/lrf_output_ui.py:129
-#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:130
-#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:133
-#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:136
-#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:139
+#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:132
+#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:135
+#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:138
+#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:141
 #: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:198
 msgid " pt"
 msgstr "pt"
@@ -13866,7 +13876,7 @@ msgid ""
 msgstr "Autor dieses Buches ändern. Mehrere Autoren sollten durch Kommata getrennt werden"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/metadata_ui.py:169
-#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1780
+#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1783
 msgid "&Publisher:"
 msgstr "&Verlag:"
 
@@ -13960,45 +13970,45 @@ msgstr "Bildschirmgröße: %s"
 msgid "Page setup"
 msgstr "Seiteneinrichtung"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:124
+#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:126
 msgid "&Output profile:"
 msgstr "Ausgabepr&ofil:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:125
+#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:127
 msgid "Profile description"
 msgstr "Profilbeschreibung"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:126
+#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:128
 msgid "&Input profile:"
 msgstr "E&ingabeprofil:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:127
+#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:129
 msgid "Margins"
 msgstr "Ränder"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:128
+#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:130
 #: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output.py:70
 msgid "&Left:"
 msgstr "&Links:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:129
-#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:132
-#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:135
-#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:138
+#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:131
+#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:134
+#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:137
+#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:140
 msgid "Unchanged"
 msgstr "Unverändert"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:131
+#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:133
 #: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output.py:72
 msgid "&Top:"
 msgstr "&Oben:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:134
+#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:136
 #: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output.py:71
 msgid "&Right:"
 msgstr "&Rechts:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:137
+#: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:139
 #: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output.py:73
 msgid "&Bottom:"
 msgstr "&Unten:"
@@ -14231,7 +14241,7 @@ msgstr "&Zurück"
 #: /__w/calibre/calibre/src/calibre/gui2/convert/regex_builder_ui.py:96
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/book_info.py:183
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:676
-#: /__w/calibre/calibre/src/calibre/gui2/metadata/diff.py:660
+#: /__w/calibre/calibre/src/calibre/gui2/metadata/diff.py:665
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:87
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins_ui.py:108
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/tweaks.py:420
@@ -17203,8 +17213,8 @@ msgid "Failed to import data."
 msgstr "Importieren der Daten fehlgeschlagen."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:68
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1083
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1096
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1093
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1106
 msgid "Active jobs"
 msgstr "Aktive Aufträge"
 
@@ -17631,7 +17641,7 @@ msgid "+ "
 msgstr "+"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:656
-#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1827
+#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1830
 msgid "&Date:"
 msgstr "&Datum:"
 
@@ -17641,7 +17651,7 @@ msgid "A&pply date"
 msgstr "Datum an&wenden"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:660
-#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1890
+#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1893
 msgid "P&ublished:"
 msgstr "Ver&öffentlicht:"
 
@@ -17660,7 +17670,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:667
 msgid "Clear &all"
-msgstr ""
+msgstr "&Alle entfernen"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:668
 msgid ""
@@ -19188,12 +19198,12 @@ msgid "The port must be a number between 8000 and 65535."
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/smartdevice.py:139
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:475
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:484
 msgid "Problem starting the wireless device"
 msgstr "Problem beim Starten des Drahtlosgeräts"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/smartdevice.py:140
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:476
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:485
 #, python-format
 msgid "The wireless device driver had problems starting. It said \"%s\""
 msgstr "Der Drahtlos-Gerätetreiber hat Probleme beim Starten. Problem: \"%s\""
@@ -20194,7 +20204,7 @@ msgid "Regular expression (?P<series_index>)"
 msgstr "Regulärer Ausdruck (?P<series_index>)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/filename_pattern_ui.py:154
-#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1735
+#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1738
 msgid "ISBN:"
 msgstr "ISBN:"
 
@@ -20963,12 +20973,12 @@ msgstr "Gespeicherte Suche"
 msgid "<h2>Shutting down</h2><div>"
 msgstr "<h2>Fährt herunter</h2><div>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/alternate_views.py:673
+#: /__w/calibre/calibre/src/calibre/gui2/library/alternate_views.py:674
 #, python-format
 msgid "Book %(sidx)s of <span class=\"series_name\">%(series)s</span>"
 msgstr "Buch %(sidx)s von <span class=\"series_name\">%(series)s</span>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/alternate_views.py:678
+#: /__w/calibre/calibre/src/calibre/gui2/library/alternate_views.py:679
 #, python-format
 msgid "This book is on the device in %s"
 msgstr "Buch ist im %s des Geräts"
@@ -21623,7 +21633,7 @@ msgid ""
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/main.py:332
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:849
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:859
 msgid "Corrupted database"
 msgstr "Beschädigte Datenbank"
 
@@ -21957,33 +21967,33 @@ msgid "Edit identifiers in a dedicated window"
 msgstr "Kennungen in eigenem Fenster bearbeiten"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1634
-#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1766
+#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1769
 msgid "This ISBN is valid"
 msgstr "Diese ISBN ist gültig"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1637
-#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1769
+#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1772
 msgid "This ISBN is invalid"
 msgstr "Diese ISBN ist ungültig"
 
-#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1732
-#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1754
+#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1735
+#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1757
 msgid "Invalid ISBN"
 msgstr "Ungültige ISBN"
 
-#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1733
+#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1736
 msgid "Enter an ISBN"
 msgstr "Geben Sie eine ISBN ein"
 
-#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1755
+#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1758
 msgid "The ISBN you entered is not valid. Try again."
 msgstr "Die eingegebene ISBN ist ungültig. Versuchen Sie es erneut."
 
-#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1794
+#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1797
 msgid "Clear publisher"
 msgstr "Verlag entfernen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1847
+#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1850
 msgid "Clear date"
 msgstr "Datum entfernen"
 
@@ -22091,30 +22101,34 @@ msgstr "Alle verbleibenden &verwerfen"
 msgid "R&eject"
 msgstr "Ausw&erfen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/metadata/diff.py:662
+#: /__w/calibre/calibre/src/calibre/gui2/metadata/diff.py:652
+msgid "Reject changes and move to next [{}]"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/metadata/diff.py:667
 #, python-format
 msgid "Move to next [%s]"
 msgstr "Zum nächsten [%s] springen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/metadata/diff.py:670
+#: /__w/calibre/calibre/src/calibre/gui2/metadata/diff.py:675
 msgid "&Mark rejected books"
 msgstr "Verworfene Bücher &markieren"
 
-#: /__w/calibre/calibre/src/calibre/gui2/metadata/diff.py:673
+#: /__w/calibre/calibre/src/calibre/gui2/metadata/diff.py:678
 msgid "Mark rejected books in the book list after this dialog is closed"
 msgstr "Nach Schließen dieses Dialogs verworfene Bücher in der Buchliste markieren"
 
-#: /__w/calibre/calibre/src/calibre/gui2/metadata/diff.py:710
+#: /__w/calibre/calibre/src/calibre/gui2/metadata/diff.py:715
 msgid "All reviewed changes will be lost! Are you sure you want to Cancel?"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/metadata/diff.py:734
+#: /__w/calibre/calibre/src/calibre/gui2/metadata/diff.py:739
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:411
 #, python-format
 msgid " [%(num)d of %(tot)d]"
 msgstr " [%(num)d von %(tot)d]"
 
-#: /__w/calibre/calibre/src/calibre/gui2/metadata/diff.py:750
+#: /__w/calibre/calibre/src/calibre/gui2/metadata/diff.py:755
 msgid "Are you sure you want to reject the remaining result?"
 msgid_plural "Are you sure you want to reject all {} remaining results?"
 msgstr[0] "Wollen Sie wirklich das verbleibende Ergebnis verwerfen?"
@@ -22208,9 +22222,9 @@ msgstr "IDs entfernen"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:253
 msgid ""
-"Paste the contents of the clipboard into the identifiers prefixed with "
-"isbn:. Or right click, to choose a different prefix."
-msgstr "Fügen Sie den Inhalt der Zwischenablage in die Kennungen mit vorangestelltem \"isbn:\". Oder rechtsklicken Sie, um ein anderes Präfix auszuwählen."
+"Paste the contents of the clipboard into the identifiers prefixed with isbn:"
+" or url:. Or right click, to choose a different prefix."
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:278
 msgid "&Download metadata"
@@ -26152,8 +26166,8 @@ msgid "&Search the internet"
 msgstr "Internet durch&suchen"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/server.py:1274
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:525
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:599
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:534
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:608
 msgid "Failed to start Content server"
 msgstr "Inhalteserver konnte nicht gestartet werden"
 
@@ -28753,7 +28767,7 @@ msgstr ""
 msgid "Sound output:"
 msgstr "Tonausgabe:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/__init__.py:165
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/__init__.py:166
 msgid "&Unmark marked text"
 msgstr "Textmarkierung &aufheben"
 
@@ -29027,7 +29041,7 @@ msgstr "Dieses Pop-up erneut anzeigen"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:855
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/download.py:229
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:117
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:124
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1491
 msgid "See what &changed"
 msgstr "Änderungen betra&chten"
@@ -32386,7 +32400,7 @@ msgid ""
 msgstr "Alle Class-Attribute aus dem HTML-Code entfernen, die keinen existierenden CSS-Regeln entsprechen"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:50
-msgid "Merge CSS rules with identical selectors"
+msgid "Merge CSS rules with identical &selectors"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:54
@@ -32397,7 +32411,7 @@ msgid ""
 msgstr "CSS-Regeln mit identischen Selektoren im selben Stylesheet zusammenführen. Bitte beachten Sie, dass dies in seltenen Fällen zu Änderungen an den wirksamen Styles des Buches führen kann. Daher bitte mit Vorsicht benutzen."
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:57
-msgid "Merge CSS rules with identical properties"
+msgid "Merge CSS rules with identical &properties"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:61
@@ -32407,73 +32421,81 @@ msgid ""
 "of the book, so use with care."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:84
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:64
+msgid "Remove &unreferenced style sheets"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:68
+msgid "Remove stylesheets that are not referenced by any content."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:91
 msgid "Remove NCX ToC file"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:85
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:92
 msgid "Remove the legacy Table of Contents in NCX form?"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:86
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:93
 msgid ""
 "This form of Table of Contents is superseded by the new HTML based Table of "
 "Contents. Leaving it behind is useful only if you expect this book to be "
 "read on very old devices that lack proper support for EPUB 3"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:90
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:97
 msgid "Ask this question again in the future"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:92
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:99
 msgid "Keep NCX"
 msgstr "Behalte NCX"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:92
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:99
 msgid "Remove NCX"
 msgstr "Entferne NCX"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:108
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:115
 msgid "Action report"
 msgstr "Aktionsbericht"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:176
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:183
 msgid "Compress images"
 msgstr "Bilder komprimieren"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:196
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:203
 msgid ""
 "You can compress the images in this book losslessly, reducing the file size "
 "of the book, without affecting image quality. Typically image size is "
 "reduced by 5 - 15%."
 msgstr "Sie können die Bilder in diesem Buch verlustfrei komprimieren und damit die Dateigröße des Buchs verkleinern, ohne die Bildqualität zu beeinflussen. Die typische Bildgröße wird dabei um 5 - 15 % reduziert."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:202
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:209
 msgid "Enable &lossy compression of JPEG images"
 msgstr "Ver&lustbehaftete Komprimierung für JPEG-Bilder aktivieren"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:203
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:210
 msgid ""
 "This allows you to change the quality factor used for JPEG images.\n"
 "By lowering the quality you can greatly reduce file size, at the expense of the image looking blurred."
 msgstr "Erlaubt Ihnen den Qualitätsfaktor für JPEG Bilder zu ändern.\nDurch verringern der Bildqualität können Sie die Dateigröße deutlich reduzieren, was allerdings zur Folge hat, dass das Bild unscharf aussieht."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:210
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:217
 msgid ""
 "The compression quality, 1 is high compression, 100 is low compression.\n"
 "Image quality is inversely correlated with compression quality."
 msgstr "Die Kompressionsqualität 1 bedeutet hohe Kompression, 100 bedeutet geringe Kompression.\nDie Bildqualität korreliert invers zur Kompressionsqualität."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:214
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:221
 msgid "Compression &quality:"
 msgstr "Komprimierungs&qualität:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:243
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:250
 msgid "Compressing images..."
 msgstr "Bilder werden komprimiert …"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:269
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:276
 msgid "Compressing images, please wait..."
 msgstr "Bilder werden komprimiert. Bitte warten …"
 
@@ -35070,43 +35092,43 @@ msgstr "Titelbild auswählen"
 msgid "Quick Start Guide"
 msgstr "Kurzanleitung"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:224
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:233
 msgid "&Donate to support calibre"
 msgstr "Spen&den, um Calibre zu unterstützen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:267
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:276
 msgid "&Eject connected device"
 msgstr "Verbundenes Gerät ausw&erfen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:271
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:280
 msgid "Quit calibre"
 msgstr "Calibre beenden"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:278
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:287
 msgid "Minimize the calibre window"
 msgstr "Calibre-Fenster minimieren"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:287
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:296
 msgid "Clear the current search"
 msgstr "Aktuelle Suche löschen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:294
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:303
 msgid "Focus the book list"
 msgstr "Auf Buchliste fokussieren"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:301
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:310
 msgid "Clear the Virtual library"
 msgstr "Virtuelle Bibliothek leeren"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:308
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:317
 msgid "Clear the additional restriction"
 msgstr "Zusätzliche Einschränkungen leeren"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:439
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:448
 msgid "Debug mode"
 msgstr "Fehlerdiagnosemodus"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:440
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:449
 #, python-format
 msgid ""
 "You have started calibre in debug mode. After you quit calibre, the debug "
@@ -35114,11 +35136,11 @@ msgid ""
 "automatically."
 msgstr "Sie haben Calibre im Fehlerdiagnosemodus gestartet. Beim Verlassen des Programms wird ein Fehlerdiagnoseprotokoll erstellt: %s<p>Das Protokoll wird automatisch angezeigt."
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:489
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:498
 msgid "Content server changed!"
 msgstr "Inhalteserver geändert!"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:490
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:499
 msgid ""
 "calibre 3 comes with a completely re-written Content server. As such any "
 "custom configuration you have for the content server no longer applies. You "
@@ -35126,7 +35148,7 @@ msgid ""
 " the net"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:526
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:535
 #, python-format
 msgid ""
 "Could not start the Content server. Error:\n"
@@ -35134,15 +35156,15 @@ msgid ""
 "%s"
 msgstr "Inhalteserver konnte nicht gestartet werden. Fehler:\n\n%s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:579
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:588
 msgid "Hide main window"
 msgstr "Hauptfenster ausblenden"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:579
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:588
 msgid "Show main window"
 msgstr "Zeigt das Hauptfenster"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:850
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:860
 #, python-format
 msgid ""
 "The library database at %s appears to be corrupted. Do you want calibre to "
@@ -35150,17 +35172,17 @@ msgid ""
 "successful."
 msgstr "Die Bibliothek Datenbank bei %s scheint beschädigt zu sein. Möchten Sie, dass Calibre versucht diese automatisch wiederherzustellen? Die Wiederherstellung könnte nicht komplett erfolgreich sein."
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:942
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:952
 msgid "Conversion error"
 msgstr "Konvertierungsfehler"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:963
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:988
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:973
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:998
 #, python-format
 msgid "<p><b>Failed to convert: %s"
 msgstr "<p><b>Fehler beim Konvertieren von: %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:964
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:974
 msgid ""
 "\n"
 "                Many older e-book reader devices are incapable of displaying\n"
@@ -35177,57 +35199,57 @@ msgid ""
 "                        "
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:978
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:992
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:988
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1002
 msgid "Conversion failed"
 msgstr "Konvertierung fehlgeschlagen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:990
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1000
 msgid "here"
 msgstr "hier"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1003
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1013
 msgid "Recipe Disabled"
 msgstr "Schema deaktiviert"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1036
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1046
 msgid "<b>Failed</b>"
 msgstr "<b>Fehlgeschlagen</b>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1076
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1086
 msgid "There are active jobs. Are you sure you want to quit?"
 msgstr "Es bestehen aktive Aufträge. Sind Sie sicher, dass Sie es beenden wollen?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1079
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1089
 msgid ""
 " is communicating with the device!<br>\n"
 "                      Quitting may cause corruption on the device.<br>\n"
 "                      Are you sure you want to quit?"
 msgstr " kommuniziert mit dem Gerät!<br>\n                      Das Beenden kann Beschädigungen auf dem Gerät verursachen.<br>\n                      Sind Sie sicher, dass Sie beenden möchten?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1087
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1097
 msgid "There are library updates waiting. Are you sure you want to quit?"
 msgstr "Es stehen noch Aktualisierungen der Bibliothek aus. Sind Sie sicher, dass Sie abbrechen möchten?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1088
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1098
 msgid "Library updates waiting"
 msgstr "Ausstehende Aktualisierungen der Bibliothek"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1093
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1103
 msgid ""
 "Some deleted books are still being moved to the recycle bin, if you quit "
 "now, they will be left behind. Are you sure you want to quit?"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1109
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1123
 msgid "Running database shutdown plugins. This could take a few seconds..."
 msgstr "Laufende Datenbank-Erweiterungen werden heruntergefahren. Das kann einige Sekunden dauern..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1161
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1175
 msgid "Shutting down the Content server. This could take a while..."
 msgstr "Inhalteserver wird heruntergefahren. Das kann etwas dauern …"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1195
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1209
 msgid ""
 "will keep running in the system tray. To close it, choose <b>Quit</b> in the"
 " context menu of the system tray."
@@ -39611,7 +39633,7 @@ msgid "%s Document"
 msgstr "%s Dokument"
 
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:124
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1562
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1561
 msgid "Unknown section"
 msgstr "Unbekannter Abschnitt"
 
@@ -39621,7 +39643,7 @@ msgstr "Feed unbekannt"
 
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:165
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:198
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1553
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1552
 msgid "Untitled article"
 msgstr "Artikel ohne Titel"
 
@@ -39629,123 +39651,123 @@ msgstr "Artikel ohne Titel"
 msgid "Unknown News Source"
 msgstr "Nachrichtenquelle unbekannt"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:610
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:609
 msgid "Article download aborted"
 msgstr "Artikel herunterladen abgebrochen"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:832
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:831
 #, python-format
 msgid "Failed to download %s"
 msgstr "Herunterladen von %s fehlgeschlagen"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:925
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:924
 #, python-format
 msgid "The \"%s\" recipe needs a username and password."
 msgstr "Das Schema \"%s\" benötigt einen Benutzernamen und ein Passwort."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1052
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1051
 msgid "Download finished"
 msgstr "Herunterladen beendet"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1054
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1053
 msgid "Failed to download the following articles:"
 msgstr "Herunterladen folgender Artikel fehlgeschlagen:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1060
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1059
 msgid "Failed to download parts of the following articles:"
 msgstr "Herunterladen von Teilen folgender Artikel fehlgeschlagen:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1062
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1061
 msgid " from "
 msgstr " von "
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1064
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1063
 msgid "\tFailed links:"
 msgstr "\tFehlgeschlagene Verweise:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1168
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1167
 msgid "Could not fetch article."
 msgstr "Konnte Artikel nicht abrufen."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1170
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1169
 msgid "The debug traceback is available earlier in this log"
 msgstr "Die Fehlerdiagnose-Rückverfolgung befindet sich weiter oben in diesem Protokoll"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1172
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1171
 msgid "Run with -vv to see the reason"
 msgstr "Mit -vv starten, um den Grund zu sehen"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1217
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1216
 msgid "Fetching feeds..."
 msgstr "Feeds werden abgerufen …"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1223
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1222
 msgid "Got feeds from index page"
 msgstr "Feeds der Indexseite wurden erhalten"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1236
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1235
 msgid "Trying to download cover..."
 msgstr "Herunterladen des Titelbildes wird versucht …"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1238
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1237
 msgid "Generating masthead..."
 msgstr "Impressum wird erstellt …"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1298
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1297
 msgid "Starting download in a single thread..."
 msgid_plural "Starting download [{} threads]..."
 msgstr[0] "Herunterladen mit einem Einzelprozess wird gestartet …"
 msgstr[1] "Herunterladen mit [{} Prozessen] wird gestartet …"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1313
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1312
 #, python-format
 msgid "Feeds downloaded to %s"
 msgstr "Feeds wurden nach %s heruntergeladen"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1322
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1321
 #, python-format
 msgid "Could not download cover: %s"
 msgstr "Titelbild konnte nicht heruntergeladen werden: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1335
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1334
 #, python-format
 msgid "Downloading cover from %s"
 msgstr "Titelbild wird von %s heruntergeladen"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1387
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1386
 msgid "Masthead image downloaded"
 msgstr "Impressumskopie geladen"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1477
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1476
 msgid "Articles in this issue:"
 msgstr "Artikel in dieser Ausgabe:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1634
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1633
 #, python-format
 msgid "Article downloaded: %s"
 msgstr "Artikel heruntergeladen: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1644
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1643
 #, python-format
 msgid "Article download aborted: %s"
 msgstr "Artikel herunterladen abgebrochen: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1651
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1650
 #, python-format
 msgid "Article download failed: %s"
 msgstr "Herunterladen der Artikel fehlgeschlagen: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1673
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1672
 msgid "Fetching feed"
 msgstr "Feed wird abgerufen"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1848
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1847
 msgid ""
 "Failed to log in, check your username and password for the calibre "
 "Periodicals service."
 msgstr "Anmelden fehlgeschlagen. Überprüfen Sie Ihren Benutzernamen und Ihr Passwort für den Calibre-Zeitschriftenservice."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1864
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1863
 msgid ""
 "You do not have permission to download this issue. Either your subscription "
 "has expired or you have exceeded the maximum allowed downloads for today."

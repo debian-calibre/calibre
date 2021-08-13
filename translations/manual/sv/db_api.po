@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-24 06:20+0000\n"
-"PO-Revision-Date: 2021-06-19 13:25+0000\n"
+"POT-Creation-Date: 2021-08-12 03:11+0000\n"
+"PO-Revision-Date: 2021-08-10 18:27+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -54,6 +54,11 @@ msgid ""
 "All table reading/sorting/searching/caching logic is re-implemented. This "
 "was necessary for maximum performance and flexibility."
 msgstr "SQLITE används helt enkelt som ett stabilt sätt att läsa och skriva från metadata.db."
+
+#: ../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
+#: calibre.db.listeners.EventType:1
+msgid "An enumeration."
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_books:1
@@ -128,6 +133,14 @@ msgstr "Om True, körs filtypsinsticksmoduler på formatet innan och efter de ti
 #: calibre.db.cache.Cache.add_format:5
 msgid "Internal use only."
 msgstr "Bara för internt bruk."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.add_listener:1
+msgid ""
+"Register a callback function that will be called after certain actions are "
+"taken on this database. The function must take three arguments: "
+"(:class:`EventType`, library_id, event_type_specific_data)"
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_book_ids:1
@@ -438,7 +451,7 @@ msgstr "Hämta data för namn. Som standard återges data för alla book_ids, f�
 msgid ""
 "Return a mapping of id numbers to values for the specified field. The field "
 "must be a many-one or many-many field, otherwise a ValueError is raised."
-msgstr "Återge en översik av id nummer till värden för specifika fält. Fältet måste vara en många-en eller många-många fält, annars genereras ett ValueError."
+msgstr "Återge en översik av id nummer till värden för specifika fält. Fältet måste vara en många-en eller många-många fält, annars skapas ett ValueError."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_ids_for_custom_book_data:1

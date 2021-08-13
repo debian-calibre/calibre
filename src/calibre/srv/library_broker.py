@@ -15,6 +15,13 @@ from calibre.utils.monotonic import monotonic
 from polyglot.builtins import iteritems, itervalues
 
 
+def gui_on_db_event(event_type, library_id, event_data):
+    from calibre.gui2.ui import get_gui
+    gui = get_gui()
+    if gui is not None:
+        gui.library_broker.on_db_event(event_type, library_id, event_data)
+
+
 def canonicalize_path(p):
     if isinstance(p, bytes):
         p = p.decode(filesystem_encoding)
@@ -201,18 +208,37 @@ class GuiLibraryBroker(LibraryBroker):
         from calibre.gui2 import gprefs
         self.last_used_times = defaultdict(lambda: -EXPIRED_AGE)
         self.gui_library_id = None
+        self.listening_for_db_events = False
         LibraryBroker.__init__(self, load_gui_libraries(gprefs))
         self.gui_library_changed(db)
 
     def init_library(self, library_path, is_default_library):
         library_path = self.original_path_map.get(library_path, library_path)
-        return LibraryDatabase(library_path, is_second_db=True)
+        db = LibraryDatabase(library_path, is_second_db=True)
+        if self.listening_for_db_events:
+            db.new_api.add_listener(gui_on_db_event)
+        return db
 
     def get(self, library_id=None):
         try:
             return getattr(LibraryBroker.get(self, library_id), 'new_api', None)
         finally:
             self.last_used_times[library_id or self.default_library] = monotonic()
+
+    def start_listening_for_db_events(self):
+        with self:
+            self.listening_for_db_events = True
+            for db in self.loaded_dbs.values():
+                db.new_api.add_listener(gui_on_db_event)
+
+    def on_db_event(self, event_type, library_id, event_data):
+        from calibre.gui2.ui import get_gui
+        gui = get_gui()
+        if gui is not None:
+            with self:
+                db = self.loaded_dbs.get(library_id)
+            if db is not None:
+                gui.event_in_db.emit(db, event_type, event_data)
 
     def get_library(self, original_library_path):
         library_path = canonicalize_path(original_library_path)
@@ -267,6 +293,8 @@ class GuiLibraryBroker(LibraryBroker):
             self.original_path_map[newloc] = original_path
             self.loaded_dbs[library_id] = db
         db.new_api.server_library_id = library_id
+        if self.listening_for_db_events:
+            db.new_api.add_listener(gui_on_db_event)
         if olddb is not None and samefile(path_for_db(olddb), path_for_db(db)):
             # This happens after a restore database, for example
             olddb.close(), olddb.break_cycles()
