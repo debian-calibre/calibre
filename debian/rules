@@ -2,7 +2,7 @@
 
 # building with python3
 PYTHON=$(shell py3versions -r 3.9)
-PYTHON_PATH=$(shell which $(PYTHON))
+PYTHON_PATH=$(shell command -v $(PYTHON))
 SETUP=$(PYTHON) setup.py
 
 # build options
