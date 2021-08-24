@@ -34,6 +34,7 @@ override_dh_auto_configure:
 override_dh_auto_build:
 #	# Add false-positive info for blhc(1) check
 	@echo 'blhc: ignore-line-regexp: \tCompiling form /.+\.ui'
+	@echo 'blhc: ignore-line-regexp: .+ -dM -E -o moc_predefs\.h /usr/lib/[^/]+/qt5/mkspecs/features/data/dummy\.cpp'
 	[ -d build ] || $(SETUP) build
 
 # Invoke "calibre_auto_test" target with automatic "HOME" and "XDG_*" variables.
