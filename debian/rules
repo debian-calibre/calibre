@@ -43,8 +43,10 @@ override_dh_auto_test:
 
 # "test_ajax_book" fails if previous test is "test_worker" (Closes: #973458)
 calibre_auto_test:
-	LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC xvfb-run $(SETUP) test $(TEST_FLAGS) --exclude-test-name=ajax_book
+	LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC xvfb-run $(SETUP) test $(TEST_FLAGS) --exclude-test-name=ajax_book,worker,qt
 	LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC xvfb-run $(SETUP) test --test-name=ajax_book
+	LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC xvfb-run $(SETUP) test --test-name=worker
+	LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC xvfb-run $(SETUP) test --test-name=qt
 
 override_dh_install:
 	dh_buildinfo
