@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "8月 13, 2021" "5.25.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "8月 27, 2021" "5.26.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -136,7 +136,7 @@ Advertise OPDS feeds via BonJour.   Advertise the OPDS feeds via the BonJour ser
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-Zero copy file transfers for increased performance.         This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. By default, this option is enabled.
+Zero copy file transfers for increased performance.         當透過網路傳送檔案時這將在核心傳輸中使用零複製，從而提高效能。然而，它可能導致損壞的檔案傳輸在一些崩潰的檔案系統上。如果您經歷了損壞的檔案傳輸，關掉它。 By default, this option is enabled.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -176,7 +176,7 @@ Maximum time for worker processes.  Maximum amount of time worker processes are 
 .INDENT 0.0
 .TP
 .B \-\-max\-jobs
-Maximum number of worker processes.         Worker processes are launched as needed and used for large jobs such as preparing a book for viewing, adding books, converting, etc. Normally, the max. number of such processes is based on the number of CPU cores. You can control it by this setting.
+Maximum number of worker processes.         對於大型作業任務設定執行作業單元的處理程序數是必需和有用的，如準備一本書供預覽、加入書籍、轉換等。通常，此類處理程序的最大數量基於 CPU 核心的數量。您可以透過這個設定來控制它。
 .UNINDENT
 .INDENT 0.0
 .TP

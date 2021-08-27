@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "8月 13, 2021" "5.25.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "8月 27, 2021" "5.26.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -54,21 +54,13 @@ conversion
 .sp
 Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .sp
-The options and default values for the options change depending on both the
-input and output formats, so you should always check with:
-.INDENT 0.0
-.INDENT 3.5
+選項以及選項的預設值都取決於輸入
+和輸出格式，所以您應該經常檢查
 .sp
-.nf
-.ft C
 ebook\-convert myfile.input_format myfile.output_format \-h
-.ft P
-.fi
-.UNINDENT
-.UNINDENT
 .sp
-Below are the options that are common to all conversion, followed by the
-options specific to every input and output format.
+以下是一些常見轉化的選項，接著
+是特定輸入輸出的選項
 .INDENT 0.0
 .IP \(bu 2
 \fI\%輸入選項\fP
@@ -107,7 +99,7 @@ options specific to every input and output format.
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device (such as by resizing images for the device screen size). In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+設定輸出設定檔案。輸出設定檔案可以讓轉換系統針對指定的裝置最佳化文檔(例如透過根據裝置螢幕大小縮放圖片)。在某些情況下，可以用輸出設定檔案對特定裝置最佳化輸出，但幾乎沒有必要。可選項有：cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet, generic_eink_hd, generic_eink_large, generic_eink
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -128,7 +120,7 @@ Specify the output profile. The output profile tells the conversion system how t
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
-Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+關閉按分頁符切割。預設情況下，程式會按分頁符將輸入檔案切分割為多個檔案。由此程式可以使用較少的電腦資源來解析和輸出結果。當然分割操作會增加處理時間，如果輸入檔案含有較多的分頁符，請關閉此功能。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -148,7 +140,7 @@ Turn off splitting at page breaks. Normally, input files are automatically split
 .INDENT 0.0
 .TP
 .B \-\-epub\-version
-The version of the EPUB file to generate. EPUB 2 is the most widely compatible, only use EPUB 3 if you know you actually need it.
+要產生的 EPUB 檔案版本。EPUB 2 是最具廣泛相容性的，只有在您確實需要的情況下才使用 EPUB 3。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -158,7 +150,7 @@ Extract the contents of the generated EPUB file to the specified folder. The con
 .INDENT 0.0
 .TP
 .B \-\-flow\-size
-Split all HTML files larger than this size (in KB). This is necessary as most EPUB readers cannot handle large file sizes. The default of 260KB is the size required for Adobe Digital Editions. Set to 0 to disable size based splitting.
+將大於該大小 (以 KB 為單位) 的 HTML 檔案分割。由於很多 EPUB 閱讀器無法開啟巨大的檔案，故此功能十分有用。預設值 260KB 是 Adobe Digital Editions 的檔案大小要求。設定為 0 來停用大小為基準的分割。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -216,12 +208,12 @@ Embed every font that is referenced in the input document but not already embedd
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Embed the specified font family into the book. This specifies the \fB"\fPbase\fB"\fP font used for the book. If the input document specifies its own fonts, they may override this base font. You can use the filter style information option to remove fonts from the input document. Note that font embedding only works with some output formats, principally EPUB, AZW3 and DOCX.
+在書中嵌入指定字型。這指定了書中使用的「基礎」字型。如果輸入檔案自己指定了字型，就有可能覆蓋這個基礎字型。您可以使用過濾樣式資訊的選項來去除輸入檔案的字型。注意，字型嵌入只在一些輸出格式中有用，主要是 EPUB、AZW3 和 DOCX。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+預設情況下，calibre 將使用各種CSS屬性的簡寫形式，如邊距、填充、邊框等。此選項將使用完整的展開形式。注意，在產生EPUB檔案時，由於Nook不能處理速記CSS，所以將輸出設定檔案設定為Nook設定檔案中的一個，CSS總是被展開的。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -311,7 +303,7 @@ Convert plain quotes, dashes and ellipsis to their typographically correct equiv
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform styles\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+包含轉換本書中 CSS 樣式規則的檔案路徑。建立這樣一個檔案的最簡單方法是在 calibre GUI 中使用精靈建立規則。在「介面外觀 \-> 轉換風格」的轉換對話框部分存取它。 一旦建立規則，就可以使用「匯出」按鈕將它們儲存到檔案中。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -382,7 +374,7 @@ Path to a file containing rules to transform the CSS styles in this book. The ea
 .INDENT 0.0
 .TP
 .B \-\-search\-replace
-Path to a file containing search and replace regular expressions. The file must contain alternating lines of regular expression followed by replacement pattern (which can be an empty line). The regular expression must be in the Python regex syntax and the file must be UTF\-8 encoded.
+包含搜尋和取代正規表達式的檔案路徑。該檔案必須包含正規表達式交替行後面跟著取代模式 (它可以是一個空行)。正規表達式必須是 Python 正規表達式的語法並且檔案必須是 UTF\-8 編碼。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -455,7 +447,7 @@ Remove the first image from the input e\-book. Useful if the input document has 
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+用於偵測文件中開始閱讀位置的 XPath 運算式。某些電子書閱讀器 (以 Kindle 為代表) 使用此定位標識來開啟書籍。請參閱 calibre 使用者手冊中的 XPath 教學了解使用此功能的更多幫助。
 .UNINDENT
 .SH 目錄
 .sp
@@ -546,7 +538,7 @@ XPath 運算式指定所有標籤應添加在三級目錄表。每個條目加�
 .INDENT 0.0
 .TP
 .B \-\-pubdate
-Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+設定發佈日期 (假定在本地時區，除非明確指定時區)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -604,7 +596,7 @@ Save the output from different stages of the conversion pipeline to the specifie
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Level of verbosity. Specify multiple times for greater verbosity. Specifying it twice will result in full verbosity, once medium verbosity and zero times least verbosity.
+詳細程度。指定多次來提高詳細程度：指定兩次是最詳細，一次是中等，零次是最簡略。
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

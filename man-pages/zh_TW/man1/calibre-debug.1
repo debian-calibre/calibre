@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "8月 13, 2021" "5.25.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "8月 27, 2021" "5.26.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -41,22 +41,19 @@ calibre\-debug [選項]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre E\-book viewer and the calibre editor in debug mode.
+多種命令行介面在排除 calibre 的故障時很有用。這個命令將無條件
+地開啟內建的 python 編譯器。您也可以在 debug 模式下執行主
+要的 cailbre GUI，calibre 閱讀器和 calibre 編輯器。
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the E\-book diff tool and so
-on.
+它同時也包含了部分沒有命令行工具的
+calibre 介面，比如字型子集，電子書區分
+工具等等。
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
-.INDENT 0.0
-.INDENT 3.5
+您也能用 \fBcalibre\-debug\fP 來執行獨立的指令碼。像這樣來操作：
+.sp
 \fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
-.UNINDENT
-.UNINDENT
 .sp
-Everything after the \fB\-\-\fP is passed to the script.
+在 \fB\-\-\fP 後的的所有東西都被傳輸到了指令碼裡。
 .sp
 Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH [選項]
@@ -103,7 +100,7 @@ Explode the book into the specified folder. Usage: \-x file.epub output_dir Expo
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Export all calibre data (books/settings/plugins). Normally, you will be asked for the export folder and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export folder and libraries. The special keyword \fB"\fPall\fB"\fP can be used to export all libraries.
+匯出所有 calibre 資料 (書籍/設定/外掛)。通常，系統會要求您提供匯出資料夾和要匯出的資料庫。您還可以將它們指定為命令行參數以略過這些問題。使用匯出資料夾和資料庫的絕對路徑。特殊關鍵字「all」可用於匯出所有資料庫。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -128,7 +125,7 @@ Export all calibre data (books/settings/plugins). Normally, you will be asked fo
 .INDENT 0.0
 .TP
 .B \-\-implode\-book, \-i
-Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the book from the files in output_dir which must have been created by a previous call to \fI\%\-\-explode\-book\fP\&. Be sure to specify the same file type as was used when exploding.
+聚合以前炸開過的書籍。 用法：\-i output_dir file.epub 從 output_dir 的檔案中匯入該圖書，該檔案必須是由之前呼叫 \fI\%\-\-explode\-book\fP 建立的。一定要指定與炸開時使用的檔案類型相同的檔案類型。
 .UNINDENT
 .INDENT 0.0
 .TP
