@@ -13984,12 +13984,14 @@ return this.__repr__();
         });
 
         function non_range_wrapper_parent(node) {
-            var p;
+            var p, child;
             p = node.parentNode;
+            child = node;
             while (ρσ_exists.d(p.dataset).calibreRangeWrapper) {
+                child = p;
                 p = p.parentNode;
             }
-            return p;
+            return [p, child];
         };
         if (!non_range_wrapper_parent.__argnames__) Object.defineProperties(non_range_wrapper_parent, {
             __argnames__ : {value: ["node"]},
@@ -13997,7 +13999,7 @@ return this.__repr__();
         });
 
         function encode(doc, node, offset, tail) {
-            var cfi, q, ρσ_unpack, adjusted_node, additional_offset, adjusted, is_first, p, win, index, id, idspec;
+            var cfi, q, ρσ_unpack, adjusted_node, additional_offset, adjusted, is_first, p, sentinel, win, index, id, idspec;
             cfi = tail || "";
             if (node.nodeType === Node.ELEMENT_NODE) {
                 if (typeof offset === "number") {
@@ -14037,7 +14039,10 @@ return this.__repr__();
             }
             is_first = true;
             while (node !== doc) {
-                p = non_range_wrapper_parent(node);
+                ρσ_unpack = non_range_wrapper_parent(node);
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+                p = ρσ_unpack[0];
+                sentinel = ρσ_unpack[1];
                 if (!p) {
                     if ((node.nodeType === Node.DOCUMENT_NODE || typeof node.nodeType === "object" && ρσ_equals(node.nodeType, Node.DOCUMENT_NODE))) {
                         win = node.defaultView;
@@ -14049,7 +14054,7 @@ return this.__repr__();
                     }
                     break;
                 }
-                index = increment_index_for_children(p.childNodes, 0, node);
+                index = increment_index_for_children(p.childNodes, 0, sentinel);
                 if (is_first) {
                     is_first = false;
                     if (node.nodeType === Node.ELEMENT_NODE && node.dataset.calibreRangeWrapper) {
@@ -22174,7 +22179,7 @@ return this.__repr__();
             var c, item;
             c = self.container;
             item = c.querySelector(".current-swatch.custom-style");
-            c.querySelector(".remove-custom-color").style.display = (item) ? "block" : "none";
+            c.querySelector(".remove-custom-color").style.display = (item) ? "flex" : "none";
         };
         if (!EditNotesAndColors.prototype.set_visibility_of_remove_button.__module__) Object.defineProperties(EditNotesAndColors.prototype.set_visibility_of_remove_button, {
             __module__ : {value: "read_book.highlights"}
@@ -22949,7 +22954,7 @@ return this.__repr__();
             delete_button = ρσ_interpolate_kwargs.call(this, create_button, [_("Remove"), "trash", delete_selection.bind(null, annotations_manager, annotations_manager.view), _("Remove selected highlights")].concat([ρσ_desugar_kwargs({class_: "ac-button sel-button"})]));
             all_button = ρσ_interpolate_kwargs.call(this, create_button, [_("All"), "plus", select_all, _("Select all highlights")].concat([ρσ_desugar_kwargs({class_: "ac-button sel-button"})]));
             export_button = ρσ_interpolate_kwargs.call(this, create_button, [_("Export"), "cloud-download", show_export_dialog.bind(null, annotations_manager), _("Export all or selected highlights")].concat([ρσ_desugar_kwargs({class_: "ac-button"})]));
-            c = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [sb, next_button, prev_button, clear_button, all_button, delete_button, export_button].concat([ρσ_desugar_kwargs({style: "display: flex; flex-wrap: wrap; margin-top: -1ex; align-items: center"})]))].concat([ρσ_desugar_kwargs({style: "margin: 1rem", id: get_container_id()})]));
+            c = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [sb, next_button, prev_button, clear_button, all_button, delete_button, export_button].concat([ρσ_desugar_kwargs({style: "display: flex; flex-wrap: wrap; margin-top: -1ex; align-items: center"})]))].concat([ρσ_desugar_kwargs({style: "padding: 1rem", id: get_container_id()})]));
             container.appendChild(c);
             toc_groups = Object.create(null);
             toc_tt = Object.create(null);
@@ -27129,7 +27134,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.25.0";
+        CALIBRE_VERSION = "5.26.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -29159,7 +29164,7 @@ return this.__repr__();
         function create_bookmarks_panel(annotations_manager, data, book, container, onclick) {
             var container_id, button;
             ρσ_interpolate_kwargs.call(this, set_css, [container].concat([ρσ_desugar_kwargs({display: "flex", flex_direction: "column"})]));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin: 1rem"})]));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "padding: 1rem"})]));
             container = container.lastChild;
             container_id = ensure_id(container);
             button = create_button(_("New bookmark"), "plus", new_bookmark.bind(null, container_id, annotations_manager, data, onclick));
@@ -44122,6 +44127,7 @@ return this.__repr__();
             this.set_original_pos = SearchOverlay.prototype.set_original_pos.bind(this);
             this.return_to_original_position = SearchOverlay.prototype.return_to_original_position.bind(this);
             this.on_worker_message = SearchOverlay.prototype.on_worker_message.bind(this);
+            this.no_result_received = SearchOverlay.prototype.no_result_received.bind(this);
             this.result_received = SearchOverlay.prototype.result_received.bind(this);
             this.make_query_programmatically = SearchOverlay.prototype.make_query_programmatically.bind(this);
             this.make_result_current = SearchOverlay.prototype.make_result_current.bind(this);
@@ -44373,6 +44379,9 @@ return this.__repr__();
             } else if (msg.id === self.search_in_flight.id) {
                 if (msg.type === "search_complete") {
                     self.search_in_flight.id = null;
+                    if (Object.keys(self.result_map).length === 0) {
+                        self.no_result_received();
+                    }
                 } else if (msg.type === "search_result") {
                     self.result_received(msg.result);
                 }
@@ -44380,6 +44389,14 @@ return this.__repr__();
         };
         if (!SearchOverlay.prototype.on_worker_message.__argnames__) Object.defineProperties(SearchOverlay.prototype.on_worker_message, {
             __argnames__ : {value: ["evt"]},
+            __module__ : {value: "read_book.search"}
+        });
+        SearchOverlay.prototype.no_result_received = function no_result_received() {
+            var self = this;
+            self.show_results();
+            self.results_container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("No matching results found")].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
+        };
+        if (!SearchOverlay.prototype.no_result_received.__module__) Object.defineProperties(SearchOverlay.prototype.no_result_received, {
             __module__ : {value: "read_book.search"}
         });
         SearchOverlay.prototype.result_received = function result_received(result) {
