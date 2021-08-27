@@ -1,0 +1,54 @@
+.\"
+.TH MARKDOWN-CALIBRE "1" "August 2021" "markdown-calibre" "User Commands"
+.SH NAME
+markdown-calibre \- convert Markdown text to XHTML/HTML
+.SH SYNOPSIS
+.B markdown-calibre
+[\fI\,options\/\fR] [\fI\,INPUTFILE\/\fR]
+.PP
+(STDIN is assumed if no INPUTFILE is given)
+.SH DESCRIPTION
+.PP
+A Python implementation of John Gruber's Markdown.
+.IP
+https://python-markdown.github.io/
+.SH OPTIONS
+.TP
+\fB\-\-version\fR
+show program's version number and exit
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+show this help message and exit
+.TP
+\fB\-f\fR \fI\,OUTPUT_FILE\/\fR, \fB\-\-file\fR=\fI\,OUTPUT_FILE\/\fR
+Write output to \fI\,OUTPUT_FILE\/\fR. Defaults to STDOUT.
+.TP
+\fB\-e\fR \fI\,ENCODING\/\fR, \fB\-\-encoding\fR=\fI\,ENCODING\/\fR
+Encoding for input and output files.
+.TP
+\fB\-o\fR \fI\,OUTPUT_FORMAT\/\fR, \fB\-\-output_format\fR=\fI\,OUTPUT_FORMAT\/\fR
+Use output format 'xhtml' (default) or 'html'.
+.TP
+\fB\-n\fR, \fB\-\-no_lazy_ol\fR
+Observe number of first item of ordered lists.
+.TP
+\fB\-x\fR \fI\,EXTENSION\/\fR, \fB\-\-extension\fR=\fI\,EXTENSION\/\fR
+Load extension \fI\,EXTENSION\/\fR.
+.TP
+\fB\-c\fR \fI\,CONFIG_FILE\/\fR, \fB\-\-extension_configs\fR=\fI\,CONFIG_FILE\/\fR
+Read extension configurations from \fI\,CONFIG_FILE\/\fR.
+\fI\,CONFIG_FILE\/\fR must be of JSON or YAML format. YAML format
+requires that a python YAML library be installed. The
+parsed JSON or YAML must result in a python dictionary
+which would be accepted by the 'extension_configs'
+keyword on the markdown.Markdown class. The extensions
+must also be loaded with the `\-\-extension` option.
+.TP
+\fB\-q\fR, \fB\-\-quiet\fR
+Suppress all warnings.
+.TP
+\fB\-v\fR, \fB\-\-verbose\fR
+Print all warnings.
+.TP
+\fB\-\-noisy\fR
+Print debug messages.

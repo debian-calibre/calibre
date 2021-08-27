@@ -5,6 +5,9 @@
 
 set -eu
 
+# Debian man pages
+dh_installman --package=calibre --language=C debian/man/*.1
+
 # default language
 dh_installman --package=calibre --language=C man-pages/man1/*.1
 
