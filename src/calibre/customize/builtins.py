@@ -4,8 +4,7 @@
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
 
-import os, glob, re
-from calibre import guess_type
+import os, glob
 from calibre.customize import (FileTypePlugin, MetadataReaderPlugin,
     MetadataWriterPlugin, PreferencesPlugin, InterfaceActionBase, StoreBase)
 from calibre.constants import numeric_version
@@ -55,47 +54,19 @@ class TXT2TXTZ(FileTypePlugin):
         'containing Markdown or Textile references to images. The referenced '
         'images as well as the TXT file are added to the archive.')
     version = numeric_version
-    file_types = {'txt', 'text'}
+    file_types = {'txt', 'text', 'md', 'markdown', 'textile'}
     supported_platforms = ['windows', 'osx', 'linux']
     on_import = True
 
-    def _get_image_references(self, txt, base_dir):
-        from calibre.ebooks.oeb.base import OEB_IMAGES
-
-        images = []
-
-        # Textile
-        for m in re.finditer(r'(?mu)(?:[\[{])?\!(?:\. )?(?P<path>[^\s(!]+)\s?(?:\(([^\)]+)\))?\!(?::(\S+))?(?:[\]}]|(?=\s|$))', txt):
-            path = m.group('path')
-            if path and not os.path.isabs(path) and guess_type(path)[0] in OEB_IMAGES and os.path.exists(os.path.join(base_dir, path)):
-                images.append(path)
-
-        # Markdown inline
-        for m in re.finditer(r'(?mu)\!\[([^\]\[]*(\[[^\]\[]*(\[[^\]\[]*(\[[^\]\[]*(\[[^\]\[]*(\[[^\]\[]*(\[[^\]\[]*\])*[^\]\[]*\])*[^\]\[]*\])*[^\]\[]*\])*[^\]\[]*\])*[^\]\[]*\])*[^\]\[]*)\]\s*\((?P<path>[^\)]*)\)', txt):  # noqa
-            path = m.group('path')
-            if path and not os.path.isabs(path) and guess_type(path)[0] in OEB_IMAGES and os.path.exists(os.path.join(base_dir, path)):
-                images.append(path)
-
-        # Markdown reference
-        refs = {}
-        for m in re.finditer(r'(?mu)^(\ ?\ ?\ ?)\[(?P<id>[^\]]*)\]:\s*(?P<path>[^\s]*)$', txt):
-            if m.group('id') and m.group('path'):
-                refs[m.group('id')] = m.group('path')
-        for m in re.finditer(r'(?mu)\!\[([^\]\[]*(\[[^\]\[]*(\[[^\]\[]*(\[[^\]\[]*(\[[^\]\[]*(\[[^\]\[]*(\[[^\]\[]*\])*[^\]\[]*\])*[^\]\[]*\])*[^\]\[]*\])*[^\]\[]*\])*[^\]\[]*\])*[^\]\[]*)\]\s*\[(?P<id>[^\]]*)\]', txt):  # noqa
-            path = refs.get(m.group('id'), None)
-            if path and not os.path.isabs(path) and guess_type(path)[0] in OEB_IMAGES and os.path.exists(os.path.join(base_dir, path)):
-                images.append(path)
-
-        # Remove duplicates
-        return list(set(images))
-
     def run(self, path_to_ebook):
         from calibre.ebooks.metadata.opf2 import metadata_to_opf
+        from calibre.ebooks.txt.processor import get_images_from_polyglot_text
 
         with open(path_to_ebook, 'rb') as ebf:
             txt = ebf.read().decode('utf-8', 'replace')
         base_dir = os.path.dirname(path_to_ebook)
-        images = self._get_image_references(txt, base_dir)
+        ext = path_to_ebook.rpartition('.')[-1].lower()
+        images = get_images_from_polyglot_text(txt, base_dir, ext)
 
         if images:
             # Create TXTZ and put file plus images inside of it.

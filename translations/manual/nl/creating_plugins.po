@@ -8,15 +8,17 @@
 # Herman L.M. van der Vaart <vaarttuig@gmail.com>, 2020
 # M. de Boer <de.boer.melle@gmail.com>, 2018,2020
 # Meteor0id, 2019
+# Meteor0id, 2019
+# Rodolfo_Jadon, 2015
 # Rodolfo_Jadon, 2015
 # W.P.M.E. Hofland <wpme.hofland@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-07 15:55+0000\n"
-"PO-Revision-Date: 2021-03-31 16:25+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2021-09-08 11:26+0000\n"
+"PO-Revision-Date: 2021-09-08 13:50+0000\n"
+"Last-Translator: peter <petertje@tuta.io>\n"
 "Language-Team: Dutch (http://www.transifex.com/calibre/calibre/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,7 +28,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:4
 msgid "Writing your own plugins to extend calibre's functionality"
-msgstr "Uw eigen plugins schrijven om de functionaliteit van Calibre uit te breiden"
+msgstr "Uw eigen plugins schrijven om de functionaliteit van calibre uit te breiden"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:6
 msgid ""
@@ -36,13 +38,13 @@ msgid ""
 "interface, to connect to different devices, to process files when adding "
 "them to calibre and so on. You can get a complete list of all the built-in "
 "plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
-msgstr "Calibre heeft een zeer modulair ontwerp. Bijna alle functionaliteit in Calibre komt in de vorm van plug-ins. Plug-ins worden gebruikt voor conversie, voor het downloaden van nieuws (hoewel dit recepten worden genoemd), voor verschillende componenten van de gebruikersinterface, om verbinding te maken met verschillende apparaten, om bestanden te verwerken wanneer ze worden toegevoegd aan Calibre enzovoort. U kunt een volledige lijst van alle ingebouwde plug-ins in kaliber krijgen door naar: guilabel: `Voorkeuren-> Geavanceerd-> Plug-ins 'te gaan."
+msgstr "calibre heeft een zeer modulair ontwerp. Bijna alle functionaliteit in calibre komt als plug-ins. Plug-ins voor conversie, downloaden van nieuws (recepten genaamd), verschillende componenten van de gebruikersinterface, verbinding maken met verschillende toestellen, bestanden verwerken bij toevoegen aan calibre enz. U vidnt een volledige lijst van ingebouwde plug-ins in calibre op: guilabel: `Voorkeuren-> Geavanceerd-> Plug-ins 'te gaan."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:8
 msgid ""
 "Here, we will teach you how to create your own plugins to add new features "
 "to calibre."
-msgstr "Hier laten we zien hoe u uw eigen plugins kunt maken om nieuwe functies toe te voegen aan Calibre."
+msgstr "Hier laten we zien hoe u uw eigen plugins kunt maken om nieuwe functies toe te voegen aan calibre."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:13
 msgid "Contents"
@@ -50,18 +52,18 @@ msgstr "Inhoud"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:15
 msgid "This only applies to calibre releases >= 0.8.60"
-msgstr "Dit is enkel van toepassing op Calibre releases >= 0.8.60"
+msgstr "Dit is enkel van toepassing op calibre releases >= 0.8.60"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:18
 msgid "Anatomy of a calibre plugin"
-msgstr "Opbouw van een Calibre plugin"
+msgstr "Opbouw van een calibre plugin"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:20
 msgid ""
 "A calibre plugin is very simple, it's just a ZIP file that contains some "
 "Python code and any other resources like image files needed by the plugin. "
 "Without further ado, let's see a basic example."
-msgstr "Een Calibre plug-in is heel eenvoudig, het is gewoon een ZIP-bestand dat een Python-code bevat en andere bronnen zoals afbeeldingsbestanden die de plug-in nodig heeft. Zonder meer, laten we een eenvoudig voorbeeld bekijken."
+msgstr "Een calibre plug-in is heel eenvoudig, gewoon een ZIP-bestand dat wat Python code bevat en andere bronnen zoals afbeelding die de plug-in nodig heeft. Genoeg, laten we een eenvoudig voorbeeld bekijken."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:24
 msgid ""
@@ -71,13 +73,13 @@ msgid ""
 "here's how to do it. Create a file named :file:`__init__.py` (this is a "
 "special name and must always be used for the main file of your plugin) and "
 "enter the following Python code into it:"
-msgstr "Aangenomen u heeft Calibre geïnstalleerd om diverse e-documenten zelf te publiceren in EPUB en MOBI-formaten. U wilt alle bestanden genereren in Calibre en als uitgever als \"Hello world\", hier volgt hoe u dit kunt doen. Maak een bestand aan genaamd :file:`__init__.py` (dit is een speciale naa en moet altijd gebruikt worden voor het hoofdbestand van uw plugin) en geef de volgende Python code in:"
+msgstr "Stel, u heeft calibre geïnstalleerd om diverse e-documenten zelf te publiceren in EPUB en MOBI-formaten. U wilt dat alle bestanden gegenereerd door calibre als uitgever \"Hello world\" hebben, hier volgt hoe dit te doen. Maak een bestand genaamd :file:`__init__.py` (dit is een speciale naam en moet altijd gebruikt worden voor het hoofdbestand van uw plugin) en geef de volgende Python code in:"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:32
 msgid ""
 "That's all. To add this code to calibre as a plugin, simply run the "
 "following in the folder in which you created :file:`__init__.py`::"
-msgstr ""
+msgstr "Dat is alles. Om deze code als plug-in aan calibre toe te voegen, voer het volgende uit in de map waar u :file:`__init__.py`:: creëerde"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:38
 msgid ""
@@ -90,7 +92,7 @@ msgstr "Op macOS bevinden de commandoregelprogramma's zich in de calibre-bundel,
 msgid ""
 "You can download the Hello World plugin from `helloworld_plugin.zip  <https"
 "://calibre-ebook.com/downloads/helloworld_plugin.zip>`_."
-msgstr "U kunt de Hello World plugin downloaden van `helloworld_plugin.zip <https://Calibre-ebook.com/downloads/helloworld_plugin.zip>`_."
+msgstr "U kunt de Hello World plugin downloaden van `helloworld_plugin.zip  <https://calibre-ebook.com/downloads/helloworld_plugin.zip>`_."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:45
 msgid ""
@@ -98,11 +100,11 @@ msgid ""
 "method will be called and the converted book will have its publisher set to "
 "\"Hello World\". This is a trivial plugin, lets move on to a more complex "
 "example that actually adds a component to the user interface."
-msgstr "Elke keer als u Calibre gebruikt om een boek te converteren, wordt plugin :meth:`run` methode opgeroepen en het geconverteerde boek heeft als uitgever \"Hello World\". Dit is een onbenullig plugin. Laten we verdergaan naar een ingewikkelder voorbeeld dat daadwerkelijk een component toevoegt aan het gebruikersinterface."
+msgstr "Elke keer u calibre gebruikt om een boek te converteren, wordt de plugin's :meth:`run` methode geroepen en het geconverteerde boek heeft als uitgever \"Hello World\". Dit is een banale plugin, op naar een ingewikkelder voorbeeld dat daadwerkelijk een component toevoegt aan de gebruikersinterface."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:50
 msgid "A User Interface plugin"
-msgstr "Een gebruikersinterface plugin"
+msgstr "Een Gebruikersinterface plugin"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:52
 msgid ""
@@ -111,20 +113,20 @@ msgid ""
 "ZIP file, allow users to configure your plugin, how to create elements in "
 "the calibre user interface and how to access and query the books database in"
 " calibre."
-msgstr "Deze plug-in zal verspreid zijn over een paar bestanden (om de code schoon te houden). Het toont u hoe u bronnen (afbeeldingen of gegevensbestanden) kunt ophalen uit het ZIP-bestand van de plug-in, gebruikers toestaan uw plug-in in te stellen, hoe elementen in de gebruikersinterface voor Calibre te maken en hoe u de gegevensbank voor boeken inkomt en raadpleegt in Calibre."
+msgstr "Deze plug-in zal bestaan uit een paar bestanden (om de code schoon te houden). Het toont u hoe bronnen (afbeeldingen of databestanden) op te halen uit de plug-in's ZIP , gebruikers toe te staan uw plug-in in te stellen, elementen in de gebruikersinterface voor calibre te maken en de database voor boeken te raadplegen en doorzoeken."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:57
 msgid ""
 "You can download this plugin from `interface_demo_plugin.zip <https"
 "://calibre-ebook.com/downloads/interface_demo_plugin.zip>`_"
-msgstr "U kunt dit plugin downloaden op `interface_demo_plugin.zip <https://Calibre-ebook.com/downloads/interface_demo_plugin.zip>`_"
+msgstr "U kunt deze plug-in downloaden op `interface_demo_plugin.zip <https://calibre-ebook.com/downloads/interface_demo_plugin.zip>`_"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:61
 msgid ""
 "The first thing to note is that this ZIP file has a lot more files in it, "
 "explained below, pay particular attention to ``plugin-import-name-"
 "interface_demo.txt``."
-msgstr "Het eerste ding om op te merken is dat dit ZIP-bestand veel meer bestanden bevat, zoals hieronder uitgelegd, besteed bijzondere aandacht aan``plugin-import-name-interface_demo.txt``."
+msgstr "Het eerste ding om op te merken is dat dit ZIP bestand veel meer bestanden bevat, onder uitgelegd, let extra op ``plugin-import-name-interface_demo.txt``."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:77
 msgid "**plugin-import-name-interface_demo.txt**"
@@ -138,7 +140,7 @@ msgid ""
 "name-**some_name**.txt``. The presence of this file allows you to import "
 "code from the .py files present inside the ZIP file, using a statement "
 "like::"
-msgstr "Een leeg tekstbestand dat wordt gebruikt om de multi-file plugin magie in te schakelen. Dit bestand moet aanwezig zijn in alle plug-ins die meer dan één .py-bestand gebruiken. Het moet leeg zijn en de bestandsnaam moet de volgende vorm hebben: `` plugin-import-naam-**een_naam **.Txt``. Met de aanwezigheid van dit bestand kunt u code importeren uit de .py-bestanden die in het ZIP-bestand aanwezig zijn, met behulp van een statement als:"
+msgstr "Een leeg tekstbestand om de multi-file plugin magie in te schakelen. Dit bestand moet aanwezig zijn in alle plug-ins die meer dan één .py bestand gebruiken. Het moet leeg zijn en de bestandsnaam moet volgende vorm hebben: `` plugin-import-name-**een_naam **.txt``. Met dit bestand kunt u code importeren uit de .py bestanden in het ZIP-bestand , met behulp van een statement als::"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:71
 msgid ""
@@ -149,14 +151,14 @@ msgid ""
 "subpackages of .py modules inside the ZIP file, just like you would normally"
 " (by defining __init__.py in each sub-folder), and everything should \"just "
 "work\"."
-msgstr ""
+msgstr "De prefix ``calibre_plugins`` moet altijd aanwezig zijn. ``some_name`` komt van de naam van het lege tekst bestand. ``some_module`` verwijst naar :file:`some_module.py` in het ZIP bestand. Merk op dat deze import even machtig is als gewone Python imports. U kan packages en subpackages van .py modules creëren in het ZIP bestand, net zoals u normaal zou doen (door __init__.py te definiëren in elke submap) en alles zou \"moeten werken\"."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:76
 msgid ""
 "The name you use for ``some_name`` enters a global namespace shared by all "
 "plugins, **so make it as unique as possible**. But remember that it must be "
 "a valid Python identifier (only alphabets, numbers and the underscore)."
-msgstr "De naam die u gebruikt voor ``een_name`` voert een algemene naamruimte in die door alle plug-ins wordt gedeeld, **dus maak deze zo uniek mogelijk**. Maar vergeet niet dat het een geldige Python-id moet zijn (alleen alfabetten, cijfers en het onderstrepingsteken)."
+msgstr "De naam die u gebruikt voor ``some_name`` gaat in een algemene naamruimte, gedeeld door alle plug-ins, **dus maak deze zo uniek mogelijk**. Maar vergeet niet dat het een geldig Python-id moet zijn (alleen alfabetten, cijfers en het onderliggend streepje)."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:80
 msgid "**__init__.py**"
@@ -164,7 +166,7 @@ msgstr "**__init__.py**"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:80
 msgid "As before, the file that defines the plugin class"
-msgstr "Zoals hiervoor, dit bestand definieërd de klasse van de plugin"
+msgstr "Zoals hiervoor, het bestand dat de plugin's klasse definieert"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:83
 msgid "**main.py**"
@@ -180,7 +182,7 @@ msgstr "**ui.py**"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:86
 msgid "This file defines the interface part of the plugin"
-msgstr "Dit bestand definieërd de interface van de plugin"
+msgstr "Dit bestand definieert de interface van de plugin"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:89
 msgid "**images/icon.png**"
@@ -196,7 +198,7 @@ msgstr "**about.txt**"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:92
 msgid "A text file with information about the plugin"
-msgstr "Een tekstbestand met informatie over uw plugin"
+msgstr "Een tekstbestand met informatie over de plugin"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:97
 msgid "**translations**"
@@ -206,11 +208,11 @@ msgstr "**vertalingen**"
 msgid ""
 "A folder containing .mo files with the translations of the user interface of"
 " your plugin into different languages. See below for details."
-msgstr "Een map die .mo-bestanden bevat met de vertalingen van het gebruikersinterface van uw plugin in verschillende talen. Zie hieronder voor details."
+msgstr "Een map die .mo-bestanden bevat met vertalingen van de gebruikersinterface van uw plug-in in verschillende talen. Zie onder voor details."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:99
 msgid "Now let's look at the code."
-msgstr "Laten we naar de code kijken"
+msgstr "Laten we naar de code kijken."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:102
 msgid "__init__.py"
@@ -218,7 +220,7 @@ msgstr "__init__.py"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:104
 msgid "First, the obligatory ``__init__.py`` to define the plugin metadata:"
-msgstr "Eerst de verplichte ``__init__.py`` om de metagegevens voor de plugin te definiëren:"
+msgstr "Eerst de verplichte ``__init__.py`` om de plugin's metagegevens te definiëren:"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:109
 msgid ""
@@ -228,19 +230,19 @@ msgid ""
 "does this for you, by telling calibre that the actual plugin is to be found "
 "in another file inside your ZIP archive, which will only be loaded in a GUI "
 "context."
-msgstr "De enige noemenswaardige eigenschap is het veld: attr:`actual_plugin`. Omdat Calibre zowel opdrachtregel- als GUI-interfaces heeft, mogen GUI-plug-ins zoals deze geen enkele GUI-bibliotheek in __init__.py laden. Het veld actual_plugin doet dit voor u, door Calibre te zeggen dat de daadwerkelijke plugin in een ander bestand in uw ZIP-archief te vinden is, dat alleen in een GUI-context wordt geladen."
+msgstr "De enige noemenswaardige eigenschap is het veld: attr:`actual_plugin`. Omdat calibre zowel opdrachtregel als GUI interfaces heeft, mogen GUI plug-ins zoals deze geen enkele GUI-bibliotheek laden in __init__.py . Het veld actual_plugin doet dit voor u, door calibre te zeggen dat de daadwerkelijke plugin in een ander bestand in uw ZIP archief te vinden is, dat alleen in een GUI context wordt geladen."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:114
 msgid ""
 "Remember that for this to work, you must have a plugin-import-name-"
 "some_name.txt file in your plugin ZIP file, as discussed above."
-msgstr "Vergeet niet dat om dit te laten werken, je een plugin-import-naam-een_naam.txt bestand nodig hebt in je ZIP-plugin-plug-in, zoals hierboven besproken."
+msgstr "Vergeet niet dat om dit te laten werken, u een plugin-import-name-een_naam.txt bestand nodig hebt in uw ZIP plug-in, zoals boven besproken."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:117
 msgid ""
 "Also there are a couple of methods for enabling user configuration of the "
 "plugin. These are discussed below."
-msgstr "Er zijn meerdere methoden om gebruikers-configuratie van de plugin mogelijk te maken. Deze worden hieronder besproken."
+msgstr "Er zijn meerdere methoden om gebruikersconfiguratie van de plug-in mogelijk te maken. Deze worden onder besproken."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:120
 msgid "ui.py"
@@ -250,7 +252,7 @@ msgstr "ui.py"
 msgid ""
 "Now let's look at ui.py which defines the actual GUI plugin. The source code"
 " is heavily commented and should be self explanatory:"
-msgstr "Laten we nu ul.py bekijken dat de eigenlijke GUI plugin definiëert. De broncode is voorzien van commentaar en zou zichzelf moeten verklaren:"
+msgstr "Laten we nu ui.py bekijken dat de eigenlijke GUI plug-in definieert. De broncode is voorzien van commentaar en zou zichzelf moeten verklaren:"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:128
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:212
@@ -259,17 +261,17 @@ msgstr "main.py"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:130
 msgid "The actual logic to implement the Interface Plugin Demo dialog."
-msgstr "De eigenlijke opzet om het Interface Plugin Demo dialoogvenster te implementeren."
+msgstr "De eigenlijke logica om de Interface Plugin Demo dialoog te implementeren."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:136
 msgid "Getting resources from the plugin ZIP file"
-msgstr "Hulpbronnen ophalen uit het ZIP-bestand voor de plug-in"
+msgstr "Ophalen bronnen uit het plug-in ZIP bestand"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:138
 msgid ""
 "calibre's plugin loading system defines a couple of built-in functions that "
 "allow you to conveniently get files from the plugin ZIP file."
-msgstr "Calibre plugin laadsysteem definieert een aantal ingebouwde functies waarmee u gemakkelijk bestanden kunt ophalen uit het plug-in ZIP bestand."
+msgstr "calibres plug-in laadsysteem definieert een aantal ingebouwde functies waarmee u gemakkelijk bestanden kunt ophalen uit het plug-in ZIP bestand."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:145
 msgid "**get_resources(name_or_list_of_names)**"
@@ -285,7 +287,7 @@ msgid ""
 "found in the ZIP file. If you pass in more than one name then it returns a "
 "dict mapping the names to bytes. If a name is not found, it will not be "
 "present in the returned dict."
-msgstr ""
+msgstr "Deze functie roepen met een padenlijst naar bestanden in het ZIP bestand. Bv. voor toegang tot icon.png in de map afbeeldingen in het ZIP bestand gebruikt u : ``afbeeldingen/icon.png``. Gebruik altijd een voorwaartse slash als padscheider, zelfs in Windows. Als u een enkele naam doorgeeft zal de functie de rauwe bytes van dat bestand geven of None als de naam niet werd gevonden in het ZIP bestand. Als u meerdere namen doorgeeft, geeft het een dict mapping the names to bytes. Als een naam niet gevonden wordt, zal die niet aanwezig zijn in de teruggegeven dict."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:149
 msgid "**get_icons(name_or_list_of_names)**"
@@ -296,36 +298,36 @@ msgid ""
 "A convenience wrapper for get_resources() that creates QIcon objects from "
 "the raw bytes returned by get_resources. If a name is not found in the ZIP "
 "file the corresponding QIcon will be null."
-msgstr "Een handige wrapper voor get_resources() die QIcon-objecten maakt van de onbewerkte bytes die worden geretourneerd door get_resources. Als een naam niet in het ZIP-bestand wordt gevonden, is de bijbehorende QIcon nul."
+msgstr "Een handige wrapper voor get_resources() die QIcon-objecten maakt van de onbewerkte bytes teruggegeven door get_resources. Als een naam niet in het ZIP bestand wordt gevonden, is de bijbehorende QIcon nul."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:152
 msgid "Enabling user configuration of your plugin"
-msgstr "Gebruikers-configuratie van uw plugin toevoegen"
+msgstr "Gebruikers-configuratie van uw plugin inschakelen"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:154
 msgid ""
 "To allow users to configure your plugin, you must define three methods in "
 "your base plugin class, **is_customizable**, **config_widget** and "
 "**save_settings** as shown below:"
-msgstr "Om gebruikers in staat te stellen uw plug-in te configureren, moet u drie methoden in uw basis-plugin-klasse definiëren, ** is_customizable **, ** config_widget ** en ** save_settings ** zoals hieronder weergegeven:"
+msgstr "Om gebruikers uw plug-in te laten configureren, moet u drie methoden in uw basis plug-inklasse definiëren, ** is_customizable **, ** config_widget ** en ** save_settings ** zoals onder weergegeven:"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:165
 msgid ""
 "calibre has many different ways to store configuration data (a legacy of its"
 " long history). The recommended way is to use the **JSONConfig** class, "
 "which stores your configuration information in a .json file."
-msgstr "Calibre heeft vele manieren om configuratie-gegevens te bewaren (een erfenis van vroeger). De aanbevolen manier is het gebruik van de **JSONConfig** class, welke de informatie bewaard in een .json-bestand."
+msgstr "calibre heeft vele manieren om configuratiegegevens te bewaren (een erfenis van lange geschiedenis). De aanbevolen manier is het gebruik van de **JSONConfig** klasse, die de informatie bewaart in een .json bestand."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:167
 msgid ""
 "The code to manage configuration data in the demo plugin is in config.py:"
-msgstr "De code om configuratie-gegevens te beheren in de demo-plugin is in config.py:"
+msgstr "De code om configuratiegegevens te beheren in de demoplug-in is in config.py:"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:172
 msgid ""
 "The ``prefs`` object is now available throughout the plugin code by a "
 "simple::"
-msgstr "Het ``prefs``-object is nu beschikbaar in de plugincode met een simpele::"
+msgstr "Het ``prefs`` object is nu beschikbaar in de plug-incode met een simpele::"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:177
 msgid "You can see the ``prefs`` object being used in main.py:"
@@ -333,7 +335,7 @@ msgstr "U kunt het gebruik van ``prefs``-object zien in main.py:"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:184
 msgid "Edit book plugins"
-msgstr "Boek-invoegtoepassingen bewerken"
+msgstr "Boek plug-ins bewerken"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:186
 msgid ""
@@ -341,14 +343,14 @@ msgid ""
 "to the calibre book editor. The plugin is available here: "
 "`editor_demo_plugin.zip <https://calibre-"
 "ebook.com/downloads/editor_demo_plugin.zip>`_."
-msgstr ""
+msgstr "Laten we wat hoger schakelen en een plug-in creëren om tools toe te voegen aan de calibre boekeditor. De plug-in is hier beschikbaar: `editor_demo_plugin.zip <https://calibre-ebook.com/downloads/editor_demo_plugin.zip>`_."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:190
 msgid ""
 "The first step, as for all plugins is to create the import name empty txt "
 "file, as described :ref:`above <import_name_txt>`. We shall name the file "
 "``plugin-import-name-editor_plugin_demo.txt``."
-msgstr "De eerste stap zoals voor alle plugins is het maken van het lege import name txt-bestand zoals :ref:`boven <import_name_txt>` beschreven. We noemen het bestand ``plugin-import-name-editor_plugin_demo.txt``."
+msgstr "De eerste stap, zoals voor alle plug-ins, is het maken van het lege import name .txt bestand zoals :ref:`above <import_name_txt>` beschreven. We noemen het bestand ``plugin-import-name-editor_plugin_demo.txt``."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:194
 msgid ""
@@ -362,7 +364,7 @@ msgid ""
 " single button in the toolbar and entry in the :guilabel:`Plugins` menu in "
 "the editor. These can have sub-menus in case the tool has multiple related "
 "actions."
-msgstr "Een enkel editor-plugin kan meerdere gereedschappen leveren, ieder gereedschap correspondeert met een enkele knop in de werkbalk en trefwoord in het :guilabel:`Plugins`-menu in de editor. Deze kunnen sub-menu's hebben indien het gereedschap meerdere acties heeft."
+msgstr "Een enkel editorplug-in kan meerdere tools leveren, iedere tool correspondeert met een knop in de werkbalk en trefwoord in het :guilabel:`Plug-ins` menu in de editor. Deze kunnen sub-menu's hebben indien de tool meerdere acties heeft."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:204
 msgid ""
@@ -372,7 +374,7 @@ msgid ""
 "``main.py`` from the demo plugin, the source code is heavily commented and "
 "should be self-explanatory. Read the API documents of the "
 ":class:`calibre.gui2.tweak_book.plugin.Tool` class for more details."
-msgstr "De gereedschappen moeten allemaal gedefiniëerd zijn in het bestand ``main.py`` in uw plugin. Ieder gereedschap in een class, dat erft van de :class:`Calibre.gui2.tweak_book.plugin.Tool` class. Laten we een kijkje nemen in ``main.py`` van de demo-plugin, de broncode is voorzien van commentaar en zou zichzelf moeten verklaren. Lees de API-documenten van de :class:`Calibre.gui2.tweak_book.plugin.Tool` class voor meer details."
+msgstr "De tools moeten allemaal gedefinieerd zijn in het bestand ``main.py`` in uw plugin. Iedere tool is een class, die erft van de :class:`calibre.gui2.tweak_book.plugin.Tool` class. Laten we een kijkje nemen in ``main.py`` van de demoplug-in, de broncode is voorzien van commentaar en zou zichzelf moeten verklaren. Lees de API-documenten van de :class:`calibre.gui2.tweak_book.plugin.Tool` class voor meer details."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:214
 msgid ""
@@ -380,20 +382,20 @@ msgid ""
 " sizes in the book by a number provided by the user. This tool demonstrates "
 "various important concepts that you will need in developing your own "
 "plugins, so you should read the (heavily commented) source code carefully."
-msgstr "Hier zien we de definitie van een enkel gereedschap dat alle lettergroottes in het boek multipliceert met een getal ingesteld door de gebruiker. Dit gereedschap demonstreert meerdere belangrijke concepten die u nodig heeft omuw eigen plugin te ontwikkelen. Lees daarom de (van commentaar voorziene) broncode grondig."
+msgstr "Hier zien we de definitie van een enkele tool dat alle lettergroottes in het boek vermenigvuldigt met een getal ingesteld door de gebruiker. Deze tool demonstreert meerdere belangrijke concepten die u nodig heeft om uw eigen plug-in te ontwikkelen. Lees daarom de (goed van commentaar voorziene) broncode grondig."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:222
 msgid ""
 "Let's break down ``main.py``. We see that it defines a single tool, named "
 "*Magnify fonts*. This tool will ask the user for a number and multiply all "
 "font sizes in the book by that number."
-msgstr "Laten we ``main.py`` in onderdelen bekijken. We zien dat een enkel gereedschap wordt gefeniniëerd genoemd *Magnify fonts* - letters vergroten. Dit gereedschap vraagt aan de gebruiker om een getal in te geven en vermenigvuldigt alle lettergroottes in het boek met dit getal."
+msgstr "Laten we ``main.py`` bekijken. We zien dat een enkele tool wordt gedefinieerd, *Magnify fonts*. Hij vraagt de gebruiker een getal en vermenigvuldigt alle lettergroottes in het boek met dit getal."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:226
 msgid ""
 "The first important thing is the tool name which you must set to some "
 "relatively unique string as it will be used as the key for this tool."
-msgstr "Het eerste belangrijke ding is de naam van het gereedschap die u moet bepalen op een relatief unieke tekenreeks omdat deze wordt gebruikt als toets voor dit gereedschap."
+msgstr "Het eerste belangrijke ding is de naam van de tool die een redelijk unieke tekenreeks moet zijn, deze wordt gebruikt als sleutel voor dit gereedschap."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:229
 msgid ""
@@ -404,7 +406,7 @@ msgid ""
 "customize. The triggered signal from the QAction is connected to the "
 "ask_user() method that asks the user for the font size multiplier, and then "
 "runs the magnification code."
-msgstr "Het volgende belangrijke toegangspunt is :meth:`calibre.gui2.tweak_book.plugin.Tool.create_action`. Deze methode maakt de QAction-objecten die op de plug-inwerkbalk en het plug-inmenu verschijnen. Optioneel wordt ook een sneltoets toegewezen die de gebruiker kan aanpassen. Het getriggerde signaal van de QAction is verbonden met de ask_user() methode die de gebruiker vraagt naar de vergrotingsfactor voor de lettergrootte en voert vervolgens de vergrotingscode uit."
+msgstr "Het volgende belangrijke punt is :meth:`calibre.gui2.tweak_book.plugin.Tool.create_action`. Deze methode maakt de QAction objecten die op de plug-inwerkbalk en het plug-inmenu verschijnen. Optioneel wordt ook een sneltoets toegewezen die de gebruiker kan aanpassen. Het getriggerde signaal van de QAction is verbonden met de ask_user() methode die de gebruiker vraagt naar de lettergrootte vergrotingsfactor en vervolgens de vergrotingscode uitvoert."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:237
 msgid ""
@@ -424,11 +426,11 @@ msgid ""
 "and has convenience methods for doing many useful things. The container "
 "object and various useful utility functions that can be reused in your "
 "plugin code are documented in :ref:`polish_api`."
-msgstr "Ten slotte is er ``self.current_container'', een verwijzing naar het boek dat wordt bewerkt als :class:`calibre.ebooks.oeb.polish.container.Container` object. Dit vertegenwoordigt het boek als een verzameling van de samenstellende HTML/CSS/afbeeldingsbestanden en heeft handige methoden om veel nuttige dingen te doen. Het containerobject en verschillende handige hulpprogramma's die kunnen worden hergebruikt in uw plug-incode zijn gedocumenteerd in :ref: `polish_api`."
+msgstr "Tenslotte is er ``self.current_container'', een verwijzing naar het boek dat wordt bewerkt als :class:`calibre.ebooks.oeb.polish.container.Container` object. Dit stelt het boek voor als een verzameling van z'n samenstellende HTML/CSS/afbeeldingsbestanden en heeft handige methoden om veel nuttige dingen te doen. Het containerobject en verschillende handige hulpprogramma's die kunnen worden herbruikt in uw plug-incode zijn gedocumenteerd in :ref: `polish_api`."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:252
 msgid "Running User Interface plugins in a separate process"
-msgstr "Plug-ins voor gebruikersinterface uitvoeren in een afzonderlijk proces"
+msgstr "Gebruikersinterfaceplug-ins uitvoeren in een afzonderlijk proces"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:254
 msgid ""
@@ -437,7 +439,7 @@ msgid ""
 "possible to use WebEngine there. Instead you can copy the data your plugin "
 "needs to a temporary folder and run the plugin with that data in a separate "
 "process. A simple example plugin follows that shows how to do this."
-msgstr ""
+msgstr "Als u een gebruikersinterfaceplug-in schrijft die Qt WebEngine nodig heeft, kan deze niet in het calibre hoofdproces draaien omdat men WebEngine daar niet kan gebruiken. In plaats daarvan kan u de data die uw plug-in nodig heeft naar een tijdelijke map kopiëren en de plug-in met die data in een apart proces draaien. Een simpele voorbeeld plug-in die toont hoe dat te doen volgt."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:261
 msgid ""
@@ -447,14 +449,14 @@ msgstr "U kunt de plug-in downloaden van `webengine_demo_plugin.zip  <https://ca
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:264
 msgid "The important part of the plugin is in two functions:"
-msgstr "Het belangrijke deel van de plug-in bestaat uit twee functies:"
+msgstr "Het belangrijke deel van de plug-in zit in twee functies:"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:273
 msgid ""
 "The ``show_demo()`` function asks the user for a URL and then runs the "
 "``main()`` function passing it that URL. The ``main()`` function displays "
 "the URL in a ``QWebEngineView``."
-msgstr "De functie ``show_demo()`` vraagt de gebruiker om een URL en voert vervolgens de functie ``main ()'' met deze URL. De functie ``main()`` geeft de URL weer in een ``QWebEngineView'."
+msgstr "De functie ``show_demo()`` vraagt de gebruiker om een URL en voert vervolgens de functie ``main ()'' uit met deze URL. De functie ``main()`` geeft de URL weer in een ``QWebEngineView'."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:279
 msgid "Adding translations to your plugin"
@@ -464,13 +466,13 @@ msgstr "Vertalingen toevoegen aan uw plugin"
 msgid ""
 "You can have all the user interface strings in your plugin translated and "
 "displayed in whatever language is set for the main calibre user interface."
-msgstr "U kunt de teksten in het gebruikersinterface in uw plugin laten vertalen in elke taal die is ingesteld voor het Calibre gebruikersinterface."
+msgstr "U kunt de teksten in het gebruikersinterface in uw plugin laten vertalen in elke taal die is ingesteld voor de calibre gebruikersinterface."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:284
 msgid ""
 "The first step is to go through your plugin's source code and mark all user "
 "visible strings as translatable, by surrounding them in _(). For example::"
-msgstr "De eerste stap in de broncodes in uw plugin te doorzoeken naar voor gebruikers zichtbare teksten te doorzoeken en deze te markeren als vertaalbaar door ze te omgeven met _(). Bijvoorbeeld::"
+msgstr "De eerste stap is door uw plug-in's broncodes te gaan en alle voor gebruikers zichtbare teksten te markeren als vertaalbaar door ze te omgeven met _(). Bijvoorbeeld::"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:289
 msgid ""
@@ -478,17 +480,17 @@ msgid ""
 "There should be one .po file for every language you want to translate into. "
 "For example: de.po for German, fr.po for French and so on. You can use the "
 "`Poedit <https://poedit.net/>`_ program for this."
-msgstr "Gebruik vervolgens een programma om .po-bestanden te genereren uit de broncode van uw plug-in. Er moet één .po-bestand zijn voor elke taal waarin u wilt vertalen. Bijvoorbeeld: nl.po voor Nederlands, fr.po voor Frans enzovoort. U kunt hiervoor het `Poedit <https://poedit.net/>`_program gebruiken."
+msgstr "Gebruik dan een programma om .po bestanden te genereren uit uw plug-in's broncode . Er moet één .po-bestand zijn voor elke taal waarin u wilt vertalen. Bijvoorbeeld: nl.po voor Nederlands, fr.po voor Frans enzovoort. U kunt hiervoor het `Poedit <https://poedit.net/>`_program gebruiken."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:294
 msgid ""
 "Send these .po files to your translators. Once you get them back, compile "
 "them into .mo files. You can again use Poedit for that, or just do::"
-msgstr "Stuur deze .po-bestanden naar uw vertalers. Zodra je ze terug krijgt, compileer ze in .mo-bestanden. Je kunt Poedit daarvoor opnieuw gebruiken, of gewoon doen:"
+msgstr "Stuur deze .po-bestanden naar uw vertalers. Zodra u ze terug krijgt, compileer ze in .mo-bestanden. U kunt opnieuw Poedit daarvoor gebruiken, of doe gewoon:"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:299
 msgid "Put the .mo files into the ``translations`` folder in your plugin."
-msgstr "Plaats de .mo-bestanden in de ``vertalingen``-map in uw plugin."
+msgstr "Plaats de .mo-bestanden in de ``vertalingen``-map in uw plug-in."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:301
 msgid ""
@@ -497,14 +499,14 @@ msgid ""
 " this function in those .py files that actually have translatable strings. "
 "So in a typical User Interface plugin you would call it at the top of "
 "``ui.py`` but not ``__init__.py``."
-msgstr "De laatste stap is om eenvoudig de functie `load_translations()` op te roepen bovenin uw .py-bestanden in uw plugin. Om de prestatie niet te vertragen moet u deze functie alleen aanroepen in die .py-bestanden die daadwerkelijk vertaalbare teksten bevatten. Dus in een normaal Gebruikersinterface plugin roept u deze functie wel aan bovenin ``ui.py`` maar niet in ``__init__.py``."
+msgstr "De laatste stap is om gewoon de functie `load_translations()` te roepen bovenaan uw plugin's .py bestanden. Voor prestatie redenen deze functie alleen aanroepen in die .py-bestanden die echt vertaalbare teksten bevatten. Dus in een normale Gebruikersinterfaceplug-in roept u deze functie aan bovenin ``ui.py`` maar niet in ``__init__.py``."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:307
 msgid ""
 "You can test the translations of your plugins by changing the user interface"
 " language in calibre under :guilabel:`Preferences->Interface->Look & feel` "
 "or by running calibre like this::"
-msgstr "U kunt de vertalingen van uw plug-ins testen door de taal van de gebruikersinterface in calibre te wijzigen onder :guilabel:`Preferences->Interface->Look & feel` of door calibre als volgt uit te voeren:"
+msgstr "U kunt de vertalingen van uw plug-ins testen door de taal van de gebruikersinterface in calibre te wijzigen onder :guilabel:`Voorkeuren->Interface->Uitstraling & gevoel` of door calibre zo uit te voeren:"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:313
 msgid ""
@@ -513,7 +515,7 @@ msgstr "Vervang ``de`` met de taalcode van de taal die u wilt testen."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:316
 msgid "The plugin API"
-msgstr "De plugin API"
+msgstr "De plug-in API"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:318
 msgid ""
@@ -521,36 +523,36 @@ msgid ""
 "different classes for the different types of plugins in calibre. Details on "
 "each class, including the base class of all plugins can be found in "
 ":ref:`plugins`."
-msgstr "Zoals u misschien heeft opgemerkt is een plugin in Calibre een class. Er zijn verschillende classes voor verschillende types plugin. Details van iedere class, inclusief de basis class van alle plugins zijn te vinden in :ref:`plugins`."
+msgstr "Zoals u misschien heeft opgemerkt is een plug-in in calibre een class. Er zijn verschillende classes voor verschillende types plug-ins. Details van iedere class, inclusief de basis class van alle plugins zijn te vinden in :ref:`plugins`."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:321
 msgid ""
 "Your plugin is almost certainly going to use code from calibre. To learn how"
 " to find various bits of functionality in the calibre code base, read the "
 "section on the calibre :ref:`code_layout`."
-msgstr "Uw plugin zal bijna zeker code gebruiken van Calibre. Om te leren hoe u diverse stukjes functionaliteit vindt in de Calibre code basis, lees de sectie :ref:`code_layout`."
+msgstr "Uw plugin zal bijna zeker code gebruiken van calibre. Om te leren hoe u diverse stukjes functionaliteit vindt in de calibre code basis, lees de sectie over calibre's :ref:`code_layout`."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:326
 msgid "Debugging plugins"
-msgstr "Plugins debuggen"
+msgstr "Plug-ins foutopsporing"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:328
 msgid ""
 "The first, most important step is to run calibre in debug mode. You can do "
 "this from the command line with::"
-msgstr "De eerste en belangrijkste stap is het laten werken van Calibre in foutenopsporingsmodus. U kunt dit doen in de opdrachtregel met::"
+msgstr "De eerste, belangrijkste stap is calibre draaien in foutenopsporingsmodus. U kunt dit doen in de opdrachtregel met::"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:332
 msgid ""
 "Or from within calibre by right-clicking the :guilabel:`Preferences` button "
 "or using the :kbd:`Ctrl+Shift+R` keyboard shortcut."
-msgstr "Of vanuit calibre door met de rechtermuisknop op de :guilabel:`Preferences` knop te klikken of gebruik te maken van de :kbd:`Ctrl+Shift+R`  sneltoets ."
+msgstr "Of vanuit calibre door met de rechts te klikken op de :guilabel:`Preferences` knop of gebruik te maken van de :kbd:`Ctrl+Shift+R` sneltoets ."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:334
 msgid ""
 "When running from the command line, debug output will be printed to the "
 "console, when running from within calibre the output will go to a txt file."
-msgstr "Wanneer u werkt met de opdrachtregel verschijnt de foutoplossen op de console, wanneer u werkt in calbre zal dit worden geschreven naar een .txt-bestand."
+msgstr "Wanneer u werkt met de opdrachtregel verschijnt de foutoplossing op de console, wanneer u werkt in calibre zal dit naar een .txt-bestand worden geschreven."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:336
 msgid ""
@@ -558,7 +560,7 @@ msgid ""
 "output in debug mode. Remember, this is Python, you really shouldn't need "
 "anything more than print statements to debug ;) I developed all of calibre "
 "using just this debugging technique."
-msgstr "U kunt overal printinstructies invoegen in uw plug-incode, deze worden uitgevoerd in de foutopsporingsmodus. Vergeet niet, dit is Python, je zou echt niets meer nodig moeten hebben dan print commando's om te debuggen ;) Ik heb heel calibre ontwikkeld met alleen deze debugtechniek."
+msgstr "U kunt overal printinstructies invoegen in uw plug-incode, deze worden uitgevoerd in de foutopsporingsmodus. Vergeet niet, dit is Python, uzou echt niets meer nodig moeten hebben dan print commando's om te debuggen ;) Ik heb heel calibre ontwikkeld met alleen deze foutopsporingstechniek."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:338
 msgid ""
@@ -570,7 +572,7 @@ msgstr "U kunt snel wijzigingen aan uw plugin testen met behulp van de volgende 
 msgid ""
 "This will shutdown a running calibre, wait for the shutdown to complete, "
 "then update your plugin in calibre and relaunch calibre."
-msgstr "Dit sluit een lopende Calibre af, wacht totdat het programma geheel afgesloten is, dan uw plugin updaten in Calibre en Calibre herstarten."
+msgstr "Dit sluit een lopende calibre af, wacht totdat het programma geheel afgesloten is, dan uw plugin updaten in calibre en calibre herstarten."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:346
 msgid "More plugin examples"
@@ -580,7 +582,7 @@ msgstr "Meer voorbeelden van plugins"
 msgid ""
 "You can find a list of many sophisticated calibre plugins `here "
 "<https://www.mobileread.com/forums/showthread.php?t=118764>`_."
-msgstr ""
+msgstr "U kan een lijst met gesofisticeerde calibre plug-ins vinden `hier <https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:351
 msgid "Sharing your plugins with others"
@@ -591,4 +593,4 @@ msgid ""
 "If you would like to share the plugins you have created with other users of "
 "calibre, post your plugin in a new thread in the `calibre plugins forum "
 "<https://www.mobileread.com/forums/forumdisplay.php?f=237>`_."
-msgstr "Als je wenst de plugins te delen die je gemaakt hebt, met andere gebruiks van Calibre, maak een nieuw onderwerp aan in  `Calibre plugins forum <https://www.mobileread.com/forums/forumdisplay.php?f=237>`_."
+msgstr "Als u de plugins die u gemaakt hebt wilt delen met andere gebruikers van calibre, post ze onder een nieuw onderwerp in  `calibre plugins forum <https://www.mobileread.com/forums/forumdisplay.php?f=237>`_."
