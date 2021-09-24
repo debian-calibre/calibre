@@ -9831,6 +9831,18 @@ return this.__repr__();
                 __module__ : {value: "widgets"}
             });
 
+            function bullet(icon) {
+                var ans;
+                ans = svgicon(icon, "2ex", "2ex");
+                ans.style.minWidth = "2ex";
+                ans.style.minHeight = "2ex";
+                return ans;
+            };
+            if (!bullet.__argnames__) Object.defineProperties(bullet, {
+                __argnames__ : {value: ["icon"]},
+                __module__ : {value: "widgets"}
+            });
+
             function process_node(node, parent_container, level) {
                 var ul, icon, li, child;
                 if (ρσ_exists.d(node.children).length) {
@@ -9840,7 +9852,7 @@ return this.__repr__();
                     for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
                         child = ρσ_Iter0[ρσ_Index0];
                         icon = (ρσ_exists.d(child.children).length) ? "caret-right" : null;
-                        li = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [svgicon(icon), E.span(" "), ρσ_interpolate_kwargs.call(E, E.a, [ρσ_desugar_kwargs({href: "javascript: void(0)", class_: "simple-link tree-item-title", onclick: (function() {
+                        li = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [bullet(icon), E.span(" "), ρσ_interpolate_kwargs.call(E, E.a, [ρσ_desugar_kwargs({href: "javascript: void(0)", class_: "simple-link tree-item-title", onclick: (function() {
                             var ρσ_anonfunc = function (event) {
                                 if (onclick) {
                                     if (event.button === 0) {
@@ -14150,8 +14162,14 @@ return this.__repr__();
         });
 
         function decoded_range_to_document_position(decoded) {
-            var rect, inline_vs_pos, block_vs_pos;
+            var rect, inserted_node, inline_vs_pos, block_vs_pos;
             rect = decoded.range.getBoundingClientRect();
+            inserted_node = null;
+            if (!rect.width && !rect.height && !rect.left && !rect.right) {
+                inserted_node = document.createTextNode(" ");
+                decoded.range.insertNode(inserted_node);
+                rect = decoded.range.getBoundingClientRect();
+            }
             if (decoded.use_range_end_pos) {
                 inline_vs_pos = scroll_viewport.rect_inline_end(rect);
             } else {
@@ -14161,6 +14179,9 @@ return this.__repr__();
                 block_vs_pos = scroll_viewport.rect_block_end(rect);
             } else {
                 block_vs_pos = scroll_viewport.rect_block_start(rect);
+            }
+            if (inserted_node) {
+                inserted_node.parentNode.removeChild(inserted_node);
             }
             return scroll_viewport.viewport_to_document_inline_block(inline_vs_pos, block_vs_pos, decoded.node.ownerDocument);
         };
@@ -14215,7 +14236,7 @@ return this.__repr__();
         });
 
         function scroll_to(cfi, callback, doc) {
-            var decoded, r, ρσ_unpack, so, eo, original_node, node_parent, original_node_index, ndoc, span, fn, node;
+            var decoded, fn;
             decoded = decode_with_range(cfi, doc);
             if (!decoded) {
                 print("No location information found for cfi: " + cfi);
@@ -14224,7 +14245,8 @@ return this.__repr__();
             if (typeof decoded.time === "number") {
                 set_current_time(decoded.node, decoded.time);
             }
-            if (decoded.range !== null) {
+            function handle_text_node() {
+                var r, ρσ_unpack, so, eo, original_node, node_parent, original_node_index, ndoc, span;
                 r = decoded.range;
                 ρσ_unpack = [r.startOffset, r.endOffset];
                 so = ρσ_unpack[0];
@@ -14243,7 +14265,7 @@ return this.__repr__();
                 span.setAttribute("style", "border-width: 0; padding: 0; margin: 0");
                 r.surroundContents(span);
                 scroll_viewport.scroll_into_view(span);
-                fn = (function() {
+                return (function() {
                     var ρσ_anonfunc = function () {
                         var p, node, offset, ρσ_unpack, doc_x, doc_y;
                         p = span.parentNode;
@@ -14302,7 +14324,13 @@ return this.__repr__();
                     });
                     return ρσ_anonfunc;
                 })();
-            } else {
+            };
+            if (!handle_text_node.__module__) Object.defineProperties(handle_text_node, {
+                __module__ : {value: "read_book.cfi"}
+            });
+
+            function handle_element_node() {
+                var node;
                 node = decoded.node;
                 if (node.nodeType === Node.TEXT_NODE) {
                     node = decoded.node = node.parentNode;
@@ -14311,7 +14339,7 @@ return this.__repr__();
                     return;
                 }
                 scroll_viewport.scroll_into_view(node);
-                fn = (function() {
+                return (function() {
                     var ρσ_anonfunc = function () {
                         var ρσ_unpack, doc_x, doc_y;
                         ρσ_unpack = decoded_node_or_spatial_offset_to_document_position(decoded);
@@ -14333,6 +14361,15 @@ return this.__repr__();
                     });
                     return ρσ_anonfunc;
                 })();
+            };
+            if (!handle_element_node.__module__) Object.defineProperties(handle_element_node, {
+                __module__ : {value: "read_book.cfi"}
+            });
+
+            if (decoded.range !== null) {
+                fn = handle_text_node();
+            } else {
+                fn = handle_element_node();
             }
             setTimeout(fn, 10);
         };
@@ -18021,7 +18058,7 @@ return this.__repr__();
                 unhide_tree(start_elem);
             } else {
                 found_note_start = false;
-                var ρσ_Iter4 = ρσ_Iterable(document.body.getElementsByTagName("*"));
+                var ρσ_Iter4 = ρσ_Iterable(document.documentElement.getElementsByTagName("*"));
                 for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
                     elem = ρσ_Iter4[ρσ_Index4];
                     if (found_note_start) {
@@ -26291,7 +26328,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.27.0";
+        CALIBRE_VERSION = "5.28.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -37432,7 +37469,7 @@ return this.__repr__();
                     ρσ_d["search"] = a("search", _("Search for selection in the book") + " [F]", "book_search");
                     ρσ_d["bookmark"] = a("bookmark", _("Create a bookmark") + " [Ctrl+Alt+B]", "new_bookmark");
                     ρσ_d["search_net"] = a("global-search", _("Search for selection on the net") + " [S]", "internet_search");
-                    ρσ_d["remove_highlight"] = a("trash", _("Remove this highlight") + " [Delete]", "remove_highlight", true);
+                    ρσ_d["remove_highlight"] = a("trash", _("Remove this highlight") + " [Delete or D]", "remove_highlight", true);
                     ρσ_d["clear"] = a("close", _("Clear selection") + " [Esc]", "clear_selection");
                     ρσ_d["speak"] = a("bullhorn", _("Read aloud") + " [T]", "speak_aloud");
                     ρσ_d["cite"] = a("reference-mode", _("Copy citation to clipboard") + " [X]", "cite");
@@ -37710,6 +37747,7 @@ return this.__repr__();
             self.end_handle_id = unique_id("handle");
             self.bar_id = unique_id("bar");
             self.editor_id = unique_id("editor");
+            self.quick_highlight_styles = [];
             self.ltr = true;
             self.rtl = false;
             self.vertical = false;
@@ -37900,6 +37938,7 @@ return this.__repr__();
                 }
             }
             selection_bar_quick_highlights = sd.get("selection_bar_quick_highlights");
+            self.quick_highlight_styles = [];
             if ((typeof selection_bar_quick_highlights !== "undefined" && selection_bar_quick_highlights !== null ? selection_bar_quick_highlights : Object.create(null)).length) {
                 self.show_quick_highlight_buttons(bar, selection_bar_quick_highlights);
             }
@@ -37912,7 +37951,7 @@ return this.__repr__();
         });
         SelectionBar.prototype.show_quick_highlight_buttons = function show_quick_highlight_buttons(bar, actions) {
             var self = this;
-            var all, x, a, dark, hs, sw, key;
+            var all, x, a, dark, hs, sc, sw, ρσ_unpack, i, key;
             all = (function() {
                 var ρσ_Iter = ρσ_Iterable(all_styles()), ρσ_Result = Object.create(null), x;
                 for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
@@ -37935,13 +37974,33 @@ return this.__repr__();
             if (!actions.length) {
                 return;
             }
+            ρσ_interpolate_kwargs.call(actions, actions.pysort, [ρσ_desugar_kwargs({key: (function() {
+                var ρσ_anonfunc = function (a) {
+                    return (all[(typeof a === "number" && a < 0) ? all.length + a : a].friendly_name || "").toLowerCase();
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["a"]},
+                    __module__ : {value: "read_book.selection_bar"}
+                });
+                return ρσ_anonfunc;
+            })()})]);
+            self.quick_highlight_styles = actions;
             bar.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "background: currentColor; width: 1px; height: " + ρσ_str.format("{}", ICON_SIZE) + "; margin-left: " + ρσ_str.format("{}", BUTTON_MARGIN) + "; margin-right: " + ρσ_str.format("{}", BUTTON_MARGIN) + ""})]));
             dark = self.view.current_color_scheme.is_dark_theme;
-            var ρσ_Iter4 = ρσ_Iterable(actions);
+            var ρσ_Iter4 = ρσ_Iterable(enumerate(actions));
             for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                key = ρσ_Iter4[ρσ_Index4];
+                ρσ_unpack = ρσ_Iter4[ρσ_Index4];
+                i = ρσ_unpack[0];
+                key = ρσ_unpack[1];
                 hs = all[(typeof key === "number" && key < 0) ? all.length + key : key];
-                sw = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-link", style: "margin-left: " + ρσ_str.format("{}", BUTTON_MARGIN) + "; margin-right: " + ρσ_str.format("{}", BUTTON_MARGIN) + "", title: _("Highlight using: {}").format(hs.friendly_name), onclick: self.quick_highlight_with_style.bind(null, hs)})]);
+                if (i < 9) {
+                    sc = i + 1;
+                } else if ((i === 10 || typeof i === "object" && ρσ_equals(i, 10))) {
+                    sc = 0;
+                } else {
+                    sc = null;
+                }
+                sw = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-link", style: "margin-left: " + ρσ_str.format("{}", BUTTON_MARGIN) + "; margin-right: " + ρσ_str.format("{}", BUTTON_MARGIN) + "", title: (ρσ_expr_temp = _("Highlight using: {name}{sc}"), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.format, [ρσ_desugar_kwargs({name: hs.friendly_name, sc: (sc !== null) ? " [" + ρσ_str.format("{}", sc) + "]" : ""})])), onclick: self.quick_highlight_with_style.bind(null, hs)})]);
                 hs.make_swatch(sw, dark);
                 bar.appendChild(sw);
             }
@@ -38189,7 +38248,7 @@ return this.__repr__();
         });
         SelectionBar.prototype.on_keydown = function on_keydown(ev) {
             var self = this;
-            var k, sc_name, forwarded;
+            var k, all, x, key, hs, sc_name, forwarded;
             [ev.stopPropagation(), ev.preventDefault()];
             if (ev.key === "Escape") {
                 if (self.state === EDITING) {
@@ -38229,8 +38288,32 @@ return this.__repr__();
                     self.cite();
                     return;
                 }
-                if (k === "delete") {
+                if (k === "delete" || k === "d") {
                     self.remove_highlight();
+                    return;
+                }
+                if (ρσ_in(k, "0123456789")) {
+                    all = (function() {
+                        var ρσ_Iter = ρσ_Iterable(all_styles()), ρσ_Result = Object.create(null), x;
+                        for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                            x = ρσ_Iter[ρσ_Index];
+                            ρσ_Result[x.key] = (x);
+                        }
+                        return ρσ_Result;
+                    })();
+                    k = int(k);
+                    if (k === 0) {
+                        k = 9;
+                    } else {
+                        k -= 1;
+                    }
+                    key = (ρσ_expr_temp = self.quick_highlight_styles)[(typeof k === "number" && k < 0) ? ρσ_expr_temp.length + k : k];
+                    if (key) {
+                        hs = all[(typeof key === "number" && key < 0) ? all.length + key : key];
+                        if (hs) {
+                            self.quick_highlight_with_style(hs);
+                        }
+                    }
                     return;
                 }
             }

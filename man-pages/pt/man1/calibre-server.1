@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "setembro 10, 2021" "5.27.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "setembro 24, 2021" "5.28.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -111,7 +111,7 @@ Socket pre\-allocation, for example, with systemd socket activation. Por predefi
 .INDENT 0.0
 .TP
 .B \-\-enable\-auth, \-\-disable\-auth
-Autenticação por senha para aceder ao servidor.     Normally, the server is unrestricted, allowing anyone to access it. You can restrict access to predefined users with this option. Por predefinição, a opção esta desativada.
+Autenticação por senha para aceder ao servidor.     Por padrão, o servidor  não tem restrições, permitindo qualquer pessoa lhe possa aceder. Pode restringir o acesso a utilizadores pré\-definidos com esta opção. Por predefinição, a opção esta desativada.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -131,7 +131,7 @@ Registar pedidos HTTP 404 (Não encontrado).         Normally, the server logs a
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
-Divulgar sinal OPDS através de BonJour.     Advertise the OPDS feeds via the BonJour service, so that OPDS based reading apps can detect and connect to the server automatically. Por predefinição, a opção esta ativada.
+Divulgar sinal OPDS através de BonJour.     Anuncia os sinais OPDS através do serviço BonJour, de modo que as aplicações de leitura baseadas em OPDS possam detetar e ligar\-se ao servidor automaticamente. Por predefinição, a opção esta ativada.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -166,12 +166,12 @@ Manage the database of users allowed to connect to this server. You can use it i
 .INDENT 0.0
 .TP
 .B \-\-max\-header\-line\-size
-Max. size of single HTTP header (in KB).
+Tamanho máximo de cabeçalho HTTP individual (em KB).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-Tempo máximo para processos de trabalho.    Maximum amount of time worker processes are allowed to run (in minutes). Set to zero for no limit.
+Tempo máximo para processos de trabalho.    Quantidade máxima de tempo permitida para a execução dos processos de trabalho (em minutos). Defina para zero para não ter limite.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -246,7 +246,7 @@ Permitir que ligações não autenticadas, mas de endereços IP específicos, re
 .INDENT 0.0
 .TP
 .B \-\-url\-prefix
-Prefixo a anteceder todos os URL.   Useful if you wish to run this server behind a reverse proxy. For example use, /calibre as the URL prefix.
+Prefixo a anteceder todos os URL.   Útil se você deseja rodar este servidor por trás de um proxy reverso. Por exemplo, use /calibre como prefixo de URL
 .UNINDENT
 .INDENT 0.0
 .TP
