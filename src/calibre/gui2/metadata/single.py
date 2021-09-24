@@ -84,11 +84,11 @@ class MetadataSingleDialogBase(QDialog):
         self.button_box = bb = QDialogButtonBox(self)
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
-        self.next_button = QPushButton(QIcon(I('forward.png')), _('&Next'),
+        self.next_button = QPushButton(QIcon(I('forward.png')), _('Next'),
                 self)
         self.next_button.setShortcut(QKeySequence('Alt+Right'))
         self.next_button.clicked.connect(self.next_clicked)
-        self.prev_button = QPushButton(QIcon(I('back.png')), _('&Previous'),
+        self.prev_button = QPushButton(QIcon(I('back.png')), _('Previous'),
                 self)
         self.prev_button.setShortcut(QKeySequence('Alt+Left'))
 
@@ -708,13 +708,11 @@ class MetadataSingleDialogBase(QDialog):
             next_ = self.db.title(self.row_list[self.current_row+1])
 
         if next_ is not None:
-            tip = (_('Save changes and edit the metadata of %s')+
-                    ' [Alt+Right]')%next_
+            tip = _('Save changes and edit the metadata of {} [Alt+Right]').format(next_)
             self.next_button.setToolTip(tip)
         self.next_button.setEnabled(next_ is not None)
         if prev is not None:
-            tip = (_('Save changes and edit the metadata of %s')+
-                    ' [Alt+Left]')%prev
+            tip = _('Save changes and edit the metadata of {} [Alt+Left]').format(prev)
             self.prev_button.setToolTip(tip)
         self.prev_button.setEnabled(prev is not None)
         self.button_box.button(QDialogButtonBox.StandardButton.Ok).setDefault(True)
