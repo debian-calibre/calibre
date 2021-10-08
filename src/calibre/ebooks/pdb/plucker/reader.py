@@ -111,14 +111,14 @@ MIBNUM_TO_NAME = {
 }
 
 
-class HeaderRecord(object):
+class HeaderRecord:
     '''
     Plucker header. PDB record 0.
     '''
 
     def __init__(self, raw):
         self.uid, = struct.unpack('>H', raw[0:2])
-        # This is labled version in the spec.
+        # This is labeled version in the spec.
         # 2 is ZLIB compressed,
         # 1 is DOC compressed
         self.compression, = struct.unpack('>H', raw[2:4])
@@ -137,7 +137,7 @@ class HeaderRecord(object):
                 self.home_html = id
 
 
-class SectionHeader(object):
+class SectionHeader:
     '''
     Every sections (record) has this header. It gives
     details about the section such as it's uid.
@@ -151,7 +151,7 @@ class SectionHeader(object):
         self.flags, = struct.unpack('>B', raw[7:8])
 
 
-class SectionHeaderText(object):
+class SectionHeaderText:
     '''
     Sub header for text records.
     '''
@@ -176,13 +176,13 @@ class SectionHeaderText(object):
             self.paragraph_offsets.append(running_offset)
 
 
-class SectionMetadata(object):
+class SectionMetadata:
     '''
     Metadata.
 
     This does not store metadata such as title, or author.
     That metadata would be best retrieved with the PDB (plucker)
-    metdata reader.
+    metadata reader.
 
     This stores document specific information such as the
     text encoding.
@@ -234,7 +234,7 @@ class SectionMetadata(object):
             adv += 2*length
 
 
-class SectionText(object):
+class SectionText:
     '''
     Text data. Stores a text section header and the PHTML.
     '''
@@ -244,7 +244,7 @@ class SectionText(object):
         self.data = raw[section_header.paragraphs * 4:]
 
 
-class SectionCompositeImage(object):
+class SectionCompositeImage:
     '''
     A composite image consists of a 2D array
     of rows and columns. The entries in the array
@@ -358,7 +358,7 @@ class Reader(FormatReader):
     def extract_content(self, output_dir):
         # Each text record is independent (unless the continuation
         # value is set in the previous record). Put each converted
-        # text recored into a separate file. We will reference the
+        # text recorded into a separate file. We will reference the
         # home.html file as the first file and let the HTML input
         # plugin assemble the order based on hyperlinks.
         with CurrentDir(output_dir):
@@ -452,7 +452,7 @@ class Reader(FormatReader):
         odi = self.options.debug_pipeline
         self.options.debug_pipeline = None
         # Determine the home.html record uid. This should be set in the
-        # reserved values in the metadata recored. home.html is the first
+        # reserved values in the metadata recorded. home.html is the first
         # text record (should have hyper link references to other records)
         # in the document.
         try:

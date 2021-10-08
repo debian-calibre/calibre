@@ -25,7 +25,7 @@ from calibre.gui2.dialogs.edit_authors_dialog import EditAuthorsDialog
 from polyglot.builtins import unicode_type, iteritems
 
 
-class TagBrowserMixin(object):  # {{{
+class TagBrowserMixin:  # {{{
 
     def __init__(self, *args, **kwargs):
         pass
@@ -556,7 +556,7 @@ class TagBrowserBar(QWidget):  # {{{
         ac = QAction(parent)
         parent.addAction(ac)
         parent.keyboard.register_shortcut('tag browser find box',
-                _('Find next match'), default_keys=(),
+                _('Find in the Tag browser'), default_keys=(),
                 action=ac, group=_('Tag browser'))
         ac.triggered.connect(self.set_focus_to_find_box)
 
@@ -568,7 +568,7 @@ class TagBrowserBar(QWidget):  # {{{
         ac = QAction(parent)
         parent.addAction(ac)
         parent.keyboard.register_shortcut('tag browser find button',
-                _('Find in the Tag browser'), default_keys=(),
+                _('Find next match'), default_keys=(),
                 action=ac, group=_('Tag browser'))
         ac.triggered.connect(self.search_button.click)
 

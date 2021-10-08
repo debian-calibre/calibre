@@ -15,12 +15,13 @@ from math import modf
 
 from calibre import prints
 from calibre.constants import DEBUG
+from calibre.ebooks.metadata.book.base import field_metadata
 from calibre.utils.formatter_functions import formatter_functions
 from calibre.utils.icu import strcmp
 from polyglot.builtins import unicode_type, error_message
 
 
-class Node(object):
+class Node:
     NODE_RVALUE = 1
     NODE_IF = 2
     NODE_ASSIGN = 3
@@ -255,7 +256,7 @@ class CharacterNode(Node):
         self.expression = expression
 
 
-class _Parser(object):
+class _Parser:
     LEX_OP = 1
     LEX_ID = 2
     LEX_CONST = 3
@@ -677,7 +678,7 @@ class StopException(Exception):
         super().__init__('Template evaluation stopped')
 
 
-class _Interpreter(object):
+class _Interpreter:
     def error(self, message, line_number):
         m = _('Interpreter: {0} - line number {1}').format(message, line_number)
         raise ValueError(m)
@@ -890,6 +891,7 @@ class _Interpreter(object):
     def do_node_raw_field(self, prog):
         try:
             name = self.expr(prog.expression)
+            name = field_metadata.search_term_to_field_key(name)
             res = getattr(self.parent_book, name, None)
             if res is None and prog.default is not None:
                 res = self.expr(prog.default)
@@ -1383,7 +1385,7 @@ class TemplateFormatter(string.Formatter):
 
     @property
     def gpm_interpreter(self):
-        if len(self._interpreters) <= self.recursion_level:
+        while len(self._interpreters) <= self.recursion_level:
             self._interpreters.append(_Interpreter())
         return self._interpreters[self.recursion_level]
 

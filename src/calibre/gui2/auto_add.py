@@ -1,28 +1,28 @@
 #!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
+# License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 
-
-__license__   = 'GPL v3'
-__copyright__ = '2012, Kovid Goyal <kovid@kovidgoyal.net>'
-__docformat__ = 'restructuredtext en'
-
-import os, tempfile, shutil, time
-from threading import Thread, Event
-from polyglot.builtins import map
-
-from qt.core import (QFileSystemWatcher, QObject, Qt, pyqtSignal, QTimer, QApplication, QCursor)
+import os
+import shutil
+import tempfile
+import time
+from qt.core import (
+    QApplication, QCursor, QFileSystemWatcher, QObject, Qt, QTimer, pyqtSignal
+)
+from threading import Event, Thread
 
 from calibre import prints
-from calibre.db.adding import filter_filename, compile_rule
+from calibre.db.adding import compile_rule, filter_filename
 from calibre.ebooks import BOOK_EXTENSIONS
 from calibre.gui2 import gprefs
 from calibre.gui2.dialogs.duplicates import DuplicatesQuestion
 from calibre.utils.tdir_in_cache import tdir_in_cache
+from polyglot.builtins import map
 
 AUTO_ADDED = frozenset(BOOK_EXTENSIONS) - {'pdr', 'mbp', 'tan'}
 
 
-class AllAllowed(object):
+class AllAllowed:
 
     def __init__(self):
         self.disallowed = frozenset(gprefs['blocked_auto_formats'])
@@ -84,9 +84,9 @@ class Worker(Thread):
             shutil.rmtree(self.tdir, ignore_errors=True)
 
     def auto_add(self):
-        from calibre.utils.ipc.simple_worker import fork_job, WorkerError
-        from calibre.ebooks.metadata.opf2 import metadata_to_opf
         from calibre.ebooks.metadata.meta import metadata_from_filename
+        from calibre.ebooks.metadata.opf2 import metadata_to_opf
+        from calibre.utils.ipc.simple_worker import WorkerError, fork_job
 
         files = [x for x in os.listdir(self.path) if
                     # Must not be in the process of being added to the db
@@ -229,7 +229,12 @@ class AutoAdder(QObject):
         added_ids = set()
 
         for fname, tdir in data:
-            paths = [os.path.join(self.worker.path, fname)]
+            path_to_remove = os.path.join(self.worker.path, fname)
+            paths = [path_to_remove]
+            fpath = os.path.join(tdir, 'file_changed_by_plugins')
+            if os.path.exists(fpath):
+                with open(fpath) as f:
+                    paths[0] = f.read()
             sz = os.path.join(tdir, 'size.txt')
             try:
                 with open(sz, 'rb') as f:
@@ -254,7 +259,9 @@ class AutoAdder(QObject):
                 from calibre.ebooks.metadata.tag_mapper import map_tags
                 mi.tags = map_tags(mi.tags, gprefs['tag_map_on_add_rules'])
             if gprefs.get('author_map_on_add_rules'):
-                from calibre.ebooks.metadata.author_mapper import map_authors, compile_rules
+                from calibre.ebooks.metadata.author_mapper import (
+                    compile_rules, map_authors
+                )
                 new_authors = map_authors(mi.authors, compile_rules(gprefs['author_map_on_add_rules']))
                 if new_authors != mi.authors:
                     mi.authors = new_authors
@@ -275,7 +282,7 @@ class AutoAdder(QObject):
                 duplicates.append(dups)
 
             try:
-                os.remove(paths[0])
+                os.remove(path_to_remove)
                 self.worker.staging.remove(fname)
             except:
                 import traceback

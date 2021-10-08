@@ -21,7 +21,7 @@ from calibre.constants import DEBUG
 from polyglot.builtins import range, as_unicode, as_bytes, unicode_type, map
 
 
-class APNXBuilder(object):
+class APNXBuilder:
     '''
     Create an APNX file using a pseudo page mapping.
     '''
@@ -280,7 +280,7 @@ class APNXBuilder(object):
 
     def get_pages_pagebreak_tag(self, mobi_file_path):
         '''
-        Determine pages based on the presense of
+        Determine pages based on the presence of
         <mbp:pagebreak>.
         '''
         pages = []

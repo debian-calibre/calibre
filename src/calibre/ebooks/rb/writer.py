@@ -19,7 +19,7 @@ from calibre.constants import __appname__, __version__
 TEXT_RECORD_SIZE = 4096
 
 
-class TocItem(object):
+class TocItem:
 
     def __init__(self, name, size, flags):
         self.name = name
@@ -27,7 +27,7 @@ class TocItem(object):
         self.flags = flags
 
 
-class RBWriter(object):
+class RBWriter:
 
     def __init__(self, opts, log):
         self.opts = opts
@@ -37,9 +37,9 @@ class RBWriter(object):
     def write_content(self, oeb_book, out_stream, metadata=None):
         info = [('info.info', self._info_section(metadata))]
         images = self._images(oeb_book.manifest)
-        text_size, chuncks = self._text(oeb_book)
-        chunck_sizes = [len(x) for x in chuncks]
-        text = [('index.html', chuncks)]
+        text_size, chunks = self._text(oeb_book)
+        chunck_sizes = [len(x) for x in chunks]
+        text = [('index.html', chunks)]
         hidx = [('index.hidx', ' ')]
 
         toc_items = []
@@ -84,8 +84,8 @@ class RBWriter(object):
         out_stream.write(struct.pack('<I', text_size))
         for size in chunck_sizes:
             out_stream.write(struct.pack('<I', size))
-        for chunck in text[0][1]:
-            out_stream.write(chunck)
+        for chunk in text[0][1]:
+            out_stream.write(chunk)
 
         self.log.debug('Writing images...')
         for item in hidx+images:
@@ -132,7 +132,7 @@ class RBWriter(object):
 
                     images.append((name, data))
                 except Exception as e:
-                    self.log.error('Error: Could not include file %s becuase '
+                    self.log.error('Error: Could not include file %s because '
                         '%s.' % (item.href, e))
 
         return images

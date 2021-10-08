@@ -15,7 +15,7 @@ import time
 from polyglot.builtins import long_type
 
 
-class PdbHeaderReader(object):
+class PdbHeaderReader:
 
     def __init__(self, stream):
         self.stream = stream
@@ -66,7 +66,7 @@ class PdbHeaderReader(object):
         return self.stream.read(end - start)
 
 
-class PdbHeaderBuilder(object):
+class PdbHeaderBuilder:
 
     def __init__(self, identity, title):
         self.identity = identity.ljust(3, '\x00')[:8].encode('utf-8')
@@ -74,7 +74,7 @@ class PdbHeaderBuilder(object):
 
     def build_header(self, section_lengths, out_stream):
         '''
-        section_lengths = Lenght of each section in file.
+        section_lengths = Length of each section in file.
         '''
 
         now = int(time.time())

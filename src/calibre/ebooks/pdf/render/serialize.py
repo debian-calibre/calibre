@@ -23,7 +23,7 @@ from polyglot.builtins import as_unicode
 PDFVER = b'%PDF-1.4'  # 1.4 is needed for XMP metadata
 
 
-class IndirectObjects(object):
+class IndirectObjects:
 
     def __init__(self):
         self._list = []
@@ -152,7 +152,7 @@ class Page(Stream):
         return ret
 
 
-class Path(object):
+class Path:
 
     def __init__(self):
         self.ops = []
@@ -199,7 +199,7 @@ class PageTree(Dictionary):
             return -1
 
 
-class HashingStream(object):
+class HashingStream:
 
     def __init__(self, f):
         self.f = f
@@ -259,7 +259,7 @@ class Metadata(Stream):
         d['Subtype'] = Name('XML')
 
 
-class PDFStream(object):
+class PDFStream:
 
     PATH_OPS = {
         # stroke fill   fill-rule
@@ -301,6 +301,7 @@ class PDFStream(object):
         i = QImage(1, 1, QImage.Format.Format_ARGB32)
         i.fill(qRgba(0, 0, 0, 255))
         self.alpha_bit = i.constBits().asstring(4).find(b'\xff')
+        self.bw_image_color_table = frozenset((QColor(Qt.GlobalColor.black).rgba(), QColor(Qt.GlobalColor.white).rgba()))
 
     @property
     def page_tree(self):
@@ -426,9 +427,7 @@ class PDFStream(object):
 
         fmt = img.format()
         image = QImage(img)
-        if (image.depth() == 1 and img.colorTable().size() == 2 and
-            img.colorTable().at(0) == QColor(Qt.GlobalColor.black).rgba() and
-            img.colorTable().at(1) == QColor(Qt.GlobalColor.white).rgba()):
+        if image.depth() == 1 and frozenset(img.colorTable()) == self.bw_image_color_table:
             if fmt == QImage.Format.Format_MonoLSB:
                 image = image.convertToFormat(QImage.Format.Format_Mono)
             fmt = QImage.Format.Format_Mono

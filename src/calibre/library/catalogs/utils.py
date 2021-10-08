@@ -12,7 +12,7 @@ from calibre import prints
 from calibre.utils.logging import default_log as log
 
 
-class NumberToText(object):  # {{{
+class NumberToText:  # {{{
     '''
     Converts numbers to text
     4.56    => four point fifty-six
@@ -129,7 +129,7 @@ class NumberToText(object):  # {{{
             right = NumberToText(decimal_strings[1]).text
             self.text = '%s point %s' % (left.capitalize(), right)
 
-        # Test for hypenated
+        # Test for hyphenated
         elif re.search('-', self.number):
             if self.verbose:
                 self.log("Hyphenated: %s" % self.number)

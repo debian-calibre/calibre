@@ -34,7 +34,7 @@ PARAGRAPH_SEPARATOR = '\u2029'
 DEFAULT_LINK_TEMPLATE = '<a href="_TARGET_">_TEXT_</a>'
 
 
-class Tag(object):
+class Tag:
 
     def __init__(self, start_block, tag_start, end_block, tag_end, self_closing=False):
         self.start_block, self.end_block = start_block, end_block
@@ -422,6 +422,14 @@ class Smarts(NullSmarts):
         tag = find_closest_containing_block_tag(block, offset)
 
         if tag is not None:
+            if tag.name == 'body':
+                ntag = find_closest_containing_block_tag(block, offset + 1)
+                if ntag is not None and ntag.name != 'body':
+                    tag = ntag
+                elif offset > 0:
+                    ntag = find_closest_containing_block_tag(block, offset - 1)
+                    if ntag is not None and ntag.name != 'body':
+                        tag = ntag
             closing_tag = find_closing_tag(tag)
             if closing_tag is None:
                 return error_dialog(editor, _('Invalid HTML'), _(
@@ -715,8 +723,10 @@ class Smarts(NullSmarts):
         if key == Qt.Key.Key_Home and smart_home(editor, ev):
             return True
 
-        if key == Qt.Key.Key_Tab and smart_tab(editor, ev):
-            return True
+        if key == Qt.Key.Key_Tab:
+            mods = ev.modifiers()
+            if not mods & Qt.KeyboardModifier.ControlModifier and smart_tab(editor, ev):
+                return True
 
         if key == Qt.Key.Key_Backspace and smart_backspace(editor, ev):
             return True

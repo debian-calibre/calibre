@@ -2,16 +2,12 @@
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2009, Kovid Goyal <kovid at kovidgoyal.net>
 
-'A simplified logging system'
-
-DEBUG = 0
-INFO  = 1
-WARN  = 2
-ERROR = 3
+# A simplified logging system
 
 import io
 import sys
 import traceback
+from contextlib import suppress
 from functools import partial
 from threading import Lock
 
@@ -19,7 +15,13 @@ from calibre.prints import prints
 from polyglot.builtins import as_unicode
 
 
-class Stream(object):
+DEBUG = 0
+INFO  = 1
+WARN  = 2
+ERROR = 3
+
+
+class Stream:
 
     def __init__(self, stream=None):
         if stream is None:
@@ -31,7 +33,9 @@ class Stream(object):
         self._prints(text, end='')
 
     def flush(self):
-        self.stream.flush()
+        with suppress(BrokenPipeError):
+            # Don't fail if we were logging to a pipe and it got closed
+            self.stream.flush()
 
     def prints(self, level, *args, **kwargs):
         self._prints(*args, **kwargs)
@@ -60,9 +64,6 @@ class ANSIStream(Stream):
         from calibre.utils.terminal import ColoredStream
         with ColoredStream(self.stream, self.color[level]):
             self._prints(*args, **kwargs)
-
-    def flush(self):
-        self.stream.flush()
 
 
 class FileStream(Stream):
@@ -93,9 +94,6 @@ class HTMLStream(Stream):
         self._prints(self.color[level], end='')
         self._prints(*args, **kwargs)
         self._prints(self.normal, end='')
-
-    def flush(self):
-        self.stream.flush()
 
 
 class UnicodeHTMLStream(HTMLStream):
@@ -147,7 +145,7 @@ class UnicodeHTMLStream(HTMLStream):
         self.last_col = lc
 
 
-class Log(object):
+class Log:
 
     DEBUG = DEBUG
     INFO  = INFO
