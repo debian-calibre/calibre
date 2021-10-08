@@ -92,7 +92,7 @@ class Heading(QWidget):  # {{{
 # }}}
 
 
-class Cell(object):  # {{{
+class Cell:  # {{{
 
     __slots__ = ('rect', 'text', 'right_align', 'color_role', 'override_color', 'swatch', 'is_overriden')
 
@@ -176,7 +176,7 @@ class Declaration(QWidget):
             ])
             self.lines_for_copy.append(text + vtext)
             if prop.is_overriden:
-                self.lines_for_copy[-1] += ' [overriden]'
+                self.lines_for_copy[-1] += ' [overridden]'
             ypos += max(br1.height(), br2.height()) + line_spacing
         self.lines_for_copy.append('--------------------------\n')
 
@@ -362,7 +362,7 @@ class Box(QWidget):
         m.exec_(ev.globalPos())
 
 
-class Property(object):
+class Property:
 
     __slots__ = 'name', 'value', 'important', 'color', 'specificity', 'is_overriden'
 

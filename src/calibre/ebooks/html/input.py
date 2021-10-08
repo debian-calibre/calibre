@@ -21,7 +21,7 @@ from polyglot.builtins import unicode_type
 from polyglot.urllib import urlparse, urlunparse
 
 
-class Link(object):
+class Link:
 
     '''
     Represents a link in a HTML file.
@@ -76,7 +76,7 @@ class IgnoreFile(Exception):
         self.errno = errno
 
 
-class HTMLFile(object):
+class HTMLFile:
 
     '''
     Contains basic information about an HTML file. This
@@ -168,7 +168,7 @@ class HTMLFile(object):
             try:
                 link = self.resolve(url)
             except ValueError:
-                # Unparseable URL, ignore
+                # Unparsable URL, ignore
                 continue
             if link not in self.links:
                 self.links.append(link)

@@ -39,7 +39,7 @@ class InvalidLinkTable(Exception):
         self.field_name = name
 
 
-class Field(object):
+class Field:
 
     is_many = False
     is_many_many = False
@@ -441,7 +441,7 @@ class OnDeviceField(OneToOneField):
             yield val, book_ids
 
 
-class LazySortMap(object):
+class LazySortMap:
 
     __slots__ = ('default_sort_key', 'sort_key_func', 'id_map', 'cache')
 
@@ -577,8 +577,10 @@ class ManyToManyField(Field):
 class IdentifiersField(ManyToManyField):
 
     def for_book(self, book_id, default_value=None):
-        ids = self.table.book_col_map.get(book_id, ())
-        if not ids:
+        ids = self.table.book_col_map.get(book_id, None)
+        if ids:
+            ids = ids.copy()
+        else:
             try:
                 ids = default_value.copy()  # in case default_value is a mutable dict
             except AttributeError:
@@ -664,7 +666,7 @@ class FormatsField(ManyToManyField):
         return ans
 
 
-class LazySeriesSortMap(object):
+class LazySeriesSortMap:
 
     __slots__ = ('default_sort_key', 'sort_key_func', 'id_map', 'cache')
 

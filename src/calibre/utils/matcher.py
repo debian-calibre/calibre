@@ -79,7 +79,7 @@ def default_scorer(*args, **kwargs):
         return PyScorer(*args, **kwargs)
 
 
-class Matcher(object):
+class Matcher:
 
     def __init__(
         self,
@@ -220,7 +220,7 @@ def process_item(ctx, haystack, needle):
     return final_score, final_positions
 
 
-class PyScorer(object):
+class PyScorer:
     __slots__ = (
         'level1', 'level2', 'level3', 'max_score_per_char', 'items', 'memory'
     )
@@ -246,7 +246,7 @@ class PyScorer(object):
 # }}}
 
 
-class CScorer(object):
+class CScorer:
 
     def __init__(
         self,
@@ -274,7 +274,7 @@ def test(return_tests=False):
 
     class Test(unittest.TestCase):
 
-        @unittest.skipIf(is_sanitized, 'Sanitizer enabled cant check for leaks')
+        @unittest.skipIf(is_sanitized, 'Sanitizer enabled can\'t check for leaks')
         def test_mem_leaks(self):
             import gc
             from calibre.utils.mem import get_memory as memory

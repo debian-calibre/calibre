@@ -86,7 +86,7 @@ def tag_regex(tagname):
                 close=r'</\s*%(t)s\s*>'%dict(t=tagname))
 
 
-class HTMLConverter(object):
+class HTMLConverter:
     SELECTOR_PAT   = re.compile(r"([A-Za-z0-9\-\_\:\.]+[A-Za-z0-9\-\_\:\.\s\,]*)\s*\{([^\}]*)\}")
     PAGE_BREAK_PAT = re.compile(r'page-break-(?:after|before)\s*:\s*(\w+)', re.IGNORECASE)
     IGNORED_TAGS   = (Comment, Declaration, ProcessingInstruction)
@@ -236,7 +236,7 @@ class HTMLConverter(object):
         self.id_counter = 0
         self.unused_target_blocks = []  # : Used to remove extra TextBlocks
         self.link_level  = 0    #: Current link level
-        self.memory = []        #: Used to ensure that duplicate CSS unhandled erros are not reported
+        self.memory = []        #: Used to ensure that duplicate CSS unhandled errors are not reported
         self.tops = {}          #: element representing the top of each HTML file in the LRF file
         self.previous_text = ''  # : Used to figure out when to lstrip
         self.stripped_space = ''
@@ -937,7 +937,7 @@ class HTMLConverter(object):
             if height <= 0:
                 height = 1
             pt = PersistentTemporaryFile(suffix='_html2lrf_scaled_image_.'+encoding.lower())
-            self.image_memory.append(pt)  # Neccessary, trust me ;-)
+            self.image_memory.append(pt)  # Necessary, trust me ;-)
             try:
                 im.resize((int(width), int(height)), PILImage.ANTIALIAS).save(pt, encoding)
                 pt.close()

@@ -18,7 +18,7 @@ from calibre import isbytestring
 from polyglot.builtins import unicode_type, filter, map
 
 
-class Concatenate(object):
+class Concatenate:
     '''String concatenation aggregator for sqlite'''
 
     def __init__(self, sep=','):
@@ -72,7 +72,7 @@ def _connect(path):
     return conn
 
 
-class LibraryDatabase(object):
+class LibraryDatabase:
 
     @staticmethod
     def books_in_old_database(path):
@@ -404,7 +404,7 @@ class LibraryDatabase(object):
             END;
         END;
         CREATE TRIGGER fkc_update_books_series_link_b
-        BEFORE UPDATE OF serie ON books_series_link
+        BEFORE UPDATE OF series ON books_series_link
         BEGIN
             SELECT CASE
                 WHEN (SELECT id from series WHERE id=NEW.series) IS NULL
@@ -1463,7 +1463,7 @@ ALTER TABLE books ADD COLUMN isbn TEXT DEFAULT "" COLLATE NOCASE;
         return self.conn.get('SELECT id FROM books where id=?', (id,), all=False) is not None
 
 
-class SearchToken(object):
+class SearchToken:
 
     FIELD_MAP = {'title'       : 1,
                   'author'      : 2,

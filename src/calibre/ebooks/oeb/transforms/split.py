@@ -43,7 +43,7 @@ class SplitError(ValueError):
                             path=path, size=size))
 
 
-class Split(object):
+class Split:
 
     def __init__(self, split_on_page_breaks=True, page_breaks_xpath=None,
             max_flow_size=0, remove_css_pagebreaks=True):
@@ -124,7 +124,7 @@ class Split(object):
         for i, elem in enumerate(item.data.iter('*')):
             try:
                 elem.set('pb_order', unicode_type(i))
-            except TypeError:  # Cant set attributes on comment nodes etc.
+            except TypeError:  # Can't set attributes on comment nodes etc.
                 continue
 
         page_breaks = list(page_breaks)
@@ -168,7 +168,7 @@ class Split(object):
         try:
             href = self.current_item.abshref(href)
         except ValueError:
-            # Unparseable URL
+            # Unparsable URL
             return url
         try:
             href = urlnormalize(href)
@@ -186,7 +186,7 @@ class Split(object):
         return url
 
 
-class FlowSplitter(object):
+class FlowSplitter:
     'The actual splitting logic'
 
     def __init__(self, item, page_breaks, page_break_ids, max_flow_size, oeb,

@@ -5,7 +5,7 @@ from polyglot.builtins import map, unicode_type, environ_item, hasenv, getenv
 import sys, locale, codecs, os, collections, collections.abc
 
 __appname__   = 'calibre'
-numeric_version = (5, 28, 0)
+numeric_version = (5, 29, 0)
 __version__   = '.'.join(map(unicode_type, numeric_version))
 git_version   = None
 __author__    = "Kovid Goyal <kovid@kovidgoyal.net>"
@@ -363,7 +363,7 @@ else:
     if not os.path.exists(config_dir) or \
             not os.access(config_dir, os.W_OK) or not \
             os.access(config_dir, os.X_OK):
-        print('No write acces to', config_dir, 'using a temporary dir instead')
+        print('No write access to', config_dir, 'using a temporary dir instead')
         import tempfile, atexit
         config_dir = tempfile.mkdtemp(prefix='calibre-config-')
 

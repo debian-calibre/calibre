@@ -216,8 +216,13 @@ class TagsView(QTreeView):  # {{{
         self._model.user_categories_edited.connect(self.user_categories_edited,
                 type=Qt.ConnectionType.QueuedConnection)
         self._model.drag_drop_finished.connect(self.drag_drop_finished)
+        self._model.convert_requested.connect(self.convert_requested)
         self.set_look_and_feel(first=True)
         QApplication.instance().palette_changed.connect(self.set_style_sheet, type=Qt.ConnectionType.QueuedConnection)
+
+    def convert_requested(self, book_ids, to_fmt):
+        from calibre.gui2.ui import get_gui
+        get_gui().iactions['Convert Books'].convert_ebooks_to_format(book_ids, to_fmt)
 
     def set_style_sheet(self):
         stylish_tb = '''
@@ -329,15 +334,44 @@ class TagsView(QTreeView):  # {{{
         self.collapsed.connect(self.collapse_node_and_children)
 
     def keyPressEvent(self, event):
+
+        def on_last_visible_item(dex, check_children):
+            model = self._model
+            if model.get_node(dex) == model.root_item:
+                # Got to root. There can't be any more children to show
+                return True
+            if check_children and self.isExpanded(dex):
+                # We are on a node with expanded children so there is a node to go to.
+                # We don't check children if we are moving up the parent hierarchy
+                return False
+            parent = model.parent(dex)
+            if dex.row() < model.rowCount(parent) - 1:
+                # Node has more nodes after it
+                return False
+            # Last node. Check the parent for further to see if there are more nodes
+            return on_last_visible_item(parent, False)
+
         # I don't see how current_index can ever be not valid, but ...
         if self.currentIndex().isValid():
-            if (gprefs['tag_browser_allow_keyboard_focus'] and
-                    event.key() == Qt.Key.Key_Return and self.state() != QAbstractItemView.State.EditingState):
-                self.toggle_current_index()
-                return
+            key = event.key()
+            if gprefs['tag_browser_allow_keyboard_focus']:
+                if key == Qt.Key.Key_Return and self.state() != QAbstractItemView.State.EditingState:
+                    self.toggle_current_index()
+                    return
+                # Check if we are moving the focus and we are at the beginning or the
+                # end of the list. The goal is to prevent moving focus away from the
+                # tag browser.
+                if key == Qt.Key.Key_Tab:
+                    if not on_last_visible_item(self.currentIndex(), True):
+                        QTreeView.keyPressEvent(self, event)
+                    return
+                if key == Qt.Key.Key_Backtab:
+                    if self.model().get_node(self.currentIndex()) != self._model.root_item.children[0]:
+                        QTreeView.keyPressEvent(self, event)
+                    return
             # If this is an edit request, mark the node to request whether to use VLs
             # As far as I can tell, F2 is used across all platforms
-            if event.key() == Qt.Key.Key_F2:
+            if key == Qt.Key.Key_F2:
                 node = self.model().get_node(self.currentIndex())
                 if node.type == TagTreeItem.TAG:
                     # Saved search nodes don't use the VL test/dialog

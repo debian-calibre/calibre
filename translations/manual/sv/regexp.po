@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-23 02:29+0000\n"
-"PO-Revision-Date: 2021-09-18 04:39+0000\n"
+"POT-Creation-Date: 2021-10-07 03:23+0000\n"
+"PO-Revision-Date: 2021-10-03 07:12+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -172,7 +172,7 @@ msgid ""
 " matching page numbers, wouldn't that be the single one expression to match "
 "all the page numbers? Yes, the expression ``Page [0-9]+ of 423`` would match"
 " every page number in that book!"
-msgstr "Jag hoppades att du skulle säga det. Men förvänta dig själv, nu blir det ännu bättre! Vi såg precis att du använder apparater, kunde vi matcha ett av flera tecken på en gång. Men du kan även upprepa ett tecken eller uppsättning, för att minska antalet uttryck som behövs för att hantera det ovan sidnummerexemplet till ett. Ja, ETT! Upphetsad? Du bör vara det! Det fungerar så här: En del så kallade specialtecken \"+\", \"?\" och \"*\", * upprepa enda element som föregår dem*. (Element antingen ett enda tecken, en teckenuppsättning, en escape-sekvens eller en grupp (vi ska lära oss om de två sista senare) - kort sagt, en enda enhet i ett reguljärt uttryck) är Dessa tecken kallas jokertecken eller kvantifikatorer. För att vara mer exakt, \"?\" matchar *0 eller 1* förekomster av det föregående elementet, \"*\" matchar *0 eller flera* för det föregående elementet och \"+\" matchar *1 eller flera* av det föregående elementet. Några exempel:? Uttrycket `` a `` skulle matcha antingen \"\" (som är den tomma strängen, inte strikt användbar i detta fall) eller \"a\", uttrycket ``a*`` skulle matcha \"\", \"a\",\"aa\" eller valfritt antal a: n i rad, och slutligen uttrycket` `a+` `skulle matcha \"a\",\"aa\" eller valfritt antal a: n i rad (Observera: det skulle inte matcha den tomma strängen!). Samma gäller för uppsättningar: Uttrycket `` [0-9]+ `` skulle matcha *varje heltal finns det*! Jag vet vad du tänker, och du har rätt: Om du använder det i ovanstående fall matcha sidnummer, skulle inte det vara det enda uttryck som matcha alla sidnummer? Ja, uttrycket `` Page [0-9]+ av 423`` skulle matcha varje sidnummer i boken!"
+msgstr "Jag hoppades att du skulle säga det. Men håll i dig själv, nu blir det ännu bättre! Vi såg precis att med uppsättning kan vi matcha en av flera tecken samtidigt. Men du kan även upprepa ett tecken eller uppsättning, för att minska antalet uttryck som behövs för att hantera ovan sidnummerexemplet till ett. Ja, ETT! Upphetsad? Du borde vara det! Det fungerar så här: Några så kallade specialtecken \"+\", \"?\" och \"*\", * upprepa det enda elementet som föregår dem*. (Element betyder antingen ett enda tecken, en teckenuppsättning, en flyktsekvens eller en grupp (vi ska lära oss om de två sista senare) - kort sagt vilken enskild enhet som helst i ett reguljärt uttryck). Dessa tecken kallas jokertecken eller kvantifierare. För att vara mer exakt, \"?\" matchar *0 eller 1* förekomster av det föregående elementet, \"*\" matchar *0 eller flera* för det föregående elementet och \"+\" matchar *1 eller flera* av det föregående elementet. Några exempel: Uttrycket ``a?`` skulle matcha antingen \"\" (som är den tomma strängen, inte strikt användbar i detta fall) eller \"a\", uttrycket ``a*`` skulle matcha \"\", \"a\", \"aa\" eller valfritt antal a i rad, och slutligen uttrycket ``a+`` skulle matcha \"a\", \"aa\" eller valfritt antal a i rad (Observera: det skulle inte matcha den tomma strängen!). Samma gäller för uppsättningar: Uttrycket `` [0-9]+`` skulle matcha *varje heltal som finns*! Jag vet vad du tänker, och du har rätt: Om du använder fallet med matchande sidnummer ovan, skulle inte det vara det enda uttrycket för att matcha alla sidnummer? Ja, uttrycket ``Page [0-9]+ of 423`` skulle matcha varje sidnummer i den boken!"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:52
 msgid ""
@@ -250,7 +250,7 @@ msgstr "``\\s``"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:73
 msgid "is equivalent to any whitespace"
-msgstr "motsvarar någon whitespace"
+msgstr "motsvarar alla whitespace"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:76
 msgid ""

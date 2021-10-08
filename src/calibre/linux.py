@@ -54,7 +54,7 @@ def polyglot_write(stream):
     return write
 
 
-class PreserveMIMEDefaults(object):  # {{{
+class PreserveMIMEDefaults:  # {{{
 
     def __init__(self):
         self.initial_values = {}
@@ -235,7 +235,7 @@ CALIBRE_LINUX_INSTALLER_HEREDOC
 # Completion {{{
 
 
-class ZshCompleter(object):  # {{{
+class ZshCompleter:  # {{{
 
     def __init__(self, opts):
         self.opts = opts
@@ -1027,7 +1027,7 @@ complete -F _'''%(opts, words) + fname + ' ' + name +"\n\n").encode('utf-8')
 
 
 pics = {'jpg', 'jpeg', 'gif', 'png', 'bmp'}
-pics = list(sorted(pics))  # for reproducability
+pics = list(sorted(pics))  # for reproducibility
 
 
 def opts_and_exts(name, op, exts, cover_opts=('--cover',), opf_opts=(),

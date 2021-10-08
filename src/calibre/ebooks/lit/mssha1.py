@@ -66,7 +66,7 @@ def _bytelist2longBigEndian(blist):
 
 
 def _rotateLeft(x, n):
-    "Rotate x (32 bit) left n bits circularly."
+    "Rotate x (32 bit) left n bits circular."
 
     return (x << n) | (x >> (32-n))
 
@@ -121,7 +121,7 @@ K = [
     ]
 
 
-class mssha1(object):
+class mssha1:
     "An implementation of the MD5 hash function in pure Python."
 
     def __init__(self):

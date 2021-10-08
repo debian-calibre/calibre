@@ -20,7 +20,7 @@ from calibre.ebooks.pdb.ztxt import zTXTError
 SUPPORTED_VERSION = (1, 40)
 
 
-class HeaderRecord(object):
+class HeaderRecord:
     '''
     The first record in the file is always the header record. It holds
     information related to the location of text, images, and so on
@@ -60,7 +60,7 @@ class Reader(FormatReader):
 
         self.log.debug('Foud ztxt version: %i.%i' % (vmajor, vminor))
 
-        # Initalize the decompressor
+        # Initialize the decompressor
         self.uncompressor = zlib.decompressobj()
         self.uncompressor.decompress(self.section_data(1))
 

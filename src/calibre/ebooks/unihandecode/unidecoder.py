@@ -66,7 +66,7 @@ from calibre.ebooks.unihandecode.zhcodepoints import CODEPOINTS as HANCODES
 from polyglot.builtins import unicode_type
 
 
-class Unidecoder(object):
+class Unidecoder:
 
     codepoints = {}
 
@@ -75,7 +75,7 @@ class Unidecoder(object):
         self.codepoints.update(HANCODES)
 
     def decode(self, text):
-        # Replace characters larger than 127 with their ASCII equivelent.
+        # Replace characters larger than 127 with their ASCII equivalent.
         return re.sub('[^\x00-\x7f]',lambda x: self.replace_point(x.group()), text)
 
     def replace_point(self, codepoint):
@@ -95,7 +95,7 @@ class Unidecoder(object):
         '''
         Find what group character is a part of.
         '''
-        # Code groups withing CODEPOINTS take the form 'xAB'
+        # Code groups within CODEPOINTS take the form 'xAB'
         if not isinstance(character, unicode_type):
             character = unicode_type(character, "utf-8")
         return 'x%02x' % (ord(character) >> 8)

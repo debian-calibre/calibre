@@ -56,7 +56,7 @@ STYLES = [
 ]
 
 
-class RBMLizer(object):
+class RBMLizer:
 
     def __init__(self, log, name_map={}):
         self.log = log
@@ -206,7 +206,7 @@ class RBMLizer(object):
                 text.append('<%s>' % style_tag)
                 tag_stack.append(style_tag)
 
-        # Proccess tags that contain text.
+        # Process tags that contain text.
         if hasattr(elem, 'text') and elem.text:
             text.append(prepare_string_for_xml(elem.text))
 

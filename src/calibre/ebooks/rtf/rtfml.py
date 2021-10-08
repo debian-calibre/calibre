@@ -95,7 +95,7 @@ def txt2rtf(text):
     return buf.getvalue()
 
 
-class RTFMLizer(object):
+class RTFMLizer:
 
     def __init__(self, log):
         self.log = log
@@ -275,7 +275,7 @@ class RTFMLizer(object):
                 text += '{%s\n' % style_tag
                 tag_stack.append(style_tag)
 
-        # Proccess tags that contain text.
+        # Process tags that contain text.
         if hasattr(elem, 'text') and elem.text:
             text += txt2rtf(elem.text)
 

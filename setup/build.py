@@ -31,7 +31,7 @@ def absolutize(paths):
     return list(set([x if os.path.isabs(x) else os.path.join(SRC, x.replace('/', os.sep)) for x in paths]))
 
 
-class Extension(object):
+class Extension:
 
     def __init__(self, name, sources, **kwargs):
         self.data = d = {}
@@ -428,7 +428,7 @@ class Build(Command):
                     os.remove(x)
 
     def check_call(self, *args, **kwargs):
-        """print cmdline if an error occured
+        """print cmdline if an error occurred
 
         If something is missing (qmake e.g.) you get a non-informative error
          self.check_call(qmc + [ext.name+'.pro'])
