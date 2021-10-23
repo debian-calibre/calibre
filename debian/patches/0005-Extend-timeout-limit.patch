@@ -14,7 +14,7 @@ Treat Debian package builder as CI system.
  4 files changed, 15 insertions(+), 15 deletions(-)
 
 diff --git a/src/calibre/srv/tests/base.py b/src/calibre/srv/tests/base.py
-index 865f139..05e2da7 100644
+index f9be9d0..289cc05 100644
 --- a/src/calibre/srv/tests/base.py
 +++ b/src/calibre/srv/tests/base.py
 @@ -110,7 +110,7 @@ class TestServer(Thread):
@@ -27,11 +27,11 @@ index 865f139..05e2da7 100644
          kwargs['port'] = kwargs.get('port', 0)
          kwargs['userdb'] = kwargs.get('userdb', ':memory:')
 diff --git a/src/calibre/srv/tests/http.py b/src/calibre/srv/tests/http.py
-index 2fb5952..ca005d5 100644
+index 348890c..d89f093 100644
 --- a/src/calibre/srv/tests/http.py
 +++ b/src/calibre/srv/tests/http.py
 @@ -16,7 +16,7 @@ from calibre.utils.monotonic import monotonic
- from polyglot.builtins import iteritems, range, unicode_type
+ from polyglot.builtins import iteritems
  from polyglot import http_client
  
 -is_ci = os.environ.get('CI', '').lower() == 'true'
@@ -96,19 +96,19 @@ index 2fb5952..ca005d5 100644
                  r = conn.getresponse()
                  self.ae(r.status, http_client.OK)
 diff --git a/src/calibre/srv/tests/loop.py b/src/calibre/srv/tests/loop.py
-index 18a9655..d7ed73b 100644
+index 109af82..936d422 100644
 --- a/src/calibre/srv/tests/loop.py
 +++ b/src/calibre/srv/tests/loop.py
-@@ -18,7 +18,7 @@ from calibre.utils.certgen import create_server_cert
+@@ -17,7 +17,7 @@ from calibre.ptempfile import TemporaryDirectory
+ from calibre.utils.certgen import create_server_cert
  from calibre.utils.monotonic import monotonic
- from polyglot.builtins import range, unicode_type, map
  from polyglot import http_client
 -is_ci = os.environ.get('CI', '').lower() == 'true'
 +is_ci = os.environ.get('SCHROOT_USER', None) != None
  
  
  class LoopTest(BaseTest):
-@@ -82,7 +82,7 @@ class LoopTest(BaseTest):
+@@ -81,7 +81,7 @@ class LoopTest(BaseTest):
          self.ae(0, sum(int(w.is_alive()) for w in server.loop.pool.workers))
          # Test shutdown with hung worker
          block = Event()
@@ -117,7 +117,7 @@ index 18a9655..d7ed73b 100644
              pool = server.loop.pool
              self.ae(3, sum(int(w.is_alive()) for w in pool.workers))
              conn = server.connect()
-@@ -111,8 +111,8 @@ class LoopTest(BaseTest):
+@@ -110,8 +110,8 @@ class LoopTest(BaseTest):
          from calibre.srv.bonjour import BonJour
          from zeroconf import Zeroconf
          b = BonJour(wait_for_stop=False)
@@ -129,12 +129,12 @@ index 18a9655..d7ed73b 100644
              service = b.services[0]
              self.ae(service.type, '_calibre._tcp.local.')
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index a312149..5b02ce0 100644
+index 7a922c6..1a12fba 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
 @@ -15,7 +15,7 @@ import os, ctypes, sys, unittest, time, shutil
  from calibre.constants import iswindows, islinux, ismacos, plugins_loc
- from polyglot.builtins import iteritems, map, unicode_type, getenv
+ from polyglot.builtins import iteritems
  
 -is_ci = os.environ.get('CI', '').lower() == 'true'
 +is_ci = os.environ.get('SCHROOT_USER', None) != None

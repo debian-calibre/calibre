@@ -34,7 +34,7 @@ index 8397388..fa4d6bd 100644
          "name": "html_syntax_highlighter",
          "sources": "calibre/gui2/tweak_book/editor/syntax/html.c"
 diff --git a/src/calibre/constants.py b/src/calibre/constants.py
-index 65eb5f5..15fed25 100644
+index 78212d8..74c97b4 100644
 --- a/src/calibre/constants.py
 +++ b/src/calibre/constants.py
 @@ -249,7 +249,6 @@ class ExtensionsImporter:
@@ -46,13 +46,13 @@ index 65eb5f5..15fed25 100644
          )
          if iswindows:
 diff --git a/src/calibre/utils/certgen.py b/src/calibre/utils/certgen.py
-index e180ddb..b950dfb 100644
+index 2b76715..90fc78b 100644
 --- a/src/calibre/utils/certgen.py
 +++ b/src/calibre/utils/certgen.py
-@@ -7,11 +7,14 @@ __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
+@@ -6,11 +6,14 @@ __license__ = 'GPL v3'
+ __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
  
  import socket
- from polyglot.builtins import unicode_type
 -from calibre_extensions import certgen
 +import secrets
 +from OpenSSL import crypto
@@ -66,12 +66,12 @@ index e180ddb..b950dfb 100644
  
  
  def create_cert_request(
-@@ -19,35 +22,66 @@ def create_cert_request(
+@@ -18,35 +21,66 @@ def create_cert_request(
      country='IN', state='Maharashtra', locality='Mumbai', organization=None,
      organizational_unit=None, email_address=None, alt_names=(), basic_constraints=None
  ):
 -    def enc(x):
--        if isinstance(x, unicode_type):
+-        if isinstance(x, str):
 -            x = x.encode('ascii')
 -        return x or None
 +    req = crypto.X509Req()
@@ -147,7 +147,7 @@ index e180ddb..b950dfb 100644
  
  
  def create_server_cert(
-@@ -98,7 +132,7 @@ def create_server_cert(
+@@ -97,7 +131,7 @@ def create_server_cert(
  
  
  if __name__ == '__main__':
