@@ -1,5 +1,3 @@
-
-
 __license__ = 'GPL 3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
@@ -13,7 +11,7 @@ This module implements a simple commandline SMTP client that supports:
 import sys, traceback, os, socket, encodings.idna as idna
 from calibre import isbytestring
 from calibre.constants import iswindows
-from polyglot.builtins import unicode_type, as_unicode, native_string_type
+from polyglot.builtins import as_unicode, native_string_type
 
 
 def decode_fqdn(fqdn):
@@ -76,41 +74,32 @@ def create_mail(from_, to, subject, text=None, attachment_data=None,
                  attachment_type=None, attachment_name=None):
     assert text or attachment_data
 
-    from email.mime.multipart import MIMEMultipart
+    from email.message import EmailMessage
     from email.utils import formatdate
-    from email import encoders
     import uuid
 
-    outer = MIMEMultipart()
-    outer['Subject'] = subject
-    outer['To'] = to
+    outer = EmailMessage()
     outer['From'] = from_
+    outer['To'] = to
+    outer['Subject'] = subject
     outer['Date'] = formatdate(localtime=True)
     outer['Message-Id'] = "<{}@{}>".format(uuid.uuid4(), get_msgid_domain(from_))
     outer.preamble = 'You will not see this in a MIME-aware mail reader.\n'
 
     if text is not None:
-        from email.mime.text import MIMEText
         if isbytestring(text):
-            msg = MIMEText(text)
-        else:
-            msg = MIMEText(text, 'plain', 'utf-8')
-        outer.attach(msg)
+            text = text.decode('utf-8', 'replace')
+        outer.set_content(text)
 
     if attachment_data is not None:
-        from email.mime.base import MIMEBase
-        from email.header import Header
         assert attachment_data and attachment_name
         try:
             maintype, subtype = attachment_type.split('/', 1)
-        except AttributeError:
+        except Exception:
             maintype, subtype = 'application', 'octet-stream'
-        msg = MIMEBase(maintype, subtype, name=Header(attachment_name, 'utf-8').encode())
-        msg.set_payload(attachment_data)
-        encoders.encode_base64(msg)
-        msg.add_header('Content-Disposition', 'attachment',
-                       filename=Header(attachment_name, 'utf-8').encode())
-        outer.attach(msg)
+        if isinstance(attachment_data, str):
+            attachment_data = attachment_data.encode('utf-8')
+        outer.add_attachment(attachment_data, maintype=maintype, subtype=subtype, filename=attachment_name)
 
     return outer
 
@@ -121,7 +110,7 @@ def get_mx(host, verbose=0):
         print('Find mail exchanger for', host)
     answers = list(dns.resolver.query(host, 'MX'))
     answers.sort(key=lambda x: int(getattr(x, 'preference', sys.maxsize)))
-    return [unicode_type(x.exchange) for x in answers if hasattr(x, 'exchange')]
+    return [str(x.exchange) for x in answers if hasattr(x, 'exchange')]
 
 
 def sendmail_direct(from_, to, msg, timeout, localhost, verbose,
@@ -150,7 +139,7 @@ def sendmail_direct(from_, to, msg, timeout, localhost, verbose,
             last_error, last_traceback = e, traceback.format_exc()
     if last_error is not None:
         print(last_traceback)
-        raise IOError('Failed to send mail: '+repr(last_error))
+        raise OSError('Failed to send mail: '+repr(last_error))
 
 
 def get_smtp_class(use_ssl=False, debuglevel=0):

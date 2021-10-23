@@ -16,6 +16,7 @@ from qt.core import (
     QWidget, pyqtSignal
 )
 from threading import Thread
+from time import monotonic
 
 from calibre.constants import TOC_DIALOG_APP_UID, islinux, iswindows
 from calibre.ebooks.oeb.polish.container import AZW3Container, get_container
@@ -32,7 +33,6 @@ from calibre.ptempfile import reset_base_dir
 from calibre.utils.config import JSONConfig
 from calibre.utils.filenames import atomic_rename
 from calibre.utils.logging import GUILog
-from polyglot.builtins import map, range, unicode_type
 
 ICON_SIZE = 24
 
@@ -85,11 +85,11 @@ class XPathDialog(QDialog):  # {{{
         name, ok = QInputDialog.getText(self, _('Choose name'),
                 _('Choose a name for these settings'))
         if ok:
-            name = unicode_type(name).strip()
+            name = str(name).strip()
             if name:
                 saved = self.prefs.get('xpath_toc_settings', {})
                 # in JSON all keys have to be strings
-                saved[name] = {unicode_type(i):x for i, x in enumerate(xpaths)}
+                saved[name] = {str(i):x for i, x in enumerate(xpaths)}
                 self.prefs.set('xpath_toc_settings', saved)
                 self.setup_load_button()
 
@@ -112,7 +112,7 @@ class XPathDialog(QDialog):  # {{{
     def load_settings(self, name):
         saved = self.prefs.get('xpath_toc_settings', {}).get(name, {})
         for i, w in enumerate(self.widgets):
-            txt = saved.get(unicode_type(i), '')
+            txt = saved.get(str(i), '')
             w.edit.setText(txt)
 
     def check(self):
@@ -127,7 +127,7 @@ class XPathDialog(QDialog):  # {{{
     def accept(self):
         if self.check():
             self.prefs.set('xpath_toc_remove_duplicates', self.remove_duplicates_cb.isChecked())
-            super(XPathDialog, self).accept()
+            super().accept()
 
     @property
     def xpaths(self):
@@ -356,7 +356,7 @@ class ItemView(QStackedWidget):  # {{{
 
     def populate_item_pane(self):
         item = self.current_item
-        name = unicode_type(item.data(0, Qt.ItemDataRole.DisplayRole) or '')
+        name = str(item.data(0, Qt.ItemDataRole.DisplayRole) or '')
         self.item_pane.heading.setText('<h2>%s</h2>'%name)
         self.icon_label.setPixmap(item.data(0, Qt.ItemDataRole.DecorationRole
                                             ).pixmap(32, 32))
@@ -423,8 +423,7 @@ class TreeWidget(QTreeWidget):  # {{{
         for i in range(parent.childCount()):
             child = parent.child(i)
             yield child
-            for gc in self.iter_items(parent=child):
-                yield gc
+            yield from self.iter_items(parent=child)
 
     def update_status_tip(self, item):
         c = item.data(0, Qt.ItemDataRole.UserRole)
@@ -475,12 +474,12 @@ class TreeWidget(QTreeWidget):  # {{{
         self.in_drop_event = True
         self.push_history()
         try:
-            super(TreeWidget, self).dropEvent(event)
+            super().dropEvent(event)
         finally:
             self.in_drop_event = False
 
     def selectedIndexes(self):
-        ans = super(TreeWidget, self).selectedIndexes()
+        ans = super().selectedIndexes()
         if self.in_drop_event:
             # For order to be be preserved when moving by drag and drop, we
             # have to ensure that selectedIndexes returns an ordered list of
@@ -600,33 +599,33 @@ class TreeWidget(QTreeWidget):  # {{{
         self.push_history()
         from calibre.utils.titlecase import titlecase
         for item in self.selectedItems():
-            t = unicode_type(item.data(0, Qt.ItemDataRole.DisplayRole) or '')
+            t = str(item.data(0, Qt.ItemDataRole.DisplayRole) or '')
             item.setData(0, Qt.ItemDataRole.DisplayRole, titlecase(t))
 
     def upper_case(self):
         self.push_history()
         for item in self.selectedItems():
-            t = unicode_type(item.data(0, Qt.ItemDataRole.DisplayRole) or '')
+            t = str(item.data(0, Qt.ItemDataRole.DisplayRole) or '')
             item.setData(0, Qt.ItemDataRole.DisplayRole, icu_upper(t))
 
     def lower_case(self):
         self.push_history()
         for item in self.selectedItems():
-            t = unicode_type(item.data(0, Qt.ItemDataRole.DisplayRole) or '')
+            t = str(item.data(0, Qt.ItemDataRole.DisplayRole) or '')
             item.setData(0, Qt.ItemDataRole.DisplayRole, icu_lower(t))
 
     def swap_case(self):
         self.push_history()
         from calibre.utils.icu import swapcase
         for item in self.selectedItems():
-            t = unicode_type(item.data(0, Qt.ItemDataRole.DisplayRole) or '')
+            t = str(item.data(0, Qt.ItemDataRole.DisplayRole) or '')
             item.setData(0, Qt.ItemDataRole.DisplayRole, swapcase(t))
 
     def capitalize(self):
         self.push_history()
         from calibre.utils.icu import capitalize
         for item in self.selectedItems():
-            t = unicode_type(item.data(0, Qt.ItemDataRole.DisplayRole) or '')
+            t = str(item.data(0, Qt.ItemDataRole.DisplayRole) or '')
             item.setData(0, Qt.ItemDataRole.DisplayRole, capitalize(t))
 
     def bulk_rename(self):
@@ -658,13 +657,13 @@ class TreeWidget(QTreeWidget):  # {{{
             self.del_items()
             ev.accept()
         else:
-            return super(TreeWidget, self).keyPressEvent(ev)
+            return super().keyPressEvent(ev)
 
     def show_context_menu(self, point):
         item = self.currentItem()
 
         def key(k):
-            sc = unicode_type(QKeySequence(k | Qt.Modifier.CTRL).toString(QKeySequence.SequenceFormat.NativeText))
+            sc = str(QKeySequence(k | Qt.Modifier.CTRL).toString(QKeySequence.SequenceFormat.NativeText))
             return ' [%s]'%sc
 
         if item is not None:
@@ -673,7 +672,7 @@ class TreeWidget(QTreeWidget):  # {{{
             m.addAction(QIcon(I('modified.png')), _('Bulk rename all selected items'), self.bulk_rename)
             m.addAction(QIcon(I('trash.png')), _('Remove all selected items'), self.del_items)
             m.addSeparator()
-            ci = unicode_type(item.data(0, Qt.ItemDataRole.DisplayRole) or '')
+            ci = str(item.data(0, Qt.ItemDataRole.DisplayRole) or '')
             p = item.parent() or self.invisibleRootItem()
             idx = p.indexOfChild(item)
             if idx > 0:
@@ -774,12 +773,12 @@ class TOCView(QWidget):  # {{{
 
     def event(self, e):
         if e.type() == QEvent.Type.StatusTip:
-            txt = unicode_type(e.tip()) or self.default_msg
+            txt = str(e.tip()) or self.default_msg
             self.hl.setText(txt)
-        return super(TOCView, self).event(e)
+        return super().event(e)
 
     def item_title(self, item):
-        return unicode_type(item.data(0, Qt.ItemDataRole.DisplayRole) or '')
+        return str(item.data(0, Qt.ItemDataRole.DisplayRole) or '')
 
     def del_items(self):
         self.tocw.del_items()
@@ -792,8 +791,7 @@ class TOCView(QWidget):  # {{{
             p.removeChild(item)
 
     def iter_items(self, parent=None):
-        for item in self.tocw.iter_items(parent=parent):
-            yield item
+        yield from self.tocw.iter_items(parent=parent)
 
     def flatten_toc(self):
         self.tocw.push_history()
@@ -834,7 +832,7 @@ class TOCView(QWidget):  # {{{
     def data_changed(self, top_left, bottom_right):
         for r in range(top_left.row(), bottom_right.row()+1):
             idx = self.tocw.model().index(r, 0, top_left.parent())
-            new_title = unicode_type(idx.data(Qt.ItemDataRole.DisplayRole) or '').strip()
+            new_title = str(idx.data(Qt.ItemDataRole.DisplayRole) or '').strip()
             toc = idx.data(Qt.ItemDataRole.UserRole)
             if toc is not None:
                 toc.title = new_title or _('(Untitled)')
@@ -926,7 +924,7 @@ class TOCView(QWidget):  # {{{
         def process_node(parent, toc_parent):
             for i in range(parent.childCount()):
                 item = parent.child(i)
-                title = unicode_type(item.data(0, Qt.ItemDataRole.DisplayRole) or '').strip()
+                title = str(item.data(0, Qt.ItemDataRole.DisplayRole) or '').strip()
                 toc = item.data(0, Qt.ItemDataRole.UserRole)
                 dest, frag = toc.dest, toc.frag
                 toc = toc_parent.add(title, dest, frag)
@@ -988,6 +986,7 @@ class TOCEditor(QDialog):  # {{{
 
     def __init__(self, pathtobook, title=None, parent=None, prefs=None, write_result_to=None):
         QDialog.__init__(self, parent)
+        self.last_reject_at = self.last_accept_at = -1000
         self.write_result_to = write_result_to
         self.prefs = prefs or te_prefs
         self.pathtobook = pathtobook
@@ -1052,6 +1051,9 @@ class TOCEditor(QDialog):  # {{{
         self.stacks.setCurrentIndex(2)
 
     def accept(self):
+        if monotonic() - self.last_accept_at < 1:
+            return
+        self.last_accept_at = monotonic()
         if self.stacks.currentIndex() == 2:
             self.toc_view.update_item(*self.item_edit.result)
             self.prefs['toc_edit_splitter_state'] = bytearray(self.item_edit.splitter.saveState())
@@ -1071,14 +1073,17 @@ class TOCEditor(QDialog):  # {{{
             error_dialog(self, _('Failed to write book'),
                 _('Could not write %s. Click "Show details" for'
                   ' more information.')%self.book_title, det_msg=tb, show=True)
-            super(TOCEditor, self).reject()
+            super().reject()
             return
         self.write_result(0)
-        super(TOCEditor, self).accept()
+        super().accept()
 
     def reject(self):
         if not self.bb.isEnabled():
             return
+        if monotonic() - self.last_reject_at < 1:
+            return
+        self.last_reject_at = monotonic()
         if self.stacks.currentIndex() == 2:
             self.prefs['toc_edit_splitter_state'] = bytearray(self.item_edit.splitter.saveState())
             self.stacks.setCurrentIndex(1)
@@ -1086,7 +1091,7 @@ class TOCEditor(QDialog):  # {{{
             self.working = False
             self.prefs['toc_editor_window_geom'] = bytearray(self.saveGeometry())
             self.write_result(1)
-            super(TOCEditor, self).reject()
+            super().reject()
 
     def write_result(self, res):
         if self.write_result_to:

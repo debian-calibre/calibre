@@ -10,13 +10,13 @@ from qt.core import (
     QSize, QStackedWidget, QStyledItemDelegate, Qt, QTimer, QTreeWidget,
     QTreeWidgetItem, QVBoxLayout, QWidget, pyqtSignal
 )
+from time import monotonic
 
 from calibre.ebooks.oeb.polish.toc import commit_toc, get_toc
 from calibre.gui2 import error_dialog, make_view_use_window_background
 from calibre.gui2.toc.main import ItemEdit, TOCView
 from calibre.gui2.tweak_book import TOP, actions, current_container, tprefs
 from calibre_extensions.progress_indicator import set_no_activate_on_click
-from polyglot.builtins import range, unicode_type
 
 
 class TOCEditor(QDialog):
@@ -26,6 +26,7 @@ class TOCEditor(QDialog):
 
     def __init__(self, title=None, parent=None):
         QDialog.__init__(self, parent)
+        self.last_reject_at = self.last_accept_at = -1000
 
         t = title or current_container().mi.title
         self.book_title = t
@@ -64,6 +65,9 @@ class TOCEditor(QDialog):
         self.stacks.setCurrentIndex(1)
 
     def accept(self):
+        if monotonic() - self.last_accept_at < 1:
+            return
+        self.last_accept_at = monotonic()
         if self.stacks.currentIndex() == 1:
             self.toc_view.update_item(*self.item_edit.result)
             tprefs['toc_edit_splitter_state'] = bytearray(self.item_edit.splitter.saveState())
@@ -71,7 +75,7 @@ class TOCEditor(QDialog):
         elif self.stacks.currentIndex() == 0:
             self.write_toc()
             tprefs['toc_editor_window_geom'] = bytearray(self.saveGeometry())
-            super(TOCEditor, self).accept()
+            super().accept()
 
     def really_accept(self, tb):
         tprefs['toc_editor_window_geom'] = bytearray(self.saveGeometry())
@@ -79,20 +83,23 @@ class TOCEditor(QDialog):
             error_dialog(self, _('Failed to write book'),
                 _('Could not write %s. Click "Show details" for'
                   ' more information.')%self.book_title, det_msg=tb, show=True)
-            super(TOCEditor, self).reject()
+            super().reject()
             return
 
-        super(TOCEditor, self).accept()
+        super().accept()
 
     def reject(self):
         if not self.bb.isEnabled():
             return
+        if monotonic() - self.last_reject_at < 1:
+            return
+        self.last_reject_at = monotonic()
         if self.stacks.currentIndex() == 1:
             tprefs['toc_edit_splitter_state'] = bytearray(self.item_edit.splitter.saveState())
             self.stacks.setCurrentIndex(0)
         else:
             tprefs['toc_editor_window_geom'] = bytearray(self.saveGeometry())
-            super(TOCEditor, self).reject()
+            super().reject()
 
     def read_toc(self):
         self.toc_view(current_container())
@@ -185,14 +192,13 @@ class TOCViewer(QWidget):
         for i in range(parent.childCount()):
             child = parent.child(i)
             yield child
-            for gc in self.iter_items(parent=child):
-                yield gc
+            yield from self.iter_items(parent=child)
 
     def emit_navigate(self, *args):
         item = self.view.currentItem()
         if item is not None:
-            dest = unicode_type(item.data(0, DEST_ROLE) or '')
-            frag = unicode_type(item.data(0, FRAG_ROLE) or '')
+            dest = str(item.data(0, DEST_ROLE) or '')
+            frag = str(item.data(0, FRAG_ROLE) or '')
             if not frag:
                 frag = TOP
             self.navigate_requested.emit(dest, frag)
@@ -222,7 +228,7 @@ class TOCViewer(QWidget):
     def showEvent(self, ev):
         if self.toc_name is None or not ev.spontaneous():
             self.build()
-        return super(TOCViewer, self).showEvent(ev)
+        return super().showEvent(ev)
 
     def update_if_visible(self):
         if self.isVisible():
