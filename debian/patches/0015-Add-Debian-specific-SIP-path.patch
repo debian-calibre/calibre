@@ -1,0 +1,34 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Sat, 23 Oct 2021 19:30:55 +0900
+Subject: Add Debian specific SIP path
+
+Forwarded: not-needed
+
+Debian uses "dist-packages" instead of "site-packages".
+
+https://wiki.debian.org/Python
+> dist-packages instead of site-packages. Third party Python software
+> installed from Debian packages goes into dist-packages, not
+> site-packages. This is to reduce conflict between the system Python,
+> and any from-source Python build you might install manually.
+
+https://www.riverbankcomputing.com/static/Docs/sip/directives.html#std-directive-Import
+> If this also fails then SIP prepends name with each of the directories,
+> in turn, specified by the sip-include-dirs value of the project section
+> in pyproject.toml.
+---
+ setup/build.py | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/setup/build.py b/setup/build.py
+index 8d5580f..6b5a530 100644
+--- a/setup/build.py
++++ b/setup/build.py
+@@ -533,6 +533,7 @@ project-factory = "pyqtbuild:PyQtProject"
+ [tool.sip.project]
+ sip-files-dir = "."
+ {abi_version}
++sip-include-dirs = ["/usr/lib/python3/dist-packages/PyQt5/bindings"]
+ 
+ [tool.sip.bindings.pictureflow]
+ headers = {ext.headers}
