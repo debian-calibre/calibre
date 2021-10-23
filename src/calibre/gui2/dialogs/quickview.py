@@ -20,7 +20,6 @@ from calibre.gui2.dialogs.quickview_ui import Ui_Quickview
 from calibre.utils.date import timestampfromdt
 from calibre.utils.icu import sort_key
 from calibre.utils.iso8601 import UNDEFINED_DATE
-from polyglot.builtins import unicode_type
 
 
 class TableItem(QTableWidgetItem):
@@ -51,7 +50,7 @@ class TableItem(QTableWidgetItem):
             # self is not None and other is None therefore self >= other
             return True
 
-        if isinstance(self.sort, (bytes, unicode_type)):
+        if isinstance(self.sort, (bytes, str)):
             l = sort_key(self.sort)
             r = sort_key(other.sort)
         else:
@@ -76,7 +75,7 @@ class TableItem(QTableWidgetItem):
             # self is not None therefore self > other
             return False
 
-        if isinstance(self.sort, (bytes, unicode_type)):
+        if isinstance(self.sort, (bytes, str)):
             l = sort_key(self.sort)
             r = sort_key(other.sort)
         else:
@@ -345,7 +344,7 @@ class Quickview(QDialog, Ui_Quickview):
         a.setEnabled(book_displayed)
         m.addAction(self.search_icon, _('Search for item in the library'),
                         partial(self.do_search, follow_library_view=False))
-        a = m.addAction(self.edit_metadata_icon, _('Edit book metadata'),
+        a = m.addAction(self.edit_metadata_icon, _('Edit metadata'),
                         partial(self.edit_metadata, book_id, follow_library_view=False))
         a.setEnabled(book_displayed)
         a = m.addAction(self.quickview_icon, _('Quickview this cell'),
@@ -483,7 +482,7 @@ class Quickview(QDialog, Ui_Quickview):
     def item_selected(self, txt):
         if self.no_valid_items:
             return
-        self.fill_in_books_box(unicode_type(txt))
+        self.fill_in_books_box(str(txt))
         self.set_search_text(self.current_key + ':"=' + txt.replace('"', '\\"') + '"')
 
     def vl_box_changed(self):
@@ -569,9 +568,9 @@ class Quickview(QDialog, Ui_Quickview):
             self.no_valid_items = False
             if self.fm[key]['datatype'] == 'rating':
                 if self.fm[key]['display'].get('allow_half_stars', False):
-                    vals = unicode_type(vals/2.0)
+                    vals = str(vals/2.0)
                 else:
-                    vals = unicode_type(vals//2)
+                    vals = str(vals//2)
             if not isinstance(vals, list):
                 vals = [vals]
             vals.sort(key=sort_key)
@@ -858,7 +857,7 @@ def get_qv_field_list(fm, use_defaults=False):
     else:
         src = db.prefs
     fieldlist = list(src['qv_display_fields'])
-    names = frozenset([x[0] for x in fieldlist])
+    names = frozenset(x[0] for x in fieldlist)
     for field in fm.displayable_field_keys():
         if (field != 'comments' and fm[field]['datatype'] != 'comments' and field not in names):
             fieldlist.append((field, False))

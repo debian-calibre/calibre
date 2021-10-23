@@ -23575,6 +23575,13 @@ return this.__repr__();
                         }
                     }
                 }
+                if (is_full_screen_layout && only_img && cols_per_screen > 1) {
+                    cols_per_screen = 1;
+                    col_size = screen_inline;
+                    col_and_gap = col_size + gap;
+                    number_of_cols = 1;
+                    document.body.style.columnWidth = "100vw";
+                }
             }
             function check_column_sizes() {
                 var ncols, data;
@@ -26328,7 +26335,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.29.0";
+        CALIBRE_VERSION = "5.30.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -37469,7 +37476,7 @@ return this.__repr__();
                     ρσ_d["search"] = a("search", _("Search for selection in the book") + " [F]", "book_search");
                     ρσ_d["bookmark"] = a("bookmark", _("Create a bookmark") + " [Ctrl+Alt+B]", "new_bookmark");
                     ρσ_d["search_net"] = a("global-search", _("Search for selection on the net") + " [S]", "internet_search");
-                    ρσ_d["remove_highlight"] = a("trash", _("Remove this highlight") + " [Delete or D]", "remove_highlight", true);
+                    ρσ_d["remove_highlight"] = a("trash", _("Remove this highlight") + _(" [Delete or D]"), "remove_highlight", true);
                     ρσ_d["clear"] = a("close", _("Clear selection") + " [Esc]", "clear_selection");
                     ρσ_d["speak"] = a("bullhorn", _("Read aloud") + " [T]", "speak_aloud");
                     ρσ_d["cite"] = a("reference-mode", _("Copy citation to clipboard") + " [X]", "cite");
@@ -42011,6 +42018,11 @@ return this.__repr__();
                 return ρσ_d;
             }).call(this));
             container.addEventListener("click", self.container_clicked, (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["passive"] = false;
+                return ρσ_d;
+            }).call(this));
+            container.addEventListener("contextmenu", self.toggle, (function(){
                 var ρσ_d = Object.create(null);
                 ρσ_d["passive"] = false;
                 return ρσ_d;
