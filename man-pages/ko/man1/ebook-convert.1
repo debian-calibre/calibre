@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "10월 22, 2021" "5.30.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "10월 29, 2021" "5.31.1" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -97,7 +97,7 @@ options specific to every input and output format.
 .INDENT 0.0
 .TP
 .B \-\-input\-profile
-입력 프로파일을 지정하세요. 입력 프로파일은 변환 시스템에 입력 문서의 다양한 정보를 어떻게 해석할 것인지에 관한 정보를 줍니다. 예를 들어, 해상도는 길이에 영향을 받습니다(즉, 픽셀 단위의 길이를 말함). 선택 가능한 값은 다음과 같습니다: cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+입력 프로필을 지정하세요. 입력 프로필은 변환 시스템에 입력 문서의 다양한 정보를 어떻게 해석할 것인지에 관한 정보를 줍니다. 예를 들어, 해상도는 길이에 영향을 받습니다(즉, 픽셀 단위의 길이를 말함). 선택 가능한 값은 다음과 같습니다: cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -196,7 +196,7 @@ Transliterate Unicode characters to an ASCII representation. Use with care becau
 .INDENT 0.0
 .TP
 .B \-\-base\-font\-size
-기본 글자 크기이며 pts 단위입니다. 만들어진 책의 모든 글자 크기는 이 크기를 근거하여 조정됩니다. 더 큰 크기를 선택하여 출력물의 글자를 더 크게 만들거나, 반대로 작은 크기를 선택하여 글자를 더 작게 만들 수 있습니다. 이 값이 기본값 0인 경우, 기본 글자 크기는 당신이 선택한 출력 프로파일에 기반하여 선택됩니다.
+기본 글자 크기이며 pts 단위입니다. 만들어진 책의 모든 글자 크기는 이 크기를 근거하여 조정됩니다. 더 큰 크기를 선택하여 출력물의 글자를 더 크게 만들거나, 반대로 작은 크기를 선택하여 글자를 더 작게 만들 수 있습니다. 이 값이 기본값 0인 경우, 기본 글자 크기는 당신이 선택한 출력 프로필에 기반하여 선택됩니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -236,7 +236,7 @@ CSS 스타일 규칙에서 제외시킬, 쉼표로 구분된, CSS 속성들 목�
 .INDENT 0.0
 .TP
 .B \-\-font\-size\-mapping
-CSS 글꼴 크기 명칭을 pts 단위의 글꼴크기로 맵핑합니다. 설정 예를 들면, 12,12,14,16,18,20,22,24와 같습니다. 이 값들은 xx\-small 부터 xx\-large까지의 크기에 대한 맵핑에, 추가로 마지막 값은 huge font에 대한 크기입니다. 글꼴 비율 재조정 알고리즘은 지능적으로 글꼴 크기의 비율을 재조정하기 위하여 이 값들을 사용합니다. 기본값으로는 사용자가 선택한 출력 프로파일에 근거한 맵핑을 사용합니다.
+CSS 글꼴 크기 명칭을 pts 단위의 글꼴크기로 맵핑합니다. 설정 예를 들면, 12,12,14,16,18,20,22,24와 같습니다. 이 값들은 xx\-small 부터 xx\-large까지의 크기에 대한 맵핑에, 추가로 마지막 값은 huge font에 대한 크기입니다. 글꼴 비율 재조정 알고리즘은 지능적으로 글꼴 크기의 비율을 재조정하기 위하여 이 값들을 사용합니다. 기본값으로는 사용자가 선택한 출력 프로필에 근거한 맵핑을 사용합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -420,7 +420,7 @@ Search pattern (regular expression) to be replaced with sr3\-replace.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-장(章)제목을 탐지하기 위한 XPath 표현식. 기본값은 \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP, 또는 \fB"\fPpart\fB"\fP란 단어를 장 제목으로 포함하는 <h1> 또는 <h2> 태그와 class=\fB"\fPchapter\fB"\fP 속성을 가지고 있는 태그들입니다. 사용된 표현식은 요소들의 목록을 평가할 수 있어야 합니다. 장 탐지를 비활성화 하려면 표현식 \fB"\fP/\fB"\fP을 사용하세요. 이 기능에 대한 더 자세한 도움말을 보려면 캘리버 사용 설명서의 XPath 입문 설명서를 참조하세요.
+장(章)제목을 탐지하기 위한 XPath 표현식. 기본값은 \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP, 또는 \fB"\fPpart\fB"\fP란 단어를 장 제목으로 포함하는 <h1> 또는 <h2> 태그와 class=\fB"\fPchapter\fB"\fP 속성을 가지고 있는 태그들입니다. 사용된 표현식은 요소들의 목록을 평가할 수 있어야 합니다. 장 탐지를 비활성화 하려면 표현식 \fB"\fP/\fB"\fP을 사용하세요. 이 기능에 대한 더 자세한 도움말을 보려면 캘리버 사용 설명서의 XPath 지침서를 참조하세요.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -445,7 +445,7 @@ XPath 표현식. 지정된 요소의 앞에 쪽 넘김이 삽입됩니다. 비�
 .INDENT 0.0
 .TP
 .B \-\-prefer\-metadata\-cover
-지정한 표지보다 우선하여 원본 파일에서 발견된 표지를 사용합니다.
+지정된 표지보다 먼저 원본 파일에서 감지된 표지를 사용합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -455,7 +455,7 @@ XPath 표현식. 지정된 요소의 앞에 쪽 넘김이 삽입됩니다. 비�
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-문서에서의 읽기 시작 지점을 탐지하기 위한 XPath 표현식. 몇몇 프로그램(대표적으로 Kindle)은 책을 열 때 이 위치를 사용합니다. 이 기능을 사용하는데 대한 더 많은 도움말은 캘리버 사용 설명서의 XPath 입문 설명서를 참고하세요.
+문서에서의 읽기 시작 지점을 탐지하기 위한 XPath 표현식. 몇몇 프로그램(대표적으로 Kindle)은 책을 열 때 이 위치를 사용합니다. 이 기능을 사용하는데 대한 더 많은 도움말은 캘리버 사용 설명서의 XPath 지침서를 참고하세요.
 .UNINDENT
 .SH 목차
 .sp
@@ -468,17 +468,17 @@ XPath 표현식. 지정된 요소의 앞에 쪽 넘김이 삽입됩니다. 비�
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-목차의 1단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 이 칸이 지정되어있다면, 다른 형태의 자동감지를 우선합니다. 예시를 보려면 캘리버 사용 설명서 안의 XPath 입문 설명서를 참조하세요.
+목차의 1단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 이 칸이 지정되어있다면, 다른 형태의 자동감지를 우선합니다. 예시를 보려면 캘리버 사용 설명서 안의 XPath 지침서를 참조하세요.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-목차의 2단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 각 항목은 이전의 1단계 항목 아래에 추가됩니다. 예시를 보려면 캘리버 사용 설명서 안의 XPath 입문 설명서를 참조하세요.
+목차의 2단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 각 항목은 이전의 1단계 항목 아래에 추가됩니다. 예시를 보려면 캘리버 사용 설명서 안의 XPath 지침서를 참조하세요.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-목차의 3단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 각 항목은 이전의 2단계 항목 아래에 추가됩니다. 예시를 보려면 캘리버 사용 설명서 안의 XPath 입문 설명서를 참조하세요.
+목차의 3단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 각 항목은 이전의 2단계 항목 아래에 추가됩니다. 예시를 보려면 캘리버 사용 설명서 안의 XPath 지침서를 참조하세요.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -503,7 +503,7 @@ XPath 표현식. 지정된 요소의 앞에 쪽 넘김이 삽입됩니다. 비�
 .INDENT 0.0
 .TP
 .B \-\-use\-auto\-toc
-일반적으로 원본 파일이 이미 목차를 가지고 있다면, 자동으로 생성된 것보다 우선적으로 사용합니다. 이 옵션을 사용하면, 자동으로 생성된 것을 항상 사용합니다.
+일반적으로 원본 파일이 이미 목차를 가지고 있다면, 자동으로 생성된 것보다 우선적으로 사용합니다. 이 옵션을 사용하면, 자동 생성된 항목이 항상 사용됩니다.
 .UNINDENT
 .SH 책 정보
 .sp

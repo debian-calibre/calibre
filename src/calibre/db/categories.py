@@ -11,7 +11,7 @@ from functools import partial
 from polyglot.builtins import iteritems, native_string_type
 
 from calibre.ebooks.metadata import author_to_author_sort
-from calibre.utils.config_base import tweaks
+from calibre.utils.config_base import tweaks, prefs
 from calibre.utils.icu import sort_key, collation_order
 
 CATEGORY_SORTS = ('name', 'popularity', 'rating')  # This has to be a tuple not a set
@@ -115,13 +115,26 @@ def clean_user_categories(dbcache):
     return new_cats
 
 
+numeric_collation = prefs['numeric_collation']
+
+
+def sort_key_for_name_and_first_letter(x):
+    v1 = icu_upper(x.sort or x.name)
+    v2 = v1 or ' '
+    # The idea is that '9999999999' is larger than any digit so all digits
+    # will sort in front. Non-digits will sort according to their ICU first letter
+    c = v2[0]
+    return (c if numeric_collation and c.isdigit() else '9999999999',
+            collation_order(v2), sort_key(v1))
+
+
 category_sort_keys = {True:{}, False: {}}
 category_sort_keys[True]['popularity'] = category_sort_keys[False]['popularity'] = \
     lambda x:(-getattr(x, 'count', 0), sort_key(x.sort or x.name))
 category_sort_keys[True]['rating'] = category_sort_keys[False]['rating'] = \
     lambda x:(-getattr(x, 'avg_rating', 0.0), sort_key(x.sort or x.name))
 category_sort_keys[True]['name'] = \
-    lambda x:(collation_order(icu_upper(x.sort or x.name or ' ')), sort_key(x.sort or x.name))
+    sort_key_for_name_and_first_letter
 category_sort_keys[False]['name'] = \
     lambda x:sort_key(x.sort or x.name)
 
