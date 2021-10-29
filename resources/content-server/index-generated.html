@@ -385,6 +385,11 @@ textarea {
 </symbol>
   <symbol viewBox="0 0 1792 1792" id="icon-chevron-left"><path d="m 1395,364.99998 -531,531 L 1395,1427 q 19,19 19,45 0,26 -19,45 l -166,166 q -19,19 -45,19 -26,0 -45,-19 L 397,940.99998 q -19,-19 -19,-45 0,-26 19,-45 l 742,-742 q 19,-18.999999 45,-18.999999 26,0 45,18.999999 l 166,166 q 19,19 19,45 0,26 -19,45 z"/>
 </symbol>
+  <symbol viewBox="0 0 128 128" id="icon-help">
+    <g>
+      <path d="M64,1C29.3,1,1,29.3,1,64s28.3,63,63,63s63-28.3,63-63S98.7,1,64,1z M64,7c11.8,0,22.8,3.6,32,9.8L78.8,34   c-4.5-2.2-9.5-3.5-14.8-3.5S53.7,31.8,49.2,34L32,16.8C41.2,10.6,52.2,7,64,7z M91.5,64c0,15.2-12.3,27.5-27.5,27.5   S36.5,79.2,36.5,64S48.8,36.5,64,36.5S91.5,48.8,91.5,64z M16.8,96C10.6,86.8,7,75.8,7,64c0-12.4,4-23.9,10.7-33.2l17,17   C32,52.6,30.5,58.1,30.5,64c0,5.3,1.3,10.3,3.5,14.8L16.8,96z M64,121c-12.4,0-23.9-4-33.2-10.7l17-17c4.8,2.7,10.3,4.2,16.2,4.2   c5.9,0,11.4-1.5,16.2-4.2l17,17C87.9,117,76.4,121,64,121z M121,64c0,11.8-3.6,22.8-9.8,32L94,78.8c2.2-4.5,3.5-9.5,3.5-14.8   c0-5.9-1.5-11.4-4.2-16.2l17-17C117,40.1,121,51.6,121,64z"/>
+    </g>
+  </symbol>
   <symbol viewBox="0 0 1792 1792" id="icon-random">
     <path d="M666 481q-60 92-137 273-22-45-37-72.5t-40.5-63.5-51-56.5-63-35-81.5-14.5h-224q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h224q250 0 410 225zm1126 799q0 14-9 23l-320 320q-9 9-23 9-13 0-22.5-9.5t-9.5-22.5v-192q-32 0-85 .5t-81 1-73-1-71-5-64-10.5-63-18.5-58-28.5-59-40-55-53.5-56-69.5q59-93 136-273 22 45 37 72.5t40.5 63.5 51 56.5 63 35 81.5 14.5h256v-192q0-14 9-23t23-9q12 0 24 10l319 319q9 9 9 23zm0-896q0 14-9 23l-320 320q-9 9-23 9-13 0-22.5-9.5t-9.5-22.5v-192h-256q-48 0-87 15t-69 45-51 61.5-45 77.5q-32 62-78 171-29 66-49.5 111t-54 105-64 100-74 83-90 68.5-106.5 42-128 16.5h-224q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h224q48 0 87-15t69-45 51-61.5 45-77.5q32-62 78-171 29-66 49.5-111t54-105 64-100 74-83 90-68.5 106.5-42 128-16.5h256v-192q0-14 9-23t23-9q12 0 24 10l319 319q9 9 9 23z"/>
   </symbol>
@@ -10153,6 +10158,7 @@ return parser;
             ρσ_d["icon_path"] = "";
             ρσ_d["custom_list_template"] = null;
             ρσ_d["num_per_page"] = 50;
+            ρσ_d["lang_code_for_user_manual"] = "";
             return ρσ_d;
         }).call(this);
         function get_interface_data() {
@@ -27178,7 +27184,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.30.0";
+        CALIBRE_VERSION = "5.31.1";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -41918,7 +41924,16 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })()})]))].concat([ρσ_desugar_kwargs({user_select: "none", background_color: get_color("window-background")})])));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [svgicon("close", icon_size, icon_size), " ", _("Close")].concat([ρσ_desugar_kwargs({style: "display: flex; align-items: center; cursor: pointer; padding: 0.5ex 1rem", class_: "main-overlay-button", title: _("Close the viewer controls")})])), ρσ_interpolate_kwargs.call(E, E.div, [" "].concat([ρσ_desugar_kwargs({style: "padding: 0.5ex 1rem"})])), ρσ_interpolate_kwargs.call(E, E.div, [" "].concat([ρσ_desugar_kwargs({style: "padding: 0.5ex 1rem"})]))].concat([ρσ_desugar_kwargs({style: "position: fixed; width: 100%; bottom: 0; display: flex; justify-content: space-between; align-items: center;user-select: none; background-color: {}".format(get_color("window-background"))})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [svgicon("close", icon_size, icon_size), " ", _("Close")].concat([ρσ_desugar_kwargs({style: "display: flex; align-items: center; cursor: pointer; padding: 0.5ex 1rem", class_: "main-overlay-button", title: _("Close the viewer controls")})])), ρσ_interpolate_kwargs.call(E, E.div, [svgicon("help", icon_size, icon_size), " ", _("Help")].concat([ρσ_desugar_kwargs({style: "display: flex; align-items: center; cursor: pointer; padding: 0.5ex 1rem", class_: "main-overlay-button", onclick: (function() {
+                var ρσ_anonfunc = function (ev) {
+                    ui_operations.show_help("viewer");
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["ev"]},
+                    __module__ : {value: "read_book.overlay"}
+                });
+                return ρσ_anonfunc;
+            })()})]))].concat([ρσ_desugar_kwargs({style: "display: flex; justify-content: space-between; align-items: center;"})])), ρσ_interpolate_kwargs.call(E, E.div, [" "].concat([ρσ_desugar_kwargs({style: "padding: 0.5ex 1rem"})])), ρσ_interpolate_kwargs.call(E, E.div, [" "].concat([ρσ_desugar_kwargs({style: "padding: 0.5ex 1rem"})]))].concat([ρσ_desugar_kwargs({style: "position: fixed; width: 100%; bottom: 0; display: flex; justify-content: space-between; align-items: center;user-select: none; background-color: {}".format(get_color("window-background"))})])));
             renderer = self.overlay.view.create_template_renderer();
             if (renderer) {
                 c = container.lastChild.lastChild;
@@ -47574,6 +47589,8 @@ return this.__repr__();
 
         var View = ρσ_modules["read_book.view"].View;
 
+        var get_interface_data = ρσ_modules.session.get_interface_data;
+
         var debounce = ρσ_modules.utils.debounce;
         var full_screen_element = ρσ_modules.utils.full_screen_element;
         var human_readable = ρσ_modules.utils.human_readable;
@@ -47673,6 +47690,26 @@ return this.__repr__();
                 };
                 if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
                     __argnames__ : {value: ["url"]},
+                    __module__ : {value: "read_book.ui"}
+                });
+                return ρσ_anonfunc;
+            })();
+            ui_operations.show_help = (function() {
+                var ρσ_anonfunc = function (which) {
+                    var path, url;
+                    if (which === "viewer") {
+                        path = "/viewer.html";
+                    } else {
+                        return;
+                    }
+                    if (get_interface_data().lang_code_for_user_manual) {
+                        path = "/" + ρσ_str.format("{}", get_interface_data().lang_code_for_user_manual) + "" + ρσ_str.format("{}", path) + "";
+                    }
+                    url = "https://manual.calibre-ebook.com" + path;
+                    window.open(url, "_blank");
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["which"]},
                     __module__ : {value: "read_book.ui"}
                 });
                 return ρσ_anonfunc;

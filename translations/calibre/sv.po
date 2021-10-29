@@ -22,9 +22,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2021-10-21 12:41+UTC\n"
-"PO-Revision-Date: 2021-10-21 07:12+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2021-10-27 15:08+UTC\n"
+"PO-Revision-Date: 2021-10-26 20:39+0000\n"
+"Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1320,6 +1320,7 @@ msgstr "Sparade sökningar"
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:213
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1005
 #: /__w/calibre/calibre/src/calibre/gui2/library/delegates.py:708
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:357
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:183
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:635
 #: /__w/calibre/calibre/src/calibre/library/database2.py:1081
@@ -1495,7 +1496,7 @@ msgid ""
 "text: is_names, use_decorations\n"
 "\n"
 "The best way to find legal combinations is to create a custom column of the appropriate type in the GUI then look at the backup OPF for a book (ensure that a new OPF has been created since the column was added). You will see the JSON for the \"display\" for the new column in the OPF."
-msgstr "En ordbok med alternativ för att anpassa hur data i denna kolumn ska tolkas. Detta är en JSON-sträng. För uppräknings kolumner, använd --display=\"{\\\"enum_values\\\":[\\\"val1\\\", \\\"val2\\\"]}\"\nDet finns många alternativ som kan gå in i visningsalternativ variabel. Alternativ för kolumntyp är:\ncomposite: composite_template, composite_sort, make_category,contains_html, use_decorations\ndatetime: date_format\nenumeration: enum_values, enum_colors, use_decorations\nint, float: number_format\ntext: is_names, use_decorations\n\nDet bästa sättet att hitta giltiga kombinationer är att skapa en anpassad kolumn av lämplig typ i gränssnittet och sedan titta på säkerhetskopian OPF för en bok (se till att en ny OPF har skapats sedan kolumn lades). Du kommer att se JSON för \"display\" för den nya kolumnen i OPF."
+msgstr "En ordbok med alternativ för att anpassa hur data i den här kolumnen ska tolkas. Det här är en JSON-sträng. För uppräkningskolumner, använd --display=\"{\\\"enum_values\\\":[\\\"val1\\\", \\\"val2\\\"]}\"\nDet finns många alternativ som kan gå in i visningsvariabel. Alternativen per kolumntyp är:\ncomposite: composite_template, composite_sort, make_category,contains_html, use_decorations\ndatetime: date_format\nenumeration: enum_values, enum_colors, use_decorations\nint, float: number_format\ntext: is_names, use_decorations\n\nDet bästa sättet att hitta giltiga kombinationer är att skapa en anpassad kolumn av lämplig typ i gränssnittet och sedan titta på  OPF-säkerhetskopian för en bok (se till att en ny OPF har skapats sedan kolumnen lades till). Du kommer att se JSON för \"visningen\" av den nya kolumnen i OPF."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add_custom_column.py:81
 msgid "You must specify label, name and datatype"
@@ -1535,13 +1536,13 @@ msgid ""
 "\n"
 "Note that there is normally no need to do this, as the OPF files are backed up\n"
 "automatically, every time metadata is changed.\n"
-msgstr "%prog backup_metadata [options]\n\nSäkerhetskopierade metadata lagras i databasen inuti individuella OPF-filer i varje\nbokmapp. Detta sker normalt automatiskt, men du kan köra det här\nkommando för att tvinga ny skapande av OPF-filer med flaggan --all.\n\nObservera att det är normalt ingen anledning att göra detta, eftersom de OPF-filer säkerhetskopieras automatiskt, varje gång metadata ändras.\n"
+msgstr "%prog backup_metadata [options]\n\nSäkerhetskopiera metadata som lagras i databasen inuti individuella OPF-filer i varje\nbokmapp. Det här sker normalt automatiskt, men du kan köra det här\nkommando för att tvinga nyskapande av OPF-filer med flaggan --all.\n\nObservera att det är normalt ingen anledning att göra det här, eftersom OPF-filerna\nsäkerhetskopieras automatiskt varje gång metadata ändras.\n"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_backup_metadata.py:37
 msgid ""
 "Normally, this command only operates on books that have out of date OPF "
 "files. This option makes it operate on all books."
-msgstr "Normalt fungerar detta kommando endast på böcker som har inaktuella OPF-filer. Det här alternativet gör att det fungerar på alla böcker."
+msgstr "Normalt fungerar det här kommandot endast på böcker som har inaktuella OPF-filer. Det här alternativet gör att det fungerar på alla böcker."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_catalog.py:27
 msgid "{} OPTIONS"
@@ -1633,7 +1634,7 @@ msgid ""
 "The cloned library will contain no books. If you want to create a full duplicate, including\n"
 "all books, then simply use your filesystem tools to copy the library folder.\n"
 "    "
-msgstr "%prog clone path/to/new/library\n\nSkapa en klon av det aktuella biblioteket. Detta skapar ett nytt, tomt bibliotek som har alla\nsamma anpassade kolumner, virtuella bibliotek och andra inställningar som det aktuella biblioteket.\n\nDet klonade biblioteket innehåller inga böcker. Om du vill skapa ett komplett duplikat, inklusive alla böcker, kan du bara använda dina filsystemsverktyg för att kopiera biblioteksmappen.\n    "
+msgstr "%prog clone sökväg/till/nytt/bibliotek\n\nSkapa en klon av det aktuella biblioteket. Det här skapar ett nytt, tomt bibliotek som har alla\nsamma anpassade kolumner, virtuella bibliotek och andra inställningar som det aktuella biblioteket.\n\nDet klonade biblioteket kommer inte att innehålla några böcker. Om du vill skapa en fullständig dubblett, inklusive alla böcker, använd helt enkelt dina filsystemverktyg för att kopiera biblioteksmappen.\n    "
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_clone.py:38
 msgid "Error: You must specify the path to the cloned library"
@@ -4131,7 +4132,7 @@ msgstr "Oanvänd (lämnas tom)"
 #: /__w/calibre/calibre/src/calibre/devices/user_defined/driver.py:54
 #: /__w/calibre/calibre/src/calibre/devices/user_defined/driver.py:56
 msgid "This field is no longer used, leave it blank."
-msgstr "Detta fält används inte längre, lämna det tomt."
+msgstr "Det här fältet används inte längre, lämna det tomt."
 
 #: /__w/calibre/calibre/src/calibre/devices/user_defined/driver.py:57
 msgid "Main memory folder"
@@ -6195,7 +6196,7 @@ msgstr "Om egenskapen {property} {match_type} {query}\n{action}"
 #: /__w/calibre/calibre/src/calibre/ebooks/docx/to_html.py:69
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1389
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:851
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:818
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:835
 msgid "Notes"
 msgstr "Anteckningar"
 
@@ -6210,7 +6211,7 @@ msgstr "Anteckningar"
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:243
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:658
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:838
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:806
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:822
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:55
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:66
 msgid "Table of Contents"
@@ -6223,6 +6224,7 @@ msgstr "Innehållsförteckning"
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.py:539
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:1176
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/models.py:40
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:828
 #: /__w/calibre/calibre/src/calibre/library/field_metadata.py:188
 msgid "Cover"
 msgstr "Omslag"
@@ -6474,6 +6476,7 @@ msgstr "Extrahera vanliga e-bokformat från arkivfiler (ZIP/RAR). Försök ocks�
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:213
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1005
 #: /__w/calibre/calibre/src/calibre/gui2/library/delegates.py:708
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:358
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:183
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:635
 msgid "No"
@@ -7046,32 +7049,32 @@ msgid "No details available"
 msgstr "Inga detaljer tillgängliga"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1376
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:805
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:821
 msgid "Title page"
 msgstr "Titelsida"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1378
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:807
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:823
 msgid "Index"
 msgstr "Översikt"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1379
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:808
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:824
 msgid "Glossary"
 msgstr "Ordlista"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1380
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:809
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:825
 msgid "Acknowledgements"
 msgstr "Tack till"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1381
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:810
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:826
 msgid "Bibliography"
 msgstr "Litteraturförteckning"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1382
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:811
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:827
 msgid "Colophon"
 msgstr "Kolofon"
 
@@ -7080,32 +7083,32 @@ msgid "Copyright"
 msgstr "Upphovsrätt"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1384
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:813
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:830
 msgid "Dedication"
 msgstr "Tillägnan"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1385
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:814
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:831
 msgid "Epigraph"
 msgstr "Epigraf"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1386
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:815
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:832
 msgid "Foreword"
 msgstr "Förord"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1387
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:816
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:833
 msgid "List of illustrations"
 msgstr "Lista på illustrationer"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1388
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:817
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:834
 msgid "List of tables"
 msgstr "Lista på tabeller"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1390
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:819
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:836
 msgid "Preface"
 msgstr "Förord"
 
@@ -9911,106 +9914,110 @@ msgid_plural ""
 msgstr[0] "Den valda boken kommer att <b>tas bort permanent</b> från din enhet. Är du säker?"
 msgstr[1] "De {} valda böckerna kommer att <b>tas bort permanent</b> från din enhet. Är du säker?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:28
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:43
 msgid "Start wireless device connection"
 msgstr "Starta trådlös enhetsanslutning"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:29
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:44
 msgid "Stop wireless device connection"
 msgstr "Stoppa trådlös enhetsanslutning"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:34
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:49
 msgid "Connect to folder"
 msgstr "Anslut till mapp"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:42
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:65
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:57
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:85
 msgid "Start Content server"
 msgstr "Starta innehållsserver"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:60
+msgid "Visit Content server in browser"
+msgstr "Besök innehållsservern i webbläsaren"
+
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:79
 msgid "Start/stop Content server"
 msgstr "Starta/stoppa innehållsserver"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:72
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:92
 #, python-brace-format
 msgid "[{ip}, port {port}, {protocol}]"
 msgstr "[{ip}, port {port}, {protocol}]"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:78
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:98
 msgid "Stop Content server"
 msgstr "Stoppa innehållsserver"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:94
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:119
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:115
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:140
 msgid "Email to"
 msgstr "E-post till"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:98
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:119
 msgid "Email to and delete from library"
 msgstr "E-post till och ta bort från biblioteket"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:112
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:129
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:133
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:150
 msgid "(delete from library)"
 msgstr "(ta bort från bibliotek)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:127
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:129
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:148
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:150
 #: /__w/calibre/calibre/src/calibre/gui2/email.py:195
 msgid "Select recipients"
 msgstr "Välj mottagare"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:135
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:156
 msgid "Email to selected recipients..."
 msgstr "Skicka e-post till valda mottagare..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:145
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:166
 msgid "Setup email based sharing of books"
 msgstr "Ställ in e-postbaserad delning av böcker"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:161
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:182
 msgid "D"
 msgstr "D"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:161
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:182
 msgid "Send to device"
 msgstr "Överför till enhet"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:180
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:201
 msgid "Connect/share"
 msgstr "Ansluta/dela"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:181
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:202
 msgid ""
 "Share books using a web server or email. Connect to special devices, etc."
 msgstr "Dela böcker med en webbserver eller e-post. Ansluta till särskilda enheter o.s.v."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:221
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:242
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/server.py:1287
 msgid "Stopping"
 msgstr "Stoppar"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:222
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:243
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/server.py:1288
 msgid "Stopping server, this could take up to a minute, please wait..."
 msgstr "Stoppar servern, detta kan ta upp till en minut, vänligen vänta..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:240
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:261
 msgid "Disable autostart"
 msgstr "Inaktivera autostart"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:241
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:262
 msgid ""
 "Do you want wireless device connections to be started automatically when "
 "calibre starts?"
 msgstr "Vill du att trådlösa enhetsanslutningar startas automatiskt när calibre startar?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:264
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:285
 msgid "Still looking for IP addresses"
 msgstr "Letar fortfarande efter IP-adresser"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:267
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:288
 msgid "Many IP addresses. See Start/Stop dialog."
 msgstr "Många IP-adresser. Se dialogrutan start/stopp."
 
@@ -12053,7 +12060,7 @@ msgstr "Redigera Öppna med program..."
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:288
 #, python-format
 msgid "Edit %s format"
-msgstr "Edit %s-format"
+msgstr "Redigera %s-format"
 
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:295
 msgid "Path to file"
@@ -12116,7 +12123,7 @@ msgstr "Markerad text"
 #: /__w/calibre/calibre/src/calibre/gui2/store/stores/mobileread/store_dialog_ui.py:74
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:770
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:541
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:446
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:460
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:56
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:69
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:319
@@ -12306,7 +12313,7 @@ msgstr "utmatning"
 #: /__w/calibre/calibre/src/calibre/gui2/device_drivers/configwidget_ui.py:77
 #: /__w/calibre/calibre/src/calibre/gui2/filename_pattern_ui.py:133
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/adding_ui.py:209
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:163
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:166
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/columns_ui.py:87
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/email_ui.py:81
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:592
@@ -12661,12 +12668,12 @@ msgstr "Återställ till förinställda värden"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories_ui.py:160
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories_ui.py:167
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories_ui.py:170
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:126
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:129
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:132
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:128
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:131
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:134
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/adding_ui.py:252
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:172
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:173
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:175
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:176
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/columns_ui.py:90
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/columns_ui.py:92
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/columns_ui.py:94
@@ -12896,7 +12903,7 @@ msgstr "Rubrik {0}"
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:314
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:45
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:47
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:167
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:170
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:209
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/text_search.py:27
 msgid "Normal"
@@ -12947,14 +12954,14 @@ msgstr "B&läddra"
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:663
 #: /__w/calibre/calibre/src/calibre/gui2/linux_file_dialogs.py:206
 #: /__w/calibre/calibre/src/calibre/gui2/linux_file_dialogs.py:283
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:549
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:595
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/texture_chooser.py:113
 #: /__w/calibre/calibre/src/calibre/gui2/qt_file_dialogs.py:218
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:295
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:57
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:924
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1327
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:88
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:102
 #: /__w/calibre/calibre/src/calibre/gui2/win_file_dialogs.py:281
 msgid "Images"
 msgstr "Bilder"
@@ -12965,9 +12972,9 @@ msgstr "Bilder"
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1021
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1211
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1259
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:206
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:218
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:227
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:220
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:232
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:241
 msgid "Choose file"
 msgstr "Välj fil"
 
@@ -12998,7 +13005,7 @@ msgstr "Välj en fil på din dator:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:817
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:58
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:89
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:103
 #: /__w/calibre/calibre/src/calibre/utils/localization.py:374
 msgid "Fonts"
 msgstr "Teckensnitt"
@@ -13542,7 +13549,7 @@ msgstr "&Inaktivera teckenstorleksomskalning"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:255
 #: /__w/calibre/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:276
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:998
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1040
 msgid "&Fonts"
 msgstr "&Teckensnitt"
 
@@ -13614,12 +13621,12 @@ msgstr "E&xtra CSS"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:273
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:491
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:985
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1027
 msgid "Filter style information"
 msgstr "Filtrera formatinformation"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:274
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:994
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1036
 msgid "Select what style information you want completely removed:"
 msgstr "Välj vilken formatinformation du vill ta bort helt och hållet:"
 
@@ -13634,7 +13641,7 @@ msgid ""
 msgstr "Tar bort CSS-marginalegenskaperna. Observera att sidmarginaler inte påverkas av den här inställningen."
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:278
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:998
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1040
 msgid "&Margins"
 msgstr "&Marginaler"
 
@@ -13643,7 +13650,7 @@ msgid "Removes the padding CSS properties"
 msgstr "Tar bort utfyllande CSS-egenskaper"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:280
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:998
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1040
 msgid "&Padding"
 msgstr "&Utfyllnad"
 
@@ -13661,7 +13668,7 @@ msgstr "Tar bort förgrunds- och bakgrundsfärger"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:284
 #: /__w/calibre/calibre/src/calibre/gui2/covers.py:130
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:998
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1040
 msgid "&Colors"
 msgstr "&Färger"
 
@@ -14438,7 +14445,7 @@ msgstr "Ogiltig XPath"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/structure_detection.py:43
 #: /__w/calibre/calibre/src/calibre/gui2/convert/toc.py:42
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:168
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:182
 #, python-format
 msgid "The XPath expression %s is invalid."
 msgstr "XPath-uttrycket %s är ogiltigt."
@@ -15087,19 +15094,19 @@ msgid "Edit style transform rules"
 msgstr "Redigera formatomvandlingsregler"
 
 #: /__w/calibre/calibre/src/calibre/gui2/css_transform_rules.py:273
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1005
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1045
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1007
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/bookmarks.py:143
 msgid "E&xport"
 msgstr "E&xportera"
 
 #: /__w/calibre/calibre/src/calibre/gui2/css_transform_rules.py:274
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1007
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1047
 msgid "Export these rules to a file"
 msgstr "Exportera dessa regler till en fil"
 
 #: /__w/calibre/calibre/src/calibre/gui2/css_transform_rules.py:277
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1009
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1049
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1003
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/bookmarks.py:147
 msgid "&Import"
@@ -16749,7 +16756,7 @@ msgid "Are you sure you want to delete the following items?"
 msgstr "Är du säker på att du vill ta bort följande poster?"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/device_category_editor_ui.py:75
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:108
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:110
 msgid "Category editor"
 msgstr "Kategoriredigerare"
 
@@ -16892,12 +16899,12 @@ msgstr "Hantera författare"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog_ui.py:96
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:718
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:109
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:111
 msgid "&Search for:"
 msgstr "Sök &efter:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog_ui.py:97
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:112
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:114
 msgid "S&earch"
 msgstr "S&ök"
 
@@ -19105,7 +19112,7 @@ msgstr "Mall&värde:"
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/completion/basic.py:89
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:55
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:239
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:820
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:837
 msgid "Text"
 msgstr "Text"
 
@@ -19130,7 +19137,7 @@ msgid "Right click to open a template editor"
 msgstr "Högerklicka för att öppna en mallredigerare"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:275
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:683
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:697
 msgid "Tem&plate:"
 msgstr "Ma&ll:"
 
@@ -19505,15 +19512,15 @@ msgstr "Återställa poster?"
 msgid "Items must be undeleted to continue. Do you want to do this?"
 msgstr "Posterna måste återställas för att fortsätta. Vill du göra det här?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:110
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:112
 msgid "Search for an item in the first column"
 msgstr "Sök efter en post i den första kolumnen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:111
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:113
 msgid "Find items containing the search string"
 msgstr "Hitta poster som innehåller söksträngen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:113
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:115
 msgid ""
 "<p>Show items only if they appear in the\n"
 "          current Virtual library. Edits already done may be hidden but will\n"
@@ -19524,49 +19531,49 @@ msgid ""
 "          is checked.</p>"
 msgstr "<p>Visa endast poster om de visas i det\n          aktuella virtuella biblioteket. Redigeringar som redan gjorts kan vara dolda men kommer\n          inte att glömmas bort.\n          </p><p>\n          Observera att den här rutan endast påverkar det som visas. Ändringar\n          påverkar alla böcker i ditt bibliotek även om den här rutan\n          är markerad.</p>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:120
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:122
 msgid "Only show items in the current &Virtual library"
 msgstr "Visa endast poster i det aktuella &virtuella biblioteket"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:121
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:123
 msgid "&Filter by:"
 msgstr "&Filtrera efter:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:122
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:124
 msgid "Filter items using the text in this box"
 msgstr "Filtrera poster med texten i den här rutan"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:123
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:125
 msgid "Show only items containing this text"
 msgstr "Visa endast poster som innehåller den här texten"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:124
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:126
 msgid "F&ilter"
 msgstr "F&iltrera"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:125
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:127
 msgid ""
 "Delete selected items from the database. This will unapply the items from "
 "all books and then remove them from the database."
 msgstr "Ta bort de valda posterna från databasen. Detta kommer att sluta tillämpa posterna på alla böcker och sedan ta bort dem från databasen."
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:127
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:129
 msgid "Ctrl+D"
 msgstr "Ctrl+D"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:128
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:130
 msgid "Rename the items in every book where they are used"
 msgstr "Byt namn på posterna i varje bok där de används"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:130
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:132
 msgid "Ctrl+R"
 msgstr "Ctrl+R"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:131
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:133
 msgid "Undo any deletes or edits on the selected lines"
 msgstr "Ångra alla borttagningar eller redigeringar på de valda raderna"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:133
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:135
 msgid "Ctrl+U"
 msgstr "Ctrl+U"
 
@@ -19622,7 +19629,7 @@ msgid "Template file"
 msgstr "Mallfil"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:609
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:548
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:594
 msgid "Select icon"
 msgstr "Välj ikon"
 
@@ -19709,7 +19716,7 @@ msgid "A General Program Mode Template"
 msgstr "En mall för allmänt programläge"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog_ui.py:375
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:361
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:407
 msgid "Set the color of the column:"
 msgstr "Ange färg för kolumnen:"
 
@@ -20844,7 +20851,7 @@ msgid "&Shortcut:"
 msgstr "&Genväg:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:433
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:185
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:186
 msgid "Done"
 msgstr "Klar"
 
@@ -22879,13 +22886,13 @@ msgid "&Automatic adding"
 msgstr "&Automatisk tilläggning"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:45
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:168
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:171
 msgid "High"
 msgstr "Hög"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:45
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:47
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:169
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:172
 msgid "Low"
 msgstr "Låg"
 
@@ -22893,98 +22900,111 @@ msgstr "Låg"
 msgid "Very low"
 msgstr "Mycket låg"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:80
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:81
 msgid "Compact Metadata"
 msgstr "Kompakta metadata"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:80
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:81
 #: /__w/calibre/calibre/src/calibre/spell/dictionary.py:29
 msgid "Default"
 msgstr "Standard"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:81
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:82
 msgid "All on 1 tab"
 msgstr "Allt på 1 flik"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:186
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:187
 msgid "Confirmation dialogs have all been reset"
 msgstr "Alla bekräftelsedialogrutor har återställts"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:164
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:167
 msgid "Notify when a &new version is available"
 msgstr "Meddela när en ny version finns tillgänglig"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:165
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:168
 msgid "Automatically send downloaded &news to e-book reader"
 msgstr "&Överför automatiskt hämtade nyheter till läsenheten"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:166
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:169
 msgid "Job &priority:"
 msgstr "&Jobbprioritet:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:170
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:173
 msgid ""
 "Choose a different layout for the Edit metadata dialog. The compact metadata"
 " layout favors editing custom metadata over changing covers and formats."
 msgstr "Välj en annan utformning för dialogrutan Redigera metadata. Den kompakta metadatautformningen gynnar redigering anpassade metadata istället för omslag och format."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:171
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:174
 msgid "Preferred &input format order:"
 msgstr "Önskad &inmatningsformatsordning:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:174
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:177
 msgid "Preferred &output format:"
 msgstr "Föredraget &utmatningsformat:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:175
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:178
 msgid "Edit metadata (single) &layout:"
 msgstr "Redigera metadata (enskild) &utformning:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:176
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:179
 msgid ""
 "If checked, Yes/No custom columns values can be Yes, No, or Unknown.\n"
 "If not checked, the values can be Yes or No."
 msgstr "Om markerad, kan Ja/Nej-anpassade kolumnvärden vara Ja, Nej eller Okänd.\nOm inte markerad, kan värdena vara Ja eller Nej."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:178
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:181
 msgid "&Yes/No columns have three values (needs restart)"
 msgstr "Ja/Nej kolumner har tre värden (kräver omstart)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:179
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:182
+msgid "Recognize numbers inside text when sorting (needs restart)"
+msgstr "Känn igen siffror i text vid sortering (kräver omstart)"
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:183
+msgid ""
+"<p>Setting this means that when sorting on text fields\n"
+"like title the text \"Book 2\" will sort before the text \"Book 100\".\n"
+"Note that setting this can cause problems with text that starts\n"
+"with numbers and is a little slower. This setting is per user, not\n"
+"per library.</p>"
+msgstr "<p>Inställningen betyder att när du sorterar på textfält\nsom titel kommer texten \"Bok 2\" att sorteras före texten \"Bok 100\".\nObservera att inställning av detta kan orsaka problem med text som börjar\nmed siffror och är lite långsammare. Den här inställningen är per användare, inte\nper bibliotek.</p>"
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:188
 msgid "&Delete news from library when it is automatically sent to reader"
 msgstr "&Ta bort nyheter från bibliotek när de automatiskt överförts till läsenheten"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:180
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:189
 msgid "Default network &timeout:"
 msgstr "Vänta på nätverkssvar i &högst:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:181
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:190
 msgid ""
 "Set the default timeout for network fetches (i.e. anytime we go out to the "
 "internet to get information)"
 msgstr "Ange hur länge programmet ska vänta på information från nätverket (d.v.s. när information hämtas från internet)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:182
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:191
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:747
 msgid " seconds"
 msgstr " sekunder"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:183
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:192
 msgid ""
 "Use this Virtual library on calibre startup if the current library is being "
 "used. Also applied when switching to this library. Note that this setting is"
 " per library. "
 msgstr "Använd detta virtuella bibliotek när calibre startas om det aktuella biblioteket används. Tillämpas också när du växlar till det här biblioteket. Observera att denna inställning är per bibliotek. "
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:184
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:193
 msgid "Reset all disabled &confirmation dialogs"
 msgstr "Återställ alla inaktiverade &bekräftelsedialogrutor"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:185
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:194
 msgid "Use internal &viewer for:"
 msgstr "Använd den interna &visaren för:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:186
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:195
 msgid "Virtual library to apply when the current &library is opened:"
 msgstr "Virtuellt bibliotek som ska användas när det befintliga &biblioteket öppnas:"
 
@@ -23166,131 +23186,161 @@ msgstr "Skriv ett reguljärt uttryck"
 msgid "You can match multiple values by separating them with %s"
 msgstr "Du kan matcha flera värden genom att separera dem med %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:332
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:324
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:354
+msgid "Remove icons"
+msgstr "Ta bort ikoner"
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:327
+msgid ""
+"Select the icons you wish to remove. The icon files will be removed when you"
+" press OK. There is no undo."
+msgstr "Välj de ikoner du vill ta bort. Ikonfilerna tas bort när du trycker på OK. Det går inte att ångra."
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:351
+msgid "No icons selected"
+msgstr "Inga ikoner valda"
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:352
+msgid "You must select at least one icon to remove"
+msgstr "Du måste välja minst en ikon för att ta bort"
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:355
+msgid "One icon will be removed."
+msgid_plural "{} icons will be removed."
+msgstr[0] "En ikon kommer att tas bort."
+msgstr[1] "{} ikoner kommer att tas bort."
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:356
+msgid ""
+"This will prevent any rules that use this icon from working. Are you sure?"
+msgstr "Det här förhindrar att alla regler som använder den här ikonen fungerar. Är du säker?"
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:378
 msgid "column coloring"
 msgstr "kolumnfärgning"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:335
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:381
 msgid "column icon"
 msgstr "kolumnikon"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:338
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:384
 msgid "Cover grid emblem"
 msgstr "Omslagrutnätsemblem"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:341
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:387
 #, python-brace-format
 msgid "Create/edit a {0} rule"
 msgstr "Skapa/redigera en {0} regel"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:346
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:392
 #, python-brace-format
 msgid "Create a {0} rule by filling in the boxes below"
 msgstr "Skapa en {0} regel genom att fylla i rutorna nedan"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:358
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:404
 msgid "Add the emblem:"
 msgstr "Lägg till emblem:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:363
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:409
 msgid "Set the:"
 msgstr "Ställ in:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:369
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:415
 msgid ""
 "If you choose composed icons and multiple rules match, then all the matching"
 " icons will be combined, otherwise the icon from the first rule to match "
 "will be used."
 msgstr "Om du väljer sammansatta ikoner och flera regler matchar, så kommer alla matchande ikoner kommer att kombineras, annars kommer ikonen från den första regeln som matchar att användas."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:372
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:418
 msgid "of the column:"
 msgstr "av kolumnen:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:380
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:426
 msgid "to:"
 msgstr "till:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:405
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:451
 msgid "&Add new image"
 msgstr "&Lägg till ny bild"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:408
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:454
 msgid "(Images should be square-ish)"
 msgstr "(Bilder bör vara kvadratiska)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:412
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:458
 msgid "Choose &more than one icon"
 msgstr "Välj &fler än en ikon"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:419
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:465
 msgid "&Add icon"
 msgstr "&Lägg till ikon"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:421
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:467
 msgid "(Icons should be square or landscape)"
 msgstr "(Ikoner bör vara kvadratiska eller liggande)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:425
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:471
 msgid "Only if the following conditions are all satisfied:"
 msgstr "Endast om följande villkor är alla uppfyllda:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:435
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:481
 msgid "Add &another condition"
 msgstr "Lägg till ett &annat villkor"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:439
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:485
 msgid "You can disable a condition by blanking all of its boxes"
 msgstr "Du kan inaktivera ett tillstånd genom att avmarkera alla rutor"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:449
-msgid "&Remove icon"
-msgstr "&Ta bort ikon"
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:495
+msgid "&Remove icons"
+msgstr "&Ta bort ikoner"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:452
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:498
 msgid ""
-"Remove a previously added icon. Note that doing so will cause rules that use"
-" it to stop working."
-msgstr "Ta bort nyligen tillagda ikon. Observera att det gör att regler som använder den kommer att sluta fungera."
+"Remove previously added icons. Note that removing an icon will cause rules "
+"that use it to stop working."
+msgstr "Ta bort tidigare tillagda ikoner. Observera att borttagning av en ikon kommer att orsaka regler som använder den att sluta fungera."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:511
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:557
 msgid "Open to see checkboxes"
 msgstr "Öppna för att se kryssrutor"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:537
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:583
 msgid "Sample text"
 msgstr "Exempeltext"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:669
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:709
 msgid "No icon selected"
 msgstr "Ingen ikon vald"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:670
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:710
 msgid "You must choose an icon for this rule"
 msgstr "Du måste välja en ikon för denna regel"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:684
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:724
 msgid "Invalid condition"
 msgstr "Ogiltigt villkor"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:685
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:725
 #, python-format
 msgid "One of the conditions for this rule is invalid: <b>%s</b>"
 msgstr "Ett av villkoren för denna regel är ogiltig: <b>%s </b>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:690
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:730
 msgid "No conditions"
 msgstr "Inga villkor"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:691
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:731
 msgid "You must specify at least one non-empty condition for this rule"
 msgstr "Du måste ange minst en icke-tomt villkor för denna regel"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:835
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:875
 msgid "color"
 msgstr "färg"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:844
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:884
 #, python-format
 msgid ""
 "\n"
@@ -23299,7 +23349,7 @@ msgid ""
 "                "
 msgstr "\n                <p>Avancerad kolumnregel <b>%(col)s</b>:\n                <pre>%(rule)s</pre>\n                "
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:849
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:889
 #, python-format
 msgid ""
 "\n"
@@ -23308,7 +23358,7 @@ msgid ""
 "                "
 msgstr "\n                <p>Avancerad regel:\n                <pre>%(rule)s</pre>\n                "
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:854
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:894
 #, python-format
 msgid ""
 "\n"
@@ -23317,19 +23367,19 @@ msgid ""
 "                "
 msgstr "\n                <p>Avancerad regel: ange <b>%(typ)s</b> för kolumn <b>%(col)s</b>:\n                <pre>%(rule)s</pre>\n                "
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:864
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:904
 #, python-format
 msgid "(<span style=\"color: %s;\">sample</span>)"
 msgstr "(<span style=\"color: %s;\">prov</span>)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:867
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:907
 #, python-brace-format
 msgid ""
 "<p>Add the emblem <b>{0}</b> to the cover if the following conditions are met:</p>\n"
 "<ul>{1}</ul>"
 msgstr "<p>Lägg till emblemet <b>{0}</b> i omslaget om följande villkor uppfylls:</p>\n<ul>{1}</ul>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:869
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:909
 #, python-format
 msgid ""
 "            <p>Set the <b>%(kind)s</b> of <b>%(col)s</b> to <b>%(color)s</b> %(sample)s\n"
@@ -23338,76 +23388,76 @@ msgid ""
 "            "
 msgstr "            <p>Ställ in <b>%(kind)s</b> av <b>%(col)s</b> till <b>%(color)s</b> %(sample)s\n            om följande villkor är uppfyllda:</p>\n            <ul>%(rule)s</ul>\n            "
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:905
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:945
 #, python-format
 msgid "<li>The condition using column <b>%(col)s</b> is <b>invalid</b>"
 msgstr "<li>Villkoret som använder kolumn <b>%(col)s</b> är <b>ogiltigt</b>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:908
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:948
 #, python-format
 msgid ""
 "<li>If the <b>%(col)s</b> column <b>%(action)s</b> "
 "%(val_label)s<b>%(val)s</b>"
 msgstr "<li>Om kolumnen <b>%(col)s</b> <b>%(action)s</b> %(val_label)s<b>%(val)s</b>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:910
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:950
 msgid "value: "
 msgstr "värde: "
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:948
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:988
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:185
 #: /__w/calibre/calibre/src/calibre/gui2/tag_mapper.py:288
 msgid "&Add rule"
 msgstr "&Lägg till regel"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:951
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:991
 #: /__w/calibre/calibre/src/calibre/gui2/tag_mapper.py:291
 msgid "&Remove rule(s)"
 msgstr "&Ta bort regel/regler"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:968
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1008
 msgid "Move the selected rule up"
 msgstr "Flytta upp vald regel"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:973
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1013
 msgid "Move the selected rule down"
 msgstr "Flytta ner vald regel"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:981
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1021
 msgid "Add ad&vanced rule"
 msgstr "Lägg till a&vancerad regel"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:987
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1027
 msgid "Du&plicate rule"
 msgstr "Du&plicera regel"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:992
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1032
 msgid "Convert to advanced r&ule"
 msgstr "Konvertera till avancerad r&egel"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1000
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1040
 msgid "Open icon folder"
 msgstr "Öppna ikonmapp"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1010
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1050
 msgid "Import rules from a file"
 msgstr "Importera regler från en fil"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1027
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1067
 msgid ""
 "You can control the color of columns in the book list by creating \"rules\" "
 "that tell calibre what color to use. Click the \"Add rule\" button below to "
 "get started.<p>You can <b>change an existing rule</b> by double clicking it."
 msgstr "Du kan anpassa färgerna på kolumnerna i boklistan genom att skapa \"regler\" som talar om för calibre vilken färg som ska användas. Klicka på knappen \"Lägg till regel\" nedan för att komma igång.<p>Du kan <b>ändra en befintlig regel</b> genom att dubbelklicka på den."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1034
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1074
 msgid ""
 "You can add icons to columns in the book list by creating \"rules\" that "
 "tell calibre what icon to use. Click the \"Add rule\" button below to get "
 "started.<p>You can <b>change an existing rule</b> by double clicking it."
 msgstr "Du kan lägga till ikoner till kolumnerna i boklistan genom att skapa \"regler\" som talar om för calibre vilken ikon som ska användas. Klicka på knappen \"Lägg till regel\" nedan för att komma igång.<p>Du kan <b>ändra en befintlig regel</b> genom att dubbelklicka på den."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1040
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1080
 msgid ""
 "You can add emblems (small icons) that are displayed on the side of covers "
 "in the Cover grid by creating \"rules\" that tell calibre what image to use."
@@ -23415,57 +23465,57 @@ msgid ""
 "existing rule</b> by double clicking it."
 msgstr "Du kan lägga till emblem (små ikoner) som visas vid sidan av omslagen i omslagsrutnätet genom att skapa \"regler\" som instruerar calibre vilken bild som ska användas. Klicka på knappen \"Lägg till regler\" nedan för att börja.<p>Du kan <b>ändra en befintlig regel</b> genom att dubbelklicka på den."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1047
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1087
 msgid "Show &emblems next to the covers"
 msgstr "Visa &emblem bredvid omslag"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1050
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1090
 msgid ""
 "If checked, you can tell calibre to display icons of your choosing next to "
 "the covers shown in the Cover grid, controlled by the metadata of the book."
 msgstr "Om det är markerat kan du berätta att calibre ska visa ikoner du väljer bredvid omslagen som visas i omslagsrutnätet, styrda av bokens metadata."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1069
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1089
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1109
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1129
 msgid "Select one rule"
 msgstr "Välj en regel"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1070
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1090
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1110
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1130
 msgid "You must select only one rule."
 msgstr "Du kan bara välja en regel."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1170
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1210
 msgid "No rule selected"
 msgstr "Ingen regel vald"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1170
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1210
 #, python-format
 msgid "No rule selected for %s."
 msgstr "Ingen regel vald för %s."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1175
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1215
 msgid "removal"
 msgstr "borttagning"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1213
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1253
 msgid "Choose file to export to"
 msgstr "Välj fil att exportera till"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1214
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1229
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1254
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1269
 msgid "Rules"
 msgstr "Regler"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1228
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1268
 msgid "Choose file to import from"
 msgstr "Välj fil att importera från"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1241
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1281
 msgid "No valid rules found"
 msgstr "Inga giltiga regler hittades"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1242
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1282
 msgid "No valid rules were found in {}."
 msgstr "Inga giltiga regler hittades i {}."
 
@@ -23492,7 +23542,7 @@ msgstr "Et-teckenseparerad text, som visas i taggbläddraren"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/columns.py:144
 msgid "(lookup name was {}) {}"
-msgstr ""
+msgstr "(uppslagsnamnet var {}) {}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/columns.py:194
 msgid "You must select a column to delete it"
@@ -26523,7 +26573,7 @@ msgstr "Växla mellan biblioteks- och enhetsvyer"
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar.py:52
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preferences.py:563
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preferences.py:566
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:357
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:378
 msgid "Separator"
 msgstr "Avskiljare"
 
@@ -26613,7 +26663,7 @@ msgstr "Välj verktygsfält att anpassa"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar_ui.py:126
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preferences.py:474
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:428
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:449
 msgid "A&vailable actions"
 msgstr "&Tillgängliga åtgärder"
 
@@ -26627,7 +26677,7 @@ msgstr "Ta bort valda åtgärder från verktygsfält"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar_ui.py:131
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preferences.py:475
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:432
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:453
 msgid "&Current actions"
 msgstr "&Aktuella åtgärder"
 
@@ -28044,12 +28094,12 @@ msgstr "Ta bort användarkategorin %s"
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:917
 #, python-format
 msgid "Books in category %s"
-msgstr "Böcker som hör till kategorin %s"
+msgstr "Böcker som tillhör kategorin %s"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:923
 #, python-format
 msgid "Books not in category %s"
-msgstr "Böcker som inte hör till kategorin %s"
+msgstr "Böcker som inte tillhör kategorin %s"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:947
 #, python-format
@@ -31117,7 +31167,7 @@ msgid ""
 msgstr "Lägg in bild så att den fyller en hel sida när den visas i en läsenheten"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:265
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1125
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1167
 msgid "Preserve aspect ratio"
 msgstr "Bevara bildförhållande"
 
@@ -31729,7 +31779,7 @@ msgid "Insert &hyperlink"
 msgstr "Infoga &hyperlänk"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:97
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:633
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:647
 msgid "Insert hyperlink"
 msgstr "Infoga hyperlänk"
 
@@ -32853,12 +32903,12 @@ msgid "&Toolbar to customize:"
 msgstr "&Verktygsfält att anpassa:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preferences.py:496
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:418
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:439
 msgid "Add selected actions to the toolbar"
 msgstr "Lägg till valda åtgärder i verktygsfältet"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preferences.py:499
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:422
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:443
 msgid "Remove selected actions from the toolbar"
 msgstr "Ta bort valda åtgärder från verktygsfältet"
 
@@ -32954,7 +33004,7 @@ msgid "Disabled confirmations restored"
 msgstr "Inaktiverade bekräftelser återställda"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:419
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:588
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:591
 msgid "Render process crashed"
 msgstr "Återgivningsprocessen kraschade"
 
@@ -34433,7 +34483,7 @@ msgid "Set &semantics"
 msgstr "Ange &semantik"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:489
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:797
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:812
 msgid "Set semantics"
 msgstr "Ange semantik"
 
@@ -34884,128 +34934,128 @@ msgstr "Det går inte att jämföra"
 msgid "There is no point comparing the current state to itself"
 msgstr "Det är inget ställe att jämföra det aktuella tillståndet med"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:52
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:66
 msgid "Choose tag name"
 msgstr "Välj taggnamn"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:59
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:73
 msgid "Specify the name of the &tag to insert:"
 msgstr "Ange namnet på &taggen att infoga:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:86
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:100
 msgid "Text (HTML) files"
 msgstr "Textfiler (HTML)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:87
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:101
 msgid "Style (CSS) files"
 msgstr "Formatfiler (CSS)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:90
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:104
 msgid "Audio"
 msgstr "Ljud"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:91
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:105
 msgid "Video"
 msgstr "Videoklipp"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:92
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:106
 msgid "OPF file (metadata)"
 msgstr "OPF-fil (metadata)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:93
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:107
 msgid "Table of contents file (NCX)"
 msgstr "Innehållförteckningsfil (NCX)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:97
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:111
 msgid "Arrange in folders"
 msgstr "Ordna i mappar"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:104
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:118
 msgid ""
 "Arrange the files in this book into sub-folders based on their types. If you"
 " leave a folder blank, the files will be placed in the root."
 msgstr "Ordna filer i denna bok i undermappar baserat på deras typer. Om du lämnar en mapp tom, kommer filerna att placeras i roten."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:123
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:137
 msgid ""
 "Note that this will only arrange files inside the book, it will not affect "
 "how they are displayed in the File browser"
 msgstr "Observera att detta endast kommer att ordna filer inuti boken, det kommer inte att påverka hur de visas i filhanteraren"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:146
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:160
 msgid "Specify locations to split at"
 msgstr "Specificera ställe att dela på"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:154
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:168
 msgid ""
 "Specify the locations to split at, using an XPath expression (click the "
 "wizard button for help with generating XPath expressions)."
 msgstr "Ange platserna som ska delas upp med ett XPath-uttryck (klicka på guide-knappen för hjälp med att skapa XPath-uttryck)."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:160
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:174
 msgid "&XPath expression:"
 msgstr "&XPath-uttryck:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:167
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:181
 msgid "Invalid XPath expression"
 msgstr "Ogiltigt XPath-uttryck"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:181
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:195
 msgid "Choose file to import"
 msgstr "Välj fil att importera"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:194
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:208
 msgid ""
 "You can import an HTML or DOCX file directly as an EPUB and edit it. The "
 "EPUB will be generated with minimal changes from the source, unlike doing a "
 "full conversion in calibre."
 msgstr "Du kan importera en HTML- eller DOCX-fil direkt som en EPUB och redigera den. EPUB:n kommer att skapas med minimala förändringar från källan, till skillnad från att göra en full konvertering i calibre."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:202
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:216
 msgid "Choose the file to import"
 msgstr "Välj filen som ska importeras"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:208
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:222
 msgid "Source file:"
 msgstr "Källfil:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:214
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:228
 msgid "Choose the location for the newly created EPUB"
 msgstr "Välj plats för den senaste skapade EPUB:n"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:220
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:234
 msgid "Destination file:"
 msgstr "Destinationsfil:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:228
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:242
 msgid "Importable files"
 msgstr "Importerbara filer"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:237
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:251
 msgid "Choose destination"
 msgstr "Välj destination"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:238
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:252
 msgid "EPUB files"
 msgstr "EPUB-filer"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:246
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:260
 msgid "Need document"
 msgstr "Kräver dokument"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:247
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:261
 msgid "You must specify the source file that will be imported."
 msgstr "Du måste ange källfilen som ska importeras."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:400
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:414
 msgid "No results found"
 msgstr "Inga resultat hittade"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:419
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:433
 msgid "Choose file to edit"
 msgstr "Välj fil att redigering"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:432
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:446
 #, python-brace-format
 msgid ""
 "<p>Quickly choose a file by typing in just a few characters from the file name into the field above.\n"
@@ -35016,51 +35066,51 @@ msgid ""
 "        and press Enter."
 msgstr "<p>Välj snabbt en fil genom att skriva in några få tecken från filnamnet i fältet ovan.\n        Om du till exempel vill välja filen:\n        {example}\n        Skriv bara in tecknen:\n        {chars}\n        och tryck på Retur."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:613
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:627
 #, python-brace-format
 msgid ""
 "Anchor: {0}\n"
 "Leading text: {1}"
 msgstr "Ankare: {0}\nInledande text: {1}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:647
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:855
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:661
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:875
 msgid "Filter files"
 msgstr "Filtrera filer"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:651
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:665
 msgid "Choose a &file to link to:"
 msgstr "Välj en &fil att länka till:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:656
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:864
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:670
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:884
 msgid "Filter locations"
 msgstr "Filtrera platser"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:662
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:869
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:676
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:889
 msgid "Choose a &location (anchor) in the file:"
 msgstr "Välj en &plats (ankare) i filen:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:670
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:843
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:684
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:863
 msgid "The destination (href) for the link"
 msgstr "Destinationen (href) för länken"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:671
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:844
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:685
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:864
 msgid "&Target:"
 msgstr "&Mål:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:676
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:690
 msgid "Te&xt:"
 msgstr "Te&xt:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:678
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:692
 msgid "The (optional) text for the link"
 msgstr "Den (valfria) texten för länken"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:686
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:700
 #, python-brace-format
 msgid ""
 "\n"
@@ -35071,35 +35121,39 @@ msgid ""
 "        "
 msgstr "\n            Mallen som ska användas för att skapa länken. Förutom {0} och {1}\n            du kan också använda {2}, {3} och {4} variabler\n            i mallen kommer de att ersättas av källfilnamnet, destinations\n            filnamnet respektive ankaret.\n        "
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:812
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:829
 msgid "Copyright page"
 msgstr "Upphovsrättssida"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:824
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:841
 msgid "Page with title, author, publisher, etc."
 msgstr "Sida med titel, författare, utgivare o.s.v."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:825
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:842
+msgid "The book cover, typically a single HTML file with a cover image inside"
+msgstr "Bokomslaget, vanligtvis en enda HTML-fil med en omslagsbild inuti"
+
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:843
 msgid "Back-of-book style index"
 msgstr "Baksidesformat index"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:826
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:844
 msgid "First \"real\" page of content"
 msgstr "Första \"riktiga\" sida av innehåll"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:841
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:860
 msgid "Type of &semantics:"
 msgstr "Typ av &semantik:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:859
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:879
 msgid "Choose a &file:"
 msgstr "Välj en &fil:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:882
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:902
 msgid "About semantics"
 msgstr "Om semantik"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:883
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:903
 msgid ""
 "Semantics refer to additional information about specific locations in the book. For example, you can specify that a particular location is the dedication or the preface or the Table of Contents and so on.\n"
 "\n"
@@ -35108,32 +35162,32 @@ msgid ""
 "The semantic information will be written in the <guide> section of the OPF file."
 msgstr "Semantik hänvisar till ytterligare information om specifika platser i boken. Till exempel kan du ange att en viss plats är dedikationen eller förordet eller innehållsförteckningen och så vidare.\n\nVälj först typen av semantisk information, välj sedan en fil och eventuellt en plats i filen att peka på.\n\nDen semantiska informationen kommer att skrivas i <guide> avsnittet av OPF-filen."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:998
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1040
 msgid "Flo&ats"
 msgstr "Flyt&ande"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1007
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1049
 msgid "&Other CSS properties:"
 msgstr "&Andra CSS-egenskaper:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1011
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1053
 #, python-format
 msgid "Only filter CSS in the current file (%s)"
 msgstr "Filtrera bara CSS i aktuell fil (%s)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1097
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1139
 msgid "Add a cover"
 msgstr "Lägg till ett omslag"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1109
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1151
 msgid "&Images in book"
 msgstr "&Bilder i bok"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1113
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1155
 msgid "Filter the list of images"
 msgstr "Filtrera listan med bilder"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1126
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1168
 msgid ""
 "If enabled the cover image you select will be embedded into the book in such"
 " a way that when viewed, its aspect ratio (ratio of width to height) will be"
@@ -35141,11 +35195,11 @@ msgid ""
 "book is being viewed on has an aspect ratio different to the image."
 msgstr "Om det är aktiverat kommer den omslagsbild du väljer att bäddas in i boken på ett sådant sätt att när den visas kommer bildförhållandet (förhållandet mellan bredd och höjd) att bevaras. Det här kommer att innebära tomma utrymmen runt bilden om skärmen som boken visas på har ett bildförhållande som skiljer sig från bilden."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1144
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1186
 msgid "Import &image"
 msgstr "Importera &bild"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1172
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1214
 msgid "Choose a cover image"
 msgstr "Välj en omslagsbild"
 
@@ -35564,7 +35618,7 @@ msgid "Double-click to edit an entry"
 msgstr "Dubbelklicka för att redigera en post"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:142
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:437
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:458
 msgid "Restore defaults"
 msgstr "Återställ standardvärden"
 
@@ -35909,43 +35963,43 @@ msgstr "Redigera denna bok"
 msgid "Reload this book"
 msgstr "Uppdatera den här boken"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:129
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:130
 msgid "Customize this toolbar"
 msgstr "Anpassa detta verktygsfält"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:131
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:132
 msgid "Hide this toolbar"
 msgstr "Dölj detta verktygsfält"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:233
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:234
 msgid "Switch to flow mode -- where the text is not broken into pages"
 msgstr "Växla till flödesläge - där texten inte är uppdelad i sidor"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:236
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:237
 msgid "Switch to paged mode -- where the text is broken into pages"
 msgstr "Växla till siddelat läge - där texten är uppdelad i sidor"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:241
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:260
 msgid "Turn off auto-scrolling"
 msgstr "Slå av automatisk rullning"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:241
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:260
 msgid "Turn on auto-scrolling"
 msgstr "Slå på automatisk rullning"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:246
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:266
 msgid "Read the text of the book aloud"
 msgstr "Läs bokens text högt"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:246
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:266
 msgid "Stop reading"
 msgstr "Sluta läsa"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:402
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:423
 msgid "Configure the toolbar"
 msgstr "Anpassa verktygsfältet"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:411
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:432
 msgid ""
 "Choose the actions you want on the toolbar. Drag and drop items in the right"
 " hand list to re-arrange the toolbar."
@@ -36053,13 +36107,13 @@ msgstr "Det gick inte att öppna boken på {0}. Klicka på \"Visa detaljer\" fö
 msgid "No book is currently open"
 msgstr "Ingen bok är för närvarande öppen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:589
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:592
 msgid ""
 "The Qt WebEngine Render process has crashed. You should try restarting the "
 "viewer."
 msgstr "Qt WebEngine Render processen har kraschat. Du bör försöka starta om visaren."
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:700
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:703
 msgid "Choose background image"
 msgstr "Välj bakgrundsbild"
 
@@ -38224,6 +38278,14 @@ msgstr "Tecken skrivna i sökrutan kommer att matcha sina accentversioner, baser
 msgid "Make searches case-sensitive"
 msgstr "Gör sökningar skiftlägeskänsliga"
 
+#: /__w/calibre/calibre/src/calibre/utils/config_base.py:546
+msgid ""
+"Recognize numbers inside text when sorting. Setting this means that when "
+"sorting on text fields like title the text \"Book 2\"will sort before the "
+"text \"Book 100\". Note that setting this can cause problems with text that "
+"starts with numbers and is a little slower."
+msgstr "Känn igen siffror i text när du sorterar. Inställningen betyder att när du sorterar på textfält som titel kommer texten \"Bok 2\" att sorteras före texten \"Bok 100\". Observera att inställning av detta kan orsaka problem med text som börjar med siffror och är lite långsammare."
+
 #: /__w/calibre/calibre/src/calibre/utils/exim.py:200
 #: /__w/calibre/calibre/src/calibre/utils/exim.py:344
 msgid "Settings and plugins"
@@ -39177,7 +39239,7 @@ msgstr "connected_device_name(storage_location) -- om en enhet är ansluten, åt
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:1869
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:1903
 msgid "connected_device_name: invalid storage location \"{}\""
-msgstr ""
+msgstr "connected_device_name: ogiltig lagringsplats \"{}\""
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:1885
 msgid ""
@@ -40743,22 +40805,10 @@ msgid ""
 msgstr "Som standard kommer calibre att visa alla kandidater när poster slutförs\nsom börjar med den text du redan har skrivit. Du kan istället låta den visa\nalla kandidater som innehåller texten du redan har skrivit. För att göra detta, ställ in completion_mode till 'contains'. Om du till exempel skriver asi det kommer det att matcha både\nAsimov och Quasimodo, medan standardbeteendet skulle matcha endast Asimov."
 
 #: /__w/calibre/calibre/resources/default_tweaks.py:543
-msgid "Recognize numbers inside text when sorting"
-msgstr "Känn igen siffror i texten vid sortering"
-
-#: /__w/calibre/calibre/resources/default_tweaks.py:544
-msgid ""
-"This means that when sorting on text fields like title the text \"Book 2\"\n"
-"will sort before the text \"Book 100\". If you want this behavior, set\n"
-"numeric_collation = True note that doing so will cause problems with text\n"
-"that starts with numbers and is a little slower."
-msgstr "Detta innebär att när sortering sker på textfält som titeltexten \"Bok 2\"\nkommer att sorteringen innan texten \"Bok 100\". Om du vill ha detta beteende, ange\nnumeric_collation = True observera att detta kommer att orsaka problem med text\nsom börjar med siffror och är lite långsammare."
-
-#: /__w/calibre/calibre/resources/default_tweaks.py:550
 msgid "Sort the list of libraries alphabetically"
 msgstr "Sortera listan över bibliotek alfabetiskt"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:551
+#: /__w/calibre/calibre/resources/default_tweaks.py:544
 msgid ""
 "The list of libraries in the Copy to library and Quick switch menus are\n"
 "normally sorted by most used. However, if there are more than a certain\n"
@@ -40766,11 +40816,11 @@ msgid ""
 "number here. The default is ten libraries."
 msgstr "Listan över biblioteken i Kopiera till bibliotek och Snabbväxlingsmenyer är\nnormalt sorterade efter de mest använda. Men om det finns mer än ett visst\nantalet sådana bibliotek sker sorteringen i bokstavsordning. Du kan ställa in att\nantalet här. Standardinställningen är tio bibliotek."
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:557
+#: /__w/calibre/calibre/resources/default_tweaks.py:550
 msgid "Choose available output formats for conversion"
 msgstr "Välj tillgängliga utmatningsformat för konvertering"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:558
+#: /__w/calibre/calibre/resources/default_tweaks.py:551
 msgid ""
 "Restrict the list of available output formats in the conversion dialogs.\n"
 "For example, if you only want to convert to EPUB and AZW3, change this to\n"
@@ -40778,11 +40828,11 @@ msgid ""
 "all available output formats to be present."
 msgstr "Begränsa listan med tillgängliga utmatningsformat i omräkningsdialogrutor.\nTill exempel om du bara vill konvertera till EPUB och AZW3, ändra detta till\nrestrict_output_formats = ['EPUB', 'AZW3']. Standardvärdet för None resulterar i att\nalla tillgängliga utmatningsformat att vara närvarande."
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:564
+#: /__w/calibre/calibre/resources/default_tweaks.py:557
 msgid "Set the thumbnail image quality used by the Content server"
 msgstr "Ange miniatyrbildkvaliteten som ska användas av innehållsservern"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:565
+#: /__w/calibre/calibre/resources/default_tweaks.py:558
 msgid ""
 "The quality of a thumbnail is largely controlled by the compression quality\n"
 "used when creating it. Set this to a larger number to improve the quality.\n"
@@ -40791,13 +40841,13 @@ msgid ""
 "The value can be between 50 and 99"
 msgstr "Kvaliteten på en omslagsminiatyrbild styrs till stor del av komprimeringskvaliteten\nnär du skapar den. Ställ in den till en högra siffra för att förbättra kvaliteten.\nObservera att omslagsminiatyrbilder blir mycket större med större komprimeringkvalitets-\nsiffra.\nVärdet kan vara mellan 50 och 99"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:572
+#: /__w/calibre/calibre/resources/default_tweaks.py:565
 msgid ""
 "Image file types to treat as e-books when dropping onto the \"Book details\""
 " panel"
 msgstr "Bildfiltyper att behandla som e-böcker när de släpps på \"bokdetalj\"-panelen"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:573
+#: /__w/calibre/calibre/resources/default_tweaks.py:566
 msgid ""
 "Normally, if you drop any image file in a format known to calibre onto the\n"
 "\"Book details\" panel, it will be used to set the cover. If you want to store\n"
@@ -40806,22 +40856,22 @@ msgid ""
 "cover_drop_exclude = {'tiff', 'webp'}"
 msgstr "Om du släpper en bildfil på \"bokdetaljpanelen\" i ett format som är känt för calibre \nkommer den att användas som omslag. Om du vill lagra\nvissa bildtyper som e-böcker i stället, kan du ställa denna justering.\nExempel:\ncover_drop_exclude = {'tiff', 'webp'}"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:580
+#: /__w/calibre/calibre/resources/default_tweaks.py:573
 msgid "Show the Saved searches box in the Search bar"
 msgstr "Visa rutan sparade sökningar i sökfältet"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:581
+#: /__w/calibre/calibre/resources/default_tweaks.py:574
 msgid ""
 "In newer versions of calibre, only a single button that allows you to add a\n"
 "new Saved search is shown in the Search bar. If you would like to have the\n"
 "old Saved searches box with its two buttons back, set this tweak to True."
 msgstr "I nyare versioner av calibre, med bara en enda knapp lägger du till en ny sparad\nsökning som visas i sökfältet. Om du vill ha tillbaka den gamla sökrutan för\nsparade sökningar med dess två knappar kan du ställa in denna justering till True."
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:586
+#: /__w/calibre/calibre/resources/default_tweaks.py:579
 msgid "Exclude fields when copy/pasting metadata"
 msgstr "Uteslut fält när du kopierar/klistrar in metadata"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:587
+#: /__w/calibre/calibre/resources/default_tweaks.py:580
 msgid ""
 "You can ask calibre to not paste some metadata fields when using the\n"
 "Edit metadata->Copy metadata/Paste metadata actions. For example,\n"
@@ -40829,22 +40879,22 @@ msgid ""
 "to prevent pasting of the cover, Date and custom column, mycolumn."
 msgstr "Du kan be calibre om att inte klistra in några metadatafält när du använder\nRedigera metadata->Kopiera metadata/Klistra in metadataåtgärder. Till exempel\nexclude_fields_on_paste = ['cover', 'timestamp', '#minkolumn'] för att förhindra\natt det läggs i omslaget, Datum och den anpassad kolumnen minkolumn."
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:593
+#: /__w/calibre/calibre/resources/default_tweaks.py:586
 msgid "Skip internet connected check"
 msgstr "Hoppa över internetanslutningskontroll"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:594
+#: /__w/calibre/calibre/resources/default_tweaks.py:587
 msgid ""
 "Skip checking whether the internet is available before downloading news.\n"
 "Useful if for some reason your operating systems network checking\n"
 "facilities are not reliable (for example NetworkManager on Linux)."
 msgstr "Hoppa över att kontrollera om internet är tillgängligt innan du hämtar nyheter.\nAnvändbar om av någon anledning dina operativsystems nätverkskontrollanläggningar\ninte är tillförlitliga (till exempel NetworkManager i Linux)."
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:599
+#: /__w/calibre/calibre/resources/default_tweaks.py:592
 msgid "Tab stop width in the template editor"
 msgstr "Tab-stoppbredd i mallredigeraren"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:600
+#: /__w/calibre/calibre/resources/default_tweaks.py:593
 msgid ""
 "Sets the width of the tab stop in the template editor in \"average characters\".\n"
 "For example, a value of 1 results in a space with the width of one average character."

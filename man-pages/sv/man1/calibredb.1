@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "oktober 22, 2021" "5.30.0" "calibre"
+.TH "CALIBREDB" "1" "oktober 29, 2021" "5.31.1" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -684,7 +684,7 @@ När du skickar argument till calibredb som har mellanslag i dem, bifoga argumen
 .INDENT 0.0
 .TP
 .B \-\-display
-En ordbok med alternativ för att anpassa hur data i denna kolumn ska tolkas. Detta är en JSON\-sträng. För uppräknings kolumner, använd \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP Det finns många alternativ som kan gå in i visningsalternativ variabel. Alternativ för kolumntyp är: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  Det bästa sättet att hitta giltiga kombinationer är att skapa en anpassad kolumn av lämplig typ i gränssnittet och sedan titta på säkerhetskopian OPF för en bok (se till att en ny OPF har skapats sedan kolumn lades). Du kommer att se JSON för \fB"\fPdisplay\fB"\fP för den nya kolumnen i OPF.
+En ordbok med alternativ för att anpassa hur data i den här kolumnen ska tolkas. Det här är en JSON\-sträng. För uppräkningskolumner, använd \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP Det finns många alternativ som kan gå in i visningsvariabel. Alternativen per kolumntyp är: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  Det bästa sättet att hitta giltiga kombinationer är att skapa en anpassad kolumn av lämplig typ i gränssnittet och sedan titta på  OPF\-säkerhetskopian för en bok (se till att en ny OPF har skapats sedan kolumnen lades till). Du kommer att se JSON för \fB"\fPvisningen\fB"\fP av den nya kolumnen i OPF.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -870,17 +870,18 @@ calibredb backup_metadata [options]
 .UNINDENT
 .UNINDENT
 .sp
-Säkerhetskopierade metadata lagras i databasen inuti individuella OPF\-filer i varje
-bokmapp. Detta sker normalt automatiskt, men du kan köra det här
-kommando för att tvinga ny skapande av OPF\-filer med flaggan \-\-all.
+Säkerhetskopiera metadata som lagras i databasen inuti individuella OPF\-filer i varje
+bokmapp. Det här sker normalt automatiskt, men du kan köra det här
+kommando för att tvinga nyskapande av OPF\-filer med flaggan \-\-all.
 .sp
-Observera att det är normalt ingen anledning att göra detta, eftersom de OPF\-filer säkerhetskopieras automatiskt, varje gång metadata ändras.
+Observera att det är normalt ingen anledning att göra det här, eftersom OPF\-filerna
+säkerhetskopieras automatiskt varje gång metadata ändras.
 .sp
 När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-all
-Normalt fungerar detta kommando endast på böcker som har inaktuella OPF\-filer. Det här alternativet gör att det fungerar på alla böcker.
+Normalt fungerar det här kommandot endast på böcker som har inaktuella OPF\-filer. Det här alternativet gör att det fungerar på alla böcker.
 .UNINDENT
 .SH CLONE
 .INDENT 0.0
@@ -888,16 +889,16 @@ Normalt fungerar detta kommando endast på böcker som har inaktuella OPF\-filer
 .sp
 .nf
 .ft C
-calibredb clone path/to/new/library
+calibredb clone sökväg/till/nytt/bibliotek
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Skapa en klon av det aktuella biblioteket. Detta skapar ett nytt, tomt bibliotek som har alla
+Skapa en klon av det aktuella biblioteket. Det här skapar ett nytt, tomt bibliotek som har alla
 samma anpassade kolumner, virtuella bibliotek och andra inställningar som det aktuella biblioteket.
 .sp
-Det klonade biblioteket innehåller inga böcker. Om du vill skapa ett komplett duplikat, inklusive alla böcker, kan du bara använda dina filsystemsverktyg för att kopiera biblioteksmappen.
+Det klonade biblioteket kommer inte att innehålla några böcker. Om du vill skapa en fullständig dubblett, inklusive alla böcker, använd helt enkelt dina filsystemverktyg för att kopiera biblioteksmappen.
 .sp
 När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .SH EMBED_METADATA

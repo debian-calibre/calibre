@@ -7254,6 +7254,7 @@ return parser;
             ρσ_d["icon_path"] = "";
             ρσ_d["custom_list_template"] = null;
             ρσ_d["num_per_page"] = 50;
+            ρσ_d["lang_code_for_user_manual"] = "";
             return ρσ_d;
         }).call(this);
         function get_interface_data() {
@@ -26335,7 +26336,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.30.0";
+        CALIBRE_VERSION = "5.31.1";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -40971,7 +40972,16 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })()})]))].concat([ρσ_desugar_kwargs({user_select: "none", background_color: get_color("window-background")})])));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [svgicon("close", icon_size, icon_size), " ", _("Close")].concat([ρσ_desugar_kwargs({style: "display: flex; align-items: center; cursor: pointer; padding: 0.5ex 1rem", class_: "main-overlay-button", title: _("Close the viewer controls")})])), ρσ_interpolate_kwargs.call(E, E.div, [" "].concat([ρσ_desugar_kwargs({style: "padding: 0.5ex 1rem"})])), ρσ_interpolate_kwargs.call(E, E.div, [" "].concat([ρσ_desugar_kwargs({style: "padding: 0.5ex 1rem"})]))].concat([ρσ_desugar_kwargs({style: "position: fixed; width: 100%; bottom: 0; display: flex; justify-content: space-between; align-items: center;user-select: none; background-color: {}".format(get_color("window-background"))})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [svgicon("close", icon_size, icon_size), " ", _("Close")].concat([ρσ_desugar_kwargs({style: "display: flex; align-items: center; cursor: pointer; padding: 0.5ex 1rem", class_: "main-overlay-button", title: _("Close the viewer controls")})])), ρσ_interpolate_kwargs.call(E, E.div, [svgicon("help", icon_size, icon_size), " ", _("Help")].concat([ρσ_desugar_kwargs({style: "display: flex; align-items: center; cursor: pointer; padding: 0.5ex 1rem", class_: "main-overlay-button", onclick: (function() {
+                var ρσ_anonfunc = function (ev) {
+                    ui_operations.show_help("viewer");
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["ev"]},
+                    __module__ : {value: "read_book.overlay"}
+                });
+                return ρσ_anonfunc;
+            })()})]))].concat([ρσ_desugar_kwargs({style: "display: flex; justify-content: space-between; align-items: center;"})])), ρσ_interpolate_kwargs.call(E, E.div, [" "].concat([ρσ_desugar_kwargs({style: "padding: 0.5ex 1rem"})])), ρσ_interpolate_kwargs.call(E, E.div, [" "].concat([ρσ_desugar_kwargs({style: "padding: 0.5ex 1rem"})]))].concat([ρσ_desugar_kwargs({style: "position: fixed; width: 100%; bottom: 0; display: flex; justify-content: space-between; align-items: center;user-select: none; background-color: {}".format(get_color("window-background"))})])));
             renderer = self.overlay.view.create_template_renderer();
             if (renderer) {
                 c = container.lastChild.lastChild;
@@ -47735,6 +47745,16 @@ return this.__repr__();
                     to_python.show_book_folder();
                 };
                 if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                    __module__ : {value: null}
+                });
+                return ρσ_anonfunc;
+            })();
+            ui_operations.show_help = (function() {
+                var ρσ_anonfunc = function (which) {
+                    to_python.show_help(which);
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["which"]},
                     __module__ : {value: null}
                 });
                 return ρσ_anonfunc;
