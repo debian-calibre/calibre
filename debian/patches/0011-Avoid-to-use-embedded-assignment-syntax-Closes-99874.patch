@@ -1,0 +1,31 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Tue, 9 Nov 2021 23:56:51 +0900
+Subject: Avoid to use embedded assignment syntax (Closes: #998744)
+
+Forwarded: not-needed
+
+This error was also reported at:
+  https://bugs.launchpad.net/calibre/+bug/1942463
+
+Fixes are:
+  https://github.com/kovidgoyal/calibre/commit/884839a691e800e56e185e10019a66b12feea640
+and
+  https://github.com/kovidgoyal/calibre/commit/ed32130ca4cbbf235f5560e7c53f78c01eab1106
+---
+ src/calibre/utils/formatter.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/calibre/utils/formatter.py b/src/calibre/utils/formatter.py
+index 83f2a00..18d1afd 100644
+--- a/src/calibre/utils/formatter.py
++++ b/src/calibre/utils/formatter.py
+@@ -656,7 +656,8 @@ class _Interpreter(object):
+ 
+     def do_node_first_non_empty(self, prog):
+         for expr in prog.expression_list:
+-            if v := self.expr(expr):
++            v = self.expr(expr)
++            if v:
+                 return v
+         return ''
+ 
