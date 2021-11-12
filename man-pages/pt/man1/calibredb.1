@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "outubro 29, 2021" "5.31.1" "calibre"
+.TH "CALIBREDB" "1" "novembro 12, 2021" "5.32.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -166,7 +166,7 @@ Ordenar os resultados por ordem crescente
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Os campos a apresentar ao listar os livros na base dados. Deve ser uma lista de campos separados por virgulas. Campos disponíveis: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid A predefinição é: title,authors. O campo especial \fB"\fPall\fB"\fP pode ser utilizado para seleccionar todos os campos. Para além dos campos internos acima, os campos personalizados também estão disponíveis como *field_name, por exemplo, para o campo personalizado #rating, use o nome: *rating
+Os campos a apresentar ao listar os livros na base dados. Deve ser uma lista de campos separados por virgulas. Campos disponíveis: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid A predefinição é: title,authors. O campo especial \fB"\fPall\fB"\fP pode ser utilizado para selecionar todos os campos. Para além dos campos internos acima, os campos personalizados também estão disponíveis como *field_name, por exemplo, para o campo personalizado #rating, use o nome: *rating
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -246,7 +246,7 @@ Adicionar livro vazio (um registo sem qualquer formato)
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Definir identificadores para este livro, por exemplo \-I asin:XXX \-I isbn:YYY
+Set the identifiers for this book, e.g. \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -289,7 +289,7 @@ Um padrão (glob) de nomes de ficheiros, em que os ficheiros que correspondam a 
 .INDENT 0.0
 .TP
 .B \-\-ignore
-Um padrão (glob) de nomes de ficheiros, em que os ficheiros que correspondam a este padrão serão ignorados quando se varrem pastas na pesquisa de ficheiros. Pode ser especificado múltiplas vezes para múltiplos padrões. Por ex.: *.pdf ignorará todos os ficheiros pdf
+A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For example: *.pdf will ignore all PDF files
 .UNINDENT
 .INDENT 0.0
 .TP

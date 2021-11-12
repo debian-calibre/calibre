@@ -10561,6 +10561,7 @@ return this.__repr__();
             ρσ_d["metadata"] = Object.create(null);
             ρσ_d["previous_book_ids"] = [];
             ρσ_d["force_refresh"] = false;
+            ρσ_d["bools_are_tristate"] = true;
             return ρσ_d;
         }).call(this);
         function current_library_id() {
@@ -10700,7 +10701,7 @@ return this.__repr__();
                 library_data.field_names = Object.create(null);
             }
             library_data.for_library = current_library_id();
-            var ρσ_Iter0 = ρσ_Iterable("search_result sortable_fields field_metadata metadata virtual_libraries book_display_fields".split(" "));
+            var ρσ_Iter0 = ρσ_Iterable("search_result sortable_fields field_metadata metadata virtual_libraries book_display_fields bools_are_tristate".split(" "));
             for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
                 key = ρσ_Iter0[ρσ_Index0];
                 library_data[(typeof key === "number" && key < 0) ? library_data.length + key : key] = data[(typeof key === "number" && key < 0) ? data.length + key : key];
@@ -27184,7 +27185,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.31.1";
+        CALIBRE_VERSION = "5.32.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -34777,14 +34778,24 @@ return this.__repr__();
             __module__ : {value: "book_list.book_details"}
         });
 
-        function href_for_search(name, val) {
+        function href_for_search() {
+            var name = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+            var val = ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[1];
+            var use_quotes = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? href_for_search.__defaults__.use_quotes : arguments[2];
+            var ρσ_kwargs_obj = arguments[arguments.length-1];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "use_quotes")){
+                use_quotes = ρσ_kwargs_obj.use_quotes;
+            }
             var query, q;
-            query = "{}:\"={}\"".format(name, str.replace(val, "\"", "\\\""));
+            query = ((use_quotes) ? "{}:\"={}\"" : "{}:{}").format(name, str.replace(val, "\"", "\\\""));
             q = search_query_for(query);
             return query_as_href(q);
         };
-        if (!href_for_search.__argnames__) Object.defineProperties(href_for_search, {
-            __argnames__ : {value: ["name", "val"]},
+        if (!href_for_search.__defaults__) Object.defineProperties(href_for_search, {
+            __defaults__ : {value: {use_quotes:true}},
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["name", "val", "use_quotes"]},
             __module__ : {value: "book_list.book_details"}
         });
 
@@ -34968,6 +34979,7 @@ return this.__repr__();
                 var is_html = (arguments[3] === undefined || ( 3 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? add_row.__defaults__.is_html : arguments[3];
                 var join = (arguments[4] === undefined || ( 4 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? add_row.__defaults__.join : arguments[4];
                 var search_text = (arguments[5] === undefined || ( 5 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? add_row.__defaults__.search_text : arguments[5];
+                var use_quotes = (arguments[6] === undefined || ( 6 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? add_row.__defaults__.use_quotes : arguments[6];
                 var ρσ_kwargs_obj = arguments[arguments.length-1];
                 if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
                 if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "is_searchable")){
@@ -34982,6 +34994,9 @@ return this.__repr__();
                 if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "search_text")){
                     search_text = ρσ_kwargs_obj.search_text;
                 }
+                if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "use_quotes")){
+                    use_quotes = ρσ_kwargs_obj.use_quotes;
+                }
                 var v;
                 if (val === undefined || val === null) {
                     return;
@@ -34993,7 +35008,7 @@ return this.__repr__();
                     }
                     if (is_searchable) {
                         text_rep = search_text || v;
-                        table.lastChild.lastChild.appendChild(ρσ_interpolate_kwargs.call(E, E.a, [v].concat([ρσ_desugar_kwargs({title: _("Click to see books with {0}: {1}").format(name, text_rep), class_: "blue-link", href: href_for_search(is_searchable, text_rep)})])));
+                        table.lastChild.lastChild.appendChild(ρσ_interpolate_kwargs.call(E, E.a, [v].concat([ρσ_desugar_kwargs({title: _("Click to see books with {0}: {1}").format(name, text_rep), class_: "blue-link", href: ρσ_interpolate_kwargs.call(this, href_for_search, [is_searchable, text_rep].concat([ρσ_desugar_kwargs({use_quotes: use_quotes})]))})])));
                     } else {
                         if (v.appendChild) {
                             table.lastChild.lastChild.appendChild(v);
@@ -35027,9 +35042,9 @@ return this.__repr__();
                 return table.lastChild.lastChild;
             };
             if (!add_row.__defaults__) Object.defineProperties(add_row, {
-                __defaults__ : {value: {is_searchable:false, is_html:false, join:null, search_text:null}},
+                __defaults__ : {value: {is_searchable:false, is_html:false, join:null, search_text:null, use_quotes:true}},
                 __handles_kwarg_interpolation__ : {value: true},
-                __argnames__ : {value: ["name", "val", "is_searchable", "is_html", "join", "search_text"]},
+                __argnames__ : {value: ["name", "val", "is_searchable", "is_html", "join", "search_text", "use_quotes"]},
                 __module__ : {value: "book_list.book_details"}
             });
 
@@ -35200,12 +35215,12 @@ return this.__repr__();
             });
 
             function process_datetime(field, fm, name, val) {
-                var fmt;
+                var fmt, formatted_val;
                 if (val) {
                     fmt = interface_data[ρσ_bound_index("gui_" + field + "_display_format", interface_data)] || (fm["display"] || Object.create(null)).date_format;
-                    val = format_date(val, fmt);
-                    if (val) {
-                        add_row(name, val);
+                    formatted_val = format_date(val, fmt);
+                    if (formatted_val) {
+                        ρσ_interpolate_kwargs.call(this, add_row, [name, formatted_val].concat([ρσ_desugar_kwargs({is_searchable: field, search_text: val})]));
                     }
                 }
             };
@@ -35249,7 +35264,7 @@ return this.__repr__();
             });
 
             function process_field(field, fm) {
-                var name, datatype, val, ias, hp, func, join, fmt;
+                var name, datatype, val, ias, hp, func, join, v, fmt, formatted_val;
                 name = fm.name || field;
                 datatype = fm.datatype;
                 val = mi[(typeof field === "number" && field < 0) ? mi.length + field : field];
@@ -35322,16 +35337,27 @@ return this.__repr__();
                             ρσ_interpolate_kwargs.call(this, add_row, [name, val].concat([ρσ_desugar_kwargs({join: join, is_searchable: field})]));
                         }
                     } else if (datatype === "bool") {
-                        add_row(name, (val) ? _("Yes") : _("No"));
+                        if (library_data.bools_are_tristate) {
+                            v = (val) ? _("Yes") : (val === undefined || val === null) ? "" : _("No");
+                        } else {
+                            v = (val) ? _("Yes") : _("No");
+                        }
+                        if (v) {
+                            ρσ_interpolate_kwargs.call(this, add_row, [name, v].concat([ρσ_desugar_kwargs({is_searchable: field, use_quotes: false})]));
+                        }
                     } else if (datatype === "int" || datatype === "float") {
                         if (val !== undefined && val !== null) {
                             fmt = (fm.display || Object.create(null)).number_format;
                             if (fmt) {
-                                val = fmt.format(val);
+                                formatted_val = fmt.format(val);
+                                if (formatted_val) {
+                                    val += "";
+                                    ρσ_interpolate_kwargs.call(this, add_row, [name, formatted_val].concat([ρσ_desugar_kwargs({is_searchable: field, search_text: val})]));
+                                }
                             } else {
                                 val += "";
+                                ρσ_interpolate_kwargs.call(this, add_row, [name, val].concat([ρσ_desugar_kwargs({is_searchable: field, search_text: val})]));
                             }
-                            add_row(name, val);
                         }
                     }
                 }

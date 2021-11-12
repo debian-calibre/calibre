@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "ottobre 29, 2021" "5.31.1" "calibre"
+.TH "EBOOK-CONVERT" "1" "novembre 12, 2021" "5.32.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -198,7 +198,7 @@ Cambia allineamento del testo. Impostato a \fB"\fPsinistra\fB"\fP il testo della
 .INDENT 0.0
 .TP
 .B \-\-disable\-font\-rescaling
-Disabilita il ridimensionamento dei caratteri.
+Disabilita ogni ridimensionamento delle dimensioni dei caratteri.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -243,7 +243,7 @@ Imposta l\fB\(aq\fPaltezza delle righe vuote inserite (in em). L\fB\(aq\fPaltezz
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Mantieni i legami presenti nel documento di input. Un legame è una speciale formattazione di una coppia di caratteri come ff, fi, fl, ecc. La maggior parte del lettori non supportano i legami con i caratteri predefiniti, così questi non verranno letti correttamente. Calibre converte automaticamente un legame nei corrispondenti due caratteri. Questa opzione manterrà i legami nel documento generato.
+Mantieni le legature presenti nel documento di input. Una legatura è una formattazione speciale di una coppia di caratteri come ff, fi, fl, eccetera. La maggior parte dei lettori non supporta le legature nei loro caratteri predefiniti, perciò probabilmente queste non verranno mostrate correttamente. Per impostazione predefinita calibre divide le legature nei suoi due caratteri corrispondenti. Questa opzione invece le manterrà.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -304,6 +304,11 @@ Crea un sottoinsieme di tutti i caratteri integrati. Ogni carattere integrato è
 .TP
 .B \-\-transform\-css\-rules
 Percorso a un file che contiene regole per trasformare gli stili CSS di questo libro. Il modo più semplice per creare questo file è quello di usare il wizard per la creazione di regole nell\fB\(aq\fPinterfaccia utente di calibre. Avvialo dalla sezione della finestra di conversione \fB"\fPAspetto\->Trasforma stili\fB"\fP\&. Dopo aver creato queste regole, puoi usare il pulsante \fB"\fPEsporta\fB"\fP per salvarle in un file.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-transform\-html\-rules
+Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform HTML\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
 .UNINDENT
 .INDENT 0.0
 .TP

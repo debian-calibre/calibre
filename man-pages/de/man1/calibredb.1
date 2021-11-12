@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "Oktober 29, 2021" "5.31.1" "calibre"
+.TH "CALIBREDB" "1" "November 12, 2021" "5.32.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -86,7 +86,7 @@ details and examples.
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ADDING FROM FOLDERS\fP
+\fI\%HINZUFÜGEN VON ORDNERN\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -266,7 +266,7 @@ Leeres Buch hinzufügen (ein Buch ohne Formate)
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Kennungen für dieses Buch festlegen, z. B.  \-I asin:XXX \-I isbn:YYY
+Set the identifiers for this book, e.g. \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -298,7 +298,7 @@ Schlagwörter des/der hinzugefügten Buches/Bücher festlegen
 .B \-\-title, \-t
 Titel der hinzugefügten Bücher festlegen
 .UNINDENT
-.SS ADDING FROM FOLDERS
+.SS HINZUFÜGEN VON ORDNERN
 .sp
 Options to control the adding of books from folders. By default only files that have extensions of known e\-book file types are added.
 .INDENT 0.0
@@ -309,7 +309,7 @@ A filename (glob) pattern, files matching this pattern will be added when scanni
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all PDF files
+A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For example: *.pdf will ignore all PDF files
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -887,17 +887,16 @@ Normalerweise beachtet dieser Befehl nur Bücher, deren OPF\-Dateien nicht mehr 
 .sp
 .nf
 .ft C
-calibredb clone path/to/new/library
+calibredb dupliziere Pfad/zur/neuen/Bibliothek
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Create a \fBclone\fP of the current library. This creates a new, empty library that has all the
-same custom columns, Virtual libraries and other settings as the current library.
+Erstellt eine Kopie der aktuellen Bibliothek. Dies erstellt eine neue, leere Bibliothek mit allen eigenen Spalten,
+virtulellen Bibliothelen und anderen Einstellungen der aktuellen Bibliothek.
 .sp
-The cloned library will contain no books. If you want to create a full duplicate, including
-all books, then simply use your filesystem tools to copy the library folder.
+Die geklonte Bibliothek enthält keine Bücher. Wenn Sie eine Kopie mit allen Büchern erstellen möchten, nutzen Sie einfach die Werkzeuge Ihres Dateisystems, um den Bibliotheksordner zu kopieren.
 .sp
 Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .SH EMBED_METADATA

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "outubro 29, 2021" "5.31.1" "calibre"
+.TH "EBOOK-CONVERT" "1" "novembro 12, 2021" "5.32.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -100,12 +100,12 @@ Especificar o perfil de origem. O perfil de origem informa o sistema de convers�
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-Listar nomes incorporados das receitas. Poderá criar um livro digital a partir dos receitas criadas como em: converter livro digital \fB"\fPNome da receita.receita\fB"\fP saída.epub
+Listar nomes incorporados das receitas. Poderá criar um livro digital a partir das receitas criadas como em: ebook\-convert \fB"\fPNome da receita.receita\fB"\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Especifica o perfil de saída. Diz ao sistema de conversão como optimizar o documento criado para o dispositivo especificado (como, por exemplo, redimensionar imagens para as dimensões do tamanho do ecrã). Em alguns casos, um perfil de saída pode ser utilizado para optimizar a saída para um dispositivo em particular, mas isso raramente é necessário. As escolhas são:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+Especifica o perfil de saída. O perfil de saída indica ao sistema de conversão como otimizar o documento criado para o dispositivo especificado (como, por exemplo, redimensionar imagens para as dimensões do tamanho do ecrã). Em alguns casos, um perfil de saída pode ser utilizado para otimizar a saída para um dispositivo em particular, mas isso raramente é necessário. As escolhas são:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -310,6 +310,11 @@ Segmentar todos os tipos de letra incorporadas. Todos os tipos de letra incorpor
 .TP
 .B \-\-transform\-css\-rules
 Caminho para um ficheiro que contém as regras para transformar os estilos CSS neste livro. O modo mais fácil de criar este ficheiro é usar o Assistente para criar regras na interface gráfica do Calibre. Para tal, aceda à secção \fB"\fPAparência\->Transformar estilos\fB"\fP do diálogo de conversão. Uma vez criadas as regras, pode usar o botão \fB"\fPExportar\fB"\fP para as guardar num ficheiro.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-transform\-html\-rules
+Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform HTML\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
 .UNINDENT
 .INDENT 0.0
 .TP
