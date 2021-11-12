@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "oktober 29, 2021" "5.31.1" "calibre"
+.TH "CALIBRE-SERVER" "1" "november 12, 2021" "5.32.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -62,7 +62,7 @@ Tid (i sekunder) att vänta på ett svar från servern när förfrågningar gör
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Välj typ av autentisering att använda.      Ställ in HTTP\-autentiseringsläget som används av servern. Ställ in på \fB"\fPbasic\fB"\fP om du placerar den här servern bakom en SSL\-proxy. Annars lämnar du det som \fB"\fPauto\fB"\fP, vilket kommer att använda \fB"\fPbasic\fB"\fP om SSL är anpassat, annars använder det \fB"\fPdigest\fB"\fP\&.
+Välj typ av autentisering att använda.      Ställ in HTTP\-autentiseringsläget som används av servern. Ställ in till \fB"\fPbasic\fB"\fP om du placerar den här servern bakom en SSL\-proxy. Annars lämnar du det som \fB"\fPauto\fB"\fP, vilket kommer att använda \fB"\fPbasic\fB"\fP om SSL är anpassat, annars använder det \fB"\fPdigest\fB"\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -117,7 +117,7 @@ Lösenordsbaserad autentisering för att komma åt servern.    Normalt är serve
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Återfall till automatiskt upptäckt gränssnitt.      Om av någon anledning servern inte kan binda till gränssnittet som anges i listen_on alternativet, så kommer det att försöka identifiera ett gränssnitt som ansluter till omvärlden och binda till det. Som standard är det här alternativet aktiverat.
+Återfall till automatiskt upptäckt gränssnitt.      Om servern av någon anledning inte kan binda till gränssnittet som anges i alternativet listen_on, kommer det att försöka identifiera ett gränssnitt som ansluter till omvärlden och binda till det. Som standard är det här alternativet aktiverat.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -137,7 +137,7 @@ Annonsera OPDS\-flöden via BonJour.  Annonsera OPDS\-flöden via BonJour\-tjän
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-Noll\-kopieringsfilöverföringar för ökad prestanda.  Detta kommer att använda noll\-kopiering för överföringar i kärnan när du skickar filer via nätverket, vilket ökar prestanda. Det kan dock leda till skadade filöverföringar på några trasiga filsystem. Om du upplever skadade filöverföringar, stäng av den. Som standard är det här alternativet aktiverat.
+Nollkopiera filöverföringar för ökad prestanda.     Det här kommer att använda nollkopiera för överföringar i kärnan när filer skickas över nätverket, vilket ökar prestandan. Det kan dock orsaka skadade filöverföringar på några brutna filsystem. Om du påträffar skadade filöverföringar, stäng av det. Som standard är det här alternativet aktiverat.
 .UNINDENT
 .INDENT 0.0
 .TP

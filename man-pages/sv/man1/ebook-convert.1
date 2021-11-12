@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "oktober 29, 2021" "5.31.1" "calibre"
+.TH "EBOOK-CONVERT" "1" "november 12, 2021" "5.32.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -241,7 +241,7 @@ Kartlägger CSS\-teckensnittsnamn till teckenstorlekar i punkter. En exempelinst
 .INDENT 0.0
 .TP
 .B \-\-insert\-blank\-line
-Infoga en blankrad mellan stycken. Fungerar inte om källfilen inte använder stycken (<p>\-eller <div>\- markeringar).
+Infoga en tom rad mellan stycken. Fungerar inte om källfilen inte använder stycken (<p>\- eller <div>\-taggar).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -286,7 +286,7 @@ Ställ in övre marginalen i punkter. Standard är 5.0. Om du ställer in det h�
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-Den minsta radavståndet, som andel av elementets beräknat m.h.a. teckenstorlek. calibre kommer att säkerställa att varje element har en radavstånd av minst denna inställning, oavsett vad det ingående dokument specificerar. Sätt till noll för att inaktivera. Standard är 120%. Använd den här inställningen istället för det direkt angivna radavståndet såvida inte du vet vad du gör. Till exempel kan du uppnå \fB"\fPdubbelt radavstånd\fB"\fP i texten genom att sätta detta till 240.
+Minsta radavståndet, i procent av elementets beräknade teckensnittsstorlek. calibre kommer att säkerställa att varje element har ett radavstånd på åtminstone den här inställningen, oavsett vad ingångsdokumentet specificerar. Ställ in till noll för att inaktivera. Standard är 120%. Använd den här inställningen i stället för det direkt angivna radavståndet, om du inte vet vad du gör. Till exempel kan du uppnå \fB"\fPdubbel radavstånd\fB"\fP i texten genom att ställa in det här till 240.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -312,6 +312,11 @@ Använd delmängd av alla inbäddade teckensnitt. Varje inbäddat teckensnitt re
 .TP
 .B \-\-transform\-css\-rules
 Sökvägen till en fil som innehåller regler för att förändra CSS\-format i denna bok. Det enklaste sättet att skapa en sådan fil är att använda guiden för att skapa regler i det grafiska gränssnittet för calibre. Gå till det i \fB"\fPUtseende och känsla\->Omvandla format\fB"\fP avsnittet i konverteringsdialogrutan. När du har skapat reglerna, kan du använda knappen \fB"\fPExportera\fB"\fP för att spara dem till en fil.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-transform\-html\-rules
+Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform HTML\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -467,7 +472,7 @@ Anpassa hur innehållsförteckningen skapas. Om källfilen har en innehållsför
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc
-När du skapar en innehållsförteckning från länkar i inmatningsdokumentet, tillåt dubbla poster, d.v.s. tillåt mer än en post med samma text, förutsatt att de pekar på en annan plats.
+När du skapar en innehållsförteckning från länkar i inmatningsdokumentet, tillåt dubbla poster, d.v.s. tillåt mer än en post med samma text, förutsatt att de hänvisar till en annan plats.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -487,7 +492,7 @@ XPath\-uttryck som anger alla taggar som ska läggas till i innehållsförteckni
 .INDENT 0.0
 .TP
 .B \-\-max\-toc\-links
-Högst antal länkar för att infoga i innehållsförteckningen. Ställ in på 0 för att inaktivera. Standard är: 50. Länkarna läggs endast till innehållsförteckningen om antalet upptäckta kapitel är lägre än tröskelvärdet.
+Högst antal länkar för att infoga i innehållsförteckningen. Ställ in till 0 för att inaktivera. Standard är: 50. Länkarna läggs endast till innehållsförteckningen om antalet identifierade kapitel är lägre än tröskelvärdet.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "ottobre 29, 2021" "5.31.1" "calibre"
+.TH "CALIBREDB" "1" "novembre 12, 2021" "5.32.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -270,7 +270,7 @@ Aggiungi un libro vuoto (un libro senza formati)
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Imposta gli identificatori per il libro. Ad esempio: \-l asin:XXX \-l isbn:XXX
+Set the identifiers for this book, e.g. \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -313,7 +313,7 @@ Uno schema per il nome del file (glob pattern), i file che corrispondono a quest
 .INDENT 0.0
 .TP
 .B \-\-ignore
-Uno schema per il nome del file (glob pattern), i file che corrispondono a questo schema saranno ignorati durante la scansione delle cartelle. Può essere specificato più volte per schemi multipli. Ad es.: *.pdf escluderà tutti i file PDF
+A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For example: *.pdf will ignore all PDF files
 .UNINDENT
 .INDENT 0.0
 .TP
