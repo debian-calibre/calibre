@@ -269,6 +269,7 @@ class Rules(QWidget):
     RuleEditDialogClass = RuleEditDialog
     changed = pyqtSignal()
 
+    ACTION_KEY = 'action'
     MSG = _('You can specify rules to filter/transform tags here. Click the "Add rule" button'
             ' below to get started. The rules will be processed in order for every tag until either a'
             ' "remove" or a "keep" rule matches.')
@@ -380,7 +381,7 @@ class Rules(QWidget):
     def rules(self, rules):
         self.rule_list.clear()
         for rule in rules:
-            if 'action' in rule and 'match_type' in rule and 'query' in rule:
+            if self.ACTION_KEY in rule and 'match_type' in rule and 'query' in rule:
                 self.RuleItemClass(rule, self.rule_list)
 
 
@@ -494,7 +495,13 @@ class RulesDialog(Dialog, SaveLoadMixin):
         self.l = l = QVBoxLayout(self)
         self.edit_widget = w = self.RulesClass(self)
         l.addWidget(w)
-        l.addWidget(self.bb)
+        ebw = self.extra_bottom_widget()
+        if ebw is None:
+            l.addWidget(self.bb)
+        else:
+            self.h = h = QHBoxLayout()
+            l.addLayout(h)
+            h.addWidget(ebw), h.addStretch(10), h.addWidget(self.bb)
         self.save_button = b = self.bb.addButton(_('&Save'), QDialogButtonBox.ButtonRole.ActionRole)
         b.setToolTip(_('Save this ruleset for later re-use'))
         b.clicked.connect(self.save_ruleset)
@@ -506,6 +513,9 @@ class RulesDialog(Dialog, SaveLoadMixin):
         self.test_button = b = self.bb.addButton(_('&Test rules'), QDialogButtonBox.ButtonRole.ActionRole)
         b.clicked.connect(self.test_rules)
 
+    def extra_bottom_widget(self):
+        pass
+
     @property
     def rules(self):
         return self.edit_widget.rules
@@ -516,6 +526,11 @@ class RulesDialog(Dialog, SaveLoadMixin):
 
     def test_rules(self):
         self.TesterClass(self.rules, self).exec_()
+
+    def sizeHint(self):
+        ans = super().sizeHint()
+        ans.setWidth(ans.width() + 100)
+        return ans
 
 
 if __name__ == '__main__':

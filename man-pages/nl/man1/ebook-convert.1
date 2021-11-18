@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "oktober 29, 2021" "5.31.1" "calibre"
+.TH "EBOOK-CONVERT" "1" "november 12, 2021" "5.32.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -35,21 +35,21 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-ebook\-convert input_file output_file [options]
+ebook\-convert input_file output_file [opties]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Convert an e\-book from one format to another.
+Converteer een e\-book van het ene naar het andere formaat.
 .sp
-input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+input_file is de invoer en output_file is de uitvoer. Beiden moeten gespecificeerd worden als de eerste twee argumenten bij het commando.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an "open e\-book" (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
+Het e\-book uitvoerformaat wordt geraden van de extensie van output_file. output_file kan ook van het speciale .EXT formaat zijn, waar EXT de uitvoerbestandextensie is. In dit geval wordt de naam van het invoerbestand die van het uitvoerbestand. Merk op dat de bestandsnaam niet mag beginnen met een koppelteken. Als, tot slot, output_file geen extensie heeft, wordt het gezien als een map en wordt een "open e\-book" (OEB) bestaande uit HTML\-bestanden geschreven in die map. Deze bestanden zijn dezelfde die normaal gezien naar de uitvoer plug\-in  zouden zijn gepasseerd.
 .sp
-After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+Na specificatie van het invoer\- en uitvoerbestand kan u de conversie aanpassen door een aantal opties te kiezen. De beschikbare opties hangen af van het type invoer\- en uitvoerbestanden. Voor hulp specificeer het invoer\- en uitvoerbestand en gebruik dan de \-h optie.
 .sp
-For full documentation of the conversion system see
+Voor de volledige documentatie van het conversiesysteem zie
 conversion
 .sp
 Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
@@ -145,7 +145,7 @@ De versie van het EPUB\-bestand dat moet worden gegenereerd. EPUB 2 is het meest
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extract the contents of the generated EPUB file to the specified folder. The contents of the folder are first deleted, so be careful.
+Extraheer de inhoud van het gegenereerde EPUB bestand naar de aangegeven map. De inhoud van de map wordt eerst gewist, dus wees voorzichtig.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -183,7 +183,7 @@ Opties om uiterlijk van de uitvoer aan te passen
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPPelé\fB"\fP with \fB"\fPPele\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Zet unicode karakters om naar ASCII tekens. Voorzichtig gebruiken want dit zal unicode karakters vervangen door ASCII. Bijvoorbeeld: \fB"\fPPelé\fB"\fP wordt vervangen door  \fB"\fPPele\fB"\fP\&. Merk ook op dat als er meerdere weergaven van een teken zijn (zoals bij gedeelde tekens uit Chinees en Japans), de weergave gekozen wordt op basis van de huidige taalinstellingen voor calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -293,7 +293,7 @@ Als calibre lege regels tussen paragrafen verwijderd, zal automatisch een paragr
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP\&.
+Zet gewone aanhalingstekens, streepjes en beletseltekens om in hun typografisch juiste equivalenten. Voor details: \fI\%https://daringfireball.net/projects/smartypants\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -304,6 +304,11 @@ Uitdunnen van alle ingebedde lettertypes. Elk ingebed lettertype is beperkt tot 
 .TP
 .B \-\-transform\-css\-rules
 Pad naar een bestand met regels om de CSS\-stijlen in dit boek te transformeren. De eenvoudigste manier om een dergelijk bestand te maken is om de wizard te gebruiken voor het maken van regels in de GUI van calibre. Open het in de \fB"\fPUitstraling & gevoel\-> Transformeer stijlen\fB"\fP sectie van het conversie dialoogvenster. Nadat u de regels hebt gemaakt, kunt u de knop \fB"\fPExporteren\fB"\fP gebruiken om ze in een bestand op te slaan.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-transform\-html\-rules
+Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform HTML\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -591,7 +596,7 @@ Opties om te helpen bij het vinden van fouten bij de conversie
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring.
+Sla de uitvoer van verschillende stadia van de conversielijn op in de opgegeven map. Nuttig als u niet zeker weet tijdens welke stap in het conversieproces een fout optreedt.
 .UNINDENT
 .INDENT 0.0
 .TP

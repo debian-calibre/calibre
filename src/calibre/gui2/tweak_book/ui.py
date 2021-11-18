@@ -7,6 +7,7 @@ __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 
 import os
 from functools import partial
+from gettext import pgettext
 from itertools import product
 from qt.core import (
     QAction, QApplication, QColor, QDockWidget, QEvent, QHBoxLayout, QIcon, QImage,
@@ -499,6 +500,8 @@ class Main(MainWindow):
             'Compress images losslessly'))
         self.action_transform_styles = treg('wizard.png', _('Transform &styles'), self.boss.transform_styles, 'transform-styles', (), _(
             'Transform styles used in the book'))
+        self.action_transform_html = treg('wizard.png', _('Transform &HTML'), self.boss.transform_html, 'transform-html', (), _(
+            'Transform HTML used in the book'))
         self.action_get_ext_resources = treg('download-metadata.png', _('Download external &resources'),
                                              self.boss.get_external_resources, 'get-external-resources', (), _(
             'Download external resources in the book (images/stylesheets/etc/ that are not included in the book)'))
@@ -579,7 +582,7 @@ class Main(MainWindow):
             self.boss.next_spell_error, 'spell-next', ('F8'), _('Go to next spelling mistake'))
 
         # Miscellaneous actions
-        group = _('Miscellaneous')
+        group = pgettext('edit book actions', 'Miscellaneous')
         self.action_create_checkpoint = treg(
             'marked.png', _('&Create checkpoint'), self.boss.create_checkpoint, 'create-checkpoint', (), _(
                 'Create a checkpoint with the current state of the book'))
@@ -665,6 +668,7 @@ class Main(MainWindow):
         e.addAction(self.action_smarten_punctuation)
         e.addAction(self.action_remove_unused_css)
         e.addAction(self.action_transform_styles)
+        e.addAction(self.action_transform_html)
         e.addAction(self.action_fix_html_all)
         e.addAction(self.action_pretty_all)
         e.addAction(self.action_rationalize_folders)

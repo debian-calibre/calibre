@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-23 06:27+0000\n"
-"PO-Revision-Date: 2021-03-21 13:28+0000\n"
+"POT-Creation-Date: 2021-11-11 06:01+0000\n"
+"PO-Revision-Date: 2021-11-08 16:07+0000\n"
 "Last-Translator: ashed <craysy@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/calibre/calibre/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -27,36 +27,66 @@ msgstr "Настройка calibre"
 
 #: ../../__w/calibre/calibre/manual/customize.rst:8
 msgid ""
-"calibre has a highly modular design. Various parts of it can be customized. "
-"You can learn how to create *recipes* to add new sources of online content "
-"to calibre in the Section :ref:`news`. Here, you will learn, first, how to "
-"use environment variables and *tweaks* to customize calibre's behavior,  and"
-" then how to specify your own static resources like icons and templates to "
-"override the defaults and finally how to use *plugins* to add functionality "
-"to calibre."
-msgstr "У calibre модульный дизайн. Можно настраивать всё. Можно узнать, как создавать *рецепты*, для добавления новых источников онлайн-контента в calibre в разделе :ref:`news`. Здесь вы узнаете, во-первых как использовать переменные окружения и *tweaks* для настройки поведения calibre, а затем как указать свои собственные статические ресурсы (значки и шаблоны) чтобы переопределить умолчания и, наконец, как использовать *plugins* для добавления функциональности в calibre."
+"calibre has a highly modular design. Various parts of it can be customized."
+"  Here, you will learn:"
+msgstr "calibre имеет высокомодульную конструкцию. Все его части можно настроить. Здесь вы узнаете:"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:24
+#: ../../__w/calibre/calibre/manual/customize.rst:10
+msgid ""
+"how to use environment variables and *tweaks* to customize calibre's "
+"behavior,"
+msgstr "как использовать переменные среды и *твики* для настройки поведения calibre,"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:11
+msgid ""
+"how to specify your own static resources like icons and templates to "
+"override the defaults"
+msgstr "как указать свои собственные статические ресурсы, такие как значки и шаблоны, чтобы переопределить умолчальные значения"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:12
+msgid "how to use *plugins* to add functionality to calibre."
+msgstr "как использовать *плагины* для добавления функциональности в calibre."
+
+#: ../../__w/calibre/calibre/manual/customize.rst:13
+msgid "how to share icon themes and plugins with other calibre users."
+msgstr "как делиться темами значков и плагинами с другими пользователями calibre."
+
+#: ../../__w/calibre/calibre/manual/customize.rst:14
+msgid ""
+"to see how to create *recipes* to add new sources of online content to "
+"calibre visit the Section :ref:`news`."
+msgstr "Чтобы узнать, как создавать *рецепты* для добавления новых источников онлайн-контента в calibre, посетите Раздел :ref:`news`."
+
+#: ../../__w/calibre/calibre/manual/customize.rst:17
+msgid ""
+"Note that although icon themes and plugins are indexed and downloadable via "
+"calibre's builtin updater, they are not part of calibre, and their canonical"
+" locations for support and source code are on the `Mobileread forums "
+"<https://www.mobileread.com/forums/forumdisplay.php?f=166>`_ in their "
+"support threads."
+msgstr "Обратите внимание, что, хотя темы значков и плагины индексируются и загружаются с помощью встроенного средства обновления calibre, они не являются частью calibre, и их исходный код и поддержка находятся на форумах `Mobileread <https://www.mobileread.com/forums/forumdisplay.php?f=166>`_ в своих ветках поддержки."
+
+#: ../../__w/calibre/calibre/manual/customize.rst:33
 msgid "Environment variables"
 msgstr "Переменные окружения"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:26
+#: ../../__w/calibre/calibre/manual/customize.rst:35
 msgid ""
 "``CALIBRE_CONFIG_DIRECTORY`` - sets the folder where configuration files are"
 " stored/read."
 msgstr "``CALIBRE_CONFIG_DIRECTORY`` - установить папку, в которой файлы конфигурации хранятся/читаются."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:27
+#: ../../__w/calibre/calibre/manual/customize.rst:36
 msgid "``CALIBRE_TEMP_DIR`` - sets the temporary folder used by calibre"
 msgstr "``CALIBRE_TEMP_DIR``- установить временную папку, используемую calibre"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:28
+#: ../../__w/calibre/calibre/manual/customize.rst:37
 msgid ""
 "``CALIBRE_CACHE_DIRECTORY`` - sets the folder calibre uses to cache "
 "persistent data between sessions"
 msgstr "``CALIBRE_CACHE_DIRECTORY`` - установить папку calibre, используемую для кэширования постоянных данных между сеансами"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:29
+#: ../../__w/calibre/calibre/manual/customize.rst:38
 msgid ""
 "``CALIBRE_OVERRIDE_DATABASE_PATH`` - allows you to specify the full path to "
 "metadata.db. Using this variable you can have metadata.db be in a location "
@@ -64,38 +94,38 @@ msgid ""
 "networked drive that does not support file locking."
 msgstr "``CALIBRE_OVERRIDE_DATABASE_PATH`` - указать полный путь к metadata.db. Используя эту переменную, вы можете хранить metadata.db вне папки библиотеки. Полезно, если папка вашей библиотеки находится на сетевом диске, который не поддерживает блокировку файлов."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:30
+#: ../../__w/calibre/calibre/manual/customize.rst:39
 msgid ""
 "``CALIBRE_DEVELOP_FROM`` - used to run from a calibre development "
 "environment. See :ref:`develop`."
 msgstr "``CALIBRE_DEVELOP_FROM`` - используется для запуска из среды разработки calibre. Смотрите :ref:`develop`."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:31
+#: ../../__w/calibre/calibre/manual/customize.rst:40
 msgid ""
 "``CALIBRE_OVERRIDE_LANG`` - used to force the language used by the interface"
 " (ISO 639 language code)"
 msgstr "``CALIBRE_OVERRIDE_LANG`` - используется для принудительного выбора языка интерфейса (ISO 639 код языка)"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:32
+#: ../../__w/calibre/calibre/manual/customize.rst:41
 msgid ""
 "``CALIBRE_TEST_TRANSLATION`` - used to test a translation .po file (should "
 "be the path to the .po file)"
 msgstr "``CALIBRE_TEST_TRANSLATION`` - используется для тестирования файла перевода .po (должен быть путь к файлу .po)"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:33
+#: ../../__w/calibre/calibre/manual/customize.rst:42
 msgid ""
 "``CALIBRE_NO_NATIVE_FILEDIALOGS`` - causes calibre to not use native file "
 "dialogs for selecting files/folders."
 msgstr "``CALIBRE_NO_NATIVE_FILEDIALOGS`` - заставляет calibre не использовать собственные файловые диалоги для выбора файлов/папок."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:34
+#: ../../__w/calibre/calibre/manual/customize.rst:43
 msgid ""
 "``CALIBRE_NO_NATIVE_MENUBAR`` - causes calibre to not create a native "
 "(global) menu on Ubuntu Unity and similar linux desktop environments. The "
 "menu is instead placed inside the window, as is traditional."
 msgstr "``CALIBRE_NO_NATIVE_MENUBAR`` - заставляет calibre не создавать собственное (глобальное) меню в Ubuntu Unity и аналогичных средах рабочего стола Linux. Вместо этого меню, как обычно, помещается внутри окна."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:35
+#: ../../__w/calibre/calibre/manual/customize.rst:44
 msgid ""
 "``CALIBRE_USE_SYSTEM_THEME`` - by default, on Linux, calibre uses its own "
 "builtin Qt style. This is to avoid crashes and hangs caused by "
@@ -105,19 +135,19 @@ msgid ""
 "to use the system theme -- beware of crashes and hangs."
 msgstr "``CALIBRE_USE_SYSTEM_THEME`` - по умолчанию в Linux calibre использует собственный встроенный стиль Qt. Это сделано для того, чтобы избежать сбоев и зависаний, вызванных несовместимостью между версией Qt calibre, на которой построена версия, и общесистемной Qt. Обратной стороной является то, что calibre может не соответствовать внешнему виду системы. Если вы установите эту переменную среды в Linux, это приведет к тому, что calibre будет использовать системную тему - остерегайтесь сбоев и зависаний."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:41
+#: ../../__w/calibre/calibre/manual/customize.rst:50
 msgid ""
 "``CALIBRE_SHOW_DEPRECATION_WARNINGS`` - causes calibre to print deprecation "
 "warnings to stdout. Useful for calibre developers."
 msgstr "``CALIBRE_SHOW_DEPRECATION_WARNINGS`` - заставляет calibre печатать предупреждения об устаревании в стандартный вывод. Полезно для разработчиков calibre."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:42
+#: ../../__w/calibre/calibre/manual/customize.rst:51
 msgid ""
 "``CALIBRE_NO_DEFAULT_PROGRAMS`` - prevent calibre from automatically "
 "registering the filetypes it is capable of handling with Windows."
 msgstr "``CALIBRE_NO_DEFAULT_PROGRAMS`` - не позволять calibre автоматически регистрировать типы файлов, с которыми он может работать в Windows."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:43
+#: ../../__w/calibre/calibre/manual/customize.rst:52
 msgid ""
 "``CALIBRE_USE_DARK_PALETTE`` - set it to ``1`` to have calibre use dark "
 "colors and ``0`` for normal colors (ignored on macOS). On Windows 10 in the "
@@ -125,16 +155,16 @@ msgid ""
 "used."
 msgstr "``CALIBRE_USE_DARK_PALETTE`` - установите его в ``1``, чтобы calibre использовал тёмные цвета, и на ``0`` для обычных цветов (игнорируется в macOS). В Windows 10 при отсутствии этой переменной используется системное предпочтение Windows для тёмных цветов."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:45
+#: ../../__w/calibre/calibre/manual/customize.rst:54
 msgid "``SYSFS_PATH`` - Use if sysfs is mounted somewhere other than /sys"
 msgstr "``SYSFS_PATH`` - использовать, если sysfs монтируется где-то, кроме /sys"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:46
+#: ../../__w/calibre/calibre/manual/customize.rst:55
 msgid ""
 "``http_proxy``, ``https_proxy`` - used on Linux to specify an HTTP(S) proxy"
 msgstr "``http_proxy``, ``https_proxy`` - используется в Linux для указания HTTP(S) прокси "
 
-#: ../../__w/calibre/calibre/manual/customize.rst:48
+#: ../../__w/calibre/calibre/manual/customize.rst:57
 msgid ""
 "See `How to set environment variables in Windows "
 "<https://www.computerhope.com/issues/ch000549.htm>`_. If you are on macOS "
@@ -143,11 +173,11 @@ msgid ""
 "environment variables one per line in it, for example::"
 msgstr "Смотрите `Как настроить переменные окружения в Windows <https://www.computerhope.com/issues/ch000549.htm>`_. Если вы на macOS можно описать переменные окружения в :file:`~/Library/Preferences/calibre/macos-env.txt` указав по одной переменной окружения на строку, к примеру::"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:58
+#: ../../__w/calibre/calibre/manual/customize.rst:67
 msgid "Tweaks"
 msgstr "Твики"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:60
+#: ../../__w/calibre/calibre/manual/customize.rst:69
 msgid ""
 "Tweaks are small changes that you can specify to control various aspects of "
 "calibre's behavior. You can change them by going to "
@@ -155,11 +185,11 @@ msgid ""
 "reproduced below"
 msgstr "Твики — это небольшие изменения, через которые вы можете управлять различными аспектами поведения calibre. Вы можете изменить их, перейдя в меню «Параметры->Расширенные->Твики». Ниже приведены значения настроек по умолчанию"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:67
+#: ../../__w/calibre/calibre/manual/customize.rst:76
 msgid "Overriding icons, templates, et cetera"
 msgstr "Переопределение значков, шаблонов и т. д."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:70
+#: ../../__w/calibre/calibre/manual/customize.rst:79
 msgid ""
 "calibre has direct support for icon themes, there are several icon themes "
 "available for calibre, that you can use by going to "
@@ -168,7 +198,7 @@ msgid ""
 "resources."
 msgstr "У calibre есть прямая поддержка тем значков, несколько из этих тем можно использовать, перейдя в :guilabel:`Параметры->Интерфейс->Оформление->Изменить набор значков`. Темы значков используют описанный ниже механизм для переопределения статических ресурсов."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:74
+#: ../../__w/calibre/calibre/manual/customize.rst:83
 msgid ""
 "calibre allows you to override the static resources, like icons, JavaScript "
 "and templates for the metadata jacket, catalogs, etc. with customized "
@@ -181,7 +211,7 @@ msgid ""
 "you choose to install calibre."
 msgstr "calibre позволяет переопределять статические ресурсы, такие как значки, JavaScript и шаблоны для оболочки метаданных, каталогов и т. д., с помощью настраиваемых версий, которые вам нравятся. Все статические ресурсы хранятся в подпапке ресурсов места установки calibre. В Windows это обычно :file:`C:\\\\Program Files\\\\Calibre2\\\\app\\\\resources`. В macOS :file:`/Applications/calibre.app/Contents/Resources/resources/`. В Linux, если вы используете бинарный установщик с веб-сайта калибра, это будет :file:`/opt/calibre/resources`. Эти пути могут меняться в зависимости от того, где вы решили установить calibre."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:83
+#: ../../__w/calibre/calibre/manual/customize.rst:92
 msgid ""
 "You should not change the files in this resources folder, as your changes "
 "will get overwritten the next time you update calibre. Instead, go to "
@@ -193,7 +223,7 @@ msgid ""
 "file in preference to the built-in one the next time it is started."
 msgstr "Вы не должны изменять файлы в этой папке ресурсов, так как ваши изменения будут перезаписаны при следующем обновлении calibre. Вместо этого перейдите в :guilabel:`Preferences-Advanced-Miscellaneous` и щелкните :guilabel:`Открыть папку конфигурации calibre`. В этой папке конфигурации создайте подпапку с именем resources и поместите в неё файлы, которые вы хотите переопределить. Поместите файлы в соответствующие подпапки, например поместите изображения в :file:`resources/images` и т. д. calibre автоматически будет использовать ваш пользовательский файл вместо встроенного при следующем запуске."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:92
+#: ../../__w/calibre/calibre/manual/customize.rst:101
 msgid ""
 "For example, if you wanted to change the icon for the :guilabel:`Remove "
 "books` action, you would first look in the built-in resources folder and see"
@@ -204,11 +234,11 @@ msgid ""
 "calibre user interface are in :file:`resources/images` and its sub-folders."
 msgstr "Например, если вы хотите изменить значок для действия :guilabel: `Remove books`, вы сначала должны заглянуть во встроенную папку ресурсов и увидеть, что соответствующий файл :file:`resources/images/remove_books.png `. Предполагая, что у вас есть альтернативный значок в формате PNG с именем :file:`my_remove_books.png`, вы должны сохранить его в папке конфигурации как :file:`resources/images/remove_books.png`. Все значки, используемые пользовательским интерфейсом calibre, находятся в :file:`resources/images` и её подпапках."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:101
+#: ../../__w/calibre/calibre/manual/customize.rst:110
 msgid "Creating your own icon theme for calibre"
 msgstr "Создание собственной темы значков для calibre"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:103
+#: ../../__w/calibre/calibre/manual/customize.rst:112
 msgid ""
 "If you have created a beautiful set of icons and wish to share them with "
 "other calibre users via calibre's builtin icon theme support, you can easily"
@@ -222,11 +252,11 @@ msgid ""
 " make your theme available via calibre's builtin icon theme system."
 msgstr "Если вы создали красивый набор значков и хотите поделиться ими с другими пользователями calibre с помощью встроенной поддержки тем значков calibre, вы можете легко упаковать свои значки в тему. Для этого перейдите в :guilabel:`Preferences-Miscellaneous-Create icon theme`, выберите папку, в которую вы поместили свои значки (обычно это папка :file:`resources/images` в папке конфигурации calibre, как описано выше) . Затем заполните метаданные темы и нажмите ОК. Создастся ZIP-файл, содержащий значки темы. Вы можете загрузить его на форум calibre по адресу `Mobileread <https://www.mobileread.com/forums/forumdisplay.php?f=166>`_, а затем я сделаю вашу тему доступной через встроенную систему тем значков calibre."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:116
+#: ../../__w/calibre/calibre/manual/customize.rst:125
 msgid "Customizing calibre with plugins"
 msgstr "Настройка calibre с помощью плагинов"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:118
+#: ../../__w/calibre/calibre/manual/customize.rst:127
 msgid ""
 "calibre has a very modular design. Almost all functionality in calibre comes"
 " in the form of plugins. Plugins are used for conversion, for downloading "
@@ -236,9 +266,17 @@ msgid ""
 "plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
 msgstr "calibre имеет модульную конструкцию. Практически все функциональные возможности calibre поставляются в виде плагинов. Плагины используются для преобразования форматов, для загрузки новостей (хотя и называются рецептами), для различных компонентов пользовательского интерфейса, для подключения к различным устройствам, для обработки файлов при добавлении их в calibre и так далее. Вы можете получить полный список всех встроенных в calibre плагинов, перейдя в :guilabel:`Параметры->Расширенные->Плагины`."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:120
+#: ../../__w/calibre/calibre/manual/customize.rst:134
 msgid ""
 "You can write your own plugins to customize and extend the behavior of "
 "calibre. The plugin architecture in calibre is very simple, see the tutorial"
 " :ref:`pluginstutorial`."
 msgstr "Вы можете писать свои плагины чтобы настроить и расширить поведение calibre. Архитектура плагинов calibre очень проста, ознакомьтесь с руководством :ref:`pluginstutorial`."
+
+#: ../../__w/calibre/calibre/manual/customize.rst:138
+msgid ""
+"Once you have written a plugin, you can upload that to the calibre plugins "
+"forum at `Mobileread "
+"<https://www.mobileread.com/forums/forumdisplay.php?f=237>`_ and it will be "
+"made available via calibre's builtin plugin updater."
+msgstr "После того, как вы написали плагин, вы можете загрузить его на форум плагинов calibre по адресу `Mobileread <https://www.mobileread.com/forums/forumdisplay.php?f=237>`_, и он будет доступен через встроенный апдейтер плагинов calibre."

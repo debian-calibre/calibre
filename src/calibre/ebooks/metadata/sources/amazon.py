@@ -676,6 +676,10 @@ class Worker(Thread):  # Get details {{{
             desc = root.xpath('//div[@id="ps-content"]/div[@class="content"]')
             if desc:
                 ans = self._render_comments(desc[0])
+            else:
+                ns = tuple(self.selector('#bookDescription_feature_div .a-expander-content'))
+                if ns:
+                    ans = self._render_comments(ns[0])
 
         desc = root.xpath(
             '//div[@id="productDescription"]/*[@class="content"]')
@@ -724,21 +728,14 @@ class Worker(Thread):  # Get details {{{
                         if series:
                             ans = (series, series_index)
         else:
-            series = root.xpath('//div[@id="seriesBullet_feature_div"]')
+            series = root.xpath('//div[@id="seriesBulletWidget_feature_div"]')
             if series:
-                series = series[0]
-                spans = series.xpath('descendant::span')
-                if spans:
-                    span = spans[0]
-                    b = span.xpath('./b')
-                    a = span.xpath('./a')
-                    if a and b:
-                        series = self.tostring(a[0], encoding='unicode', method='text', with_tail=False).strip()
-                        if series:
-                            raw = self.tostring(b[0], encoding='unicode', method='text', with_tail=False).strip()
-                            m = re.search(r'[0-9.]+', raw)
-                            if m is not None:
-                                ans = (series, float(m.group()))
+                a = series[0].xpath('descendant::a')
+                if a:
+                    raw = self.tostring(a[0], encoding='unicode', method='text', with_tail=False)
+                    m = re.search(r'(?:Book|Libro)\s+(?P<index>[0-9.]+)\s+(?:of|de)\s+([0-9.]+)\s*:\s*(?P<series>.+)', raw.strip())
+                    if m is not None:
+                        ans = (m.group('series').strip(), float(m.group('index')))
 
         # This is found on Kindle edition pages on amazon.com
         if ans == (None, None):
@@ -971,7 +968,7 @@ class Worker(Thread):  # Get details {{{
 class Amazon(Source):
 
     name = 'Amazon.com'
-    version = (1, 2, 19)
+    version = (1, 2, 21)
     minimum_calibre_version = (2, 82, 0)
     description = _('Downloads metadata and covers from Amazon')
 
@@ -1650,7 +1647,7 @@ def manual_tests(domain, **kw):  # {{{
 
         (  # No specific problems
             {'identifiers': {'isbn': '0743273567'}},
-            [title_test('The great gatsby', exact=True),
+            [title_test('the great gatsby: the only authorized edition', exact=True),
              authors_test(['Francis Scott Fitzgerald'])]
         ),
 
