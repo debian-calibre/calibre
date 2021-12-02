@@ -5,13 +5,13 @@ Subject: Extend timeout limit
 Forwarded: not-needed
 
 Some non-x86 architecture is much slower than x86.
-Treat Debian package builder as CI system.
+Add some more time to wait test results.
 ---
  src/calibre/srv/tests/base.py |  2 +-
- src/calibre/srv/tests/http.py | 16 ++++++++--------
- src/calibre/srv/tests/loop.py |  8 ++++----
- src/calibre/test_build.py     |  4 ++--
- 4 files changed, 15 insertions(+), 15 deletions(-)
+ src/calibre/srv/tests/http.py | 14 +++++++-------
+ src/calibre/srv/tests/loop.py |  6 +++---
+ src/calibre/test_build.py     |  2 +-
+ 4 files changed, 12 insertions(+), 12 deletions(-)
 
 diff --git a/src/calibre/srv/tests/base.py b/src/calibre/srv/tests/base.py
 index f9be9d0..289cc05 100644
@@ -27,18 +27,9 @@ index f9be9d0..289cc05 100644
          kwargs['port'] = kwargs.get('port', 0)
          kwargs['userdb'] = kwargs.get('userdb', ':memory:')
 diff --git a/src/calibre/srv/tests/http.py b/src/calibre/srv/tests/http.py
-index 348890c..d89f093 100644
+index 348890c..b2277f4 100644
 --- a/src/calibre/srv/tests/http.py
 +++ b/src/calibre/srv/tests/http.py
-@@ -16,7 +16,7 @@ from calibre.utils.monotonic import monotonic
- from polyglot.builtins import iteritems
- from polyglot import http_client
- 
--is_ci = os.environ.get('CI', '').lower() == 'true'
-+is_ci = os.environ.get('SCHROOT_USER', None) != None
- 
- 
- class TestHTTP(BaseTest):
 @@ -96,7 +96,7 @@ class TestHTTP(BaseTest):
          def handler(data):
              return data.lang_code + data._('Unknown')
@@ -96,18 +87,9 @@ index 348890c..d89f093 100644
                  r = conn.getresponse()
                  self.ae(r.status, http_client.OK)
 diff --git a/src/calibre/srv/tests/loop.py b/src/calibre/srv/tests/loop.py
-index 109af82..936d422 100644
+index 109af82..b876142 100644
 --- a/src/calibre/srv/tests/loop.py
 +++ b/src/calibre/srv/tests/loop.py
-@@ -17,7 +17,7 @@ from calibre.ptempfile import TemporaryDirectory
- from calibre.utils.certgen import create_server_cert
- from calibre.utils.monotonic import monotonic
- from polyglot import http_client
--is_ci = os.environ.get('CI', '').lower() == 'true'
-+is_ci = os.environ.get('SCHROOT_USER', None) != None
- 
- 
- class LoopTest(BaseTest):
 @@ -81,7 +81,7 @@ class LoopTest(BaseTest):
          self.ae(0, sum(int(w.is_alive()) for w in server.loop.pool.workers))
          # Test shutdown with hung worker
@@ -129,18 +111,9 @@ index 109af82..936d422 100644
              service = b.services[0]
              self.ae(service.type, '_calibre._tcp.local.')
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index 7a922c6..1a12fba 100644
+index 7a922c6..eba5da1 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
-@@ -15,7 +15,7 @@ import os, ctypes, sys, unittest, time, shutil
- from calibre.constants import iswindows, islinux, ismacos, plugins_loc
- from polyglot.builtins import iteritems
- 
--is_ci = os.environ.get('CI', '').lower() == 'true'
-+is_ci = os.environ.get('SCHROOT_USER', None) != None
- is_sanitized = 'libasan' in os.environ.get('LD_PRELOAD', '')
- 
- try:
 @@ -346,7 +346,7 @@ class BuildTest(unittest.TestCase):
  
              p.runJavaScript('1 + 1', callback)

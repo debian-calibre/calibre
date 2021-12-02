@@ -11,10 +11,12 @@ export DEB_BUILD_MAINT_OPTIONS=hardening=+all reproducible=+all
 
 # Do all test by default
 TEST_FLAGS =
+CI_ENV =
 
 # Disable some test when in package builder environment
-ifdef SCHROOT_USER
+ifeq ($(wildcard .git),)
   include debian/buildd-options.mak
+  CI_ENV += CI=true
 endif
 
 %:
@@ -43,10 +45,10 @@ override_dh_auto_test:
 
 # "test_ajax_book" fails if previous test is "test_workers" (Closes: #973458)
 calibre_auto_test:
-	LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC xvfb-run --auto-servernum $(SETUP) test $(TEST_FLAGS) --exclude-test-name=ajax_book --exclude-test-name=workers --exclude-test-name=qt
-	LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC xvfb-run --auto-servernum $(SETUP) test --test-name=ajax_book $(TEST_FLAGS)
-	LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC xvfb-run --auto-servernum $(SETUP) test --test-name=workers   $(TEST_FLAGS)
-	LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC xvfb-run --auto-servernum $(SETUP) test --test-name=qt        $(TEST_FLAGS)
+	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC $(CI_ENV) xvfb-run --auto-servernum $(SETUP) test $(TEST_FLAGS) --exclude-test-name=ajax_book --exclude-test-name=workers --exclude-test-name=qt
+	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC $(CI_ENV) xvfb-run --auto-servernum $(SETUP) test --test-name=ajax_book $(TEST_FLAGS)
+	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC $(CI_ENV) xvfb-run --auto-servernum $(SETUP) test --test-name=workers   $(TEST_FLAGS)
+	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC $(CI_ENV) xvfb-run --auto-servernum $(SETUP) test --test-name=qt        $(TEST_FLAGS)
 
 override_dh_install:
 	dh_buildinfo
