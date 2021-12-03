@@ -13389,7 +13389,7 @@ return this.__repr__();
         var scroll_viewport = ρσ_modules["read_book.viewport"].scroll_viewport;
         var rem_size = ρσ_modules["read_book.viewport"].rem_size;
 
-        escape_pat = /[\[\],^();~@!-]/g;
+        escape_pat = /[\[\],^();~@!]/g;
         unescape_pat = /[\^](.)/g;
         function escape_for_cfi(raw) {
             return (raw || "").replace(escape_pat, "^$&");
@@ -16285,7 +16285,7 @@ return this.__repr__();
 
     (function(){
         var __name__ = "iframe_comm";
-        var LOADING_DOC;
+        var LOADING_DOC, instance_numbers;
         var GCM = ρσ_modules.aes.GCM;
 
         var E = ρσ_modules.elementmaker.E;
@@ -16385,8 +16385,9 @@ return this.__repr__();
             var k;
             self.messenger = new Messenger;
             self.iframe_id = ensure_id(iframe, "content-iframe");
+            self.reload_count = 0;
             if (ρσ_in(":", entry_point)) {
-                self.needs_init = false;
+                self.needs_init = iframe.src !== entry_point;
                 self.srcdoc_created = true;
                 self.constructor_url = entry_point;
                 self.entry_point = null;
@@ -16457,7 +16458,7 @@ return this.__repr__();
         });
         IframeWrapper.prototype.init = function init() {
             var self = this;
-            var iframe, sdoc;
+            var iframe, sdoc, ch;
             if (!self.needs_init) {
                 return;
             }
@@ -16469,8 +16470,9 @@ return this.__repr__();
                     iframe.srcdoc = "<p>&nbsp;</p>";
                     iframe.srcdoc = sdoc;
                 } else {
-                    iframe.src = "about:blank";
-                    iframe.src = self.constructor_url;
+                    self.reload_count += 1;
+                    ch = (ρσ_in("?", self.constructor_url)) ? "&" : "?";
+                    iframe.src = self.constructor_url + ("" + ρσ_str.format("{}", ch) + "rc=" + ρσ_str.format("{}", self.reload_count) + "");
                 }
             } else {
                 self.create_srcdoc();
@@ -16491,6 +16493,9 @@ return this.__repr__();
         IframeWrapper.prototype._send_message = function _send_message(action, encrypted, data) {
             var self = this;
             var msg;
+            if (!self.ready) {
+                return;
+            }
             data.action = action;
             msg = (function(){
                 var ρσ_d = Object.create(null);
@@ -16621,21 +16626,29 @@ return this.__repr__();
             __module__ : {value: "iframe_comm"}
         });
 
+        instance_numbers = Object.create(null);
         function IframeClient() {
             if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
             IframeClient.prototype.__bind_methods__.call(this);
             IframeClient.prototype.__init__.apply(this, arguments);
         }
         Object.defineProperty(IframeClient.prototype, "__bind_methods__", {value: function () {
+            this.send_ready = IframeClient.prototype.send_ready.bind(this);
             this.initialize = IframeClient.prototype.initialize.bind(this);
             this.print_to_parent = IframeClient.prototype.print_to_parent.bind(this);
             this.handle_message = IframeClient.prototype.handle_message.bind(this);
             this.send_message = IframeClient.prototype.send_message.bind(this);
         }});
-        IframeClient.prototype.__init__ = function __init__(handlers) {
+        IframeClient.prototype.__init__ = function __init__(handlers, name) {
             var self = this;
             var k;
             self.encrypted_communications = false;
+            self.name = name;
+            if (!instance_numbers[ρσ_bound_index(self.name, instance_numbers)]) {
+                instance_numbers[ρσ_bound_index(self.name, instance_numbers)] = 0;
+            }
+            instance_numbers[ρσ_bound_index(self.name, instance_numbers)] += 1;
+            self.instance_num = instance_numbers[ρσ_bound_index(self.name, instance_numbers)];
             self.handlers = (function() {
                 var ρσ_Iter = ρσ_Iterable(handlers), ρσ_Result = Object.create(null), k;
                 for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
@@ -16648,25 +16661,28 @@ return this.__repr__();
             self.handlers.initialize = self.initialize;
             self.ready_sent = false;
             window.addEventListener("message", self.handle_message, false);
-            window.addEventListener("load", (function() {
-                var ρσ_anonfunc = function () {
-                    if (!self.ready_sent) {
-                        self.send_message("ready", Object.create(null));
-                        self.ready_sent = true;
-                    }
-                };
-                if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
-                    __module__ : {value: "iframe_comm"}
-                });
-                return ρσ_anonfunc;
-            })());
+            window.addEventListener("load", self.send_ready, (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["once"] = true;
+                return ρσ_d;
+            }).call(this));
         };
         if (!IframeClient.prototype.__init__.__argnames__) Object.defineProperties(IframeClient.prototype.__init__, {
-            __argnames__ : {value: ["handlers"]},
+            __argnames__ : {value: ["handlers", "name"]},
             __module__ : {value: "iframe_comm"}
         });
         IframeClient.__argnames__ = IframeClient.prototype.__init__.__argnames__;
         IframeClient.__handles_kwarg_interpolation__ = IframeClient.prototype.__init__.__handles_kwarg_interpolation__;
+        IframeClient.prototype.send_ready = function send_ready() {
+            var self = this;
+            if (!self.ready_sent) {
+                self.send_message("ready", Object.create(null));
+                self.ready_sent = true;
+            }
+        };
+        if (!IframeClient.prototype.send_ready.__module__) Object.defineProperties(IframeClient.prototype.send_ready, {
+            __module__ : {value: "iframe_comm"}
+        });
         IframeClient.prototype.initialize = function initialize(data) {
             var self = this;
             var ρσ_unpack;
@@ -16705,6 +16721,10 @@ return this.__repr__();
             msg = event.data;
             data = msg.data;
             if (msg.encrypted) {
+                if (!self.gcm_from_parent) {
+                    print("the iframe " + ρσ_str.format("{}", self.name) + "-" + ρσ_str.format("{}", self.instance_num) + " got an encrypted message from its parent without being initialized");
+                    return;
+                }
                 try {
                     data = JSON.parse(self.gcm_from_parent.decrypt(data));
                 } catch (ρσ_Exception) {
@@ -16751,6 +16771,7 @@ return this.__repr__();
         IframeClient.prototype.send_message = function send_message(action, data) {
             var self = this;
             data.action = action;
+            data.iframe_id = "" + ρσ_str.format("{}", self.name) + "-" + ρσ_str.format("{}", self.instance_num) + "";
             if (self.encrypted_communications) {
                 data = self.gcm_to_parent.encrypt(JSON.stringify(data));
             }
@@ -16769,6 +16790,7 @@ return this.__repr__();
         Object.defineProperty(IframeClient.prototype, "__bases__", {value: []});
 
         ρσ_modules.iframe_comm.LOADING_DOC = LOADING_DOC;
+        ρσ_modules.iframe_comm.instance_numbers = instance_numbers;
         ρσ_modules.iframe_comm.Messenger = Messenger;
         ρσ_modules.iframe_comm.IframeWrapper = IframeWrapper;
         ρσ_modules.iframe_comm.create_wrapped_iframe = create_wrapped_iframe;
@@ -18117,7 +18139,7 @@ return this.__repr__();
                 ρσ_d["display"] = self.display;
                 return ρσ_d;
             }).call(this);
-            self.comm = new IframeClient(handlers);
+            self.comm = new IframeClient(handlers, "popup-iframe");
             self.blob_url_map = Object.create(null);
             self.name = null;
             self.frag = null;
@@ -26337,7 +26359,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.32.0";
+        CALIBRE_VERSION = "5.33.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -26590,7 +26612,7 @@ return this.__repr__();
                 })();
                 return ρσ_d;
             }).call(this);
-            self.comm = new IframeClient(handlers);
+            self.comm = new IframeClient(handlers, "main-iframe");
             self.last_window_ypos = 0;
             self.length_before = null;
         };
@@ -28035,7 +28057,9 @@ return this.__repr__();
         Object.defineProperty(IframeBoss.prototype, "__bases__", {value: []});
 
         function main() {
-            main.boss = new IframeBoss;
+            if (!main.boss) {
+                main.boss = new IframeBoss;
+            }
         };
         if (!main.__module__) Object.defineProperties(main, {
             __module__ : {value: "read_book.iframe"}
@@ -38884,6 +38908,11 @@ return this.__repr__();
         });
         SelectionBar.prototype.book_search = function book_search() {
             var self = this;
+            var cs;
+            cs = ρσ_exists.d(ρσ_exists.d(self.view.currently_showing).selection).text;
+            if (!cs || len(str.strip(cs)) < 2) {
+                return error_dialog(_("Too little text"), _("Cannot search as too little text is selected. You must select at least two characters."));
+            }
             self.view.show_search(true);
             self.clear_selection();
         };
@@ -45402,6 +45431,9 @@ return this.__repr__();
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
             data.width = ρσ_unpack[0];
             data.height = ρσ_unpack[1];
+            if (ui_operations.on_iframe_ready) {
+                ui_operations.on_iframe_ready();
+            }
             return self.do_pending_load;
         };
         if (!View.prototype.on_iframe_ready.__argnames__) Object.defineProperties(View.prototype.on_iframe_ready, {
@@ -45599,8 +45631,10 @@ return this.__repr__();
             is_current_book = self.book && (self.book.key === book.key || typeof self.book.key === "object" && ρσ_equals(self.book.key, book.key));
             self.book_load_started = true;
             if (!is_current_book) {
-                self.iframe_wrapper.reset();
-                self.content_popup_overlay.reset();
+                if (self.book) {
+                    self.iframe_wrapper.reset();
+                    self.content_popup_overlay.reset();
+                }
                 self.loaded_resources = Object.create(null);
                 self.content_popup_overlay.loaded_resources = Object.create(null);
                 self.timers.start_book(book);
@@ -46631,7 +46665,7 @@ return this.__repr__();
         var __name__ = "__main__";
 
 
-        var book, view, TRANSLATIONS_DATA, div;
+        var book, view, TRANSLATIONS_DATA;
         var traceback = ρσ_modules.traceback;
 
         var E = ρσ_modules.elementmaker.E;
@@ -47785,6 +47819,15 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })();
+            ui_operations.on_iframe_ready = (function() {
+                var ρσ_anonfunc = function () {
+                    to_python.on_iframe_ready();
+                };
+                if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                    __module__ : {value: null}
+                });
+                return ρσ_anonfunc;
+            })();
             document.body.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: "view"})]));
             window.onerror = onerror;
             create_modal_container();
@@ -47800,11 +47843,10 @@ return this.__repr__();
                 return ρσ_anonfunc;
             })(), 0);
         } else {
-            div = document.getElementById("calibre-viewer-footnote-iframe");
-            if (div) {
-                footnotes_main();
-            } else {
+            if (document.location.pathname.endsWith("/__index__")) {
                 iframe_main();
+            } else if (document.location.pathname.endsWith("/__popup__")) {
+                footnotes_main();
             }
         }
     })();

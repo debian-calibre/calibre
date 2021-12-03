@@ -5,7 +5,7 @@ from polyglot.builtins import environ_item, hasenv
 import sys, locale, codecs, os, collections, collections.abc
 
 __appname__   = 'calibre'
-numeric_version = (5, 32, 0)
+numeric_version = (5, 33, 0)
 __version__   = '.'.join(map(str, numeric_version))
 git_version   = None
 __author__    = "Kovid Goyal <kovid@kovidgoyal.net>"
@@ -442,3 +442,7 @@ def get_windows_number_formats():
         thousands_sep, decimal_point = d['thousands_sep'], d['decimal_point']
         ans = get_windows_number_formats.ans = thousands_sep, decimal_point
     return ans
+
+
+def trash_name():
+    return _('Trash') if ismacos else _('Recycle Bin')

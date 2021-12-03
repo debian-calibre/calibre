@@ -220,7 +220,7 @@ class Central(QStackedWidget):  # {{{
             menu.addSeparator()
             menu.addAction(actions['close-all-but-current-tab'].icon(), _('Close other tabs'), partial(self.close_all_but, ed))
             menu.addAction(actions['close-tabs-to-right-of'].icon(), _('Close tabs to the right of this tab'), partial(self.close_to_right, ed))
-            menu.exec_(self.editor_tabs.tabBar().mapToGlobal(event.pos()))
+            menu.exec(self.editor_tabs.tabBar().mapToGlobal(event.pos()))
 
         return True
 # }}}
@@ -374,7 +374,7 @@ class Main(MainWindow):
         self.status_bar.addWidget(la)
 
         self.boss(self)
-        g = QApplication.instance().desktop().availableGeometry(self)
+        g = self.screen().availableSize()
         self.resize(g.width()-50, g.height()-50)
 
         self.apply_settings()

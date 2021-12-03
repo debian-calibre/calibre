@@ -376,7 +376,7 @@ class ResultsList(QTreeWidget):
         m.addSeparator()
         m.addAction(_('Expand all'), self.expandAll)
         m.addAction(_('Collapse all'), self.collapseAll)
-        m.exec_(self.mapToGlobal(pos))
+        m.exec(self.mapToGlobal(pos))
 
     def edit_notes(self, item):
         r = item.data(0, Qt.ItemDataRole.UserRole)
@@ -934,11 +934,11 @@ class AnnotationsBrowser(Dialog):
             return Dialog.keyPressEvent(self, ev)
 
     def setup_ui(self):
-        self.use_stemmer = us = QCheckBox(_('&Match on related English words'))
+        self.use_stemmer = us = QCheckBox(_('&Match on related words'))
         us.setChecked(gprefs['browse_annots_use_stemmer'])
         us.setToolTip('<p>' + _(
-            'With this option searching for words will also match on any related English words. For'
-            ' example: <i>correction</i> matches <i>correcting</i> and <i>corrected</i> as well'))
+            'With this option searching for words will also match on any related words (supported in several languages). For'
+            ' example, in the English language: <i>correction</i> matches <i>correcting</i> and <i>corrected</i> as well'))
         us.stateChanged.connect(lambda state: gprefs.set('browse_annots_use_stemmer', state != Qt.CheckState.Unchecked))
 
         l = QVBoxLayout(self)
@@ -998,7 +998,7 @@ class AnnotationsBrowser(Dialog):
         if not annots:
             return error_dialog(self, _('No selected annotations'), _(
                 'No annotations have been selected'), show=True)
-        Export(annots, self).exec_()
+        Export(annots, self).exec()
 
     def delete_annotations(self, ids):
         if confirm(ngettext(
@@ -1019,7 +1019,7 @@ class AnnotationsBrowser(Dialog):
                 'Editing is only supported for the notes associated with highlights'), show=True)
         notes = annot.get('notes')
         d = EditNotes(notes, self)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             notes = d.notes
             if notes and notes.strip():
                 annot['notes'] = notes.strip()
@@ -1032,7 +1032,7 @@ class AnnotationsBrowser(Dialog):
     def show_dialog(self, restrict_to_book_ids=None):
         if self.parent() is None:
             self.browse_panel.effective_query_changed()
-            self.exec_()
+            self.exec()
         else:
             self.reinitialize(restrict_to_book_ids)
             self.show()

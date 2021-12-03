@@ -403,7 +403,7 @@ class WebView(RestartingWebEngineView, OpenWithHandler):
     def __init__(self, parent=None):
         RestartingWebEngineView.__init__(self, parent)
         self.inspector = Inspector(self)
-        w = QApplication.instance().desktop().availableGeometry(self).width()
+        w = self.screen().availableSize().width()
         self._size_hint = QSize(int(w/3), int(w/2))
         self._page = WebPage(self)
         self.setPage(self._page)
@@ -484,7 +484,7 @@ class WebView(RestartingWebEngineView, OpenWithHandler):
                             mime = c.mime_map[resource_name]
                             if mime.startswith('image/'):
                                 menu.addAction(_('Edit %s') % resource_name, partial(self.edit_image, resource_name))
-        menu.exec_(ev.globalPos())
+        menu.exec(ev.globalPos())
 
     def open_with(self, file_name, fmt, entry):
         self.parent().open_file_with.emit(file_name, fmt, entry)

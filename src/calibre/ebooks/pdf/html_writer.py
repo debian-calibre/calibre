@@ -22,7 +22,7 @@ from qt.webengine import (
 )
 
 from calibre import detect_ncpus, human_readable, prepare_string_for_xml
-from calibre.constants import __version__, iswindows
+from calibre.constants import __version__, iswindows, ismacos
 from calibre.ebooks.metadata.xmp import metadata_to_xmp_packet
 from calibre.ebooks.oeb.base import XHTML, XPath
 from calibre.ebooks.oeb.polish.container import Container as ContainerBase
@@ -63,7 +63,7 @@ def data_as_pdf_doc(data):
 def preprint_js():
     ans = getattr(preprint_js, 'ans', None)
     if ans is None:
-        ans = preprint_js.ans = P('pdf-preprint.js', data=True).decode('utf-8')
+        ans = preprint_js.ans = P('pdf-preprint.js', data=True).decode('utf-8').replace('HYPHEN_CHAR', 'true' if ismacos else 'false', 1)
     return ans
 
 
@@ -309,7 +309,7 @@ class RenderManager(QObject):
     def run_loop(self):
         self.block_signal_handlers()
         try:
-            return QApplication.exec_()
+            return QApplication.exec()
         finally:
             self.restore_signal_handlers()
 
@@ -336,7 +336,7 @@ class RenderManager(QObject):
         w = self.workers[0]
         self.evaljs_result = None
         w.runJavaScript(js, self.evaljs_callback)
-        QApplication.exec_()
+        QApplication.exec()
         return self.evaljs_result
 
     def evaljs_callback(self, result):
@@ -455,8 +455,8 @@ def add_anchors_markup(root, uuid, anchors):
             # rescale the viewport
             a.tail = '\n'
         div.append(a)
-    a.count = 0
-    tuple(map(a, anchors))
+    for anchor in anchors:
+        a(anchor)
     a(uuid)
 
 

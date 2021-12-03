@@ -1205,7 +1205,8 @@ class BooksView(QTableView):  # {{{
         return index
 
     def selectionCommand(self, index, event):
-        if event and event.type() == QEvent.Type.KeyPress and event.key() in (Qt.Key.Key_Home, Qt.Key.Key_End) and event.modifiers() & Qt.Modifier.CTRL:
+        if event and event.type() == QEvent.Type.KeyPress and event.key() in (
+                Qt.Key.Key_Home, Qt.Key.Key_End) and event.modifiers() & Qt.KeyboardModifier.ControlModifier:
             return QItemSelectionModel.SelectionFlag.ClearAndSelect | QItemSelectionModel.SelectionFlag.Rows
         return super().selectionCommand(index, event)
 
@@ -1451,7 +1452,7 @@ class DeviceBooksView(BooksView):  # {{{
 
     def dropEvent(self, *args):
         error_dialog(self, _('Not allowed'),
-        _('Dropping onto a device is not supported. First add the book to the calibre library.')).exec_()
+        _('Dropping onto a device is not supported. First add the book to the calibre library.')).exec()
 
     def set_editable(self, editable, supports_backloading):
         self._model.set_editable(editable)

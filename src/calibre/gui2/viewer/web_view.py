@@ -153,11 +153,8 @@ class UrlSchemeHandler(QWebEngineUrlSchemeHandler):
             return self.fail_request(rq)
         if name.startswith('book/'):
             name = name.partition('/')[2]
-            if name == '__index__':
+            if name in ('__index__', '__popup__'):
                 send_reply(rq, 'text/html', b'<div>\xa0</div>')
-                return
-            elif name == '__popup__':
-                send_reply(rq, 'text/html', b'<div id="calibre-viewer-footnote-iframe">\xa0</div>')
                 return
             try:
                 data, mime_type = get_data(name)
@@ -196,7 +193,7 @@ class UrlSchemeHandler(QWebEngineUrlSchemeHandler):
         if fail_code is None:
             fail_code = QWebEngineUrlRequestJob.Error.UrlNotFound
         rq.fail(fail_code)
-        prints("Blocking FAKE_PROTOCOL request: {}".format(rq.requestUrl().toString()))
+        prints("Blocking FAKE_PROTOCOL request: {} with code: {}".format(rq.requestUrl().toString(), fail_code))
 
 # }}}
 
@@ -232,6 +229,7 @@ def create_profile():
 class ViewerBridge(Bridge):
 
     view_created = from_js(object)
+    on_iframe_ready = from_js()
     content_file_changed = from_js(object)
     set_session_data = from_js(object, object)
     set_local_storage = from_js(object, object)
@@ -494,7 +492,7 @@ class WebView(RestartingWebEngineView):
         self.tts.event_received.connect(self.tts_event_received)
         self.dead_renderer_error_shown = False
         self.render_process_failed.connect(self.render_process_died)
-        w = QApplication.instance().desktop().availableGeometry(self).width()
+        w = self.screen().availableSize().width()
         QApplication.instance().palette_changed.connect(self.palette_changed)
         self.show_home_page_on_ready = True
         self._size_hint = QSize(int(w/3), int(w/2))
@@ -502,6 +500,7 @@ class WebView(RestartingWebEngineView):
         self._page.linkHovered.connect(self.link_hovered)
         self.view_is_ready = False
         self.bridge.bridge_ready.connect(self.on_bridge_ready)
+        self.bridge.on_iframe_ready.connect(self.on_iframe_ready)
         self.bridge.view_created.connect(self.on_view_created)
         self.bridge.content_file_changed.connect(self.on_content_file_changed)
         self.bridge.set_session_data.connect(self.set_session_data)
@@ -630,6 +629,9 @@ class WebView(RestartingWebEngineView):
         performance_monitor('bridge ready')
         for func, args in iteritems(self.pending_bridge_ready_actions):
             getattr(self.bridge, func)(*args)
+
+    def on_iframe_ready(self):
+        performance_monitor('iframe ready')
 
     def on_view_created(self, data):
         self.view_created.emit(data)

@@ -101,8 +101,7 @@ class ImageView(QDialog):
         self.maximized_at_last_fullscreen = False
         self.setWindowFlag(Qt.WindowType.WindowMinimizeButtonHint)
         self.setWindowFlag(Qt.WindowType.WindowMaximizeButtonHint)
-        dw = QApplication.instance().desktop()
-        self.avail_geom = dw.availableGeometry(parent if parent is not None else self)
+        self.avail_geom = self.screen().availableGeometry()
         self.current_img = current_img
         self.current_url = current_url
         self.factor = 1.0
@@ -256,7 +255,7 @@ class ImageView(QDialog):
         title = _('Image: {name} {resolution}').format(name=self.current_image_name, resolution=reso)
         self.setWindowTitle(title)
         if use_exec:
-            self.exec_()
+            self.exec()
         else:
             self.show()
 
@@ -314,4 +313,4 @@ if __name__ == '__main__':
     u = QUrl.fromLocalFile(sys.argv[-1])
     d = ImageView(None, p, u)
     d()
-    app.exec_()
+    app.exec()

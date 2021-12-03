@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "november 12, 2021" "5.32.0" "calibre"
+.TH "CALIBREDB" "1" "december 03, 2021" "5.33.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -140,7 +140,7 @@ visa denna hjälptext och avsluta
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Sökväg till calibre\-biblioteket. Standard är att använda sökvägen lagrad i inställningarna. Du kan också ansluta till en calibre\-innehållsserver för att utföra åtgärder på fjärrbibliotek. Så här använder du en webbadress i formuläret: \fI\%http://hostname:port/#bibliotek_id\fP till exempel \fI\%http://localhost:8080/#mittbibliotek\fP\&. Bibliotek_id är bibliotekets ID för det bibliotek du vill ansluta till på innehållsservern. Du kan använda det speciella bibliotek_id\-värdet för att få en lista över biblioteks\-id:n tillgängliga på servern. Mer information om hur du anpassar åtkomst via en innehållsserver finns i https://manual.calibre\-ebook.com/sv/generated/sv/calibredb.html.
+Sökväg till calibre\-biblioteket. Standard är att använda sökvägen lagrad i inställningarna. Du kan också ansluta till en calibre\-innehållsserver för att utföra åtgärder på fjärrbibliotek. Så här använder du en webbadress av formen: \fI\%http://hostname:port/#bibliotek_id\fP till exempel \fI\%http://localhost:8080/#mittbibliotek\fP\&. Bibliotek_id är bibliotekets ID för det bibliotek du vill ansluta till på innehållsservern. Du kan använda det speciella bibliotek_id\-värdet för att få en lista över biblioteks\-id:n tillgängliga på servern. Mer information om hur du anpassar åtkomst via en innehållsserver finns i https://manual.calibre\-ebook.com/sv/generated/sv/calibredb.html.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -309,7 +309,7 @@ Ett filnamn (glob)\-mönster, filer som matchar det här mönstret kommer att l�
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For example: *.pdf will ignore all PDF files
+Ett filnamn (glob)\-mönster, filer som matchar det här mönstret ignoreras vid skanning av mappar efter filer. Kan anges flera gånger för flera mönster. Till exempel: *.pdf ignorerar alla PDF\-filer
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -339,7 +339,7 @@ När du skickar argument till calibredb som har mellanslag i dem, bifoga argumen
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Använd inte papperskorgen
+Använd inte Papperskorgen
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -477,7 +477,7 @@ Kommaseparerad lista med format att spara för varje bok. Som standard sparas al
 .INDENT 0.0
 .TP
 .B \-\-progress
-Rapportera framsteg
+Rapportera förlopp
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -744,8 +744,8 @@ calibredb set_custom [options] column id value
 .UNINDENT
 .UNINDENT
 .sp
-Sätt värdet på en anpassad kolumn boken identifieras av id.
-Du kan få en lista med id genom använda sökkommando.
+Ställ in värdet på en anpassad kolumn för boken som identifieras av id.
+Du kan få en lista med id med hjälp av sökkommandot.
 Du kan få en lista med anpassade kolumnnamn med hjälp av custom_columns
 kommando.
 .sp

@@ -460,9 +460,9 @@ class TagsView(QTreeView):  # {{{
             categories stops working. Don't know why. To avoid the problem
             we fix the action in dragMoveEvent.
             '''
-            drag.exec_(Qt.DropAction.CopyAction|Qt.DropAction.MoveAction, Qt.DropAction.CopyAction)
+            drag.exec(Qt.DropAction.CopyAction|Qt.DropAction.MoveAction, Qt.DropAction.CopyAction)
         else:
-            drag.exec_(Qt.DropAction.CopyAction)
+            drag.exec(Qt.DropAction.CopyAction)
 
     def mouseDoubleClickEvent(self, event):
         # swallow these to avoid toggling and editing at the same time
@@ -487,8 +487,7 @@ class TagsView(QTreeView):  # {{{
         set_to: if None, advance the state. Otherwise must be one of the values
         in TAG_SEARCH_STATES
         '''
-        modifiers = int(QApplication.keyboardModifiers())
-        exclusive = modifiers not in (Qt.Modifier.CTRL, Qt.Modifier.SHIFT)
+        exclusive = QApplication.keyboardModifiers() not in (Qt.KeyboardModifier.ControlModifier, Qt.KeyboardModifier.ShiftModifier)
         if self._model.toggle(index, exclusive, set_to=set_to):
             # Reset the focus back to TB if it has it before the toggle
             # Must ask this question before starting the search because
@@ -609,6 +608,14 @@ class TagsView(QTreeView):  # {{{
                 self.delete_user_category.emit(key)
                 return
             if action == 'delete_search':
+                if not question_dialog(
+                    self,
+                    title=_('Delete Saved search'),
+                    msg='<p>'+ _('Delete the saved search: {}?').format(key),
+                    skip_dialog_name='tb_delete_saved_search',
+                    skip_dialog_msg=_('Show this confirmation again')
+                ):
+                    return
                 self.model().db.saved_search_delete(key)
                 self.rebuild_saved_searches.emit()
                 return

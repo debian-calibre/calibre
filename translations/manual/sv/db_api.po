@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-21 12:39+0000\n"
-"PO-Revision-Date: 2021-10-16 12:05+0000\n"
+"POT-Creation-Date: 2021-12-01 12:56+0000\n"
+"PO-Revision-Date: 2021-11-27 15:22+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -31,13 +31,13 @@ msgstr "API-dokumentation för databasgränssnittet"
 msgid ""
 "This API is thread safe (it uses a multiple reader, single writer locking "
 "scheme).  You can access this API like this::"
-msgstr "Denna API är trådsäker (använder en flerläsare-, singelskrivar-utelåsningsschema). Du kan komma åt denna API så här::"
+msgstr "Denna API är trådsäker (använder ett flerläsar-, singelskrivarutelåsningsschema). Du kan komma åt denna API så här::"
 
 #: ../../__w/calibre/calibre/manual/db_api.rst:14
 msgid ""
 "If you are in a calibre plugin that is part of the main calibre GUI, you get"
 " access to it like this instead::"
-msgstr "Om du är i en calibre-insticksmodul som är del av calibres huvudanvändargränssnitt, får du tillgång till det så här istället::"
+msgstr "Om du är i en calibre-insticksmodul som är en del av calibres huvudanvändargränssnitt får du tillgång till den så här istället::"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache:1
@@ -45,7 +45,7 @@ msgid ""
 "An in-memory cache of the metadata.db file from a calibre library. This "
 "class also serves as a threadsafe API for accessing the database. The in-"
 "memory cache is maintained in normal form for maximum performance."
-msgstr "En iminnescache av metadata.db filen från calibre-biblioteket. Denna klass fungerar också som en trådsäker API för komma åt databasen. Iminnecachen hanteras på normalt sätt för högsta prestanda."
+msgstr "En cache i minnet för metadata.db-filen från ett calibre-bibliotek. Den här klassen fungerar också som ett trådsäkert API för åtkomst till databasen. Cachen i minnet behålls i normal form för högsta prestanda."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache:5
@@ -53,7 +53,7 @@ msgid ""
 "SQLITE is simply used as a way to read and write from metadata.db robustly. "
 "All table reading/sorting/searching/caching logic is re-implemented. This "
 "was necessary for maximum performance and flexibility."
-msgstr "SQLITE används helt enkelt som ett stabilt sätt att läsa och skriva från metadata.db."
+msgstr "SQLITE används helt enkelt som ett sätt att läsa och skriva från metadata.db robust. All logik för läsning/sortering/sökning/cachning av tabeller är återimplementerad. Detta var nödvändigt för maximal prestanda och flexibilitet."
 
 #: ../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.listeners.EventType:1
@@ -132,7 +132,7 @@ msgstr "Om True, körs filtypsinsticksmoduler på formatet innan och efter de ti
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:5
 msgid "Internal use only."
-msgstr "Bara för internt bruk."
+msgstr "Endast internt bruk."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_listener:1
@@ -145,12 +145,12 @@ msgstr "Registrera en återanropningsfunktion som anropas efter att vissa åtgä
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_book_ids:1
 msgid "Frozen set of all known book ids."
-msgstr "Frusen uppsättning av alla kända bokidentiteter."
+msgstr "Fryst uppsättning av alla kända bokidentiteter."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_field_for:1
 msgid "Same as field_for, except that it operates on multiple books at once"
-msgstr "Samma som field_for, förutom att den opererar på flera böcker på samma gång"
+msgstr "Samma som field_for, förutom att det fungerar på flera böcker samtidigt"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_field_ids:1
@@ -162,7 +162,7 @@ msgstr "Fryst uppsättning av identiteter för alla värden i fältet ``namn``."
 msgid ""
 "Frozen set of all fields names (should only be used for many-one and many-"
 "many fields)"
-msgstr "Frusen uppsättning av alla fältnamn (bör bara användas för många till en och många till många fält)"
+msgstr "Fryst uppsättning av alla fältnamn (bör endast användas för många-ett och många-många fält)"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_data:1
@@ -201,7 +201,7 @@ msgstr "Återgett värde är en mängd av bokidentiteter eller den tomma mängde
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_in_virtual_library:1
 msgid "Return the set of books in the specified virtual library"
-msgstr "Returnera uppsättning av böcker som angavs i virtuellt bibliotek"
+msgstr "Återge uppsättningen böcker i det angivna virtuella biblioteket"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.compress_covers:1
@@ -214,9 +214,9 @@ msgstr "Komprimera omslagsbilderna för de angivna böckerna. En kompressionskva
 #: calibre.db.cache.Cache.compress_covers:4
 msgid ""
 "The progress callback will be called with the book_id and the old and new "
-"sizes for each book that has been processed. If an error occurs, the news "
+"sizes for each book that has been processed. If an error occurs, the new "
 "size will be a string with the error details."
-msgstr "Framstegsåterkallningen kommer att anropas med book_id och de gamla och nya storlekarna för varje bok som har bearbetats. Om ett fel inträffar kommer nyhetsstorleken att vara en sträng med feldetaljer."
+msgstr "Framstegsåterkallningen kommer att anropas med book_id och de gamla och nya storlekarna för varje bok som har bearbetats. Om ett fel inträffar kommer den nya storleken att vara en sträng med feldetaljer."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.copy_cover_to:1
@@ -301,7 +301,7 @@ msgstr "Uppdatera metadata i alla format av de angivna bok_ids till aktuell meta
 msgid ""
 "Same as field_for, except that it avoids the extra lookup to get the field "
 "object"
-msgstr "Samma som field_for, förutom att den undviker extra uppslag för att få fältobjektet"
+msgstr "Samma som field_for, förutom att den undviker den extra uppslagningen för att få fältobjektet"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_for:1
@@ -317,7 +317,7 @@ msgid ""
 "``default_value`` is not used for title, title_sort, authors, author_sort "
 "and series_index. This is because these always have values in the db. "
 "``default_value`` is used for all custom columns."
-msgstr "``default_value`` används inte för title, title_sort, authors, author_sort och series_index. Detta för dessa alltid har värden i databasen ``default_value`` används för anpassade kolumner."
+msgstr "``default_value`` används inte för title, title_sort, authors, author_sort och series_index. Det här beror på att dessa alltid har värden i db. ``default_value`` används för alla anpassade kolumner."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_for:10
@@ -492,13 +492,13 @@ msgstr "Återge nästa serieindex för den specifika serien, med beaktning av ol
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:4
 msgid "The series-like field (defaults to the builtin series column)"
-msgstr "Serielikt fält (som standard för inbyggda seriekolumnen)"
+msgstr "Det serieliknande fältet (standard är den inbyggda seriekolumnen)"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:5
 msgid ""
 "If True, returns a mapping of book_id to current series_index value instead."
-msgstr "Om True, återger en översikt av book_id till aktuell serie_index-värde istället."
+msgstr "Om True, återges en översikt av book_id till aktuellt serie_index-värde istället."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_proxy_metadata:1
@@ -537,7 +537,7 @@ msgstr "Återge True om och endast om specificerad bok_id finns i db"
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.init:1
 msgid "Initialize this cache with data from the backend."
-msgstr "Initialisera denna buffring med data från fjärrsidan."
+msgstr "Initiera denna cache med data från backend."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.multisort:1
@@ -551,7 +551,7 @@ msgstr "Återge en lista med sorterade bokidentifierare. Om ids_to_sort är  Non
 msgid ""
 "fields must be a list of 2-tuples of the form (field_name, ascending=True or"
 " False). The most significant field is the first 2-tuple."
-msgstr "fälten måste vara en lista med 2-tupler av formatet (field_name, ascending=True eller False). Det mest signifikata fältet är den första 2-tupeln."
+msgstr "fälten måste vara en lista med 2-tupler av formatet (field_name, ascending=True eller False). Det signifikantaste fältet är den första 2-tupeln."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.pref:1
@@ -578,7 +578,7 @@ msgstr "Ta bort böckerna angivna av book_ids från databasen och tar bort deras
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:1
 msgid "Remove the specified formats from the specified books."
-msgstr "Ta bort angivna format från angivna böcker."
+msgstr "Ta bort de angivna formaten från de angivna böckerna."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:3
@@ -644,7 +644,7 @@ msgid ""
 "lock, but searching a composite column involves reading field values via "
 "ProxyMetadata which tries to get a shared lock. There may be other scenarios"
 " that trigger this as well."
-msgstr "Ett säker läsningslås är ett lås som gör ingenting om tråden redan har en skrivlås, annars begärs ett läslås. Detta är nödvändigt för att förhindra DowngradeLockErrors, vilket kan ske vid uppdatering av sökningen bufferten i närvaro av kompositkolumner. Uppdatering av sökningen bufferten har ett exklusivt lås, men söker en sammansatt kolumn vilket innebär läsning av fältvärden via ProxyMetadata som försöker att få ett delat lås. Det kan finnas andra scenarier som utlöser detta."
+msgstr "Ett säkert läslås är ett lås som inte gör något om tråden redan har ett skrivlås, annars får den ett läslås. Detta är nödvändigt för att förhindra DowngradeLockErrors, som kan hända vid uppdatering av sökcachen i närvaro av sammansatta kolumner. Uppdatering av sökcachen innehåller ett exklusivt lås, men sökning i en sammansatt kolumn innebär att fältvärden läses via ProxyMetadata som försöker få ett delat lås. Det kan finnas andra scenarier som utlöser detta också."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.safe_read_lock:9
@@ -659,7 +659,7 @@ msgstr "Den här egenskapen återger ett nytt låsobjekt på varje åtkomst. Det
 msgid ""
 "Save a copy of the specified format as ORIGINAL_FORMAT, overwriting any "
 "existing ORIGINAL_FORMAT."
-msgstr "Spara en kopia i angivet format som ORIGINAL_FORMAT, skriver över alla befintliga ORIGINAL_FORMAT."
+msgstr "Spara en kopia i det angivna formatet som ORIGINAL_FORMAT, skriver över alla befintliga ORIGINAL_FORMAT."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:1
@@ -679,7 +679,7 @@ msgstr "En begränsning som är ANDad med angiven förfrågan. Observera att res
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:6
 msgid "Used internally (virtual fields such as on_device to search over)."
-msgstr "Använt internt (virtuella fält som on_device för söka efter)"
+msgstr "Används internt (virtuella fält som on_device ska söka över)."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:8
@@ -696,17 +696,17 @@ msgstr "alternativ måste vara en översikt på formen {book_id:conversion_optio
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_cover:1
 msgid ""
-"Set the cover for this book.  data can be either a QImage, QPixmap, file "
+"Set the cover for this book. The data can be either a QImage, QPixmap, file "
 "object or bytestring. It can also be None, in which case any existing cover "
 "is removed."
-msgstr "Ställ in omslaget för denna bok. data kan antingen vara en QImage, QPixmap, filobjekt eller oktettsträng. Det kan också vara None, i fallet omslag är borttaget."
+msgstr "Ställ in omslaget för denna bok. Data kan antingen vara en QImage, QPixmap, filobjekt eller bytestring. Det kan också vara None, i vilket fall eventuellt befintligt omslag tas bort."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:1
 msgid ""
 "Set the values of the field specified by ``name``. Returns the set of all "
 "book ids that were affected by the change."
-msgstr "Ange värden av fält angivna av  ``name``. Återger uppsättningen av bok id:ar som påverkades av förändringen."
+msgstr "Ställ in värdena för fältet som anges av ``namn``. Återger uppsättningen av alla bok-id som påverkades av ändringen."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:3
@@ -725,7 +725,7 @@ msgstr "Om True, i fall det rör sig om många-en eller många-många fälten f�
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:8
 msgid "Used internally, you should never change it."
-msgstr "Används internt, du bör aldrig ändra den."
+msgstr "Används internt, du bör aldrig ändra det."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_metadata:1
@@ -744,7 +744,7 @@ msgid ""
 "the book to have. Covers are always changed if a new cover is provided, but "
 "are never deleted. Also note that force_changes has no effect on setting "
 "title or authors."
-msgstr "När man sätter force_changes=True tvingas set_metadata att uppdatera fält, även om mi innehåller tomma värden. I det här fallet är \"None\" skiljt från \"empty\". Om mi.XXX är None ersätts XXX inte, annars görs det. Taggar, identifierare, och omslagsattribut är specialfall. Taggar och identifierare kan inte ställas in på None för då kommer de alltid ersättas om force_changes är True. Du måste se till att mi innehåller de värden som du vill att boken ska ha. Omlslag förändras alltid om ett nytt omslag finns, men de raderas aldrig . Observera också att force_changes har ingen effekt på inställningen titel eller författare."
+msgstr "Inställning force_changes=True tvingar set_metadata att uppdatera fält även om mi innehåller tomma värden. I det här fallet särskiljs 'None' från 'empty'. Om mi.XXX är None, ersätts inte XXX, annars görs det. Taggar, identifierare och omslagsattribut är specialfall. Taggar och identifierare kan inte ställas in på None så de alltid ersätts om force_changes är True. Du måste se till att mi innehåller de värden du vill att boken ska ha. Omslag ändras alltid om ett nytt omslag tillhandahålls, men tas aldrig bort. Observera också att force_changes inte har någon effekt på inställning av titel eller författare."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pref:1

@@ -4,7 +4,7 @@
 
 import textwrap
 from qt.core import (
-    QAction, QApplication, QBrush, QCheckBox, QCoreApplication, QDialog, QGridLayout,
+    QAction, QApplication, QBrush, QCheckBox, QDialog, QGridLayout,
     QHBoxLayout, QIcon, QKeySequence, QLabel, QListView, QModelIndex, QPalette,
     QPixmap, QPushButton, QShortcut, QSize, QSplitter, Qt, QTimer, QToolButton,
     QVBoxLayout, QWidget, pyqtSignal, QDialogButtonBox
@@ -198,7 +198,7 @@ class BookInfo(QDialog):
         self.previous_button.setToolTip(_('Previous [%s]')%
                 str(self.ps.key().toString(QKeySequence.SequenceFormat.NativeText)))
 
-        geom = QCoreApplication.instance().desktop().availableGeometry(self)
+        geom = self.screen().availableSize()
         screen_height = geom.height() - 100
         screen_width = geom.width() - 100
         self.resize(max(int(screen_width/2), 700), screen_height)
@@ -223,7 +223,7 @@ class BookInfo(QDialog):
 
     def configure(self):
         d = Configure(get_gui().current_db, self)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             if self.current_row is not None:
                 mi = self.view.model().get_book_display_info(self.current_row)
                 if mi is not None:
@@ -364,6 +364,6 @@ if __name__ == '__main__':
     app.current_db = db()
     get_gui.ans = app
     d = Configure(app.current_db)
-    d.exec_()
+    d.exec()
     del d
     del app

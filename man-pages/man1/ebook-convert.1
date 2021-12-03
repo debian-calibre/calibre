@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "November 12, 2021" "5.32.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "December 03, 2021" "5.33.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -639,7 +639,7 @@ Reduce the number of colors used in the image. This works only if you choose the
 .INDENT 0.0
 .TP
 .B \-\-comic\-image\-size
-Specify the image size as widthxheight pixels. Normally, an image size is automatically calculated from the output profile, this option overrides it.
+Specify the image size as width x height pixels, for example: 123x321. Normally, an image size is automatically calculated from the output profile, this option overrides it.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -975,7 +975,7 @@ Title for any generated in\-line table of contents.
 .INDENT 0.0
 .TP
 .B \-\-docx\-custom\-page\-size
-Custom size of the document. Use the form widthxheight EG. \fI123x321\fP to specify the width and height (in pts). This overrides any specified page\-size.
+Custom size of the document. Use the form width x height, for example: \fI123x321\fP to specify the width and height (in pts). This overrides any specified page\-size.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1310,7 +1310,7 @@ If specified, the output plugin will try to create output that is as human reada
 .INDENT 0.0
 .TP
 .B \-\-custom\-size
-Custom size of the document. Use the form widthxheight e.g. \fI123x321\fP to specify the width and height. This overrides any specified paper\-size.
+Custom size of the document. Use the form width x height e.g. \fI123x321\fP to specify the width and height. This overrides any specified paper\-size.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1340,7 +1340,7 @@ An HTML template used to generate headers on every page. The strings _PAGENUM_, 
 .INDENT 0.0
 .TP
 .B \-\-pdf\-hyphenate
-Break long words at the end of lines. This can give the text at the right margin a more even appearance.
+Break long words at the end of lines. This can give the text at the right margin a more even appearance. Note that depending on the fonts used this option can break the copying of text from the PDF file.
 .UNINDENT
 .INDENT 0.0
 .TP

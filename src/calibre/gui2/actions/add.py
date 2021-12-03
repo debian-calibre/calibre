@@ -16,8 +16,8 @@ from calibre.constants import iswindows
 from calibre.ebooks import BOOK_EXTENSIONS
 from calibre.ebooks.metadata import MetaInformation, normalize_isbn
 from calibre.gui2 import (
-    choose_dir, choose_files, error_dialog, gprefs, info_dialog, question_dialog,
-    warning_dialog
+    choose_dir, choose_files, choose_files_and_remember_all_files, error_dialog,
+    gprefs, info_dialog, question_dialog, warning_dialog
 )
 from calibre.gui2.actions import InterfaceAction
 from calibre.gui2.dialogs.add_empty_book import AddEmptyBookDialog
@@ -139,7 +139,7 @@ class AddAction(InterfaceAction):
         ids = self._check_add_formats_ok()
         if not ids:
             return
-        books = choose_files(self.gui, 'add formats dialog dir',
+        books = choose_files_and_remember_all_files(self.gui, 'add formats dialog dir',
                 _('Select book files'), filters=get_filters())
         if books:
             self._add_formats(books, ids)
@@ -207,7 +207,7 @@ class AddAction(InterfaceAction):
         from calibre.ebooks.oeb.polish.create import valid_empty_formats
         from calibre.gui2.dialogs.choose_format import ChooseFormatDialog
         d = ChooseFormatDialog(self.gui, _('Choose format of empty file'), sorted(valid_empty_formats))
-        if d.exec_() != QDialog.DialogCode.Accepted or not d.format():
+        if d.exec() != QDialog.DialogCode.Accepted or not d.format():
             return
         self._add_empty_format(d.format())
 
@@ -321,7 +321,7 @@ class AddAction(InterfaceAction):
             title = index.model().db.title(index.row())
         dlg = AddEmptyBookDialog(self.gui, self.gui.library_view.model().db,
                                  author, series, dup_title=title)
-        if dlg.exec_() == QDialog.DialogCode.Accepted:
+        if dlg.exec() == QDialog.DialogCode.Accepted:
             temp_files = []
             num = dlg.qty_to_add
             series = dlg.selected_series
@@ -398,7 +398,7 @@ class AddAction(InterfaceAction):
         self.isbn_add_dialog = ProgressDialog(_('Adding'),
                 _('Creating book records from ISBNs'), max=len(books),
                 cancelable=False, parent=self.gui)
-        self.isbn_add_dialog.exec_()
+        self.isbn_add_dialog.exec()
 
     def do_one_isbn_add(self):
         try:
@@ -516,7 +516,7 @@ class AddAction(InterfaceAction):
     def add_from_isbn(self, *args):
         from calibre.gui2.dialogs.add_from_isbn import AddFromISBN
         d = AddFromISBN(self.gui)
-        if d.exec_() == QDialog.DialogCode.Accepted and d.books:
+        if d.exec() == QDialog.DialogCode.Accepted and d.books:
             self.add_isbns(d.books, add_tags=d.set_tags, check_for_existing=d.check_for_existing)
 
     def add_books(self, *args):
@@ -529,7 +529,7 @@ class AddAction(InterfaceAction):
             fmts = self.gui.device_manager.device.settings().format_map
             filters = [(_('Supported books'), fmts)]
 
-        books = choose_files(self.gui, 'add books dialog dir',
+        books = choose_files_and_remember_all_files(self.gui, 'add books dialog dir',
                 _('Select books'), filters=filters)
         if not books:
             return
@@ -612,7 +612,7 @@ class AddAction(InterfaceAction):
             rows = view.selectionModel().selectedRows()
             if not rows or len(rows) == 0:
                 d = error_dialog(self.gui, _('Add to library'), _('No book selected'))
-                d.exec_()
+                d.exec()
                 return
             paths = [p for p in view.model().paths(rows) if p is not None]
         ve = self.gui.device_manager.device.VIRTUAL_BOOK_EXTENSIONS
@@ -632,7 +632,7 @@ class AddAction(InterfaceAction):
                 return
         if not paths or len(paths) == 0:
             d = error_dialog(self.gui, _('Add to library'), _('No book files found'))
-            d.exec_()
+            d.exec()
             return
 
         self.gui.device_manager.prepare_addable_books(self.Dispatcher(partial(

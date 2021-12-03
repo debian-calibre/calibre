@@ -222,7 +222,7 @@ class Diff(Dialog):
         self.view.line_activated.connect(self.line_activated)
 
     def sizeHint(self):
-        geom = QApplication.instance().desktop().availableGeometry(self)
+        geom = self.screen().availableSize()
         return QSize(int(0.9 * geom.width()), int(0.8 * geom.height()))
 
     def setup_ui(self):
@@ -472,7 +472,7 @@ def compare_books(path1, path2, revert_msg=None, revert_callback=None, parent=No
     if revert_msg is not None:
         d.revert_requested.connect(revert_callback)
     QTimer.singleShot(0, partial(d.ebook_diff, path1, path2, names=names))
-    d.exec_()
+    d.exec()
     try:
         d.revert_requested.disconnect()
     except:
@@ -499,7 +499,7 @@ def main(args=sys.argv):
     func = getattr(d, attr)
     QTimer.singleShot(0, lambda : func(left, right))
     d.show()
-    app.exec_()
+    app.exec()
     return 0
 
 

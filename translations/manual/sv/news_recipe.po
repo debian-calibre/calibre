@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-11 06:01+0000\n"
-"PO-Revision-Date: 2021-10-30 15:59+0000\n"
+"POT-Creation-Date: 2021-12-01 12:56+0000\n"
+"PO-Revision-Date: 2021-11-29 19:19+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -138,7 +138,7 @@ msgid ""
 "method should be called only once on a particular Recipe instance. Calling "
 "it more than once will lead to undefined behavior. :return: Path to "
 "index.html"
-msgstr "Hämta och förbearbeta alla artiklar från flöde i detta recept. Denna metod bör kallas en gång för en viss receptinstans. Kallas det mer än en gång kommer det att leda till odefinierade beteenden. :return: Path to index.html"
+msgstr "Hämta och förbearbeta alla artiklar från flöde i detta recept. Denna metod bör kallas en gång för en viss receptinstans. Kallas det mer än en gång kommer det att leda till odefinierade beteenden. :return: Sökväg till index.html"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.extract_readable_article:1
@@ -146,7 +146,7 @@ msgid ""
 "Extracts main article content from 'html', cleans up and returns as a "
 "(article_html, extracted_title) tuple. Based on the original readability "
 "algorithm by Arc90."
-msgstr "Tar fram huvudartikelns innehåll från \"html\", rensar upp och återges som en (article_html, extracted_title) tupel. Baserat på den ursprungliga läsbarhet algoritm genom Arc90."
+msgstr "Extraherar huvudartikelinnehållet från 'html', rensas upp och återges som en (artikel_html, extraherad_titel) tupel. Baserat på den ursprungliga läsbarhetsalgoritmen från Arc90."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_article_url:1
@@ -227,7 +227,7 @@ msgid ""
 "article URL. It should return the path to a file on the filesystem that "
 "contains the article HTML. That file is processed by the recursive HTML "
 "fetching engine, so it can contain links to pages/images on the web."
-msgstr "Om du sätter `articles_are_obfuscated` anropas denna metod med varje artikel URL. Det ska återge sökvägen till en fil i filsystemet som innehåller artikeln HTML. Filen bearbetas av den rekursiva HTML-hämtmotor, så det kan innehålla länkar till sidor/bilder på webben."
+msgstr "Om du ställer in `articles_are_obfuscated` anropas denna metod med varje artikelwebbadress. Den ska återge sökvägen till en fil i filsystemet som innehåller artikel-HTML. Filen bearbetas av den rekursiva HTML-hämtningsmotorn, så den kan innehålla länkar till sidor/bilder på webben."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:6
@@ -498,14 +498,14 @@ msgid ""
 "algorithms from the readability project. Setting this to True, means that "
 "you do not have to worry about cleaning up the downloaded HTML manually "
 "(though manual cleanup will always be superior)."
-msgstr "Automatiskt extrahera all text från hämtade artikelsidor. Använder algoritmerna från läsbarhet projektet. Sätt denna till True innebär att du inte behöver oroa dig för att städa upp hämtad HTML manuellt (även om manuell rensning alltid kommer att vara bättre)."
+msgstr "Extrahera automatiskt all text från hämtade artikelsidor. Använder algoritmerna från läsbarhetsprojektet. Att ställa in detta till True betyder att du inte behöver oroa dig för att städa upp den hämtade HTML-koden manuellt (även om manuell städning alltid kommer att vara överlägsen)."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.auto_cleanup_keep:1
 msgid ""
 "Specify elements that the auto cleanup algorithm should never remove. The "
 "syntax is a XPath expression. For example::"
-msgstr "Ange element som den automatiska rensningsalgoritmen aldrig ska ta bort. Syntaxen är ett XPath-uttryck. Exempelvis::"
+msgstr "Ange element som den automatiska rensningsalgoritmen aldrig ska ta bort. Syntaxen är ett XPath-uttryck. Till exempel::"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.center_navbar:1
@@ -616,7 +616,7 @@ msgstr "Förteckning över flöden att hämtar. Kan vara antingen ``[url1, url2,
 msgid ""
 "List of regular expressions that determines which links to ignore. If empty "
 "it is ignored. Used only if is_link_wanted is not implemented. For example::"
-msgstr "Lista med reguljära uttryck som avgör vilka länkar att ignorera. Om den är tom ignoreras den. Används endast om is_link_wanted inte implementeras. Exempelvis::"
+msgstr "Lista med reguljära uttryck som avgör vilka länkar att ignorera. Om den är tom ignoreras den. Används endast om is_link_wanted inte implementeras. Till exempel::"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.filter_regexps:7
@@ -650,12 +650,12 @@ msgstr "Ignorera dubbletter av artiklar som finns i mer än ett avsnitt. En dubb
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:7
 msgid "To use URLs instead, set it to::"
-msgstr "För att använda URL:er istället, sätt den till::"
+msgstr "För att använda webbadresser istället, ställ in den till::"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:11
 msgid "To match on title or URL, set it to::"
-msgstr "För att matcha titel eller URL, sätt den till::"
+msgstr "För att matcha titel eller webbadress, ställ in den till::"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.keep_only_tags:1
@@ -693,7 +693,7 @@ msgid ""
 "List of regular expressions that determines which links to follow. If empty,"
 " it is ignored. Used only if is_link_wanted is not implemented. For "
 "example::"
-msgstr "Lista med reguljära uttryck som avgör vilka länkar att följa. Om den är tom, ignoreras den. Endast användas om is_link_wanted inte implementeras. Exempelvis::"
+msgstr "Lista med reguljära uttryck som avgör vilka länkar att följa. Om den är tom, ignoreras den. Endast användas om is_link_wanted inte implementeras. Till exempel::"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.match_regexps:7
@@ -766,7 +766,7 @@ msgstr "Antal nivåer av länkar att följa på en artikelwebbplats"
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_attributes:1
 msgid "List of attributes to remove from all tags. For example::"
-msgstr "Lista med attribut att ta bort från alla taggar. Exempelvis::"
+msgstr "Lista med attribut att ta bort från alla taggar. Till exempel::"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_empty_feeds:1
@@ -841,7 +841,7 @@ msgid ""
 "article rather than its original web URL. If you set this to True, you might"
 " also need to implement :meth:`canonicalize_internal_url` to work with the "
 "URL scheme of your particular website."
-msgstr "Om inställt till True så kommer länkar i hämtade artiklar som hänvisar till andra hämtade artiklar ändras till att peka på den hämtade kopian av artikeln snarare än dess ursprungliga webbadress . Om du ställer in detta till True, behöver du kanske du också införa  :meth:`canonicalize_internal_url` för att arbeta med URL-schemat för just din webbplats."
+msgstr "Om den är inställd till True ändras länkar i hämtade artiklar som hänvisar till andra hämtade artiklar ändras till att hänvisa till den hämtade kopian av artikeln istället än dess ursprungliga webbadress. Om du ställer in detta till True, kan du också behöva implementera  :meth:`canonicalize_internal_url` för att fungera med webbadressschemat för din specifika webbplats."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.reverse_article_order:1
@@ -869,7 +869,7 @@ msgstr "Skala om bilder för att passa enhetens skärmmått inställda av utmatn
 msgid ""
 "Number of simultaneous downloads. Set to 1 if the server is picky. "
 "Automatically reduced to 1 if :attr:`BasicNewsRecipe.delay` > 0"
-msgstr "Antal samtidiga hämtningar. Sätt till 1 om servern är petig. Automatisk reducerat till 1 om attr:`BasicNewsRecipe.delay` > 0"
+msgstr "Antal samtidiga hämtningar. Ställ in till 1 om servern är kräsen. Sänks automatiskt till 1 om attr:`BasicNewsRecipe.delay` > 0"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.summary_length:1

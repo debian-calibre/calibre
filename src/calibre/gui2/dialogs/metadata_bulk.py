@@ -8,7 +8,7 @@ import regex
 from collections import defaultdict, namedtuple
 from io import BytesIO
 from qt.core import (
-    QApplication, QComboBox, QCompleter, QCoreApplication, QDateTime, QDialog,
+    QApplication, QComboBox, QCompleter, QDateTime, QDialog,
     QDialogButtonBox, QFont, QGridLayout, QInputDialog, QLabel, QLineEdit,
     QProgressBar, QSize, Qt, QVBoxLayout, pyqtSignal
 )
@@ -162,10 +162,11 @@ class MyBlockingBusy(QDialog):  # {{{
                 self.error = (err, traceback.format_exc())
         QDialog.accept(self)
 
-    def exec_(self):
+    def exec(self):
         self.thread = Thread(target=self.do_it)
         self.thread.start()
-        return QDialog.exec_(self)
+        return QDialog.exec(self)
+    exec_ = exec
 
     def do_it(self):
         try:
@@ -575,24 +576,23 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
         self.authors.setFocus(Qt.FocusReason.OtherFocusReason)
         self.generate_cover_settings = None
         self.button_config_cover_gen.clicked.connect(self.customize_cover_generation)
-        self.exec_()
+        self.exec()
 
     def sizeHint(self):
-        desktop = QCoreApplication.instance().desktop()
-        geom = desktop.availableGeometry(self)
+        geom = self.screen().availableSize()
         nh, nw = max(300, geom.height()-50), max(400, geom.width()-70)
         return QSize(nw, nh)
 
     def customize_cover_generation(self):
         from calibre.gui2.covers import CoverSettingsDialog
         d = CoverSettingsDialog(parent=self)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             self.generate_cover_settings = d.prefs_for_rendering
 
     def set_comments(self):
         from calibre.gui2.dialogs.comments_dialog import CommentsDialog
         d = CommentsDialog(self, '' if self.comments is null else (self.comments or ''), _('Comments'))
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             self.comments = d.textbox.html
             b = self.comments_button
             b.setStyleSheet('QPushButton { font-weight: bold }')
@@ -1139,7 +1139,7 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
 
     def tag_editor(self, *args):
         d = TagEditor(self, self.db, None)
-        d.exec_()
+        d.exec()
         if d.result() == QDialog.DialogCode.Accepted:
             tag_string = ', '.join(d.tags)
             self.tags.setText(tag_string)
@@ -1253,7 +1253,7 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
         # which can slow down bulk editing of large numbers of books
         self.model.stop_metadata_backup()
         try:
-            bb.exec_()
+            bb.exec()
         finally:
             self.model.start_metadata_backup()
 
@@ -1274,7 +1274,7 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
                 'Covers were compressed by {percent:.1%} from a total size of'
                 ' {old} to {new}.').format(
                     percent=percent, old=human_readable(total_old), new=human_readable(total_new))
-                ).exec_()
+                ).exec()
         return QDialog.accept(self)
 
     def series_changed(self, *args):
