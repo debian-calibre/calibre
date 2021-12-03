@@ -111,7 +111,7 @@ index 109af82..b876142 100644
              service = b.services[0]
              self.ae(service.type, '_calibre._tcp.local.')
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index 7a922c6..eba5da1 100644
+index 3490c53..ee67d5a 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
 @@ -346,7 +346,7 @@ class BuildTest(unittest.TestCase):
@@ -120,6 +120,6 @@ index 7a922c6..eba5da1 100644
              p.printToPdf(print_callback)
 -            QTimer.singleShot(5000, lambda: QApplication.instance().quit())
 +            QTimer.singleShot(500000, lambda: QApplication.instance().quit())
-             QApplication.instance().exec_()
+             QApplication.instance().exec()
              test_flaky = ismacos and not is_ci
              if not test_flaky:
