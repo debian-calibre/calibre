@@ -143,7 +143,7 @@ class Completer(QListView):  # {{{
         widget = self.parent()
         if widget is None:
             return
-        screen = QApplication.desktop().availableGeometry(widget)
+        screen = widget.screen().availableGeometry()
         h = (p.sizeHintForRow(0) * min(self.max_visible_items, m.rowCount()) + 3) + 3
         hsb = p.horizontalScrollBar()
         if hsb and hsb.isVisible():
@@ -535,4 +535,4 @@ if __name__ == '__main__':
         'oothree', 'a1', 'a2','Edgas', 'Èdgar', 'Édgaq', 'Edgar', 'Édgar']
     le.update_items_cache(items)
     le.show_initial_value('')
-    d.exec_()
+    d.exec()

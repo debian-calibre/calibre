@@ -358,10 +358,26 @@ def find_main_title(root, refines, remove_blanks=False):
     return main_title
 
 
+def find_subtitle(root, refines):
+    for title in XPath('./opf:metadata/dc:title')(root):
+        if not title.text or not title.text.strip():
+            continue
+        props = properties_for_id(title.get('id'), refines)
+        q = props.get('title-type') or ''
+        if 'subtitle' in q or 'sub-title' in q:
+            return title
+
+
 @simple_text
 def read_title(root, prefixes, refines):
     main_title = find_main_title(root, refines)
-    return None if main_title is None else main_title.text.strip()
+    if main_title is None:
+        return None
+    ans = main_title.text.strip()
+    st = find_subtitle(root, refines)
+    if st is not None and st is not main_title:
+        ans += ': ' + st.text.strip()
+    return ans
 
 
 @simple_text
@@ -380,6 +396,9 @@ def read_title_sort(root, prefixes, refines):
 
 def set_title(root, prefixes, refines, title, title_sort=None):
     main_title = find_main_title(root, refines, remove_blanks=True)
+    st = find_subtitle(root, refines)
+    if st is not None:
+        remove_element(st, refines)
     if main_title is None:
         m = XPath('./opf:metadata')(root)[0]
         main_title = m.makeelement(DC('title'))
@@ -483,11 +502,17 @@ def read_authors(root, prefixes, refines):
 
 def set_authors(root, prefixes, refines, authors):
     ensure_prefix(root, prefixes, 'marc')
-    for item in XPath('./opf:metadata/dc:creator')(root):
-        props = properties_for_id_with_scheme(item.get('id'), prefixes, refines)
-        opf_role = item.get(OPF('role'))
-        if (opf_role and opf_role.lower() != 'aut') or (props.get('role') and not is_relators_role(props, 'aut')):
-            continue
+    removals = []
+    for role in ('aut', 'edt'):
+        for item in XPath('./opf:metadata/dc:creator')(root):
+            props = properties_for_id_with_scheme(item.get('id'), prefixes, refines)
+            opf_role = item.get(OPF('role'))
+            if (opf_role and opf_role.lower() != role) or (props.get('role') and not is_relators_role(props, role)):
+                continue
+            removals.append(item)
+        if removals:
+            break
+    for item in removals:
         remove_element(item, refines)
     metadata = XPath('./opf:metadata')(root)[0]
     for author in authors:

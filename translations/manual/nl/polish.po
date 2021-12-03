@@ -8,6 +8,7 @@
 # Meteor0id, 2019
 # Meteor0id, 2019
 # Patrick van Noort <patrick.vannoort@gmail.com>, 2018
+# peter <petertje@tuta.io>, 2021
 # math1985 <transifex@matthijsmelissen.nl>, 2016
 # Volluta <volluta@tutanota.com>, 2015
 # W.P.M.E. Hofland <wpme.hofland@gmail.com>, 2015
@@ -15,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-07 03:23+0000\n"
-"PO-Revision-Date: 2021-10-03 08:29+0000\n"
+"POT-Creation-Date: 2021-12-02 15:47+0000\n"
+"PO-Revision-Date: 2021-11-23 15:50+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Dutch (http://www.transifex.com/calibre/calibre/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -58,14 +59,14 @@ msgstr "Het container object"
 msgid ""
 "A container represents an open e-book as a folder full of files and an OPF "
 "file. There are two important concepts:"
-msgstr ""
+msgstr "Een container stelt een open e-boek voor als een map vol bestanden en een OPF-bestand. Er zijn twee belangrijke concepten:"
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:4
 msgid ""
 "The root folder. This is the base of the e-book. All the e-books files are "
 "inside this folder or in its sub-folders."
-msgstr ""
+msgstr "De hoofdmap. Dit is de basis van het e-boek. Alle e-boek bestanden bevinden zich in deze map of in zijn submappen."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:7
@@ -74,7 +75,7 @@ msgid ""
 " always contain POSIX separators and are unquoted. They can be thought of as"
 " canonical identifiers for files in the book. Most methods on the container "
 "object work with names. Names are always in the NFC Unicode normal form."
-msgstr ""
+msgstr "Namen: Dit zijn paden naar boekbestanden relatief aan de hoofdmap. Ze bevatten altijd POSIX separatoren en hebben geen aanhalingstekens. Zie ze als canonieke identificatoren voor bestanden in het boek. Meeste methodes op het containerobject werken met namen. Namen zijn altijd in de NFC Unicode normale vorm."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:13
@@ -84,19 +85,19 @@ msgid ""
 "work, you should never access files on the filesystem directly. Instead, use"
 " :meth:`raw_data` or :meth:`open` to read/write to component files in the "
 "book."
-msgstr ""
+msgstr "Klonen: Het containerobject ondersteunt efficiënt op-schijf klonen, gebruikt om controlepunten toe te passen in de e-boek editor. Om dit te laten werken, mag u nooit bestanden direct in het bestandssysteem benaderen. In plaats daarvan, gebruik  :meth:`raw_data` of :meth:`open`  om te lezen/schrijven naar onderdelen in het boek."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:18
 msgid ""
 "When converting between hrefs and names use the methods provided by this "
 "class, they assume all hrefs are quoted."
-msgstr ""
+msgstr "Bij converteren tussen hrefs en namen, gebruik de methodes voorzien in deze class, ze gaan ervan uit dat alle hrefs tussen aanhalingstekens staan."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.abspath_to_name:1
 msgid "Convert an absolute path to a canonical name relative to :attr:`root`"
-msgstr ""
+msgstr "Converteer een absoluut pad naar een canonieke naam relatief ten opzichte van :attr:`root`"
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.abspath_to_name:0
@@ -141,26 +142,26 @@ msgstr "Parameters"
 #: of calibre.ebooks.oeb.polish.container.Container.abspath_to_name:3
 msgid ""
 "The base folder. By default the root for this container object is used."
-msgstr ""
+msgstr "De hoofdmap, Standaard wordt de root  voor dit containerobject gebruikt."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.add_file:1
 msgid ""
 "Add a file to this container. Entries for the file are automatically created"
 " in the OPF manifest and spine (if the file is a text document)"
-msgstr ""
+msgstr "Bestand aan deze container toevoegen. Vermeldingen worden automatisch aangemaakt in het OPF manifest en de spine (als het bestand een tekstdocument is)"
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.add_name_to_manifest:1
 msgid ""
 "Add an entry to the manifest for a file with the specified name. Returns the"
 " manifest id."
-msgstr ""
+msgstr "Vermelding toevoegen aan het manifest voor een bestand met de gespecificeerde naam, Geeft het manifest ID terug."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.add_properties:1
 msgid "Add the specified properties to the manifest item identified by name."
-msgstr ""
+msgstr "De gespecificeerde eigenschappen toevoegen aan het manifest item geïdentificeerd bij naam."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.apply_unique_properties:1
@@ -187,7 +188,7 @@ msgstr ""
 msgid ""
 "The path to write the saved e-book file to. If None, the path of the "
 "original book file is used."
-msgstr ""
+msgstr "Het pad om het opgeslagen e-boekbestand naar toe te schrijven. Indien Geen, wordt het pad van het originele boekbestand gebruikt."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit:4
@@ -866,7 +867,7 @@ msgstr "Bewerken Boekhulpmiddel"
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
 #: calibre.gui2.tweak_book.plugin.Tool:1
-msgid "Bases: :class:`object`"
+msgid "Bases: :py:class:`object`"
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of

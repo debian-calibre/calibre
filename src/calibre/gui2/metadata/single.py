@@ -11,10 +11,10 @@ import os
 from datetime import datetime
 from functools import partial
 from qt.core import (
-    QApplication, QCoreApplication, QDialog, QDialogButtonBox, QFont, QFrame,
-    QGridLayout, QGroupBox, QHBoxLayout, QIcon, QInputDialog, QKeySequence, QMenu,
-    QPushButton, QScrollArea, QShortcut, QSize, QSizePolicy, QSpacerItem, QSplitter,
-    Qt, QTabWidget, QToolButton, QVBoxLayout, QWidget, pyqtSignal
+    QApplication, QDialog, QDialogButtonBox, QFrame, QGridLayout, QGroupBox,
+    QHBoxLayout, QIcon, QInputDialog, QKeySequence, QMenu, QPushButton, QScrollArea,
+    QShortcut, QSize, QSizePolicy, QSpacerItem, QSplitter, Qt, QTabWidget,
+    QToolButton, QVBoxLayout, QWidget, pyqtSignal
 )
 
 from calibre.constants import ismacos
@@ -30,6 +30,7 @@ from calibre.gui2.metadata.basic_widgets import (
     TitleSortEdit, show_locked_file_error
 )
 from calibre.gui2.metadata.single_download import FullFetch
+from calibre.gui2.widgets2 import CenteredToolButton
 from calibre.library.comments import merge_comments as merge_two_comments
 from calibre.utils.config import tweaks
 from calibre.utils.date import local_tz
@@ -131,8 +132,7 @@ class MetadataSingleDialogBase(QDialog):
     # }}}
 
     def sizeHint(self):
-        desktop = QCoreApplication.instance().desktop()
-        geom = desktop.availableGeometry(self)
+        geom = self.screen().availableSize()
         nh, nw = max(300, geom.height()-50), max(400, geom.width()-70)
         return QSize(nw, nh)
 
@@ -270,26 +270,14 @@ class MetadataSingleDialogBase(QDialog):
         self.pubdate = PubdateEdit(self)
         self.basic_metadata_widgets.extend([self.timestamp, self.pubdate])
 
-        self.fetch_metadata_button = b = RightClickButton(self)
-        # The following rigmarole is needed so that Qt gives the button the
-        # same height as the other buttons in the dialog. There is no way to
-        # center the text in a QToolButton with an icon, so we can't just set an
-        # icon
-        b.setIcon(QIcon(I('download-metadata.png')))
-        b.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
-        b.setMinimumHeight(b.sizeHint().height())
-        b.setIcon(QIcon())
-        b.setText(_('&Download metadata')), b.setPopupMode(QToolButton.ToolButtonPopupMode.DelayedPopup)
+        self.fetch_metadata_button = b = CenteredToolButton(QIcon(I('download-metadata.png')), _('&Download metadata'), self)
+        b.setPopupMode(QToolButton.ToolButtonPopupMode.DelayedPopup)
         b.setToolTip(_('Download metadata for this book [%s]') % self.download_shortcut.key().toString(QKeySequence.SequenceFormat.NativeText))
-        b.setSizePolicy(QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed))
         self.fetch_metadata_button.clicked.connect(self.fetch_metadata)
         self.fetch_metadata_menu = m = QMenu(self.fetch_metadata_button)
         m.addAction(QIcon(I('edit-undo.png')), _('Undo last metadata download'), self.undo_fetch_metadata)
         self.fetch_metadata_button.setMenu(m)
         self.download_shortcut.activated.connect(self.fetch_metadata_button.click)
-        font = self.fmb_font = QFont()
-        font.setBold(True)
-        self.fetch_metadata_button.setFont(font)
 
         if self.use_toolbutton_for_config_metadata:
             self.config_metadata_button = QToolButton(self)
@@ -436,7 +424,7 @@ class MetadataSingleDialogBase(QDialog):
                                                        'pdf')
         from calibre.gui2.metadata.pdf_covers import PDFCovers
         d = PDFCovers(pdfpath, parent=self)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             cpath = d.cover_path
             if cpath:
                 with open(cpath, 'rb') as f:
@@ -472,7 +460,7 @@ class MetadataSingleDialogBase(QDialog):
             cdata = mi.cover_data[1]
         if cdata is None:
             error_dialog(self, _('Could not read cover'),
-                         _('Could not read cover from %s format')%ext.upper()).exec_()
+                         _('Could not read cover from %s format')%ext.upper()).exec()
             return
         self.update_cover(cdata, ext)
 
@@ -680,7 +668,7 @@ class MetadataSingleDialogBase(QDialog):
             self.edit_format.connect(edit_slot)
         self.set_current_callback = set_current_callback
         self.do_one(apply_changes=False)
-        ret = self.exec_()
+        ret = self.exec()
         self.break_cycles()
         return ret
 
@@ -1173,21 +1161,33 @@ class MetadataSingleDialogAlt2(MetadataSingleDialogBase):  # {{{
         l.addWidget(w, 1, 0, 1, 2)
 
         # Cover & formats in col 3
-        gb = QGroupBox(_('Cover'), tab0)
-        lb = QGridLayout()
-        gb.setLayout(lb)
-        lb.addWidget(self.cover, 0, 0, 1, 3, alignment=Qt.AlignmentFlag.AlignCenter)
+        # First the cover & buttons
+        cover_group_box = QGroupBox(_('Cover'), tab0)
+        cover_layout = QVBoxLayout()
+        cover_layout.setContentsMargins(0, 0, 0, 0)
+        cover_group_box.setLayout(cover_layout)
+        cover_layout.addWidget(self.cover)
         sto(self.manage_authors_button, self.cover.buttons[0])
-        for i, b in enumerate(self.cover.buttons[:3]):
-            lb.addWidget(b, 1, i, 1, 1)
-            sto(b, self.cover.buttons[i+1])
+        # First row of cover buttons
         hl = QHBoxLayout()
+        hl.setContentsMargins(0, 0, 0, 0)
+        for i, b in enumerate(self.cover.buttons[:3]):
+            hl.addWidget(b)
+            sto(b, self.cover.buttons[i+1])
+        cover_layout.addLayout(hl)
+        # Second row of cover buttons
+        hl = QHBoxLayout()
+        hl.setContentsMargins(0, 0, 0, 0)
         for b in self.cover.buttons[3:]:
             hl.addWidget(b)
+        cover_layout.addLayout(hl)
         sto(self.cover.buttons[-2], self.cover.buttons[-1])
-        lb.addLayout(hl, 2, 0, 1, 3)
-        l.addWidget(gb, 0, 2, 1, 1)
-        l.addWidget(self.formats_manager, 1, 2, 1, 1)
+        # Layout for both cover & formats boxes
+        cover_and_formats = QVBoxLayout()
+        cover_and_formats.setContentsMargins(0, 0, 0, 0)
+        cover_and_formats.addWidget(cover_group_box, stretch=100)
+        cover_and_formats.addWidget(self.formats_manager)
+        l.addLayout(cover_and_formats, 0, 2, 2, 1)
         sto(self.cover.buttons[-1], self.formats_manager)
 
         self.formats_manager.formats.setMaximumWidth(10000)

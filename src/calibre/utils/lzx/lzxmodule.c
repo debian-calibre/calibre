@@ -3,6 +3,7 @@
  *
  * Python module C glue code.
  */
+#define PY_SSIZE_T_CLEAN
 
 #include <Python.h>
 
@@ -151,7 +152,7 @@ decompress(PyObject *self, PyObject *args)
 {
     unsigned char *inbuf;
     unsigned char *outbuf;
-    unsigned int inlen;
+    Py_ssize_t inlen;
     unsigned int outlen;
     int err;
     memory_file source;

@@ -5586,11 +5586,13 @@ var str = ρσ_str, repr = ρσ_repr;;
             __module__ : {value: null}
         });
 
-        document.body.addEventListener("click", onclick, true);
-        document.documentElement.appendChild(ρσ_interpolate_kwargs.call(E, E.style, ["[data-in-split-mode=\"1\"] [data-is-block=\"1\"]:hover { cursor: pointer !important; border-top: solid 5px green !important }"].concat([ρσ_desugar_kwargs({type: "text/css"})])));
-        fix_fullscreen_svg_images();
-        if (check_for_maths()) {
-            load_mathjax();
+        if (document.body) {
+            document.body.addEventListener("click", onclick, true);
+            document.documentElement.appendChild(ρσ_interpolate_kwargs.call(E, E.style, ["[data-in-split-mode=\"1\"] [data-is-block=\"1\"]:hover { cursor: pointer !important; border-top: solid 5px green !important }"].concat([ρσ_desugar_kwargs({type: "text/css"})])));
+            fix_fullscreen_svg_images();
+            if (check_for_maths()) {
+                load_mathjax();
+            }
         }
     })();
 })();

@@ -665,7 +665,7 @@ class CharView(QListView):
                             partial(self.remove_from_favorites, char_code))
                 if self.showing_favorites:
                     m.addAction(_('Restore favorites to defaults'), self.restore_defaults)
-                m.exec_(self.mapToGlobal(pos))
+                m.exec(self.mapToGlobal(pos))
 
     def restore_defaults(self):
         del tprefs['charmap_favorites']
@@ -806,7 +806,7 @@ class CharSelect(Dialog):
         self.raise_()
 
     def char_selected(self, c):
-        if QApplication.keyboardModifiers() & Qt.Modifier.CTRL:
+        if QApplication.keyboardModifiers() & Qt.KeyboardModifier.ControlModifier:
             self.hide()
         if self.parent() is None or self.parent().focusWidget() is None:
             QApplication.clipboard().setText(c)
@@ -829,4 +829,4 @@ if __name__ == '__main__':
     w = CharSelect()
     w.initialize()
     w.show()
-    app.exec_()
+    app.exec()

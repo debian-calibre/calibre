@@ -248,7 +248,7 @@ def u(x):
     return x + 'Underline'
 
 
-underline_styles = {x:getattr(QTextCharFormat, u(x)) for x in underline_styles}
+underline_styles = {x:getattr(QTextCharFormat.UnderlineStyle, u(x)) for x in underline_styles}
 
 
 def to_highlight(data):
@@ -659,7 +659,7 @@ class ThemeEditor(Dialog):
 
     def create_new_theme(self):
         d = CreateNewTheme(self)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             name = '*' + d.theme_name
             base = str(d.base.currentText())
             theme = {}
@@ -688,13 +688,14 @@ class ThemeEditor(Dialog):
             self.show_theme()
 
     def sizeHint(self):
-        g = QApplication.instance().desktop().availableGeometry(self.parent() or self)
+        g = self.screen().availableSize()
         return QSize(min(1500, g.width() - 25), 650)
 # }}}
 
 
 if __name__ == '__main__':
-    app = QApplication([])
+    from calibre.gui2 import Application
+    app = Application([])
     d = ThemeEditor()
-    d.exec_()
+    d.exec()
     del app

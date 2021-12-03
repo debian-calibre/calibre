@@ -29,7 +29,7 @@ from polyglot.builtins import codepoint_to_chr, iteritems, itervalues
 
 string_length = lambda x: strlen(str(x))  # Needed on narrow python builds, as subclasses of unicode dont work
 KEY = Qt.Key.Key_J
-MODIFIER = Qt.Modifier.META if ismacos else Qt.Modifier.CTRL
+MODIFIER = Qt.KeyboardModifier.MetaModifier if ismacos else Qt.KeyboardModifier.ControlModifier
 
 SnipKey = namedtuple('SnipKey', 'trigger syntaxes')
 
@@ -709,7 +709,7 @@ class UserSnippets(Dialog):
         d.bb = bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
         l.addWidget(bb)
         bb.accepted.connect(d.accept), bb.rejected.connect(d.reject)
-        if d.exec_() == QDialog.DialogCode.Accepted and lw.currentItem() is not None:
+        if d.exec() == QDialog.DialogCode.Accepted and lw.currentItem() is not None:
             self.stack.setCurrentIndex(1)
             self.edit_snip.apply_snip(lw.currentItem().data(Qt.ItemDataRole.UserRole), creating_snippet=True)
 # }}}
@@ -719,5 +719,5 @@ if __name__ == '__main__':
     from calibre.gui2 import Application
     app = Application([])
     d = UserSnippets()
-    d.exec_()
+    d.exec()
     del app

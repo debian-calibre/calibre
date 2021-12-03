@@ -330,7 +330,7 @@ class ItemView(QStackedWidget):  # {{{
 
     def create_from_user_xpath(self):
         d = XPathDialog(self, self.prefs)
-        if d.exec_() == QDialog.DialogCode.Accepted and d.xpaths:
+        if d.exec() == QDialog.DialogCode.Accepted and d.xpaths:
             self.create_from_xpath.emit(d.xpaths, d.remove_duplicates_cb.isChecked())
 
     def hide_azw3_warning(self):
@@ -641,16 +641,16 @@ class TreeWidget(QTreeWidget):  # {{{
                 item.setData(0, Qt.ItemDataRole.DisplayRole, fmt % (num + i))
 
     def keyPressEvent(self, ev):
-        if ev.key() == Qt.Key.Key_Left and ev.modifiers() & Qt.Modifier.CTRL:
+        if ev.key() == Qt.Key.Key_Left and ev.modifiers() & Qt.KeyboardModifier.ControlModifier:
             self.move_left()
             ev.accept()
-        elif ev.key() == Qt.Key.Key_Right and ev.modifiers() & Qt.Modifier.CTRL:
+        elif ev.key() == Qt.Key.Key_Right and ev.modifiers() & Qt.KeyboardModifier.ControlModifier:
             self.move_right()
             ev.accept()
-        elif ev.key() == Qt.Key.Key_Up and (ev.modifiers() & Qt.Modifier.CTRL or ev.modifiers() & Qt.Modifier.ALT):
+        elif ev.key() == Qt.Key.Key_Up and (ev.modifiers() & Qt.KeyboardModifier.ControlModifier or ev.modifiers() & Qt.KeyboardModifier.AltModifier):
             self.move_up()
             ev.accept()
-        elif ev.key() == Qt.Key.Key_Down and (ev.modifiers() & Qt.Modifier.CTRL or ev.modifiers() & Qt.Modifier.ALT):
+        elif ev.key() == Qt.Key.Key_Down and (ev.modifiers() & Qt.KeyboardModifier.ControlModifier or ev.modifiers() & Qt.KeyboardModifier.AltModifier):
             self.move_down()
             ev.accept()
         elif ev.key() in (Qt.Key.Key_Delete, Qt.Key.Key_Backspace):
@@ -663,7 +663,7 @@ class TreeWidget(QTreeWidget):  # {{{
         item = self.currentItem()
 
         def key(k):
-            sc = str(QKeySequence(k | Qt.Modifier.CTRL).toString(QKeySequence.SequenceFormat.NativeText))
+            sc = str(QKeySequence(k | Qt.KeyboardModifier.ControlModifier).toString(QKeySequence.SequenceFormat.NativeText))
             return ' [%s]'%sc
 
         if item is not None:
@@ -693,7 +693,7 @@ class TreeWidget(QTreeWidget):  # {{{
             case_menu.addAction(_('Capitalize'), self.capitalize)
             m.addMenu(case_menu)
 
-            m.exec_(QCursor.pos())
+            m.exec(QCursor.pos())
 # }}}
 
 
@@ -1034,7 +1034,7 @@ class TOCEditor(QDialog):  # {{{
         self.explode_done.connect(self.read_toc, type=Qt.ConnectionType.QueuedConnection)
         self.writing_done.connect(self.really_accept, type=Qt.ConnectionType.QueuedConnection)
 
-        r = QApplication.desktop().availableGeometry(self)
+        r = self.screen().availableSize()
         self.resize(r.width() - 100, r.height() - 100)
         geom = self.prefs.get('toc_editor_window_geom', None)
         if geom is not None:
@@ -1163,7 +1163,7 @@ def main(path=None, title=None):
     d = TOCEditor(path, title=title, write_result_to=path + '.result')
     d.start()
     ret = 1
-    if d.exec_() == QDialog.DialogCode.Accepted:
+    if d.exec() == QDialog.DialogCode.Accepted:
         ret = 0
     del d
     del app

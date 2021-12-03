@@ -809,7 +809,7 @@ class Cache:
         will perform lossless compression, otherwise lossy compression.
 
         The progress callback will be called with the book_id and the old and new sizes
-        for each book that has been processed. If an error occurs, the news size will
+        for each book that has been processed. If an error occurs, the new size will
         be a string with the error details.
         '''
         jpeg_quality = max(10, min(jpeg_quality, 100))
@@ -1365,7 +1365,7 @@ class Cache:
 
     @write_api
     def set_cover(self, book_id_data_map):
-        ''' Set the cover for this book.  data can be either a QImage,
+        ''' Set the cover for this book. The data can be either a QImage,
         QPixmap, file object or bytestring. It can also be None, in which
         case any existing cover is removed. '''
 

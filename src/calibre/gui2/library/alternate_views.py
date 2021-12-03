@@ -41,7 +41,7 @@ CACHE_FORMAT = 'PPM'
 def auto_height(widget):
     # On some broken systems, availableGeometry() returns tiny values, we need
     # a value of at least 1000 for 200 DPI systems.
-    return max(1000, QApplication.instance().desktop().availableGeometry(widget).height()) / 5.0
+    return max(1000, widget.screen().availableSize().height()) / 5.0
 
 
 class EncodeError(ValueError):
@@ -51,7 +51,10 @@ class EncodeError(ValueError):
 def handle_enter_press(self, ev, special_action=None, has_edit_cell=True):
     if ev.key() in (Qt.Key.Key_Enter, Qt.Key.Key_Return):
         mods = ev.modifiers()
-        if mods & Qt.Modifier.CTRL or mods & Qt.Modifier.ALT or mods & Qt.Modifier.SHIFT or mods & Qt.Modifier.META:
+        if (
+            mods & Qt.KeyboardModifier.ControlModifier or mods & Qt.KeyboardModifier.AltModifier or
+            mods & Qt.KeyboardModifier.ShiftModifier or mods & Qt.KeyboardModifier.MetaModifier
+        ):
             return
         if self.state() != QAbstractItemView.State.EditingState and self.hasFocus() and self.currentIndex().isValid():
             from calibre.gui2.ui import get_gui
@@ -208,7 +211,7 @@ def mouseMoveEvent(self, event):
     if not index.isValid():
         return
     drag = self.drag_data()
-    drag.exec_(Qt.DropAction.CopyAction)
+    drag.exec(Qt.DropAction.CopyAction)
     self.drag_start_pos = None
 
 
@@ -1151,7 +1154,8 @@ class GridView(QListView):
         return index
 
     def selectionCommand(self, index, event):
-        if event and event.type() == QEvent.Type.KeyPress and event.key() in (Qt.Key.Key_Home, Qt.Key.Key_End) and event.modifiers() & Qt.Modifier.CTRL:
+        if event and event.type() == QEvent.Type.KeyPress and event.key() in (Qt.Key.Key_Home, Qt.Key.Key_End
+                                    ) and event.modifiers() & Qt.KeyboardModifier.ControlModifier:
             return QItemSelectionModel.SelectionFlag.ClearAndSelect | QItemSelectionModel.SelectionFlag.Rows
         return super().selectionCommand(index, event)
 

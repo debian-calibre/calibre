@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "november 12, 2021" "5.32.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "december 03, 2021" "5.33.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -97,7 +97,7 @@ visa denna hjälptext och avsluta
 .INDENT 0.0
 .TP
 .B \-\-input\-profile
-Ange inmatningsprofilen. Profilen ger information till konverteringssystemet om hur information i inmatning ska tolkas. Till exempel upplösningsberoende längder (d.v.s. längder i pixlar). Alternativen är: cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+Ange inmatningsprofilen. Inmatningsprofilen ger information till konverteringssystemet om hur uppgifterna i inmatningsdokumentet ska tolkas. Till exempel upplösningsberoende längder (d.v.s. längder i pixlar). Alternativen är: cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -107,7 +107,7 @@ Lista inbyggda receptnamn. Du kan skapa en e\-bok från ett inbyggt recept så h
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Ange utmatningsprofilen. Utmatningsprofilen berättar för konverteringssystemet hur man optimerar det skapade dokumentet för den angivna enheten (t.ex. genom att ändra storlek på bilder för enhetens skärmstorlek). I vissa fall kan en utmatningsprofil användas för att optimera utmatningen för en viss enhet, men detta är sällan nödvändigt. Alternativen är:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+Ange utmatningsprofilen. Utmatningsprofilen berättar för konverteringssystemet hur det skapade  dokumentet ska optimeras för den angivna enheten (t.ex. genom att ändra storlek på bilder för enhetens skärmstorlek). I vissa fall kan en utmatningsprofil användas för att optimera utmatningen för en viss enhet, men detta är sällan nödvändigt. Alternativen är:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -251,12 +251,12 @@ Ställ in höjden på de infogade tomma raderna (i em). Höjden på raderna mell
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Bevara ligaturer som finns i inmatningsdokumentet. En ligatur är en speciell framställning ett teckenpar som ff, fi, fl och så vidare. De flesta läsenheter saknar stöd för ligaturer i deras standardteckensnitt så det är osannolikt att de återges korrekt. Som standard konverterar calibre en ligatur till motsvarande par av vanliga tecken. Det här alternativet kommer att bevara ligaturerna istället.
+Bevara ligaturer som finns i inmatningsdokumentet. En ligatur är en speciell återgivning av ett teckenpar som ff, fi, fl och så vidare. De flesta läsenheter saknar stöd för ligaturer i deras standardteckensnitt så det är osannolikt att de återges korrekt. Som standard konverterar calibre en ligatur till motsvarande par av vanliga tecken. Det här alternativet kommer att bevara ligaturerna istället.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-line\-height
-Radavståndet i punkter. Anpassar mellanrum mellan på varandra följande textrader. Gäller endast element som inte definierar sitt eget radavstånd. I de flesta fall är det minsta radavståndet valet mer användbart. Som standard utför ingen ändring i radavstånd.
+Radavståndet i punkter. Anpassar avstånd mellan på varandra följande textrader. Gäller endast element som inte definierar sitt eget radavstånd. I de flesta fall är det minsta radavståndet valet mer användbart. Som standard utför ingen ändring i radavstånd.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -291,7 +291,7 @@ Minsta radavståndet, i procent av elementets beräknade teckensnittsstorlek. ca
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing
-Ta bort mellanrum mellan stycken. Drar även in första raden på det nya stycket med 1,5 em. Mellanrumsavlägsnande fungerar inte om källfilen inte använder stycken (<p> eller <div> taggar).
+Ta bort avstånd mellan stycken. Drar även in första raden på det nya stycket med 1,5 em. Borttagning av avstånd fungerar inte om källfilen inte använder stycken (<p>\- eller <div>\-taggar).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -316,7 +316,7 @@ Sökvägen till en fil som innehåller regler för att förändra CSS\-format i 
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform HTML\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+Sökväg till en fil som innehåller regler för att omvandla HTML i den här boken. Det enklaste sättet att skapa en sådan fil är att använda guiden för att skapa regler i det grafiska gränssnittet för calibre. Öppna den i avsnittet \fB"\fPUtseende och känsla\->Omvandla HTML\fB"\fP i konverteringsdialogrutan. När du har skapat reglerna kan du använda knappen \fB"\fPExportera\fB"\fP för att spara dem i en fil.
 .UNINDENT
 .INDENT 0.0
 .TP

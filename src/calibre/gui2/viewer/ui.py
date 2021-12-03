@@ -20,7 +20,9 @@ from calibre import prints
 from calibre.constants import ismacos, iswindows
 from calibre.customize.ui import available_input_formats
 from calibre.db.annotations import merge_annotations
-from calibre.gui2 import choose_files, error_dialog, sanitize_env_vars
+from calibre.gui2 import (
+    add_to_recent_docs, choose_files, error_dialog, sanitize_env_vars
+)
 from calibre.gui2.dialogs.drm_error import DRMErrorMessage
 from calibre.gui2.image_popup import ImagePopup
 from calibre.gui2.main_window import MainWindow
@@ -237,7 +239,7 @@ class EbookViewer(MainWindow):
         m.addSeparator()
         a(_('Hide this scrollbar'), 'toggle_scrollbar')
 
-        q = m.exec_(QCursor.pos())
+        q = m.exec(QCursor.pos())
         if not q:
             return
         q = amap[q.text()]
@@ -426,6 +428,10 @@ class EbookViewer(MainWindow):
         error_dialog(self, title, msg, det_msg=details or None, show=True)
 
     def print_book(self):
+        if not hasattr(set_book_path, 'pathtoebook'):
+            error_dialog(self, _('Cannot print book'), _(
+                'No book is currently open'), show=True)
+            return
         from .printing import print_book
         print_book(set_book_path.pathtoebook, book_title=self.current_book_data['metadata']['title'], parent=self)
 
@@ -514,7 +520,7 @@ class EbookViewer(MainWindow):
             tb = re.split(r'^calibre\.gui2\.viewer\.convert_book\.ConversionFailure:\s*', tb, maxsplit=1, flags=re.M)[-1]
             last_line = tuple(tb.strip().splitlines())[-1]
             if last_line.startswith('calibre.ebooks.DRMError'):
-                DRMErrorMessage(self).exec_()
+                DRMErrorMessage(self).exec()
             else:
                 error_dialog(self, _('Loading book failed'), _(
                     'Failed to open the book at {0}. Click "Show details" for more info.').format(data['pathtoebook']),
@@ -529,6 +535,12 @@ class EbookViewer(MainWindow):
                 raise
             self.load_ebook(data['pathtoebook'], open_at=data['open_at'], reload_book=True)
             return
+        if iswindows:
+            try:
+                add_to_recent_docs(data['pathtoebook'])
+            except Exception:
+                import traceback
+                traceback.print_exc()
         self.current_book_data = data
         get_current_book_data(self.current_book_data)
         self.current_book_data['annotations_map'] = defaultdict(list)

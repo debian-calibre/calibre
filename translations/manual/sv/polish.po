@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-21 12:39+0000\n"
-"PO-Revision-Date: 2021-10-15 11:39+0000\n"
+"POT-Creation-Date: 2021-12-02 15:47+0000\n"
+"PO-Revision-Date: 2021-11-27 13:25+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -198,7 +198,7 @@ msgid ""
 "Commit a parsed object to disk (it is serialized and written to the "
 "underlying file). If ``keep_parsed`` is True the parsed representation is "
 "retained in the cache. See also: :meth:`parsed`"
-msgstr "Överlämnar ett tolkat objekt till disken (det är serialiserade och skrivs till den underliggande fil). Om ``keep_parsed`` är True behålls den tolkade representationen i bufferten. Se också: :meth:`parsed`"
+msgstr "Överlämnar ett tolkat objekt till disken (det serialiseras och skrivs till den underliggande filen). Om ``keep_parsed`` är True behålls den tolkade representationen i cachen. Se även: :meth:`parsed`"
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.dirty:1
@@ -290,7 +290,7 @@ msgstr "Se till att `name` inte redan finns i denna bok. Om den gör det, återg
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.manifest_has_name:1
 msgid "Return True if the manifest has an entry corresponding to name"
-msgstr "Returnar True om manifestet har en post som motsvarar namnet"
+msgstr "Återge True om manifestet har en post som motsvarar namnet"
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.manifest_id_map:1
@@ -367,7 +367,7 @@ msgid ""
 "commit the file if it is dirtied and remove it from the parse cache. You "
 "must finish with this file before accessing the parsed version of it again, "
 "or bad things will happen."
-msgstr "Öppna filen som utpekas av namn för direkt läs / skriv. Observera att detta kommer att förkasta filen om den är dirtied och ta bort den från tolkningsbufferten. Du måste avsluta med den här filen innan du öppnar den tolkas versionen av den igen, eller dåliga saker kommer att hända."
+msgstr "Öppna filen som hänvisas till med namnet för direkt läsning/skrivning. Observera att detta kommer att förkasta filen om den är smutsig och ta bort den från tolkningscachen. Du måste avsluta med den här filen innan du öppnar den tolkade versionen av den igen, annars kommer dåliga saker att hända."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf:1
@@ -407,7 +407,7 @@ msgid ""
 " returned. Note that parsed objects are cached for performance. If you make "
 "any changes to the parsed object, you must call :meth:`dirty` so that the "
 "container knows to update the cache. See also :meth:`replace`."
-msgstr "Returnera en tolkad representation av filen som anges med namn. För HTML- och XML-filer returneras ett lxml-träd. För CSS-filer returneras en css_parser-formatmall. Observera att analyserade objekt cachas för prestanda. Om du gör några ändringar i det analyserade objektet måste du anropa :meth:`dirty` så att behållaren vet att uppdatera cacheminnet. Se även :meth:`replace`."
+msgstr "Återge en tolkad representation av filen som anges med namn. För HTML- och XML-filer återges ett lxml-träd. För CSS-filer återges en css_parser-formatmall. Observera att tolkade objekt cachelagras för prestanda. Om du gör några ändringar i det tolkade objektet måste du anropa :meth:`dirty` så att behållaren vet att uppdatera cacheminnet. Se även :meth:`replace`."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.raw_data:1
@@ -457,7 +457,7 @@ msgid ""
 "Remove the item identified by name from this container. This removes all "
 "references to the item in the OPF manifest, guide and spine as well as from "
 "any internal caches."
-msgstr "Ta bort posten identifierat med namn från denna behållare. Detta tar bort alla referenser till objektet i OPF manifestet, guide och rygg samt från eventuella interna buffertar."
+msgstr "Ta bort posten som identifieras med namn från den här behållaren. Detta tar bort alla referenser till posten i OPF-manifestet, guiden och ryggrraden samt från eventuella interna cacher."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.rename:1
@@ -712,7 +712,7 @@ msgstr "Hanterar omslag"
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.set_cover:1
 msgid "Set the cover of the book to the image pointed to by cover_path."
-msgstr "Anpassa omslaget till boken till den bild som utpekas av cover_path."
+msgstr "Ställ in omslaget på boken till den bild som hänvisas till av cover_path."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.set_cover:3
@@ -737,7 +737,7 @@ msgid ""
 "covers in EPUB) **no_svg**: True or False  (Use an SVG cover wrapper in the "
 "EPUB titlepage) **existing**: True or False  (``cover_path`` refers to an "
 "existing image in the book)"
-msgstr "Ingen eller en ordbok som bestämmer hur omslaget sätts in. Ordboken kan ha poster: **keep_aspect**: True eller False (Bevara omslagsproportioner i EPUB) **no_svg**: True eller False (Använd ett SVG-omslagshölje i EPUB-titelsidan) **befintliga**: True eller False (``cover_path`` refererar till en befintlig bild i boken)"
+msgstr "Ingen eller en ordbok som kontrollerar hur omslaget ställs in. Ordboken kan innehålla poster: **keep_aspect**: True eller False (bevara omslagsbildförhållanden i EPUB) **no_svg**: True eller False (använd ett SVG-omslagshölje i EPUB-titelsidan) **befintliga**: True eller False (``cover_path`` refererar till en befintlig bild i boken)"
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.mark_as_cover:1
@@ -863,8 +863,8 @@ msgstr "Bokredigeringsverktyg"
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
 #: calibre.gui2.tweak_book.plugin.Tool:1
-msgid "Bases: :class:`object`"
-msgstr "Bas: :class:`object`"
+msgid "Bases: :py:class:`object`"
+msgstr "Grunder: :py:class:`object`"
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
 #: calibre.gui2.tweak_book.plugin.Tool:1
@@ -1052,7 +1052,7 @@ msgstr "Utför eventuella ändringar som användaren har gjort i filer öppnas i
 msgid ""
 "Return the name of the file being edited currently or None if no file is "
 "being edited"
-msgstr "Returnamnet på filen som redigeras för närvarande eller None om ingen fil redigeras"
+msgstr "Återge namnet på filen som för närvarande redigeras eller None om ingen fil redigeras"
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
 #: calibre.gui2.tweak_book.boss.Boss.edit_file:1

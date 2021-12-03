@@ -769,6 +769,8 @@ class View:
 
     def on_iframe_ready(self, data):
         data.width, data.height = self.iframe_size()
+        if ui_operations.on_iframe_ready:
+            ui_operations.on_iframe_ready()
         return self.do_pending_load
 
     def do_pending_load(self):
@@ -885,8 +887,9 @@ class View:
         is_current_book = self.book and self.book.key == book.key
         self.book_load_started = True
         if not is_current_book:
-            self.iframe_wrapper.reset()
-            self.content_popup_overlay.reset()
+            if self.book:
+                self.iframe_wrapper.reset()
+                self.content_popup_overlay.reset()
             self.loaded_resources = {}
             self.content_popup_overlay.loaded_resources = {}
             self.timers.start_book(book)

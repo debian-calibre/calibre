@@ -6,14 +6,15 @@
 # Eduard van der Linde, 2018
 # M. de Boer <de.boer.melle@gmail.com>, 2018
 # Meteor0id, 2019
+# peter <petertje@tuta.io>, 2021
 # W.P.M.E. Hofland <wpme.hofland@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-19 02:55+0000\n"
-"PO-Revision-Date: 2021-04-18 08:15+0000\n"
-"Last-Translator: M. de Boer <de.boer.melle@gmail.com>\n"
+"POT-Creation-Date: 2021-12-01 12:56+0000\n"
+"PO-Revision-Date: 2021-11-25 00:15+0000\n"
+"Last-Translator: peter <petertje@tuta.io>\n"
 "Language-Team: Dutch (http://www.transifex.com/calibre/calibre/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,7 +24,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:4
 msgid "All about using regular expressions in calibre"
-msgstr "Alles over het gebruik van reguliere expressies in Calibre"
+msgstr "Alles over het gebruik van reguliere expressies in calibre"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:6
 msgid ""
@@ -31,7 +32,7 @@ msgid ""
 "sophisticated manipulation of e-book content and metadata. This tutorial is "
 "a gentle introduction to getting you started with using regular expressions "
 "in calibre."
-msgstr "Reguliere expressies zijn functies die op veel plaatsen van Calibre worden gebruikt om geavanceerde manipulatie van e-book inhoud en metagegevens uit te voeren. Deze handleiding is een voorzichtige inleiding om u op weg te helpen met het gebruik van reguliere uitdrukkingen in Calibre."
+msgstr "Reguliere expressies zijn functies die op veel plaatsen van calibre worden gebruikt om geavanceerde manipulatie van e-book inhoud en metadata uit te voeren. Deze handleiding is een voorzichtige inleiding om u op weg te helpen met het gebruik van reguliere uitdrukkingen in calibre."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:11
 msgid "Contents"
@@ -59,7 +60,7 @@ msgstr "Dit gaat onvermijdelijk enigszins technisch worden, - reguliere expressi
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:19
 msgid "Where in calibre can you use regular expressions?"
-msgstr "Waar in Calibre kan je reguliere expressies gebruiken?"
+msgstr "Waar in calibre kan je reguliere expressies gebruiken?"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:21
 msgid ""
@@ -70,7 +71,7 @@ msgid ""
 "expressions in its :guilabel:`Search and replace` feature. Finally, you can "
 "use regular expressions when searching the calibre book list and when "
 "searching inside the calibre E-book viewer."
-msgstr ""
+msgstr "Er zijn een paar plaatsen waar calibre reguliere expressies gebruikt. Daar is de :guilabel :`Zoeken & vervangen` in conversie-opties, detectie van metadata uit bestandsnamen in de importinstellingen en Zoeken & vervangen bij het bewerken van de metadata van boeken in bulk. De calibre boek editor kan ook reguliere expressies gebruiken in zijn :guilabel:`Zoek en vervang` functie. Tenslotte kan u reguliere expressies gebruiken bij doorzoeken van de calibre boekenlijst en bij zoeken in de calibre e-boekviewer."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:30
 msgid "What on earth *is* a regular expression?"
@@ -82,7 +83,7 @@ msgid ""
 "expression can *match* a number of different strings. This is what makes "
 "regular expression so powerful -- they are a concise way of describing a "
 "potentially large number of variations."
-msgstr ""
+msgstr "Een reguliere expressie is een manier om een string set te beschrijven. Een enkele reguliere expressie kan *overeenkomen* met een aantal verschillende strings. Dit maakt reguliere expressie zo krachtig -- het is een beknopte manier om een mogelijk groot aantal variaties te beschrijven."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:34
 msgid ""
@@ -97,7 +98,7 @@ msgid ""
 "complicated because regular expressions allow for variations in the strings "
 "it matches, so one expression can match multiple strings, which is why "
 "people bother using them at all. More on that in a bit."
-msgstr ""
+msgstr "Ik gebruik string hier op de manier dat het gebruikt wordt in programmeertalen: een reeks van één of meerdere karakters, inbegrepen letters, cijfers, interpunctie en zogenaamde witruimte (regeleindes, tabs, enz.). Merk a.u.b. op dat in het algemeen hoofd- en kleine letters niet als identiek beschouwd worden, \"a\" is dus iets anders als \"A\" en zo verder. In calibre zijn reguliere expressies hoofdletterongevoelig in de Zoekbalk maar niet in de conversie-opties. Er is een manier om elke reguliere expressie hoofdletterongevoelig te maken maar dat bespreken we later. Het wordt gecompliceerd omdat reguliere expressies variaties toelaten in de strings waar ze mee overeen komen, dus een expressie kan met verschillende strings overeen komen, reden dat ze gebruikt worden. Meer daarover later."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:37
 msgid "Care to explain?"
@@ -113,7 +114,7 @@ msgid ""
 "though, that this *only* matches the exact string ``\"Hello, World!\"``, not"
 " e.g. ``\"Hello, wOrld!\"`` or ``\"hello, world!\"`` or any other such "
 "variation."
-msgstr ""
+msgstr "Wel, daarom zijn we hier. Ten eerste, dit is het belangrijkste concept in reguliere expressies: *Een string is zelf een reguliere expressie die met zichzelf overeenkomt*. Dat wil zeggen, als ik met de string ``\"Hello, World!\"`` wou overeenkomen met een reguliere expressie, de te gebruiken reguliere expressie zou ``Hello, World!`` zijn. Ja, het is echt zo simpel. U zal nochtans opmerken dat dit *enkel* overeenkomt met de exacte string ``\"Hello, World!\"``, niet met bv. ``\"Hello, wOrld!\"`` of ``\"hello, world!\"`` of elke andere variatie."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:42
 msgid "That doesn't sound too bad. What's next?"
@@ -139,7 +140,7 @@ msgid ""
 "needed to three: The second expression ``Page [0-9][0-9] of 423`` would "
 "match all two-digit page numbers, and I'm sure you can guess what the third "
 "expression would look like. Yes, go ahead. Write it down."
-msgstr ""
+msgstr "Nu komt het echt leuke gedeelte. Herinnert u zich dat ik zei dat reguliere expressies met meerdere strings kunnen overeenkomen? Nu wordt het een beetje ingewikkelder. Neem, als een iets meer praktische oefening, dat het e-boek dat u wou converteren een gemene voettekst had om de pagina's te tellen, zoals \"Pagina 5 van 423\". Duidelijk dat het pagina nummer zal stijgen van 1 tot 423, dus u zou met 423 verschillende strings moeten overeenkomen, klopt? Fout, eigenlijk: reguliere expressies laten u karaktersets definiëren die overeenkomen: Om een set te definiëren, zet u alle karakters die u in de set wilt tussen vierkante haken. Dus, bv., de set ``[abc]`` komt overeen met ofwel karakter \"a\", \"b\" of \"c\". *Sets komen altijd maar overeen met een van de karakters in de set*. Ze \"begrijpen\" karakterbereiken, dat wil zeggen, als u met alle kleine letters wil overeenkomen, gebruikt u de set ``[a-z]``, voor hoofd- en kleine letters gebruikt u ``[a-zA-Z]`` en zo voort. Bent u mee? Dus, duidelijk, gebruik makend van de expressie ``Page [0-9] of 423`` komt u overeen met de eerste 9 pagina's, daarbij de vereiste expressies tot drie reducerend: De tweede expressie ``Page [0-9][0-9] of 423``  komt overeen met alle tweecijferige paginanummers en ik ben er zeker van dat u kan raden hoe de derde expressie eruit zou zien. Ja, vooruit, schrijf het op."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:47
 msgid "Hey, neat! This is starting to make sense!"
@@ -155,7 +156,7 @@ msgid ""
 "characters, \"+\", \"?\" and \"*\", *repeat the single element preceding "
 "them*. (Element means either a single character, a character set, an escape "
 "sequence or a group (we'll learn about those last two later)- in short, any "
-"single entity in a regular expression.) These characters are called "
+"single entity in a regular expression). These characters are called "
 "wildcards or quantifiers. To be more precise, \"?\" matches *0 or 1* of the "
 "preceding element, \"*\" matches *0 or more* of the preceding element and "
 "\"+\" matches *1 or more* of the preceding element. A few examples: The "
@@ -183,7 +184,7 @@ msgid ""
 "that tag, but actually, it matches the whole string! (The character \".\" is"
 " another special character. It matches anything *except* linebreaks, so, "
 "basically, the expression ``.*`` would match any single line you can think "
-"of.) Instead, try using ``<p.*?>`` which makes the quantifier ``\"*\"`` non-"
+"of). Instead, try using ``<p.*?>`` which makes the quantifier ``\"*\"`` non-"
 "greedy. That expression would only match the first opening tag, as intended."
 " There's actually another way to accomplish this: The expression "
 "``<p[^>]*>`` will match that same opening tag- you'll see why after the next"
@@ -195,7 +196,7 @@ msgstr ""
 msgid ""
 "Well, these special characters are very neat and all, but what if I wanted "
 "to match a dot or a question mark?"
-msgstr ""
+msgstr "Nou, deze speciale karakters zijn erg netjes en zo maar wat als ik een overeenkomst met een punt of vraagteken wil?"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:58
 msgid ""
@@ -223,7 +224,7 @@ msgid ""
 "uppercase letter, ``[a-zA-Z]`` matching a single letter and ``[a-zA-Z0-9]`` "
 "matching a single letter or number. You can also use an escape sequence as "
 "shorthand:"
-msgstr ""
+msgstr "Ik wist dat u het zou vragen. Enkele nuttige sets zijn ``[0-9]`` komt overeen met een enkel getal, ``[a-z]`` met een enkele kleine letter, ``[A-Z]`` met een enkele hoofdletter, ``[a-zA-Z]`` met een enkele letter en ``[a-zA-Z0-9]`` komt overeen met een enkele letter of cijfer."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:66
 msgid "``\\d``"
@@ -231,7 +232,7 @@ msgstr "``\\d``"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:66
 msgid "is equivalent to ``[0-9]``"
-msgstr ""
+msgstr "is gelijkwaardig aan ``[0-9]``"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:70
 msgid "``\\w``"
@@ -239,7 +240,7 @@ msgstr "``\\w``"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:69
 msgid "is equivalent to ``[a-zA-Z0-9_]``"
-msgstr ""
+msgstr "is gelijkwaardig aan ``[a-zA-Z0-9_]``"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:73
 msgid "``\\s``"
@@ -247,14 +248,14 @@ msgstr "``\\s``"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:73
 msgid "is equivalent to any whitespace"
-msgstr ""
+msgstr "is gelijkwaardig aan elke spatie"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:76
 msgid ""
 "\"Whitespace\" is a term for anything that won't be printed. These "
 "characters include space, tabulator, line feed, form feed, carriage return, "
 "non-breaking spaces, etc."
-msgstr ""
+msgstr "\"Witruimte\" is een term voor alles dat niet afgedrukt wordt. Deze karakters zijn onder andere spatie, tab,  regelinvoerteken (LF), paginainvoerteken (FF), regeleinde (CR), niet-afbrekende spaties, enz."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:78
 msgid ""
@@ -384,7 +385,7 @@ msgid ""
 " with the tag ``<b class=\"calibre2\">``, now you have to end with the "
 "corresponding closing tag (opening tags are ``<tag>``, closing tags are "
 "``</tag>``), which is simply the next ``</b>`` in this case. (Refer to a "
-"good HTML manual or ask in the forum if you are unclear on this point.) The "
+"good HTML manual or ask in the forum if you are unclear on this point). The "
 "opening tag can be described using ``<b.*?>``, the closing tag using "
 "``</b>``, thus we could remove everything between those tags using "
 "``<b.*?>.*?</b>``. But using this expression would be a bad idea, because it"
@@ -432,7 +433,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:125
 msgid "Bulk editing metadata"
-msgstr "Massabewerking van metagegevens"
+msgstr "Massabewerking van metadata"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:127
 msgid ""
@@ -474,7 +475,7 @@ msgid ""
 "One last word of warning, though: Regexps are powerful, but also really easy"
 " to get wrong. calibre provides really great testing possibilities to see if"
 " your expressions behave as you expect them to. Use them. Try not to shoot "
-"yourself in the foot. (God, I love that expression...) But should you, "
+"yourself in the foot. (God, I love that expression...). But should you, "
 "despite the warning, injure your foot (or any other body parts), try to "
 "learn from it."
 msgstr ""

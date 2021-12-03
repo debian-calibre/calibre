@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "11월 12, 2021" "5.32.0" "calibre"
+.TH "CALIBREDB" "1" "12월 03, 2021" "5.33.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -339,7 +339,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Do not use the recycle bin
+Do not use the Recycle Bin
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -684,7 +684,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-display
-A dictionary of options to customize how the data in this column will be interpreted. This is a JSON  string. For enumeration columns, use \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP There are many options that can go into the display variable.The options by column type are: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  The best way to find legal combinations is to create a custom column of the appropriate type in the GUI then look at the backup OPF for a book (ensure that a new OPF has been created since the column was added). You will see the JSON for the \fB"\fPdisplay\fB"\fP for the new column in the OPF.
+이 열의 데이터가 해석되는 방식을 사용자 지정하기 위한 옵션 사전입니다. 이것은 JSON 문자열입니다. 열거 열의 경우 \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP를 사용합니다. 표시 변수에 들어갈 수 있는 많은 옵션이 있습니다. 열 유형별 옵션은 다음과 같습니다: 복합: composite_template, composite_sort, make_category,contains_html, use_decorations 날짜시간: date_format 열거: enum_values, enum_colors, use_decorations: enum_values, enum_colors, use_decorations int, float: number_format 텍스트: is_names, use_decorations  합법적인 조합을 찾는 가장 좋은 방법은 GUI에서 적절한 유형의 사용자 지정 열을 만든 다음 책에 대한 백업 OPF를 확인하는 것입니다(열이 추가된 이후 새 OPF가 생성되었는지 확인). OPF의 새 열에 대한 \fB"\fP디스플레이\fB"\fP에 대한 JSON이 표시됩니다.
 .UNINDENT
 .INDENT 0.0
 .TP

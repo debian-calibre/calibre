@@ -130,7 +130,7 @@ View an e-book.
         'Alternately, you can use the form toc:something and it will open '
         'at the location of the first Table of Contents entry that contains '
         'the string "something". The form toc-href:something will match the '
-        'href (internal link destination) of toc nodes. The matching is exact, '
+        'href (internal link destination) of toc nodes. The matching is exact. '
         'If you want to match a substring, use the form toc-href-contains:something. '
         'The form ref:something will use Reference mode references.'))
     a('--continue', default=False, action='store_true', dest='continue_reading',
@@ -162,7 +162,7 @@ def run_gui(app, opts, args, internal_book_data, listener=None):
     if opts.full_screen:
         main.set_full_screen(True)
 
-    app.exec_()
+    app.exec()
 
 
 def main(args=sys.argv):
