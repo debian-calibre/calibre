@@ -7,12 +7,11 @@ import textwrap
 from collections import OrderedDict
 from functools import partial
 from operator import attrgetter
-
 from qt.core import (
-    QAbstractListModel, QApplication, QDialog, QDialogButtonBox, QFont, QGridLayout,
-    QGroupBox, QIcon, QLabel, QListView, QMenu, QModelIndex, QPlainTextEdit, QComboBox,
-    QPushButton, QSizePolicy, QSplitter, QStyle, QStyledItemDelegate, QAbstractItemView, QItemSelectionModel,
-    QStyleOptionViewItem, Qt, QVBoxLayout, QWidget, pyqtSignal
+    QAbstractItemView, QAbstractListModel, QApplication, QComboBox, QDialog,
+    QDialogButtonBox, QFont, QGridLayout, QGroupBox, QIcon, QItemSelectionModel,
+    QLabel, QListView, QMenu, QModelIndex, QPlainTextEdit, QPushButton, QSizePolicy,
+    QSplitter, Qt, QVBoxLayout, QWidget, pyqtSignal
 )
 
 from calibre import isbytestring
@@ -59,22 +58,6 @@ class AdaptSQP(SearchQueryParser):
 
     def __init__(self, *args, **kwargs):
         pass
-
-
-class Delegate(QStyledItemDelegate):  # {{{
-
-    def __init__(self, view):
-        QStyledItemDelegate.__init__(self, view)
-        self.view = view
-
-    def paint(self, p, opt, idx):
-        copy = QStyleOptionViewItem(opt)
-        copy.showDecorationSelected = True
-        if self.view.currentIndex() == idx:
-            copy.state |= QStyle.StateFlag.State_HasFocus
-        QStyledItemDelegate.paint(self, p, copy, idx)
-
-# }}}
 
 
 class Tweak:  # {{{
@@ -156,7 +139,7 @@ class Tweaks(QAbstractListModel, AdaptSQP):  # {{{
         except:
             return None
         if role == Qt.ItemDataRole.DisplayRole:
-            return textwrap.fill(tweak.name, 40)
+            return tweak.name
         if role == Qt.ItemDataRole.FontRole and tweak.is_customized:
             ans = QFont()
             ans.setBold(True)
@@ -375,6 +358,7 @@ class TweaksView(QListView):
         self.setSpacing(5)
         self.setVerticalScrollMode(QAbstractItemView.ScrollMode.ScrollPerPixel)
         self.setMinimumWidth(300)
+        self.setWordWrap(True)
 
     def currentChanged(self, cur, prev):
         QListView.currentChanged(self, cur, prev)
@@ -451,8 +435,6 @@ class ConfigWidget(ConfigWidgetBase):
 
     def genesis(self, gui):
         self.gui = gui
-        self.delegate = Delegate(self.tweaks_view)
-        self.tweaks_view.setItemDelegate(self.delegate)
         self.tweaks_view.current_changed.connect(self.current_changed)
         self.view = self.tweaks_view
         self.highlighter = PythonHighlighter(self.edit_tweak.document())

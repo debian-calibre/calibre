@@ -30,6 +30,10 @@ class DeviceDefaults:
                     'eBooks/import', 'eBooks', 'sdcard/ebooks'],
                     }
                 ),
+                # Supernote A5
+                ({'vendor': 0x2207, 'product': 0x0031}, {
+                    'calibre_file_paths': {'metadata':'Documents/metadata.calibre', 'driveinfo':'Documents/driveinfo.calibre'},
+                }),
         )
 
     def __call__(self, device, driver):

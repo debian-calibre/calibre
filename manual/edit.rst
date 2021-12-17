@@ -678,6 +678,14 @@ common in your book and to run a simple search and replace on individual words.
     check tool. If you do not do this and continue to use the Spell check tool,
     you could lose the changes you have made in the editor.
 
+.. note::
+   To exclude an individual file from being spell checked when running the
+   spell check tool, you can use the :guilabel:`Exclude files` button or
+   add the following comment just under the opening tag in the file::
+
+        <!-- calibre-no-spell-check -->
+
+
 Adding new dictionaries
 ###########################
 

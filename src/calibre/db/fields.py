@@ -6,6 +6,7 @@ __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
+import sys
 from threading import Lock
 from collections import defaultdict, Counter
 from functools import partial
@@ -25,8 +26,23 @@ def bool_sort_key(bools_are_tristate):
     return (lambda x:{True: 1, False: 2, None: 3}.get(x, 3)) if bools_are_tristate else lambda x:{True: 1, False: 2, None: 2}.get(x, 2)
 
 
-def numeric_sort_key(x):
-    return x or 0
+def sort_value_for_undefined_numbers():
+    t = tweaks['value_for_undefined_numbers_when_sorting']
+    try:
+        if t == 'minimum':
+            return float('-inf')
+        if t == 'maximum':
+            return float('inf')
+        return float(t)
+    except Exception:
+        print('***** Bad value in undefined sort number tweak', t, file=sys.stderr)
+        return 0
+
+
+def numeric_sort_key(defval, x):
+    # It isn't clear whether this function can ever be called with a non-numeric
+    # argument, but we check just in case
+    return x if type(x) in (int, float) else defval
 
 
 IDENTITY = lambda x: x
@@ -59,8 +75,8 @@ class Field:
         self._default_sort_key = b''
 
         if dt in {'int', 'float', 'rating'}:
-            self._default_sort_key = 0
-            self._sort_key = numeric_sort_key
+            self._default_sort_key = sort_value_for_undefined_numbers()
+            self._sort_key = partial(numeric_sort_key, self._default_sort_key)
         elif dt == 'bool':
             self._default_sort_key = None
             self._sort_key = bool_sort_key(bools_are_tristate)
@@ -232,6 +248,7 @@ class CompositeField(OneToOneField):
         composite_sort = m.get('display', {}).get('composite_sort', None)
         if composite_sort == 'number':
             self._default_sort_key = 0
+            self._undefined_number_sort_key = sort_value_for_undefined_numbers()
             self._sort_key = self.number_sort_key
         elif composite_sort == 'date':
             self._default_sort_key = UNDEFINED_DATE
@@ -262,7 +279,7 @@ class CompositeField(OneToOneField):
                 val = val[:(-2 if p > 1 else -1)].strip()
             val = atof(val) * p
         except (TypeError, AttributeError, ValueError, KeyError):
-            val = 0.0
+            val = self._undefined_number_sort_key
         return val
 
     def date_sort_key(self, val):

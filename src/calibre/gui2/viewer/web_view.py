@@ -322,10 +322,10 @@ def apply_font_settings(page_or_view):
     if mfs is None:
         s.resetFontSize(QWebEngineSettings.FontSize.MinimumFontSize)
     else:
-        s.setFontSize(QWebEngineSettings.FontSize.MinimumFontSize, mfs)
+        s.setFontSize(QWebEngineSettings.FontSize.MinimumFontSize, int(mfs))
     bfs = sd.get('base_font_size')
     if bfs is not None:
-        s.setFontSize(QWebEngineSettings.FontSize.DefaultFontSize, bfs)
+        s.setFontSize(QWebEngineSettings.FontSize.DefaultFontSize, int(bfs))
         s.setFontSize(QWebEngineSettings.FontSize.DefaultFixedFontSize, int(bfs * 13 / 16))
 
     font_size_changed = (old_minimum, old_base, old_fixed_base) != (
@@ -370,9 +370,7 @@ class WebPage(QWebEnginePage):
             pass
 
     def acceptNavigationRequest(self, url, req_type, is_main_frame):
-        if req_type == QWebEngineUrlRequestInfo.NavigationType.NavigationTypeReload:
-            return True
-        if req_type == QWebEngineUrlRequestInfo.NavigationType.NavigationTypeBackForward:
+        if req_type in (QWebEngineUrlRequestInfo.NavigationType.NavigationTypeReload, QWebEngineUrlRequestInfo.NavigationType.NavigationTypeBackForward):
             return True
         if url.scheme() in (FAKE_PROTOCOL, 'data'):
             return True

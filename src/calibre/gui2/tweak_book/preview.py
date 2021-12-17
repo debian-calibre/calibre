@@ -341,12 +341,13 @@ class WebPage(QWebEnginePage):
         prints('%s:%s: %s' % (source_id, linenumber, msg))
 
     def acceptNavigationRequest(self, url, req_type, is_main_frame):
-        if req_type == QWebEngineUrlRequestInfo.NavigationType.NavigationTypeReload:
+        if req_type in (QWebEngineUrlRequestInfo.NavigationType.NavigationTypeReload, QWebEngineUrlRequestInfo.NavigationType.NavigationTypeBackForward):
             return True
         if url.scheme() in (FAKE_PROTOCOL, 'data'):
             return True
-        if req_type == QWebEnginePage.NavigationType.NavigationTypeLinkClicked:
+        if url.scheme() in ('http', 'https') and req_type == QWebEnginePage.NavigationType.NavigationTypeLinkClicked:
             safe_open_url(url)
+        prints('Blocking navigation request to:', url.toString())
         return False
 
     def go_to_anchor(self, anchor):
@@ -763,10 +764,10 @@ class Preview(QWidget):
 
     def apply_settings(self):
         s = self.view.settings()
-        s.setFontSize(QWebEngineSettings.FontSize.DefaultFontSize, tprefs['preview_base_font_size'])
-        s.setFontSize(QWebEngineSettings.FontSize.DefaultFixedFontSize, tprefs['preview_mono_font_size'])
-        s.setFontSize(QWebEngineSettings.FontSize.MinimumLogicalFontSize, tprefs['preview_minimum_font_size'])
-        s.setFontSize(QWebEngineSettings.FontSize.MinimumFontSize, tprefs['preview_minimum_font_size'])
+        s.setFontSize(QWebEngineSettings.FontSize.DefaultFontSize, int(tprefs['preview_base_font_size']))
+        s.setFontSize(QWebEngineSettings.FontSize.DefaultFixedFontSize, int(tprefs['preview_mono_font_size']))
+        s.setFontSize(QWebEngineSettings.FontSize.MinimumLogicalFontSize, int(tprefs['preview_minimum_font_size']))
+        s.setFontSize(QWebEngineSettings.FontSize.MinimumFontSize, int(tprefs['preview_minimum_font_size']))
         sf, ssf, mf = tprefs['engine_preview_serif_family'], tprefs['engine_preview_sans_family'], tprefs['engine_preview_mono_family']
         if sf:
             s.setFontFamily(QWebEngineSettings.FontFamily.SerifFont, sf)

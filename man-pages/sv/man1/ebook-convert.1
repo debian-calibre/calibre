@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "december 04, 2021" "5.33.2" "calibre"
+.TH "EBOOK-CONVERT" "1" "december 17, 2021" "5.34.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -107,7 +107,7 @@ Lista inbyggda receptnamn. Du kan skapa en e\-bok från ett inbyggt recept så h
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Ange utmatningsprofilen. Utmatningsprofilen berättar för konverteringssystemet hur det skapade  dokumentet ska optimeras för den angivna enheten (t.ex. genom att ändra storlek på bilder för enhetens skärmstorlek). I vissa fall kan en utmatningsprofil användas för att optimera utmatningen för en viss enhet, men detta är sällan nödvändigt. Alternativen är:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+Ange utmatningsprofilen. Utmatningsprofilen berättar för konverteringssystemet hur det skapade dokumentet ska optimeras för den angivna enheten (t.ex. genom att ändra storlek på bilder för enhetens skärmstorlek). I vissa fall kan en utmatningsprofil användas för att optimera utmatningen för en viss enhet, men detta är sällan nödvändigt. Alternativen är:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -196,7 +196,7 @@ Translitterera Unicode\-tecken till en ASCII\-representation. Används med förs
 .INDENT 0.0
 .TP
 .B \-\-base\-font\-size
-Grundteckenstorleken i punkter. Alla teckenstorlekar i den producerade boken kommer att skalas om baserat på den här storleken. Genom att välja en större storlek kan du få teckensnittet i utmatningen större och vice versa. Som standard, när värdet är noll kommer grundteckenstorleken för teckensnitt att väljas baserat på utmatningsprofilen du väljer.
+Grundteckensnittsstorleken i punkter. Alla teckensnittsstorlekar i den producerade boken kommer att skalas om baserat på den här storleken. Genom att välja en större storlek kan du få teckensnittet i utmatningen större och vice versa. Som standard, när värdet är noll kommer grundteckensnittsstorleken för teckensnitt att väljas baserat på utmatningsprofilen du väljer.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -206,7 +206,7 @@ Grundteckenstorleken i punkter. Alla teckenstorlekar i den producerade boken kom
 .INDENT 0.0
 .TP
 .B \-\-disable\-font\-rescaling
-Inaktivera all omskalning av teckenstorlekar.
+Inaktivera all omskalning av teckensnittsstorlekar.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -236,7 +236,7 @@ En kommaseparerad lista över CSS\-egenskaper som kommer att tas bort från alla
 .INDENT 0.0
 .TP
 .B \-\-font\-size\-mapping
-Kartlägger CSS\-teckensnittsnamn till teckenstorlekar i punkter. En exempelinställning är 12,12,14,16,18,20,22,24. Detta konverterar storlekarna xx\-liten till xx\-stor, den sista storleken används för enorma teckensnitt. Omskalningsalgoritmen använder dessa storlekar för att på ett smart sätt skala om teckensnitten. Som standard används en kartläggning baserad på din valda utmatningsprofil.
+Kartlägger CSS\-teckensnittsnamn till teckensnittsstorlekar i punkter. En exempelinställning är 12,12,14,16,18,20,22,24. Detta konverterar storlekarna xx\-liten till xx\-stor, den sista storleken används för enorma teckensnitt. Omskalningsalgoritmen använder dessa storlekar för att på ett smart sätt skala om teckensnitten. Som standard används en kartläggning baserad på din valda utmatningsprofil.
 .UNINDENT
 .INDENT 0.0
 .TP
