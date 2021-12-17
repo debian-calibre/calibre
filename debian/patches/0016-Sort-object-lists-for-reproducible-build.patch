@@ -9,10 +9,10 @@ Forwarded: not-needed
  2 files changed, 14 insertions(+), 14 deletions(-)
 
 diff --git a/setup/build.py b/setup/build.py
-index 6b5a530..4288605 100644
+index 50dab9e..2936853 100644
 --- a/setup/build.py
 +++ b/setup/build.py
-@@ -403,8 +403,8 @@ class Build(Command):
+@@ -417,8 +417,8 @@ class Build(Command):
          compiler = self.env.cxx if ext.needs_cxx else self.env.cc
          linker = self.env.linker if iswindows else compiler
          dest = self.dest(ext)
@@ -23,7 +23,7 @@ index 6b5a530..4288605 100644
          cmd = [linker]
          if iswindows:
              pre_ld_flags = []
-@@ -414,7 +414,7 @@ class Build(Command):
+@@ -428,7 +428,7 @@ class Build(Command):
              cmd += pre_ld_flags + self.env.ldflags + ext.ldflags + elib + xlib + \
                  ['/EXPORT:' + init_symbol_name(ext.name)] + objects + ext.extra_objs + ['/OUT:'+dest]
          else:
@@ -32,7 +32,7 @@ index 6b5a530..4288605 100644
          lddb.append({'arguments': cmd, 'directory': os.getcwd(), 'output': os.path.relpath(dest, os.getcwd())})
  
          if self.newer(dest, objects+ext.extra_objs):
-@@ -487,7 +487,7 @@ class Build(Command):
+@@ -501,7 +501,7 @@ class Build(Command):
              QMAKE_CXXFLAGS += {CXXFLAGS} {CPPFLAGS}
              QMAKE_LFLAGS   += {LFLAGS}
              ''').format(
@@ -41,7 +41,7 @@ index 6b5a530..4288605 100644
                      target), freetype=' '.join(ft_inc_dirs),
                  CFLAGS   = os.environ.get('CFLAGS',   ''),
                  CXXFLAGS = os.environ.get('CXXFLAGS', ''),
-@@ -537,7 +537,7 @@ sip-include-dirs = ["/usr/lib/python3/dist-packages/PyQt5/bindings"]
+@@ -551,7 +551,7 @@ sip-include-dirs = ["/usr/lib/python3/dist-packages/PyQt5/bindings"]
  
  [tool.sip.bindings.pictureflow]
  headers = {ext.headers}
