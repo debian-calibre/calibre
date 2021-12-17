@@ -320,7 +320,7 @@ class Ui_Form(object):
         self.thumb_width.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.thumb_width.setDecimals(2)
         self.thumb_width.setMinimum(1.0)
-        self.thumb_width.setMaximum(5.0)
+        self.thumb_width.setMaximum(3.0)
         self.thumb_width.setSingleStep(0.1)
         self.thumb_width.setObjectName("thumb_width")
         self.horizontalLayout.addWidget(self.thumb_width)

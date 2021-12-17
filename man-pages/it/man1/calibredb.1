@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "dicembre 04, 2021" "5.33.2" "calibre"
+.TH "CALIBREDB" "1" "dicembre 17, 2021" "5.34.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -49,7 +49,7 @@ identificato da un percorso oppure da un Server dei contenuti di calibre in esec
 macchina locale o su internet. Puoi avviare un
 Server dei contenuti di calibre con il comando \fBcalibre\-server\fP
 oppure cliccando nell\(aqinterfaccia principale di calibre Connetti/condividi  → 
-Avvia Server di contenuti\&. Dato che \fBcalibredb\fP può modificare le tue
+Avvia Server dei Contenuti\&. Dato che \fBcalibredb\fP può modificare le tue
 biblioteche di calibre, devi prima impostare un\(aqautenticazione per il server. Ci
 sono due modi per farlo:
 .INDENT 0.0
@@ -144,7 +144,7 @@ mostra questo messaggio di aiuto ed esci
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Percorso della biblioteca di calibre. Per impostazione predefinita viene usato il percorso salvato nelle impostazioni. Puoi anche connetterti a un Server dei Contenuti di calibre ed eseguire azioni su biblioteche remote. Per fare ciò usa un URL di formato: \fI\%http://nomehost:porta/#id_biblioteca\fP per esempio \fI\%http://localhost:8080/#lamiabiblioteca\fP\&. id_biblioteca è l\fB\(aq\fPid della biblioteca a cui ti vuoi connettere nel Server dei Contenuti. Puoi usare il valore speciale di id_biblioteca di \- per ottenere un elenco di id biblioteca disponibili nel server. Per dettagli su come impostare l\fB\(aq\fPaccesso attraverso un Server dei Contenuti, vedi \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
+Percorso della biblioteca di calibre. Per impostazione predefinita viene usato il percorso salvato nelle impostazioni. Puoi anche connetterti a un Server dei Contenuti di calibre ed eseguire azioni su biblioteche remote. Per fare ciò usa un URL di formato: \fI\%http://nomehost:porta/#id_biblioteca\fP per esempio \fI\%http://localhost:8080/#lamiabiblioteca\fP\&. id_biblioteca è l\fB\(aq\fPid della biblioteca a cui ti vuoi connettere nel Server dei Contenuti. Puoi usare il valore speciale di id_biblioteca di \- per ottenere un elenco di id biblioteca disponibili nel server. Per dettagli su come impostare l\fB\(aq\fPaccesso attraverso un Server dei Contenuti, vedi \fI\%https://manual.calibre\-ebook.com/it/generated/it/calibredb.html\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -424,7 +424,7 @@ Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessa
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-Il campo da impostare. Il formato è nome_campo:valore, per esempio: \fI\%\-\-field\fP tags:tag1,tag2. Usa \fI\%\-\-list\-fields\fP per ottenere una lista di tutti i nomi dei campi. Puoi specificare questa opzione più volte per impostare più di un campo. Nota bene: per le lingue devi usare i codici lingua ISO639 (p. es. en per Inglese, it per Italiano e così via). Per gli identificatori, la sintassi è \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Per campi booleani (sì/no) usa true e false oppure yes e no.
+Il campo da impostare. Il formato è nome_campo:valore, per esempio: \fI\%\-\-field\fP tags:tag1,tag2. Usa \fI\%\-\-list\-fields\fP per ottenere una lista di tutti i nomi dei campi. Puoi specificare questa opzione più volte per impostare più di un campo. Nota bene: per le lingue devi usare i codici lingua ISO639 (p. es. en per inglese, it per italiano e così via). Per gli identificatori, la sintassi è \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Per campi booleani (sì/no) usa true e false oppure yes e no.
 .UNINDENT
 .INDENT 0.0
 .TP

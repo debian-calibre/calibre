@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-01 12:56+0000\n"
-"PO-Revision-Date: 2021-11-25 19:26+0000\n"
+"POT-Creation-Date: 2021-12-16 10:49+0000\n"
+"PO-Revision-Date: 2021-12-10 18:34+0000\n"
 "Last-Translator: peter <petertje@tuta.io>\n"
 "Language-Team: Dutch (http://www.transifex.com/calibre/calibre/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -1237,7 +1237,7 @@ msgid ""
 "``field_exists(field_name)`` -- checks if a field (column) with the lookup "
 "name ``field_name`` exists, returning ``'1'`` if so and the empty string if "
 "not."
-msgstr ""
+msgstr "``field_exists(field_name)`` -- controleert of een veld (kolom) met de lookup naam ``field_name`` bestaat, geeft ``'1'`` indien ja en de lege string indien niet. "
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:408
 msgid ""
@@ -1247,7 +1247,7 @@ msgid ""
 "conversion of complex single-function- or template-program-mode templates to"
 " `GPM` Templates. For example, the following program produces the same "
 "output as the above template::"
-msgstr ""
+msgstr "``finish_formatting(val, fmt, prefix, suffix)`` -- pas het formaat, voor- en achtervoegsel toe op een waarde op dezelfde manier als in een sjabloon zoals ``{series_index:05.2f| - |- }``. Deze functie is voorzien om conversie te vergemakkelijken van ingewikkelde single-functie- of sjabloon-programma-modus sjablonen naar `GPM` Sjablonen. Bv. het volgende programma geeft dezelfde output als bovenstaande sjabloon::"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:412
 msgid ""
@@ -1262,7 +1262,7 @@ msgid ""
 " < cmp`` in sequence, returning the associated result for the first "
 "comparison that succeeds. Returns else_result if no comparison succeeds. "
 "Example::"
-msgstr ""
+msgstr "``first_matching_cmp(val, [ cmp, result, ]* else_result)`` -- vergelijkt ``val < cmp`` in volgorde, het  geassocieerde resultaat teruggevend voor de eerste vergelijking die klopt. Geeft else_result terug als geen vergelijking klopt. Bv::"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:426
 msgid ""
@@ -1288,7 +1288,7 @@ msgid ""
 "``format_date(val, format_string)`` -- format the value, which must be a "
 "date string, using the format_string, returning a string. The formatting "
 "codes are:"
-msgstr ""
+msgstr "``format_date(val, format_string)`` -- maak de waarde op, die een datumstring moet zijn, met behulp van format_string, geef een string terug. De opmaakcodes zijn:"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:432
 msgid "``d    :`` the day as number without a leading zero (1 to 31)"
@@ -1362,13 +1362,13 @@ msgstr "``ss   :`` de seconden met voorloopnul (00 tot 59)"
 msgid ""
 "``ap   :`` use a 12-hour clock instead of a 24-hour clock, with 'ap' "
 "replaced by the localized string for am or pm."
-msgstr ""
+msgstr "``ap   :`` gebruik een 12-uur klok i.p.v. een 24-uur klok, met 'ap' vervangen door de gelokaliseerde string voor am of pm."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:449
 msgid ""
 "``AP   :`` use a 12-hour clock instead of a 24-hour clock, with 'AP' "
 "replaced by the localized string for AM or PM."
-msgstr ""
+msgstr "``AP   :`` gebruik een 12-uur klok i.p.v. een 24-uur klok, met 'AP' vervangen door de gelokaliseerde string voor AM of PM."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:450
 msgid ""
@@ -1379,7 +1379,7 @@ msgstr "``iso  :`` de datum met tijd en tijdzone. Moet als enige formaat aanwezi
 msgid ""
 "``to_number   :`` convert the date & time into a floating point number (a "
 "`timestamp`)"
-msgstr ""
+msgstr "``to_number   :`` converteer de datum & tijd in een floating point getal (een `tijdstempel`)"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:452
 msgid ""
@@ -1387,7 +1387,7 @@ msgid ""
 "``iso`` formatted date. If you want a different date format then add the "
 "desired formatting string after ``from_number`` and a colon (``:``). "
 "Example: ``from_number:MMM dd yyyy``"
-msgstr ""
+msgstr "``from_number :`` converteer een floating point getal (een `tijdstempel`) in een ``iso`` opgemaakte datum. Als u een ander datumformaat wilt, voeg de gewenste opmaakstring toe na ``from_number`` en een dubbel punt (``:``). Bv: ``from_number:MMM dd yyyy``"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:454
 msgid ""
@@ -1395,7 +1395,7 @@ msgid ""
 "localized month names, which can happen if you changed the date format "
 "tweaks to contain ``MMMM``. In this case, instead of using the ``field()`` "
 "function as in::"
-msgstr ""
+msgstr "U kan onverwachte resultaten krijgen bij opmaken van een datum met gelokaliseerde maandnamen. Dit kan gebeuren als u de datumopmaak tweaks veranderde om ``MMMM`` te bevatten. In dit geval, i.p.v. de ``field()`` functie te gebruiken zoals in::"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:458
 msgid "use the ``raw_field()`` function as in::"
@@ -1446,7 +1446,7 @@ msgid ""
 "then return the value of the mark, either ``'true'`` (lower case) or a "
 "comma-separated list of named marks. Returns ``''`` (the empty string) if "
 "the book is not marked. This function works only in the GUI."
-msgstr ""
+msgstr "``is_marked()`` -- controleer of het boek `gemarkeerd` is in calibre. Indien ja, geef de waarde van de markering terug, ofwel ``'true'`` (kleine letters) of een kommagescheiden lijst van benoemde markeringen. Geeft ``''`` (de lege string) terug als het boek niet gemarkeerd is. Deze functie werkt enkel in de GUI."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:468
 msgid ""
@@ -1454,7 +1454,7 @@ msgid ""
 "<https://www.loc.gov/standards/iso639-2/php/code_list.php>`_ for the "
 "language names passed in `lang_strings`. The strings must be in the language"
 " of the current locale. ``Lang_strings`` is a comma-separated list."
-msgstr ""
+msgstr "``language_codes(lang_strings)`` -- geef de `taalcodes <https://www.loc.gov/standards/iso639-2/php/code_list.php>`_ terug voor de taalnamen doorgegeven in `lang_strings`. De strings moeten in de taal van de huidige locale zijn. ``Lang_strings`` is een kommagescheiden lijst."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:469
 msgid ""
@@ -1473,7 +1473,7 @@ msgid ""
 "``list_count(value, separator)`` -- interprets ``value`` as a list of items "
 "separated by ``separator``, returning the count of items in the list. "
 "Aliases: ``count()``, ``list_count()``"
-msgstr ""
+msgstr "``list_count(value, separator)`` -- interpreteert ``value`` als een lijst met items gescheiden door ``separator``, geeft het aantal items in de lijst terug. Aliassen: ``count()``, ``list_count()``"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:471
 msgid ""
@@ -1481,7 +1481,7 @@ msgid ""
 "a list of items separated by ``separator``, returning the number of items in"
 " the list that match the regular expression ``pattern``. Aliases: "
 "``list_count_matching()``, ``count_matching()``"
-msgstr ""
+msgstr "``list_count_matching(list, pattern, separator)`` -- interpreteert ``lijst`` als een lijst met items gescheiden door ``separator``, geeft het aantal items in de lijst terug die overeenkomen met de reguliere expressie ``pattern``. Aliassen: ``list_count_matching()``, ``count_matching()``"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:472
 msgid ""
@@ -1489,7 +1489,7 @@ msgid ""
 "removing from ``list1`` any item found in ``list2`` using a case-insensitive"
 " comparison. The items in ``list1`` and ``list2`` are separated by "
 "separator, as are the items in the returned list."
-msgstr ""
+msgstr "``list_difference(list1, list2, separator)`` -- geeft een lijst terug gemaakt door uit ``list1`` alle item te verwijderen gevonden in ``list2`` waarbij niet hoofdlettergevoelig wordt vergeleken. De items in ``list1`` en ``list2`` zijn gescheiden door separator, net zoals de items in de teruggegeven lijst."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:473
 msgid ""
@@ -1498,7 +1498,7 @@ msgid ""
 "return ``no_val``. The items are determined by splitting each list using the"
 " appropriate separator character (``sep1`` or ``sep2``). The order of items "
 "in the lists is not relevant. The comparison is case-insensitive."
-msgstr ""
+msgstr "``list_equals(list1, sep1, list2, sep2, yes_val, no_val)`` -- geef ``yes_val`` terug als ``list1`` en `list2` dezelfde items bevatten, anders ``no_val``. De items worden bepaald door iedere lijst te splitsen met het juiste scheidingsteken (``sep1`` or ``sep2``).  De volgorde van items in de lijst is niet relevant. De vergelijking is hoofdletterongevoelig."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:474
 msgid ""
@@ -1506,7 +1506,7 @@ msgid ""
 "removing from ``list1`` any item not found in ``list2``, using a case-"
 "insensitive comparison. The items in ``list1`` and ``list2`` are separated "
 "by separator, as are the items in the returned list."
-msgstr ""
+msgstr "``list_intersection(list1, list2, separator)`` -- geeft een lijst terug gemaakt door uit ``list1`` alle item te verwijderen niet gevonden in ``list2`` waarbij niet hoofdlettergevoelig wordt vergeleken. De items in ``list1`` en ``list2`` zijn gescheiden door separator, net zoals de items in de teruggegeven lijst."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:475
 msgid ""
@@ -1516,7 +1516,7 @@ msgid ""
 " it does then add it to the list to be returned. If ``opt_replace`` is not "
 "the empty string then apply the replacement before adding the item to the "
 "returned list."
-msgstr ""
+msgstr "``list_re(src_list, separator, include_re, opt_replace)`` -- maak een lijst door eerst ``src_list`` te scheiden in items met het ``separator`` karakter. Voor elk item in de lijst, controleer of het overeenkot met ``include_re``. Indien ja, voeg het toe aan de terug te geven lijst. Als ``opt_replace`` niet de lege string is, pas de vervanging dan toe vóór het item aan de teruggegeven lijst toe te voegen."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:476
 msgid ""
@@ -1524,7 +1524,7 @@ msgid ""
 "template_for_group]*)`` -- Like list_re except replacements are not "
 "optional. It uses ``re_group(item, search_re, template ...)`` when doing the"
 " replacements."
-msgstr ""
+msgstr "``list_re_group(src_list, separator, include_re, search_re [, template_for_group]*)`` -- zoals list-re behalve vervanging is niet optioneel. Het gebruikt ``re_group(item, search_re, template ...)`` bij het vervangen."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:477
 msgid ""
@@ -1532,7 +1532,7 @@ msgid ""
 "removing duplicate items in ``list``. If items differ only in case then the "
 "last is returned. The items in ``list`` are separated by ``separator``, as "
 "are the items in the returned list."
-msgstr ""
+msgstr "``list_remove_duplicates(list, separator)`` -- geef een lijst terug gemaakt door uit ``list`` alle duplicaten te verwijderen. Als items enkel verschillen in hoofdlettergebruik wordt het laatste teruggegeven. De items in ``lijst`` zijn gescheiden door ``separator``, net zoals de items in de teruggegeven lijst."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:478
 msgid ""
@@ -1549,7 +1549,7 @@ msgid ""
 "named ``id_prefix_N`` where N is the position of the value in the list. The "
 "first item has position 0 (zero). The function returns the last element in "
 "the list."
-msgstr ""
+msgstr "``list_split(list_val, sep, id_prefix)`` -- splitst ``list_val`` in aparte waardes met ``sep``, wijst dan de waardes toe an lokale variabelen genaamd ``id_prefix_N`` waar N de positie is van de waarde in de lijst. Het eerste item heeft positie 0 (zero). De functie geeft het laatste element in de lijst."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:481
 msgid "Example::"
@@ -1714,7 +1714,7 @@ msgstr "``template(x)`` -- evalueert ``x`` als een sjabloon. De evaluatie wordt 
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:520
 msgid "More complex programs in template expressions - Template Program Mode"
-msgstr ""
+msgstr "Meer complexe programma's in sjabloonexpressies - Sjabloon Programma Modus"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:522
 msgid ""
@@ -1745,13 +1745,13 @@ msgstr "Het voorbeeld toont meerdere dingen:"
 msgid ""
 "`TPM` is used if the expression begins with ``:'`` and ends with ``'``. "
 "Anything else is assumed to be in :ref:`Single Function Mode <single_mode>`."
-msgstr ""
+msgstr "`SPM` wordt gebruikt als de expressie begint met ``:'`` en eindigt met ``'``. Al de rest wordt verondersteld aanwezig te zijn in :ref:`Single Function Mode <single_mode>`."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:533
 msgid ""
 "the variable ``$`` stands for the field named in the template: the "
 "expression is operating upon, ``#series`` in this case."
-msgstr ""
+msgstr "de variabele ``$`` staat voor het veld benoemd in de sjabloon: de expressie werkt op, ``#series`` in dit geval."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:534
 msgid ""

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "dicembre 04, 2021" "5.33.2" "calibre"
+.TH "EBOOK-CONVERT" "1" "dicembre 17, 2021" "5.34.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -89,7 +89,7 @@ mostra questo messaggio di aiuto ed esci
 .INDENT 0.0
 .TP
 .B \-\-input\-profile
-Specificare il profilo di input. Il profilo di input fornisce informazioni al sistema di conversione su come interpretare i vari dati del documento di input. Per esempio lunghezze dipendenti dalla risoluzione (es. lunghezze in pixel). Le scelte sono: cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+Specifica il profilo di input. Il profilo di input fornisce informazioni al sistema di conversione su come interpretare i vari dati del documento di input. Per esempio le lunghezze dipendenti dalla risoluzione (es. lunghezze in pixel). Le scelte sono: cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -160,7 +160,7 @@ In genere, se il file di input non ha una copertina e non ne viene specificata u
 .INDENT 0.0
 .TP
 .B \-\-no\-svg\-cover
-Non utilizzare SVG per la copertina del libro. Usare questa opzione se l\fB\(aq\fPEPUB verrà usato su un dispositivo che non supporta SVG, come l\fB\(aq\fPiPhone o il JetBook Lite. Senza questa opzione, alcuni dispositivi visualizzeranno come copertina una pagina bianca.
+Non utilizzare SVG per la copertina del libro. Usa questa opzione se l\fB\(aq\fPEPUB verrà usato su un dispositivo che non supporta SVG, come l\fB\(aq\fPiPhone o il JetBook Lite. Senza questa opzione, questi dispositivi visualizzeranno come copertina una pagina bianca.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -213,7 +213,7 @@ Incorpora la famiglia caratteri specificata nel libro. Permette di specificare i
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-Per impostazione predefinita, Calibre utilizza la forma abbreviata per varie proprietà CSS come margine, imbottitura, bordo, ecc. Questa opzione gli farà usare invece il modulo espanso completo. Si noti che i CSS sono sempre espansi quando si generano file EPUB con il profilo di output impostato su uno dei profili Nook, in quanto il Nook non può gestire CSS abbreviati.
+Per impostazione predefinita, calibre utilizza la forma abbreviata per varie proprietà CSS come margin, padding, border, ecc. Questa opzione farà usare invece la loro forma completa. Tieni presente che il CSS è sempre espanso quando si generano file EPUB con il profilo di output impostato su uno dei profili Nook, in quanto il Nook non può gestire un CSS abbreviato.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -228,7 +228,7 @@ Un elenco separato da virgole delle proprietà CSS che saranno rimosse da tutte 
 .INDENT 0.0
 .TP
 .B \-\-font\-size\-mapping
-Rappresentare le dimensioni di caratteri dai nomi in CSS alle dimensioni in punti. Un esempio di valori è 10,12,14,16,18,20,22,24. Questi sono i valori usati per riprodurre le dimensioni da xx\-small a xx\-large, con l\fB\(aq\fPultima dimensione per i caratteri enormi. L\fB\(aq\fPalgoritmo di ridimensionamento usa questi riferimenti per ridimensionare i caratteri. Il valore predefinito è di utilizzare un modello basato sul tipo di output scelto.
+Correla le dimensioni relative dei caratteri CSS a valori di dimensione in pt. Un esempio di valori è 10,12,14,16,18,20,22,24. Questi sono i valori per le dimensioni che vanno da xx\-small a xx\-large, con l\fB\(aq\fPultima dimensione usata per caratteri enormi. L\fB\(aq\fPalgoritmo di ridimensionamento usa questi riferimenti per ridimensionare i caratteri. L\fB\(aq\fPimpostazione predefinita è l\fB\(aq\fPutilizzo di valori basati sul profilo di output scelto.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -248,7 +248,7 @@ Mantieni le legature presenti nel documento di input. Una legatura è una format
 .INDENT 0.0
 .TP
 .B \-\-line\-height
-Altezza della riga, espressa in punti. Gestisce la spaziatura tra righe consecutive di testo. Si applica solo ad elementi che con definiscono la propria altezza. I molti casi, l\fB\(aq\fPopzione che definisce l\fB\(aq\fPaltezza minima della riga è più utile. In modo predefinito non viene applicata nessuna manipolazione di altezza della riga.
+Altezza della riga, espressa in punti. Gestisce la spaziatura tra righe consecutive di testo. Si applica solo ad elementi che non definiscono la propria altezza di riga. Nella maggior parte dei casi, l\fB\(aq\fPopzione che definisce l\fB\(aq\fPaltezza minima della riga è più utile. Per impostazione predefinita non viene applicata alcuna manipolazione di altezza di riga.
 .UNINDENT
 .INDENT 0.0
 .TP

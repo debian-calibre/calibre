@@ -2008,7 +2008,7 @@ Object.defineProperties(ρσ_dict.prototype, (function(){
     });
     return ρσ_anonfunc;
 })();
-ρσ_dict.prototype.set_default = (function() {
+ρσ_dict.prototype.set_default = ρσ_dict.prototype.setdefault = (function() {
     var ρσ_anonfunc = function (key, defval) {
         var j;
         j = this.jsmap;
@@ -2072,13 +2072,20 @@ Object.defineProperties(ρσ_dict.prototype, (function(){
 })();
 ρσ_dict.prototype.popitem = (function() {
     var ρσ_anonfunc = function () {
-        var r;
-        r = this.jsmap.entries().next();
-        if (r.done) {
-            throw new KeyError("dict is empty");
+        var last, e, r;
+        last = null;
+        e = this.jsmap.entries();
+        while (true) {
+            r = e.next();
+            if (r.done) {
+                if (last === null) {
+                    throw new KeyError("dict is empty");
+                }
+                this.jsmap.delete(last.value[0]);
+                return last.value;
+            }
+            last = r;
         }
-        this.jsmap.delete(r.value[0]);
-        return r.value;
     };
     if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
         __module__ : {value: "__main__"}
@@ -2703,6 +2710,7 @@ function ρσ_setitem(obj, key, val) {
         }
         obj[(typeof key === "number" && key < 0) ? obj.length + key : key] = val;
     }
+    return val;
 };
 if (!ρσ_setitem.__argnames__) Object.defineProperties(ρσ_setitem, {
     __argnames__ : {value: ["obj", "key", "val"]},
@@ -17854,7 +17862,7 @@ return this.__repr__();
         function is_footnote_link(a, dest_name, dest_frag, src_name, link_to_map) {
             var roles, ρσ_unpack, x, num, style, children, text_children, eid, files_linking_to_self, files_linking_to_anchor, cb, ltext, ctext;
             roles = elem_roles(a);
-            if (roles["doc-noteref"]) {
+            if (roles["doc-noteref"] || roles["doc-biblioref"] || roles["doc-glossref"]) {
                 return true;
             }
             if (roles["doc-link"]) {
@@ -18589,7 +18597,6 @@ return this.__repr__();
                     r.insertNode(wrapper);
                 } 
             }
-            r.commonAncestorContainer.normalize();
         };
         if (!wrap_range.__argnames__) Object.defineProperties(wrap_range, {
             __argnames__ : {value: ["r", "wrapper"]},
@@ -18662,6 +18669,7 @@ return this.__repr__();
             all_wrappers = [];
             wrap_node = create_wrapper_function(wrapper_elem, r, intersecting_wrappers, process_wrapper, all_wrappers);
             text_nodes_in_range(r).map(wrap_node);
+            r.commonAncestorContainer.normalize();
             crw = wrapper_elem.dataset.calibreRangeWrapper;
             delete intersecting_wrappers[crw];
             if (class_to_add_to_last && all_wrappers.length) {
@@ -26359,7 +26367,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.33.2";
+        CALIBRE_VERSION = "5.34.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -41402,22 +41410,7 @@ return this.__repr__();
         });
         OpenBook.prototype.show = function show(container) {
             var self = this;
-            container.style.backgroundColor = get_color("window-background");
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [svgicon("close")].concat([ρσ_desugar_kwargs({style: "cursor:pointer", onclick: (function() {
-                var ρσ_anonfunc = function (event) {
-                    [event.preventDefault(), event.stopPropagation()];
-                    if (self.closeable) {
-                        self.overlay.hide_current_panel(event);
-                    } else {
-                        ui_operations.quit();
-                    }
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["event"]},
-                    __module__ : {value: "read_book.overlay"}
-                });
-                return ρσ_anonfunc;
-            })(), class_: "simple-link"})])), ρσ_interpolate_kwargs.call(E, E.h2, [_("Open a book")].concat([ρσ_desugar_kwargs({style: "margin-left: 1rem"})]))].concat([ρσ_desugar_kwargs({style: "padding: 1ex 1em; border-bottom: solid 1px currentColor; display:flex; justify-content: flex-start"})])));
+            simple_overlay_title(_("Open a book"), self.overlay, container);
             create_open_book(container, ρσ_exists.d(self.overlay.view).book);
         };
         if (!OpenBook.prototype.show.__argnames__) Object.defineProperties(OpenBook.prototype.show, {
