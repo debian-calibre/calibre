@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:fdm=marker:ai
 
 
 __license__   = 'GPL v3'
@@ -44,7 +43,8 @@ class Tag:
 
     @property
     def string_representation(self):
-        return '%s:%s:%s:%s:%s'%(self.name, self.count, self.id, self.state, self.category)
+        return '%s:%s:%s:%s:%s:%s'%(self.name, self.count, self.id, self.state,
+                                    self.category, self.original_categories)
 
     def __str__(self):
         return self.string_representation
@@ -207,10 +207,11 @@ def get_categories(dbcache, sort='name', book_ids=None, first_letter_sort=False)
     for c in gst:
         if c not in muc:
             continue
-        user_categories[c] = []
+        uc = []
         for sc in gst[c]:
             for t in categories.get(sc, ()):
-                user_categories[c].append([t.name, sc, 0])
+                uc.append([t.name, sc, 0])
+        user_categories[c] = uc
 
     if user_categories:
         # We want to use same node in the user category as in the source

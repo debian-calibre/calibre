@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "december 17, 2021" "5.34.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "januari 21, 2022" "5.35.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -52,7 +52,7 @@ Efter att ha angivit in\- och utmatningsfilerna kan du anpassa konverteringen ge
 För fullständig dokumentation om konverteringssystemet, gå till
 conversion
 .sp
-När du skickar argument till \fBebook\-convert\fP som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till \fBebook\-convert\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .sp
 Alternativen och standardvärden för ändringsalternativ beror på både
 inmatning\- och utmatningsformat, därför bör du alltid kontrollera med:
@@ -128,7 +128,7 @@ Alternativ för att anpassa bearbetningen av utmatning epub
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
-Inaktivera delning vid sidbrytningar. Normalt delas inmatningsfilen automatiskt vid varje sidbrytning i två filer. Detta ger en utmatad e\-bok som kan tolkas snabbare och med mindre resurser. Att dela är dock långsamt och om din källfil innehåller ett mycket stort antal sidbrytningar bör du inaktivera delning vid sidbrytning.
+Inaktivera delning vid sidbrytningar. Normalt delas inmatningsfilen automatiskt vid varje sidbrytning i två filer. Detta ger en utmatad e\-bok som kan analyseras snabbare och med mindre resurser. Att dela är dock långsamt och om din källfil innehåller ett mycket stort antal sidbrytningar bör du inaktivera delning vid sidbrytning.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -343,7 +343,7 @@ Ta bort tomma stycken från dokumentet när de förekommer mellan vartannat styc
 .INDENT 0.0
 .TP
 .B \-\-disable\-fix\-indents
-Vändningsindrag som skapats från flera icke\-brytande mellanslagsenheter i CSS\-indrag.
+Vändningsindrag som skapats från flera icke\-brytande blankstegsenheter i CSS\-indrag.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -429,12 +429,12 @@ Anpassa automatisk identifiering av dokumentets struktur.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Ett XPath\-uttryck för att identifiera kapitelrubrikerna. Standard är att betrakta <h1>\- eller <h2>\-taggar som innehåller orden \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP eller \fB"\fPpart\fB"\fP som kapitelrubriker samt alla taggar som har class=\fB"\fPchapter\fB"\fP\&. Uttrycket som används måste utvärderas till en lista med element. För att inaktivera kapitelidentifiering, använd uttrycket \fB"\fP/\fB"\fP\&. Se XPath\-handledningen i användarhandboken för calibre för ytterligare hjälp med att använda den här funktionen.
+Ett XPath\-uttryck för att identifiera kapitelrubrikerna. Standard är att betrakta <h1>\- eller <h2>\-taggar som innehåller orden \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP eller \fB"\fPpart\fB"\fP som kapitelrubriker samt alla taggar som har class=\fB"\fPchapter\fB"\fP\&. Uttrycket som används måste utvärderas till en lista med element. För att inaktivera kapitelidentifiering, använd uttrycket \fB"\fP/\fB"\fP\&. Se XPath\-handledningen i användarmanualen för calibre för ytterligare hjälp med att använda den här funktionen.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Anger hur upptäckta kapitel markeras. Värdet \fB"\fPpagebreak\fB"\fP infogar en sidbrytning före kapitel. Värdet \fB"\fPrule\fB"\fP infogar en blankrad före kapitel. Värdet \fB"\fPnone\fB"\fP inaktiverar kapitelmarkering och om värdet \fB"\fPboth\fB"\fP anges kommer både sidbrytningar och blankrader att markera kapitel.
+Anger hur upptäckta kapitel markeras. Värdet \fB"\fPpagebreak\fB"\fP infogar en sidbrytning före kapitel. Värdet \fB"\fPrule\fB"\fP infogar en tom rad före kapitel. Värdet \fB"\fPnone\fB"\fP inaktiverar kapitelmarkering och om värdet \fB"\fPboth\fB"\fP anges kommer både sidbrytningar och tomma rader att markera kapitel.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -464,7 +464,7 @@ Ta bort den första bilden från den inmatade e\-boken. Praktiskt om inmatningsd
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-Ett XPath\-uttryck för att identifiera platsen i dokumentet där du ska börja läsa. Vissa e\-bokläsningsprogram (framförallt Kindle) använder denna plats som position för att öppna boken. Se XPath\-handledningen i användarhandboken för calibre för ytterligare hjälp med att använda den här funktionen.
+Ett XPath\-uttryck för att identifiera platsen i dokumentet där du ska börja läsa. Vissa e\-bokläsningsprogram (framförallt Kindle) använder denna plats som position för att öppna boken. Se XPath\-handledningen i användarmanualen för calibre för ytterligare hjälp med att använda den här funktionen.
 .UNINDENT
 .SH INNEHÅLLSFÖRTECKNING
 .sp
@@ -477,17 +477,17 @@ När du skapar en innehållsförteckning från länkar i inmatningsdokumentet, t
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-XPath\-uttryck som anger alla taggar som ska läggas till i innehållsförteckningen på nivå ett. Om detta anges har det företräde framför andra former av automatisk detektering. Se XPath\-handledningen i användarhandboken för calibre för exempel.
+XPath\-uttryck som anger alla taggar som ska läggas till i innehållsförteckningen på nivå ett. Om detta anges har det företräde framför andra former av automatisk upptäckt. Se XPath\-handledningen i användarmanualen för calibre för exempel.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-XPath\-uttryck som anger alla taggar som ska läggas till i innehållsförteckningen på nivå två. Varje post läggs till under föregående nivå en. Se XPath\-handledningen i användarhandboken för calibre för exempel.
+XPath\-uttryck som anger alla taggar som ska läggas till i innehållsförteckningen på nivå två. Varje post läggs till under föregående nivå ett\-post. Se XPath\-handledningen i användarmanualen för calibre för exempel.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-XPath\-uttryck som anger alla taggar som ska läggas till i innehållsförteckningen på nivå tre. Varje post läggs till under föregående nivå två. Se XPath\-handledningen i användarhandboken för calibre för exempel.
+XPath\-uttryck som anger alla taggar som ska läggas till i innehållsförteckningen på nivå tre. Varje post läggs till under föregående nivå två\-post. Se XPath\-handledningen i användarmanualen för calibre för exempel.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -585,7 +585,7 @@ Ange bokens index i denna serie.
 .INDENT 0.0
 .TP
 .B \-\-tags
-Ange taggar för boken. Skall vara en kommaseparerad lista.
+Ange taggarna för boken. Ska vara en kommaseparerad lista.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -608,7 +608,7 @@ Alternativ för att hjälpa till att felsöka konverteringen
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Spara utmatning från olika skeden av konverteringssekvensen till den angivna mappen. Användbart om du är osäker i vilket skede av konverteringsprocessen ett problem uppstår.
+Spara utmatning från olika stadier av konverteringsprocessen till den angivna mappen. Användbart om du är osäker på i vilket skede av konverteringsprocessen ett problem inträffar.
 .UNINDENT
 .INDENT 0.0
 .TP

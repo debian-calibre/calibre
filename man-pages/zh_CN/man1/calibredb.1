@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "十二月 17, 2021" "5.34.0" "calibre"
+.TH "CALIBREDB" "1" "一月 21, 2022" "5.35.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -269,7 +269,7 @@ calibredb add [选项] file1 file2 file3 ...
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Set the identifiers for this book, e.g. \-I asin:XXX \-I isbn:YYY
+为这本书设置标识符，例如 \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -303,7 +303,7 @@ Set the identifiers for this book, e.g. \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .SS 正在从文件夹中添加
 .sp
-Options to control the adding of books from folders. By default only files that have extensions of known e\-book file types are added.
+用于控制从文件夹添加书籍的选项。默认情况下，只能添加那些受支持的电子书格式类型的文件。
 .INDENT 0.0
 .TP
 .B \-\-add
@@ -312,12 +312,12 @@ Options to control the adding of books from folders. By default only files that 
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For example: *.pdf will ignore all PDF files
+文件名模式 (glob) ，在扫描文件夹中的文件时，与此模式匹配的文件将被忽略。可以为多个模式多次指定。例如：*.pdf将忽略所有PDF文件
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
+假设每个文件夹只有一本逻辑图书，并且其中的所有文件都是该图书的不同电子书格式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -830,8 +830,8 @@ calibredb list_categories [options]
 .UNINDENT
 .UNINDENT
 .sp
-Produce a report of the category information in the database. The
-information is the equivalent of what is shown in the Tag browser.
+在数据库中生成一个目录信息的报告。
+该信息与标签窗格中显示的信息等效。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
 .INDENT 0.0
@@ -865,18 +865,18 @@ information is the equivalent of what is shown in the Tag browser.
 .sp
 .nf
 .ft C
-calibredb backup_metadata [options]
+calibredb backup_metadata [选项]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Backup the metadata stored in the database into individual OPF files in each
-books folder. This normally happens automatically, but you can run this
-command to force re\-generation of the OPF files, with the \-\-all option.
+将存储在数据库中的元数据备份到每个图书文件夹中的
+单个OPF文件中。这通常是自动发生的，但是您可以运行
+此命令来强制重新生成OPF文件，并使用\-\-all选项。
 .sp
-Note that there is normally no need to do this, as the OPF files are backed up
-automatically, every time metadata is changed.
+请注意，通常不需要这样做，因为每次元数据更改时，
+OPF文件都会自动备份。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
 .INDENT 0.0

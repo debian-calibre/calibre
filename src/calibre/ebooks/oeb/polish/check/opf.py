@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__ = 'GPL v3'
@@ -286,7 +285,7 @@ def check_opf(container):
     if container.opf.tag != OPF('package'):
         err = BaseError(_('The OPF does not have the correct root element'), container.opf_name, container.opf.sourceline)
         err.HELP = xml(_(
-            'The opf must have the root element <package> in namespace {0}, like this: <package xmlns="{0}">')).format(OPF2_NS)
+            'The OPF must have the root element <package> in namespace {0}, like this: <package xmlns="{0}">')).format(OPF2_NS)
         errors.append(err)
 
     elif container.opf.get('version') is None and container.book_type == 'epub':

@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-01 12:56+0000\n"
-"PO-Revision-Date: 2021-11-29 19:19+0000\n"
+"POT-Creation-Date: 2022-01-20 09:15+0000\n"
+"PO-Revision-Date: 2021-12-29 00:10+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -37,7 +37,7 @@ msgid ""
 "progressively more of the functionality in this class, you can make "
 "progressively more customized/powerful recipes. For a tutorial introduction "
 "to creating recipes, see :doc:`news`."
-msgstr "Basklass som innehåller logik behövs i alla recept. Genom att åsidosätta progressivt mer av funktionaliteten i denna klass, kan du göra allt mer kundanpassade/kraftfulla recept. En handledning introduktion till att skapa recept, se :doc:`news`."
+msgstr "Grundklass som innehåller logik behövs i alla recept. Genom att åsidosätta gradvis mer av funktionaliteten i den här klassen kan du göra allt mer anpassade/kraftfulla recept. För en handledningsintroduktion till att skapa recept, se :doc:`news`."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.abort_article:1
@@ -288,7 +288,7 @@ msgid ""
 "that have a \"Print Edition\" webpage that lists all the articles in the "
 "current print edition. If this function is implemented, it will be used in "
 "preference to :meth:`BasicNewsRecipe.parse_feeds`."
-msgstr "Denna metod bör implementeras på recept för att tolka en webbplats istället för flöden skapar en lista med artiklar. Typiska användningsområden är för nyhetskällor som har en \"tryckt upplaga\"-webbplats som listar alla artiklar i den aktuella tryckupplagan. Om denna funktion implementeras kommer den att användas istället för :meth:`BasicNewsRecipe.parse_feeds`."
+msgstr "Denna metod bör implementeras på recept för att analysera en webbplats istället för flöden skapar en lista med artiklar. Typiska användningsområden är för nyhetskällor som har en \"tryckt upplaga\"-webbplats som listar alla artiklar i den aktuella tryckupplagan. Om denna funktion implementeras kommer den att användas istället för :meth:`BasicNewsRecipe.parse_feeds`."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_index:7
@@ -335,17 +335,17 @@ msgstr "Ett objekt av klass :class:`calibre.web.feeds.Article`. Om du ändrar sa
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:7
 msgid "Parsed HTML belonging to this article"
-msgstr "Tolkad HTML tillhör den här artikeln"
+msgstr "Analyserad HTML tillhör den här artikeln"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:8
 msgid "True iff the parsed HTML is the first page of the article."
-msgstr "True iff tolkade HTML är den första sidan av artikeln."
+msgstr "True iff analyserade HTML är den första sidan av artikeln."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:1
 msgid "Run any needed post processing on the parsed downloaded e-book."
-msgstr "Kör någon behövd efterbehandling på den tolkade hämtade e-boken."
+msgstr "Kör någon behövd efterbehandling på den analyserade hämtade e-boken."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:3
@@ -412,7 +412,7 @@ msgid ""
 "before it is parsed into an object tree. raw_html is a unicode string "
 "representing the raw HTML downloaded from the web. url is the URL from which"
 " the HTML was downloaded."
-msgstr "Denna metod anropas med källa av varje hämtad :term:`HTML`-fil, innan den tolkas i ett objektträd. raw_html är en unicode sträng som representerar råa HTML-hämtning från webben. url är URL från vilken HTML var hämtad."
+msgstr "Denna metod anropas med källa av varje hämtad :term:`HTML`-fil, innan den analyseras i ett objektträd. raw_html är en unicode sträng som representerar råa HTML-hämtning från webben. url är URL från vilken HTML var hämtad."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:6
@@ -468,7 +468,7 @@ msgid ""
 "<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag` and "
 "extract the text from it recursively, including any CDATA sections and alt "
 "tag attributes. Return a possibly empty Unicode string."
-msgstr "Bekväm metod som använder en `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tagga` och extrahera texten från den rekursivt, inklusive godtyckliga CDATA-sektioner och alt-tagg-attribut. Återge en eventuellt tom Unicode-sträng."
+msgstr "Bekväm metod som använder en `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tagga` och extrahera texten från den rekursivt, inklusive godtyckliga CDATA-avsnitt och alt-tagg-attribut. Återge en eventuellt tom Unicode-sträng."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:6
@@ -591,7 +591,7 @@ msgid ""
 "``cp1252``. If None, try to detect the encoding. If it is a callable, the "
 "callable is called with two arguments: The recipe object and the source to "
 "be decoded. It must return the decoded source."
-msgstr "Ange en åsidosättskodning för webbplatser som har en felaktig teckenuppsättningsspecifikation. Det vanligaste är att ange ``latin1`` och använda ``cp1252``. Om None, försök att identifiera kodningen. Om det är en anropbar, anropas den anropbara med två argument: Receptobjektet och källan som ska avkodas. Det måste återge den avkodade källan."
+msgstr "Ange en åsidosättskodning för webbplatser som har en felaktig teckenuppsättningsspecifikation. Det vanligaste är att ange ``latin1`` och använda ``cp1252``. Om None, försök att identifiera kodningen. Om det är en anropbar, anropas den anropsbara med två argument: Receptobjektet och källan som ska avkodas. Det måste återge den avkodade källan."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.extra_css:1
@@ -793,8 +793,9 @@ msgstr "Lista med taggar som ska avlägsnas. Angivna taggar tas bort från hämt
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags:9
 msgid ""
 "All keys are optional. For a full explanation of the search criteria, see "
-"`Beautiful Soup <https://www.crummy.com/software/BeautifulSoup/bs4/doc"
-"/#searching-the-tree>`__ A common example::"
+"`Beautiful Soup "
+"<https://www.crummy.com/software/BeautifulSoup/bs4/doc/#searching-the-"
+"tree>`__ A common example::"
 msgstr "Alla tangenter är valbara. För en fullständig förklaring av sökkriterierna, se `Beautiful Soup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/#searching-the-tree>`__ Ett vanligt exempel::"
 
 #: ../../__w/calibre/calibre/manual/docstring of

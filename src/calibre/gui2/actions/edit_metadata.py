@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -77,7 +76,7 @@ class EditMetadataAction(InterfaceAction):
         cm('bulk', _('Edit metadata in bulk'),
                 triggered=partial(self.edit_metadata, False, bulk=True))
         md.addSeparator()
-        cm('download', _('Download metadata and covers'),
+        cm('download', _('Download metadata and covers'), icon='download-metadata.png',
                 triggered=partial(self.download_metadata, ids=None),
                 shortcut='Ctrl+D')
         self.metadata_menu = md

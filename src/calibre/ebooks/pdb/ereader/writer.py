@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 '''
 Write content to ereader pdb file.
 '''
@@ -108,9 +105,9 @@ class Writer(FormatWriter):
                 item += struct.pack('>L', mo.start())
                 text = mo.group('text')
                 # Strip all PML tags from text
-                text = re.sub(br'\\U[0-9a-z]{4}', '', text)
-                text = re.sub(br'\\a\d{3}', '', text)
-                text = re.sub(br'\\.', '', text)
+                text = re.sub(br'\\U[0-9a-z]{4}', b'', text)
+                text = re.sub(br'\\a\d{3}', b'', text)
+                text = re.sub(br'\\.', b'', text)
                 # Add appropriate spacing to denote the various levels of headings
                 if 'val' in mo.groupdict().keys():
                     text = b'%s%s' % (b' ' * 4 * int(mo.group('val')), text)
@@ -186,7 +183,7 @@ class Writer(FormatWriter):
             if len(metadata.publisher) >= 1:
                 publisher = metadata.publisher[0].value
 
-        return as_bytes('%s\x00%s\x00%s\x00%s\x00%s\x00' % (title, author, copyright, publisher, isbn))
+        return as_bytes(f'{title}\x00{author}\x00{copyright}\x00{publisher}\x00{isbn}\x00')
 
     def _header_record(self, text_count, chapter_count, link_count, image_count):
         '''

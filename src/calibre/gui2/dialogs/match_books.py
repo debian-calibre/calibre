@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__   = 'GPL v3'
@@ -8,7 +7,7 @@ __docformat__ = 'restructuredtext en'
 
 
 from qt.core import (Qt, QDialog, QAbstractItemView, QTableWidgetItem,
-                      QByteArray, QApplication, QCursor)
+                      QByteArray, QApplication, QCursor, QTimer)
 
 from calibre.gui2 import gprefs, error_dialog
 from calibre.gui2.dialogs.match_books_ui import Ui_MatchBooks
@@ -110,9 +109,11 @@ class MatchBooks(QDialog, Ui_MatchBooks):
         self.buttonBox.rejected.connect(self.reject)
         self.ignore_next_key = False
 
-        search_text= self.device_db[self.current_device_book_id].title
+        search_text = self.device_db[self.current_device_book_id].title
         search_text = search_text.replace('(', '\\(').replace(')', '\\)')
         self.search_text.setText(search_text)
+        if search_text and len(self.library_db.new_api.all_book_ids()) < 8000:
+            QTimer.singleShot(0, self.search_button.click)
 
     def return_pressed(self):
         self.ignore_next_key = True

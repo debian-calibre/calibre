@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "12月 17, 2021" "5.34.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "1月 21, 2022" "5.35.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -191,7 +191,7 @@ SVGの表紙を使う場合、このオプションはアスペクト比（縦�
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPPelé\fB"\fP with \fB"\fPPele\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Unicode文字をASCII表記に翻訳します。Unicode文字がASCIIで置き換わることになるため注意して使ってください。例えば \fB"\fPPelé\fB"\fP は \fB"\fPPele\fB"\fPに置換されます。また文字に複数の表記がある場合（例えば中国語と日本語で共有されている文字）、表記は現在のCalibreのインタフェース言語が使われます。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -301,7 +301,7 @@ Calibreがパラグラフ間の空白行を削除する時に、パラグラフ�
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP\&.
+プレーンな引用符、ダッシュ、省略記号を、活字で正しい同等のものに変換します。詳細については、\fI\%https://daringfireball.net/projects/smartypants\fP を参照してください。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -604,7 +604,7 @@ XPath式を指定します。XPathで指定された要素の直前にページ�
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring.
+変換パイプラインのさまざまな段階からの出力を指定されたフォルダーに保存します。変換プロセスのどの段階でバグが発生しているかわからない場合に便利です。
 .UNINDENT
 .INDENT 0.0
 .TP

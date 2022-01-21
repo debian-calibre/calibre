@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -8,7 +7,7 @@ __docformat__ = 'restructuredtext en'
 
 import functools
 from qt.core import (
-    QAction, QApplication, QDialog, QEvent, QIcon, QLabel, QMenu, QPainter,
+    QAction, QApplication, QDialog, QEvent, QIcon, QLabel, QMenu, QStylePainter,
     QSizePolicy, QSplitter, QStackedWidget, QStatusBar, QStyle, QStyleOption, Qt,
     QTabBar, QTimer, QToolButton, QVBoxLayout, QWidget
 )
@@ -249,12 +248,12 @@ class VersionLabel(QLabel):  # {{{
 
     def paintEvent(self, ev):
         if self.mouse_over:
-            p = QPainter(self)
+            p = QStylePainter(self)
             tool = QStyleOption()
+            tool.initFrom(self)
             tool.rect = self.rect()
             tool.state = QStyle.StateFlag.State_Raised | QStyle.StateFlag.State_Active | QStyle.StateFlag.State_MouseOver
-            s = self.style()
-            s.drawPrimitive(QStyle.PrimitiveElement.PE_PanelButtonTool, tool, p, self)
+            p.drawPrimitive(QStyle.PrimitiveElement.PE_PanelButtonTool, tool)
             p.end()
         return QLabel.paintEvent(self, ev)
 # }}}
@@ -311,7 +310,7 @@ class StatusBar(QStatusBar):  # {{{
         if self.library_total != self.total:
             base = _('{0}, {1} total').format(base, self.library_total)
 
-        self.defmsg.setText('\xa0%s\xa0\xa0\xa0\xa0[%s]' % (msg, base))
+        self.defmsg.setText(f'\xa0{msg}\xa0\xa0\xa0\xa0[{base}]')
         self.clearMessage()
 
     def device_disconnected(self):
@@ -727,7 +726,6 @@ class LayoutMixin:  # {{{
 
     def toggle_grid_view(self, show):
         self.library_view.alternate_views.show_view('grid' if show else None)
-        self.sort_sep.setVisible(show)
         self.sort_button.setVisible(show)
 
     def toggle_search_bar(self, show):

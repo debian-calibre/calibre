@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "december 17, 2021" "5.34.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "januari 21, 2022" "5.35.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -41,12 +41,12 @@ calibre\-server [options] [path to library folder...]
 .UNINDENT
 .UNINDENT
 .sp
-Start the calibre Content server. The calibre Content server exposes your
-calibre libraries over the internet. You can specify the path to the library
-folders as arguments to \fBcalibre\-server\fP\&. If you do not specify any paths, all the
-libraries that the main calibre program knows about will be used.
+Start de calibre Content server. De calibre Content server toont uw
+calibre bibliotheken via het internet. U kan het pad naar de bibliotheek
+mappen specificeren als argumenten bij \fBcalibre\-server\fP\&. Als u geen pad specificeert,
+worden alle bibliotheken die het calibre hoofdprogramma kent, gebruikt.
 .sp
-Whenever you pass arguments to \fBcalibre\-server\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan \fBcalibre\-server\fP parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .SH [OPTIES]
 .INDENT 0.0
 .TP
@@ -56,12 +56,12 @@ Pad naar toegangslogbestand. Dit houdt informatie bij over clients die verbindin
 .INDENT 0.0
 .TP
 .B \-\-ajax\-timeout
-Time (in seconds) to wait for a response from the server when making queries.
+Tijd (in seconden) om te wachten op een antwoord van de server bij zoekopdrachten.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Kies het type authenticatie dat gebruikt is.        Set the HTTP authentication mode used by the server. Set to \fB"\fPbasic\fB"\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB"\fPauto\fB"\fP, which will use \fB"\fPbasic\fB"\fP if SSL is configured otherwise it will use \fB"\fPdigest\fB"\fP\&.
+Kies het type authenticatie dat gebruikt is.        Stel de HTTP authenticatie modus in gebruikt door de server. Op \fB"\fPbasis\fB"\fP als u de server achter een proxy zet, laat het anders op \fB"\fPauto\fB"\fP wat \fB"\fPbasis\fB"\fP gebruikt als SSL is ingesteld, anders gebruikt het \fB"\fPdigest\fB"\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -71,72 +71,72 @@ Herstart automatisch wanneer de bron code veranderd. Handig voor ontwikkeling. U
 .INDENT 0.0
 .TP
 .B \-\-ban\-after
-Number of login failures for ban.   The number of login failures after which an IP address is banned
+Aantal mislukte inlogpogingen voor bannen.  Het aantal mislukte inlogpogingen waarna een IP adres wordt geband
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-Ban IP addresses that have repeated login failures.         Temporarily bans access for IP addresses that have repeated login failures for the specified number of minutes. Useful to prevent attempts at guessing passwords. If set to zero, no banning is done.
+Ban IP adressen met meerdere mislukte inlogpogingen.        Bant tijdelijk IP adressen die meerdere mislukte inlogpogingen hebben voor het gespecificeerde aantal minuten. Nuttig om pogingen tot wachtwoord raden te voorkomen. Indien ingesteld op 0 wordt er niet geband.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-book\-list\-mode
-Choose the default book list mode.  Set the default book list mode that will be used for new users. Individual users can override the default in their own settings. The default is to use a cover grid.
+De standaard boekenlijst modus kiezen.      Stel de standaard boekenlijst modus in voor nieuwe gebruikers. Individuele gebruikers kunnen de standaard negeren in hun instellingen. De standaard is een omslagraster.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-compress\-min\-size
-Minimum size for which responses use data compression (in bytes).
+Minimale grootte waarbij antwoorden data compressie gebruiken (in bytes).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-custom\-list\-template
-Path to a JSON file containing a template for the custom book list mode. The easiest way to create such a template file is to go to Preferences\-> Sharing over the net\-> Book list template in calibre, create the template and export it.
+Pad naar een JSON bestand met een sjabloon voor de aangepaste boekenlijst modus. De gemakkelijkste manier om zo\fB\(aq\fPn sjabloonbestand te creëren is via Voorkeuren\->Delen\->Delen via (inter)net\->Boek lijst sjabloon in calibre, creëer de sjabloon en exporteer ze.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-daemonize
-Run process in background as a daemon (Linux only).
+Draai het proces in de achtergrond als een daemon (enkel Linux)
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-Restrict displayed user\-defined fields.     Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
+Getoonde gebruiker gedefinieerde velden beperken.   Komma gescheiden lijst met door de gebruiker gedefinieerde metadatavelden die door de Content server in de /opds en /mobile weergaven worden getoond. Als u deze optie selecteert, worden velden die niet in deze lijst zijn opgenomen niet weergegeven. Bv.: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-allow\-socket\-preallocation, \-\-disable\-allow\-socket\-preallocation
-Socket pre\-allocation, for example, with systemd socket activation. By default, this option is enabled.
+Socket voor\-toewijzing, bv. bij systemd socket activatie. Deze optie is standaard ingeschakeld.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-auth, \-\-disable\-auth
-Password based authentication to access the server.         Normally, the server is unrestricted, allowing anyone to access it. You can restrict access to predefined users with this option. By default, this option is disabled.
+Wachtwoord gebaseerde authenticatie voor toegang tot de server.     Normaal heeft de server geen beperkingen en geeft iedereen toegang. Met deze optie kan u toegang beperken tot vooraf gedefinieerde gebruikers. Deze optie is standaard uitgeschakeld.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Fallback to auto\-detected interface.        If for some reason the server is unable to bind to the interface specified in the listen_on option, then it will try to detect an interface that connects to the outside world and bind to that. By default, this option is enabled.
+Terug vallen op automatisch gedetecteerde interface.        Als de server voor een bepaalde reden niet in staat is om te \fB"\fPbind\fB"\fPen  met de interface gespecificeerd in listen_on, probeert hij een interface te detecteren die met de buitenwereld verbindt en bind daarmee. Deze optie is standaard ingeschakeld.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Allow un\-authenticated local connections to make changes.   Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. By default, this option is disabled.
+Laat niet\-geauthentiseerde lokale verbindingen veranderingen maken.         Normaal, als u authenticatie niet aanzet, werkt de server in alleen\-lezen modus zodat anonieme gebruikers geen veranderingen kunnen aanbrengen in uw calibre bibliotheken. Deze optie laat iedereen die verbindt vanop dezelfde computer als waarop de server draait veranderingen maken. Nuttig als u de server wilt draaien zonder authenticatie maar toch calibredb wilt gebruiken om uw bibliotheken te wijzigen. Merk op dat deze optie aanzetten betekent dat elk programma op de computer uw calibre bibliotheken kan wijzigen. Deze optie is standaard uitgeschakeld.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-Log HTTP 404 (Not Found) requests.  Normally, the server logs all HTTP requests for resources that are not found. This can generate a lot of log spam, if your server is targeted by bots. Use this option to turn it off. By default, this option is enabled.
+HTTP 404 (Niet Gevonden) verzoeken loggen.  Normaal logt de server alle HTTP verzoeken voor bronnen die hij niet vond. Dit kan een hoop log spam genereren als uw server het doel wordt van bots. Gebruik deze optie om het af te zetten. Deze optie is standaard ingeschakeld.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
-Adverteer OPDS feeds via BonJour.   Advertise the OPDS feeds via the BonJour service, so that OPDS based reading apps can detect and connect to the server automatically. By default, this option is enabled.
+Adverteer OPDS feeds via BonJour.   Adverteer de OPDS feeds via de BonJour dienst, zodat OPDS gebaseerde reading apps de server kunnen detecteren en automatisch verbinden. Deze optie is standaard ingeschakeld.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-Zero copy file transfers for increased performance.         This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. By default, this option is enabled.
+Zero copy file transfers for increased performance.         This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. Deze optie is standaard ingeschakeld.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -146,12 +146,12 @@ toon dit helpbericht en stop
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-Genegeerde door de gebruiker gedefinieerde metadata velden.         Door komma\fB\(aq\fPs gescheiden lijst van door de gebruiker gedefinieerde metadata  gegevensvelden die niet door de inhoudsserver in de weergaven /OPDS en /mobiel worden weergegeven. Bijvoorbeeld: my_rating,my_tags
+Genegeerde door de gebruiker gedefinieerde metadata velden.         Door komma\fB\(aq\fPs gescheiden lijst van door de gebruiker gedefinieerde metadata gegevensvelden die niet door de inhoudsserver in de weergaven /OPDS en /mobiel worden weergegeven. Bijvoorbeeld: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-The interface on which to listen for connections.   The default is to listen on all available IPv4 interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
+De interface waarop te luisteren voor verbindingen.         Standaard is luisteren op alle beschikbare IPv4 interfaces. U kan dit veranderen naar bv. \fB"\fP127.0.0.1\fB"\fP om enkel naar verbindingen van de lokale machine te luisteren of naar \fB"\fP::\fB"\fP om naar alle inkomende IPv6 en IPv4 verbindingen te luisteren.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -161,7 +161,7 @@ Pad naar logbestand voor serverlog. Dit logbestand bevat servergegevens en foute
 .INDENT 0.0
 .TP
 .B \-\-manage\-users
-Manage the database of users allowed to connect to this server. You can use it in automated mode by adding a \-\-. See calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help for details. See also the \fI\%\-\-userdb\fP option.
+Beheer de database met gebruikers die met deze server mogen verbinden. U kan het in automatische modus gebruiken door toevoeging van een \-\-. Bekijk calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help voor details. Bekijk ook de \fI\%\-\-userdb\fP optie.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -171,22 +171,22 @@ Max. grootte van enkele HTTP header (in KB).
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-Maximale tijd voor werkprocessen.   Maximum amount of time worker processes are allowed to run (in minutes). Set to zero for no limit.
+Maximale tijd voor werkprocessen.   Maximale tijd dat werker processen mogen draaien (in minuten). Stel in op nul voor geen limiet.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-jobs
-Maximale aantal werkprocessen.      Worker processes are launched as needed and used for large jobs such as preparing a book for viewing, adding books, converting, etc. Normally, the max. number of such processes is based on the number of CPU cores. You can control it by this setting.
+Maximale aantal werkprocessen.      Werker processen worden gelanceerd indien nodig en gebruikt voor grote taken zoals voorbereiden van een boek om te tonen, boeken toevoegen, converteren, enz. Normaal is het maximale aantal gebaseerd op het aantal CPU kernen. U kan het controleren met deze instelling.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-log\-size
-Max. logfile grootte (in MB).       The maximum size of log files, generated by the server. When the log becomes larger than this size, it is automatically rotated. Set to zero to disable log rotation.
+Max. logfile grootte (in MB).       Maximum grootte van log bestanden gegenereerd door de server. Als de log groter wordt, wordt het automatisch geroteerd. Zet op nul om log rotatie uit te schakelen.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-items
-Maximale aantal boeken in OPDS feeds.       The maximum number of books that the server will return in a single OPDS acquisition feed.
+Maximale aantal boeken in OPDS feeds.       Maximum aantal boeken dat de server terug geeft in een enkele OPDS verkrijgingsfeed.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -201,7 +201,7 @@ Toegestane max. bestandsgrootte om naar server te uploaden (in MB).
 .INDENT 0.0
 .TP
 .B \-\-num\-per\-page
-Number of books to show in a single page.   The number of books to show in a single page in the browser.
+Aantal boeken te tonen op een enkele pagina.        Aantal boeken te tonen op een enkele pagina in de browser.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -216,7 +216,7 @@ De poort waarop geluisterd word naar verbindingen.
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-Path to a JSON file containing URLs for the \fB"\fPSearch the internet\fB"\fP feature. The easiest way to create such a file is to go to Preferences\-> Sharing over the net\->Search the internet in calibre, create the URLs and export them.
+Pad naar JSON bestand met URLs voor de \fB"\fPDoorzoek het internet\fB"\fP functie. De gemakkelijkste manier om zo\fB\(aq\fPn bestand te creëren is via Voorkeuren\->Delen\->Delen via (inter)net\->Doorzoek het internet in calibre, creëer de URLs en exporteer ze.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -241,17 +241,17 @@ Tijd (in seconden) totdat een inactieve verbinding wordt gesloten.
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-Allow un\-authenticated connections from specific IP addresses to make changes.      Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
+Laat niet\-geauthentiseerde verbindingen van specifieke IP adressen veranderingen maken.     Normaal, als u authenticatie niet aanzet, werkt de server in alleen\-lezen modus zodat anonieme gebruikers geen veranderingen kunnen aanbrengen in uw calibre bibliotheken. Deze optie laat iedereen die verbindt vanop specifieke IP adressen veranderingen maken. Moet een komma gescheiden lijst zijn van adressen of netwerk specificaties. Nuttig als u de server wilt draaien zonder authenticatie maar toch calibredb wilt gebruiken om uw bibliotheken te wijzigen. Merk op dat deze optie aanzetten betekent dat iedereen die verbindt vanop de gespecificeerde adressen uw calibre bibliotheken kan wijzigen.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-url\-prefix
-Een prefix om voor alle URL\fB\(aq\fPs te zetten.    Useful if you wish to run this server behind a reverse proxy. For example use, /calibre as the URL prefix.
+Een prefix om voor alle URL\fB\(aq\fPs te zetten.    Nuttig als u deze server achter een omgekeerde proxy wil draaien. Bv. gebruik /calibre als het URL voorvoegsel.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-userdb
-Path to the user database to use for authentication. The database is a SQLite file. To create it use \fI\%\-\-manage\-users\fP\&. You can read more about managing users at: \fI\%https://manual.calibre\-ebook.com/nl/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
+Pad naar de gebruikersdatabase voor authenticatie. De database is een SQLite bestand. Gebruik \fI\%\-\-manage\-users\fP om het te creëren. U kan meer lezen over gebruikersbeheer op: \fI\%https://manual.calibre\-ebook.com/nl/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -261,7 +261,7 @@ toon programmaversie en stop
 .INDENT 0.0
 .TP
 .B \-\-worker\-count
-Number of worker threads used to process requests.
+Aantal werker threads gebruikt om verzoeken te verwerken.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

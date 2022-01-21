@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2013, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -114,7 +113,7 @@ def get_bulk_rename_settings(parent, number, msg=None, sanitize=sanitize_file_na
         fmt = '%d'
         if leading_zeros:
             largest = num + number - 1
-            fmt = '%0{}d'.format(len(str(largest)))
+            fmt = f'%0{len(str(largest))}d'
         ans['prefix'] = prefix + fmt
         ans['start'] = num
         if allow_spine_order:
@@ -684,7 +683,12 @@ class FileList(QTreeWidget, OpenWithHandler):
             m.addSeparator()
         md = QApplication.instance().clipboard().mimeData()
         if md.hasUrls() and md.hasFormat(FILE_COPY_MIME):
-            m.addAction(_('Paste files from other editor instance'), self.paste_from_other_instance)
+            import json
+            name_map = json.loads(bytes(md.data(FILE_COPY_MIME)))
+            m.addAction(ngettext(
+                _('Paste file from other editor instance'),
+                _('Paste {} files from other editor instance'),
+                len(name_map)).format(len(name_map)), self.paste_from_other_instance)
 
         selected_map = defaultdict(list)
         for item in sel:

@@ -4376,12 +4376,11 @@ define_str_func("zfill", (function() {
 define_str_func = undefined;
 var str = ρσ_str, repr = ρσ_repr;;
     var ρσ_modules = {};
-    ρσ_modules.traceback = {};
     ρσ_modules.elementmaker = {};
-    ρσ_modules.gettext = {};
-    ρσ_modules.date = {};
     ρσ_modules.pythonize = {};
     ρσ_modules.initialize = {};
+    ρσ_modules.traceback = {};
+    ρσ_modules.gettext = {};
     ρσ_modules.ajax = {};
     ρσ_modules.book_list = {};
     ρσ_modules["book_list.globals"] = {};
@@ -4392,6 +4391,7 @@ var str = ρσ_str, repr = ρσ_repr;;
     ρσ_modules["book_list.theme"] = {};
     ρσ_modules.utils = {};
     ρσ_modules["book_list.library_data"] = {};
+    ρσ_modules.date = {};
     ρσ_modules.dom = {};
     ρσ_modules.popups = {};
     ρσ_modules.widgets = {};
@@ -4426,15 +4426,15 @@ var str = ρσ_str, repr = ρσ_repr;;
     ρσ_modules["read_book.touch"] = {};
     ρσ_modules.select = {};
     ρσ_modules["read_book.iframe"] = {};
-    ρσ_modules["book_list.ui"] = {};
     ρσ_modules["book_list.item_list"] = {};
-    ρσ_modules["read_book.bookmarks"] = {};
-    ρσ_modules["read_book.content_popup"] = {};
+    ρσ_modules["read_book.open_book"] = {};
     ρσ_modules["read_book.prefs"] = {};
     ρσ_modules["read_book.prefs.utils"] = {};
     ρσ_modules["read_book.prefs.head_foot"] = {};
+    ρσ_modules["book_list.ui"] = {};
+    ρσ_modules["read_book.bookmarks"] = {};
+    ρσ_modules["read_book.content_popup"] = {};
     ρσ_modules["read_book.goto"] = {};
-    ρσ_modules["read_book.open_book"] = {};
     ρσ_modules["book_list.top_bar"] = {};
     ρσ_modules.file_uploads = {};
     ρσ_modules["book_list.add"] = {};
@@ -4468,138 +4468,6 @@ var str = ρσ_str, repr = ρσ_repr;;
     ρσ_modules["read_book.search"] = {};
     ρσ_modules["read_book.timers"] = {};
     ρσ_modules["read_book.view"] = {};
-
-    (function(){
-        var __name__ = "traceback";
-        function _get_internal_traceback(err) {
-            var lines, final_lines, found_sentinel, sline, ρσ_unpack, i, line;
-            if (ρσ_instanceof(err, Exception) && err.stack) {
-                lines = ρσ_str.splitlines(err.stack);
-                final_lines = [];
-                found_sentinel = false;
-                var ρσ_Iter0 = ρσ_Iterable(enumerate(lines));
-                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                    ρσ_unpack = ρσ_Iter0[ρσ_Index0];
-                    i = ρσ_unpack[0];
-                    line = ρσ_unpack[1];
-                    sline = ρσ_str.strip(line);
-                    if (i === 0) {
-                        final_lines.push(line);
-                        continue;
-                    }
-                    if (found_sentinel) {
-                        final_lines.push(line);
-                        continue;
-                    }
-                    if (sline.startsWith("at new " + err.name) || sline.startsWith(err.name + "@")) {
-                        found_sentinel = true;
-                    }
-                }
-                return final_lines.join("\n");
-            }
-            return err && err.stack;
-        };
-        if (!_get_internal_traceback.__argnames__) Object.defineProperties(_get_internal_traceback, {
-            __argnames__ : {value: ["err"]},
-            __module__ : {value: "traceback"}
-        });
-
-        function format_exception(exc, limit) {
-            var tb, lines, e;
-            if (typeof exc === "undefined") {
-                exc = ρσ_last_exception;
-            }
-            if (!(ρσ_instanceof(exc, Error))) {
-                if (exc && exc.toString) {
-                    return ρσ_list_decorate([ exc.toString() ]);
-                }
-                return ρσ_list_decorate([]);
-            }
-            tb = _get_internal_traceback(exc);
-            if (tb) {
-                lines = ρσ_str.splitlines(tb);
-                e = lines[0];
-                lines = lines.slice(1);
-                if (limit) {
-                    lines = (limit > 0) ? lines.slice(0, limit + 1) : lines.slice(limit);
-                }
-                lines.reverse();
-                lines.push(e);
-                lines.insert(0, "Traceback (most recent call last):");
-                return (function() {
-                    var ρσ_Iter = ρσ_Iterable(lines), ρσ_Result = [], l;
-                    for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
-                        l = ρσ_Iter[ρσ_Index];
-                        ρσ_Result.push(l + "\n");
-                    }
-                    ρσ_Result = ρσ_list_constructor(ρσ_Result);
-                    return ρσ_Result;
-                })();
-            }
-            return ρσ_list_decorate([ exc.toString() ]);
-        };
-        if (!format_exception.__argnames__) Object.defineProperties(format_exception, {
-            __argnames__ : {value: ["exc", "limit"]},
-            __module__ : {value: "traceback"}
-        });
-
-        function format_exc(limit) {
-            return format_exception(ρσ_last_exception, limit).join("");
-        };
-        if (!format_exc.__argnames__) Object.defineProperties(format_exc, {
-            __argnames__ : {value: ["limit"]},
-            __module__ : {value: "traceback"}
-        });
-
-        function print_exc(limit) {
-            print(format_exc(limit));
-        };
-        if (!print_exc.__argnames__) Object.defineProperties(print_exc, {
-            __argnames__ : {value: ["limit"]},
-            __module__ : {value: "traceback"}
-        });
-
-        function format_stack(limit) {
-            var stack, lines;
-            stack = (new Error).stack;
-            if (!stack) {
-                return ρσ_list_decorate([]);
-            }
-            lines = str.splitlines(stack).slice(2);
-            lines.reverse();
-            if (limit) {
-                lines = (limit > 0) ? lines.slice(0, limit + 1) : lines.slice(limit);
-            }
-            return (function() {
-                var ρσ_Iter = ρσ_Iterable(lines), ρσ_Result = [], l;
-                for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
-                    l = ρσ_Iter[ρσ_Index];
-                    ρσ_Result.push(l + "\n");
-                }
-                ρσ_Result = ρσ_list_constructor(ρσ_Result);
-                return ρσ_Result;
-            })();
-        };
-        if (!format_stack.__argnames__) Object.defineProperties(format_stack, {
-            __argnames__ : {value: ["limit"]},
-            __module__ : {value: "traceback"}
-        });
-
-        function print_stack(limit) {
-            print(format_stack(limit).join(""));
-        };
-        if (!print_stack.__argnames__) Object.defineProperties(print_stack, {
-            __argnames__ : {value: ["limit"]},
-            __module__ : {value: "traceback"}
-        });
-
-        ρσ_modules.traceback._get_internal_traceback = _get_internal_traceback;
-        ρσ_modules.traceback.format_exception = format_exception;
-        ρσ_modules.traceback.format_exc = format_exc;
-        ρσ_modules.traceback.print_exc = print_exc;
-        ρσ_modules.traceback.format_stack = format_stack;
-        ρσ_modules.traceback.print_stack = print_stack;
-    })();
 
     (function(){
         var __name__ = "elementmaker";
@@ -4907,6 +4775,178 @@ var str = ρσ_str, repr = ρσ_repr;;
         ρσ_modules.elementmaker.E = E;
         ρσ_modules.elementmaker._makeelement = _makeelement;
         ρσ_modules.elementmaker.maker_for_document = maker_for_document;
+    })();
+
+    (function(){
+        var __name__ = "pythonize";
+        function strings() {
+            var string_funcs, exclude, name;
+            string_funcs = set("capitalize strip lstrip rstrip islower isupper isspace lower upper swapcase center count endswith startswith find rfind index rindex format join ljust rjust partition rpartition replace split rsplit splitlines zfill".split(" "));
+            if (!arguments.length) {
+                exclude = (function(){
+                    var s = ρσ_set();
+                    s.jsset.add("split");
+                    s.jsset.add("replace");
+                    return s;
+                })();
+            } else if (arguments[0]) {
+                exclude = Array.prototype.slice.call(arguments);
+            } else {
+                exclude = null;
+            }
+            if (exclude) {
+                string_funcs = string_funcs.difference(set(exclude));
+            }
+            var ρσ_Iter0 = ρσ_Iterable(string_funcs);
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                name = ρσ_Iter0[ρσ_Index0];
+                (ρσ_expr_temp = String.prototype)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name] = (ρσ_expr_temp = ρσ_str.prototype)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name];
+            }
+        };
+        if (!strings.__module__) Object.defineProperties(strings, {
+            __module__ : {value: "pythonize"}
+        });
+
+        ρσ_modules.pythonize.strings = strings;
+    })();
+
+    (function(){
+        var __name__ = "initialize";
+        var strings = ρσ_modules.pythonize.strings;
+
+        strings();
+    })();
+
+    (function(){
+        var __name__ = "traceback";
+        function _get_internal_traceback(err) {
+            var lines, final_lines, found_sentinel, sline, ρσ_unpack, i, line;
+            if (ρσ_instanceof(err, Exception) && err.stack) {
+                lines = ρσ_str.splitlines(err.stack);
+                final_lines = [];
+                found_sentinel = false;
+                var ρσ_Iter0 = ρσ_Iterable(enumerate(lines));
+                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                    ρσ_unpack = ρσ_Iter0[ρσ_Index0];
+                    i = ρσ_unpack[0];
+                    line = ρσ_unpack[1];
+                    sline = ρσ_str.strip(line);
+                    if (i === 0) {
+                        final_lines.push(line);
+                        continue;
+                    }
+                    if (found_sentinel) {
+                        final_lines.push(line);
+                        continue;
+                    }
+                    if (sline.startsWith("at new " + err.name) || sline.startsWith(err.name + "@")) {
+                        found_sentinel = true;
+                    }
+                }
+                return final_lines.join("\n");
+            }
+            return err && err.stack;
+        };
+        if (!_get_internal_traceback.__argnames__) Object.defineProperties(_get_internal_traceback, {
+            __argnames__ : {value: ["err"]},
+            __module__ : {value: "traceback"}
+        });
+
+        function format_exception(exc, limit) {
+            var tb, lines, e;
+            if (typeof exc === "undefined") {
+                exc = ρσ_last_exception;
+            }
+            if (!(ρσ_instanceof(exc, Error))) {
+                if (exc && exc.toString) {
+                    return ρσ_list_decorate([ exc.toString() ]);
+                }
+                return ρσ_list_decorate([]);
+            }
+            tb = _get_internal_traceback(exc);
+            if (tb) {
+                lines = ρσ_str.splitlines(tb);
+                e = lines[0];
+                lines = lines.slice(1);
+                if (limit) {
+                    lines = (limit > 0) ? lines.slice(0, limit + 1) : lines.slice(limit);
+                }
+                lines.reverse();
+                lines.push(e);
+                lines.insert(0, "Traceback (most recent call last):");
+                return (function() {
+                    var ρσ_Iter = ρσ_Iterable(lines), ρσ_Result = [], l;
+                    for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                        l = ρσ_Iter[ρσ_Index];
+                        ρσ_Result.push(l + "\n");
+                    }
+                    ρσ_Result = ρσ_list_constructor(ρσ_Result);
+                    return ρσ_Result;
+                })();
+            }
+            return ρσ_list_decorate([ exc.toString() ]);
+        };
+        if (!format_exception.__argnames__) Object.defineProperties(format_exception, {
+            __argnames__ : {value: ["exc", "limit"]},
+            __module__ : {value: "traceback"}
+        });
+
+        function format_exc(limit) {
+            return format_exception(ρσ_last_exception, limit).join("");
+        };
+        if (!format_exc.__argnames__) Object.defineProperties(format_exc, {
+            __argnames__ : {value: ["limit"]},
+            __module__ : {value: "traceback"}
+        });
+
+        function print_exc(limit) {
+            print(format_exc(limit));
+        };
+        if (!print_exc.__argnames__) Object.defineProperties(print_exc, {
+            __argnames__ : {value: ["limit"]},
+            __module__ : {value: "traceback"}
+        });
+
+        function format_stack(limit) {
+            var stack, lines;
+            stack = (new Error).stack;
+            if (!stack) {
+                return ρσ_list_decorate([]);
+            }
+            lines = str.splitlines(stack).slice(2);
+            lines.reverse();
+            if (limit) {
+                lines = (limit > 0) ? lines.slice(0, limit + 1) : lines.slice(limit);
+            }
+            return (function() {
+                var ρσ_Iter = ρσ_Iterable(lines), ρσ_Result = [], l;
+                for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                    l = ρσ_Iter[ρσ_Index];
+                    ρσ_Result.push(l + "\n");
+                }
+                ρσ_Result = ρσ_list_constructor(ρσ_Result);
+                return ρσ_Result;
+            })();
+        };
+        if (!format_stack.__argnames__) Object.defineProperties(format_stack, {
+            __argnames__ : {value: ["limit"]},
+            __module__ : {value: "traceback"}
+        });
+
+        function print_stack(limit) {
+            print(format_stack(limit).join(""));
+        };
+        if (!print_stack.__argnames__) Object.defineProperties(print_stack, {
+            __argnames__ : {value: ["limit"]},
+            __module__ : {value: "traceback"}
+        });
+
+        ρσ_modules.traceback._get_internal_traceback = _get_internal_traceback;
+        ρσ_modules.traceback.format_exception = format_exception;
+        ρσ_modules.traceback.format_exc = format_exc;
+        ρσ_modules.traceback.print_exc = print_exc;
+        ρσ_modules.traceback.format_stack = format_stack;
+        ρσ_modules.traceback.print_stack = print_stack;
     })();
 
     (function(){
@@ -5592,353 +5632,6 @@ return parser;
         ρσ_modules.gettext.install = install;
         ρσ_modules.gettext.register_callback = register_callback;
         ρσ_modules.gettext.Translations = Translations;
-    })();
-
-    (function(){
-        var __name__ = "date";
-        var UNDEFINED_DATE_ISO, UNDEFINED_DATE, lcdata, supports_locales, fd_function_index;
-        UNDEFINED_DATE_ISO = "0101-01-01T00:00:00+00:00";
-        UNDEFINED_DATE = new Date(UNDEFINED_DATE_ISO);
-        function is_date_undefined(date) {
-            var ρσ_unpack, dy, uy;
-            ρσ_unpack = [date.getUTCFullYear(), UNDEFINED_DATE.getUTCFullYear()];
-            dy = ρσ_unpack[0];
-            uy = ρσ_unpack[1];
-            return dy < uy || dy === uy && date.getUTCMonth() === UNDEFINED_DATE.getUTCMonth() && date.getUTCDate() <= UNDEFINED_DATE.getUTCDate() + 1;
-        };
-        if (!is_date_undefined.__argnames__) Object.defineProperties(is_date_undefined, {
-            __argnames__ : {value: ["date"]},
-            __module__ : {value: "date"}
-        });
-
-        lcdata = (function(){
-            var ρσ_d = Object.create(null);
-            ρσ_d["abday"] = ρσ_list_decorate([ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ]);
-            ρσ_d["abmon"] = ρσ_list_decorate([ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ]);
-            ρσ_d["day"] = ρσ_list_decorate([ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ]);
-            ρσ_d["mon"] = ρσ_list_decorate([ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]);
-            return ρσ_d;
-        }).call(this);
-        supports_locales = false;
-        try {
-            (new Date).toLocaleString("dfkjghdfkgj");
-        } catch (ρσ_Exception) {
-            ρσ_last_exception = ρσ_Exception;
-            if (ρσ_Exception instanceof RangeError) {
-                supports_locales = true;
-            } else {
-            } 
-        }
-        function fmt_date_pat() {
-            var ans;
-            ans = fmt_date_pat.ans;
-            if (!(typeof ans !== "undefined" && ans !== null)) {
-                ans = fmt_date_pat.ans = /(s{1,2})|(m{1,2})|(h{1,2})|(H{1,2})|(zzz)|(z)|(ap)|(AP)|(a)|(A)|(t)|(d{1,4}|M{1,4}|(?:yyyy|yy))/g;
-            }
-            return ans;
-        };
-        if (!fmt_date_pat.__module__) Object.defineProperties(fmt_date_pat, {
-            __module__ : {value: "date"}
-        });
-
-        function fd_format_hour(dt, ampm, hr, as_utc) {
-            var h;
-            h = (as_utc) ? dt.getUTCHours() : dt.getHours();
-            if (ampm) {
-                h %= 12;
-            }
-            return (hr.length === 1) ? h.toString() : str.format("{:02d}", h);
-        };
-        if (!fd_format_hour.__argnames__) Object.defineProperties(fd_format_hour, {
-            __argnames__ : {value: ["dt", "ampm", "hr", "as_utc"]},
-            __module__ : {value: "date"}
-        });
-
-        function fd_format_hour24(dt, ampm, hr, as_utc) {
-            return fd_format_hour(dt, false, hr, as_utc);
-        };
-        if (!fd_format_hour24.__argnames__) Object.defineProperties(fd_format_hour24, {
-            __argnames__ : {value: ["dt", "ampm", "hr", "as_utc"]},
-            __module__ : {value: "date"}
-        });
-
-        function fd_format_minute(dt, ampm, min, as_utc) {
-            var m;
-            m = (as_utc) ? dt.getUTCMinutes() : dt.getMinutes();
-            return (min.length === 1) ? m.toString() : str.format("{:02d}", m);
-        };
-        if (!fd_format_minute.__argnames__) Object.defineProperties(fd_format_minute, {
-            __argnames__ : {value: ["dt", "ampm", "min", "as_utc"]},
-            __module__ : {value: "date"}
-        });
-
-        function fd_format_second(dt, ampm, min, as_utc) {
-            var s;
-            s = (as_utc) ? dt.getUTCSeconds() : dt.getSeconds();
-            return (min.length === 1) ? s.toString() : str.format("{:02d}", s);
-        };
-        if (!fd_format_second.__argnames__) Object.defineProperties(fd_format_second, {
-            __argnames__ : {value: ["dt", "ampm", "min", "as_utc"]},
-            __module__ : {value: "date"}
-        });
-
-        function fd_format_ms(dt, ampm, min, as_utc) {
-            var s;
-            s = (as_utc) ? dt.getUTCMilliseconds() : dt.getSeconds();
-            return (min.length === 1) ? s.toString() : str.format("{:03d}", s);
-        };
-        if (!fd_format_ms.__argnames__) Object.defineProperties(fd_format_ms, {
-            __argnames__ : {value: ["dt", "ampm", "min", "as_utc"]},
-            __module__ : {value: "date"}
-        });
-
-        function fd_format_timezone(dt, ampm, t, as_utc) {
-            var short, full, idx;
-            short = dt.toLocaleTimeString();
-            full = dt.toLocaleTimeString([], (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["timeZoneName"] = "long";
-                return ρσ_d;
-            }).call(this));
-            idx = full.indexOf(short);
-            if (idx > -1) {
-                return full.slice(idx + short.length).strip();
-            }
-            return window.Intl.DateTimeFormat().resolvedOptions().timeZone;
-        };
-        if (!fd_format_timezone.__argnames__) Object.defineProperties(fd_format_timezone, {
-            __argnames__ : {value: ["dt", "ampm", "t", "as_utc"]},
-            __module__ : {value: "date"}
-        });
-
-        function fd_format_ampm(dt, ampm, ap, as_utc) {
-            var h, ans;
-            h = (as_utc) ? dt.getUTCHours() : dt.getHours();
-            ans = (h < 12) ? "am" : "pm";
-            return (ap === "ap" || ap === "a") ? ans : ans.toUpperCase();
-        };
-        if (!fd_format_ampm.__argnames__) Object.defineProperties(fd_format_ampm, {
-            __argnames__ : {value: ["dt", "ampm", "ap", "as_utc"]},
-            __module__ : {value: "date"}
-        });
-
-        function fd_format_day(dt, ampm, dy, as_utc) {
-            var d, options, w;
-            d = (as_utc) ? dt.getUTCDate() : dt.getDate();
-            if (dy.length === 1) {
-                return d.toString();
-            }
-            if (dy.length === 2) {
-                return str.format("{:02d}", d);
-            }
-            if (supports_locales) {
-                options = (function(){
-                    var ρσ_d = Object.create(null);
-                    ρσ_d["weekday"] = (dy.length === 3) ? "short" : "long";
-                    return ρσ_d;
-                }).call(this);
-                if (as_utc) {
-                    options["timeZone"] = "UTC";
-                }
-                return dt.toLocaleString(window.navigator.language, options);
-            }
-            w = (as_utc) ? dt.getUTCDay() : dt.getDay();
-            return (ρσ_expr_temp = lcdata[ρσ_bound_index((dy.length === 3) ? "abday" : "day", lcdata)])[ρσ_bound_index((w + 1) % 7, ρσ_expr_temp)];
-        };
-        if (!fd_format_day.__argnames__) Object.defineProperties(fd_format_day, {
-            __argnames__ : {value: ["dt", "ampm", "dy", "as_utc"]},
-            __module__ : {value: "date"}
-        });
-
-        function fd_format_month(dt, ampm, mo, as_utc) {
-            var m, options;
-            m = (as_utc) ? dt.getUTCMonth() : dt.getMonth();
-            if (mo.length === 1) {
-                return (m + 1).toString();
-            }
-            if (mo.length === 2) {
-                return str.format("{:02d}", m + 1);
-            }
-            if (supports_locales) {
-                options = (function(){
-                    var ρσ_d = Object.create(null);
-                    ρσ_d["month"] = (ρσ_expr_temp = (function(){
-                        var ρσ_d = Object.create(null);
-                        ρσ_d[1] = "numeric";
-                        ρσ_d[2] = "2-digit";
-                        ρσ_d[3] = "short";
-                        ρσ_d[4] = "long";
-                        return ρσ_d;
-                    }).call(this))[ρσ_bound_index(mo.length, ρσ_expr_temp)] || "long";
-                    return ρσ_d;
-                }).call(this);
-                if (as_utc) {
-                    options["timeZone"] = "UTC";
-                }
-                return dt.toLocaleString(window.navigator.language, options);
-            }
-            return (ρσ_expr_temp = lcdata[ρσ_bound_index((mo.length === 3) ? "abmon" : "mon", lcdata)])[(typeof m === "number" && m < 0) ? ρσ_expr_temp.length + m : m];
-        };
-        if (!fd_format_month.__argnames__) Object.defineProperties(fd_format_month, {
-            __argnames__ : {value: ["dt", "ampm", "mo", "as_utc"]},
-            __module__ : {value: "date"}
-        });
-
-        function fd_format_year(dt, ampm, yr, as_utc) {
-            var y;
-            y = (as_utc) ? dt.getUTCFullYear() : dt.getFullYear();
-            if (yr.length === 2) {
-                return str.format("{:02d}", y % 100);
-            }
-            return str.format("{:04d}", y);
-        };
-        if (!fd_format_year.__argnames__) Object.defineProperties(fd_format_year, {
-            __argnames__ : {value: ["dt", "ampm", "yr", "as_utc"]},
-            __module__ : {value: "date"}
-        });
-
-        fd_function_index = (function(){
-            var ρσ_d = Object.create(null);
-            ρσ_d["d"] = fd_format_day;
-            ρσ_d["M"] = fd_format_month;
-            ρσ_d["y"] = fd_format_year;
-            ρσ_d["h"] = fd_format_hour;
-            ρσ_d["H"] = fd_format_hour24;
-            ρσ_d["m"] = fd_format_minute;
-            ρσ_d["s"] = fd_format_second;
-            ρσ_d["a"] = fd_format_ampm;
-            ρσ_d["A"] = fd_format_ampm;
-            ρσ_d["z"] = fd_format_ms;
-            ρσ_d["t"] = fd_format_timezone;
-            return ρσ_d;
-        }).call(this);
-        function am_pm_pat() {
-            var ans;
-            ans = am_pm_pat.ans;
-            if (!(typeof ans !== "undefined" && ans !== null)) {
-                ans = am_pm_pat.ans = /(ap)|(a)|(AP)|(A)/;
-            }
-            return ans;
-        };
-        if (!am_pm_pat.__module__) Object.defineProperties(am_pm_pat, {
-            __module__ : {value: "date"}
-        });
-
-        function format_date() {
-            var date = (arguments[0] === undefined || ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? format_date.__defaults__.date : arguments[0];
-            var fmt = (arguments[1] === undefined || ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? format_date.__defaults__.fmt : arguments[1];
-            var as_utc = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? format_date.__defaults__.as_utc : arguments[2];
-            var ρσ_kwargs_obj = arguments[arguments.length-1];
-            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "date")){
-                date = ρσ_kwargs_obj.date;
-            }
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "fmt")){
-                fmt = ρσ_kwargs_obj.fmt;
-            }
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "as_utc")){
-                as_utc = ρσ_kwargs_obj.as_utc;
-            }
-            var ampm;
-            fmt = fmt || "dd MMM yyyy";
-            ampm = am_pm_pat().test(fmt);
-            if (typeof date === "string") {
-                date = new Date(date);
-            }
-            date = date || new Date;
-            if (is_date_undefined(date)) {
-                return "";
-            }
-            return fmt.replace(fmt_date_pat(), (function() {
-                var ρσ_anonfunc = function (match) {
-                    if (!match) {
-                        return "";
-                    }
-                    try {
-                        return fd_function_index[ρσ_bound_index(match[0], fd_function_index)](date, ampm, match, as_utc);
-                    } catch (ρσ_Exception) {
-                        ρσ_last_exception = ρσ_Exception;
-                        if (ρσ_Exception instanceof Error) {
-                            print(str.format("Failed to format date with format: {} and match: {}", fmt, match));
-                            return "";
-                        } else {
-                            throw ρσ_Exception;
-                        }
-                    }
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["match"]},
-                    __module__ : {value: "date"}
-                });
-                return ρσ_anonfunc;
-            })());
-        };
-        if (!format_date.__defaults__) Object.defineProperties(format_date, {
-            __defaults__ : {value: {date:null, fmt:"dd MMM yyyy", as_utc:false}},
-            __handles_kwarg_interpolation__ : {value: true},
-            __argnames__ : {value: ["date", "fmt", "as_utc"]},
-            __module__ : {value: "date"}
-        });
-
-        ρσ_modules.date.UNDEFINED_DATE_ISO = UNDEFINED_DATE_ISO;
-        ρσ_modules.date.UNDEFINED_DATE = UNDEFINED_DATE;
-        ρσ_modules.date.lcdata = lcdata;
-        ρσ_modules.date.supports_locales = supports_locales;
-        ρσ_modules.date.fd_function_index = fd_function_index;
-        ρσ_modules.date.is_date_undefined = is_date_undefined;
-        ρσ_modules.date.fmt_date_pat = fmt_date_pat;
-        ρσ_modules.date.fd_format_hour = fd_format_hour;
-        ρσ_modules.date.fd_format_hour24 = fd_format_hour24;
-        ρσ_modules.date.fd_format_minute = fd_format_minute;
-        ρσ_modules.date.fd_format_second = fd_format_second;
-        ρσ_modules.date.fd_format_ms = fd_format_ms;
-        ρσ_modules.date.fd_format_timezone = fd_format_timezone;
-        ρσ_modules.date.fd_format_ampm = fd_format_ampm;
-        ρσ_modules.date.fd_format_day = fd_format_day;
-        ρσ_modules.date.fd_format_month = fd_format_month;
-        ρσ_modules.date.fd_format_year = fd_format_year;
-        ρσ_modules.date.am_pm_pat = am_pm_pat;
-        ρσ_modules.date.format_date = format_date;
-    })();
-
-    (function(){
-        var __name__ = "pythonize";
-        function strings() {
-            var string_funcs, exclude, name;
-            string_funcs = set("capitalize strip lstrip rstrip islower isupper isspace lower upper swapcase center count endswith startswith find rfind index rindex format join ljust rjust partition rpartition replace split rsplit splitlines zfill".split(" "));
-            if (!arguments.length) {
-                exclude = (function(){
-                    var s = ρσ_set();
-                    s.jsset.add("split");
-                    s.jsset.add("replace");
-                    return s;
-                })();
-            } else if (arguments[0]) {
-                exclude = Array.prototype.slice.call(arguments);
-            } else {
-                exclude = null;
-            }
-            if (exclude) {
-                string_funcs = string_funcs.difference(set(exclude));
-            }
-            var ρσ_Iter0 = ρσ_Iterable(string_funcs);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                name = ρσ_Iter0[ρσ_Index0];
-                (ρσ_expr_temp = String.prototype)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name] = (ρσ_expr_temp = ρσ_str.prototype)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name];
-            }
-        };
-        if (!strings.__module__) Object.defineProperties(strings, {
-            __module__ : {value: "pythonize"}
-        });
-
-        ρσ_modules.pythonize.strings = strings;
-    })();
-
-    (function(){
-        var __name__ = "initialize";
-        var strings = ρσ_modules.pythonize.strings;
-
-        strings();
     })();
 
     (function(){
@@ -8856,6 +8549,313 @@ return this.__repr__();
         ρσ_modules["book_list.library_data"].ensure_current_library_data = ensure_current_library_data;
         ρσ_modules["book_list.library_data"].ThumbnailCache = ThumbnailCache;
         ρσ_modules["book_list.library_data"].sync_library_books = sync_library_books;
+    })();
+
+    (function(){
+        var __name__ = "date";
+        var UNDEFINED_DATE_ISO, UNDEFINED_DATE, lcdata, supports_locales, fd_function_index;
+        UNDEFINED_DATE_ISO = "0101-01-01T00:00:00+00:00";
+        UNDEFINED_DATE = new Date(UNDEFINED_DATE_ISO);
+        function is_date_undefined(date) {
+            var ρσ_unpack, dy, uy;
+            ρσ_unpack = [date.getUTCFullYear(), UNDEFINED_DATE.getUTCFullYear()];
+            dy = ρσ_unpack[0];
+            uy = ρσ_unpack[1];
+            return dy < uy || dy === uy && date.getUTCMonth() === UNDEFINED_DATE.getUTCMonth() && date.getUTCDate() <= UNDEFINED_DATE.getUTCDate() + 1;
+        };
+        if (!is_date_undefined.__argnames__) Object.defineProperties(is_date_undefined, {
+            __argnames__ : {value: ["date"]},
+            __module__ : {value: "date"}
+        });
+
+        lcdata = (function(){
+            var ρσ_d = Object.create(null);
+            ρσ_d["abday"] = ρσ_list_decorate([ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ]);
+            ρσ_d["abmon"] = ρσ_list_decorate([ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ]);
+            ρσ_d["day"] = ρσ_list_decorate([ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ]);
+            ρσ_d["mon"] = ρσ_list_decorate([ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]);
+            return ρσ_d;
+        }).call(this);
+        supports_locales = false;
+        try {
+            (new Date).toLocaleString("dfkjghdfkgj");
+        } catch (ρσ_Exception) {
+            ρσ_last_exception = ρσ_Exception;
+            if (ρσ_Exception instanceof RangeError) {
+                supports_locales = true;
+            } else {
+            } 
+        }
+        function fmt_date_pat() {
+            var ans;
+            ans = fmt_date_pat.ans;
+            if (!(typeof ans !== "undefined" && ans !== null)) {
+                ans = fmt_date_pat.ans = /(s{1,2})|(m{1,2})|(h{1,2})|(H{1,2})|(zzz)|(z)|(ap)|(AP)|(a)|(A)|(t)|(d{1,4}|M{1,4}|(?:yyyy|yy))/g;
+            }
+            return ans;
+        };
+        if (!fmt_date_pat.__module__) Object.defineProperties(fmt_date_pat, {
+            __module__ : {value: "date"}
+        });
+
+        function fd_format_hour(dt, ampm, hr, as_utc) {
+            var h;
+            h = (as_utc) ? dt.getUTCHours() : dt.getHours();
+            if (ampm) {
+                h %= 12;
+            }
+            return (hr.length === 1) ? h.toString() : str.format("{:02d}", h);
+        };
+        if (!fd_format_hour.__argnames__) Object.defineProperties(fd_format_hour, {
+            __argnames__ : {value: ["dt", "ampm", "hr", "as_utc"]},
+            __module__ : {value: "date"}
+        });
+
+        function fd_format_hour24(dt, ampm, hr, as_utc) {
+            return fd_format_hour(dt, false, hr, as_utc);
+        };
+        if (!fd_format_hour24.__argnames__) Object.defineProperties(fd_format_hour24, {
+            __argnames__ : {value: ["dt", "ampm", "hr", "as_utc"]},
+            __module__ : {value: "date"}
+        });
+
+        function fd_format_minute(dt, ampm, min, as_utc) {
+            var m;
+            m = (as_utc) ? dt.getUTCMinutes() : dt.getMinutes();
+            return (min.length === 1) ? m.toString() : str.format("{:02d}", m);
+        };
+        if (!fd_format_minute.__argnames__) Object.defineProperties(fd_format_minute, {
+            __argnames__ : {value: ["dt", "ampm", "min", "as_utc"]},
+            __module__ : {value: "date"}
+        });
+
+        function fd_format_second(dt, ampm, min, as_utc) {
+            var s;
+            s = (as_utc) ? dt.getUTCSeconds() : dt.getSeconds();
+            return (min.length === 1) ? s.toString() : str.format("{:02d}", s);
+        };
+        if (!fd_format_second.__argnames__) Object.defineProperties(fd_format_second, {
+            __argnames__ : {value: ["dt", "ampm", "min", "as_utc"]},
+            __module__ : {value: "date"}
+        });
+
+        function fd_format_ms(dt, ampm, min, as_utc) {
+            var s;
+            s = (as_utc) ? dt.getUTCMilliseconds() : dt.getSeconds();
+            return (min.length === 1) ? s.toString() : str.format("{:03d}", s);
+        };
+        if (!fd_format_ms.__argnames__) Object.defineProperties(fd_format_ms, {
+            __argnames__ : {value: ["dt", "ampm", "min", "as_utc"]},
+            __module__ : {value: "date"}
+        });
+
+        function fd_format_timezone(dt, ampm, t, as_utc) {
+            var short, full, idx;
+            short = dt.toLocaleTimeString();
+            full = dt.toLocaleTimeString([], (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["timeZoneName"] = "long";
+                return ρσ_d;
+            }).call(this));
+            idx = full.indexOf(short);
+            if (idx > -1) {
+                return full.slice(idx + short.length).strip();
+            }
+            return window.Intl.DateTimeFormat().resolvedOptions().timeZone;
+        };
+        if (!fd_format_timezone.__argnames__) Object.defineProperties(fd_format_timezone, {
+            __argnames__ : {value: ["dt", "ampm", "t", "as_utc"]},
+            __module__ : {value: "date"}
+        });
+
+        function fd_format_ampm(dt, ampm, ap, as_utc) {
+            var h, ans;
+            h = (as_utc) ? dt.getUTCHours() : dt.getHours();
+            ans = (h < 12) ? "am" : "pm";
+            return (ap === "ap" || ap === "a") ? ans : ans.toUpperCase();
+        };
+        if (!fd_format_ampm.__argnames__) Object.defineProperties(fd_format_ampm, {
+            __argnames__ : {value: ["dt", "ampm", "ap", "as_utc"]},
+            __module__ : {value: "date"}
+        });
+
+        function fd_format_day(dt, ampm, dy, as_utc) {
+            var d, options, w;
+            d = (as_utc) ? dt.getUTCDate() : dt.getDate();
+            if (dy.length === 1) {
+                return d.toString();
+            }
+            if (dy.length === 2) {
+                return str.format("{:02d}", d);
+            }
+            if (supports_locales) {
+                options = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["weekday"] = (dy.length === 3) ? "short" : "long";
+                    return ρσ_d;
+                }).call(this);
+                if (as_utc) {
+                    options["timeZone"] = "UTC";
+                }
+                return dt.toLocaleString(window.navigator.language, options);
+            }
+            w = (as_utc) ? dt.getUTCDay() : dt.getDay();
+            return (ρσ_expr_temp = lcdata[ρσ_bound_index((dy.length === 3) ? "abday" : "day", lcdata)])[ρσ_bound_index((w + 1) % 7, ρσ_expr_temp)];
+        };
+        if (!fd_format_day.__argnames__) Object.defineProperties(fd_format_day, {
+            __argnames__ : {value: ["dt", "ampm", "dy", "as_utc"]},
+            __module__ : {value: "date"}
+        });
+
+        function fd_format_month(dt, ampm, mo, as_utc) {
+            var m, options;
+            m = (as_utc) ? dt.getUTCMonth() : dt.getMonth();
+            if (mo.length === 1) {
+                return (m + 1).toString();
+            }
+            if (mo.length === 2) {
+                return str.format("{:02d}", m + 1);
+            }
+            if (supports_locales) {
+                options = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["month"] = (ρσ_expr_temp = (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d[1] = "numeric";
+                        ρσ_d[2] = "2-digit";
+                        ρσ_d[3] = "short";
+                        ρσ_d[4] = "long";
+                        return ρσ_d;
+                    }).call(this))[ρσ_bound_index(mo.length, ρσ_expr_temp)] || "long";
+                    return ρσ_d;
+                }).call(this);
+                if (as_utc) {
+                    options["timeZone"] = "UTC";
+                }
+                return dt.toLocaleString(window.navigator.language, options);
+            }
+            return (ρσ_expr_temp = lcdata[ρσ_bound_index((mo.length === 3) ? "abmon" : "mon", lcdata)])[(typeof m === "number" && m < 0) ? ρσ_expr_temp.length + m : m];
+        };
+        if (!fd_format_month.__argnames__) Object.defineProperties(fd_format_month, {
+            __argnames__ : {value: ["dt", "ampm", "mo", "as_utc"]},
+            __module__ : {value: "date"}
+        });
+
+        function fd_format_year(dt, ampm, yr, as_utc) {
+            var y;
+            y = (as_utc) ? dt.getUTCFullYear() : dt.getFullYear();
+            if (yr.length === 2) {
+                return str.format("{:02d}", y % 100);
+            }
+            return str.format("{:04d}", y);
+        };
+        if (!fd_format_year.__argnames__) Object.defineProperties(fd_format_year, {
+            __argnames__ : {value: ["dt", "ampm", "yr", "as_utc"]},
+            __module__ : {value: "date"}
+        });
+
+        fd_function_index = (function(){
+            var ρσ_d = Object.create(null);
+            ρσ_d["d"] = fd_format_day;
+            ρσ_d["M"] = fd_format_month;
+            ρσ_d["y"] = fd_format_year;
+            ρσ_d["h"] = fd_format_hour;
+            ρσ_d["H"] = fd_format_hour24;
+            ρσ_d["m"] = fd_format_minute;
+            ρσ_d["s"] = fd_format_second;
+            ρσ_d["a"] = fd_format_ampm;
+            ρσ_d["A"] = fd_format_ampm;
+            ρσ_d["z"] = fd_format_ms;
+            ρσ_d["t"] = fd_format_timezone;
+            return ρσ_d;
+        }).call(this);
+        function am_pm_pat() {
+            var ans;
+            ans = am_pm_pat.ans;
+            if (!(typeof ans !== "undefined" && ans !== null)) {
+                ans = am_pm_pat.ans = /(ap)|(a)|(AP)|(A)/;
+            }
+            return ans;
+        };
+        if (!am_pm_pat.__module__) Object.defineProperties(am_pm_pat, {
+            __module__ : {value: "date"}
+        });
+
+        function format_date() {
+            var date = (arguments[0] === undefined || ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? format_date.__defaults__.date : arguments[0];
+            var fmt = (arguments[1] === undefined || ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? format_date.__defaults__.fmt : arguments[1];
+            var as_utc = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? format_date.__defaults__.as_utc : arguments[2];
+            var ρσ_kwargs_obj = arguments[arguments.length-1];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "date")){
+                date = ρσ_kwargs_obj.date;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "fmt")){
+                fmt = ρσ_kwargs_obj.fmt;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "as_utc")){
+                as_utc = ρσ_kwargs_obj.as_utc;
+            }
+            var ampm;
+            fmt = fmt || "dd MMM yyyy";
+            ampm = am_pm_pat().test(fmt);
+            if (typeof date === "string") {
+                date = new Date(date);
+            }
+            date = date || new Date;
+            if (is_date_undefined(date)) {
+                return "";
+            }
+            return fmt.replace(fmt_date_pat(), (function() {
+                var ρσ_anonfunc = function (match) {
+                    if (!match) {
+                        return "";
+                    }
+                    try {
+                        return fd_function_index[ρσ_bound_index(match[0], fd_function_index)](date, ampm, match, as_utc);
+                    } catch (ρσ_Exception) {
+                        ρσ_last_exception = ρσ_Exception;
+                        if (ρσ_Exception instanceof Error) {
+                            print(str.format("Failed to format date with format: {} and match: {}", fmt, match));
+                            return "";
+                        } else {
+                            throw ρσ_Exception;
+                        }
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["match"]},
+                    __module__ : {value: "date"}
+                });
+                return ρσ_anonfunc;
+            })());
+        };
+        if (!format_date.__defaults__) Object.defineProperties(format_date, {
+            __defaults__ : {value: {date:null, fmt:"dd MMM yyyy", as_utc:false}},
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["date", "fmt", "as_utc"]},
+            __module__ : {value: "date"}
+        });
+
+        ρσ_modules.date.UNDEFINED_DATE_ISO = UNDEFINED_DATE_ISO;
+        ρσ_modules.date.UNDEFINED_DATE = UNDEFINED_DATE;
+        ρσ_modules.date.lcdata = lcdata;
+        ρσ_modules.date.supports_locales = supports_locales;
+        ρσ_modules.date.fd_function_index = fd_function_index;
+        ρσ_modules.date.is_date_undefined = is_date_undefined;
+        ρσ_modules.date.fmt_date_pat = fmt_date_pat;
+        ρσ_modules.date.fd_format_hour = fd_format_hour;
+        ρσ_modules.date.fd_format_hour24 = fd_format_hour24;
+        ρσ_modules.date.fd_format_minute = fd_format_minute;
+        ρσ_modules.date.fd_format_second = fd_format_second;
+        ρσ_modules.date.fd_format_ms = fd_format_ms;
+        ρσ_modules.date.fd_format_timezone = fd_format_timezone;
+        ρσ_modules.date.fd_format_ampm = fd_format_ampm;
+        ρσ_modules.date.fd_format_day = fd_format_day;
+        ρσ_modules.date.fd_format_month = fd_format_month;
+        ρσ_modules.date.fd_format_year = fd_format_year;
+        ρσ_modules.date.am_pm_pat = am_pm_pat;
+        ρσ_modules.date.format_date = format_date;
     })();
 
     (function(){
@@ -16898,6 +16898,9 @@ return this.__repr__();
                 document.documentElement.appendChild(ss);
             }
             text = "";
+            if (runtime.is_standalone_viewer && ρσ_in("macos", window.navigator.userAgent)) {
+                text += "\n* { -webkit-hyphenate-character: \"-\" !important }\n";
+            }
             if (opts.override_book_colors !== "never") {
                 text = "body";
                 if (opts.override_book_colors === "dark") {
@@ -26367,7 +26370,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.34.0";
+        CALIBRE_VERSION = "5.35.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -28087,6 +28090,739 @@ return this.__repr__();
     })();
 
     (function(){
+        var __name__ = "book_list.item_list";
+        var CLASS_NAME;
+        var build_rule = ρσ_modules.dom.build_rule;
+        var svgicon = ρσ_modules.dom.svgicon;
+        var add_extra_css = ρσ_modules.dom.add_extra_css;
+        var clear = ρσ_modules.dom.clear;
+
+        var E = ρσ_modules.elementmaker.E;
+
+        var get_font_size = ρσ_modules["book_list.theme"].get_font_size;
+        var get_color = ρσ_modules["book_list.theme"].get_color;
+
+        CLASS_NAME = "generic-items-list";
+        add_extra_css((function() {
+            var ρσ_anonfunc = function () {
+                var sel, style;
+                sel = "." + CLASS_NAME + " ";
+                style = "";
+                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + "li"].concat([ρσ_desugar_kwargs({padding: "0", border_bottom: "solid 1px " + get_color("window-foreground"), border_top: "solid 1px " + get_color("window-background"), cursor: "pointer", list_style: "none"})]));
+                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".item-title"].concat([ρσ_desugar_kwargs({font_size: get_font_size("item-list-title")})]));
+                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .item-subtitle"].concat([ρσ_desugar_kwargs({font_size: get_font_size("item-list-subtitle"), font_style: "italic"})]));
+                sel += " li > div:nth-child(1)";
+                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({padding: "1rem"})]));
+                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ":hover"].concat([ρσ_desugar_kwargs({color: get_color("list-hover-foreground"), background_color: get_color("list-hover-background"), border_top_color: get_color("list-hover-foreground")})]));
+                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ":active"].concat([ρσ_desugar_kwargs({transform: "scale(1, 1.5)"})]));
+                return style;
+            };
+            if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                __module__ : {value: "book_list.item_list"}
+            });
+            return ρσ_anonfunc;
+        })());
+        function side_action(action, ev) {
+            var li;
+            [ev.stopPropagation(), ev.preventDefault()];
+            if (action) {
+                li = ev.currentTarget.closest("li");
+                action(li);
+            }
+        };
+        if (!side_action.__argnames__) Object.defineProperties(side_action, {
+            __argnames__ : {value: ["action", "ev"]},
+            __module__ : {value: "book_list.item_list"}
+        });
+
+        function build_list(container, items, subtitle) {
+            var c, ul, has_icons, item, ic, li, s, x;
+            c = container;
+            clear(c);
+            c.classList.add(CLASS_NAME);
+            if (subtitle) {
+                c.appendChild(ρσ_interpolate_kwargs.call(E, E.p, [subtitle].concat([ρσ_desugar_kwargs({style: "font-style:italic; padding: 1em 1ex; border-bottom: solid 1px currentColor"})])));
+            }
+            ul = E.ul();
+            c.appendChild(ul);
+            has_icons = false;
+            var ρσ_Iter0 = ρσ_Iterable(items);
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                item = ρσ_Iter0[ρσ_Index0];
+                if (item.icon) {
+                    has_icons = true;
+                    break;
+                }
+            }
+            var ρσ_Iter1 = ρσ_Iterable(items);
+            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                item = ρσ_Iter1[ρσ_Index1];
+                ic = "";
+                if (has_icons) {
+                    if (item.icon) {
+                        ic = svgicon(item.icon);
+                    }
+                    ic = E.span(ic, " ");
+                }
+                li = E.li(ρσ_interpolate_kwargs.call(E, E.div, [ic, item.title].concat([ρσ_desugar_kwargs({class_: "item-title"})])));
+                ul.appendChild(li);
+                if (item.subtitle) {
+                    li.firstChild.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [item.subtitle].concat([ρσ_desugar_kwargs({class_: "item-subtitle", style: "padding-top:1ex"})])));
+                }
+                if (item.action) {
+                    li.addEventListener("click", item.action);
+                }
+                if (item.data) {
+                    li.dataset.userData = item.data;
+                }
+                if (ρσ_exists.d(item.side_actions).length) {
+                    s = li.style;
+                    s.display = "flex";
+                    s.alignItems = "center";
+                    li.firstChild.style.flexGrow = "10";
+                    li.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "display: flex; align-items: center; margin-left: 0.5rem"})]));
+                    var ρσ_Iter2 = ρσ_Iterable(item.side_actions);
+                    for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                        x = ρσ_Iter2[ρσ_Index2];
+                        li.lastChild.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [svgicon(x.icon)].concat([ρσ_desugar_kwargs({class_: "simple-link", style: "padding: 0.5rem", title: x.tooltip || "", onclick: side_action.bind(null, x.action)})])));
+                    }
+                }
+            }
+        };
+        if (!build_list.__argnames__) Object.defineProperties(build_list, {
+            __argnames__ : {value: ["container", "items", "subtitle"]},
+            __module__ : {value: "book_list.item_list"}
+        });
+
+        function create_side_action() {
+            var icon = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+            var action = (arguments[1] === undefined || ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_side_action.__defaults__.action : arguments[1];
+            var tooltip = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_side_action.__defaults__.tooltip : arguments[2];
+            var ρσ_kwargs_obj = arguments[arguments.length-1];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "action")){
+                action = ρσ_kwargs_obj.action;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "tooltip")){
+                tooltip = ρσ_kwargs_obj.tooltip;
+            }
+            return (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["icon"] = icon;
+                ρσ_d["action"] = action;
+                ρσ_d["tooltip"] = tooltip;
+                return ρσ_d;
+            }).call(this);
+        };
+        if (!create_side_action.__defaults__) Object.defineProperties(create_side_action, {
+            __defaults__ : {value: {action:null, tooltip:null}},
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["icon", "action", "tooltip"]},
+            __module__ : {value: "book_list.item_list"}
+        });
+
+        function create_item() {
+            var title = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+            var action = (arguments[1] === undefined || ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_item.__defaults__.action : arguments[1];
+            var subtitle = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_item.__defaults__.subtitle : arguments[2];
+            var icon = (arguments[3] === undefined || ( 3 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_item.__defaults__.icon : arguments[3];
+            var data = (arguments[4] === undefined || ( 4 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_item.__defaults__.data : arguments[4];
+            var side_actions = (arguments[5] === undefined || ( 5 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_item.__defaults__.side_actions : arguments[5];
+            var ρσ_kwargs_obj = arguments[arguments.length-1];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "action")){
+                action = ρσ_kwargs_obj.action;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "subtitle")){
+                subtitle = ρσ_kwargs_obj.subtitle;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "icon")){
+                icon = ρσ_kwargs_obj.icon;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "data")){
+                data = ρσ_kwargs_obj.data;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "side_actions")){
+                side_actions = ρσ_kwargs_obj.side_actions;
+            }
+            return (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["title"] = title;
+                ρσ_d["action"] = action;
+                ρσ_d["subtitle"] = subtitle;
+                ρσ_d["icon"] = icon;
+                ρσ_d["data"] = data;
+                ρσ_d["side_actions"] = side_actions || [];
+                return ρσ_d;
+            }).call(this);
+        };
+        if (!create_item.__defaults__) Object.defineProperties(create_item, {
+            __defaults__ : {value: {action:null, subtitle:null, icon:null, data:null, side_actions:null}},
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["title", "action", "subtitle", "icon", "data", "side_actions"]},
+            __module__ : {value: "book_list.item_list"}
+        });
+
+        function create_item_list() {
+            var container = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+            var items = ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[1];
+            var subtitle = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_item_list.__defaults__.subtitle : arguments[2];
+            var ρσ_kwargs_obj = arguments[arguments.length-1];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "subtitle")){
+                subtitle = ρσ_kwargs_obj.subtitle;
+            }
+            build_list(container, items, subtitle);
+        };
+        if (!create_item_list.__defaults__) Object.defineProperties(create_item_list, {
+            __defaults__ : {value: {subtitle:null}},
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["container", "items", "subtitle"]},
+            __module__ : {value: "book_list.item_list"}
+        });
+
+        ρσ_modules["book_list.item_list"].CLASS_NAME = CLASS_NAME;
+        ρσ_modules["book_list.item_list"].side_action = side_action;
+        ρσ_modules["book_list.item_list"].build_list = build_list;
+        ρσ_modules["book_list.item_list"].create_side_action = create_side_action;
+        ρσ_modules["book_list.item_list"].create_item = create_item;
+        ρσ_modules["book_list.item_list"].create_item_list = create_item_list;
+    })();
+
+    (function(){
+        var __name__ = "read_book.open_book";
+        var current_container_id, current_opened_book_path;
+        var E = ρσ_modules.elementmaker.E;
+
+        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
+
+        var create_item = ρσ_modules["book_list.item_list"].create_item;
+        var create_item_list = ρσ_modules["book_list.item_list"].create_item_list;
+
+        var clear = ρσ_modules.dom.clear;
+        var unique_id = ρσ_modules.dom.unique_id;
+
+        var _ = ρσ_modules.gettext.gettext;
+
+        var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
+
+        var create_button = ρσ_modules.widgets.create_button;
+
+        current_container_id = null;
+        current_opened_book_path = null;
+        function create_open_book(container, book) {
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin: 1rem", id: unique_id()})]));
+            container = container.lastChild;
+            current_container_id = container.id;
+            current_opened_book_path = null;
+            if (book) {
+                current_opened_book_path = book.manifest.pathtoebook;
+            }
+            rebuild_open_list(container);
+        };
+        if (!create_open_book.__argnames__) Object.defineProperties(create_open_book, {
+            __argnames__ : {value: ["container", "book"]},
+            __module__ : {value: "read_book.open_book"}
+        });
+
+        function rebuild_open_list(container) {
+            var sd, rl, c, items, fname, entry;
+            clear(container);
+            container.appendChild(ρσ_interpolate_kwargs.call(this, create_button, [_("Open a book from your computer")].concat([ρσ_desugar_kwargs({action: ui_operations.ask_for_open.bind(null, null)})])));
+            sd = get_session_data();
+            rl = sd.get("standalone_recently_opened");
+            if ((typeof rl !== "undefined" && rl !== null ? rl : Object.create(null)).length) {
+                container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: unique_id()})]));
+                c = container.lastChild;
+                items = ρσ_list_decorate([]);
+                c.appendChild(ρσ_interpolate_kwargs.call(E, E.h2, [_("Recently viewed books")].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem"})])));
+                c.appendChild(E.div());
+                var ρσ_Iter0 = ρσ_Iterable(rl);
+                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                    entry = ρσ_Iter0[ρσ_Index0];
+                    if (current_opened_book_path && current_opened_book_path === entry.pathtoebook) {
+                        continue;
+                    }
+                    if (typeof entry.pathtoebook !== "string") {
+                        continue;
+                    }
+                    fname = entry.pathtoebook.replace(/\\/g, "/");
+                    if (ρσ_in("/", fname)) {
+                        fname = (ρσ_expr_temp = fname.rpartition("/"))[ρσ_expr_temp.length-1];
+                    }
+                    items.push(create_item(entry.title || _("Unknown"), ui_operations.ask_for_open.bind(null, entry.pathtoebook), fname));
+                }
+                create_item_list(c.lastChild, items);
+                c.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin: 1rem"})]));
+                c.lastChild.appendChild(ρσ_interpolate_kwargs.call(this, create_button, [_("Clear recent list")].concat([ρσ_desugar_kwargs({action: clear_recent_list.bind(null, c.id)})])));
+            }
+        };
+        if (!rebuild_open_list.__argnames__) Object.defineProperties(rebuild_open_list, {
+            __argnames__ : {value: ["container"]},
+            __module__ : {value: "read_book.open_book"}
+        });
+
+        function clear_recent_list(container_id) {
+            var sd;
+            sd = get_session_data();
+            sd.set("standalone_recently_opened", []);
+            document.getElementById(container_id).style.display = "none";
+        };
+        if (!clear_recent_list.__argnames__) Object.defineProperties(clear_recent_list, {
+            __argnames__ : {value: ["container_id"]},
+            __module__ : {value: "read_book.open_book"}
+        });
+
+        function add_book_to_recently_viewed(book) {
+            var sd, rl, key, new_entry, ans, entry;
+            sd = get_session_data();
+            rl = sd.get("standalone_recently_opened");
+            key = book.manifest.pathtoebook;
+            new_entry = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["key"] = key;
+                ρσ_d["pathtoebook"] = book.manifest.pathtoebook;
+                ρσ_d["title"] = book.metadata.title;
+                ρσ_d["authors"] = book.metadata.authors;
+                ρσ_d["timestamp"] = (new Date).toISOString();
+                return ρσ_d;
+            }).call(this);
+            ans = [];
+            ans.push(new_entry);
+            var ρσ_Iter1 = ρσ_Iterable(rl);
+            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                entry = ρσ_Iter1[ρσ_Index1];
+                if (entry.key !== key) {
+                    ans.push(entry);
+                }
+            }
+            sd.set("standalone_recently_opened", ans.slice(0, 25));
+            return ans;
+        };
+        if (!add_book_to_recently_viewed.__argnames__) Object.defineProperties(add_book_to_recently_viewed, {
+            __argnames__ : {value: ["book"]},
+            __module__ : {value: "read_book.open_book"}
+        });
+
+        function remove_recently_opened(path) {
+            var sd, rl, newl, entry, container;
+            sd = get_session_data();
+            rl = sd.get("standalone_recently_opened");
+            newl = [];
+            var ρσ_Iter2 = ρσ_Iterable(rl);
+            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                entry = ρσ_Iter2[ρσ_Index2];
+                if (entry.key !== path) {
+                    newl.push(entry);
+                }
+            }
+            sd.set("standalone_recently_opened", newl);
+            if (current_container_id) {
+                container = document.getElementById(current_container_id);
+                if (container) {
+                    rebuild_open_list(container);
+                }
+            }
+        };
+        if (!remove_recently_opened.__argnames__) Object.defineProperties(remove_recently_opened, {
+            __argnames__ : {value: ["path"]},
+            __module__ : {value: "read_book.open_book"}
+        });
+
+        ρσ_modules["read_book.open_book"].current_container_id = current_container_id;
+        ρσ_modules["read_book.open_book"].current_opened_book_path = current_opened_book_path;
+        ρσ_modules["read_book.open_book"].create_open_book = create_open_book;
+        ρσ_modules["read_book.open_book"].rebuild_open_list = rebuild_open_list;
+        ρσ_modules["read_book.open_book"].clear_recent_list = clear_recent_list;
+        ρσ_modules["read_book.open_book"].add_book_to_recently_viewed = add_book_to_recently_viewed;
+        ρσ_modules["read_book.open_book"].remove_recently_opened = remove_recently_opened;
+    })();
+
+    (function(){
+        var __name__ = "read_book.prefs";
+
+    })();
+
+    (function(){
+        var __name__ = "read_book.prefs.utils";
+        var E = ρσ_modules.elementmaker.E;
+
+        var _ = ρσ_modules.gettext.gettext;
+
+        var create_button = ρσ_modules.widgets.create_button;
+
+        function create_button_box(restore_defaults_func, apply_func, cancel_func) {
+            var cbutton, rbutton, obutton, b;
+            cbutton = ρσ_interpolate_kwargs.call(this, create_button, [_("Cancel")].concat([ρσ_desugar_kwargs({action: cancel_func})]));
+            if (restore_defaults_func) {
+                rbutton = ρσ_interpolate_kwargs.call(this, create_button, [_("Restore defaults")].concat([ρσ_desugar_kwargs({action: restore_defaults_func})]));
+            } else {
+                rbutton = E.div(" ");
+            }
+            obutton = ρσ_interpolate_kwargs.call(this, create_button, [_("OK")].concat([ρσ_desugar_kwargs({action: apply_func})]));
+            var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ rbutton, obutton, cbutton ]));
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                b = ρσ_Iter0[ρσ_Index0];
+                b.style.marginTop = "1ex";
+            }
+            return ρσ_interpolate_kwargs.call(E, E.div, [rbutton, ρσ_interpolate_kwargs.call(E, E.div, [obutton, E.div(" "), cbutton].concat([ρσ_desugar_kwargs({style: "margin-left: 1rem; display: flex; align-items: flex-start; flex-wrap: wrap"})]))].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem; display: flex; justify-content: space-between; align-items: flex-start"})]));
+        };
+        if (!create_button_box.__argnames__) Object.defineProperties(create_button_box, {
+            __argnames__ : {value: ["restore_defaults_func", "apply_func", "cancel_func"]},
+            __module__ : {value: "read_book.prefs.utils"}
+        });
+
+        ρσ_modules["read_book.prefs.utils"].create_button_box = create_button_box;
+    })();
+
+    (function(){
+        var __name__ = "read_book.prefs.head_foot";
+        var CONTAINER, time_formatter;
+        var E = ρσ_modules.elementmaker.E;
+
+        var _ = ρσ_modules.gettext.gettext;
+        var ngettext = ρσ_modules.gettext.ngettext;
+
+        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
+
+        var unique_id = ρσ_modules.dom.unique_id;
+
+        var create_button_box = ρσ_modules["read_book.prefs.utils"].create_button_box;
+
+        var defaults = ρσ_modules.session.defaults;
+        var get_interface_data = ρσ_modules.session.get_interface_data;
+
+        var fmt_sidx = ρσ_modules.utils.fmt_sidx;
+
+        CONTAINER = unique_id("reader-hf-prefs");
+        function create_item(region, label, style) {
+            function sep() {
+                return ρσ_interpolate_kwargs.call(E, E.option, [" "].concat([ρσ_desugar_kwargs({disabled: true})]));
+            };
+            if (!sep.__module__) Object.defineProperties(sep, {
+                __module__ : {value: "read_book.prefs.head_foot"}
+            });
+
+            function opt(label, name, selected) {
+                return ρσ_interpolate_kwargs.call(E, E.option, [label].concat([ρσ_desugar_kwargs({id: name, value: name, selected: bool(selected)})]));
+            };
+            if (!opt.__argnames__) Object.defineProperties(opt, {
+                __argnames__ : {value: ["label", "name", "selected"]},
+                __module__ : {value: "read_book.prefs.head_foot"}
+            });
+
+            return ρσ_interpolate_kwargs.call(E, E.tr, [ρσ_interpolate_kwargs.call(E, E.td, [label + ":"].concat([ρσ_desugar_kwargs({style: "padding: 1ex 1rem"})])), E.td(ρσ_interpolate_kwargs.call(E, E.select, [opt(_("Empty"), "empty", true), sep(), opt(_("Book title"), "title"), opt(_("Authors"), "authors"), opt(_("Series"), "series"), sep(), opt(_("Top level section"), "top-section"), opt(_("Current section"), "section"), sep(), opt(_("Clock"), "clock"), sep(), opt(_("Progress"), "progress"), opt(_("Time to read book"), "time-book"), opt(_("Time to read chapter"), "time-chapter"), opt(_("Time to read chapter and book"), "time-chapter-book"), opt(_("Position in book"), "pos-book"), opt(_("Position in chapter"), "pos-chapter"), opt(_("Pages in chapter"), "pages-progress")].concat([ρσ_desugar_kwargs({data_region: region})])))].concat([ρσ_desugar_kwargs({style: style || ""})]));
+        };
+        if (!create_item.__argnames__) Object.defineProperties(create_item, {
+            __argnames__ : {value: ["region", "label", "style"]},
+            __module__ : {value: "read_book.prefs.head_foot"}
+        });
+
+        function create_items(which) {
+            var ans;
+            if (which === "header" || which === "footer") {
+                ans = ρσ_interpolate_kwargs.call(E, E.table, [create_item("left", _("Left")), create_item("middle", _("Middle")), create_item("right", _("Right"))].concat([ρσ_desugar_kwargs({data_which: which})]));
+            } else if (which === "controls_footer") {
+                ans = ρσ_interpolate_kwargs.call(E, E.table, [create_item("left", _("Left"), "display: none"), create_item("middle", _("Middle")), create_item("right", _("Right"))].concat([ρσ_desugar_kwargs({data_which: which})]));
+            } else {
+                ans = ρσ_interpolate_kwargs.call(E, E.table, [create_item("left", _("Top")), create_item("middle", _("Middle")), create_item("right", _("Bottom"))].concat([ρσ_desugar_kwargs({data_which: which})]));
+            }
+            return ans;
+        };
+        if (!create_items.__argnames__) Object.defineProperties(create_items, {
+            __argnames__ : {value: ["which"]},
+            __module__ : {value: "read_book.prefs.head_foot"}
+        });
+
+        function apply_setting(table, val) {
+            var sel, opt, x, region;
+            var ρσ_Iter0 = ρσ_Iterable("left middle right".split(" "));
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                region = ρσ_Iter0[ρσ_Index0];
+                sel = table.querySelector("select[data-region=" + ρσ_str.format("{}", region) + "]");
+                var ρσ_Iter1 = ρσ_Iterable(sel.selectedOptions);
+                for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                    opt = ρσ_Iter1[ρσ_Index1];
+                    opt.selected = false;
+                }
+                x = val[(typeof region === "number" && region < 0) ? val.length + region : region] || "empty";
+                opt = sel.namedItem(x);
+                if (opt) {
+                    opt.selected = true;
+                } else {
+                    sel.selectedIndex = 0;
+                }
+            }
+        };
+        if (!apply_setting.__argnames__) Object.defineProperties(apply_setting, {
+            __argnames__ : {value: ["table", "val"]},
+            __module__ : {value: "read_book.prefs.head_foot"}
+        });
+
+        function get_setting(table) {
+            var ans, sel, region;
+            ans = Object.create(null);
+            var ρσ_Iter2 = ρσ_Iterable("left middle right".split(" "));
+            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                region = ρσ_Iter2[ρσ_Index2];
+                sel = table.querySelector("select[data-region=" + ρσ_str.format("{}", region) + "]");
+                if (sel.selectedIndex > -1) {
+                    ans[(typeof region === "number" && region < 0) ? ans.length + region : region] = (ρσ_expr_temp = sel.options)[ρσ_bound_index(sel.selectedIndex, ρσ_expr_temp)].value;
+                }
+            }
+            return ans;
+        };
+        if (!get_setting.__argnames__) Object.defineProperties(get_setting, {
+            __argnames__ : {value: ["table"]},
+            __module__ : {value: "read_book.prefs.head_foot"}
+        });
+
+        function groups() {
+            return (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["header"] = _("Header");
+                ρσ_d["footer"] = _("Footer");
+                ρσ_d["left-margin"] = _("Left margin");
+                ρσ_d["right-margin"] = _("Right margin");
+                ρσ_d["controls_footer"] = _("Controls footer");
+                return ρσ_d;
+            }).call(this);
+        };
+        if (!groups.__module__) Object.defineProperties(groups, {
+            __module__ : {value: "read_book.prefs.head_foot"}
+        });
+
+        function restore_defaults() {
+            var container, table, which;
+            container = document.getElementById(CONTAINER);
+            var ρσ_Iter3 = ρσ_Iterable(Object.keys(groups()));
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                which = ρσ_Iter3[ρσ_Index3];
+                table = container.querySelector("table[data-which=" + ρσ_str.format("{}", which) + "]");
+                apply_setting(table, defaults[(typeof which === "number" && which < 0) ? defaults.length + which : which] || Object.create(null));
+            }
+        };
+        if (!restore_defaults.__module__) Object.defineProperties(restore_defaults, {
+            __module__ : {value: "read_book.prefs.head_foot"}
+        });
+
+        function create_head_foot_panel(container, apply_func, cancel_func) {
+            var gr, s, key, sd, table, which;
+            gr = groups();
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: CONTAINER})]));
+            container = container.lastChild;
+            var ρσ_Iter4 = ρσ_Iterable(gr);
+            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                key = ρσ_Iter4[ρσ_Index4];
+                s = "margin: 1rem;";
+                if (container.childNodes.length > 0) {
+                    s += "margin-top: 0;";
+                }
+                container.appendChild(ρσ_interpolate_kwargs.call(E, E.h4, [gr[(typeof key === "number" && key < 0) ? gr.length + key : key]].concat([ρσ_desugar_kwargs({style: s})])));
+                container.appendChild(create_items(key));
+                container.appendChild(E.hr());
+            }
+            container.removeChild(container.lastChild);
+            sd = get_session_data();
+            var ρσ_Iter5 = ρσ_Iterable(Object.keys(gr));
+            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                which = ρσ_Iter5[ρσ_Index5];
+                table = container.querySelector("table[data-which=" + ρσ_str.format("{}", which) + "]");
+                apply_setting(table, sd.get(which) || Object.create(null));
+            }
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [create_button_box(restore_defaults, apply_func, cancel_func)].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
+        };
+        if (!create_head_foot_panel.__argnames__) Object.defineProperties(create_head_foot_panel, {
+            __argnames__ : {value: ["container", "apply_func", "cancel_func"]},
+            __module__ : {value: "read_book.prefs.head_foot"}
+        });
+
+        function commit_head_foot(onchange, container) {
+            var sd, changed, prev, table, current, region, which;
+            sd = get_session_data();
+            changed = false;
+            var ρσ_Iter6 = ρσ_Iterable(Object.keys(groups()));
+            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                which = ρσ_Iter6[ρσ_Index6];
+                prev = sd.get(which) || Object.create(null);
+                table = container.querySelector("table[data-which=" + ρσ_str.format("{}", which) + "]");
+                current = get_setting(table);
+                var ρσ_Iter7 = ρσ_Iterable("left middle right".split(" "));
+                for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                    region = ρσ_Iter7[ρσ_Index7];
+                    if (prev[(typeof region === "number" && region < 0) ? prev.length + region : region] !== current[(typeof region === "number" && region < 0) ? current.length + region : region]) {
+                        changed = true;
+                    }
+                }
+                sd.set(which, get_setting(table));
+            }
+            if (changed) {
+                onchange();
+            }
+        };
+        if (!commit_head_foot.__argnames__) Object.defineProperties(commit_head_foot, {
+            __argnames__ : {value: ["onchange", "container"]},
+            __module__ : {value: "read_book.prefs.head_foot"}
+        });
+
+        if (ρσ_exists.d((typeof window !== "undefined" && window !== null ? window : Object.create(null)).Intl).DateTimeFormat) {
+            time_formatter = window.Intl.DateTimeFormat(undefined, (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["hour"] = "numeric";
+                ρσ_d["minute"] = "numeric";
+                return ρσ_d;
+            }).call(this));
+        } else {
+            time_formatter = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["format"] = (function() {
+                    var ρσ_anonfunc = function (date) {
+                        return "{}:{}".format(date.getHours(), date.getMinutes());
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["date"]},
+                        __module__ : {value: "read_book.prefs.head_foot"}
+                    });
+                    return ρσ_anonfunc;
+                })();
+                return ρσ_d;
+            }).call(this);
+        }
+        function set_time_formatter(func) {
+            time_formatter = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["format"] = func;
+                return ρσ_d;
+            }).call(this);
+        };
+        if (!set_time_formatter.__argnames__) Object.defineProperties(set_time_formatter, {
+            __argnames__ : {value: ["func"]},
+            __module__ : {value: "read_book.prefs.head_foot"}
+        });
+
+        function format_time_left(seconds) {
+            var ρσ_unpack, hours, minutes;
+            ρσ_unpack = divmod(int(seconds / 60), 60);
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+            hours = ρσ_unpack[0];
+            minutes = ρσ_unpack[1];
+            if (hours <= 0) {
+                if (minutes < 1) {
+                    return _("almost done");
+                }
+                minutes = minutes;
+                return ngettext("{} min", "{} mins", minutes).format(minutes);
+            }
+            if (!minutes) {
+                return ngettext("{} hour", "{} hours", hours).format(hours);
+            }
+            return _("{} h {} mins").format(hours, minutes);
+        };
+        if (!format_time_left.__argnames__) Object.defineProperties(format_time_left, {
+            __argnames__ : {value: ["seconds"]},
+            __module__ : {value: "read_book.prefs.head_foot"}
+        });
+
+        function format_pos(progress_frac, length) {
+            var pages, pos;
+            if (length < 1) {
+                return "";
+            }
+            pages = Math.ceil(length / 1e3);
+            pos = progress_frac * pages;
+            return "" + ρσ_str.format("{:.1f}", pos) + " / " + ρσ_str.format("{}", pages) + "";
+        };
+        if (!format_pos.__argnames__) Object.defineProperties(format_pos, {
+            __argnames__ : {value: ["progress_frac", "length"]},
+            __module__ : {value: "read_book.prefs.head_foot"}
+        });
+
+        function render_head_foot(div, which, region, metadata, current_toc_node, current_toc_toplevel_node, book_time, chapter_time, pos, override) {
+            var template, field, interface_data, text, has_clock, percent, ival;
+            template = get_session_data().get(which) || Object.create(null);
+            field = template[(typeof region === "number" && region < 0) ? template.length + region : region] || "empty";
+            interface_data = get_interface_data();
+            text = "";
+            has_clock = false;
+            if (override) {
+                text = override;
+            } else if (field === "progress") {
+                percent = min(100, max(Math.round(pos.progress_frac * 100), 0));
+                text = percent + "%";
+            } else if (field === "title") {
+                text = metadata.title || _("Untitled");
+            } else if (field === "authors") {
+                text = " & ".join(metadata.authors || []);
+            } else if (field === "series") {
+                if (metadata.series) {
+                    ival = ρσ_interpolate_kwargs.call(this, fmt_sidx, [metadata.series_index].concat([ρσ_desugar_kwargs({use_roman: interface_data.use_roman_numerals_for_series_number})]));
+                    text = _("{0} of {1}").format(ival, metadata.series);
+                }
+            } else if (field === "clock") {
+                text = time_formatter.format(new Date);
+                has_clock = true;
+            } else if (field === "section") {
+                text = (current_toc_node) ? current_toc_node.title : "";
+            } else if (field === "top-section") {
+                text = (current_toc_toplevel_node) ? current_toc_toplevel_node.title : "";
+                if (!text) {
+                    text = (current_toc_node) ? current_toc_node.title : "";
+                }
+            } else if (field.startswith("time-")) {
+                if (book_time === null || chapter_time === null) {
+                    text = _("Calculating...");
+                } else {
+                    if (field === "time-book") {
+                        text = format_time_left(book_time);
+                    } else if (field === "time-chapter") {
+                        text = format_time_left(chapter_time);
+                    } else {
+                        text = "{} ({})".format(format_time_left(chapter_time), format_time_left(book_time));
+                    }
+                }
+            } else if (field.startswith("pos-")) {
+                if (field === "pos-book") {
+                    text = format_pos(pos.progress_frac, pos.book_length);
+                } else {
+                    text = format_pos(pos.file_progress_frac, pos.chapter_length);
+                }
+            } else if (field === "pages-progress") {
+                if (pos.page_counts) {
+                    text = "" + ρσ_str.format("{}", pos.page_counts.current + 1) + " / " + ρσ_str.format("{}", pos.page_counts.total) + "";
+                } else {
+                    text = _("Unknown");
+                }
+            }
+            if (!text) {
+                text = " ";
+            }
+            if (text !== div.textContent) {
+                div.textContent = text;
+            }
+            return has_clock;
+        };
+        if (!render_head_foot.__argnames__) Object.defineProperties(render_head_foot, {
+            __argnames__ : {value: ["div", "which", "region", "metadata", "current_toc_node", "current_toc_toplevel_node", "book_time", "chapter_time", "pos", "override"]},
+            __module__ : {value: "read_book.prefs.head_foot"}
+        });
+
+        ρσ_modules["read_book.prefs.head_foot"].CONTAINER = CONTAINER;
+        ρσ_modules["read_book.prefs.head_foot"].time_formatter = time_formatter;
+        ρσ_modules["read_book.prefs.head_foot"].create_item = create_item;
+        ρσ_modules["read_book.prefs.head_foot"].create_items = create_items;
+        ρσ_modules["read_book.prefs.head_foot"].apply_setting = apply_setting;
+        ρσ_modules["read_book.prefs.head_foot"].get_setting = get_setting;
+        ρσ_modules["read_book.prefs.head_foot"].groups = groups;
+        ρσ_modules["read_book.prefs.head_foot"].restore_defaults = restore_defaults;
+        ρσ_modules["read_book.prefs.head_foot"].create_head_foot_panel = create_head_foot_panel;
+        ρσ_modules["read_book.prefs.head_foot"].commit_head_foot = commit_head_foot;
+        ρσ_modules["read_book.prefs.head_foot"].set_time_formatter = set_time_formatter;
+        ρσ_modules["read_book.prefs.head_foot"].format_time_left = format_time_left;
+        ρσ_modules["read_book.prefs.head_foot"].format_pos = format_pos;
+        ρσ_modules["read_book.prefs.head_foot"].render_head_foot = render_head_foot;
+    })();
+
+    (function(){
         var __name__ = "book_list.ui";
         var panel_handlers, default_panel_handler;
         var ensure_id = ρσ_modules.dom.ensure_id;
@@ -28287,206 +29023,6 @@ return this.__repr__();
         ρσ_modules["book_list.ui"].query_as_href = query_as_href;
         ρσ_modules["book_list.ui"].show_panel = show_panel;
         ρσ_modules["book_list.ui"].apply_url_state = apply_url_state;
-    })();
-
-    (function(){
-        var __name__ = "book_list.item_list";
-        var CLASS_NAME;
-        var build_rule = ρσ_modules.dom.build_rule;
-        var svgicon = ρσ_modules.dom.svgicon;
-        var add_extra_css = ρσ_modules.dom.add_extra_css;
-        var clear = ρσ_modules.dom.clear;
-
-        var E = ρσ_modules.elementmaker.E;
-
-        var get_font_size = ρσ_modules["book_list.theme"].get_font_size;
-        var get_color = ρσ_modules["book_list.theme"].get_color;
-
-        CLASS_NAME = "generic-items-list";
-        add_extra_css((function() {
-            var ρσ_anonfunc = function () {
-                var sel, style;
-                sel = "." + CLASS_NAME + " ";
-                style = "";
-                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + "li"].concat([ρσ_desugar_kwargs({padding: "0", border_bottom: "solid 1px " + get_color("window-foreground"), border_top: "solid 1px " + get_color("window-background"), cursor: "pointer", list_style: "none"})]));
-                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".item-title"].concat([ρσ_desugar_kwargs({font_size: get_font_size("item-list-title")})]));
-                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .item-subtitle"].concat([ρσ_desugar_kwargs({font_size: get_font_size("item-list-subtitle"), font_style: "italic"})]));
-                sel += " li > div:nth-child(1)";
-                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({padding: "1rem"})]));
-                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ":hover"].concat([ρσ_desugar_kwargs({color: get_color("list-hover-foreground"), background_color: get_color("list-hover-background"), border_top_color: get_color("list-hover-foreground")})]));
-                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ":active"].concat([ρσ_desugar_kwargs({transform: "scale(1, 1.5)"})]));
-                return style;
-            };
-            if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
-                __module__ : {value: "book_list.item_list"}
-            });
-            return ρσ_anonfunc;
-        })());
-        function side_action(action, ev) {
-            var li;
-            [ev.stopPropagation(), ev.preventDefault()];
-            if (action) {
-                li = ev.currentTarget.closest("li");
-                action(li);
-            }
-        };
-        if (!side_action.__argnames__) Object.defineProperties(side_action, {
-            __argnames__ : {value: ["action", "ev"]},
-            __module__ : {value: "book_list.item_list"}
-        });
-
-        function build_list(container, items, subtitle) {
-            var c, ul, has_icons, item, ic, li, s, x;
-            c = container;
-            clear(c);
-            c.classList.add(CLASS_NAME);
-            if (subtitle) {
-                c.appendChild(ρσ_interpolate_kwargs.call(E, E.p, [subtitle].concat([ρσ_desugar_kwargs({style: "font-style:italic; padding: 1em 1ex; border-bottom: solid 1px currentColor"})])));
-            }
-            ul = E.ul();
-            c.appendChild(ul);
-            has_icons = false;
-            var ρσ_Iter0 = ρσ_Iterable(items);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                item = ρσ_Iter0[ρσ_Index0];
-                if (item.icon) {
-                    has_icons = true;
-                    break;
-                }
-            }
-            var ρσ_Iter1 = ρσ_Iterable(items);
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                item = ρσ_Iter1[ρσ_Index1];
-                ic = "";
-                if (has_icons) {
-                    if (item.icon) {
-                        ic = svgicon(item.icon);
-                    }
-                    ic = E.span(ic, " ");
-                }
-                li = E.li(ρσ_interpolate_kwargs.call(E, E.div, [ic, item.title].concat([ρσ_desugar_kwargs({class_: "item-title"})])));
-                ul.appendChild(li);
-                if (item.subtitle) {
-                    li.firstChild.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [item.subtitle].concat([ρσ_desugar_kwargs({class_: "item-subtitle", style: "padding-top:1ex"})])));
-                }
-                if (item.action) {
-                    li.addEventListener("click", item.action);
-                }
-                if (item.data) {
-                    li.dataset.userData = item.data;
-                }
-                if (ρσ_exists.d(item.side_actions).length) {
-                    s = li.style;
-                    s.display = "flex";
-                    s.alignItems = "center";
-                    li.firstChild.style.flexGrow = "10";
-                    li.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "display: flex; align-items: center; margin-left: 0.5rem"})]));
-                    var ρσ_Iter2 = ρσ_Iterable(item.side_actions);
-                    for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                        x = ρσ_Iter2[ρσ_Index2];
-                        li.lastChild.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [svgicon(x.icon)].concat([ρσ_desugar_kwargs({class_: "simple-link", style: "padding: 0.5rem", title: x.tooltip || "", onclick: side_action.bind(null, x.action)})])));
-                    }
-                }
-            }
-        };
-        if (!build_list.__argnames__) Object.defineProperties(build_list, {
-            __argnames__ : {value: ["container", "items", "subtitle"]},
-            __module__ : {value: "book_list.item_list"}
-        });
-
-        function create_side_action() {
-            var icon = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
-            var action = (arguments[1] === undefined || ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_side_action.__defaults__.action : arguments[1];
-            var tooltip = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_side_action.__defaults__.tooltip : arguments[2];
-            var ρσ_kwargs_obj = arguments[arguments.length-1];
-            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "action")){
-                action = ρσ_kwargs_obj.action;
-            }
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "tooltip")){
-                tooltip = ρσ_kwargs_obj.tooltip;
-            }
-            return (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["icon"] = icon;
-                ρσ_d["action"] = action;
-                ρσ_d["tooltip"] = tooltip;
-                return ρσ_d;
-            }).call(this);
-        };
-        if (!create_side_action.__defaults__) Object.defineProperties(create_side_action, {
-            __defaults__ : {value: {action:null, tooltip:null}},
-            __handles_kwarg_interpolation__ : {value: true},
-            __argnames__ : {value: ["icon", "action", "tooltip"]},
-            __module__ : {value: "book_list.item_list"}
-        });
-
-        function create_item() {
-            var title = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
-            var action = (arguments[1] === undefined || ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_item.__defaults__.action : arguments[1];
-            var subtitle = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_item.__defaults__.subtitle : arguments[2];
-            var icon = (arguments[3] === undefined || ( 3 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_item.__defaults__.icon : arguments[3];
-            var data = (arguments[4] === undefined || ( 4 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_item.__defaults__.data : arguments[4];
-            var side_actions = (arguments[5] === undefined || ( 5 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_item.__defaults__.side_actions : arguments[5];
-            var ρσ_kwargs_obj = arguments[arguments.length-1];
-            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "action")){
-                action = ρσ_kwargs_obj.action;
-            }
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "subtitle")){
-                subtitle = ρσ_kwargs_obj.subtitle;
-            }
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "icon")){
-                icon = ρσ_kwargs_obj.icon;
-            }
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "data")){
-                data = ρσ_kwargs_obj.data;
-            }
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "side_actions")){
-                side_actions = ρσ_kwargs_obj.side_actions;
-            }
-            return (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["title"] = title;
-                ρσ_d["action"] = action;
-                ρσ_d["subtitle"] = subtitle;
-                ρσ_d["icon"] = icon;
-                ρσ_d["data"] = data;
-                ρσ_d["side_actions"] = side_actions || [];
-                return ρσ_d;
-            }).call(this);
-        };
-        if (!create_item.__defaults__) Object.defineProperties(create_item, {
-            __defaults__ : {value: {action:null, subtitle:null, icon:null, data:null, side_actions:null}},
-            __handles_kwarg_interpolation__ : {value: true},
-            __argnames__ : {value: ["title", "action", "subtitle", "icon", "data", "side_actions"]},
-            __module__ : {value: "book_list.item_list"}
-        });
-
-        function create_item_list() {
-            var container = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
-            var items = ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[1];
-            var subtitle = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_item_list.__defaults__.subtitle : arguments[2];
-            var ρσ_kwargs_obj = arguments[arguments.length-1];
-            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "subtitle")){
-                subtitle = ρσ_kwargs_obj.subtitle;
-            }
-            build_list(container, items, subtitle);
-        };
-        if (!create_item_list.__defaults__) Object.defineProperties(create_item_list, {
-            __defaults__ : {value: {subtitle:null}},
-            __handles_kwarg_interpolation__ : {value: true},
-            __argnames__ : {value: ["container", "items", "subtitle"]},
-            __module__ : {value: "book_list.item_list"}
-        });
-
-        ρσ_modules["book_list.item_list"].CLASS_NAME = CLASS_NAME;
-        ρσ_modules["book_list.item_list"].side_action = side_action;
-        ρσ_modules["book_list.item_list"].build_list = build_list;
-        ρσ_modules["book_list.item_list"].create_side_action = create_side_action;
-        ρσ_modules["book_list.item_list"].create_item = create_item;
-        ρσ_modules["book_list.item_list"].create_item_list = create_item_list;
     })();
 
     (function(){
@@ -28977,390 +29513,6 @@ return this.__repr__();
     })();
 
     (function(){
-        var __name__ = "read_book.prefs";
-
-    })();
-
-    (function(){
-        var __name__ = "read_book.prefs.utils";
-        var E = ρσ_modules.elementmaker.E;
-
-        var _ = ρσ_modules.gettext.gettext;
-
-        var create_button = ρσ_modules.widgets.create_button;
-
-        function create_button_box(restore_defaults_func, apply_func, cancel_func) {
-            var cbutton, rbutton, obutton, b;
-            cbutton = ρσ_interpolate_kwargs.call(this, create_button, [_("Cancel")].concat([ρσ_desugar_kwargs({action: cancel_func})]));
-            if (restore_defaults_func) {
-                rbutton = ρσ_interpolate_kwargs.call(this, create_button, [_("Restore defaults")].concat([ρσ_desugar_kwargs({action: restore_defaults_func})]));
-            } else {
-                rbutton = E.div(" ");
-            }
-            obutton = ρσ_interpolate_kwargs.call(this, create_button, [_("OK")].concat([ρσ_desugar_kwargs({action: apply_func})]));
-            var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ rbutton, obutton, cbutton ]));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                b = ρσ_Iter0[ρσ_Index0];
-                b.style.marginTop = "1ex";
-            }
-            return ρσ_interpolate_kwargs.call(E, E.div, [rbutton, ρσ_interpolate_kwargs.call(E, E.div, [obutton, E.div(" "), cbutton].concat([ρσ_desugar_kwargs({style: "margin-left: 1rem; display: flex; align-items: flex-start; flex-wrap: wrap"})]))].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem; display: flex; justify-content: space-between; align-items: flex-start"})]));
-        };
-        if (!create_button_box.__argnames__) Object.defineProperties(create_button_box, {
-            __argnames__ : {value: ["restore_defaults_func", "apply_func", "cancel_func"]},
-            __module__ : {value: "read_book.prefs.utils"}
-        });
-
-        ρσ_modules["read_book.prefs.utils"].create_button_box = create_button_box;
-    })();
-
-    (function(){
-        var __name__ = "read_book.prefs.head_foot";
-        var CONTAINER, time_formatter;
-        var E = ρσ_modules.elementmaker.E;
-
-        var _ = ρσ_modules.gettext.gettext;
-        var ngettext = ρσ_modules.gettext.ngettext;
-
-        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
-
-        var unique_id = ρσ_modules.dom.unique_id;
-
-        var create_button_box = ρσ_modules["read_book.prefs.utils"].create_button_box;
-
-        var defaults = ρσ_modules.session.defaults;
-        var get_interface_data = ρσ_modules.session.get_interface_data;
-
-        var fmt_sidx = ρσ_modules.utils.fmt_sidx;
-
-        CONTAINER = unique_id("reader-hf-prefs");
-        function create_item(region, label, style) {
-            function sep() {
-                return ρσ_interpolate_kwargs.call(E, E.option, [" "].concat([ρσ_desugar_kwargs({disabled: true})]));
-            };
-            if (!sep.__module__) Object.defineProperties(sep, {
-                __module__ : {value: "read_book.prefs.head_foot"}
-            });
-
-            function opt(label, name, selected) {
-                return ρσ_interpolate_kwargs.call(E, E.option, [label].concat([ρσ_desugar_kwargs({id: name, value: name, selected: bool(selected)})]));
-            };
-            if (!opt.__argnames__) Object.defineProperties(opt, {
-                __argnames__ : {value: ["label", "name", "selected"]},
-                __module__ : {value: "read_book.prefs.head_foot"}
-            });
-
-            return ρσ_interpolate_kwargs.call(E, E.tr, [ρσ_interpolate_kwargs.call(E, E.td, [label + ":"].concat([ρσ_desugar_kwargs({style: "padding: 1ex 1rem"})])), E.td(ρσ_interpolate_kwargs.call(E, E.select, [opt(_("Empty"), "empty", true), sep(), opt(_("Book title"), "title"), opt(_("Authors"), "authors"), opt(_("Series"), "series"), sep(), opt(_("Top level section"), "top-section"), opt(_("Current section"), "section"), sep(), opt(_("Clock"), "clock"), sep(), opt(_("Progress"), "progress"), opt(_("Time to read book"), "time-book"), opt(_("Time to read chapter"), "time-chapter"), opt(_("Time to read chapter and book"), "time-chapter-book"), opt(_("Position in book"), "pos-book"), opt(_("Position in chapter"), "pos-chapter"), opt(_("Pages in chapter"), "pages-progress")].concat([ρσ_desugar_kwargs({data_region: region})])))].concat([ρσ_desugar_kwargs({style: style || ""})]));
-        };
-        if (!create_item.__argnames__) Object.defineProperties(create_item, {
-            __argnames__ : {value: ["region", "label", "style"]},
-            __module__ : {value: "read_book.prefs.head_foot"}
-        });
-
-        function create_items(which) {
-            var ans;
-            if (which === "header" || which === "footer") {
-                ans = ρσ_interpolate_kwargs.call(E, E.table, [create_item("left", _("Left")), create_item("middle", _("Middle")), create_item("right", _("Right"))].concat([ρσ_desugar_kwargs({data_which: which})]));
-            } else if (which === "controls_footer") {
-                ans = ρσ_interpolate_kwargs.call(E, E.table, [create_item("left", _("Left"), "display: none"), create_item("middle", _("Middle")), create_item("right", _("Right"))].concat([ρσ_desugar_kwargs({data_which: which})]));
-            } else {
-                ans = ρσ_interpolate_kwargs.call(E, E.table, [create_item("left", _("Top")), create_item("middle", _("Middle")), create_item("right", _("Bottom"))].concat([ρσ_desugar_kwargs({data_which: which})]));
-            }
-            return ans;
-        };
-        if (!create_items.__argnames__) Object.defineProperties(create_items, {
-            __argnames__ : {value: ["which"]},
-            __module__ : {value: "read_book.prefs.head_foot"}
-        });
-
-        function apply_setting(table, val) {
-            var sel, opt, x, region;
-            var ρσ_Iter0 = ρσ_Iterable("left middle right".split(" "));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                region = ρσ_Iter0[ρσ_Index0];
-                sel = table.querySelector("select[data-region=" + ρσ_str.format("{}", region) + "]");
-                var ρσ_Iter1 = ρσ_Iterable(sel.selectedOptions);
-                for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                    opt = ρσ_Iter1[ρσ_Index1];
-                    opt.selected = false;
-                }
-                x = val[(typeof region === "number" && region < 0) ? val.length + region : region] || "empty";
-                opt = sel.namedItem(x);
-                if (opt) {
-                    opt.selected = true;
-                } else {
-                    sel.selectedIndex = 0;
-                }
-            }
-        };
-        if (!apply_setting.__argnames__) Object.defineProperties(apply_setting, {
-            __argnames__ : {value: ["table", "val"]},
-            __module__ : {value: "read_book.prefs.head_foot"}
-        });
-
-        function get_setting(table) {
-            var ans, sel, region;
-            ans = Object.create(null);
-            var ρσ_Iter2 = ρσ_Iterable("left middle right".split(" "));
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                region = ρσ_Iter2[ρσ_Index2];
-                sel = table.querySelector("select[data-region=" + ρσ_str.format("{}", region) + "]");
-                if (sel.selectedIndex > -1) {
-                    ans[(typeof region === "number" && region < 0) ? ans.length + region : region] = (ρσ_expr_temp = sel.options)[ρσ_bound_index(sel.selectedIndex, ρσ_expr_temp)].value;
-                }
-            }
-            return ans;
-        };
-        if (!get_setting.__argnames__) Object.defineProperties(get_setting, {
-            __argnames__ : {value: ["table"]},
-            __module__ : {value: "read_book.prefs.head_foot"}
-        });
-
-        function groups() {
-            return (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["header"] = _("Header");
-                ρσ_d["footer"] = _("Footer");
-                ρσ_d["left-margin"] = _("Left margin");
-                ρσ_d["right-margin"] = _("Right margin");
-                ρσ_d["controls_footer"] = _("Controls footer");
-                return ρσ_d;
-            }).call(this);
-        };
-        if (!groups.__module__) Object.defineProperties(groups, {
-            __module__ : {value: "read_book.prefs.head_foot"}
-        });
-
-        function restore_defaults() {
-            var container, table, which;
-            container = document.getElementById(CONTAINER);
-            var ρσ_Iter3 = ρσ_Iterable(Object.keys(groups()));
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                which = ρσ_Iter3[ρσ_Index3];
-                table = container.querySelector("table[data-which=" + ρσ_str.format("{}", which) + "]");
-                apply_setting(table, defaults[(typeof which === "number" && which < 0) ? defaults.length + which : which] || Object.create(null));
-            }
-        };
-        if (!restore_defaults.__module__) Object.defineProperties(restore_defaults, {
-            __module__ : {value: "read_book.prefs.head_foot"}
-        });
-
-        function create_head_foot_panel(container, apply_func, cancel_func) {
-            var gr, s, key, sd, table, which;
-            gr = groups();
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: CONTAINER})]));
-            container = container.lastChild;
-            var ρσ_Iter4 = ρσ_Iterable(gr);
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                key = ρσ_Iter4[ρσ_Index4];
-                s = "margin: 1rem;";
-                if (container.childNodes.length > 0) {
-                    s += "margin-top: 0;";
-                }
-                container.appendChild(ρσ_interpolate_kwargs.call(E, E.h4, [gr[(typeof key === "number" && key < 0) ? gr.length + key : key]].concat([ρσ_desugar_kwargs({style: s})])));
-                container.appendChild(create_items(key));
-                container.appendChild(E.hr());
-            }
-            container.removeChild(container.lastChild);
-            sd = get_session_data();
-            var ρσ_Iter5 = ρσ_Iterable(Object.keys(gr));
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                which = ρσ_Iter5[ρσ_Index5];
-                table = container.querySelector("table[data-which=" + ρσ_str.format("{}", which) + "]");
-                apply_setting(table, sd.get(which) || Object.create(null));
-            }
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [create_button_box(restore_defaults, apply_func, cancel_func)].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
-        };
-        if (!create_head_foot_panel.__argnames__) Object.defineProperties(create_head_foot_panel, {
-            __argnames__ : {value: ["container", "apply_func", "cancel_func"]},
-            __module__ : {value: "read_book.prefs.head_foot"}
-        });
-
-        function commit_head_foot(onchange, container) {
-            var sd, changed, prev, table, current, region, which;
-            sd = get_session_data();
-            changed = false;
-            var ρσ_Iter6 = ρσ_Iterable(Object.keys(groups()));
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                which = ρσ_Iter6[ρσ_Index6];
-                prev = sd.get(which) || Object.create(null);
-                table = container.querySelector("table[data-which=" + ρσ_str.format("{}", which) + "]");
-                current = get_setting(table);
-                var ρσ_Iter7 = ρσ_Iterable("left middle right".split(" "));
-                for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                    region = ρσ_Iter7[ρσ_Index7];
-                    if (prev[(typeof region === "number" && region < 0) ? prev.length + region : region] !== current[(typeof region === "number" && region < 0) ? current.length + region : region]) {
-                        changed = true;
-                    }
-                }
-                sd.set(which, get_setting(table));
-            }
-            if (changed) {
-                onchange();
-            }
-        };
-        if (!commit_head_foot.__argnames__) Object.defineProperties(commit_head_foot, {
-            __argnames__ : {value: ["onchange", "container"]},
-            __module__ : {value: "read_book.prefs.head_foot"}
-        });
-
-        if (ρσ_exists.d((typeof window !== "undefined" && window !== null ? window : Object.create(null)).Intl).DateTimeFormat) {
-            time_formatter = window.Intl.DateTimeFormat(undefined, (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["hour"] = "numeric";
-                ρσ_d["minute"] = "numeric";
-                return ρσ_d;
-            }).call(this));
-        } else {
-            time_formatter = (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["format"] = (function() {
-                    var ρσ_anonfunc = function (date) {
-                        return "{}:{}".format(date.getHours(), date.getMinutes());
-                    };
-                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                        __argnames__ : {value: ["date"]},
-                        __module__ : {value: "read_book.prefs.head_foot"}
-                    });
-                    return ρσ_anonfunc;
-                })();
-                return ρσ_d;
-            }).call(this);
-        }
-        function set_time_formatter(func) {
-            time_formatter = (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["format"] = func;
-                return ρσ_d;
-            }).call(this);
-        };
-        if (!set_time_formatter.__argnames__) Object.defineProperties(set_time_formatter, {
-            __argnames__ : {value: ["func"]},
-            __module__ : {value: "read_book.prefs.head_foot"}
-        });
-
-        function format_time_left(seconds) {
-            var ρσ_unpack, hours, minutes;
-            ρσ_unpack = divmod(int(seconds / 60), 60);
-ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
-            hours = ρσ_unpack[0];
-            minutes = ρσ_unpack[1];
-            if (hours <= 0) {
-                if (minutes < 1) {
-                    return _("almost done");
-                }
-                minutes = minutes;
-                return ngettext("{} min", "{} mins", minutes).format(minutes);
-            }
-            if (!minutes) {
-                return ngettext("{} hour", "{} hours", hours).format(hours);
-            }
-            return _("{} h {} mins").format(hours, minutes);
-        };
-        if (!format_time_left.__argnames__) Object.defineProperties(format_time_left, {
-            __argnames__ : {value: ["seconds"]},
-            __module__ : {value: "read_book.prefs.head_foot"}
-        });
-
-        function format_pos(progress_frac, length) {
-            var pages, pos;
-            if (length < 1) {
-                return "";
-            }
-            pages = Math.ceil(length / 1e3);
-            pos = progress_frac * pages;
-            return "" + ρσ_str.format("{:.1f}", pos) + " / " + ρσ_str.format("{}", pages) + "";
-        };
-        if (!format_pos.__argnames__) Object.defineProperties(format_pos, {
-            __argnames__ : {value: ["progress_frac", "length"]},
-            __module__ : {value: "read_book.prefs.head_foot"}
-        });
-
-        function render_head_foot(div, which, region, metadata, current_toc_node, current_toc_toplevel_node, book_time, chapter_time, pos, override) {
-            var template, field, interface_data, text, has_clock, percent, ival;
-            template = get_session_data().get(which) || Object.create(null);
-            field = template[(typeof region === "number" && region < 0) ? template.length + region : region] || "empty";
-            interface_data = get_interface_data();
-            text = "";
-            has_clock = false;
-            if (override) {
-                text = override;
-            } else if (field === "progress") {
-                percent = min(100, max(Math.round(pos.progress_frac * 100), 0));
-                text = percent + "%";
-            } else if (field === "title") {
-                text = metadata.title || _("Untitled");
-            } else if (field === "authors") {
-                text = " & ".join(metadata.authors || []);
-            } else if (field === "series") {
-                if (metadata.series) {
-                    ival = ρσ_interpolate_kwargs.call(this, fmt_sidx, [metadata.series_index].concat([ρσ_desugar_kwargs({use_roman: interface_data.use_roman_numerals_for_series_number})]));
-                    text = _("{0} of {1}").format(ival, metadata.series);
-                }
-            } else if (field === "clock") {
-                text = time_formatter.format(new Date);
-                has_clock = true;
-            } else if (field === "section") {
-                text = (current_toc_node) ? current_toc_node.title : "";
-            } else if (field === "top-section") {
-                text = (current_toc_toplevel_node) ? current_toc_toplevel_node.title : "";
-                if (!text) {
-                    text = (current_toc_node) ? current_toc_node.title : "";
-                }
-            } else if (field.startswith("time-")) {
-                if (book_time === null || chapter_time === null) {
-                    text = _("Calculating...");
-                } else {
-                    if (field === "time-book") {
-                        text = format_time_left(book_time);
-                    } else if (field === "time-chapter") {
-                        text = format_time_left(chapter_time);
-                    } else {
-                        text = "{} ({})".format(format_time_left(chapter_time), format_time_left(book_time));
-                    }
-                }
-            } else if (field.startswith("pos-")) {
-                if (field === "pos-book") {
-                    text = format_pos(pos.progress_frac, pos.book_length);
-                } else {
-                    text = format_pos(pos.file_progress_frac, pos.chapter_length);
-                }
-            } else if (field === "pages-progress") {
-                if (pos.page_counts) {
-                    text = "" + ρσ_str.format("{}", pos.page_counts.current + 1) + " / " + ρσ_str.format("{}", pos.page_counts.total) + "";
-                } else {
-                    text = _("Unknown");
-                }
-            }
-            if (!text) {
-                text = " ";
-            }
-            if (text !== div.textContent) {
-                div.textContent = text;
-            }
-            return has_clock;
-        };
-        if (!render_head_foot.__argnames__) Object.defineProperties(render_head_foot, {
-            __argnames__ : {value: ["div", "which", "region", "metadata", "current_toc_node", "current_toc_toplevel_node", "book_time", "chapter_time", "pos", "override"]},
-            __module__ : {value: "read_book.prefs.head_foot"}
-        });
-
-        ρσ_modules["read_book.prefs.head_foot"].CONTAINER = CONTAINER;
-        ρσ_modules["read_book.prefs.head_foot"].time_formatter = time_formatter;
-        ρσ_modules["read_book.prefs.head_foot"].create_item = create_item;
-        ρσ_modules["read_book.prefs.head_foot"].create_items = create_items;
-        ρσ_modules["read_book.prefs.head_foot"].apply_setting = apply_setting;
-        ρσ_modules["read_book.prefs.head_foot"].get_setting = get_setting;
-        ρσ_modules["read_book.prefs.head_foot"].groups = groups;
-        ρσ_modules["read_book.prefs.head_foot"].restore_defaults = restore_defaults;
-        ρσ_modules["read_book.prefs.head_foot"].create_head_foot_panel = create_head_foot_panel;
-        ρσ_modules["read_book.prefs.head_foot"].commit_head_foot = commit_head_foot;
-        ρσ_modules["read_book.prefs.head_foot"].set_time_formatter = set_time_formatter;
-        ρσ_modules["read_book.prefs.head_foot"].format_time_left = format_time_left;
-        ρσ_modules["read_book.prefs.head_foot"].format_pos = format_pos;
-        ρσ_modules["read_book.prefs.head_foot"].render_head_foot = render_head_foot;
-    })();
-
-    (function(){
         var __name__ = "read_book.goto";
         var traceback = ρσ_modules.traceback;
 
@@ -29636,108 +29788,6 @@ return this.__repr__();
         ρσ_modules["read_book.goto"].get_next_section = get_next_section;
         ρσ_modules["read_book.goto"].create_goto_panel = create_goto_panel;
         ρσ_modules["read_book.goto"].create_location_overlay = create_location_overlay;
-    })();
-
-    (function(){
-        var __name__ = "read_book.open_book";
-        var E = ρσ_modules.elementmaker.E;
-
-        var _ = ρσ_modules.gettext.gettext;
-
-        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
-
-        var create_item = ρσ_modules["book_list.item_list"].create_item;
-        var create_item_list = ρσ_modules["book_list.item_list"].create_item_list;
-
-        var unique_id = ρσ_modules.dom.unique_id;
-
-        var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
-
-        var create_button = ρσ_modules.widgets.create_button;
-
-        function create_open_book(container, book) {
-            var sd, rl, c, items, fname, entry;
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin: 1rem"})]));
-            container = container.lastChild;
-            container.appendChild(ρσ_interpolate_kwargs.call(this, create_button, [_("Open a book from your computer")].concat([ρσ_desugar_kwargs({action: ui_operations.ask_for_open.bind(null, null)})])));
-            sd = get_session_data();
-            rl = sd.get("standalone_recently_opened");
-            if (rl.length) {
-                container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: unique_id()})]));
-                c = container.lastChild;
-                items = ρσ_list_decorate([]);
-                c.appendChild(ρσ_interpolate_kwargs.call(E, E.h2, [_("Recently viewed books")].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem"})])));
-                c.appendChild(E.div());
-                var ρσ_Iter0 = ρσ_Iterable(rl);
-                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                    entry = ρσ_Iter0[ρσ_Index0];
-                    if (book && book.manifest.pathtoebook === entry.pathtoebook) {
-                        continue;
-                    }
-                    if (typeof entry.pathtoebook !== "string") {
-                        continue;
-                    }
-                    fname = entry.pathtoebook.replace(/\\/g, "/");
-                    if (ρσ_in("/", fname)) {
-                        fname = (ρσ_expr_temp = fname.rpartition("/"))[ρσ_expr_temp.length-1];
-                    }
-                    items.push(create_item(entry.title || _("Unknown"), ui_operations.ask_for_open.bind(null, entry.pathtoebook), fname));
-                }
-                create_item_list(c.lastChild, items);
-                c.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin: 1rem"})]));
-                c.lastChild.appendChild(ρσ_interpolate_kwargs.call(this, create_button, [_("Clear recent list")].concat([ρσ_desugar_kwargs({action: clear_recent_list.bind(null, c.id)})])));
-            }
-        };
-        if (!create_open_book.__argnames__) Object.defineProperties(create_open_book, {
-            __argnames__ : {value: ["container", "book"]},
-            __module__ : {value: "read_book.open_book"}
-        });
-
-        function clear_recent_list(container_id) {
-            var sd;
-            sd = get_session_data();
-            sd.set("standalone_recently_opened", []);
-            document.getElementById(container_id).style.display = "none";
-        };
-        if (!clear_recent_list.__argnames__) Object.defineProperties(clear_recent_list, {
-            __argnames__ : {value: ["container_id"]},
-            __module__ : {value: "read_book.open_book"}
-        });
-
-        function add_book_to_recently_viewed(book) {
-            var sd, rl, key, new_entry, ans, entry;
-            sd = get_session_data();
-            rl = sd.get("standalone_recently_opened");
-            key = book.manifest.pathtoebook;
-            new_entry = (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["key"] = key;
-                ρσ_d["pathtoebook"] = book.manifest.pathtoebook;
-                ρσ_d["title"] = book.metadata.title;
-                ρσ_d["authors"] = book.metadata.authors;
-                ρσ_d["timestamp"] = (new Date).toISOString();
-                return ρσ_d;
-            }).call(this);
-            ans = [];
-            ans.push(new_entry);
-            var ρσ_Iter1 = ρσ_Iterable(rl);
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                entry = ρσ_Iter1[ρσ_Index1];
-                if (entry.key !== key) {
-                    ans.push(entry);
-                }
-            }
-            sd.set("standalone_recently_opened", ans.slice(0, 25));
-            return ans;
-        };
-        if (!add_book_to_recently_viewed.__argnames__) Object.defineProperties(add_book_to_recently_viewed, {
-            __argnames__ : {value: ["book"]},
-            __module__ : {value: "read_book.open_book"}
-        });
-
-        ρσ_modules["read_book.open_book"].create_open_book = create_open_book;
-        ρσ_modules["read_book.open_book"].clear_recent_list = clear_recent_list;
-        ρσ_modules["read_book.open_book"].add_book_to_recently_viewed = add_book_to_recently_viewed;
     })();
 
     (function(){
@@ -33218,7 +33268,7 @@ return this.__repr__();
         });
 
         function show_top_message() {
-            var container, q, text;
+            var container, q, c;
             container = component("top_message");
             q = loaded_books_query();
             if (!q.search && !q.vl) {
@@ -33240,19 +33290,22 @@ return this.__repr__();
                 }
             }
             if (q.search) {
-                text = _("Showing books matching: {} ");
-                if (!library_data.search_result.total_num) {
-                    text = _("No books matching: {} ");
+                c = E.span();
+                if (library_data.search_result.total_num) {
+                    c.appendChild(E.span(_("Showing books matching:"), " ", E.i(library_data.search_result.query), " ", _("(total matches: {}) ").format(library_data.search_result.total_num)));
+                    c.appendChild(E.span(" ", ρσ_interpolate_kwargs.call(E, E.a, [_("Clear search")].concat([ρσ_desugar_kwargs({class_: "blue-link", onclick: (function() {
+                        var ρσ_anonfunc = function () {
+                            search();
+                        };
+                        if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                            __module__ : {value: "book_list.views"}
+                        });
+                        return ρσ_anonfunc;
+                    })()})]))));
+                } else {
+                    c.appendChild(E.span(_("No books matching:"), " ", E.i(library_data.search_result.query)));
                 }
-                container.appendChild(E.span(E.span(text.format(library_data.search_result.query)), create_button(_("Clear"), "close", (function() {
-                    var ρσ_anonfunc = function () {
-                        search();
-                    };
-                    if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
-                        __module__ : {value: "book_list.views"}
-                    });
-                    return ρσ_anonfunc;
-                })(), _("Clear this search"))));
+                container.appendChild(c);
             }
         };
         if (!show_top_message.__module__) Object.defineProperties(show_top_message, {
@@ -40713,7 +40766,7 @@ return this.__repr__();
             });
             return ρσ_anonfunc;
         })());
-        function simple_overlay_title(title, overlay, container) {
+        function simple_overlay_title(title, overlay, container, close_action) {
             container.style.backgroundColor = get_color("window-background");
             function action() {
                 var event;
@@ -40725,10 +40778,10 @@ return this.__repr__();
                 __module__ : {value: "read_book.overlay"}
             });
 
-            ρσ_interpolate_kwargs.call(this, create_top_bar, [container].concat([ρσ_desugar_kwargs({title: title, icon: "close", action: action})]));
+            ρσ_interpolate_kwargs.call(this, create_top_bar, [container].concat([ρσ_desugar_kwargs({title: title, icon: "close", action: close_action || action})]));
         };
         if (!simple_overlay_title.__argnames__) Object.defineProperties(simple_overlay_title, {
-            __argnames__ : {value: ["title", "overlay", "container"]},
+            __argnames__ : {value: ["title", "overlay", "container", "close_action"]},
             __module__ : {value: "read_book.overlay"}
         });
 
@@ -41410,7 +41463,22 @@ return this.__repr__();
         });
         OpenBook.prototype.show = function show(container) {
             var self = this;
-            simple_overlay_title(_("Open a book"), self.overlay, container);
+            simple_overlay_title(_("Open a book"), self.overlay, container, (function() {
+                var ρσ_anonfunc = function () {
+                    var ev;
+                    ev = this;
+                    [ev.stopPropagation(), ev.preventDefault()];
+                    if (self.closeable) {
+                        self.overlay.hide_current_panel(ev);
+                    } else {
+                        ui_operations.quit();
+                    }
+                };
+                if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                    __module__ : {value: "read_book.overlay"}
+                });
+                return ρσ_anonfunc;
+            })());
             create_open_book(container, ρσ_exists.d(self.overlay.view).book);
         };
         if (!OpenBook.prototype.show.__argnames__) Object.defineProperties(OpenBook.prototype.show, {
@@ -46659,16 +46727,11 @@ return this.__repr__();
 
 
         var book, view, TRANSLATIONS_DATA;
-        var traceback = ρσ_modules.traceback;
-
         var E = ρσ_modules.elementmaker.E;
 
-        var _ = ρσ_modules.gettext.gettext;
-        var install = ρσ_modules.gettext.install;
-
-        var format_date = ρσ_modules.date.format_date;
-
         var initialize = ρσ_modules.initialize;
+
+        var traceback = ρσ_modules.traceback;
 
         var ajax = ρσ_modules.ajax.ajax;
         var workaround_qt_bug = ρσ_modules.ajax.workaround_qt_bug;
@@ -46678,11 +46741,16 @@ return this.__repr__();
 
         var library_data = ρσ_modules["book_list.library_data"].library_data;
 
-        var get_color = ρσ_modules["book_list.theme"].get_color;
         var css_for_variables = ρσ_modules["book_list.theme"].css_for_variables;
+        var get_color = ρσ_modules["book_list.theme"].get_color;
+
+        var format_date = ρσ_modules.date.format_date;
 
         var get_widget_css = ρσ_modules.dom.get_widget_css;
         var set_css = ρσ_modules.dom.set_css;
+
+        var _ = ρσ_modules.gettext.gettext;
+        var install = ρσ_modules.gettext.install;
 
         var create_modal_container = ρσ_modules.modals.create_modal_container;
 
@@ -46693,16 +46761,18 @@ return this.__repr__();
 
         var footnotes_main = ρσ_modules["read_book.footnotes"].main;
 
+        var default_color_schemes = ρσ_modules["read_book.globals"].default_color_schemes;
         var runtime = ρσ_modules["read_book.globals"].runtime;
         var set_system_colors = ρσ_modules["read_book.globals"].set_system_colors;
         var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
-        var default_color_schemes = ρσ_modules["read_book.globals"].default_color_schemes;
 
         var iframe_main = ρσ_modules["read_book.iframe"].main;
 
-        var View = ρσ_modules["read_book.view"].View;
+        var remove_recently_opened = ρσ_modules["read_book.open_book"].remove_recently_opened;
 
         var set_time_formatter = ρσ_modules["read_book.prefs.head_foot"].set_time_formatter;
+
+        var View = ρσ_modules["read_book.view"].View;
 
         var local_storage = ρσ_modules.session.local_storage;
         var session_defaults = ρσ_modules.session.session_defaults;
@@ -47075,6 +47145,9 @@ return this.__repr__();
                 }
                 if (which === "show-status-message") {
                     view.show_status_message(data.text);
+                }
+                if (which === "remove-recently-opened") {
+                    remove_recently_opened(data.path);
                 }
             };
             if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {

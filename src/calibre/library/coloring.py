@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 # License: GPLv3 Copyright: 2011, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -114,9 +113,9 @@ class Rule:  # {{{
 
     def ondevice_condition(self, col, action, val):
         if action == 'is set':
-            return "test(ondevice(), '1', '')"
+            return "ondevice()"
         if action == 'is not set':
-            return "test(ondevice(), '', '1')"
+            return "!ondevice()"
 
     def bool_condition(self, col, action, val):
         test = {'is true':      '0, 0, 1',
@@ -129,30 +128,30 @@ class Rule:  # {{{
 
     def number_condition(self, col, action, val):
         if action == 'is set':
-            return "test(field('%s'), '1', '')"%col
+            return f"${col}"
         if action == 'is not set':
-            return "test(field('%s'), '', '1')"%col
+            return f"!${col}"
         lt, eq, gt = {
                 'eq': ('', '1', ''),
                 'lt': ('1', '', ''),
                 'gt': ('', '', '1')
         }[action]
         if col == 'size':
-            return "cmp(booksize(), %s, '%s', '%s', '%s')" % (val, lt, eq, gt)
+            return f"cmp(booksize(), {val}, '{lt}', '{eq}', '{gt}')"
         else:
-            return "cmp(raw_field('%s'), %s, '%s', '%s', '%s')" % (col, val, lt, eq, gt)
+            return f"cmp(raw_field('{col}', 0), {val}, '{lt}', '{eq}', '{gt}')"
 
     def rating_condition(self, col, action, val):
         if action == 'is set':
-            return "test(field('%s'), '1', '')"%col
+            return f"${col}"
         if action == 'is not set':
-            return "test(field('%s'), '', '1')"%col
+            return f"!${col}"
         lt, eq, gt = {
                 'eq': ('', '1', ''),
                 'lt': ('1', '', ''),
                 'gt': ('', '', '1')
         }[action]
-        return "cmp(field('%s'), %s, '%s', '%s', '%s')" % (col, val, lt, eq, gt)
+        return f"cmp(field('{col}'), {val}, '{lt}', '{eq}', '{gt}')"
 
     def date_condition(self, col, action, val):
         if action == 'count_days':
@@ -176,24 +175,25 @@ class Rule:  # {{{
                             "format_date(today(), 'yyyy-MM-dd')), '1', '', ''), '')")
                      %(col, val, col))
         if action == 'is set':
-            return ("test(field('%s'), '1', '')"%(col))
+            return (f"${col}")
         if action == 'is not set':
-            return ("test(field('%s'), '', '1')"%(col))
+            return (f"!${col}")
+        if action == 'is today':
+            return f"substr(format_date(raw_field('{col}'), 'iso'), 0, 10) == substr(today(), 0, 10)"
         lt, eq, gt = {
                 'eq': ('', '1', ''),
                 'lt': ('1', '', ''),
                 'gt': ('', '', '1')
         }[action]
-        return ("strcmp(format_date(raw_field('%s'), 'yyyy-MM-dd'), '%s', '%s', '%s', '%s')" %
-            (col, val, lt, eq, gt))
+        return (f"strcmp(format_date(raw_field('{col}'), 'yyyy-MM-dd'), '{val}', '{lt}', '{eq}', '{gt}')")
 
     def multiple_condition(self, col, action, val, sep):
         if not sep or sep == '|':
             sep = ','
         if action == 'is set':
-            return "test(field('%s'), '1', '')"%col
+            return f"${col}"
         if action == 'is not set':
-            return "test(field('%s'), '', '1')"%col
+            return f"!${col}"
         if action == 'has':
             return "str_in_list(field('%s'), '%s', \"%s\", '1', '')"%(col, sep, val)
         if action == 'does not have':
@@ -205,9 +205,9 @@ class Rule:  # {{{
 
     def text_condition(self, col, action, val):
         if action == 'is set':
-            return "test(field('%s'), '1', '')"%col
+            return f"${col}"
         if action == 'is not set':
-            return "test(field('%s'), '', '1')"%col
+            return f"!${col}"
         if action == 'is':
             return "strcmp(field('%s'), \"%s\", '', '1', '')"%(col, val)
         if action == 'is not':

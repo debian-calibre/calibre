@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:fdm=marker:ai
 
 
 __license__   = 'GPL v3'
@@ -417,8 +416,8 @@ class PDFStream:
         self.objects.commit(r, self.stream)
         return r
 
-    def add_jpeg_image(self, img_data, w, h, cache_key=None):
-        return self.write_image(img_data, w, h, 32, dct=True)
+    def add_jpeg_image(self, img_data, w, h, cache_key=None, depth=32):
+        return self.write_image(img_data, w, h, depth, dct=True)
 
     def add_image(self, img, cache_key):
         ref = self.get_image(cache_key)

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE" "1" "декември 17, 2021" "5.34.0" "calibre"
+.TH "CALIBRE" "1" "януари 21, 2022" "5.35.0" "calibre"
 .SH NAME
 calibre \- calibre
 .
@@ -41,23 +41,23 @@ calibre [options] [path_to_ebook or calibre url ...]
 .UNINDENT
 .UNINDENT
 .sp
-Launch the main \fBcalibre\fP Graphical User Interface and optionally add the e\-book at
-path_to_ebook to the database. You can also specify \fBcalibre\fP URLs to perform various
-different actions, than just adding books. For example:
+Стартирайте основния \fBcalibre\fP Графичен потребителски интерфейс и по желание добавете е\-книга
+path_to_ebook в базата данни. Може също да зададете \fBcalibre\fP URL адреси за извършване на различни
+разнообразни действия, отколкото просто добавяне на книги. Например:
 .sp
 \fBcalibre\fP://view\-book/test_library/1842/epub
 .sp
-Will open the book with id 1842 in the EPUB format from the library
-"test_library" in the \fBcalibre\fP E\-book viewer. Library names are the folder names of the
-libraries with spaces replaced by underscores. A full description of the
-various URL based actions is in the User Manual.
+Ще отвори книгата с id 1842 във формат EPUB от библиотеката
+"test_library" в \fBcalibre\fP E\-book viewer. Имената на библиотеки са имена на папките за
+библиотеки с интервали, заменени от подчертавания. Пълно описание на
+различни действия, базирани на URL адреси, е в ръководството за потребителя.
 .sp
-Whenever you pass arguments to \fBcalibre\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
-.SH [ОПЦИИ]
+Винаги, когато предавате аргументи на \fBcalibre\fP, които имат интервали в тях, затворете аргументите в кавички. Например: "/some path/with spaces"
+.SH ОБЩИ НАСТРОЙКИ
 .INDENT 0.0
 .TP
 .B \-\-detach
-Detach from the controlling terminal, if any (Linux only)
+Отдели от контролния терминал, ако има (само за Linux)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -67,27 +67,27 @@ Detach from the controlling terminal, if any (Linux only)
 .INDENT 0.0
 .TP
 .B \-\-ignore\-plugins
-Ignore custom plugins, useful if you installed a plugin that is preventing calibre from starting
+Игнорирайте персонализирани плъгини, полезно, ако сте инсталирали плъгин, който предотвратява calibre от стартиране
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-no\-update\-check
-Do not check for updates
+Не проверявай за актуализации
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-running\-calibre, \-s
-Cause a running calibre instance, if any, to be shutdown. Note that if there are running jobs, they will be silently aborted, so use with care.
+Накарай екземпляр на работещ calibre, ако има такъв, да бъде изключен. Имайте предвид, че ако в него се изпълняват задания, те ще бъдат мълчаливо прекратени, така че използвайте с внимание.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-start\-in\-tray
-Start minimized to system tray.
+Стартирай минимизиран в трея.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Ignored, do not use. Present only for legacy reasons
+Игнорирани, не използвайте. Присъстване само по наследени причини
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -97,7 +97,7 @@ Ignored, do not use. Present only for legacy reasons
 .INDENT 0.0
 .TP
 .B \-\-with\-library
-Use the library located at the specified path.
+Използвайте библиотеката, разположена на указания път.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

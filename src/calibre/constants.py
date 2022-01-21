@@ -1,11 +1,10 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 from polyglot.builtins import environ_item, hasenv
 import sys, locale, codecs, os, collections, collections.abc
 
 __appname__   = 'calibre'
-numeric_version = (5, 34, 0)
+numeric_version = (5, 35, 0)
 __version__   = '.'.join(map(str, numeric_version))
 git_version   = None
 __author__    = "Kovid Goyal <kovid@kovidgoyal.net>"

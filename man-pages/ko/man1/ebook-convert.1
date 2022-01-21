@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "12월 17, 2021" "5.34.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "1월 21, 2022" "5.35.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -102,12 +102,12 @@ options specific to every input and output format.
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-내장 레시피 이름을 나열합니다. 다음과 같은 방법으로 내장 레시피에서 eBook을 생성할 수 있습니다: ebook\-convert \fB"\fP레시피 이름.recipe\fB"\fP 출력.epub
+내장된 레시피 이름을 나열합니다. 다음과 같은 내장된 레시피에서 전자책을 만들 수 있습니다: ebook\-convert \fB"\fP레시피 이름.recipe\fB"\fP 출력.epub
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device (such as by resizing images for the device screen size). In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device (such as by resizing images for the device screen size). In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, generic_eink, generic_eink_hd, generic_eink_large, tablet
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -168,7 +168,7 @@ Split all HTML files larger than this size (in KB). This is necessary as most EP
 .INDENT 0.0
 .TP
 .B \-\-no\-svg\-cover
-책 표지에 SVG를 사용하지 않습니다. EPUB가 iPhone이나 JetBook Lite처럼 SVG를 지원하지 않는 기기에 사용할 예정이면 이 옵션을 사용하세요. 이 옵션을 사용하지 않으면, 앞에서 명시한 기기들은 표지를 빈 면으로 표시하게 됩니다.
+책 표지에 SVG를 사용하지 않습니다. EPUB가 iPhone이나 JetBook Lite처럼 SVG를 지원하지 않는 장치에 사용할 예정이면 이 옵션을 사용하세요. 이 옵션을 사용하지 않으면, 앞에서 명시한 장치들은 표지를 빈 면으로 표시하게 됩니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -201,7 +201,7 @@ Transliterate Unicode characters to an ASCII representation. Use with care becau
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-텍스트 맞춤 방식을 변경합니다. \fB"\fP왼쪽 정렬\fB"\fP은 원본의 모든 양쪽 정렬된 본문을 왼쪽 정렬로 변환합니다. \fB"\fP양쪽 정렬\fB"\fP는 모든 정렬이 안된 본문을 양쪽 정렬하도록 변환합니다. \fB"\fP원본\fB"\fP(기본값)은 원본 파일의 맞춤 방식을 바꾸지 않습니다. 일부 출력 형식만 텍스트 맞춤을 지원한다는 점을 유의하세요.
+텍스트 자리 맞춤을 변경합니다. \fB"\fP왼쪽\fB"\fP 값은 원본의 모든 정렬된 텍스트를 왼쪽 정렬된(즉, 정렬되지 않은) 텍스트로 변환합니다. \fB"\fP양쪽 정렬\fB"\fP 값은 모든 정렬이 안된 본문을 양쪽 정렬하도록 변환합니다. \fB"\fP원본\fB"\fP(기본값) 값은 원본 파일의 자리 맞춤을 바꾸지 않습니다. 일부 출력 형식만 자리 맞춤을 지원합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -231,7 +231,7 @@ CSS 스타일시트로의 경로나 직접 입력된 CSS 텍스트. 이 CSS는 �
 .INDENT 0.0
 .TP
 .B \-\-filter\-css
-CSS 스타일 규칙에서 제외시킬, 쉼표로 구분된, CSS 속성들 목록. 사용자의 기기에서 기존의 특정 스타일 정보를 덮어쓰는 것이 막혀져 있는 경우에 유용합니다. 예시: font\-family, color, margin\-left, margin\-right
+CSS 스타일 규칙에서 제외시킬, 쉼표로 구분된, CSS 속성들 목록. 사용자의 장치에서 기존의 특정 스타일 정보를 덮어쓰는 것이 막혀져 있는 경우에 유용합니다. 예시: font\-family, color, margin\-left, margin\-right
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -425,7 +425,7 @@ Search pattern (regular expression) to be replaced with sr3\-replace.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-장(章)제목을 탐지하기 위한 XPath 표현식. 기본값은 \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP, 또는 \fB"\fPpart\fB"\fP란 단어를 장 제목으로 포함하는 <h1> 또는 <h2> 태그와 class=\fB"\fPchapter\fB"\fP 속성을 가지고 있는 태그들입니다. 사용된 표현식은 요소들의 목록을 평가할 수 있어야 합니다. 장 탐지를 비활성화 하려면 표현식 \fB"\fP/\fB"\fP을 사용하세요. 이 기능에 대한 더 자세한 도움말을 보려면 캘리버 사용 설명서의 XPath 지침서를 참조하세요.
+장(章)제목을 탐지하기 위한 XPath 표현식. 기본값은 \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP, 또는 \fB"\fPpart\fB"\fP란 단어를 장 제목으로 포함하는 <h1> 또는 <h2> 태그와 class=\fB"\fPchapter\fB"\fP 속성을 가지고 있는 태그들입니다. 사용된 표현식은 요소들의 목록을 평가할 수 있어야 합니다. 장 탐지를 비활성화 하려면 표현식 \fB"\fP/\fB"\fP을 사용하세요. 이 기능에 대한 더 자세한 도움말을 보려면 캘리버 사용자 설명서의 XPath 지침서를 참조하세요.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -460,7 +460,7 @@ XPath 표현식. 지정된 요소의 앞에 쪽 넘김이 삽입됩니다. 비�
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-문서에서의 읽기 시작 지점을 탐지하기 위한 XPath 표현식. 몇몇 프로그램(대표적으로 Kindle)은 책을 열 때 이 위치를 사용합니다. 이 기능을 사용하는데 대한 더 많은 도움말은 캘리버 사용 설명서의 XPath 지침서를 참고하세요.
+문서에서의 읽기 시작 지점을 탐지하기 위한 XPath 표현식. 몇몇 프로그램(대표적으로 Kindle)은 책을 열 때 이 위치를 사용합니다. 이 기능을 사용하는데 대한 더 많은 도움말은 캘리버 사용자 설명서의 XPath 지침서를 참고하세요.
 .UNINDENT
 .SH 목차
 .sp
@@ -473,17 +473,17 @@ XPath 표현식. 지정된 요소의 앞에 쪽 넘김이 삽입됩니다. 비�
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-목차의 1단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 이 칸이 지정되어있다면, 다른 형태의 자동감지를 우선합니다. 예시를 보려면 캘리버 사용 설명서 안의 XPath 지침서를 참조하세요.
+목차의 1단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 이 칸이 지정되어있다면, 다른 형태의 자동감지를 우선합니다. 예시를 보려면 캘리버 사용자 설명서 안의 XPath 지침서를 참조하세요.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-목차의 2단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 각 항목은 이전의 1단계 항목 아래에 추가됩니다. 예시를 보려면 캘리버 사용 설명서 안의 XPath 지침서를 참조하세요.
+목차의 2단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 각 항목은 이전의 1단계 항목 아래에 추가됩니다. 예시를 보려면 캘리버 사용자 설명서 안의 XPath 지침서를 참조하세요.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-목차의 3단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 각 항목은 이전의 2단계 항목 아래에 추가됩니다. 예시를 보려면 캘리버 사용 설명서 안의 XPath 지침서를 참조하세요.
+목차의 3단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 각 항목은 이전의 2단계 항목 아래에 추가됩니다. 예시를 보려면 캘리버 사용자 설명서 안의 XPath 지침서를 참조하세요.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -561,7 +561,7 @@ Set the publication date (assumed to be in the local timezone, unless the timezo
 .INDENT 0.0
 .TP
 .B \-\-rating
-별점을 지정합니다. 1과 5 사이의 숫자여야 합니다.
+평점을 지정합니다. 1과 5 사이의 숫자여야 합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -600,7 +600,7 @@ Set the book timestamp (no longer used anywhere)
 .UNINDENT
 .SH 디버그
 .sp
-변환 작업에 대한 디버깅을 돕기 위한 옵션입니다
+변환 디버깅에 도움이 되는 옵션
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d

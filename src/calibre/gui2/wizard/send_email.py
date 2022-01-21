@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -68,11 +67,16 @@ class TestEmail(QDialog):
         t.start()
 
     def run_test(self):
-        try:
-            tb = self.test_func(str(self.to.text())) or _('Email successfully sent')
-        except Exception:
-            import traceback
-            tb = traceback.format_exc()
+        from email.utils import parseaddr
+        addr = parseaddr(self.to.text().strip())[-1]
+        if not addr:
+            tb = f'{self.to.text().strip()} is not a valid email address'
+        else:
+            try:
+                tb = self.test_func(addr) or _('Email successfully sent')
+            except Exception:
+                import traceback
+                tb = traceback.format_exc()
         self.test_done.emit(tb)
 
     def on_test_done(self, txt):

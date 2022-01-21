@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8
 
 
 __license__   = 'GPL v3'
@@ -7,7 +6,8 @@ __copyright__ = '2010, Kovid Goyal <kovid at kovidgoyal.net>'
 
 '''Dialog to create a new custom column'''
 
-import re
+import copy, re
+from enum import Enum
 from functools import partial
 
 from qt.core import (
@@ -91,8 +91,9 @@ class CreateCustomColumn(QDialog):
     )))
     column_types_map = {k['datatype']:idx for idx, k in iteritems(column_types)}
 
-    def __init__(self, parent, current_row, current_key, standard_colheads, standard_colnames):
-        QDialog.__init__(self, parent)
+    def __init__(self, gui, caller, current_key, standard_colheads, freeze_lookup_name=False):
+        QDialog.__init__(self, gui)
+        self.gui = gui
         self.setup_ui()
         self.setWindowTitle(_('Create a custom column'))
         self.heading_label.setText('<b>' + _('Create a custom column'))
@@ -106,11 +107,10 @@ class CreateCustomColumn(QDialog):
         for sort_by in [_('Text'), _('Number'), _('Date'), _('Yes/No')]:
             self.composite_sort_by.addItem(sort_by)
 
-        self.parent = parent
-        self.parent.cc_column_key = None
-        self.editing_col = current_row is not None
+        self.caller = caller
+        self.caller.cc_column_key = None
+        self.editing_col = current_key is not None
         self.standard_colheads = standard_colheads
-        self.standard_colnames = standard_colnames
         self.column_type_box.setMaxVisibleItems(len(self.column_types))
         for t in self.column_types:
             self.column_type_box.addItem(self.column_types[t]['text'])
@@ -124,17 +124,15 @@ class CreateCustomColumn(QDialog):
         self.setWindowTitle(_('Edit custom column'))
         self.heading_label.setText('<b>' + _('Edit custom column'))
         self.shortcuts.setVisible(False)
-        idx = current_row
-        if idx < 0:
-            self.simple_error(_('No column selected'), _('No column has been selected'))
-            return
         col = current_key
-        if col not in parent.custcols:
-            self.simple_error('', _('Selected column is not a user-defined column'))
+        if col not in caller.custcols:
+            self.simple_error('', _('The selected column is not a user-defined column'))
             return
 
-        c = parent.custcols[col]
+        c = caller.custcols[col]
         self.column_name_box.setText(c['label'])
+        if freeze_lookup_name:
+            self.column_name_box.setEnabled(False)
         self.column_heading_box.setText(c['name'])
         self.column_heading_box.setFocus()
         ct = c['datatype']
@@ -511,22 +509,16 @@ class CreateCustomColumn(QDialog):
         if not col_heading:
             return self.simple_error('', _('No column heading was provided'))
 
-        db = self.parent.gui.library_view.model().db
+        db = self.gui.library_view.model().db
         key = db.field_metadata.custom_field_prefix+col
-        bad_col = False
-        if key in self.parent.custcols:
-            if not self.editing_col or \
-                    self.parent.custcols[key]['colnum'] != self.orig_column_number:
-                bad_col = True
-        if bad_col:
+        cc = self.caller.custcols
+        if key in cc and (not self.editing_col or cc[key]['colnum'] != self.orig_column_number):
             return self.simple_error('', _('The lookup name %s is already used')%col)
-
         bad_head = False
-        for t in self.parent.custcols:
-            if self.parent.custcols[t]['name'] == col_heading:
-                if not self.editing_col or \
-                        self.parent.custcols[t]['colnum'] != self.orig_column_number:
-                    bad_head = True
+        for cc in self.caller.custcols.values():
+            if cc['name'] == col_heading and cc['colnum'] != self.orig_column_number:
+                bad_head = True
+                break
         for t in self.standard_colheads:
             if self.standard_colheads[t] == col_heading:
                 bad_head = True
@@ -639,7 +631,7 @@ class CreateCustomColumn(QDialog):
                 display_dict['default_value'] = tv
 
         if col_type in ['text', 'composite', 'enumeration'] and not is_multiple:
-            display_dict['use_decorations'] = self.use_decorations.checkState()
+            display_dict['use_decorations'] = self.use_decorations.checkState() == Qt.CheckState.Checked
 
         if default_val and 'default_value' not in display_dict:
             display_dict['default_value'] = default_val
@@ -647,7 +639,7 @@ class CreateCustomColumn(QDialog):
         display_dict['description'] = self.description_box.text().strip()
 
         if not self.editing_col:
-            self.parent.custcols[key] = {
+            self.caller.custcols[key] = {
                     'label':col,
                     'name':col_heading,
                     'datatype':col_type,
@@ -656,17 +648,251 @@ class CreateCustomColumn(QDialog):
                     'colnum':None,
                     'is_multiple':is_multiple,
                 }
-            self.parent.cc_column_key = key
+            self.caller.cc_column_key = key
         else:
-            self.parent.custcols[self.orig_column_name]['label'] = col
-            self.parent.custcols[self.orig_column_name]['name'] = col_heading
+            cc = self.caller.custcols[self.orig_column_name]
+            cc['label'] = col
+            cc['name'] = col_heading
             # Remove any previous default value
-            self.parent.custcols[self.orig_column_name]['display'].pop('default_value', None)
-            self.parent.custcols[self.orig_column_name]['display'].update(display_dict)
-            self.parent.custcols[self.orig_column_name]['*edited'] = True
-            self.parent.custcols[self.orig_column_name]['*must_restart'] = True
-            self.parent.cc_column_key = key
+            cc['display'].pop('default_value', None)
+            cc['display'].update(display_dict)
+            cc['*edited'] = True
+            cc['*must_restart'] = True
+            self.caller.cc_column_key = key
         QDialog.accept(self)
 
     def reject(self):
         QDialog.reject(self)
+
+
+class CreateNewCustomColumn:
+    """
+    Provide an API to create new custom columns.
+
+    Usage:
+        from calibre.gui2.preferences.create_custom_column import CreateNewCustomColumn
+        creator = CreateNewCustomColumn(gui)
+        if creator.must_restart():
+                ...
+        else:
+            result = creator.create_column(....)
+            if result[0] == creator.Result.COLUMN_ADDED:
+
+    The parameter 'gui' passed when creating a class instance is the main
+    calibre gui (calibre.gui2.ui.get_gui())
+
+    Use the create_column(...) method to open a dialog to create a new custom
+    column with given lookup_name, column_heading, datatype, and is_multiple.
+    You can create as many columns as you wish with a single instance of the
+    CreateNewCustomColumn class. Subsequent class instances will refuse to
+    create columns until calibre is restarted, as will calibre Preferences.
+
+    The lookup name must begin with a '#'. All remaining characters must be
+    lower case letters, digits or underscores. The character after the '#' must
+    be a letter. The lookup name must not end with the suffix '_index'.
+
+    The datatype must be one of calibre's custom column types: 'bool',
+    'comments', 'composite', 'datetime', 'enumeration', 'float', 'int',
+    'rating', 'series', or 'text'. The datatype can't be changed in the dialog.
+
+    is_multiple tells calibre that the column contains multiple values -- is
+    tags-like. The value True is allowed only for 'composite' and 'text' types.
+
+    If generate_unused_lookup_name is False then the provided lookup_name and
+    column_heading must not already exist. If generate_unused_lookup_name is
+    True then if necessary the method will add the suffix '_n' to the provided
+    lookup_name to allocate an unused lookup_name, where 'n' is an integer.
+    The same processing is applied to column_heading to make it is unique, using
+    the same suffix used for the lookup name if possible. In either case the
+    user can change the column heading in the dialog.
+
+    Set freeze_lookup_name to False if you want to allow the user choose a
+    different lookup name. The user will not be allowed to choose the lookup
+    name of an existing column. The provided lookup_name and column_heading
+    either must not exist or generate_unused_lookup_name must be True,
+    regardless of the value of freeze_lookup_name.
+
+    The 'display' parameter is used to pass item- and type-specific information
+    for the column. It is a dict. The easiest way to see the current values for
+    'display' for a particular column is to create a column like you want then
+    look for the lookup name in the file metadata_db_prefs_backup.json. You must
+    restart calibre twice after creating a new column before its information
+    will appear in that file.
+
+    The key:value pairs for each type are as follows. Note that this
+    list might be incorrect. As said above, the best way to get current values
+    is to create a similar column and look at the values in 'display'.
+      all types:
+        'default_value': a string representation of the default value for the
+                         column. Permitted values are type specific
+        'description': a string containing the column's description
+      comments columns:
+        'heading_position': a string specifying where a comment heading goes:
+                            hide, above, side
+        'interpret_as': a string specifying the comment's purpose:
+                        html, short-text, long-text, markdown
+      composite columns:
+        'composite_template': a string containing the template for the composite column
+        'composite_sort': a string specifying how the composite is to be sorted
+        'make_category': True or False -- whether the column is shown in the tag browser
+        'contains_html': True or False -- whether the column is interpreted as HTML
+        'use_decorations': True or False -- should check marks be displayed
+      datetime columns:
+        'date_format': a string specifying the display format
+      enumerated columns
+        'enum_values': a string containing comma-separated valid values for an enumeration
+        'enum_colors': a string containing comma-separated colors for an enumeration
+        'use_decorations': True or False -- should check marks be displayed
+      float and int columns:
+        'number_format': the format to apply for the column
+      rating columns:
+        'allow_half_stars': True or False -- are half-stars allowed
+      text columns:
+        'is_names': True or False -- whether the items are comma or ampersand separated
+        'use_decorations': True or False -- should check marks be displayed
+
+    This method returns a tuple (Result.enum_value, message). If tuple[0] is
+    Result.COLUMN_ADDED then the message is the lookup name including the '#'.
+    Otherwise it is a potentially localized error message.
+
+    You or the user must restart calibre for the column(s) to be actually added.
+
+    Result.EXCEPTION_RAISED is returned if the create dialog raises an exception.
+    This can happen if the display contains illegal values, for example a string
+    where a boolean is required. The string is the exception text. Run calibre
+    in debug mode to see the entire traceback.
+
+    The method returns Result.MUST_RESTART if further calibre configuration has
+    been blocked. You can check for this situation in advance by calling
+    must_restart().
+    """
+
+    class Result(Enum):
+        COLUMN_ADDED = 0
+        CANCELED = 1
+        INVALID_KEY = 2
+        DUPLICATE_KEY = 3
+        DUPLICATE_HEADING = 4
+        INVALID_TYPE = 5
+        INVALID_IS_MULTIPLE = 6
+        INVALID_DISPLAY = 7
+        EXCEPTION_RAISED = 8
+        MUST_RESTART = 9
+
+    def __init__(self, gui):
+        self.gui = gui
+        self.restart_required = gui.must_restart_before_config
+        self.db = db = self.gui.library_view.model().db
+        self.custcols = copy.deepcopy(db.field_metadata.custom_field_metadata())
+        # Get the largest internal column number so we can be sure that we can
+        # detect duplicates.
+        self.created_count = max((x['colnum'] for x in self.custcols.values()),
+                                         default=0) + 1
+
+    def create_column(self, lookup_name, column_heading, datatype, is_multiple,
+                      display={}, generate_unused_lookup_name=False, freeze_lookup_name=True):
+        """ See the class documentation for more information."""
+        if self.restart_required:
+            return (self.Result.MUST_RESTART, _("You must restart calibre before making any more changes"))
+        if not lookup_name.startswith('#'):
+            return (self.Result.INVALID_KEY, _("The lookup name must begin with a '#'"))
+        suffix_number = 1
+        if lookup_name in self.custcols:
+            if not generate_unused_lookup_name:
+                return(self.Result.DUPLICATE_KEY, _("The custom column %s already exists") % lookup_name)
+            for suffix_number in range(suffix_number, 100000):
+                nk = '%s_%d'%(lookup_name, suffix_number)
+                if nk not in self.custcols:
+                    lookup_name = nk
+                    break
+        if column_heading:
+            headings = {v['name'] for v in self.custcols.values()}
+            if column_heading in headings:
+                if not generate_unused_lookup_name:
+                    return(self.Result.DUPLICATE_HEADING,
+                           _("The column heading %s already exists") % column_heading)
+                for i in range(suffix_number, 100000):
+                    nh = '%s_%d'%(column_heading, i)
+                    if nh not in headings:
+                        column_heading = nh
+                        break
+        else:
+            column_heading = lookup_name
+        if datatype not in CreateCustomColumn.column_types_map:
+            return(self.Result.INVALID_TYPE,
+                   _("The custom column type %s doesn't exist") % datatype)
+        if is_multiple and '*' + datatype not in CreateCustomColumn.column_types_map:
+            return(self.Result.INVALID_IS_MULTIPLE,
+                   _("You cannot specify is_multiple for the datatype %s") % datatype)
+        if not isinstance(display, dict):
+            return(self.Result.INVALID_DISPLAY,
+                   _("The display parameter must be a Python dict"))
+        self.created_count += 1
+        self.custcols[lookup_name] = {
+                'label': lookup_name,
+                'name': column_heading,
+                'datatype': datatype,
+                'display': display,
+                'normalized': None,
+                'colnum': self.created_count,
+                'is_multiple': is_multiple,
+            }
+        try:
+            dialog = CreateCustomColumn(self.gui, self, lookup_name,
+                                        self.gui.library_view.model().orig_headers,
+                                        freeze_lookup_name=freeze_lookup_name)
+            if dialog.result() == QDialog.DialogCode.Accepted and self.cc_column_key is not None:
+                cc = self.custcols[lookup_name]
+                self.db.create_custom_column(
+                                label=cc['label'],
+                                name=cc['name'],
+                                datatype=cc['datatype'],
+                                is_multiple=cc['is_multiple'],
+                                display=cc['display'])
+                self.gui.must_restart_before_config = True
+                return (self.Result.COLUMN_ADDED, self.cc_column_key)
+        except Exception as e:
+            import traceback
+            traceback.print_exc()
+            self.custcols.pop(lookup_name, None)
+            return (self.Result.EXCEPTION_RAISED, str(e))
+        self.custcols.pop(lookup_name, None)
+        return (self.Result.CANCELED, _('Canceled'))
+
+    def current_columns(self):
+        """
+        Return the currently defined custom columns
+
+        Return the currently defined custom columns including the ones that haven't
+        yet been created. It is a dict of dicts defined as follows:
+            custcols[lookup_name] = {
+                    'label': lookup_name,
+                    'name': column_heading,
+                    'datatype': datatype,
+                    'display': display,
+                    'normalized': None,
+                    'colnum': an integer used internally,
+                    'is_multiple': is_multiple,
+                }
+        Columns that already exist will have additional attributes that this class
+        doesn't use. See calibre.library.field_metadata.add_custom_field() for the
+        complete list.
+        """
+        # deepcopy to prevent users from changing it. The new MappingProxyType
+        # isn't enough because only the top-level dict is immutable, not the
+        # items in the dict.
+        return copy.deepcopy(self.custcols)
+
+    def current_headings(self):
+        """
+        Return the currently defined column headings
+
+        Return the column headings including the ones that haven't yet been
+        created. It is a dict. The key is the heading, the value is the lookup
+        name having that heading.
+        """
+        return {v['name']:('#' + v['label']) for v in self.custcols.values()}
+
+    def must_restart(self):
+        """Return true if calibre must be restarted before new columns can be added."""
+        return self.restart_required

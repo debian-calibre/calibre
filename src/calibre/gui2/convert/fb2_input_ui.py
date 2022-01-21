@@ -29,4 +29,4 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
 
         Form.setWindowTitle(_("Form"))
-        self.opt_no_inline_fb2_toc.setText(_("Do not insert a &Table of Contents at the beginning of the book."))
+        self.opt_no_inline_fb2_toc.setText(_("Do not insert a &Table of Contents at the beginning of the book"))
