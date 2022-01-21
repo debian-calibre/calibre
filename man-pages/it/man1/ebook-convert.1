@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "dicembre 17, 2021" "5.34.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "gennaio 21, 2022" "5.35.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -370,7 +370,7 @@ Abilita l\fB\(aq\fPelaborazione euristica. Questa opzione deve essere impostata 
 .INDENT 0.0
 .TP
 .B \-\-html\-unwrap\-factor
-Scala usata per determinare la posizione alla quale la riga dovrebbe essere troncata. I valori ammessi sono i decimali tra 0 e 1. Il valore predefinito è 0.4, appena sotto il valore mediano della lunghezza. Se solo alcune righe risultano sfasate questo valore dovrebbe essere ridotto.
+Scala usata per determinare la posizione alla quale una riga dovrebbe essere ricongiunta. I valori ammessi sono i decimali compresi tra 0 e 1. Il valore predefinito è 0.4, appena inferiore al valore mediano della lunghezza. Se solo alcune righe del documento richiedono il ricongiungimento questo valore dovrebbe essere ridotto.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -421,7 +421,7 @@ Controlla il rilevamento automatico della struttura del documento.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Un\fB\(aq\fPespressione XPath per rilevare i titoli dei capitoli. Per impostazione predefinita si considerano come titoli di capitolo i tag <h1> o <h2> che contengono le parole \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP o \fB"\fPpart\fB"\fP, così come ogni tag che contenga class=\fB"\fPchapter\fB"\fP\&. L\fB\(aq\fPespressione usata deve restituire un elenco di elementi. Per disabilitare la rilevazione dei capitoli, usa l\fB\(aq\fPespressione \fB"\fP/\fB"\fP\&. Vedi il Tutorial XPath nel Manuale utente di Calibre per ulteriore aiuto nell\fB\(aq\fPusare questa funzione.
+Un\fB\(aq\fPespressione XPath per rilevare i titoli dei capitoli. Per impostazione predefinita si considerano come titoli di capitolo i tag <h1> o <h2> che contengono le parole \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP o \fB"\fPpart\fB"\fP, così come ogni tag che contenga class=\fB"\fPchapter\fB"\fP\&. L\fB\(aq\fPespressione usata deve restituire un elenco di elementi. Per disabilitare la rilevazione dei capitoli, usa l\fB\(aq\fPespressione \fB"\fP/\fB"\fP\&. Vedi la Guida XPath nel Manuale utente di calibre per ulteriore aiuto nell\fB\(aq\fPusare questa funzione.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -456,7 +456,7 @@ Rimuovi la prima immagine dall\fB\(aq\fPe\-book in ingresso. Utile se il documen
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-Un\fB\(aq\fPespressione XPath per rilevare la posizione nel documento da cui cominciare la lettura. Alcuni programmi di lettura e\-book (in particolare Kindle) usano questa posizione come quella in cui il libro viene aperto. Vedi il tutorial XPath nel Manuale Utente di calibre per maggiori informazioni sull\fB\(aq\fPutilizzo di questa funzione.
+Un\fB\(aq\fPespressione XPath per rilevare la posizione nel documento da cui cominciare la lettura. Alcuni programmi di lettura e\-book (in particolare Kindle) usano questa posizione come quella in cui il libro viene aperto. Vedi la guida XPath nel Manuale Utente di calibre per maggiori informazioni sull\fB\(aq\fPutilizzo di questa funzione.
 .UNINDENT
 .SH INDICE
 .sp

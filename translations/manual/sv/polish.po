@@ -4,7 +4,7 @@
 # 
 # Translators:
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2020
-# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021
+# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2022
 # Jonatan Nyberg <jonatan@autistici.org>, 2019-2021
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017
 # Merarom <merarom@yahoo.es>, 2014-2016
@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-02 15:47+0000\n"
-"PO-Revision-Date: 2021-11-27 13:25+0000\n"
+"POT-Creation-Date: 2022-01-20 09:15+0000\n"
+"PO-Revision-Date: 2022-01-01 09:11+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -198,7 +198,7 @@ msgid ""
 "Commit a parsed object to disk (it is serialized and written to the "
 "underlying file). If ``keep_parsed`` is True the parsed representation is "
 "retained in the cache. See also: :meth:`parsed`"
-msgstr "Överlämnar ett tolkat objekt till disken (det serialiseras och skrivs till den underliggande filen). Om ``keep_parsed`` är True behålls den tolkade representationen i cachen. Se även: :meth:`parsed`"
+msgstr "Överlämnar ett analyserat objekt till disken (det serialiseras och skrivs till den underliggande filen). Om ``keep_parsed`` är True behålls den analyserade representationen i cachen. Se även: :meth:`parsed`"
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.dirty:1
@@ -222,7 +222,7 @@ msgstr "True om en fil/mapp som motsvarar det kanoniska namn som finns. Observer
 msgid ""
 "Return the size in bytes of the file represented by the specified canonical "
 "name. Automatically handles dirtied parsed objects. See also: :meth:`parsed`"
-msgstr "Återge storlek i bytes av filen som representeras av det angivna kanoniska namnet. Hanterar automatiskt smutsiga tolkade objekt. Se även: :meth:`tolkade`"
+msgstr "Återge storlek i bytes av filen som representeras av det angivna kanoniska namnet. Hanterar automatiskt smutsiga analyserade objekt. Se även: :meth:`analyserade`"
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.generate_item:1
@@ -256,7 +256,7 @@ msgstr "Återge True om och endast om en fil med samma kanoniska namn som angett
 msgid ""
 "Convert an href (relative to base) to a name. base must be a name or None, "
 "in which case self.root is used."
-msgstr "Konvertera en href (i förhållande till bas) till ett namn. basen måste vara ett namn eller None, i vilket fall self.root används."
+msgstr "Konvertera en href (relativ till bas) till ett namn. basen måste vara ett namn eller None, i vilket fall self.root används."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.insert_into_xml:1
@@ -367,7 +367,7 @@ msgid ""
 "commit the file if it is dirtied and remove it from the parse cache. You "
 "must finish with this file before accessing the parsed version of it again, "
 "or bad things will happen."
-msgstr "Öppna filen som hänvisas till med namnet för direkt läsning/skrivning. Observera att detta kommer att förkasta filen om den är smutsig och ta bort den från tolkningscachen. Du måste avsluta med den här filen innan du öppnar den tolkade versionen av den igen, annars kommer dåliga saker att hända."
+msgstr "Öppna filen som hänvisas till med namnet för direkt läsning/skrivning. Observera att detta kommer att förkasta filen om den är smutsig och ta bort den från tolkningscachen. Du måste avsluta med den här filen innan du öppnar den analyserade versionen av den igen, annars kommer dåliga saker att hända."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf:1
@@ -407,7 +407,7 @@ msgid ""
 " returned. Note that parsed objects are cached for performance. If you make "
 "any changes to the parsed object, you must call :meth:`dirty` so that the "
 "container knows to update the cache. See also :meth:`replace`."
-msgstr "Återge en tolkad representation av filen som anges med namn. För HTML- och XML-filer återges ett lxml-träd. För CSS-filer återges en css_parser-formatmall. Observera att tolkade objekt cachelagras för prestanda. Om du gör några ändringar i det tolkade objektet måste du anropa :meth:`dirty` så att behållaren vet att uppdatera cacheminnet. Se även :meth:`replace`."
+msgstr "Återge en analyserad representation av filen som anges med namn. För HTML- och XML-filer återges ett lxml-träd. För CSS-filer återges en css_parser-formatmall. Observera att analyserade objekt cachelagras för prestanda. Om du gör några ändringar i det analyserade objektet måste du anropa :meth:`dirty` så att behållaren vet att uppdatera cacheminnet. Se även :meth:`replace`."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.raw_data:1
@@ -474,7 +474,7 @@ msgid ""
 "Replace the parsed object corresponding to name with obj, which must be a "
 "similar object, i.e. an lxml tree for HTML/XML or a css_parser stylesheet "
 "for a CSS file."
-msgstr "Ersätt det tolkade objektet som motsvarar namnet med obj, vilket måste vara ett liknande objekt, dvs. ett lxml-träd för HTML/XML eller en css_parser-formatmall för en CSS-fil."
+msgstr "Ersätt det analyserade objektet som motsvarar namnet med obj, som måste vara ett liknande objekt, d.v.s. ett lxml-träd för HTML/XML eller en css_parser-formatmall för en CSS-fil."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.replace_links:1
@@ -484,7 +484,7 @@ msgid ""
 "attribute that is set to True if any actual replacement is done. Convenient "
 "ways of creating such callables are using the :class:`LinkReplacer` and "
 ":class:`LinkRebaser` classes."
-msgstr "Ersätt alla länkar i namn med replace_func, vilket måste vara en anropsbar som accepterar en URL och återger den ersatta URL:n. Den måste också ha ett \"ersatt\" attribut som är satt till True om någon faktisk ersättning görs. Praktiska sätt att skapa sådana anropbara använd :class:`LinkReplacer` och :class:`LinkRebaser` klasser."
+msgstr "Ersätt alla länkar i namn med replace_func, som måste vara en anropsbar som accepterar en webbadress och återger den ersatta webbadressen. Den måste också ha ett \"ersatt\" attribut som är satt till True om någon faktisk ersättning görs. Praktiska sätt att skapa sådana anropsbara är att använda klasserna :class:`LinkReplacer` och :class:`LinkRebaser`."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.serialize_item:1

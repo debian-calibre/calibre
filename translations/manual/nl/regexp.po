@@ -6,14 +6,14 @@
 # Eduard van der Linde, 2018
 # M. de Boer <de.boer.melle@gmail.com>, 2018
 # Meteor0id, 2019
-# peter <petertje@tuta.io>, 2021
+# peter <petertje@tuta.io>, 2021-2022
 # W.P.M.E. Hofland <wpme.hofland@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-01 12:56+0000\n"
-"PO-Revision-Date: 2021-11-25 00:15+0000\n"
+"POT-Creation-Date: 2022-01-20 09:15+0000\n"
+"PO-Revision-Date: 2022-01-16 22:44+0000\n"
 "Last-Translator: peter <petertje@tuta.io>\n"
 "Language-Team: Dutch (http://www.transifex.com/calibre/calibre/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -170,7 +170,7 @@ msgid ""
 " matching page numbers, wouldn't that be the single one expression to match "
 "all the page numbers? Yes, the expression ``Page [0-9]+ of 423`` would match"
 " every page number in that book!"
-msgstr ""
+msgstr "Ik hoopte al dat u dat zou zeggen. Maar hou u vast, het wordt nog beter! We zagen net dat met sets we konden zoeken naar één of meerdere karakters ineens. Maar men kan zelfs een karakter of set herhalen en zo het aantal expressies nodig voor het paginanummer voorbeeld boven verminderen tot één. Ja, ÉÉN! Spannend? Absoluut! Zo werkt het: Bepaalde zogenaamde speciale karakters, \"+\", \"?\" en \"*\", *herhalen het voorafgaande element*. (Element betekent ofwel een enkel karakter, ofwel een karakterset, ofwel een escape sequentie ofwel een groep (we leren later meer over die twee laatste)- kortom, elke eenheid in een reguliere expressie). Deze karakters heten wildcards of quantifiers. Nauwkeuriger, \"?\" komt overeen met *0 of 1* van het voorafgaande element, \"*\" komt overeen met *0 of meer* van het voorafgaande element en \"+\" komt overeen met *1 of meer* van het voorafgaande element. Een paar voorbeelden: De expressie ``a?`` komt overeen met ofwel \"\" (de lege string, niet echt bruikbaar in dit geval) ofwel \"a\", de expressie ``a*`` komt overeen met \"\", \"a\", \"aa\" of elk aantal a's op een rij, en, tenslotte, de expressie ``a+`` komt overeen met \"a\", \"aa\" of elk aantal a's op een rij (Merk op: het komt niet overeen met de lege string!). Zelfde geval met sets: De expressie ``[0-9]+`` komt overeen met *elk bestaand geheel getal*! Ik weet wat u denkt en u hebt gelijk: Als u dat in het geval boven met overeenkomende pagina nummers gebruikt, zou dat niet die enkele expressie zijn die met alle paginanummers overeen komt? Ja, de expressie ``Page [0-9]+ of 423`` komt overeen met elk paginanummer in dat boek!"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:52
 msgid ""
@@ -190,7 +190,7 @@ msgid ""
 "``<p[^>]*>`` will match that same opening tag- you'll see why after the next"
 " section. Just note that there quite frequently is more than one way to "
 "write a regular expression."
-msgstr ""
+msgstr "Iets over die quantifiers: Ze proberen gewoonlijk met zoveel mogelijk tekst overeen te komen, voorzichtig gebruiken dus. Dit wordt \"gulzig gedrag\" genoemd - Ik ben er zeker van dat u dat snapt. Het wordt problematisch als u, bv. probeert met een tag overeen te komen. Beschouw bv. de string ``\"<p class=\"calibre2\">Title here</p>\"`` en dat u met de openingstag wilt overeenkomen (het deel tussen het eerste paar punthaakjes, meer over tags later). Men zou denken dat de expressie ``<p.*>`` dat doet maar eigenlijk komt dat overeen met de hele string! (Het karakter \".\" is nog een speciaal karakter dat met alles overeenkomt *behalve* een nieuwe ijn, dus de expressie ``.*`` komt overeen met elke regel die u zich kan inbeelden). I.p.d.v. gebruik ``<p.*?>`` wat de quantifier ``\"*\"`` niet-gulzig maakt. Die expressie komt enkel overeen met de openingstag, zoals bedoeld. Er is nog een manier om dit te bereiken: De expressie ``<p[^>]*>`` komt met dezelfde tag overeen - u ziet waarom na het volgende onderdeel. Merk gewoon op dat er dikwijls meerdere manieren zijn om een reguliere expressie te schrijven."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:56
 msgid ""
@@ -211,7 +211,7 @@ msgid ""
 "the way, concerning those special characters: Consider any character we "
 "discuss in this introduction as having some function to be special and thus "
 "needing to be escaped if you want the literal character."
-msgstr ""
+msgstr "U kan natuurlijk dit doen: Zet gewoon een backslash voor elk speciaal karakter en het wordt geïnterpreteerd als letterlijk dat karakter, zonder speciale betekenis. Dit paar backslashes gevolgd door een enkel karakter wordt een escape sequentie genoemd en een backslash voor een speciaal karakter zetten heet dat karakter escapen. Een escape sequentie wordt geïnterpreteerd als een enkel element. Er zijn natuurlijk escape sequenties die meer doen dan speciale karakters escapen, ``\"\\t\"`` bv. betekent een tabulator. We zien later enkele escape sequenties. Oh, enne, wat betreft die speciale karakters: Beschouw elk karakter dat we bespreken in deze introductie als hebbende een zekere functie die speciaal kan zijn en dus een nood om te escapen als u het letterlijke karakter wilt hebben."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:61
 msgid "So, what are the most useful sets?"
@@ -270,13 +270,13 @@ msgid ""
 " ``<p[^>]*>`` from the previous section, now you can see that the character "
 "set it's using tries to match any character except for a closing angle "
 "bracket."
-msgstr ""
+msgstr "Al laatste woord over sets, u kan een set ook definiëren als elk karakter *behalve* die in de set. U doet dat door het karakter ``\"^\"`` als *allereerste karakter in de set* te zetten. Dus, ``[^a]`` komt overeen met elk karakter behalve \"a\". Dat heet de set aanvullen. Die verkorte escapereeksen die we eerder zagen kunnen ook aangevuld worden: ``\"\\D\"`` betekent elk niet-numeriek karakter, equivalent dus met ``[^0-9]``. De andere verkortingen kunnen aangevuld worden door, u raadde het, gebruik van de respectieve hoofdletter i.p.v. de kleine letter. Dus, terug naar het voorbeeld ``<p[^>]*>`` van de vorige sectie, u ziet nu dat de gebruikte karakterset probeert overeen te komen met elk karakter behalve een sluitend vierkant haakje."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:81
 msgid ""
 "But if I had a few varying strings I wanted to match, things get "
 "complicated?"
-msgstr ""
+msgstr "Maar als ik een paar verschillende strings had die ik wilde laten overeenkomen worden dingen ingewikkeld?"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:83
 msgid ""
@@ -292,7 +292,7 @@ msgid ""
 "bar character): If you use the expression ``(Title|Author)`` you'll either "
 "get a match for \"Title\" (on the odd pages) or you'd match \"Author\" (on "
 "the even pages). Well, wasn't that easy?"
-msgstr ""
+msgstr "Vrees niet, 't leven is nog altijd eenvoudig en goed. Overweeg dit voorbeeld: In het boek dat converteert staat \"Titel\" op elke oneven pagina en \"Auteur\" op elke even pagina. Ziet er goed uit in druk, niet? Maar in e-boeken is het vervelend. U kan hele expressies groeperen tussen aanhalingstekens en het karakter ``\"|\"`` laat overeenkomen met *ofwel* de expressie rechts *ofwel* de expressie links. Combineer deze en u bent klaar. Te snel voor u? Oké, om te beginnen groeperen we de expressies voor even en oneven pagina's en krijgen ``(Title)(Author)`` als de twee benodigde expressies. Nu maken we het simpeler met gebruik van het pijp symbool (``\"|\"`` wordt het pijp of sluissymbool genoemd): Als u de expressie ``(Title|Author)`` gebruikt krijgt u ofwel een overeenkomst voor \"Titel\" (op de oneven pagina's) ofwel \"Auteur\" (op de even pagina's). Wel, was dat niet gemakkelijk?"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:85
 msgid ""
@@ -308,7 +308,7 @@ msgid ""
 "will be selected. If you were to use ``c|Calibre``, you'd get a match on the"
 " string \"c\" or on the string \"Calibre\", which isn't what we wanted. In "
 "short: If in doubt, use grouping together with the vertical bar."
-msgstr ""
+msgstr "U kan natuurlijk het pijp symbool ook zonder groeperende haakjes gebruiken. Weet u nog dat ik zei dat quantifiers het element voor zich herhalen? Wel, het pijp symbool werkt enigszins anders: De expressie \"Titel|Auteur\" komt ook overeen met ofwel de string \"Titel\" ofwel de string \"Auteur\", net zoals het voorbeeld boven met groeperen. *Het pijp symbool selecteert tussen de volledige expressie ervoor en erna*. Dus als u met de strings \"Calibre\" en \"calibre\" wou overeenkomen en enkel wou selecteren tussen de hoofd- en kleine letter \"c\", moet u de expressie ``(c|C)alibre`` gebruiken, waar de groepering ervoor zorgt dat enkel de \"c\" wordt geselecteerd. Als u ``c|Calibre`` zou gebruiken, zou u een overeenkomst krijgen op de string \"c\" of op de string \"Calibre\", wat niet is wat we wilden. Samengevat: Bij twijfel, gebruik groeperen met het pijp symbool."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:88
 msgid "You missed..."
@@ -323,13 +323,13 @@ msgid ""
 "you want to reference, thus, the fifth group would be referenced as ``\\5``."
 " So, if you searched for ``([^ ]+) \\1`` in the string \"Test Test\", you'd "
 "match the whole string!"
-msgstr ""
+msgstr "...wacht nog even, er is nog één, heel tof ding dat u kan doen met groepen. Als u een groep hebt die vroeger overeenkwam, kan u verder in de expressie verwijzingen naar die groep gebruiken: Groepen worden genummerd vanaf 1, en u verwijst ernaar door het getal van de groep waarnaar u wilt verwijzen te escapen, dus naar de vijfde groep wordt verwezen met ``\\5``. Dus, als u zocht naar ``([^ ]+) \\1`` in de string \"Test Test\", komt dat overeen met de hele string!"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:94
 msgid ""
 "In the beginning, you said there was a way to make a regular expression case"
 " insensitive?"
-msgstr ""
+msgstr "In het begin zei u dat er een manier was om een reguliere expressie hoofdletterongevoelig te maken?"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:96
 msgid ""
@@ -340,7 +340,7 @@ msgid ""
 "the specific flags you want. For ignoring case, the flag is ``i``, thus you "
 "include ``(?i)`` in your expression. Thus, ``(?i)test`` would match "
 "\"Test\", \"tEst\", \"TEst\" and any case variation you could think of."
-msgstr ""
+msgstr "Inderdaad, bedankt voor uw aandacht en om me eraan te herinneren. U kan calibre zeggen hoe u bepaalde dingen gedaan wilt hebben met vlaggen. U voegt vlaggen in in uw expressie via de speciale constructie ``(?vlaggen hier)`` waar u, natuurlijk, \"vlaggen hier\" vervangt door de specifieke vlag die u wilt. Om hoofdlettergebruik te negeren is de vlag ``i`` dus u voegt ``(?i)`` in in uw expressie. Dus, ``(?i)test`` komt overeen met \"Test\", \"tEst\", \"TEst\" en elke hoofd/kleine letter variatie ie u kunt bedenken."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:98
 msgid ""
@@ -349,13 +349,13 @@ msgid ""
 "expression, just put them in the same statement: ``(?is)`` would ignore case"
 " and make the dot match all. It doesn't matter which flag you state first, "
 "``(?si)`` would be equivalent to the above."
-msgstr ""
+msgstr "Een andere nuttige vlag laat het punt overeenkomen met eender welk karakter, *inbegrepen* de newline, de vlag  ``s``. Als u meerdere vlaggen wil gebruiken in een expressie, zet ze gewoon in dezelfde verklaring: ``(?is)`` negeert hoofdlettergebruik en laat het punt met alles overeenkomen. Het maakt niet uit welke vlag u eerst zet, ``(?si)`` is gelijk aan het bovenstaande."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:101
 msgid ""
 "I think I'm beginning to understand these regular expressions now... how do "
 "I use them in calibre?"
-msgstr ""
+msgstr "Ik denk dat ik deze reguliere expressies begin te begrijpen nu ... hoe gebruik ik ze in calibre?"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:104
 msgid "Conversions"
@@ -375,7 +375,7 @@ msgid ""
 "the button labeled :guilabel:`Test` and calibre highlights the parts it "
 "would replace were you to use the regexp. Once you're satisfied, hit OK and "
 "convert. Be careful if your conversion source has tags like this example::"
-msgstr ""
+msgstr "Laten we beginnen met de conversie instellingen, wat echt handig is. In het :guilabel:`Zoeken & vervangen` deel kan u een regexp (afkorting voor reguliere expressie) ingeven die de string beschrijft die vervangen wordt tijdens de conversie. Het handige deel is de wizard. Klik op de toverstaf en u krijgt een voorbeeld van wat calibre \"ziet\" tijdens de conversie. Scrol naar de string die u wilt verwijderen, selecteer en kopieer hem, plak helm in het regexp veld boven in het venster. Als er variabele delen zijn, zoals pagina nummers of zo, gebruik daarvoor sets en quantifiers en terwijl u bezig bent, denk eraan speciale karakters te escapen, als er zijn. Klik op de :guilabel:`Test` knop en calibre accentueert de delen die het zou vervangen als u de regexp zou gebruiken. Wanneer u tevreden bent, klik op OK en converteer. Weer voorzichtig als uw conversie bron tags heeft zoals deze::"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:116
 msgid ""
@@ -402,7 +402,7 @@ msgid ""
 "note that should you accidentally remove more or fewer tags than you "
 "actually wanted to, calibre tries to repair the damaged code after doing the"
 " removal."
-msgstr ""
+msgstr "(schaamteloos geripped uit  `deze thread <https://www.mobileread.com/forums/showthread.php?t=75594\">`_). U moet enkele tags verwijderen ook. In dit voorbeeld raad ik aan te beginnen met de tag ``<b class=\"calibre2\">``, nu moet u eindigen met de overeenkomende sluittag (openingstags zijn ``<tag>``, sluittags zijn ``</tag>``), welke gewoon de volgende ``</b>`` in dit geval. (Gebruik een goede HTML manual of vraag in het forum als u hierover twijfelt). De openingstag kan beschreven worden met ``<b.*?>``, de sluittag met ``</b>``, dus we kunnen alles tussen deze tags verwijderen met ``<b.*?>.*?</b>``. Maar deze expressie gebruiken is een slecht idee want ze verwijdert alles omsloten door <b> tags (die, by the way, de omsloten tekst vet weergeeft), en waarschijnlijk verwijderen we delen va het boek op deze manier. In plaats daarvan, geef ook het begin van de omsloten string mee, de reguliere expressie wordt dan ``<b.*?>\\s*Generated\\s+by\\s+ABC\\s+Amber\\s+LIT.*?</b>`` De ``\\s`` met quantifiers is inbegrepen hier in plaats van expliciet gebruik van de spaties zoals in de string om eventuele variaties van de string op te vangen. Denk eraan te controleren wat calibre gaat verwijderen zodat u zeker bent dat u geen delen verwijdert die u wilt behouden als u een nieuwe expressie test. Als u maar één voorkomen test, kan u ergens anders in de tekst een mismatch over het hoofd zien. Merk ook op dat als per ongeluk meer of minder tags verwijdert dan u eigenlijk wou dat calibre de beschadigde code probeert te herstellen na het verwijderen."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:119
 msgid "Adding books"
@@ -429,7 +429,7 @@ msgid ""
 "calibre provides, you need to add the file extension to your testing "
 "filename, otherwise you won't get any matches at all, despite using a "
 "working expression."
-msgstr ""
+msgstr "Iets anders waar u reguliere expressies voor kan gebruiken is metadata uit bestandsnamen halen. U vindt deze functie in \"Boeken toevoegen\" in de instellingen. Er is hier een speciale functie: U kan veldnamen gebruiken voor metadata velden, bv. ``(?P<title>)`` geeft aan dat calibre dit deel van de string gebruikt als boektitel. De toegelaten veldnamen zijn opgelijst in de vensters, samen met een ander leuk testveld. Bv. Stel u wilt een hoop bestanden importeren genaamd zoals ``Classical Texts: The Divine Comedy by Dante Alighieri.mobi``. (Dit is natuurlijk al in uw bibliotheek, we houden allemaal van klassieke Italiaanse poëzie) of ``Science Fiction epics: The Foundation Trilogy by Isaac Asimov.epub``. Dit is duidelijk een naamgevingsschema waar calibre geen nuttige data kan uithalen - z'n standaard expressie om metadata te extraheren is ``(?P2.+) - (?P3[^_]+)``. Een reguliere expressie die hier werkt zou ``[a-zA-Z]+: (?P4.+) by (?P5.+)`` zijn. Merk a.u.b. op dat, in de groep voor het metadata veld, u expressies moet gebruiken die beschrijven waar het veld met overeenkomt. En merk ook op dat bij gebruik van het door calibre voorziene testveld, u de extensie moet toevoegen aan uw testbestandsnaam of u krijgt helemaal geen overeenkomsten, ook niet met een werkende expressie."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:125
 msgid "Bulk editing metadata"
@@ -468,7 +468,7 @@ msgid ""
 "started and to enable you to continue learning by yourself- a good starting "
 "point would be the `Python documentation for regexps "
 "<https://docs.python.org/library/re.html>`_."
-msgstr ""
+msgstr "Wel, tot zover de zeer korte inleiding tot reguliere expressies. Hopelijk heb ik u genoeg laten zien om u tenminste te laten beginnen en het mogelijk te maken om zelfstandig verder te leren - een goed vertrekpunt is de `Python documentatie voor reguliere expressies <https://docs.python.org/library/re.html>`_."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:131
 msgid ""
@@ -478,11 +478,11 @@ msgid ""
 "yourself in the foot. (God, I love that expression...). But should you, "
 "despite the warning, injure your foot (or any other body parts), try to "
 "learn from it."
-msgstr ""
+msgstr "Toch een laatste verwittiging: Reguliere expressies zijn krachtig maar ook foutgevoelig. calibre voorziet echt super testmogelijkheden om te zien of uw expressies doen wat u verwacht van hen. Gebruik ze. Probeer uzelf niet in de voet te schieten. (Dzjee, wat een prachtige uitdrukking...). Doet u het toch ondanks de waarschuwing (of in een ander lichaamsdeel), probeer ervan te leren."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:135
 msgid "Quick reference"
-msgstr ""
+msgstr "Snelle referentie"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:143
 msgid "Credits"
@@ -518,7 +518,7 @@ msgstr "Starson17"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:153
 msgid "Orpheu"
-msgstr ""
+msgstr "Orpheu"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:155
 msgid ""
@@ -527,4 +527,4 @@ msgid ""
 "library used by calibre is: `regex <https://bitbucket.org/mrabarnett/mrab-"
 "regex/src/hg/>`_ which supports several useful enhancements over the Python "
 "standard library one."
-msgstr ""
+msgstr "Voor meer over reguliere expressies, bekijk `The Python User Manual <https://docs.python.org/library/re.html>`_. De actuele reguliere expressie bibliotheek gebruikt door calibre is: `regex <https://bitbucket.org/mrabarnett/mrab-regex/src/hg/>`_ welke verscheidene nuttige verbeteringen ondersteunt bovenop de Python standaard bibliotheek."

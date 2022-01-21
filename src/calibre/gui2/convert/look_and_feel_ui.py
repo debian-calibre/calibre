@@ -218,6 +218,7 @@ class Ui_Form(object):
         self.tab_5 = QtWidgets.QWidget()
         self.tab_5.setObjectName("tab_5")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.tab_5)
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.opt_transform_html_rules = HtmlRulesWidget(self.tab_5)
         self.opt_transform_html_rules.setObjectName("opt_transform_html_rules")

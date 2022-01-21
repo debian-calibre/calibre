@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "декември 17, 2021" "5.34.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "януари 21, 2022" "5.35.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -41,25 +41,25 @@ calibre\-debug [options]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre E\-book viewer and the calibre editor in debug mode.
+Различни интерфейси на командния ред, полезни за отстраняване на calibre грешки. Без опции,
+тази команда стартира вграден Python интерпретатор. Може също да стартирате главния
+calibre GUI, calibre E\-book viewer и calibre editor в режим за отстраняване на грешки.
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the E\-book diff tool and so
-on.
+Съдържа и интерфейси към различни calibre битове, които нямат
+инструменти за специализиран команден ред, като поднастройка на шрифт, инструмента E\-book diff и
+така нататък.
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+Може също да използвате \fBcalibre\-debug\fP, за да изпълнявате самостоятелни скриптове. За да направите, че да го използвате така:
 .INDENT 0.0
 .INDENT 3.5
 \fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .UNINDENT
 .UNINDENT
 .sp
-Everything after the \fB\-\-\fP is passed to the script.
+Всичко след \fB\-\-\fP се предава на сценария.
 .sp
-Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
-.SH [ОПЦИИ]
+Винаги, когато предавате аргументи на \fBcalibre\-debug\fP, които имат интервали в тях, затворете аргументите в кавички. Например: "/some path/with spaces"
+.SH ОБЩИ НАСТРОЙКИ
 .INDENT 0.0
 .TP
 .B \-\-add\-simple\-plugin
@@ -83,7 +83,7 @@ Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, en
 .INDENT 0.0
 .TP
 .B \-\-diff
-Run the calibre diff tool. For example: calibre\-debug \fI\%\-\-diff\fP file1 file2
+Стартиране на calibre diff инструмент. Например: calibre\-debug \fI\%\-\-diff\fP file1 file2
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -98,27 +98,27 @@ Run the calibre diff tool. For example: calibre\-debug \fI\%\-\-diff\fP file1 fi
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Explode the book into the specified folder. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
+Взривете книгата в указаната папка. В употреба: \-x file.epub output_dir Експортира книгата като колекция от HTML файлове и метаданни, които може да редактирате с помощта на стандартни инструменти за редактиране на HTML. Работи с EPUB, AZW3, HTMLZ и DOCX файлове.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Export all calibre data (books/settings/plugins). Normally, you will be asked for the export folder and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export folder and libraries. The special keyword \fB"\fPall\fB"\fP can be used to export all libraries.
+Експортирайте всички данни от calibre (книги/настройки/плъгини). Обикновено ще бъде поискана папката за експорт и библиотеките към експорт. Може също така да гѝ посочите като аргументи на командния ред, за да пропуснете въпросите. Използвайте абсолютни пътища за папката на експорт и библиотеките. Специалната ключова дума \fB"\fPвсички\fB"\fP може да се използва за експорт на всички библиотеки.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-fix\-multiprocessing
-For internal use
+За вътрешна употреба
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-gui, \-g
-Стартирай ГИ с активиран дебъгер. Резултатът излиза в stdout и stderr.
+Стартирай GUI с активиран дебъгер. Резултатът излиза в stdout и stderr.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-gui\-debug
-Стартирай ГИ с дебъгер конзола и запис към определен път. Само за вътрешно ползване, използвай опция \-g за стартиране на ГИ в режим дебъгер.
+Стартирай GUI с дебъгер конзола и запис към определен път. Само за вътрешно ползване, използвай опция \-g за стартиране на GUI в режим дебъгер.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -128,7 +128,7 @@ For internal use
 .INDENT 0.0
 .TP
 .B \-\-implode\-book, \-i
-Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the book from the files in output_dir which must have been created by a previous call to \fI\%\-\-explode\-book\fP\&. Be sure to specify the same file type as was used when exploding.
+Имплодиране на избухнала преди това книга. В употреба: \-i output_dir file.epub Внася книгата от файловете в output_dir които трябва да са били създадени от предишно обаждане до \fI\%\-\-explode\-book\fP\&. Не забравяйте да укажете същия тип файл, какъвто е използван при взривяване.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -138,7 +138,7 @@ Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the 
 .INDENT 0.0
 .TP
 .B \-\-inspect\-mobi, \-m
-Преглеждане на MOBI файла(овете) в определен път(ища).
+Преглеждане на MOBI файла(\-овете) в определен път(ища).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -153,22 +153,22 @@ Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the 
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-Run a plugin that provides a command line interface. For example: calibre\-debug \-r \fB"\fPAdd Books\fB"\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
+Изпълнение на плъгин, който предоставя интерфейс на командния ред. Например: calibre\-debug \-r \fB"\fPДобави книги\fB"\fP \fB\-\-\fP file1 \fB\-\-option1\fP Всичко след \fB\-\-\fP ще бъде предадено на плъгина като аргументи.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-running\-calibre, \-s
-Cause a running calibre instance, if any, to be shutdown. Note that if there are running jobs, they will be silently aborted, so use with care.
+Накарай екземпляр на работещ calibre, ако има такъв, да бъде изключен. Имайте предвид, че ако в него се изпълняват задания, те ще бъдат мълчаливо прекратени, така че използвайте с внимание.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-subset\-font, \-f
-Subset the specified font. Use \fB\-\-\fP after this option to pass option to the font subsetting program.
+Подзадайте указания шрифт. Използвайте \fB\-\-\fP след тази опция, за да премине опция към програма за поднастройка на шрифта.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-test\-build
-Test binary modules in build
+Тест на двоични модули в компилация
 .UNINDENT
 .INDENT 0.0
 .TP

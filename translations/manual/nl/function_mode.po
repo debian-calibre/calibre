@@ -6,6 +6,7 @@
 # M. de Boer <de.boer.melle@gmail.com>, 2018
 # Meteor0id, 2019
 # Patrick van Noort <patrick.vannoort@gmail.com>, 2018
+# peter <petertje@tuta.io>, 2022
 # math1985 <transifex@matthijsmelissen.nl>, 2016
 # Volluta <volluta@tutanota.com>, 2016
 # W.P.M.E. Hofland <wpme.hofland@gmail.com>, 2015
@@ -13,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-07 03:23+0000\n"
-"PO-Revision-Date: 2021-10-03 01:41+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2022-01-20 09:15+0000\n"
+"PO-Revision-Date: 2022-01-16 23:20+0000\n"
+"Last-Translator: peter <petertje@tuta.io>\n"
 "Language-Team: Dutch (http://www.transifex.com/calibre/calibre/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,7 +44,7 @@ msgid ""
 "template, you specify an arbitrary function, in the `Python programming "
 "language <https://docs.python.org>`_. This allows you to do lots of things "
 "that are not possible with simple templates."
-msgstr ""
+msgstr "In de standaard *regexp*  modus voor zoeken en vervangen, geeft u zowel een reguliere expressie op om naar te zoeken als een sjabloon, om alle gevonden overeenkomsten te vervangen. In functiemodus geeft u in plaats van een vast sjabloon een willekeurige functie op in de `Python programmeertaal <https://docs.python.org>`_. Hiermee kunt u veel dingen doen die niet mogelijk zijn met eenvoudige sjablonen."
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:16
 msgid ""
@@ -54,7 +55,7 @@ msgstr "Technieken voor het gebruik van de functie modus en de syntaxis worden b
 
 #: ../../__w/calibre/calibre/manual/function_mode.rstNone
 msgid "The Function mode"
-msgstr ""
+msgstr "De Functie modus"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:26
 msgid "Automatically fixing the case of headings in the document"
@@ -65,7 +66,7 @@ msgid ""
 "Here, we will leverage one of the builtin functions in the editor to "
 "automatically change the case of all text inside heading tags to title "
 "case::"
-msgstr "Hier zullen we gebruik maken van een van de ingebouwde functies in de editor om automatisch het hoofdlettergebruik van alle tekst binnen heading-labels naar Hoofdletters te veranderen::"
+msgstr "Hier zullen we gebruik maken van een van de ingebouwde functies in de editor om automatisch het hoofdlettergebruik van alle tekst binnen heading-tags naar elk woord met hoofdletters te veranderen::"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:33
 msgid ""
@@ -73,11 +74,11 @@ msgid ""
 "tags)` builtin function. The will change titles that look like: ``<h1>some "
 "TITLE</h1>`` to ``<h1>Some Title</h1>``. It will work even if there are "
 "other HTML tags inside the heading tags."
-msgstr "Kies voor de functie eenvoudigweg de :guilabel:`Titel-case tekst (negeer labels)` ingebouwde functie. De titels zullen van naam veranderen: ``<h1>een TITEl</h1>`` tot `` een Titel<h1>``. Het werkt ook als er andere HTML-labels in de heading-labels voorkomen."
+msgstr "Kies voor de functie eenvoudigweg de :guilabel:`Titel-case tekst (negeer tags)` ingebouwde functie. Dit verandert titels die eruit zien als: ``<h1>een TITEL</h1>`` naar ``<h1>Een Titel</h1>``. Het werkt zelfs als er andere HTML-tags in de heading-tags voorkomen."
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:40
 msgid "Your first custom function - smartening hyphens"
-msgstr ""
+msgstr "Uw eerste aangepaste functie - koppeltekens slim maken"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:42
 msgid ""
@@ -100,38 +101,39 @@ msgid ""
 "arguments shown above. For the moment, we won't worry about all the "
 "different arguments to ``replace()`` function. Just focus on the ``match`` "
 "argument. It represents a match when running a search and replace. Its full "
-"documentation in available `here <https://docs.python.org/library/re.html"
-"#match-objects>`_. ``match.group()`` simply returns all the matched text and"
-" all we do is replace hyphens in that text with em-dashes, first replacing "
-"double hyphens and then single hyphens."
+"documentation in available `here "
+"<https://docs.python.org/library/re.html#match-objects>`_. ``match.group()``"
+" simply returns all the matched text and all we do is replace hyphens in "
+"that text with em-dashes, first replacing double hyphens and then single "
+"hyphens."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:65
 msgid "Use this function with the find regular expression::"
-msgstr ""
+msgstr "Gebruik deze functie met de zoek reguliere expressie::"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:69
 msgid ""
 "And it will replace all hyphens with em-dashes, but only in actual text and "
 "not inside HTML tag definitions."
-msgstr ""
+msgstr "En het vervangt alle koppeltekens met em-streepjes maar enkel in echte tekst en niet in HTML tag definities."
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:74
 msgid ""
 "The power of function mode - using a spelling dictionary to fix mis-"
 "hyphenated words"
-msgstr ""
+msgstr "De kracht van functie modus - een spellingswoordenboek gebruiken om fout koppeltekengebruik te herstellen"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:76
 msgid ""
 "Often, e-books created from scans of printed books contain mis-hyphenated "
 "words -- words that were split at the end of the line on the printed page. "
 "We will write a simple function to automatically find and fix such words."
-msgstr ""
+msgstr "E-boeken gecreëerd van scans van gedrukte boeken bevatten dikwijls fout koppeltekengebruik -- woorden gesplitst aan het einde van een regel in d gedrukte tekst. We gaan een eenvoudige functie schrijven om zulke woorden automatisch te vinden en herstellen."
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:101
 msgid "Use this function with the same find expression as before, namely::"
-msgstr ""
+msgstr "Gebruik deze functie met dezelfde zoek reguliere expressie als voorheen, namelijk::"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:105
 msgid ""
@@ -171,7 +173,7 @@ msgstr "Gebruik  het met de find expresse::"
 #: ../../__w/calibre/calibre/manual/function_mode.rst:141
 msgid ""
 "Place the cursor at the top of the file and click :guilabel:`Replace all`."
-msgstr ""
+msgstr "Plaats de cursor aan het begin van het bestand en klik op :guilabel:`Alle vervangen`."
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:143
 msgid ""
@@ -186,7 +188,7 @@ msgid ""
 "``'spine'`` means that if this search is run on multiple HTML files, the "
 "files are processed in the order in which they appear in the book. See "
 ":ref:`file_order_replace_all` for details."
-msgstr ""
+msgstr "Een andere nieuwe functie is het gebruik van de ``replace.file_order`` -- instelling die voor ``'spine'`` betekent dat als deze zoekopdracht draait op meerdere HTML files, de bestanden verwerkt worden in de volgorde waarin ze verschijnen in het book. Bekijk :ref:`file_order_replace_all` voor details."
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:154
 msgid "Auto create a Table of Contents"
@@ -270,7 +272,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:248
 msgid "The ``number`` argument"
-msgstr ""
+msgstr "The ``number`` argument"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:250
 msgid ""
@@ -281,7 +283,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:255
 msgid "The ``file_name`` argument"
-msgstr ""
+msgstr "Het ``file_name`` argument"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:257
 msgid ""
@@ -293,7 +295,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:263
 msgid "The ``metadata`` argument"
-msgstr ""
+msgstr "Het ``metadata`` argument"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:265
 msgid ""
@@ -306,7 +308,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:271
 msgid "The ``dictionaries`` argument"
-msgstr ""
+msgstr "Het ``dictionaries`` argument"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:273
 msgid ""
@@ -318,7 +320,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:279
 msgid "The ``data`` argument"
-msgstr "Het ``gegevens`` argument"
+msgstr "Het ``data`` argument"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:281
 msgid ""
@@ -330,7 +332,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:288
 msgid "The ``functions`` argument"
-msgstr ""
+msgstr "Het ``functions`` argument"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:290
 msgid ""
@@ -344,7 +346,7 @@ msgstr ""
 msgid ""
 "Then, in another function, you can access the ``utility()`` function like "
 "this:"
-msgstr ""
+msgstr "Dan, in een andere functie, hebt u toegang tot de ``utility()`` functie, zo:"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:311
 msgid ""
@@ -357,7 +359,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:331
 msgid "Debugging your functions"
-msgstr "Debuggen van uw functies"
+msgstr "Foutzoeken in uw functies"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:333
 msgid ""
@@ -369,7 +371,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:341
 msgid "Choose file order when running on multiple HTML files"
-msgstr ""
+msgstr "Kies bestandsvolgorde bij uitvoeren meerdere HTML bestanden"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:343
 msgid ""
@@ -424,7 +426,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:408
 msgid "More examples"
-msgstr ""
+msgstr "Meer voorbeelden"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:410
 msgid ""

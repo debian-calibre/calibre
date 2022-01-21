@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "12월 17, 2021" "5.34.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "1월 21, 2022" "5.35.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -59,7 +59,7 @@ You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use 
 Everything after the \fB\-\-\fP is passed to the script.
 .sp
 Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
-.SH [설정들]
+.SH [옵션]
 .INDENT 0.0
 .TP
 .B \-\-add\-simple\-plugin
@@ -73,7 +73,7 @@ Python 코드를 실행합니다.
 .INDENT 0.0
 .TP
 .B \-\-debug\-device\-driver, \-d
-기기 탐지를 디버그합니다.
+장치 감지 디버그
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -98,7 +98,7 @@ Python 코드를 실행합니다.
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Explode the book into the specified folder. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
+책을 지정된 폴더로 분해합니다. 사용법: \-x file.epub output_dir 표준 HTML 편집 도구를 사용하여 편집할 수 있는 HTML 파일 및 메타데이터 모음으로 책을 내보냅니다. EPUB, AZW3, HTMLZ 및 DOCX 파일과 함께 작동합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -153,7 +153,7 @@ Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the 
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-명령행 인터페이스를 제공하는 플러그인을 실행합니다. 예: calibre\-debug \-r \fB"\fPAdd Books\fB"\fP \fB\-\-\fP 파일 \fB\-\-option1\fP \fB\-\-\fP 뒤의 모든 것은 플러그인에 인수로 전달됩니다.
+명령행 인터페이스를 제공하는 플러그인을 실행합니다. 예: calibre\-debug \-r \fB"\fP책 추가\fB"\fP \fB\-\-\fP 파일1 \-\-옵션1 \fB\-\-\fP 뒤의 모든 것은 플러그인에 인수로 전달됩니다.
 .UNINDENT
 .INDENT 0.0
 .TP

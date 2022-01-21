@@ -31,6 +31,8 @@ def init_dateop(cb):
             ('>', _('after')),
             ('<=', _('before or equal to')),
             ('>=', _('after or equal to')),
+            ('s', _('set')),
+            ('u', _('unset')),
     ]:
         cb.addItem(desc, op)
 
@@ -162,8 +164,21 @@ def create_simple_tab(self, db):
                 self.general_combo.findText(self.box_last_values['general_index']))
 
 
+def toggle_date_conditions_visibility(self):
+    dcl = self.date_tab.date_condition_layouts
+    op = current_dateop(self.dateop_date)
+    visible = op not in 'su'
+    for l in dcl:
+        for i in range(l.count()):
+            x = l.itemAt(i)
+            w = x.widget()
+            if w is not None:
+                w.setVisible(visible)
+
+
 def create_date_tab(self, db):
     self.date_tab = w = QWidget(self.tab_widget)
+    w.date_condition_layouts = dcl = []
     self.tab_widget.addTab(w, _("&Date search"))
     w.l = l = QVBoxLayout(w)
 
@@ -190,11 +205,13 @@ def create_date_tab(self, db):
     h.addWidget(df)
     self.dateop_date = dd = add(_("date column for books whose &date is "), QComboBox(w))
     init_dateop(dd)
+    connect_lambda(dd.currentIndexChanged, self, toggle_date_conditions_visibility)
     w.la3 = la = QLabel('...')
     h.addWidget(la)
     h.addStretch(10)
 
     w.h2 = h = QHBoxLayout()
+    dcl.append(h)
     l.addLayout(h)
     self.sel_date = a(QRadioButton(_('&year'), w))
     self.date_year = dy = a(QSpinBox(w))
@@ -209,6 +226,7 @@ def create_date_tab(self, db):
     h.addStretch(10)
 
     w.h3 = h = QHBoxLayout()
+    dcl.append(h)
     l.addLayout(h)
     self.sel_daysago = a(QRadioButton('', w))
     self.date_daysago = da = a(QSpinBox(w))
@@ -220,6 +238,7 @@ def create_date_tab(self, db):
 
     w.h4 = h = QHBoxLayout()
     l.addLayout(h)
+    dcl.append(h)
     self.sel_human = a(QRadioButton('', w))
     self.date_human = dh = a(QComboBox(w))
     for val, text in [('today', _('Today')), ('yesterday', _('Yesterday')), ('thismonth', _('This month'))]:
@@ -233,6 +252,7 @@ def create_date_tab(self, db):
     h.addStretch(10)
 
     l.addStretch(10)
+    toggle_date_conditions_visibility(self)
 
 
 def create_template_tab(self):
@@ -376,16 +396,18 @@ class SearchDialog(QDialog):
         if template and value:
             cb = self.template_test_type_box
             op =  str(cb.itemData(cb.currentIndex()))
-            l = '{}#@#:{}:{}'.format(template, op, value)
+            l = f'{template}#@#:{op}:{value}'
             return 'template:"' + l + '"'
         return ''
 
     def date_search_string(self):
         field = str(self.date_field.itemData(self.date_field.currentIndex()) or '')
         op = current_dateop(self.dateop_date)
-        prefix = '%s:%s' % (field, op)
+        if op in 'su':
+            return f'{field}:{"true" if op == "s" else "false"}'
+        prefix = f'{field}:{op}'
         if self.sel_date.isChecked():
-            ans = '%s%s' % (prefix, self.date_year.value())
+            ans = f'{prefix}{self.date_year.value()}'
             m = self.date_month.itemData(self.date_month.currentIndex())
             if m > 0:
                 ans += '-%s' % m
@@ -396,8 +418,8 @@ class SearchDialog(QDialog):
         if self.sel_daysago.isChecked():
             val = self.date_daysago.value()
             val *= {0:1, 1:7, 2:30, 3:365}[self.date_ago_type.currentIndex()]
-            return '%s%sdaysago' % (prefix, val)
-        return '%s%s' % (prefix, str(self.date_human.itemData(self.date_human.currentIndex()) or ''))
+            return f'{prefix}{val}daysago'
+        return '{}{}'.format(prefix, str(self.date_human.itemData(self.date_human.currentIndex()) or ''))
 
     def adv_search_string(self):
         mk = self.matchkind.currentIndex()

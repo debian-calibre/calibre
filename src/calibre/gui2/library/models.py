@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -142,7 +141,8 @@ class ColumnIcon:  # {{{
                     if (os.path.exists(d)):
                         bm = QPixmap(d)
                         scaled, nw, nh = fit_image(bm.width(), bm.height(), bm.width(), dim)
-                        bm = bm.scaled(nw, nh, aspectRatioMode=Qt.AspectRatioMode.IgnoreAspectRatio, transformMode=Qt.TransformationMode.SmoothTransformation)
+                        bm = bm.scaled(int(nw), int(nh), aspectRatioMode=Qt.AspectRatioMode.IgnoreAspectRatio,
+                                       transformMode=Qt.TransformationMode.SmoothTransformation)
                         bm.setDevicePixelRatio(self.dpr)
                         icon_bitmaps.append(bm)
                         total_width += bm.width()
@@ -279,7 +279,7 @@ class BooksModel(QAbstractTableModel):  # {{{
             old.pop(colname, None)
             self.styled_columns.pop(colname, None)
             if font_type != 'normal':
-                self.styled_columns[colname] = getattr(self, '{}_font'.format(font_type))
+                self.styled_columns[colname] = getattr(self, f'{font_type}_font')
                 old[colname] = font_type
             self.db.new_api.set_pref('styled_columns', old)
             col = self.column_map.index(colname)
@@ -851,7 +851,7 @@ class BooksModel(QAbstractTableModel):  # {{{
                     book_id = idfunc(idx)
                     series = fffunc(field_obj, book_id, default_value=False)
                     if series:
-                        return ('%s [%s]' % (series, fmt_sidx(fffunc(sidx_field, book_id, default_value=1.0))))
+                        return (f'{series} [{fmt_sidx(fffunc(sidx_field, book_id, default_value=1.0))}]')
                     return None
             elif dt in {'int', 'float'}:
                 fmt = m['display'].get('number_format', None)
@@ -1037,7 +1037,9 @@ class BooksModel(QAbstractTableModel):  # {{{
                 if fm['is_custom']:
                     cust_desc = fm['display'].get('description', '')
                     if cust_desc:
-                        cust_desc = '<br><b>{}</b>'.format(_('Description:')) + ' ' + prepare_string_for_xml(cust_desc)
+                        cust_desc = ('<br><b>{}</b>'.format(_('Description:')) +
+                                     '<span style="white-space:pre-wrap"> ' +
+                                     prepare_string_for_xml(cust_desc) + '</span>')
                 return '<b>{}</b>: {}'.format(
                     prepare_string_for_xml(title),
                     _('The lookup/search name is <i>{0}</i>').format(ht) + cust_desc + is_cat
@@ -1120,7 +1122,8 @@ class BooksModel(QAbstractTableModel):  # {{{
             disp['composite_template'] = tmpl
             self.db.set_custom_column_metadata(cc['colnum'], display=disp,
                                                update_last_modified=True)
-            self.refresh(reset=True)
+            self.refresh(reset=False)
+            self.research(reset=True)
             return True
 
         id = self.db.id(row)
@@ -1717,7 +1720,7 @@ class DeviceBooksModel(BooksModel):  # {{{
             text = self.headers[cname]
             return '<b>{}</b>: {}'.format(
                 prepare_string_for_xml(text),
-                prepare_string_for_xml(_('The lookup/search name is')) + ' <i>{}</i>'.format(self.column_map[section]))
+                prepare_string_for_xml(_('The lookup/search name is')) + f' <i>{self.column_map[section]}</i>')
         if DEBUG and role == Qt.ItemDataRole.ToolTipRole and orientation == Qt.Orientation.Vertical:
             return (_('This book\'s UUID is "{0}"').format(self.db[self.map[section]].uuid))
         if role != Qt.ItemDataRole.DisplayRole:

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -30,7 +29,7 @@ from calibre.ebooks.metadata import (
 from calibre.ebooks.metadata.meta import get_metadata
 from calibre.ebooks.oeb.polish.main import SUPPORTED as EDIT_SUPPORTED
 from calibre.gui2 import (
-    choose_files, choose_images, error_dialog, file_icon_provider, gprefs
+    choose_files_and_remember_all_files, choose_images, error_dialog, file_icon_provider, gprefs
 )
 from calibre.gui2.comments_editor import Editor
 from calibre.gui2.complete2 import EditWithComplete
@@ -973,7 +972,7 @@ class FormatsManager(QWidget):
         return
 
     def add_format(self, *args):
-        files = choose_files(
+        files = choose_files_and_remember_all_files(
                 self, 'add formats dialog', _("Choose formats for ") + self.dialog.title.current_val,
                 [(_('Books'), BOOK_EXTENSIONS)])
         self._add_formats(files)
@@ -1528,7 +1527,7 @@ class Identifiers(Dialog):
 
     def __init__(self, identifiers, parent=None):
         Dialog.__init__(self, _('Edit Identifiers'), 'edit-identifiers-dialog', parent=parent)
-        self.text.setPlainText('\n'.join('%s:%s' % (k, identifiers[k]) for k in sorted(identifiers, key=sort_key)))
+        self.text.setPlainText('\n'.join(f'{k}:{identifiers[k]}' for k in sorted(identifiers, key=sort_key)))
 
     def setup_ui(self):
         self.l = l = QVBoxLayout(self)

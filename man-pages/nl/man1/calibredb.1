@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "december 17, 2021" "5.34.0" "calibre"
+.TH "CALIBREDB" "1" "januari 21, 2022" "5.35.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -149,7 +149,7 @@ toon dit helpbericht en stop
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Pad naar calibre bibliotheek. Standaard wordt het pad gebruikt opgeslagen in de instellingen. U kan ook met een calibre Content server verbinden om  te wijzigen in bibliotheken op afstand. Om dit te doen, gebruik een URL van de vorm: \fI\%http://hostname:port/#library_id\fP bv, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id is de id van de bibliotheek waarmee u wilt verbinden op de Content server. U kan de speciale library_id gebruiken van \- om een lijst te krijgen van beschikbare ids op de server. Voor details over het toegang krijgen via een Content server, zie \fI\%https://manual.calibre\-ebook.com/nl/generated/nl/calibredb.html\fP\&.
+Pad naar calibre bibliotheek. Standaard wordt het pad gebruikt opgeslagen in de instellingen. U kan ook met een calibre Content server verbinden om te wijzigen in bibliotheken op afstand. Om dit te doen, gebruik een URL van de vorm: \fI\%http://hostname:port/#library_id\fP bv, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id is de id van de bibliotheek waarmee u wilt verbinden op de Content server. U kan de speciale library_id gebruiken van \- om een lijst te krijgen van beschikbare ids op de server. Voor details over het toegang krijgen via een Content server, zie \fI\%https://manual.calibre\-ebook.com/nl/generated/nl/calibredb.html\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -185,7 +185,7 @@ calibredb list [opties]
 .sp
 Toon de beschikbare boeken in de calibre\-database.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -224,7 +224,7 @@ Filter de resultaten op de zoekoperatie. Voor het indeling van de zoekopdracht k
 .INDENT 0.0
 .TP
 .B \-\-separator
-De tekenreeks gebruikt om velden van elkaar te scheiden. Standaard is dit een spatie.
+De string gebruikt om velden van elkaar te scheiden. Standaard is dit een spatie.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -246,7 +246,7 @@ calibredb toevoegen [opties] bestand1 bestand2 bestand3 ...
 Voeg de gespecificeerde bestanden als boeken toe aan de database. U kan ook mappen specificeren,
 kijk bij map gerelateerde opties beneden.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -290,12 +290,12 @@ Een door komma\fB\(aq\fPs gescheiden lijst van talen (het beste is om ISO639 taa
 .INDENT 0.0
 .TP
 .B \-\-series, \-s
-Stel de reeks in voor toegevoegde boek(en)
+Stel de series in van toegevoegde boek(en)
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-series\-index, \-S
-Stel het nummer in de reeks in voor toegevoegde boek(en)
+Stel het nummer in de serie in voor toegevoegde boek(en)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -313,7 +313,7 @@ Opties voor beheer van boeken toevoegen vanuit mappen. Standaard enkel bestanden
 .INDENT 0.0
 .TP
 .B \-\-add
-Een bestandsnaam (glob) patroon, bestanden die overeenkomen met dit patroon zullen worden toegevoegd bij het scannen van mappen voor bestanden, zelfs als ze geen bekend e\-book bestandstype hebben. Kan meerdere keren worden opgegeven voor meerdere patronen.
+Een bestandsnaam (glob) patroon, bestanden die overeenkomen met dit patroon zullen worden toegevoegd bij het scannen van mappen voor bestanden, zelfs als ze geen bekend e\-boek bestandstype hebben. Kan meerdere keren worden opgegeven voor meerdere patronen.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -342,9 +342,9 @@ calibredb verwijder ID\(aqs
 .UNINDENT
 .UNINDENT
 .sp
-Verwijder de boek indentificatioren van de database. ID\(aqs is een komma\-gescheiden lijst van ID nummers (u kan ID nummers verkrijgen door het zoek commando te gebruiken). Bijvoorbeeld: 23,34,57\-85 (bij opgave van een reeks, wordt het laatste nummer niet opgenomen).
+Verwijder de boek indentificatoren van de database. ID\(aqs is een komma\-gescheiden lijst van ID nummers (u kan ID nummers verkrijgen door het zoek commando te gebruiken). Bijvoorbeeld: 23,34,57\-85 (bij opgave van een serie, wordt het laatste nummer niet opgenomen).
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-permanent
@@ -362,9 +362,9 @@ calibredb add_format [opties] id ebook_file
 .UNINDENT
 .UNINDENT
 .sp
-Voeg het e\-book in ebook_file toe aan de beschikbare formaten voor het logische boek geïdentificeerd door id. U kunt id krijgen door de zoekopdracht te gebruiken. Als het formaat al bestaat, wordt het vervangen, tenzij de optie Niet vervangen is opgegeven.
+Voeg het e\-boek in ebook_file toe aan de beschikbare formaten voor het logische boek geïdentificeerd door id. U kunt id krijgen door de zoekopdracht te gebruiken. Als het formaat al bestaat, wordt het vervangen, tenzij de optie Niet vervangen is opgegeven.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -384,7 +384,7 @@ calibredb remove_format [opties] id fmt
 .sp
 Verwijder het formaat fmt van het logische boek geïdentificeerd door id. U kunt het id met het zoek\-commando vinden. fmt is een bestandsextensie zoals LRF, TXT of EPUB. Als het logische boek niet in dit formaat bestaat zal er niets gebeuren.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -397,14 +397,14 @@ calibredb show_metadata [opties] id
 .UNINDENT
 .UNINDENT
 .sp
-Toon de metadata  die in de calibre database zijn opgeslagen voor het boek dat bij id hoort.
+Toon de metadata die in de calibre database zijn opgeslagen voor het boek dat bij id hoort.
 id is een id nummer verkregen met het zoek\-commando.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
-Metadata  in OPF\-formaat (XML) afdrukken
+Metadata in OPF\-formaat (XML) afdrukken
 .UNINDENT
 .SH SET_METADATA
 .INDENT 0.0
@@ -418,14 +418,14 @@ calibredb set_metadata [options] id [/path/to/metadata .opf]
 .UNINDENT
 .UNINDENT
 .sp
-Instellen metadata  opgeslagen in de calibre database voor het boek geïdentificeerd door
+Stel metadata opgeslagen in de calibre database in voor het boek geïdentificeerd door
 id van het OPF\-bestand metadata.opf. id is een id nummer van het zoekcommando (ls). U
 kunt een idee krijgen van het OPF formaat door de \-\-as\-opf parameter te gebruiken
 voor het show_metadata commando. U kunt ook de metadata van individuele velden instellen
 met de \-\-field optie. Wanneer u de \-\-field optie gebruikt, is het niet nodig een OPF\-bestand
 te specificeren.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
@@ -434,7 +434,7 @@ Het veld om te zetten. Formaat is veld_naam:waarde, bijvoorbeeld: \fI\%\-\-field
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-Toon de metadata  veldnamen die kunnen worden gebruikt met de \fI\%\-\-field\fP optie
+Toon de metadata veldnamen die kunnen worden gebruikt met de \fI\%\-\-field\fP optie
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -449,10 +449,10 @@ calibredb export [opties] ids
 .UNINDENT
 .sp
 Exporteer de boeken gespecificeerd door ids (een lijst gescheiden door komma\(aqs) naar het bestandssysteem.
-De exportoperatie bewaard alle formaten van het boek, de omslag en metadata  (in een opf\-bestand).
+De exportoperatie bewaard alle formaten van het boek, de omslag en metadata (in een opf\-bestand).
 U kunt id\-nummers met het zoek\-commando vinden.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -461,7 +461,7 @@ Exporteer alle boeken in de database, negeer de lijst met id\fB\(aq\fPs.
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Have calibre convert all non English characters into English equivalents for the file names. This is useful if saving to a legacy filesystem without full support for Unicode filenames. Als u dit opgeeft zal het gedrag uitgeschakeld worden.
+Laat calibre alle niet\-Latijnse karakters converteren naar Latijnse voor de bestandsnamen. Nuttig bij opslaan naar een verouderd bestandssysteem zonder volledige ondersteuning voor Unicode bestandsnamen. Als u dit opgeeft zal het gedrag uitgeschakeld worden.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -471,12 +471,12 @@ Normaal slaat calibre de omslag op in een apart bestand samen met de overige boe
 .INDENT 0.0
 .TP
 .B \-\-dont\-update\-metadata
-Normaal gesproken zal calibre de metadata  in opgeslagen bestanden bijwerken aan de hand van de informatie in de calibre\-bibliotheek. Dit maakt opslaan op schijf langzamer. Als u dit opgeeft zal het gedrag uitgeschakeld worden.
+Normaal zal calibre de metadata in opgeslagen bestanden bijwerken met informatie in de calibre bibliotheek. Maakt opslaan op schijf langzamer. Als u dit opgeeft zal het gedrag uitgeschakeld worden.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-write\-opf
-Normaal gesproken, zal calibre de metadata  in een apart OPF\-bestand opslaan, samen met de daadwerkelijke E\-boekbestanden. Als u dit opgeeft zal het gedrag uitgeschakeld worden.
+Normaal gesproken, zal calibre de metadata in een apart OPF\-bestand opslaan, samen met de daadwerkelijke e\-boekbestanden. Als u dit opgeeft zal het gedrag uitgeschakeld worden.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -501,7 +501,7 @@ Exporteer alle boeken naar één enkele map
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+De sjabloon waarmee de bestandsnaam en mapstructuur van de opgeslagen bestanden wordt gecontroleerd. Standaard is dit \fB"\fP{author_sort}/{title}/{title} \- {authors}’\fB"\fP dat boeken per auteur in een submap plaatst met bestandsnamen met de naam van de auteur en de titel. Beschikbare opties zijn: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -536,7 +536,7 @@ Note that different \fBcatalog\fP formats support different sets of options. To
 see the different options, specify the name of the output file and then the
 \-\-help option.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
@@ -556,97 +556,97 @@ Laat gedetailleerde uitvoerinformatie zien. Nuttig bij het opsporen van probleme
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title
-Title of generated catalog used as title in metadata. Default: \fB\(aq\fPMy Books\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Titel van gegenereerde catalogus gebruikt als titel in metadata. Standaard: \fB\(aq\fPMy Books\fB\(aq\fP Van toepassing op: AZW3, EPUB, MOBI uitvoerformaten
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cross\-reference\-authors
-Create cross\-references in Authors section for books with multiple authors. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Creëert kruis\-referenties in Auteursonderdeel voor boeken met meerdere auteurs. Standaard: \fB\(aq\fPFalse\fB\(aq\fP Van toepassing op: AZW3, EPUB, MOBI uitvoerformaten.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Sla de uitvoer van verschillende stadia in de omzettingspijplijn op in de gespecificeerde map. Nuttig wanneer u onzeker bent in welk stadium van het omzettingsproces een fout optreedt. Standaard: \fB\(aq\fPNone\fB\(aq\fP Van toepassing op: AZW3, EPUB, MOBI uitvoerformaten
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclude\-genre
-Regex describing tags to exclude as genres. Default: \fB\(aq\fP[.+]|^+$\fB\(aq\fP excludes bracketed tags, e.g. \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, and \fB\(aq\fP+\fB\(aq\fP, the default tag for read books. Applies to: AZW3, EPUB, MOBI output formats
+Regex die beschrijft welke labels uit te sluiten als genre\fB\(aq\fPs. Standaard: \fB\(aq\fP[.+]|^+$\fB\(aq\fP sluit labels in haken uit, b.v. \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, en \fB\(aq\fP+\fB\(aq\fP, de standaard voor gelezen boeken. Van toepassing op: AZW3, EPUB, MOBI uitvoerformaten
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Specifies the rules used to exclude books from the generated catalog. The model for an exclusion rule is either (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) or (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). For example: ((\fB\(aq\fPArchived books\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) will exclude a book with a value of \fB\(aq\fPArchived\fB\(aq\fP in the custom column \fB\(aq\fPstatus\fB\(aq\fP\&. When multiple rules are defined, all rules will be applied. Default:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Applies to: AZW3, EPUB, MOBI output formats
+Specificeert de regels gebruikt om boeken uit te sluiten van de aangemaakt catalogus. Het model voor een uitsluitregel is ofwel (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) of (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). Bijvoorbeeld: ((\fB\(aq\fPGearchiveerde boeken\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPGearchiveerd\fB\(aq\fP),) zal een boek uitsluiten met de waarde \fB\(aq\fPGearchiveerd\fB\(aq\fP in de aangepaste kolom \fB\(aq\fPstatus\fB\(aq\fP\&. Wanneer meerder kolommen zijn gedefinieerd, worden alle regels toegepast. Standaard:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Geldt voor AZW3, EPUB, MOBI uitvoerformaten
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-authors
-Include \fB\(aq\fPAuthors\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Voeg \fB\(aq\fPAuteurs\fB\(aq\fP onderdeel toe aan catalogus. Standaard: \fB\(aq\fPFalse\fB\(aq\fP Van toepassing op: AZW3, EPUB, MOBI uitvoerformaten
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-descriptions
-Include \fB\(aq\fPDescriptions\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Voeg \fB\(aq\fPBeschrijvingen\fB\(aq\fP onderdeel toe aan catalogus. Standaard: \fB\(aq\fPFalse\fB\(aq\fP Van toepassing op: AZW3, EPUB, MOBI uitvoerformaten
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-genres
-Include \fB\(aq\fPGenres\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Voeg \fB\(aq\fPGenres\fB\(aq\fP onderdeel toe aan catalogus. Standaard: \fB\(aq\fPFalse\fB\(aq\fP Van toepassing op: AZW3, EPUB, MOBI uitvoerformaten
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-recently\-added
-Include \fB\(aq\fPRecently Added\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Voeg \fB\(aq\fPOnlangs toegevoegd\fB\(aq\fP onderdeel toe aan catalogus. Standaard: \fB\(aq\fPFalse\fB\(aq\fP Van toepassing op: AZW3, EPUB, MOBI uitvoerformaten
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-series
-Include \fB\(aq\fPSeries\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Voeg \fB\(aq\fPSeries\fB\(aq\fP onderdeel toe aan catalogus. Standaard: \fB\(aq\fPFalse\fB\(aq\fP Van toepassing op: AZW3, EPUB, MOBI uitvoerformaten
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-titles
-Include \fB\(aq\fPTitles\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Voeg \fB\(aq\fPTitels\fB\(aq\fP onderdeel toe aan catalogus. Standaard: \fB\(aq\fPFalse\fB\(aq\fP Van toepassing op: AZW3, EPUB, MOBI uitvoerformaten
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-genre\-source\-field
-Source field for \fB\(aq\fPGenres\fB\(aq\fP section. Default: \fB\(aq\fPLabels\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Bronveld voor Genres onderdeel. Standaard: \fB\(aq\fPLabels\fB\(aq\fP Van toepassing op: AZW3, EPUB, MOBI uitvoerformaten
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-header\-note\-source\-field
-Custom field containing note text to insert in Description header. Default: \fB\(aq\fP\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Aangepast veld met in de Beschrijving koptekst in te voegen notitie tekst. Standaard: \fB\(aq\fP\fB\(aq\fP Van toepassing op: AZW3, EPUB, MOBI uitvoerformaten
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-merge\-comments\-rule
-#<custom field>:[before|after]:[True|False] specifying:  <custom field> Custom field containing notes to merge with comments  [before|after] Placement of notes with respect to comments  [True|False] \- A horizontal rule is inserted between notes and comments Default: \fB\(aq\fP::\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+#<custom field>:[voor|na]:[Waar|Onwaar] specificerend:  <custom field> Aangepast veld met nota\fB\(aq\fPs samen te voegen met commentaar  [voor|na] Plaatsing van nota\fB\(aq\fPs ten opzichte van commentaar  [Waar|Onwaar] \- Een horizontale regel wordt ingevoegd tussen nota\fB\(aq\fPs en commentaar Standaard: \fB\(aq\fP::\fB\(aq\fP Geldt voor: AZW3, EPUB, MOBI outvoerformaten
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specifies the output profile. In some cases, an output profile is required to optimize the catalog for the device. For example, \fB\(aq\fPkindle\fB\(aq\fP or \fB\(aq\fPkindle_dx\fB\(aq\fP creates a structured Table of Contents with Sections and Articles. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Specificeert het uitvoerprofiel. In sommige gevallen is een uitvoerprofiel vereist om de catalogus te optimaliseren voor het toestel. Bijvoorbeeld \fB\(aq\fPkindle\fB\(aq\fP of \fB\(aq\fPkindle_dx\fB\(aq\fP creëert een gestructureerde Inhoudsopgave met Onderdelen en Artikelen Standaard: \fB\(aq\fPNone\fB\(aq\fP Geldt voor AZW3, EPUB, MOBI uitvoerformaten
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-Specifies the rules used to include prefixes indicating read books, wishlist items and other user\-specified prefixes. The model for a prefix rule is (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). When multiple rules are defined, the first matching rule will be used. Default: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Applies to: AZW3, EPUB, MOBI output formats
+Specificeert de regels gebruikt voor het insluiten van voorvoegsels die gelezen boeken aanduiden, wenslijst items en andere gebruiker gespecificeerde voorvoegsels. Het model voor een voorvoegsel regel is (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). Wanneer meerdere regels gedefinieerd zijn, wordt de eerste regel gebruikt. Standaard: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Geldt voor AZW3, EPUB, MOBI uitvoerformaten
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-preset
-Use a named preset created with the GUI catalog builder. A preset specifies all settings for building a catalog. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Gebruik een benoemde voorinstelling gemaakt met de GUI catalogus bouwer. Een voorinstelling specificeert alle instellingen om een catalogus te maken. Standaard: \fB\(aq\fPNone\fB\(aq\fP Van toepassing op AZW3, EPUB, MOBI uitvoerformaten
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-thumb\-width
-Size hint (in inches) for book covers in catalog. Range: 1.0 \- 2.0 Default: \fB\(aq\fP1.0\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Formaat tip (in inches) voor boekomslagen in catalogus. Bereik: 1.0 \- 2.0 Standaard: \fB\(aq\fP1.0\fB\(aq\fP Van toepassing op: AZW3, EPUB, MOBI uitvoerformaten
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-use\-existing\-cover
-Replace existing cover when generating the catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Vervang bestaande omslag bij genereren van de catalogus. Standaard: \fB\(aq\fPFalse\fB\(aq\fP Van toepassing op: AZW3, EPUB, MOBI uitvoerformaten
 .UNINDENT
 .SH SAVED_SEARCHES
 .INDENT 0.0
@@ -672,7 +672,7 @@ Syntax om te verwijderen:
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -692,11 +692,11 @@ mag geen spaties of dubbele punten bevatten, naam is de mens vriendelijke naam v
 .sp
 gegevenstype is één van: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-display
-Een woordenboek van opties voor het aanpassen van hoe de gegevens in deze kolom worden geïnterpreteerd. Dit is een JSON  tekenreeks. Voor kolommen met opsommingen gebruik \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP Er bestaan vele opties voor de weergave variabele. De opties per kolomtype zijn: samenstelling: composite_template, composite_sort, make_category,contains_html, use_decorations datum/tijd: date_format opsomming: enum_values, enum_colors, use_decorations int, float: number_format tekst: is_names, use_decorations  De beste manier om geldige combinaties te vinden is door het maken van een aangepaste kolom van het juiste type in de GUI en daarna in de back\-up OPF zoeken naar een boek (verzeker u ervan dat er een nieuw OPF is aangemaakt nadat de kolom is toegevoegd). U zult de JSON zien voor de \fB"\fPweergave\fB"\fP van de nieuwe kolom in de OPF.
+Een woordenboek van opties voor het aanpassen van hoe de gegevens in deze kolom worden geïnterpreteerd. Dit is een JSON  string. Voor kolommen met opsommingen gebruik \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP Er bestaan vele opties voor de weergave variabele. De opties per kolomtype zijn: samenstelling: composite_template, composite_sort, make_category,contains_html, use_decorations datum/tijd: date_format opsomming: enum_values, enum_colors, use_decorations int, float: number_format tekst: is_names, use_decorations  De beste manier om geldige combinaties te vinden is door het maken van een aangepaste kolom van het juiste type in de GUI en daarna in de back\-up OPF zoeken naar een boek (verzeker u ervan dat er een nieuw OPF is aangemaakt nadat de kolom is toegevoegd). U zult de JSON zien voor de \fB"\fPweergave\fB"\fP van de nieuwe kolom in de OPF.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -717,7 +717,7 @@ calibredb custom_columns [options]
 .sp
 Lijst van beschikbare\ aangepaste kolommen. Geeft kolommen en ID\(aqs weer.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -737,7 +737,7 @@ calibredb remove_custom_column [options] label
 .sp
 Verwijder de door het label geïdentificeerde aangepaste kolom. U kan de beschikbare kolommen bekijken door het\ custom_columns commando te gebruiken.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -759,7 +759,7 @@ Stel de waarde van de aangepaste kolom in voor het boek,\ die\ geïdentificeerd 
 U kunt een lijst van ids krijgen met behulp van het zoek commando.
 U kunt een lijst met aangepaste kolomnamen krijgen met behulp van\ het custom_columns commando.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -782,11 +782,11 @@ elke map van de calibre bibliotheek. Nuttig als uw metadata.db bestand
 gecorrumpeerd is.
 .sp
 WAARSCHUWING/ Dit commando regenereert uw database volledig. U zal alle
-zoekacties, gebruikerscategorieën, plugboards, opgeslagen per\-boek conversies
+zoekacties, gebruikerscategorieën, adapters, opgeslagen per\-boek conversies
 en aangepaste recepten verliezen. Herstelde metadata zullen maar zo accuraat zijn als
 wat is gevonden in de OPF bestanden.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -806,7 +806,7 @@ calibredb check_library [opties]
 .sp
 Voer controles uit op het bestandssysteem van de bibliotheek. Rapporten zijn invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -840,13 +840,13 @@ calibredb list_categories [opties]
 .UNINDENT
 .sp
 Maak een rapport van de categorie\-informatie in de database. De
-informatie is het equivalent van wat wordt weergegeven in de Tag\-browser.
+informatie is het equivalent van wat wordt weergegeven in de Labelbrowser.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
-Kommagescheiden lijst van categorie\-opzoeknamen. Standaard: all
+Kommagescheiden lijst van categorie\-opzoeknamen. Standaard: alle
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -861,7 +861,7 @@ Het type CSV bestand te maken.  Keuzes excel, excel\-tab, unix
 .INDENT 0.0
 .TP
 .B \-\-item_count, \-i
-Toon alleen het aantal items in een categorie in plaats van de aantallen per item binnen in de categorie
+Toon alleen het aantal items in een categorie in plaats van de aantallen per item in de categorie
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -879,15 +879,18 @@ calibredb backup_metadata [opties]
 .fi
 .UNINDENT
 .UNINDENT
+.INDENT 0.0
+.TP
+.B Maak een back\-up van de metadata uit de database in individuele OPF bestanden
+in elke boek map. Dit gebeurt normaal automatisch maar u kan dit commando
+.UNINDENT
 .sp
-Backup de metadata uit de database in individuele OPF bestanden in elke
-boek map. Dit gebeurt normaal automatisch maar u kan dit commando uitvoeren
-om een vernieuwing van de OPF af te dwingen met de \-\-all optie.
+uitvoeren om een vernieuwing van de OPF af te dwingen met de \-\-all optie.
 .sp
-NB: Dit is normaal niet nodig omdat de OPF bestanden automatisch worden
-geback\-upped elke keer metadata is veranderd.
+NB: Dit is normaal niet nodig omdat er van de OPF bestanden automatisch
+een back\-up wordt gemaakt elke keer metadata is veranderd.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -906,12 +909,12 @@ calibredb kloon pad/naar/nieuw/bibliotheek
 .UNINDENT
 .sp
 Maak een kloon van de huidige bibliotheek. Hierdoor wordt een nieuwe, lege bibliotheek gemaakt met dezelfde
-aangepaste kolommen, virtuele bibliotheken en andere instellingen als de huidige bibliotheek.
+aangepaste kolommen, Virtuele bibliotheken en andere instellingen als de huidige bibliotheek.
 .sp
 De gekloonde bibliotheek bevat geen boeken. Als u een volledig duplicaat wilt maken, inclusief
 alle boeken, gebruik dan gewoon uw bestandssysteemtools om de bibliotheekmap te kopiëren.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -924,19 +927,19 @@ calibredb ingevoegde_metadata [opties] boek_id
 .UNINDENT
 .UNINDENT
 .sp
-Update de metadata  in het eigenlijke boek file opgeslagen in calibre bibliotheek vanuit
-de metadata  in de calibre database. Normaal worden metadata enkel geüpdatet wanneer
+Update de metadata in het eigenlijke boek file opgeslagen in calibre bibliotheek vanuit
+de metadata in de calibre database. Normaal worden metadata enkel geüpdatet wanneer
 files uit calibre worden geëxporteerd, dit commando is nuttig indien u wilt dat de bestanden worden
 geüpdatet ter plaatse. Opgelet dat verschillende formaten verschillende hoeveelheden metadata
 ondersteunen. U kan de speciale waarde "all" gebruiken in plaats van boek_id om de metadata van alle
 boeken aan te passen. U kan ook verschillende boek id\(aqs meegeven gescheiden door spaties en id reeksen
 gescheiden door koppeltekens. Bijvoorbeeld: calibredb ingevoegde_metadata 1 2 10\-15 23
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
-Update alleen de metadata  in specifieke bestands types. Gebruik dit meerdere keren om verschillende formaten aan te passen. Standaard worden alle formaten aangepast.
+Update alleen de metadata in specifieke bestands types. Gebruik dit meerdere keren om verschillende formaten aan te passen. Standaard worden alle formaten aangepast.
 .UNINDENT
 .SH SEARCH
 .INDENT 0.0
@@ -957,7 +960,7 @@ om andere commando\(aqs uit te voeren die een lijst van IDs aanvaarden als invoe
 De zoekexpressie kan eerder wat zijn uit calibre\(aqs krachtige zoek querytaal
 bijvoorbeeld: %p rog \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l

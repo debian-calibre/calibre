@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "WEB2DISK" "1" "декември 17, 2021" "5.34.0" "calibre"
+.TH "WEB2DISK" "1" "януари 21, 2022" "5.35.0" "calibre"
 .SH NAME
 web2disk \- web2disk
 .
@@ -41,34 +41,34 @@ web2disk URL
 .UNINDENT
 .UNINDENT
 .sp
-Where URL is for example \fI\%https://google.com\fP
+Къде например е URL адресът \fI\%https://google.com\fP
 .sp
-Whenever you pass arguments to \fBweb2disk\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
-.SH [ОПЦИИ]
+Винаги, когато предавате аргументи на \fBweb2disk\fP, които имат интервали в тях, затворете аргументите в кавички. Например: "/some path/with spaces"
+.SH ОБЩИ НАСТРОЙКИ
 .INDENT 0.0
 .TP
 .B \-\-base\-dir, \-d
-Base folder into which URL is saved. Default is .
+Базова папка, в която е записан URL адрес. По подразб. е .
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-delay
-Minimum interval in seconds between consecutive fetches. Default is 0 s
+Минимален интервал в секунди между последователни донасяния. По подразб. е 0 с
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-download\-stylesheets
-Do not download CSS stylesheets.
+Не изтегляйте CSS листове със стилове.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-encoding
-The character encoding for the websites you are trying to download. The default is to try and guess the encoding.
+Кодирането на знаците за веб сайтовете, които се опитвате да изтеглите. По подразбиране е да опитате и да отгатнете кодирането.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-filter\-regexp
-Any link that matches this regular expression will be ignored. This option can be specified multiple times, in which case as long as any regexp matches a link, it will be ignored. By default, no links are ignored. If both filter regexp and match regexp are specified, then filter regexp is applied first.
+Всяка връзка, която съвпада с този регулярен израз, ще бъде игнорирана. Тази опция може да бъде посочена няколко пъти, като в този случай, докато всеки регулярен израз съвпада с връзка, той ще бъде игнориран. По подразбиране не се игнорират връзки. Ако са посочени както филтър regexp, така и съвпадение regexp, тогава първо се прилага филтър regexp.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -78,27 +78,27 @@ Any link that matches this regular expression will be ignored. This option can b
 .INDENT 0.0
 .TP
 .B \-\-match\-regexp
-Only links that match this regular expression will be followed. This option can be specified multiple times, in which case as long as a link matches any one regexp, it will be followed. By default all links are followed.
+Ще бъдат следвани само връзки, които съответстват на този регулярен израз. Тази опция може да бъде зададена няколко пъти, като в този случай, докато връзката съвпада с всеки един регулярен израз, тя ще бъде следвана. Следват се по подразбиране всички връзки.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-files, \-n
-The maximum number of files to download. This only applies to files from <a href> tags. Default is 9223372036854775807
+Максималният брой файлове за изтегляне. Това се отнася само за файлове от <a href> етикети. По подразб. е 9223372036854775807
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-recursions, \-r
-Maximum number of levels to recurse i.e. depth of links to follow. Default 1
+Максимален брой нива за повтаряне т.е. дълбочина на връзките, които да следвате. По подразб. 1
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout, \-t
-Timeout in seconds to wait for a response from the server. Default: 10.0 s
+Изчакване в секунди, за да изчакате отговор от сървъра. По подразбиране: 10.0 с
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-verbose
-Show detailed output information. Useful for debugging
+Показване на подробна изходна информация. Полезно за отстраняване на грешки
 .UNINDENT
 .INDENT 0.0
 .TP

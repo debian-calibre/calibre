@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__ = 'GPL v3'
@@ -187,7 +186,7 @@ def create_cover(report, icons=(), cols=5, size=120, padding=16):
             with lopen(ipath, 'rb') as f:
                 img = image_from_data(f.read())
             scaled, nwidth, nheight = fit_image(img.width(), img.height(), size, size)
-            img = img.scaled(nwidth, nheight, Qt.AspectRatioMode.IgnoreAspectRatio, Qt.TransformationMode.SmoothTransformation)
+            img = img.scaled(int(nwidth), int(nheight), Qt.AspectRatioMode.IgnoreAspectRatio, Qt.TransformationMode.SmoothTransformation)
             dx = (size - nwidth) // 2
             canvas.compose(img, x + dx, y)
     return canvas.export()
@@ -692,7 +691,7 @@ class ChooseTheme(Dialog):
             self.themes.sort(key=lambda x:self.usage.get(x.get('name'), 0), reverse=True)
         self.theme_list.clear()
         for theme in self.themes:
-            i = QListWidgetItem(theme.get('title', '') + ' %s %s' % (theme.get('number'), self.usage.get(theme.get('name'))), self.theme_list)
+            i = QListWidgetItem(theme.get('title', '') + ' {} {}'.format(theme.get('number'), self.usage.get(theme.get('name'))), self.theme_list)
             i.setData(Qt.ItemDataRole.UserRole, theme)
             if 'cover-pixmap' in theme:
                 i.setData(Qt.ItemDataRole.DecorationRole, theme['cover-pixmap'])

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -51,6 +50,7 @@ def parse_indx_header(data):
     num = len(words)
     values = struct.unpack('>%dL' % num, data[4:4*(num+1)])
     ans = dict(zip(words, values))
+    ans['idx_header_end_pos'] = 4 * (num+1)
     ordt1, ordt2 = ans['ordt1'], ans['ordt2']
     ans['ordt1_raw'], ans['ordt2_raw'] = [], []
     ans['ordt_map'] = ''
@@ -253,6 +253,15 @@ def parse_index_record(table, data, control_byte_count, tags, codec,
     return header
 
 
+def get_tag_section_start(data, indx_header):
+    tag_section_start = indx_header['tagx']
+    if data[tag_section_start:tag_section_start + 4] != b'TAGX':
+        tpos = data.find(b'TAGX', indx_header['idx_header_end_pos'])
+        if tpos > -1:
+            tag_section_start = tpos
+    return tag_section_start
+
+
 def read_index(sections, idx, codec):
     table, cncx = OrderedDict(), CNCX([], codec)
 
@@ -266,7 +275,7 @@ def read_index(sections, idx, codec):
         cncx_records = [x[0] for x in sections[off:off+indx_header['ncncx']]]
         cncx = CNCX(cncx_records, codec)
 
-    tag_section_start = indx_header['tagx']
+    tag_section_start = get_tag_section_start(data, indx_header)
     control_byte_count, tags = parse_tagx_section(data[tag_section_start:])
 
     for i in range(idx + 1, idx + 1 + indx_count):

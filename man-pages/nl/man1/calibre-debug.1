@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "december 17, 2021" "5.34.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "januari 21, 2022" "5.35.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -45,10 +45,10 @@ Verscheidene commandoregel interfaces nuttig voor foutzoeken in calibre. Zonder 
 start dit commando een geïntegreerde python vertaler. Men kan ook de hoofd calibre
 GUI gebruiken, het calibre leesvenster en de calibre editor in de foutzoekmodus.
 .sp
-Het bevat ook interfaces voor verschillende stukjes van  calibre die geen specifieke
+Het bevat ook interfaces voor verschillende stukjes van calibre die geen specifieke
 commandoregel gereedschappen hebben, zoals font subsets, de e\-boek diff tool enzovoort.
 .sp
-U kan ook \fBcalibre\-debug\fP gebruiken om zelfstandige scripts te draaien. Gebruikt het daarvoor zo:
+U kan ook \fBcalibre\-debug\fP gebruiken om zelfstandige scripts te draaien. Gebruik het daarvoor zo:
 .INDENT 0.0
 .INDENT 3.5
 \fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
@@ -57,7 +57,7 @@ U kan ook \fBcalibre\-debug\fP gebruiken om zelfstandige scripts te draaien. Geb
 .sp
 Alles na de  \fB\-\-\fP wordt doorgegeven aan het script.
 .sp
-Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan \fBcalibre\-debug\fP parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .SH [OPTIES]
 .INDENT 0.0
 .TP
@@ -127,7 +127,7 @@ toon dit helpbericht en stop
 .INDENT 0.0
 .TP
 .B \-\-implode\-book, \-i
-Opnieuw comprimeren van een eerder gedecomprimeerd boek. Gebruik: \-i output_dir file.epub Importeert\ het boek\ met de bestanden in de\ output_dir die reeds gecreëerd werden bij een vorige uitvoer van het decomprimeren van het boek. Zorg ervoor dat u hetzelfde bestandstype opgeeft dat werd gebruikt\ bij het exploderen.
+Implodeer een eerder geëxplodeerd boek. Gebruik: \-i output_dir file.epub Importeert het boek vanuit bestanden in output_dir die gecreëerd werden bij een vorige aanroep van \fI\%\-\-explode\-book\fP\&. Zorg ervoor hetzelfde bestandstype op te geven als bij het exploderen.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -147,7 +147,7 @@ Output van de paden de nodig zijn voor de installatie van de calibre omgeving
 .INDENT 0.0
 .TP
 .B \-\-reinitialize\-db
-Reïnitialiseren van de sqlite calibre database op het opgegeven pad. Nuttig bij herstellen van een corrupte database.
+Re\-initialiseren van de sqlite calibre database op het opgegeven pad. Nuttig bij herstellen van een corrupte database.
 .UNINDENT
 .INDENT 0.0
 .TP

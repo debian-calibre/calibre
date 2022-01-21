@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -28,7 +27,7 @@ def parse_old_style(src):
         exec(src, options)
     except Exception as err:
         try:
-            print('Failed to parse old style options string with error: {}'.format(err))
+            print(f'Failed to parse old style options string with error: {err}')
         except Exception:
             pass
     return options
@@ -305,7 +304,7 @@ class OptionSet:
                         raise Exception('options is not a dictionary')
                 except Exception as err:
                     try:
-                        print('Failed to parse options string with error: {}'.format(err))
+                        print(f'Failed to parse options string with error: {err}')
                     except Exception:
                         pass
         opts = OptionValues()
@@ -539,7 +538,7 @@ def create_global_prefs(conf_obj=None):
                    'your language is Spanish it will only match n. Note that '
                    'this is much slower than a simple search on very large '
                    'libraries. Also, this option will have no effect if you turn '
-                   'on case-sensitive searching'))
+                   'on case-sensitive searching.'))
     c.add_opt('case_sensitive', default=False, help=_(
         'Make searches case-sensitive'))
     c.add_opt('numeric_collation', default=False,

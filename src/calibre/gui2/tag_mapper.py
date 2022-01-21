@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -251,13 +250,13 @@ class Delegate(QStyledItemDelegate):
         if width and width != st.textWidth():
             st.setTextWidth(width)
         br = st.size()
-        return QSize(br.width() + self.MARGIN, br.height() + self.MARGIN)
+        return QSize(int(br.width() + self.MARGIN), int(br.height() + self.MARGIN))
 
     def paint(self, painter, option, index):
         QStyledItemDelegate.paint(self, painter, option, index)
         pal = option.palette
         color = pal.color(QPalette.ColorRole.HighlightedText if option.state & QStyle.StateFlag.State_Selected else QPalette.ColorRole.Text).name()
-        text = '<div style="color:%s">%s</div>' % (color, index.data(RENDER_ROLE))
+        text = f'<div style="color:{color}">{index.data(RENDER_ROLE)}</div>'
         st = QStaticText(text)
         st.setTextWidth(option.rect.width())
         painter.drawStaticText(option.rect.left() + self.MARGIN // 2, option.rect.top() + self.MARGIN // 2, st)
