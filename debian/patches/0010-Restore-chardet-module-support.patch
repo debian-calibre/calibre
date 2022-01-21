@@ -11,10 +11,10 @@ Current Debian doesn't have "cchardet" module.
  2 files changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/src/calibre/ebooks/chardet.py b/src/calibre/ebooks/chardet.py
-index ced93f4..f4d1fb8 100644
+index 53fe6c5..f0a4a72 100644
 --- a/src/calibre/ebooks/chardet.py
 +++ b/src/calibre/ebooks/chardet.py
-@@ -104,7 +104,10 @@ _CHARSET_ALIASES = {"macintosh" : "mac-roman", "x-sjis" : "shift-jis"}
+@@ -103,7 +103,10 @@ _CHARSET_ALIASES = {"macintosh" : "mac-roman", "x-sjis" : "shift-jis"}
  
  
  def detect(bytestring):
@@ -27,10 +27,10 @@ index ced93f4..f4d1fb8 100644
      enc = ans.get('encoding')
      if enc:
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index dbaad33..786437b 100644
+index 42b0241..56609ec 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
-@@ -70,7 +70,10 @@ class BuildTest(unittest.TestCase):
+@@ -69,7 +69,10 @@ class BuildTest(unittest.TestCase):
          del CHMFile, chmlib
  
      def test_chardet(self):
