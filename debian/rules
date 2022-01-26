@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
 # building with python3
-PYTHON=$(shell py3versions -r 3.9)
+PYTHON=$(shell py3versions -d)
 PYTHON_PATH=$(shell command -v $(PYTHON))
 SETUP=$(PYTHON) setup.py
 
