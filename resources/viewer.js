@@ -16885,9 +16885,9 @@ return this.__repr__();
             if (opts.color_scheme.link) {
                 des.setProperty("--calibre-viewer-link-color", opts.color_scheme.link);
             }
-            var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ document.documentElement, document.body ]));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                elem = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter2 = ρσ_Iterable(ρσ_list_decorate([ document.documentElement, document.body ]));
+            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                elem = ρσ_Iter2[ρσ_Index2];
                 elem.style.color = opts.color_scheme.foreground;
                 elem.style.backgroundColor = "transparent";
             }
@@ -16956,14 +16956,14 @@ return this.__repr__();
             if (style.selbg) {
                 style.selbg = make_selection_background_opaque(style.selbg);
             }
-            var ρσ_Iter1 = ρσ_Iterable(Object.keys(style));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                prop = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter3 = ρσ_Iterable(Object.keys(style));
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                prop = ρσ_Iter3[ρσ_Index3];
                 css_text += "" + ρσ_str.format("{}", prop) + ": " + ρσ_str.format("{}", style[(typeof prop === "number" && prop < 0) ? style.length + prop : prop]) + "; ";
             }
-            var ρσ_Iter2 = ρσ_Iterable(sheet.sheet.cssRules);
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                rule = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter4 = ρσ_Iterable(sheet.sheet.cssRules);
+            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                rule = ρσ_Iter4[ρσ_Index4];
                 if (rule.type === rule.STYLE_RULE && rule.selectorText.indexOf("selection") > -1) {
                     rule.style.cssText = css_text;
                 }
@@ -22583,7 +22583,7 @@ return this.__repr__();
             sc["toggle_lookup"] = desc(['Ctrl+l'], "ui", _("Show/hide the word lookup panel"));
             quit_shortcut = (ismacos) ? "Meta+q" : "Ctrl+q";
             sc["quit"] = desc(quit_shortcut, "ui", _("Quit the E-book viewer"));
-            sc["print"] = desc("Ctrl+P", "ui", _("Print book to PDF"));
+            sc["print"] = desc("Ctrl+p", "ui", _("Print book to PDF"));
             sc["toggle_toolbar"] = desc("Ctrl+F11", "ui", _("Toggle the toolbar"));
             sc["toggle_highlights"] = desc("Ctrl+h", "ui", _("Toggle the highlights panel"));
             sc["edit_book"] = desc("Ctrl+d", "ui", _("Edit this book"));
@@ -26370,7 +26370,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.35.0";
+        CALIBRE_VERSION = "5.36.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -37591,7 +37591,7 @@ return this.__repr__();
                     ρσ_d["remove_highlight"] = a("trash", _("Remove this highlight") + _(" [Delete or D]"), "remove_highlight", true);
                     ρσ_d["clear"] = a("close", _("Clear selection") + " [Esc]", "clear_selection");
                     ρσ_d["speak"] = a("bullhorn", _("Read aloud") + " [T]", "speak_aloud");
-                    ρσ_d["cite"] = a("reference-mode", _("Copy citation to clipboard") + " [X]", "cite");
+                    ρσ_d["cite"] = a("reference-mode", _("Copy a citation to this text") + " [X]", "cite");
                     return ρσ_d;
                 }).call(this);
                 qh = all_actions.ans.quick_highlight;

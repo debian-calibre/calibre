@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "január 21, 2022" "5.35.0" "calibre"
+.TH "CALIBREDB" "1" "február 04, 2022" "5.36.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -150,7 +150,7 @@ Password for connecting to a calibre Content server. To read the password from s
 .INDENT 0.0
 .TP
 .B \-\-timeout
-The timeout, in seconds, when connecting to a calibre library over the network. The default is two minutes.
+Időtúllépés másodpercben, amikor a hálózaton keresztül csatlakozik egy Calibre könyvtárhoz. Az alapértelmezett érték két perc.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -194,12 +194,12 @@ The fields to display when listing books in the database. Should be a comma sepa
 .INDENT 0.0
 .TP
 .B \-\-for\-machine
-Generate output in JSON format, which is more suitable for machine parsing. Causes the line width and separator options to be ignored.
+Kimenet generálása JSON formátumban, amely alkalmasabb a gépi elemzésre. A vonalszélesség és az elválasztó beállítások figyelmen kívül hagyását okozza.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-limit
-The maximum number of results to display. Default: all
+A megjeleníthető eredmények maximális száma. Alapértelmezett: mind (all)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -232,14 +232,14 @@ A mező, ami alapján az eredmény rendezve lesz. Elérhető mezők:  author_sor
 .sp
 .nf
 .ft C
-calibredb add [options] file1 file2 file3 ...
+calibredb add [opciók] fájl1 fájl2 fájl3 ...
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Add the specified files as books to the database. You can also specify folders, see
-the folder related options below.
+Adja hozzá a megadott fájlokat könyvként az adatbázishoz. Megadhat mappákat is,
+lásd alább a mappákkal kapcsolatos beállításokat.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -250,7 +250,7 @@ A hozzáadott könyv(ek) szerzőjének megadása
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-If books with similar titles and authors are found, merge the incoming formats (files) automatically into existing book records. A value of \fB"\fPignore\fB"\fP means duplicate formats are discarded. A value of \fB"\fPoverwrite\fB"\fP means duplicate formats in the library are overwritten with the newly added files. A value of \fB"\fPnew_record\fB"\fP means duplicate formats are placed into a new book record.
+Ha hasonló címmel és szerzővel rendelkező könyveket talál, a bejövő formátumokat (fájlokat) automatikusan egyesíti a meglévő könyvrekordokba. Az \fB"\fPignore \- kihagyás\fB"\fP érték azt jelenti, hogy a duplikált formátumokat a rendszer elveti. Az \fB"\fPoverwrite \- felülírás\fB"\fP érték azt jelenti, hogy a könyvtárban található duplikált formátumok felülíródnak az újonnan hozzáadott fájlokkal. A \fB"\fPnew_record \- új_rekord\fB"\fP értéke azt jelenti, hogy a duplikált formátumok egy új könyvrekordba kerülnek.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -260,7 +260,7 @@ Hozzáadott címkép helye
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Add books to database even if they already exist. Comparison is done based on book titles and authors. Note that the \fI\%\-\-automerge\fP option takes precedence.
+Könyvek hozzáadása az adatbázishoz akkor is, ha már léteznek. Az összehasonlítás a könyvcímek és szerzők alapján történik. Vegye figyelembe, hogy \fI\%\-\-automerge\fP opció élvez elsőbbséget.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -270,7 +270,7 @@ Add books to database even if they already exist. Comparison is done based on bo
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Set the identifiers for this book, e.g. \-I asin:XXX \-I isbn:YYY
+Állítsa be a könyv azonosítóit, pl. \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -304,26 +304,26 @@ A hozzáadott könyv(ek) címének megadása
 .UNINDENT
 .SS HOZZÁADÁS MAPPÁKBÓL
 .sp
-Options to control the adding of books from folders. By default only files that have extensions of known e\-book file types are added.
+Lehetőségek a könyvek mappákból történő hozzáadásának szabályozására. Alapértelmezés szerint csak azok a fájlok kerülnek hozzáadásra, amelyek kiterjesztése ismert e\-könyv fájltípusokra vonatkozik.
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+Fájlnév (glob) minta, ennek a mintának megfelelő fájlok hozzáadódnak a mappák fájlok keresésekor, még akkor is, ha azok nem ismert e\-könyv fájltípusúak. Több mintához többször is megadható.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For example: *.pdf will ignore all PDF files
+A fájlnév (glob) minta, az ennek a mintának megfelelő fájlok figyelmen kívül maradnak a mappák fájlok keresésekor. Több mintához többször is megadható. Például: *.pdf figyelmen kívül hagy minden PDF fájlt
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
+Tételezzük fel, hogy minden mappában csak egyetlen logikai könyv található, és a benne lévő összes fájl az adott könyv különböző e\-könyv\-formátumai
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Process folders recursively
+Mappák rekurzív feldolgozása
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -343,7 +343,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Do not use the Recycle Bin
+Ne használja ezt: Lomtár
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -429,7 +429,7 @@ The field to set. Format is field_name:value, for example: \fI\%\-\-field\fP tag
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-List the metadata field names that can be used with the \fI\%\-\-field\fP option
+A \fI\%\-\-field\fP paraméterrel használható metaadat\-mezőnevek felsorolása
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -456,7 +456,7 @@ Minden könyv exportálása az adatbázisba. Ne vegye figyelembe az azonosító 
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Have calibre convert all non English characters into English equivalents for the file names. This is useful if saving to a legacy filesystem without full support for Unicode filenames. Ennek megadása kikapcsolja ezt az opciót.
+A kaliber konvertálja az összes nem angol karaktert a fájlnevek angol megfelelőire. Ez akkor hasznos, ha régi fájlrendszerbe menti, és nem támogatja a Unicode fájlneveket. Ennek megadása kikapcsolja ezt az opciót.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -496,7 +496,7 @@ Minden könyv exportálása külön mappába
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+A mentett fájlok fájlnevének és mappaszerkezetének szabályozására szolgáló sablon. Az alapértelmezett: \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP, amely a könyveket egy szerzőnkénti almappába menti, a címet és a szerzőt tartalmazó fájlnevekkel. A következő vezérlők állnak rendelkezésre {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -551,67 +551,67 @@ Részletes kimeneti információk megjelenítése. Hasznos hibakeresésnél.
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title
-Title of generated catalog used as title in metadata. Default: \fB\(aq\fPMy Books\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+A metaadatokban címként használt generált katalógus címe. Alapértelmezett: \fB\(aq\fPMy Books\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cross\-reference\-authors
-Create cross\-references in Authors section for books with multiple authors. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Kereszthivatkozások létrehozása a \fB"\fPSzerzők\fB"\fP részben több szerzőt tartalmazó könyvekhez. Alapértelmezett: \fB\(aq\fPFalse\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Az átalakítási folyamat különböző szakaszaiból származó kimenet mentése a megadott mappába. Hasznos, ha nem biztos abban, hogy az átalakítási folyamat melyik szakaszában történik hiba. Alapértelmezett: \fB\(aq\fPNone\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclude\-genre
-Regex describing tags to exclude as genres. Default: \fB\(aq\fP[.+]|^+$\fB\(aq\fP excludes bracketed tags, e.g. \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, and \fB\(aq\fP+\fB\(aq\fP, the default tag for read books. Applies to: AZW3, EPUB, MOBI output formats
+Műfajként kizárandó címkéket leíró reguláris kifejezés. Alapértelmezett: \fB\(aq\fP[.+]|^+$\fB\(aq\fP nem tartalmazza a zárójeles címkéket, pl. \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, and \fB\(aq\fP+\fB\(aq\fP, az olvasott könyvek alapértelmezett címkéje. Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Specifies the rules used to exclude books from the generated catalog. The model for an exclusion rule is either (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) or (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). For example: ((\fB\(aq\fPArchived books\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) will exclude a book with a value of \fB\(aq\fPArchived\fB\(aq\fP in the custom column \fB\(aq\fPstatus\fB\(aq\fP\&. When multiple rules are defined, all rules will be applied. Default:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Applies to: AZW3, EPUB, MOBI output formats
+Meghatározza azokat a szabályokat, amelyek segítségével kizárják a könyveket a létrehozott katalógusból. A kizárási szabály modellje vagy (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPCímkék\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) vagy (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). Például: ((\fB\(aq\fPArchivált könyvek\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchivált\fB\(aq\fP),) kizárja az „Archivált” értékű könyvet az \fB"\fPállapot” egyéni oszlopban. Ha több szabályt határoz meg, akkor az összes szabályt alkalmazni fogja. Alapértelmezett:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-authors
-Include \fB\(aq\fPAuthors\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Tartalmazza a \fB\(aq\fPSzerzők\fB\(aq\fP részt a katalógusban. Alapértelmezett: \fB\(aq\fPFalse\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-descriptions
-Include \fB\(aq\fPDescriptions\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Tartalmazza a \fB\(aq\fPLeírások\fB\(aq\fP részt a katalógusban. Alapértelmezett: \fB\(aq\fPFalse\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-genres
-Include \fB\(aq\fPGenres\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Tartalmazza a \fB"\fPMűfajok” részt a katalógusban. Alapértelmezett: \fB\(aq\fPFalse\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-recently\-added
-Include \fB\(aq\fPRecently Added\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Tartalmazza a \fB\(aq\fPLegutóbb hozzáadva\fB\(aq\fP részt a katalógusban. Alapértelmezett: \fB\(aq\fPFalse\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-series
-Include \fB\(aq\fPSeries\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Tartalmazza a \fB"\fPSorozatok” részt a katalógusban. Alapértelmezett: \fB\(aq\fPFalse\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-titles
-Include \fB\(aq\fPTitles\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Tartalmazza a \fB\(aq\fPCímek\fB\(aq\fP részt a katalógusban. Alapértelmezett: \fB\(aq\fPFalse\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-genre\-source\-field
-Source field for \fB\(aq\fPGenres\fB\(aq\fP section. Default: \fB\(aq\fPCímke\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+A \fB"\fPMűfajok” rész forrásmezője. Alapértelmezett: \fB\(aq\fPCímke\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-header\-note\-source\-field
-Custom field containing note text to insert in Description header. Default: \fB\(aq\fP\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Egyéni mező, amely a \fB"\fPLeírás\fB"\fP fejlécébe beillesztendő megjegyzésszöveget tartalmaz.za. Alapértelmezett: \fB\(aq\fP\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -621,7 +621,7 @@ Custom field containing note text to insert in Description header. Default: \fB\
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specifies the output profile. In some cases, an output profile is required to optimize the catalog for the device. For example, \fB\(aq\fPkindle\fB\(aq\fP or \fB\(aq\fPkindle_dx\fB\(aq\fP creates a structured Table of Contents with Sections and Articles. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+A kimeneti profil meghatározása. Egyes esetekben kimeneti profilra van szükség az eszköz katalógusának optimalizálásához. Például a „kindle” vagy a „kindle_dx” strukturált tartalomjegyzéket hoz létre szakaszokkal és cikkekkel. Alapértelmezett: \fB\(aq\fPNone\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -631,17 +631,17 @@ Specifies the rules used to include prefixes indicating read books, wishlist ite
 .INDENT 0.0
 .TP
 .B \-\-preset
-Use a named preset created with the GUI catalog builder. A preset specifies all settings for building a catalog. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Egy, a GUI katalóguskészítővel létrehozott előre beállított készlet használata. Egy előre beállított készlet megadja a katalógus létrehozásához szükséges összes beállítást.. Alapértelmezett: \fB\(aq\fPNone\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-thumb\-width
-Size hint (in inches) for book covers in catalog. Range: 1.0 \- 2.0 Default: \fB\(aq\fP1.0\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Méretmutató jüvelykben)  a katalógusban szereplő könyvborítókhoz. Tartomány: 1.0 \- 2.0 Alapértelmezett: \fB\(aq\fP1.0\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-use\-existing\-cover
-Replace existing cover when generating the catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+A meglévő borító kicserélése katalógus generálásakor. Alapértelmezett: \fB\(aq\fPFalse\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
 .UNINDENT
 .SH SAVED_SEARCHES
 .INDENT 0.0
@@ -841,7 +841,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
-Comma\-separated list of category lookup names. Default: all
+A kategória keresőneveinek vesszővel elválasztott listája. Alapértelmezett: mind (all)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -851,7 +851,7 @@ CSV kimenet
 .INDENT 0.0
 .TP
 .B \-\-dialect
-The type of CSV file to produce. Choices: excel, excel\-tab, unix
+A létrehozandó CSV\-fájl típusa. Választási lehetőségek: excel, excel\-tab, unix
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -886,7 +886,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-all
-Normally, this command only operates on books that have out of date OPF files. This option makes it operate on all books.
+Általában ez a parancs csak azokon a könyveken működik, amelyekben elavult OPF\-fájlok vannak. Ezzel az opcióval minden könyvön működik.
 .UNINDENT
 .SH CLONE
 .INDENT 0.0
@@ -900,11 +900,13 @@ calibredb clone path/to/new/library
 .UNINDENT
 .UNINDENT
 .sp
-Create a \fBclone\fP of the current library. This creates a new, empty library that has all the
-same custom columns, Virtual libraries and other settings as the current library.
+Hozzon létre egy klónt az aktuális könyvtárból. Ezzel egy új, üres könyvtárat hoz létre,
+amely ugyanazokkal az egyéni oszlopokkal, virtuális könyvtárakkal és
+egyéb beállításokkal rendelkezik, mint az aktuális könyvtárban.
 .sp
-The cloned library will contain no books. If you want to create a full duplicate, including
-all books, then simply use your filesystem tools to copy the library folder.
+A klónozott könyvtár nem tartalmaz majd könyveket. Ha teljes másolatot hozna létre,
+beleértve az összes könyvet, egyszerűen használja a fájlrendszer eszközeit a könyvtármappa
+másolásához.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH EMBED_METADATA
@@ -931,7 +933,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
-Only update metadata in files of the specified format. Specify it multiple times for multiple formats. By default, all formats are updated.
+Csak a megadott formátumú fájlok metaadatait frissítése. Több formátum esetén adja meg többször. Alapértelmezés szerint minden formátum frissül.
 .UNINDENT
 .SH SEARCH
 .INDENT 0.0
@@ -956,7 +958,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l
-The maximum number of results to return. Default is all results.
+A visszaküldendő eredmények maximális száma. Alapértelmezett az összes eredmény.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

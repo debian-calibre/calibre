@@ -250,6 +250,8 @@ per_language_title_sort_articles = {
         # French
         'fra'  : (r'Le\s+', r'La\s+', r"L'", u'L´', u'L’', r'Les\s+', r'Un\s+', r'Une\s+',
                   r'Des\s+', r'De\s+La\s+', r'De\s+', r"D'", u'D´', u'L’'),
+        # Polish
+        'pol': (),
         # Italian
         'ita': ('Lo\\s+', 'Il\\s+', "L'", 'L´', 'La\\s+', 'Gli\\s+',
                 'I\\s+', 'Le\\s+', 'Uno\\s+', 'Un\\s+', 'Una\\s+', "Un'",
@@ -432,17 +434,6 @@ locale_for_sorting =  ''
 # columns. If False, one column is used.
 metadata_single_use_2_cols_for_custom_fields = True
 
-#: Order of custom column(s) in edit metadata
-# Controls the order that custom columns are listed in edit metadata single
-# and bulk. The columns listed in the tweak are displayed first and in the
-# order provided. Any columns not listed are displayed after the listed ones,
-# in alphabetical order. Do note that this tweak does not change the size of
-# the edit widgets. Putting comments widgets in this list may result in some
-# odd widget spacing when using two-column mode.
-# Enter a comma-separated list of custom field lookup names, as in
-# metadata_edit_custom_column_order = ['#genre', '#mytags', '#etc']
-metadata_edit_custom_column_order = []
-
 #: Edit metadata custom column label width and elision point
 # Set the width of custom column labels shown in the edit metadata dialogs.
 # If metadata_edit_elide_labels is True then labels wider than the width
@@ -466,7 +457,7 @@ metadata_edit_elision_point = 'right'
 # to be public relays here. Any relay host ending with one of the suffixes
 # in the list below will be considered a public email server.
 public_smtp_relay_delay = 301
-public_smtp_relay_host_suffixes = ['gmail.com', 'live.com', 'gmx.com']
+public_smtp_relay_host_suffixes = ['gmail.com', 'live.com', 'gmx.com', 'outlook.com']
 
 #: The maximum width and height for covers saved in the calibre library
 # All covers in the calibre library will be resized, preserving aspect ratio,

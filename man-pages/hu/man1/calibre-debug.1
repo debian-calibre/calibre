@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "január 21, 2022" "5.35.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "február 04, 2022" "5.36.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -41,22 +41,23 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre E\-book viewer and the calibre editor in debug mode.
+Különféle parancssori felületek, amelyek hasznosak a Calibre hibakereséséhez.
+Beállítások nélkül ez a parancs elindít egy beágyazott Python\-értelmezést.
+A fő kaliberű grafikus felhasználói felületet, a Calibre e\-könyvnézegetőt és a
+Calibre szerkesztőt is futtathatja hibakeresési módban.
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the E\-book diff tool and so
-on.
+Ezenkívül interfészeket tartalmaz különböző Calibre bitekhez, amelyek nem rendelkeznek
+dedikált parancssori eszközökkel, mint például a betűkészlet\-alkészlet, az E\-book diff eszköz
+és így tovább.
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+\fBcalibre\-debug\fP segítségével önálló szkripteket is futtathat. Ehhez használja a következőképpen:
 .INDENT 0.0
 .INDENT 3.5
 \fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .UNINDENT
 .UNINDENT
 .sp
-Everything after the \fB\-\-\fP is passed to the script.
+\-\- után mindent a szkript kezel.
 .sp
 Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH [BEÁLLÍTÁSOK]
@@ -98,12 +99,12 @@ Python kód futtatása a fájlon.
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Explode the book into the specified folder. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
+A könyv kicsomagolása a megadott mappába. Használat: \-x file.epub output_dir A könyvet HTML\-fájlok és metaadatok gyűjteményeként exportálja, amelyet a szokásos HTML\-szerkesztőeszközökkel szerkeszthet. Működik EPUB, AZW3, HTMLZ és DOCX fájlokkal.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Export all calibre data (books/settings/plugins). Normally, you will be asked for the export folder and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export folder and libraries. The special keyword \fB"\fPall\fB"\fP can be used to export all libraries.
+Az összes calibre adat (könyvek/beállítások/pluginok) exportálása. Általában az exportálandó könyvtárak és az exportálandó könyvtárak mappáját kéri a rendszer. Ezeket parancssori argumentumként is megadhatja, hogy kihagyja a kérdéseket. Használjon abszolút elérési utakat az export mappához és a könyvtárakhoz. Az \fB"\fPall\fB"\fP speciális kulcsszóval az összes könyvtárat exportálhatja.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -128,7 +129,7 @@ súgó megjelenítése és kilépés
 .INDENT 0.0
 .TP
 .B \-\-implode\-book, \-i
-Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the book from the files in output_dir which must have been created by a previous call to \fI\%\-\-explode\-book\fP\&. Be sure to specify the same file type as was used when exploding.
+Egy korábban kicsomagolt könyv becsomagolása. Használat: \-i output_dir file.epub Importálja a könyvet az output_dir fájlokból, amelyeket a \fI\%\-\-explode\-book\fP korábbi hívásával kell létrehozni. Ügyeljen arra, hogy ugyanazt a fájltípust adja meg, mint amit a felbontáskor használt.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -163,7 +164,7 @@ Egy futó Calibre példány bezárása. Ha vannak futó műveletek, akkor azok m
 .INDENT 0.0
 .TP
 .B \-\-subset\-font, \-f
-Subset the specified font. Use \fB\-\-\fP after this option to pass option to the font subsetting program.
+A megadott betűtípus részhalmaza. Használja a \fB\-\-\fP kapcsolót az opció után, hogy átadja az opciót a betűkészlet\-kijelölő programnak.
 .UNINDENT
 .INDENT 0.0
 .TP

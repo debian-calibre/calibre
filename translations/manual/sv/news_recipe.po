@@ -4,7 +4,7 @@
 # 
 # Translators:
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2020
-# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021
+# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2022
 # Jonatan Nyberg <jonatan@autistici.org>, 2018-2021
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2018
 # Merarom <merarom@yahoo.es>, 2014-2015,2017
@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-20 09:15+0000\n"
-"PO-Revision-Date: 2021-12-29 00:10+0000\n"
+"POT-Creation-Date: 2022-02-03 02:30+0000\n"
+"PO-Revision-Date: 2022-01-23 18:31+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -71,7 +71,7 @@ msgid ""
 "If your recipe when converted to EPUB has problems with images when viewed "
 "in Adobe Digital Editions, call this method from within "
 ":meth:`postprocess_html`."
-msgstr "Om ditt recept vid konvertering till EPUB har problem med bilderna när de visas i Adobe Digital Editions, kalla denna metod inifrån :meth:`postprocess_html`."
+msgstr "Om ditt recept vid konvertering till EPUB har problem med bilderna när de visas i Adobe Digital Editions, anropa den här metoden inifrån :meth:`postprocess_html`."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:1
@@ -101,7 +101,7 @@ msgstr "Parametrar"
 msgid ""
 "Is True if the URL is coming from an internal link in an HTML file. False if"
 " the URL is the URL used to download an article."
-msgstr "Är True om webbadressen kommer från en intern länk i en HTML-fil. False om webbadressen är URL som används för att hämtar en artikel."
+msgstr "Är True om webbadressen kommer från en intern länk i en HTML-fil. False om webbadressen är webbadressen som används för att hämta en artikel."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.cleanup:1
@@ -129,7 +129,7 @@ msgstr "Klonade webbläsarinstanser använder samma, trådsäkra CookieJar som s
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.default_cover:1
 msgid "Create a generic cover for recipes that don't have a cover"
-msgstr "Skapa en generisk omslag för recept som inte har ett omslag"
+msgstr "Skapa ett generiskt omslag för recept som inte har ett omslag"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.download:1
@@ -155,10 +155,10 @@ msgid ""
 "points to the content for each article. Return the article URL. It is called"
 " with `article`, an object representing a parsed article from a feed. See "
 "`feedparser <https://pythonhosted.org/feedparser/>`_. By default it looks "
-"for the original link (for feeds syndicated via a service like feedburner or"
-" pheedo) and if found, returns that or else returns `article.link "
+"for the original link (for feeds syndicated via a service like FeedBurner or"
+" Pheedo) and if found, returns that or else returns `article.link "
 "<https://pythonhosted.org/feedparser/reference-entry-link.html>`_."
-msgstr "Åsidosätt i en underklass för att anpassa utvinning av :term:`URL` som hänvisar till innehållet för varje artikel. Återge artikelwebbadressen. Den anropas med `article`, ett objekt som representerar en analyserad artikel från ett flöde. Se `feedparser <https://pythonhosted.org/feedparser/>`_. Normalt söker den efter den ursprungliga länken (till flöde syndikerade via en tjänst som Feedburner eller pheedo) och om den hittas, återger detta eller annars återges `article.link <https://pythonhosted.org/feedparser/reference-entry-link.html>`_."
+msgstr "Åsidosätt i en underklass för att anpassa extraheringen av :term:`URL` som hänvisar till innehållet för varje artikel. Återge artikelwebbadressen. Den anropas med `article`, ett objekt som representerar en analyserad artikel från ett flöde. Se `feedparser <https://pythonhosted.org/feedparser/>`_. Normalt söker den efter den ursprungliga länken (till flöde syndikerade via en tjänst som FeedBurner eller Pheedo) och om den hittas, återger detta eller annars återges `article.link <https://pythonhosted.org/feedparser/reference-entry-link.html>`_."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_browser:1
@@ -227,7 +227,7 @@ msgid ""
 "article URL. It should return the path to a file on the filesystem that "
 "contains the article HTML. That file is processed by the recursive HTML "
 "fetching engine, so it can contain links to pages/images on the web."
-msgstr "Om du ställer in `articles_are_obfuscated` anropas denna metod med varje artikelwebbadress. Den ska återge sökvägen till en fil i filsystemet som innehåller artikel-HTML. Filen bearbetas av den rekursiva HTML-hämtningsmotorn, så den kan innehålla länkar till sidor/bilder på webben."
+msgstr "Om du ställer in `articles_are_obfuscated` anropas denna metod med varje artikelwebbadress. Den ska återge sökvägen till en fil i filsystemet som innehåller artikel-HTML:n. Filen bearbetas av den rekursiva HTML-hämtningsmotorn, så den kan innehålla länkar till sidor/bilder på webben."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:6
@@ -323,7 +323,7 @@ msgid ""
 "Called when each HTML page belonging to article is downloaded. Intended to "
 "be used to get article metadata like author/summary/etc. from the parsed "
 "HTML (soup)."
-msgstr "Anropas när varje HTML-sida som tillhör artikel hämtas. Avsedd att användas för att få artikelns metadata som författare/sammanfattning/etc. från analyserad HTML (massa)."
+msgstr "Anropas när varje HTML-sida som tillhör artikel hämtas. Avsedd att användas för att få artikelns metadata som författare/sammanfattning/o.s.v. från den analyserad HTML:n (soap)."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:5
@@ -412,12 +412,12 @@ msgid ""
 "before it is parsed into an object tree. raw_html is a unicode string "
 "representing the raw HTML downloaded from the web. url is the URL from which"
 " the HTML was downloaded."
-msgstr "Denna metod anropas med källa av varje hämtad :term:`HTML`-fil, innan den analyseras i ett objektträd. raw_html är en unicode sträng som representerar råa HTML-hämtning från webben. url är URL från vilken HTML var hämtad."
+msgstr "Denna metod anropas med källa av varje hämtad :term:`HTML`-fil, innan den analyseras i ett objektträd. raw_html är en unicode sträng som representerar råa HTML-hämtning från webben. url är URL från vilken HTML:n var hämtad."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:6
 msgid "Note that this method acts *before* preprocess_regexps."
-msgstr "Obserevera att denna metod agerar *innan* preprocess_regexps."
+msgstr "Observera att den här metoden agerar *före* preprocess_regexps."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:8
@@ -630,7 +630,7 @@ msgstr "kommer ta bort alla URL-adresser som har `ads.doubleclick.net` in sig."
 msgid ""
 "Only one of :attr:`BasicNewsRecipe.match_regexps` or "
 ":attr:`BasicNewsRecipe.filter_regexps` should be defined."
-msgstr "Bara en av :attr:`BasicNewsRecipe.match_regexps` eller :attr:`BasicNewsRecipe.filter_regexps` skulle bara definierad."
+msgstr "Endast en av :attr:`BasicNewsRecipe.match_regexps` eller :attr:`BasicNewsRecipe.filter_regexps` bör definieras."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.handle_gzip:1
@@ -678,7 +678,7 @@ msgstr "kommer bara ha taggar som har ett  `id` attribut av  `\"content\"` eller
 msgid ""
 "The language that the news is in. Must be an ISO-639 code either two or "
 "three characters long"
-msgstr "Språket som nyheterna är i. Måste vara en ISO-639-kod antingen två eller tre tecken långt"
+msgstr "Språket som nyheterna är på. Måste vara en ISO-639-kod, antingen två eller tre tecken lång"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.masthead_url:1
@@ -890,12 +890,12 @@ msgstr "CSS som används för att utforma mallar, d.v.s. navigeringsfältet och 
 msgid ""
 "The format string for the date shown on the first page. By default: "
 "Day_Name, Day_Number Month_Name Year"
-msgstr "Formatsträng för datum att visa på första sidan. Som standard: Day_Name, Day_Number Month_Name Year"
+msgstr "Formatsträngen för datumet som visas på första sidan. Som standard: Day_Name, Day_Number Month_Name Year"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.timeout:1
 msgid "Timeout for fetching files from server in seconds"
-msgstr "Tidsbegränsning för hämta filer från servern i sekunder"
+msgstr "Tidsbegränsning för att hämta filer från servern i sekunder"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.title:1

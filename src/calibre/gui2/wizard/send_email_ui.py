@@ -151,6 +151,6 @@ class Ui_Form(object):
         self.relay_none.setToolTip(_("WARNING: Using no encryption is highly insecure"))
         self.relay_none.setText(_("&None"))
         self.relay_use_gmx.setText(_("Use &GMX"))
-        self.relay_use_hotmail.setText(_("Use &Hotmail"))
+        self.relay_use_hotmail.setText(_("Use &Outlook"))
         self.test_email_button.setText(_("&Test email"))
 

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "január 21, 2022" "5.35.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "február 04, 2022" "5.36.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -107,7 +107,7 @@ List builtin recipe names. You can create an e\-book from a builtin recipe like 
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device (such as by resizing images for the device screen size). In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet, generic_eink, generic_eink_large, generic_eink_hd
+A kimeneti profil meghatározása. A kimeneti profil megmondja a konvertáló rendszernek, hogyan optimalizálja a létrehozott dokumentumot a megadott eszközhöz (például a képek átméretezésével az eszköz képernyőjének méretéhez). Egyes esetekben egy kimeneti profil használható egy adott eszköz kimenetének optimalizálására, de erre ritkán van szükség. A választási lehetőségek a következők:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet, generic_eink, generic_eink_large, generic_eink_hd
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -128,7 +128,7 @@ A(z) epub kimenet feldolgozását vezérlő kapcsolók
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
-Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+Oldaltörésnél történő szétvágás kikapcsolása. Normális esetben a bemeneti fájlok minden oldaltörésnél két részre lesznek vágva. Ez olyan e\-book formátumot eredményez, amelyet gyorsabban, kevesebb erőforrást igényelve lehet beolvasni. Ez a művelet azonban lassú, és ha a forrásfájl sok oldaltörést tartalmaz, akkor érdemes alkalmazni ezt az opciót.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -138,7 +138,7 @@ Ez az opciók csak akkor szükséges, ha ez EPUB\-ot FBReaderJ\-vel szándékozi
 .INDENT 0.0
 .TP
 .B \-\-epub\-inline\-toc
-Insert an inline Table of Contents that will appear as part of the main book content.
+Egy beágyazott tartalomjegyzék beillesztése, amely a fő könyvtartalom részeként fog megjelenni.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -148,7 +148,7 @@ A beillesztett Tartalomjegyzék fájlt tegye a könyv végére
 .INDENT 0.0
 .TP
 .B \-\-epub\-version
-The version of the EPUB file to generate. EPUB 2 is the most widely compatible, only use EPUB 3 if you know you actually need it.
+A generálandó EPUB\-fájl verziója. Az EPUB 2 a legszélesebb körben kompatibilis, csak akkor használja az EPUB 3\-at, ha tudja, hogy valóban szüksége van rá.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -158,7 +158,7 @@ Extract the contents of the generated EPUB file to the specified folder. The con
 .INDENT 0.0
 .TP
 .B \-\-flow\-size
-Split all HTML files larger than this size (in KB). This is necessary as most EPUB readers cannot handle large file sizes. The default of 260KB is the size required for Adobe Digital Editions. Set to 0 to disable size based splitting.
+Ossza fel az összes ennél a méretnél nagyobb HTML\-fájlt (KB\-ban). Erre azért van szükség, mert a legtöbb EPUB\-olvasó nem tudja kezelni a nagy fájlméreteket. Az alapértelmezett 260KB az Adobe Digital Editions használatához szükséges méret. Állítsa 0\-ra a méretalapú felosztás letiltásához.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -191,12 +191,12 @@ A kimeneti formátum megjelenítésének beállításai
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPPelé\fB"\fP with \fB"\fPPele\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Unicode karakterek átírása ASCII\-ábrázolásra. Használja körültekintően, mert ezzel a Unicode karaktereket ASCII\-re cseréli. Például a „Pelé” helyett „Pele” lesz. Vegye figyelembe azt is, hogy azokban az esetekben, amikor egy karakternek többszörös ábrázolása van (például a kínai és a japán által megosztott karakterek), az aktuális Calibre interfésznyelven alapuló ábrázolás kerül felhasználásra.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-base\-font\-size
-The base font size in pts. All font sizes in the produced book will be rescaled based on this size. By choosing a larger size you can make the fonts in the output bigger and vice versa. By default, when the value is zero, the base font size is chosen based on the output profile you chose.
+Alap betűméret pontokban. Az elkészített könyvben szereplő összes betűméret átméretezésre kerül a méret alapján. Ha nagyobb méretet választ, a kimenetben lévő betűtípusokat nagyobbá teheti, és fordítva. Alapértelmezés szerint, ha az érték nulla, az alap betűméretet a rendszer a kiválasztott kimeneti profil alapján választja ki.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -211,17 +211,17 @@ A betűk átméretezésének tiltása.
 .INDENT 0.0
 .TP
 .B \-\-embed\-all\-fonts
-Embed every font that is referenced in the input document but not already embedded. This will search your system for the fonts, and if found, they will be embedded. Embedding will only work if the format you are converting to supports embedded fonts, such as EPUB, AZW3, DOCX or PDF. Please ensure that you have the proper license for embedding the fonts used in this document.
+Minden betűtípus beágyazása, amelyre hivatkozik a beviteli dokumentum, de még nincs beágyazva. Ez megkeresi a rendszerben a betűtípusokat, és ha megtalálja, beágyazódik. A beágyazás csak akkor működik, ha a konvertálandó formátum támogatja a beágyazott betűtípusokat, például EPUB, AZW3, DOCX vagy PDF. Kérjük, győződjön meg arról, hogy rendelkezik a dokumentumban használt betűtípusok beágyazásához szükséges megfelelő licenccel.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Embed the specified font family into the book. This specifies the \fB"\fPbase\fB"\fP font used for the book. If the input document specifies its own fonts, they may override this base font. You can use the filter style information option to remove fonts from the input document. Note that font embedding only works with some output formats, principally EPUB, AZW3 and DOCX.
+A megadott betűtípus beágyazása a könyvbe. Ez lesz a könyv alap betűtípusa. Amennyiben a bemeneti fájl tartalmaz már saját betűtípust, az felülírja ezt a beállítást. A Stílus információk szűrésénél ezeket a már beágyazott betűtípusokat eltávolíthatja. Vegye figyelembe, hogy a betűtípus beágyazása csak bizonyos formátumoknál, alapvetően az EPUB, AZW3 és a DOCX formátumok esetében működik.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+Alapértelmezés szerint a Calibre a gyorsított formát fogja használni a különböző CSS\-tulajdonságokhoz, például margóhoz, kitöltéshez, szegélyhez stb. Ez a beállítás a teljes kibontott űrlapot fogja használni. Vegye figyelembe, hogy a CSS mindig kibővül, amikor olyan EPUB\-fájlokat állít elő, amelyek kimeneti profilja valamelyik Nook\-profilra van beállítva, mivel a Nook nem tudja kezelni a gyorsított CSS\-t.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -301,7 +301,7 @@ Amikor a Calibre eltávolítja az üres sorokat, automatikusan behúzással lát
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP\&.
+Egyszerű idézőjelek, kötőjelek és ellipszisek konvertálása tipográfiai megfelelőjükre. További részletek: \fI\%https://daringfireball.net/projects/smartypants\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -311,12 +311,12 @@ Minden beágyazott betűtípus csak azokat a betűket fogja tartalmazni, melyek 
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform styles\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+A könyvben szereplő CSS\-stílusok átalakítására szolgáló szabályokat tartalmazó fájl elérési útja. Az ilyen fájl létrehozásának legegyszerűbb módja a varázsló használata a szabályok létrehozásához a kaliber GUI\-ban. Hozzáférhet a \fB"\fPBeállítások\fB"\fP párbeszédpanel „Közös beállítások\->Kinézet és megjelenés\->Stílusok átalakítása” részében. Miután létrehozta a szabályokat, az \fB"\fPExportálás\fB"\fP gombbal mentheti őket fájlba.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform HTML\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+Útvonal egy olyan fájlhoz, amely szabályokat tartalmaz a könyv HTML\-kódjának átalakítására. Az ilyen fájl létrehozásának legegyszerűbb módja a varázsló használata a szabályok létrehozásához a Calibre GUI\-ban. Hozzáférhet a \fB"\fPBeállítások\fB"\fP  párbeszédpanel \fB"\fPKözös beállítások\->Kinézet és megjelenés\->HTML átalakítása\fB"\fP részében. Miután létrehozta a szabályokat, az \fB"\fPExportálás\fB"\fP gombbal mentheti őket fájlba.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -429,7 +429,7 @@ Dokumentum\-struktúra automatikus felismerése.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP as chapter titles as well as any tags that have class=\fB"\fPchapter\fB"\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB"\fP/\fB"\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+XPath kifejezés a fejezetcímek észlelésére. Az alapértelmezés szerint minden <h1> vagy (or)  <h2> címkét, amely a „fejezet”, „könyv”, „szakasz”, „prológus”, „epilógus” vagy „rész” szavakat tartalmazza fejezetcímként kell kezelni, valamint minden olyan címkét, amelyhez class=\fB"\fPchapter tartozik. A használt kifejezésnek ki kell értékelnie egy elemlistát. A fejezetfelismerés letiltásához használja a \fB"\fP/\fB"\fP kifejezést. A funkció használatához további segítségért tekintse meg a kaliber felhasználói kézikönyv XPath oktatóanyagát.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -464,7 +464,7 @@ Távolítsa el az első képet a forrás e\-könyvből. Hasznos, ha a forrás do
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+XPath kifejezés, amely meghatározza azt a helyet a dokumentumban, ahol az olvasást elkezdheti. Egyes e\-könyv\-olvasó programok (leginkább a Kindle) ezt a helyet használják a könyv kinyitásának helyeként. A funkció használatához további segítségért tekintse meg a Calibre felhasználói kézikönyv XPath oktatóanyagát.
 .UNINDENT
 .SH TARTALOMJEGYZÉK
 .sp
@@ -608,7 +608,7 @@ A hibakereséshez használható opciók
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring.
+A konvertálás egyes szakaszainak mentése a megadott mappába. Hasznos lehet, ha nem tudja, melyik szakasznál keletkezett a konvertálási hiba.
 .UNINDENT
 .INDENT 0.0
 .TP
