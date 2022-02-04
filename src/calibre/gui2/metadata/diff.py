@@ -547,6 +547,13 @@ class CompareSingle(QWidget):
             if val != self.initial_vals[field]:
                 widgets.new.to_mi(self.current_mi)
                 changed = True
+        if changed and not self.current_mi.languages:
+            # this is needed because blank language setting
+            # causes current UI language to be set
+            widgets = self.widgets['languages']
+            neww, oldw = widgets[:2]
+            if oldw.current_val:
+                self.current_mi.languages = oldw.current_val
         return changed
 
 
@@ -779,7 +786,7 @@ if __name__ == '__main__':
     gm = partial(db.get_metadata, index_is_id=True, get_cover=True, cover_as_data=True)
     get_metadata = lambda x:list(map(gm, ids[x]))
     d = CompareMany(list(range(len(ids))), get_metadata, db.field_metadata, db=db)
-    if d.exec() == QDialog.DialogCode.Accepted:
-        for changed, mi in itervalues(d.accepted):
-            if changed and mi is not None:
-                print(mi)
+    d.exec()
+    for changed, mi in itervalues(d.accepted):
+        if changed and mi is not None:
+            print(mi)

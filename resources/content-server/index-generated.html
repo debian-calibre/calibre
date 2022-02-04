@@ -23431,7 +23431,7 @@ return this.__repr__();
             sc["toggle_lookup"] = desc(['Ctrl+l'], "ui", _("Show/hide the word lookup panel"));
             quit_shortcut = (ismacos) ? "Meta+q" : "Ctrl+q";
             sc["quit"] = desc(quit_shortcut, "ui", _("Quit the E-book viewer"));
-            sc["print"] = desc("Ctrl+P", "ui", _("Print book to PDF"));
+            sc["print"] = desc("Ctrl+p", "ui", _("Print book to PDF"));
             sc["toggle_toolbar"] = desc("Ctrl+F11", "ui", _("Toggle the toolbar"));
             sc["toggle_highlights"] = desc("Ctrl+h", "ui", _("Toggle the highlights panel"));
             sc["edit_book"] = desc("Ctrl+d", "ui", _("Edit this book"));
@@ -27218,7 +27218,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.35.0";
+        CALIBRE_VERSION = "5.36.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -38543,7 +38543,7 @@ return this.__repr__();
                     ρσ_d["remove_highlight"] = a("trash", _("Remove this highlight") + _(" [Delete or D]"), "remove_highlight", true);
                     ρσ_d["clear"] = a("close", _("Clear selection") + " [Esc]", "clear_selection");
                     ρσ_d["speak"] = a("bullhorn", _("Read aloud") + " [T]", "speak_aloud");
-                    ρσ_d["cite"] = a("reference-mode", _("Copy citation to clipboard") + " [X]", "cite");
+                    ρσ_d["cite"] = a("reference-mode", _("Copy a citation to this text") + " [X]", "cite");
                     return ρσ_d;
                 }).call(this);
                 qh = all_actions.ans.quick_highlight;

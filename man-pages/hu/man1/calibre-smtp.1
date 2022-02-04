@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "január 21, 2022" "5.35.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "február 04, 2022" "5.36.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -57,7 +57,7 @@ Whenever you pass arguments to \fBcalibre\-smtp\fP that have spaces in them, enc
 .INDENT 0.0
 .TP
 .B \-\-fork, \-f
-Fork and deliver message in background. If you use this option, you should also use \fI\%\-\-outbox\fP to handle delivery failures.
+\fB"\fPFork\fB"\fP és üzenet kézbesítés a háttérben. Ha ezt az opciót használja, akkor a \fB\-\-outboxot\fP is érdemes használnia a kézbesítési hibák kezelésére.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -113,7 +113,7 @@ Path to a file of concatenated CA certificates in PEM format, used to verify the
 .INDENT 0.0
 .TP
 .B \-\-dont\-verify\-server\-certificate
-Do not verify the server certificate when connecting using TLS. This used to be the default behavior in calibre versions before 3.27. If you are using a relay with a self\-signed or otherwise invalid certificate, you can use this option to restore the pre 3.27 behavior
+Ne ellenőrizze a szervertanúsítványt, ha TLS használatával csatlakozik. Ez volt az alapértelmezett viselkedés a 3.27 előtti Calibre verziókban. Ha önaláírt vagy más módon érvénytelen tanúsítvánnyal rendelkező közvetítőt használ, ezzel a lehetőséggel visszaállíthatja a 3.27 előtti viselkedést
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -128,7 +128,7 @@ Password for relay
 .INDENT 0.0
 .TP
 .B \-\-port
-Port to connect to on relay server. Default is to use 465 if encryption method is SSL and 25 otherwise.
+Port, amelyhez csatlakozni kell a továbbítószerveren. Az alapértelmezett a 465 használata, ha a titkosítási módszer SSL, és egyébként 25.
 .UNINDENT
 .INDENT 0.0
 .TP

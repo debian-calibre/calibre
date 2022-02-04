@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "január 21, 2022" "5.35.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "február 04, 2022" "5.36.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -51,17 +51,17 @@ Whenever you pass arguments to \fBcalibre\-server\fP that have spaces in them, e
 .INDENT 0.0
 .TP
 .B \-\-access\-log
-Path to the access log file. This log contains information about clients connecting to the server and making requests. By default no access logging is done.
+A hozzáférési naplófájl elérési útja. Ez a napló információkat tartalmaz a kiszolgálóhoz csatlakozó és kéréseket benyújtó ügyfelekről. Alapértelmezés szerint nem történik hozzáférési naplózás.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ajax\-timeout
-Time (in seconds) to wait for a response from the server when making queries.
+A szerver válaszának várakozási ideje (másodpercben) a lekérdezések során.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Choose the type of authentication used.     Set the HTTP authentication mode used by the server. Set to \fB"\fPbasic\fB"\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB"\fPauto\fB"\fP, which will use \fB"\fPbasic\fB"\fP if SSL is configured otherwise it will use \fB"\fPdigest\fB"\fP\&.
+A használt hitelesítés típusának kiválasztása.      Állítsa be a szerver által használt HTTP hitelesítési módot. Állítsa \fB"\fPbasic\fB"\fP értékre, ha ezt a szervert SSL proxy mögé helyezi. Ellenkező esetben hagyja \fB"\fPauto\fB"\fP\-módban, amely az \fB"\fPbasic\fB"\fP módot fogja használni, ha az SSL be van állítva, különben a \fB"\fPdigest\fB"\fP módot fogja használni.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -71,22 +71,22 @@ Automatically reload server when source code changes. Useful for development. Yo
 .INDENT 0.0
 .TP
 .B \-\-ban\-after
-Number of login failures for ban.   The number of login failures after which an IP address is banned
+A kitiltáshoz szükséges bejelentkezési hibák száma.         Azon bejelentkezési hibák száma, amelyek után egy IP\-cím letiltásra kerül
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-Ban IP addresses that have repeated login failures.         Temporarily bans access for IP addresses that have repeated login failures for the specified number of minutes. Useful to prevent attempts at guessing passwords. If set to zero, no banning is done.
+IP\-címek letiltása, amelyeknél ismétlődő bejelentkezési hibák jelentkeztek.         Ideiglenesen letiltja a hozzáférést az olyan IP\-címekhez, amelyek ismétlődő bejelentkezési hibával rendelkeznek a megadott számú perceken keresztül. Hasznos a jelszavak kitalálására irányuló kísérletek megelőzésére. Ha nullára van állítva, nem történik kitiltás.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-book\-list\-mode
-Choose the default book list mode.  Set the default book list mode that will be used for new users. Individual users can override the default in their own settings. The default is to use a cover grid.
+Az alapértelmezett könyvlista mód kiválasztása.     Állítsa be az új felhasználóknál használt alapértelmezett könyvlista módot. Az egyes felhasználók felülírhatják az alapértelmezett beállításokat saját beállításaikban. Az alapértelmezés a fedőrács használata.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-compress\-min\-size
-Minimum size for which responses use data compression (in bytes).
+Minimális méret, amelyhez a válaszok adattömörítést használnak (bájtban).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -96,12 +96,12 @@ Path to a JSON file containing a template for the custom book list mode. The eas
 .INDENT 0.0
 .TP
 .B \-\-daemonize
-Run process in background as a daemon (Linux only).
+Folyamat futtatása a háttérben \fB"\fPdaemon\fB"\fP\-ként (csak Linuxon).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-Restrict displayed user\-defined fields.     Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
+A felhasználó által definiált mezők megjelenítésének korlátozása.   Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -111,32 +111,32 @@ Socket pre\-allocation, for example, with systemd socket activation. Alapértelm
 .INDENT 0.0
 .TP
 .B \-\-enable\-auth, \-\-disable\-auth
-Password based authentication to access the server.         Normally, the server is unrestricted, allowing anyone to access it. You can restrict access to predefined users with this option. Alapértelmezésben ez a lehetőség nem engedélyezett.
+Password based authentication to access the server.         Általában a szerver korlátlan, így bárki hozzáférhet. Ezzel az opcióval korlátozhatja a hozzáférést előre meghatározott felhasználókra. Alapértelmezésben ez a lehetőség nem engedélyezett.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Fallback to auto\-detected interface.        If for some reason the server is unable to bind to the interface specified in the listen_on option, then it will try to detect an interface that connects to the outside world and bind to that. Alapértelmezésben ez a lehetőség engedélyezett.
+Visszatérés az automatikusan észlelt interfészhez.  Ha a szerver valamilyen oknál fogva nem tud kapcsolódni a listen_on opcióban megadott interfészhez, akkor megpróbál egy olyan interfészt észlelni, amelyik a külvilághoz csatlakozik, és ehhez kötődik. Alapértelmezésben ez a lehetőség engedélyezett.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Allow un\-authenticated local connections to make changes.   Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. Alapértelmezésben ez a lehetőség nem engedélyezett.
+Engedélyezze a nem hitelesített helyi kapcsolatoknak a módosításokat.       Normális esetben, ha nem kapcsolja be a hitelesítést, a szerver csak olvasható módban működik, így nem teszi lehetővé a névtelen felhasználók számára, hogy módosítsák a Calibre könyvtárakat. Ezzel az opcióval bárki, aki ugyanarról a számítógépről csatlakozik, amelyen a kiszolgáló fut, változtatásokat hajthat végre. Ez akkor hasznos, ha hitelesítés nélkül szeretné futtatni a kiszolgálót, de továbbra is használja a calibredb\-t a Calibre könyvtárak módosításához. Vegye figyelembe, hogy ennek az opciónak a bekapcsolása azt jelenti, hogy a számítógépen futó bármely program módosíthatja a Calibre könyvtárakat. Alapértelmezésben ez a lehetőség nem engedélyezett.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-Log HTTP 404 (Not Found) requests.  Normally, the server logs all HTTP requests for resources that are not found. This can generate a lot of log spam, if your server is targeted by bots. Use this option to turn it off. Alapértelmezésben ez a lehetőség engedélyezett.
+HTTP 404 (nem található) kérések naplózása.         Általában a kiszolgáló naplózza a nem található erőforrások összes HTTP\-kérését. Ez sok naplólevélszemetet generálhat, ha a szerverét robotok célozzák meg. Ezzel a lehetőséggel kapcsolhatja ki. Alapértelmezésben ez a lehetőség engedélyezett.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
-Advertise OPDS feeds via BonJour.   Advertise the OPDS feeds via the BonJour service, so that OPDS based reading apps can detect and connect to the server automatically. Alapértelmezésben ez a lehetőség engedélyezett.
+OPDS\-hírcsatornák hirdetése a BonJour segítségével.         Hirdesse az OPDS hírcsatornákat a BonJour szolgáltatáson keresztül, hogy az OPDS alapú olvasóalkalmazások automatikusan felismerjék és csatlakozzanak a szerverhez. Alapértelmezésben ez a lehetőség engedélyezett.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-Zero copy file transfers for increased performance.         This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. Alapértelmezésben ez a lehetőség engedélyezett.
+Nulla másolás nélküli fájlátvitel a nagyobb teljesítmény érdekében.         Ez nulla\-másolatot használ a kernelen belüli átvitelhez, amikor fájlokat küld a hálózaton, növelve a teljesítményt. Ez azonban hibás fájlátvitelt okozhat egyes hibás fájlrendszereken. Ha sérült fájlátvitelt tapasztal, kapcsolja ki. Alapértelmezésben ez a lehetőség engedélyezett.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -146,12 +146,12 @@ súgó megjelenítése és kilépés
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-Ignored user\-defined metadata fields.       Comma separated list of user\-defined metadata fields that will not be displayed by the Content server in the /opds and /mobile views. For example: my_rating,my_tags
+A felhasználó által definiált metaadatmezők figyelmen kívül hagyása.        Comma separated list of user\-defined metadata fields that will not be displayed by the Content server in the /opds and /mobile views. For example: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-The interface on which to listen for connections.   The default is to listen on all available IPv4 interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
+Az a felület, amelyen a kapcsolatok figyelhetők.    Alapértelmezés az összes elérhető IPv4 interfészen történő figyelés. Módosíthatja ezt például „127.0.0.1”\-re, ha csak a helyi gépről érkező kapcsolatokat figyeli, vagy „::”\-re, ha az összes bejövő IPv6\- és IPv4\-kapcsolatot figyeli.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -166,37 +166,37 @@ Manage the database of users allowed to connect to this server. You can use it i
 .INDENT 0.0
 .TP
 .B \-\-max\-header\-line\-size
-Max. size of single HTTP header (in KB).
+Egyetlen HTTP\-fejléc max. mérete (KB\-ban).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-Maximum time for worker processes.  Maximum amount of time worker processes are allowed to run (in minutes). Set to zero for no limit.
+A munkafolyamatok maximális ideje.  A dolgozó folyamatok futásának maximális időtartama (percekben). Állítsa nullára, ha nincs korlát.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-jobs
-Maximum number of worker processes.         Worker processes are launched as needed and used for large jobs such as preparing a book for viewing, adding books, converting, etc. Normally, the max. number of such processes is based on the number of CPU cores. You can control it by this setting.
+A dolgozói folyamatok maximális száma.      A munkafolyamatok szükség szerint elindulnak, és olyan nagy munkákhoz használatosak, mint például a könyv megtekintésre való előkészítése, könyvek hozzáadása, konvertálás stb. Általában az ilyen folyamatok maximális száma a CPU\-magok számán alapul. Ezzel a beállítással szabályozhatja ezt.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-log\-size
-Naplófájl max. mérete (MB).         The maximum size of log files, generated by the server. When the log becomes larger than this size, it is automatically rotated. Set to zero to disable log rotation.
+Naplófájl max. mérete (MB).         A szerver által generált naplófájlok maximális mérete. Amikor a napló nagyobb lesz ennél a méretnél, automatikusan elforgatja. Állítsa nullára a naplóforgatás letiltásához.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-items
-Maximum number of books in OPDS feeds.      The maximum number of books that the server will return in a single OPDS acquisition feed.
+A könyvek maximális száma az OPDS\-hírcsatornákban.  A könyvek maximális száma, amelyet a szerver egyetlen OPDS adatgyűjtési hírfolyamban visszaküld.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-ungrouped\-items
-Maximum number of ungrouped items in OPDS feeds.    Group items in categories such as author/tags by first letter when there are more than this number of items. Set to zero to disable.
+A csoportosítatlan elemek maximális száma az OPDS\-hírcsatornákban.  Csoportosítsa az elemeket kategóriákba (például szerző/címkék) az első betű szerint, ha ennél több elem van. A letiltáshoz állítsa nullára.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-request\-body\-size
-Max. allowed size for files uploaded to the server (in MB).
+A szerverre feltöltött fájlok megengedett max. mérete (MB\-ban).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -221,32 +221,32 @@ Path to a JSON file containing URLs for the \fB"\fPSearch the internet\fB"\fP fe
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-timeout
-Total time in seconds to wait for clean shutdown.
+A tiszta leállásra való várakozás teljes időtartama másodpercben.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-certfile
-Path to the SSL certificate file.
+SSL\-tanúsítványfájl elérési útja.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-keyfile
-Path to the SSL private key file.
+SSL privát kulcs fájl elérési útja.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout
-Time (in seconds) after which an idle connection is closed.
+Idő (másodpercben), amely után a tétlen kapcsolat bezárul.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-Allow un\-authenticated connections from specific IP addresses to make changes.      Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
+A módosítások végrehajtásához engedélyezze a nem hitelesített kapcsolatokat adott IP\-címekről.      Normális esetben, ha nem kapcsolja be a hitelesítést, a szerver csak olvasható módban működik, így nem teszi lehetővé a névtelen felhasználók számára, hogy módosítsák a Calibre  könyvtárakat. Ezzel az opcióval bárki, aki a megadott IP\-címekről csatlakozik, változtatásokat hajthat végre. A címek vagy a hálózati specifikációk vesszővel elválasztott listájának kell lennie. Ez akkor hasznos, ha hitelesítés nélkül szeretné futtatni a kiszolgálót, de továbbra is használja a calibredb\-t a Calibre könyvtárak módosításához. Vegye figyelembe, hogy ennek az opciónak a bekapcsolása azt jelenti, hogy bárki, aki a megadott IP\-címekről csatlakozik, módosíthatja a Calibre könyvtárait.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-url\-prefix
-A prefix to prepend to all URLs.    Useful if you wish to run this server behind a reverse proxy. For example use, /calibre as the URL prefix.
+Az összes URL elé írandó előtag.    Hasznos, ha ezt a kiszolgálót fordított proxy mögött szeretné futtatni. Például használja a /calibre\-t URL előtagként.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -261,7 +261,7 @@ program verziójának megjelenítése és kilépés
 .INDENT 0.0
 .TP
 .B \-\-worker\-count
-Number of worker threads used to process requests.
+A kérések feldolgozásához használt munkaszálak száma.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal
