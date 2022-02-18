@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "február 04, 2022" "5.36.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "február 18, 2022" "5.37.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -52,7 +52,7 @@ from is the email address of the sender and to is the email address
 of the recipient. When a complete email is read from STDIN, from and to
 are only used in the SMTP negotiation, the message headers are not modified.
 .sp
-Whenever you pass arguments to \fBcalibre\-smtp\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Amikor olyan argumentumokat ad át \fBcalibre\-smtp\fP\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
 .SH [BEÁLLÍTÁSOK]
 .INDENT 0.0
 .TP
@@ -67,12 +67,12 @@ súgó megjelenítése és kilépés
 .INDENT 0.0
 .TP
 .B \-\-localhost, \-l
-Host name of localhost. Used when connecting to SMTP server.
+A \fB"\fPlocalhost\fB"\fP gazdagépneve. SMTP szerverhez való csatlakozáskor használatos.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-outbox, \-o
-Path to maildir folder to store failed email messages in.
+A \fB"\fPmaildir\fB"\fP mappa elérési útja a sikertelen e\-mailek tárolására.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -91,11 +91,11 @@ program verziójának megjelenítése és kilépés
 .UNINDENT
 .SS COMPOSE MAIL
 .sp
-Options to compose an email. Ignored if text is not specified
+E\-mail írási lehetőségek. Figyelmen kívül hagyja, ha nincs megadva szöveg
 .INDENT 0.0
 .TP
 .B \-\-attachment, \-a
-File to attach to the email
+Az e\-mailhez csatolandó fájl
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -104,11 +104,11 @@ Email tárgya
 .UNINDENT
 .SS SMTP RELAY
 .sp
-Options to use an SMTP relay server to send mail. calibre will try to send the email directly unless \-\-relay is specified.
+Lehetőségek SMTP továbbítószerver használatára levelek küldésére. Calibre megpróbálja közvetlenül elküldeni az e\-mailt, hacsak nincs megadva a \-\-relay.
 .INDENT 0.0
 .TP
 .B \-\-cafile
-Path to a file of concatenated CA certificates in PEM format, used to verify the server certificate when using TLS. By default, the system CA certificates are used.
+Összefűzött CA\-tanúsítványokat tartalmazó fájl elérési útja PEM formátumban, amely a szervertanúsítvány ellenőrzésére szolgál TLS használatakor. Alapértelmezés szerint a rendszer a CA\-tanúsítványokat használja.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -118,12 +118,12 @@ Ne ellenőrizze a szervertanúsítványt, ha TLS használatával csatlakozik. Ez
 .INDENT 0.0
 .TP
 .B \-\-encryption\-method, \-e
-Encryption method to use when connecting to relay. Choices are TLS, SSL and NONE. Default is TLS. WARNING: Choosing NONE is highly insecure
+Reléhez való csatlakozáskor használandó titkosítási módszer. Választható: TLS, SSL és NINCS. Az alapértelmezett a TLS. FIGYELMEZTETÉS: A NINCS választása rendkívül bizonytalan
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password, \-p
-Password for relay
+Relé jelszó
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -133,12 +133,12 @@ Port, amelyhez csatlakozni kell a továbbítószerveren. Az alapértelmezett a 4
 .INDENT 0.0
 .TP
 .B \-\-relay, \-r
-An SMTP relay server to use to send mail.
+Egy SMTP\-továbbító szerver levél küldésére.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-username, \-u
-Username for relay
+Felhasználónév a reléhez
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

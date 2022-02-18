@@ -95,6 +95,8 @@ class Ui_Form(object):
         self.opt_fix_indents.setObjectName("opt_fix_indents")
         self.verticalLayout_2.addWidget(self.opt_fix_indents)
         self.verticalLayout.addWidget(self.heuristic_options)
+        spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout.addItem(spacerItem3)
         self.huf_label.setBuddy(self.opt_html_unwrap_factor)
         self.label_2.setBuddy(self.opt_replace_scene_breaks)
 

@@ -38,11 +38,9 @@ series_index_auto_increment = 'next'
 use_series_auto_increment_tweak_when_importing = False
 
 #: Add separator after completing an author name
-# Should the completion separator be append
-# to the end of the completed text to
-# automatically begin a new completion operation
-# for authors.
-# Can be either True or False
+# Set this if the completion separator should be appended to the end of the
+# completed text to automatically begin a new completion operation for authors.
+# It can be either True or False
 authors_completer_append_separator = False
 
 #: Author sort name algorithm
@@ -428,26 +426,6 @@ vertical_scrolling_per_row = False
 # Example: locale_for_sorting = 'nb' -- sort using Norwegian rules.
 locale_for_sorting =  ''
 
-#: Number of columns for custom metadata in the edit metadata dialog
-# Set whether to use one or two columns for custom metadata when editing
-# metadata  one book at a time. If True, then the fields are laid out using two
-# columns. If False, one column is used.
-metadata_single_use_2_cols_for_custom_fields = True
-
-#: Edit metadata custom column label width and elision point
-# Set the width of custom column labels shown in the edit metadata dialogs.
-# If metadata_edit_elide_labels is True then labels wider than the width
-# will be elided, otherwise they will be word wrapped. The maximum width is
-# computed by multiplying the average width of characters in the font by the
-# appropriate number.
-# Set the elision point to 'middle' to put the ellipsis (…) in the middle of
-# the label, 'right' to put it at the right end of the label, and 'left' to
-# put it at the left end.
-metadata_edit_elide_labels = True
-metadata_edit_bulk_cc_label_length = 25
-metadata_edit_single_cc_label_length = 12
-metadata_edit_elision_point = 'right'
-
 #: The number of seconds to wait before sending emails
 # The number of seconds to wait before sending emails when using a
 # public email server like GMX/Hotmail/Gmail. Default is: 5 minutes
@@ -522,7 +500,14 @@ default_tweak_format = None
 # completions you will now have to press Tab to select one before pressing
 # Enter. Which technique you prefer will depend on the state of metadata in
 # your library and your personal editing style.
+#
+# If preselect_first_completion is False and you want Tab to accept what you
+# typed instead of the first completion then set tab_accepts_uncompleted_text
+# to True. If you do this then to select from the completions you must press
+# the Down or Up arrow keys. The tweak tab_accepts_uncompleted_text is ignored
+# if preselect_first_completion is True
 preselect_first_completion = False
+tab_accepts_uncompleted_text = False
 
 #: Completion mode when editing authors/tags/series/etc.
 # By default, when completing items, calibre will show you all the candidates

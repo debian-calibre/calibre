@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1083</width>
-    <height>580</height>
+    <height>579</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -338,6 +338,9 @@
         <string>&amp;Layout</string>
        </attribute>
        <layout class="QFormLayout" name="formLayout_2">
+        <property name="fieldGrowthPolicy">
+         <enum>QFormLayout::ExpandingFieldsGrow</enum>
+        </property>
         <item row="0" column="0" colspan="2">
          <widget class="QLabel" name="label_19">
           <property name="text">
@@ -421,7 +424,13 @@
           </property>
           <layout class="QGridLayout" name="gridLayout_4">
            <item row="0" column="0" colspan="5">
-            <widget class="QLabel" name="label_20">
+            <widget class="QLabel" name="cover_size_label">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+               <horstretch>0</horstretch>
+               <verstretch>10</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string>By default, calibre chooses a cover size based on your computer's screen size. You can change the cover size here:</string>
              </property>
@@ -908,10 +917,10 @@ A value of zero means calculate automatically.</string>
       <attribute name="title">
        <string>Edit &amp;metadata</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_61">
-       <item row="1" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout1">
-         <item>
+      <layout class="QVBoxLayout" name="vbox_layout_61">
+       <item>
+        <layout class="QFormLayout">
+         <item row="0" column="0">
           <widget class="QLabel" name="edit_metadata_single_label">
            <property name="text">
             <string>Edit metadata (single) &amp;layout:</string>
@@ -921,29 +930,16 @@ A value of zero means calculate automatically.</string>
            </property>
           </widget>
          </item>
-         <item>
+         <item row="0" column="1">
           <widget class="QComboBox" name="opt_edit_metadata_single_layout">
            <property name="toolTip">
             <string>Choose a different layout for the Edit metadata dialog. The compact metadata layout favors editing custom metadata over changing covers and formats.</string>
            </property>
           </widget>
          </item>
-         <item>
-          <spacer name="verticalSpacer_5">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
         </layout>
        </item>
-       <item row="6" column="0">
+       <item>
         <widget class="QGroupBox" name="groupBox">
          <property name="title">
           <string>Select the custom columns (for this library) to display in the edit metadata dialogs and their order</string>
@@ -994,18 +990,105 @@ A value of zero means calculate automatically.</string>
          </layout>
         </widget>
        </item>
-       <item row="8" column="0">
-        <widget class="QCheckBox" name="opt_edit_metadata_ignore_display_order">
-         <property name="text">
-          <string>Show all columns in default order when editing metadata</string>
-         </property>
-         <property name="toolTip">
-          <string>&lt;p&gt;Check this box to make the edit metadata dialogs ignore the
+       <item>
+        <layout class="QHBoxLayout">
+         <item>
+          <layout class="QFormLayout">
+           <item row="0" column="0" colspan="2">
+            <widget class="QCheckBox" name="opt_edit_metadata_ignore_display_order">
+             <property name="toolTip">
+              <string>&lt;p&gt;Check this box to make the edit metadata dialogs ignore the
 above specifications, showing all the columns in the default order. This is
 useful for temporarily seeing all your columns in the dialogs without losing
 the display and order specifications.&lt;/p&gt;</string>
-         </property>
-        </widget>
+             </property>
+             <property name="text">
+              <string>Show &amp;all columns in default order when editing metadata</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="2">
+            <widget class="QCheckBox" name="opt_edit_metadata_elide_labels">
+             <property name="toolTip">
+              <string>If checked then labels wider than the label width
+will be elided, otherwise they will be word wrapped.</string>
+             </property>
+             <property name="text">
+              <string>&amp;Elide labels when editing custom columns</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_102">
+             <property name="text">
+              <string>Elision point:</string>
+             </property>
+             <property name="buddy">
+              <cstring>opt_edit_metadata_elision_point</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QComboBox" name="opt_edit_metadata_elision_point">
+             <property name="toolTip">
+              <string>Choose where in the label to put the...</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QFormLayout">
+           <item row="0" column="0" colspan="2">
+            <widget class="QCheckBox" name="opt_edit_metadata_single_use_2_cols_for_custom_fields">
+             <property name="text">
+              <string>Use &amp;two columns for custom columns in the Default layout</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_102">
+             <property name="text">
+              <string>&amp;Bulk edit custom column label length:</string>
+             </property>
+             <property name="buddy">
+              <cstring>opt_edit_metadata_bulk_cc_label_length</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QSpinBox" name="opt_edit_metadata_bulk_cc_label_length">
+             <property name="toolTip">
+              <string>The maximum width of a custom column label for the bulk metadata edit dialog in average characters.</string>
+             </property>
+             <property name="suffix">
+              <string> chars</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_1022">
+             <property name="text">
+              <string>&amp;Single edit custom column label length:</string>
+             </property>
+             <property name="buddy">
+              <cstring>opt_edit_metadata_single_cc_label_length</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QSpinBox" name="opt_edit_metadata_single_cc_label_length">
+             <property name="toolTip">
+              <string>The maximum width of a custom column label for the single metadata edit dialog in average characters.</string>
+             </property>
+             <property name="suffix">
+              <string> chars</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
@@ -1451,11 +1534,11 @@ when the column in the book list is changed using the cursor arrow keys</string>
          <item row="1" column="0">
           <widget class="QCheckBox" name="opt_qv_retkey_changes_column">
            <property name="toolTip">
-            <string>Pressing 'Enter' in a cell changes both the book and the
+            <string>Pressing Enter in a cell changes both the book and the
 column being examined (the left-hand pane)</string>
            </property>
            <property name="text">
-            <string>&amp;Pressing 'Enter' changes the examined column</string>
+            <string>&amp;Pressing Enter changes the examined column</string>
            </property>
           </widget>
          </item>

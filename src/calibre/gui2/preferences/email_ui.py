@@ -24,7 +24,7 @@ class Ui_Form(object):
         self.horizontalLayout_8 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_8.setObjectName("horizontalLayout_8")
         self.email_view = QtWidgets.QTableView(Form)
-        self.email_view.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
+        self.email_view.setSelectionMode(QtWidgets.QAbstractItemView.MultiSelection)
         self.email_view.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
         self.email_view.setObjectName("email_view")
         self.horizontalLayout_8.addWidget(self.email_view)

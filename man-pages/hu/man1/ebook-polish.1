@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-POLISH" "1" "február 04, 2022" "5.36.0" "calibre"
+.TH "EBOOK-POLISH" "1" "február 18, 2022" "5.37.0" "calibre"
 .SH NAME
 ebook-polish \- ebook-polish
 .
@@ -41,19 +41,18 @@ ebook\-polish [options] input_file [output_file]
 .UNINDENT
 .UNINDENT
 .sp
-Polishing books is all about putting the shine of perfection onto
-your carefully crafted e\-books.
+A könyvek polirozása arról szól, hogy a tökéletesség fényét
+teszi a gondosan elkészített e\-könyveikre.
+A polírozás megpróbálja minimalizálni az e\-könyv belső kódjának módosításait.
+A konvertálástól eltérően, nem simítja ki a CSS\-t, nem nevezi át a fájlokat,
+nem módosítja a betűméretet, nem módosítja a margókat stb. Minden művelet csak
+a kívánt hatás eléréséhez szükséges minimális változtatásokat hajtja végre.
 .sp
-Polishing tries to minimize the changes to the internal code of your e\-book.
-Unlike conversion, it does not flatten CSS, rename files, change font
-sizes, adjust margins, etc. Every action performs only the minimum set of
-changes needed for the desired effect.
+Ezt az eszközt az e\-könyvkészítési folyamat utolsó lépéseként kell használni..
 .sp
-You should use this tool as the last step in your e\-book creation process.
+Vegye figyelembe, hogy a polírozás csak AZW3 vagy EPUB formátumú fájlokon működik.
 .sp
-Note that polishing only works on files in the AZW3 vagy EPUB formats.
-.sp
-Whenever you pass arguments to \fBebook\-polish\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Amikor olyan argumentumokat ad át \fBebook\-polish\fP\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
 .SH [BEÁLLÍTÁSOK]
 .INDENT 0.0
 .TP
@@ -68,12 +67,12 @@ A könyvben lévő képek veszteségmentes tömörítése, csökkentve a fájlm�
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-Path to a cover image. Changes the cover specified in the e\-book. If no cover is present, or the cover is not properly identified, inserts a new cover.
+Útvonal a borítóképhez. Megváltoztatja az e\-könyvben megadott borítót. Ha nincs borító, vagy a borító nincs megfelelően azonosítva, új borítót helyez be.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-embed\-fonts, \-e
-Embed all fonts that are referenced in the document and are not already embedded. This will scan your computer for the fonts, and if they are found, they will be embedded into the document. Please ensure that you have the proper license for embedding the fonts used in this document.
+Az összes olyan betűtípus beágyazása, amelyre hivatkozik a dokumentum, és még nincs beágyazva. Ez átkutatja a számítógépen a betűtípusokat, és ha megtalálja azokat,  beágyazódik a dokumentumba.. Kérjük, győződjön meg arról, hogy rendelkezik a dokumentumban használt betűtípusok beágyazásához szükséges megfelelő licenccel.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -83,17 +82,17 @@ súgó megjelenítése és kilépés
 .INDENT 0.0
 .TP
 .B \-\-jacket, \-j
-Insert a \fB"\fPbook jacket\fB"\fP page at the start of the book that contains all the book metadata such as title, tags, authors, series, comments, etc. Any previous book jacket will be replaced.
+Egy \fB"\fPkönyvborító” oldal beillesztése a könyv elejére, amely tartalmazza  a könyv összes metaadatát, például címet, címkéket, szerzőket, sorozatokat,  megjegyzéseket stb. Minden korábbi könyvborító kicserélésre kerül.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-opf, \-o
-Path to an OPF file. The metadata in the book is updated from the OPF file.
+Egy OPF fájl elérési útja. A könyv metaadatai az OPF fájlból frissülnek.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-jacket
-Remove a previous inserted book jacket page.
+A korábban behelyezett könyvborító eltávolítása.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -103,7 +102,7 @@ Szótag kötőjelek eltávolítása minden szövegből a könyvben
 .INDENT 0.0
 .TP
 .B \-\-remove\-unused\-css, \-u
-Remove all unused CSS rules from stylesheets and <style> tags. Some books created from production templates can have a large number of extra CSS rules that don\fB\(aq\fPt match any actual content. These extra rules can slow down readers that need to parse them all.
+Távolítson el minden nem használt CSS\-szabályt a stíluslapokról és a <style> címkéket.  Egyes, gyártási sablonokból létrehozott könyvek nagyszámú extra CSS\-szabályt tartalmazhatnak,  amelyek nem egyeznek semmilyen tényleges tartalommal. Ezek az extra szabályok lelassíthatják az olvasókat,  melyeknek mindegyiket elemezniük kell.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -113,7 +112,7 @@ Konvertálja az egyszerű szöveges kötőjeleket, ellipsziseket, idézőjeleket
 .INDENT 0.0
 .TP
 .B \-\-subset\-fonts, \-f
-Subsetting fonts means reducing an embedded font to contain only the characters used from that font in the book. This greatly reduces the size of the font files (halving the font file sizes is common). For example, if the book uses a specific font for headers, then subsetting will reduce that font to contain only the characters present in the actual headers in the book. Or if the book embeds the bold and italic versions of a font, but bold and italic text is relatively rare, or absent altogether, then the bold and italic fonts can either be reduced to only a few characters or completely removed. The only downside to subsetting fonts is that if, at a later date you decide to add more text to your books, the newly added text might not be covered by the subset font.
+A betűkészletek részhalmaza azt jelenti, hogy a beágyazott betűtípust  úgy csökkentik, hogy csak az abból a betűtípusból használt karaktereket  tartalmazzák a könyvben. Ez nagymértékben csökkenti a betűfájlok méretét  (gyakori a betű méretek felezése). Például, ha a könyv egy adott betűtípust használ a fejlécekhez, akkor az alkészlet csökkenti azt a betűtípust, hogy csak a könyv  tényleges fejléceiben szereplő karaktereket tartalmazza.  Vagy ha a könyv beágyazza egy betűtípus félkövér és dőlt változatát,  de a félkövér és dőlt szöveg viszonylag ritka, vagy teljesen hiányzik, akkor  a félkövér és dőlt betűtípus vagy néhány karakterre csökkenthető, vagy  teljesen eltávolítható. A betűkészletek részhalmazának egyetlen hátránya, hogy ha egy későbbi  időpontban úgy dönt, hogy további szöveget ad a könyveihez, előfordulhat,  hogy az újonnan hozzáadott szöveget nem fedi az alkészlet betűtípusa..
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -123,7 +122,7 @@ Ha lehetséges, a könyv belső szerkezetétnek frissítése. Például,  EPUB 2
 .INDENT 0.0
 .TP
 .B \-\-verbose
-Produce more verbose output, useful for debugging.
+Részletesebb kimenet generálása, hasznos hibakereséskor
 .UNINDENT
 .INDENT 0.0
 .TP

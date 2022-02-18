@@ -31,7 +31,6 @@ from calibre.gui2.metadata.basic_widgets import (
 from calibre.gui2.metadata.single_download import FullFetch
 from calibre.gui2.widgets2 import CenteredToolButton
 from calibre.library.comments import merge_comments as merge_two_comments
-from calibre.utils.config import tweaks
 from calibre.utils.date import local_tz
 from calibre.utils.localization import canonicalize_lang
 from polyglot.builtins import iteritems
@@ -56,7 +55,6 @@ class MetadataSingleDialogBase(QDialog):
 
     view_format = pyqtSignal(object, object)
     edit_format = pyqtSignal(object, object)
-    cc_two_column = tweaks['metadata_single_use_2_cols_for_custom_fields']
     one_line_comments_toolbar = False
     use_toolbutton_for_config_metadata = True
 
@@ -309,13 +307,16 @@ class MetadataSingleDialogBase(QDialog):
             gprefs['paste_isbn_prefixes'] = list(filter(None, (x.strip() for x in prefixes.splitlines()))) or gprefs.defaults['paste_isbn_prefixes']
             self.update_paste_identifiers_menu()
 
+    def use_two_columns_for_custom_metadata(self):
+        raise NotImplementedError
+
     def create_custom_metadata_widgets(self):  # {{{
         self.custom_metadata_widgets_parent = w = QWidget(self)
         layout = QGridLayout()
         w.setLayout(layout)
         self.custom_metadata_widgets, self.__cc_spacers = \
             populate_metadata_page(layout, self.db, None, parent=w, bulk=False,
-                two_column=self.cc_two_column)
+                two_column=self.use_two_columns_for_custom_metadata())
         self.__custom_col_layouts = [layout]
         for widget in self.custom_metadata_widgets:
             widget.connect_data_changed(self.data_changed)
@@ -745,6 +746,9 @@ class Splitter(QSplitter):
 
 class MetadataSingleDialog(MetadataSingleDialogBase):  # {{{
 
+    def use_two_columns_for_custom_metadata(self):
+        return gprefs['edit_metadata_single_use_2_cols_for_custom_fields']
+
     def do_layout(self):
         if len(self.db.custom_column_label_map) == 0:
             self.central_widget.tabBar().setVisible(False)
@@ -896,14 +900,15 @@ class DragTrackingWidget(QWidget):  # {{{
 
 class MetadataSingleDialogAlt1(MetadataSingleDialogBase):  # {{{
 
-    cc_two_column = False
     one_line_comments_toolbar = True
     use_toolbutton_for_config_metadata = False
-
     on_drag_enter = pyqtSignal()
 
     def handle_drag_enter(self):
         self.central_widget.setCurrentIndex(1)
+
+    def use_two_columns_for_custom_metadata(self):
+        return False
 
     def do_layout(self):
         self.central_widget.clear()
@@ -1051,9 +1056,11 @@ class MetadataSingleDialogAlt1(MetadataSingleDialogBase):  # {{{
 
 class MetadataSingleDialogAlt2(MetadataSingleDialogBase):  # {{{
 
-    cc_two_column = False
     one_line_comments_toolbar = True
     use_toolbutton_for_config_metadata = False
+
+    def use_two_columns_for_custom_metadata(self):
+        return False
 
     def do_layout(self):
         self.central_widget.clear()
@@ -1203,23 +1210,23 @@ class MetadataSingleDialogAlt2(MetadataSingleDialogBase):  # {{{
             hl.addWidget(b)
         cover_layout.addLayout(hl)
         sto(self.cover.buttons[-2], self.cover.buttons[-1])
-        # Layout for both cover & formats boxes
-        cover_and_formats = QVBoxLayout()
-        cover_and_formats.setContentsMargins(0, 0, 0, 0)
-        cover_and_formats.addWidget(cover_group_box, stretch=100)
+        # Splitter for both cover & formats boxes
+        self.cover_and_formats = cover_and_formats = QSplitter(Qt.Orientation.Vertical)
+        # Put a very small margin on the left so that the word "Cover" doesn't
+        # touch the splitter
+        cover_and_formats.setContentsMargins(1, 0, 0, 0)
+        cover_and_formats.addWidget(cover_group_box)
         # Add the formats manager box
         cover_and_formats.addWidget(self.formats_manager)
         sto(self.cover.buttons[-1], self.formats_manager)
         self.formats_manager.formats.setMaximumWidth(10000)
         self.formats_manager.formats.setIconSize(QSize(32, 32))
-
-        cover_and_formats_widget = QWidget()
-        main_splitter.addWidget(cover_and_formats_widget)
-        cover_and_formats_widget.setLayout(cover_and_formats)
+        main_splitter.addWidget(cover_and_formats)
 
     def save_widget_settings(self):
         gprefs['all_on_one_metadata_splitter_1_state'] = bytearray(self.metadata_splitter.saveState())
         gprefs['all_on_one_metadata_splitter_2_state'] = bytearray(self.main_splitter.saveState())
+        gprefs['all_on_one_metadata_splitter_3_state'] = bytearray(self.cover_and_formats.saveState())
 
     def restore_widget_settings(self):
         s = gprefs.get('all_on_one_metadata_splitter_1_state')
@@ -1228,6 +1235,9 @@ class MetadataSingleDialogAlt2(MetadataSingleDialogBase):  # {{{
         s = gprefs.get('all_on_one_metadata_splitter_2_state')
         if s is not None:
             self.main_splitter.restoreState(s)
+        s = gprefs.get('all_on_one_metadata_splitter_3_state')
+        if s is not None:
+            self.cover_and_formats.restoreState(s)
 # }}}
 
 
