@@ -27218,7 +27218,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.36.0";
+        CALIBRE_VERSION = "5.37.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -30778,7 +30778,7 @@ return this.__repr__();
                 __module__ : {value: "file_uploads"}
             });
 
-            msg = msg || _("Upload books by <a>selecting the book files</a> or drag and drop of the files here");
+            msg = msg || _("Upload books by either <a>selecting the book files</a> or drag and drop the files here");
             c = E.div(E.span(), ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "file", style: "display:none", onchange: files_selected})]));
             if (!single_file) {
                 c.lastChild.setAttribute("multiple", "multiple");
@@ -35631,7 +35631,14 @@ return this.__repr__();
                 button_style += "display: none;";
             }
             function prev_next_button(is_prev) {
-                return ρσ_interpolate_kwargs.call(E, E.div, [svgicon((is_prev) ? "chevron-left" : "chevron-right")].concat([ρσ_desugar_kwargs({style: button_style, title: (is_prev) ? _("Previous book [Ctrl+Left]") : _("Next book [Ctrl+Right]"), class_: "next-book-button", onclick: next_book.bind(null, book_id, (is_prev) ? -1 : 1)})]));
+                var delta, nbid, s;
+                delta = (is_prev) ? -1 : 1;
+                nbid = book_after(book_id, delta);
+                s = button_style;
+                if (!nbid || nbid === book_id) {
+                    s += "; display: none";
+                }
+                return ρσ_interpolate_kwargs.call(E, E.div, [svgicon((is_prev) ? "chevron-left" : "chevron-right")].concat([ρσ_desugar_kwargs({style: s, title: (is_prev) ? _("Previous book [Ctrl+Left]") : _("Next book [Ctrl+Right]"), class_: "next-book-button", onclick: next_book.bind(null, book_id, delta)})]));
             };
             if (!prev_next_button.__argnames__) Object.defineProperties(prev_next_button, {
                 __argnames__ : {value: ["is_prev"]},

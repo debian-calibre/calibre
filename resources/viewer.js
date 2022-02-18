@@ -16885,9 +16885,9 @@ return this.__repr__();
             if (opts.color_scheme.link) {
                 des.setProperty("--calibre-viewer-link-color", opts.color_scheme.link);
             }
-            var ρσ_Iter2 = ρσ_Iterable(ρσ_list_decorate([ document.documentElement, document.body ]));
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                elem = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ document.documentElement, document.body ]));
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                elem = ρσ_Iter0[ρσ_Index0];
                 elem.style.color = opts.color_scheme.foreground;
                 elem.style.backgroundColor = "transparent";
             }
@@ -16956,14 +16956,14 @@ return this.__repr__();
             if (style.selbg) {
                 style.selbg = make_selection_background_opaque(style.selbg);
             }
-            var ρσ_Iter3 = ρσ_Iterable(Object.keys(style));
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                prop = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter1 = ρσ_Iterable(Object.keys(style));
+            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                prop = ρσ_Iter1[ρσ_Index1];
                 css_text += "" + ρσ_str.format("{}", prop) + ": " + ρσ_str.format("{}", style[(typeof prop === "number" && prop < 0) ? style.length + prop : prop]) + "; ";
             }
-            var ρσ_Iter4 = ρσ_Iterable(sheet.sheet.cssRules);
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                rule = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter2 = ρσ_Iterable(sheet.sheet.cssRules);
+            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                rule = ρσ_Iter2[ρσ_Index2];
                 if (rule.type === rule.STYLE_RULE && rule.selectorText.indexOf("selection") > -1) {
                     rule.style.cssText = css_text;
                 }
@@ -26370,7 +26370,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.36.0";
+        CALIBRE_VERSION = "5.37.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -30133,7 +30133,7 @@ return this.__repr__();
                 __module__ : {value: "file_uploads"}
             });
 
-            msg = msg || _("Upload books by <a>selecting the book files</a> or drag and drop of the files here");
+            msg = msg || _("Upload books by either <a>selecting the book files</a> or drag and drop the files here");
             c = E.div(E.span(), ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "file", style: "display:none", onchange: files_selected})]));
             if (!single_file) {
                 c.lastChild.setAttribute("multiple", "multiple");
@@ -34679,7 +34679,14 @@ return this.__repr__();
                 button_style += "display: none;";
             }
             function prev_next_button(is_prev) {
-                return ρσ_interpolate_kwargs.call(E, E.div, [svgicon((is_prev) ? "chevron-left" : "chevron-right")].concat([ρσ_desugar_kwargs({style: button_style, title: (is_prev) ? _("Previous book [Ctrl+Left]") : _("Next book [Ctrl+Right]"), class_: "next-book-button", onclick: next_book.bind(null, book_id, (is_prev) ? -1 : 1)})]));
+                var delta, nbid, s;
+                delta = (is_prev) ? -1 : 1;
+                nbid = book_after(book_id, delta);
+                s = button_style;
+                if (!nbid || nbid === book_id) {
+                    s += "; display: none";
+                }
+                return ρσ_interpolate_kwargs.call(E, E.div, [svgicon((is_prev) ? "chevron-left" : "chevron-right")].concat([ρσ_desugar_kwargs({style: s, title: (is_prev) ? _("Previous book [Ctrl+Left]") : _("Next book [Ctrl+Right]"), class_: "next-book-button", onclick: next_book.bind(null, book_id, delta)})]));
             };
             if (!prev_next_button.__argnames__) Object.defineProperties(prev_next_button, {
                 __argnames__ : {value: ["is_prev"]},
@@ -46776,6 +46783,7 @@ return this.__repr__();
 
         var local_storage = ρσ_modules.session.local_storage;
         var session_defaults = ρσ_modules.session.session_defaults;
+        var default_interface_data = ρσ_modules.session.default_interface_data;
 
         var debounce = ρσ_modules.utils.debounce;
         var encode_query_with_path = ρσ_modules.utils.encode_query_with_path;
@@ -47096,6 +47104,7 @@ return this.__repr__();
                         ρσ_d["default_color_schemes"] = default_color_schemes;
                         return ρσ_d;
                     }).call(this));
+                    default_interface_data.use_roman_numerals_for_series_number = ui_data.use_roman_numerals_for_series_number;
                     if (ui_data.show_home_page_on_ready) {
                         view.overlay.open_book(false);
                     }

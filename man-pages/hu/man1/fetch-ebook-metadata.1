@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "FETCH-EBOOK-METADATA" "1" "február 04, 2022" "5.36.0" "calibre"
+.TH "FETCH-EBOOK-METADATA" "1" "február 18, 2022" "5.37.0" "calibre"
 .SH NAME
 fetch-ebook-metadata \- fetch-ebook-metadata
 .
@@ -41,15 +41,14 @@ fetch\-ebook\-metadata [options]
 .UNINDENT
 .UNINDENT
 .sp
-Fetch book metadata from online sources. You must specify at least one
-of title, authors or ISBN.
+Könyvek metaadatainak megszerzése online forrásokból. A cím, a szerző vagy az ISBN közül legalább egyet meg kell adni..
 .sp
-Whenever you pass arguments to \fBfetch\-ebook\-metadata\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Amikor olyan argumentumokat ad át \fBfetch\-ebook\-metadata\fP\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
 .SH [BEÁLLÍTÁSOK]
 .INDENT 0.0
 .TP
 .B \-\-allowed\-plugin, \-p
-Specify the name of a metadata download plugin to use. By default, all metadata plugins will be used. Can be specified multiple times for multiple plugins. All plugin names: Google, Google Images, Amazon.com, Edelweiss, Open Library, Big Book Search
+Adja meg a használni kívánt metaadatletöltő beépülő modul nevét. Alapértelmezés szerint az összes metaadat\-bővítmény használatban lesz. Több bővítményhez többször is megadható. Az összes beépülő modul neve: Google, Google Images, Amazon.com, Edelweiss, Open Library, Big Book Search
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -59,7 +58,7 @@ Könyv szerzője(i)
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-Specify a filename. The cover, if available, will be saved to it. Without this option, no cover will be downloaded.
+Adjon meg egy fájlnevet. A borító, ha rendelkezésre áll, el lesz mentve rá. E lehetőség nélkül a borító nem töltődik le.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -69,7 +68,7 @@ súgó megjelenítése és kilépés
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Identifiers such as ASIN/Goodreads id etc. Can be specified multiple times for multiple identifiers. For example: \fI\%\-\-identifier\fP asin:B0082BAJA0
+Azonosítók, például ASIN/Goodreads azonosító stb. Többször is megadható több azonosítóhoz. Például:\fI\%\-\-identifier\fP asin:B0082BAJA0
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -79,7 +78,7 @@ ISBN azonosító
 .INDENT 0.0
 .TP
 .B \-\-opf, \-o
-Output the metadata in OPF format instead of human readable text.
+A metaadatokat OPF formátumban adja ki az ember által olvasható szöveg helyett.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -94,7 +93,7 @@ Könyv címe
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Print the log to the console (stderr)
+A napló nyomtatása a konzolra (stderr)
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "február 04, 2022" "5.36.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "február 18, 2022" "5.37.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -41,12 +41,11 @@ calibre\-server [options] [path to library folder...]
 .UNINDENT
 .UNINDENT
 .sp
-Start the calibre Content server. The calibre Content server exposes your
-calibre libraries over the internet. You can specify the path to the library
-folders as arguments to \fBcalibre\-server\fP\&. If you do not specify any paths, all the
-libraries that the main calibre program knows about will be used.
+Elindítja el a Calibre tartalomkiszolgálót. A Calibre tartalomszerver az interneten keresztül
+elérhetővé teszi a Calibre könyvtárait. Megadhatja a könyvtár mappáinak elérési útját \fBcalibre\-server\fP\&. argumentumaként.
+Ha nem ad meg egyetlen elérési utat sem, akkor a program minden olyan könyvtárat használ, amelyről a fő Calibre program tud.
 .sp
-Whenever you pass arguments to \fBcalibre\-server\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Amikor olyan argumentumokat ad át \fBcalibre\-server\fP\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
 .SH [BEÁLLÍTÁSOK]
 .INDENT 0.0
 .TP
@@ -66,7 +65,7 @@ A használt hitelesítés típusának kiválasztása.      Állítsa be a szerve
 .INDENT 0.0
 .TP
 .B \-\-auto\-reload
-Automatically reload server when source code changes. Useful for development. You should also specify a small value for the shutdown timeout.
+A kiszolgáló automatikus újratöltése, ha a forráskód megváltozik. Hasznos a fejlesztéshez. Meg kell adni egy kis értéket is a leállítási időtúllépéshez.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -91,7 +90,7 @@ Minimális méret, amelyhez a válaszok adattömörítést használnak (bájtban
 .INDENT 0.0
 .TP
 .B \-\-custom\-list\-template
-Path to a JSON file containing a template for the custom book list mode. The easiest way to create such a template file is to go to Preferences\-> Sharing over the net\-> Book list template in calibre, create the template and export it.
+Az egyéni könyvlista módhoz tartozó sablont tartalmazó JSON\-fájl elérési útja. A legegyszerűbb módja egy ilyen sablonfájl létrehozásának, ha a Beállítások\-> Megosztás a neten keresztül\-> Könyvlistasablon Calibre\-ben, létrehozzuk a sablont és exportáljuk.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -101,17 +100,17 @@ Folyamat futtatása a háttérben \fB"\fPdaemon\fB"\fP\-ként (csak Linuxon).
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-A felhasználó által definiált mezők megjelenítésének korlátozása.   Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
+A felhasználó által definiált mezők megjelenítésének korlátozása.   A tartalomszerver által az /opds és /mobile nézetben megjelenített, felhasználó által definiált metaadatmezők vesszővel tagolt listája. Ha megadja ezt a lehetőséget, a listában nem szereplő mezők nem jelennek meg. Például: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-allow\-socket\-preallocation, \-\-disable\-allow\-socket\-preallocation
-Socket pre\-allocation, for example, with systemd socket activation. Alapértelmezésben ez a lehetőség engedélyezett.
+Aljzatok előzetes kiosztása, például systemd aljzat aktiválással. Alapértelmezésben ez a lehetőség engedélyezett.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-auth, \-\-disable\-auth
-Password based authentication to access the server.         Általában a szerver korlátlan, így bárki hozzáférhet. Ezzel az opcióval korlátozhatja a hozzáférést előre meghatározott felhasználókra. Alapértelmezésben ez a lehetőség nem engedélyezett.
+Jelszó alapú hitelesítés a szerver eléréséhez.      Általában a szerver korlátlan, így bárki hozzáférhet. Ezzel az opcióval korlátozhatja a hozzáférést előre meghatározott felhasználókra. Alapértelmezésben ez a lehetőség nem engedélyezett.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -146,7 +145,7 @@ súgó megjelenítése és kilépés
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-A felhasználó által definiált metaadatmezők figyelmen kívül hagyása.        Comma separated list of user\-defined metadata fields that will not be displayed by the Content server in the /opds and /mobile views. For example: my_rating,my_tags
+A felhasználó által definiált metaadatmezők figyelmen kívül hagyása.        Vesszővel tagolt lista a felhasználó által definiált metaadatmezőkről, amelyeket a tartalomkiszolgáló nem jelenít meg az /opds és /mobile nézetben. Például: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -156,12 +155,12 @@ Az a felület, amelyen a kapcsolatok figyelhetők.    Alapértelmezés az össze
 .INDENT 0.0
 .TP
 .B \-\-log
-Path to log file for server log. This log contains server information and errors, not access logs. By default it is written to stdout.
+A szervernapló naplófájljának elérési útja. Ez a napló szerverinformációkat és hibákat tartalmaz, nem hozzáférési naplókat. Alapértelmezés szerint az \fB"\fPstdout\fB"\fP\-ba van írva.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-manage\-users
-Manage the database of users allowed to connect to this server. You can use it in automated mode by adding a \-\-. See calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help for details. See also the \fI\%\-\-userdb\fP option.
+A kiszolgálóhoz csatlakozásra jogosult felhasználók adatbázisának kezelése. Használhatja automatizált módban egy \fB\-\-\fP hozzáadásával. A részletekért lásd: calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help. Lásd még \fI\%\-\-userdb\fP opciót.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -201,7 +200,7 @@ A szerverre feltöltött fájlok megengedett max. mérete (MB\-ban).
 .INDENT 0.0
 .TP
 .B \-\-num\-per\-page
-Egy oldalon megjelenő könyvek száma.        Az egy böngésző oldalon megjelenő könyvek darabszáma
+Egy oldalon megjelenő könyvek száma.        Egy böngésző oldalon megjelenő könyvek darabszáma.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -216,7 +215,7 @@ Portszám, amelyen figyel a kiszolgáló.
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-Path to a JSON file containing URLs for the \fB"\fPSearch the internet\fB"\fP feature. The easiest way to create such a file is to go to Preferences\-> Sharing over the net\->Search the internet in calibre, create the URLs and export them.
+A „Keresés az interneten” funkció URL\-címeit tartalmazó JSON\-fájl elérési útja. Egy ilyen fájl létrehozásának legegyszerűbb módja, ugrás a Beállítások\-> Megosztás a neten keresztül\-> Calibre keresés az interneten, és URL\-ek létrehozása majd azok exportálása.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -251,7 +250,7 @@ Az összes URL elé írandó előtag.    Hasznos, ha ezt a kiszolgálót fordít
 .INDENT 0.0
 .TP
 .B \-\-userdb
-Path to the user database to use for authentication. The database is a SQLite file. To create it use \fI\%\-\-manage\-users\fP\&. You can read more about managing users at: \fI\%https://manual.calibre\-ebook.com/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
+A hitelesítéshez használt felhasználói adatbázis elérési útja. Az adatbázis egy SQLite fájl. Létrehozásához használja a következőt: \fI\%\-\-manage\-users\fP\&. A felhasználók kezeléséről itt olvashat bővebben: \fI\%https://manual.calibre\-ebook.com/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
 .UNINDENT
 .INDENT 0.0
 .TP

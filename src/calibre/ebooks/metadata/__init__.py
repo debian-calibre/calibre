@@ -160,15 +160,18 @@ def get_title_sort_pat(lang=None):
     except AttributeError:
         ans = None  # invalid tweak value
     try:
-        ans = frozenset(ans) if ans else frozenset(data['eng'])
-    except:
+        ans = frozenset(ans) if ans is not None else frozenset(data['eng'])
+    except Exception:
         ans = frozenset((r'A\s+', r'The\s+', r'An\s+'))
-    ans = '|'.join(ans)
-    ans = '^(%s)'%ans
-    try:
-        ans = re.compile(ans, re.IGNORECASE)
-    except:
-        ans = re.compile(r'^(A|The|An)\s+', re.IGNORECASE)
+    if ans:
+        ans = '|'.join(ans)
+        ans = '^(%s)'%ans
+        try:
+            ans = re.compile(ans, re.IGNORECASE)
+        except:
+            ans = re.compile(r'^(A|The|An)\s+', re.IGNORECASE)
+    else:
+        ans = re.compile('^$')  # matches only the empty string
     _title_pats[lang] = ans
     return ans
 
@@ -192,9 +195,10 @@ def title_sort(title, order=None, lang=None):
         except IndexError:
             pass
         else:
-            title = title[len(prep):] + ', ' + prep
-            if title[0] in _ignore_starts:
-                title = title[1:]
+            if prep:
+                title = title[len(prep):] + ', ' + prep
+                if title[0] in _ignore_starts:
+                    title = title[1:]
     return title.strip()
 
 

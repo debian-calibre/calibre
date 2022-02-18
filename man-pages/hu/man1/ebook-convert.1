@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "február 04, 2022" "5.36.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "február 18, 2022" "5.37.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -41,34 +41,29 @@ ebook\-convert input_file output_file [options]
 .UNINDENT
 .UNINDENT
 .sp
-Convert an e\-book from one format to another.
+Egy e\-könyv konvertálása egyik formátumból egy másikba.
 .sp
-input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+input_file a bemenet és output_file a kimenet. Mindkettőt a parancs első két argumentumaként kell megadni.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an "open e\-book" (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
+A kimeneti e\-könyv formátumát az output_file fájlkiterjesztés alapján lehet kitalálni. A kimeneti fájl speciális .EXT formátumú is lehet, ahol az EXT a kimeneti fájl kiterjesztése. Ebben az esetben a kimeneti fájl neve a bemeneti fájl nevéből származik. Vegye figyelembe, hogy a fájlnevek nem kezdődhetnek kötőjellel. Végül, ha az output_file nem rendelkezik kiterjesztéssel, akkor mappaként kezeli, és egy HTML fájlokból álló "Open e\-book"\-t (OEB) ír ebbe a mappába. Ezek azok a fájlok, amelyeket általában a kimeneti beépülő modulnak kellett volna átadni.
 .sp
-After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+A bemeneti és kimeneti fájl megadása után testreszabhatja az átalakítást különféle beállítások megadásával. Az elérhető opciók a bemeneti és kimeneti fájltípusoktól függenek. Ha segítségre van szüksége, adja meg a bemeneti és kimeneti fájlt, majd használja a \(aq\-h\(aq kapcsolót.
 .sp
-For full documentation of the conversion system see
+Az átalakítási rendszer teljes dokumentációját lásd
 conversion
 .sp
-Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Amikor olyan argumentumokat ad át \fBebook\-convert\fP\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
 .sp
-The options and default values for the options change depending on both the
-input and output formats, so you should always check with:
+TA beállítások és az opciók alapértelmezett értékei a bemeneti és kimeneti
+formátumtól függően változnak, ezért mindig ellenőrizze a következőket:
 .INDENT 0.0
 .INDENT 3.5
-.sp
-.nf
-.ft C
 ebook\-convert myfile.input_format myfile.output_format \-h
-.ft P
-.fi
 .UNINDENT
 .UNINDENT
 .sp
-Below are the options that are common to all conversion, followed by the
-options specific to every input and output format.
+Az alábbiakban felsoroljuk azokat a beállításokat, amelyek minden konverzióra jellemzőek,
+majd az egyes bemeneti és kimeneti formátumokra jellemző beállításokat.
 .INDENT 0.0
 .IP \(bu 2
 \fI\%BEMENET\-BEÁLLÍTÁSOK\fP
@@ -97,12 +92,12 @@ súgó megjelenítése és kilépés
 .INDENT 0.0
 .TP
 .B \-\-input\-profile
-Forrás profil megadása. Ez a konvertáláshoz szükséges adatokat is beállítja. Például felbontásfüggő hossz (hossz pixelben). A lehetőségek:  cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+A forrás profil megadása. A bemeneti profil információt ad a konverziós rendszernek arról, hogyan értelmezze a különböző információkat a beviteli dokumentumban. Például a felbontástól függő hosszúságok (azaz a hosszúságok pixelben). A választási lehetőségek a következők: cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+A beépített receptnevek listája. Létrehozhat egy e\-könyvet egy beépített receptből, így: ebook\-convert \fB"\fPRecept Name.recept\fB"\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -143,7 +138,7 @@ Egy beágyazott tartalomjegyzék beillesztése, amely a fő könyvtartalom rész
 .INDENT 0.0
 .TP
 .B \-\-epub\-toc\-at\-end
-A beillesztett Tartalomjegyzék fájlt tegye a könyv végére
+A beszúrt tartalomjegyzéket helyezze a könyv végére az eleje helyett.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -153,7 +148,7 @@ A generálandó EPUB\-fájl verziója. Az EPUB 2 a legszélesebb körben kompati
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extract the contents of the generated EPUB file to the specified folder. The contents of the folder are first deleted, so be careful.
+Kicsomagolja a generált EPUB fájl tartalmát a megadott mappába. Először a mappa tartalma törlődik, ezért legyen óvatos..
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -311,7 +306,7 @@ Minden beágyazott betűtípus csak azokat a betűket fogja tartalmazni, melyek 
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-A könyvben szereplő CSS\-stílusok átalakítására szolgáló szabályokat tartalmazó fájl elérési útja. Az ilyen fájl létrehozásának legegyszerűbb módja a varázsló használata a szabályok létrehozásához a kaliber GUI\-ban. Hozzáférhet a \fB"\fPBeállítások\fB"\fP párbeszédpanel „Közös beállítások\->Kinézet és megjelenés\->Stílusok átalakítása” részében. Miután létrehozta a szabályokat, az \fB"\fPExportálás\fB"\fP gombbal mentheti őket fájlba.
+A könyvben szereplő CSS\-stílusok átalakítására szolgáló szabályokat tartalmazó fájl elérési útja. Az ilyen fájl létrehozásának legegyszerűbb módja a varázsló használata a szabályok létrehozásához a Calibre  GUI\-ban. Hozzáférhet a \fB"\fPBeállítások\fB"\fP párbeszédpanel „Közös beállítások\->Kinézet és megjelenés\->Stílusok átalakítása” részében. Miután létrehozta a szabályokat, az \fB"\fPExportálás\fB"\fP gombbal mentheti őket fájlba.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -378,7 +373,7 @@ Heurisztikus feldolgozás. Ezt be kell kapcsolni, hogy bármilyen heurisztikus f
 .INDENT 0.0
 .TP
 .B \-\-html\-unwrap\-factor
-Arány meghatározása, ahonnan egy sor tördelése megszüntetendő. Az érvényes értékek 0 és 1 között vannak. Az alap 0.4, ami a fél sornál egy kicsit rövidebb. Ha csak pár sort kellene egysorossá tenni a dokumentumban, akkor érdemes csökkenteni ezt az értéket.
+Arány meghatározása, ahonnan egy sor tördelése megszüntetendő. Az érvényes értékek 0 és 1 között vannak. Az alap 0.4, ami a fél sornál egy kicsit rövidebb. Ha csak pár sort kellene egysorossá tenni a dokumentumban, akkor érdemes csökkenteni ezt az értéket
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -391,12 +386,12 @@ A dokumentum szövegének és felépítésének módosítása felhasználó ált
 .INDENT 0.0
 .TP
 .B \-\-search\-replace
-Path to a file containing search and replace regular expressions. The file must contain alternating lines of regular expression followed by replacement pattern (which can be an empty line). The regular expression must be in the Python regex syntax and the file must be UTF\-8 encoded.
+Keresési és csere reguláris kifejezéseket tartalmazó fájl elérési útja. A fájlnak tartalmaznia kell a reguláris kifejezés váltakozó sorait, amelyeket helyettesítési minta követ (amely lehet egy üres sor is). A reguláris kifejezésnek Python regex szintaxisában kell lennie, és a fájlnak UTF\-8 kódolásúnak kell lennie.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-sr1\-replace
-Helyettesítő szöveg az első reguláris kifejezéssel talált szöveg cseréjére
+Helyettesítő szöveg az első reguláris kifejezéssel talált szöveg cseréjére.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -406,7 +401,7 @@ Az első csere mintája (reguláris kifejezés)
 .INDENT 0.0
 .TP
 .B \-\-sr2\-replace
-Helyettesítő szöveg a második reguláris kifejezéssel talált szöveg cseréjére
+Helyettesítő szöveg a második reguláris kifejezéssel talált szöveg cseréjére.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -416,7 +411,7 @@ A második csere mintája (reguláris kifejezés)
 .INDENT 0.0
 .TP
 .B \-\-sr3\-replace
-Helyettesítő szöveg a harmadik reguláris kifejezéssel talált szöveg cseréjére
+Helyettesítő szöveg a harmadik reguláris kifejezéssel talált szöveg cseréjére.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -429,7 +424,7 @@ Dokumentum\-struktúra automatikus felismerése.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-XPath kifejezés a fejezetcímek észlelésére. Az alapértelmezés szerint minden <h1> vagy (or)  <h2> címkét, amely a „fejezet”, „könyv”, „szakasz”, „prológus”, „epilógus” vagy „rész” szavakat tartalmazza fejezetcímként kell kezelni, valamint minden olyan címkét, amelyhez class=\fB"\fPchapter tartozik. A használt kifejezésnek ki kell értékelnie egy elemlistát. A fejezetfelismerés letiltásához használja a \fB"\fP/\fB"\fP kifejezést. A funkció használatához további segítségért tekintse meg a kaliber felhasználói kézikönyv XPath oktatóanyagát.
+XPath kifejezés a fejezetcímek észlelésére. Az alapértelmezés szerint minden <h1> vagy (or)  <h2> címkét, amely a „fejezet”, „könyv”, „szakasz”, „prológus”, „epilógus” vagy „rész” szavakat tartalmazza fejezetcímként kell kezelni, valamint minden olyan címkét, amelyhez class=\fB"\fPchapter tartozik. A használt kifejezésnek ki kell értékelnie egy elemlistát. A fejezetfelismerés letiltásához használja a \fB"\fP/\fB"\fP kifejezést. A funkció használatához további segítségért tekintse meg a Calibre felhasználói kézikönyv XPath oktatóanyagát.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -454,7 +449,7 @@ Egy XPath kifejezés. A megadott elem elé oldaltörés lesz beillesztve. A tilt
 .INDENT 0.0
 .TP
 .B \-\-prefer\-metadata\-cover
-Inkább a forrásfájlban található borítót használja a beállított borító helyett, ha elérhető
+Inkább a forrásfájlban található borítót használja a beállított borító helyett, ha elérhető.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -472,7 +467,7 @@ Az automatikus Tartalomjegyzék\-generálás beállítása. Alapértelmezettkén
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc
-Többszörös bejegyzések engedélyezése. Pl. ha egy könyv több azonos Tartalomjegyzék szöveget tartalmaz, de azok különböző helyre mutatnak
+Amikor a bemeneti dokumentumban található hivatkozásokból tartalomjegyzéket hoz létre, engedélyezze az ismétlődő bejegyzéseket, azaz engedélyezzen egynél több bejegyzést ugyanazzal a szöveggel, feltéve, hogy azok más helyre mutatnak.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -555,7 +550,7 @@ Nyelv megadása.
 .INDENT 0.0
 .TP
 .B \-\-pubdate
-Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+Állítsa be a közzététel dátumát (feltehetően a helyi időzónában van, hacsak nincs kifejezetten megadva az időzóna)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -613,7 +608,7 @@ A konvertálás egyes szakaszainak mentése a megadott mappába. Hasznos lehet, 
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Level of verbosity. Specify multiple times for greater verbosity. Specifying it twice will result in full verbosity, once medium verbosity and zero times least verbosity.
+Bőbeszédűség szintje. Adja meg többször a nagyobb bőbeszédűség érdekében. Kétszer megadva teljes bőbeszédűséget, egyszer közepes bőbeszédűséget és nulla legkisebb bőbeszédűséget eredményez.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-META" "1" "február 04, 2022" "5.36.0" "calibre"
+.TH "EBOOK-META" "1" "február 18, 2022" "5.37.0" "calibre"
 .SH NAME
 ebook-meta \- ebook-meta
 .
@@ -35,23 +35,23 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-ebook\-meta ebook_file [options]
+ebook\-meta e\-könyv_fájl [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Read/Write metadata from/to e\-book files.
+Metaadatok olvasása, írása  e\-könyv fájlból ill. fájlokba.
 .sp
-Supported formats for reading metadata: azw, azw1, azw3, azw4, cb7, cbr, cbz, chm, docx, epub, fb2, fbz, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
+Támogatott formátumok a metaadatok olvasásához: azw, azw1, azw3, azw4, cb7, cbr, cbz, chm, docx, epub, fb2, fbz, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
 .sp
-Supported formats for writing metadata: azw, azw1, azw3, azw4, docx, epub, fb2, fbz, htmlz, lrf, mobi, odt, pdb, pdf, prc, rtf, tpz, txtz
+Támogatott formátumok a metaadatok írásához: azw, azw1, azw3, azw4, docx, epub, fb2, fbz, htmlz, lrf, mobi, odt, pdb, pdf, prc, rtf, tpz, txtz
 .sp
-Different file types support different kinds of metadata. If you try to set
-some metadata on a file type that does not support it, the metadata will be
-silently ignored.
+A különböző fájltípusok különböző típusú metaadatokat támogatnak. Ha
+olyan fájltípuson próbál meg metaadatokat beállítani, amely nem támogatja azt,
+a rendszer figyelmen kívül hagyja a metaadatokat.
 .sp
-Whenever you pass arguments to \fBebook\-meta\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Amikor olyan argumentumokat ad át \fBebook\-meta\fP\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
 .SH [BEÁLLÍTÁSOK]
 .INDENT 0.0
 .TP
@@ -81,7 +81,7 @@ A könyv leírása.
 .INDENT 0.0
 .TP
 .B \-\-cover
-Borító megadása
+Borító megadása a megadott fájlhoz.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -91,12 +91,12 @@ A kiadás dátumának megadása.
 .INDENT 0.0
 .TP
 .B \-\-from\-opf
-Read metadata from the specified OPF file and use it to set metadata in the e\-book. Metadata specified on the command line will override metadata read from the OPF file
+Olvassa be a metaadatokat a megadott OPF fájlból, és használja azokat metaadatok beállításához az e\-könyvben. A parancssorban megadott metaadatok felülírják az OPF fájlból beolvasott metaadatokat
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-get\-cover
-Get the cover from the e\-book and save it at as the specified file.
+Borító megszerzése az e\-könyvből, és elmentése egy megadott fájlként.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -106,7 +106,7 @@ súgó megjelenítése és kilépés
 .INDENT 0.0
 .TP
 .B \-\-identifier
-Set the identifiers for the book, can be specified multiple times. For example: \fI\%\-\-identifier\fP uri:https://acme.com \fI\%\-\-identifier\fP isbn:12345 To remove an identifier, specify no value, \fI\%\-\-identifier\fP isbn: Note that for EPUB files, an identifier marked as the package identifier cannot be removed.
+Állítsa be a könyv azonosítóit, többször is megadható. Például: \fI\%\-\-identifier\fP uri:https://acme.com \fI\%\-\-identifier\fP isbn:12345 Az azonosító eltávolításához ne adjon meg értéket, \fI\%\-\-identifier\fP isbn: Vegye figyelembe, hogy EPUB\-fájlok esetén a csomagazonosítóként megjelölt azonosító nem távolítható el.
 .UNINDENT
 .INDENT 0.0
 .TP
