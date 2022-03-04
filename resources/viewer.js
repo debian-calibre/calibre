@@ -13551,7 +13551,7 @@ return this.__repr__();
             while (p) {
                 if (is_text_node(p)) {
                     ans += p.nodeValue.length;
-                } else if (p.nodeType === Node.ELEMENT_NODE && p.dataset.calibreRangeWrapper) {
+                } else if (p.nodeType === Node.ELEMENT_NODE && ρσ_exists.d(p.dataset).calibreRangeWrapper) {
                     ans += text_length_in_range_wrapper(p);
                 }
                 p = p.nextSibling;
@@ -13565,7 +13565,7 @@ return this.__repr__();
 
         function adjust_node_for_text_offset(node) {
             var offset, adjusted, p;
-            if (node.parentNode && node.parentNode.dataset.calibreRangeWrapper) {
+            if (node.parentNode && ρσ_exists.d(node.parentNode.dataset).calibreRangeWrapper) {
                 node = node.parentNode;
             }
             offset = 0;
@@ -13577,13 +13577,13 @@ return this.__repr__();
                 }
                 if (is_text_node(p)) {
                     offset += p.nodeValue.length;
-                } else if (p.nodeType === Node.ELEMENT_NODE && p.dataset.calibreRangeWrapper) {
+                } else if (p.nodeType === Node.ELEMENT_NODE && ρσ_exists.d(p.dataset).calibreRangeWrapper) {
                     offset += text_length_in_range_wrapper(p);
                 }
                 node = p;
                 adjusted = true;
             }
-            if (adjusted && node.nodeType === Node.ELEMENT_NODE && node.dataset.calibreRangeWrapper) {
+            if (adjusted && node.nodeType === Node.ELEMENT_NODE && ρσ_exists.d(node.dataset).calibreRangeWrapper) {
                 if (!node.firstChild || node.firstChild.nodeType !== Node.TEXT_NODE) {
                     node.insertBefore(document.createTextNode(""), node.firstChild || null);
                 }
@@ -13602,7 +13602,7 @@ return this.__repr__();
             var ρσ_Iter0 = ρσ_Iterable(range_wrapper.childNodes);
             for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
                 child = ρσ_Iter0[ρσ_Index0];
-                if (child.nodeType === Node.ELEMENT_NODE && child.dataset.calibreRangeWrapper) {
+                if (child.nodeType === Node.ELEMENT_NODE && ρσ_exists.d(child.dataset).calibreRangeWrapper) {
                     ans = ans.concat(unwrapped_nodes(child));
                 } else {
                     ans.push(child);
@@ -13618,7 +13618,7 @@ return this.__repr__();
         function increment_index_for_child(child, index, sentinel) {
             var is_element, nodes;
             is_element = child.nodeType === Node.ELEMENT_NODE;
-            if (is_element && child.dataset.calibreRangeWrapper) {
+            if (is_element && ρσ_exists.d(child.dataset).calibreRangeWrapper) {
                 nodes = unwrapped_nodes(child);
                 index = increment_index_for_children(nodes, index, sentinel);
             } else {
@@ -13675,7 +13675,7 @@ return this.__repr__();
                     if (q) {
                         if (q.nodeType === Node.ELEMENT_NODE) {
                             node = q;
-                            if (node.dataset.calibreRangeWrapper) {
+                            if (ρσ_exists.d(node.dataset).calibreRangeWrapper) {
                                 if (!node.firstChild) {
                                     node.appendChild(document.createTextNode(""));
                                 }
@@ -13683,7 +13683,7 @@ return this.__repr__();
                             }
                         }
                     }
-                } else if (node.dataset.calibreRangeWrapper) {
+                } else if (ρσ_exists.d(node.dataset).calibreRangeWrapper) {
                     if (!node.firstChild) {
                         node.appendChild(document.createTextNode(""));
                     }
@@ -13725,7 +13725,7 @@ return this.__repr__();
                 index = increment_index_for_children(p.childNodes, 0, sentinel);
                 if (is_first) {
                     is_first = false;
-                    if (node.nodeType === Node.ELEMENT_NODE && node.dataset.calibreRangeWrapper) {
+                    if (node.nodeType === Node.ELEMENT_NODE && ρσ_exists.d(node.dataset).calibreRangeWrapper) {
                         index -= 1;
                     }
                 }
@@ -13813,7 +13813,7 @@ return this.__repr__();
                     }
                     last_text_node = node;
                     offset -= l;
-                } else if (node.nodeType === Node.ELEMENT_NODE && node.dataset.calibreRangeWrapper) {
+                } else if (node.nodeType === Node.ELEMENT_NODE && ρσ_exists.d(node.dataset).calibreRangeWrapper) {
                     ρσ_unpack = node_for_text_offset(unwrapped_nodes(node), offset);
 ρσ_unpack = ρσ_unpack_asarray(3, ρσ_unpack);
                     qn = ρσ_unpack[0];
@@ -13906,7 +13906,7 @@ return this.__repr__();
             }
             if (offset !== null) {
                 orig_offset = offset;
-                if (ρσ_exists.d(node.parentNode).nodeType === Node.ELEMENT_NODE && node.parentNode.dataset.calibreRangeWrapper) {
+                if (ρσ_exists.d(node.parentNode).nodeType === Node.ELEMENT_NODE && ρσ_exists.d(node.parentNode.dataset).calibreRangeWrapper) {
                     node = node.parentNode;
                 }
                 ρσ_unpack = node_for_text_offset(node.parentNode.childNodes, offset, node);
@@ -15306,6 +15306,7 @@ return this.__repr__();
                 ρσ_d["recent_date"] = new Date;
                 ρσ_d["last_read"] = Object.create(null);
                 ρσ_d["last_read_position"] = Object.create(null);
+                ρσ_d["saved_reading_rates"] = Object.create(null);
                 ρσ_d["annotations_map"] = Object.create(null);
                 return ρσ_d;
             }).call(this);
@@ -15352,6 +15353,7 @@ return this.__repr__();
             this.finish_mathjax = DB.prototype.finish_mathjax.bind(this);
             this.update_last_read_time = DB.prototype.update_last_read_time.bind(this);
             this.update_metadata = DB.prototype.update_metadata.bind(this);
+            this.save_reading_rates = DB.prototype.save_reading_rates.bind(this);
             this.update_annotations_data_from_key = DB.prototype.update_annotations_data_from_key.bind(this);
             this.get_file = DB.prototype.get_file.bind(this);
             this.get_book_file = DB.prototype.get_book_file.bind(this);
@@ -15868,6 +15870,15 @@ return this.__repr__();
         };
         if (!DB.prototype.update_metadata.__argnames__) Object.defineProperties(DB.prototype.update_metadata, {
             __argnames__ : {value: ["book", "new_metadata"]},
+            __module__ : {value: "read_book.db"}
+        });
+        DB.prototype.save_reading_rates = function save_reading_rates(book, rates) {
+            var self = this;
+            book.saved_reading_rates = rates;
+            ρσ_interpolate_kwargs.call(self, self.do_op, [ρσ_list_decorate([ "books" ]), book, _("Failed to write to the books database")].concat([ρσ_desugar_kwargs({op: "put"})]));
+        };
+        if (!DB.prototype.save_reading_rates.__argnames__) Object.defineProperties(DB.prototype.save_reading_rates, {
+            __argnames__ : {value: ["book", "rates"]},
             __module__ : {value: "read_book.db"}
         });
         DB.prototype.update_annotations_data_from_key = function update_annotations_data_from_key(library_id, book_id, fmt, new_data) {
@@ -26370,7 +26381,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.37.0";
+        CALIBRE_VERSION = "5.38.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -32014,6 +32025,17 @@ return this.__repr__();
             if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "icon")){
                 icon = ρσ_kwargs_obj.icon;
             }
+            function onkeydown(container_id, close_action, ev) {
+                if (ev.key === "Escape") {
+                    [ev.preventDefault(), ev.stopPropagation()];
+                    close_action();
+                }
+            };
+            if (!onkeydown.__argnames__) Object.defineProperties(onkeydown, {
+                __argnames__ : {value: ["container_id", "close_action", "ev"]},
+                __module__ : {value: "book_list.prefs"}
+            });
+
             function close_action() {
                 if (on_close !== null) {
                     on_close();
@@ -32027,9 +32049,17 @@ return this.__repr__();
             function init_prefs_panel(container_id) {
                 var container;
                 container = document.getElementById(container_id);
+                container.addEventListener("keydown", onkeydown.bind(null, container_id, close_action), (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["passive"] = false;
+                    ρσ_d["capture"] = true;
+                    return ρσ_d;
+                }).call(this));
+                container.setAttribute("tabindex", "0");
                 ρσ_interpolate_kwargs.call(this, create_top_bar, [container].concat([ρσ_desugar_kwargs({title: title_func(), action: close_action, icon: icon})]));
                 container.appendChild(E.div());
                 create_prefs_widget(container.lastChild, get_prefs_data());
+                container.focus();
             };
             if (!init_prefs_panel.__argnames__) Object.defineProperties(init_prefs_panel, {
                 __argnames__ : {value: ["container_id"]},
@@ -32798,6 +32828,17 @@ return this.__repr__();
             __module__ : {value: "book_list.search"}
         });
 
+        function onkeydown(container_id, close_action, ev) {
+            if (ev.key === "Escape") {
+                [ev.preventDefault(), ev.stopPropagation()];
+                close_action();
+            }
+        };
+        if (!onkeydown.__argnames__) Object.defineProperties(onkeydown, {
+            __argnames__ : {value: ["container_id", "close_action", "ev"]},
+            __module__ : {value: "book_list.search"}
+        });
+
         function init(container_id) {
             var container;
             if (!library_data.sortable_fields) {
@@ -32805,10 +32846,18 @@ return this.__repr__();
                 return;
             }
             container = document.getElementById(container_id);
+            container.setAttribute("tabindex", "0");
+            container.addEventListener("keydown", onkeydown.bind(null, container_id, back), (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["passive"] = false;
+                ρσ_d["capture"] = true;
+                return ρσ_d;
+            }).call(this));
             ρσ_interpolate_kwargs.call(this, create_top_bar, [container].concat([ρσ_desugar_kwargs({title: _("Search for books"), action: back, icon: "close"})]));
             ρσ_interpolate_kwargs.call(this, add_button, [container].concat([ρσ_desugar_kwargs({icon: "cogs", action: show_panel.bind(null, "book_list^search^prefs"), tooltip: _("Configure Tag browser")})]));
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: CLASS_NAME})]));
             create_search_panel(container.lastChild);
+            container.focus();
         };
         if (!init.__argnames__) Object.defineProperties(init, {
             __argnames__ : {value: ["container_id"]},
@@ -32841,6 +32890,7 @@ return this.__repr__();
         ρσ_modules["book_list.search"].create_search_panel = create_search_panel;
         ρσ_modules["book_list.search"].get_prefs = get_prefs;
         ρσ_modules["book_list.search"].tb_config_panel_handler = tb_config_panel_handler;
+        ρσ_modules["book_list.search"].onkeydown = onkeydown;
         ρσ_modules["book_list.search"].init = init;
     })();
 
@@ -44000,6 +44050,8 @@ return this.__repr__();
     (function(){
         var __name__ = "read_book.timers";
         var THRESHOLD, FILTER_THRESHOLD, MAX_SAMPLES;
+        var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
+
         THRESHOLD = 5;
         FILTER_THRESHOLD = 25;
         MAX_SAMPLES = 256;
@@ -44030,6 +44082,10 @@ return this.__repr__();
             var self = this;
             self.reset_read_timer();
             self.rates = [];
+            if (ρσ_exists.d((typeof book !== "undefined" && book !== null ? book : Object.create(null)).saved_reading_rates).rates) {
+                self.rates = book.saved_reading_rates.rates.slice(0);
+                self.calculate();
+            }
         };
         if (!Timers.prototype.start_book.__argnames__) Object.defineProperties(Timers.prototype.start_book, {
             __argnames__ : {value: ["book"]},
@@ -44091,6 +44147,13 @@ return this.__repr__();
             }
             self.rates.push(rate);
             self.calculate();
+            if (ui_operations.update_reading_rates) {
+                ui_operations.update_reading_rates((function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["rates"] = self.rates.slice(0);
+                    return ρσ_d;
+                }).call(this));
+            }
         };
         if (!Timers.prototype.on_human_scroll.__argnames__) Object.defineProperties(Timers.prototype.on_human_scroll, {
             __argnames__ : {value: ["amt_scrolled"]},
@@ -46896,7 +46959,7 @@ return this.__repr__();
             __module__ : {value: null}
         });
 
-        function manifest_received(key, initial_position, pathtoebook, highlights, book_url, end_type, xhr, ev) {
+        function manifest_received(key, initial_position, pathtoebook, highlights, book_url, reading_rates, end_type, xhr, ev) {
             var data;
             end_type = workaround_qt_bug(xhr, end_type);
             if (end_type === "load") {
@@ -46908,6 +46971,7 @@ return this.__repr__();
                 book.highlights = highlights;
                 book.stored_files = Object.create(null);
                 book.calibre_book_url = book_url;
+                book.saved_reading_rates = reading_rates;
                 book.is_complete = true;
                 delete book.manifest["metadata"];
                 delete book.manifest["last_read_positions"];
@@ -46917,7 +46981,7 @@ return this.__repr__();
             }
         };
         if (!manifest_received.__argnames__) Object.defineProperties(manifest_received, {
-            __argnames__ : {value: ["key", "initial_position", "pathtoebook", "highlights", "book_url", "end_type", "xhr", "ev"]},
+            __argnames__ : {value: ["key", "initial_position", "pathtoebook", "highlights", "book_url", "reading_rates", "end_type", "xhr", "ev"]},
             __module__ : {value: null}
         });
 
@@ -47191,14 +47255,14 @@ return this.__repr__();
 
         
         var start_book_load = from_python((function() {
-            var ρσ_anonfunc = function start_book_load(key, initial_position, pathtoebook, highlights, book_url) {
+            var ρσ_anonfunc = function start_book_load(key, initial_position, pathtoebook, highlights, book_url, reading_rates) {
                 var xhr;
-                xhr = ρσ_interpolate_kwargs.call(this, ajax, ["manifest", manifest_received.bind(null, key, initial_position, pathtoebook, highlights, book_url)].concat([ρσ_desugar_kwargs({ok_code: 0})]));
+                xhr = ρσ_interpolate_kwargs.call(this, ajax, ["manifest", manifest_received.bind(null, key, initial_position, pathtoebook, highlights, book_url, reading_rates)].concat([ρσ_desugar_kwargs({ok_code: 0})]));
                 xhr.responseType = "json";
                 xhr.send();
             };
             if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                __argnames__ : {value: ["key", "initial_position", "pathtoebook", "highlights", "book_url"]},
+                __argnames__ : {value: ["key", "initial_position", "pathtoebook", "highlights", "book_url", "reading_rates"]},
                 __module__ : {value: null}
             });
             return ρσ_anonfunc;
@@ -47899,6 +47963,16 @@ return this.__repr__();
                     to_python.on_iframe_ready();
                 };
                 if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                    __module__ : {value: null}
+                });
+                return ρσ_anonfunc;
+            })();
+            ui_operations.update_reading_rates = (function() {
+                var ρσ_anonfunc = function (rates) {
+                    to_python.update_reading_rates(rates);
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["rates"]},
                     __module__ : {value: null}
                 });
                 return ρσ_anonfunc;

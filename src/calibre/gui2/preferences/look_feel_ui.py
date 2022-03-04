@@ -407,6 +407,18 @@ class Ui_Form(object):
         self.em_display_order.setAlternatingRowColors(True)
         self.em_display_order.setObjectName("em_display_order")
         self.gridLayout_31.addWidget(self.em_display_order, 1, 0, 3, 1)
+        self.lowlayout = FlowLayout()
+        self.lowlayout.setObjectName("lowlayout")
+        self.em_export_layout_button = QtWidgets.QPushButton(self.groupBox1)
+        self.em_export_layout_button.setObjectName("em_export_layout_button")
+        self.lowlayout.addWidget(self.em_export_layout_button)
+        self.em_import_layout_button = QtWidgets.QPushButton(self.groupBox1)
+        self.em_import_layout_button.setObjectName("em_import_layout_button")
+        self.lowlayout.addWidget(self.em_import_layout_button)
+        self.em_reset_layout_button = QtWidgets.QPushButton(self.groupBox1)
+        self.em_reset_layout_button.setObjectName("em_reset_layout_button")
+        self.lowlayout.addWidget(self.em_reset_layout_button)
+        self.gridLayout_31.addLayout(self.lowlayout, 5, 0, 1, 1)
         self.vbox_layout_61.addWidget(self.groupBox1)
         self.hboxlayout1 = QtWidgets.QHBoxLayout()
         self.hboxlayout1.setObjectName("hboxlayout1")
@@ -418,12 +430,21 @@ class Ui_Form(object):
         self.opt_edit_metadata_elide_labels = QtWidgets.QCheckBox(self.edit_metadata_tab)
         self.opt_edit_metadata_elide_labels.setObjectName("opt_edit_metadata_elide_labels")
         self.formlayout1.setWidget(1, QtWidgets.QFormLayout.SpanningRole, self.opt_edit_metadata_elide_labels)
+        self.label_1023 = QtWidgets.QLabel(self.edit_metadata_tab)
+        self.label_1023.setObjectName("label_1023")
+        self.formlayout1.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.label_1023)
+        self.hboxlayout2 = QtWidgets.QHBoxLayout()
+        self.hboxlayout2.setObjectName("hboxlayout2")
         self.label_102 = QtWidgets.QLabel(self.edit_metadata_tab)
         self.label_102.setObjectName("label_102")
-        self.formlayout1.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.label_102)
+        self.hboxlayout2.addWidget(self.label_102)
         self.opt_edit_metadata_elision_point = QtWidgets.QComboBox(self.edit_metadata_tab)
         self.opt_edit_metadata_elision_point.setObjectName("opt_edit_metadata_elision_point")
-        self.formlayout1.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.opt_edit_metadata_elision_point)
+        self.hboxlayout2.addWidget(self.opt_edit_metadata_elision_point)
+        self.formlayout1.setLayout(2, QtWidgets.QFormLayout.FieldRole, self.hboxlayout2)
+        self.opt_edit_metadata_templates_only_F2_on_booklist = QtWidgets.QCheckBox(self.edit_metadata_tab)
+        self.opt_edit_metadata_templates_only_F2_on_booklist.setObjectName("opt_edit_metadata_templates_only_F2_on_booklist")
+        self.formlayout1.setWidget(3, QtWidgets.QFormLayout.SpanningRole, self.opt_edit_metadata_templates_only_F2_on_booklist)
         self.hboxlayout1.addLayout(self.formlayout1)
         self.formlayout2 = QtWidgets.QFormLayout()
         self.formlayout2.setObjectName("formlayout2")
@@ -773,6 +794,19 @@ class Ui_Form(object):
         self.groupBox1.setTitle(_("Select the custom columns (for this library) to display in the edit metadata dialogs and their order"))
         self.em_down_button.setToolTip(_("Move down"))
         self.em_up_button.setToolTip(_("Move up"))
+        self.em_export_layout_button.setText(_("Export list"))
+        self.em_export_layout_button.setToolTip(_("<p>Click this button to write the current display\n"
+"settings to a file. This could be useful if you have several libraries with similar\n"
+"structure and you want to use the same column order for each one.</p>"))
+        self.em_import_layout_button.setText(_("Import list"))
+        self.em_import_layout_button.setToolTip(_("<p>Click this button to set the list to one\n"
+"previously exported. This could be useful if you have several libraries with\n"
+"similar structure and you want to use the same column order for each one. Columns\n"
+"in the imported list that aren\'t in the current library are ignored. Columns in\n"
+"the library that are not in the imported list are put at the end and marked\n"
+"as displayable.</p>"))
+        self.em_reset_layout_button.setText(_("Reset list"))
+        self.em_reset_layout_button.setToolTip(_("<p>Click this button to reset the list to its default order.</p>"))
         self.opt_edit_metadata_ignore_display_order.setToolTip(_("<p>Check this box to make the edit metadata dialogs ignore the\n"
 "above specifications, showing all the columns in the default order. This is\n"
 "useful for temporarily seeing all your columns in the dialogs without losing\n"
@@ -781,8 +815,13 @@ class Ui_Form(object):
         self.opt_edit_metadata_elide_labels.setToolTip(_("If checked then labels wider than the label width\n"
 "will be elided, otherwise they will be word wrapped."))
         self.opt_edit_metadata_elide_labels.setText(_("&Elide labels when editing custom columns"))
+        self.label_1023.setText(_("          "))
         self.label_102.setText(_("Elision point:"))
         self.opt_edit_metadata_elision_point.setToolTip(_("Choose where in the label to put the..."))
+        self.opt_edit_metadata_templates_only_F2_on_booklist.setText(_("&Tab key doesn\'t edit column templates in the book list"))
+        self.opt_edit_metadata_templates_only_F2_on_booklist.setToolTip(_("<p>Check this box to disable editing the template for\n"
+"a \"Column made from other columns\" in the book list when the column is entered\n"
+"using the Tab key. The F2 (Edit) key will still open the template editor.</p>"))
         self.opt_edit_metadata_single_use_2_cols_for_custom_fields.setText(_("Use &two columns for custom columns in the Default layout"))
         self.label_1021.setText(_("&Bulk edit custom column label length:"))
         self.opt_edit_metadata_bulk_cc_label_length.setToolTip(_("The maximum width of a custom column label for the bulk metadata edit dialog in average characters."))
@@ -878,5 +917,5 @@ class Ui_Form(object):
         self.qv_down_button.setToolTip(_("Move down"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.quickview_tab), _("&Quickview"))
 from calibre.gui2.complete2 import EditWithComplete
-from calibre.gui2.widgets2 import ScrollingTabWidget
+from calibre.gui2.widgets2 import FlowLayout, ScrollingTabWidget
 
