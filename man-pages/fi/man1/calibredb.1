@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "helmikuuta 18, 2022" "5.37.0" "calibre"
+.TH "CALIBREDB" "1" "maaliskuuta 04, 2022" "5.38.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -86,7 +86,7 @@ details and examples.
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ADDING FROM FOLDERS\fP
+\fI\%LISÄTÄÄN KANSIOISTA\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -150,7 +150,7 @@ Salasana calibre Content\-palvelimelle. Lukeaksesi salasana tavallisesti syötet
 .INDENT 0.0
 .TP
 .B \-\-timeout
-The timeout, in seconds, when connecting to a calibre library over the network. The default is two minutes.
+Odotusaika sekunneissa kun calibre\-kirjastoon yhdistetään verkon kautta. Oletuksena on kaksi minuuttia.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -256,7 +256,7 @@ Tiedostopolku kansikuvaan lisäty(i)lle
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Add books to database even if they already exist. Comparison is done based on book titles and authors. Note that the \fI\%\-\-automerge\fP option takes precedence.
+Lisää kirjat tietokantaan vaikka ne ovat jo siellä. Vertailu perustuu kirjojen ja tekijöiden nimiin. Huomaa, että vaihtoehto \fI\%\-\-automerge\fP on ensisijainen.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -266,7 +266,7 @@ Lisää tyhjä kirja. (Kirjan kirjaus ilman tallennusmuotoja)
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Set the identifiers for this book, e.g. \-I asin:XXX \-I isbn:YYY
+Aseta tunnisteet tälle kirjalle, esim. \-l asin:XXX \-l isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -296,11 +296,11 @@ Aseta tägit lisäty(i)lle
 .INDENT 0.0
 .TP
 .B \-\-title, \-t
-Anna nimi lisäty)i)lle.
+Anna nimi lisäty(i)lle.
 .UNINDENT
-.SS ADDING FROM FOLDERS
+.SS LISÄTÄÄN KANSIOISTA
 .sp
-Options to control the adding of books from folders. By default only files that have extensions of known e\-book file types are added.
+Asetukset kirjojen lisäämiselle kansioista. Oletuksena vain tunnettujen e\-kirjatiedostomuotojen päätteillä varustetut tiedostot lisätään.
 .INDENT 0.0
 .TP
 .B \-\-add
@@ -314,12 +314,12 @@ A filename (glob) pattern, files matching this pattern will be ignored when scan
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
+Oleta, että kussakin kansiossa on vain yhtä kirjaa ja kaikki siinä olevat tiedostot ovat tämän kirjan eri e\-kirjaformaatteja.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Process folders recursively
+Työstä myös alikansiot.
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -339,7 +339,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Do not use the Recycle Bin
+Älä käytä Roskakori
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0

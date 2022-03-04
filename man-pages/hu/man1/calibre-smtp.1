@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "február 18, 2022" "5.37.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "március 04, 2022" "5.38.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -41,16 +41,16 @@ calibre\-smtp [options] [from to text]
 .UNINDENT
 .UNINDENT
 .sp
-Send mail using the SMTP protocol. \fBcalibre\-smtp\fP has two modes of operation. In the
-compose mode you specify from to and text and these are used to build and
-send an email message. In the filter mode, \fBcalibre\-smtp\fP reads a complete email
-message from STDIN and sends it.
+Levelek küldése SMTP protokoll használatával. %p két üzemmóddal rendelkezik.
+A levélírási módban megadhatja a \(aqtól\-ig\(aq\-t és a szöveget, és ezek az e\-mail üzenetek
+létrehozására és küldésére szolgálnak. Szűrő módban, \fBcalibre\-smtp\fP beolvas
+egy teljes e\-mailt az STDIN\-től, és elküldi.
 .sp
-text is the body of the email message.
-If text is not specified, a complete email message is read from STDIN.
-from is the email address of the sender and to is the email address
-of the recipient. When a complete email is read from STDIN, from and to
-are only used in the SMTP negotiation, the message headers are not modified.
+szöveg az e\-mail üzenet törzse.
+Ha nincs megadva szöveg, a rendszer egy teljes e\-mailt olvas be az STDIN\-ből.
+A from a feladó e\-mail címe, a to pedig a címzett e\-mail címe. Ha egy teljes
+e\-mailt beolvasnak az STDIN\-ből, akkor csak az SMTP\-egyeztetésben
+használják a feladó és a címzett e\-mailt, az üzenetfejlécek nem módosulnak.
 .sp
 Amikor olyan argumentumokat ad át \fBcalibre\-smtp\fP\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
 .SH [BEÁLLÍTÁSOK]

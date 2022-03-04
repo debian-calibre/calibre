@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-03 07:43+0530\n"
+"POT-Creation-Date: 2022-03-02 13:48+0000\n"
 "PO-Revision-Date: 2020-07-03 02:15+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Malay (http://www.transifex.com/calibre/calibre/language/ms/)\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Language: ms\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:4
+#: ../../__w/calibre/calibre/manual/xpath.rst:4
 msgid "XPath tutorial"
 msgstr "Tutorial XPath"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:6
+#: ../../__w/calibre/calibre/manual/xpath.rst:6
 msgid ""
 "In this tutorial, you will be given a gentle introduction to `XPath "
 "<https://en.wikipedia.org/wiki/XPath>`_, a query language that can be used "
@@ -33,35 +33,35 @@ msgid ""
 "HTML document."
 msgstr "Dalam tutorial ini, anda diperkenalkan dengan bahasa `XPath <https://en.wikipedia.org/wiki/XPath>`_, iaitu bahasa kueri atau pertanyaan yang boleh digunakan untuk memilih bahagian arbitrari `HTML <https://en.wikipedia.org/wiki/HTML>`_ dokumen di dalam calibre. XPath merupakan piawaian yang banyak digunakan, dan jika anda mencari di dalam google akan dapati sangat banyak maklumat mengenai. Walaubagaimanapun, tutorial ini lebih fokuskan pada penggunaan XPath untuk tugasan berkaitan e-buku seperti mencari pengepala bab di dalam dokumen HTML tidak berstruktur."
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:16
+#: ../../__w/calibre/calibre/manual/xpath.rst:16
 msgid "Contents"
 msgstr "Kandungan"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:19
+#: ../../__w/calibre/calibre/manual/xpath.rst:19
 msgid "Selecting by tag name"
 msgstr "Memilih berdasarkan nama tag"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:21
+#: ../../__w/calibre/calibre/manual/xpath.rst:21
 msgid ""
 "The simplest form of selection is to select tags by name. For example, "
 "suppose you want to select all the ``<h2>`` tags in a document. The XPath "
 "query for this is simply::"
 msgstr "Bentuk paling ringkas pemilihan ialah dengan memilih tag mengikut nama. Contohnya, anda mahu memilih semua tag ``<h2>`` di dalam dokumen. Pertanyaan XPath untuk ini hanyalah simply::"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:27
+#: ../../__w/calibre/calibre/manual/xpath.rst:27
 msgid ""
 "The prefix `//` means *search at any level of the document*. Now suppose you"
 " want to search for ``<span>`` tags that are inside ``<a>`` tags. That can "
 "be achieved with::"
 msgstr "Awalan `//` bermaksud *gelintar pada mana-mana aras dokumen*. Sekarang anda mahu gelintar tag ``<span>`` yang berada di dalam tag ``<a>`` tags. Ia boleh dibuat dengan::"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:33
+#: ../../__w/calibre/calibre/manual/xpath.rst:33
 msgid ""
 "If you want to search for tags at a particular level in the document, change"
 " the prefix::"
 msgstr "Jika anda mahu gelintar tag pada aras tertentu di dalam dokumen, ubah prefix::"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:39
+#: ../../__w/calibre/calibre/manual/xpath.rst:39
 msgid ""
 "This will match only ``<p>A very short e-book to demonstrate the use of "
 "XPath.</p>`` in the :ref:`sample_ebook` but not any of the other ``<p>`` "
@@ -71,7 +71,7 @@ msgid ""
 "tags."
 msgstr "Ini hanya padankan ``<p>A very short ebook to demonstrate the use of XPath.</p>`` di dalam :ref:`sample_ebook` tetapi bukan pada mana-mana tag ``<p>`` yang lain. Awalan ``h:`` dalam contoh di atas diperlukan untuk memadani tag XHTML. Ini kerana secara dalaman, calibre mewakili semua kandungan sebagai XHTML. Dalam tag XHTML yang mempunyai *namespace*, dan ``h:`` merupakan awalan ruang nama untuk tag HTML."
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:45
+#: ../../__w/calibre/calibre/manual/xpath.rst:45
 msgid ""
 "Now suppose you want to select both ``<h1>`` and ``<h2>`` tags. To do that, "
 "we need a XPath construct called *predicate*. A :dfn:`predicate` is simply a"
@@ -80,7 +80,7 @@ msgid ""
 "is created by enclosing the test expression in square brackets::"
 msgstr "Sekarang anda mahu memilih kedua-dua tag ``<h1>`` dan ``<h2>``. Untuk membuatnya,m kita perlukan konstruk XPath yang dikenali sebagai *predikat*. `Predikat` :dfn: ialah ujian yang digunakan untuk memilih tag. Ujian boleh jadi berguna sepanjang tutorial ini dijalanakn, anda akan lihat lagu beberapa contoh yang berguna. Predikat dicipta dengan menutup ungkapan ujian dengan simbol kurungan::"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:53
+#: ../../__w/calibre/calibre/manual/xpath.rst:53
 msgid ""
 "There are several new features in this XPath expression. The first is the "
 "use of the wildcard ``*``. It means *match any tag*. Now look at the test "
@@ -92,69 +92,69 @@ msgid ""
 "will be introduced in this tutorial."
 msgstr "Terdapat beberapa fitur baharu di dalam ungkapan XPath ini. Yang pertama ialah penggunaan kad liar ``*``. Ia bermaksud *padan mana-mana tag*. Sekarang lihat pada ungkapan uji `name()='h1' atau name()='h2'``. :term:`name()` ialah contoh *fungsi terbina-dalam*. Ia hanyalah menilai nama tag. Oleh itu dengan menggunakannya, kita boleh memilih tag yang namanya sama ada `h1` atau `h2`. Perhatian, fungsi :term:`name()` mengabaikan ruang nama supaya tidak memerlukan awalan ``h:``. XPath mempunyai beberapa fungsi terbina-dalam yang berguna. Ada beberapa lagi fungsi akan diperkenalkan di dalam tutorial ini."
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:62
+#: ../../__w/calibre/calibre/manual/xpath.rst:62
 msgid "Selecting by attributes"
 msgstr "Memilih berdasarkan atribut"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:64
+#: ../../__w/calibre/calibre/manual/xpath.rst:64
 msgid ""
 "To select tags based on their attributes, the use of predicates is "
 "required::"
 msgstr "Untuk memilih tag berdasarkan atribut mereka, penggunaan predikat diperlukan::"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:70
+#: ../../__w/calibre/calibre/manual/xpath.rst:70
 msgid ""
 "Here, the ``@`` operator refers to the attributes of the tag. You can use "
 "some of the `XPath built-in functions`_ to perform more sophisticated "
 "matching on attribute values."
 msgstr "Di sini, operator ``@`` merujuk pada atribut tag. Anda boleh guna beberapa `fungsi terbina-dalam XPath`_ untuk membuat padanan lebih kompleks pada nilai atribut."
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:76
+#: ../../__w/calibre/calibre/manual/xpath.rst:76
 msgid "Selecting by tag content"
 msgstr "Memilih berdasarkan kandungan tag"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:78
+#: ../../__w/calibre/calibre/manual/xpath.rst:78
 msgid ""
 "Using XPath, you can even select tags based on the text they contain. The "
 "best way to do this is to use the power of *regular expressions* via the "
 "built-in function :term:`re:test()`::"
 msgstr "Dengan menggunakan XPath, anda boleh pilih tag berdasarkan pada teks yang dikandunginnya. Cara terbaik membuatnya ialah denga gunakan kehebatan *ungkapan nalar* melalui fungsi terbina-dalam :term:`re:test()`::"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:84
+#: ../../__w/calibre/calibre/manual/xpath.rst:84
 msgid ""
 "Here the ``.`` operator refers to the contents of the tag, just as the ``@``"
 " operator referred to its attributes."
 msgstr "Di sini operator ``.`` merujuk pada kandungan tag, sepertimana operator ``@`` merujuk pada atributnya."
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:90
+#: ../../__w/calibre/calibre/manual/xpath.rst:90
 msgid "Sample e-book"
 msgstr "E-buku sampel"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:96
+#: ../../__w/calibre/calibre/manual/xpath.rst:96
 msgid "XPath built-in functions"
 msgstr "Fungsi terbina-dalam XPath"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:99
+#: ../../__w/calibre/calibre/manual/xpath.rst:99
 msgid "name()"
 msgstr "name()"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:101
+#: ../../__w/calibre/calibre/manual/xpath.rst:101
 msgid "The name of the current tag."
 msgstr "Nama bagi tag semasa"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:102
+#: ../../__w/calibre/calibre/manual/xpath.rst:102
 msgid "contains()"
 msgstr "contains()"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:104
+#: ../../__w/calibre/calibre/manual/xpath.rst:104
 msgid "``contains(s1, s2)`` returns `true` if s1 contains s2."
 msgstr "``contains(s1, s2)`` kembali `true` jika s1 mengandungi s2."
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:105
+#: ../../__w/calibre/calibre/manual/xpath.rst:105
 msgid "re:test()"
 msgstr "re:test()"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:107
+#: ../../__w/calibre/calibre/manual/xpath.rst:107
 msgid ""
 "``re:test(src, pattern, flags)`` returns `true` if the string `src` matches "
 "the regular expression `pattern`. A particularly useful flag is ``i``, it "
