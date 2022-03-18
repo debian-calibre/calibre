@@ -5,13 +5,14 @@
 import json
 from operator import itemgetter
 from qt.core import (
-    QAction, QComboBox, QGridLayout, QHBoxLayout, QIcon, QInputDialog,
-    QItemSelectionModel, QLabel, QListWidget, QListWidgetItem, QPushButton, Qt,
-    QWidget, pyqtSignal
+    QAbstractItemView, QAction, QComboBox, QGridLayout, QHBoxLayout, QIcon,
+    QInputDialog, QItemSelectionModel, QLabel, QListWidget, QListWidgetItem,
+    QPushButton, Qt, QWidget, pyqtSignal
 )
 
 from calibre.gui2 import choose_files, choose_save_file
 from calibre.gui2.dialogs.confirm_delete import confirm
+from calibre.gui2.gestures import GestureManager
 from calibre.gui2.viewer.shortcuts import get_shortcut_for
 from calibre.gui2.viewer.web_view import vprefs
 from calibre.utils.date import EPOCH, utcnow
@@ -32,6 +33,17 @@ class BookmarksList(QListWidget):
         self.addAction(ac)
         self.ac_delete = ac = QAction(QIcon(I('trash.png')), _('Remove this bookmark'), self)
         self.addAction(ac)
+        self.gesture_manager = GestureManager(self)
+        self.setVerticalScrollMode(QAbstractItemView.ScrollMode.ScrollPerPixel)
+
+    def viewportEvent(self, ev):
+        try:
+            ret = self.gesture_manager.handle_event(ev)
+        except AttributeError:
+            ret = None
+        if ret is not None:
+            return ret
+        return super().viewportEvent(ev)
 
     @property
     def current_non_removed_item(self):
