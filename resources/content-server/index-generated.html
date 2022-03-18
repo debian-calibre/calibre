@@ -27229,7 +27229,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.38.0";
+        CALIBRE_VERSION = "5.39.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -40861,7 +40861,21 @@ return this.__repr__();
             self.close_func = close_func;
             self.on_change = on_change;
             self.main_title = _("Configure book reader");
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.div(), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "flex-grow: 100; overflow: auto"})])].concat([ρσ_desugar_kwargs({style: "contain: paint; width: 100%; height: 100%; display: flex; flex-direction: column"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.div(), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "flex-grow: 100; overflow: auto"})])].concat([ρσ_desugar_kwargs({style: "contain: paint; width: 100%; height: 100%; display: flex; flex-direction: column", tabindex: "-1", onkeydown: (function() {
+                var ρσ_anonfunc = function (ev) {
+                    if (ev.key === "Escape") {
+                        [ev.stopPropagation(), ev.preventDefault()];
+                        if (!self.cancel()) {
+                            self.close_func();
+                        }
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["ev"]},
+                    __module__ : {value: "read_book.prefs.main"}
+                });
+                return ρσ_anonfunc;
+            })()})])));
             container = container.firstChild;
             ρσ_interpolate_kwargs.call(this, create_top_bar, [container.firstChild].concat([ρσ_desugar_kwargs({title: self.main_title, icon: "close", action: self.onclose})]));
             self.container_id = ensure_id(container.lastChild);
@@ -40894,6 +40908,7 @@ return this.__repr__();
             if (self.stack.length > 1) {
                 self.stack.pop();
                 self.display_panel((ρσ_expr_temp = self.stack)[ρσ_expr_temp.length-1]);
+                return true;
             }
         };
         if (!Prefs.prototype.cancel.__module__) Object.defineProperties(Prefs.prototype.cancel, {
@@ -40935,6 +40950,8 @@ return this.__repr__();
             container = self.container;
             clear(container);
             getattr(self, "display_" + which)(container);
+            container.setAttribute("tabindex", "-1");
+            container.focus();
         };
         if (!Prefs.prototype.display_panel.__argnames__) Object.defineProperties(Prefs.prototype.display_panel, {
             __argnames__ : {value: ["which"]},
@@ -48440,7 +48457,7 @@ return this.__repr__();
         });
         ReadUI.prototype.download_book = function download_book(book) {
             var self = this;
-            var files, total, cover_total_updated, name, files_left, failed_files, xhr, progress, pbar, ρσ_unpack, library_id, book_id, fmt, base_path, query, progress_track, raster_cover_name, nnum, base, inserted_name, raster_cover_size, fname;
+            var files, total, cover_total_updated, name, files_left, failed_files, xhr, progress, pbar, ρσ_unpack, library_id, book_id, fmt, base_path, query, progress_track, raster_cover_name, nnum, base, inserted_name, raster_cover_size, count, queued, fname;
             files = book.manifest.files;
             total = 0;
             cover_total_updated = false;
@@ -48543,9 +48560,19 @@ return this.__repr__();
             });
 
             function on_complete(end_type, xhr, ev) {
+                var fname;
                 self.downloads_in_progress.remove(xhr);
                 progress_track[ρσ_bound_index(this, progress_track)] = (this === raster_cover_name) ? raster_cover_size : files[ρσ_bound_index(this, files)].size;
                 update_progress();
+                if (len(queued)) {
+                    var ρσ_Iter4 = ρσ_Iterable(queued);
+                    for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                        fname = ρσ_Iter4[ρσ_Index4];
+                        start_download(fname, base_path + encodeURIComponent(fname).replace(/%2[fF]/g, "/"));
+                        queued.discard(fname);
+                        break;
+                    }
+                }
                 if (end_type === "abort") {
                     files_left.discard(this);
                     return;
@@ -48598,11 +48625,18 @@ return this.__repr__();
             if (raster_cover_name) {
                 start_download(raster_cover_name, "get/cover/" + book_id + "/" + encodeURIComponent(library_id));
             }
-            var ρσ_Iter4 = ρσ_Iterable(files_left);
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                fname = ρσ_Iter4[ρσ_Index4];
+            count = 0;
+            queued = set();
+            var ρσ_Iter5 = ρσ_Iterable(files_left);
+            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                fname = ρσ_Iter5[ρσ_Index5];
                 if (fname !== raster_cover_name) {
-                    start_download(fname, base_path + encodeURIComponent(fname).replace(/%2[fF]/g, "/"));
+                    count += 1;
+                    if (count < 20) {
+                        start_download(fname, base_path + encodeURIComponent(fname).replace(/%2[fF]/g, "/"));
+                    } else {
+                        queued.add(fname);
+                    }
                 }
             }
         };
@@ -48687,9 +48721,9 @@ return this.__repr__();
             progress_track = Object.create(null);
             files_left = set();
             failed_files = ρσ_list_decorate([]);
-            var ρσ_Iter5 = ρσ_Iterable(files);
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                key = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter6 = ρσ_Iterable(files);
+            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                key = ρσ_Iter6[ρσ_Index6];
                 total += files[(typeof key === "number" && key < 0) ? files.length + key : key];
                 progress_track[(typeof key === "number" && key < 0) ? progress_track.length + key : key] = 0;
                 files_left.add(key);
@@ -48698,18 +48732,18 @@ return this.__repr__();
             progress.firstChild.textContent = _("Downloading MathJax to render mathematics in this book...");
             pbar = progress.firstChild.nextSibling;
             pbar.setAttribute("max", total + "");
-            var ρσ_Iter6 = ρσ_Iterable(self.downloads_in_progress);
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                xhr = ρσ_Iter6[ρσ_Index6];
+            var ρσ_Iter7 = ρσ_Iterable(self.downloads_in_progress);
+            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                xhr = ρσ_Iter7[ρσ_Index7];
                 xhr.abort();
             }
             self.downloads_in_progress = ρσ_list_decorate([]);
             function update_progress() {
                 var x, name, msg;
                 x = 0;
-                var ρσ_Iter7 = ρσ_Iterable(progress_track);
-                for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                    name = ρσ_Iter7[ρσ_Index7];
+                var ρσ_Iter8 = ρσ_Iterable(progress_track);
+                for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
+                    name = ρσ_Iter8[ρσ_Index8];
                     x += progress_track[(typeof name === "number" && name < 0) ? progress_track.length + name : name];
                 }
                 pbar.setAttribute("value", x + "");
@@ -48806,9 +48840,9 @@ return this.__repr__();
                 __module__ : {value: "read_book.ui"}
             });
 
-            var ρσ_Iter8 = ρσ_Iterable(files_left);
-            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                fname = ρσ_Iter8[ρσ_Index8];
+            var ρσ_Iter9 = ρσ_Iterable(files_left);
+            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
+                fname = ρσ_Iter9[ρσ_Index9];
                 start_download(fname);
             }
         };
@@ -48909,9 +48943,9 @@ return this.__repr__();
                 return;
             }
             old = self.windows_to_listen_for_messages_from;
-            var ρσ_Iter9 = ρσ_Iterable(old);
-            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                x = ρσ_Iter9[ρσ_Index9];
+            var ρσ_Iter10 = ρσ_Iterable(old);
+            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
+                x = ρσ_Iter10[ρσ_Index10];
                 ρσ_unpack = x;
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
                 w = ρσ_unpack[0];

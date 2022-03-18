@@ -39,7 +39,6 @@ from calibre.utils.date import (
 from calibre.utils.filenames import ascii_text, shorten_components_to
 from calibre.utils.formatter import TemplateFormatter
 from calibre.utils.icu import capitalize, collation_order, sort_key
-from calibre.utils.img import scale_image
 from calibre.utils.localization import get_lang, lang_as_iso639_1
 from calibre.utils.zipfile import ZipFile
 from polyglot.builtins import iteritems
@@ -1365,34 +1364,19 @@ class CatalogBuilder:
         else:
             return None
 
-    def format_prefix(self, prefix_char):
+    def insert_prefix(self, soup, parent_tag, pos, prefix_char):
         """ Generate HTML snippet with prefix character.
 
-        Return a <code> snippet for Kindle, <span> snippet for EPUB.
+        Insert a <code> snippet for Kindle, <span> snippet for EPUB.
         Optimized to preserve first-column alignment for MOBI, EPUB.
-
-        Args:
-         prefix_char (str): prefix character or None
-
-        Return:
-         (str): BeautifulSoup HTML snippet to be inserted into <p> line item entry.
         """
-
-        soup = BeautifulSoup('')
         if self.opts.fmt == 'mobi':
-            codeTag = soup.new_tag("code")
-            if prefix_char is None:
-                codeTag.insert(0, NavigableString(NBSP))
-            else:
-                codeTag.insert(0, NavigableString(prefix_char))
-            return codeTag
+            tag = soup.new_tag('code')
         else:
-            spanTag = soup.new_tag("span")
-            spanTag['class'] = "prefix"
-            if prefix_char is None:
-                prefix_char = NBSP
-            spanTag.insert(0, NavigableString(prefix_char))
-            return spanTag
+            tag = soup.new_tag('span')
+            tag['class'] = 'prefix'
+        tag.append(prefix_char or NBSP)
+        parent_tag.insert(pos, tag)
 
     def generate_author_anchor(self, author):
         """ Generate legal XHTML anchor.
@@ -1573,7 +1557,7 @@ class CatalogBuilder:
             pBookTag['class'] = "line_item"
             ptc = 0
 
-            pBookTag.insert(ptc, self.format_prefix(book['prefix']))
+            self.insert_prefix(soup, pBookTag, ptc, book['prefix'])
             ptc += 1
 
             spanTag = soup.new_tag("span")
@@ -1724,7 +1708,7 @@ class CatalogBuilder:
                     pBookTag['class'] = "line_item"
                     ptc = 0
 
-                    pBookTag.insert(ptc, self.format_prefix(new_entry['prefix']))
+                    self.insert_prefix(soup, pBookTag, ptc, new_entry['prefix'])
                     ptc += 1
 
                     spanTag = soup.new_tag("span")
@@ -1776,7 +1760,7 @@ class CatalogBuilder:
                     pBookTag['class'] = "line_item"
                     ptc = 0
 
-                    pBookTag.insert(ptc, self.format_prefix(new_entry['prefix']))
+                    self.insert_prefix(soup, pBookTag, ptc, new_entry['prefix'])
                     ptc += 1
 
                     spanTag = soup.new_tag("span")
@@ -2292,7 +2276,7 @@ class CatalogBuilder:
             pBookTag['class'] = "line_item"
             ptc = 0
 
-            pBookTag.insert(ptc, self.format_prefix(book['prefix']))
+            self.insert_prefix(soup, pBookTag, ptc, book['prefix'])
             ptc += 1
 
             spanTag = soup.new_tag("span")
@@ -2425,7 +2409,7 @@ class CatalogBuilder:
             ptc = 0
 
             book['prefix'] = self.discover_prefix(book)
-            pBookTag.insert(ptc, self.format_prefix(book['prefix']))
+            self.insert_prefix(soup, pBookTag, ptc, book['prefix'])
             ptc += 1
 
             spanTag = soup.new_tag("span")
@@ -2584,7 +2568,7 @@ class CatalogBuilder:
             pBookTag['class'] = "line_item"
             ptc = 0
 
-            pBookTag.insert(ptc, self.format_prefix(book['prefix']))
+            self.insert_prefix(soup, pBookTag, ptc, book['prefix'])
             ptc += 1
 
             spanTag = soup.new_tag("span")
@@ -3890,6 +3874,7 @@ class CatalogBuilder:
          (file): thumb written to /images
          (archive): current thumb archived under cover crc
         """
+        from calibre.utils.img import scale_image
 
         def _open_archive(mode='r'):
             try:

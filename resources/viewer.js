@@ -26381,7 +26381,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.38.0";
+        CALIBRE_VERSION = "5.39.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -39909,7 +39909,21 @@ return this.__repr__();
             self.close_func = close_func;
             self.on_change = on_change;
             self.main_title = _("Configure book reader");
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.div(), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "flex-grow: 100; overflow: auto"})])].concat([ρσ_desugar_kwargs({style: "contain: paint; width: 100%; height: 100%; display: flex; flex-direction: column"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.div(), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "flex-grow: 100; overflow: auto"})])].concat([ρσ_desugar_kwargs({style: "contain: paint; width: 100%; height: 100%; display: flex; flex-direction: column", tabindex: "-1", onkeydown: (function() {
+                var ρσ_anonfunc = function (ev) {
+                    if (ev.key === "Escape") {
+                        [ev.stopPropagation(), ev.preventDefault()];
+                        if (!self.cancel()) {
+                            self.close_func();
+                        }
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["ev"]},
+                    __module__ : {value: "read_book.prefs.main"}
+                });
+                return ρσ_anonfunc;
+            })()})])));
             container = container.firstChild;
             ρσ_interpolate_kwargs.call(this, create_top_bar, [container.firstChild].concat([ρσ_desugar_kwargs({title: self.main_title, icon: "close", action: self.onclose})]));
             self.container_id = ensure_id(container.lastChild);
@@ -39942,6 +39956,7 @@ return this.__repr__();
             if (self.stack.length > 1) {
                 self.stack.pop();
                 self.display_panel((ρσ_expr_temp = self.stack)[ρσ_expr_temp.length-1]);
+                return true;
             }
         };
         if (!Prefs.prototype.cancel.__module__) Object.defineProperties(Prefs.prototype.cancel, {
@@ -39983,6 +39998,8 @@ return this.__repr__();
             container = self.container;
             clear(container);
             getattr(self, "display_" + which)(container);
+            container.setAttribute("tabindex", "-1");
+            container.focus();
         };
         if (!Prefs.prototype.display_panel.__argnames__) Object.defineProperties(Prefs.prototype.display_panel, {
             __argnames__ : {value: ["which"]},
