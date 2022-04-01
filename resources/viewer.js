@@ -14804,6 +14804,7 @@ return this.__repr__();
             this.all_bookmarks = AnnotationsManager.prototype.all_bookmarks.bind(this);
             this.add_bookmark = AnnotationsManager.prototype.add_bookmark.bind(this);
             this.remove_bookmark = AnnotationsManager.prototype.remove_bookmark.bind(this);
+            this.edit_bookmark = AnnotationsManager.prototype.edit_bookmark.bind(this);
             this.default_bookmark_title = AnnotationsManager.prototype.default_bookmark_title.bind(this);
             this.set_highlights = AnnotationsManager.prototype.set_highlights.bind(this);
             this.all_highlights = AnnotationsManager.prototype.all_highlights.bind(this);
@@ -14918,6 +14919,28 @@ return this.__repr__();
         };
         if (!AnnotationsManager.prototype.remove_bookmark.__argnames__) Object.defineProperties(AnnotationsManager.prototype.remove_bookmark, {
             __argnames__ : {value: ["title"]},
+            __module__ : {value: "read_book.annotations"}
+        });
+        AnnotationsManager.prototype.edit_bookmark = function edit_bookmark(title, new_title) {
+            var self = this;
+            var changed, b;
+            changed = false;
+            var ρσ_Iter6 = ρσ_Iterable(self.bookmarks);
+            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                b = ρσ_Iter6[ρσ_Index6];
+                if (b.title === title) {
+                    b.title = new_title;
+                    b.timestamp = (new Date).toISOString();
+                    changed = true;
+                }
+            }
+            if (changed) {
+                self.sync_annots_to_server("bookmarks");
+            }
+            return changed;
+        };
+        if (!AnnotationsManager.prototype.edit_bookmark.__argnames__) Object.defineProperties(AnnotationsManager.prototype.edit_bookmark, {
+            __argnames__ : {value: ["title", "new_title"]},
             __module__ : {value: "read_book.annotations"}
         });
         AnnotationsManager.prototype.default_bookmark_title = function default_bookmark_title() {
@@ -15134,9 +15157,9 @@ return this.__repr__();
             var self = this;
             var now, uuid, annot, toc_family_titles, x;
             now = (new Date).toISOString();
-            var ρσ_Iter6 = ρσ_Iterable(msg.removed_highlights);
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                uuid = ρσ_Iter6[ρσ_Index6];
+            var ρσ_Iter7 = ρσ_Iterable(msg.removed_highlights);
+            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                uuid = ρσ_Iter7[ρσ_Index7];
                 self.remove_highlight(uuid);
             }
             annot = (ρσ_expr_temp = self.highlights)[ρσ_bound_index(msg.uuid, ρσ_expr_temp)] = (function(){
@@ -15157,9 +15180,9 @@ return this.__repr__();
             }
             if ((typeof toc_family !== "undefined" && toc_family !== null ? toc_family : Object.create(null)).length) {
                 toc_family_titles = [];
-                var ρσ_Iter7 = ρσ_Iterable(toc_family);
-                for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                    x = ρσ_Iter7[ρσ_Index7];
+                var ρσ_Iter8 = ρσ_Iterable(toc_family);
+                for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
+                    x = ρσ_Iter8[ρσ_Index8];
                     if (x.title) {
                         toc_family_titles.push(x.title);
                     }
@@ -15177,9 +15200,9 @@ return this.__repr__();
             var name, ans, h;
             name = self.view.currently_showing.name;
             ans = [];
-            var ρσ_Iter8 = ρσ_Iterable(Object.values(self.highlights));
-            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                h = ρσ_Iter8[ρσ_Index8];
+            var ρσ_Iter9 = ρσ_Iterable(Object.values(self.highlights));
+            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
+                h = ρσ_Iter9[ρσ_Index9];
                 if (h.spine_name === name && !h.removed && h.start_cfi) {
                     ans.push(h);
                 }
@@ -26381,7 +26404,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.39.1";
+        CALIBRE_VERSION = "5.40.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -29081,8 +29104,23 @@ return this.__repr__();
             __module__ : {value: "read_book.bookmarks"}
         });
 
+        function edit_bookmark(annotations_manager, title, list_dom_node) {
+            var new_title;
+            new_title = window.prompt(_("Enter new title for bookmark:"), title);
+            if (new_title) {
+                if (annotations_manager.edit_bookmark(title, new_title)) {
+                    console.log(list_dom_node);
+                    list_dom_node.querySelector(".item-title").textContent = new_title;
+                }
+            }
+        };
+        if (!edit_bookmark.__argnames__) Object.defineProperties(edit_bookmark, {
+            __argnames__ : {value: ["annotations_manager", "title", "list_dom_node"]},
+            __module__ : {value: "read_book.bookmarks"}
+        });
+
         function create_bookmarks_list(annotations_manager, onclick) {
-            var bookmarks, items, sa, bookmark, c;
+            var bookmarks, items, sa, ea, bookmark, c;
             bookmarks = ρσ_interpolate_kwargs.call(this, sorted, [annotations_manager.all_bookmarks()].concat([ρσ_desugar_kwargs({key: (function() {
                 var ρσ_anonfunc = function (x) {
                     return x.title.toLowerCase();
@@ -29099,7 +29137,8 @@ return this.__repr__();
                 bookmark = ρσ_Iter0[ρσ_Index0];
                 if (!bookmark.removed) {
                     sa = create_side_action("trash", remove_bookmark.bind(null, annotations_manager, bookmark.title), _("Remove this bookmark"));
-                    items.push(ρσ_interpolate_kwargs.call(this, create_item, [bookmark.title].concat([ρσ_desugar_kwargs({data: bookmark.pos, action: onclick.bind(null, goto_cfi.bind(null, bookmark.pos)), side_actions: ρσ_list_decorate([ sa ])})])));
+                    ea = create_side_action("edit", edit_bookmark.bind(null, annotations_manager, bookmark.title), _("Edit this bookmark"));
+                    items.push(ρσ_interpolate_kwargs.call(this, create_item, [bookmark.title].concat([ρσ_desugar_kwargs({data: bookmark.pos, action: onclick.bind(null, goto_cfi.bind(null, bookmark.pos)), side_actions: ρσ_list_decorate([ sa, ea ])})])));
                 }
             }
             c = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-top: 1ex"})]);
@@ -29163,6 +29202,7 @@ return this.__repr__();
 
         ρσ_modules["read_book.bookmarks"].goto_cfi = goto_cfi;
         ρσ_modules["read_book.bookmarks"].remove_bookmark = remove_bookmark;
+        ρσ_modules["read_book.bookmarks"].edit_bookmark = edit_bookmark;
         ρσ_modules["read_book.bookmarks"].create_bookmarks_list = create_bookmarks_list;
         ρσ_modules["read_book.bookmarks"].create_new_bookmark = create_new_bookmark;
         ρσ_modules["read_book.bookmarks"].new_bookmark = new_bookmark;

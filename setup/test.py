@@ -109,6 +109,9 @@ def find_tests(which_tests=None, exclude_tests=None):
     if ok('matcher'):
         from calibre.utils.matcher import test
         a(test(return_tests=True))
+    if ok('scraper'):
+        from calibre.scraper.simple import find_tests
+        a(find_tests())
     if ok('icu'):
         from calibre.utils.icu_test import find_tests
         a(find_tests())
@@ -138,6 +141,8 @@ def find_tests(which_tests=None, exclude_tests=None):
         from calibre.utils.search_query_parser_test import find_tests
         a(find_tests())
         from calibre.utils.html2text import find_tests
+        a(find_tests())
+        from calibre.utils.shm import find_tests
         a(find_tests())
         from calibre.library.comments import find_tests
         a(find_tests())

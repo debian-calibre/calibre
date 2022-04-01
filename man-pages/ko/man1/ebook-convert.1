@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "3월 20, 2022" "5.39.1" "calibre"
+.TH "EBOOK-CONVERT" "1" "4월 01, 2022" "5.40.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -50,7 +50,7 @@ The output e\-book format is guessed from the file extension of output_file. out
 After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
 For full documentation of the conversion system see
-conversion
+\fI\%전자책 변환\fP
 .sp
 Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .sp
@@ -79,7 +79,7 @@ options specific to every input and output format.
 .IP \(bu 2
 \fI\%합리적 추측에 의한(Heuristic) 처리\fP
 .IP \(bu 2
-\fI\%검색과 치환\fP
+\fI\%검색 및 교체\fP
 .IP \(bu 2
 \fI\%구조 탐지\fP
 .IP \(bu 2
@@ -211,12 +211,12 @@ Transliterate Unicode characters to an ASCII representation. Use with care becau
 .INDENT 0.0
 .TP
 .B \-\-embed\-all\-fonts
-입력 문서에서 참조된 모든 글꼴 중 이미 내장되어있지 않은 모든 글꼴을 내장합니다. 이 옵션을 켜면 사용자의 시스템에서 해당 글꼴을 검색하게 되고, 발견된 글꼴은 출력 문서에 내장됩니다.  글꼴 내장 옵션은 변환하려는 형식이 EPUB, AZW3, DOCX, PDF 처럼 글꼴 내장 기능을 지원하는 경우에만 동작합니다. 이 문서에 사용된 글꼴들에 대하여 글꼴 내장에 필요한 적절한 라이센스를 사용자가 보유하고 있는지 확인하시기 바랍니다.
+입력 문서에서 참조되지만 아직 포함되지 않은 모든 글꼴을 포함합니다. 그러면 시스템에서 글꼴을 검색하고 발견하면 포함됩니다. 포함은 변환하려는 형식이 EPUB, AZW3, DOCX 또는 PDF와 같은 포함 글꼴을 지원하는 경우에만 작동합니다. 이 문서에 사용된 글꼴을 포함할 수 있는 적절한 라이선스가 있는지 확인하십시오.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-지정된 글꼴 패밀리를 책 안에 내장(embed)합니다. 이 옵션은 책에서 사용될 \fB"\fP기본\fB"\fP 글꼴을 지정합니다. 만일 입력 문서가 자신만의 글꼴을 명시적으로 지정해놓은 경우에는 이 기본 글꼴 설정을 덮어써버릴 수 있습니다. 이런 경우 스타일 정보 필터링 기능을 사용하여 입력문서에서 글꼴 설정들을 제거할 수 있습니다. 글꼴 내장 기능은 EPUB, AZW3, DOCX와 같은 몇몇 출력 형식에서만 동작한다는 점을 유의하세요.
+지정된 글꼴 모음을 책에 포함합니다. 책에 사용되는 \fB"\fP기본\fB"\fP 글꼴을 지정합니다. 입력 문서가 자체 글꼴을 지정하는 경우 이 기본 글꼴을 재정의할 수 있습니다. 필터 스타일 정보 옵션을 사용하여 입력 문서에서 글꼴을 제거할 수 있습니다. 글꼴 포함은 주로 EPUB, AZW3 및 DOCX와 같은 일부 출력 형식에서만 작동합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -286,7 +286,7 @@ pt 단위의 줄 간격 높이입니다. 자신들의 줄 간격을 직접 지�
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-해당 요소의 계산되어진 글꼴 크기의 퍼센트 단위로 된 줄 간격의 최소 크기입니다. 캘리버는 모든 요소들이 입력 문서에서 지정된 사항과 상관없이 최소한 이 설정에 지정된 줄 간격 값을 가지도록 시도합니다. 비활성화하려면 0으로 지정하세요. 기본값은 120% 입니다. 어떤 기능인지 잘 모를 경우에는 설정에서 이 기본값을 사용하세요. 예시: \fB"\fP두배 높이의 줄 간격\fB"\fP으로 이루어진 텍스트를 얻으려면 이 설정에 240을 지정하세요.
+해당 요소의 계산된 글꼴 크기에 대한 백분율로 표시되는 최소 줄 높이입니다. 캘리버는 입력 문서가 지정하는 것과 상관없이 모든 요소가 최소한 이 설정의 줄 높이를 갖도록 합니다. 비활성화하려면 0으로 설정하십시오. 기본값은 120%입니다. 현재 수행 중인 작업을 모르는 경우가 아니면 직접 라인 높이 사양보다 이 설정을 사용하십시오. 예를 들어, 이것을 240으로 설정하여 \fB"\fP이중 간격\fB"\fP 텍스트를 얻을 수 있습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -381,7 +381,7 @@ Path to a file containing rules to transform the HTML in this book. The easiest 
 .B \-\-replace\-scene\-breaks
 장면 구분 표시를 지정된 텍스트로 교체합니다. 기본값으로, 입력 문서에 사용된 텍스트가 사용됩니다.
 .UNINDENT
-.SH 검색과 치환
+.SH 검색 및 교체
 .sp
 문서의 텍스트와 구조를 사용자 정의 패턴을 사용하여 변경합니다.
 .INDENT 0.0
@@ -556,7 +556,7 @@ Set the publication date (assumed to be in the local timezone, unless the timezo
 .INDENT 0.0
 .TP
 .B \-\-publisher
-책의 출판사를 지정합니다.
+책의 발행자를 지정합니다.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "3월 20, 2022" "5.39.1" "calibre"
+.TH "CALIBREDB" "1" "4월 01, 2022" "5.40.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -564,7 +564,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
-카탈로그에 추가할 데이터베이스 ID의 쉼표로 구분된 목록입니다. 선언되면, :option:
+범주에 추가할 데이터베이스 ID의 쉼표로 구분된 목록입니다. 선언되면, :option:
 .nf
 \(ga
 .fi
@@ -584,7 +584,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title
-메타데이터에서 제목으로 사용되는 생성된 카탈로그의 제목입니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
+책 정보에서 제목으로 사용되는 생성된 범주의 제목입니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -604,37 +604,37 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-생성된 카탈로그에서 책을 제외하는 데 사용되는 규칙을 지정합니다. 제외 규칙의 모델은 다음 중 하나입니다. (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP태그\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) 또는 (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). 예를 들어: ((\fB\(aq\fP보관된 책\fB\(aq\fP,\fB\(aq\fP#상태\fB\(aq\fP,\fB\(aq\fP보관됨\fB\(aq\fP),) 맞춤 열 \fB\(aq\fP상태\fB\(aq\fP에서 값이 \fB\(aq\fP보관됨\fB\(aq\fP인 책은 제외됩니다. 여러 규칙이 정의되면 모든 규칙이 적용됩니다. 기본값: \fB"\fP기본값(%d)\fB"\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
+생성된 범주에서 책을 제외하는 데 사용되는 규칙을 지정합니다. 제외 규칙의 모델은 다음 중 하나입니다. (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP태그\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) 또는 (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). 예를 들어: ((\fB\(aq\fP보관된 책\fB\(aq\fP,\fB\(aq\fP#상태\fB\(aq\fP,\fB\(aq\fP보관됨\fB\(aq\fP),) 맞춤 열 \fB\(aq\fP상태\fB\(aq\fP에서 값이 \fB\(aq\fP보관됨\fB\(aq\fP인 책은 제외됩니다. 여러 규칙이 정의되면 모든 규칙이 적용됩니다. 기본값: \fB"\fP기본값(%d)\fB"\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-authors
-\fB\(aq\fP저자\fB\(aq\fP 섹션을 카탈로그에 포함합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
+\fB\(aq\fP저자\fB\(aq\fP 섹션을 범주에 포함합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-descriptions
-\fB\(aq\fP책 설명\fB\(aq\fP 섹션을 카탈로그에 포함합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
+\fB\(aq\fP책 설명\fB\(aq\fP 섹션을 범주에 포함합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-genres
-\fB\(aq\fP장르\fB\(aq\fP 섹션을 카탈로그에 포함합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
+\fB\(aq\fP장르\fB\(aq\fP 섹션을 범주에 포함합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-recently\-added
-\fB\(aq\fP최근 추가된 항목\fB\(aq\fP 섹션을 카탈로그에 포함합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
+\fB\(aq\fP최근 추가된 항목\fB\(aq\fP 섹션을 범주에 포함합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-series
-\fB\(aq\fP시리즈\fB\(aq\fP 섹션을 카탈로그에 포함합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
+\fB\(aq\fP시리즈\fB\(aq\fP 섹션을 범주에 포함합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-titles
-\fB\(aq\fP제목\fB\(aq\fP 섹션을 카탈로그에 포함합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
+\fB\(aq\fP제목\fB\(aq\fP 섹션을 범주에 포함합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -654,7 +654,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-출력 프로필을 지정합니다. 어떤 경우에는 장치의 카탈로그를 최적화하기 위해 출력 프로필이 필요합니다. 예를 들어, \fB\(aq\fPkindle\fB\(aq\fP 또는 \fB\(aq\fPkindle_dx\fB\(aq\fP는 섹션 및 기사가 있는 구조화된 목차를 작성합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
+출력 프로필을 지정합니다. 어떤 경우에는 장치의 범주를 최적화하기 위해 출력 프로필이 필요합니다. 예를 들어, \fB\(aq\fPkindle\fB\(aq\fP 또는 \fB\(aq\fPkindle_dx\fB\(aq\fP는 섹션 및 기사가 있는 구조화된 목차를 작성합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -664,17 +664,17 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-preset
-GUI 카탈로그 빌더로 작성된 명명된 프리셋을 사용합니다. 프리셋은 카탈로그 작성을 위한 모든 설정을 지정합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
+GUI 범주 빌더로 작성된 명명된 프리셋을 사용합니다. 프리셋은 범주 작성을 위한 모든 설정을 지정합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-thumb\-width
-카탈로그의 책 표지에 대한 힌트 크기(인치)입니다. 범위: 1.0 \- 2.0 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
+범주의 책 표지에 대한 힌트 크기(인치)입니다. 범위: 1.0 \- 2.0 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-use\-existing\-cover
-카탈로그 생성 시 기존 표지를 교체합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
+범주 생성 시 기존 표지를 교체합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .SH SAVED_SEARCHES
 .INDENT 0.0
