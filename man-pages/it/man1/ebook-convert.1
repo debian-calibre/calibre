@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "marzo 20, 2022" "5.39.1" "calibre"
+.TH "EBOOK-CONVERT" "1" "aprile 01, 2022" "5.40.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -50,11 +50,11 @@ Il formato di output viene dedotto dall\(aqestensione del file convertito file_d
 Dopo aver specificato i file di input e output è possibile personalizzare la conversione specificando varie opzioni. Le opzioni disponibili dipendono dal tipo di file di input e output. Per avere maggiori informazioni sulle opzioni specifiche, indica i file di input e output e poi inserisci l\(aqopzione \-h.
 .sp
 Per la documentazione completa sul sistema di conversione, vedi
-conversion
+\fI\%Conversione E\-book\fP
 .sp
 Ogni qualvolta vengono passati argomenti con degli spazi a \fBebook\-convert\fP, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
 .sp
-Le opzioni e i valori di default cambiano a seconda sia del
+Le opzioni e i valori predefiniti cambiano a seconda sia del
 formato di input che ti output, quindi bisognerebbe sempre controllare:
 .sp
 ebook\-convert myfile.input_format myfile.output_format \-h
@@ -150,7 +150,7 @@ Estrai i contenuti del file EPUB generato nella cartella selezionata. I contenut
 .INDENT 0.0
 .TP
 .B \-\-flow\-size
-Separa tutti i file HTML più grandi di questa dimensione (in KB). Ciò è necessario in quanto molti lettori EPUB non sono in grado di gestire file di dimensioni maggiori. La dimensione di 260KB è quella di default per le Edizioni Digitali di Adobe. Imposta a 0 per disabilitare la divisione basata sulla dimensione.
+Separa tutti i file HTML più grandi di questa dimensione (in KB). Ciò è necessario in quanto molti lettori EPUB non sono in grado di gestire file di dimensioni maggiori. La dimensione di 260KB è quella predefinita per le Edizioni Digitali di Adobe. Imposta a 0 per disabilitare la divisione basata sulla dimensione.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -183,7 +183,7 @@ Opzioni per controllare l\(aqaspetto dell\(aqoutput
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Converti i caratteri Unicode in una rappresentazione ASCII. Usa con attenzione perchè sostituirà i caratteri Unicode con caratteri ASCII. Per esempio sostituirà \fB"\fPPelé\fB"\fP con \fB"\fPPele\fB"\fP\&. In più, nota che nei casi in cui ci sia più di una rappresentazione per un carattere (caratteri presenti sia in cinese che in giapponese per esempio) la rappresentazione basata sul linguaggio corrente dell\fB\(aq\fPinterfaccia di calibre sarà usata.
+Converti i caratteri Unicode in una rappresentazione ASCII. Usa con attenzione perché sostituirà i caratteri Unicode con caratteri ASCII. Per esempio sostituirà \fB"\fPPelé\fB"\fP con \fB"\fPPele\fB"\fP\&. In più, nota che nei casi in cui ci sia più di una rappresentazione per un carattere (caratteri presenti sia in cinese che in giapponese per esempio) la rappresentazione basata sul linguaggio corrente dell\fB\(aq\fPinterfaccia di calibre sarà usata.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -303,12 +303,12 @@ Crea un sottoinsieme di tutti i caratteri integrati. Ogni carattere integrato è
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Percorso a un file che contiene regole per trasformare gli stili CSS di questo libro. Il modo più semplice per creare questo file è quello di usare il wizard per la creazione di regole nell\fB\(aq\fPinterfaccia utente di calibre. Avvialo dalla sezione della finestra di conversione \fB"\fPAspetto\->Trasforma stili\fB"\fP\&. Dopo aver creato queste regole, puoi usare il pulsante \fB"\fPEsporta\fB"\fP per salvarle in un file.
+Percorso a un file che contiene regole per trasformare gli stili CSS di questo libro. Il modo più semplice per creare questo file è quello di usare la procedura guidata per la creazione di regole nell\fB\(aq\fPinterfaccia utente di calibre. Avvialo dalla sezione della finestra di conversione \fB"\fPAspetto\->Trasforma stili\fB"\fP\&. Dopo aver creato queste regole, puoi usare il pulsante \fB"\fPEsporta\fB"\fP per salvarle in un file.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Percorso a un file che contiene regole per trasformare il codice HTML di questo libro. Il modo più semplice per creare questo file è quello di usare il wizard per la creazione di regole nell\fB\(aq\fPinterfaccia utente di calibre. Avvialo dalla sezione della finestra di conversione \fB"\fPAspetto\->Trasforma HTML\fB"\fP\&. Dopo aver creato queste regole, puoi usare il pulsante \fB"\fPEsporta\fB"\fP per salvarle in un file.
+Percorso a un file che contiene regole per trasformare il codice HTML di questo libro. Il modo più semplice per creare questo file è quello di usare la procedura guidata per la creazione di regole nell\fB\(aq\fPinterfaccia utente di calibre. Avvialo dalla sezione della finestra di conversione \fB"\fPAspetto\->Trasforma HTML\fB"\fP\&. Dopo aver creato queste regole, puoi usare il pulsante \fB"\fPEsporta\fB"\fP per salvarle in un file.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -421,7 +421,7 @@ Controlla il rilevamento automatico della struttura del documento.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Un\fB\(aq\fPespressione XPath per rilevare i titoli dei capitoli. Per impostazione predefinita si considerano come titoli di capitolo i tag <h1> o <h2> che contengono le parole \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP o \fB"\fPpart\fB"\fP, così come ogni tag che contenga class=\fB"\fPchapter\fB"\fP\&. L\fB\(aq\fPespressione usata deve restituire un elenco di elementi. Per disabilitare la rilevazione dei capitoli, usa l\fB\(aq\fPespressione \fB"\fP/\fB"\fP\&. Vedi la Guida XPath nel Manuale utente di calibre per ulteriore aiuto nell\fB\(aq\fPusare questa funzione.
+Un\fB\(aq\fPespressione XPath per rilevare i titoli dei capitoli. Per impostazione predefinita si considerano come titoli di capitolo i tag <h1> o <h2> che contengono le parole \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP o \fB"\fPpart\fB"\fP, così come ogni tag che contenga class=\fB"\fPchapter\fB"\fP\&. L\fB\(aq\fPespressione usata deve restituire un elenco di elementi. Per disabilitare la rilevazione dei capitoli, usa l\fB\(aq\fPespressione \fB"\fP/\fB"\fP\&. Vedi la Guida XPath nel manuale utente di calibre per ulteriore aiuto nell\fB\(aq\fPusare questa funzione.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -456,7 +456,7 @@ Rimuovi la prima immagine dall\fB\(aq\fPe\-book in ingresso. Utile se il documen
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-Un\fB\(aq\fPespressione XPath per rilevare la posizione nel documento da cui cominciare la lettura. Alcuni programmi di lettura e\-book (in particolare Kindle) usano questa posizione come quella in cui il libro viene aperto. Vedi la guida XPath nel Manuale Utente di calibre per maggiori informazioni sull\fB\(aq\fPutilizzo di questa funzione.
+Un\fB\(aq\fPespressione XPath per rilevare la posizione nel documento da cui cominciare la lettura. Alcuni programmi di lettura e\-book (in particolare Kindle) usano questa posizione come quella in cui il libro viene aperto. Vedi la guida XPath nel manuale utente di calibre per maggiori informazioni sull\fB\(aq\fPutilizzo di questa funzione.
 .UNINDENT
 .SH INDICE
 .sp
