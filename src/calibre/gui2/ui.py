@@ -1183,10 +1183,16 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         self.hide_windows()
         if self._spare_pool is not None:
             self._spare_pool.shutdown()
+        from calibre.scraper.simple import cleanup_overseers
+        wait_for_cleanup = cleanup_overseers()
         from calibre.db.delete_service import shutdown
         shutdown()
+        from calibre.live import async_stop_worker
+        wait_for_stop = async_stop_worker()
         time.sleep(2)
         self.istores.join()
+        wait_for_cleanup()
+        wait_for_stop()
         return True
 
     def run_wizard(self, *args):

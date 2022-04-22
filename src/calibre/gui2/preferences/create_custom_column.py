@@ -13,7 +13,7 @@ from functools import partial
 from qt.core import (
     QDialog, Qt, QColor, QIcon, QVBoxLayout, QLabel, QGridLayout,
     QDialogButtonBox, QWidget, QLineEdit, QHBoxLayout, QComboBox,
-    QCheckBox
+    QCheckBox, QSpinBox
 )
 
 from calibre.gui2 import error_dialog
@@ -197,6 +197,7 @@ class CreateCustomColumn(QDialog):
         elif ct == '*text':
             self.is_names.setChecked(c['display'].get('is_names', False))
         self.description_box.setText(c['display'].get('description', ''))
+        self.decimals_box.setValue(min(9, max(1, int(c['display'].get('decimals', 2)))))
 
         all_colors = [str(s) for s in list(QColor.colorNames())]
         self.enum_colors_label.setToolTip('<p>' + ', '.join(all_colors) + '</p>')
@@ -323,6 +324,18 @@ class CreateCustomColumn(QDialog):
         h.addWidget(la)
         self.format_label = add_row('', h)
 
+        # Float number of decimal digits
+        h = QHBoxLayout()
+        self.decimals_box = fb = QSpinBox(self)
+        fb.setRange(1, 9)
+        fb.setValue(2)
+        h.addWidget(fb)
+        self.decimals_default_label = la = QLabel(_(
+            'Control the number of decimal digits you can enter when editing this column'))
+        la.setWordWrap(True)
+        h.addWidget(la)
+        self.decimals_label = add_row(_('Decimals when &editing:'), h)
+
         # Template
         self.composite_box = cb = TemplateLineEditor(self)
         self.composite_default_label = cdl = QLabel(_("Default: (nothing)"))
@@ -420,9 +433,10 @@ class CreateCustomColumn(QDialog):
         needs_format = col_type in ('datetime', 'int', 'float')
         for x in ('box', 'default_label', 'label'):
             getattr(self, 'format_'+x).setVisible(needs_format)
+            getattr(self, 'decimals_'+x).setVisible(col_type == 'float')
         if needs_format:
             if col_type == 'datetime':
-                l, dl = _('&Format for dates'), _('Default: dd MMM yyyy.')
+                l, dl = _('&Format for dates:'), _('Default: dd MMM yyyy.')
                 self.format_box.setToolTip(_(
                     '<p>Date format.</p>'
                     '<p>The formatting codes are:'
@@ -453,7 +467,7 @@ class CreateCustomColumn(QDialog):
                     "<li>dd MMMM yy gives 05 January 10</li>\n"
                     "</ul> "))
             else:
-                l, dl = _('&Format for numbers'), (
+                l, dl = _('&Format for numbers:'), (
                     '<p>' + _('Default: Not formatted. For format language details see'
                     ' <a href="https://docs.python.org/library/string.html#format-string-syntax">the Python documentation</a>'))
                 if col_type == 'int':
@@ -591,6 +605,8 @@ class CreateCustomColumn(QDialog):
                 display_dict = {'number_format':str(self.format_box.text()).strip()}
             else:
                 display_dict = {'number_format': None}
+            if col_type == 'float':
+                display_dict['decimals'] = int(self.decimals_box.value())
             if default_val:
                 try:
                     if col_type == 'int':
@@ -743,8 +759,10 @@ class CreateNewCustomColumn:
         'enum_values': a string containing comma-separated valid values for an enumeration
         'enum_colors': a string containing comma-separated colors for an enumeration
         'use_decorations': True or False -- should check marks be displayed
+      float columns:
+        'decimals': the number of decimal digits to allow when editing (int). Range: 1 - 9
       float and int columns:
-        'number_format': the format to apply for the column
+        'number_format': the format to apply when displaying the column
       rating columns:
         'allow_half_stars': True or False -- are half-stars allowed
       text columns:

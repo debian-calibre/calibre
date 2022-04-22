@@ -820,7 +820,7 @@ class Ui_Form(object):
         self.opt_edit_metadata_elision_point.setToolTip(_("Choose where in the label to put the..."))
         self.opt_edit_metadata_templates_only_F2_on_booklist.setText(_("&Tab key doesn\'t edit column templates in the book list"))
         self.opt_edit_metadata_templates_only_F2_on_booklist.setToolTip(_("<p>Check this box to disable editing the template for\n"
-"a \"Column made from other columns\" in the book list when the column is entered\n"
+"a \"Column built from other columns\" in the book list when the column is entered\n"
 "using the Tab key. The F2 (Edit) key will still open the template editor.</p>"))
         self.opt_edit_metadata_single_use_2_cols_for_custom_fields.setText(_("Use &two columns for custom columns in the Default layout"))
         self.label_1021.setText(_("&Bulk edit custom column label length:"))

@@ -198,7 +198,16 @@ class GoogleBooks(Source):
         goog = identifiers.get('google', None)
         if goog is not None:
             return ('google', goog, 'https://books.google.com/books?id=%s' % goog)
+    # }}}
 
+    def id_from_url(self, url):  # {{{
+        from polyglot.urllib import urlparse, parse_qs
+        purl = urlparse(url)
+        if purl.netloc == 'books.google.com':
+            q = parse_qs(purl.query)
+            gid = q.get('id')
+            if gid:
+                return 'google', gid[0]
     # }}}
 
     def create_query(self, title=None, authors=None, identifiers={}, capitalize_isbn=False):  # {{{

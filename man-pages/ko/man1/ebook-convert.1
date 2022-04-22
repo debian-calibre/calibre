@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "4월 01, 2022" "5.40.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "4월 22, 2022" "5.41.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -206,7 +206,7 @@ Transliterate Unicode characters to an ASCII representation. Use with care becau
 .INDENT 0.0
 .TP
 .B \-\-disable\-font\-rescaling
-모든 \fB"\fP글꼴 크기 비율 재조정 기능\fB"\fP을 사용하지 않습니다.
+글꼴 크기의 모든 크기 조정을 비활성화합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -226,7 +226,7 @@ By default, calibre will use the shorthand form for various CSS properties such 
 .INDENT 0.0
 .TP
 .B \-\-extra\-css
-CSS 스타일시트로의 경로나 직접 입력된 CSS 텍스트. 이 CSS는 원본 파일의 스타일 규칙에 덧붙여지게 됩니다. 따라서, 이 기능을 그 규칙들을 덮어쓰는데 사용할 수 있습니다.
+CSS 스타일시트 또는 원시 CSS에 대한 경로입니다. 이 CSS는 소스 파일의 스타일 규칙에 추가되므로 해당 규칙을 재정의하는 데 사용할 수 있습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -397,7 +397,7 @@ sr1\-search로 찾은 텍스트를 바꾸려면 교체를 선택합니다.
 .INDENT 0.0
 .TP
 .B \-\-sr1\-search
-sr1\-replace로 대체할 검색 패턴(정규식)입니다.
+sr1\-replace로 교체할 검색 패턴(정규식)입니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -425,7 +425,7 @@ Search pattern (regular expression) to be replaced with sr3\-replace.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-장(章)제목을 탐지하기 위한 XPath 표현식. 기본값은 \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP, 또는 \fB"\fPpart\fB"\fP란 단어를 장 제목으로 포함하는 <h1> 또는 <h2> 태그와 class=\fB"\fPchapter\fB"\fP 속성을 가지고 있는 태그들입니다. 사용된 표현식은 요소들의 목록을 평가할 수 있어야 합니다. 장 탐지를 비활성화 하려면 표현식 \fB"\fP/\fB"\fP을 사용하세요. 이 기능에 대한 더 자세한 도움말을 보려면 캘리버 사용자 설명서의 XPath 지침서를 참조하세요.
+장(章)제목을 탐지하기 위한 XPath 표현식. 기본값은 \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP, 또는 \fB"\fPpart\fB"\fP란 단어를 장 제목으로 포함하는 <h1> 또는 <h2> 태그와 class=\fB"\fPchapter\fB"\fP 속성을 가지고 있는 태그들입니다. 사용된 표현식은 요소들의 목록을 평가할 수 있어야 합니다. 장 탐지를 비활성화 하려면 표현식 \fB"\fP/\fB"\fP을 사용하세요. 이 특정 기능에 대한 더 자세한 도움말을 보려면 캘리버 사용자 설명서의 XPath 지침서를 참조하세요.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -460,7 +460,7 @@ XPath 표현식. 지정된 요소의 앞에 쪽 넘김이 삽입됩니다. 비�
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-문서에서의 읽기 시작 지점을 탐지하기 위한 XPath 표현식. 몇몇 프로그램(대표적으로 Kindle)은 책을 열 때 이 위치를 사용합니다. 이 기능을 사용하는데 대한 더 많은 도움말은 캘리버 사용자 설명서의 XPath 지침서를 참고하세요.
+문서에서의 읽기 시작 지점을 탐지하기 위한 XPath 표현식. 몇몇 프로그램(대표적으로 Kindle)은 책을 열 때 이 위치를 사용합니다. 이 특정 기능을 사용하는데 대한 더 많은 도움말은 캘리버 사용자 설명서의 XPath 지침서를 참고하세요.
 .UNINDENT
 .SH 목차
 .sp

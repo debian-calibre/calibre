@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(392, 378)
+        Form.resize(392, 444)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(Form)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.groupBox = QtWidgets.QGroupBox(Form)
@@ -71,6 +71,10 @@ class Ui_Form(object):
         self.opt_keep_color = QtWidgets.QCheckBox(self.groupBox_3)
         self.opt_keep_color.setObjectName("opt_keep_color")
         self.verticalLayout.addWidget(self.opt_keep_color)
+        self.label_5 = QtWidgets.QLabel(self.groupBox_3)
+        self.label_5.setWordWrap(True)
+        self.label_5.setObjectName("label_5")
+        self.verticalLayout.addWidget(self.label_5)
         self.verticalLayout_2.addWidget(self.groupBox_3)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_2.addItem(spacerItem)
@@ -97,4 +101,5 @@ class Ui_Form(object):
         self.opt_keep_links.setText(_("Do not remove links (<a> tags) before processing"))
         self.opt_keep_image_references.setText(_("Do not remove image &references before processing"))
         self.opt_keep_color.setText(_("Keep text &color, when possible"))
+        self.label_5.setText(_("Note that images will not be preserved. For that, convert to TXTZ instead."))
 from calibre.gui2.widgets import EncodingComboBox
