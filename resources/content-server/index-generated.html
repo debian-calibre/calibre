@@ -20815,6 +20815,16 @@ return this.__repr__();
             ρσ_d["square"] = true;
             return ρσ_d;
         }).call(this);
+        function is_new_footnote_start(elem, start_elem) {
+            var c;
+            c = get_note_container(elem);
+            return c !== start_elem && c !== start_elem.firstElementChild;
+        };
+        if (!is_new_footnote_start.__argnames__) Object.defineProperties(is_new_footnote_start, {
+            __argnames__ : {value: ["elem", "start_elem"]},
+            __module__ : {value: "read_book.footnotes"}
+        });
+
         function show_footnote(target, known_anchors) {
             var start_elem, style, elem, found_note_start, eid, pb;
             if (!target) {
@@ -20843,7 +20853,7 @@ return this.__repr__();
                     elem = ρσ_Iter4[ρσ_Index4];
                     if (found_note_start) {
                         eid = elem.getAttribute("id");
-                        if (eid !== target && known_anchors[(typeof eid === "number" && eid < 0) ? known_anchors.length + eid : eid] && get_note_container(elem) !== start_elem) {
+                        if (eid !== target && known_anchors[(typeof eid === "number" && eid < 0) ? known_anchors.length + eid : eid] && is_new_footnote_start(elem, start_elem)) {
                             delete get_note_container(elem).do_not_hide;
                             break;
                         }
@@ -21107,6 +21117,7 @@ return this.__repr__();
         ρσ_modules["read_book.footnotes"].get_page_break = get_page_break;
         ρσ_modules["read_book.footnotes"].hide_children = hide_children;
         ρσ_modules["read_book.footnotes"].unhide_tree = unhide_tree;
+        ρσ_modules["read_book.footnotes"].is_new_footnote_start = is_new_footnote_start;
         ρσ_modules["read_book.footnotes"].show_footnote = show_footnote;
         ρσ_modules["read_book.footnotes"].PopupIframeBoss = PopupIframeBoss;
         ρσ_modules["read_book.footnotes"].main = main;
@@ -27252,7 +27263,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.40.0";
+        CALIBRE_VERSION = "5.41.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -41282,7 +41293,7 @@ return this.__repr__();
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Enter the name and URL for a custom lookup source. The URL must contain  {0} in it, which will be replaced by the word being looked up. For example:  {1}").format("{word}", "https://google.com/search?q={word}")].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
             do_add = add.bind(null, container_id);
             container.appendChild(E.form(ρσ_interpolate_kwargs.call(E, E.button, [ρσ_desugar_kwargs({style: "display:none", onclick: do_add})]), ρσ_interpolate_kwargs.call(E, E.table, [E.tr(E.td(_("Name:") + " "), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "text", name: "name"})]))), E.tr(E.td(" "), E.td(" ")), E.tr(E.td(_("URL:") + " "), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "url", name: "url"})])))].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})]))));
-            container.append(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, create_button, [_("Add"), "plus", add.bind(null, container_id)].concat([ρσ_desugar_kwargs({highlight: true})])), " ", create_button(_("Cancel"), toggle_custom_container.bind(null, container_id, false))].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
+            container.append(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, create_button, [_("Add"), "plus", add.bind(null, container_id)].concat([ρσ_desugar_kwargs({highlight: true})])), " ", ρσ_interpolate_kwargs.call(this, create_button, [_("Cancel")].concat([ρσ_desugar_kwargs({action: toggle_custom_container.bind(null, container_id, false)})]))].concat([ρσ_desugar_kwargs({style: "margin: 1rem; display: flex"})])));
             container.querySelector("input").focus();
         };
         if (!add_custom.__argnames__) Object.defineProperties(add_custom, {
@@ -41390,6 +41401,7 @@ return this.__repr__();
         function create_word_actions_panel(container, word, close_panel_func) {
             word = str.replace(word, "\u00ad", "");
             current_data = [word, close_panel_func];
+            container.appendChild(E.div());
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "display:none"})]));
             populate_list(container);
         };
@@ -42354,18 +42366,7 @@ return this.__repr__();
         });
         WordActionsOverlay.prototype.show = function show(container) {
             var self = this;
-            container.style.backgroundColor = get_color("window-background");
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.h2(_("Lookup: {}").format(self.word)), ρσ_interpolate_kwargs.call(E, E.div, [svgicon("close")].concat([ρσ_desugar_kwargs({style: "cursor:pointer", onclick: (function() {
-                var ρσ_anonfunc = function (event) {
-                    [event.preventDefault(), event.stopPropagation(), self.overlay.hide_current_panel(event)];
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["event"]},
-                    __module__ : {value: "read_book.overlay"}
-                });
-                return ρσ_anonfunc;
-            })(), class_: "simple-link"})]))].concat([ρσ_desugar_kwargs({style: "padding: 1ex 1em; border-bottom: solid 1px currentColor; display:flex; justify-content: space-between"})])));
-            container.appendChild(E.div());
+            simple_overlay_title(_("Lookup: {}").format(self.word), self.overlay, container);
             create_word_actions_panel(container, self.word, self.overlay.hide);
         };
         if (!WordActionsOverlay.prototype.show.__argnames__) Object.defineProperties(WordActionsOverlay.prototype.show, {

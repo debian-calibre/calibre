@@ -50,6 +50,9 @@ class SearchDialog(QDialog, Ui_Dialog):
         self.results_view.model().cover_pool.set_thread_count(self.cover_thread_count)
         self.results_view.model().details_pool.set_thread_count(self.details_thread_count)
         self.results_view.setCursor(Qt.CursorShape.PointingHandCursor)
+        # needed for live updates of amazon_live.py
+        from calibre.live import start_worker
+        start_worker()
 
         # Check for results and hung threads.
         self.checker = QTimer()
@@ -200,7 +203,7 @@ class SearchDialog(QDialog, Ui_Dialog):
         self.results_view.model().set_query(query)
 
         # Plugins are in random order that does not change.
-        # Randomize the ord of the plugin names every time
+        # Randomize the order of the plugin names every time
         # there is a search. This way plugins closer
         # to a don't have an unfair advantage over
         # plugins further from a.
