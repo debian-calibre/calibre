@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2020, Kovid Goyal <kovid at kovidgoyal.net>
 
 import json
@@ -7,13 +6,14 @@ import regex
 from collections import Counter, OrderedDict
 from html import escape
 from qt.core import (
-    QCheckBox, QComboBox, QFont, QHBoxLayout, QIcon, QLabel, Qt, QToolButton,
-    QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget, pyqtSignal
+    QAbstractItemView, QCheckBox, QComboBox, QFont, QHBoxLayout, QIcon, QLabel, Qt,
+    QToolButton, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget, pyqtSignal
 )
 from threading import Thread
 
 from calibre.ebooks.conversion.search_replace import REGEX_FLAGS
 from calibre.gui2 import warning_dialog
+from calibre.gui2.gestures import GestureManager
 from calibre.gui2.progress_indicator import ProgressIndicator
 from calibre.gui2.viewer.config import vprefs
 from calibre.gui2.viewer.web_view import get_data, get_manifest
@@ -105,7 +105,7 @@ class Search:
                 if self.mode == 'word':
                     words = []
                     for part in expr.split():
-                        words.append(r'\b{}\b'.format(text_to_regex(part)))
+                        words.append(fr'\b{text_to_regex(part)}\b')
                     expr = r'\s+'.join(words)
                 else:
                     expr = text_to_regex(expr)
@@ -170,9 +170,12 @@ def searchable_text_for_name(name):
     ans = []
     serialized_data = json.loads(get_data(name)[0])
     stack = []
+    removed_tails = []
     for child in serialized_data['tree']['c']:
         if child.get('n') == 'body':
             stack.append(child)
+            # the JS code does not add the tail of body tags to flat text
+            removed_tails.append((child.pop('l', None), child))
     ignore_text = {'script', 'style', 'title'}
     text_pos = 0
     anchor_offset_map = OrderedDict()
@@ -201,6 +204,9 @@ def searchable_text_for_name(name):
             stack.append(tail)
         if children:
             stack.extend(reversed(children))
+    for (tail, body) in removed_tails:
+        if tail is not None:
+            body['l'] = tail
     return ''.join(ans), anchor_offset_map
 
 
@@ -329,7 +335,7 @@ class SearchInput(QWidget):  # {{{
 
         self.search_box = sb = SearchBox(self)
         self.panel_name = panel_name
-        sb.initialize('viewer-{}-panel-expression'.format(panel_name))
+        sb.initialize(f'viewer-{panel_name}-panel-expression')
         sb.item_selected.connect(self.saved_search_selected)
         sb.history_saved.connect(self.history_saved)
         sb.history_cleared.connect(self.history_cleared)
@@ -365,13 +371,13 @@ class SearchInput(QWidget):  # {{{
             '<li><b>Whole words</b> will search for whole words that equal the entered text.'
             '<li><b>Regex</b> will interpret the text as a regular expression.'
         ))
-        qt.setCurrentIndex(qt.findData(vprefs.get('viewer-{}-mode'.format(self.panel_name), 'normal') or 'normal'))
+        qt.setCurrentIndex(qt.findData(vprefs.get(f'viewer-{self.panel_name}-mode', 'normal') or 'normal'))
         qt.currentIndexChanged.connect(self.save_search_type)
         h.addWidget(qt)
 
         self.case_sensitive = cs = QCheckBox(_('&Case sensitive'), self)
         cs.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-        cs.setChecked(bool(vprefs.get('viewer-{}-case-sensitive'.format(self.panel_name), False)))
+        cs.setChecked(bool(vprefs.get(f'viewer-{self.panel_name}-case-sensitive', False)))
         cs.stateChanged.connect(self.save_search_type)
         h.addWidget(cs)
 
@@ -383,26 +389,26 @@ class SearchInput(QWidget):  # {{{
 
     def history_saved(self, new_text, history):
         if new_text:
-            sss = vprefs.get('saved-{}-settings'.format(self.panel_name)) or {}
+            sss = vprefs.get(f'saved-{self.panel_name}-settings') or {}
             sss[new_text] = {'case_sensitive': self.case_sensitive.isChecked(), 'mode': self.query_type.currentData()}
             history = frozenset(history)
             sss = {k: v for k, v in iteritems(sss) if k in history}
-            vprefs['saved-{}-settings'.format(self.panel_name)] = sss
+            vprefs[f'saved-{self.panel_name}-settings'] = sss
 
     def history_cleared(self):
-        vprefs['saved-{}-settings'.format(self.panel_name)] = {}
+        vprefs[f'saved-{self.panel_name}-settings'] = {}
 
     def save_search_type(self):
         text = self.search_box.currentText()
         if text and not self.ignore_search_type_changes:
-            sss = vprefs.get('saved-{}-settings'.format(self.panel_name)) or {}
+            sss = vprefs.get(f'saved-{self.panel_name}-settings') or {}
             sss[text] = {'case_sensitive': self.case_sensitive.isChecked(), 'mode': self.query_type.currentData()}
-            vprefs['saved-{}-settings'.format(self.panel_name)] = sss
+            vprefs[f'saved-{self.panel_name}-settings'] = sss
 
     def saved_search_selected(self):
         text = self.search_box.currentText()
         if text:
-            s = (vprefs.get('saved-{}-settings'.format(self.panel_name)) or {}).get(text)
+            s = (vprefs.get(f'saved-{self.panel_name}-settings') or {}).get(text)
             if s:
                 self.ignore_search_type_changes = True
                 if 'case_sensitive' in s:
@@ -423,8 +429,8 @@ class SearchInput(QWidget):  # {{{
             )
 
     def emit_search(self, backwards=False):
-        vprefs['viewer-{}-case-sensitive'.format(self.panel_name)] = self.case_sensitive.isChecked()
-        vprefs['viewer-{}-mode'.format(self.panel_name)] = self.query_type.currentData()
+        vprefs[f'viewer-{self.panel_name}-case-sensitive'] = self.case_sensitive.isChecked()
+        vprefs[f'viewer-{self.panel_name}-mode'] = self.query_type.currentData()
         sq = self.search_query(backwards)
         if sq is not None:
             self.do_search.emit(sq)
@@ -466,6 +472,17 @@ class Results(QTreeWidget):  # {{{
         self.section_map = {}
         self.search_results = []
         self.item_map = {}
+        self.gesture_manager = GestureManager(self)
+        self.setVerticalScrollMode(QAbstractItemView.ScrollMode.ScrollPerPixel)
+
+    def viewportEvent(self, ev):
+        try:
+            ret = self.gesture_manager.handle_event(ev)
+        except AttributeError:
+            ret = None
+        if ret is not None:
+            return ret
+        return super().viewportEvent(ev)
 
     def current_item_changed(self, current, previous):
         if current is not None:
@@ -754,7 +771,7 @@ class SearchPanel(QWidget):  # {{{
 
     def show_no_results_found(self):
         msg = _('No matches were found for:')
-        warning_dialog(self, _('No matches found'), msg + '  <b>{}</b>'.format(self.current_search.text), show=True)
+        warning_dialog(self, _('No matches found'), msg + f'  <b>{self.current_search.text}</b>', show=True)
 
     def keyPressEvent(self, ev):
         if ev.key() == Qt.Key.Key_Escape:

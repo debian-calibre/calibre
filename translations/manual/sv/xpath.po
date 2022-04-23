@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021
+# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2022
 # Jonatan Nyberg <jonatan@autistici.org>, 2019-2021
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017
 # Merarom <merarom@yahoo.es>, 2014-2015
@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-11 06:01+0000\n"
-"PO-Revision-Date: 2021-11-02 16:04+0000\n"
+"POT-Creation-Date: 2022-02-03 02:30+0000\n"
+"PO-Revision-Date: 2022-02-02 05:07+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +34,7 @@ msgid ""
 "yield a ton of information. This tutorial, however, focuses on using XPath "
 "for e-book related tasks like finding chapter headings in an unstructured "
 "HTML document."
-msgstr "I den här handledning kommer du att få en lätt introduktion till `XPath <https://sv.wikipedia.org/wiki/XPath>`_, ett frågespråk som kan användas för att välja godtyckliga delar av `HTML <https://sv.wikipedia.org/wiki/HTML>`_-dokument i calibre. XPath är en allmänt använd standard, och googla det kommer att ge en ton av information. Denna handledning, däremot fokuserar på att använda XPath för e-bok relaterade uppgifter som att hitta kapitelrubriker i ett ostrukturerad HTML-dokument."
+msgstr "I den här handledningen kommer du att få en kort introduktion till `XPath <https://sv.wikipedia.org/wiki/XPath>`_, ett frågespråk som kan användas för att välja godtyckliga delar av `HTML <https://sv.wikipedia.org/wiki/HTML>`_-dokument i calibre. XPath är en allmänt använd standard, och att googla det kommer att ge massor av information. Den här handledningen fokuserar däremot på att använda XPath för e-bokrelaterade uppgifter som att hitta kapitelrubriker i ett ostrukturerad HTML-dokument."
 
 #: ../../__w/calibre/calibre/manual/xpath.rst:16
 msgid "Contents"
@@ -49,20 +49,20 @@ msgid ""
 "The simplest form of selection is to select tags by name. For example, "
 "suppose you want to select all the ``<h2>`` tags in a document. The XPath "
 "query for this is simply::"
-msgstr "Den enklaste formen av val är att välja tagg efter namnet. Anta till exempel att du vill välja alla ``<h2>`` taggar i ett dokument. XPath-förfråga till detta är helt enkelt::"
+msgstr "Den enklaste formen av val är att välja taggar efter namn. Anta till exempel att du vill välja alla ``<h2>``-taggar i ett dokument. XPath-förfrågan till detta är helt enkelt::"
 
 #: ../../__w/calibre/calibre/manual/xpath.rst:27
 msgid ""
 "The prefix `//` means *search at any level of the document*. Now suppose you"
 " want to search for ``<span>`` tags that are inside ``<a>`` tags. That can "
 "be achieved with::"
-msgstr "Prefixet `//` betyder *söka på alla nivåer i dokumentet*. Anta nu att du vill söka efter ``<span>`` taggar som är inne ``<a>`` taggar. Detta kan uppnås med::"
+msgstr "Prefixet `//` betyder *sökning på alla nivåer i dokumentet*. Anta nu att du vill söka efter ``<span>``-taggar som finns inuti ``<a>``-taggar. Det kan uppnås med::"
 
 #: ../../__w/calibre/calibre/manual/xpath.rst:33
 msgid ""
 "If you want to search for tags at a particular level in the document, change"
 " the prefix::"
-msgstr "Om du vill söka efter taggar på en viss nivå i dokumentet, ändrar prefixet::"
+msgstr "Om du vill söka efter taggar på en viss nivå i dokumentet, ändra prefixet::"
 
 #: ../../__w/calibre/calibre/manual/xpath.rst:39
 msgid ""
@@ -81,7 +81,7 @@ msgid ""
 " test that is used to select tags. Tests can be arbitrarily powerful and as "
 "this tutorial progresses, you will see more powerful examples. A predicate "
 "is created by enclosing the test expression in square brackets::"
-msgstr "Anta nu att du vill välja både ``<h1>`` och ``<h2>`` taggar. För att göra det behöver vi en XPath-konstruktion som kallas *predikat*. En :dfn:`predikat` är helt enkelt ett test som används för att välja taggar. Tester kan vara godtyckligt kraftfullt och som denna handledning fortskrider, kommer du att se mer kraftfulla exempel. Ett predikat skapas genom att innesluta test uttryck inom hakparenteser::"
+msgstr "Anta nu att du vill välja både ``<h1>``- och ``<h2>``-taggar. För att göra det behöver vi en XPath-konstruktion som kallas *predikat*. Ett :dfn:`predikat` är helt enkelt ett test som används för att välja taggar. Tester kan vara godtyckligt kraftfullt och som den här handledningen fortskrider, kommer du att se mer kraftfulla exempel. Ett predikat skapas genom att innesluta testuttrycket inom hakparenteser::"
 
 #: ../../__w/calibre/calibre/manual/xpath.rst:53
 msgid ""
@@ -93,7 +93,7 @@ msgid ""
 "the :term:`name()` function ignores namespaces so that there is no need for "
 "the ``h:`` prefix. XPath has several useful built-in functions. A few more "
 "will be introduced in this tutorial."
-msgstr "Det finns flera nya funktioner i detta XPath-uttryck. Den första är användningen av tecknet ``*``. Det betyder *matcha alla taggar*. Titta nu på provuttrycket ``name()='h1' eller name()= 'h2'``. :term:`name()` är ett exempel på en *inbyggd funktion*. Den utvärderar endast namnet på taggen. Så genom att använda det kan vi välja taggar vars namn är antingen `h1` eller `h2`. Observera att funktionen :term:`name()` ignorerar namespaces så det inte finns något behov av prefixet ``h:``. XPath har flera användbara inbyggda funktioner. Några fler kommer att introduceras i den här guiden."
+msgstr "Det finns flera nya funktioner i detta XPath-uttryck. Den första är användningen av tecknet ``*``. Det betyder *matcha alla taggar*. Titta nu på testuttrycket ``name()='h1' eller name()= 'h2'``. :term:`name()` är ett exempel på en *inbyggd funktion*. Den utvärderar helt enkelt namnet på taggen. Så genom att använda det kan vi välja taggar vars namn är antingen `h1` eller `h2`. Observera att funktionen :term:`name()` ignorerar namespaces så det inte finns något behov av prefixet ``h:``. XPath har flera användbara inbyggda funktioner. Några fler kommer att introduceras i den här guiden."
 
 #: ../../__w/calibre/calibre/manual/xpath.rst:62
 msgid "Selecting by attributes"

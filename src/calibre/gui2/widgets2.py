@@ -1,16 +1,16 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2013, Kovid Goyal <kovid at kovidgoyal.net>
 
 
 import weakref
 from qt.core import (
-    QApplication, QByteArray, QCalendarWidget, QCheckBox, QColor, QColorDialog, QFrame,
-    QComboBox, QDate, QDateTime, QDateTimeEdit, QDialog, QDialogButtonBox, QFont,
-    QFontInfo, QFontMetrics, QIcon, QKeySequence, QLabel, QLayout, QMenu, QMimeData,
-    QPalette, QPixmap, QPoint, QPushButton, QRect, QScrollArea, QSize, QSizePolicy,
-    QStyle, QStyledItemDelegate, Qt, QTabWidget, QTextBrowser, QToolButton, QTextCursor,
-    QUndoCommand, QUndoStack, QUrl, QWidget, pyqtSignal, QBrush, QPainter
+    QApplication, QBrush, QByteArray, QCalendarWidget, QCheckBox, QColor,
+    QColorDialog, QComboBox, QDate, QDateTime, QDateTimeEdit, QDialog,
+    QDialogButtonBox, QFont, QFontInfo, QFontMetrics, QFrame, QIcon, QKeySequence,
+    QLabel, QLayout, QMenu, QMimeData, QPainter, QPalette, QPixmap, QPoint,
+    QPushButton, QRect, QScrollArea, QSize, QSizePolicy, QStyle, QStyledItemDelegate,
+    QStyleOptionToolButton, QStylePainter, Qt, QTabWidget, QTextBrowser, QTextCursor,
+    QToolButton, QUndoCommand, QUndoStack, QUrl, QWidget, pyqtSignal
 )
 
 from calibre.ebooks.metadata import rating_to_stars
@@ -156,6 +156,41 @@ class RightClickButton(QToolButton):
             ev.accept()
             return
         return QToolButton.mousePressEvent(self, ev)
+
+
+class CenteredToolButton(RightClickButton):
+
+    def __init__(self, icon, text, parent=None):
+        super().__init__(parent)
+        self.setText(text)
+        self.setIcon(icon)
+        self.setSizePolicy(QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed))
+        self.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+        self.text_flags =  Qt.TextFlag.TextSingleLine | Qt.AlignmentFlag.AlignCenter
+
+    def paintEvent(self, ev):
+        painter = QStylePainter(self)
+        opt = QStyleOptionToolButton()
+        self.initStyleOption(opt)
+        text = opt.text
+        opt.text = ''
+        opt.icon = QIcon()
+        s = painter.style()
+        painter.drawComplexControl(QStyle.ComplexControl.CC_ToolButton, opt)
+        if s.styleHint(QStyle.StyleHint.SH_UnderlineShortcut, opt, self):
+            flags = self.text_flags | Qt.TextFlag.TextShowMnemonic
+        else:
+            flags = self.text_flags | Qt.TextFlag.TextHideMnemonic
+        fw = s.pixelMetric(QStyle.PixelMetric.PM_DefaultFrameWidth, opt, self)
+        opt.rect.adjust(fw, fw, -fw, -fw)
+        w = opt.iconSize.width()
+        text_rect = opt.rect.adjusted(w, 0, 0, 0)
+        painter.drawItemText(text_rect, flags, opt.palette, self.isEnabled(), text)
+        fm = QFontMetrics(opt.font)
+        text_rect = s.itemTextRect(fm, text_rect, flags, self.isEnabled(), text)
+        left = text_rect.left() - w - 4
+        pixmap_rect = QRect(left, opt.rect.top(), opt.iconSize.width(), opt.rect.height())
+        painter.drawItemPixmap(pixmap_rect, Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter, self.icon().pixmap(opt.iconSize))
 
 
 class Dialog(QDialog):
@@ -567,7 +602,7 @@ class ScrollingTabWidget(QTabWidget):
             # widgets added to a tab widget, which looks horrible.
             if (cm.left(), cm.top(), cm.right(), cm.bottom()) == (0, 0, 0, 0):
                 pl.setContentsMargins(9, 9, 9, 9)
-        name = 'STW{}'.format(abs(id(self)))
+        name = f'STW{abs(id(self))}'
         sw.setObjectName(name)
         sw.setWidget(page)
         sw.setWidgetResizable(True)
@@ -695,4 +730,4 @@ if __name__ == '__main__':
     app.load_builtin_fonts()
     w = RatingEditor.test()
     w.show()
-    app.exec_()
+    app.exec()

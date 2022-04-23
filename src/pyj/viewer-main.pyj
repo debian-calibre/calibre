@@ -2,26 +2,29 @@
 # License: GPL v3 Copyright: 2018, Kovid Goyal <kovid at kovidgoyal.net>
 from __python__ import bound_methods, hash_literals
 
-import traceback
 from elementmaker import E
-from gettext import gettext as _, install
-from date import format_date
 
 import initialize  # noqa: unused-import
+import traceback
 from ajax import ajax, workaround_qt_bug
 from book_list.globals import get_session_data, set_session_data
 from book_list.library_data import library_data
-from book_list.theme import get_color, css_for_variables
+from book_list.theme import css_for_variables, get_color
+from date import format_date
 from dom import get_widget_css, set_css
+from gettext import gettext as _, install
 from modals import create_modal_container
 from qt import from_python, to_python
 from read_book.db import new_book
 from read_book.footnotes import main as footnotes_main
-from read_book.globals import runtime, set_system_colors, ui_operations, default_color_schemes
+from read_book.globals import (
+    default_color_schemes, runtime, set_system_colors, ui_operations
+)
 from read_book.iframe import main as iframe_main
-from read_book.view import View
+from read_book.open_book import remove_recently_opened
 from read_book.prefs.head_foot import set_time_formatter
-from session import local_storage, session_defaults
+from read_book.view import View
+from session import local_storage, session_defaults, default_interface_data
 from utils import debounce, encode_query_with_path, parse_url_params
 from viewer.constants import FAKE_HOST, FAKE_PROTOCOL, READER_BACKGROUND_URL
 
@@ -92,7 +95,7 @@ def show_error(title, msg, details):
     to_python.show_error(title, msg, details)
 
 
-def manifest_received(key, initial_position, pathtoebook, highlights, book_url, end_type, xhr, ev):
+def manifest_received(key, initial_position, pathtoebook, highlights, book_url, reading_rates, end_type, xhr, ev):
     nonlocal book
     end_type = workaround_qt_bug(xhr, end_type)
     if end_type is 'load':
@@ -104,6 +107,7 @@ def manifest_received(key, initial_position, pathtoebook, highlights, book_url, 
         book.highlights = highlights
         book.stored_files = {}
         book.calibre_book_url = book_url
+        book.saved_reading_rates = reading_rates
         book.is_complete = True
         v'delete book.manifest["metadata"]'
         v'delete book.manifest["last_read_positions"]'
@@ -186,6 +190,7 @@ def create_view(prefs, local_storage, field_metadata, ui_data):
         view = View(document.getElementById('view'))
         window.addEventListener('resize', debounce(view.on_resize.bind(self), 250))
         to_python.view_created({'default_color_schemes': default_color_schemes})
+        default_interface_data.use_roman_numerals_for_series_number = ui_data.use_roman_numerals_for_series_number
         if ui_data.show_home_page_on_ready:
             view.overlay.open_book(False)
 
@@ -209,6 +214,8 @@ def generic_action(which, data):
         view.set_notes_for_highlight(data.uuid, data.notes or '')
     if which is 'show-status-message':
         view.show_status_message(data.text)
+    if which is 'remove-recently-opened':
+        remove_recently_opened(data.path)
 
 
 @from_python
@@ -222,8 +229,8 @@ def show_home_page():
 
 
 @from_python
-def start_book_load(key, initial_position, pathtoebook, highlights, book_url):
-    xhr = ajax('manifest', manifest_received.bind(None, key, initial_position, pathtoebook, highlights, book_url), ok_code=0)
+def start_book_load(key, initial_position, pathtoebook, highlights, book_url, reading_rates):
+    xhr = ajax('manifest', manifest_received.bind(None, key, initial_position, pathtoebook, highlights, book_url, reading_rates), ok_code=0)
     xhr.responseType = 'json'
     xhr.send()
 
@@ -431,6 +438,10 @@ if window is window.top:
         to_python.show_book_folder()
     ui_operations.show_help = def(which):
         to_python.show_help(which)
+    ui_operations.on_iframe_ready = def():
+        to_python.on_iframe_ready()
+    ui_operations.update_reading_rates = def(rates):
+        to_python.update_reading_rates(rates)
 
     document.body.appendChild(E.div(id='view'))
     window.onerror = onerror
@@ -442,8 +453,7 @@ if window is window.top:
         , 0)  # We do this after event loop ticks over to avoid catching popstate events that some browsers send on page load
 else:
     # iframe
-    div = document.getElementById('calibre-viewer-footnote-iframe')
-    if div:
-        footnotes_main()
-    else:
+    if document.location.pathname.endsWith('/__index__'):
         iframe_main()
+    elif document.location.pathname.endsWith('/__popup__'):
+        footnotes_main()

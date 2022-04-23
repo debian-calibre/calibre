@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -76,8 +75,9 @@ class ConditionEditor(QWidget):  # {{{
             ),
             'datetime' : (
                 (_('is equal to'), 'eq'),
-                (_('is less than'), 'lt'),
-                (_('is greater than'), 'gt'),
+                (_('is earlier than'), 'lt'),
+                (_('is later than'), 'gt'),
+                (_('is today'), 'is today'),
                 (_('is set'), 'is set'),
                 (_('is not set'), 'is not set'),
                 (_('is more days ago than'), 'older count days'),
@@ -131,7 +131,7 @@ class ConditionEditor(QWidget):  # {{{
         self.l = l = QGridLayout(self)
         self.setLayout(l)
 
-        texts = _('If the ___ column ___ values')
+        texts = _('If the ___ column ___ value')
         try:
             one, two, three = texts.split('___')
         except:
@@ -200,6 +200,8 @@ class ConditionEditor(QWidget):  # {{{
     @property
     def current_val(self):
         ans = str(self.value_box.text()).strip()
+        if not self.value_box.isEnabled():
+            ans = ''
         if self.current_col == 'languages':
             rmap = {lower(v):k for k, v in iteritems(lang_map())}
             ans = rmap.get(lower(ans), ans)
@@ -311,8 +313,7 @@ class ConditionEditor(QWidget):  # {{{
                 tt += '\n' + _('You can match multiple values by separating'
                         ' them with %s')%m['is_multiple']['ui_to_list']
         self.value_box.setToolTip(tt)
-        if action in ('is set', 'is not set', 'is true', 'is false',
-                'is undefined'):
+        if action in ('is set', 'is not set', 'is true', 'is false', 'is undefined', 'is today'):
             self.value_box.setEnabled(False)
 # }}}
 
@@ -412,7 +413,10 @@ class RuleEditor(QDialog):  # {{{
                 self.kind_box.addItem(tt, t)
             l.addWidget(self.kind_box, 3, 0)
             self.kind_box.setToolTip(textwrap.fill(_(
-                'If you choose composed icons and multiple rules match, then all the'
+                'Choosing icon with text will add an icon to the left of the'
+                ' column content, choosing icon with no text will hide'
+                ' the column content and leave only the icon.'
+                ' If you choose composed icons and multiple rules match, then all the'
                 ' matching icons will be combined, otherwise the icon from the'
                 ' first rule to match will be used.')))
             self.l3 = l3 = QLabel(_('of the column:'))
@@ -654,7 +658,7 @@ class RuleEditor(QDialog):  # {{{
 
     def remove_icon_file_dialog(self):
         d = RemoveIconFileDialog(self, self.icon_file_names, self.icon_folder)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             if len(d.files_to_remove) > 0:
                 for name in d.files_to_remove:
                     try:
@@ -1141,7 +1145,7 @@ class EditRules(QWidget):  # {{{
     def add_rule(self):
         d = RuleEditor(self.model.fm, self.pref_name)
         d.add_blank_condition()
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             kind, col, r = d.rule
             if kind and r and col:
                 selected_row = self.get_first_selected_row()
@@ -1153,7 +1157,7 @@ class EditRules(QWidget):  # {{{
         selected_row = self.get_first_selected_row()
         if self.pref_name == 'column_color_rules':
             td = TemplateDialog(self, '', mi=self.mi, fm=self.fm, color_field='')
-            if td.exec_() == QDialog.DialogCode.Accepted:
+            if td.exec() == QDialog.DialogCode.Accepted:
                 col, r = td.rule
                 if r and col:
                     idx = self.model.add_rule('color', col, r, selected_row=selected_row)
@@ -1164,7 +1168,7 @@ class EditRules(QWidget):  # {{{
                 td = TemplateDialog(self, '', mi=self.mi, fm=self.fm, doing_emblem=True)
             else:
                 td = TemplateDialog(self, '', mi=self.mi, fm=self.fm, icon_field_key='')
-            if td.exec_() == QDialog.DialogCode.Accepted:
+            if td.exec() == QDialog.DialogCode.Accepted:
                 typ, col, r = td.rule
                 if typ and r and col:
                     idx = self.model.add_rule(typ, col, r, selected_row=selected_row)
@@ -1187,7 +1191,7 @@ class EditRules(QWidget):  # {{{
             d = TemplateDialog(self, rule, mi=self.mi, fm=self.fm, icon_field_key=col,
                                icon_rule_kind=kind)
 
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             if len(d.rule) == 2:  # Convert template dialog rules to a triple
                 d.rule = ('color', d.rule[0], d.rule[1])
             kind, col, r = d.rule
@@ -1296,7 +1300,7 @@ if __name__ == '__main__':
     if False:
         d = RuleEditor(db.field_metadata, 'column_icon_rules')
         d.add_blank_condition()
-        d.exec_()
+        d.exec()
 
         kind, col, r = d.rule
 
@@ -1308,5 +1312,5 @@ if __name__ == '__main__':
         d.resize(QSize(800, 600))
         d.initialize(db.field_metadata, db.prefs, None, 'column_color_rules')
         d.show()
-        app.exec_()
+        app.exec()
         d.commit(db.prefs)

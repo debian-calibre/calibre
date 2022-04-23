@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__ = 'GPL v3'
@@ -29,7 +28,7 @@ from polyglot.builtins import codepoint_to_chr, iteritems, itervalues
 
 string_length = lambda x: strlen(str(x))  # Needed on narrow python builds, as subclasses of unicode dont work
 KEY = Qt.Key.Key_J
-MODIFIER = Qt.Modifier.META if ismacos else Qt.Modifier.CTRL
+MODIFIER = Qt.KeyboardModifier.MetaModifier if ismacos else Qt.KeyboardModifier.ControlModifier
 
 SnipKey = namedtuple('SnipKey', 'trigger syntaxes')
 
@@ -210,7 +209,7 @@ class EditorTabStop:
         self.join_previous_edit = False
 
     def __repr__(self):
-        return 'EditorTabStop(num=%r text=%r left=%r right=%r is_deleted=%r mirrors=%r)' % (
+        return 'EditorTabStop(num={!r} text={!r} left={!r} right={!r} is_deleted={!r} mirrors={!r})'.format(
             self.num, self.text, self.left, self.right, self.is_deleted, self.mirrors)
     __str__ = __unicode__ = __repr__
 
@@ -625,7 +624,7 @@ class UserSnippets(Dialog):
         self.stack.addWidget(es)
 
     def snip_to_text(self, snip):
-        return '%s - %s' % (snip['trigger'], snip['description'])
+        return '{} - {}'.format(snip['trigger'], snip['description'])
 
     def snip_to_item(self, snip):
         i = QListWidgetItem(self.snip_to_text(snip), self.snip_list)
@@ -709,7 +708,7 @@ class UserSnippets(Dialog):
         d.bb = bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
         l.addWidget(bb)
         bb.accepted.connect(d.accept), bb.rejected.connect(d.reject)
-        if d.exec_() == QDialog.DialogCode.Accepted and lw.currentItem() is not None:
+        if d.exec() == QDialog.DialogCode.Accepted and lw.currentItem() is not None:
             self.stack.setCurrentIndex(1)
             self.edit_snip.apply_snip(lw.currentItem().data(Qt.ItemDataRole.UserRole), creating_snippet=True)
 # }}}
@@ -719,5 +718,5 @@ if __name__ == '__main__':
     from calibre.gui2 import Application
     app = Application([])
     d = UserSnippets()
-    d.exec_()
+    d.exec()
     del app

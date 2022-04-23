@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__ = 'GPL v3'
@@ -279,9 +278,9 @@ class Editor(QMainWindow):
             'Enter the name of the tag'))
         if ok:
             mru = tprefs['insert_tag_mru']
-        mru.insert(0, name)
-        tprefs['insert_tag_mru'] = mru
-        self._build_insert_tag_button_menu()
+            mru.insert(0, name)
+            tprefs['insert_tag_mru'] = mru
+            self._build_insert_tag_button_menu()
 
     def remove_insert_tag(self, name):
         mru = tprefs['insert_tag_mru']
@@ -609,13 +608,13 @@ class Editor(QMainWindow):
             update_mark_text_action(self)
             m.addAction(actions['mark-selected-text'])
         if self.syntax != 'css' and actions['editor-cut'].isEnabled():
-            cm = QMenu(_('Change &case'), m)
+            cm = QMenu(_('C&hange case'), m)
             for ac in 'upper lower swap title capitalize'.split():
                 cm.addAction(actions['transform-case-' + ac])
             m.addMenu(cm)
         if self.syntax == 'html':
             m.addAction(actions['multisplit'])
-        m.exec_(self.editor.viewport().mapToGlobal(pos))
+        m.exec(self.editor.viewport().mapToGlobal(pos))
 
     def goto_sourceline(self, *args, **kwargs):
         return self.editor.goto_sourceline(*args, **kwargs)
@@ -661,4 +660,4 @@ def launch_editor(path_to_edit, path_is_raw=False, syntax='html', callback=None)
     if callback is not None:
         callback(t)
     t.show()
-    app.exec_()
+    app.exec()

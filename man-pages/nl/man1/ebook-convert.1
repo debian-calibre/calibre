@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "november 12, 2021" "5.32.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "april 22, 2022" "5.41.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -41,18 +41,18 @@ ebook\-convert input_file output_file [opties]
 .UNINDENT
 .UNINDENT
 .sp
-Converteer een e\-book van het ene naar het andere formaat.
+Converteer een e\-boek van het ene naar het andere formaat.
 .sp
 input_file is de invoer en output_file is de uitvoer. Beiden moeten gespecificeerd worden als de eerste twee argumenten bij het commando.
 .sp
-Het e\-book uitvoerformaat wordt geraden van de extensie van output_file. output_file kan ook van het speciale .EXT formaat zijn, waar EXT de uitvoerbestandextensie is. In dit geval wordt de naam van het invoerbestand die van het uitvoerbestand. Merk op dat de bestandsnaam niet mag beginnen met een koppelteken. Als, tot slot, output_file geen extensie heeft, wordt het gezien als een map en wordt een "open e\-book" (OEB) bestaande uit HTML\-bestanden geschreven in die map. Deze bestanden zijn dezelfde die normaal gezien naar de uitvoer plug\-in  zouden zijn gepasseerd.
+Het e\-boek uitvoerformaat wordt geraden van de extensie van output_file. output_file kan ook van het speciale .EXT formaat zijn, waar EXT de uitvoerbestandextensie is. In dit geval wordt de naam van het invoerbestand die van het uitvoerbestand. Merk op dat de bestandsnaam niet mag beginnen met een koppelteken. Als, tot slot, output_file geen extensie heeft, wordt het gezien als een map en wordt een "open e\-boek" (OEB) bestaande uit HTML bestanden geschreven in die map. Deze bestanden zijn dezelfde die normaal gezien naar de uitvoer plug\-in zouden zijn gepasseerd.
 .sp
 Na specificatie van het invoer\- en uitvoerbestand kan u de conversie aanpassen door een aantal opties te kiezen. De beschikbare opties hangen af van het type invoer\- en uitvoerbestanden. Voor hulp specificeer het invoer\- en uitvoerbestand en gebruik dan de \-h optie.
 .sp
 Voor de volledige documentatie van het conversiesysteem zie
-conversion
+\fI\%E\-book conversie\fP
 .sp
-Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan \fBebook\-convert\fP parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .sp
 De opties en standaard waarden voor de opties veranderen met de
 de input en output waarden. U moet dus altijd controleren bij:
@@ -89,7 +89,7 @@ toon dit helpbericht en stop
 .INDENT 0.0
 .TP
 .B \-\-input\-profile
-Specificeer het invoerprofiel. Het invoerprofiel geeft het conversiesysteem informatie over hoe de informatie in het invoerdocument geïnterpreteerd moet worden. Bijvoorbeeld resolutie\-afhankelijke lengtes (lengte in pixels). Mogelijkheden zijn:  cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+Specificeer het invoerprofiel. Het invoerprofiel geeft het conversiesysteem informatie over hoe de informatie in het invoerdocument geïnterpreteerd moet worden. Bijvoorbeeld resolutie\-afhankelijke lengtes (lengte in pixels). Mogelijkheden zijn: cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -120,7 +120,7 @@ Opties om de bewerking van uitvoerbestand epub aan te passen
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
-Schakel het splitten bij pagina\-eindes uit. Normaal gesproken worden de invoerbestanden automatisch bij elk pagina\-einde opgesplitst in twee bestanden.\ Hierdoor krijg\ je een uitvoer e\-boek dat sneller en met minder middelen taalkundig kan worden ontleed. Het splitsen is echter traag, en als uw bronbestand een zeer groot aantal pagina\-eindes bevat, moet u splitsing op pagina\-eindes uitschakelen.
+Schakel splitsen bij pagina\-eindes uit. Normaal worden de invoerbestanden automatisch bij elk pagina\-einde opgesplitst in twee bestanden. Hierdoor krijg je een uitvoer e\-boek dat sneller en met minder middelen kan verwerkt worden. Splitsen is echter traag, en als uw bronbestand een groot aantal pagina\-eindes bevat, moet u splitsen op pagina\-eindes uitschakelen.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -130,12 +130,12 @@ Deze optie is alleen nodig als u de EPUB op een FBReaderJ wilt gebruiken. Het ve
 .INDENT 0.0
 .TP
 .B \-\-epub\-inline\-toc
-Voeg een in de tekst staande Inhoudsopgave in, die in het boek zelf komt te staan als deel van inhoud.
+Voeg een in\-line Inhoudsopgave in, die in het boek komt als deel van de inhoud.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-epub\-toc\-at\-end
-Zet de ingevoegde in de tekst staande Inhoudsopgave aan het eind van het boek in plaats van aan het begin.
+Zet de ingevoegde in\-line Inhoudsopgave aan het eind van het boek in plaats van aan het begin.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -175,7 +175,7 @@ Indien opgegeven, zal de uitvoerplug\-in proberen om uitvoer te genereren die zo
 .INDENT 0.0
 .TP
 .B \-\-toc\-title
-Titel voor iedere gegenereerde in\-line inhoudsopgave.
+Titel voor iedere gegenereerde in\-line Inhoudsopgave.
 .UNINDENT
 .SH LOOK AND FEEL
 .sp
@@ -208,17 +208,17 @@ Alle lettertypes invoegen waaraan in het input\-document wordt gerefereerd maar 
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Het gespecificeerde lettertype wordt ingebed in het boek. Dit bepaalt het \fB"\fPbasis\fB"\fP lettertype dat gebruikt wordt voor het boek. Als het invoer document eigen lettertypes specificeert, kunnen deze het basis lettertype overschrijven. U kunt het filter \fB"\fPstijl informatie optie\fB"\fP gebruiken om lettertypes uit het invoer document te verwijderen. Opgepast: inbedden van lettertypes alleen werkt met bepaalde uitvoer indelingen, voornamelijk EPUB en AZW3.
+Het gespecificeerde lettertype inbedden in het boek. Dit specificeert het \fB"\fPbasis\fB"\fP lettertype voor het boek. Als het invoer document eigen lettertypes specificeert, kunnen deze het basis lettertype negeren. U kunt de filter stijlinformatie optie gebruiken om lettertypes uit het invoer document te verwijderen. Merk op: inbedden van lettertypes werkt alleen met bepaalde uitvoer indelingen, voornamelijk EPUB, AZW3 en DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-Standaard gebruikt calibre het steno\-formaat voor verschillende CSS\-eigenschappen zoals margins, padding, border, enz. Deze optie zorgt ervoor dat het in plaats daarvan het volledige formaat gebruikt. Houd er rekening mee dat CSS altijd wordt uitgebreid bij het genereren van EPUB\-bestanden met het uitvoerprofiel ingesteld op een van de Nook\-profielen, aangezien de Nook geen steno\-CSS kan verwerken.
+Standaard gebruikt calibre het verkorte formaat voor verschillende CSS\-eigenschappen zoals marges, padding, rand, enz. Deze optie zorgt ervoor dat het in plaats daarvan het volledige formaat gebruikt. Merk op dat CSS altijd wordt uitgebreid bij genereren van EPUB bestanden met als uitvoerprofiel een van de Nook profielen daar de Nook geen verkorte CSS kan verwerken.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-extra\-css
-Het pad naar een CSS\-Stylesheet, of raw CSS. Deze CSS zal worden toegevoegd aan de stijlregels van het invoerbestand, waarbij de regels uit de CSS voorrang hebben.
+Het pad naar een CSS stijlblad of rauwe CSS. Deze CSS wordt toegevoegd aan de stijlregels van het bronbestand, zodat het deze regels kan negeren.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -303,12 +303,12 @@ Uitdunnen van alle ingebedde lettertypes. Elk ingebed lettertype is beperkt tot 
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Pad naar een bestand met regels om de CSS\-stijlen in dit boek te transformeren. De eenvoudigste manier om een dergelijk bestand te maken is om de wizard te gebruiken voor het maken van regels in de GUI van calibre. Open het in de \fB"\fPUitstraling & gevoel\-> Transformeer stijlen\fB"\fP sectie van het conversie dialoogvenster. Nadat u de regels hebt gemaakt, kunt u de knop \fB"\fPExporteren\fB"\fP gebruiken om ze in een bestand op te slaan.
+Pad naar een bestand met regels om de CSS\-stijlen in dit boek te transformeren. De eenvoudigste manier om een dergelijk bestand te maken is om de wizard te gebruiken voor het maken van regels in de GUI van calibre. Open het in de \fB"\fPUitstraling & gevoel\-> Transformeer stijlen\fB"\fP onderdeel van het conversie dialoogvenster. Nadat u de regels hebt gemaakt, kunt u de knop \fB"\fPExporteren\fB"\fP gebruiken om ze in een bestand op te slaan.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform HTML\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+Pad naar een bestand met regels om de HTML in dit boek te transformeren. De eenvoudigste manier om een zo\fB\(aq\fPn bestand te maken is de calibre GUI wizard te gebruiken voor het maken van regels. Open het in de \fB"\fPUitstraling & gevoel\-> Transformeer HTML\fB"\fP onderdeel van de conversiedialoog. Na maken van de regels, kunt u de knop \fB"\fPExporteren\fB"\fP gebruiken om ze in een bestand op te slaan.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -331,7 +331,7 @@ Verwijder lege alinea\fB\(aq\fPs als ze elke tweede alinea voorkomen
 .INDENT 0.0
 .TP
 .B \-\-disable\-fix\-indents
-Maak van indentatie aangeduid door ‘non\-breaking spaces’ CSS\-indentatie.
+Maak van indentatie aangeduid door niet\-afbrekende spaties CSS\-indentatie.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -346,7 +346,7 @@ Zoek naar veelgebruikte woorden en patronen die duiden op cursief en maak deze c
 .INDENT 0.0
 .TP
 .B \-\-disable\-markup\-chapter\-headings
-Detecteer onopgemaakte hoofdstuk\- en deelkoppen en verander deze in h2\- en h3\-labels. Deze optie genereert zelf geen inhoudsopgave, maar kan samen met structuurdetectie gebruikt worden om er een te maken.
+Detecteer onopgemaakte hoofdstuk (sub)koppen en verander deze in h2 en h3 tags. Deze instelling creëert geen Inhoudsopgave maar kan samen met structuurdetectie gebruikt worden om er een te maken.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -417,7 +417,7 @@ Stel de auto\-detectie van de documentstructuur in.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Een XPath\-expressie om hoofdstuktitels te detecteren. De standaard is om  <h1>te overwegen of <h2>labels die de woorden \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP  als hoofdstuktitels bevatten, evenals labels met class = \fB"\fPchapter\fB"\fP\&. De gebruikte uitdrukking moet resulteren in een lijst met elementen. Gebruik de uitdrukking \fB"\fP/\fB"\fP om hoofdstukdetectie uit te schakelen. Raadpleeg de XPath\-zelfstudie in de calibre gebruikershandleiding voor meer hulp bij het gebruik van deze functie.
+Een XPath\-expressie om hoofdstuktitels te detecteren. De standaard is om <h1> of <h2> labels die de woorden \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP bevatten als hoofdstuktitels te overwegen, evenals labels met class = \fB"\fPchapter\fB"\fP\&. De gebruikte uitdrukking moet resulteren in een lijst met elementen. Gebruik de uitdrukking \fB"\fP/\fB"\fP om hoofdstukdetectie uit te schakelen. Raadpleeg de XPath zelfstudie in de calibre Gebruikershandleiding voor meer hulp bij het gebruik van deze functie.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -432,7 +432,7 @@ In sommige documenten worden voor elke alinea apart linker\- en rechtermarges op
 .INDENT 0.0
 .TP
 .B \-\-insert\-metadata
-Voeg de boek\-metadata  in aan het begin van het boek. Dit is nuttig als uw e\-boeklezer de directie manier van tonen/zoeken van metadata  niet ondersteunt.
+Voeg de boek\-metadata in aan het begin van het boek. Dit is nuttig als uw e\-boeklezer de directie manier van tonen/zoeken van metadata niet ondersteunt.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -447,60 +447,60 @@ Gebruik de in het bronbestand gedetecteerde omslag en niet de opgegeven omslag.
 .INDENT 0.0
 .TP
 .B \-\-remove\-first\-image
-Verwijder de eerste afbeelding van het oorspronkelijke e\-boek. Nuttig als het  brondocument een omslagfoto heeft dat niet wordt herkent als omslag. In dat geval als u een omslag heeft ingesteld in calibre zal het e\-book twee omslagfoto\fB\(aq\fPs laten zien mits u deze optie niet instelt.
+Verwijder de eerste afbeelding van het oorspronkelijke e\-boek. Nuttig als het brondocument een omslagafbeelding heeft die niet wordt herkend als omslag. In dat geval als u een omslag heeft ingesteld in calibre zal het e\-boek twee omslagfoto\fB\(aq\fPs laten zien als u deze optie niet instelt.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-Een XPath\-expressie om de locatie in het document te detecteren waar te beginnen met lezen. Sommige e\-book leesprogramma\fB\(aq\fPs (vooral de Kindle) gebruiken deze locatie als de positie om het boek te openen. Raadpleeg de XPath\-zelfstudie in de calibre gebruikershandleiding voor meer hulp bij het gebruik van deze functie.
+Een XPath\-expressie om de locatie in het document te detecteren waar te beginnen met lezen. Sommige e\-boek leesprogramma\fB\(aq\fPs (vooral de Kindle) gebruiken deze locatie als de positie om het boek te openen. Raadpleeg de XPath\-zelfstudie in de calibre gebruikershandleiding voor meer hulp bij het gebruik van deze functie.
 .UNINDENT
 .SH INHOUDSOPGAVE
 .sp
-Configureer het automatisch aanmaken van de inhoudsopgave. Standaard zal, indien aanwezig, de inhoudsopgave van het invoerbestand gebruikt worden, in plaats van de automatisch aangemaakte inhoudsopgave.
+Configureer het automatisch aanmaken van de Inhoudsopgave. Standaard zal, indien aanwezig, de Inhoudsopgave van het invoerbestand gebruikt worden, in plaats van de automatisch aangemaakte Inhoudsopgave.
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc
-Laat dubbele invoer toe bij creëren van een inhoudstabel vanuit links in het invoer document, i.e. laat meer dan één invoer toe met dezelfde tekst indien ze verwijzen naar een verschillende locatie.
+Laat dubbele invoer toe bij creëren van een Inhoudsopgave vanuit links in het invoerdocument, d.w.z. laat meer dan één invoer toe met dezelfde tekst indien ze verwijzen naar een verschillende locatie.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-XPath\-expressie waarmee alle labels worden toegevoegd aan de inhoudsopgave op niveau een. Deze optie gaat boven andere vormen van auto\-detectie. Zie ook de voorbeelden in de XPath\-handleiding in de calibre\-handleiding.
+XPath expressie die alle aan de Inhoudsopgave op niveau een toe te voegen tags specificeert. Deze optie gaat boven andere vormen van auto\-detectie. Bekijk de XPath handleiding in de calibre handleiding voor voorbeelden .
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-XPath\-expressie waarmee alle labels worden toegevoegd aan de inhoudsopgave op niveau twee. Elke toevoeging komt onder de vorige vermelding op niveau een. Zie ook de voorbeelden in de XPath\-handleiding in de calibre\-handleiding.
+XPath expressie die alle aan de Inhoudsopgave op niveau twee toe te voegen tags specificeert.. Elke vermelding komt onder de vorige niveau een vermelding. Bekijk de XPath handleiding in de calibre handleiding voor voorbeelden .
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-XPath\-expressie waarmee alle labels worden toegevoegd aan de inhoudsopgave op niveau drie. Elke toevoeging komt onder de vorige vermelding op niveau twee. Zie ook de voorbeelden in de XPath\-handleiding in de calibre\-handleiding.
+XPath expressie die alle aan de Inhoudsopgave op niveau drie toe te voegen tags specificeert.. Elke vermelding komt onder de vorige niveau twee vermelding. Bekijk de XPath handleiding in de calibre handleiding voor voorbeelden .
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-toc\-links
-Maximaal aantal snelkoppelingen dat aan de inhoudsopgave toegevoegd mag worden. Gebruik 0 om uit te schakelen. Standaard is: 50. Snelkoppelingen worden alleen aan de inhoudsopgave toegevoegd als minder dan dit aantal hoofdstukken werd gedetecteerd.
+Maximaal aantal links dat aan de Inhoudsopgave toegevoegd mag worden. Gebruik 0 om uit te schakelen. Standaard is: 50. Links worden alleen aan de inhoudsopgave toegevoegd als minder dan dit aantal hoofdstukken werd gedetecteerd.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-no\-chapters\-in\-toc
-Voeg geen automatisch gedetecteerde hoofdstukken aan de inhoudsopgave toe.
+Voeg geen automatisch gedetecteerde hoofdstukken aan de Inhoudsopgave toe.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-toc\-filter
-Verwijder regels uit de inhoudsopgave waarvan de titels overeenkomen met de opgegeven reguliere uitdrukking. Overeenkomende regels en alle onderliggende regels worden verwijderd.
+Verwijder vermeldingen uit de Inhoudsopgave wiens titels overeenkomen met de opgegeven reguliere expressie. Overeenkomende vermeldingen en kinderen worden verwijderd.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-toc\-threshold
-Als het aantal gedetecteerde hoofdstukken kleiner is dan dit getal worden links aan de inhoudsopgave toegevoegd. Standaard: 6
+Als het aantal gedetecteerde hoofdstukken kleiner is dan dit getal worden links aan de Inhoudsopgave toegevoegd. Standaard: 6
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-use\-auto\-toc
-Normaal gesproken wordt de inhoudsopgave van het invoerbestand gebruikt in plaats van een automatisch gemaakte inhoudsopgave. Met deze optie zal de automatisch aangemaakte versie altijd gebruikt worden.
+Indien aanwezig, wordt normaal de Inhoudsopgave van het bronbestand gebruikt i.p.v. een automatisch gegenereerde. Met deze optie zal altijd de automatisch gegenereerde versie gebruikt worden.
 .UNINDENT
 .SH METAGEGEVENS
 .sp
@@ -523,7 +523,7 @@ Geef de producent op.
 .INDENT 0.0
 .TP
 .B \-\-comments
-Stel de e\-book omschrijving in.
+Stel de e\-boek omschrijving in.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -548,7 +548,7 @@ Stel de publicatiedatum in (veronderstellend de locale tijdzone, behalve als de 
 .INDENT 0.0
 .TP
 .B \-\-publisher
-Stel de e\-book\ uitgever in.
+Stel de e\-boek uitgever in.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -558,17 +558,17 @@ Waardering geven. Moet een getal tussen de 1 en 5 zijn.
 .INDENT 0.0
 .TP
 .B \-\-read\-metadata\-from\-opf, \-\-from\-opf, \-m
-Lees metadata  uit het opgegeven OPF\-bestand. Metadata  die hieruit worden gelezen krijgt voorrang over metadata  uit het bronbestand.
+Lees metadata uit het opgegeven OPF bestand. Metadata die hieruit worden gelezen negeren metadata in het bronbestand.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-series
-Stel de reeks in waartoe dit e\-boek\ behoort.
+Stel de serie in waartoe dit e\-boek\ behoort.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-series\-index
-Geef de index van dit boek in de reeks op.
+Geef de index van dit boek in de serie op.
 .UNINDENT
 .INDENT 0.0
 .TP

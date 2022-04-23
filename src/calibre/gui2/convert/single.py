@@ -1,12 +1,11 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 # License: GPLv3 Copyright: 2009, Kovid Goyal <kovid at kovidgoyal.net>
 
 
 import shutil
 
 from qt.core import (
-    QAbstractListModel, QCheckBox, QComboBox, QCoreApplication, QDialog,
+    QAbstractListModel, QCheckBox, QComboBox, QDialog,
     QDialogButtonBox, QFont, QFrame, QGridLayout, QHBoxLayout, QIcon, QLabel,
     QListView, QModelIndex, QScrollArea, QSize, QSizePolicy, QSpacerItem,
     Qt, QTextEdit, QWidget, QApplication
@@ -87,6 +86,7 @@ class Config(QDialog):
         self.groups.entered[(QModelIndex)].connect(self.show_group_help)
         rb = self.buttonBox.button(QDialogButtonBox.StandardButton.RestoreDefaults)
         rb.setText(_('Restore &defaults'))
+        rb.setIcon(QIcon(I('clear_left.png')))
         rb.clicked.connect(self.restore_defaults)
         self.groups.setMouseTracking(True)
         geom = gprefs.get('convert_single_dialog_geom', None)
@@ -179,8 +179,7 @@ class Config(QDialog):
         self.buttonBox.rejected.connect(self.reject)
 
     def sizeHint(self):
-        desktop = QCoreApplication.instance().desktop()
-        geom = desktop.availableGeometry(self)
+        geom = self.screen().availableSize()
         nh, nw = max(300, geom.height()-100), max(400, geom.width()-70)
         return QSize(nw, nh)
 
@@ -241,6 +240,7 @@ class Config(QDialog):
         for w in widgets:
             w.set_help_signal.connect(self.help.setPlainText)
             w.setVisible(False)
+            w.layout().setContentsMargins(0, 0, 0, 0)
 
         self._groups_model = GroupModel(widgets)
         self.groups.setModel(self._groups_model)

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -8,7 +7,7 @@ import subprocess
 import sys
 import unittest
 
-from setup import SRC, Command, islinux, ismacos, iswindows
+from setup import SRC, Command, isbsd, islinux, ismacos, iswindows
 
 TEST_MODULES = frozenset('srv db polish opf css docx cfi matcher icu smartypants build misc dbcli ebooks'.split())
 
@@ -50,8 +49,10 @@ class TestImports(unittest.TestCase):
             exclude_modules |= {
                     'calibre.linux',
                     'calibre.utils.linux_trash', 'calibre.utils.open_with.linux',
-                    'calibre.gui2.linux_file_dialogs', 'calibre.devices.usbms.hal',
+                    'calibre.gui2.linux_file_dialogs',
             }
+        if not isbsd:
+            exclude_modules.add('calibre.devices.usbms.hal')
         self.assertGreater(self.base_check(os.path.join(SRC, 'odf'), exclude_packages, exclude_modules), 10)
         base = os.path.join(SRC, 'calibre')
         self.assertGreater(self.base_check(base, exclude_packages, exclude_modules), 1000)
@@ -108,6 +109,9 @@ def find_tests(which_tests=None, exclude_tests=None):
     if ok('matcher'):
         from calibre.utils.matcher import test
         a(test(return_tests=True))
+    if ok('scraper'):
+        from calibre.scraper.simple import find_tests
+        a(find_tests())
     if ok('icu'):
         from calibre.utils.icu_test import find_tests
         a(find_tests())
@@ -137,6 +141,8 @@ def find_tests(which_tests=None, exclude_tests=None):
         from calibre.utils.search_query_parser_test import find_tests
         a(find_tests())
         from calibre.utils.html2text import find_tests
+        a(find_tests())
+        from calibre.utils.shm import find_tests
         a(find_tests())
         from calibre.library.comments import find_tests
         a(find_tests())

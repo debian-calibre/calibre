@@ -31,7 +31,7 @@ def get_containing_block(node):
 
 def is_footnote_link(a, dest_name, dest_frag, src_name, link_to_map):
     roles = elem_roles(a)
-    if roles['doc-noteref']:
+    if roles['doc-noteref'] or roles['doc-biblioref'] or roles['doc-glossref']:
         return True
     if roles['doc-link']:
         return False
@@ -141,6 +141,11 @@ def unhide_tree(elem):
 ok_list_types = {'disc': True, 'circle': True, 'square': True}
 
 
+def is_new_footnote_start(elem, start_elem):
+    c = get_note_container(elem)
+    return c is not start_elem and c is not start_elem.firstElementChild
+
+
 def show_footnote(target, known_anchors):
     if not target:
         return
@@ -163,7 +168,7 @@ def show_footnote(target, known_anchors):
         for elem in document.documentElement.getElementsByTagName('*'):
             if found_note_start:
                 eid = elem.getAttribute('id')
-                if eid is not target and known_anchors[eid] and get_note_container(elem) is not start_elem:
+                if eid is not target and known_anchors[eid] and is_new_footnote_start(elem, start_elem):
                     # console.log('Breaking footnote on anchor: ' + elem.getAttribute('id'))
                     v'delete get_note_container(elem).do_not_hide'
                     break
@@ -191,7 +196,7 @@ class PopupIframeBoss:
             'clear': self.on_clear,
             'display': self.display,
         }
-        self.comm = IframeClient(handlers)
+        self.comm = IframeClient(handlers, 'popup-iframe')
         self.blob_url_map = {}
         self.name = None
         self.frag = None

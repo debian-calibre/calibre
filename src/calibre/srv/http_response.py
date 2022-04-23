@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__ = 'GPL v3'
@@ -9,6 +8,7 @@ import errno
 import hashlib
 import os
 import struct
+import time
 import uuid
 from collections import namedtuple
 from functools import wraps
@@ -22,7 +22,7 @@ from calibre.srv.errors import HTTPSimpleResponse
 from calibre.srv.http_request import HTTPRequest, read_headers
 from calibre.srv.loop import WRITE
 from calibre.srv.utils import (
-    HTTP1, HTTP11, Cookie, MultiDict, fast_now_strftime, get_translator_for_lang,
+    HTTP1, HTTP11, Cookie, MultiDict, get_translator_for_lang,
     http_date, socket_errors_socket_closed, sort_q_values
 )
 from calibre.utils.monotonic import monotonic
@@ -254,7 +254,8 @@ class RequestData:  # {{{
 
     def filesystem_file_with_custom_etag(self, output, *etag_parts):
         etag = hashlib.sha1()
-        tuple(map(lambda x:etag.update(str(x).encode('utf-8')), etag_parts))
+        for i in etag_parts:
+            etag.update(str(i).encode('utf-8'))
         return ETaggedFile(output, etag.hexdigest())
 
     def filesystem_file_with_constant_etag(self, output, etag_as_hexencoded_string):
@@ -431,7 +432,7 @@ class HTTPConnection(HTTPRequest):
             buf.append("Connection: close")
         if extra_headers is not None:
             for h, v in iteritems(extra_headers):
-                buf.append('%s: %s' % (h, v))
+                buf.append(f'{h}: {v}')
         buf.append('')
         buf = [(x + '\r\n').encode('ascii') for x in buf]
         if self.method != 'HEAD':
@@ -525,7 +526,7 @@ class HTTPConnection(HTTPRequest):
 
         buf = [HTTP11 + (' %d ' % data.status_code) + http_client.responses[data.status_code]]
         for header, value in sorted(iteritems(outheaders), key=itemgetter(0)):
-            buf.append('%s: %s' % (header, value))
+            buf.append(f'{header}: {value}')
         for morsel in itervalues(data.outcookie):
             morsel['version'] = '1'
             x = morsel.output()
@@ -549,9 +550,13 @@ class HTTPConnection(HTTPRequest):
         ff = self.forwarded_for
         if ff:
             ff = '[%s] ' % ff
-        line = '%s port-%s %s%s %s "%s" %s %s' % (
+        try:
+            ts = time.strftime('%d/%b/%Y:%H:%M:%S %z')
+        except Exception:
+            ts = 'strftime() failed'
+        line = '{} port-{} {}{} {} "{}" {} {}'.format(
             self.remote_addr, self.remote_port, ff or '', username or '-',
-            fast_now_strftime('%d/%b/%Y:%H:%M:%S %z'),
+            ts,
             force_unicode(self.request_line or '', 'utf-8'),
             status_code, ('-' if response_size is None else response_size))
         self.access_log(line)

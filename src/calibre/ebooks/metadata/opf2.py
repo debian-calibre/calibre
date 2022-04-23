@@ -544,6 +544,7 @@ class OPF:  # {{{
         'and re:match(@name, concat("^calibre:", $name, "$"), "i"))]')
     title_path      = XPath('descendant::*[re:match(name(), "title", "i")]')
     authors_path    = XPath('descendant::*[re:match(name(), "creator", "i") and (@role="aut" or @opf:role="aut" or (not(@role) and not(@opf:role)))]')
+    editors_path    = XPath('descendant::*[re:match(name(), "creator", "i") and (@role="edt" or @opf:role="edt")]')
     bkp_path        = XPath('descendant::*[re:match(name(), "contributor", "i") and (@role="bkp" or @opf:role="bkp")]')
     tags_path       = XPath('descendant::*[re:match(name(), "subject", "i")]')
     isbn_path       = XPath('descendant::*[re:match(name(), "identifier", "i") and '
@@ -846,11 +847,14 @@ class OPF:  # {{{
         ans = []
         for elem in self.authors_path(self.metadata):
             ans.extend(string_to_authors(self.get_text(elem)))
+        if not ans:
+            for elem in self.editors_path(self.metadata):
+                ans.extend(string_to_authors(self.get_text(elem)))
         return ans
 
     @authors.setter
     def authors(self, val):
-        remove = list(self.authors_path(self.metadata))
+        remove = list(self.authors_path(self.metadata)) or list(self.editors_path(self.metadata))
         for elem in remove:
             elem.getparent().remove(elem)
         # Ensure new author element is at the top of the list
@@ -866,18 +870,16 @@ class OPF:  # {{{
 
     @property
     def author_sort(self):
-        matches = self.authors_path(self.metadata)
+        matches = self.authors_path(self.metadata) or self.editors_path(self.metadata)
         if matches:
             for match in matches:
-                ans = match.get('{%s}file-as'%self.NAMESPACES['opf'], None)
-                if not ans:
-                    ans = match.get('file-as', None)
+                ans = match.get('{%s}file-as'%self.NAMESPACES['opf']) or match.get('file-as')
                 if ans:
                     return ans
 
     @author_sort.setter
     def author_sort(self, val):
-        matches = self.authors_path(self.metadata)
+        matches = self.authors_path(self.metadata) or self.editors_path(self.metadata)
         if matches:
             for key in matches[0].attrib:
                 if key.endswith('file-as'):
@@ -1271,11 +1273,11 @@ class OPF:  # {{{
 
     def create_metadata_element(self, name, attrib=None, is_dc=True):
         if is_dc:
-            name = '{%s}%s' % (self.NAMESPACES['dc'], name)
+            name = '{{{}}}{}'.format(self.NAMESPACES['dc'], name)
         else:
             attrib = attrib or {}
             attrib['name'] = 'calibre:' + name
-            name = '{%s}%s' % (self.NAMESPACES['opf'], 'meta')
+            name = '{{{}}}{}'.format(self.NAMESPACES['opf'], 'meta')
         nsmap = dict(self.NAMESPACES)
         del nsmap['opf']
         elem = etree.SubElement(self.metadata, name, attrib=attrib,

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2020, Kovid Goyal <kovid at kovidgoyal.net>
 
 from functools import partial
@@ -68,6 +67,8 @@ class Client:
             self.create_ssip_client()
         if self.system_default_output_module is None:
             self.system_default_output_module = self.ssip_client.get_output_module()
+            if self.system_default_output_module == '(null)':
+                raise ValueError(_('Speech dispatcher on this system is not configured with any available voices. Install some voices first.'))
         if not self.settings_applied:
             self.apply_settings()
         self.set_use_ssml(use_ssml)

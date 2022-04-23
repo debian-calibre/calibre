@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 # License: GPLv3 Copyright: 2010, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -74,7 +73,7 @@ def comments_to_html(comments):
         '.\r'), comments)
     for lost_cr in lost_cr_pat.finditer(comments):
         comments = comments.replace(lost_cr.group(),
-                                    '%s%s\n\n%s' % (lost_cr.group(1),
+                                    '{}{}\n\n{}'.format(lost_cr.group(1),
                                                     lost_cr.group(2),
                                                     lost_cr.group(3)))
 
@@ -144,7 +143,7 @@ def merge_comments(one, two):
 
 def sanitize_comments_html(html):
     from calibre.ebooks.markdown import Markdown
-    text = html2text(html)
+    text = html2text(html, single_line_break=False)
     md = Markdown()
     html = md.convert(text)
     return html

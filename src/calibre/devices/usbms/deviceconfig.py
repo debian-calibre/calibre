@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 __license__ = 'GPL 3'
 __copyright__ = '2009, John Schember <john@nachtimwald.com>'
 __docformat__ = 'restructuredtext en'
@@ -10,7 +7,7 @@ from calibre.utils.config_base import Config, ConfigProxy
 
 class DeviceConfig:
 
-    HELP_MESSAGE = _('Configure Device')
+    HELP_MESSAGE = _('Configure device')
 
     #: Can be None, a string or a list of strings. When it is a string
     #: that string is used for the help text and the actual customization value

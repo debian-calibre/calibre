@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:fdm=marker:ai
 
 
 __license__   = 'GPL v3'
@@ -142,7 +141,7 @@ def find_matching_font(fonts, weight='normal', style='normal', stretch='normal')
 
 def do_embed(container, font, report):
     from calibre.utils.fonts.scanner import font_scanner
-    report('Embedding font %s from %s' % (font['full_name'], font['path']))
+    report('Embedding font {} from {}'.format(font['full_name'], font['path']))
     data = font_scanner.get_font_data(font)
     fname = font['full_name']
     ext = 'otf' if font['is_otf'] else 'ttf'
@@ -236,7 +235,7 @@ def embed_all_fonts(container, stats, report):
         return False
 
     # Write out CSS
-    rules = [';\n\t'.join('%s: %s' % (
+    rules = [';\n\t'.join('{}: {}'.format(
         k, '"%s"' % v if k == 'font-family' else v) for k, v in iteritems(rulel) if (k in props and props[k] != v and v != '400') or k == 'src')
         for rulel in rules]
     css = '\n\n'.join(['@font-face {\n\t%s\n}' % r for r in rules])
@@ -248,7 +247,13 @@ def embed_all_fonts(container, stats, report):
     # Add link to CSS in all files that need it
     for spine_name in modified:
         root = container.parsed(spine_name)
-        head = root.xpath('//*[local-name()="head"][1]')[0]
+        try:
+            head = root.xpath('//*[local-name()="head"][1]')[0]
+        except IndexError:
+            head = root.makeelement(XHTML('head'))
+            root.insert(0, head)
+            head.tail = '\n'
+            head.text = '\n  '
         href = container.name_to_href(name, spine_name)
         etree.SubElement(head, XHTML('link'), rel='stylesheet', type='text/css', href=href).tail = '\n'
         container.dirty(spine_name)

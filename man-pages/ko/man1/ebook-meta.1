@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-META" "1" "11월 12, 2021" "5.32.0" "calibre"
+.TH "EBOOK-META" "1" "4월 22, 2022" "5.41.0" "calibre"
 .SH NAME
 ebook-meta \- ebook-meta
 .
@@ -43,7 +43,7 @@ ebook\-meta ebook_file [options]
 .sp
 Read/Write metadata from/to e\-book files.
 .sp
-Supported formats for reading metadata: azw, azw1, azw3, azw4, cb7, cbr, cbz, chm, docx, epub, fb2, fbz, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
+Supported formats for reading metadata: azw, azw1, azw3, azw4, cb7, cbc, cbr, cbz, chm, docx, epub, fb2, fbz, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
 .sp
 Supported formats for writing metadata: azw, azw1, azw3, azw4, docx, epub, fb2, fbz, htmlz, lrf, mobi, odt, pdb, pdf, prc, rtf, tpz, txtz
 .sp
@@ -52,7 +52,7 @@ some metadata on a file type that does not support it, the metadata will be
 silently ignored.
 .sp
 Whenever you pass arguments to \fBebook\-meta\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
-.SH [설정들]
+.SH [옵션]
 .INDENT 0.0
 .TP
 .B \-\-author\-sort
@@ -71,7 +71,7 @@ Whenever you pass arguments to \fBebook\-meta\fP that have spaces in them, enclo
 .INDENT 0.0
 .TP
 .B \-\-category
-책의 분류를 지정합니다.
+책 범주를 지정합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -106,7 +106,7 @@ Whenever you pass arguments to \fBebook\-meta\fP that have spaces in them, enclo
 .INDENT 0.0
 .TP
 .B \-\-identifier
-Set the identifiers for the book, can be specified multiple times. For example: \fI\%\-\-identifier\fP uri:https://acme.com \fI\%\-\-identifier\fP isbn:12345 To remove an identifier, specify no value, \fI\%\-\-identifier\fP isbn: Note that for EPUB files, an identifier marked as the package identifier cannot be removed.
+책의 식별자를 설정하고 여러 번 지정할 수 있습니다. 예를 들어: \fI\%\-\-identifier\fP uri:https://acme.com \fI\%\-\-identifier\fP isbn:12345 식별자를 제거하려면 값을 지정하지 말고, \fI\%\-\-identifier\fP isbn: EPUB 파일의 경우 패키지 식별자로 표시된 식별자는 제거할 수 없습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -131,12 +131,12 @@ LRF 파일의 BookID를 지정
 .INDENT 0.0
 .TP
 .B \-\-publisher, \-p
-책의 출판사를 지정합니다.
+책의 발행자를 지정합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-rating, \-r
-별점을 지정합니다. 1과 5 사이의 숫자여야 합니다.
+평점을 지정합니다. 1과 5 사이의 숫자여야 합니다.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:fdm=marker:ai
 
 
 __license__   = 'GPL v3'
@@ -384,7 +383,8 @@ def remove_links_to(container, predicate):
             removed = remove_links_in_sheet(partial(container.href_to_name, base=name), container.parsed(name), predicate)
         if removed:
             changed.add(name)
-    tuple(map(container.dirty, changed))
+    for i in changed:
+        container.dirty(i)
     return changed
 
 

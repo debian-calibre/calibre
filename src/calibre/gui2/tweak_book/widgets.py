@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__ = 'GPL v3'
@@ -9,12 +8,13 @@ import os
 import textwrap
 import unicodedata
 from collections import OrderedDict
+from math import ceil
 from qt.core import (
     QAbstractListModel, QApplication, QCheckBox, QComboBox, QCursor, QDialog,
     QDialogButtonBox, QEvent, QFormLayout, QFrame, QGridLayout, QGroupBox,
     QHBoxLayout, QIcon, QItemSelectionModel, QLabel, QLineEdit, QListView, QMimeData,
     QModelIndex, QPainter, QPalette, QPixmap, QPlainTextEdit, QPoint, QRect, QSize,
-    QSizePolicy, QSplitter, QStaticText, QStyle, QStyledItemDelegate, Qt,
+    QSizePolicy, QSplitter, QStaticText, QStyle, QStyledItemDelegate, Qt, QTextCursor,
     QTextDocument, QTextOption, QToolButton, QVBoxLayout, QWidget, pyqtSignal
 )
 
@@ -88,7 +88,7 @@ class InsertTag(Dialog):  # {{{
     @classmethod
     def test(cls):
         d = cls()
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             print(d.tag)
 
 # }}}
@@ -281,7 +281,7 @@ def make_highlighted_text(emph, text, positions):
         for p in positions:
             ch = get_char(text, p)
             parts.append(prepare_string_for_xml(text[pos:p]))
-            parts.append('<span style="%s">%s</span>' % (emph, prepare_string_for_xml(ch)))
+            parts.append(f'<span style="{emph}">{prepare_string_for_xml(ch)}</span>')
             pos = p + len(ch)
         parts.append(prepare_string_for_xml(text[pos:]))
         return ''.join(parts)
@@ -290,7 +290,7 @@ def make_highlighted_text(emph, text, positions):
 
 def emphasis_style():
     pal = QApplication.instance().palette()
-    return 'color: {}; font-weight: bold'.format(pal.color(QPalette.ColorRole.Link).name())
+    return f'color: {pal.color(QPalette.ColorRole.Link).name()}; font-weight: bold'
 
 
 class Results(QWidget):
@@ -361,7 +361,7 @@ class Results(QWidget):
             self.current_result = 0
             prefixes = [QStaticText('<b>%s</b>' % os.path.basename(x)) for x in results]
             [(p.setTextFormat(Qt.TextFormat.RichText), p.setTextOption(self.text_option)) for p in prefixes]
-            self.maxwidth = max(x.size().width() for x in prefixes)
+            self.maxwidth = max(int(ceil(x.size().width())) for x in prefixes)
             self.results = tuple((prefix, self.make_text(text, positions), text)
                 for prefix, (text, positions) in zip(prefixes, iteritems(results)))
         else:
@@ -400,9 +400,9 @@ class Results(QWidget):
                 p.drawStaticText(offset, prefix)
                 offset.setX(self.maxwidth + 5)
                 p.drawStaticText(offset, self.divider)
-                offset.setX(offset.x() + self.divider.size().width())
+                offset.setX(offset.x() + int(ceil(self.divider.size().width())))
                 p.drawStaticText(offset, full)
-                offset.setY(offset.y() + size.height() + self.MARGIN // 2)
+                offset.setY(int(offset.y() + size.height() + self.MARGIN // 2))
                 if i in (self.current_result, self.mouse_hover_result):
                     offset.setX(0)
                     p.save()
@@ -494,7 +494,7 @@ class QuickOpen(Dialog):
         from calibre.utils.matcher import get_items_from_dir
         items = get_items_from_dir(os.getcwd(), lambda x:not x.endswith('.pyc'))
         d = cls(items)
-        d.exec_()
+        d.exec()
         print(d.selected_result)
 
 # }}}
@@ -733,9 +733,9 @@ class InsertLink(Dialog):
                 frag = item.get('id', None) or item.get('name')
                 if not frag:
                     continue
-                text = lead_text(item, num_words=4)
+                text = lead_text(item, num_words=4).strip()
                 ac.append((text, frag))
-            ac.sort(key=lambda text_frag: numeric_sort_key(text_frag[0]))
+            ac.sort(key=lambda text_frag: numeric_sort_key(text_frag[0] or text_frag[1]))
         self.anchor_names.model().set_names(self.anchor_cache[name])
         self.update_target()
 
@@ -792,7 +792,7 @@ class InsertLink(Dialog):
         from calibre.ebooks.oeb.polish.container import get_container
         c = get_container(sys.argv[-1], tweak_mode=True)
         d = cls(c, next(c.spine_names)[0])
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             print(d.href, d.text)
 
 # }}}
@@ -844,7 +844,7 @@ class InsertSemantics(Dialog):
             'bodymatter': _('First "real" page of content'),
         }
         t = _
-        all_types = [(k, (('%s (%s)' % (t(v), type_map_help[k])) if k in type_map_help else t(v))) for k, v in iteritems(self.known_type_map)]
+        all_types = [(k, ((f'{t(v)} ({type_map_help[k]})') if k in type_map_help else t(v))) for k, v in iteritems(self.known_type_map)]
         all_types.sort(key=lambda x: sort_key(x[1]))
         self.all_types = OrderedDict(all_types)
 
@@ -906,7 +906,7 @@ class InsertSemantics(Dialog):
             ' choose a file and optionally a location within the file to point to.\n\nThe'
             ' semantic information will be written in the <guide> section of the OPF file.'))
         d.resize(d.sizeHint())
-        d.exec_()
+        d.exec()
 
     def dest_for_type(self, item_type):
         if item_type in self.changes:
@@ -1012,7 +1012,7 @@ class InsertSemantics(Dialog):
         from calibre.ebooks.oeb.polish.container import get_container
         c = get_container(sys.argv[-1], tweak_mode=True)
         d = cls(c)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             import pprint
             pprint.pprint(d.changed_type_map)
             d.apply_changes(d.container)
@@ -1084,7 +1084,7 @@ class FilterCSS(Dialog):  # {{{
     @classmethod
     def test(cls):
         d = cls()
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             print(d.filtered_properties)
 
 # }}}
@@ -1217,7 +1217,7 @@ class AddCover(Dialog):
             from calibre.gui2.tweak_book.file_list import NewFileDialog
             d = NewFileDialog(self)
             d.do_import_file(ans[0], hide_button=True)
-            if d.exec_() == QDialog.DialogCode.Accepted:
+            if d.exec() == QDialog.DialogCode.Accepted:
                 self.import_requested.emit(d.file_name, d.file_data)
                 self.container = current_container()
                 self.names_filter.clear()
@@ -1233,7 +1233,7 @@ class AddCover(Dialog):
         from calibre.ebooks.oeb.polish.container import get_container
         c = get_container(sys.argv[-1], tweak_mode=True)
         d = cls(c)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             pass
 
 # }}}
@@ -1286,6 +1286,31 @@ class PlainTextEdit(QPlainTextEdit):  # {{{
             if ret:
                 return True
         return QPlainTextEdit.event(self, ev)
+
+    def mouseDoubleClickEvent(self, ev):
+        super().mouseDoubleClickEvent(ev)
+        c = self.textCursor()
+        # Workaround for QTextCursor considering smart quotes as word
+        # characters https://bugreports.qt.io/browse/QTBUG-101372
+        changed = False
+        while True:
+            q = c.selectedText()
+            if not q:
+                break
+            left = min(c.anchor(), c.position())
+            right = max(c.anchor(), c.position())
+            if q[0] in '“‘':
+                changed = True
+                c.setPosition(left + 1)
+                c.setPosition(right, QTextCursor.MoveMode.KeepAnchor)
+            elif q[-1] in '’”':
+                changed = True
+                c.setPosition(left)
+                c.setPosition(right - 1, QTextCursor.MoveMode.KeepAnchor)
+            else:
+                break
+        if changed:
+            self.setTextCursor(c)
 
 # }}}
 

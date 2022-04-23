@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -510,7 +509,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
 
     def handle_changes_from_server(self, library_path, change_event):
         if DEBUG:
-            prints('Received server change event: {} for {}'.format(change_event, library_path))
+            prints(f'Received server change event: {change_event} for {library_path}')
         if self.library_broker.is_gui_library(library_path):
             self.server_changes.put((library_path, change_event))
             self.server_change_notification_timer.start()
@@ -606,7 +605,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         if self.content_server is not None and \
                 self.content_server.exception is not None:
             error_dialog(self, _('Failed to start Content server'),
-                         str(self.content_server.exception)).exec_()
+                         str(self.content_server.exception)).exec()
 
     @property
     def current_db(self):
@@ -1184,10 +1183,16 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         self.hide_windows()
         if self._spare_pool is not None:
             self._spare_pool.shutdown()
+        from calibre.scraper.simple import cleanup_overseers
+        wait_for_cleanup = cleanup_overseers()
         from calibre.db.delete_service import shutdown
         shutdown()
+        from calibre.live import async_stop_worker
+        wait_for_stop = async_stop_worker()
         time.sleep(2)
         self.istores.join()
+        wait_for_cleanup()
+        wait_for_stop()
         return True
 
     def run_wizard(self, *args):
@@ -1209,7 +1214,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                 info_dialog(self, 'calibre', 'calibre '+
                         _('will keep running in the system tray. To close it, '
                         'choose <b>Quit</b> in the context menu of the '
-                        'system tray.'), show_copy_button=False).exec_()
+                        'system tray.'), show_copy_button=False).exec()
                 dynamic['systray_msg'] = True
             self.hide_windows()
             e.ignore()

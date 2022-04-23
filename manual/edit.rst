@@ -26,8 +26,7 @@ Basic workflow
 ---------------
 
 .. note::
-    A video tour of the calibre E-book editor is available `here
-    <https://calibre-ebook.com/demo#tutorials>`_.
+    A video tour of the calibre E-book editor is available :website:`here <demo#tutorials>`.
 
 When you first open a book with the Edit book tool, you will be presented with
 a list of files on the left. These are the individual HTML files, stylesheets,
@@ -50,7 +49,7 @@ you created the checkpoint. To create a checkpoint, use :guilabel:`Edit->Create
 checkpoint`. Checkpoints will also be automatically created for you whenever you
 run any automated tool like global search and replace. The checkpointing
 functionality is in addition to the normal undo/redo mechanism when editing
-individual files. Checkpoints are useful for when changes are spread over
+individual files. Checkpoints are needed for when changes are spread over
 multiple files in the book.
 
 That is the basic work flow for editing books -- Open a file, make changes,
@@ -127,6 +126,9 @@ links and references to the merged files. Note that merging files can sometimes
 cause text styling to change, since the individual files could have used
 different stylesheets.
 
+You can also select text files and then drag and drop the text files onto
+another text file to merge the dropped text files into the target text file.
+
 Changing text file order
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -134,7 +136,8 @@ You can re-arrange the order in which text (HTML) files are opened when reading
 the book by simply dragging and dropping them in the Files browser. For the
 technically inclined, this is called re-ordering the book spine. Note that you
 have to drop the items *between* other items, not on top of them, this can be a
-little fiddly until you get used to it.
+little fiddly until you get used to it. Dropping on top of another file will
+cause the files to be merged.
 
 Marking the cover
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -514,7 +517,7 @@ You can create a checkpoint via :guilabel:`Edit->Create checkpoint`. And go back
 to a previous checkpoint with :guilabel:`Edit->Revert to ...`
 
 The check pointing functionality is in addition to the normal Undo/redo
-mechanism when editing individual files. Checkpoints are particularly useful
+mechanism when editing individual files. Checkpoints are needed
 for when changes are spread over multiple files in the book or when you wish to
 be able to revert a large group of related changes as a whole.
 
@@ -673,6 +676,14 @@ common in your book and to run a simple search and replace on individual words.
     tool is open, you should click the :guilabel:`Refresh` button in the Spell
     check tool. If you do not do this and continue to use the Spell check tool,
     you could lose the changes you have made in the editor.
+
+.. note::
+   To exclude an individual file from being spell checked when running the
+   spell check tool, you can use the :guilabel:`Exclude files` button or
+   add the following comment just under the opening tag in the file::
+
+        <!-- calibre-no-spell-check -->
+
 
 Adding new dictionaries
 ###########################

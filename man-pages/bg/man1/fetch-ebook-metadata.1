@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "FETCH-EBOOK-METADATA" "1" "ноември 12, 2021" "5.32.0" "calibre"
+.TH "FETCH-EBOOK-METADATA" "1" "април 22, 2022" "5.41.0" "calibre"
 .SH NAME
 fetch-ebook-metadata \- fetch-ebook-metadata
 .
@@ -41,15 +41,14 @@ fetch\-ebook\-metadata [options]
 .UNINDENT
 .UNINDENT
 .sp
-Fetch book metadata from online sources. You must specify at least one
-of title, authors or ISBN.
+Извличане на метаданни за книги от онлайн източници. Трябва да посочите поне еднозаглавие, автори или ISBN.
 .sp
-Whenever you pass arguments to \fBfetch\-ebook\-metadata\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Винаги, когато предавате аргументи на \fBfetch\-ebook\-metadata\fP, които имат интервали в тях, затворете аргументите в кавички. Например: "/some path/with spaces"
 .SH ОБЩИ НАСТРОЙКИ
 .INDENT 0.0
 .TP
 .B \-\-allowed\-plugin, \-p
-Specify the name of a metadata download plugin to use. By default, all metadata plugins will be used. Can be specified multiple times for multiple plugins. All plugin names: Google, Google Images, Amazon.com, Edelweiss, Open Library, Big Book Search
+Задайте името на плъгин за изтегляне на метаданни, който да се използва. По подразб. всички плъгини за метаданни ще се използват. Може да се зададе няколко пъти за няколко плъгини. Всички имена на плъгини: Google, Google Images, Amazon.com, Edelweiss, Open Library, Big Book Search
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -59,7 +58,7 @@ Specify the name of a metadata download plugin to use. By default, all metadata 
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-Specify a filename. The cover, if available, will be saved to it. Without this option, no cover will be downloaded.
+Задайте име\-файл. Корицата, ако е налична, ще бъде записана към него. Без тази опция, няма да бъде изтеглена корица.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -69,7 +68,7 @@ Specify a filename. The cover, if available, will be saved to it. Without this o
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Identifiers such as ASIN/Goodreads id etc. Can be specified multiple times for multiple identifiers. For example: \fI\%\-\-identifier\fP asin:B0082BAJA0
+Идентификатори като ASIN/Goodreads id и т.н. Може да се посочат няколко пъти за няколко идентификатора. Например: \fI\%\-\-identifier\fP asin:B0082BAJA0
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -79,12 +78,12 @@ ISBN на книга
 .INDENT 0.0
 .TP
 .B \-\-opf, \-o
-Output the metadata in OPF format instead of human readable text.
+Изведете метаданните във формат OPF вместо човешки четим текст.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout, \-d
-Timeout in seconds. Default is 30
+Таймаут в секунди. По подразб. е 30
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -94,7 +93,7 @@ Timeout in seconds. Default is 30
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Print the log to the console (stderr)
+Отпечатване лог файла на конзолата (stderr)
 .UNINDENT
 .INDENT 0.0
 .TP

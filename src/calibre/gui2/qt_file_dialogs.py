@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -35,7 +34,7 @@ class Dummy:
 class FileDialog(QObject):
 
     def __init__(
-        self, title=_('Choose Files'),
+        self, title=_('Choose files'),
         filters=[],
         add_all_files_filter=True,
         parent=None,
@@ -56,8 +55,11 @@ class FileDialog(QObject):
         if filters:
             for filter in filters:
                 text, extensions = filter
-                extensions = ['*'+(i if i.startswith('.') else '.'+i) for i in
-                        extensions]
+                if not extensions or (len(extensions) == 1 and extensions[0] == '*'):
+                    extensions = ['*']
+                else:
+                    extensions = ['*'+(i if i.startswith('.') else '.'+i) for i in
+                            extensions]
                 etext = '%s (%s);;'%(text, ' '.join(extensions))
                 if len(etext) > 72:
                     has_long_filter = True

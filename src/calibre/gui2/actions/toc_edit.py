@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:fdm=marker:ai
 
 
 __license__   = 'GPL v3'
@@ -7,6 +6,7 @@ __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
 import os
+from itertools import count
 from collections import OrderedDict
 from qt.core import (
     QCheckBox, QDialog, QDialogButtonBox, QGridLayout, QIcon, QLabel, QTimer
@@ -101,6 +101,7 @@ class ToCEditAction(InterfaceAction):
             self.do_edit(book_id_map)
 
     def genesis(self):
+        self.shm_count = count()
         self.qaction.triggered.connect(self.edit_books)
         self.jobs = []
 
@@ -130,7 +131,7 @@ class ToCEditAction(InterfaceAction):
         if not rows or len(rows) == 0:
             d = error_dialog(self.gui, _('Cannot edit ToC'),
                     _('No books selected'))
-            d.exec_()
+            d.exec()
             return None
         db = self.gui.current_db
         ans = (db.id(r) for r in rows)
@@ -140,49 +141,65 @@ class ToCEditAction(InterfaceAction):
         for book_id, fmts in iteritems(book_id_map):
             if len(fmts) > 1:
                 d = ChooseFormat(fmts, self.gui)
-                if d.exec_() != QDialog.DialogCode.Accepted:
+                if d.exec() != QDialog.DialogCode.Accepted:
                     return
                 fmts = d.formats
             for fmt in fmts:
                 self.do_one(book_id, fmt)
 
     def do_one(self, book_id, fmt):
+        import struct, json, atexit
+        from calibre.utils.shm import SharedMemory
         db = self.gui.current_db
         path = db.format(book_id, fmt, index_is_id=True, as_path=True)
         title = db.title(book_id, index_is_id=True) + ' [%s]'%fmt
-        data = {'path': path, 'title': title}
-        self.gui.job_manager.launch_gui_app('toc-dialog', kwargs=data)
-        job = data.copy()
-        job.update({'book_id': book_id, 'fmt': fmt, 'library_id': db.new_api.library_id, 'started': False, 'start_time': monotonic()})
+        job = {'path': path, 'title': title}
+        data = json.dumps(job).encode('utf-8')
+        header = struct.pack('>II', 0, 0)
+        shm = SharedMemory(prefix=f'c{os.getpid()}-{next(self.shm_count)}-', size=len(data) + len(header) + SharedMemory.num_bytes_for_size)
+        shm.write(header)
+        shm.write_data_with_size(data)
+        shm.flush()
+        atexit.register(shm.close)
+        self.gui.job_manager.launch_gui_app('toc-dialog', kwargs={'shm_name': shm.name})
+        job.update({
+            'book_id': book_id, 'fmt': fmt, 'library_id': db.new_api.library_id, 'shm': shm, 'started': False, 'start_time': monotonic()})
         self.jobs.append(job)
         self.check_for_completions()
 
     def check_for_completions(self):
-        from calibre.utils.filenames import retry_on_fail
+        import struct
+
+        def remove_job(job):
+            job['shm'].close()
+            self.jobs.remove(job)
+
         for job in tuple(self.jobs):
-            started_path = job['path'] + '.started'
-            result_path = job['path'] + '.result'
-            if job['started'] and os.path.exists(result_path):
-                self.jobs.remove(job)
-                with open(result_path) as f:
-                    ret = int(f.read().strip())
-                retry_on_fail(os.remove, result_path)
-                if ret == 0:
+            path = job['path']
+            shm = job['shm']
+            shm.seek(0)
+            state, ok = struct.unpack('>II', shm.read(struct.calcsize('>II')))
+            if state == 0:
+                # not started
+                if monotonic() - job['start_time'] > 120:
+                    remove_job(job)
+                    error_dialog(self.gui, _('Failed to start editor'), _(
+                        'Could not edit: {}. The Table of Contents editor did not start in two minutes').format(job['title']), show=True)
+            elif state == 1:
+                # running
+                pass
+            elif state == 2:
+                # finished
+                job['shm'].already_unlinked = True
+                remove_job(job)
+                if ok == 1:
                     db = self.gui.current_db
                     if db.new_api.library_id != job['library_id']:
                         error_dialog(self.gui, _('Library changed'), _(
                             'Cannot save changes made to {0} by the ToC editor as'
                             ' the calibre library has changed.').format(job['title']), show=True)
                     else:
-                        db.new_api.add_format(job['book_id'], job['fmt'], job['path'], run_hooks=False)
-                os.remove(job['path'])
-            else:
-                if monotonic() - job['start_time'] > 120:
-                    self.jobs.remove(job)
-                    continue
-                if os.path.exists(started_path):
-                    job['started'] = True
-                    retry_on_fail(os.remove, started_path)
+                        db.new_api.add_format(job['book_id'], job['fmt'], path, run_hooks=False)
         if self.jobs:
             QTimer.singleShot(100, self.check_for_completions)
 

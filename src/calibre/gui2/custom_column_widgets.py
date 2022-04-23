@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -7,6 +6,7 @@ __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
 import os
+from collections import OrderedDict
 from functools import partial
 
 from qt.core import (Qt, QComboBox, QLabel, QSpinBox, QDoubleSpinBox,
@@ -17,7 +17,7 @@ from qt.core import (Qt, QComboBox, QLabel, QSpinBox, QDoubleSpinBox,
 from calibre.utils.date import qt_to_dt, now, as_local_time, as_utc, internal_iso_format_string
 from calibre.gui2.complete2 import EditWithComplete as EWC
 from calibre.gui2.comments_editor import Editor as CommentsEditor
-from calibre.gui2 import UNDEFINED_QDATETIME, error_dialog, elided_text
+from calibre.gui2 import UNDEFINED_QDATETIME, error_dialog, elided_text, gprefs
 from calibre.gui2.dialogs.tag_editor import TagEditor
 from calibre.utils.config import tweaks
 from calibre.utils.icu import sort_key
@@ -286,7 +286,7 @@ class Float(Int):
         self.widgets = [QLabel(label_string(self.col_metadata['name']), parent)]
         self.finish_ui_setup(parent, ClearingDoubleSpinBox)
         self.editor.setRange(-1000000., float(100000000))
-        self.editor.setDecimals(2)
+        self.editor.setDecimals(int(self.col_metadata['display'].get('decimals', 2)))
 
 
 class Rating(Base):
@@ -489,7 +489,7 @@ def _save_dialog(parent, title, msg, det_msg=''):
     d.setWindowTitle(title)
     d.setText(msg)
     d.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No | QMessageBox.StandardButton.Cancel)
-    return d.exec_()
+    return d.exec()
 
 
 class Text(Base):
@@ -507,7 +507,7 @@ class Text(Base):
                 w.set_space_before_sep(True)
                 w.set_add_separator(tweaks['authors_completer_append_separator'])
             w.get_editor_button().clicked.connect(self.edit)
-            w.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
+            w.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
             self.set_to_undefined = w.clear
         else:
             w = EditWithComplete(parent)
@@ -576,7 +576,7 @@ class Text(Base):
             self.initialize(self.book_id)
         else:
             d = TagEditor(self.parent, self.db, self.book_id, self.key)
-            if d.exec_() == QDialog.DialogCode.Accepted:
+            if d.exec() == QDialog.DialogCode.Accepted:
                 self.setter(d.tags)
 
     def connect_data_changed(self, slot):
@@ -750,8 +750,32 @@ widgets = {
 def field_sort_key(y, fm=None):
     m1 = fm[y]
     name = icu_lower(m1['name'])
-    n1 = 'zzzzz' + name if m1['datatype'] == 'comments' and m1.get('display', {}).get('interpret_as') != 'short-text' else name
+    n1 = 'zzzzz' + name if column_is_comments(y, fm) else name
     return sort_key(n1)
+
+
+def column_is_comments(key, fm):
+    return (fm[key]['datatype'] == 'comments' and
+            fm[key].get('display', {}).get('interpret_as') != 'short-text')
+
+
+def get_field_list(db, use_defaults=False, pref_data_override=None):
+    fm = db.field_metadata
+    fields = fm.custom_field_keys(include_composites=False)
+    if pref_data_override is not None:
+        displayable = pref_data_override
+    else:
+        displayable = db.prefs.get('edit_metadata_custom_columns_to_display', None)
+    if use_defaults or displayable is None:
+        fields.sort(key=partial(field_sort_key, fm=fm))
+        return [(k, True) for k in fields]
+    else:
+        field_set = set(fields)
+        result = OrderedDict({k:v for k,v in displayable if k in field_set})
+        for k in fields:
+            if k not in result:
+                result[k] = True
+        return [(k,v) for k,v in result.items()]
 
 
 def populate_metadata_page(layout, db, book_id, bulk=False, two_column=False, parent=None):
@@ -766,44 +790,30 @@ def populate_metadata_page(layout, db, book_id, bulk=False, two_column=False, pa
     fm = db.field_metadata
 
     # Get list of all non-composite custom fields. We must make widgets for these
-    fields = fm.custom_field_keys(include_composites=False)
-    cols_to_display = fields
-    cols_to_display.sort(key=partial(field_sort_key, fm=fm))
-
-    # This will contain the fields in the order to display them
-    cols = []
-
-    # The fields named here must be first in the widget list
-    tweak_cols = tweaks['metadata_edit_custom_column_order']
-    comments_in_tweak = 0
-    for key in (tweak_cols or ()):
-        # Add the key if it really exists in the database
-        if key in cols_to_display:
-            cols.append(key)
-            if fm[key]['datatype'] == 'comments' and fm[key].get('display', {}).get('interpret_as') != 'short-text':
-                comments_in_tweak += 1
-
-    # Add all the remaining fields
-    comments_not_in_tweak = 0
-    for key in cols_to_display:
-        if key not in cols:
-            cols.append(key)
-            if fm[key]['datatype'] == 'comments' and fm[key].get('display', {}).get('interpret_as') != 'short-text':
-                comments_not_in_tweak += 1
+    cols = [k[0] for k in get_field_list(db, use_defaults=db.prefs['edit_metadata_ignore_display_order']) if k[1]]
+    # This deals with the historical behavior where comments fields go to the
+    # bottom, starting on the left hand side. If a comment field is moved to
+    # somewhere else then it isn't moved to either side.
+    comments_at_end = 0
+    for k in cols[::-1]:
+        if not column_is_comments(k, fm):
+            break
+        comments_at_end += 1
+    comments_not_at_end = len([k for k in cols if column_is_comments(k, fm)]) - comments_at_end
 
     count = len(cols)
     layout_rows_for_comments = 9
     if two_column:
-        turnover_point = int(((count - comments_not_in_tweak + 1) +
-                                int(comments_in_tweak*(layout_rows_for_comments-1)))/2)
+        turnover_point = int(((count - comments_at_end + 1) +
+                                int(comments_not_at_end*(layout_rows_for_comments-1)))/2)
     else:
         # Avoid problems with multi-line widgets
         turnover_point = count + 1000
     ans = []
     column = row = base_row = max_row = 0
     label_width = 0
-    do_elision = tweaks['metadata_edit_elide_labels']
-    elide_pos = tweaks['metadata_edit_elision_point']
+    do_elision = gprefs['edit_metadata_elide_labels']
+    elide_pos = gprefs['edit_metadata_elision_point']
     elide_pos = elide_pos if elide_pos in {'left', 'middle', 'right'} else 'right'
     # make room on the right side for the scrollbar
     sb_width = QApplication.instance().style().pixelMetric(QStyle.PixelMetric.PM_ScrollBarExtent)
@@ -814,22 +824,22 @@ def populate_metadata_page(layout, db, book_id, bulk=False, two_column=False, pa
         dt = fm[key]['datatype']
         if dt == 'composite' or (bulk and dt == 'comments'):
             continue
-        is_comments = dt == 'comments' and fm[key].get('display', {}).get('interpret_as') != 'short-text'
+        is_comments = column_is_comments(key, fm)
         w = widget_factory(dt, fm[key]['colnum'])
         ans.append(w)
         if two_column and is_comments:
             # Here for compatibility with old layout. Comments always started
             # in the left column
-            comments_in_tweak -= 1
+            comments_not_at_end -= 1
             # no special processing if the comment field was named in the tweak
-            if comments_in_tweak < 0 and comments_not_in_tweak > 0:
+            if comments_not_at_end < 0 and comments_at_end > 0:
                 # Force a turnover, adding comments widgets below max_row.
                 # Save the row to return to if we turn over again
                 column = 0
                 row = max_row
                 base_row = row
-                turnover_point = row + int((comments_not_in_tweak * layout_rows_for_comments)/2)
-                comments_not_in_tweak = 0
+                turnover_point = row + int((comments_at_end * layout_rows_for_comments)/2)
+                comments_at_end = 0
 
         l = QGridLayout()
         if is_comments:
@@ -850,10 +860,10 @@ def populate_metadata_page(layout, db, book_id, bulk=False, two_column=False, pa
                     colon_width = font_metrics.width(':')
                     if bulk:
                         label_width = (font_metrics.averageCharWidth() *
-                               tweaks['metadata_edit_bulk_cc_label_length']) - colon_width
+                               gprefs['edit_metadata_bulk_cc_label_length']) - colon_width
                     else:
                         label_width = (font_metrics.averageCharWidth() *
-                               tweaks['metadata_edit_single_cc_label_length']) - colon_width
+                               gprefs['edit_metadata_single_cc_label_length']) - colon_width
                 wij.setMaximumWidth(label_width)
                 if c == 0:
                     wij.setSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Preferred)
@@ -1088,7 +1098,7 @@ class BulkFloat(BulkInt):
     def setup_ui(self, parent):
         self.make_widgets(parent, QDoubleSpinBox)
         self.main_widget.setRange(-1000000., float(100000000))
-        self.main_widget.setDecimals(2)
+        self.main_widget.setDecimals(int(self.col_metadata['display'].get('decimals', 2)))
         self.finish_ui_setup(parent)
 
     def set_to_undefined(self):
@@ -1494,7 +1504,7 @@ class BulkText(BulkBase):
                 return
             widget.setText('')
         d = TagEditor(self.parent, self.db, key=('#'+self.col_metadata['label']))
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             val = d.tags
             if not val:
                 val = []

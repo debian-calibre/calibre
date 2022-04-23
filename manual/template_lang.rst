@@ -39,7 +39,7 @@ In addition to the standard column based fields, you also can use:
   * ``{formats}`` - A list of formats available in the calibre library for a book
   * ``{identifiers:select(isbn)}`` - The ISBN of the book
 
-If the metadata for field for a given a book is not defined then the field in the template is replaced by the empty string (``''``). For example, consider the following template::
+If the metadata for the field for a given book is not defined then the field in the template is replaced by the empty string (``''``). For example, consider the following template::
 
     {author_sort}/{series}/{title} {series_index}
 
@@ -70,7 +70,7 @@ However, if a book has no series the template will produce `- - the title`, whic
 
   ``{field:|prefix_text|suffix_text}``
 
-This ``template expression`` says that if ``field`` has the the value `XXXX` then the result will be `prefix_textXXXXXsuffix_text`. If ``field`` is empty (has no value) then the result will be the empty string (nothing) because the prefix and suffix are ignored. The prefix and suffix can contain blanks.
+This ``template expression`` says that if ``field`` has the value `XXXX` then the result will be `prefix_textXXXXXsuffix_text`. If ``field`` is empty (has no value) then the result will be the empty string (nothing) because the prefix and suffix are ignored. The prefix and suffix can contain blanks.
 
 **Do not use subtemplates (`{ ... }`) or functions (see below) in the prefix or the suffix.**
 
@@ -154,14 +154,14 @@ The functions intended for use in Single Function Mode are:
 * ``human_readable()`` -- expects the value to be a number and returns a string representing that number in KB, MB, GB, etc.
 * ``ifempty(text if empty)`` -- if the value is not empty then return the value of the field, otherwise return `text if empty`.
 * ``in_list(separator, [ pattern, found_val, ]* not_found_val)`` -- interpret the value as a list of items separated by ``separator``, checking the ``pattern`` against each item in the list. If the ``pattern`` matches an item then return ``found_val``, otherwise return ``not_found_val``. The pair ``pattern`` and ``found_value`` can be repeated as many times as desired, permitting returning different values depending on the item's value. The patterns are checked in order, and the first match is returned.
-* ``language_strings(localize)`` -- return the `language names <https://www.loc.gov/standards/iso639-2/php/code_list.php>`_ for the `language codes <https://www.loc.gov/standards/iso639-2/php/code_list.php>`_ passed in as the value. Example: ``{languages:language_strings()}``.  If `localize` is zero, return the strings in English. If ``localize`` is not zero, return the strings in the language of the current locale. ``Lang_codes`` is a comma-separated list.
+* ``language_strings(localize)`` -- return the `language names <https://www.loc.gov/standards/iso639-2/php/code_list.php>`_ for the `language codes <https://www.loc.gov/standards/iso639-2/php/code_list.php>`_ passed in as the value. Example: ``{languages:language_strings()}``.  If ``localize`` is zero, return the strings in English. If ``localize`` is not zero, return the strings in the language of the current locale. ``Lang_codes`` is a comma-separated list.
 * ``list_item(index, separator)`` -- interpret the value as a list of items separated by ``separator``, returning the 'index'th item. The first item is number zero. The last item has the index ``-1`` as in ``list_item(-1,separator)``. If the item is not in the list, then the empty string is returned.
 * ``lookup([ pattern, key, ]* else_key)`` -- The patterns will be checked against the value in order. If a pattern matches then the value of the field named by ``key`` is returned. If no pattern matches then the value of the field named by ``else_key`` is returned. See``switch`` (below).
 * ``lowercase()`` -- returns the value of the field in lower case.
 * ``rating_to_stars(use_half_stars)`` -- Returns the rating as string of star (``★``) characters. The value must be a number between 0 and 5. Set use_half_stars to 1 if you want half star characters for fractional numbers available with custom ratings columns.
 * ``re(pattern, replacement)`` -- return the value after applying the regular expression. All instances of ``pattern`` in the value are replaced with ``replacement``. The template language uses case insensitive `Python regular expressions <https://docs.python.org/3/library/re.html>`_.
 * ``select(key)`` -- interpret the value as a comma-separated list of items with each item having the form ``id:value`` (the calibre ``identifier`` format). The function finds the first pair with the id equal to key and returns the corresponding value. If no id matches then the function returns the empty string.
-* ``shorten(left chars, middle text, right chars)`` -- Return a shortened version of the value, consisting of ``left chars`` characters from the beginning of the value, followed by ``middle text``, followed by ``right chars`` characters from the end of the value. ``Left chars`` and ``right chars`` must be non-negative integers. Example: assume you want to display the title with a length of at most 15 characters in length. One template that does this is ``{title:shorten(9,-,5)}``. For a book with the title `Ancient English Laws in the Times of Ivanhoe` the result will be `Ancient E-nhoe`: the first 9 characters of the title, a ``-``, then the last 5 characters. If the value's length is less than ``left chars`` + ``right chars`` + the length of ``middle text`` then the value will be returned unchanged. For example, the title `The Dome` would not be changed.
+* ``shorten(left chars, middle text, right chars)`` -- Return a shortened version of the value, consisting of ``left chars`` characters from the beginning of the value, followed by ``middle text``, followed by ``right chars`` characters from the end of the value. ``Left chars`` and ``right chars`` must be non-negative integers. Example: assume you want to display the title with a length of at most 15 characters in length. One template that does this is ``{title:shorten(9,-,5)}``. For a book with the title `Ancient English Laws in the Times of Ivanhoe` the result will be `Ancient E-anhoe`: the first 9 characters of the title, a ``-``, then the last 5 characters. If the value's length is less than ``left chars`` + ``right chars`` + the length of ``middle text`` then the value will be returned unchanged. For example, the title `The Dome` would not be changed.
 * ``str_in_list(separator, [ string, found_val, ]+ not_found_val)`` -- interpret the value as a list of items separated by ``separator`` then compare ``string`` against each value in the list. The ``string`` is not a regular expression. If ``string`` is equal to any item (ignoring case) then return the corresponding ``found_val``. If ``string`` contains ``separators`` then it is also treated as a list and each subvalue is checked. The ``string`` and ``found_value`` pairs can be repeated as many times as desired, permitting returning different values depending on string's value. If none of the strings match then ``not_found_value`` is returned. The strings are checked in order. The first match is returned.
 * ``subitems(start_index, end_index)`` -- This function breaks apart lists of tag-like hierarchical items such as genres. It interprets the value as a comma-separated list of tag-like items, where each item is a period-separated list. It returns a new list made by extracting from each item the components from ``start_index`` to ``end_index``, then merging the results back together. Duplicates are removed. The first subitem in a period-separated list has an index of zero. If an index is negative then it counts from the end of the list. As a special case, an end_index of zero is assumed to be the length of the list.
 
@@ -217,6 +217,7 @@ General Program Mode
     or_expression   ::= and_expression [ '||' and_expression ]*
     and_expression  ::= not_expression [ '&&' not_expression ]*
     not_expression  ::= [ '!' not_expression ]* | compare_exp
+    concatenate_expr::= compare_expr [ '&' compare_expr ]*
     compare_expr    ::= add_sub_expr [ compare_op add_sub_expr ]
     compare_op      ::= '==' | '!=' | '>=' | '>' | '<=' | '<' | 'in' | 'inlist' |
                         '==#' | '!=#' | '>=#' | '>#' | '<=#' | '<#'
@@ -227,13 +228,15 @@ General Program Mode
     unary_op_expr   ::= [ add_sub_op unary_op_expr ]* | expression
     expression      ::= identifier | constant | function | assignment | field_reference |
                         if_expr | for_expr | break_expr | continue_expr |
-                        '(' expression_list ')'
+                        '(' expression_list ')' | function_def
     field_reference ::= '$' [ '$' ] [ '#' ] identifier
     identifier      ::= id_start [ id_rest ]*
     id_start        ::= letter | underscore
     id_rest         ::= id_start | digit
     constant        ::= " string " | ' string ' | number
     function        ::= identifier '(' expression_list [ ',' expression_list ]* ')'
+    function_def    ::= 'def' identifier '(' top_expression [ ',' top_expression ]* ')' ':'
+                        expression_list 'fed'
     assignment      ::= identifier '=' top_expression
     if_expr         ::= 'if' condition 'then' expression_list
                         [ elif_expr ] [ 'else' expression_list ] 'fi'
@@ -265,6 +268,7 @@ The operator precedence (order of evaluation) from highest (evaluated first) to 
 * Multiply (``*``) and divide (``/``). These operators are associative and evaluate left to right. Use parentheses if you want to change the order of evaluation.
 * Add (``+``) and subtract (``-``). These operators are associative and evaluate left to right.
 * Numeric and string comparisons. These operators return ``'1'`` if the comparison succeeds, otherwise the empty string (``''``). Comparisons are not associative: ``a < b < c`` is a syntax error.
+* String concatenation (``&``). The ``&`` operator returns a string formed by concatenating the left-hand and right-hand expressions. Example: ``'aaa' & 'bbb'`` returns ``'aaabbb'``. The operator is associative and evaluates left to right.
 * Unary logical not (``!``). This operator returns ``'1'`` if the expression is False (evaluates to the empty string), otherwise ``''``.
 * Logical and (``&&``). This operator returns '1' if both the left-hand and right-hand expressions are True, or the empty string ``''`` if either is False. It is associative, evaluates left to right, and does `short-circuiting <https://chortle.ccsu.edu/java5/Notes/chap40/ch40_2.html>`_.
 * Logical or (``||``). This operator returns ``'1'`` if either the left-hand or right-hand expression is True, or ``''`` if both are False. It is associative, evaluates left to right, and does `short-circuiting <https://chortle.ccsu.edu/java5/Notes/chap40/ch40_2.html>`_. It is an `inclusive or`, returning ``'1'`` if both the left- and right-hand expressions are True.
@@ -336,6 +340,31 @@ If the original Genre is `History.Military, Science Fiction.Alternate History, R
 :guilabel:`Edit metadata in bulk -> Search & replace` with :guilabel:`Search for` set to ``template`` to strip off the first level of the hierarchy and assign the resulting value to Genre.
 
 Note: the last line in the template, ``new_tags``, isn't strictly necessary in this case because ``for`` returns the value of the last top_expression in the expression list. The value of an assignment is the value of its expression, so the value of the ``for`` statement is what was assigned to ``new_tags``.
+
+**Function definition**
+
+If you have code in a template that repeats then you can put that code into a local function. The ``def`` keyword starts the definition. It is followed by the function name, the argument list, then the code in the function. The function definition ends with the ``fed`` keyword.
+
+Arguments are positional. When a function is called the supplied arguments are matched left to right against the defined parameters, with the value of the argument assigned to the parameter. It is an error to provide more arguments than defined parameters. Parameters can have default values, such as ``a = 25``. If an argument is not supplied for that parameter then the default value is used, otherwise the parameter is set to the empty string.
+
+The ``return`` statement can be used in a local function.
+
+A function must be defined before it can be used.
+
+Example: This template computes an approximate duration in years, months, and days from a number of days. The function ``to_plural()`` formats the computed values. Note that the example also uses the ``&`` operator::
+
+  program:
+  	days = 2112;
+	years = floor(days/360);
+	months = floor(mod(days, 360)/30);
+	days = days - ((years*360) + (months * 30));
+
+	def to_plural(v, str):
+		if v == 0 then return '' fi;
+		return v & ' ' & (if v == 1 then str else str & 's' fi) & ' '
+	fed;
+
+	to_plural(years, 'year') & to_plural(months, 'month') & to_plural(days,'day')
 
 **Relational operators**
 
@@ -678,7 +707,7 @@ The same thing happens for authors, but using a different character for the cut,
 
 Plugboards affect the metadata written into the book when it is saved to disk or written to the device. Plugboards do not affect the metadata used by ``save to disk`` and ``send to device`` to create the file names. Instead, file names are constructed using the templates entered on the appropriate preferences window.
 
-Tips:
+Tips
 -----
 
 * Use the Template Tester to test templates. Add the tester to the context menu for books in the library and/or give it a keyboard shortcut.

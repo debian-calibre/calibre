@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "novembro 12, 2021" "5.32.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "abril 22, 2022" "5.41.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -35,23 +35,20 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-calibre\-server [options] [path to library folder...]
+calibre\-server [options] [path to library folder ...]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Start the calibre Content server. The calibre Content server exposes your
-calibre libraries over the internet. You can specify the path to the library
-folders as arguments to \fBcalibre\-server\fP\&. If you do not specify any paths, all the
-libraries that the main calibre program knows about will be used.
+Inicie o servidor de conteúdos Calibre. O servidor de conteúdos do Calibre expõe a sua biblioteca Calibre na Internet. Você pode especificar o caminho para a pasta da biblioteca com os argumentos para \fBcalibre\-server\fP\&. Se não especificar qualquer caminho, serão utilizadas todas as bibliotecas que o programa principal Calibre conheça.
 .sp
 Sempre que passar argumentos para o \fBcalibre\-server\fP que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
 .SH [OPÇÕES]
 .INDENT 0.0
 .TP
 .B \-\-access\-log
-Path to the access log file. This log contains information about clients connecting to the server and making requests. By default no access logging is done.
+Caminho para o ficheiro de registo de acessos. Este registo contém informações sobre os clientes que se ligam e fazem pedidos ao servidor. Por padrão, nenhum registo de acesso é efetuado.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -61,7 +58,7 @@ O tempo em segundos para aguardar por uma resposta do servidor ao efetuar pedido
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Escolher o tipo de autenticação a usar.     Set the HTTP authentication mode used by the server. Set to \fB"\fPbasic\fB"\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB"\fPauto\fB"\fP, which will use \fB"\fPbasic\fB"\fP if SSL is configured otherwise it will use \fB"\fPdigest\fB"\fP\&.
+Escolher o tipo de autenticação a usar.     Define o modo de autenticação HTTP usado pelo servidor. Definir como \fB"\fPbasic\fB"\fP se usar o servidor atrás de um proxy SSL. Senão, deixe como \fB"\fPauto\fB"\fP, que usará \fB"\fPbasic\fB"\fP se o SSL estiver configurado, ou \fB"\fPdigest\fB"\fP se não estiver configurado.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -76,7 +73,7 @@ Número de erros de autenticação até ser banido.     Número de erros de aute
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-Banir endereços IP que apresentem erros de autenticação continuados.        Temporarily bans access for IP addresses that have repeated login failures for the specified number of minutes. Useful to prevent attempts at guessing passwords. If set to zero, no banning is done.
+Banir endereços IP que apresentem erros de autenticação continuados.        Banir temporariamente o acesso a endereços IP que tenham falhas de autenticação repetidas no número de minutos especificado. Útil para evitar tentativas de adivinhar senhas. Se definido como zero, nenhum banimento será efetuado.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -91,7 +88,7 @@ Tamanho mínimo para que a resposta utilize compressão de dados (em bytes).
 .INDENT 0.0
 .TP
 .B \-\-custom\-list\-template
-Path to a JSON file containing a template for the custom book list mode. The easiest way to create such a template file is to go to Preferences\-> Sharing over the net\-> Book list template in calibre, create the template and export it.
+Caminho para um ficheiro JSON contendo um modelo para o modo de lista de livros personalizados. A maneira mais fácil de criar esse ficheiro de modelo é ir a Preferências\-> Partilha na rede\-> Modelo para lista de livros, criar o modelo e exportá\-lo.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -106,7 +103,7 @@ Restringir exibição de campos de metadados definidos pelo utilizador.       Li
 .INDENT 0.0
 .TP
 .B \-\-enable\-allow\-socket\-preallocation, \-\-disable\-allow\-socket\-preallocation
-Socket pre\-allocation, for example, with systemd socket activation. Por predefinição, a opção esta ativada.
+Pré\-alocação de encaixe, por exemplo, com ativação de encaixe systemd. Por predefinição, a opção esta ativada.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -116,12 +113,12 @@ Autenticação por senha para aceder ao servidor.     Por padrão, o servidor  n
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Voltar à interface automaticamente detetada.        If for some reason the server is unable to bind to the interface specified in the listen_on option, then it will try to detect an interface that connects to the outside world and bind to that. Por predefinição, a opção esta ativada.
+Substituir pela interface detetada automaticamente.         Se. por algum motivo, o servidor não conseguir associar a interface especificada na opção listen_on, ele tentará detetar uma interface que se ligue ao mundo exterior e associar\-se a ela. Por predefinição, a opção esta ativada.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Permitir que ligações locais não autenticadas realizem alterações.  Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. Por predefinição, a opção esta desativada.
+Permitir que ligações locais não autenticadas realizem alterações.  Normalmente, se não ativar a autenticação o servidor operará no modo de apenas leitura, para não permitir que utilizadores anónimos façam alterações nas suas bibliotecas Calibre. Essa opção permite que qualquer pessoa que se ligue no mesmo computador em que o servidor está a ser executado possa fazer alterações. Isto é útil se deseja executar o servidor sem autenticação, mas ainda usar o calibredb para fazer alterações nas suas bibliotecas Calibre. Note que ativar esta opção significa que qualquer programa em execução no computador também pode fazer alterações nas suas bibliotecas Calibre. Por predefinição, a opção esta desativada.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -136,7 +133,7 @@ Divulgar sinal OPDS através de BonJour.     Anuncia os sinais OPDS através do 
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-Cópia zero na transferência de ficheiros para melhor desempenho.    This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. Por predefinição, a opção esta ativada.
+Cópia zero na transferência de ficheiros para melhor desempenho.    Isto usará transferências zero\-copy no Kernel ao enviar ficheiros pela rede, aumentado a performance. Entretanto, pode causar transferências corrompidas de ficheiros em alguns sistemas de ficheiros com problemas. Desative se verificar transferências de corrompidas. Por predefinição, a opção esta ativada.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -161,7 +158,7 @@ Caminho para o ficheiro de registos do servidor. Este ficheiro contém informaç
 .INDENT 0.0
 .TP
 .B \-\-manage\-users
-Manage the database of users allowed to connect to this server. You can use it in automated mode by adding a \-\-. See calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help for details. See also the \fI\%\-\-userdb\fP option.
+Gere a base de dados de utilizadores com permissão para ligar a este servidor. Pode usar de modo automático ao adicionar um \-\-. Ver calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help para detalhes. Veja também a opção \fI\%\-\-userdb\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -176,12 +173,12 @@ Tempo máximo para processos de trabalho.    Quantidade máxima de tempo permiti
 .INDENT 0.0
 .TP
 .B \-\-max\-jobs
-Número máximo de processos de trabalho.     Worker processes are launched as needed and used for large jobs such as preparing a book for viewing, adding books, converting, etc. Normally, the max. number of such processes is based on the number of CPU cores. You can control it by this setting.
+Número máximo de processos de trabalho.     As aplicações de processos de trabalho são iniciadas conforme necessário e usadas em grandes trabalhos, como preparar um livro para visualização, adicionar livros, converter etc. Normalmente, o número máx. de tais processos é baseado no número de núcleos de CPU. Você pode controlar esse número nesta configuração.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-log\-size
-Tamanho máx. do ficheiro log. (em MB).      The maximum size of log files, generated by the server. When the log becomes larger than this size, it is automatically rotated. Set to zero to disable log rotation.
+Tamanho máx. do ficheiro log. (em MB).      Tamanho máximo dos ficheiros de diário gerado pelo servidor. Quando o registo diário se tornar maior que este tamanho, será feita  uma rotação automática. Defina para zero para desativar rotação de diário.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -216,7 +213,7 @@ A porta onde escutar ligações.
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-Path to a JSON file containing URLs for the \fB"\fPSearch the internet\fB"\fP feature. The easiest way to create such a file is to go to Preferences\-> Sharing over the net\->Search the internet in calibre, create the URLs and export them.
+Caminho para um ficheiro JSON contendo URLs para a funcionalidade \fB"\fPPesquisar na internet\fB"\fP\&. A maneira mais fácil de criar esse ficheiro é ir a Preferências\-> Partilhar na rede\->Pesquisar internet no Calibre, criar os URL e exportá\-los.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -241,7 +238,7 @@ O tempo em segundos após o qual uma ligação inativa será encerrada.
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-Permitir que ligações não autenticadas, mas de endereços IP específicos, realizem alterações.       Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
+Permitir que ligações não autenticadas, mas de endereços IP específicos, realizem alterações.       Normalmente, se não ativar a autenticação o servidor operará no modo de apenas leitura, para não permitir que utilizadores anónimos façam alterações nas suas bibliotecas Calibre. Essa opção permite que qualquer pessoa que se ligue a partir do endereço IP especificado possa fazer alterações. Deve ser uma lista separada por vírgulas de endereços ou especificações de redes. Isto é útil se deseja executar o servidor sem autenticação, mas ainda usar o calibredb para fazer alterações nas suas bibliotecas Calibre. Note que ativar esta opção significa que qualquer pessoa que se ligue a partir dos endereços de IP especificados pode fazer alterações nas suas bibliotecas Calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -251,7 +248,7 @@ Prefixo a anteceder todos os URL.   Útil se você deseja rodar este servidor po
 .INDENT 0.0
 .TP
 .B \-\-userdb
-Path to the user database to use for authentication. The database is a SQLite file. To create it use \fI\%\-\-manage\-users\fP\&. You can read more about managing users at: \fI\%https://manual.calibre\-ebook.com/pt/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
+Caminho para a base de dados de utilizadores a usar para autenticação. A base de dados é um ficheiro SQLite. Para o criar use \fI\%\-\-manage\-users\fP\&. Pode ler mais sobre como gerir utilizadores em: \fI\%https://manual.calibre\-ebook.com/pt/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
 .UNINDENT
 .INDENT 0.0
 .TP

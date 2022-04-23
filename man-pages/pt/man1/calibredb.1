@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "novembro 12, 2021" "5.32.0" "calibre"
+.TH "CALIBREDB" "1" "abril 22, 2022" "5.41.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -43,7 +43,7 @@ calibredb comando [options] [arguments]
 .sp
 \fBcalibredb\fP é a interface de linha de comandos para a base de dados do Calibre. Possui vários subcomandos, documentados a seguir.
 .sp
-\fBcalibredb\fP pode ser usado para manipular quer uma base de dados Calibre especificada por caminho quer um Servidor de conteúdos  Calibre em execução em máquina local ou na internet.
+\fBcalibredb\fP pode ser usado para manipular quer uma base de dados Calibre especificada por caminho quer um Servidor de conteúdos  Calibre em execução em máquina local ou na Internet.
 Você pode iniciar um :guilabel: \fIServidor de conteúdos\fP Calibre usando o programa \fBcalibre\-server\fP ou, no programa principal Calibre, clicar em Ligar/Partilhar \-> Iniciar servidor de conteúdos\(ga.
 Como o \fBcalibredb\fP pode efetuar alterações nas suas bibliotecas Calibre, primeiro você deve configurar a autenticação no servidor.
 Existem duas maneiras de o fazer:
@@ -246,7 +246,7 @@ Adicionar livro vazio (um registo sem qualquer formato)
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Set the identifiers for this book, e.g. \-I asin:XXX \-I isbn:YYY
+Definir identificadores para este livro, por exemplo \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -289,7 +289,7 @@ Um padrão (glob) de nomes de ficheiros, em que os ficheiros que correspondam a 
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For example: *.pdf will ignore all PDF files
+Um padrão (glob) de nomes de ficheiros, em que os ficheiros que correspondam a este padrão serão ignorados quando se varrem pastas na pesquisa de ficheiros. Pode ser especificado múltiplas vezes para múltiplos padrões. Exemplo: *.pdf ignorará todos os ficheiros pdf
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -319,7 +319,7 @@ Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os e
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Não usar a reciclagem
+Não usar a Reciclagem
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -680,7 +680,7 @@ calibredb custom_columns [opções]
 .UNINDENT
 .UNINDENT
 .sp
-Lista as colunas personalizados disponíveis. Mostra etiquetas de colunas e os ID.
+Lista as colunas personalizadas disponíveis. Mostra rótulos de colunas e os ID.
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
 .INDENT 0.0
@@ -700,8 +700,8 @@ calibredb remove_custom_column [opções] etiquetas
 .UNINDENT
 .UNINDENT
 .sp
-Remover o campo personalizado com o identificador especificado.
-Pode ver quais os campos personalizados estão disponíveis com o comando custom_columns.
+Remover o campo personalizado com o rótulo especificado.
+Pode ver quais os campos personalizados disponíveis com o comando custom_columns.
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
 .INDENT 0.0

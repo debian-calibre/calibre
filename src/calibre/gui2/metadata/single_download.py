@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -148,11 +147,11 @@ class ResultsModel(QAbstractTableModel):  # {{{
         if col == 1:
             t = book.title if book.title else _('Unknown')
             a = authors_to_string(book.authors) if book.authors else ''
-            return '<b>%s</b><br><i>%s</i>' % (t, a)
+            return f'<b>{t}</b><br><i>{a}</i>'
         if col == 2:
             d = format_date(book.pubdate, 'yyyy') if book.pubdate else _('Unknown')
             p = book.publisher if book.publisher else ''
-            return '<b>%s</b><br><i>%s</i>' % (d, p)
+            return f'<b>{d}</b><br><i>{p}</i>'
 
     def data(self, index, role):
         row, col = index.row(), index.column()
@@ -463,6 +462,7 @@ class IdentifyWidget(QWidget):  # {{{
 
         self.query = QLabel('download starting...')
         self.query.setWordWrap(True)
+        self.query.setTextFormat(Qt.TextFormat.PlainText)
         l.addWidget(self.query)
 
         self.comments_view.show_wait()
@@ -822,7 +822,7 @@ class CoversView(QListView):  # {{{
             m = QMenu(self)
             m.addAction(QIcon(I('view.png')), _('View this cover at full size'), self.show_cover)
             m.addAction(QIcon(I('edit-copy.png')), _('Copy this cover to clipboard'), self.copy_cover)
-            m.exec_(QCursor.pos())
+            m.exec(QCursor.pos())
 
     def show_cover(self):
         idx = self.currentIndex()
@@ -1126,7 +1126,7 @@ class FullFetch(QDialog):  # {{{
         self.title, self.authors = title, authors
         self.identify_widget.start(title=title, authors=authors,
                 identifiers=identifiers)
-        return self.exec_()
+        return self.exec()
 # }}}
 
 
@@ -1182,7 +1182,7 @@ class CoverFetch(QDialog):  # {{{
         book.identifiers = identifiers
         self.covers_widget.start(book, self.current_cover,
                 title, authors, {})
-        return self.exec_()
+        return self.exec()
 
     def view_log(self):
         self._lv = LogViewer(self.log, self)

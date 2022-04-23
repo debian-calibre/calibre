@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE" "1" "november 12, 2021" "5.32.0" "calibre"
+.TH "CALIBRE" "1" "április 22, 2022" "5.41.0" "calibre"
 .SH NAME
 calibre \- calibre
 .
@@ -35,29 +35,29 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-calibre [options] [path_to_ebook or calibre url ...]
+calibre [options] [path_to_ebook vagy Ccalibre url ...]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Launch the main \fBcalibre\fP Graphical User Interface and optionally add the e\-book at
-path_to_ebook to the database. You can also specify \fBcalibre\fP URLs to perform various
-different actions, than just adding books. For example:
+Elindítja el a Calibre fő grafikus felhasználói felületet, és opcionálisan hozzáadja az e\-könyvet
+a path_to_ebook címen az adatbázishoz. Megadhat Calibre URL\-eket is, amelyek különféle műveletek
+végrehajtásához szükségesek, nem csak könyvek hozzáadása. Például:
 .sp
 \fBcalibre\fP://view\-book/test_library/1842/epub
 .sp
-Will open the book with id 1842 in the EPUB format from the library
-"test_library" in the \fBcalibre\fP E\-book viewer. Library names are the folder names of the
-libraries with spaces replaced by underscores. A full description of the
-various URL based actions is in the User Manual.
+Megnyitja az 1842\-es azonosítójú könyvet EPUB formátumban a "test_library" könyvtárból
+a Calibre e\-könyvnézegetőben. A könyvtárnevek a könyvtárak mappanevei,
+amelyekben a szóközöket aláhúzásjelek helyettesítik. A különféle URL\-alapú
+műveletek teljes leírása a felhasználói kézikönyvben található.
 .sp
-Whenever you pass arguments to \fBcalibre\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Amikor olyan argumentumokat ad át \fBcalibre\fP\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
 .SH [BEÁLLÍTÁSOK]
 .INDENT 0.0
 .TP
 .B \-\-detach
-Detach from the controlling terminal, if any (Linux only)
+Ha van, válassza le a vezérlő terminálról (csak Linuxon)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -82,12 +82,12 @@ Egy futó Calibre példány bezárása. Ha vannak futó műveletek, akkor azok m
 .INDENT 0.0
 .TP
 .B \-\-start\-in\-tray
-A tálcára összecsukott állapotban induljon
+Indítás kicsinyítve a tálcán.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Ignored, do not use. Present only for legacy reasons
+Figyelmen kívül hagyva, ne használja. Csak örökölt okokból van jelen
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -9,15 +9,15 @@ import signal
 import sys
 import threading
 from contextlib import contextmanager
-from threading import Lock, RLock
-
 from qt.core import (
-    QT_VERSION, QApplication, QBuffer, QByteArray, QCoreApplication, QDateTime,
-    QDesktopServices, QDialog, QEvent, QFileDialog, QFileIconProvider, QFileInfo, QPalette,
-    QFont, QFontDatabase, QFontInfo, QFontMetrics, QIcon, QLocale, QColor,
-    QNetworkProxyFactory, QObject, QSettings, QSocketNotifier, QStringListModel, Qt,
-    QThread, QTimer, QTranslator, QUrl, pyqtSignal, QIODevice, QDialogButtonBox, QStyle
+    QT_VERSION, QApplication, QBuffer, QByteArray, QColor, QCoreApplication,
+    QDateTime, QDesktopServices, QDialog, QDialogButtonBox, QEvent, QFileDialog,
+    QFileIconProvider, QFileInfo, QFont, QFontDatabase, QFontInfo, QFontMetrics,
+    QGuiApplication, QIcon, QIODevice, QLocale, QNetworkProxyFactory, QObject,
+    QPalette, QSettings, QSocketNotifier, QStringListModel, QStyle, Qt, QThread,
+    QTimer, QTranslator, QUrl, pyqtSignal
 )
+from threading import Lock, RLock
 
 from calibre import as_unicode, prints
 from calibre.constants import (
@@ -31,6 +31,7 @@ from calibre.gui2.linux_file_dialogs import (
 )
 from calibre.gui2.qt_file_dialogs import FileDialog
 from calibre.ptempfile import base_dir
+from calibre.utils.config_base import tweaks
 from calibre.utils.config import Config, ConfigProxy, JSONConfig, dynamic
 from calibre.utils.date import UNDEFINED_DATE
 from calibre.utils.file_type_icons import EXT_MAP
@@ -42,6 +43,13 @@ try:
     NO_URL_FORMATTING = QUrl.UrlFormattingOption.None_
 except AttributeError:
     NO_URL_FORMATTING = getattr(QUrl, 'None')
+
+
+def load_icon(name):
+    return QIcon(I(name))
+
+
+QIcon.ic = load_icon
 
 
 # Setup gprefs {{{
@@ -197,6 +205,29 @@ def create_defs():
     defs['browse_annots_use_stemmer'] = True
     defs['annots_export_format'] = 'txt'
     defs['books_autoscroll_time'] = 2.0
+    defs['edit_metadata_single_use_2_cols_for_custom_fields'] = True
+    defs['edit_metadata_elide_labels'] = True
+    defs['edit_metadata_elision_point'] = "right"
+    defs['edit_metadata_bulk_cc_label_length'] = 25
+    defs['edit_metadata_single_cc_label_length'] = 12
+    defs['edit_metadata_templates_only_F2_on_booklist'] = False
+
+    def migrate_tweak(tweak_name, pref_name):
+        # If the tweak has been changed then leave the tweak in the file so
+        # that the user can bounce between versions with and without the
+        # migration. For versions before the migration the tweak wins. For
+        # versions after the migration any changes win.
+        v = tweaks.get(tweak_name, None)
+        migrated_tweak_name = pref_name + '_tweak_migrated'
+        m = gprefs.get(migrated_tweak_name, None)
+        if m is None and v is not None:
+            gprefs[pref_name] = v
+            gprefs[migrated_tweak_name] = True
+    migrate_tweak('metadata_edit_elide_labels', 'edit_metadata_elide_labels')
+    migrate_tweak('metadata_edit_elision_point', 'edit_metadata_elision_point')
+    migrate_tweak('metadata_edit_bulk_cc_label_length', 'edit_metadata_bulk_cc_label_length')
+    migrate_tweak('metadata_edit_single_cc_label_length', 'edit_metadata_single_cc_label_length')
+    migrate_tweak('metadata_single_use_2_cols_for_custom_fields', 'edit_metadata_single_use_2_cols_for_custom_fields')
 
 
 create_defs()
@@ -255,7 +286,7 @@ def _config():  # {{{
             help='Asked library thing password at least once.')
     c.add_opt('search_as_you_type', default=False,
             help=_('Start searching as you type. If this is disabled then search will '
-            'only take place when the Enter or Return key is pressed.'))
+            'only take place when the Enter key is pressed.'))
     c.add_opt('highlight_search_matches', default=False,
             help=_('When searching, show all books with search results '
             'highlighted instead of showing only the matches. You can use the '
@@ -331,13 +362,15 @@ def default_author_link():
 
 
 def available_heights():
-    desktop  = QCoreApplication.instance().desktop()
-    return list(map(lambda x: x.height(), map(desktop.availableGeometry, range(desktop.screenCount()))))
+    return tuple(s.availableSize().height() for s in QGuiApplication.screens())
 
 
 def available_height():
-    desktop  = QCoreApplication.instance().desktop()
-    return desktop.availableGeometry().height()
+    return QApplication.instance().primaryScreen().availableSize().height()
+
+
+def available_width():
+    return QApplication.instance().primaryScreen().availableSize().width()
 
 
 def max_available_height():
@@ -346,11 +379,6 @@ def max_available_height():
 
 def min_available_height():
     return min(available_heights())
-
-
-def available_width():
-    desktop       = QCoreApplication.instance().desktop()
-    return desktop.availableGeometry().width()
 
 
 def get_screen_dpi():
@@ -382,7 +410,7 @@ def warning_dialog(parent, title, msg, det_msg='', show=False,
         )+ ' ' + title, msg, det_msg, parent=parent,
         show_copy_button=show_copy_button)
     if show:
-        return d.exec_()
+        return d.exec()
     return d
 
 
@@ -393,7 +421,7 @@ def error_dialog(parent, title, msg, det_msg='', show=False,
         ) + ' ' + title, msg, det_msg, parent=parent,
         show_copy_button=show_copy_button)
     if show:
-        return d.exec_()
+        return d.exec()
     return d
 
 
@@ -441,7 +469,7 @@ def question_dialog(parent, title, msg, det_msg='', show_copy_button=False,
         tc.setChecked(bool(skip_dialog_skip_precheck))
         d.resize_needed.emit()
 
-    ret = d.exec_() == QDialog.DialogCode.Accepted
+    ret = d.exec() == QDialog.DialogCode.Accepted
     if add_abort_button and d.aborted:
         raise Aborted()
 
@@ -459,7 +487,7 @@ def info_dialog(parent, title, msg, det_msg='', show=False,
                     show_copy_button=show_copy_button, only_copy_details=only_copy_details)
 
     if show:
-        return d.exec_()
+        return d.exec()
     return d
 
 
@@ -474,7 +502,7 @@ def show_restart_warning(msg, parent=None):
         d.do_restart = True
     b.clicked.connect(rf)
     d.set_details('')
-    d.exec_()
+    d.exec()
     b.clicked.disconnect()
     return d.do_restart
 
@@ -678,13 +706,37 @@ if not iswindows and not ismacos and 'CALIBRE_NO_NATIVE_FILEDIALOGS' not in os.e
     has_linux_file_dialog_helper = check_for_linux_native_dialogs()
 
 if has_windows_file_dialog_helper:
-    from calibre.gui2.win_file_dialogs import choose_files, choose_images, choose_dir, choose_save_file
+    from calibre.gui2.win_file_dialogs import (
+        choose_dir, choose_files, choose_images, choose_save_file
+    )
 elif has_linux_file_dialog_helper:
     choose_dir, choose_files, choose_save_file, choose_images = map(
         linux_native_dialog, 'dir files save_file images'.split())
 else:
-    from calibre.gui2.qt_file_dialogs import choose_files, choose_images, choose_dir, choose_save_file
+    from calibre.gui2.qt_file_dialogs import (
+        choose_dir, choose_files, choose_images, choose_save_file
+    )
     choose_files, choose_images, choose_dir, choose_save_file
+
+
+def choose_files_and_remember_all_files(
+    window, name, title, filters=[], select_only_single_file=False, default_dir='~'
+):
+    pref_name = f'{name}-last-used-filter-spec-all-files'
+    lufs = dynamic.get(pref_name, False)
+    af = _('All files'), ['*']
+    filters = list(filters)
+    filters.insert(0, af) if lufs else filters.append(af)
+    paths = choose_files(window, name, title, list(filters), False, select_only_single_file, default_dir)
+    if paths:
+        ext = paths[0].rpartition(os.extsep)[-1].lower()
+        used_all_files = True
+        for i, (name, exts) in enumerate(filters):
+            if ext in exts:
+                used_all_files = False
+                break
+        dynamic.set(pref_name, used_all_files)
+    return paths
 
 
 def is_dark_theme():
@@ -874,6 +926,9 @@ class Application(QApplication):
     def __init__(self, args, force_calibre_style=False, override_program_name=None, headless=False, color_prefs=gprefs, windows_app_uid=None):
         self.ignore_palette_changes = False
         QNetworkProxyFactory.setUseSystemConfiguration(True)
+        # Allow import of webengine after construction of QApplication on new
+        # enough PyQt
+        QApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts)
         if iswindows:
             self.windows_app_uid = None
             if windows_app_uid:
@@ -1042,6 +1097,7 @@ class Application(QApplication):
     def load_builtin_fonts(self, scan_for_fonts=False):
         if scan_for_fonts:
             from calibre.utils.fonts.scanner import font_scanner
+
             # Start scanning the users computer for fonts
             font_scanner
 
@@ -1144,14 +1200,17 @@ class Application(QApplication):
                 # if not os.path.exists(p): raise ValueError(p)
                 pcache[v] = p
             v = pcache[v]
-            icon_map[getattr(QStyle, 'SP_'+k)] = v
+            icon_map[getattr(QStyle.StandardPixmap, 'SP_'+k)] = v
         transient_scroller = 0
         if ismacos:
             from calibre_extensions.cocoa import transient_scroller
             transient_scroller = transient_scroller()
-        icon_map[QStyle.StandardPixmap.SP_CustomBase + 1] = I('close-for-light-theme.png')
-        icon_map[QStyle.StandardPixmap.SP_CustomBase + 2] = I('close-for-dark-theme.png')
-        self.pi.load_style(icon_map, transient_scroller)
+        icon_map[(QStyle.StandardPixmap.SP_CustomBase & 0xf0000000) + 1] = I('close-for-light-theme.png')
+        icon_map[(QStyle.StandardPixmap.SP_CustomBase & 0xf0000000) + 2] = I('close-for-dark-theme.png')
+        try:
+            self.pi.load_style(icon_map, transient_scroller)
+        except OverflowError:  # running from source without updated runtime
+            self.pi.load_style({}, transient_scroller)
 
     def _send_file_open_events(self):
         with self._file_open_lock:
@@ -1332,6 +1391,7 @@ def ensure_app(headless=True):
             if headless and has_headless:
                 _store_app.headless = True
             import traceback
+
             # This is needed because as of PyQt 5.4 if sys.execpthook ==
             # sys.__excepthook__ PyQt will abort the application on an
             # unhandled python exception in a slot or virtual method. Since ensure_app()
@@ -1399,7 +1459,7 @@ def elided_text(text, font=None, width=300, pos='middle'):
     rendered, replacing characters from the left, middle or right (as per pos)
     of the string with an ellipsis. Results in a string much closer to the
     limit than Qt's elidedText().'''
-    from qt.core import QFontMetrics, QApplication
+    from qt.core import QApplication, QFontMetrics
     if font is None:
         font = QApplication.instance().font()
     fm = (font if isinstance(font, QFontMetrics) else QFontMetrics(font))
@@ -1416,68 +1476,8 @@ def elided_text(text, font=None, width=300, pos='middle'):
     return str(text)
 
 
-def find_forms(srcdir):
-    base = os.path.join(srcdir, 'calibre', 'gui2')
-    forms = []
-    for root, _, files in os.walk(base):
-        for name in files:
-            if name.endswith('.ui'):
-                forms.append(os.path.abspath(os.path.join(root, name)))
-
-    return forms
-
-
-def form_to_compiled_form(form):
-    return form.rpartition('.')[0]+'_ui.py'
-
-
-def build_forms(srcdir, info=None, summary=False, check_for_migration=False):
-    import re
-    from PyQt5.uic import compileUi
-    from polyglot.io import PolyglotStringIO
-    forms = find_forms(srcdir)
-    if info is None:
-        from calibre import prints
-        info = prints
-    pat = re.compile(r'''(['"]):/images/([^'"]+)\1''')
-
-    def sub(match):
-        ans = 'I(%s%s%s)'%(match.group(1), match.group(2), match.group(1))
-        return ans
-
-    num = 0
-    transdef_pat = re.compile(r'^\s+_translate\s+=\s+QtCore.QCoreApplication.translate$', flags=re.M)
-    transpat = re.compile(r'_translate\s*\(.+?,\s+"(.+?)(?<!\\)"\)', re.DOTALL)
-
-    # Ensure that people running from source have all their forms rebuilt for
-    # the qt5 migration
-    force_compile = check_for_migration and not gprefs.get('migrated_forms_to_qt5', False)
-
-    for form in forms:
-        compiled_form = form_to_compiled_form(form)
-        if force_compile or not os.path.exists(compiled_form) or os.stat(form).st_mtime > os.stat(compiled_form).st_mtime:
-            if not summary:
-                info('\tCompiling form', form)
-            buf = PolyglotStringIO()
-            compileUi(form, buf)
-            dat = buf.getvalue()
-            dat = dat.replace('import images_rc', '')
-            dat = transdef_pat.sub('', dat)
-            dat = transpat.sub(r'_("\1")', dat)
-            dat = dat.replace('_("MMM yyyy")', '"MMM yyyy"')
-            dat = dat.replace('_("d MMM yyyy")', '"d MMM yyyy"')
-            dat = pat.sub(sub, dat)
-            if not isinstance(dat, bytes):
-                dat = dat.encode('utf-8')
-            open(compiled_form, 'wb').write(dat)
-            num += 1
-    if num:
-        info('Compiled %d forms' % num)
-    if force_compile:
-        gprefs.set('migrated_forms_to_qt5', True)
-
-
 if is_running_from_develop:
+    from calibre.build_forms import build_forms
     build_forms(os.environ['CALIBRE_DEVELOP_FROM'], check_for_migration=True)
 
 
@@ -1495,8 +1495,7 @@ empty_index = empty_model.index(0)
 
 def set_app_uid(val):
     import ctypes
-    from ctypes import wintypes
-    from ctypes import HRESULT
+    from ctypes import HRESULT, wintypes
     try:
         AppUserModelID = ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID
     except Exception:  # Vista has no app uids

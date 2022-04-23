@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:fdm=marker:ai
 #
 # Copyright (C) 2006 Søren Roug, European Environment Agency
 #
@@ -60,6 +59,14 @@ fields = {
 }
 
 
+def uniq(vals):
+    ''' Remove all duplicates from vals, while preserving order.  '''
+    vals = vals or ()
+    seen = set()
+    seen_add = seen.add
+    return list(x for x in vals if x not in seen and not seen_add(x))
+
+
 def get_metadata(stream, extract_cover=True):
     whitespace = re.compile(r'\s+')
 
@@ -72,9 +79,14 @@ def get_metadata(stream, extract_cover=True):
 
         def find(field):
             ns, tag = fields[field]
-            ans = root.xpath('//ns0:{}'.format(tag), namespaces={'ns0': ns})
+            ans = root.xpath(f'//ns0:{tag}', namespaces={'ns0': ns})
             if ans:
                 return normalize(tostring(ans[0], method='text', encoding='unicode', with_tail=False)).strip()
+
+        def find_all(field):
+            ns, tag = fields[field]
+            for x in root.xpath(f'//ns0:{tag}', namespaces={'ns0': ns}):
+                yield normalize(tostring(x, method='text', encoding='unicode', with_tail=False)).strip()
 
         mi = MetaInformation(None, [])
         title = find('title')
@@ -89,9 +101,11 @@ def get_metadata(stream, extract_cover=True):
         lang = find('language')
         if lang and canonicalize_lang(lang):
             mi.languages = [canonicalize_lang(lang)]
-        kw = find('keyword') or find('keywords')
-        if kw:
-            mi.tags = [x.strip() for x in kw.split(',') if x.strip()]
+        keywords = []
+        for q in ('keyword', 'keywords'):
+            for kw in find_all(q):
+                keywords += [x.strip() for x in kw.split(',') if x.strip()]
+        mi.tags = uniq(keywords)
         data = {}
         for tag in root.xpath('//ns0:user-defined', namespaces={'ns0': fields['user-defined'][0]}):
             name = (tag.get('{%s}name' % METANS) or '').lower()
@@ -172,7 +186,7 @@ def _set_metadata(raw, mi):
     def remove(*tag_names):
         for tag_name in tag_names:
             ns = fields[tag_name][0]
-            tag_name = '{}:{}'.format(nsrmap[ns], tag_name)
+            tag_name = f'{nsrmap[ns]}:{tag_name}'
             for x in xpath('descendant::' + tag_name, meta):
                 x.getparent().remove(x)
 
@@ -241,7 +255,7 @@ def _set_metadata(raw, mi):
     if not mi.is_null('series'):
         remove_user_metadata('opf.series', 'opf.seriesindex')
         add_user_metadata('opf.series', mi.series)
-        add_user_metadata('opf.seriesindex', '{}'.format(mi.series_index))
+        add_user_metadata('opf.seriesindex', f'{mi.series_index}')
     if not mi.is_null('identifiers'):
         remove_user_metadata('opf.identifiers')
         add_user_metadata('opf.identifiers', as_unicode(json.dumps(mi.identifiers)))

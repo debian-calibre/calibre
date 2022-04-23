@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__ = 'GPL v3'
@@ -216,7 +215,7 @@ class SeriesEdit(LineEdit):
         series_index = mi.get(self.field + '_index', default=1.0)
         val = ''
         if series:
-            val = '%s [%s]' % (series, mi.format_series_index(series_index))
+            val = f'{series} [{mi.format_series_index(series_index)}]'
         self.setText(val)
         self.setCursorPosition(0)
 
@@ -257,7 +256,7 @@ class IdentifiersEdit(LineEdit):
 
     @as_dict.setter
     def as_dict(self, val):
-        val = ('%s:%s' % (k, v) for k, v in iteritems(val))
+        val = (f'{k}:{v}' for k, v in iteritems(val))
         self.setText(', '.join(val))
         self.setCursorPosition(0)
 
@@ -548,6 +547,13 @@ class CompareSingle(QWidget):
             if val != self.initial_vals[field]:
                 widgets.new.to_mi(self.current_mi)
                 changed = True
+        if changed and not self.current_mi.languages:
+            # this is needed because blank language setting
+            # causes current UI language to be set
+            widgets = self.widgets['languages']
+            neww, oldw = widgets[:2]
+            if oldw.current_val:
+                self.current_mi.languages = oldw.current_val
         return changed
 
 
@@ -646,7 +652,7 @@ class CompareMany(QDialog):
             b.clicked.connect(self.reject_all_remaining)
             self.sb = b = bb.addButton(_('R&eject'), QDialogButtonBox.ButtonRole.ActionRole)
             ac = QAction(self)
-            ac.setShortcut(QKeySequence(Qt.Modifier.ALT | Qt.Modifier.SHIFT | Qt.Key.Key_Right))
+            ac.setShortcut(QKeySequence(Qt.KeyboardModifier.AltModifier | Qt.KeyboardModifier.ShiftModifier | Qt.Key.Key_Right))
             ac.triggered.connect(b.click)
             self.addAction(ac)
             b.setToolTip(_('Reject changes and move to next [{}]').format(ac.shortcut().toString(QKeySequence.SequenceFormat.NativeText)))
@@ -655,7 +661,7 @@ class CompareMany(QDialog):
             if reject_button_tooltip:
                 b.setToolTip(reject_button_tooltip)
             self.next_action = ac = QAction(self)
-            ac.setShortcut(QKeySequence(Qt.Modifier.ALT | Qt.Key.Key_Right))
+            ac.setShortcut(QKeySequence(Qt.KeyboardModifier.AltModifier | Qt.Key.Key_Right))
             self.addAction(ac)
         if action_button is not None:
             self.acb = b = bb.addButton(action_button[0], QDialogButtonBox.ButtonRole.ActionRole)
@@ -680,8 +686,7 @@ class CompareMany(QDialog):
 
         self.next_item(True)
 
-        desktop = QApplication.instance().desktop()
-        geom = desktop.availableGeometry(parent or self)
+        geom = (parent or self).screen().availableSize()
         width = max(700, min(950, geom.width()-50))
         height = max(650, min(1000, geom.height()-100))
         self.resize(QSize(width, height))
@@ -781,7 +786,7 @@ if __name__ == '__main__':
     gm = partial(db.get_metadata, index_is_id=True, get_cover=True, cover_as_data=True)
     get_metadata = lambda x:list(map(gm, ids[x]))
     d = CompareMany(list(range(len(ids))), get_metadata, db.field_metadata, db=db)
-    if d.exec_() == QDialog.DialogCode.Accepted:
-        for changed, mi in itervalues(d.accepted):
-            if changed and mi is not None:
-                print(mi)
+    d.exec()
+    for changed, mi in itervalues(d.accepted):
+        if changed and mi is not None:
+            print(mi)

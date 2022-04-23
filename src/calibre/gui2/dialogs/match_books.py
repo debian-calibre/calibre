@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__   = 'GPL v3'
@@ -8,7 +7,7 @@ __docformat__ = 'restructuredtext en'
 
 
 from qt.core import (Qt, QDialog, QAbstractItemView, QTableWidgetItem,
-                      QByteArray, QApplication, QCursor)
+                      QByteArray, QApplication, QCursor, QTimer)
 
 from calibre.gui2 import gprefs, error_dialog
 from calibre.gui2.dialogs.match_books_ui import Ui_MatchBooks
@@ -110,9 +109,11 @@ class MatchBooks(QDialog, Ui_MatchBooks):
         self.buttonBox.rejected.connect(self.reject)
         self.ignore_next_key = False
 
-        search_text= self.device_db[self.current_device_book_id].title
+        search_text = self.device_db[self.current_device_book_id].title
         search_text = search_text.replace('(', '\\(').replace(')', '\\)')
         self.search_text.setText(search_text)
+        if search_text and len(self.library_db.new_api.all_book_ids()) < 8000:
+            QTimer.singleShot(0, self.search_button.click)
 
     def return_pressed(self):
         self.ignore_next_key = True
@@ -129,7 +130,7 @@ class MatchBooks(QDialog, Ui_MatchBooks):
         if not query:
             d = error_dialog(self.gui, _('Match books'),
                      _('You must enter a search expression into the search field'))
-            d.exec_()
+            d.exec()
             return
         try:
             self.search_button.setEnabled(False)
@@ -200,7 +201,7 @@ class MatchBooks(QDialog, Ui_MatchBooks):
         if not self.current_library_book_id:
             d = error_dialog(self.gui, _('Match books'),
                      _('You must select a matching book'))
-            d.exec_()
+            d.exec()
             return
         mi = self.library_db.get_metadata(self.current_library_book_id,
                               index_is_id=True, get_user_categories=False,

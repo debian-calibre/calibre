@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -146,7 +145,7 @@ if __name__ == '__main__':
         {'action':'ignore', 'query':'ignore-me', 'match_type':'startswith'},
         {'action':'add', 'query':'*.moose', 'match_type':'glob'},
     ]
-    d.exec_()
+    d.exec()
     from pprint import pprint
     pprint(d.rules)
     del d, app

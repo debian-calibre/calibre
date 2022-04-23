@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__ = 'GPL v3'
@@ -41,7 +40,7 @@ CACHE_FORMAT = 'PPM'
 def auto_height(widget):
     # On some broken systems, availableGeometry() returns tiny values, we need
     # a value of at least 1000 for 200 DPI systems.
-    return max(1000, QApplication.instance().desktop().availableGeometry(widget).height()) / 5.0
+    return max(1000, widget.screen().availableSize().height()) / 5.0
 
 
 class EncodeError(ValueError):
@@ -51,7 +50,10 @@ class EncodeError(ValueError):
 def handle_enter_press(self, ev, special_action=None, has_edit_cell=True):
     if ev.key() in (Qt.Key.Key_Enter, Qt.Key.Key_Return):
         mods = ev.modifiers()
-        if mods & Qt.Modifier.CTRL or mods & Qt.Modifier.ALT or mods & Qt.Modifier.SHIFT or mods & Qt.Modifier.META:
+        if (
+            mods & Qt.KeyboardModifier.ControlModifier or mods & Qt.KeyboardModifier.AltModifier or
+            mods & Qt.KeyboardModifier.ShiftModifier or mods & Qt.KeyboardModifier.MetaModifier
+        ):
             return
         if self.state() != QAbstractItemView.State.EditingState and self.hasFocus() and self.currentIndex().isValid():
             from calibre.gui2.ui import get_gui
@@ -208,7 +210,7 @@ def mouseMoveEvent(self, event):
     if not index.isValid():
         return
     drag = self.drag_data()
-    drag.exec_(Qt.DropAction.CopyAction)
+    drag.exec(Qt.DropAction.CopyAction)
     self.drag_start_pos = None
 
 
@@ -438,7 +440,7 @@ class CoverDelegate(QStyledItemDelegate):
             sz = f.pixelSize()
             if sz < 5:
                 sz = f.pointSize() * self.parent().logicalDpiY() / 72.0
-            self.title_height = max(25, sz + 10)
+            self.title_height = int(max(25, sz + 10))
         self.item_size = self.cover_size + QSize(2 * self.MARGIN, (2 * self.MARGIN) + self.title_height)
         if self.emblem_size > 0:
             extra = self.emblem_size + self.MARGIN
@@ -453,7 +455,7 @@ class CoverDelegate(QStyledItemDelegate):
         if spc < 0.01:
             self.spacing = max(10, min(50, int(0.1 * self.original_width)))
         else:
-            self.spacing = self.parent().logicalDpiX() * CM_TO_INCH * spc
+            self.spacing = int(self.parent().logicalDpiX() * CM_TO_INCH * spc)
 
     def sizeHint(self, option, index):
         return self.item_size
@@ -559,7 +561,7 @@ class CoverDelegate(QStyledItemDelegate):
                 title = db.field_for('title', book_id, default_value='')
                 authors = ' & '.join(db.field_for('authors', book_id, default_value=()))
                 painter.setRenderHint(QPainter.RenderHint.TextAntialiasing, True)
-                painter.drawText(rect, Qt.AlignmentFlag.AlignCenter|Qt.TextFlag.TextWordWrap, '%s\n\n%s' % (title, authors))
+                painter.drawText(rect, Qt.AlignmentFlag.AlignCenter|Qt.TextFlag.TextWordWrap, f'{title}\n\n{authors}')
                 if cdata is False:
                     self.render_queue.put(book_id)
                 if self.title_height != 0:
@@ -667,7 +669,7 @@ class CoverDelegate(QStyledItemDelegate):
             if title and authors:
                 title = '<b>%s</b>' % ('<br>'.join(wrap(p(title), 120)))
                 authors = '<br>'.join(wrap(p(' & '.join(authors)), 120))
-                tt = '%s<br><br>%s' % (title, authors)
+                tt = f'{title}<br><br>{authors}'
                 series = db.field_for('series', book_id)
                 if series:
                     use_roman_numbers=config['use_roman_numerals_for_series_number']
@@ -812,7 +814,7 @@ class GridView(QListView):
             path = texture_path(tex)
             if path:
                 path = os.path.abspath(path).replace(os.sep, '/')
-                ss += 'background-image: url({});'.format(path)
+                ss += f'background-image: url({path});'
                 ss += 'background-attachment: fixed;'
                 pm = QPixmap(path)
                 if not pm.isNull():
@@ -820,9 +822,9 @@ class GridView(QListView):
                     r, g, b = qRed(val), qGreen(val), qBlue(val)
         dark = max(r, g, b) < 115
         col = '#eee' if dark else '#111'
-        ss += 'color: {};'.format(col)
+        ss += f'color: {col};'
         self.delegate.highlight_color = QColor(col)
-        self.setStyleSheet('QListView {{ {} }}'.format(ss))
+        self.setStyleSheet(f'QListView {{ {ss} }}')
 
     def refresh_settings(self):
         size_changed = (
@@ -929,7 +931,7 @@ class GridView(QListView):
                     if scaled:
                         if self.ignore_render_requests.is_set():
                             return
-                        p = p.scaled(nwidth, nheight, Qt.AspectRatioMode.IgnoreAspectRatio, Qt.TransformationMode.SmoothTransformation)
+                        p = p.scaled(int(nwidth), int(nheight), Qt.AspectRatioMode.IgnoreAspectRatio, Qt.TransformationMode.SmoothTransformation)
                         p.setDevicePixelRatio(dpr)
                     cdata = p
                 # update cache
@@ -1151,7 +1153,8 @@ class GridView(QListView):
         return index
 
     def selectionCommand(self, index, event):
-        if event and event.type() == QEvent.Type.KeyPress and event.key() in (Qt.Key.Key_Home, Qt.Key.Key_End) and event.modifiers() & Qt.Modifier.CTRL:
+        if event and event.type() == QEvent.Type.KeyPress and event.key() in (Qt.Key.Key_Home, Qt.Key.Key_End
+                                    ) and event.modifiers() & Qt.KeyboardModifier.ControlModifier:
             return QItemSelectionModel.SelectionFlag.ClearAndSelect | QItemSelectionModel.SelectionFlag.Rows
         return super().selectionCommand(index, event)
 

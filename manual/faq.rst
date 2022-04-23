@@ -158,8 +158,7 @@ How do I use some of the advanced features of the conversion tools?
 You can get help on any individual feature of the converters by mousing over
 it in the GUI or running ``ebook-convert dummy.html .epub -h`` at a terminal.
 A good place to start is to look at the following demo file that demonstrates
-some of the advanced features
-`html-demo.zip <https://calibre-ebook.com/downloads/html-demo.zip>`_
+some of the advanced features :download_file:`html-demo.zip <html-demo.zip>`.
 
 
 Device integration
@@ -196,7 +195,7 @@ We just need some information from you:
 
 Once you send us the output for a particular operating system, support for the device in that operating system
 will appear in the next release of calibre. To send us the output, open a bug report and attach the output to it.
-See `how to report bugs <https://calibre-ebook.com/bugs>`_.
+See :website:`how to report bugs <bugs>`.
 
 My device is not being detected by calibre?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -216,8 +215,8 @@ Follow these steps to find the problem:
       fix that by looking under :guilabel:`System Preferences > Security and
       Privacy > Privacy > Files and Folders`.
     * Make sure you are running the latest version of calibre (currently
-      |version|). The latest version can always be downloaded from `the calibre
-      website <https://calibre-ebook.com/download>`_.  You can tell what
+      |version|). The latest version can always be downloaded from :website:`the calibre
+      website <download>`.  You can tell what
       version of calibre you are currently running by looking at the bottom
       line of the main calibre window.
     * Ensure your operating system is seeing the device. That is, the device
@@ -245,15 +244,8 @@ user defined plugin is used instead.
 How do I use calibre with my iPad/iPhone/iPod touch?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The easiest way to transfer books wirelessly to your Apple device (iPad/iPhone/iPod)
-is to use the `Calibre Companion <https://calibrecompanion.co?utm_source=Calibre&utm_medium=Website&utm_campaign=Main&utm_term=FAQ&utm_content=IOS>`__ iOS app.
-This app allows calibre to connect to your Apple device wirelessly, just as though you
-plugged in the device with a USB cable. You can browse files on the device
-in calibre and use the :guilabel:`Send to device` button to transfer files to
-your device wirelessly.
-
-Another easy way to browse your calibre collection from your Apple device
-is by using the calibre Content server, which makes your collection available
+An easy way to browse your calibre collection from your Apple device
+is by using :doc:`server`, which makes your collection available
 over the net. First perform the following steps in calibre
 
   * Set the Preferred Output Format in calibre to EPUB (The output format can be
@@ -285,6 +277,11 @@ right IP address to use.
 You will see a list of books in Safari, tap on any book and you will be given
 the option to either download it, or read it in the browser itself. If you
 choose to download it, Safari will ask you if you want to open it with iBooks.
+
+Many reading apps support browsing the calibre library directly via its `OPDS <httpd://opds.io/>`__ support.
+In such apps you can go to the online catalog screen and add the IP address of
+the calibre server to browse and download books from your calibre library
+within the app.
 
 How do I use calibre with my Android phone/tablet or Kindle Fire HD?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -331,17 +328,9 @@ utility, etc.
 Over the air
 ^^^^^^^^^^^^^^
 
-The easiest way to transfer books wirelessly to your Android device is to use
-the `Calibre Companion <https://calibrecompanion.co?utm_source=Calibre&utm_medium=Website&utm_campaign=Main&utm_term=FAQ&utm_content=Android>`__ Android app.
-This app allows calibre to connect to your Android device wirelessly, just as though you
-plugged in the device with a USB cable. You can browse files on the device
-in calibre and use the :guilabel:`Send to device` button to transfer files to
-your device wirelessly.
-
-calibre also has a builtin web server, the :guilabel:`Content server`.
-You can browse your calibre collection on your Android device by using the
-calibre Content server, which makes your collection available over the net.
-First perform the following steps in calibre
+calibre has a builtin web server, the :doc:`server`. It makes your calibre
+collection available over the net. You can browse it on your device using a
+simple browser or a dedicated application. First perform the following steps in calibre:
 
   * Set the :guilabel:`Preferred Output Format` in calibre to EPUB for normal Android devices or MOBI for Kindles (The output format can be set under :guilabel:`Preferences->Interface->Behavior`)
   * Convert the books you want to read on your device to EPUB/MOBI format by selecting them and clicking the :guilabel:`Convert` button.
@@ -359,11 +348,11 @@ You can now browse your book collection and download books from calibre
 to your device to open with whatever e-book reading software you have on your
 Android device.
 
-Calibre Companion and many reading apps support browsing the calibre library
-directly. For example, in Aldiko, click My Catalogs, then + to add a catalog,
-then give the catalog a title such as "calibre" and provide the URL listed
-above. You can now browse the calibre library and download directly into the
-reading software.
+Many reading apps support browsing the calibre library directly via its `OPDS <httpd://opds.io/>`__ support.
+In such apps you can go to the online catalog screen and add the IP address of
+the calibre server to browse and download books from your calibre library
+within the app.
+
 
 Can I access my calibre books using the web browser in my Kindle or other reading device?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -425,7 +414,7 @@ antivirus program.
 
 .. note::
     If you are concerned about giving calibre access to your email
-    account, simply create a new free email account with GMX or Hotmail
+    account, simply create a new free email account with GMX or Outlook
     and use it only for calibre.
 
 
@@ -561,8 +550,8 @@ Now coming to author name sorting:
     * Authors in the Tag browser are sorted by the sort value for the **authors**. Remember that this is different from the Author sort field for a book.
     * By default, this sort algorithm assumes that the author name is in ``First name Last name`` format and generates a ``Last name, First name`` sort value.
     * You can change this algorithm by going to :guilabel:`Preferences->Advanced->Tweaks` and setting the :guilabel:`author_sort_copy_method` tweak.
-    * You can force calibre to recalculate the author sort values for every author by right clicking on any author and selecting :guilabel:`Manage authors`, then pushing the `Recalculate all author sort values` button. Do this after you have set the author_sort_copy_method tweak to what you want.
-    * You can force calibre to recalculate the author sort values for all books by using the bulk metadata edit dialog (select all books and click edit metadata, check the `Automatically set author sort` checkbox, then press OK.)
+    * You can force calibre to recalculate the author sort values for every author by right clicking on any author and selecting :guilabel:`Manage authors`, then pushing the :guilabel:`Recalculate all author sort values` button. Do this after you have set the author_sort_copy_method tweak to what you want.
+    * You can force calibre to recalculate the author sort values for all books by using the bulk metadata edit dialog (select all books and click edit metadata, check the :guilabel:`Automatically set author sort` checkbox, then press OK).
     * When recalculating the author sort values for books, calibre uses the author sort values for each individual author. Therefore, ensure that the individual author sort values are correct before recalculating the books' author sort values.
     * You can control whether the Tag browser display authors using their names or their sort values by setting the :guilabel:`categories_use_field_for_author_name` tweak in :guilabel:`Preferences->Advanced->Tweaks`
 
@@ -613,7 +602,7 @@ Why doesn't calibre have a column for foo?
 calibre is designed to have columns for the most frequently and widely used
 fields. In addition, you can add any columns you like. Columns can be added via
 :guilabel:`Preferences->Interface->Add your own columns`.  Watch the tutorial
-`UI Power tips <https://calibre-ebook.com/demo#tutorials>`_ to learn how to
+:website:`UI Power tips <demo#tutorials>` to learn how to
 create your own columns, or read `this blog post
 <https://blog.calibre-ebook.com/calibre-custom-columns/>`_.
 
@@ -920,7 +909,7 @@ I downloaded the installer, but it is not working?
 Downloading from the Internet can sometimes result in a corrupted download. If the calibre installer you downloaded is not opening, try downloading it again. If re-downloading it does not work, download it from `an alternate location <https://github.com/kovidgoyal/calibre/releases/latest>`_. If the installer still doesn't work, then something on your computer is preventing it from running.
 
     * Try temporarily disabling your antivirus program (Microsoft Security Essentials, or Kaspersky or Norton or McAfee or whatever). This is most likely the culprit if the upgrade process is hanging in the middle.
-    * Similarly, if the installer is failing/rolling and you have Microsoft PowerToys running, quit it.
+    * Similarly, if the installer is failing/rolling back and you have Microsoft PowerToys running, quit it.
     * Try rebooting your computer and running a registry cleaner like `Wise registry cleaner <https://www.wisecleaner.com>`_.
     * Try a clean install. That is, uninstall calibre, delete :file:`C:\\Program Files\\Calibre2` (or wherever you previously chose to install calibre). Then re-install calibre. Note that uninstalling does not touch your books or settings.
     * Try downloading the installer with an alternate browser. For example if you are using Microsoft Edge, try using Firefox or Chrome instead.
@@ -931,13 +920,13 @@ Downloading from the Internet can sometimes result in a corrupted download. If t
       the :guilabel:`Security` tab. Make sure that your user account has full control
       for this folder.
 
-If you still cannot get the installer to work and you are on Windows, you can use the `calibre portable install <https://calibre-ebook.com/download_portable>`_, which does not need an installer (it is just a zip file).
+If you still cannot get the installer to work and you are on Windows, you can use the :website:`calibre portable install <download_portable>`, which does not need an installer (it is just a ZIP file).
 
 My antivirus program claims calibre is a virus/trojan?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The first thing to check is that you are downloading calibre from the official
-website: `<https://calibre-ebook.com/download>`_. Make sure you are clicking the
+The first thing to check is that you are downloading calibre from the
+:website:`official website <download>`. Make sure you are clicking the
 download links on the left, not the advertisements on the right. calibre is a
 very popular program and unscrupulous people try to setup websites offering it
 for download to fool the unwary.
@@ -1005,8 +994,8 @@ proxies used by calibre in Preferences->Miscellaneous.
 I want some feature added to calibre. What can I do?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 You have two choices:
- 1. Create a patch by hacking on calibre and send it to me for review and inclusion. See `Development <https://calibre-ebook.com/get-involved>`_.
- 2. `Open a bug requesting the feature <https://calibre-ebook.com/bugs>`_. Remember that while you may think your feature request is extremely important/essential, calibre developers might not agree. Fortunately, calibre is open source, which means you always have the option of implementing your feature yourself, or hiring someone to do it for you. Furthermore, calibre has a comprehensive plugin architecture, so you might be able to develop your feature as a plugin, see :ref:`pluginstutorial`.
+ 1. Create a patch by hacking on calibre and send it to me for review and inclusion. See :website:`Development <get-involved>`.
+ 2. :website:`Open a bug requesting the feature <bugs>`. Remember that while you may think your feature request is extremely important/essential, calibre developers might not agree. Fortunately, calibre is open source, which means you always have the option of implementing your feature yourself, or hiring someone to do it for you. Furthermore, calibre has a comprehensive plugin architecture, so you might be able to develop your feature as a plugin, see :ref:`pluginstutorial`.
 
 Why doesn't calibre have an automatic update?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1018,8 +1007,8 @@ For many reasons:
     to see if you want to update once a year or so. There is a check box to
     turn off the update notification, on the update notification itself.
 
-  * calibre downloads currently use `about 150TB of bandwidth a month
-    <https://calibre-ebook.com/dynamic/downloads>`_. Implementing automatic
+  * calibre downloads currently use :website_base:`about 150TB of bandwidth a month
+    <dynamic/downloads>`. Implementing automatic
     updates would greatly increase that and end up costing thousands of dollars
     a month, which someone has to pay.
 
@@ -1042,7 +1031,7 @@ calibre is licensed under the GNU General Public License v3 (an open source lice
 How do I run calibre from my USB stick?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A portable version of calibre is available `here <https://calibre-ebook.com/download_portable>`_.
+A portable version of calibre is available :website:`here <download_portable>`.
 
 How do I run parts of calibre like news download and the Content server on my own Linux server?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "novembre 12, 2021" "5.32.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "aprile 22, 2022" "5.41.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -41,7 +41,7 @@ calibre\-smtp [opzioni] [da a testo]
 .UNINDENT
 .UNINDENT
 .sp
-Invia posta usando il protocollo SMTP. \fBcalibre\-smtp\fP ha due modalità di funziomento.
+Invia posta usando il protocollo SMTP. \fBcalibre\-smtp\fP ha due modalità di funzionamento.
 Nella modalità componi vanno specificati da, a e testo, usati per costruire e
 inviare un messaggio email. Nella modalità filtra, \fBcalibre\-smtp\fP legge un messaggio
 email completo da STDIN e lo invia.
@@ -57,7 +57,7 @@ Ogni qualvolta vengono passati argomenti con degli spazi a \fBcalibre\-smtp\fP, 
 .INDENT 0.0
 .TP
 .B \-\-fork, \-f
-Fork and deliver message in background. If you use this option, you should also use \fI\%\-\-outbox\fP to handle delivery failures.
+Separa il processo e consegna il messaggio in background. Se usi questa opzione dovresti usare anche \fI\%\-\-outbox\fP per gestire le consegne fallite.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -113,7 +113,7 @@ Percorso di un file contenente certificati CA concatenati in formato PEM, usati 
 .INDENT 0.0
 .TP
 .B \-\-dont\-verify\-server\-certificate
-Non verificare il certificato del server quando ti connetti usando TLS. Questo era il comportamento predefinito nelle versioni di calibre prededenti alla 3.27. Se usi un relay con un certificato autofirmato o comunque invalido, puoi usare questa opzione per ripristinare il comportamento pre\-3.27
+Non verificare il certificato del server quando ti connetti usando TLS. Questo era il comportamento predefinito nelle versioni di calibre precedenti alla 3.27. Se usi un relay con un certificato autofirmato o comunque invalido, puoi usare questa opzione per ripristinare il comportamento pre\-3.27
 .UNINDENT
 .INDENT 0.0
 .TP

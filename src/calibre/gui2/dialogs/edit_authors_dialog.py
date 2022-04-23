@@ -249,7 +249,7 @@ class EditAuthorsDialog(QDialog, Ui_EditAuthorsDialog):
                     break
         if select_item:
             self.table.setCurrentItem(select_item)
-            self.table.setFocus(True)
+            self.table.setFocus(Qt.FocusReason.OtherFocusReason)
             if select_sort or select_link:
                 self.table.editItem(select_item)
             self.start_find_pos = select_item.row() * 2 + select_item.column()
@@ -330,7 +330,7 @@ class EditAuthorsDialog(QDialog, Ui_EditAuthorsDialog):
             ca.triggered.connect(self.copy_aus_to_au)
         m.addSeparator()
         m.addMenu(case_menu)
-        m.exec_(self.table.mapToGlobal(point))
+        m.exec(self.table.mapToGlobal(point))
 
     def undo_cell(self, old_value):
         self.context_item.setText(old_value)
@@ -407,7 +407,7 @@ class EditAuthorsDialog(QDialog, Ui_EditAuthorsDialog):
             text = icu_lower(str(item.text()))
             if st in text:
                 self.table.setCurrentItem(item)
-                self.table.setFocus(True)
+                self.table.setFocus(Qt.FocusReason.OtherFocusReason)
                 return
         # Nothing found. Pop up the little dialog for 1.5 seconds
         self.not_found_label.setVisible(True)
@@ -481,7 +481,7 @@ class EditAuthorsDialog(QDialog, Ui_EditAuthorsDialog):
             aut_list = string_to_authors(aut)
             if len(aut_list) != 1:
                 error_dialog(self.parent(), _('Invalid author name'),
-                        _('You cannot change an author to multiple authors.')).exec_()
+                        _('You cannot change an author to multiple authors.')).exec()
                 aut = ' % '.join(aut_list)
                 self.table.item(row, 0).setText(aut)
             item.set_sort_key()

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__ = 'GPL v3'
@@ -72,7 +71,7 @@ class ChoosePopupWidget(QWidget):
             if desc:
                 text += ' - <i>%s</i>' % prepare_string_for_xml(desc)
             color = self.palette().color(QPalette.ColorRole.Text).name()
-            text = '<span style="color: %s">%s</span>' % (color, text)
+            text = f'<span style="color: {color}">{text}</span>'
             st = self.rendered_text_cache[otext] = QStaticText(text)
             st.setTextOption(self.text_option)
             st.setTextFormat(Qt.TextFormat.RichText)
@@ -122,7 +121,7 @@ class ChoosePopupWidget(QWidget):
                 color = pal.color(QPalette.ColorRole.HighlightedText).name()
                 st = QStaticText(st)
                 text = st.text().partition('>')[2]
-                st.setText('<span style="color: %s">%s' % (color, text))
+                st.setText(f'<span style="color: {color}">{text}')
             painter.drawStaticText(self.SIDE_MARGIN, y, st)
             painter.restore()
         painter.end()
@@ -180,11 +179,11 @@ class ChoosePopupWidget(QWidget):
         if key == Qt.Key.Key_Escape:
             self.abort(), ev.accept()
             return True
-        if key == Qt.Key.Key_Tab and not ev.modifiers() & Qt.Modifier.CTRL:
+        if key == Qt.Key.Key_Tab and not ev.modifiers() & Qt.KeyboardModifier.ControlModifier:
             self.choose_next_result(previous=ev.modifiers() & Qt.KeyboardModifier.ShiftModifier)
             ev.accept()
             return True
-        if key == Qt.Key.Key_Backtab and not ev.modifiers() & Qt.Modifier.CTRL:
+        if key == Qt.Key.Key_Backtab and not ev.modifiers() & Qt.KeyboardModifier.ControlModifier:
             self.choose_next_result(previous=ev.modifiers() & Qt.KeyboardModifier.ShiftModifier)
             return True
         if key in (Qt.Key.Key_Up, Qt.Key.Key_Down):

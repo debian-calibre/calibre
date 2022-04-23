@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -52,7 +51,7 @@ class SaveTemplate(QWidget, Ui_Form):
     def do_open_editor(self):
         t = TemplateDialog(self, self.opt_template.text(), fm=self.field_metadata)
         t.setWindowTitle(_('Edit template'))
-        if t.exec_():
+        if t.exec():
             self.opt_template.set_value(t.rule[1])
 
     def changed(self, *args):

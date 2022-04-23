@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2020, Kovid Goyal <kovid at kovidgoyal.net>
 
 from contextlib import suppress
@@ -199,5 +198,5 @@ if __name__ == '__main__':
     c = Client({})
     w = Widget(c, {})
     w.show()
-    app.exec_()
+    app.exec()
     print(w.backend_settings)

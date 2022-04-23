@@ -2008,7 +2008,7 @@ Object.defineProperties(ρσ_dict.prototype, (function(){
     });
     return ρσ_anonfunc;
 })();
-ρσ_dict.prototype.set_default = (function() {
+ρσ_dict.prototype.set_default = ρσ_dict.prototype.setdefault = (function() {
     var ρσ_anonfunc = function (key, defval) {
         var j;
         j = this.jsmap;
@@ -2072,13 +2072,20 @@ Object.defineProperties(ρσ_dict.prototype, (function(){
 })();
 ρσ_dict.prototype.popitem = (function() {
     var ρσ_anonfunc = function () {
-        var r;
-        r = this.jsmap.entries().next();
-        if (r.done) {
-            throw new KeyError("dict is empty");
+        var last, e, r;
+        last = null;
+        e = this.jsmap.entries();
+        while (true) {
+            r = e.next();
+            if (r.done) {
+                if (last === null) {
+                    throw new KeyError("dict is empty");
+                }
+                this.jsmap.delete(last.value[0]);
+                return last.value;
+            }
+            last = r;
         }
-        this.jsmap.delete(r.value[0]);
-        return r.value;
     };
     if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
         __module__ : {value: "__main__"}
@@ -2703,6 +2710,7 @@ function ρσ_setitem(obj, key, val) {
         }
         obj[(typeof key === "number" && key < 0) ? obj.length + key : key] = val;
     }
+    return val;
 };
 if (!ρσ_setitem.__argnames__) Object.defineProperties(ρσ_setitem, {
     __argnames__ : {value: ["obj", "key", "val"]},
@@ -5216,7 +5224,7 @@ var str = ρσ_str, repr = ρσ_repr;;
         var __name__ = "__main__";
 
 
-        var FAKE_HOST, FAKE_PROTOCOL, state;
+        var FAKE_HOST, FAKE_PROTOCOL, state, settings, css;
         var E = ρσ_modules.elementmaker.E;
 
         var fix_fullscreen_svg_images = ρσ_modules.fs_images.fix_fullscreen_svg_images;
@@ -5586,11 +5594,18 @@ var str = ρσ_str, repr = ρσ_repr;;
             __module__ : {value: null}
         });
 
-        document.body.addEventListener("click", onclick, true);
-        document.documentElement.appendChild(ρσ_interpolate_kwargs.call(E, E.style, ["[data-in-split-mode=\"1\"] [data-is-block=\"1\"]:hover { cursor: pointer !important; border-top: solid 5px green !important }"].concat([ρσ_desugar_kwargs({type: "text/css"})])));
-        fix_fullscreen_svg_images();
-        if (check_for_maths()) {
-            load_mathjax();
+        if (document.body) {
+            settings = JSON.parse(window.navigator.userAgent.split("|")[1]);
+            css = "[data-in-split-mode=\"1\"] [data-is-block=\"1\"]:hover { cursor: pointer !important; border-top: solid 5px green !important }";
+            if (settings.os === "macos") {
+                css += "\n* { -webkit-hyphenate-character: \"-\" !important }\n";
+            }
+            document.body.addEventListener("click", onclick, true);
+            document.documentElement.appendChild(ρσ_interpolate_kwargs.call(E, E.style, [css].concat([ρσ_desugar_kwargs({type: "text/css"})])));
+            fix_fullscreen_svg_images();
+            if (check_for_maths()) {
+                load_mathjax();
+            }
         }
     })();
 })();

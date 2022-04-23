@@ -132,6 +132,37 @@ class BusyCursor:
         QApplication.restoreOverrideCursor()
 
 
+def convert_open_popup(opm, skip_key):
+    class OPM(OpenFeedback):
+
+        def __init__(self, opm):
+            super().__init__('placeholder')
+            self.opm = opm
+            self.skip_key = skip_key
+
+        def custom_dialog(self, parent):
+            from calibre.gui2.dialogs.message_box import MessageBox
+
+            class M(MessageBox):
+                def on_cd_finished(s):
+                    gprefs.set(self.skip_key, not s.toggle_checkbox.isChecked())
+            m = M({
+                'info': MessageBox.INFO, 'information': MessageBox.INFO,
+                'warn': MessageBox.WARNING, 'warning': MessageBox.WARNING,
+                }[self.opm.level], self.opm.title, self.opm.message,
+                parent=parent
+            )
+            tc = m.toggle_checkbox
+            tc.setVisible(True)
+            tc.setText(_('Show this message again'))
+            tc.setChecked(not self.opm.skip_dialog_skip_precheck)
+            m.resize_needed.emit()
+            m.finished.connect(m.on_cd_finished)
+            return m
+
+    return OPM(opm)
+
+
 class DeviceManager(Thread):  # {{{
 
     def __init__(self, connected_slot, job_manager, open_feedback_slot,
@@ -140,8 +171,7 @@ class DeviceManager(Thread):  # {{{
         '''
         :sleep_time: Time to sleep between device probes in secs
         '''
-        Thread.__init__(self)
-        self.setDaemon(True)
+        Thread.__init__(self, daemon=True)
         # [Device driver, Showing in GUI, Ejected]
         self.devices        = list(device_plugins())
         self.disabled_device_plugins = list(disabled_device_plugins())
@@ -192,6 +222,11 @@ class DeviceManager(Thread):  # {{{
         for dev, detected_device in connected_devices:
             if dev.OPEN_FEEDBACK_MESSAGE is not None:
                 self.open_feedback_slot(dev.OPEN_FEEDBACK_MESSAGE)
+            opm = dev.get_open_popup_message()
+            if opm is not None:
+                skip_key = f'do_not_show_device_open_popup_message_{dev.__class__.__name__}'
+                if not gprefs.get(skip_key, False):
+                    self.open_feedback_msg(dev.get_gui_name(), convert_open_popup(opm, skip_key))
             try:
                 dev.reset(detected_device=detected_device,
                     report_progress=self.report_progress)
@@ -989,7 +1024,7 @@ class DeviceMixin:  # {{{
             if cw.validate():
                 QDialog.accept(config_dialog)
         config_dialog.accept = validate
-        if config_dialog.exec_() == QDialog.DialogCode.Accepted:
+        if config_dialog.exec() == QDialog.DialogCode.Accepted:
             dev.save_settings(cw)
 
             do_restart = show_restart_warning(_('Restart calibre for the changes to %s'
@@ -1042,7 +1077,7 @@ class DeviceMixin:  # {{{
         if getattr(job, 'exception', None).__class__.__name__ == 'MTPInvalidSendPathError':
             try:
                 from calibre.gui2.device_drivers.mtp_config import SendError
-                return SendError(self, job.exception).exec_()
+                return SendError(self, job.exception).exec()
             except:
                 traceback.print_exc()
         try:
@@ -1234,7 +1269,7 @@ class DeviceMixin:  # {{{
         rows = self.library_view.selectionModel().selectedRows()
         if not rows or len(rows) == 0:
             error_dialog(self, _('No books'), _('No books')+' '+
-                    _('selected to send')).exec_()
+                    _('selected to send')).exec()
             return
 
         fmt = None
@@ -1264,7 +1299,7 @@ class DeviceMixin:  # {{{
                 elif f in aval_out_formats:
                     formats.append((f, _('0 of %i books') % len(rows), True))
             d = ChooseFormatDeviceDialog(self, _('Choose format to send to device'), formats)
-            if d.exec_() != QDialog.DialogCode.Accepted:
+            if d.exec() != QDialog.DialogCode.Accepted:
                 return
             if d.format():
                 fmt = d.format().lower()
@@ -1272,15 +1307,15 @@ class DeviceMixin:  # {{{
         if dest in ('main', 'carda', 'cardb'):
             if not self.device_connected or not self.device_manager:
                 error_dialog(self, _('No device'),
-                        _('Cannot send: No device is connected')).exec_()
+                        _('Cannot send: No device is connected')).exec()
                 return
             if dest == 'carda' and not self.device_manager.has_card():
                 error_dialog(self, _('No card'),
-                        _('Cannot send: Device has no storage card')).exec_()
+                        _('Cannot send: Device has no storage card')).exec()
                 return
             if dest == 'cardb' and not self.device_manager.has_card():
                 error_dialog(self, _('No card'),
-                        _('Cannot send: Device has no storage card')).exec_()
+                        _('Cannot send: Device has no storage card')).exec()
                 return
             if dest == 'main':
                 on_card = None
@@ -1567,7 +1602,7 @@ class DeviceMixin:  # {{{
                 'as no suitable formats were found. Convert the book(s) to a '
                 'format supported by your device first.'
                 ), bad)
-            d.exec_()
+            d.exec()
 
     def upload_dirtied_booklists(self):
         '''
@@ -1645,7 +1680,7 @@ class DeviceMixin:  # {{{
                                  _('<p>Cannot upload books to device there '
                                  'is no more free space available ')+where+
                                  '</p>\n<ul>%s</ul>'%(titles,))
-                d.exec_()
+                d.exec()
             elif isinstance(job.exception, WrongDestinationError):
                 error_dialog(self, _('Incorrect destination'),
                         str(job.exception), show=True)

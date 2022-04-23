@@ -171,7 +171,7 @@ class UpdateNotification(QDialog):
             FILTER_UPDATE_AVAILABLE)
         d = PluginUpdaterDialog(self.parent(),
                 initial_filter=FILTER_UPDATE_AVAILABLE)
-        d.exec_()
+        d.exec()
         if d.do_restart:
             QDialog.accept(self)
             from calibre.gui2.ui import get_gui
@@ -223,7 +223,7 @@ class UpdateMixin:
                     '<a href="update:%s">%s%s</a></span>') % (
                         _('Update found'), version_url, calibre_version, plt)
         else:
-            plt = ngettext('updated plugin', 'updated plugins', number_of_plugin_updates)
+            plt = ngettext('plugin update available', 'plugin updates available', number_of_plugin_updates)
             msg = ('<a href="update:%s">%d %s</a>')%(version_url, number_of_plugin_updates, plt)
         self.status_bar.update_label.setText(msg)
         self.status_bar.update_label.setVisible(True)
@@ -240,7 +240,7 @@ class UpdateMixin:
                     FILTER_UPDATE_AVAILABLE)
                 d = PluginUpdaterDialog(self,
                         initial_filter=FILTER_UPDATE_AVAILABLE)
-                d.exec_()
+                d.exec()
                 if d.do_restart:
                     self.quit(restart=True)
 
@@ -270,5 +270,5 @@ class UpdateMixin:
 if __name__ == '__main__':
     from calibre.gui2 import Application
     app = Application([])
-    UpdateNotification('x.y.z', False).exec_()
+    UpdateNotification('x.y.z', False).exec()
     del app

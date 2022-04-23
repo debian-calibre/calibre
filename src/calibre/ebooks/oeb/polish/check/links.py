@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__ = 'GPL v3'
@@ -410,7 +409,8 @@ def check_external_links(container, progress_callback=(lambda num, total:None), 
         return []
     items = Queue()
     ans = []
-    tuple(map(items.put, iteritems(external_links)))
+    for el in iteritems(external_links):
+        items.put(el)
     progress_callback(0, len(external_links))
     done = []
     downloaded_html_ids = {}
@@ -438,7 +438,7 @@ def check_external_links(container, progress_callback=(lambda num, total:None), 
                             except Exception:
                                 ids = downloaded_html_ids[href] = frozenset()
                         if frag not in ids:
-                            ans.append((locations, ValueError('HTML anchor {} not found on the page'.format(frag)), full_href))
+                            ans.append((locations, ValueError(f'HTML anchor {frag} not found on the page'), full_href))
                 res.close()
             finally:
                 done.append(None)

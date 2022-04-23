@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -8,7 +7,7 @@ __docformat__ = 'restructuredtext en'
 
 import functools
 from qt.core import (
-    QAction, QApplication, QDialog, QEvent, QIcon, QLabel, QMenu, QPainter,
+    QAction, QApplication, QDialog, QEvent, QIcon, QLabel, QMenu, QStylePainter,
     QSizePolicy, QSplitter, QStackedWidget, QStatusBar, QStyle, QStyleOption, Qt,
     QTabBar, QTimer, QToolButton, QVBoxLayout, QWidget
 )
@@ -249,12 +248,12 @@ class VersionLabel(QLabel):  # {{{
 
     def paintEvent(self, ev):
         if self.mouse_over:
-            p = QPainter(self)
+            p = QStylePainter(self)
             tool = QStyleOption()
+            tool.initFrom(self)
             tool.rect = self.rect()
             tool.state = QStyle.StateFlag.State_Raised | QStyle.StateFlag.State_Active | QStyle.StateFlag.State_MouseOver
-            s = self.style()
-            s.drawPrimitive(QStyle.PrimitiveElement.PE_PanelButtonTool, tool, p, self)
+            p.drawPrimitive(QStyle.PrimitiveElement.PE_PanelButtonTool, tool)
             p.end()
         return QLabel.paintEvent(self, ev)
 # }}}
@@ -311,7 +310,7 @@ class StatusBar(QStatusBar):  # {{{
         if self.library_total != self.total:
             base = _('{0}, {1} total').format(base, self.library_total)
 
-        self.defmsg.setText('\xa0%s\xa0\xa0\xa0\xa0[%s]' % (msg, base))
+        self.defmsg.setText(f'\xa0{msg}\xa0\xa0\xa0\xa0[{base}] ')
         self.clearMessage()
 
     def device_disconnected(self):
@@ -522,7 +521,7 @@ class VLTabs(QTabBar):  # {{{
 
     def contextMenuEvent(self, ev):
         m = QMenu(self)
-        m.addAction(_('Sort tabs alphabetically'), self.sort_alphabetically)
+        m.addAction(QIcon.ic('sort.png'), _('Sort tabs alphabetically'), self.sort_alphabetically)
         hidden = self.current_db.new_api.pref('virt_libs_hidden')
         if hidden:
             s = m._s = m.addMenu(_('Restore hidden tabs'))
@@ -530,18 +529,18 @@ class VLTabs(QTabBar):  # {{{
                 s.addAction(x, partial(self.restore, x))
         m.addAction(_('Hide Virtual library tabs'), self.disable_bar)
         if gprefs['vl_tabs_closable']:
-            m.addAction(_('Lock Virtual library tabs'), self.lock_tab)
+            m.addAction(QIcon.ic('drm-locked.png'), _('Lock Virtual library tabs'), self.lock_tab)
         else:
-            m.addAction(_('Unlock Virtual library tabs'), self.unlock_tab)
+            m.addAction(QIcon.ic('drm-unlocked.png'), _('Unlock Virtual library tabs'), self.unlock_tab)
         i = self.tabAt(ev.pos())
         if i > -1:
             vl = str(self.tabData(i) or '')
             if vl:
                 vln = vl.replace('&', '&&')
                 m.addSeparator()
-                m.addAction(_('Edit "%s"') % vln, partial(self.gui.do_create_edit, name=vl))
-                m.addAction(_('Delete "%s"') % vln, partial(self.gui.remove_vl_triggered, name=vl))
-        m.exec_(ev.globalPos())
+                m.addAction(QIcon.ic('edit_input.png'), _('Edit "%s"') % vln, partial(self.gui.do_create_edit, name=vl))
+                m.addAction(QIcon.ic('trash.png'), _('Delete "%s"') % vln, partial(self.gui.remove_vl_triggered, name=vl))
+        m.exec(ev.globalPos())
 
     def sort_alphabetically(self):
         self.current_db.new_api.set_pref('virt_libs_order', ())
@@ -705,7 +704,7 @@ class LayoutMixin:  # {{{
         identifiers = db.field_for('identifiers', book_id, default_value={})
         from calibre.gui2.metadata.basic_widgets import Identifiers
         d = Identifiers(identifiers, self)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             identifiers = d.get_identifiers()
             db.set_field('identifiers', {book_id: identifiers})
             self.iactions['Edit Metadata'].refresh_books_after_metadata_edit({book_id})
@@ -727,7 +726,6 @@ class LayoutMixin:  # {{{
 
     def toggle_grid_view(self, show):
         self.library_view.alternate_views.show_view('grid' if show else None)
-        self.sort_sep.setVisible(show)
         self.sort_button.setVisible(show)
 
     def toggle_search_bar(self, show):

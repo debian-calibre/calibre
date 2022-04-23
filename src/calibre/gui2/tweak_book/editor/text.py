@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2013, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -187,7 +186,7 @@ class TextEdit(PlainTextEdit):
                 if mt.startswith('image/'):
                     self.insert_image(href)
                 elif mt in OEB_STYLES:
-                    insert_text('<link href="{}" rel="stylesheet" type="text/css"/>'.format(href))
+                    insert_text(f'<link href="{href}" rel="stylesheet" type="text/css"/>')
                 elif mt in OEB_DOCS:
                     self.insert_hyperlink(href, name)
             self.ensureCursorVisible()
@@ -254,9 +253,9 @@ class TextEdit(PlainTextEdit):
         if ff is None:
             ff = default_font_family()
         font.setFamily(ff)
-        font.setPointSize(tprefs['editor_font_size'])
+        font.setPointSizeF(tprefs['editor_font_size'])
         self.tooltip_font = QFont(font)
-        self.tooltip_font.setPointSize(font.pointSize() - 1)
+        self.tooltip_font.setPointSizeF(font.pointSizeF() - 1.)
         self.setFont(font)
         self.highlighter.apply_theme(theme)
         w = self.fontMetrics()
@@ -811,7 +810,7 @@ class TextEdit(PlainTextEdit):
             # For some reason using eventFilter for this does not work, so we
             # implement it here
             self.completion_popup.abort()
-        if ev.modifiers() & Qt.Modifier.CTRL:
+        if ev.modifiers() & Qt.KeyboardModifier.ControlModifier:
             url = self.link_for_position(ev.pos())
             if url is not None:
                 ev.accept()
@@ -908,7 +907,7 @@ version="1.1" width="100%%" height="100%%" viewBox="0 0 {w} {h}" preserveAspectR
 </svg></div>'''.format(w=width, h=height, a='xMidYMid meet' if preserve_aspect_ratio else 'none')
             else:
                 alt = _('Image')
-                template = '<img alt="{}" src="%s" />'.format(alt)
+                template = f'<img alt="{alt}" src="%s" />'
         text = template % href
         c.insertText(text)
         if self.syntax == 'html' and not fullpage:

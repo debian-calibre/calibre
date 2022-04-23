@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 __license__ = 'GPL 3'
 __copyright__ = '2012, Kovid Goyal <kovid at kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
@@ -47,7 +44,7 @@ class PDFOutput(OutputFormatPlugin):
             'non default output profile is used. Default is letter. Choices '
             'are {}').format(', '.join(PAPER_SIZES))),
         OptionRecommendation(name='custom_size', recommended_value=None,
-            help=_('Custom size of the document. Use the form widthxheight '
+            help=_('Custom size of the document. Use the form width x height '
             'e.g. `123x321` to specify the width and height. '
             'This overrides any specified paper-size.')),
         OptionRecommendation(name='preserve_cover_aspect_ratio',
@@ -69,12 +66,13 @@ class PDFOutput(OutputFormatPlugin):
                 'The font family used to render monospace fonts')),
         OptionRecommendation(name='pdf_default_font_size',
             recommended_value=20, help=_(
-                'The default font size')),
+                'The default font size (in pixels)')),
         OptionRecommendation(name='pdf_mono_font_size',
             recommended_value=16, help=_(
-                'The default font size for monospaced text')),
+                'The default font size for monospaced text (in pixels)')),
         OptionRecommendation(name='pdf_hyphenate', recommended_value=False,
-            help=_('Break long words at the end of lines. This can give the text at the right margin a more even appearance.')),
+            help=_('Break long words at the end of lines. This can give the text at the right margin a more even appearance.'
+                   ' Note that depending on the fonts used this option can break the copying of text from the PDF file.')),
         OptionRecommendation(name='pdf_mark_links', recommended_value=False,
             help=_('Surround all links with a red box, useful for debugging.')),
         OptionRecommendation(name='pdf_page_numbers', recommended_value=False,

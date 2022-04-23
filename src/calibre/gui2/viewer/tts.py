@@ -1,12 +1,16 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2020, Kovid Goyal <kovid at kovidgoyal.net>
 
-from qt.core import QDialogButtonBox, QObject, QVBoxLayout, pyqtSignal, QDialog
+from qt.core import QDialog, QDialogButtonBox, QObject, QVBoxLayout, pyqtSignal
 
 from calibre.gui2 import error_dialog
 from calibre.gui2.viewer.config import get_pref_group, vprefs
 from calibre.gui2.widgets2 import Dialog
+
+
+def set_sync_override(allowed):
+    from calibre.gui2.viewer.lookup import set_sync_override
+    set_sync_override(allowed)
 
 
 class Config(Dialog):
@@ -90,15 +94,19 @@ class TTS(QObject):
             return error_dialog(self.parent(), _('Text-to-Speech unavailable'), str(err), show=True)
 
     def play(self, data):
+        set_sync_override(False)
         self.tts_client.speak_marked_text(data['marked_text'], self.callback)
 
     def pause(self, data):
+        set_sync_override(True)
         self.tts_client.pause()
 
     def resume(self, data):
+        set_sync_override(False)
         self.tts_client.resume()
 
     def resume_after_configure(self, data):
+        set_sync_override(False)
         self.tts_client.resume_after_configure()
 
     def callback(self, event):
@@ -108,6 +116,7 @@ class TTS(QObject):
         self.event_received.emit(event.type.name, data)
 
     def stop(self, data):
+        set_sync_override(True)
         self.tts_client.stop()
 
     @property
@@ -123,7 +132,7 @@ class TTS(QObject):
     def configure(self, data):
         ui_settings = get_pref_group('tts').copy()
         d = Config(self.tts_client, ui_settings, self.backend_settings, parent=self.parent())
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             s = d.backend_settings
             self.backend_settings = s
             self.tts_client.apply_settings(s)

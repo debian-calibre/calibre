@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "novembre 12, 2021" "5.32.0" "calibre"
+.TH "CALIBREDB" "1" "aprile 22, 2022" "5.41.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -48,8 +48,8 @@ molti sotto\-comandi, descritti più sotto
 identificato da un percorso oppure da un Server dei contenuti di calibre in esecuzione sulla
 macchina locale o su internet. Puoi avviare un
 Server dei contenuti di calibre con il comando \fBcalibre\-server\fP
-oppure cliccando nell\(aqinterfaccia principale di calibre Connetti/condividi  → 
-Avvia Server di contenuti\&. Dato che \fBcalibredb\fP può modificare le tue
+oppure facendo clic nell\(aqinterfaccia principale di calibre Connetti/condividi  → 
+Avvia server dei contenuti\&. Dato che \fBcalibredb\fP può modificare le tue
 biblioteche di calibre, devi prima impostare un\(aqautenticazione per il server. Ci
 sono due modi per farlo:
 .INDENT 0.0
@@ -62,7 +62,7 @@ Se intendi connetterti solamente a un server in esecuzione sul computer stesso,
 .UNINDENT
 .sp
 puoi semplicemente usare l\(aqopzione \fB\-\-enable\-local\-write\fP del
-Server dei contenuti, per permettere ad ogni programma, calibredb incluso, in esecuzione
+server dei contenuti, per permettere ad ogni programma, calibredb incluso, in esecuzione
 sul computer locale di  modificare i tuoi dati di calibre. Se il server
 è avviato dall\(aqinterfaccia principale di calibre, questa opzione si trova
 in Preferenze → Condivisione via rete → Avanzate\&.
@@ -78,7 +78,7 @@ e usando \fB\-\-manage\-users\fP per creare gli utenti.
 Se hai avviato il server dall\(aqinterfaccia principale di calibre, usa
 Preferenze → Condivisione via rete → Richiedi nome utente/password\&.
 .sp
-Per connetterti a un Server dei contenuti in esecuzione, inserisci l\(aqURL del server dopo l\(aqopzione
+Per connetterti a un server dei contenuti in esecuzione, inserisci l\(aqURL del server dopo l\(aqopzione
 \fI\%\-\-with\-library\fP, vedi la documentazione dell\(aqopzione per
 dettagli ed esempi.
 .INDENT 0.0
@@ -144,12 +144,12 @@ mostra questo messaggio di aiuto ed esci
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Percorso della biblioteca di calibre. Per impostazione predefinita viene usato il percorso salvato nelle impostazioni. Puoi anche connetterti a un Server dei Contenuti di calibre ed eseguire azioni su biblioteche remote. Per fare ciò usa un URL di formato: \fI\%http://nomehost:porta/#id_biblioteca\fP per esempio \fI\%http://localhost:8080/#lamiabiblioteca\fP\&. id_biblioteca è l\fB\(aq\fPid della biblioteca a cui ti vuoi connettere nel Server dei Contenuti. Puoi usare il valore speciale di id_biblioteca di \- per ottenere un elenco di id biblioteca disponibili nel server. Per dettagli su come impostare l\fB\(aq\fPaccesso attraverso un Server dei Contenuti, vedi \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
+Percorso della biblioteca di calibre. Per impostazione predefinita viene usato il percorso salvato nelle impostazioni. Puoi anche connetterti a un server dei contenuti di calibre ed eseguire azioni su biblioteche remote. Per fare ciò usa un URL di formato: \fI\%http://nomehost:porta/#id_biblioteca\fP per esempio \fI\%http://localhost:8080/#lamiabiblioteca\fP\&. id_biblioteca è l\fB\(aq\fPid della biblioteca a cui ti vuoi connettere nel server dei contenuti. Puoi usare il valore speciale di id_biblioteca di \- per ottenere un elenco di id biblioteca disponibili nel server. Per dettagli su come impostare l\fB\(aq\fPaccesso attraverso un server dei contenuti, vedi \fI\%https://manual.calibre\-ebook.com/it/generated/it/calibredb.html\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password
-La password per connettersi a un Server dei Contenuti di calibre. Pe leggere la password dallo standard input, usa il valore speciale: <stdin>. Per leggere la password da un file, usa <f:/path/to/file> (ovvero <f: followed by the full path to the file and a trailing >). Le parentesi angolari di cui sopra sono richieste, ricordati di anteporre un carattere di escape o di usare le virgolette nel tuo terminale.
+La password per connettersi a un server dei contenuti di calibre. Per leggere la password dallo standard input, usa il valore speciale: <stdin>. Per leggere la password da un file, usa <f:/path/to/file> (ovvero <f: followed by the full path to the file and a trailing >). Le parentesi angolari di cui sopra sono richieste, ricordati di anteporre un carattere di escape o di usare le virgolette nel tuo terminale.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -214,7 +214,7 @@ Il prefisso per tutti i percorsi. L\fB\(aq\fPimpostazione predefinita è il perc
 .INDENT 0.0
 .TP
 .B \-\-search, \-s
-Filtra i risultati con una ricerca. Per il formato della ricerca, vedere la documentazione relativa alla ricerca nel Manuale Utente. L\fB\(aq\fPopzione predefinita è quella di non filtrare.
+Filtra i risultati con una ricerca. Per il formato della ricerca, vedere la documentazione relativa alla ricerca nel manuale utente. L\fB\(aq\fPopzione predefinita è quella di non filtrare.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -270,7 +270,7 @@ Aggiungi un libro vuoto (un libro senza formati)
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Set the identifiers for this book, e.g. \-I asin:XXX \-I isbn:YYY
+Imposta gli identificatori per questo libro, ad esempio: \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -313,7 +313,7 @@ Uno schema per il nome del file (glob pattern), i file che corrispondono a quest
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For example: *.pdf will ignore all PDF files
+Uno schema per il nome del file (glob pattern), i file che corrispondono a questo schema saranno ignorati durante la scansione delle cartelle. Può essere specificato più volte per schemi multipli. Ad esempio: *.pdf escluderà tutti i file PDF
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -343,7 +343,7 @@ Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessa
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Non usare il cestino
+Non usare il Cestino
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -424,7 +424,7 @@ Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessa
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-Il campo da impostare. Il formato è nome_campo:valore, per esempio: \fI\%\-\-field\fP tags:tag1,tag2. Usa \fI\%\-\-list\-fields\fP per ottenere una lista di tutti i nomi dei campi. Puoi specificare questa opzione più volte per impostare più di un campo. Nota bene: per le lingue devi usare i codici lingua ISO639 (p. es. en per Inglese, it per Italiano e così via). Per gli identificatori, la sintassi è \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Per campi booleani (sì/no) usa true e false oppure yes e no.
+Il campo da impostare. Il formato è nome_campo:valore, per esempio: \fI\%\-\-field\fP tags:tag1,tag2. Usa \fI\%\-\-list\-fields\fP per ottenere una lista di tutti i nomi dei campi. Puoi specificare questa opzione più volte per impostare più di un campo. Nota bene: per le lingue devi usare i codici lingua ISO639 (p. es. en per inglese, it per italiano e così via). Per gli identificatori, la sintassi è \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Per campi booleani (sì/no) usa true e false oppure yes e no.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -496,7 +496,7 @@ Esporta tutti i libri in una singola cartella
 .INDENT 0.0
 .TP
 .B \-\-template
-Lo schema che controlla i nomi di file e l\fB\(aq\fPalbero delle cartelle dei file salvati. Il valore predefinito è \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP che salva i libri in una sottocartella per autore mentre i nomi di file contengono titolo e autore. I controli disponibili sono: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+Lo schema che controlla i nomi di file e l\fB\(aq\fPalbero delle cartelle dei file salvati. Il valore predefinito è \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP che salva i libri in una sottocartella per autore mentre i nomi di file contengono titolo e autore. I controlli disponibili sono: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -540,7 +540,7 @@ Lista degli identificativi ID per il catalogo in campi separati da virgole. Se d
 .INDENT 0.0
 .TP
 .B \-\-search, \-s
-Filtra i risultati in base alla query di ricerca. Per il formato della query di ricerca fare riferimento alla documentazione sulla sintassi di ricerca nel Manuale utente. Predefinito: nessun filtraggio
+Filtra i risultati in base alla query di ricerca. Per il formato della query di ricerca fare riferimento alla documentazione sulla sintassi di ricerca nel manuale utente. Predefinito: nessun filtraggio
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -556,7 +556,7 @@ Titolo del catalogo generato usato come titolo nei metadati. Valore predefinito:
 .INDENT 0.0
 .TP
 .B \-\-cross\-reference\-authors
-Crea riferimenti incroiciati nella sezione Autori per libri con autori multipli. Valore predefinito: \fB\(aq\fPFalse\fB\(aq\fP Si applica a: formati di output AZW3, EPUB, MOBI
+Crea riferimenti incrociati nella sezione Autori per libri con autori multipli. Predefinito: \fB\(aq\fPFalse\fB\(aq\fP Si applica a: formati di output AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -957,7 +957,7 @@ Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessa
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l
-Il numero massimo di risultati da fornire. Tutti i risultati sono il default.
+Il numero massimo di risultati da fornire. Il valore predefinito è tutti i risultati.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

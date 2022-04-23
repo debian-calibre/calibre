@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -64,6 +63,11 @@ class CompleteModel(QAbstractListModel):  # {{{
     def data(self, index, role):
         if role == Qt.ItemDataRole.DisplayRole:
             try:
+                return self.current_items[index.row()].replace('\n', ' ')
+            except IndexError:
+                pass
+        if role == Qt.ItemDataRole.UserRole:
+            try:
                 return self.current_items[index.row()]
             except IndexError:
                 pass
@@ -78,6 +82,7 @@ class CompleteModel(QAbstractListModel):  # {{{
 class Completer(QListView):  # {{{
 
     item_selected = pyqtSignal(object)
+    apply_current_text = pyqtSignal()
     relayout_needed = pyqtSignal()
 
     def __init__(self, completer_widget, max_visible_items=7, sort_func=sort_key, strip_completion_entries=True):
@@ -97,6 +102,8 @@ class Completer(QListView):  # {{{
         self.pressed.connect(self.item_chosen)
         self.installEventFilter(self)
         self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        self.tab_accepts_uncompleted_text = (tweaks['tab_accepts_uncompleted_text'] and
+                                             not tweaks['preselect_first_completion'])
 
     def hide(self):
         self.setCurrentIndex(QModelIndex())
@@ -106,7 +113,7 @@ class Completer(QListView):  # {{{
         if not self.isVisible():
             return
         self.hide()
-        text = self.model().data(index, Qt.ItemDataRole.DisplayRole)
+        text = self.model().data(index, Qt.ItemDataRole.UserRole)
         self.item_selected.emit(str(text))
 
     def set_items(self, items):
@@ -143,7 +150,7 @@ class Completer(QListView):  # {{{
         widget = self.parent()
         if widget is None:
             return
-        screen = QApplication.desktop().availableGeometry(widget)
+        screen = widget.screen().availableGeometry()
         h = (p.sizeHintForRow(0) * min(self.max_visible_items, m.rowCount()) + 3) + 3
         hsb = p.horizontalScrollBar()
         if hsb and hsb.isVisible():
@@ -228,6 +235,9 @@ class Completer(QListView):  # {{{
                 if idx.isValid():
                     self.item_chosen(idx)
                     self.hide()
+                elif self.tab_accepts_uncompleted_text:
+                    self.hide()
+                    self.apply_current_text.emit()
                 elif self.model().rowCount() > 0:
                     self.next_match()
                 e.accept()
@@ -301,6 +311,8 @@ class LineEdit(QLineEdit, LineEditECM):
 
         self.mcompleter = Completer(completer_widget, sort_func=sort_func, strip_completion_entries=strip_completion_entries)
         self.mcompleter.item_selected.connect(self.completion_selected,
+                type=Qt.ConnectionType.QueuedConnection)
+        self.mcompleter.apply_current_text.connect(self.apply_current_text,
                 type=Qt.ConnectionType.QueuedConnection)
         self.mcompleter.relayout_needed.connect(self.relayout)
         self.mcompleter.setFocusProxy(completer_widget)
@@ -421,6 +433,14 @@ class LineEdit(QLineEdit, LineEditECM):
         self.setCursorPosition(len(before_text))
         self.item_selected.emit(text)
 
+    def apply_current_text(self):
+        if self.sep is not None:
+            txt = str(self.text())
+            sep_pos = txt.rfind(self.sep)
+            if sep_pos:
+                ntxt = txt[sep_pos+1:].strip()
+                self.completion_selected(ntxt)
+
 
 class EditWithComplete(EnComboBox):
 
@@ -531,8 +551,8 @@ if __name__ == '__main__':
     d.setLayout(QVBoxLayout())
     le = EditWithComplete(d)
     d.layout().addWidget(le)
-    items = ['one', 'otwo', 'othree', 'ooone', 'ootwo', 'other', 'odd', 'over', 'orc', 'oven', 'owe',
+    items = ['oane\n line2\n line3', 'otwo', 'othree', 'ooone', 'ootwo', 'other', 'odd', 'over', 'orc', 'oven', 'owe',
         'oothree', 'a1', 'a2','Edgas', 'Èdgar', 'Édgaq', 'Edgar', 'Édgar']
     le.update_items_cache(items)
     le.show_initial_value('')
-    d.exec_()
+    d.exec()

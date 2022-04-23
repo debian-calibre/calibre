@@ -1,19 +1,21 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
 __copyright__ = '2012, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import re, codecs, os, numbers
+import codecs
+import numbers
+import os
+import re
 from collections import namedtuple
 
 from calibre import strftime
 from calibre.customize import CatalogPlugin
-from calibre.library.catalogs import FIELDS, TEMPLATE_ALLOWED_FIELDS
 from calibre.customize.conversion import DummyReporter
 from calibre.ebooks.metadata import format_isbn
+from calibre.library.catalogs import FIELDS, TEMPLATE_ALLOWED_FIELDS
 from polyglot.builtins import string_or_bytes
 
 
@@ -108,12 +110,12 @@ class BIBTEX(CatalogPlugin):
                 "Applies to: BIBTEX output format"))]
 
     def run(self, path_to_output, opts, db, notification=DummyReporter()):
-        from calibre.utils.date import isoformat
-        from calibre.utils.html2text import html2text
-        from calibre.utils.bibtex import BibTeX
         from calibre.library.save_to_disk import preprocess_template
-        from calibre.utils.logging import default_log as log
+        from calibre.utils.bibtex import BibTeX
+        from calibre.utils.date import isoformat
         from calibre.utils.filenames import ascii_text
+        from calibre.utils.html2text import html2text
+        from calibre.utils.logging import default_log as log
 
         library_name = os.path.basename(db.library_path)
 
@@ -141,8 +143,11 @@ class BIBTEX(CatalogPlugin):
             for field in fields:
                 if field.startswith('#'):
                     item = db.get_field(entry['id'],field,index_is_id=True)
+                    m = db.new_api.field_metadata[field]
                     if isinstance(item, (bool, numbers.Number)):
                         item = repr(item)
+                    elif m.get('is_multiple'):
+                        item = m['is_multiple']['list_to_ui'].join(filter(None, item))
                 elif field == 'title_sort':
                     item = entry['sort']
                 elif field == 'library_name':
@@ -169,7 +174,7 @@ class BIBTEX(CatalogPlugin):
                     bibtex_entry.append('rating = "%s"' % int(item))
 
                 elif field == 'size' :
-                    bibtex_entry.append('%s = "%s octets"' % (field, int(item)))
+                    bibtex_entry.append(f'{field} = "{int(item)} octets"')
 
                 elif field == 'tags' :
                     # A list to flatten
@@ -197,7 +202,7 @@ class BIBTEX(CatalogPlugin):
                     formats = [format.rpartition('.')[2].lower() for format in item]
                     bibtex_entry.append('formats = "%s"' % ', '.join(formats))
                     if calibre_files:
-                        files = [':%s:%s' % (format, format.rpartition('.')[2].upper())
+                        files = [':{}:{}'.format(format, format.rpartition('.')[2].upper())
                             for format in item]
                         bibtex_entry.append('file = "%s"' % ', '.join(files))
 
@@ -212,13 +217,13 @@ class BIBTEX(CatalogPlugin):
                     bibtex_entry.append('month = "%s"' % bibtexdict.utf8ToBibtex(strftime("%b", item)))
 
                 elif field.startswith('#') and isinstance(item, string_or_bytes):
-                    bibtex_entry.append('custom_%s = "%s"' % (field[1:],
+                    bibtex_entry.append('custom_{} = "{}"'.format(field[1:],
                         bibtexdict.utf8ToBibtex(item)))
 
                 elif isinstance(item, string_or_bytes):
                     # elif field in ['title', 'publisher', 'cover', 'uuid', 'ondevice',
                     # 'author_sort', 'series', 'title_sort'] :
-                    bibtex_entry.append('%s = "%s"' % (field, bibtexdict.utf8ToBibtex(item)))
+                    bibtex_entry.append(f'{field} = "{bibtexdict.utf8ToBibtex(item)}"')
 
             bibtex_entry = ',\n    '.join(bibtex_entry)
             bibtex_entry += ' }\n\n'
@@ -303,7 +308,7 @@ class BIBTEX(CatalogPlugin):
 
         if opts.verbose:
             opts_dict = vars(opts)
-            log("%s(): Generating %s" % (self.name,self.fmt))
+            log(f"{self.name}(): Generating {self.fmt}")
             if opts.connected_device['is_device_connected']:
                 log(" connected_device: %s" % opts.connected_device['name'])
             if opts_dict['search_text']:
@@ -320,9 +325,9 @@ class BIBTEX(CatalogPlugin):
                 else:
                     log(" Fields: %s" % opts_dict['fields'])
 
-            log(" Output file will be encoded in %s with %s flag" % (bibfile_enc, bibfile_enctag))
+            log(f" Output file will be encoded in {bibfile_enc} with {bibfile_enctag} flag")
 
-            log(" BibTeX entry type is %s with a citation like '%s' flag" % (bib_entry, opts_dict['bib_cit']))
+            log(" BibTeX entry type is {} with a citation like '{}' flag".format(bib_entry, opts_dict['bib_cit']))
 
         # If a list of ids are provided, don't use search_text
         if opts.ids:

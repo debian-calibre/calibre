@@ -20,9 +20,10 @@ sys.path.append(base)
 sys.path.insert(0, os.path.dirname(base))
 from setup import __appname__, __version__
 from calibre.utils.localization import localize_website_link
+import calibre.utils.img as cimg
 import custom
 del sys.path[0]
-custom
+custom, cimg
 # General configuration
 # ---------------------
 
@@ -171,14 +172,17 @@ def sort_languages(x):
     return sort_key(type(u'')(name))
 
 
+website = 'https://calibre-ebook.com'
 html_context['other_languages'].sort(key=sort_languages)
 html_context['support_text'] = _('Support calibre')
 html_context['support_tooltip'] = _('Contribute to support calibre development')
-html_context['homepage_url'] = 'https://calibre-ebook.com'
+html_context['homepage_url'] = website
 if needs_localization:
     html_context['homepage_url'] = localize_website_link(html_context['homepage_url'])
 extlinks = {
+    'website_base': (website, None),
     'website': (html_context['homepage_url'] + '/%s', None),
+    'download_file': (f'{website}/downloads/%s', '%s'),
 }
 del sort_languages, get_language
 
@@ -192,7 +196,7 @@ epub_uid         = u'S54a88f8e9d42455e9c6db000e989225f'
 epub_tocdepth    = 4
 epub_tocdup      = True
 epub_cover       = ('epub_cover.jpg', 'epub_cover_template.html')
-suppress_wrnings = ['epub.duplicated_toc_entry']
+suppress_warnings = ['epub.duplicated_toc_entry']
 
 # Custom sidebar templates, maps document names to template names.
 # html_sidebars = {}
@@ -236,11 +240,13 @@ latex_documents = [(master_doc, 'calibre.tex', title, 'Kovid Goyal', 'manual', F
 # If false, no module index is generated.
 # latex_use_modindex = True
 
+# we use lualatex as it is actively maintained and pdflatex and xelatex fail
+# to render smart quotes and dashes
+latex_engine = 'lualatex'
 latex_logo = 'resources/logo.png'
 latex_show_pagerefs = True
 latex_show_urls = 'footnote'
 latex_elements = {
     'papersize':'letterpaper',
-    'fontenc':r'\usepackage[T2A,T1]{fontenc}',
     'preamble': r'\renewcommand{\pageautorefname}{%s}' % _('page'),
 }

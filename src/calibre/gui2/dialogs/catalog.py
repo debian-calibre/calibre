@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -11,7 +10,7 @@ import os
 import sys
 import weakref
 from qt.core import (
-    QApplication, QCoreApplication, QDialog, QDialogButtonBox, QScrollArea, QSize
+    QApplication, QDialog, QDialogButtonBox, QScrollArea, QSize
 )
 
 from calibre.customize import PluginInstallationType
@@ -138,14 +137,12 @@ class Catalog(QDialog, Ui_Dialog):
             QApplication.instance().safe_restore_geometry(self, bytes(geom))
         else:
             self.resize(self.sizeHint())
-        d = QCoreApplication.instance().desktop()
-        g = d.availableGeometry(d.screenNumber(self))
+        g = self.screen().availableSize()
         self.setMaximumWidth(g.width() - 50)
         self.setMaximumHeight(g.height() - 50)
 
     def sizeHint(self):
-        desktop = QCoreApplication.instance().desktop()
-        geom = desktop.availableGeometry(self)
+        geom = self.screen().availableSize()
         nh, nw = max(300, geom.height()-50), max(400, geom.width()-70)
         return QSize(nw, nh)
 

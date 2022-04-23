@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -66,7 +65,7 @@ class GUI(Command):
             os.chdir(cwd)
 
     def build_forms(self, summary=False):
-        from calibre.gui2 import build_forms
+        from calibre.build_forms import build_forms
         build_forms(self.SRC, info=self.info, summary=summary)
 
     def clean(self):

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -71,4 +70,4 @@ if __name__ == '__main__':
     app = Application([])
     w = LoadingOverlay()
     w.show()
-    app.exec_()
+    app.exec()

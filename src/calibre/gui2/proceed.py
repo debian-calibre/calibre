@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -388,7 +387,7 @@ class ProceedQuestion(QWidget):
 
     def animated_paint(self, painter):
         top = (1 - self._show_fraction) * self.height()
-        painter.drawPixmap(0, top, self.rendered_pixmap)
+        painter.drawPixmap(0, int(top), self.rendered_pixmap)
 
     def paint_background(self, painter):
         br = 12  # border_radius
@@ -422,7 +421,7 @@ def main():
             det_msg='details shown first, with a long line to test wrapping of text and width layout',
             show_det=True, show_ok=True)
     QTimer.singleShot(10, doit)
-    app.exec_()
+    app.exec()
 
 
 if __name__ == '__main__':

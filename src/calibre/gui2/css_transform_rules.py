@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -336,7 +335,7 @@ class RulesWidget(QWidget, SaveLoadMixin):  # {{{
         self.changed.emit()
 
     def test_rules(self):
-        self.TesterClass(self.rules_widget.rules, self).exec_()
+        self.TesterClass(self.rules_widget.rules, self).exec()
 
     @property
     def rules(self):
@@ -360,7 +359,7 @@ if __name__ == '__main__':
     d.rules = [
         {'property':'color', 'match_type':'*', 'query':'', 'action':'change', 'action_data':'green'},
     ]
-    d.exec_()
+    d.exec()
     from pprint import pprint
     pprint(d.rules)
     del d, app

@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 from polyglot.builtins import environ_item, hasenv
+from functools import lru_cache
 import sys, locale, codecs, os, collections, collections.abc
 
 __appname__   = 'calibre'
-numeric_version = (5, 32, 0)
+numeric_version = (5, 41, 0)
 __version__   = '.'.join(map(str, numeric_version))
 git_version   = None
 __author__    = "Kovid Goyal <kovid@kovidgoyal.net>"
@@ -442,3 +442,20 @@ def get_windows_number_formats():
         thousands_sep, decimal_point = d['thousands_sep'], d['decimal_point']
         ans = get_windows_number_formats.ans = thousands_sep, decimal_point
     return ans
+
+
+def trash_name():
+    return _('Trash') if ismacos else _('Recycle Bin')
+
+
+@lru_cache(maxsize=2)
+def get_umask():
+    mask = os.umask(0o22)
+    os.umask(mask)
+    return mask
+
+
+# call this at startup as it changed process global state, which doesnt work
+# with multi-threading. It's absurd there is no way to safely read the current
+# umask of a process.
+get_umask()

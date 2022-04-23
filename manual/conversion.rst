@@ -250,6 +250,14 @@ rules that change styles based on various conditions. For example you can use
 it to change all green colors to blue, or remove all bold styling from the text
 or color all headings a certain color, etc.
 
+Transform HTML
+~~~~~~~~~~~~~~~~~~~
+
+Similar to transform styles, but allows you to make changes to the HTML content
+of the book. You can replace one tag with another, add classes or other
+attributes to tags based on their content, etc.
+
+
 
 .. _page-setup:
 
@@ -644,7 +652,7 @@ calibre can automatically convert ``.docx`` files created by Microsoft Word 2007
 newer. Just add the file to calibre and click convert.
 
 .. note::
-    There is a `demo .docx file <https://calibre-ebook.com/downloads/demos/demo.docx>`_
+    There is a :download_file:`demo .docx file <demos/demo.docx>`
     that demonstrates the capabilities of the calibre conversion engine. Just
     download it and convert it to EPUB or AZW3 to see what calibre can do.
 
@@ -663,9 +671,8 @@ produce clean HTML that will convert well. Note that Word produces really messy
 HTML, converting it can take a long time, so be patient. If you have a newer
 version of Word available, you can directly save it as .docx as well.
 
-Another alternative is to use the free OpenOffice. Open your .doc file in
-OpenOffice and save it in OpenOffice's format .odt. calibre can directly convert
-.odt files.
+Another alternative is to use the free LibreOffice. Open your .doc file in
+LibreOffice and save it as .docx, which can be directly converted in calibre.
 
 Convert TXT documents
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -783,10 +790,10 @@ calibre will automatically convert this .cbc file into a e-book with a Table of 
 EPUB advanced formatting demo
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Various advanced formatting for EPUB files is demonstrated in this `demo file <https://calibre-ebook.com/downloads/demos/demo.epub>`_.
+Various advanced formatting for EPUB files is demonstrated in this :download_file:`demo file <demos/demo.epub>`.
 The file was created from hand coded HTML using calibre and is meant to be used as a template for your own EPUB creation efforts.
 
-The source HTML it was created from is available `demo.zip <https://calibre-ebook.com/downloads/demos/demo.zip>`_. The settings used to create the
+The source HTML it was created from is available :download_file:`demo.zip <demos/demo.zip>`. The settings used to create the
 EPUB from the ZIP file are::
 
     ebook-convert demo.zip .epub -vv --authors "Kovid Goyal" --language en --level1-toc '//*[@class="title"]' --disable-font-rescaling --page-breaks-before / --no-default-epub-cover

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__ = 'GPL v3'
@@ -187,7 +186,7 @@ def create_cover(report, icons=(), cols=5, size=120, padding=16):
             with lopen(ipath, 'rb') as f:
                 img = image_from_data(f.read())
             scaled, nwidth, nheight = fit_image(img.width(), img.height(), size, size)
-            img = img.scaled(nwidth, nheight, Qt.AspectRatioMode.IgnoreAspectRatio, Qt.TransformationMode.SmoothTransformation)
+            img = img.scaled(int(nwidth), int(nheight), Qt.AspectRatioMode.IgnoreAspectRatio, Qt.TransformationMode.SmoothTransformation)
             dx = (size - nwidth) // 2
             canvas.compose(img, x + dx, y)
     return canvas.export()
@@ -416,11 +415,11 @@ def create_theme(folder=None, parent=None):
             return
     report = read_theme_from_folder(folder)
     d = ThemeCreateDialog(parent, report)
-    if d.exec_() != QDialog.DialogCode.Accepted:
+    if d.exec() != QDialog.DialogCode.Accepted:
         return
     d.save_metadata()
     d = Compress(d.report, parent=parent)
-    d.exec_()
+    d.exec()
     if d.wasCanceled() or d.raw is None:
         return
     raw, prefix = d.raw, d.prefix
@@ -490,7 +489,8 @@ def get_cover(metadata):
 
 def get_covers(themes, dialog, num_of_workers=8):
     items = Queue()
-    tuple(map(items.put, themes))
+    for i in themes:
+        items.put(i)
 
     def callback(metadata, x):
         if not sip.isdeleted(dialog) and not dialog.dialog_closed:
@@ -546,11 +546,11 @@ class Delegate(QStyledItemDelegate):
             <p>{description}</p>
             <p>Version: {version} Number of users: {usage}</p>
             <p><i>Right click to visit theme homepage</i></p>
-            '''.format(title=theme.get('title', _('Unknown')), author=theme.get('author', _('Unknown')),
+            ''').format(title=theme.get('title', _('Unknown')), author=theme.get('author', _('Unknown')),
                        number=theme.get('number', 0), description=theme.get('description', ''),
                        size=human_readable(theme.get('compressed-size', 0)), version=theme.get('version', 1),
                        usage=theme.get('usage', 0),
-        )))
+        ))
         painter.drawStaticText(COVER_SIZE[0] + self.SPACING, option.rect.top() + self.SPACING, theme['static-text'])
         painter.restore()
 
@@ -601,8 +601,7 @@ class ChooseTheme(Dialog):
         self.dialog_closed = True
 
     def sizeHint(self):
-        desktop  = QApplication.instance().desktop()
-        h = desktop.availableGeometry(self).height()
+        h = self.screen().availableSize().height()
         return QSize(900, h - 75)
 
     def setup_ui(self):
@@ -692,7 +691,7 @@ class ChooseTheme(Dialog):
             self.themes.sort(key=lambda x:self.usage.get(x.get('name'), 0), reverse=True)
         self.theme_list.clear()
         for theme in self.themes:
-            i = QListWidgetItem(theme.get('title', '') + ' %s %s' % (theme.get('number'), self.usage.get(theme.get('name'))), self.theme_list)
+            i = QListWidgetItem(theme.get('title', '') + ' {} {}'.format(theme.get('number'), self.usage.get(theme.get('name'))), self.theme_list)
             i.setData(Qt.ItemDataRole.UserRole, theme)
             if 'cover-pixmap' in theme:
                 i.setData(Qt.ItemDataRole.DecorationRole, theme['cover-pixmap'])
@@ -798,7 +797,7 @@ class ChooseTheme(Dialog):
         t = Thread(name='DownloadIconTheme', target=download)
         t.daemon = True
         t.start()
-        ret = d.exec_()
+        ret = d.exec()
 
         if self.downloaded_theme and not isinstance(self.downloaded_theme, BytesIO):
             return error_dialog(self, _('Download failed'), _(
@@ -880,6 +879,6 @@ if __name__ == '__main__':
     app = Application([])
     # create_theme('.')
     d = ChooseTheme()
-    if d.exec_() == QDialog.DialogCode.Accepted and d.commit_changes is not None:
+    if d.exec() == QDialog.DialogCode.Accepted and d.commit_changes is not None:
         d.commit_changes()
     del app

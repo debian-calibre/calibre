@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -461,7 +460,7 @@ def export_rules(serialized_rules):
     lines = []
     for rule in serialized_rules:
         lines.extend('# ' + l for l in rule_to_text(rule).splitlines())
-        lines.extend('%s: %s' % (k, v.replace('\n', ' ')) for k, v in rule.items() if k in allowed_keys and k != 'actions')
+        lines.extend('{}: {}'.format(k, v.replace('\n', ' ')) for k, v in rule.items() if k in allowed_keys and k != 'actions')
         for action in rule.get('actions', ()):
             lines.append(f"action: {action['type']}: {action.get('data', '')}")
         lines.append('')
@@ -559,15 +558,7 @@ def test(return_tests=False):  # {{{
             self.ae(erule, next(iter(import_rules(export_rules([rule])))))
 
         def test_html_transform_actions(self):
-            try:
-                parse('a', fragment_context='div')
-            except TypeError:
-                import os
-                is_ci = os.environ.get('CI', '').lower() == 'true'
-                if is_ci:
-                    raise unittest.SkipTest('html5-parser too old on CI')
-                else:
-                    raise
+            parse('a', fragment_context='div')
 
             def r(html='<p>hello'):
                 return parse(namespace_elements=True, html=html)[1]

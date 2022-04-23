@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2018, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -130,7 +129,7 @@ View an e-book.
         'Alternately, you can use the form toc:something and it will open '
         'at the location of the first Table of Contents entry that contains '
         'the string "something". The form toc-href:something will match the '
-        'href (internal link destination) of toc nodes. The matching is exact, '
+        'href (internal link destination) of toc nodes. The matching is exact. '
         'If you want to match a substring, use the form toc-href-contains:something. '
         'The form ref:something will use Reference mode references.'))
     a('--continue', default=False, action='store_true', dest='continue_reading',
@@ -162,7 +161,7 @@ def run_gui(app, opts, args, internal_book_data, listener=None):
     if opts.full_screen:
         main.set_full_screen(True)
 
-    app.exec_()
+    app.exec()
 
 
 def main(args=sys.argv):
@@ -199,7 +198,7 @@ def main(args=sys.argv):
     if oat and not (
             oat.startswith('toc:') or oat.startswith('toc-href:') or oat.startswith('toc-href-contains:') or
             oat.startswith('epubcfi(/') or is_float(oat) or oat.startswith('ref:')):
-        raise SystemExit('Not a valid --open-at value: {}'.format(opts.open_at))
+        raise SystemExit(f'Not a valid --open-at value: {opts.open_at}')
 
     if get_session_pref('singleinstance', False):
         from calibre.utils.lock import SingleInstance

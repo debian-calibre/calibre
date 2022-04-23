@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__ = 'GPL v3'
@@ -220,7 +219,7 @@ class Central(QStackedWidget):  # {{{
             menu.addSeparator()
             menu.addAction(actions['close-all-but-current-tab'].icon(), _('Close other tabs'), partial(self.close_all_but, ed))
             menu.addAction(actions['close-tabs-to-right-of'].icon(), _('Close tabs to the right of this tab'), partial(self.close_to_right, ed))
-            menu.exec_(self.editor_tabs.tabBar().mapToGlobal(event.pos()))
+            menu.exec(self.editor_tabs.tabBar().mapToGlobal(event.pos()))
 
         return True
 # }}}
@@ -374,7 +373,7 @@ class Main(MainWindow):
         self.status_bar.addWidget(la)
 
         self.boss(self)
-        g = QApplication.instance().desktop().availableGeometry(self)
+        g = self.screen().availableSize()
         self.resize(g.width()-50, g.height()-50)
 
         self.apply_settings()
@@ -384,7 +383,7 @@ class Main(MainWindow):
         self.keyboard.finalize()
         self.setDockNestingEnabled(tprefs['nestable_dock_widgets'])
         for v, h in product(('top', 'bottom'), ('left', 'right')):
-            p = 'dock_%s_%s' % (v, h)
+            p = f'dock_{v}_{h}'
             pref = tprefs[p] or tprefs.defaults[p]
             area = getattr(Qt, '%sDockWidgetArea' % capitalize({'vertical':h, 'horizontal':v}[pref]))
             self.setCorner(getattr(Qt, '%s%sCorner' % tuple(map(capitalize, (v, h)))), area)
@@ -774,7 +773,7 @@ class Main(MainWindow):
                     bar.addAction(actions[ac])
                 except KeyError:
                     if DEBUG:
-                        prints('Unknown action for toolbar %r: %r' % (str(bar.objectName()), ac))
+                        prints(f'Unknown action for toolbar {str(bar.objectName())!r}: {ac!r}')
 
         for x in tprefs['global_book_toolbar']:
             add(self.global_bar, x)

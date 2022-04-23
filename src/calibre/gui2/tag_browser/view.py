@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -11,7 +10,7 @@ from functools import partial
 
 from qt.core import (
     QStyledItemDelegate, Qt, QTreeView, pyqtSignal, QSize, QIcon, QApplication, QStyle, QAbstractItemView,
-    QMenu, QPoint, QToolTip, QCursor, QDrag, QRect, QModelIndex,
+    QMenu, QPoint, QToolTip, QCursor, QDrag, QRect, QModelIndex, QStyleOptionViewItem,
     QLinearGradient, QPalette, QColor, QPen, QBrush, QFont, QTimer
 )
 
@@ -50,7 +49,7 @@ class TagDelegate(QStyledItemDelegate):  # {{{
         painter.setClipRect(nr)
         bg = option.palette.window()
         if self.old_look:
-            bg = option.palette.alternateBase() if option.features&option.Alternate else option.palette.base()
+            bg = option.palette.alternateBase() if option.features&QStyleOptionViewItem.ViewItemFeature.Alternate else option.palette.base()
         painter.fillRect(r, bg)
         style.proxy().drawPrimitive(QStyle.PrimitiveElement.PE_PanelItemViewItem, option, painter, widget)
         painter.setOpacity(0.3)
@@ -460,9 +459,9 @@ class TagsView(QTreeView):  # {{{
             categories stops working. Don't know why. To avoid the problem
             we fix the action in dragMoveEvent.
             '''
-            drag.exec_(Qt.DropAction.CopyAction|Qt.DropAction.MoveAction, Qt.DropAction.CopyAction)
+            drag.exec(Qt.DropAction.CopyAction|Qt.DropAction.MoveAction, Qt.DropAction.CopyAction)
         else:
-            drag.exec_(Qt.DropAction.CopyAction)
+            drag.exec(Qt.DropAction.CopyAction)
 
     def mouseDoubleClickEvent(self, event):
         # swallow these to avoid toggling and editing at the same time
@@ -487,8 +486,7 @@ class TagsView(QTreeView):  # {{{
         set_to: if None, advance the state. Otherwise must be one of the values
         in TAG_SEARCH_STATES
         '''
-        modifiers = int(QApplication.keyboardModifiers())
-        exclusive = modifiers not in (Qt.Modifier.CTRL, Qt.Modifier.SHIFT)
+        exclusive = QApplication.keyboardModifiers() not in (Qt.KeyboardModifier.ControlModifier, Qt.KeyboardModifier.ShiftModifier)
         if self._model.toggle(index, exclusive, set_to=set_to):
             # Reset the focus back to TB if it has it before the toggle
             # Must ask this question before starting the search because
@@ -609,6 +607,14 @@ class TagsView(QTreeView):  # {{{
                 self.delete_user_category.emit(key)
                 return
             if action == 'delete_search':
+                if not question_dialog(
+                    self,
+                    title=_('Delete Saved search'),
+                    msg='<p>'+ _('Delete the saved search: {}?').format(key),
+                    skip_dialog_name='tb_delete_saved_search',
+                    skip_dialog_msg=_('Show this confirmation again')
+                ):
+                    return
                 self.model().db.saved_search_delete(key)
                 self.rebuild_saved_searches.emit()
                 return
@@ -871,7 +877,7 @@ class TagsView(QTreeView):  # {{{
                             search_submenu.addAction(self.search_copy_icon,
                                      _('The saved search expression'),
                                      partial(self.context_menu_handler, action='raw_search',
-                                             key=tag.name))
+                                             key=tag.original_name))
                     self.context_menu.addSeparator()
                 elif key.startswith('@') and not item.is_gst:
                     if item.can_be_edited:

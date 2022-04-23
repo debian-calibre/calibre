@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "十一月 12, 2021" "5.32.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "四月 22, 2022" "5.41.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -41,16 +41,16 @@ ebook\-convert input_file output_file [options]
 .UNINDENT
 .UNINDENT
 .sp
-Convert an e\-book from one format to another.
+转换不同格式的电子书。
 .sp
-input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+input_file 表示输入文件，output_file 表示输出文件。这两者作为命令行参数必须指定到最前面。
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an "open e\-book" (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
+输出的电子书格式可由 output_file 的扩展名得到。同时 output_file 也可以是一种以 .EXT 为扩展名的特殊格式。在这种情况下，输出文件的名称则使用输入文件的名称。注意：文件名不能以连字号作为开头。如果 output_file 不含扩展名，那么它将被视为一个目录并将会在该目录下生成 HTML 格式的“开放式电子书(OEB)”。这些文件会被视为正常文件而被输出插件所识别。
 .sp
-After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+在指定输入和输出文件后，你可以自定义特定的转换选项。根据输入和输出文件的类型不同可用的转换选项也不同。如需获取针对输入和输出文件的帮助，请在命令行中输入 \-h。
 .sp
-For full documentation of the conversion system see
-conversion
+对于转换系统的完整文档请查阅
+\fI\%电子书转换\fP
 .sp
 每当向具有它们自己空间的:command:
 .nf
@@ -149,7 +149,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extract the contents of the generated EPUB file to the specified folder. The contents of the folder are first deleted, so be careful.
+解压EPUB文件的内容到指定文件夹。请注意，该文件夹的内容会先被清空。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -297,7 +297,7 @@ pt 行高。控制两行高度距离。仅仅适用于未定义行高的元素�
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP\&.
+将普通引号、破折号和省略号转换为与它们对应的正确印刷体。有关详细信息, 请参阅 \fI\%https://daringfireball.net/projects/smartypants\fP。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -312,7 +312,7 @@ Convert plain quotes, dashes and ellipsis to their typographically correct equiv
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform HTML\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+包含转换本书中的HTML的规则的文件的路径。创建这样一个文件的最简单方法是在 calibre图形用户界面中使用向导创建规则。在“外观\->转换HTML”的转换对话框部分访问它。一旦创建规则，就可以使用“导出”按钮将它们保存到文件中。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -600,7 +600,7 @@ XPath 表达式指定所有标签应添加在三级目录表。每个条目加�
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring.
+在转换过程的不同阶段分别保存输出到指定目录。如果你不确定在哪个阶段出了问题，这个选项非常实用。
 .UNINDENT
 .INDENT 0.0
 .TP

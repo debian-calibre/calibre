@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__ = 'GPL v3'
@@ -42,7 +41,7 @@ class TrimImage(QDialog):
         r.setShortcut(QKeySequence(QKeySequence.StandardKey.Redo))
         self.trim_action = ac = self.bar.addAction(QIcon(I('trim.png')), _('&Trim'), self.do_trim)
         ac.setShortcut(QKeySequence('Ctrl+T'))
-        ac.setToolTip('%s [%s]' % (_('Trim image by removing borders outside the selected region'),
+        ac.setToolTip('{} [{}]'.format(_('Trim image by removing borders outside the selected region'),
                                    ac.shortcut().toString(QKeySequence.SequenceFormat.NativeText)))
         ac.setEnabled(False)
         c.selection_state_changed.connect(self.selection_changed)
@@ -84,10 +83,9 @@ class TrimImage(QDialog):
 
     def selection_area_changed(self, rect):
         if rect:
-            w = rect.width()
-            h = rect.height()
+            x, y, w, h = map(int, self.canvas.rect_for_trim())
             text = f'{int(w)}x{int(h)}'
-            text = _('Size: {0}px Aspect ratio: {1:.2g}').format(text, w / h)
+            text = _('Size: {0}px Aspect ratio: {1:.3g}').format(text, w / h)
         else:
             text = ''
         self.tr_sz.setText(text)
@@ -119,7 +117,7 @@ if __name__ == '__main__':
     with open(fname, 'rb') as f:
         data = f.read()
     d = TrimImage(data)
-    if d.exec_() == QDialog.DialogCode.Accepted and d.image_data is not None:
+    if d.exec() == QDialog.DialogCode.Accepted and d.image_data is not None:
         b, ext = os.path.splitext(fname)
         fname = b + '-trimmed' + ext
         with open(fname, 'wb') as f:

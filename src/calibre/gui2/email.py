@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -130,9 +129,14 @@ class Sendmail:
                 except Exception:
                     pass
 
+            relay = opts.relay_host
+            if relay and relay == 'smtp.live.com':
+                # Microsoft changed the SMTP server
+                relay = 'smtp-mail.outlook.com'
+
             sendmail(msg, efrom, eto, localhost=None,
                         verbose=1,
-                        relay=opts.relay_host,
+                        relay=relay,
                         username=opts.relay_username,
                         password=from_hex_unicode(opts.relay_password), port=opts.relay_port,
                         encryption=opts.encryption,
@@ -246,6 +250,10 @@ class SelectRecipients(QDialog):  # {{{
         if not to:
             return error_dialog(
                 self, _('Need address'), _('You must specify an address'), show=True)
+        from email.utils import parseaddr
+        if not parseaddr(to)[-1] or '@' not in to:
+            return error_dialog(
+                self, _('Invalid email address'), _('The address {} is invalid').format(to), show=True)
         formats = ','.join([x.strip().upper() for x in str(self.formats.text()).strip().split(',') if x.strip()])
         if not formats:
             return error_dialog(
@@ -306,7 +314,7 @@ class SelectRecipients(QDialog):  # {{{
 
 def select_recipients(parent=None):
     d = SelectRecipients(parent)
-    if d.exec_() == QDialog.DialogCode.Accepted:
+    if d.exec() == QDialog.DialogCode.Accepted:
         return d.ans
     return ()
 # }}}
@@ -361,7 +369,7 @@ class EmailMixin:  # {{{
             for to, (ids, nooutput) in iteritems(bad_recipients):
                 msg = _('This recipient has no valid formats defined') if nooutput else \
                         _('These books have no suitable input formats for conversion')
-                det_msg.append('%s - %s' % (to, msg))
+                det_msg.append(f'{to} - {msg}')
                 det_msg.extend('\t' + titles[bid] for bid in ids)
                 det_msg.append('\n')
             warning_dialog(self, _('Could not send'),
@@ -469,7 +477,7 @@ class EmailMixin:  # {{{
             d = warning_dialog(self, _('No suitable formats'),
                 _('Could not email the following books '
                 'as no suitable formats were found:'), bad)
-            d.exec_()
+            d.exec()
 
     def email_sent(self, job, remove=[]):
         if job.failed:

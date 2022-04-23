@@ -7,7 +7,6 @@ Build-Depends:
  dh-buildinfo,
  dh-python,
  fonts-liberation2,
- imagemagick,
  libboost-dev,
  libchm-dev,
  libegl1-mesa-dev,
@@ -16,7 +15,6 @@ Build-Depends:
  libicu-dev,
  libjpeg-turbo-progs,
  libjxr-tools,
- libmagickwand-dev,
  libmtdev-dev [linux-any],
  libmtp-dev (>= 1.1.5),
  libpodofo-dev (>= 0.8.2),
@@ -36,7 +34,6 @@ Build-Depends:
  python3-chm,
  python3-css-parser,
  python3-cssselect,
- python3-cssutils,
  python3-dateutil,
  python3-dev,
  python3-feedparser,
@@ -85,14 +82,12 @@ Homepage: https://calibre-ebook.com
 Vcs-Browser: https://github.com/debian-calibre/calibre
 Vcs-Git: https://github.com/debian-calibre/calibre.git
 Rules-Requires-Root: no
-X-Python3-Version: 3.9
 
 Package: calibre
 Architecture: all
 Pre-Depends: dpkg (>= 1.17.14)
 Depends: calibre-bin (>= ${source:Version}), ${misc:Depends},
  fonts-liberation2,
- imagemagick,
  libjpeg-turbo-progs,
  libjxr-tools,
  optipng,
@@ -104,7 +99,6 @@ Depends: calibre-bin (>= ${source:Version}), ${misc:Depends},
  python3-chm,
  python3-css-parser,
  python3-cssselect,
- python3-cssutils,
  python3-dateutil,
  python3-feedparser,
  python3-html2text,

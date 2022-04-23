@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "11月 12, 2021" "5.32.0" "calibre"
+.TH "CALIBREDB" "1" "4月 22, 2022" "5.41.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -150,7 +150,7 @@ Calibreコンテンツサーバ接続用パスワード。標準入力からパ�
 .INDENT 0.0
 .TP
 .B \-\-timeout
-The timeout, in seconds, when connecting to a calibre library over the network. The default is two minutes.
+ネットワーク経由でキャリバーライブラリに接続するときのタイムアウト。秒単位。デフォルトは2分です。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -234,8 +234,8 @@ calibredb add [options] file1 file2 file3 ...
 .UNINDENT
 .UNINDENT
 .sp
-Add the specified files as books to the database. You can also specify folders, see
-the folder related options below.
+指定したファイルを本としてデータベースに追加します。フォルダを指定することもできます。参照
+以下のフォルダ関連のオプション。
 .sp
 スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
 .INDENT 0.0
@@ -246,7 +246,7 @@ the folder related options below.
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-If books with similar titles and authors are found, merge the incoming formats (files) automatically into existing book records. A value of \fB"\fPignore\fB"\fP means duplicate formats are discarded. A value of \fB"\fPoverwrite\fB"\fP means duplicate formats in the library are overwritten with the newly added files. A value of \fB"\fPnew_record\fB"\fP means duplicate formats are placed into a new book record.
+似たようなタイトルと著者の本が見つかった場合は、受信した形式（ファイル）を既存の本のレコードに自動的にマージします。 \fB\(aq\fPignore\fB\(aq\fPの値は、重複するフォーマットが破棄されることを意味します。 \fB\(aq\fPoverwrite\fB\(aq\fPの値は、ライブラリ内の重複する形式が新しく追加されたファイルで上書きされることを意味します。 \fB\(aq\fPnew_record\fB\(aq\fPの値は、重複する形式が新しいブックレコードに配置されることを意味します。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -266,7 +266,7 @@ If books with similar titles and authors are found, merge the incoming formats (
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Set the identifiers for this book, e.g. \-I asin:XXX \-I isbn:YYY
+この本の識別子を設定します。例： \-I asin：XXX \-I isbn：YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -300,16 +300,16 @@ Set the identifiers for this book, e.g. \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .SS フォルダから追加
 .sp
-Options to control the adding of books from folders. By default only files that have extensions of known e\-book file types are added.
+フォルダからの本の追加を制御するオプション。デフォルトでは、既知の電子書籍ファイルタイプの拡張子を持つファイルのみが追加されます。
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+ファイル名（glob）パターン。このパターンに一致するファイルは、既知の電子書籍ファイルタイプでなくても、フォルダーでファイルをスキャンするときに追加されます。複数のパターンに対して複数回指定できます。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For example: *.pdf will ignore all PDF files
+ファイル名（glob）パターン。このパターンに一致するファイルは、フォルダーでファイルをスキャンするときに無視されます。複数のパターンに対して複数回指定できます。例：*。pdfはすべてのPDFファイルを無視します
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -319,7 +319,7 @@ A filename (glob) pattern, files matching this pattern will be ignored when scan
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Process folders recursively
+フォルダを再帰的に処理
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -339,7 +339,7 @@ idsに指定された本をデータベースから削除。idsには数字を�
 .INDENT 0.0
 .TP
 .B \-\-permanent
-ゴミ箱を使用しない
+ゴミ箱は使用しないでください
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -490,7 +490,7 @@ Have calibre convert all non English characters into English equivalents for the
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Export all books into a single folder
+すべての書籍を1つのフォルダにエクスポート
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -505,7 +505,7 @@ The template to control the filename and folder structure of the saved files. De
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Export books to the specified folder. Default is .
+指定したフォルダに本をエクスポートします。デフォルトは .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -772,14 +772,10 @@ calibredb restore_database [options]
 .UNINDENT
 .UNINDENT
 .sp
-Restore this database from the metadata stored in OPF files in each
-folder of the calibre library. This is useful if your metadata.db file
-has been corrupted.
+Calibreライブラリの各ディレクトリに保存されているOPFファイルから書誌情報を読み取り、データベースをリストアします。
+これはmetadata.dbファイルが壊れてしまった時に有用です。
 .sp
-WARNING: This command completely regenerates your database. You will lose
-all saved searches, user categories, plugboards, stored per\-book conversion
-settings, and custom recipes. Restored metadata will only be as accurate as
-what is found in the OPF files.
+注意: このコマンドを実行すると、データベースを完全に再生成します。すべての保存済み検索条件、ユーザカテゴリ、書誌情報変換ルール、書誌ごとの変換設定、カスタムレシピは失われます。リストアされる書誌情報は、OPFファイルの内容と同等となります。
 .sp
 スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
 .INDENT 0.0
@@ -874,12 +870,12 @@ calibredb backup_metadata [options]
 .UNINDENT
 .UNINDENT
 .sp
-Backup the metadata stored in the database into individual OPF files in each
-books folder. This normally happens automatically, but you can run this
-command to force re\-generation of the OPF files, with the \-\-all option.
+データベースに保存されているメタデータを、それぞれの個別のOPFファイルにバックアップします
+ブックフォルダ。これは通常自動的に行われますが、これを実行できます
+\-\-allオプションを指定して、OPFファイルの再生成を強制するコマンド。
 .sp
-Note that there is normally no need to do this, as the OPF files are backed up
-automatically, every time metadata is changed.
+OPFファイルはメタデータが変更されるたびに自動的にバックアップされるため、
+通常はこれを行う必要がないことに注意してください。
 .sp
 スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
 .INDENT 0.0

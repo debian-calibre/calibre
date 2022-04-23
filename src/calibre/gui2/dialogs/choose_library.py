@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -150,7 +149,7 @@ class ChooseLibrary(QDialog, Ui_Dialog):
 
             t = Thread(name='MoveLibrary', target=do_move)
             QTimer.singleShot(0, t.start)
-            pd.exec_()
+            pd.exec()
             if abort_move.is_set():
                 self.callback(self.db.library_path)
                 return

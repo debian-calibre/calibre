@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 # License: GPLv3 Copyright: 2020, Charles Haley
 
 from calibre.gui2.actions import InterfaceAction
@@ -21,4 +20,4 @@ class ShowTemplateFunctionsAction(InterfaceAction):
     def show_template_editor(self, *args):
         d = Preferences(self.gui, initial_plugin=('Advanced', 'TemplateFunctions'),
                 close_after_initial=True)
-        d.exec_()
+        d.exec()

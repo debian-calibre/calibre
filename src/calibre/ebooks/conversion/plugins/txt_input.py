@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 __license__ = 'GPL 3'
 __copyright__ = '2009, John Schember <john@nachtimwald.com>'
 __docformat__ = 'restructuredtext en'
@@ -87,11 +84,11 @@ class TXTInput(InputFormatPlugin):
             help=_('Normally extra space at the beginning of lines is retained. '
                    'With this option they will be removed.')),
         OptionRecommendation(name="markdown_extensions", recommended_value='footnotes, tables, toc',
-            help=_('Enable extensions to markdown syntax. Extensions are formatting that is not part '
-                   'of the standard markdown format. The extensions enabled by default: %default.\n'
-                   'To learn more about markdown extensions, see {}\n'
+            help=_('Enable extensions to Markdown syntax. Extensions are formatting that is not part '
+                   'of the standard Markdown format. The extensions enabled by default: %default.\n'
+                   'To learn more about Markdown extensions, see {}\n'
                    'This should be a comma separated list of extensions to enable:\n'
-                   ).format('https://python-markdown.github.io/extensions/') + '\n'.join('* %s: %s' % (k, MD_EXTENSIONS[k]) for k in sorted(MD_EXTENSIONS))),
+                   ).format('https://python-markdown.github.io/extensions/') + '\n'.join(f'* {k}: {MD_EXTENSIONS[k]}' for k in sorted(MD_EXTENSIONS))),
     }
 
     def shift_file(self, fname, data):
@@ -100,7 +97,7 @@ class TXTInput(InputFormatPlugin):
         c = 0
         while os.path.exists(candidate):
             c += 1
-            candidate = os.path.join(self.output_dir, '{}-{}{}'.format(name, c, ext))
+            candidate = os.path.join(self.output_dir, f'{name}-{c}{ext}')
         ans = candidate
         with open(ans, 'wb') as f:
             f.write(data)
@@ -204,7 +201,7 @@ class TXTInput(InputFormatPlugin):
                 # gb2312 instead of gbk. gbk is a superset of gb2312, anyway.
                 det_encoding = 'gbk'
             ienc = det_encoding
-            log.debug('Detected input encoding as %s with a confidence of %s%%' % (ienc, confidence * 100))
+            log.debug(f'Detected input encoding as {ienc} with a confidence of {confidence * 100}%')
         if not ienc:
             ienc = 'utf-8'
             log.debug('No input encoding specified and could not auto detect using %s' % ienc)

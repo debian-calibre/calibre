@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 # License: GPLv3 Copyright: 2010, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -8,13 +7,14 @@ import re
 from collections import namedtuple
 from functools import partial
 from qt.core import (
-    QAction, QApplication, QColor, QEasingCurve, QIcon, QKeySequence, QLayout, QMenu,
-    QMimeData, QPainter, QPen, QPixmap, QPropertyAnimation, QRect, QSize, QClipboard,
-    QSizePolicy, Qt, QUrl, QWidget, pyqtProperty, pyqtSignal
+    QAction, QApplication, QClipboard, QColor, QDialog, QEasingCurve, QIcon,
+    QKeySequence, QLayout, QMenu, QMimeData, QPainter, QPen, QPixmap,
+    QPropertyAnimation, QRect, QSize, QSizePolicy, Qt, QUrl, QWidget, pyqtProperty,
+    pyqtSignal
 )
 
 from calibre import fit_image, sanitize_file_name
-from calibre.constants import config_dir
+from calibre.constants import config_dir, iswindows
 from calibre.ebooks import BOOK_EXTENSIONS
 from calibre.ebooks.metadata.book.base import Metadata, field_metadata
 from calibre.ebooks.metadata.book.render import mi_to_html
@@ -59,6 +59,9 @@ def css(reset=False):
     if not hasattr(css, 'ans'):
         val = P('templates/book_details.css', data=True).decode('utf-8')
         css.ans = re.sub(r'/\*.*?\*/', '', val, flags=re.DOTALL)
+        if iswindows:
+            # On Windows the default monospace font family is Courier which is ugly
+            css.ans = 'pre { font-family: "Segoe UI Mono", "Consolas", monospace; }\n\n' + css.ans
     return css.ans
 
 
@@ -351,6 +354,7 @@ def add_item_specific_entries(menu, data, book_info, copy_menu, search_menu):
         if field is not None:
             book_id = int(data['book_id'])
             value = remove_value = data['value']
+            remove_name = ''
             if field == 'identifiers':
                 ac = book_info.copy_link_action
                 ac.current_url = value
@@ -363,6 +367,7 @@ def add_item_specific_entries(menu, data, book_info, copy_menu, search_menu):
                 init_find_in_tag_browser(search_menu, find_action, field, remove_value)
                 init_find_in_grouped_search(search_menu, field, remove_value, book_info)
                 menu.addAction(book_info.edit_identifiers_action)
+                remove_name = data.get('name') or value
             elif field in ('tags', 'series', 'publisher') or is_category(field):
                 add_copy_action(value)
                 init_find_in_tag_browser(search_menu, find_action, field, value)
@@ -378,7 +383,7 @@ def add_item_specific_entries(menu, data, book_info, copy_menu, search_menu):
                                         lambda: QApplication.instance().clipboard().setText(v))
             ac = book_info.remove_item_action
             ac.data = (field, remove_value, book_id)
-            ac.setText(_('Remove %s from this book') % escape_for_menu(value))
+            ac.setText(_('Remove %s from this book') % escape_for_menu(remove_name or data.get('original_value') or value))
             menu.addAction(ac)
         else:
             v = data.get('original_value') or data.get('value')
@@ -466,7 +471,7 @@ def details_context_menu_event(view, ev, book_info, add_popup_action=False, edit
         ema = get_gui().iactions['Edit Metadata'].menuless_qaction
         menu.addAction(_('Open the Edit metadata window') + '\t' + ema.shortcut().toString(QKeySequence.SequenceFormat.NativeText), edit_metadata)
     if len(menu.actions()) > 0:
-        menu.exec_(ev.globalPos())
+        menu.exec(ev.globalPos())
 # }}}
 
 
@@ -515,6 +520,7 @@ class CoverView(QWidget):  # {{{
         self.pixmap = self.default_pixmap
         self.pwidth = self.pheight = None
         self.data = {}
+        self.last_trim_id = self.last_trim_pixmap = None
 
         self.do_layout()
 
@@ -597,12 +603,21 @@ class CoverView(QWidget):  # {{{
 
     def contextMenuEvent(self, ev):
         cm = QMenu(self)
-        paste = cm.addAction(_('Paste cover'))
-        copy = cm.addAction(_('Copy cover'))
-        save = cm.addAction(_('Save cover to disk'))
-        remove = cm.addAction(_('Remove cover'))
-        gc = cm.addAction(_('Generate cover from metadata'))
+        paste = cm.addAction(QIcon.ic('edit-paste.png'), _('Paste cover'))
+        copy = cm.addAction(QIcon.ic('edit-copy.png'), _('Copy cover'))
+        save = cm.addAction(QIcon.ic('save.png'), _('Save cover to disk'))
+        remove = cm.addAction(QIcon.ic('trash.png'), _('Remove cover'))
+        gc = cm.addAction(QIcon.ic('default_cover.png'), _('Generate cover from metadata'))
         cm.addSeparator()
+        if self.pixmap is not self.default_pixmap and self.data.get('id'):
+            book_id = self.data['id']
+            cm.tc = QMenu(_('Trim cover'))
+            cm.tc.addAction(QIcon.ic('trim.png'), _('Automatically trim borders'), self.trim_cover)
+            cm.tc.addAction(_('Trim borders manually'), self.manual_trim_cover)
+            cm.tc.addSeparator()
+            cm.tc.addAction(QIcon.ic('edit-undo.png'), _('Undo last trim'), self.undo_last_trim).setEnabled(self.last_trim_id == book_id)
+            cm.addMenu(cm.tc)
+            cm.addSeparator()
         if not QApplication.instance().clipboard().mimeData().hasImage():
             paste.setEnabled(False)
         copy.triggered.connect(self.copy_to_clipboard)
@@ -613,7 +628,40 @@ class CoverView(QWidget):  # {{{
         create_open_cover_with_menu(self, cm)
         cm.si = m = create_search_internet_menu(self.search_internet.emit)
         cm.addMenu(m)
-        cm.exec_(ev.globalPos())
+        cm.exec(ev.globalPos())
+
+    def trim_cover(self):
+        book_id = self.data.get('id')
+        if not book_id:
+            return
+        from calibre.utils.img import image_from_x, remove_borders_from_image
+        img = image_from_x(self.pixmap)
+        nimg = remove_borders_from_image(img)
+        if nimg is not img:
+            self.last_trim_id = book_id
+            self.last_trim_pixmap = self.pixmap
+            self.update_cover(QPixmap.fromImage(nimg))
+
+    def manual_trim_cover(self):
+        book_id = self.data.get('id')
+        if not book_id:
+            return
+        from calibre.gui2.dialogs.trim_image import TrimImage
+        from calibre.utils.img import image_to_data
+        cdata = image_to_data(image_from_x(self.pixmap), fmt='PNG', png_compression_level=1)
+        d = TrimImage(cdata, parent=self)
+        if d.exec() == QDialog.DialogCode.Accepted and d.image_data is not None:
+            self.last_trim_id = book_id
+            self.last_trim_pixmap = self.pixmap
+            self.update_cover(cdata=d.image_data)
+
+    def undo_last_trim(self):
+        book_id = self.data.get('id')
+        if not book_id or book_id != self.last_trim_id:
+            return
+        pmap = self.last_trim_pixmap
+        self.last_trim_pixmap = self.last_trim_id = None
+        self.update_cover(pmap)
 
     def open_with(self, entry):
         id_ = self.data.get('id', None)

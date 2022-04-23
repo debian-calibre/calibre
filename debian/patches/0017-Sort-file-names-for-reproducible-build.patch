@@ -1,0 +1,22 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Sat, 13 Nov 2021 08:47:22 +0900
+Subject: Sort file names for reproducible build
+
+Forwarded: not-needed
+---
+ setup/revendor.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/setup/revendor.py b/setup/revendor.py
+index b978663..350ee7c 100755
+--- a/setup/revendor.py
++++ b/setup/revendor.py
+@@ -62,7 +62,7 @@ class ReVendor(Command):
+ 
+     def add_tree(self, base, prefix, ignore=lambda n:False):
+         for dirpath, dirnames, filenames in os.walk(base):
+-            for fname in filenames:
++            for fname in sorted(filenames):
+                 f = os.path.join(dirpath, fname)
+                 name = prefix + '/' + os.path.relpath(f, base).replace(os.sep, '/')
+                 if not ignore(name):

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "november 12, 2021" "5.32.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "april 22, 2022" "5.41.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -50,9 +50,9 @@ Utmatningsformatet för e\-boken uppskattas utifrån filändelsen i output_file.
 Efter att ha angivit in\- och utmatningsfilerna kan du anpassa konverteringen genom att ange olika alternativ. Vilka alternativ som är tillgängliga beror på in\- och utmatningsfiltyperna. För att få hjälp med dem, ange in\- och utmatningsfilerna och lägg därefter till alternativet \-h.
 .sp
 För fullständig dokumentation om konverteringssystemet, gå till
-conversion
+\fI\%Konvertering av e\-bok\fP
 .sp
-När du skickar argument till \fBebook\-convert\fP som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till \fBebook\-convert\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .sp
 Alternativen och standardvärden för ändringsalternativ beror på både
 inmatning\- och utmatningsformat, därför bör du alltid kontrollera med:
@@ -97,7 +97,7 @@ visa denna hjälptext och avsluta
 .INDENT 0.0
 .TP
 .B \-\-input\-profile
-Ange inmatningsprofilen. Profilen ger information till konverteringssystemet om hur information i inmatning ska tolkas. Till exempel upplösningsberoende längder (d.v.s. längder i pixlar). Alternativen är: cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+Ange inmatningsprofilen. Inmatningsprofilen ger information till konverteringssystemet om hur uppgifterna i inmatningsdokumentet ska tolkas. Till exempel upplösningsberoende längder (d.v.s. längder i pixlar). Alternativen är: cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -107,7 +107,7 @@ Lista inbyggda receptnamn. Du kan skapa en e\-bok från ett inbyggt recept så h
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Ange utmatningsprofilen. Utmatningsprofilen berättar för konverteringssystemet hur man optimerar det skapade dokumentet för den angivna enheten (t.ex. genom att ändra storlek på bilder för enhetens skärmstorlek). I vissa fall kan en utmatningsprofil användas för att optimera utmatningen för en viss enhet, men detta är sällan nödvändigt. Alternativen är:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+Ange utmatningsprofilen. Utmatningsprofilen berättar för konverteringssystemet hur det skapade dokumentet ska optimeras för den angivna enheten (t.ex. genom att ändra storlek på bilder för enhetens skärmstorlek). I vissa fall kan en utmatningsprofil användas för att optimera utmatningen för en viss enhet, men detta är sällan nödvändigt. Alternativen är:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -128,12 +128,12 @@ Alternativ för att anpassa bearbetningen av utmatning epub
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
-Inaktivera delning vid sidbrytningar. Normalt delas inmatningsfilen automatiskt vid varje sidbrytning i två filer. Detta ger en utmatad e\-bok som kan tolkas snabbare och med mindre resurser. Att dela är dock långsamt och om din källfil innehåller ett mycket stort antal sidbrytningar bör du inaktivera delning vid sidbrytning.
+Inaktivera delning vid sidbrytningar. Normalt delas inmatningsfilen automatiskt vid varje sidbrytning i två filer. Detta ger en utmatad e\-bok som kan analyseras snabbare och med mindre resurser. Att dela är dock långsamt och om din källfil innehåller ett mycket stort antal sidbrytningar bör du inaktivera delning vid sidbrytning.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-epub\-flatten
-Det här alternativet behövs endast om du tänker använda EPUB med FBReaderJ. Det plattar ut filsystemet inuti EPUB och lägger alla filer i den översta nivån.
+Det här alternativet behövs endast om du tänker använda EPUB:n med FBReaderJ. Det plattar ut filsystemet inuti EPUB:n och lägger alla filer i den översta nivån.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -196,7 +196,7 @@ Translitterera Unicode\-tecken till en ASCII\-representation. Används med förs
 .INDENT 0.0
 .TP
 .B \-\-base\-font\-size
-Grundteckenstorleken i punkter. Alla teckenstorlekar i den producerade boken kommer att skalas om baserat på den här storleken. Genom att välja en större storlek kan du få teckensnittet i utmatningen större och vice versa. Som standard, när värdet är noll kommer grundteckenstorleken för teckensnitt att väljas baserat på utmatningsprofilen du väljer.
+Grundteckensnittsstorleken i punkter. Alla teckensnittsstorlekar i den producerade boken kommer att skalas om baserat på den här storleken. Genom att välja en större storlek kan du få teckensnittet i utmatningen större och vice versa. Som standard, när värdet är noll kommer grundteckensnittsstorleken för teckensnitt att väljas baserat på utmatningsprofilen du väljer.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -206,12 +206,12 @@ Grundteckenstorleken i punkter. Alla teckenstorlekar i den producerade boken kom
 .INDENT 0.0
 .TP
 .B \-\-disable\-font\-rescaling
-Inaktivera all omskalning av teckenstorlekar.
+Inaktivera all omskalning av teckensnittsstorlekar.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-embed\-all\-fonts
-Bädda in varje teckensnitt som refereras i inmatningsdokumentet som inte redan är inbäddat. Detta kommer att söka i ditt system efter teckensnitt och om de påträffas, kommer de att bäddas in. Inbäddning fungerar bara om det format du konverterar till stöder inbäddade teckensnitt, t.ex. EPUB, AZW3, DOCX eller PDF. Vänligen se till att du har rätt licens för att bädda in teckensnitt som används i detta dokument.
+Bädda in varje teckensnitt som refereras i inmatningsdokumentet som inte redan är inbäddat. Detta kommer att söka i ditt system efter teckensnitt och om de påträffas, kommer de att bäddas in. Inbäddning fungerar bara om det format du konverterar till stöder inbäddade teckensnitt, t.ex. EPUB, AZW3, DOCX eller PDF. Se till att du har rätt licens för att bädda in teckensnitt som används i detta dokument.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -236,7 +236,7 @@ En kommaseparerad lista över CSS\-egenskaper som kommer att tas bort från alla
 .INDENT 0.0
 .TP
 .B \-\-font\-size\-mapping
-Kartlägger CSS\-teckensnittsnamn till teckenstorlekar i punkter. En exempelinställning är 12,12,14,16,18,20,22,24. Detta konverterar storlekarna xx\-liten till xx\-stor, den sista storleken används för enorma teckensnitt. Omskalningsalgoritmen använder dessa storlekar för att på ett smart sätt skala om teckensnitten. Som standard används en kartläggning baserad på din valda utmatningsprofil.
+Kartlägger CSS\-teckensnittsnamn till teckensnittsstorlekar i punkter. En exempelinställning är 12,12,14,16,18,20,22,24. Detta konverterar storlekarna xx\-liten till xx\-stor, den sista storleken används för enorma teckensnitt. Omskalningsalgoritmen använder dessa storlekar för att på ett smart sätt skala om teckensnitten. Som standard används en kartläggning baserad på din valda utmatningsprofil.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -251,12 +251,12 @@ Ställ in höjden på de infogade tomma raderna (i em). Höjden på raderna mell
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Bevara ligaturer som finns i inmatningsdokumentet. En ligatur är en speciell framställning ett teckenpar som ff, fi, fl och så vidare. De flesta läsenheter saknar stöd för ligaturer i deras standardteckensnitt så det är osannolikt att de återges korrekt. Som standard konverterar calibre en ligatur till motsvarande par av vanliga tecken. Det här alternativet kommer att bevara ligaturerna istället.
+Bevara ligaturer som finns i inmatningsdokumentet. En ligatur är en speciell återgivning av ett teckenpar som ff, fi, fl och så vidare. De flesta läsenheter saknar stöd för ligaturer i deras standardteckensnitt så det är osannolikt att de återges korrekt. Som standard konverterar calibre en ligatur till motsvarande par av normala tecken. Det här alternativet kommer att bevara ligaturerna istället.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-line\-height
-Radavståndet i punkter. Anpassar mellanrum mellan på varandra följande textrader. Gäller endast element som inte definierar sitt eget radavstånd. I de flesta fall är det minsta radavståndet valet mer användbart. Som standard utför ingen ändring i radavstånd.
+Radavståndet i punkter. Anpassar avstånd mellan på varandra följande textrader. Gäller endast element som inte definierar sitt eget radavstånd. I de flesta fall är det minsta radavståndet valet mer användbart. Som standard utför ingen ändring i radavstånd.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -291,7 +291,7 @@ Minsta radavståndet, i procent av elementets beräknade teckensnittsstorlek. ca
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing
-Ta bort mellanrum mellan stycken. Drar även in första raden på det nya stycket med 1,5 em. Mellanrumsavlägsnande fungerar inte om källfilen inte använder stycken (<p> eller <div> taggar).
+Ta bort avstånd mellan stycken. Drar även in första raden på det nya stycket med 1,5 em. Borttagning av avstånd fungerar inte om källfilen inte använder stycken (<p>\- eller <div>\-taggar).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -301,7 +301,7 @@ När calibre tar bort tomma rader mellan stycken, anger det automatiskt ett styc
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Konvertera rena citat, bindestreck och ellips till deras typografiskt korrekta motsvarigheter. För detaljer, se \fI\%https://daringfireball.net/projects/smartypants\fP\&.
+Konvertera rena citattecken, bindestreck och ellipser till deras typografiskt korrekta motsvarigheter. För detaljer, se \fI\%https://daringfireball.net/projects/smartypants\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -316,12 +316,12 @@ Sökvägen till en fil som innehåller regler för att förändra CSS\-format i 
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform HTML\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+Sökväg till en fil som innehåller regler för att omvandla HTML i den här boken. Det enklaste sättet att skapa en sådan fil är att använda guiden för att skapa regler i det grafiska gränssnittet för calibre. Öppna den i avsnittet \fB"\fPUtseende och känsla\->Omvandla HTML\fB"\fP i konverteringsdialogrutan. När du har skapat reglerna kan du använda knappen \fB"\fPExportera\fB"\fP för att spara dem i en fil.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-unsmarten\-punctuation
-Konvertera snitsiga citat, streck och specialtecken till deras motsvarigheter i vanlig text.
+Konvertera tjusiga citattecken, streck och ellipser till deras vanliga motsvarigheter.
 .UNINDENT
 .SH HEURISTISK BEARBETNING
 .sp
@@ -343,7 +343,7 @@ Ta bort tomma stycken från dokumentet när de förekommer mellan vartannat styc
 .INDENT 0.0
 .TP
 .B \-\-disable\-fix\-indents
-Vändningsindrag som skapats från flera icke\-brytande mellanslagsenheter i CSS\-indrag.
+Vändningsindrag som skapats från flera icke\-brytande blankstegsenheter i CSS\-indrag.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -353,7 +353,7 @@ Vänsterjusterade scenbrytningsmarkörer är centrerade. Ersätt mjuka scenbrytn
 .INDENT 0.0
 .TP
 .B \-\-disable\-italicize\-common\-cases
-Leta efter vanliga ord och mönster som betecknar kursiv och kursivera dem.
+Leta efter vanliga ord och mönster som betecknar kursivt format och kursiverar dem.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -429,12 +429,12 @@ Anpassa automatisk identifiering av dokumentets struktur.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Ett XPath\-uttryck för att identifiera kapitelrubrikerna. Standard är att betrakta <h1>\- eller <h2>\-taggar som innehåller orden \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP eller \fB"\fPpart\fB"\fP som kapitelrubriker samt alla taggar som har class=\fB"\fPchapter\fB"\fP\&. Uttrycket som används måste utvärderas till en lista med element. För att inaktivera kapitelidentifiering, använd uttrycket \fB"\fP/\fB"\fP\&. Se XPath\-handledningen i användarhandboken för calibre för ytterligare hjälp med att använda den här funktionen.
+Ett XPath\-uttryck för att identifiera kapitelrubrikerna. Standard är att betrakta <h1>\- eller <h2>\-taggar som innehåller orden \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP eller \fB"\fPpart\fB"\fP som kapitelrubriker samt alla taggar som har class=\fB"\fPchapter\fB"\fP\&. Uttrycket som används måste utvärderas till en lista med element. För att inaktivera kapitelidentifiering, använd uttrycket \fB"\fP/\fB"\fP\&. Se XPath\-handledningen i användarmanualen för calibre för ytterligare hjälp med att använda den här funktionen.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Anger hur upptäckta kapitel markeras. Värdet \fB"\fPpagebreak\fB"\fP infogar en sidbrytning före kapitel. Värdet \fB"\fPrule\fB"\fP infogar en blankrad före kapitel. Värdet \fB"\fPnone\fB"\fP inaktiverar kapitelmarkering och om värdet \fB"\fPboth\fB"\fP anges kommer både sidbrytningar och blankrader att markera kapitel.
+Anger hur upptäckta kapitel markeras. Värdet \fB"\fPpagebreak\fB"\fP infogar en sidbrytning före kapitel. Värdet \fB"\fPrule\fB"\fP infogar en tom rad före kapitel. Värdet \fB"\fPnone\fB"\fP inaktiverar kapitelmarkering och om värdet \fB"\fPboth\fB"\fP anges kommer både sidbrytningar och tomma rader att markera kapitel.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -464,7 +464,7 @@ Ta bort den första bilden från den inmatade e\-boken. Praktiskt om inmatningsd
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-Ett XPath\-uttryck för att identifiera platsen i dokumentet där du ska börja läsa. Vissa e\-bokläsningsprogram (framförallt Kindle) använder denna plats som position för att öppna boken. Se XPath\-handledningen i användarhandboken för calibre för ytterligare hjälp med att använda den här funktionen.
+Ett XPath\-uttryck för att identifiera platsen i dokumentet där du ska börja läsa. Vissa e\-bokläsningsprogram (framförallt Kindle) använder denna plats som position för att öppna boken. Se XPath\-handledningen i användarmanualen för calibre för ytterligare hjälp med att använda den här funktionen.
 .UNINDENT
 .SH INNEHÅLLSFÖRTECKNING
 .sp
@@ -477,17 +477,17 @@ När du skapar en innehållsförteckning från länkar i inmatningsdokumentet, t
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-XPath\-uttryck som anger alla taggar som ska läggas till i innehållsförteckningen på nivå ett. Om detta anges har det företräde framför andra former av automatisk detektering. Se XPath\-handledningen i användarhandboken för calibre för exempel.
+XPath\-uttryck som anger alla taggar som ska läggas till i innehållsförteckningen på nivå ett. Om detta anges har det företräde framför andra former av automatisk upptäckt. Se XPath\-handledningen i användarmanualen för calibre för exempel.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-XPath\-uttryck som anger alla taggar som ska läggas till i innehållsförteckningen på nivå två. Varje post läggs till under föregående nivå en. Se XPath\-handledningen i användarhandboken för calibre för exempel.
+XPath\-uttryck som anger alla taggar som ska läggas till i innehållsförteckningen på nivå två. Varje post läggs till under föregående nivå ett\-post. Se XPath\-handledningen i användarmanualen för calibre för exempel.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-XPath\-uttryck som anger alla taggar som ska läggas till i innehållsförteckningen på nivå tre. Varje post läggs till under föregående nivå två. Se XPath\-handledningen i användarhandboken för calibre för exempel.
+XPath\-uttryck som anger alla taggar som ska läggas till i innehållsförteckningen på nivå tre. Varje post läggs till under föregående nivå två\-post. Se XPath\-handledningen i användarmanualen för calibre för exempel.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -585,7 +585,7 @@ Ange bokens index i denna serie.
 .INDENT 0.0
 .TP
 .B \-\-tags
-Ange taggar för boken. Skall vara en kommaseparerad lista.
+Ange taggarna för boken. Ska vara en kommaseparerad lista.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -604,11 +604,11 @@ Versionen av titeln som ska användas för sortering.
 .UNINDENT
 .SH FELSÖK
 .sp
-Alternativ för att hjälpa till att felsöka konverteringen
+Alternativ som hjälper dig att felsöka konverteringen
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Spara utmatning från olika skeden av konverteringssekvensen till den angivna mappen. Användbart om du är osäker i vilket skede av konverteringsprocessen ett problem uppstår.
+Spara utmatning från olika stadier av konverteringsprocessen till den angivna mappen. Användbart om du är osäker på i vilket skede av konverteringsprocessen ett problem inträffar.
 .UNINDENT
 .INDENT 0.0
 .TP

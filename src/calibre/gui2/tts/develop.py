@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2020, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -159,7 +158,7 @@ def main():
     tts.show_status.connect(la.setText)
     w.setCentralWidget(tts)
     w.show()
-    app.exec_()
+    app.exec()
     tts.dispatch_on_main_thread_signal.disconnect()
     tts.mark_changed.disconnect()
     tts.tts.shutdown()
@@ -182,7 +181,7 @@ def headless():
         c.speak_marked_text(text, callback)
     QTimer.singleShot(10, run)
     QTimer.singleShot(5000, app.quit)
-    app.exec_()
+    app.exec()
 
 
 if __name__ == '__main__':

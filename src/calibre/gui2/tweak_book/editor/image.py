@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__ = 'GPL v3'
@@ -58,7 +57,7 @@ class ResizeDialog(QDialog):  # {{{
             oval = val / self.aspect_ratio if which == 'width' else val * self.aspect_ratio
             other = getattr(self, '_height' if which == 'width' else '_width')
             other.blockSignals(True)
-            other.setValue(oval)
+            other.setValue(int(oval))
             other.blockSignals(False)
 
     @property
@@ -309,7 +308,7 @@ class Editor(QMainWindow):
     def resize_image(self):
         im = self.canvas.current_image
         d = ResizeDialog(im.width(), im.height(), self)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             self.canvas.resize_image(d.width, d.height)
 
     def sharpen_image(self):
@@ -341,7 +340,7 @@ def launch_editor(path_to_edit, path_is_raw=False):
     t = Editor('raster_image')
     t.data = raw
     t.show()
-    app.exec_()
+    app.exec()
 
 
 if __name__ == '__main__':

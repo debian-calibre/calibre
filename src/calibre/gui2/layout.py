@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -213,13 +212,7 @@ class SearchBar(QFrame):  # {{{
         x.setVisible(False)
         x.setToolTip(_('Close the Virtual library'))
         parent.clear_vl = x
-        self.vl_sep = QFrame(self)
-        self.vl_sep.setFrameStyle(QFrame.Shape.VLine | QFrame.Shadow.Sunken)
-        l.addWidget(self.vl_sep)
 
-        parent.sort_sep = QFrame(self)
-        parent.sort_sep.setFrameStyle(QFrame.Shape.VLine | QFrame.Shadow.Sunken)
-        parent.sort_sep.setVisible(False)
         parent.sort_button = self.sort_button = sb = QToolButton(self)
         sb.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
         sb.setToolTip(_('Change how the displayed books are sorted'))
@@ -232,7 +225,6 @@ class SearchBar(QFrame):  # {{{
         sb.menu().aboutToShow.connect(self.populate_sort_menu)
         sb.setVisible(False)
         l.addWidget(sb)
-        l.addWidget(parent.sort_sep)
 
         x = parent.search = SearchBox2(self, as_url=search_as_url)
         x.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)

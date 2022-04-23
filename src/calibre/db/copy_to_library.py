@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -60,6 +59,9 @@ def postprocess_copy(book_id, new_book_id, new_authors, db, newdb, identical_boo
     co = db.conversion_options(book_id)
     if co is not None:
         newdb.set_conversion_options({new_book_id:co})
+    annots = db.all_annotations_for_book(book_id)
+    if annots:
+        newdb.restore_annotations(new_book_id, annots)
     if identical_books_data is not None and duplicate_action != 'add':
         newdb.update_data_for_find_identical_books(new_book_id, identical_books_data)
 

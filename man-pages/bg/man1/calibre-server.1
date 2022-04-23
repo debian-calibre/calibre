@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "ноември 12, 2021" "5.32.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "април 22, 2022" "5.41.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -35,108 +35,108 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-calibre\-server [options] [path to library folder...]
+calibre\-server [опции] [път до папка на библиотека...]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Start the calibre Content server. The calibre Content server exposes your
-calibre libraries over the internet. You can specify the path to the library
-folders as arguments to \fBcalibre\-server\fP\&. If you do not specify any paths, all the
-libraries that the main calibre program knows about will be used.
+Стартирайте сървъра за съдържание на calibre. Calibre съдържание\-сървър излага ваши
+calibre библиотеки по интернет. Може да зададете пътя до папките
+на библиотеки като аргументи към \fBcalibre\-server\fP\&. Ако не зададете пътища, всички
+библиотеки, ще се използват, за които основната calibre програма знае.
 .sp
-Whenever you pass arguments to \fBcalibre\-server\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Винаги, когато предавате аргументи на \fBcalibre\-server\fP, които имат интервали в тях, затворете аргументите в кавички. Например: "/some path/with spaces"
 .SH ОБЩИ НАСТРОЙКИ
 .INDENT 0.0
 .TP
 .B \-\-access\-log
-Path to the access log file. This log contains information about clients connecting to the server and making requests. By default no access logging is done.
+Път до лог файл за достъп. Този лог файл съдържа информация за клиенти свързване със сървъра и отправяне на заявки. По подразбиране не се извършва регистриране на достъп.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ajax\-timeout
-Time (in seconds) to wait for a response from the server when making queries.
+Време (в секунди), за изчакване на отговор от сървъра, когато правите заявки.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Choose the type of authentication used.     Set the HTTP authentication mode used by the server. Set to \fB"\fPbasic\fB"\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB"\fPauto\fB"\fP, which will use \fB"\fPbasic\fB"\fP if SSL is configured otherwise it will use \fB"\fPdigest\fB"\fP\&.
+Избери вида на използваното удостоверяване.         Задайте режима на HTTP удостоверяване, използван от сървъра. Задайте на \fB"\fPbasic\fB"\fP ако ще поставяте този сървър зад SSL прокси. В противен случай гó оставете като \fB"\fPauto\fB"\fP, който ще използва \fB"\fPbasic\fB"\fP, ако SSL е конфигуриран в противен случай ще използва \fB"\fPdigest\fB"\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-auto\-reload
-Automatically reload server when source code changes. Useful for development. You should also specify a small value for the shutdown timeout.
+Автоматично презареждане на сървър при промяна на изходния код. Полезно за развитие. Също така трябва да зададете малка стойност на изчакването за изключване.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-after
-Number of login failures for ban.   The number of login failures after which an IP address is banned
+Брой на провалите при вход за забрана.      Броят на отказите при вход, след които IP адресът е забранен
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-Ban IP addresses that have repeated login failures.         Temporarily bans access for IP addresses that have repeated login failures for the specified number of minutes. Useful to prevent attempts at guessing passwords. If set to zero, no banning is done.
+Забрана на IP адреси, които имат неуспешни повторни входове.        Временно забранява достъпа за IP адреси, които имат повтарящи се провали при вход за определения брой минути. Полезно за предотвратяване на опити за отгатване на пароли. Ако е настроено на нула, не се прави забрана.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-book\-list\-mode
-Choose the default book list mode.  Set the default book list mode that will be used for new users. Individual users can override the default in their own settings. The default is to use a cover grid.
+Избери режима на списък с книги по подразбиране.    Задайте режима на списък с книги по подразбиране, който ще се използва за нови потребители. Индивидуални потребители могат да заместят по подразбиране в собствените си настройки. По подразб. е да използвате корица\-мрежа.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-compress\-min\-size
-Minimum size for which responses use data compression (in bytes).
+Минимален размер, за който отговорите използват компресиране на данни (в байта).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-custom\-list\-template
-Path to a JSON file containing a template for the custom book list mode. The easiest way to create such a template file is to go to Preferences\-> Sharing over the net\-> Book list template in calibre, create the template and export it.
+Път към JSON файл, съдържащ шаблон за режима на списък с персонализирани книги. The най\-лесният начин да създадете такъв файл шаблон е да отидете на Предпочитания\-> Споделяне през мрежата\-> Шаблон за списък с книги в calibre, създайте шаблона и гó експортирайте.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-daemonize
-Run process in background as a daemon (Linux only).
+Изпълнение на процес във фонов режим като демон (само за Linux).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-Restrict displayed user\-defined fields.     Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
+Ограничаване на показани полета, дефинирани от потребител.  Разделен със запетая списък с дефинирани от потребителя полета с метаданни, които ще се показват от сървъра съдържание в изгледите /opds и /mobile. Ако зададете тази опция, всички полета, които не са в този списък, няма да бъдат показани. Например: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-allow\-socket\-preallocation, \-\-disable\-allow\-socket\-preallocation
-Socket pre\-allocation, for example, with systemd socket activation. By default, this option is enabled.
+Предразпределение на контакт, например със системно активиране на контакт. По подразбиране тази опция е разрешена.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-auth, \-\-disable\-auth
-Password based authentication to access the server.         Normally, the server is unrestricted, allowing anyone to access it. You can restrict access to predefined users with this option. By default, this option is disabled.
+Удостоверяване, базирано на парола за достъп до сървъра.    Обикновено сървърът е неограничен, което позволява на всеки да получи достъп до него. Може да ограничите достъпа до предварително определени потребители с тази опция. По подразбиране тази опция е забранена.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Fallback to auto\-detected interface.        If for some reason the server is unable to bind to the interface specified in the listen_on option, then it will try to detect an interface that connects to the outside world and bind to that. By default, this option is enabled.
+Връщане назад към автоматично открития интерфейс.   Ако по някаква причина сървърът не е в състояние да се обвърже с посочения интерфейс в опцията listen_on, тогава ще се опита да открие интерфейс, който се свързва с външния свят и се обвързва с това. По подразбиране тази опция е разрешена.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Allow un\-authenticated local connections to make changes.   Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. By default, this option is disabled.
+Разрешаване на неудостоверени локални връзки да правят промени.     Обикновено, ако не включите удостоверяване, сървърът работи в режим само\-четене, така че да не се позволи на анонимните потребители да правят промени във ваши calibre библиотеки. Тази опция позволява на всеки, който се свързва от един и същ компютър, тъй като сървърът работи за извършване на промени. Това е полезно, ако вие искате да стартирате сървъра без удостоверяване, но все още използвате calibredb, за да правите промени във ваши calibre библиотеки. Имайте предвид, че включването на тази опция означава, че всяка програма, работеща на компютъра, може да направи промени във ваши calibre библиотеки. По подразбиране тази опция е забранена.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-Log HTTP 404 (Not Found) requests.  Normally, the server logs all HTTP requests for resources that are not found. This can generate a lot of log spam, if your server is targeted by bots. Use this option to turn it off. By default, this option is enabled.
+Лог заявки \- HTTP 404 (Не е намерен).       Обикновено сървърът регистрира всички HTTP заявки за ресурси, които не са намерени. Това може да генерира много лог спам, ако вашият сървър е насочен към ботове. Използвайте тази опция, за да изключите това. По подразбиране тази опция е разрешена.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
-Advertise OPDS feeds via BonJour.   Advertise the OPDS feeds via the BonJour service, so that OPDS based reading apps can detect and connect to the server automatically. By default, this option is enabled.
+Рекламиране на OPDS емисии чрез BonJour.    Рекламирайте OPDS емисиите чрез услугата BonJour, така че OPDS базирани приложения за четене могат да откриват и да се свързват със сървъра автоматично. По подразбиране тази опция е разрешена.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-Zero copy file transfers for increased performance.         This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. By default, this option is enabled.
+Нулево копиране на файлови трансфери за повишена производителност.  Това ще използва нулево копиране в ядрото трансфери при изпращане на файлове над мрежата, увеличавайки производителността. Въпреки това, може да предизвика повреден файл при трансфери на някои счупени системни файлове. Ако получите повреден файл при трансфери, изключете това. По подразбиране тази опция е разрешена.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -146,112 +146,112 @@ Zero copy file transfers for increased performance.         This will use zero\-
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-Ignored user\-defined metadata fields.       Comma separated list of user\-defined metadata fields that will not be displayed by the Content server in the /opds and /mobile views. For example: my_rating,my_tags
+Игнорирани полета за метаданни, дефинирани от потребителя.  Разделен със запетая списък с дефинирани от потребителя полета с метаданни, които няма да бъдат показвани от сървъра съдържание в изгледите /opds и /mobile. Например: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-The interface on which to listen for connections.   The default is to listen on all available IPv4 interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
+Интерфейсът, на който да слушате за връзки.         По подразбиране е да слушате на всички налични IPv4 интерфейси. Може да промените това, например, \fB"\fP127.0.0.1\fB"\fP, за да слушате само за връзки от локална машина, или към \fB"\fP::\fB"\fP да слушате всички входящи IPv6 и IPv4 връзки.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-log
-Path to log file for server log. This log contains server information and errors, not access logs. By default it is written to stdout.
+Път до лог файл за лог на сървър. Този лог файл съдържа информация за сървър и грешки, а не регистрационни файлове за достъп. По подразбиране е написан на stdout.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-manage\-users
-Manage the database of users allowed to connect to this server. You can use it in automated mode by adding a \-\-. See calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help for details. See also the \fI\%\-\-userdb\fP option.
+Управление базата данни на потребителите е позволено да се свърже с този сървър. Може да използвате това в автоматизиран режим чрез добавяне на \-\-. Вижте calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help за подробности. Вижте също и \fI\%\-\-userdb\fP опцията.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-header\-line\-size
-Max. size of single HTTP header (in KB).
+Макс. размер на единична HTTP заглавка (в КБ).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-Maximum time for worker processes.  Maximum amount of time worker processes are allowed to run (in minutes). Set to zero for no limit.
+Максимално време за работни процеси.        Максимално количество време на работни процеси е позволено да се изпълнява (за минути). Задаване на нула за без лимит.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-jobs
-Maximum number of worker processes.         Worker processes are launched as needed and used for large jobs such as preparing a book for viewing, adding books, converting, etc. Normally, the max. number of such processes is based on the number of CPU cores. You can control it by this setting.
+Максимален брой работни процеси.    Работни процеси се стартират при необходимост и се използват за големи работни места като подготовка на книга за разглеждане, добавяне на книги, конвертиране и др. Обикновено, макс. брой на такива процеси се основава на броя ядра на процесора. Може да да контролирате това, от тази настройка.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-log\-size
-Max. log file size (in MB).         The maximum size of log files, generated by the server. When the log becomes larger than this size, it is automatically rotated. Set to zero to disable log rotation.
+Макс. размер на лог файл (в MB).    Максималният размер на лог файлове, генерирани от сървъра. Когато дневникът стане по\-голям от този размер, той се завърта автоматично. Задаване на нула, за да забраните завъртане на лог файл.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-items
-Maximum number of books in OPDS feeds.      The maximum number of books that the server will return in a single OPDS acquisition feed.
+Максимален брой книги в OPDS емисии.        Максималният брой книги, които сървърът ще върне в една OPDS емисия за придобиване.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-ungrouped\-items
-Maximum number of ungrouped items in OPDS feeds.    Group items in categories such as author/tags by first letter when there are more than this number of items. Set to zero to disable.
+Максимален брой разгрупирани елементи в OPDS емисии.        Групирайте елементите в категории като автор/етикети по първа буква, когато има повече от този брой елементи. Зададено на нула, за да забраните.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-request\-body\-size
-Max. allowed size for files uploaded to the server (in MB).
+Макс. разрешен размер за файлове, качени на сървъра (в МБ).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-num\-per\-page
-Number of books to show in a single page.   The number of books to show in a single page in the browser.
+Брой книги за показване в единична страница.        Броят на книгите за показване на единична страница в браузъра.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-pidfile
-Write process PID to the specified file
+Писане на PID процес към посочения файл
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-port
-The port on which to listen for connections.
+Портът, на който да слушате за връзки.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-Path to a JSON file containing URLs for the \fB"\fPSearch the internet\fB"\fP feature. The easiest way to create such a file is to go to Preferences\-> Sharing over the net\->Search the internet in calibre, create the URLs and export them.
+Път до JSON файл, съдържащ URL адреси за \fB"\fPТърсене в интернет\fB"\fP функцията. Най\-лесният начин за създаване на такъв файл е да отидете на Предпочитания\-> Споделяне по мрежата\->Търсене интернета в calibre, създайте URL адресите и гѝ експортирайте.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-timeout
-Total time in seconds to wait for clean shutdown.
+Общо време в секунди, за изчакване на чисто изключване.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-certfile
-Path to the SSL certificate file.
+Път до файла със SSL сертификат.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-keyfile
-Path to the SSL private key file.
+Път до SSL файла с частен ключ.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout
-Time (in seconds) after which an idle connection is closed.
+Време (в секунди), след което е затворена връзка с престой.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-Allow un\-authenticated connections from specific IP addresses to make changes.      Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
+Разреши неудостоверени връзки от конкретни IP адреси да правят промени.     Обикновено, ако не включите удостоверяване, сървърът работи в режим само\-четене, така че да не се позволи на анонимни потребители да правят промени във ваши calibre библиотеки. Тази опция позволява на всеки, който се свързва от посочените IP адреси да извършва промени. Трябва да бъде разделен със запетаи списък, на адреси или мрежови спецификации. Това е полезно, ако искате да стартирате сървъра без удостоверяване, но все пак използвайте calibredb, за да направите промени във ваши calibre библиотеки. Имайте предвид, че включването на тази опция означава, че всеки, който се свързва от определените IP адреси може да прави промени във ваши calibre библиотеки.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-url\-prefix
-A prefix to prepend to all URLs.    Useful if you wish to run this server behind a reverse proxy. For example use, /calibre as the URL prefix.
+Префикс за представка към всички URL адреси.        Полезно, ако желаете да стартирате този сървър зад обратен прокси. Например използвайте, /calibre като префикс на URL адреса.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-userdb
-Path to the user database to use for authentication. The database is a SQLite file. To create it use \fI\%\-\-manage\-users\fP\&. You can read more about managing users at: \fI\%https://manual.calibre\-ebook.com/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
+Път до потребителската база данни, която да използвате за удостоверяване. Базата данни е SQLite файл. За да гó създадете, използвайте \fI\%\-\-manage\-users\fP\&. Може да прочетете повече за управление на потребители на: \fI\%https://manual.calibre\-ebook.com/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -261,7 +261,7 @@ Path to the user database to use for authentication. The database is a SQLite fi
 .INDENT 0.0
 .TP
 .B \-\-worker\-count
-Number of worker threads used to process requests.
+Брой на работни нишки, използвани за обработка на заявки.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

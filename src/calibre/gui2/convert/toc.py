@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -39,6 +38,6 @@ class TOCWidget(Widget, Ui_Form):
             x = getattr(self, 'opt_'+x+'_toc')
             if not x.check():
                 error_dialog(self, _('Invalid XPath'),
-                _('The XPath expression %s is invalid.')%x.text).exec_()
+                _('The XPath expression %s is invalid.')%x.text).exec()
                 return False
         return True

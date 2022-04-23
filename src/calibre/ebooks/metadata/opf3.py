@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -7,12 +6,14 @@ import json
 import re
 from collections import defaultdict, namedtuple
 from contextlib import suppress
-from operator import attrgetter
 from functools import wraps
 from lxml import etree
+from operator import attrgetter
 
 from calibre import prints
-from calibre.ebooks.metadata import authors_to_string, check_isbn, string_to_authors
+from calibre.ebooks.metadata import (
+    authors_to_string, check_isbn, fmt_sidx, string_to_authors
+)
 from calibre.ebooks.metadata.book.base import Metadata
 from calibre.ebooks.metadata.book.json_codec import (
     decode_is_multiple, encode_is_multiple, object_to_unicode
@@ -192,7 +193,7 @@ def ensure_prefix(root, prefixes, prefix, value=None):
     prefixes[prefix] = value or reserved_prefixes[prefix]
     prefixes = {k:v for k, v in iteritems(prefixes) if reserved_prefixes.get(k) != v}
     if prefixes:
-        root.set('prefix', ' '.join('%s: %s' % (k, v) for k, v in iteritems(prefixes)))
+        root.set('prefix', ' '.join(f'{k}: {v}' for k, v in iteritems(prefixes)))
     else:
         root.attrib.pop('prefix', None)
 
@@ -301,7 +302,7 @@ def set_identifiers(root, prefixes, refines, new_identifiers, force_identifiers=
     metadata = XPath('./opf:metadata')(root)[0]
     for scheme, val in iteritems(new_identifiers):
         ident = metadata.makeelement(DC('identifier'))
-        ident.text = '%s:%s' % (scheme, val)
+        ident.text = f'{scheme}:{val}'
         if package_identifier is None:
             metadata.append(ident)
         else:
@@ -323,7 +324,7 @@ def identifier_writer(name):
         metadata = XPath('./opf:metadata')(root)[0]
         if ival:
             ident = metadata.makeelement(DC('identifier'))
-            ident.text = '%s:%s' % (name, ival)
+            ident.text = f'{name}:{ival}'
             if package_identifier is None:
                 metadata.append(ident)
             else:
@@ -358,10 +359,26 @@ def find_main_title(root, refines, remove_blanks=False):
     return main_title
 
 
+def find_subtitle(root, refines):
+    for title in XPath('./opf:metadata/dc:title')(root):
+        if not title.text or not title.text.strip():
+            continue
+        props = properties_for_id(title.get('id'), refines)
+        q = props.get('title-type') or ''
+        if 'subtitle' in q or 'sub-title' in q:
+            return title
+
+
 @simple_text
 def read_title(root, prefixes, refines):
     main_title = find_main_title(root, refines)
-    return None if main_title is None else main_title.text.strip()
+    if main_title is None:
+        return None
+    ans = main_title.text.strip()
+    st = find_subtitle(root, refines)
+    if st is not None and st is not main_title:
+        ans += ': ' + st.text.strip()
+    return ans
 
 
 @simple_text
@@ -380,6 +397,9 @@ def read_title_sort(root, prefixes, refines):
 
 def set_title(root, prefixes, refines, title, title_sort=None):
     main_title = find_main_title(root, refines, remove_blanks=True)
+    st = find_subtitle(root, refines)
+    if st is not None:
+        remove_element(st, refines)
     if main_title is None:
         m = XPath('./opf:metadata')(root)[0]
         main_title = m.makeelement(DC('title'))
@@ -483,11 +503,17 @@ def read_authors(root, prefixes, refines):
 
 def set_authors(root, prefixes, refines, authors):
     ensure_prefix(root, prefixes, 'marc')
-    for item in XPath('./opf:metadata/dc:creator')(root):
-        props = properties_for_id_with_scheme(item.get('id'), prefixes, refines)
-        opf_role = item.get(OPF('role'))
-        if (opf_role and opf_role.lower() != 'aut') or (props.get('role') and not is_relators_role(props, 'aut')):
-            continue
+    removals = []
+    for role in ('aut', 'edt'):
+        for item in XPath('./opf:metadata/dc:creator')(root):
+            props = properties_for_id_with_scheme(item.get('id'), prefixes, refines)
+            opf_role = item.get(OPF('role'))
+            if (opf_role and opf_role.lower() != role) or (props.get('role') and not is_relators_role(props, role)):
+                continue
+            removals.append(item)
+        if removals:
+            break
+    for item in removals:
         remove_element(item, refines)
     metadata = XPath('./opf:metadata')(root)[0]
     for author in authors:
@@ -804,14 +830,14 @@ def set_series(root, prefixes, refines, series, series_index):
     for meta in XPath('./opf:metadata/opf:meta[@property="belongs-to-collection"]')(root):
         remove_element(meta, refines)
     if series:
-        create_series(root, refines, series, '%.2g' % series_index)
+        create_series(root, refines, series, fmt_sidx(series_index))
 # }}}
 
 # User metadata {{{
 
 
 def dict_reader(name, load=json.loads, try2=True):
-    pq = '%s:%s' % (CALIBRE_PREFIX, name)
+    pq = f'{CALIBRE_PREFIX}:{name}'
 
     def reader(root, prefixes, refines):
         for meta in XPath('./opf:metadata/opf:meta[@property]')(root):
@@ -843,7 +869,7 @@ read_author_link_map = dict_reader('author_link_map')
 
 
 def dict_writer(name, serialize=dump_dict, remove2=True):
-    pq = '%s:%s' % (CALIBRE_PREFIX, name)
+    pq = f'{CALIBRE_PREFIX}:{name}'
 
     def writer(root, prefixes, refines, val):
         if remove2:

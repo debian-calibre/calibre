@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 # License: GPLv3 Copyright: 2010, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -12,12 +11,11 @@ from html5_parser import parse
 from lxml import html
 from qt.core import (
     QAction, QApplication, QBrush, QByteArray, QCheckBox, QColor, QColorDialog,
-    QDialog, QDialogButtonBox, QFont, QFontInfo, QFontMetrics, QFormLayout,
-    QHBoxLayout, QIcon, QKeySequence, QLabel, QLineEdit, QMenu, QPalette,
-    QPlainTextEdit, QPushButton, QSize, QSyntaxHighlighter, Qt, QTabWidget,
-    QTextBlockFormat, QTextCharFormat, QTextCursor, QTextEdit, QTextFormat,
-    QTextListFormat, QToolBar, QToolButton, QUrl, QVBoxLayout, QWidget, pyqtSignal,
-    pyqtSlot
+    QDialog, QDialogButtonBox, QFont, QFontInfo, QFontMetrics, QFormLayout, QIcon,
+    QKeySequence, QLabel, QLineEdit, QMenu, QPalette, QPlainTextEdit, QPushButton,
+    QSize, QSyntaxHighlighter, Qt, QTabWidget, QTextBlockFormat, QTextCharFormat,
+    QTextCursor, QTextEdit, QTextFormat, QTextListFormat, QTimer, QToolButton, QUrl,
+    QVBoxLayout, QWidget, pyqtSignal, pyqtSlot
 )
 
 from calibre import xml_replace_entities
@@ -26,6 +24,7 @@ from calibre.gui2 import (
     NO_URL_FORMATTING, choose_files, error_dialog, gprefs, is_dark_theme
 )
 from calibre.gui2.book_details import css
+from calibre.gui2.flow_toolbar import create_flow_toolbar
 from calibre.gui2.widgets import LineEditECM
 from calibre.gui2.widgets2 import to_plain_text
 from calibre.utils.cleantext import clean_xml_chars
@@ -140,7 +139,7 @@ def use_implicit_styling_for_a(a, style_map):
 def merge_contiguous_links(root):
     all_hrefs = set(root.xpath('//a/@href'))
     for href in all_hrefs:
-        tags = root.xpath('//a[@href="{}"]'.format(href))
+        tags = root.xpath(f'//a[@href="{href}"]')
         processed = set()
 
         def insert_tag(parent, child):
@@ -209,7 +208,7 @@ def cleanup_qt_markup(root):
         filter_qt_styles(style)
     for tag, style in iteritems(style_map):
         if style:
-            tag.set('style', '; '.join('{}: {}'.format(k, v) for k, v in iteritems(style)))
+            tag.set('style', '; '.join(f'{k}: {v}' for k, v in iteritems(style)))
         else:
             tag.attrib.pop('style', None)
     for span in root.xpath('//span[not(@style)]'):
@@ -372,7 +371,7 @@ class EditorWidget(QTextEdit, LineEditECM):  # {{{
             if bf.leftMargin() == bf.rightMargin() and bf.leftMargin() > 0:
                 name = 'blockquote'
         else:
-            name = 'h{}'.format(lvl)
+            name = f'h{lvl}'
         for ac in self.block_style_actions:
             ac.setChecked(ac.block_name == name)
 
@@ -691,7 +690,7 @@ class EditorWidget(QTextEdit, LineEditECM):  # {{{
         d.bb.rejected.connect(d.reject)
         d.resize(d.sizeHint())
         link, name, is_image = None, None, False
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             link, name = str(d.url.text()).strip(), str(d.name.text()).strip()
             is_image = d.treat_as_image.isChecked()
         return link, name, is_image
@@ -799,10 +798,16 @@ class EditorWidget(QTextEdit, LineEditECM):  # {{{
 
     def text(self):
         return self.textCursor().selectedText()
+    selectedText = text
 
     def setText(self, text):
         with self.editing_cursor() as c:
             c.insertText(text)
+    insert = setText
+
+    def hasSelectedText(self):
+        c = self.textCursor()
+        return c.hasSelection()
 
     def contextMenuEvent(self, ev):
         menu = self.createStandardContextMenu()
@@ -832,7 +837,7 @@ class EditorWidget(QTextEdit, LineEditECM):  # {{{
         am.addAction(self.action_background)
         am.addAction(self.action_color)
         menu.addAction(_('Smarten punctuation'), parent.smarten_punctuation)
-        menu.exec_(ev.globalPos())
+        menu.exec(ev.globalPos())
 
 # }}}
 
@@ -1069,12 +1074,7 @@ class Editor(QWidget):  # {{{
     def __init__(self, parent=None, one_line_toolbar=False, toolbar_prefs_name=None):
         QWidget.__init__(self, parent)
         self.toolbar_prefs_name = toolbar_prefs_name or self.toolbar_prefs_name
-        self.toolbar1 = QToolBar(self)
-        self.toolbar2 = QToolBar(self)
-        self.toolbar3 = QToolBar(self)
-        for i in range(1, 4):
-            t = getattr(self, 'toolbar%d'%i)
-            t.setIconSize(QSize(18, 18))
+        self.toolbar = create_flow_toolbar(self, restrict_to_single_line=one_line_toolbar, icon_size=18)
         self.editor = EditorWidget(self)
         self.editor.data_changed.connect(self.data_changed)
         self.set_base_url = self.editor.set_base_url
@@ -1090,14 +1090,8 @@ class Editor(QWidget):  # {{{
         self.wyswyg.layout = l = QVBoxLayout(self.wyswyg)
         self.setLayout(self._layout)
         l.setContentsMargins(0, 0, 0, 0)
-        if one_line_toolbar:
-            tb = QHBoxLayout()
-            l.addLayout(tb)
-        else:
-            tb = l
-        tb.addWidget(self.toolbar1)
-        tb.addWidget(self.toolbar2)
-        tb.addWidget(self.toolbar3)
+
+        l.addWidget(self.toolbar)
         l.addWidget(self.editor)
         self._layout.addWidget(self.tabs)
         self.tabs.addTab(self.wyswyg, _('&Normal view'))
@@ -1110,53 +1104,47 @@ class Editor(QWidget):  # {{{
             if hidden:
                 self.hide_toolbars()
 
-        # toolbar1 {{{
-        self.toolbar1.addAction(self.editor.action_undo)
-        self.toolbar1.addAction(self.editor.action_redo)
-        self.toolbar1.addAction(self.editor.action_select_all)
-        self.toolbar1.addAction(self.editor.action_remove_format)
-        self.toolbar1.addAction(self.editor.action_clear)
-        self.toolbar1.addSeparator()
+        self.toolbar.add_action(self.editor.action_undo)
+        self.toolbar.add_action(self.editor.action_redo)
+        self.toolbar.add_action(self.editor.action_select_all)
+        self.toolbar.add_action(self.editor.action_remove_format)
+        self.toolbar.add_action(self.editor.action_clear)
+        self.toolbar.add_separator()
 
         for x in ('copy', 'cut', 'paste'):
             ac = getattr(self.editor, 'action_'+x)
-            self.toolbar1.addAction(ac)
+            self.toolbar.add_action(ac)
 
-        self.toolbar1.addSeparator()
-        self.toolbar1.addAction(self.editor.action_background)
-        # }}}
+        self.toolbar.add_separator()
+        self.toolbar.add_action(self.editor.action_background)
+        self.toolbar.add_action(self.editor.action_color)
+        self.toolbar.add_separator()
 
-        # toolbar2 {{{
         for x in ('', 'un'):
             ac = getattr(self.editor, 'action_%sordered_list'%x)
-            self.toolbar2.addAction(ac)
-        self.toolbar2.addSeparator()
+            self.toolbar.add_action(ac)
+        self.toolbar.add_separator()
         for x in ('superscript', 'subscript', 'indent', 'outdent'):
-            self.toolbar2.addAction(getattr(self.editor, 'action_' + x))
+            self.toolbar.add_action(getattr(self.editor, 'action_' + x))
             if x in ('subscript', 'outdent'):
-                self.toolbar2.addSeparator()
+                self.toolbar.add_separator()
 
-        self.toolbar2.addAction(self.editor.action_block_style)
-        w = self.toolbar2.widgetForAction(self.editor.action_block_style)
-        if hasattr(w, 'setPopupMode'):
-            w.setPopupMode(QToolButton.ToolButtonPopupMode.InstantPopup)
-        self.toolbar2.addAction(self.editor.action_insert_link)
-        self.toolbar2.addAction(self.editor.action_insert_hr)
-        # }}}
+        self.toolbar.add_action(self.editor.action_block_style, popup_mode=QToolButton.ToolButtonPopupMode.InstantPopup)
+        self.toolbar.add_action(self.editor.action_insert_link)
+        self.toolbar.add_action(self.editor.action_insert_hr)
+        self.toolbar.add_separator()
 
-        # toolbar3 {{{
         for x in ('bold', 'italic', 'underline', 'strikethrough'):
             ac = getattr(self.editor, 'action_'+x)
-            self.toolbar3.addAction(ac)
+            self.toolbar.add_action(ac)
             self.addAction(ac)
-        self.toolbar3.addSeparator()
+        self.toolbar.add_separator()
 
         for x in ('left', 'center', 'right', 'justified'):
             ac = getattr(self.editor, 'action_align_'+x)
-            self.toolbar3.addAction(ac)
-        self.toolbar3.addSeparator()
-        self.toolbar3.addAction(self.editor.action_color)
-        # }}}
+            self.toolbar.add_action(ac)
+        self.toolbar.add_separator()
+        QTimer.singleShot(0, self.toolbar.updateGeometry)
 
         self.code_edit.textChanged.connect(self.code_dirtied)
         self.editor.data_changed.connect(self.wyswyg_dirtied)
@@ -1200,14 +1188,11 @@ class Editor(QWidget):  # {{{
         self.source_dirty = True
 
     def hide_toolbars(self):
-        self.toolbar1.setVisible(False)
-        self.toolbar2.setVisible(False)
-        self.toolbar3.setVisible(False)
+        self.toolbar.setVisible(False)
 
     def show_toolbars(self):
-        self.toolbar1.setVisible(True)
-        self.toolbar2.setVisible(True)
-        self.toolbar3.setVisible(True)
+        self.toolbar.setVisible(True)
+        QTimer.singleShot(0, self.toolbar.updateGeometry)
 
     def toggle_toolbars(self):
         visible = self.toolbars_visible
@@ -1217,7 +1202,7 @@ class Editor(QWidget):  # {{{
 
     @property
     def toolbars_visible(self):
-        return self.toolbar1.isVisible() or self.toolbar2.isVisible() or self.toolbar3.isVisible()
+        return self.toolbar.isVisible()
 
     @toolbars_visible.setter
     def toolbars_visible(self, val):
@@ -1242,12 +1227,13 @@ class Editor(QWidget):  # {{{
 if __name__ == '__main__':
     from calibre.gui2 import Application
     app = Application([])
-    w = Editor()
+    w = Editor(one_line_toolbar=False)
     w.resize(800, 600)
+    w.setWindowFlag(Qt.WindowType.Dialog)
     w.show()
     w.html = '''<h1>Test Heading</h1><blockquote>Test blockquote</blockquote><p><span style="background-color: rgb(0, 255, 255); ">He hadn't
     set <u>out</u> to have an <em>affair</em>, <span style="font-style:italic; background-color:red">
     much</span> less a <s>long-term</s>, <b>devoted</b> one.</span><p>hello'''
     w.html = '<div><p id="moo">Testing <em>a</em> link.</p><p>\xa0</p><p>ss</p></div>'
-    app.exec_()
+    app.exec()
     # print w.html

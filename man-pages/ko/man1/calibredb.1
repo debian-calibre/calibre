@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "11월 12, 2021" "5.32.0" "calibre"
+.TH "CALIBREDB" "1" "4월 22, 2022" "5.41.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -41,42 +41,75 @@ calibredb command [options] [arguments]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP is the command line interface to the calibre database. It has
-several sub\-commands, documented below.
+:command:
+.nf
+\(ga
+.fi
+calibredb\(ga는 캘리버 데이터베이스에 대한 명령줄 인터페이스입니다.
+아래에 설명된 여러 하위 명령이 있습니다.
 .sp
-\fBcalibredb\fP can be used to manipulate either a calibre database
-specified by path or a calibre Content server running either on
-the local machine or over the internet. You can start a calibre
-Content server using either the \fBcalibre\-server\fP
-program or in the main calibre program click Connect/share  → 
-Start Content server\&. Since \fBcalibredb\fP can make changes to your
-calibre libraries, you must setup authentication on the server first. There
-are two ways to do that:
+\fBcalibredb\(ga는 경로로 지정된 캘리버 데이터베이스나 로컬 머신이나
+인터넷에서 실행되는 캘리버 :guilabel:\(ga콘텐츠 서버\(ga를 조작하는 데 사용할 수 있습니다.
+:command:\(gacalibre\-server\fP 프로그램을 사용하거나 기본 프로그램에서
+연결/공유  →  콘텐츠 서버 시작\(ga을 클릭하여, :guilabel:\(ga콘텐츠 서버 캘리버를
+시작할 수 있습니다. :command:
+.nf
+\(ga
+.fi
+calibredb\(ga는 캘리버 서재를 변경할 수 있으므로
+먼저 서버에서 인증을 설정해야 합니다. 이를 위한 두 가지 방법이 있습니다.
+.INDENT 0.0
+.INDENT 3.5
 .INDENT 0.0
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-If you plan to connect only to a server running on the same computer,
-you can simply use the \fB\-\-enable\-local\-write\fP option of the
-Content server, to allow any program, including calibredb, running on
-the local computer to make changes to your calibre data. When running
-the server from the main calibre program, this option is in
-Preferences → Sharing over the net → Advanced\&.
+같은 컴퓨터에서 실행되는 서버에만 연결하려는 경우 콘텐츠 서버의
+.UNINDENT
+.sp
+\fB\-\-enable\-local\-write\fP 옵션을 사용하여 calibredb를 포함한 모든 프로그램이
+로컬에서 실행되도록 허용할 수 있습니다. 캘리버 데이터를 변경하려면
+컴퓨터를 사용하십시오. 주요 프로그램에서 서버를 실행할 때 이 옵션은
+.UNINDENT
+.UNINDENT
+.sp
+:guilabel:
+.nf
+\(ga
+.fi
+기본 설정\->넷을 통한 공유\->고급\(ga에 있습니다.
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
 .IP \(bu 2
-If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
-options to \fBcalibredb\fP to give it access. You can setup
-user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
-option and using \fB\-\-manage\-users\fP to create the user accounts.
-If you are running the server from the main calibre program, use
-Preferences → Sharing over the net → Require username/password\&.
+인터넷을 통한 액세스를 활성화하려면 서버에서 사용자 계정을 설정하고
+.UNINDENT
+.sp
+\fI\%\-\-username\fP 및 \fI\%\-\-password\fP 옵션을 \fBcalibredb\(ga에
+사용하여 액세스합니다. \(ga\fP\-\-enable\-auth\(ga\(ga 옵션을 사용하고 
+.nf
+\(ga\(ga
+.fi
+\-\-manage\-users\(ga\(ga를
+사용하여 사용자 계정을 생성하여 :command:
+.nf
+\(ga
+.fi
+calibre\-server\(ga에 대한
+사용자 인증을 설정할 수 있습니다.
+주요 프로그램에서 서버를 실행하는 경우 :guilabel:
+.nf
+\(ga
+.fi
+기본 설정\->넷을 통한 공유
+\->사용자이름/비밀번호\(ga를 사용하십시오.
+.UNINDENT
 .UNINDENT
 .UNINDENT
 .UNINDENT
 .sp
-To connect to a running Content server, pass the URL of the server to the
-\fI\%\-\-with\-library\fP option, see the documentation of that option for
-details and examples.
+실행 중인 콘텐츠 서버에 연결하려면 서버의 URL을 \fI\%\-\-with\-library\fP 옵션으로
+전달하십시오. 자세한 내용과 예시는 해당 옵션 설명서를 참조하십시오.
 .INDENT 0.0
 .IP \(bu 2
 \fI\%GLOBAL OPTIONS\fP
@@ -86,7 +119,7 @@ details and examples.
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ADDING FROM FOLDERS\fP
+\fI\%폴더에서 추가\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -210,7 +243,7 @@ The prefix for all file paths. Default is the absolute path to the library folde
 .INDENT 0.0
 .TP
 .B \-\-search, \-s
-Filter the results by the search query. For the format of the search query, please see the search related documentation in the User Manual. Default is to do no filtering.
+검색 쿼리로 결과를 필터링합니다. 검색 쿼리 의 형식은 사용자 설명서에서 검색 관련 설명서를 참조하십시오. 기본값은 필터링을 하지 않는 것입니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -228,14 +261,14 @@ The field by which to sort the results. Available fields: author_sort, authors, 
 .sp
 .nf
 .ft C
-calibredb add [options] file1 file2 file3 ...
+calibredb add [옵션] 파일1 파일2 파일3 ...
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Add the specified files as books to the database. You can also specify folders, see
-the folder related options below.
+지정된 파일을 데이터베이스에 책으로 추가합니다. 폴더를 지정할 수도 있습니다.
+아래의 폴더 관련 옵션을 참조하십시오.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -261,7 +294,7 @@ Add books to database even if they already exist. Comparison is done based on bo
 .INDENT 0.0
 .TP
 .B \-\-empty, \-e
-비어있는 책 추가 (형식이 없는 책)
+비어있는 책 추가하기 (형식이 없는 책)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -298,7 +331,7 @@ Set the identifiers for this book, e.g. \-I asin:XXX \-I isbn:YYY
 .B \-\-title, \-t
 추가된 책(들)의 이름을 입력하기
 .UNINDENT
-.SS ADDING FROM FOLDERS
+.SS 폴더에서 추가
 .sp
 Options to control the adding of books from folders. By default only files that have extensions of known e\-book file types are added.
 .INDENT 0.0
@@ -339,7 +372,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Do not use the recycle bin
+Do not use the 휴지통
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -420,7 +453,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-The field to set. Format is field_name:value, for example: \fI\%\-\-field\fP tags:tag1,tag2. Use \fI\%\-\-list\-fields\fP to get a list of all field names. You can specify this option multiple times to set multiple fields. Note: For languages you must use the ISO639 language codes (e.g. en for English, fr for French and so on). For identifiers, the syntax is \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. For boolean (yes/no) fields use true and false or yes and no.
+설정할 필드입니다. 형식은 field_name:value입니다(예: \fI\%\-\-field\fP tags:tag1,tag2). \fB\-\-list\-fields\(ga을 사용하여 모든 필드 이름 목록을 가져옵니다. 이 옵션을 여러 번 지정하여 여러 필드를 설정할 수 있습니다. 참고: 언어의 경우 ISO639 언어 코드를 사용해야 합니다(예: 영어는 en, 프랑스어는 fr 등). 식별자의 경우 구문은 :option:\fP\-\-field\(ga identifiers:isbn:XXXX,doi:YYYYY입니다. 불리언(예/아니요) 필드의 경우 참/거짓 또는 예/아니요를 사용합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -467,7 +500,7 @@ Have calibre convert all non English characters into English equivalents for the
 .INDENT 0.0
 .TP
 .B \-\-dont\-write\-opf
-보통, 캘리버는 실제 eBook 파일과 함께 분리된 OPF 파일 내에 책 정보를 기록합니다. Specifying this switch will turn this behavior off.
+보통, 캘리버는 실제 전자책 파일과 함께 분리된 OPF 파일 내에 책 정보를 기록합니다. Specifying this switch will turn this behavior off.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -531,12 +564,16 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
-Comma\-separated list of database IDs to catalog. If declared, \fI\%\-\-search\fP is ignored. Default: all
+범주에 추가할 데이터베이스 ID의 쉼표로 구분된 목록입니다. 선언되면, :option:
+.nf
+\(ga
+.fi
+\-\-search\(ga는 무시됩니다. 기본값: 모두
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-search, \-s
-Filter the results by the search query. For the format of the search query, please see the search\-related documentation in the User Manual. Default: no filtering
+검색 쿼리로 결과를 필터링합니다. 검색 쿼리 의 형식은 사용자 설명서에서 검색 관련 문서를 참조하십시오. 기본값: 필터링 없음
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -547,97 +584,97 @@ Filter the results by the search query. For the format of the search query, plea
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title
-Title of generated catalog used as title in metadata. Default: \fB\(aq\fPMy Books\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+책 정보에서 제목으로 사용되는 생성된 범주의 제목입니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cross\-reference\-authors
-Create cross\-references in Authors section for books with multiple authors. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+여러 저자가 있는 책의 저자 섹션에서 상호 참조를 만듭니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+변환 파이프라인의 다른 단계에서 출력을 지정된 폴더에 저장합니다. 변환 프로세스의 어느 단계에서 버그가 발생하는지 확실하지 않은 경우 유용합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclude\-genre
-Regex describing tags to exclude as genres. Default: \fB\(aq\fP[.+]|^+$\fB\(aq\fP excludes bracketed tags, e.g. \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, and \fB\(aq\fP+\fB\(aq\fP, the default tag for read books. Applies to: AZW3, EPUB, MOBI output formats
+장르로 제외할 태그를 설명하는 정규식입니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP은 괄호로 묶인 태그를 제외합니다(예: \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, 및 \fB\(aq\fP+\fB\(aq\fP, 책 읽기의 기본 태그. 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Specifies the rules used to exclude books from the generated catalog. The model for an exclusion rule is either (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) or (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). For example: ((\fB\(aq\fPArchived books\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) will exclude a book with a value of \fB\(aq\fPArchived\fB\(aq\fP in the custom column \fB\(aq\fPstatus\fB\(aq\fP\&. When multiple rules are defined, all rules will be applied. Default:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Applies to: AZW3, EPUB, MOBI output formats
+생성된 범주에서 책을 제외하는 데 사용되는 규칙을 지정합니다. 제외 규칙의 모델은 다음 중 하나입니다. (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP태그\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) 또는 (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). 예를 들어: ((\fB\(aq\fP보관된 책\fB\(aq\fP,\fB\(aq\fP#상태\fB\(aq\fP,\fB\(aq\fP보관됨\fB\(aq\fP),) 맞춤 열 \fB\(aq\fP상태\fB\(aq\fP에서 값이 \fB\(aq\fP보관됨\fB\(aq\fP인 책은 제외됩니다. 여러 규칙이 정의되면 모든 규칙이 적용됩니다. 기본값: \fB"\fP기본값(%d)\fB"\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-authors
-\fB\(aq\fP저자\fB\(aq\fP 섹션을 카탈로그에 포함합니다. 기본값: \fB\(aq\fPFalse\fB\(aq\fP 적용 대상 형식: AZW3, EPUB, MOBI 출력 형식
+\fB\(aq\fP저자\fB\(aq\fP 섹션을 범주에 포함합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-descriptions
-\fB\(aq\fP책 설명\fB\(aq\fP 섹션을 카탈로그에 포함합니다. 기본값: \fB\(aq\fPFalse\fB\(aq\fP 적용 대상 형식: AZW3, EPUB, MOBI 출력 형식
+\fB\(aq\fP책 설명\fB\(aq\fP 섹션을 범주에 포함합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-genres
-\fB\(aq\fP장르\fB\(aq\fP 섹션을 카탈로그에 포함합니다. 기본값: \fB\(aq\fPFalse\fB\(aq\fP 적용 대상 형식: AZW3, EPUB, MOBI 출력 형식
+\fB\(aq\fP장르\fB\(aq\fP 섹션을 범주에 포함합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-recently\-added
-\fB\(aq\fP최근 추가된 항목\fB\(aq\fP 섹션을 카탈로그에 포함합니다. 기본값: \fB\(aq\fPFalse\fB\(aq\fP 적용 대상 형식: AZW3, EPUB, MOBI 출력 형식
+\fB\(aq\fP최근 추가된 항목\fB\(aq\fP 섹션을 범주에 포함합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-series
-\fB\(aq\fP시리즈\fB\(aq\fP 섹션을 카탈로그에 포함합니다. 기본값: \fB\(aq\fPFalse\fB\(aq\fP 적용 대상 형식: AZW3, EPUB, MOBI 출력 형식
+\fB\(aq\fP시리즈\fB\(aq\fP 섹션을 범주에 포함합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-titles
-\fB\(aq\fP제목\fB\(aq\fP 섹션을 카탈로그에 포함합니다. 기본값: \fB\(aq\fPFalse\fB\(aq\fP 적용 대상 형식: AZW3, EPUB, MOBI 출력 형식
+\fB\(aq\fP제목\fB\(aq\fP 섹션을 범주에 포함합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-genre\-source\-field
-Source field for \fB\(aq\fPGenres\fB\(aq\fP section. Default: \fB\(aq\fP태그\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+\fB\(aq\fP장르\fB\(aq\fP 섹션의 소스 필드입니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-header\-note\-source\-field
-Custom field containing note text to insert in Description header. Default: \fB\(aq\fP\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+설명 헤더에 삽입할 메모 텍스트가 포함된 사용자 정의 필드입니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-merge\-comments\-rule
-#<custom field>:[before|after]:[True|False] specifying:  <custom field> Custom field containing notes to merge with comments  [before|after] Placement of notes with respect to comments  [True|False] \- A horizontal rule is inserted between notes and comments Default: \fB\(aq\fP::\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+#<custom field>:[이전|이후]:[참|거짓] 지정: <custom field> 주석과 병합할 메모가 포함된 사용자 정의 필드 [이전|이후] 주석에 대한 주석 배치 [참|거짓] \- 메모와 주석 사이에 가로줄을 삽입합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specifies the output profile. In some cases, an output profile is required to optimize the catalog for the device. For example, \fB\(aq\fPkindle\fB\(aq\fP or \fB\(aq\fPkindle_dx\fB\(aq\fP creates a structured Table of Contents with Sections and Articles. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+출력 프로필을 지정합니다. 어떤 경우에는 장치의 범주를 최적화하기 위해 출력 프로필이 필요합니다. 예를 들어, \fB\(aq\fPkindle\fB\(aq\fP 또는 \fB\(aq\fPkindle_dx\fB\(aq\fP는 섹션 및 기사가 있는 구조화된 목차를 작성합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-Specifies the rules used to include prefixes indicating read books, wishlist items and other user\-specified prefixes. The model for a prefix rule is (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). When multiple rules are defined, the first matching rule will be used. Default: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Applies to: AZW3, EPUB, MOBI output formats
+읽은 책, 위시리스트 항목 및 기타 사용자 지정 접두사를 나타내는 접두사를 포함하는 데 사용되는 규칙을 지정합니다. 접두사 규칙의 모델은 (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP)입니다. 여러 규칙이 정의된 경우 첫 번째 일치 규칙이 사용됩니다. 기본값: \fB"\fP기본값(%d)\fB"\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-preset
-Use a named preset created with the GUI catalog builder. A preset specifies all settings for building a catalog. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+GUI 범주 빌더로 작성된 명명된 프리셋을 사용합니다. 프리셋은 범주 작성을 위한 모든 설정을 지정합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-thumb\-width
-Size hint (in inches) for book covers in catalog. Range: 1.0 \- 2.0 Default: \fB\(aq\fP1.0\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+범주의 책 표지에 대한 힌트 크기(인치)입니다. 범위: 1.0 \- 2.0 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-use\-existing\-cover
-Replace existing cover when generating the catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+범주 생성 시 기존 표지를 교체합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .SH SAVED_SEARCHES
 .INDENT 0.0
@@ -645,21 +682,20 @@ Replace existing cover when generating the catalog. Default: \fB\(aq\fPFalse\fB\
 .sp
 .nf
 .ft C
-calibredb saved_searches [options] (list|add|remove)
+calibredb saved_searches [옵션] (list|add|remove)
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Manage the saved searches stored in this database.
-If you try to add a query with a name that already exists, it will be
-replaced.
+이 데이터베이스에 저장된 저장된 검색을 관리합니다.
+이미 존재하는 이름으로 쿼리를 추가하려고 하면 대체됩니다.
 .sp
-Syntax for adding:
+추가할때 구문:
 .sp
 calibredb \fBsaved_searches\fP add search_name search_expression
 .sp
-Syntax for removing:
+제거할때 구문:
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
@@ -684,7 +720,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-display
-A dictionary of options to customize how the data in this column will be interpreted. This is a JSON  string. For enumeration columns, use \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP There are many options that can go into the display variable.The options by column type are: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  The best way to find legal combinations is to create a custom column of the appropriate type in the GUI then look at the backup OPF for a book (ensure that a new OPF has been created since the column was added). You will see the JSON for the \fB"\fPdisplay\fB"\fP for the new column in the OPF.
+이 열의 데이터가 해석되는 방식을 사용자 지정하기 위한 옵션 사전입니다. 이것은 JSON 문자열입니다. 열거 열의 경우 \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP를 사용합니다. 표시 변수에 들어갈 수 있는 많은 옵션이 있습니다. 열 유형별 옵션은 다음과 같습니다: 복합: composite_template, composite_sort, make_category,contains_html, use_decorations 날짜시간: date_format 열거: enum_values, enum_colors, use_decorations: enum_values, enum_colors, use_decorations int, float: number_format 텍스트: is_names, use_decorations  합법적인 조합을 찾는 가장 좋은 방법은 GUI에서 적절한 유형의 사용자 지정 열을 만든 다음 책에 대한 백업 OPF를 확인하는 것입니다(열이 추가된 이후 새 OPF가 생성되었는지 확인). OPF의 새 열에 대한 \fB"\fP디스플레이\fB"\fP에 대한 JSON이 표시됩니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -836,7 +872,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
-Comma\-separated list of category lookup names. Default: all
+범주 조회 이름의 쉼표로 구분된 목록입니다. 기본값: 모두
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -934,18 +970,15 @@ Only update metadata in files of the specified format. Specify it multiple times
 .sp
 .nf
 .ft C
-calibredb search [options] search expression
+calibredb search [옵션] search expression
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Search the library for the specified \fBsearch\fP term, returning a comma separated
-list of book ids matching the \fBsearch\fP expression. The output format is useful
-to feed into other commands that accept a list of ids as input.
+지정된 검색어에 대해 서재를 검색하여 검색 표현식과 일치하는 책 ID의 쉼표로 구분된 목록을 반환합니다. 출력 형식은 ID 목록을 입력으로 허용하는 다른 명령에 입력하는 데 유용합니다.
 .sp
-The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
-language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
+검색 표현식은 캘리버의 강력한 검색어 언어의 모든 것이 될 수 있습니다. 예: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -170,7 +169,7 @@ def do_print():
     ext = data['input'].lower().rpartition('.')[-1]
     input_plugin = plugin_for_input_format(ext)
     if input_plugin is None:
-        raise ValueError('Not a supported file type: {}'.format(ext.upper()))
+        raise ValueError(f'Not a supported file type: {ext.upper()}')
     args = ['ebook-convert', data['input'], data['output'], '--paper-size', data['paper_size'], '--pdf-add-toc',
             '--disable-remove-fake-margins', '--chapter-mark', 'none', '-vv']
     if input_plugin.is_image_collection:
@@ -225,12 +224,12 @@ class Printing(QProgressDialog):
 def print_book(path_to_book, parent=None, book_title=None):
     book_title = book_title or os.path.splitext(os.path.basename(path_to_book))[0]
     d = PrintDialog(book_title, parent)
-    if d.exec_() == QDialog.DialogCode.Accepted:
+    if d.exec() == QDialog.DialogCode.Accepted:
         data = d.data
         data['input'] = path_to_book
         t = DoPrint(data)
         t.start()
-        Printing(t, data['show_file'], parent).exec_()
+        Printing(t, data['show_file'], parent).exec()
 
 
 if __name__ == '__main__':

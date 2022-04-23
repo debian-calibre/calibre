@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -157,7 +156,7 @@ class SourcesEditor(Dialog):
 
     def add_source(self):
         d = SourceEditor(self)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             self.add_entry(d.entry, prepend=True)
 
     def remove_source(self):
@@ -167,7 +166,7 @@ class SourcesEditor(Dialog):
 
     def edit_source(self, source_item):
         d = SourceEditor(self, source_item.data(Qt.ItemDataRole.UserRole))
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             source_item.setData(Qt.ItemDataRole.UserRole, d.entry)
             source_item.setData(Qt.ItemDataRole.DisplayRole, d.name)
 
@@ -209,7 +208,7 @@ class Page(QWebEnginePage):
             QWebEnginePage.JavaScriptConsoleMessageLevel.WarningMessageLevel: 'WARNING'
         }.get(level, 'ERROR')
         if source_id == 'userscript:lookup.js':
-            prints('%s: %s:%s: %s' % (prefix, source_id, linenumber, msg), file=sys.stderr)
+            prints(f'{prefix}: {source_id}:{linenumber}: {msg}', file=sys.stderr)
             sys.stderr.flush()
 
     def zoom_in(self):
@@ -233,10 +232,16 @@ class View(QWebEngineView):
         menu.addAction(_('Zoom out'), self.page().zoom_out)
         menu.addAction(_('Default zoom'), self.page().default_zoom)
         menu.addAction(_('Inspect'), self.do_inspect_element)
-        menu.exec_(ev.globalPos())
+        menu.exec(ev.globalPos())
 
     def do_inspect_element(self):
         self.inspect_element.emit()
+
+
+def set_sync_override(allowed):
+    li = getattr(set_sync_override, 'instance', None)
+    if li is not None:
+        li.set_sync_override(allowed)
 
 
 class Lookup(QWidget):
@@ -276,6 +281,7 @@ class Lookup(QWidget):
         l.addLayout(h)
         h.addWidget(b), h.addWidget(rb)
         self.auto_update_query = a = QCheckBox(_('Update on selection change'), self)
+        self.disallow_auto_update = False
         a.setToolTip(textwrap.fill(
             _('Automatically update the displayed result when selected text in the book changes. With this disabled'
               ' the lookup is changed only when clicking the Refresh button.')))
@@ -283,6 +289,12 @@ class Lookup(QWidget):
         a.stateChanged.connect(self.auto_update_state_changed)
         l.addWidget(a)
         self.update_refresh_button_status()
+        set_sync_override.instance = self
+
+    def set_sync_override(self, allowed):
+        self.disallow_auto_update = not allowed
+        if self.auto_update_query.isChecked() and allowed:
+            self.update_query()
 
     def auto_update_state_changed(self, state):
         vprefs['auto_update_lookup'] = self.auto_update_query.isChecked()
@@ -307,7 +319,7 @@ class Lookup(QWidget):
         self._page.triggerAction(QWebEnginePage.WebAction.InspectElement)
 
     def add_sources(self):
-        if SourcesEditor(self).exec_() == QDialog.DialogCode.Accepted:
+        if SourcesEditor(self).exec() == QDialog.DialogCode.Accepted:
             self.populate_sources()
             self.source_box.setCurrentIndex(0)
             self.update_query()
@@ -371,7 +383,7 @@ class Lookup(QWidget):
     def selected_text_changed(self, text, annot_id):
         already_has_text = bool(self.current_query)
         self.selected_text = text or ''
-        if self.auto_update_query.isChecked() or not already_has_text:
+        if not self.disallow_auto_update and (self.auto_update_query.isChecked() or not already_has_text):
             self.debounce_timer.start()
         self.update_refresh_button_status()
 

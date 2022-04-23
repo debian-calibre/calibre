@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -58,12 +57,12 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
     def debug_device_detection(self, *args):
         from calibre.gui2.preferences.device_debug import DebugDevice
         d = DebugDevice(self.gui, self)
-        d.exec_()
+        d.exec()
 
     def user_defined_device(self, *args):
         from calibre.gui2.preferences.device_user_defined import UserDefinedDevice
         d = UserDefinedDevice(self)
-        d.exec_()
+        d.exec()
 
     def open_config_dir(self, *args):
         from calibre.utils.config import config_dir

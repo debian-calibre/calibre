@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -147,6 +146,7 @@ class Cache:
         self.formatter_template_cache = {}
         self.dirtied_cache = {}
         self.vls_for_books_cache = None
+        self.vls_for_books_lib_in_process = None
         self.vls_cache_lock = Lock()
         self.dirtied_sequence = 0
         self.cover_caches = set()
@@ -257,6 +257,7 @@ class Cache:
         self.clear_search_cache_count += 1
         self._search_api.update_or_clear(self, book_ids)
         self.vls_for_books_cache = None
+        self.vls_for_books_lib_in_process = None
 
     @read_api
     def last_modified(self):
@@ -809,7 +810,7 @@ class Cache:
         will perform lossless compression, otherwise lossy compression.
 
         The progress callback will be called with the book_id and the old and new sizes
-        for each book that has been processed. If an error occurs, the news size will
+        for each book that has been processed. If an error occurs, the new size will
         be a string with the error details.
         '''
         jpeg_quality = max(10, min(jpeg_quality, 100))
@@ -1365,7 +1366,7 @@ class Cache:
 
     @write_api
     def set_cover(self, book_id_data_map):
-        ''' Set the cover for this book.  data can be either a QImage,
+        ''' Set the cover for this book. The data can be either a QImage,
         QPixmap, file object or bytestring. It can also be None, in which
         case any existing cover is removed. '''
 
@@ -2276,18 +2277,24 @@ class Cache:
             c = defaultdict(list)
             if not got_lock:
                 # We get here if resolving the books in a VL triggers another VL
-                # calculation. This can be 'real' recursion, in which case the
-                # eventual answer will be wrong. It can also be a  search using
-                # a location of 'all' that causes evaluation of a composite that
-                # references virtual_libraries(). If the composite isn't used in a
-                # VL then the eventual answer will be correct because get_metadata
-                # will clear the caches.
-                return c
+                # cache calculation. This can be 'real' recursion, for example a
+                # VL expression using a template that calls virtual_libraries(),
+                # or a search using a location of 'all' that causes evaluation
+                # of a composite that uses virtual_libraries(). The first case
+                # is an error and the exception message should appear somewhere.
+                # However, the error can seem nondeterministic. It might not be
+                # raised if the use is via a composite and that composite is
+                # evaluated before it is used in the search. The second case is
+                # also an error but if the composite isn't used in a VL then the
+                # eventual answer will be correct because get_metadata() will
+                # clear the caches.
+                raise ValueError(_('Recursion detected while processing Virtual library "%s"')
+                                 % self.vls_for_books_lib_in_process)
             if self.vls_for_books_cache is None:
-                self.vls_for_books_cache_is_loading = True
                 libraries = self._pref('virtual_libraries', {})
                 for lib, expr in libraries.items():
                     book = None
+                    self.vls_for_books_lib_in_process = lib
                     try:
                         for book in self._search(expr, virtual_fields=virtual_fields):
                             c[book].append(lib)
@@ -2429,11 +2436,11 @@ class Cache:
             format_metadata[book_id] = {}
             for fmt in self._formats(book_id):
                 mdata = self.format_metadata(book_id, fmt)
-                key = '%s:%s:%s' % (key_prefix, book_id, fmt)
+                key = f'{key_prefix}:{book_id}:{fmt}'
                 format_metadata[book_id][fmt] = key
                 with exporter.start_file(key, mtime=mdata.get('mtime')) as dest:
                     self._copy_format_to(book_id, fmt, dest, report_file_size=dest.ensure_space)
-            cover_key = '%s:%s:%s' % (key_prefix, book_id, '.cover')
+            cover_key = '{}:{}:{}'.format(key_prefix, book_id, '.cover')
             with exporter.start_file(cover_key) as dest:
                 if not self.copy_cover_to(book_id, dest, report_file_size=dest.ensure_space):
                     dest.discard()

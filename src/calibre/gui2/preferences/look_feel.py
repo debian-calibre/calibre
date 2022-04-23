@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -13,7 +12,7 @@ from threading import Thread
 
 from qt.core import (
     QApplication, QFont, QFontInfo, QFontDialog, QColorDialog, QPainter, QDialog,
-    QAbstractListModel, Qt, QIcon, QKeySequence, QColor, pyqtSignal, QCursor,
+    QAbstractListModel, Qt, QIcon, QKeySequence, QColor, pyqtSignal, QCursor, QListWidgetItem,
     QWidget, QSizePolicy, QBrush, QPixmap, QSize, QPushButton, QVBoxLayout, QItemSelectionModel,
     QTableWidget, QTableWidgetItem, QLabel, QFormLayout, QLineEdit, QComboBox, QDialogButtonBox
 )
@@ -22,7 +21,8 @@ from calibre import human_readable
 from calibre.ebooks.metadata.book.render import DEFAULT_AUTHOR_LINK
 from calibre.constants import ismacos, iswindows
 from calibre.ebooks.metadata.sources.prefs import msprefs
-from calibre.gui2 import default_author_link
+from calibre.gui2 import default_author_link, choose_save_file, choose_files
+from calibre.gui2.custom_column_widgets import get_field_list as em_get_field_list
 from calibre.gui2.dialogs.template_dialog import TemplateDialog
 from calibre.gui2.preferences import ConfigWidgetBase, test_widget, CommaSeparatedList
 from calibre.gui2.preferences.look_feel_ui import Ui_Form
@@ -210,7 +210,7 @@ class IdLinksEditor(Dialog):
         if r > -1:
             key, name, template = map(lambda c: self.table.item(r, c).text(), range(3))
         d = IdLinksRuleEdit(key, name, template, self)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             if r < 0:
                 self.table.setRowCount(self.table.rowCount() + 1)
                 r = self.table.rowCount() - 1
@@ -260,8 +260,8 @@ class DisplayedFields(QAbstractListModel):  # {{{
             except:
                 pass
             if not name:
-                name = field
-            return name
+                return field
+            return f'{name} ({field})'
         if role == Qt.ItemDataRole.CheckStateRole:
             return Qt.CheckState.Checked if visible else Qt.CheckState.Unchecked
         if role == Qt.ItemDataRole.DecorationRole and field.startswith('#'):
@@ -326,6 +326,23 @@ def move_field_down(widget, model):
             sm.select(idx, QItemSelectionModel.SelectionFlag.ClearAndSelect)
             widget.setCurrentIndex(idx)
 
+# }}}
+
+
+class EMDisplayedFields(DisplayedFields):  # {{{
+    def __init__(self, db, parent=None):
+        DisplayedFields.__init__(self, db, parent)
+
+    def initialize(self, use_defaults=False, pref_data_override=None):
+        self.beginResetModel()
+        self.fields = [[x[0], x[1]] for x in
+                em_get_field_list(self.db, use_defaults=use_defaults, pref_data_override=pref_data_override)]
+        self.endResetModel()
+        self.changed = True
+
+    def commit(self):
+        if self.changed:
+            self.db.new_api.set_pref('edit_metadata_custom_columns_to_display', self.fields)
 # }}}
 
 
@@ -516,6 +533,21 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
                          key=lambda x:sort_key(x[0]))
         r('field_under_covers_in_grid', db.prefs, choices=choices)
 
+        choices = [(_('Default'), 'default'), (_('Compact metadata'), 'alt1'),
+                   (_('All on 1 tab'), 'alt2')]
+        r('edit_metadata_single_layout', gprefs,
+          choices=[(_('Default'), 'default'), (_('Compact metadata'), 'alt1'),
+                   (_('All on 1 tab'), 'alt2')])
+        r('edit_metadata_ignore_display_order', db.prefs)
+        r('edit_metadata_elision_point', gprefs,
+          choices=[(_('Left'), 'left'), (_('Middle'), 'middle'),
+                   (_('Right'), 'right')])
+        r('edit_metadata_elide_labels', gprefs)
+        r('edit_metadata_single_use_2_cols_for_custom_fields', gprefs)
+        r('edit_metadata_bulk_cc_label_length', gprefs)
+        r('edit_metadata_single_cc_label_length', gprefs)
+        r('edit_metadata_templates_only_F2_on_booklist', gprefs)
+
         self.current_font = self.initial_font = None
         self.change_font_button.clicked.connect(self.change_font)
 
@@ -527,6 +559,18 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
                 lambda self: move_field_up(self.field_display_order, self.display_model))
         connect_lambda(self.df_down_button.clicked, self,
                 lambda self: move_field_down(self.field_display_order, self.display_model))
+
+        self.em_display_model = EMDisplayedFields(self.gui.current_db,
+                self.em_display_order)
+        self.em_display_model.dataChanged.connect(self.changed_signal)
+        self.em_display_order.setModel(self.em_display_model)
+        connect_lambda(self.em_up_button.clicked, self,
+                lambda self: move_field_up(self.em_display_order, self.em_display_model))
+        connect_lambda(self.em_down_button.clicked, self,
+                lambda self: move_field_down(self.em_display_order, self.em_display_model))
+        self.em_export_layout_button.clicked.connect(self.em_export_layout)
+        self.em_import_layout_button.clicked.connect(self.em_import_layout)
+        self.em_reset_layout_button.clicked.connect(self.em_reset_layout)
 
         self.qv_display_model = QVDisplayedFields(self.gui.current_db,
                 self.qv_display_order)
@@ -553,6 +597,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         self.emblems_tab.layout().addWidget(self.grid_rules)
 
         self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.tabBar().setVisible(False)
         keys = [QKeySequence('F11', QKeySequence.SequenceFormat.PortableText), QKeySequence(
             'Ctrl+Shift+F', QKeySequence.SequenceFormat.PortableText)]
         keys = [str(x.toString(QKeySequence.SequenceFormat.NativeText)) for x in keys]
@@ -590,18 +635,56 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         self.css_highlighter = get_highlighter('css')()
         self.css_highlighter.apply_theme(get_theme(None))
         self.css_highlighter.set_document(self.opt_book_details_css.document())
+        for i in range(self.tabWidget.count()):
+            self.sections_view.addItem(QListWidgetItem(self.tabWidget.tabIcon(i), self.tabWidget.tabText(i).replace('&', '')))
+        self.sections_view.setCurrentRow(self.tabWidget.currentIndex())
+        self.sections_view.currentRowChanged.connect(self.tabWidget.setCurrentIndex)
+        self.sections_view.setMaximumWidth(self.sections_view.sizeHintForColumn(0) + 16)
+        self.sections_view.setSpacing(4)
+        self.sections_view.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.tabWidget.currentWidget().setFocus(Qt.FocusReason.OtherFocusReason)
+
+    def em_export_layout(self):
+        filename = choose_save_file(self, 'em_import_export_field_list',
+                _('Save column list to file'),
+                filters=[(_('Column list'), ['json'])])
+        if filename:
+            try:
+                with open(filename, 'w') as f:
+                    json.dump(self.em_display_model.fields, f, indent=1)
+            except Exception as err:
+                error_dialog(self, _('Export field layout'),
+                             _('<p>Could not write field list. Error:<br>%s')%err, show=True)
+
+    def em_import_layout(self):
+        filename = choose_files(self, 'em_import_export_field_list',
+                _('Load column list from file'),
+                filters=[(_('Column list'), ['json'])])
+        if filename:
+            try:
+                with open(filename[0]) as f:
+                    fields = json.load(f)
+                self.em_display_model.initialize(pref_data_override=fields)
+                self.changed_signal.emit()
+            except Exception as err:
+                error_dialog(self, _('Import layout'),
+                             _('<p>Could not read field list. Error:<br>%s')%err, show=True)
+
+    def em_reset_layout(self):
+        self.em_display_model.initialize(use_defaults=True)
+        self.changed_signal.emit()
 
     def choose_icon_theme(self):
         from calibre.gui2.icon_theme import ChooseTheme
         d = ChooseTheme(self)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             self.commit_icon_theme = d.commit_changes
             self.icon_theme_title = d.new_theme_title or _('Default icons')
             self.icon_theme.setText(_('Icon theme: <b>%s</b>') % self.icon_theme_title)
             self.changed_signal.emit()
 
     def edit_id_link_rules(self):
-        if IdLinksEditor(self).exec_() == QDialog.DialogCode.Accepted:
+        if IdLinksEditor(self).exec() == QDialog.DialogCode.Accepted:
             self.changed_signal.emit()
 
     @property
@@ -636,7 +719,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
     def edit_cb_title_template(self):
         t = TemplateDialog(self, self.opt_cover_browser_title_template.text(), fm=self.gui.current_db.field_metadata)
         t.setWindowTitle(_('Edit template for caption'))
-        if t.exec_():
+        if t.exec():
             self.opt_cover_browser_title_template.setText(t.rule[1])
 
     def initialize(self):
@@ -649,13 +732,17 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         self.current_font = self.initial_font = font
         self.update_font_display()
         self.display_model.initialize()
+        self.em_display_model.initialize()
         self.qv_display_model.initialize()
         db = self.gui.current_db
+        mi = []
         try:
-            idx = self.gui.library_view.currentIndex().row()
-            mi = db.get_metadata(idx, index_is_id=False)
+            rows = self.gui.current_view().selectionModel().selectedRows()
+            for row in rows:
+                if row.isValid():
+                    mi.append(db.new_api.get_proxy_metadata(db.data.index_to_id(row.row())))
         except:
-            mi=None
+            pass
         self.edit_rules.initialize(db.field_metadata, db.prefs, mi, 'column_color_rules')
         self.icon_rules.initialize(db.field_metadata, db.prefs, mi, 'column_icon_rules')
         self.grid_rules.initialize(db.field_metadata, db.prefs, mi, 'cover_grid_icon_rules')
@@ -707,6 +794,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
             self.changed_signal.emit()
             self.update_font_display()
         self.display_model.restore_defaults()
+        self.em_display_model.restore_defaults()
         self.qv_display_model.restore_defaults()
         self.edit_rules.clear()
         self.icon_rules.clear()
@@ -733,7 +821,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
     def change_cover_grid_texture(self):
         from calibre.gui2.preferences.texture_chooser import TextureChooser
         d = TextureChooser(parent=self, initial=self.cg_bg_widget.btex)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             self.set_cg_texture(d.texture)
             self.changed_signal.emit()
 
@@ -758,7 +846,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
 
     def change_font(self, *args):
         fd = QFontDialog(self.build_font_obj(), self)
-        if fd.exec_() == QDialog.DialogCode.Accepted:
+        if fd.exec() == QDialog.DialogCode.Accepted:
             font = fd.selectedFont()
             fi = QFontInfo(font)
             self.current_font = [str(fi.family()), fi.pointSize(),
@@ -777,6 +865,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
                 QApplication.setFont(self.font_display.font())
                 rr = True
             self.display_model.commit()
+            self.em_display_model.commit()
             self.qv_display_model.commit()
             self.edit_rules.commit(self.gui.current_db.prefs)
             self.icon_rules.commit(self.gui.current_db.prefs)
@@ -804,6 +893,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         gui.tags_view.reread_collapse_parameters()
         gui.library_view.refresh_book_details(force=True)
         gui.library_view.refresh_grid()
+        gui.library_view.refresh_composite_edit()
         gui.library_view.set_row_header_visibility()
         gui.cover_flow.setShowReflections(gprefs['cover_browser_reflections'])
         gui.cover_flow.setPreserveAspectRatio(gprefs['cb_preserve_aspect_ratio'])

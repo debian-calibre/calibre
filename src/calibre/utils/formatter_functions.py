@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 '''
 Created on 13 Jan 2011
@@ -810,7 +809,7 @@ class BuiltinShorten(BuiltinFormatterFunction):
             'integers. For example, assume the title of the book is '
             '`Ancient English Laws in the Times of Ivanhoe`, and you want '
             'it to fit in a space of at most 15 characters. If you use '
-            '{title:shorten(9,-,5)}, the result will be `Ancient E-nhoe`. '
+            '{title:shorten(9,-,5)}, the result will be `Ancient E-anhoe`. '
             'If the field\'s length is less than left chars + right chars + '
             'the length of `middle text`, then the field will be used '
             'intact. For example, the title `The Dome` would not be changed.')
@@ -1756,9 +1755,12 @@ class BuiltinVirtualLibraries(BuiltinFormatterFunction):
 
     def evaluate(self, formatter, kwargs, mi, locals_):
         with suppress(Exception):
-            from calibre.gui2.ui import get_gui
-            a = get_gui().current_db.data.get_virtual_libraries_for_books((mi.id,))
-            return ', '.join(a[mi.id])
+            try:
+                from calibre.gui2.ui import get_gui
+                a = get_gui().current_db.data.get_virtual_libraries_for_books((mi.id,))
+                return ', '.join(a[mi.id])
+            except ValueError as v:
+                return str(v)
         return _('This function can be used only in the GUI')
 
 

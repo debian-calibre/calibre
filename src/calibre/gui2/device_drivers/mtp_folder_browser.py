@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:fdm=marker:ai
 
 
 __license__   = 'GPL v3'
@@ -226,7 +225,7 @@ def browse():
     app
     dev = setup_device()
     d = Browser(dev.filesystem_cache)
-    d.exec_()
+    d.exec()
     dev.shutdown()
     return d.current_item
 
@@ -237,7 +236,7 @@ def ignored_folders():
     app
     dev = setup_device()
     d = IgnoredFolders(dev)
-    d.exec_()
+    d.exec()
     dev.shutdown()
     return d.ignored_folders
 

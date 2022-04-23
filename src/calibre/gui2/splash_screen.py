@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -123,7 +122,7 @@ def main():
     spl = SplashScreen(develop=True)
     spl.show()
     spl.show_message('Testing the splash screen message...')
-    app.exec_()
+    app.exec()
 
 
 if __name__ == '__main__':

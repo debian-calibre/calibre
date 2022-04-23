@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__ = 'GPL v3'
@@ -86,6 +85,9 @@ class Tests(unittest.TestCase):
 
             # Test parsing of text assertions
             ('/1:3[aa^,b]', a('aa,b'), ''),
+            ('/1:3[aa-b]', a('aa-b'), ''),
+            ('/1:3[aa^-b]', a('aa-b'), ''),
+            ('/1:3[aa-^--b]', a('aa---b'), ''),
             ('/1:3[aa^,b,c1]', a('aa,b', 'c1'), ''),
             ('/1:3[,aa^,b]', a(after='aa,b'), ''),
             ('/1:3[;s=a]', a(s='a'), ''),
@@ -123,7 +125,7 @@ class Tests(unittest.TestCase):
             test(cfi, body)
 
         for i in range(len(body)):
-            test('/4/{}'.format((i + 1)*2), body[i])
+            test(f'/4/{(i + 1)*2}', body[i])
 
         p = body[4]
         test('/4/999[para05]', p)

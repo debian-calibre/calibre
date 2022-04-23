@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -15,8 +14,33 @@ def user_agent_data():
     return ans
 
 
+def common_english_words():
+    ans = getattr(common_english_words, 'ans', None)
+    if ans is None:
+        ans = common_english_words.ans = tuple(x.strip() for x in P('common-english-words.txt', data=True).decode('utf-8').splitlines())
+    return ans
+
+
 def common_user_agents():
     return user_agent_data()['common_user_agents']
+
+
+def common_chrome_user_agents():
+    for x in user_agent_data()['common_user_agents']:
+        if 'Chrome/' in x:
+            yield x
+
+
+def choose_randomly_by_popularity(ua_list):
+    pm = user_agents_popularity_map()
+    weights = None
+    if pm:
+        weights = tuple(map(pm.__getitem__, ua_list))
+    return random.choices(ua_list, weights=weights)[0]
+
+
+def random_common_chrome_user_agent():
+    return choose_randomly_by_popularity(tuple(common_chrome_user_agents()))
 
 
 def user_agents_popularity_map():
@@ -39,3 +63,12 @@ def accept_header_for_ua(ua):
     if 'Firefox/' in ua:
         return 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
     return 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+
+
+def common_english_word_ua():
+    words = common_english_words()
+    w1 = random.choice(words)
+    w2 = w1
+    while w2 == w1:
+        w2 = random.choice(words)
+    return f'{w1}/{w2}'

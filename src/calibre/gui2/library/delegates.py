@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -14,7 +13,7 @@ from qt.core import (Qt, QApplication, QStyle, QIcon,  QDoubleSpinBox, QStyleOpt
         QStyleOptionComboBox, QStyleOptionSpinBox, QLocale, QSize, QLineEdit, QDialog, QPalette)
 
 from calibre.ebooks.metadata import rating_to_stars
-from calibre.gui2 import UNDEFINED_QDATETIME, rating_font
+from calibre.gui2 import UNDEFINED_QDATETIME, rating_font, gprefs
 from calibre.constants import iswindows
 from calibre.gui2.widgets import EnLineEdit
 from calibre.gui2.widgets2 import populate_standard_spinbox_context_menu, RatingEditor, DateTimeEdit as DateTimeEditBase
@@ -24,7 +23,6 @@ from calibre.utils.date import now, format_date, qt_to_dt, is_date_undefined, in
 from calibre.utils.config import tweaks
 from calibre.utils.icu import sort_key
 from calibre.gui2.dialogs.comments_dialog import CommentsDialog, PlainTextDialog
-from calibre.gui2.dialogs.template_dialog import TemplateDialog
 from calibre.gui2.dialogs.tag_editor import TagEditor
 from calibre.gui2.languages import LanguagesEdit
 
@@ -354,7 +352,7 @@ class CompleteDelegate(QStyledItemDelegate, UpdateEditorGeometry):  # {{{
             if check_key_modifier(Qt.KeyboardModifier.ShiftModifier) and col != 'authors':
                 key = col if m.is_custom_column(col) else None
                 d = TagEditor(parent, self.db, m.id(index.row()), key=key)
-                if d.exec_() == QDialog.DialogCode.Accepted:
+                if d.exec() == QDialog.DialogCode.Accepted:
                     m.setData(index, self.sep.join(d.tags), Qt.ItemDataRole.EditRole)
                 return None
             editor = EditWithComplete(parent)
@@ -524,7 +522,7 @@ class CcLongTextDelegate(QStyledItemDelegate):  # {{{
         else:
             text = m.db.data[index.row()][m.custom_columns[col]['rec_index']]
         d = PlainTextDialog(parent, text, column_name=m.custom_columns[col]['name'])
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             m.setData(index, d.text, Qt.ItemDataRole.EditRole)
         return None
 
@@ -555,7 +553,7 @@ class CcNumberDelegate(QStyledItemDelegate, UpdateEditorGeometry):  # {{{
             editor = ClearingDoubleSpinBox(parent)
             editor.setSpecialValueText(_('Undefined'))
             editor.setRange(-1000000., 100000000.)
-            editor.setDecimals(2)
+            editor.setDecimals(int(m.custom_columns[col]['display'].get('decimals', 2)))
         return editor
 
     def setModelData(self, editor, model, index):
@@ -672,7 +670,7 @@ class CcCommentsDelegate(QStyledItemDelegate):  # {{{
         else:
             text = m.db.data[index.row()][m.custom_columns[col]['rec_index']]
         editor = CommentsDialog(parent, text, column_name=m.custom_columns[col]['name'])
-        d = editor.exec_()
+        d = editor.exec()
         if d:
             m.setData(index, (editor.textbox.html), Qt.ItemDataRole.EditRole)
         return None
@@ -746,8 +744,15 @@ class CcTemplateDelegate(QStyledItemDelegate):  # {{{
         Delegate for custom_column bool data.
         '''
         QStyledItemDelegate.__init__(self, parent)
+        self.disallow_edit = gprefs['edit_metadata_templates_only_F2_on_booklist']
 
     def createEditor(self, parent, option, index):
+        if self.disallow_edit:
+            editor = QLineEdit(parent)
+            editor.setText(_('Template editing disabled'))
+            return editor
+        self.disallow_edit = gprefs['edit_metadata_templates_only_F2_on_booklist']
+        from calibre.gui2.dialogs.template_dialog import TemplateDialog
         m = index.model()
         mi = m.db.get_metadata(index.row(), index_is_id=False)
         if check_key_modifier(Qt.KeyboardModifier.ControlModifier):
@@ -758,9 +763,21 @@ class CcTemplateDelegate(QStyledItemDelegate):  # {{{
         editor.setWindowTitle(_("Edit template"))
         editor.textbox.setTabChangesFocus(False)
         editor.textbox.setTabStopWidth(20)
-        d = editor.exec_()
+        d = editor.exec()
         if d:
             m.setData(index, (editor.rule[1]), Qt.ItemDataRole.EditRole)
         return None
 
+    def setEditorData(self, editor, index):
+        editor.setText('editing templates disabled')
+        editor.setReadOnly(True)
+
+    def setModelData(self, editor, model, index):
+        pass
+
+    def allow_one_edit(self):
+        self.disallow_edit = False
+
+    def refresh(self):
+        self.disallow_edit = gprefs['edit_metadata_templates_only_F2_on_booklist']
 # }}}

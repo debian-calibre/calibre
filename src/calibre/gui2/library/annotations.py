@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2020, Kovid Goyal <kovid at kovidgoyal.net>
 
 import codecs
@@ -365,18 +364,20 @@ class ResultsList(QTreeWidget):
         items = self.selectedItems()
         m = QMenu(self)
         if isinstance(result, dict):
-            m.addAction(_('Open in viewer'), partial(self.item_activated, item))
-            m.addAction(_('Show in calibre'), partial(self.show_in_calibre, item))
+            m.addAction(QIcon.ic('viewer.png'), _('Open in viewer'), partial(self.item_activated, item))
+            m.addAction(QIcon.ic('lt.png'), _('Show in calibre'), partial(self.show_in_calibre, item))
             if result.get('annotation', {}).get('type') == 'highlight':
-                m.addAction(_('Edit notes'), partial(self.edit_notes, item))
+                m.addAction(QIcon.ic('modified.png'), _('Edit notes'), partial(self.edit_notes, item))
         if items:
             m.addSeparator()
-            m.addAction(ngettext('Export selected item', 'Export {} selected items', len(items)).format(len(items)), self.export_requested.emit)
-            m.addAction(ngettext('Delete selected item', 'Delete {} selected items', len(items)).format(len(items)), self.delete_requested.emit)
+            m.addAction(QIcon.ic('save.png'),
+                        ngettext('Export selected item', 'Export {} selected items', len(items)).format(len(items)), self.export_requested.emit)
+            m.addAction(QIcon.ic('trash.png'),
+                        ngettext('Delete selected item', 'Delete {} selected items', len(items)).format(len(items)), self.delete_requested.emit)
         m.addSeparator()
-        m.addAction(_('Expand all'), self.expandAll)
-        m.addAction(_('Collapse all'), self.collapseAll)
-        m.exec_(self.mapToGlobal(pos))
+        m.addAction(QIcon.ic('plus.png'), _('Expand all'), self.expandAll)
+        m.addAction(QIcon.ic('minus.png'), _('Collapse all'), self.collapseAll)
+        m.exec(self.mapToGlobal(pos))
 
     def edit_notes(self, item):
         r = item.data(0, Qt.ItemDataRole.UserRole)
@@ -586,7 +587,7 @@ class Restrictions(QWidget):
         tb.addItem(' ', ' ')
         for user_type, user in db.all_annotation_users():
             display_name = friendly_username(user_type, user)
-            tb.addItem(display_name, '{}:{}'.format(user_type, user))
+            tb.addItem(display_name, f'{user_type}:{user}')
         if before:
             row = tb.findData(before)
             if row > -1:
@@ -827,7 +828,7 @@ class DetailsPanel(QWidget):
         series_text = ''
         if series:
             use_roman_numbers = config['use_roman_numerals_for_series_number']
-            series_text = '{} of {}'.format(fmt_sidx(sidx, use_roman=use_roman_numbers), series)
+            series_text = f'{fmt_sidx(sidx, use_roman=use_roman_numbers)} of {series}'
         annot = r['annotation']
         atype = annotation_title(annot['type'], singular=True)
         book_format = r['format']
@@ -934,11 +935,11 @@ class AnnotationsBrowser(Dialog):
             return Dialog.keyPressEvent(self, ev)
 
     def setup_ui(self):
-        self.use_stemmer = us = QCheckBox(_('&Match on related English words'))
+        self.use_stemmer = us = QCheckBox(_('&Match on related words'))
         us.setChecked(gprefs['browse_annots_use_stemmer'])
         us.setToolTip('<p>' + _(
-            'With this option searching for words will also match on any related English words. For'
-            ' example: <i>correction</i> matches <i>correcting</i> and <i>corrected</i> as well'))
+            'With this option searching for words will also match on any related words (supported in several languages). For'
+            ' example, in the English language: <i>correction</i> matches <i>correcting</i> and <i>corrected</i> as well'))
         us.stateChanged.connect(lambda state: gprefs.set('browse_annots_use_stemmer', state != Qt.CheckState.Unchecked))
 
         l = QVBoxLayout(self)
@@ -998,7 +999,7 @@ class AnnotationsBrowser(Dialog):
         if not annots:
             return error_dialog(self, _('No selected annotations'), _(
                 'No annotations have been selected'), show=True)
-        Export(annots, self).exec_()
+        Export(annots, self).exec()
 
     def delete_annotations(self, ids):
         if confirm(ngettext(
@@ -1019,7 +1020,7 @@ class AnnotationsBrowser(Dialog):
                 'Editing is only supported for the notes associated with highlights'), show=True)
         notes = annot.get('notes')
         d = EditNotes(notes, self)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             notes = d.notes
             if notes and notes.strip():
                 annot['notes'] = notes.strip()
@@ -1032,7 +1033,7 @@ class AnnotationsBrowser(Dialog):
     def show_dialog(self, restrict_to_book_ids=None):
         if self.parent() is None:
             self.browse_panel.effective_query_changed()
-            self.exec_()
+            self.exec()
         else:
             self.reinitialize(restrict_to_book_ids)
             self.show()

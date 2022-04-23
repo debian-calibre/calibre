@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -180,7 +179,7 @@ class DownloadResources(Dialog):
         else:
             replacements, failures = ret
             if failures:
-                tb = ['{}\n\t{}\n'.format(url, err) for url, err in iteritems(failures)]
+                tb = [f'{url}\n\t{err}\n' for url, err in iteritems(failures)]
                 if not replacements:
                     error_dialog(self, _('Download failed'), _(
                         'Failed to download external resources, click "Show details" for more information.'),
@@ -266,6 +265,6 @@ if __name__ == '__main__':
     from calibre.gui2.tweak_book.boss import get_container
     set_current_container(get_container(sys.argv[-1]))
     d = DownloadResources()
-    d.exec_()
+    d.exec()
     print(d.show_diff)
     del d, app

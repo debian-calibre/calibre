@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -68,11 +67,17 @@ class TestEmail(QDialog):
         t.start()
 
     def run_test(self):
-        try:
-            tb = self.test_func(str(self.to.text())) or _('Email successfully sent')
-        except Exception:
-            import traceback
-            tb = traceback.format_exc()
+        from email.utils import parseaddr
+        q = self.to.text().strip()
+        addr = parseaddr(q)[-1]
+        if not addr or '@' not in q:
+            tb = f'{self.to.text().strip()} is not a valid email address'
+        else:
+            try:
+                tb = self.test_func(addr) or _('Email successfully sent')
+            except Exception:
+                import traceback
+                tb = traceback.format_exc()
         self.test_done.emit(tb)
 
     def on_test_done(self, txt):
@@ -94,14 +99,13 @@ class RelaySetup(QDialog):
         self.tl = QLabel(('<p>'+_('Setup sending email using') +
                 ' <b>{name}</b><p>' +
             _('If you don\'t have an account, you can sign up for a free {name} email '
-            'account at <a href="https://{url}">https://{url}</a>. {extra}')).format(
+            'account at <a href="https://{url}">{url}</a>. {extra}')).format(
                 **service))
         l.addWidget(self.tl, 0, 0, 3, 0)
         self.tl.setWordWrap(True)
         self.tl.setOpenExternalLinks(True)
         for name, label in (
                 ['from_', _('Your %s &email address:')],
-                ['username', _('Your %s &username:')],
                 ['password', _('Your %s &password:')],
                 ):
             la = QLabel(label%service['name'])
@@ -117,7 +121,6 @@ class RelaySetup(QDialog):
                 l.addWidget(self.ptoggle, r, 2)
                 self.ptoggle.stateChanged.connect(
                         lambda s: self.password.setEchoMode(QLineEdit.EchoMode.Normal if s == Qt.CheckState.Checked else QLineEdit.EchoMode.Password))
-        self.username.setText(service['username'])
         self.password.setEchoMode(QLineEdit.EchoMode.Password)
         self.bl = QLabel('<p>' + _(
             'If you plan to use email to send books to your Kindle, remember to'
@@ -130,12 +133,28 @@ class RelaySetup(QDialog):
         self.resize(self.sizeHint())
         self.service = service
 
+    @property
+    def service_username(self):
+        na = self.from_.text()
+        from email.utils import parseaddr
+        addr = parseaddr(na)[-1]
+        if not addr or '@' not in na:
+            return ''
+        return addr
+
     def accept(self):
-        un = str(self.username.text())
-        if self.service.get('at_in_username', False) and '@' not in un:
-            return error_dialog(self, _('Incorrect username'),
-                    _('%s needs the full email address as your username') %
-                    self.service['name'], show=True)
+        pw = self.password.text()
+        if not pw:
+            return error_dialog(self, _('No password'), _(
+                'You must specify a password'), show=True)
+        fr = self.from_.text().strip()
+        if not fr:
+            return error_dialog(self, _('No email address'), _(
+                'You must specify an email address'), show=True)
+        un = self.service_username
+        if not un:
+            return error_dialog(self, _('Incorrect email address'), _(
+                'The email address "{}" is not valid').format(self.from_.text()), show=True)
         QDialog.accept(self)
 
 
@@ -188,7 +207,7 @@ class SendEmail(QWidget, Ui_Form):
             if not opts.relay_password or question_dialog(self, _('OK to proceed?'),
                     _('This will display your email password on the screen'
                     '. Is it OK to proceed?'), show_copy_button=False):
-                TestEmail(pa, self).exec_()
+                TestEmail(pa, self).exec()
 
     def test_email_settings(self, to):
         opts = smtp_prefs().parse()
@@ -243,22 +262,22 @@ class SendEmail(QWidget, Ui_Form):
                     'at_in_username': True,
                 },
                 'hotmail': {
-                    'name': 'Hotmail',
-                    'relay': 'smtp.live.com',
+                    'name': 'Outlook',
+                    'relay': 'smtp-mail.outlook.com',
                     'port': 587,
-                    'username': '',
-                    'url': 'www.hotmail.com',
+                    'username': '@outlook.com',
+                    'url': 'outlook.live.com/owa/',
                     'extra': _('If you are setting up a new'
-                        ' Hotmail account, Microsoft requires that you '
+                        ' Outlook account, Microsoft requires that you '
                         ' verify your account periodically, before it'
                         ' will let calibre send email.'),
                     'at_in_username': True,
                 }
         }[service]
         d = RelaySetup(service, self)
-        if d.exec_() != QDialog.DialogCode.Accepted:
+        if d.exec() != QDialog.DialogCode.Accepted:
             return
-        self.relay_username.setText(d.username.text())
+        self.relay_username.setText(d.service_username)
         self.relay_password.setText(d.password.text())
         self.email_from.setText(d.from_.text())
         self.relay_host.setText(service['relay'])
@@ -269,7 +288,7 @@ class SendEmail(QWidget, Ui_Form):
         from_ = str(self.email_from.text()).strip()
         if to_set and not from_:
             error_dialog(self, _('Bad configuration'),
-                         _('You must set the From email address')).exec_()
+                         _('You must set the From email address')).exec()
             return False
         username = str(self.relay_username.text()).strip()
         password = str(self.relay_password.text()).strip()
@@ -281,7 +300,7 @@ class SendEmail(QWidget, Ui_Form):
             if ((username and not password) or (not username and password)):
                 error_dialog(self, _('Bad configuration'),
                             _('You must either set both the username <b>and</b> password for '
-                            'the mail server or no username and no password at all.')).exec_()
+                            'the mail server or no username and no password at all.')).exec()
                 return False
             if not (username and password) and not question_dialog(
                     self, _('Are you sure?'),

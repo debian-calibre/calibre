@@ -232,14 +232,14 @@ add_extra_css(def():
 )
 # }}}
 
-def simple_overlay_title(title, overlay, container):
+def simple_overlay_title(title, overlay, container, close_action):
     container.style.backgroundColor = get_color('window-background')
     def action():
         event = this
         event.stopPropagation()
         overlay.hide_current_panel(event)
 
-    create_top_bar(container, title=title, icon='close', action=action)
+    create_top_bar(container, title=title, icon='close', action=close_action or action)
 
 
 class MainOverlay:  # {{{
@@ -522,13 +522,7 @@ class WordActionsOverlay:  # {{{
         pass  # Dont allow panel to be closed by a click
 
     def show(self, container):
-        container.style.backgroundColor = get_color('window-background')
-        container.appendChild(E.div(
-            style='padding: 1ex 1em; border-bottom: solid 1px currentColor; display:flex; justify-content: space-between',
-            E.h2(_('Lookup: {}').format(self.word)),
-                E.div(svgicon('close'), style='cursor:pointer', onclick=def(event):event.preventDefault(), event.stopPropagation(), self.overlay.hide_current_panel(event);, class_='simple-link'),
-            ))
-        container.appendChild(E.div())
+        simple_overlay_title(_('Lookup: {}').format(self.word), self.overlay, container)
         create_word_actions_panel(container, self.word, self.overlay.hide)
 # }}}
 
@@ -585,21 +579,14 @@ class OpenBook: # {{{
         pass  # Dont allow panel to be closed by a click
 
     def show(self, container):
-        container.style.backgroundColor = get_color('window-background')
-        container.appendChild(E.div(
-            style='padding: 1ex 1em; border-bottom: solid 1px currentColor; display:flex; justify-content: flex-start',
-                E.div(
-                    svgicon('close'), style=f'cursor:pointer',
-                    onclick=def(event):
-                        event.preventDefault(), event.stopPropagation()
-                        if self.closeable:
-                            self.overlay.hide_current_panel(event)
-                        else:
-                            ui_operations.quit()
-                    ,
-                    class_='simple-link'),
-                E.h2(_('Open a book'), style='margin-left: 1rem'),
-            ))
+        simple_overlay_title(_('Open a book'), self.overlay, container, def ():
+            ev = this
+            ev.stopPropagation(), ev.preventDefault()
+            if self.closeable:
+                self.overlay.hide_current_panel(ev)
+            else:
+                ui_operations.quit()
+        )
         create_open_book(container, self.overlay.view?.book)
 # }}}
 

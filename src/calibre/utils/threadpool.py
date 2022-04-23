@@ -77,9 +77,8 @@ class WorkerThread(threading.Thread):
         requestsQueue and resultQueue are instances of queue.Queue passed
         by the ThreadPool class when it creates a new worker thread.
         """
-
+        kwds['daemon'] = True
         threading.Thread.__init__(self, **kwds)
-        self.setDaemon(1)
         self.workRequestQueue = requestsQueue
         self.resultQueue = resultsQueue
         self._dismissed = threading.Event()
@@ -287,7 +286,7 @@ if __name__ == '__main__':
 
     # this will be called each time a result is available
     def print_result(request, result):
-        print("**Result: %s from request #%s" % (result, request.requestID))
+        print(f"**Result: {result} from request #{request.requestID}")
 
     # this will be called when an exception occurs within a thread
     def handle_exception(request, exc_info):

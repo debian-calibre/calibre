@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -197,7 +196,6 @@ def main(args=sys.argv):
         except NoAutoReload as e:
             raise SystemExit(error_message(e))
 
-    ensure_single_instance()
     if opts.userdb:
         opts.userdb = os.path.abspath(os.path.expandvars(os.path.expanduser(opts.userdb)))
         connect(opts.userdb, exc_class=SystemExit).close()
@@ -207,6 +205,7 @@ def main(args=sys.argv):
         except (KeyboardInterrupt, EOFError):
             raise SystemExit(_('Interrupted by user'))
         raise SystemExit(0)
+    ensure_single_instance()
 
     libraries = args[1:]
     for lib in libraries:
@@ -227,7 +226,7 @@ def main(args=sys.argv):
     try:
         server = Server(libraries, opts)
     except BadIPSpec as e:
-        raise SystemExit('{}'.format(e))
+        raise SystemExit(f'{e}')
     if getattr(opts, 'daemonize', False):
         if not opts.log and not iswindows:
             raise SystemExit(

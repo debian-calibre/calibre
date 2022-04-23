@@ -11,7 +11,7 @@ Job management.
 
 import time
 
-from qt.core import (QAbstractTableModel, QModelIndex, Qt, QPainter,
+from qt.core import (QAbstractTableModel, QModelIndex, Qt, QStylePainter,
     QTimer, pyqtSignal, QIcon, QDialog, QAbstractItemDelegate, QApplication, QEvent,
     QSize, QStyleOptionProgressBar, QStyle, QToolTip, QWidget, QStyleOption,
     QHBoxLayout, QVBoxLayout, QSizePolicy, QLabel, QCoreApplication, QAction, QItemSelectionModel,
@@ -308,10 +308,10 @@ class JobManager(QAbstractTableModel, AdaptSQP):  # {{{
     def kill_job(self, job, view):
         if isinstance(job, DeviceJob):
             return error_dialog(view, _('Cannot kill job'),
-                         _('Cannot kill jobs that communicate with the device')).exec_()
+                         _('Cannot kill jobs that communicate with the device')).exec()
         if job.duration is not None:
             return error_dialog(view, _('Cannot kill job'),
-                         _('Job has already run')).exec_()
+                         _('Job has already run')).exec()
         if not getattr(job, 'killable', True):
             return error_dialog(view, _('Cannot kill job'),
                     _('This job cannot be stopped'), show=True)
@@ -321,7 +321,7 @@ class JobManager(QAbstractTableModel, AdaptSQP):  # {{{
         devjobs = [j for j in jobs if isinstance(j, DeviceJob)]
         if devjobs:
             error_dialog(view, _('Cannot kill job'),
-                         _('Cannot kill jobs that communicate with the device')).exec_()
+                         _('Cannot kill jobs that communicate with the device')).exec()
             jobs = [j for j in jobs if not isinstance(j, DeviceJob)]
         jobs = [j for j in jobs if j.duration is None]
         unkillable = [j for j in jobs if not getattr(j, 'killable', True)]
@@ -527,7 +527,7 @@ class JobsButton(QWidget):  # {{{
     def update_label(self):
         n = self.jobs()
         prefix = '<b>' if n > 0 else ''
-        self._jobs.setText(prefix + _('Jobs:') + ' {} '.format(n))
+        self._jobs.setText(prefix + ' ' + _('Jobs:') + f' {n} ')
 
     def event(self, ev):
         m = None
@@ -602,12 +602,12 @@ class JobsButton(QWidget):  # {{{
 
     def paintEvent(self, ev):
         if self.mouse_over:
-            p = QPainter(self)
+            p = QStylePainter(self)
             tool = QStyleOption()
+            tool.initFrom(self)
             tool.rect = self.rect()
             tool.state = QStyle.StateFlag.State_Raised | QStyle.StateFlag.State_Active | QStyle.StateFlag.State_MouseOver
-            s = self.style()
-            s.drawPrimitive(QStyle.PrimitiveElement.PE_PanelButtonTool, tool, p, self)
+            p.drawPrimitive(QStyle.PrimitiveElement.PE_PanelButtonTool, tool)
             p.end()
         QWidget.paintEvent(self, ev)
 
@@ -673,7 +673,7 @@ class JobsDialog(QDialog, Ui_JobsDialog):
             row = index.row()
             job = self.model.row_to_job(row)
             d = DetailView(self, job)
-            d.exec_()
+            d.exec()
             d.timer.stop()
 
     def show_details(self, *args):

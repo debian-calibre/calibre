@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__ = 'GPL v3'
@@ -211,7 +210,7 @@ class FunctionBox(EditWithComplete):
             menu.addSeparator()
             menu.addAction(_('Save current search'), self.save_search.emit)
             menu.addAction(_('Show saved searches'), self.show_saved_searches.emit)
-        menu.exec_(event.globalPos())
+        menu.exec(event.globalPos())
 
 
 class FunctionEditor(Dialog):
@@ -373,5 +372,5 @@ def replace_swapcase_ignore_tags(match, number, file_name, metadata, dictionarie
 
 if __name__ == '__main__':
     app = QApplication([])
-    FunctionEditor().exec_()
+    FunctionEditor().exec()
     del app

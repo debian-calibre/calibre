@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__ = 'GPL v3'
@@ -45,7 +44,7 @@ class Tag:
         self.self_closing = self_closing
 
     def __repr__(self):
-        return '<%s start_block=%s start_offset=%s end_block=%s end_offset=%s self_closing=%s>' % (
+        return '<{} start_block={} start_offset={} end_block={} end_offset={} self_closing={}>'.format(
             self.name, self.start_block.blockNumber(), self.start_offset, self.end_block.blockNumber(), self.end_offset, self.self_closing)
     __str__ = __repr__
 
@@ -233,7 +232,7 @@ def rename_tag(cursor, opening_tag, closing_tag, new_name, insert=False):
     with edit_block(cursor):
         text = select_tag(cursor, closing_tag)
         if insert:
-            text = '</%s>%s' % (new_name, text)
+            text = f'</{new_name}>{text}'
         else:
             text = re.sub(r'^<\s*/\s*[a-zA-Z0-9]+', '</%s' % new_name, text)
         cursor.insertText(text)
@@ -502,7 +501,7 @@ class Smarts(NullSmarts):
         pos = min(c.position(), c.anchor())
         m = re.match(r'[a-zA-Z0-9:-]+', name)
         cname = name if m is None else m.group()
-        c.insertText('<{}>{}</{}>'.format(name, text, cname))
+        c.insertText(f'<{name}>{text}</{cname}>')
         c.setPosition(pos + 2 + len(name))
         editor.setTextCursor(c)
 
@@ -676,6 +675,8 @@ class Smarts(NullSmarts):
         ev_text = ev.text()
         key = ev.key()
         is_xml = editor.syntax == 'xml'
+        mods = ev.modifiers() & (
+            Qt.KeyboardModifier.ControlModifier | Qt.KeyboardModifier.AltModifier | Qt.KeyboardModifier.MetaModifier | Qt.KeyboardModifier.KeypadModifier)
 
         if tprefs['replace_entities_as_typed'] and (
                 ';' in ev_text or
@@ -723,7 +724,6 @@ class Smarts(NullSmarts):
             return True
 
         if key == Qt.Key.Key_Tab:
-            mods = ev.modifiers()
             if not mods & Qt.KeyboardModifier.ControlModifier and smart_tab(editor, ev):
                 return True
 
@@ -731,11 +731,10 @@ class Smarts(NullSmarts):
             return True
 
         if key in (Qt.Key.Key_BraceLeft, Qt.Key.Key_BraceRight):
-            mods = ev.modifiers()
-            if int(mods & Qt.KeyboardModifier.ControlModifier):
+            if mods == Qt.KeyboardModifier.ControlModifier:
                 if self.jump_to_enclosing_tag(editor, key == Qt.Key.Key_BraceLeft):
                     return True
-        if key == Qt.Key.Key_T and int(ev.modifiers() & (Qt.KeyboardModifier.ControlModifier | Qt.KeyboardModifier.AltModifier)):
+        if key == Qt.Key.Key_T and mods == (Qt.KeyboardModifier.ControlModifier | Qt.KeyboardModifier.AltModifier):
             return self.select_tag_contents(editor)
 
         return False

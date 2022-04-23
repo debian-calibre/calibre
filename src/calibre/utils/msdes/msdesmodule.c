@@ -4,7 +4,7 @@
  * Python module C glue code.
  */
 
-
+#define PY_SSIZE_T_CLEAN
 #include <Python.h>
 
 #include <d3des.h>
@@ -17,7 +17,7 @@ static PyObject *
 msdes_deskey(PyObject *self, PyObject *args)
 {
     unsigned char *key = NULL;
-    unsigned int len = 0;
+    Py_ssize_t len = 0;
     short int edf = 0;
 
     if (!PyArg_ParseTuple(args, "y#h", &key, &len, &edf)) {
@@ -44,8 +44,8 @@ msdes_des(PyObject *self, PyObject *args)
 {
     unsigned char *inbuf = NULL;
     unsigned char *outbuf = NULL;
-    unsigned int len = 0;
-    unsigned int off = 0;
+    Py_ssize_t len = 0;
+    Py_ssize_t off = 0;
     PyObject *retval = NULL;
 
     if (!PyArg_ParseTuple(args, "y#", &inbuf, &len)) {

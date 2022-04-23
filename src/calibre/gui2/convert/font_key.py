@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -104,5 +103,5 @@ if __name__ == '__main__':
     from qt.core import QApplication
     app = QApplication([])
     d = FontKeyChooser()
-    d.exec_()
+    d.exec()
     del app

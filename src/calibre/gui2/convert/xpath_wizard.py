@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -102,7 +101,7 @@ class XPathEdit(QWidget):
 
     def wizard(self):
         wiz = Wizard(self)
-        if wiz.exec_() == QDialog.DialogCode.Accepted:
+        if wiz.exec() == QDialog.DialogCode.Accepted:
             self.edit.setText(wiz.xpath)
 
     def setObjectName(self, *args):
@@ -144,5 +143,5 @@ if __name__ == '__main__':
     w = XPathEdit()
     w.setObjectName('test')
     w.show()
-    app.exec_()
+    app.exec()
     print(w.xpath)

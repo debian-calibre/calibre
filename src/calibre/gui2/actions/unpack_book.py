@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -339,9 +338,9 @@ class UnpackBookAction(InterfaceAction):
             'mobi', 'azw'})
         if not tweakable_fmts:
             return error_dialog(self.gui, _('Cannot unpack book'),
-                    _('The book must be in ePub, HTMLZ or AZW3 formats to unpack.'
+                    _('The book must be in EPUB, HTMLZ or AZW3 formats to unpack.'
                         '\n\nFirst convert the book to one of these formats.'),
                     show=True)
         dlg = UnpackBook(self.gui, book_id, tweakable_fmts, db)
-        dlg.exec_()
+        dlg.exec()
         dlg.cleanup()

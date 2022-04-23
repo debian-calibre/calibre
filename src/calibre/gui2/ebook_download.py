@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 __license__ = 'GPL 3'
 __copyright__ = '2011, John Schember <john@nachtimwald.com>'
 __docformat__ = 'restructuredtext en'
@@ -43,7 +40,7 @@ class DownloadInfo(MessageBox):
 def show_download_info(filename, parent=None):
     if not gprefs.get('show_get_books_download_info', True):
         return
-    DownloadInfo(filename, parent).exec_()
+    DownloadInfo(filename, parent).exec()
 
 
 def get_download_filename(response):

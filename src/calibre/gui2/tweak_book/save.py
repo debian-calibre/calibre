@@ -1,11 +1,10 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__ = 'GPL v3'
 __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 
-import shutil, os, errno
+import shutil, os, errno, stat
 from threading import Thread
 
 from qt.core import (QObject, pyqtSignal, QLabel, QWidget, QHBoxLayout, Qt, QSize)
@@ -50,11 +49,11 @@ def save_container(container, path):
                 # Somebody deleted the original file
         if st is not None:
             try:
-                os.fchmod(fno, st.st_mode)
+                os.fchmod(fno, st.st_mode | stat.S_IWUSR)
             except OSError as err:
                 if err.errno != errno.EPERM:
                     raise
-                raise OSError('Failed to change permissions of %s to %s (%s), with error: %s. Most likely the %s directory has a restrictive umask' % (
+                raise OSError('Failed to change permissions of {} to {} ({}), with error: {}. Most likely the {} directory has a restrictive umask'.format(
                     temp.name, oct(st.st_mode), format_permissions(st.st_mode), errno.errorcode[err.errno], os.path.dirname(temp.name)))
             try:
                 os.fchown(fno, st.st_uid, st.st_gid)

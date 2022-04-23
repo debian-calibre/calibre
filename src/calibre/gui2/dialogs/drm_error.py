@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -32,5 +31,5 @@ if __name__ == '__main__':
     from calibre.gui2 import Application
     app = Application([])
     d = DRMErrorMessage(title='testing title')
-    d.exec_()
+    d.exec()
     del d

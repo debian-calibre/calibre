@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:fdm=marker:ai
 # License: GPLv3 Copyright: 2013, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -34,7 +33,6 @@ from calibre.ebooks.metadata.opf3 import (
 from calibre.ebooks.metadata.utils import parse_opf_version
 from calibre.ebooks.mobi import MobiError
 from calibre.ebooks.mobi.reader.headers import MetadataHeader
-from calibre.ebooks.mobi.tweak import set_cover
 from calibre.ebooks.oeb.base import (
     DC11_NS, OEB_DOCS, OEB_STYLES, OPF, OPF2_NS, Manifest, itercsslinks, iterlinks,
     rewrite_links, serialize, urlquote, urlunquote
@@ -410,11 +408,11 @@ class Container(ContainerBase):  # {{{
             raise ValueError('Renaming of %s is not allowed' % current_name)
         if self.exists(new_name) and (new_name == current_name or new_name.lower() != current_name.lower()):
             # The destination exists and does not differ from the current name only by case
-            raise ValueError('Cannot rename %s to %s as %s already exists' % (current_name, new_name, new_name))
+            raise ValueError(f'Cannot rename {current_name} to {new_name} as {new_name} already exists')
         new_path = self.name_to_abspath(new_name)
         base = os.path.dirname(new_path)
         if os.path.isfile(base):
-            raise ValueError('Cannot rename %s to %s as %s is a file' % (current_name, new_name, base))
+            raise ValueError(f'Cannot rename {current_name} to {new_name} as {base} is a file')
         if not os.path.exists(base):
             os.makedirs(base)
         old_path = parent_dir = self.name_to_abspath(current_name)
@@ -558,7 +556,10 @@ class Container(ContainerBase):  # {{{
     def has_name_and_is_not_empty(self, name):
         if not self.has_name(name):
             return False
-        return os.path.getsize(self.name_path_map[name]) > 0
+        try:
+            return os.path.getsize(self.name_path_map[name]) > 0
+        except OSError:
+            return False
 
     def has_name_case_insensitive(self, name):
         if not name:
@@ -825,7 +826,8 @@ class Container(ContainerBase):  # {{{
         imap = {name:item_id for item_id, name in iteritems(imap)}
         items = [item for item, name, linear in self.spine_iter]
         tail, last_tail = (items[0].tail, items[-1].tail) if items else ('\n    ', '\n  ')
-        tuple(map(self.remove_from_xml, items))
+        for i in items:
+            self.remove_from_xml(i)
         spine = self.opf_xpath('//opf:spine')[0]
         spine.text = tail
         for name, linear in spine_items:
@@ -1138,9 +1140,9 @@ class EpubContainer(Container):
                     ans += ' 2'
                 else:
                     if not v.minor:
-                        ans += ' {}'.format(v.major)
+                        ans += f' {v.major}'
                     else:
-                        ans += ' {}.{}'.format(v.major, v.minor)
+                        ans += f' {v.major}.{v.minor}'
             except Exception:
                 pass
         return ans
@@ -1444,6 +1446,7 @@ def do_explode(path, dest):
 
 def opf_to_azw3(opf, outpath, container):
     from calibre.ebooks.conversion.plumber import Plumber, create_oebbook
+    from calibre.ebooks.mobi.tweak import set_cover
 
     class Item(Manifest.Item):
 
@@ -1460,6 +1463,7 @@ def opf_to_azw3(opf, outpath, container):
     inp = plugin_for_input_format('azw3')
     outp = plugin_for_output_format('azw3')
     plumber.opts.mobi_passthrough = True
+    plumber.opts.keep_ligatures = True
     oeb = create_oebbook(container.log, opf, plumber.opts, specialize=specialize)
     set_cover(oeb)
     outp.convert(oeb, outpath, inp, plumber.opts, container.log)

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__ = 'GPL v3'
@@ -12,7 +11,7 @@ import socket
 import ssl
 import traceback
 from contextlib import suppress
-from functools import partial
+from functools import partial, lru_cache
 from io import BytesIO
 
 from calibre import as_unicode
@@ -166,7 +165,7 @@ class Connection:  # {{{
             self.remote_addr = self.remote_port = self.parsed_remote_addr = None
         self.is_trusted_ip = bool(self.opts.local_write and getattr(self.parsed_remote_addr, 'is_loopback', False))
         if not self.is_trusted_ip and self.opts.trusted_ips and self.parsed_remote_addr is not None:
-            self.is_trusted_ip = is_ip_trusted(self.parsed_remote_addr, self.opts.trusted_ips)
+            self.is_trusted_ip = is_ip_trusted(self.parsed_remote_addr, parsed_trusted_ips(self.opts.trusted_ips))
         self.orig_send_bufsize = self.send_bufsize = 4096
         self.tdir = tdir
         self.wait_for = READ
@@ -328,6 +327,9 @@ class Connection:  # {{{
         self.handle_event = None  # prevent reference cycles
         try:
             self.socket.shutdown(socket.SHUT_WR)
+        except OSError:
+            pass
+        try:
             self.socket.close()
         except OSError:
             pass
@@ -365,6 +367,11 @@ class Connection:  # {{{
 # }}}
 
 
+@lru_cache(maxsize=2)
+def parsed_trusted_ips(raw):
+    return tuple(parse_trusted_ips(raw)) if raw else ()
+
+
 class ServerLoop:
 
     LISTENING_MSG = 'calibre server listening on'
@@ -384,8 +391,6 @@ class ServerLoop:
         self.ready = False
         self.handler = handler
         self.opts = opts or Options()
-        if self.opts.trusted_ips:
-            self.opts.trusted_ips = tuple(parse_trusted_ips(self.opts.trusted_ips))
         self.log = log or ThreadSafeLog(level=ThreadSafeLog.DEBUG)
         self.jobs_manager = JobsManager(self.opts, self.log)
         self.access_log = access_log
@@ -441,7 +446,7 @@ class ServerLoop:
             self.control_out.close()
 
     def __str__(self):
-        return "%s(%r)" % (self.__class__.__name__, self.bind_address)
+        return f"{self.__class__.__name__}({self.bind_address!r})"
     __repr__ = __str__
 
     @property
@@ -470,7 +475,7 @@ class ServerLoop:
             try:
                 self.bind(af, socktype, proto)
             except OSError as serr:
-                msg = "%s -- (%s: %s)" % (msg, sa, as_unicode(serr))
+                msg = f"{msg} -- ({sa}: {as_unicode(serr)})"
                 if self.socket:
                     self.socket.close()
                 self.socket = None
@@ -489,7 +494,7 @@ class ServerLoop:
                 ip = get_external_ip()
                 if ip == self.bind_address[0]:
                     raise
-                self.log.warn('Failed to bind to %s with error: %s. Trying to bind to the default interface: %s instead' % (
+                self.log.warn('Failed to bind to {} with error: {}. Trying to bind to the default interface: {} instead'.format(
                     self.bind_address[0], as_unicode(err), ip))
                 self.bind_address = (ip, self.bind_address[1])
                 self.do_bind()

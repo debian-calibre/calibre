@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -92,7 +91,7 @@ class ShareConnMenu(QMenu):  # {{{
                 ip_text = ' ' + _('[{ip}, port {port}, {protocol}]').format(
                         ip=listen_on, port=opts.port, protocol=protocol)
             except Exception:
-                ip_text = ' [{} {}]'.format(listen_on, protocol)
+                ip_text = f' [{listen_on} {protocol}]'
             self.ip_text = ip_text
             self.server_state_changed_signal.emit(running, ip_text)
             text = _('Stop Content server') + ip_text
@@ -163,7 +162,7 @@ class ShareConnMenu(QMenu):  # {{{
             action1.a_s.connect(sync_menu.action_triggered)
             action2.a_s.connect(sync_menu.action_triggered)
         else:
-            ac = self.addAction(_('Setup email based sharing of books'))
+            ac = self.addAction(QIcon.ic('mail.png'), _('Setup email based sharing of books'))
             self.email_actions.append(ac)
             ac.triggered.connect(self.setup_email)
 
@@ -243,7 +242,7 @@ class ConnectShareAction(InterfaceAction):
                     _('Stopping server, this could take up to a minute, please wait...'),
                     show_copy_button=False)
             QTimer.singleShot(1000, self.check_exited)
-            self.stopping_msg.exec_()
+            self.stopping_msg.exec()
 
     def check_exited(self):
         if getattr(self.gui.content_server, 'is_running', False):
@@ -264,7 +263,7 @@ class ConnectShareAction(InterfaceAction):
                     dm.set_option('smartdevice', 'autostart', False)
         else:
             sd_dialog = SmartdeviceDialog(self.gui)
-            sd_dialog.exec_()
+            sd_dialog.exec()
         self.set_smartdevice_action_state()
 
     def check_smartdevice_menus(self):

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2018, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -131,7 +130,7 @@ if __name__ == '__main__':
     d.rules = [
             {'action':'replace', 'query':'alice B & alice bob', 'match_type':'one_of', 'replace':'Alice Bob'},
     ]
-    d.exec_()
+    d.exec()
     from pprint import pprint
     pprint(d.rules)
     del d, app

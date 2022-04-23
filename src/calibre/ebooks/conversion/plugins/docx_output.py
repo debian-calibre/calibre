@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__ = 'GPL v3'
@@ -26,8 +25,8 @@ class DOCXOutput(OutputFormatPlugin):
             'are %s') % PAGE_SIZES),
 
         OptionRecommendation(name='docx_custom_page_size', recommended_value=None,
-            help=_('Custom size of the document. Use the form widthxheight '
-            'EG. `123x321` to specify the width and height (in pts). '
+            help=_('Custom size of the document. Use the form width x height, '
+            'for example: `123x321` to specify the width and height (in pts). '
             'This overrides any specified page-size.')),
 
         OptionRecommendation(name='docx_no_cover', recommended_value=False,

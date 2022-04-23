@@ -3,13 +3,15 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
+# Junghee Lee <daemul72@gmail.com>, 2022
+# Junghee Lee <daemul72@gmail.com>, 2021-2022
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-19 02:55+0000\n"
-"PO-Revision-Date: 2021-04-18 08:14+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2022-04-21 08:10+0000\n"
+"PO-Revision-Date: 2014-06-17 08:35+0000\n"
+"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022\n"
 "Language-Team: Korean (http://www.transifex.com/calibre/calibre/language/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,7 +29,7 @@ msgid ""
 "sophisticated manipulation of e-book content and metadata. This tutorial is "
 "a gentle introduction to getting you started with using regular expressions "
 "in calibre."
-msgstr ""
+msgstr "정규식은 전자책 콘텐츠 및 책 정보의 정교한 조작을 수행하기 위해 캘리버의 여러 곳에서 사용되는 특정 기능들입니다. 이 지침서는 캘리버에서 정규식을 사용하는 방법을 소개합니다."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:11
 msgid "Contents"
@@ -151,7 +153,7 @@ msgid ""
 "characters, \"+\", \"?\" and \"*\", *repeat the single element preceding "
 "them*. (Element means either a single character, a character set, an escape "
 "sequence or a group (we'll learn about those last two later)- in short, any "
-"single entity in a regular expression.) These characters are called "
+"single entity in a regular expression). These characters are called "
 "wildcards or quantifiers. To be more precise, \"?\" matches *0 or 1* of the "
 "preceding element, \"*\" matches *0 or more* of the preceding element and "
 "\"+\" matches *1 or more* of the preceding element. A few examples: The "
@@ -179,7 +181,7 @@ msgid ""
 "that tag, but actually, it matches the whole string! (The character \".\" is"
 " another special character. It matches anything *except* linebreaks, so, "
 "basically, the expression ``.*`` would match any single line you can think "
-"of.) Instead, try using ``<p.*?>`` which makes the quantifier ``\"*\"`` non-"
+"of). Instead, try using ``<p.*?>`` which makes the quantifier ``\"*\"`` non-"
 "greedy. That expression would only match the first opening tag, as intended."
 " There's actually another way to accomplish this: The expression "
 "``<p[^>]*>`` will match that same opening tag- you'll see why after the next"
@@ -380,7 +382,7 @@ msgid ""
 " with the tag ``<b class=\"calibre2\">``, now you have to end with the "
 "corresponding closing tag (opening tags are ``<tag>``, closing tags are "
 "``</tag>``), which is simply the next ``</b>`` in this case. (Refer to a "
-"good HTML manual or ask in the forum if you are unclear on this point.) The "
+"good HTML manual or ask in the forum if you are unclear on this point). The "
 "opening tag can be described using ``<b.*?>``, the closing tag using "
 "``</b>``, thus we could remove everything between those tags using "
 "``<b.*?>.*?</b>``. But using this expression would be a bad idea, because it"
@@ -401,7 +403,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:119
 msgid "Adding books"
-msgstr "책 추가하기"
+msgstr "책 추가"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:121
 msgid ""
@@ -428,7 +430,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:125
 msgid "Bulk editing metadata"
-msgstr ""
+msgstr "일괄 편집중인 책 정보"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:127
 msgid ""
@@ -470,7 +472,7 @@ msgid ""
 "One last word of warning, though: Regexps are powerful, but also really easy"
 " to get wrong. calibre provides really great testing possibilities to see if"
 " your expressions behave as you expect them to. Use them. Try not to shoot "
-"yourself in the foot. (God, I love that expression...) But should you, "
+"yourself in the foot. (God, I love that expression...). But should you, "
 "despite the warning, injure your foot (or any other body parts), try to "
 "learn from it."
 msgstr ""
@@ -481,7 +483,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:143
 msgid "Credits"
-msgstr ""
+msgstr "크레딧"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:145
 msgid "Thanks for helping with tips, corrections and such:"

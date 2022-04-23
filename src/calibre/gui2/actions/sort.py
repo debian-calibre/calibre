@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__ = 'GPL v3'
@@ -11,6 +10,7 @@ from qt.core import QAction, QDialog, QIcon, QToolButton, pyqtSignal
 
 from calibre.gui2.actions import InterfaceAction
 from calibre.utils.icu import primary_sort_key
+from calibre.library.field_metadata import category_icon_map
 from polyglot.builtins import iteritems
 
 SORT_HIDDEN_PREF = 'sort-action-hidden-fields'
@@ -37,6 +37,9 @@ class SortAction(QAction):
         QAction.__init__(self, text, parent)
         self.key, self.ascending = key, ascending
         self.triggered.connect(self)
+        ic = category_icon_map['custom:'] if self.key.startswith('#') else category_icon_map.get(key)
+        if ic:
+            self.setIcon(QIcon.ic(ic))
 
     def __call__(self):
         self.sort_requested.emit(self.key, self.ascending)
@@ -123,12 +126,17 @@ class SortByAction(InterfaceAction):
             if key == sort_col:
                 sac.setIcon(self.sorted_icon)
             sac.sort_requested.connect(self.sort_requested)
-            menu.addAction(sac)
+            if key == sort_col:
+                before = menu.actions()[0] if menu.actions() else None
+                menu.insertAction(before, sac)
+                menu.insertSeparator(before)
+            else:
+                menu.addAction(sac)
 
     def choose_multisort(self):
         from calibre.gui2.dialogs.multisort import ChooseMultiSort
         d = ChooseMultiSort(self.gui.current_db, parent=self.gui, is_device_connected=self.gui.device_connected)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             self.gui.library_view.multisort(d.current_sort_spec)
 
     def sort_requested(self, key, ascending):

@@ -570,7 +570,7 @@ class BasicNewsRecipe(Recipe):
         article URL. It is called with `article`, an object representing a parsed article
         from a feed. See `feedparser <https://pythonhosted.org/feedparser/>`_.
         By default it looks for the original link (for feeds syndicated via a
-        service like feedburner or pheedo) and if found,
+        service like FeedBurner or Pheedo) and if found,
         returns that or else returns
         `article.link <https://pythonhosted.org/feedparser/reference-entry-link.html>`_.
         '''
@@ -1790,7 +1790,7 @@ class BasicNewsRecipe(Recipe):
                             arelpath = sorted(articles, key=numeric_sort_key)[0]
                             a.set('href', item.relhref(arelpath))
                             if url not in seen:
-                                log.debug('Resolved internal URL: %s -> %s' % (url, arelpath))
+                                log.debug(f'Resolved internal URL: {url} -> {arelpath}')
                                 seen.add(url)
 
 

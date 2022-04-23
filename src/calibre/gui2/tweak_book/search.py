@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2013, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -120,7 +119,7 @@ class HistoryBox(HistoryComboBox):
         menu.addSeparator()
         menu.addAction(_('Save current search'), self.save_search.emit)
         menu.addAction(_('Show saved searches'), self.show_saved_searches.emit)
-        menu.exec_(event.globalPos())
+        menu.exec(event.globalPos())
 
     def toggle_popups(self):
         self.disable_popup = not bool(self.disable_popup)
@@ -340,7 +339,7 @@ class SearchWidget(QWidget):
 
     def edit_function(self):
         d = FunctionEditor(func_name=self.functions.text().strip(), parent=self)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             self.functions.setText(d.func_name)
 
     def remove_function(self):
@@ -745,7 +744,7 @@ class EditSearch(QFrame):  # {{{
 
     def edit_function(self):
         d = FunctionEditor(func_name=self.function.text().strip(), parent=self)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             self.function.setText(d.func_name)
 
     def remove_function(self):
@@ -881,10 +880,10 @@ class SavedSearches(QWidget):
 
     def setup_ui(self):
         self.l = l = QVBoxLayout(self)
-        self.setLayout(l)
 
         self.filter_text = ft = QLineEdit(self)
         ft.setClearButtonEnabled(True)
+        ft.setSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Fixed)
         ft.textChanged.connect(self.do_filter)
         ft.setPlaceholderText(_('Filter displayed searches'))
         l.addWidget(ft)
@@ -894,7 +893,8 @@ class SavedSearches(QWidget):
         self.stack = stack = QStackedLayout()
         self.main_widget = mw = QWidget(self)
         stack.addWidget(mw)
-        self.edit_search_widget = es = EditSearch(mw)
+        self.edit_search_widget = es = EditSearch(self)
+        es.setSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred)
         stack.addWidget(es)
         es.done.connect(self.search_editing_done)
         mw.v = QVBoxLayout(mw)
@@ -1490,7 +1490,7 @@ def run_search(
                 d.show_changes = False
                 b.setIcon(QIcon(I('diff.png'))), b.clicked.connect(d.accept)
                 connect_lambda(b.clicked, d, lambda d: setattr(d, 'show_changes', True))
-                d.exec_()
+                d.exec()
                 if d.show_changes:
                     show_current_diff(allow_revert=True)
             else:
@@ -1586,4 +1586,4 @@ if __name__ == '__main__':
     app = QApplication([])
     d = SavedSearches()
     d.show()
-    app.exec_()
+    app.exec()

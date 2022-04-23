@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -64,14 +63,14 @@ class ViewAction(InterfaceAction):
         cm = partial(self.create_menu_action, self.view_menu)
         self.view_specific_action = cm('specific', _('View specific format'),
                 shortcut='Alt+V', triggered=self.view_specific_format)
-        self.internal_view_action = cm('internal', _('View with calibre E-book viewer'), triggered=self.view_internal)
+        self.internal_view_action = cm('internal', _('View with calibre E-book viewer'), icon='viewer.png', triggered=self.view_internal)
         self.action_pick_random = cm('pick random', _('Read a random book'),
                 icon='random.png', triggered=self.view_random)
         self.view_menu.addAction(QIcon(I('highlight.png')), _('Browse annotations'), self.browse_annots)
         self.clear_sep1 = self.view_menu.addSeparator()
         self.clear_sep2 = self.view_menu.addSeparator()
         self.clear_history_action = cm('clear history',
-                _('Clear recently viewed list'), triggered=self.clear_history)
+                _('Clear recently viewed list'), icon='trash.png', triggered=self.clear_history)
         self.history_actions = [self.clear_sep1]
         self.action_view_last_read = ac = self.create_action(
             spec=(_('Continue reading previous book'), None, _('Continue reading the last opened book'), 'shift+v'), attr='action_view_last_read')
@@ -149,6 +148,9 @@ class ViewAction(InterfaceAction):
             title = db.title(id_, index_is_id=True)
             self._view_file(fmt_path, calibre_book_data=self.calibre_book_data(id_, format), open_at=open_at)
             self.update_history([(id_, title)])
+        else:
+            error_dialog(self.gui, _('E-book file missing'), _(
+                'The {} format file is missing from the calibre library folder').format(format), show=True)
 
     def book_downloaded_for_viewing(self, job):
         if job.failed:
@@ -209,7 +211,7 @@ class ViewAction(InterfaceAction):
         rows = list(self.gui.library_view.selectionModel().selectedRows())
         if not rows or len(rows) == 0:
             d = error_dialog(self.gui, _('Cannot view'), _('No book selected'))
-            d.exec_()
+            d.exec()
             return
 
         db = self.gui.library_view.model().db
@@ -228,7 +230,7 @@ class ViewAction(InterfaceAction):
         d = ChooseFormatDialog(self.gui, _('Choose the format to view'),
                 list(sorted(all_fmts)), show_open_with=True)
         self.gui.book_converted.connect(d.book_converted)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             formats = [[x.upper() for x in db.new_api.formats(book_id)] for book_id in book_ids]
             fmt = d.format()
             orig_num = len(rows)
@@ -266,7 +268,7 @@ class ViewAction(InterfaceAction):
         if not rows or len(rows) == 0:
             d = error_dialog(self.gui, _('Cannot open folder'),
                     _('No book selected'))
-            d.exec_()
+            d.exec()
             return
         if not self._view_check(len(rows), max_=10, skip_dialog_name='open-folder-many-check'):
             return

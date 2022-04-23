@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2020, Kovid Goyal <kovid at kovidgoyal.net>
 
 import json
@@ -20,6 +19,7 @@ from calibre.constants import (
 from calibre.ebooks.epub.cfi.parse import cfi_sort_key
 from calibre.gui2 import error_dialog, is_dark_theme, safe_open_url
 from calibre.gui2.dialogs.confirm_delete import confirm
+from calibre.gui2.gestures import GestureManager
 from calibre.gui2.library.annotations import (
     Details, Export as ExportBase, render_highlight_as_text, render_notes
 )
@@ -176,6 +176,17 @@ class Highlights(QTreeWidget):
         self.uuid_map = {}
         self.section_font = QFont(self.font())
         self.section_font.setItalic(True)
+        self.gesture_manager = GestureManager(self)
+        self.setVerticalScrollMode(QAbstractItemView.ScrollMode.ScrollPerPixel)
+
+    def viewportEvent(self, ev):
+        try:
+            ret = self.gesture_manager.handle_event(ev)
+        except AttributeError:
+            ret = None
+        if ret is not None:
+            return ret
+        return super().viewportEvent(ev)
 
     def show_context_menu(self, point):
         index = self.indexAt(point)
@@ -188,8 +199,8 @@ class Highlights(QTreeWidget):
                 'Delete this highlight', 'Delete selected highlights', len(self.selectedItems())
             ), self.delete_requested.emit)
         m.addSeparator()
-        m.addAction(_('Expand all'), self.expandAll)
-        m.addAction(_('Collapse all'), self.collapseAll)
+        m.addAction(QIcon.ic('plus.png'), _('Expand all'), self.expandAll)
+        m.addAction(QIcon.ic('minus.png'), _('Collapse all'), self.collapseAll)
         self.context_menu.popup(self.mapToGlobal(point))
         return True
 
@@ -405,7 +416,7 @@ class NotesDisplay(Details):
         self.setHtml('<div><a href="edit://moo">{}</a></div>{}'.format(_('Edit notes'), html))
         self.document().setDefaultStyleSheet('a[href] { text-decoration: none }')
         h = self.document().size().height() + 2
-        self.setMaximumHeight(h)
+        self.setMaximumHeight(int(h))
 
     def anchor_clicked(self, qurl):
         if qurl.scheme() == 'edit':
@@ -416,7 +427,7 @@ class NotesDisplay(Details):
     def edit_notes(self):
         current_text = self.current_notes
         d = NotesEditDialog(current_text, self)
-        if d.exec_() == QDialog.DialogCode.Accepted and d.notes != current_text:
+        if d.exec() == QDialog.DialogCode.Accepted and d.notes != current_text:
             self.notes_edited.emit(d.notes)
 
 
@@ -539,7 +550,7 @@ class HighlightsPanel(QWidget):
         hl = list(self.highlights.all_highlights)
         if not hl:
             return error_dialog(self, _('No highlights'), _('This book has no highlights to export'), show=True)
-        Export(hl, self).exec_()
+        Export(hl, self).exec()
 
     def selected_text_changed(self, text, annot_id):
         if annot_id:

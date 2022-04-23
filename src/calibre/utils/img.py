@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2015-2019, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -121,7 +120,7 @@ def image_from_data(data):
         q = what(None, data)
         if q == 'jxr':
             return load_jxr_data(data)
-        raise NotImage('Not a valid image (detected type: {})'.format(q))
+        raise NotImage(f'Not a valid image (detected type: {q})')
     return i
 
 
@@ -257,7 +256,7 @@ def save_cover_data_to(
         changed = fmt != orig_fmt
     if resize_to is not None:
         changed = True
-        img = img.scaled(resize_to[0], resize_to[1], Qt.AspectRatioMode.IgnoreAspectRatio, Qt.TransformationMode.SmoothTransformation)
+        img = img.scaled(int(resize_to[0]), int(resize_to[1]), Qt.AspectRatioMode.IgnoreAspectRatio, Qt.TransformationMode.SmoothTransformation)
     owidth, oheight = img.width(), img.height()
     nwidth, nheight = tweaks['maximum_cover_size'] if minify_to is None else minify_to
     if letterbox:
@@ -269,7 +268,7 @@ def save_cover_data_to(
         scaled, nwidth, nheight = fit_image(owidth, oheight, nwidth, nheight)
         if scaled:
             changed = True
-            img = img.scaled(nwidth, nheight, Qt.AspectRatioMode.IgnoreAspectRatio, Qt.TransformationMode.SmoothTransformation)
+            img = img.scaled(int(nwidth), int(nheight), Qt.AspectRatioMode.IgnoreAspectRatio, Qt.TransformationMode.SmoothTransformation)
     if img.hasAlphaChannel():
         changed = True
         img = blend_image(img, bgcolor)
@@ -296,9 +295,9 @@ def blend_on_canvas(img, width, height, bgcolor='#ffffff'):
     w, h = img.width(), img.height()
     scaled, nw, nh = fit_image(w, h, width, height)
     if scaled:
-        img = img.scaled(nw, nh, Qt.AspectRatioMode.IgnoreAspectRatio, Qt.TransformationMode.SmoothTransformation)
+        img = img.scaled(int(nw), int(nh), Qt.AspectRatioMode.IgnoreAspectRatio, Qt.TransformationMode.SmoothTransformation)
         w, h = nw, nh
-    canvas = QImage(width, height, QImage.Format.Format_RGB32)
+    canvas = QImage(int(width), int(height), QImage.Format.Format_RGB32)
     canvas.fill(QColor(bgcolor))
     overlay_image(img, canvas, (width - w)//2, (height - h)//2)
     return canvas
@@ -307,7 +306,7 @@ def blend_on_canvas(img, width, height, bgcolor='#ffffff'):
 class Canvas:
 
     def __init__(self, width, height, bgcolor='#ffffff'):
-        self.img = QImage(width, height, QImage.Format.Format_RGB32)
+        self.img = QImage(int(width), int(height), QImage.Format.Format_RGB32)
         self.img.fill(QColor(bgcolor))
 
     def __enter__(self):
@@ -326,7 +325,7 @@ class Canvas:
 
 def create_canvas(width, height, bgcolor='#ffffff'):
     'Create a blank canvas of the specified size and color '
-    img = QImage(width, height, QImage.Format.Format_RGB32)
+    img = QImage(int(width), int(height), QImage.Format.Format_RGB32)
     img.fill(QColor(bgcolor))
     return img
 
@@ -363,7 +362,7 @@ def add_borders_to_image(img, left=0, top=0, right=0, bottom=0, border_color='#f
     img = image_from_data(img)
     if not (left > 0 or right > 0 or top > 0 or bottom > 0):
         return img
-    canvas = QImage(img.width() + left + right, img.height() + top + bottom, QImage.Format.Format_RGB32)
+    canvas = QImage(int(img.width() + left + right), int(img.height() + top + bottom), QImage.Format.Format_RGB32)
     canvas.fill(QColor(border_color))
     overlay_image(img, canvas, left, top)
     return canvas
@@ -376,7 +375,7 @@ def remove_borders_from_image(img, fuzz=None):
     absolute intensity units). Default is from a tweak whose default value is 10. '''
     fuzz = tweaks['cover_trim_fuzz_value'] if fuzz is None else fuzz
     img = image_from_data(img)
-    ans = imageops.remove_borders(img, max(0, fuzz))
+    ans = imageops.remove_borders(img, int(max(0, fuzz)))
     return ans if ans.size() != img.size() else img
 # }}}
 
@@ -411,10 +410,10 @@ def scale_image(data, width=60, height=80, compression_quality=70, as_png=False,
     if preserve_aspect_ratio:
         scaled, nwidth, nheight = fit_image(img.width(), img.height(), width, height)
         if scaled:
-            img = img.scaled(nwidth, nheight, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
+            img = img.scaled(int(nwidth), int(nheight), Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
     else:
         if img.width() != width or img.height() != height:
-            img = img.scaled(width, height, Qt.AspectRatioMode.IgnoreAspectRatio, Qt.TransformationMode.SmoothTransformation)
+            img = img.scaled(int(width), int(height), Qt.AspectRatioMode.IgnoreAspectRatio, Qt.TransformationMode.SmoothTransformation)
     fmt = 'PNG' if as_png else 'JPEG'
     w, h = img.width(), img.height()
     return w, h, image_to_data(img, compression_quality=compression_quality, fmt=fmt)
@@ -432,7 +431,7 @@ def crop_image(img, x, y, width, height):
     img = image_from_data(img)
     width = min(width, img.width() - x)
     height = min(height, img.height() - y)
-    return img.copy(x, y, width, height)
+    return img.copy(int(x), int(y), int(width), int(height))
 
 # }}}
 
@@ -598,7 +597,7 @@ def optimize_jpeg(file_path):
 def optimize_png(file_path, level=7):
     ' level goes from 1 to 7 with 7 being maximum compression '
     exe = get_exe_path('optipng')
-    cmd = [exe] + '-fix -clobber -strip all -o{} -out'.format(level).split() + [False, True]
+    cmd = [exe] + f'-fix -clobber -strip all -o{level} -out'.split() + [False, True]
     return run_optimizer(file_path, cmd)
 
 

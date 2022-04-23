@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2020, Kovid Goyal <kovid at kovidgoyal.net>
 
 import re
@@ -136,5 +135,5 @@ class SearchBox(HistoryComboBox):  # {{{
         menu = self.lineEdit().createStandardContextMenu()
         menu.addSeparator()
         menu.addAction(_('Clear search history'), self.clear_history)
-        menu.exec_(event.globalPos())
+        menu.exec(event.globalPos())
 # }}}

@@ -16,28 +16,52 @@ class Federalist(BasicNewsRecipe):
     title = 'The Federalist'
     __author__ = 'Kovid Goyal'
     language = 'en'
-    oldest_article = 7
+    oldest_article = 10
     max_articles_per_feed = 100
     no_stylesheets = True
     encoding = 'utf-8'
     use_embedded_content = False
     remove_attributes = ['xmlns', 'lang', 'style', 'width', 'height']
-    extra_css = '''
-    .shortbio { margin: 1em; padding: 1em; font-style: italic }
-    '''
+
+    extra_css = """
+        .shortbio,.article-excerpt{font-style: italic}
+        .article-author-details,.article-author-description,.article-meta-author,.article-meta-date,.article-thumbnail-caption{font-size: small}
+    """
 
     keep_only_tags = [
-        classes('entry-header'),
-        classes('wp-post-image post-categories entry-content shortbio byline-month byline-standard alpha-byline'),
+        classes(
+            'title-lg article-thumbnail post-categories article-excerpt article-author-details'
+            ' article-meta-author article-meta-date article-content article-body shortbio entry-header'
+            ' byline-month byline-standard alpha-byline article-author-description article-author-details'),
     ]
     remove_tags = [
         dict(name=['meta', 'link']),
-        classes('auth-ad attachment-post-thumbnail attachment-author-bio'),
+        classes('auth-ad article-share article-tags attachment-post-thumbnail attachment-author-bio'),
     ]
 
     feeds = [
-        ('All', 'http://thefederalist.com/feed/'),
+        ('All', 'https://thefederalist.com/feed/'),
     ]
+
+    # def parse_index(self):
+    #     return [('Articles', [
+    #         {
+    #         'title': 'test',
+    #         'url': 'https://thefederalist.com/2022/03/09/propaganda-press-wield-bidens-russia-blame-game-to-gaslight-americans-about-expensive-gas/'},
+    #         {
+    #         'title': 'test2',
+    #         'url': 'https://thefederalist.com/2022/03/10/white-house-will-blame-anyone-but-biden-for-februarys-7-9-inflation-jump/',
+    #         }
+    #     ])]
+
+    def preprocess_raw_html_(self, raw_html, url):
+        soup = self.index_to_soup(raw_html)
+        # this website puts article-thumbnail images inside article-body in
+        # some articles and outside it in others, so we have to special case it
+        for ab in soup.findAll(**classes('article-body')):
+            for img in ab.findAll(**classes('article-thumbnail')):
+                del img['class']
+        return str(soup)
 
     def preprocess_html(self, soup):
         for img in soup.findAll('img', attrs={'data-lazy-src': True}):
@@ -49,9 +73,3 @@ class Federalist(BasicNewsRecipe):
                 img.extract()
             seen.add(src)
         return soup
-
-    # def parse_index(self):
-    #     return [('Articles', [
-    #         {'title':'img', 'url':'http://thefederalist.com/2018/05/09/venezuelas-economic-problems-caused-socialism-not-falling-oil-prices/'},
-    #         {'title':'xxx', 'url':'http://thefederalist.com/2018/05/04/fans-take-on-marvel-dc-and-the-comic-book-industrys-sjw-self-destruction/'},
-    #     ])]

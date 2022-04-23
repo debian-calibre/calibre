@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 __license__ = 'GPL 3'
 __copyright__ = '2011, John Schember <john@nachtimwald.com>'
 __docformat__ = 'restructuredtext en'
@@ -57,7 +54,7 @@ class StoreAction(InterfaceAction):
         self.show_disclaimer()
         from calibre.gui2.store.search.search import SearchDialog
         sd = SearchDialog(self.gui, self.gui, query)
-        sd.exec_()
+        sd.exec()
 
     def _get_selected_row(self):
         rows = self.gui.current_view().selectionModel().selectedRows()
@@ -118,7 +115,7 @@ class StoreAction(InterfaceAction):
     def choose(self):
         from calibre.gui2.store.config.chooser.chooser_dialog import StoreChooserDialog
         d = StoreChooserDialog(self.gui)
-        d.exec_()
+        d.exec()
         self.gui.load_store_plugins()
         self.load_menu()
 

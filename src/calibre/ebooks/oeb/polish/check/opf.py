@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__ = 'GPL v3'
@@ -224,7 +223,7 @@ class MultipleCovers(BaseError):
 class NoUID(BaseError):
 
     HELP = xml(_(
-        'The OPF must have a unique identifier, i.e. a <dc:identifier> element whose id is referenced'
+        'The OPF must have an unique identifier, i.e. a <dc:identifier> element whose id is referenced'
         ' by the <package> element'))
     INDIVIDUAL_FIX = _('Auto-generate a unique identifier')
 
@@ -252,9 +251,17 @@ class NoUID(BaseError):
 class EmptyIdentifier(BaseError):
 
     HELP = xml(_('The <dc:identifier> element must not be empty.'))
+    INDIVIDUAL_FIX = _('Remove empty identifiers')
 
     def __init__(self, name, lnum):
         BaseError.__init__(self, _('Empty identifier element'), name, lnum)
+
+    def __call__(self, container):
+        for dcid in container.opf_xpath('/opf:package/opf:metadata/dc:identifier'):
+            if not dcid.text or not dcid.text.strip():
+                container.remove_from_xml(dcid)
+        container.dirty(container.opf_name)
+        return True
 
 
 class BadSpineMime(BaseError):
@@ -286,7 +293,7 @@ def check_opf(container):
     if container.opf.tag != OPF('package'):
         err = BaseError(_('The OPF does not have the correct root element'), container.opf_name, container.opf.sourceline)
         err.HELP = xml(_(
-            'The opf must have the root element <package> in namespace {0}, like this: <package xmlns="{0}">')).format(OPF2_NS)
+            'The OPF must have the root element <package> in namespace {0}, like this: <package xmlns="{0}">')).format(OPF2_NS)
         errors.append(err)
 
     elif container.opf.get('version') is None and container.book_type == 'epub':
@@ -388,8 +395,12 @@ def check_opf(container):
                 errors.append(NookCover(container.opf_name, cover.sourceline))
 
     uid = container.opf.get('unique-identifier', None)
-    if uid is None or not container.opf_xpath('/opf:package/opf:metadata/dc:identifier[@id=%r]' % uid):
+    if uid is None:
         errors.append(NoUID(container.opf_name))
+    else:
+        dcid = container.opf_xpath('/opf:package/opf:metadata/dc:identifier[@id=%r]' % uid)
+        if not dcid or not dcid[0].text or not dcid[0].text.strip():
+            errors.append(NoUID(container.opf_name))
     for elem in container.opf_xpath('/opf:package/opf:metadata/dc:identifier'):
         if not elem.text or not elem.text.strip():
             errors.append(EmptyIdentifier(container.opf_name, elem.sourceline))

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -77,10 +76,6 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
 
         r('bools_are_tristate', db.prefs, restart_required=True)
         r('numeric_collation', prefs, restart_required=True)
-        r = self.register
-        choices = [(_('Default'), 'default'), (_('Compact Metadata'), 'alt1'),
-                   (_('All on 1 tab'), 'alt2')]
-        r('edit_metadata_single_layout', gprefs, choices=choices)
 
     def initialize(self):
         ConfigWidgetBase.initialize(self)

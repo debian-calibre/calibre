@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -198,7 +197,7 @@ class MetadataWidget(Widget, Ui_Form):
             if not os.access(_file, os.R_OK):
                 d = error_dialog(self.parent(), _('Cannot read'),
                         _('You do not have permission to read the file: ') + _file)
-                d.exec_()
+                d.exec()
                 return
             cover = None
             try:
@@ -207,7 +206,7 @@ class MetadataWidget(Widget, Ui_Form):
             except OSError as e:
                 d = error_dialog(self.parent(), _('Error reading file'),
                         _("<p>There was an error reading from file: <br /><b>") + _file + "</b></p><br />"+str(e))
-                d.exec_()
+                d.exec()
             if cover:
                 pix = QPixmap()
                 pix.loadFromData(cover)
@@ -215,7 +214,7 @@ class MetadataWidget(Widget, Ui_Form):
                 if pix.isNull():
                     d = error_dialog(self.parent(), _('Error reading file'),
                                       _file + _(" is not a valid picture"))
-                    d.exec_()
+                    d.exec()
                 else:
                     self.cover_path.setText(_file)
                     self.set_cover_tooltip(pix)

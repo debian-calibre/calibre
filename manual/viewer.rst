@@ -41,7 +41,7 @@ You can access the viewer controls by either:
 The viewer has two modes, "paged" and "flow". In paged mode the book content
 is presented as pages, similar to a paper book. In flow mode the text is
 presented continuously, like in a web browser. You can switch between them
-using the viewer Preferences under :guilabel:`Page layout` or by pressing the
+using the viewer :guilabel:`Preferences` under :guilabel:`Page layout` or by pressing the
 :kbd:`Ctrl+M` key.
 
 
@@ -62,7 +62,7 @@ Table of Contents
 ^^^^^^^^^^^^^^^^^^^^
 
 If the book you are reading defines a Table of Contents, you can access it by
-pressing the :guilabel:`Table of Contents` button.  This will bring up a list
+pressing the :guilabel:`Table of Contents` button. This will bring up a list
 of sections in the book. You can click on any of them to jump to that portion
 of the book.
 

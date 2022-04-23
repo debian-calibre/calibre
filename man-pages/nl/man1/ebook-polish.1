@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-POLISH" "1" "november 12, 2021" "5.32.0" "calibre"
+.TH "EBOOK-POLISH" "1" "april 22, 2022" "5.41.0" "calibre"
 .SH NAME
 ebook-polish \- ebook-polish
 .
@@ -45,14 +45,14 @@ Boeken oppoetsen gaat over alles wat de indruk van perfectie aan
 je zorgvuldig samengestelde E\-boeken geeft.
 .sp
 Oppoetsen tracht zo min mogelijk de interne code van u E\-boek te veranderen.
-Anders dan bij converteren vereenvoudigt  het geen CSS, hernoemt het geen bestanden, verandert niet
+Anders dan bij converteren vereenvoudigt het geen CSS, hernoemt het geen bestanden, verandert niet
 de lettertype grootte, aanpassen van marges, enz. Elke actie veroorzaakt slechts de minimaal benodigde veranderingen om het beoogde effect te bereiken.
 .sp
 Je dient dit als laatste stap in u E\-boek creatieproces te gebruiken.
 .sp
 Merk op dat oppoetsen alleen werkt bij bestanden in het AZW3 of EPUB formaat.
 .sp
-Whenever you pass arguments to \fBebook\-polish\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Als u aan \fBebook\-polish\fP parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
 .SH [OPTIES]
 .INDENT 0.0
 .TP
@@ -82,12 +82,12 @@ toon dit helpbericht en stop
 .INDENT 0.0
 .TP
 .B \-\-jacket, \-j
-Voegt een \fB"\fPBoekomslag\fB"\fP pagina in aan het begin van het boek, die alle metadata  van het boek bevat, zoals titel, labels, auteurs, reeksen, commentaren enz. Elke vorig gebruikte boekomslag zal worden vervangen.
+Voegt een \fB"\fPBoekomslag\fB"\fP pagina in aan het begin van het boek, die alle metadata van het boek bevat, zoals titel, labels, auteurs, series, commentaren enz. Elke vorig gebruikte boekomslag zal worden vervangen.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-opf, \-o
-Pad naar een OPF bestand. De metadata  in het boek is bijgewerkt vanuit het OPF bestand.
+Pad naar een OPF bestand. De metadata in het boek is bijgewerkt vanuit het OPF bestand.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -102,12 +102,12 @@ Verwijder zachte koppeltekens uit alle tekst in het boek
 .INDENT 0.0
 .TP
 .B \-\-remove\-unused\-css, \-u
-Verwijder alle ongebruikte CSS regels van stijlbladen en <stijl> tags. Boeken  gemaakt op basis van productiesjablonen kunnen een groot aantal extra CSS\-regels  hebben die niet slaan op enige feitelijke inhoud. Deze extra regels kunnen  e\-readers  vertragen die ze allemaal moeten verwerken.
+Verwijder alle ongebruikte CSS regels van stijlbladen en <stijl> tags. Boeken gemaakt op basis van productiesjablonen kunnen een groot aantal extra CSS\-regels  hebben die niet slaan op enige feitelijke inhoud. Deze extra regels kunnen e\-readers  vertragen die ze allemaal moeten verwerken.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation, \-p
-Zet platte tekst streepjes, weglatingstekens, aanhalingstekens, meerdere afbreekstreepjes, enz. om naar de typografisch juiste equivalenten. NB, het algoritme kan soms incorrecte resultaten geven, met name als enkele aanhalingstekens worden gebruikt bij de start van samenstelling.
+Zet platte tekst streepjes, weglatingstekens, aanhalingstekens, meerdere afbreekstreepjes, enz. om naar de typografisch juiste equivalenten. NB, het algoritme kan soms foute resultaten geven, met name als enkele aanhalingstekens worden gebruikt bij de start van samenstelling.
 .UNINDENT
 .INDENT 0.0
 .TP

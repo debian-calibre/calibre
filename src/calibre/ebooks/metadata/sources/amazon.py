@@ -97,7 +97,7 @@ def parse_details_page(url, log, timeout, browser, domain):
         return
     if domain == 'jp':
         for a in root.xpath('//a[@href]'):
-            if 'black-curtain-redirect.html' in a.get('href'):
+            if ('black-curtain-redirect.html' in a.get('href')) or ('/black-curtain/save-eligibility/black-curtain' in a.get('href')):
                 url = a.get('href')
                 if url:
                     if url.startswith('/'):
@@ -281,7 +281,7 @@ class Worker(Thread):  # Get details {{{
             descendant::*[starts-with(text(), "Publication Date:") or \
                     starts-with(text(), "Audible.com Release Date:")]
         '''
-        self.publisher_names = {'Publisher', 'Uitgever', 'Verlag', 'Utgivare',
+        self.publisher_names = {'Publisher', 'Uitgever', 'Verlag', 'Utgivare', 'Herausgeber',
                                 'Editore', 'Editeur', 'Editor', 'Editora', '出版社'}
 
         self.language_xpath =    '''
@@ -733,7 +733,10 @@ class Worker(Thread):  # Get details {{{
                 a = series[0].xpath('descendant::a')
                 if a:
                     raw = self.tostring(a[0], encoding='unicode', method='text', with_tail=False)
-                    m = re.search(r'(?:Book|Libro)\s+(?P<index>[0-9.]+)\s+(?:of|de)\s+([0-9.]+)\s*:\s*(?P<series>.+)', raw.strip())
+                    if self.domain == 'jp':
+                        m = re.search(r'(?P<index>[0-9.]+)\s*(?:巻|冊)\s*\(全\s*([0-9.]+)\s*(?:巻|冊)\):\s*(?P<series>.+)', raw.strip())
+                    else:
+                        m = re.search(r'(?:Book|Libro|Buch)\s+(?P<index>[0-9.]+)\s+(?:of|de|von)\s+([0-9.]+)\s*:\s*(?P<series>.+)', raw.strip())
                     if m is not None:
                         ans = (m.group('series').strip(), float(m.group('index')))
 
@@ -885,7 +888,7 @@ class Worker(Thread):  # Get details {{{
 
     def parse_detail_cells(self, mi, c1, c2):
         name = self.totext(c1, only_printable=True).strip().strip(':').strip()
-        val = self.totext(c2)
+        val = self.totext(c2).strip()
         if not val:
             return
         if name in self.language_names:
@@ -968,7 +971,7 @@ class Worker(Thread):  # Get details {{{
 class Amazon(Source):
 
     name = 'Amazon.com'
-    version = (1, 2, 21)
+    version = (1, 2, 25)
     minimum_calibre_version = (2, 82, 0)
     description = _('Downloads metadata and covers from Amazon')
 
@@ -990,6 +993,7 @@ class Amazon(Source):
         'jp': _('Japan'),
         'es': _('Spain'),
         'br': _('Brazil'),
+        'in': _('India'),
         'nl': _('Netherlands'),
         'cn': _('China'),
         'ca': _('Canada'),
@@ -1028,6 +1032,22 @@ class Amazon(Source):
     def __init__(self, *args, **kwargs):
         Source.__init__(self, *args, **kwargs)
         self.set_amazon_id_touched_fields()
+
+    def id_from_url(self, url):
+        from polyglot.urllib import urlparse
+        purl = urlparse(url)
+        if purl.netloc and purl.path and '/dp/' in purl.path:
+            host_parts = tuple(x.lower() for x in purl.netloc.split('.'))
+            if 'amazon' in host_parts:
+                domain = host_parts[-1]
+            parts = purl.path.split('/')
+            idx = parts.index('dp')
+            try:
+                val = parts[idx+1]
+            except IndexError:
+                return
+            aid = 'amazon' if domain == 'com' else ('amazon_' + domain)
+            return aid, val
 
     def test_fields(self, mi):
         '''
@@ -1106,7 +1126,7 @@ class Amazon(Source):
 
     def _get_book_url(self, identifiers):  # {{{
         domain, asin = self.get_domain_and_asin(
-            identifiers, extra_domains=('in', 'au', 'ca'))
+            identifiers, extra_domains=('au', 'ca'))
         if domain and asin:
             url = None
             r = self.referrer_for_domain(domain)
@@ -1656,14 +1676,22 @@ def manual_tests(domain, **kw):  # {{{
     # }}}
 
     all_tests['de'] = [  # {{{
+        # series
+        (
+            {'identifiers': {'isbn': '3499275120'}},
+            [title_test('Vespasian: Das Schwert des Tribuns: Historischer Roman',
+                        exact=False), authors_test(['Robert Fabbri']), series_test('Die Vespasian-Reihe', 1)
+             ]
+
+        ),
+
         (  # umlaut in title/authors
             {'title': 'Flüsternde Wälder',
              'authors': ['Nicola Förg']},
             [title_test('Flüsternde Wälder'),
-             authors_test(['Nicola Förg'])
+             authors_test(['Nicola Förg'], subset=True)
              ]
         ),
-
 
         (
             {'identifiers': {'isbn': '9783453314979'}},
@@ -1798,6 +1826,13 @@ def manual_tests(domain, **kw):  # {{{
             {'identifiers': {'amazon_ca': '162380874X'}},
             [title_test('Parting Shot', exact=True), authors_test(['Mary Calmes'])
              ]
+        ),
+    ]  # }}}
+
+    all_tests['in'] = [  # {{{
+        (   # Paperback with series
+            {'identifiers': {'amazon_in': '1423146786'}},
+            [title_test('The Heroes of Olympus, Book Five The Blood of Olympus', exact=True)]
         ),
     ]  # }}}
 

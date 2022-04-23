@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "November 12, 2021" "5.32.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "April 22, 2022" "5.41.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -50,7 +50,7 @@ The output e\-book format is guessed from the file extension of output_file. out
 After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
 For full documentation of the conversion system see
-conversion
+\fI\%E\-book conversion\fP
 .sp
 Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .sp
@@ -639,7 +639,7 @@ Reduce the number of colors used in the image. This works only if you choose the
 .INDENT 0.0
 .TP
 .B \-\-comic\-image\-size
-Specify the image size as widthxheight pixels. Normally, an image size is automatically calculated from the output profile, this option overrides it.
+Specify the image size as width x height pixels, for example: 123x321. Normally, an image size is automatically calculated from the output profile, this option overrides it.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -721,7 +721,7 @@ Specify the character encoding of the input document. If set this option will ov
 .INDENT 0.0
 .TP
 .B \-\-docx\-inline\-subsup
-Render superscripts and subscripts so that they do not affect the line height.
+Render superscripts and subscripts so that they do not affect the line height
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -753,7 +753,7 @@ Specify the character encoding of the input document. If set this option will ov
 .INDENT 0.0
 .TP
 .B \-\-no\-inline\-fb2\-toc
-Do not insert a Table of Contents at the beginning of the book.
+Do not insert a Table of Contents at the beginning of the book
 .UNINDENT
 .SH HTLZ INPUT OPTIONS
 .INDENT 0.0
@@ -913,7 +913,7 @@ Specify the character encoding of the input document. If set this option will ov
 .INDENT 0.0
 .TP
 .B \-\-markdown\-extensions
-Enable extensions to markdown syntax. Extensions are formatting that is not part of the standard markdown format. The extensions enabled by default: footnotes, tables, toc. To learn more about markdown extensions, see \fI\%https://python\-markdown.github.io/extensions/\fP This should be a comma separated list of extensions to enable: * abbr: Abbreviations * admonition: Support admonitions * attr_list: Add attribute to HTML tags * codehilite: Add code highlighting via Pygments * def_list: Definition lists * extra: Enables various common extensions * fenced_code: Alternative code block syntax * footnotes: Footnotes * legacy_attrs: Use legacy element attributes * legacy_em: Use legacy underscore handling for connected words * meta: Metadata in the document * nl2br: Treat newlines as hard breaks * sane_lists: Do not allow mixing list types * smarty: Use markdown\fB\(aq\fPs internal smartypants parser * tables: Support tables * toc: Generate a table of contents * wikilinks: Wiki style links
+Enable extensions to Markdown syntax. Extensions are formatting that is not part of the standard Markdown format. The extensions enabled by default: footnotes, tables, toc. To learn more about Markdown extensions, see \fI\%https://python\-markdown.github.io/extensions/\fP This should be a comma separated list of extensions to enable: * abbr: Abbreviations * admonition: Support admonitions * attr_list: Add attribute to HTML tags * codehilite: Add code highlighting via Pygments * def_list: Definition lists * extra: Enables various common extensions * fenced_code: Alternative code block syntax * footnotes: Footnotes * legacy_attrs: Use legacy element attributes * legacy_em: Use legacy underscore handling for connected words * meta: Metadata in the document * nl2br: Treat newlines as hard breaks * sane_lists: Do not allow mixing list types * smarty: Use markdown\fB\(aq\fPs internal smartypants parser * tables: Support tables * toc: Generate a table of contents * wikilinks: Wiki style links
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -975,7 +975,7 @@ Title for any generated in\-line table of contents.
 .INDENT 0.0
 .TP
 .B \-\-docx\-custom\-page\-size
-Custom size of the document. Use the form widthxheight EG. \fI123x321\fP to specify the width and height (in pts). This overrides any specified page\-size.
+Custom size of the document. Use the form width x height, for example: \fI123x321\fP to specify the width and height (in pts). This overrides any specified page\-size.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1310,7 +1310,7 @@ If specified, the output plugin will try to create output that is as human reada
 .INDENT 0.0
 .TP
 .B \-\-custom\-size
-Custom size of the document. Use the form widthxheight e.g. \fI123x321\fP to specify the width and height. This overrides any specified paper\-size.
+Custom size of the document. Use the form width x height e.g. \fI123x321\fP to specify the width and height. This overrides any specified paper\-size.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1325,7 +1325,7 @@ Add a Table of Contents at the end of the PDF that lists page numbers. Useful if
 .INDENT 0.0
 .TP
 .B \-\-pdf\-default\-font\-size
-The default font size
+The default font size (in pixels)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1340,7 +1340,7 @@ An HTML template used to generate headers on every page. The strings _PAGENUM_, 
 .INDENT 0.0
 .TP
 .B \-\-pdf\-hyphenate
-Break long words at the end of lines. This can give the text at the right margin a more even appearance.
+Break long words at the end of lines. This can give the text at the right margin a more even appearance. Note that depending on the fonts used this option can break the copying of text from the PDF file.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1355,7 +1355,7 @@ The font family used to render monospace fonts. Will work only if the font is av
 .INDENT 0.0
 .TP
 .B \-\-pdf\-mono\-font\-size
-The default font size for monospaced text
+The default font size for monospaced text (in pixels)
 .UNINDENT
 .INDENT 0.0
 .TP

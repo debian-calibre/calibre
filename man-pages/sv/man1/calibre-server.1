@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "november 12, 2021" "5.32.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "april 22, 2022" "5.41.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -47,7 +47,7 @@ till biblioteksmappar som argument till \fBcalibre\-server\fP\&. Om du inte
 anger några vägar, kommer alla biblioteken som i calibre\-
 huvudprogrammet känner till att användas.
 .sp
-När du skickar argument till \fBcalibre\-server\fP som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till \fBcalibre\-server\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .SH [ALTERNATIV]
 .INDENT 0.0
 .TP
@@ -152,7 +152,7 @@ Ignorera användardefinierade metadatafält.  Kommaseparerad lista över använd
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-Gränssnitt för att lyssna efter anslutningar.       Standard är att lyssna på alla tillgängliga IPv4\-gränssnitt. Du kan ändra det här till exempelvis \fB"\fP127.0.0.1\fB"\fP för att bara lyssna på anslutningar från den lokala maskinen, eller till \fB"\fP::\fB"\fP för att lyssna på alla inkommande IPv6\- och IPv4\-anslutningar.
+Gränssnitt för att lyssna efter anslutningar.       Standard är att lyssna på alla tillgängliga IPv4\-gränssnitt. Du kan ändra det här till till exempel \fB"\fP127.0.0.1\fB"\fP för att bara lyssna på anslutningar från den lokala maskinen, eller till \fB"\fP::\fB"\fP för att lyssna på alla inkommande IPv6\- och IPv4\-anslutningar.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -172,7 +172,7 @@ Största storlek på enskild HTTP\-rubrik (i KB).
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-Längst tid för arbetarprocesser.    Högsta tiden arbetsprocesser tillåts att köra (i minuter). Sätt till noll för ingen tidsbegränsning.
+Längsta tid för arbetarprocesser.   Högsta tid som arbetsprocesser tillåts köras (i minuter). Ställ in på noll för ingen gräns.
 .UNINDENT
 .INDENT 0.0
 .TP

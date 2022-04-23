@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 # License: GPLv3 Copyright: 2010, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -151,7 +150,7 @@ class EmailAccounts(QAbstractTableModel):  # {{{
             na = as_unicode(value or '')
             from email.utils import parseaddr
             addr = parseaddr(na)[-1]
-            if not addr:
+            if not addr or '@' not in na:
                 return False
             self.accounts[na] = self.accounts.pop(account)
             self.account_order[row] = na
@@ -187,22 +186,29 @@ class EmailAccounts(QAbstractTableModel):  # {{{
         self.endResetModel()
         return self.index(self.account_order.index(y), 0)
 
+    def remove_rows(self, *rows):
+        for row in sorted(rows, reverse=True):
+            try:
+                account = self.account_order[row]
+            except Exception:
+                continue
+            self.accounts.pop(account)
+        self.account_order = sorted(self.accounts)
+        has_default = False
+        for account in self.account_order:
+            if self.accounts[account][2]:
+                has_default = True
+                break
+        if not has_default and self.account_order:
+            self.accounts[self.account_order[0]][2] = True
+
+        self.beginResetModel()
+        self.endResetModel()
+        self.do_sort()
+
     def remove(self, index):
         if index.isValid():
-            row = index.row()
-            account = self.account_order[row]
-            self.accounts.pop(account)
-            self.account_order = sorted(self.accounts)
-            has_default = False
-            for account in self.account_order:
-                if self.accounts[account][2]:
-                    has_default = True
-                    break
-            if not has_default and self.account_order:
-                self.accounts[self.account_order[0]][2] = True
-
-            self.beginResetModel()
-            self.endResetModel()
+            self.remove(index.row())
 
 # }}}
 
@@ -271,8 +277,10 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         self.changed_signal.emit()
 
     def remove_email_account(self, *args):
-        idx = self.email_view.currentIndex()
-        self._email_accounts.remove(idx)
+        rows = set()
+        for idx in self.email_view.selectionModel().selectedIndexes():
+            rows.add(idx.row())
+        self._email_accounts.remove_rows(*rows)
         self.changed_signal.emit()
 
     def refresh_gui(self, gui):

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__ = 'GPL v3'
@@ -21,6 +20,7 @@ from qt.core import (
 from threading import Thread
 
 from calibre.constants import __appname__
+from calibre.ebooks.oeb.base import OEB_DOCS, NCX_MIME, OPF_MIME
 from calibre.ebooks.oeb.polish.spell import (
     get_all_words, get_checkable_file_names, merge_locations, replace_word,
     undo_replace_word
@@ -153,7 +153,7 @@ class UserWordList(QListWidget):
         m = QMenu(self)
         m.addAction(_('Copy selected words to clipboard'), self.copy_to_clipboard)
         m.addAction(_('Select all words'), self.select_all)
-        m.exec_(ev.globalPos())
+        m.exec(ev.globalPos())
 
     def select_all(self):
         for item in (self.item(i) for i in range(self.count())):
@@ -315,7 +315,7 @@ class ManageUserDictionaries(Dialog):
         self.is_active.blockSignals(False)
         self.words.clear()
         for word, lang in sorted(d.words, key=lambda x:sort_key(x[0])):
-            i = QListWidgetItem('%s [%s]' % (word, get_language(lang)), self.words)
+            i = QListWidgetItem(f'{word} [{get_language(lang)}]', self.words)
             i.setData(Qt.ItemDataRole.UserRole, (word, lang))
 
     def add_word(self):
@@ -331,7 +331,7 @@ class ManageUserDictionaries(Dialog):
         d.bb = bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok|QDialogButtonBox.StandardButton.Cancel)
         bb.accepted.connect(d.accept), bb.rejected.connect(d.reject)
         l.addRow(bb)
-        if d.exec_() != QDialog.DialogCode.Accepted:
+        if d.exec() != QDialog.DialogCode.Accepted:
             return
         d.loc.update_recently_used()
         word = str(w.text())
@@ -369,7 +369,7 @@ class ManageUserDictionaries(Dialog):
         l.addRow(bb)
         bb.accepted.connect(d.accept), bb.rejected.connect(d.reject)
 
-        if d.exec_() != QDialog.DialogCode.Accepted:
+        if d.exec() != QDialog.DialogCode.Accepted:
             return
         lc = le.lang_codes
         if not lc:
@@ -403,7 +403,7 @@ class ManageUserDictionaries(Dialog):
     @classmethod
     def test(cls):
         d = cls()
-        d.exec_()
+        d.exec()
 
 
 # }}}
@@ -468,7 +468,7 @@ class ManageDictionaries(Dialog):  # {{{
 
     def manage_user_dictionaries(self):
         d = ManageUserDictionaries(self)
-        d.exec_()
+        d.exec()
         if d.dictionaries_changed:
             self.dictionaries_changed = True
 
@@ -518,7 +518,7 @@ class ManageDictionaries(Dialog):  # {{{
 
     def add_dictionary(self):
         d = AddDictionary(self)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             self.build_dictionaries(reread=True)
 
     def remove_dictionary(self):
@@ -570,7 +570,7 @@ class ManageDictionaries(Dialog):  # {{{
             x.setData(0, Qt.ItemDataRole.FontRole, bf if x is item else None)
         lc = str(item.parent().data(0, Qt.ItemDataRole.UserRole))
         pl = dprefs['preferred_locales']
-        pl[lc] = '%s-%s' % (lc, str(item.data(0, Qt.ItemDataRole.UserRole)))
+        pl[lc] = f'{lc}-{str(item.data(0, Qt.ItemDataRole.UserRole))}'
         dprefs['preferred_locales'] = pl
 
     def init_dictionary(self, item):
@@ -592,7 +592,7 @@ class ManageDictionaries(Dialog):  # {{{
         cc = str(item.parent().data(0, Qt.ItemDataRole.UserRole))
         lc = str(item.parent().parent().data(0, Qt.ItemDataRole.UserRole))
         d = item.data(0, Qt.ItemDataRole.UserRole)
-        locale = '%s-%s' % (lc, cc)
+        locale = f'{lc}-{cc}'
         pl = dprefs['preferred_dictionaries']
         pl[locale] = d.id
         dprefs['preferred_dictionaries'] = pl
@@ -600,7 +600,7 @@ class ManageDictionaries(Dialog):  # {{{
     @classmethod
     def test(cls):
         d = cls()
-        d.exec_()
+        d.exec()
 # }}}
 
 # Spell Check Dialog {{{
@@ -663,12 +663,12 @@ class WordsModel(QAbstractTableModel):
             if col == 0:
                 return word
             if col == 1:
-                return '{} '.format(len(self.words[(word, locale)]))
+                return f'{len(self.words[(word, locale)])} '
             if col == 2:
                 pl = calibre_langcode_to_name(locale.langcode)
                 countrycode = locale.countrycode
                 if countrycode:
-                    pl = ' %s (%s)' % (pl, countrycode)
+                    pl = f' {pl} ({countrycode})'
                 return pl
             if col == 3:
                 return self.misspelled_text((word, locale))
@@ -894,7 +894,7 @@ class WordsView(QTableView):
         m.addSeparator()
         m.addAction(_('Copy selected words to clipboard'), self.copy_to_clipboard)
 
-        m.exec_(ev.globalPos())
+        m.exec(ev.globalPos())
 
     def copy_to_clipboard(self):
         rows = {i.row() for i in self.selectedIndexes()}
@@ -910,6 +910,42 @@ class WordsView(QTableView):
     @property
     def current_word(self):
         return self.model().word_for_row(self.currentIndex().row())
+
+
+class ManageExcludedFiles(Dialog):
+
+    def __init__(self, parent, excluded_files):
+        self.orig_excluded_files = frozenset(excluded_files)
+        super().__init__(_('Exclude files from spell check'), 'spell-check-exclude-files2', parent)
+
+    def sizeHint(self):
+        return QSize(500, 600)
+
+    def setup_ui(self):
+        self.la = la = QLabel(_(
+            'Choose the files to exclude below. In addition to this list any file'
+            ' can be permanently excluded by adding the comment {} just under its opening tag.').format(
+                '<!-- calibre-no-spell-check -->'))
+        la.setWordWrap(True)
+        la.setTextFormat(Qt.TextFormat.PlainText)
+        self.l = l = QVBoxLayout(self)
+        l.addWidget(la)
+        self.files = QListWidget(self)
+        self.files.setSelectionMode(QAbstractItemView.SelectionMode.MultiSelection)
+        cc = current_container()
+        for name in sorted(cc.mime_map):
+            mt = cc.mime_map[name]
+            if mt in OEB_DOCS or mt in (NCX_MIME, OPF_MIME):
+                i = QListWidgetItem(self.files)
+                i.setText(name)
+                if name in self.orig_excluded_files:
+                    i.setSelected(True)
+        l.addWidget(self.files)
+        l.addWidget(self.bb)
+
+    @property
+    def excluded_files(self):
+        return {item.text() for item in self.files.selectedItems()}
 
 
 class SpellCheck(Dialog):
@@ -929,6 +965,7 @@ class SpellCheck(Dialog):
         self.current_word_changed_timer = t = QTimer()
         t.timeout.connect(self.do_current_word_changed)
         t.setSingleShot(True), t.setInterval(100)
+        self.excluded_files = set()
         Dialog.__init__(self, _('Check spelling'), 'spell-check', parent)
         self.work_finished.connect(self.work_done, type=Qt.ConnectionType.QueuedConnection)
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose, False)
@@ -952,6 +989,11 @@ class SpellCheck(Dialog):
         b.setToolTip('<p>' + _('Undo the last spell check word replacement, if any'))
         b.setIcon(QIcon(I('edit-undo.png')))
         b.clicked.connect(self.undo_last_change)
+        b = self.exclude_button = self.bb.addButton('', QDialogButtonBox.ButtonRole.ActionRole)
+        b.setToolTip('<p>' + _('Exclude some files in the book from spell check'))
+        b.setIcon(QIcon(I('chapters.png')))
+        b.clicked.connect(self.change_excluded_files)
+        self.update_exclude_button()
 
         self.progress = p = QWidget(self)
         s.addWidget(p)
@@ -1061,6 +1103,25 @@ class SpellCheck(Dialog):
             ev.accept()
             return
         return Dialog.keyPressEvent(self, ev)
+
+    def change_excluded_files(self):
+        d = ManageExcludedFiles(self, self.excluded_files)
+        if d.exec_() == QDialog.DialogCode.Accepted:
+            new = d.excluded_files
+            if new != self.excluded_files:
+                self.excluded_files = new
+                self.update_exclude_button()
+                self.refresh()
+
+    def clear_caches(self):
+        self.excluded_files = set()
+        self.update_exclude_button()
+
+    def update_exclude_button(self):
+        t = _('E&xclude files')
+        if self.excluded_files:
+            t += f' ({len(self.excluded_files)})'
+        self.exclude_button.setText(t)
 
     def sort_type_changed(self):
         tprefs['spell_check_case_sensitive_sort'] = bool(self.case_sensitive_sort.isChecked())
@@ -1257,7 +1318,7 @@ class SpellCheck(Dialog):
 
     def get_words(self, change_request=None):
         try:
-            words = get_all_words(current_container(), dictionaries.default_locale)
+            words = get_all_words(current_container(), dictionaries.default_locale, excluded_files=self.excluded_files)
             spell_map = {w:dictionaries.recognized(*w) for w in words}
         except:
             import traceback
@@ -1336,7 +1397,7 @@ class SpellCheck(Dialog):
         set_book_locale(current_container().mi.language)
         d = cls()
         QTimer.singleShot(0, d.refresh)
-        d.exec_()
+        d.exec()
 # }}}
 
 # Find next occurrence  {{{
@@ -1376,7 +1437,7 @@ def find_next(word, locations, current_editor, current_editor_name,
     return False
 
 
-def find_next_error(current_editor, current_editor_name, gui_parent, show_editor, edit_file):
+def find_next_error(current_editor, current_editor_name, gui_parent, show_editor, edit_file, close_editor):
     files = get_checkable_file_names(current_container())[0]
     if current_editor_name not in files:
         current_editor_name = None
@@ -1391,12 +1452,18 @@ def find_next_error(current_editor, current_editor_name, gui_parent, show_editor
             from_cursor = True
             current_editor_name = None
         ed = editors.get(file_name, None)
+        needs_close = False
         if ed is None:
             edit_file(file_name)
             ed = editors[file_name]
+            needs_close = True
+        if hasattr(ed, 'highlighter'):
+            ed.highlighter.join()
         if ed.editor.find_next_spell_error(from_cursor=from_cursor):
             show_editor(file_name)
             return True
+        elif needs_close:
+            close_editor(file_name)
     return False
 
 # }}}

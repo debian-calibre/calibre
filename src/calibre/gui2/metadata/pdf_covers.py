@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:fdm=marker:ai
 
 
 __license__   = 'GPL v3'
@@ -148,6 +147,6 @@ if __name__ == '__main__':
     from calibre.gui2 import Application
     app = Application([])
     d = PDFCovers(sys.argv[-1])
-    d.exec_()
+    d.exec()
     print(d.cover_path)
     del app

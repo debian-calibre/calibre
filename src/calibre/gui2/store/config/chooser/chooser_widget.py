@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 __license__ = 'GPL 3'
 __copyright__ = '2011, John Schember <john@nachtimwald.com>'
 __docformat__ = 'restructuredtext en'
@@ -34,5 +31,5 @@ class StoreChooserWidget(QWidget, Ui_Form):
 
     def build_adv_search(self):
         adv = AdvSearchBuilderDialog(self)
-        if adv.exec_() == QDialog.DialogCode.Accepted:
+        if adv.exec() == QDialog.DialogCode.Accepted:
             self.query.setText(adv.search_string())

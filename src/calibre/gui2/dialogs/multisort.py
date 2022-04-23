@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2021, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -201,7 +200,7 @@ if __name__ == '__main__':
     app = Application([])
     from calibre.library import db
     d = ChooseMultiSort(db())
-    d.exec_()
+    d.exec()
     print(d.current_sort_spec)
     del d
     del app

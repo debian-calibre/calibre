@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -12,7 +11,7 @@ from collections import Counter
 from functools import partial
 from qt.core import QDialog, QModelIndex, QObject, QTimer
 
-from calibre.constants import ismacos
+from calibre.constants import ismacos, trash_name
 from calibre.gui2 import Aborted, error_dialog, question_dialog
 from calibre.gui2.actions import InterfaceAction
 from calibre.gui2.dialogs.confirm_delete import confirm
@@ -35,11 +34,11 @@ class MultiDeleter(QObject):  # {{{
         self.permanent = False
         if can_recycle and len(ids) > 100:
             if question_dialog(gui, _('Are you sure?'), '<p>'+
-                _('You are trying to delete %d books. '
-                    'Sending so many files to the Recycle'
-                    ' Bin <b>can be slow</b>. Should calibre skip the'
-                    ' recycle bin? If you click Yes the files'
-                    ' will be <b>permanently deleted</b>.')%len(ids),
+                _('You are trying to delete {0} books. '
+                    'Sending so many files to the {1}'
+                    ' <b>can be slow</b>. Should calibre skip the'
+                    ' {1}? If you click Yes the files'
+                    ' will be <b>permanently deleted</b>.').format(len(ids), trash_name()),
                 add_abort_button=True
             ):
                 self.permanent = True
@@ -162,7 +161,7 @@ class DeleteAction(InterfaceAction):
                     c[x] += 1
         d = SelectFormats(c, msg, parent=self.gui, exclude=exclude,
                 single=single)
-        if d.exec_() != QDialog.DialogCode.Accepted:
+        if d.exec() != QDialog.DialogCode.Accepted:
             return None
         return d.selected_formats
 
@@ -170,7 +169,7 @@ class DeleteAction(InterfaceAction):
         rows = self.gui.library_view.selectionModel().selectedRows()
         if not rows or len(rows) == 0:
             d = error_dialog(self.gui, err_title, _('No book selected'))
-            d.exec_()
+            d.exec()
             return set()
         return set(map(self.gui.library_view.model().id, rows))
 
@@ -269,7 +268,7 @@ class DeleteAction(InterfaceAction):
         if not self.gui.device_manager.is_device_present:
             d = error_dialog(self.gui, _('Cannot delete books'),
                              _('No device is connected'))
-            d.exec_()
+            d.exec()
             return
         ids = self._get_selected_ids()
         if not ids:
@@ -287,10 +286,10 @@ class DeleteAction(InterfaceAction):
         if not some_to_delete:
             d = error_dialog(self.gui, _('No books to delete'),
                              _('None of the selected books are on the device'))
-            d.exec_()
+            d.exec()
             return
         d = DeleteMatchingFromDeviceDialog(self.gui, to_delete)
-        if d.exec_():
+        if d.exec():
             paths = {}
             ids = {}
             for (model, id, path) in d.result:

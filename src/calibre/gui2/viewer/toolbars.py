@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -68,7 +67,7 @@ def all_actions():
             'toggle_highlights': Action('highlight_only_on.png', _('Browse highlights in book'), 'toggle_highlights'),
             'select_all': Action('edit-select-all.png', _('Select all text in the current file')),
             'edit_book': Action('edit_book.png', _('Edit this book'), 'edit_book'),
-            'reload_book': Action('reload.png', _('Reload this book'), 'reload_book'),
+            'reload_book': Action('view-refresh.png', _('Reload this book'), 'reload_book'),
         }
         all_actions.ans = Actions(amap)
     return all_actions.ans
@@ -131,7 +130,7 @@ class ActionsToolBar(ToolBar):
         a.triggered.connect(self.customize)
         a = m.addAction(_('Hide this toolbar'))
         a.triggered.connect(self.hide_toolbar)
-        m.exec_(self.mapToGlobal(pos))
+        m.exec(self.mapToGlobal(pos))
 
     def hide_toolbar(self):
         self.web_view.trigger_shortcut('toggle_toolbar')
@@ -219,7 +218,7 @@ class ActionsToolBar(ToolBar):
                 self.addSeparator()
             else:
                 try:
-                    self.addAction(getattr(self, '{}_action'.format(x)))
+                    self.addAction(getattr(self, f'{x}_action'))
                 except AttributeError:
                     pass
         w = self.widgetForAction(self.color_scheme_action)
@@ -271,7 +270,7 @@ class ActionsToolBar(ToolBar):
 
     def update_dock_actions(self, visibility_map):
         for k in ('toc', 'bookmarks', 'lookup', 'inspector', 'highlights'):
-            ac = getattr(self, '{}_action'.format(k))
+            ac = getattr(self, f'{k}_action')
             ac.setChecked(visibility_map[k])
 
     def set_tooltips(self, rmap):
@@ -306,10 +305,13 @@ class ActionsToolBar(ToolBar):
                     continue
                 if hasattr(set_book_path, 'pathtoebook') and path == os.path.abspath(set_book_path.pathtoebook):
                     continue
-                m.addAction('{}\t {}'.format(
-                    elided_text(entry['title'], pos='right', width=250),
-                    elided_text(os.path.basename(path), width=250))).triggered.connect(partial(
-                    self.open_book_at_path.emit, path))
+                if os.path.exists(path):
+                    m.addAction('{}\t {}'.format(
+                        elided_text(entry['title'], pos='right', width=250),
+                        elided_text(os.path.basename(path), width=250))).triggered.connect(partial(
+                        self.open_book_at_path.emit, path))
+                else:
+                    self.web_view.remove_recently_opened(path)
 
     def on_view_created(self, data):
         self.default_color_schemes = data['default_color_schemes']
@@ -323,7 +325,7 @@ class ActionsToolBar(ToolBar):
         def add_action(key, defns):
             a = m.addAction(defns[key]['name'])
             a.setCheckable(True)
-            a.setObjectName('color-switch-action:{}'.format(key))
+            a.setObjectName(f'color-switch-action:{key}')
             a.triggered.connect(self.color_switch_triggerred)
             if key == ccs:
                 a.setChecked(True)
@@ -347,7 +349,7 @@ class ActionsToolBar(ToolBar):
 
     def customize(self):
         d = ConfigureToolBar(parent=self.parent())
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             self.add_actions()
 
 
@@ -493,4 +495,4 @@ class ConfigureToolBar(Dialog):
 if __name__ == '__main__':
     from calibre.gui2 import Application
     app = Application([])
-    ConfigureToolBar().exec_()
+    ConfigureToolBar().exec()

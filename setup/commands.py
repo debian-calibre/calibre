@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -13,7 +12,7 @@ __all__ = [
     'git_version',
     'develop', 'install',
     'kakasi', 'rapydscript', 'cacerts', 'recent_uas', 'resources',
-    'check', 'to3', 'unicode_check', 'iterators_check', 'test', 'test_rs',
+    'check', 'test', 'test_rs', 'upgrade_source_code',
     'sdist', 'bootstrap', 'extdev',
     'manual', 'tag_release',
     'upload_to_server',
@@ -66,12 +65,9 @@ bootstrap = Bootstrap()
 from setup.gui import GUI
 gui = GUI()
 
-from setup.check import Check
+from setup.check import Check, UpgradeSourceCode
 check = Check()
-from setup.port import To3, UnicodeCheck, IteratorsCheck
-to3 = To3()
-unicode_check = UnicodeCheck()
-iterators_check = IteratorsCheck()
+upgrade_source_code = UpgradeSourceCode()
 
 from setup.test import Test, TestRS
 test = Test()

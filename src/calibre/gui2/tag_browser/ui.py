@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -148,7 +147,7 @@ class TagBrowserMixin:  # {{{
         db = self.library_view.model().db
         d = TagCategories(self, db, on_category,
                           book_ids=self.tags_view.model().get_book_ids_to_use())
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             # Order is important. The categories must be removed before setting
             # the preference because setting the pref recomputes the dynamic categories
             db.field_metadata.remove_user_categories()
@@ -269,7 +268,7 @@ class TagBrowserMixin:  # {{{
                           get_book_ids=partial(self.get_book_ids, db=db, category=category),
                           sorter=key, ttm_is_first_letter=is_first_letter,
                           fm=db.field_metadata[category])
-        d.exec_()
+        d.exec()
         if d.result() == QDialog.DialogCode.Accepted:
             to_rename = d.to_rename  # dict of old id to new name
             to_delete = d.to_delete  # list of ids
@@ -415,7 +414,7 @@ class TagBrowserMixin:  # {{{
     def edit_enum_values(self, parent, db, key):
         from calibre.gui2.dialogs.enum_values_edit import EnumValuesEdit
         d = EnumValuesEdit(parent, db, key)
-        d.exec_()
+        d.exec()
 
     def do_tag_item_renamed(self):
         # Clean up library view and search
@@ -446,7 +445,7 @@ class TagBrowserMixin:  # {{{
                     break
         editor = EditAuthorsDialog(parent, db, id_, select_sort, select_link,
                                    get_authors_func, is_first_letter)
-        if editor.exec_() == QDialog.DialogCode.Accepted:
+        if editor.exec() == QDialog.DialogCode.Accepted:
             # Save and restore the current selections. Note that some changes
             # will cause sort orders to change, so don't bother with attempting
             # to restore the position. Restoring the state has the side effect
@@ -600,8 +599,8 @@ class TagBrowserBar(QWidget):  # {{{
         find_shown = self.toggle_search_button.isChecked()
         self.toggle_search_button.setVisible(not find_shown)
         l = self.layout()
-        items = [l.itemAt(i) for i in range(l.count())]
-        tuple(map(l.removeItem, items))
+        while l.count():
+            l.takeAt(0)
         if find_shown:
             l.addWidget(self.alter_tb)
             self.alter_tb.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonIconOnly)
@@ -684,9 +683,9 @@ class TagBrowserWidget(QFrame):  # {{{
         l.m.aboutToShow.connect(self.about_to_show_configure_menu)
         l.m.show_counts_action = ac = l.m.addAction('counts')
         ac.triggered.connect(self.toggle_counts)
-        l.m.show_avg_rating_action = ac = l.m.addAction('avg rating')
+        l.m.show_avg_rating_action = ac = l.m.addAction(QIcon.ic('rating.png'), 'avg rating')
         ac.triggered.connect(self.toggle_avg_rating)
-        sb = l.m.addAction(_('Sort by'))
+        sb = l.m.addAction(QIcon.ic('sort.png'), _('Sort by'))
         sb.m = l.sort_menu = QMenu(l.m)
         sb.setMenu(sb.m)
         sb.bg = QActionGroup(sb)
@@ -703,7 +702,7 @@ class TagBrowserWidget(QFrame):  # {{{
                 _('Set the sort order for entries in the Tag browser'))
         sb.setStatusTip(sb.toolTip())
 
-        ma = l.m.addAction(_('Search type when selecting multiple items'))
+        ma = l.m.addAction(QIcon.ic('search.png'), _('Search type when selecting multiple items'))
         ma.m = l.match_menu = QMenu(l.m)
         ma.setMenu(ma.m)
         ma.ag = QActionGroup(ma)
@@ -747,8 +746,10 @@ class TagBrowserWidget(QFrame):  # {{{
     def about_to_show_configure_menu(self):
         ac = self.alter_tb.m.show_counts_action
         ac.setText(_('Hide counts') if gprefs['tag_browser_show_counts'] else _('Show counts'))
+        ac.setIcon(QIcon.ic('minus.png') if gprefs['tag_browser_show_counts'] else QIcon.ic('plus.png'))
         ac = self.alter_tb.m.show_avg_rating_action
         ac.setText(_('Hide average rating') if config['show_avg_rating'] else _('Show average rating'))
+        ac.setIcon(QIcon.ic('minus.png' if config['show_avg_rating'] else 'plus.png'))
 
     def toggle_counts(self):
         gprefs['tag_browser_show_counts'] ^= True
@@ -845,7 +846,7 @@ class TagBrowserWidget(QFrame):  # {{{
             return
 
         self.item_search.lineEdit().blockSignals(True)
-        self.search_button.setFocus(True)
+        self.search_button.setFocus(Qt.FocusReason.OtherFocusReason)
         self.item_search.lineEdit().blockSignals(False)
 
         if txt.startswith('='):

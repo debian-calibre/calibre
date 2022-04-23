@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -32,18 +31,18 @@ class NameConflict(ValueError):
 
 
 def keysequence_from_event(ev):  # {{{
-    k, mods = ev.key(), int(ev.modifiers())
+    k, mods = ev.key(), ev.modifiers()
     if k in (
             0, Qt.Key.Key_unknown, Qt.Key.Key_Shift, Qt.Key.Key_Control, Qt.Key.Key_Alt,
             Qt.Key.Key_Meta, Qt.Key.Key_AltGr, Qt.Key.Key_CapsLock, Qt.Key.Key_NumLock,
             Qt.Key.Key_ScrollLock):
         return
     letter = QKeySequence(k).toString(QKeySequence.SequenceFormat.PortableText)
-    if mods & Qt.Modifier.SHIFT and letter.lower() == letter.upper():
+    if mods & Qt.KeyboardModifier.ShiftModifier and letter.lower() == letter.upper():
         # Something like Shift+* or Shift+> we have to remove the shift,
         # since it is included in keycode.
-        mods = mods & ~Qt.Modifier.SHIFT
-    return QKeySequence(k | mods)
+        mods = mods & ~Qt.KeyboardModifier.ShiftModifier
+    return QKeySequence(k | int(mods))
 # }}}
 
 
@@ -681,9 +680,9 @@ class ShortcutConfig(QWidget):  # {{{
 
     def show_context_menu(self, pos):
         menu = QMenu(self)
-        menu.addAction(_('Expand all'), self.view.expandAll)
-        menu.addAction(_('Collapse all'), self.view.collapseAll)
-        menu.exec_(self.view.mapToGlobal(pos))
+        menu.addAction(QIcon.ic('plus.png'), _('Expand all'), self.view.expandAll)
+        menu.addAction(QIcon.ic('minus.png'), _('Collapse all'), self.view.collapseAll)
+        menu.exec(self.view.mapToGlobal(pos))
 
     def restore_defaults(self):
         self._model.restore_defaults()
@@ -716,7 +715,7 @@ class ShortcutConfig(QWidget):  # {{{
         self.search.search_done(True)
         if not idx.isValid():
             info_dialog(self, _('No matches'),
-                    _('Could not find any shortcuts matching %s')%query,
+                    _('Could not find any shortcuts matching <i>{}</i>').format(prepare_string_for_xml(query)),
                     show=True, show_copy_button=False)
             return
         self.highlight_index(idx)

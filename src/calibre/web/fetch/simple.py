@@ -25,7 +25,6 @@ from calibre.ebooks.BeautifulSoup import BeautifulSoup
 from calibre.ebooks.chardet import xml_to_unicode
 from calibre.utils.config import OptionParser
 from calibre.utils.filenames import ascii_filename
-from calibre.utils.img import image_from_data, image_to_data
 from calibre.utils.imghdr import what
 from calibre.utils.logging import Log
 from calibre.web.fetch.utils import rescale_image
@@ -264,7 +263,7 @@ class RecursiveFetcher:
                 data = response(f.read())
                 data.newurl = 'file:'+url  # This is what mechanize does for
                 # local URLs
-            self.log.debug('Fetched %s in %.1f seconds' % (url, time.monotonic() - st))
+            self.log.debug(f'Fetched {url} in {time.monotonic() - st:.1f} seconds')
             return data
 
         delta = time.monotonic() - self.last_fetch_at
@@ -295,7 +294,7 @@ class RecursiveFetcher:
                 raise err
         finally:
             self.last_fetch_at = time.monotonic()
-        self.log.debug('Fetched %s in %f seconds' % (url, time.monotonic() - st))
+        self.log.debug(f'Fetched {url} in {time.monotonic() - st:f} seconds')
         return data
 
     def start_fetch(self, url):
@@ -440,6 +439,7 @@ class RecursiveFetcher:
                     x.write(data)
                 tag['src'] = imgpath
             else:
+                from calibre.utils.img import image_from_data, image_to_data
                 try:
                     # Ensure image is valid
                     img = image_from_data(data)
@@ -542,7 +542,7 @@ class RecursiveFetcher:
 
                     st = time.monotonic()
                     soup = self.get_soup(dsrc, url=iurl)
-                    self.log.debug('Parsed %s in %.1f seconds' % (iurl, time.monotonic() - st))
+                    self.log.debug(f'Parsed {iurl} in {time.monotonic() - st:.1f} seconds')
 
                     base = soup.find('base', href=True)
                     if base is not None:

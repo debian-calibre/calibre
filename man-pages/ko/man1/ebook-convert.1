@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "11월 12, 2021" "5.32.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "4월 22, 2022" "5.41.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -50,7 +50,7 @@ The output e\-book format is guessed from the file extension of output_file. out
 After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
 For full documentation of the conversion system see
-conversion
+\fI\%전자책 변환\fP
 .sp
 Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .sp
@@ -79,7 +79,7 @@ options specific to every input and output format.
 .IP \(bu 2
 \fI\%합리적 추측에 의한(Heuristic) 처리\fP
 .IP \(bu 2
-\fI\%검색과 치환\fP
+\fI\%검색 및 교체\fP
 .IP \(bu 2
 \fI\%구조 탐지\fP
 .IP \(bu 2
@@ -102,12 +102,12 @@ options specific to every input and output format.
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-내장 레시피 이름을 나열합니다. 다음과 같은 방법으로 내장 레시피에서 eBook을 생성할 수 있습니다: ebook\-convert \fB"\fP레시피 이름.recipe\fB"\fP 출력.epub
+내장된 레시피 이름을 나열합니다. 다음과 같은 내장된 레시피에서 전자책을 만들 수 있습니다: ebook\-convert \fB"\fP레시피 이름.recipe\fB"\fP 출력.epub
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device (such as by resizing images for the device screen size). In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device (such as by resizing images for the device screen size). In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, generic_eink, generic_eink_hd, generic_eink_large, tablet
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -168,17 +168,17 @@ Split all HTML files larger than this size (in KB). This is necessary as most EP
 .INDENT 0.0
 .TP
 .B \-\-no\-svg\-cover
-책 표지에 SVG를 사용하지 않습니다. EPUB가 iPhone이나 JetBook Lite처럼 SVG를 지원하지 않는 기기에 사용할 예정이면 이 옵션을 사용하세요. 이 옵션을 사용하지 않으면, 앞에서 명시한 기기들은 표지를 빈 면으로 표시하게 됩니다.
+책 표지에 SVG를 사용하지 않습니다. EPUB가 iPhone이나 JetBook Lite처럼 SVG를 지원하지 않는 장치에 사용할 예정이면 이 옵션을 사용하세요. 이 옵션을 사용하지 않으면, 앞에서 명시한 장치들은 표지를 빈 면으로 표시하게 됩니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-preserve\-cover\-aspect\-ratio
-SVG 표지를 사용할 때, 이 옵션은 표지가 허용되는 화면 영역을 덮도록 크기가 조정되지만 가로/세로 비율이 유지되도록 합니다. 따라서, 이미지의 양 옆이나 아래/위에 흰 여백이 생길 수 있지만 이미지는 왜곡되지 않게 됩니다. 이 옵션을 끄면 테두리 여백은 없어지지만, 이미지가 다소 왜곡될 수 있습니다.
+SVG 표지를 사용할 때 이 옵션을 사용하면 표지가 사용 가능한 화면 영역을 덮도록 크기가 조정되지만 가로 세로 비율(너비 대 높이 비율)은 유지됩니다. 즉, 이미지의 측면 또는 상단과 하단에 흰색 테두리가 있을 수 있지만 이미지는 왜곡되지 않습니다. 이 옵션이 없으면 이미지가 약간 왜곡될 수 있지만 테두리는 없습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-pretty\-print
-지정된 경우에, 출력 플러그인은 사람이 읽을 수 있는 결과물을 생성합니다. 일부 출력 플러그인에는 영향을 미치지 않을 수 있습니다.
+지정된 경우, 출력 플러그인은 사람이 읽을 수 있는 출력을 최대한 생성하려고 시도합니다. 일부 출력 플러그인에 대해서는 영향을 미치지 않을 수 있습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -201,22 +201,22 @@ Transliterate Unicode characters to an ASCII representation. Use with care becau
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-텍스트 맞춤 방식을 변경합니다. \fB"\fP왼쪽 정렬\fB"\fP은 원본의 모든 양쪽 정렬된 본문을 왼쪽 정렬로 변환합니다. \fB"\fP양쪽 정렬\fB"\fP는 모든 정렬이 안된 본문을 양쪽 정렬하도록 변환합니다. \fB"\fP원본\fB"\fP(기본값)은 원본 파일의 맞춤 방식을 바꾸지 않습니다. 일부 출력 형식만 텍스트 맞춤을 지원한다는 점을 유의하세요.
+텍스트 자리 맞춤을 변경합니다. \fB"\fP왼쪽\fB"\fP 값은 원본의 모든 정렬된 텍스트를 왼쪽 정렬된(즉, 정렬되지 않은) 텍스트로 변환합니다. \fB"\fP양쪽 정렬\fB"\fP 값은 모든 정렬이 안된 본문을 양쪽 정렬하도록 변환합니다. \fB"\fP원본\fB"\fP(기본값) 값은 원본 파일의 자리 맞춤을 바꾸지 않습니다. 일부 출력 형식만 자리 맞춤을 지원합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-font\-rescaling
-모든 \fB"\fP글꼴 크기 비율 재조정 기능\fB"\fP을 사용하지 않습니다.
+글꼴 크기의 모든 크기 조정을 비활성화합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-embed\-all\-fonts
-입력 문서에서 참조된 모든 글꼴 중 이미 내장되어있지 않은 모든 글꼴을 내장합니다. 이 옵션을 켜면 사용자의 시스템에서 해당 글꼴을 검색하게 되고, 발견된 글꼴은 출력 문서에 내장됩니다.  글꼴 내장 옵션은 변환하려는 형식이 EPUB, AZW3, DOCX, PDF 처럼 글꼴 내장 기능을 지원하는 경우에만 동작합니다. 이 문서에 사용된 글꼴들에 대하여 글꼴 내장에 필요한 적절한 라이센스를 사용자가 보유하고 있는지 확인하시기 바랍니다.
+입력 문서에서 참조되지만 아직 포함되지 않은 모든 글꼴을 포함합니다. 그러면 시스템에서 글꼴을 검색하고 발견하면 포함됩니다. 포함은 변환하려는 형식이 EPUB, AZW3, DOCX 또는 PDF와 같은 포함 글꼴을 지원하는 경우에만 작동합니다. 이 문서에 사용된 글꼴을 포함할 수 있는 적절한 라이선스가 있는지 확인하십시오.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-지정된 글꼴 패밀리를 책 안에 내장(embed)합니다. 이 옵션은 책에서 사용될 \fB"\fP기본\fB"\fP 글꼴을 지정합니다. 만일 입력 문서가 자신만의 글꼴을 명시적으로 지정해놓은 경우에는 이 기본 글꼴 설정을 덮어써버릴 수 있습니다. 이런 경우 스타일 정보 필터링 기능을 사용하여 입력문서에서 글꼴 설정들을 제거할 수 있습니다. 글꼴 내장 기능은 EPUB, AZW3, DOCX와 같은 몇몇 출력 형식에서만 동작한다는 점을 유의하세요.
+지정된 글꼴 모음을 책에 포함합니다. 책에 사용되는 \fB"\fP기본\fB"\fP 글꼴을 지정합니다. 입력 문서가 자체 글꼴을 지정하는 경우 이 기본 글꼴을 재정의할 수 있습니다. 필터 스타일 정보 옵션을 사용하여 입력 문서에서 글꼴을 제거할 수 있습니다. 글꼴 포함은 주로 EPUB, AZW3 및 DOCX와 같은 일부 출력 형식에서만 작동합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -226,12 +226,12 @@ By default, calibre will use the shorthand form for various CSS properties such 
 .INDENT 0.0
 .TP
 .B \-\-extra\-css
-CSS 스타일시트로의 경로나 직접 입력된 CSS 텍스트. 이 CSS는 원본 파일의 스타일 규칙에 덧붙여지게 됩니다. 따라서, 이 기능을 그 규칙들을 덮어쓰는데 사용할 수 있습니다.
+CSS 스타일시트 또는 원시 CSS에 대한 경로입니다. 이 CSS는 소스 파일의 스타일 규칙에 추가되므로 해당 규칙을 재정의하는 데 사용할 수 있습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-filter\-css
-CSS 스타일 규칙에서 제외시킬, 쉼표로 구분된, CSS 속성들 목록. 사용자의 기기에서 기존의 특정 스타일 정보를 덮어쓰는 것이 막혀져 있는 경우에 유용합니다. 예시: font\-family, color, margin\-left, margin\-right
+CSS 스타일 규칙에서 제외시킬, 쉼표로 구분된, CSS 속성들 목록. 사용자의 장치에서 기존의 특정 스타일 정보를 덮어쓰는 것이 막혀져 있는 경우에 유용합니다. 예시: font\-family, color, margin\-left, margin\-right
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -266,7 +266,7 @@ pt 단위의 줄 간격 높이입니다. 자신들의 줄 간격을 직접 지�
 .INDENT 0.0
 .TP
 .B \-\-margin\-bottom
-아래 여백을 pt 단위로 설정합니다. 기본값은 5.0입니다. 0보다 작게 설정하면 여백이 아예 지정되지 않습니다(원본 문서의 여백 설정이 보존됨). 참고: PDF나 DOCX와 같은 페이지 기반 양식들은 자신들이 갖고 있는 여백 설정이 우선합니다.
+하단 여백을 pt 단위로 지정합니다. 기본값은 5.0입니다. 0보다 작게 설정하면 여백이 아예 지정되지 않습니다(원본 문서의 여백 설정이 보존됨). 참고: PDF나 DOCX와 같은 페이지 기반 양식들은 자신들이 갖고 있는 여백 설정이 우선합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -281,12 +281,12 @@ pt 단위의 줄 간격 높이입니다. 자신들의 줄 간격을 직접 지�
 .INDENT 0.0
 .TP
 .B \-\-margin\-top
-위 여백을 pt 단위로 설정합니다. 기본값은 5.0입니다. 0보다 작게 설정하면 여백이 아예 지정되지 않습니다(원본 문서의 여백 설정이 보존됨). 참고: PDF나 DOCX와 같은 페이지 기반 양식들은 자신들이 갖고 있는 여백 설정이 우선합니다.
+상단 여백을 pt 단위로 설정합니다. 기본값은 5.0입니다. 0보다 작게 설정하면 여백이 아예 지정되지 않습니다(원본 문서의 여백 설정이 보존됨). 참고: PDF나 DOCX와 같은 페이지 기반 양식들은 자신들이 갖고 있는 여백 설정이 우선합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-해당 요소의 계산되어진 글꼴 크기의 퍼센트 단위로 된 줄 간격의 최소 크기입니다. 캘리버는 모든 요소들이 입력 문서에서 지정된 사항과 상관없이 최소한 이 설정에 지정된 줄 간격 값을 가지도록 시도합니다. 비활성화하려면 0으로 지정하세요. 기본값은 120% 입니다. 어떤 기능인지 잘 모를 경우에는 설정에서 이 기본값을 사용하세요. 예시: \fB"\fP두배 높이의 줄 간격\fB"\fP으로 이루어진 텍스트를 얻으려면 이 설정에 240을 지정하세요.
+해당 요소의 계산된 글꼴 크기에 대한 백분율로 표시되는 최소 줄 높이입니다. 캘리버는 입력 문서가 지정하는 것과 상관없이 모든 요소가 최소한 이 설정의 줄 높이를 갖도록 합니다. 비활성화하려면 0으로 설정하십시오. 기본값은 120%입니다. 현재 수행 중인 작업을 모르는 경우가 아니면 직접 라인 높이 사양보다 이 설정을 사용하십시오. 예를 들어, 이것을 240으로 설정하여 \fB"\fP이중 간격\fB"\fP 텍스트를 얻을 수 있습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -354,7 +354,7 @@ Path to a file containing rules to transform the HTML in this book. The easiest 
 .INDENT 0.0
 .TP
 .B \-\-disable\-markup\-chapter\-headings
-서식이 지정되지 않은 장(章)제목과 부제목들을 탐지하고 h2와 h3 태그로 바꿉니다. 이 설정이 목차를 생성하지는 않지만, 생성하기 위해서 \fB"\fP구조 탐지\fB"\fP 옵션과 같이 사용될 수 있습니다.
+형식이 지정되지 않은 장(章) 제목과 부제목을 감지합니다. h2 및 h3 태그로 변경합니다. 이 설정은 목차를 만들지 않지만 구조 감지 옵션과 함께 사용하여 목차를 만들 수 있습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -374,14 +374,14 @@ Path to a file containing rules to transform the HTML in this book. The easiest 
 .INDENT 0.0
 .TP
 .B \-\-html\-unwrap\-factor
-행 길이의 어느 지점에서 줄바꿈을 합쳐야 할지 결정하는데 사용되는 스케일. 유요한 값은 0과 1사이의 십진수 값입니다. 기본값은 0.4이며, 행 길의 중간에서 약간 아래입니다. 문서에서 단지 몇몇 줄만 줄바꿈 합치기가 필요한 경우라면 이 값이 더 작아져야 합니다
+행 길이의 어느 지점에서 줄바꿈을 합쳐야 할지 결정하는데 사용되는 스케일. 유요한 값은 0과 1사이의 십진수 값입니다. 기본값은 0.4이며, 행 길의 중간에서 약간 아래입니다. 문서에서 단지 몇몇 줄만 한줄로 합치기가 필요한 경우라면 이 값이 더 작아져야 합니다
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-replace\-scene\-breaks
 장면 구분 표시를 지정된 텍스트로 교체합니다. 기본값으로, 입력 문서에 사용된 텍스트가 사용됩니다.
 .UNINDENT
-.SH 검색과 치환
+.SH 검색 및 교체
 .sp
 문서의 텍스트와 구조를 사용자 정의 패턴을 사용하여 변경합니다.
 .INDENT 0.0
@@ -392,17 +392,17 @@ Path to a file containing search and replace regular expressions. The file must 
 .INDENT 0.0
 .TP
 .B \-\-sr1\-replace
-Replacement to replace the text found with sr1\-search.
+sr1\-search로 찾은 텍스트를 바꾸려면 교체를 선택합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-sr1\-search
-Search pattern (regular expression) to be replaced with sr1\-replace.
+sr1\-replace로 교체할 검색 패턴(정규식)입니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-sr2\-replace
-Replacement to replace the text found with sr2\-search.
+sr2\-search로 찾은 텍스트를 바꾸려면 교체를 선택합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -412,7 +412,7 @@ Search pattern (regular expression) to be replaced with sr2\-replace.
 .INDENT 0.0
 .TP
 .B \-\-sr3\-replace
-Replacement to replace the text found with sr3\-search.
+sr3\-search로 찾은 텍스트를 바꾸려면 교체를 선택합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -425,7 +425,7 @@ Search pattern (regular expression) to be replaced with sr3\-replace.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-장(章)제목을 탐지하기 위한 XPath 표현식. 기본값은 \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP, 또는 \fB"\fPpart\fB"\fP란 단어를 장 제목으로 포함하는 <h1> 또는 <h2> 태그와 class=\fB"\fPchapter\fB"\fP 속성을 가지고 있는 태그들입니다. 사용된 표현식은 요소들의 목록을 평가할 수 있어야 합니다. 장 탐지를 비활성화 하려면 표현식 \fB"\fP/\fB"\fP을 사용하세요. 이 기능에 대한 더 자세한 도움말을 보려면 캘리버 사용 설명서의 XPath 지침서를 참조하세요.
+장(章)제목을 탐지하기 위한 XPath 표현식. 기본값은 \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP, 또는 \fB"\fPpart\fB"\fP란 단어를 장 제목으로 포함하는 <h1> 또는 <h2> 태그와 class=\fB"\fPchapter\fB"\fP 속성을 가지고 있는 태그들입니다. 사용된 표현식은 요소들의 목록을 평가할 수 있어야 합니다. 장 탐지를 비활성화 하려면 표현식 \fB"\fP/\fB"\fP을 사용하세요. 이 특정 기능에 대한 더 자세한 도움말을 보려면 캘리버 사용자 설명서의 XPath 지침서를 참조하세요.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -455,12 +455,12 @@ XPath 표현식. 지정된 요소의 앞에 쪽 넘김이 삽입됩니다. 비�
 .INDENT 0.0
 .TP
 .B \-\-remove\-first\-image
-입력 eBook에서의 첫번째 이미지를 제거합니다. 입력 문서가 실제 표지가 아닌 표지 이미지를 가지고 있는 경우 유용합니다. 이런 경우, 이 옵션을 지정하지 않은 상태에서 캘리버에서 표지를 지정해놓으면 출력 문서는 두개의 표지 이미지를 가지게 되어버립니다.
+입력 전자책에서의 첫번째 이미지를 제거합니다. 입력 문서가 실제 표지가 아닌 표지 이미지를 가지고 있는 경우 유용합니다. 이런 경우, 이 옵션을 지정하지 않은 상태에서 캘리버에서 표지를 지정해놓으면 출력 문서는 두개의 표지 이미지를 가지게 되어버립니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-문서에서의 읽기 시작 지점을 탐지하기 위한 XPath 표현식. 몇몇 프로그램(대표적으로 Kindle)은 책을 열 때 이 위치를 사용합니다. 이 기능을 사용하는데 대한 더 많은 도움말은 캘리버 사용 설명서의 XPath 지침서를 참고하세요.
+문서에서의 읽기 시작 지점을 탐지하기 위한 XPath 표현식. 몇몇 프로그램(대표적으로 Kindle)은 책을 열 때 이 위치를 사용합니다. 이 특정 기능을 사용하는데 대한 더 많은 도움말은 캘리버 사용자 설명서의 XPath 지침서를 참고하세요.
 .UNINDENT
 .SH 목차
 .sp
@@ -468,22 +468,22 @@ XPath 표현식. 지정된 요소의 앞에 쪽 넘김이 삽입됩니다. 비�
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc
-입력 문서 안의 링크에서 목차를 생성할 때, 중복된 항목을 허용합니다. 즉, 링크들이 서로 다른 위치를 가리키기만 한다면, 같은 텍스트로 된 하나 이상의 항목을 허용한다는 의미입니다.
+입력 문서의 링크에서 목차를 만들 때, 중복 항목을 허용합니다. 즉, 동일한 텍스트가 있는 항목이 다른 위치를 가리키는 경우 둘 이상의 항목을 허용합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-목차의 1단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 이 칸이 지정되어있다면, 다른 형태의 자동감지를 우선합니다. 예시를 보려면 캘리버 사용 설명서 안의 XPath 지침서를 참조하세요.
+목차의 1단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 이 칸이 지정되어있다면, 다른 형태의 자동감지를 우선합니다. 예시를 보려면 캘리버 사용자 설명서 안의 XPath 지침서를 참조하세요.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-목차의 2단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 각 항목은 이전의 1단계 항목 아래에 추가됩니다. 예시를 보려면 캘리버 사용 설명서 안의 XPath 지침서를 참조하세요.
+목차의 2단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 각 항목은 이전의 1단계 항목 아래에 추가됩니다. 예시를 보려면 캘리버 사용자 설명서 안의 XPath 지침서를 참조하세요.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-목차의 3단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 각 항목은 이전의 2단계 항목 아래에 추가됩니다. 예시를 보려면 캘리버 사용 설명서 안의 XPath 지침서를 참조하세요.
+목차의 3단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 각 항목은 이전의 2단계 항목 아래에 추가됩니다. 예시를 보려면 캘리버 사용자 설명서 안의 XPath 지침서를 참조하세요.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -556,12 +556,12 @@ Set the publication date (assumed to be in the local timezone, unless the timezo
 .INDENT 0.0
 .TP
 .B \-\-publisher
-책의 출판사를 지정합니다.
+책의 발행자를 지정합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-rating
-별점을 지정합니다. 1과 5 사이의 숫자여야 합니다.
+평점을 지정합니다. 1과 5 사이의 숫자여야 합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -586,7 +586,7 @@ Set the publication date (assumed to be in the local timezone, unless the timezo
 .INDENT 0.0
 .TP
 .B \-\-timestamp
-Set the book timestamp (no longer used anywhere)
+책 타임스탬프 지정하기(더 이상 어디에도 사용되지 않음)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -600,7 +600,7 @@ Set the book timestamp (no longer used anywhere)
 .UNINDENT
 .SH 디버그
 .sp
-변환 작업에 대한 디버깅을 돕기 위한 옵션입니다
+변환 디버깅에 도움이 되는 옵션
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d

@@ -1,9 +1,8 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
 
 
-def html2text(html):
+def html2text(html, single_line_break=True):
     from html2text import HTML2Text
     import re
     if isinstance(html, bytes):
@@ -16,7 +15,7 @@ def html2text(html):
     h2t = HTML2Text()
     h2t.default_image_alt = _('Unnamed image')
     h2t.body_width = 0
-    h2t.single_line_break = True
+    h2t.single_line_break = single_line_break
     h2t.emphasis_mark = '*'
     return h2t.handle(html)
 

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -127,7 +126,7 @@ class TweakEpubAction(InterfaceAction):
         if len(tweakable_fmts) > 1:
             if tprefs['choose_tweak_fmt']:
                 d = Choose(sorted(tweakable_fmts, key=tprefs.defaults['tweak_fmt_order'].index), self.gui)
-                if d.exec_() != QDialog.DialogCode.Accepted:
+                if d.exec() != QDialog.DialogCode.Accepted:
                     return
                 tweakable_fmts = {d.fmt}
             else:

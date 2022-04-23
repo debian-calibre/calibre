@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -76,7 +75,7 @@ class RunAction(QDialog):
 
     def __init__(self, title, err_msg, action, parent=None):
         QDialog.__init__(self, parent)
-        self.setWindowTitle(_('Working please wait...'))
+        self.setWindowTitle(_('Working, please wait...'))
         self.title, self.action, self.tb, self.err_msg = title, action, None, err_msg
         self.abort = Event()
         self.setup_ui()
@@ -361,7 +360,7 @@ class EximDialog(Dialog):
             dbmap[db.library_path] = db.new_api
         return RunAction(_('Exporting all calibre data...'), _(
             'Failed to export data.'), partial(export, self.export_dir, library_paths=library_paths, dbmap=dbmap),
-                      parent=self).exec_() == QDialog.DialogCode.Accepted
+                      parent=self).exec() == QDialog.DialogCode.Accepted
 
     def run_import_action(self):
         library_path_map = {}
@@ -369,7 +368,7 @@ class EximDialog(Dialog):
             if w.path:
                 library_path_map[w.lpath] = w.path
         return RunAction(_('Importing all calibre data...'), _(
-            'Failed to import data.'), partial(import_data, self.importer, library_path_map), parent=self).exec_() == QDialog.DialogCode.Accepted
+            'Failed to import data.'), partial(import_data, self.importer, library_path_map), parent=self).exec() == QDialog.DialogCode.Accepted
 
     def accept(self):
         if not self.validate():
@@ -388,5 +387,5 @@ if __name__ == '__main__':
     from calibre.gui2 import Application
     app = Application([])
     d = EximDialog(initial_panel='import')
-    d.exec_()
+    d.exec()
     del app

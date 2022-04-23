@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
 
 import functools
@@ -147,7 +146,7 @@ def run_kde(cmd):
     if ret == 1:
         return  # canceled
     if ret != 0:
-        raise ValueError('KDE file dialog aborted with return code: {} and stderr: {}'.format(ret, stderr))
+        raise ValueError(f'KDE file dialog aborted with return code: {ret} and stderr: {stderr}')
     ans = stdout.splitlines()
     return ans
 
@@ -163,7 +162,10 @@ def kdialog_choose_dir(window, name, title, default_dir='~', no_save_dir=False):
 def kdialog_filters(filters, all_files=True):
     ans = []
     for name, exts in filters:
-        ans.append('{} ({})'.format(name, ' '.join('*.' + x for x in exts)))
+        if not exts or (len(exts) == 1 and exts[0] == '*'):
+            ans.append(name + ' (*)')
+        else:
+            ans.append('{} ({})'.format(name, ' '.join('*.' + x for x in exts)))
     if all_files:
         ans.append(_('All files') + ' (*)')
     return '\n'.join(ans)
@@ -224,7 +226,7 @@ def run_zenity(cmd):
     if ret == 1:
         return  # canceled
     if ret != 0:
-        raise ValueError('GTK file dialog aborted with return code: {} and stderr: {}'.format(ret, stderr))
+        raise ValueError(f'GTK file dialog aborted with return code: {ret} and stderr: {stderr}')
     ans = stdout.splitlines()
     return ans
 
@@ -240,7 +242,10 @@ def zenity_choose_dir(window, name, title, default_dir='~', no_save_dir=False):
 def zenity_filters(filters, all_files=True):
     ans = []
     for name, exts in filters:
-        ans.append('--file-filter={} | {}'.format(name, ' '.join('*.' + x for x in exts)))
+        if not exts or (len(exts) == 1 and exts[0] == '*'):
+            ans.append('--file-filter={} | {}'.format(name, '*'))
+        else:
+            ans.append('--file-filter={} | {}'.format(name, ' '.join('*.' + x for x in exts)))
     if all_files:
         ans.append('--file-filter={} | {}'.format(_('All files'), '*'))
     return ans
@@ -288,7 +293,7 @@ def zenity_choose_images(window, name, title, select_only_single_file=True, form
 
 def linux_native_dialog(name):
     prefix = check_for_linux_native_dialogs()
-    func = globals()['{}_choose_{}'.format(prefix, name)]
+    func = globals()[f'{prefix}_choose_{name}']
 
     @functools.wraps(func)
     def looped(window, *args, **kwargs):
@@ -314,7 +319,7 @@ def linux_native_dialog(name):
             t = Thread(name='FileDialogHelper', target=r)
             t.daemon = True
             t.start()
-            loop.exec_(QEventLoop.ProcessEventsFlag.ExcludeUserInputEvents)
+            loop.exec(QEventLoop.ProcessEventsFlag.ExcludeUserInputEvents)
             if ret[1] is not None:
                 reraise(*ret[1])
             return ret[0]

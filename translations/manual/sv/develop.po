@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021
+# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2022
 # Jonatan Nyberg <jonatan@autistici.org>, 2018-2021
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2018
 # Merarom <merarom@yahoo.es>, 2014-2017
@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-11 06:01+0000\n"
-"PO-Revision-Date: 2021-11-10 15:04+0000\n"
+"POT-Creation-Date: 2022-02-17 05:40+0000\n"
+"PO-Revision-Date: 2022-02-16 11:38+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -84,7 +84,7 @@ msgstr "All calibre-pythonkod finns i paketet ``calibre``. Paketet innehåller f
 msgid ""
 "devices - All the device drivers. Just look through some of the built-in "
 "drivers to get an idea for how they work."
-msgstr "enheter - Alla drivrutiner. Bara titta igenom några av de inbyggda drivrutiner för att få en uppfattning om hur de fungerar."
+msgstr "enheter - Alla enhetsdrivrutiner. Titta bara igenom några av de inbyggda drivrutinerna för att få en uppfattning om hur de fungerar."
 
 #: ../../__w/calibre/calibre/manual/develop.rst:40
 msgid ""
@@ -97,8 +97,8 @@ msgstr "För mer information, se: ``devices.interface`` som definierar gränssni
 #: ../../__w/calibre/calibre/manual/develop.rst:43
 msgid ""
 "e-books  - All the e-book conversion/metadata code. A good starting point is"
-" ``calibre.ebooks.conversion.cli`` which is the module powering the :command"
-":`ebook-convert` command. The conversion process is controlled via "
+" ``calibre.ebooks.conversion.cli`` which is the module powering the "
+":command:`ebook-convert` command. The conversion process is controlled via "
 "``conversion.plumber``. The format independent code is all in ``ebooks.oeb``"
 " and the format dependent code is in ``ebooks.format_name``."
 msgstr "e-böcker - All e-bokkonvertering/metadatakod. En bra utgångspunkt är ``calibre.ebooks.conversion.cli`` vilken är modulen som driver :command:`ebook-convert` kommandot. Konverteringen styrs via ``conversion.plumber``. Formatoberoende kod är alla i ``ebooks.oeb`` och formatberoende kod finns i ``ebooks.format_name``."
@@ -120,7 +120,7 @@ msgid ""
 "transformations that are applied to the book during conversions live in "
 ":file:`oeb/transforms/*.py`. And the input and output plugins live in "
 ":file:`conversion/plugins/*.py`."
-msgstr "Konvertering sker i en \"rörledning\", för strukturen av rörledningen, se :ref:`conversion-introduction`. Rörledningen består av en inmatningsinsticksmodul, olika omvandlingar och en utmatningsinsticksmodul. Den kod som konstruerar och driver rörledningen i :file:`plumber.py`. Rörledningen fungerar på en representation av en e-bok som är som en uppackad EPUB, med manifest, bokrygg, innehållsförteckning, guide, html innehåll, o.s.v. Den klass som hanterar denna representation är OEBBook i ``ebooks.oeb.base`` . De olika omvandlingarna som tillämpas på boken under konvertering finns i :file:`oeb/transforms/*.py`. Och inmatning och utmatning insticksmodul finns i :file:`conversion/plugins/*.py`."
+msgstr "Konvertering sker i en process, för strukturen av processen, se :ref:`conversion-introduction`. Processen består av en inmatningsinsticksmodul, olika omvandlingar och en utmatningsinsticksmodul. Koden som konstruerar och driver processen i :file:`plumber.py`. Processen fungerar på en representation av en e-bok som är som en uppackad EPUB, med manifest, bokrygg, innehållsförteckning, guide, html-innehåll, o.s.v. Klassen som hanterar den här representationen är OEBBook i ``ebooks.oeb.base`` . De olika omvandlingarna som tillämpas på boken under konvertering finns i :file:`oeb/transforms/*.py`. Och in- och utmatningsinsticksmodulerna finns i :file:`conversion/plugins/*.py`."
 
 #: ../../__w/calibre/calibre/manual/develop.rst:58
 msgid ""
@@ -166,9 +166,8 @@ msgstr "Få koden"
 #: ../../__w/calibre/calibre/manual/develop.rst:77
 msgid ""
 "You can get the calibre source code in two ways, using a version control "
-"system or directly downloading a `tarball <https://calibre-"
-"ebook.com/dist/src>`_."
-msgstr "Du kan hämta calibre-källkoden på två sätt, med hjälp av ett versionshanteringssystem eller direkt hämta en - `tarball <https://calibre-ebook.com/dist/src>`_."
+"system or directly downloading a :website_base:`tarball <dist/src>`."
+msgstr "Du kan hämta calibre-källkoden på två sätt, med hjälp av ett versionshanteringssystem eller direkt hämta en :website_base:`tarball <dist/src>`."
 
 #: ../../__w/calibre/calibre/manual/develop.rst:80
 msgid ""
@@ -193,8 +192,8 @@ msgstr "calibre är ett mycket stort projekt med en mycket lång källkontrollsh
 #: ../../__w/calibre/calibre/manual/develop.rst:91
 msgid ""
 "If you want to get the code faster, the source code for the latest release "
-"is always available as an `archive <https://calibre-ebook.com/dist/src>`_."
-msgstr "Om du vill få koden snabbare, är källkoden för den senaste versionen alltid finns som ett `arkiv <https://calibre-ebook.com/dist/src>`_."
+"is always available as an :website_base:`archive <dist/src>`."
+msgstr "Om du vill hämta koden snabbare är källkoden för den senaste utgåvan alltid tillgänglig som ett :website_base:`arkiv <dist/src>`."
 
 #: ../../__w/calibre/calibre/manual/develop.rst:94
 msgid "To update a branch to the latest code, use the command::"
@@ -225,7 +224,7 @@ msgid ""
 "<https://bugs.launchpad.net/calibre>`_. Note that this will include *all* "
 "the commits you have made. If you only want to send some commits, you have "
 "to change ``origin/master`` above. To send only the last commit, use::"
-msgstr "Detta kommer att skapa en file:`my-changes`-fil i den aktuella mappen, helt enkelt bifoga det till ett ärende i calibre-`problemhanteraren <https://bugs.launchpad.net/calibre>`_.  Observera att detta kommer att omfatta *alla* de åtgärder du har gjort. Om du bara vill skicka några åtgärder måste du ändra ``origin/master`` ovan. Om du vill skicka bara den senaste bekräftelsen, använd::"
+msgstr "Detta kommer att skapa en file:`my-changes`-fil i den aktuella mappen, helt enkelt bifoga det till ett ärende i calibre-`felhanteringssystemet <https://bugs.launchpad.net/calibre>`_.  Observera att detta kommer att omfatta *alla* de åtgärder du har gjort. Om du bara vill skicka några åtgärder måste du ändra ``origin/master`` ovan. Om du vill skicka bara den senaste bekräftelsen, använd::"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:119
 msgid ""
@@ -390,7 +389,7 @@ msgid ""
 "The next step is to create a bash script that will set the environment "
 "variable ``CALIBRE_DEVELOP_FROM`` to the absolute path of the src folder "
 "when running calibre in debug mode."
-msgstr "Nästa steg är att skapa ett bash skript som kommer att sätta miljövariabeln ``CALIBRE_DEVELOP_FROM`` till den absoluta sökvägen till mappen src när man kör calibre i felsökningsläge."
+msgstr "Nästa steg är att skapa ett bash-skript som kommer att ställa in miljövariabeln ``CALIBRE_DEVELOP_FROM`` till den absoluta sökvägen till mappen src när calibre körs i felsökningsläge."
 
 #: ../../__w/calibre/calibre/manual/develop.rst:207
 msgid "Create a plain text file::"
@@ -398,13 +397,13 @@ msgstr "Skapa en fil med oformaterad text::"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:213
 msgid ""
-"Save this file as ``/usr/bin/calibre-develop``, then set its permissions so "
-"that it can be executed::"
-msgstr "Spara den här filen som ``/usr/bin/calibre-develop``, ställ sedan in dess rättigheter så att den kan köras::"
+"Save this file as :file:`/usr/local/bin/calibre-develop`, then set its "
+"permissions so that it can be executed::"
+msgstr "Spara den här filen som :file:`/usr/local/bin/calibre-develop` och ställ sedan in dess behörigheter så att den kan köras::"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:217
 msgid "Once you have done this, run::"
-msgstr "När du har gjort det, kör::"
+msgstr "När du har gjort detta, kör::"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:221
 msgid ""
@@ -473,7 +472,7 @@ msgstr "calibre-källkodsträdet är mycket stabilt och går sällan sönder, me
 
 #: ../../__w/calibre/calibre/manual/develop.rst:268
 msgid "To launch the release version of calibre with your everyday library:"
-msgstr "För att starta den utgivna versionen av calibre med din vardagliga biblioteket:"
+msgstr "För att starta den utgivna versionen av calibre med ditt vardagliga biblioteket:"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:270
 msgid "calibre-normal.bat::"
@@ -527,10 +526,10 @@ msgstr "Du kan infoga följande två rader kod för att starta en interaktiv Pyt
 msgid ""
 "When running from the command line, this will start an interactive Python "
 "interpreter with access to all locally defined variables (variables in the "
-"local scope). The interactive prompt even has TAB completion for object "
-"properties and you can use the various Python facilities for introspection, "
-"such as :func:`dir`, :func:`type`, :func:`repr`, etc."
-msgstr "När du kör från kommandoraden startar detta en interaktiv Python-tolk med tillgång till alla lokalt definierade variabler (variabler i den lokala omfånget). Den interaktiva prompten har till och med TAB-komplettering för objektegenskaper och du kan använda de olika Python-faciliteterna för introspektion, såsom :func:`dir`, :func:`type`, :func:`repr` o.s.v."
+"local scope). The interactive prompt even has :kbd:`Tab` completion for "
+"object properties and you can use the various Python facilities for "
+"introspection, such as :func:`dir`, :func:`type`, :func:`repr`, etc."
+msgstr "När du kör från kommandoraden startar detta en interaktiv Python-tolk med tillgång till alla lokalt definierade variabler (variabler i den lokala omfånget). Den interaktiva prompten har till och med :kbd:`Tab`-komplettering för objektegenskaper och du kan använda de olika Python-faciliteterna för introspektion, såsom :func:`dir`, :func:`type`, :func:`repr` o.s.v."
 
 #: ../../__w/calibre/calibre/manual/develop.rst:317
 msgid "Using the Python debugger as a remote debugger"
@@ -548,7 +547,7 @@ msgid ""
 "Then run calibre, either as normal, or using one of the calibre-debug "
 "commands described in the previous section. Once the above point in the code"
 " is reached, calibre will freeze, waiting for the debugger to connect."
-msgstr "Kör sedan calibre, antingen som vanligt, eller använda någon av calibre felsökningskommandon som beskrivs i föregående avsnitt. När ovanstående punkt i koden är nådd kommer calibre frysa, väntar på felsökaren för att ansluta."
+msgstr "Kör sedan calibre, antingen som normalt, eller använda någon av calibre-felsökningskommandon som beskrivs i föregående avsnitt. När ovanstående punkt i koden är nådd kommer calibre frysa, väntar på felsökaren för att ansluta."
 
 #: ../../__w/calibre/calibre/manual/develop.rst:330
 msgid ""
@@ -626,7 +625,7 @@ msgstr "kan användas för att köra ditt eget Python-skript. Det fungerar på s
 #: ../../__w/calibre/calibre/manual/develop.rst:379
 msgid ""
 "The ``--`` causes all subsequent arguments to be passed to your script."
-msgstr "Den ``--``  leder till att alla efterföljande argument skickas till ditt skript."
+msgstr "``--`` gör att alla efterföljande argument skickas till ditt skript."
 
 #: ../../__w/calibre/calibre/manual/develop.rst:383
 msgid "Using calibre in your projects"

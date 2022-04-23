@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -46,7 +45,7 @@ _ligpat = re.compile('|'.join(LIGATURES))
 
 
 def sanitize_head(match):
-    x = match.group(1)
+    x = match.group(1).strip()
     x = _span_pat.sub('', x)
     return '<head>\n%s\n</head>' % x
 
@@ -351,7 +350,7 @@ def accent_regex(accent_maps, letter_before=False):
         accent_cat.add(accent)
         k, v = accent_maps[accent].split(':', 1)
         if len(k) != len(v):
-            raise ValueError('Invalid mapping for: {} -> {}'.format(k, v))
+            raise ValueError(f'Invalid mapping for: {k} -> {v}')
         accent_maps[accent] = lmap = dict(zip(k, v))
         letters |= set(lmap)
 
@@ -380,8 +379,7 @@ def html_preprocess_rules():
         (re.compile(r'\s{10000,}'), ''),
         # Some idiotic HTML generators (Frontpage I'm looking at you)
         # Put all sorts of crap into <head>. This messes up lxml
-        (re.compile(r'<head[^>]*>\n*(.*?)\n*</head>', re.IGNORECASE|re.DOTALL),
-        sanitize_head),
+        (re.compile(r'<head[^>]*>(.*?)</head>', re.IGNORECASE|re.DOTALL), sanitize_head),
         # Convert all entities, since lxml doesn't handle them well
         (re.compile(r'&(\S+?);'), convert_entities),
         # Remove the <![if/endif tags inserted by everybody's darling, MS Word

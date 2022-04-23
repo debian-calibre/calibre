@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -94,6 +93,7 @@ class View:
                     'au_map': self.get_author_data,
                     'ondevice': self.get_ondevice,
                     'marked': self.get_marked,
+                    'all_marked_labels': self.all_marked_labels,
                     'series_sort':self.get_series_sort,
                 }.get(col, self._get)
             if isinstance(col, numbers.Integral):
@@ -222,6 +222,9 @@ class View:
         id_ = idx if index_is_id else self.index_to_id(idx)
         return self.marked_ids.get(id_, default_value)
 
+    def all_marked_labels(self):
+        return set(self.marked_ids.values()) - {'true'}
+
     def get_author_data(self, idx, index_is_id=True, default_value=None):
         id_ = idx if index_is_id else self.index_to_id(idx)
         with self.cache.safe_read_lock:
@@ -279,7 +282,7 @@ class View:
     def _build_restriction_string(self, restriction):
         if self.base_restriction:
             if restriction:
-                return '(%s) and (%s)' % (self.base_restriction, restriction)
+                return f'({self.base_restriction}) and ({restriction})'
             else:
                 return self.base_restriction
         else:
@@ -295,7 +298,7 @@ class View:
         else:
             q = query
             if search_restriction:
-                q = '(%s) and (%s)' % (search_restriction, query)
+                q = f'({search_restriction}) and ({query})'
         if not q:
             if set_restriction_count:
                 self.search_restriction_book_count = len(self._map)
@@ -371,8 +374,9 @@ class View:
         '''
         old_marked_ids = set(self.marked_ids)
         if not hasattr(id_dict, 'items'):
-            # Simple list. Make it a dict of string 'true'
-            self.marked_ids = dict.fromkeys(id_dict, 'true')
+            # Simple list. Make it a dict entry of string 'true'
+            self.marked_ids = {k: (self.marked_ids[k] if k in self.marked_ids else 'true')
+                               for k in id_dict}
         else:
             # Ensure that all the items in the dict are text
             self.marked_ids = {k: str(v) for k, v in iteritems(id_dict)}

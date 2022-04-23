@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -65,7 +64,7 @@ class SearchLineEdit(QLineEdit):  # {{{
             if url:
                 menu.addAction(_('Copy search as URL'), lambda : QApplication.clipboard().setText(url))
         menu.addAction(_('&Clear search history')).triggered.connect(self.clear_history)
-        menu.exec_(ev.globalPos())
+        menu.exec(ev.globalPos())
 
     def paste_and_search(self):
         self.paste()
@@ -164,6 +163,7 @@ class SearchBox2(QComboBox):  # {{{
 
     def clear_history(self):
         config[self.opt_name] = []
+        super().clear()
         self.clear()
     clear_search_history = clear_history
 
@@ -244,6 +244,8 @@ class SearchBox2(QComboBox):  # {{{
 
     def timer_event(self):
         self._do_search(as_you_type=True)
+        # since this is an automatic search keep focus
+        self.setFocus(Qt.FocusReason.OtherFocusReason)
 
     def history_selected(self, text):
         self.changed.emit()
@@ -275,6 +277,7 @@ class SearchBox2(QComboBox):  # {{{
 
     def do_search(self, *args):
         self._do_search()
+        self.timer.stop()
 
     def block_signals(self, yes):
         self.blockSignals(yes)
@@ -532,7 +535,7 @@ class SearchBoxMixin:  # {{{
 
     def do_advanced_search(self, *args):
         d = SearchDialog(self, self.library_view.model().db)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             self.search.set_search_string(d.search_string(), store_in_history=True)
 
     def do_search_button(self):
@@ -604,7 +607,7 @@ class SavedSearchBoxMixin:  # {{{
 
     def do_saved_search_edit(self, search):
         d = SavedSearchEditor(self, search)
-        d.exec_()
+        d.exec()
         if d.result() == QDialog.DialogCode.Accepted:
             self.do_rebuild_saved_searches()
 
@@ -615,7 +618,7 @@ class SavedSearchBoxMixin:  # {{{
     def add_saved_search(self):
         from calibre.gui2.dialogs.saved_search_editor import AddSavedSearch
         d = AddSavedSearch(parent=self, search=self.search.current_text)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             self.current_db.new_api.ensure_has_search_category(fail_on_existing=False)
             self.do_rebuild_saved_searches()
 

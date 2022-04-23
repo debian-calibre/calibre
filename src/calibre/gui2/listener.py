@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2020, Kovid Goyal <kovid at kovidgoyal.net>
 
 import errno
@@ -141,7 +140,7 @@ def test():
     s.message_received.connect(show_message)
 
     l.show()
-    app.exec_()
+    app.exec()
     del app
 
 

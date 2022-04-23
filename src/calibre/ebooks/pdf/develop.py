@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -35,7 +34,7 @@ def main():
     renderer = Renderer()
     renderer.setUrl(QUrl.fromLocalFile(sys.argv[-1]))
     renderer.loadFinished.connect(renderer.do_print)
-    QApplication.instance().exec_()
+    QApplication.instance().exec()
     print('Output written to:', OUTPUT)
 
 

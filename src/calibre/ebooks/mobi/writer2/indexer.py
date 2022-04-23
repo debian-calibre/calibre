@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -65,8 +64,8 @@ class TAGX:  # {{{
         '''
         TAGX block for the Primary index header of a periodical
         '''
-        list(map(self.add_tag, (1, 2, 3, 4, 5, 21, 22, 23, 0, 69, 70, 71, 72,
-            73, 0)))
+        for i in (1, 2, 3, 4, 5, 21, 22, 23, 0, 69, 70, 71, 72,73, 0):
+            self.add_tag(i)
         return self.header(2) + bytes(self.byts)
 
     @property
@@ -74,7 +73,8 @@ class TAGX:  # {{{
         '''
         TAGX block for the secondary index header of a periodical
         '''
-        list(map(self.add_tag, (11, 0)))
+        for i in (11, 0):
+            self.add_tag(i)
         return self.header(1) + bytes(self.byts)
 
     @property
@@ -82,7 +82,8 @@ class TAGX:  # {{{
         '''
         TAGX block for the primary index header of a flat book
         '''
-        list(map(self.add_tag, (1, 2, 3, 4, 0)))
+        for i in (1, 2, 3, 4, 0):
+            self.add_tag(i)
         return self.header(1) + bytes(self.byts)
 
 

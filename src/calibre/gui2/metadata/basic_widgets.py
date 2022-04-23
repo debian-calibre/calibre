@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -30,7 +29,7 @@ from calibre.ebooks.metadata import (
 from calibre.ebooks.metadata.meta import get_metadata
 from calibre.ebooks.oeb.polish.main import SUPPORTED as EDIT_SUPPORTED
 from calibre.gui2 import (
-    choose_files, choose_images, error_dialog, file_icon_provider, gprefs
+    choose_files_and_remember_all_files, choose_images, error_dialog, file_icon_provider, gprefs
 )
 from calibre.gui2.comments_editor import Editor
 from calibre.gui2.complete2 import EditWithComplete
@@ -68,7 +67,7 @@ def save_dialog(parent, title, msg, det_msg=''):
     d.setWindowTitle(title)
     d.setText(msg)
     d.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No | QMessageBox.StandardButton.Cancel)
-    return d.exec_()
+    return d.exec()
 
 
 def clean_text(x):
@@ -372,7 +371,7 @@ class AuthorsEdit(EditWithComplete, ToMetadataMixin):
         current_authors = self.current_val
         from calibre.gui2.dialogs.authors_edit import AuthorsEdit
         d = AuthorsEdit(all_authors, current_authors, self)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             self.set_value(d.authors)
 
     def manage_authors(self):
@@ -811,6 +810,10 @@ class FormatList(_FormatList):
         _FormatList.__init__(self, parent)
         self.setContextMenuPolicy(Qt.ContextMenuPolicy.DefaultContextMenu)
 
+    def sizeHint(self):
+        sz = self.iconSize()
+        return QSize(sz.width() * 7, sz.height() * 3)
+
     def contextMenuEvent(self, event):
         item = self.itemFromIndex(self.currentIndex())
         originals = [self.item(x).ext.upper() for x in range(self.count())]
@@ -850,6 +853,7 @@ class FormatList(_FormatList):
 class FormatsManager(QWidget):
 
     data_changed = pyqtSignal()
+    ICON_SIZE = 32
 
     @property
     def changed(self):
@@ -868,29 +872,30 @@ class FormatsManager(QWidget):
         self._changed = False
 
         self.l = l = QGridLayout()
+        l.setContentsMargins(0, 0, 0, 0)
         self.setLayout(l)
         self.cover_from_format_button = QToolButton(self)
         self.cover_from_format_button.setToolTip(
                 _('Set the cover for the book from the selected format'))
         self.cover_from_format_button.setIcon(QIcon(I('default_cover.png')))
-        self.cover_from_format_button.setIconSize(QSize(32, 32))
+        self.cover_from_format_button.setIconSize(QSize(self.ICON_SIZE, self.ICON_SIZE))
 
         self.metadata_from_format_button = QToolButton(self)
         self.metadata_from_format_button.setIcon(QIcon(I('edit_input.png')))
-        self.metadata_from_format_button.setIconSize(QSize(32, 32))
+        self.metadata_from_format_button.setIconSize(QSize(self.ICON_SIZE, self.ICON_SIZE))
         self.metadata_from_format_button.setToolTip(
                 _('Set metadata for the book from the selected format'))
 
         self.add_format_button = QToolButton(self)
         self.add_format_button.setIcon(QIcon(I('add_book.png')))
-        self.add_format_button.setIconSize(QSize(32, 32))
+        self.add_format_button.setIconSize(QSize(self.ICON_SIZE, self.ICON_SIZE))
         self.add_format_button.clicked.connect(self.add_format)
         self.add_format_button.setToolTip(
                 _('Add a format to this book'))
 
         self.remove_format_button = QToolButton(self)
         self.remove_format_button.setIcon(QIcon(I('trash.png')))
-        self.remove_format_button.setIconSize(QSize(32, 32))
+        self.remove_format_button.setIconSize(QSize(self.ICON_SIZE, self.ICON_SIZE))
         self.remove_format_button.clicked.connect(self.remove_format)
         self.remove_format_button.setToolTip(
                 _('Remove the selected format from this book'))
@@ -904,8 +909,7 @@ class FormatsManager(QWidget):
         self.formats.delete_format.connect(self.remove_format)
         self.formats.itemDoubleClicked.connect(self.show_format)
         self.formats.setDragDropMode(QAbstractItemView.DragDropMode.DropOnly)
-        self.formats.setIconSize(QSize(32, 32))
-        self.formats.setMaximumWidth(200)
+        self.formats.setIconSize(QSize(self.ICON_SIZE, self.ICON_SIZE))
 
         l.addWidget(self.cover_from_format_button, 0, 0, 1, 1)
         l.addWidget(self.metadata_from_format_button, 2, 0, 1, 1)
@@ -968,7 +972,7 @@ class FormatsManager(QWidget):
         return
 
     def add_format(self, *args):
-        files = choose_files(
+        files = choose_files_and_remember_all_files(
                 self, 'add formats dialog', _("Choose formats for ") + self.dialog.title.current_val,
                 [(_('Books'), BOOK_EXTENSIONS)])
         self._add_formats(files)
@@ -1048,7 +1052,7 @@ class FormatsManager(QWidget):
                 fmt = self.formats.item(0)
             if fmt is None:
                 error_dialog(self, _('No format selected'),
-                    _('No format selected')).exec_()
+                    _('No format selected')).exec()
                 return None
         return fmt.ext.lower()
 
@@ -1073,7 +1077,7 @@ class FormatsManager(QWidget):
                     fmt = self.formats.item(0)
                 if fmt is None:
                     error_dialog(self, _('No format selected'),
-                        _('No format selected')).exec_()
+                        _('No format selected')).exec()
                     return None, None
             ext = fmt.ext.lower()
             if fmt.path is None:
@@ -1189,7 +1193,7 @@ class Cover(ImageView):  # {{{
             if not os.access(_file, os.R_OK):
                 d = error_dialog(self, _('Cannot read'),
                         _('You do not have permission to read the file: ') + _file)
-                d.exec_()
+                d.exec()
                 return
             cover = None
             try:
@@ -1199,7 +1203,7 @@ class Cover(ImageView):  # {{{
                 d = error_dialog(
                         self, _('Error reading file'),
                         _("<p>There was an error reading from file: <br /><b>") + _file + "</b></p><br />"+str(e))
-                d.exec_()
+                d.exec()
             if cover:
                 orig = self.current_val
                 self.current_val = cover
@@ -1229,7 +1233,7 @@ class Cover(ImageView):  # {{{
         cdata = self.current_val
         from calibre.gui2.dialogs.trim_image import TrimImage
         d = TrimImage(cdata, parent=self)
-        if d.exec_() == QDialog.DialogCode.Accepted and d.image_data is not None:
+        if d.exec() == QDialog.DialogCode.Accepted and d.image_data is not None:
             self.current_val = d.image_data
             self.cdata_before_trim = cdata
 
@@ -1244,7 +1248,7 @@ class Cover(ImageView):  # {{{
         from calibre.gui2.covers import CoverSettingsDialog
         mi = self.dialog.to_book_metadata()
         d = CoverSettingsDialog(mi=mi, parent=self)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             self.current_val = generate_cover(mi, prefs=d.prefs_for_rendering)
 
     def set_pixmap_from_data(self, data):
@@ -1451,7 +1455,7 @@ class TagsEdit(EditWithComplete, ToMetadataMixin):  # {{{
             self.initialize(self.db, id_)
         else:
             d = TagEditor(self, db, id_)
-            if d.exec_() == QDialog.DialogCode.Accepted:
+            if d.exec() == QDialog.DialogCode.Accepted:
                 self.current_val = d.tags
                 self.update_items_cache(db.new_api.all_field_names('tags'))
 
@@ -1523,7 +1527,7 @@ class Identifiers(Dialog):
 
     def __init__(self, identifiers, parent=None):
         Dialog.__init__(self, _('Edit Identifiers'), 'edit-identifiers-dialog', parent=parent)
-        self.text.setPlainText('\n'.join('%s:%s' % (k, identifiers[k]) for k in sorted(identifiers, key=sort_key)))
+        self.text.setPlainText('\n'.join(f'{k}:{identifiers[k]}' for k in sorted(identifiers, key=sort_key)))
 
     def setup_ui(self):
         self.l = l = QVBoxLayout(self)
@@ -1585,11 +1589,11 @@ class IdentifiersEdit(QLineEdit, ToMetadataMixin):
         ac = m.addAction(_('Edit identifiers in a dedicated window'), self.edit_identifiers)
         m.insertAction(first, ac)
         m.insertSeparator(first)
-        m.exec_(ev.globalPos())
+        m.exec(ev.globalPos())
 
     def edit_identifiers(self):
         d = Identifiers(self.current_val, self)
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             self.current_val = d.get_identifiers()
 
     @property
@@ -1681,7 +1685,7 @@ class IdentifiersEdit(QLineEdit, ToMetadataMixin):
         text = str(QApplication.clipboard().text()).strip()
         if not text or not check_isbn(text):
             d = ISBNDialog(self, text)
-            if not d.exec_():
+            if not d.exec():
                 return
             text = d.text()
             if not text:
@@ -1705,7 +1709,7 @@ class IdentifiersEdit(QLineEdit, ToMetadataMixin):
         rules = msprefs['id_link_rules']
         if rules:
             formatter = EvalFormatter()
-            vals = {'id' : '(?P<new_id>[^/]+)'}
+            vals = {'id' : '(?P<new_id>.+)'}
             for key in rules.keys():
                 rule = rules[key]
                 for name, template in rule:

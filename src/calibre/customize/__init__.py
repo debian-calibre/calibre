@@ -177,7 +177,7 @@ class Plugin:  # {{{
             v.addWidget(config_widget)
             v.addWidget(button_box)
             size_dialog()
-            config_dialog.exec_()
+            config_dialog.exec()
 
             if config_dialog.result() == QDialog.DialogCode.Accepted:
                 if hasattr(config_widget, 'validate'):
@@ -202,7 +202,7 @@ class Plugin:  # {{{
             v.addWidget(sc)
             v.addWidget(button_box)
             size_dialog()
-            config_dialog.exec_()
+            config_dialog.exec()
 
             if config_dialog.result() == QDialog.DialogCode.Accepted:
                 sc = str(sc.text()).strip()
@@ -512,7 +512,7 @@ class CatalogPlugin(Plugin):  # {{{
 
         db.search(opts.search_text)
 
-        if opts.sort_by:
+        if getattr(opts, 'sort_by', None):
             # 2nd arg = ascending
             db.sort(opts.sort_by, True)
         return db.get_data_as_dict(ids=opts.ids)
@@ -530,7 +530,7 @@ class CatalogPlugin(Plugin):  # {{{
                 all_custom_fields.add(field+'_index')
         all_fields = all_std_fields.union(all_custom_fields)
 
-        if opts.fields != 'all':
+        if getattr(opts, 'fields', 'all') != 'all':
             # Make a list from opts.fields
             of = [x.strip() for x in opts.fields.split(',')]
             requested_fields = set(of)
@@ -565,7 +565,7 @@ class CatalogPlugin(Plugin):  # {{{
         from calibre.ptempfile import PersistentTemporaryDirectory
 
         if not type(self) in builtin_plugins and self.name not in config['disabled_plugins']:
-            files_to_copy = ["%s.%s" % (self.name.lower(),ext) for ext in ["ui","py"]]
+            files_to_copy = [f"{self.name.lower()}.{ext}" for ext in ["ui","py"]]
             resources = zipfile.ZipFile(self.plugin_path,'r')
 
             if self.resources_path is None:
@@ -575,7 +575,7 @@ class CatalogPlugin(Plugin):  # {{{
                 try:
                     resources.extract(file, self.resources_path)
                 except:
-                    print(" customize:__init__.initialize(): %s not found in %s" % (file, os.path.basename(self.plugin_path)))
+                    print(f" customize:__init__.initialize(): {file} not found in {os.path.basename(self.plugin_path)}")
                     continue
             resources.close()
 

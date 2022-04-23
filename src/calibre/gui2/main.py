@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -246,7 +245,7 @@ class GuiRunner(QObject):
 
     def timed_print(self, *a, **kw):
         if DEBUG:
-            prints('[{:.2f}]'.format(monotonic() - self.startup_time), *a, **kw)
+            prints(f'[{monotonic() - self.startup_time:.2f}]', *a, **kw)
 
     def start_gui(self, db):
         from calibre.gui2.ui import Main
@@ -408,7 +407,7 @@ def run_gui_(opts, args, app, gui_debug=None):
     app.load_builtin_fonts(scan_for_fonts=True)
     if not dynamic.get('welcome_wizard_was_run', False):
         from calibre.gui2.wizard import wizard
-        wizard().exec_()
+        wizard().exec()
         dynamic.set('welcome_wizard_was_run', True)
     from calibre.gui2.ui import Main
     if ismacos:
@@ -416,10 +415,10 @@ def run_gui_(opts, args, app, gui_debug=None):
     else:
         actions = tuple(Main.get_menubar_actions())
     runner = GuiRunner(opts, args, actions, app, gui_debug=gui_debug)
-    ret = app.exec_()
+    ret = app.exec()
     if getattr(runner.main, 'run_wizard_b4_shutdown', False):
         from calibre.gui2.wizard import wizard
-        wizard().exec_()
+        wizard().exec()
     if getattr(runner.main, 'restart_after_quit', False):
         after_quit_actions['restart_after_quit'] = True
         after_quit_actions['debug_on_restart'] = getattr(runner.main, 'debug_on_restart', False) or gui_debug is not None

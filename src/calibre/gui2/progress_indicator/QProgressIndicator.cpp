@@ -122,13 +122,13 @@ dpiScaled(qreal value) {
 
 class CalibreStyle: public QProxyStyle {
     private:
-        QHash<int, QString> icon_map;
+        const QHash<unsigned long, QString> icon_map;
         QByteArray desktop_environment;
         QDialogButtonBox::ButtonLayout button_layout;
         int transient_scroller;
 
     public:
-        CalibreStyle(QStyle *base, QHash<int, QString> icmap, int transient_scroller) : QProxyStyle(base), icon_map(icmap), transient_scroller(transient_scroller) {
+        CalibreStyle(QStyle *base, const QHash<unsigned long, QString> &icmap, int transient_scroller) : QProxyStyle(base), icon_map(icmap), transient_scroller(transient_scroller) {
             setObjectName(QString("calibre"));
             desktop_environment = detectDesktopEnvironment();
             button_layout = static_cast<QDialogButtonBox::ButtonLayout>(QProxyStyle::styleHint(SH_DialogButtonLayout));
@@ -271,7 +271,11 @@ class CalibreStyle: public QProxyStyle {
                     if (option->state & QStyle::State_HasFocus && (vopt = qstyleoption_cast<const QStyleOptionViewItem *>(option)) && widget && widget->property("highlight_current_item").toBool()) {
                         QColor color = vopt->palette.color(QPalette::Normal, QPalette::Highlight);
                         QStyleOptionViewItem opt = QStyleOptionViewItem(*vopt);
-						color = color.lighter(125);
+                        if (is_color_dark(option->palette.color(QPalette::Window))) {
+                            color = color.lighter(190);
+                        } else {
+                            color = color.lighter(125);
+                        }
                         opt.palette.setColor(QPalette::Highlight, color);
                         return QProxyStyle::drawPrimitive(element, &opt, painter, widget);
                     }
@@ -341,7 +345,18 @@ class CalibreStyle: public QProxyStyle {
         }
 
 		void drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const {
+            const QStyleOptionViewItem *vopt = NULL;
 			switch(element) {
+                case CE_ItemViewItem: {
+                    if (option->state & QStyle::State_HasFocus && (vopt = qstyleoption_cast<const QStyleOptionViewItem *>(option)) && widget && widget->property("highlight_current_item").toBool()) {
+                        if (is_color_dark(option->palette.color(QPalette::Window))) {
+                            QStyleOptionViewItem opt = QStyleOptionViewItem(*vopt);
+                            opt.palette.setColor(QPalette::HighlightedText, Qt::black);
+                            QProxyStyle::drawControl(element, &opt, painter, widget);
+                            return;
+                        }
+                    }
+                } break;
 				case CE_MenuItem:  // {{{
 					// Draw menu separators that work in both light and dark modes
 					if (const QStyleOptionMenuItem *menuItem = qstyleoption_cast<const QStyleOptionMenuItem *>(option)) {
@@ -373,7 +388,7 @@ class CalibreStyle: public QProxyStyle {
 		}
 };
 
-int load_style(QHash<int,QString> icon_map, int transient_scroller) {
+int load_style(const QHash<unsigned long,QString> &icon_map, int transient_scroller) {
     QStyle *base_style = QStyleFactory::create(QString("Fusion"));
     QApplication::setStyle(new CalibreStyle(base_style, icon_map, transient_scroller));
     return 0;

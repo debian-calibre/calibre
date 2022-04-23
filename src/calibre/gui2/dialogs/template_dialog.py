@@ -5,10 +5,11 @@ __copyright__ = '2008, Kovid Goyal kovid@kovidgoyal.net'
 __docformat__ = 'restructuredtext en'
 __license__   = 'GPL v3'
 
-import json, os, traceback
+import json, os, traceback, re
+from functools import partial
 
 from qt.core import (Qt, QDialog, QDialogButtonBox, QSyntaxHighlighter, QFont,
-                      QRegExp, QApplication, QTextCharFormat, QColor, QCursor,
+                      QApplication, QTextCharFormat, QColor, QCursor,
                       QIcon, QSize, QPalette, QLineEdit, QByteArray, QFontInfo,
                       QFontDatabase, QVBoxLayout, QTableWidget, QTableWidgetItem,
                       QComboBox, QAbstractItemView, QTextOption, QFontMetrics)
@@ -21,6 +22,7 @@ from calibre.gui2 import gprefs, error_dialog, choose_files, choose_save_file, p
 from calibre.gui2.dialogs.template_dialog_ui import Ui_TemplateDialog
 from calibre.library.coloring import (displayable_columns, color_row_key)
 from calibre.utils.config_base import tweaks
+from calibre.utils.date import DEFAULT_DATE
 from calibre.utils.formatter_functions import formatter_functions
 from calibre.utils.formatter import StopException
 from calibre.utils.icu import sort_key
@@ -41,55 +43,53 @@ class ParenPosition:
 
 class TemplateHighlighter(QSyntaxHighlighter):
 
-    Config = {}
-    Rules = []
-    Formats = {}
     BN_FACTOR = 1000
 
     KEYWORDS = ["program", 'if', 'then', 'else', 'elif', 'fi', 'for', 'rof',
-                'separator', 'break', 'continue', 'return', 'in', 'inlist']
+                'separator', 'break', 'continue', 'return', 'in', 'inlist',
+                'def', 'fed']
 
     def __init__(self, parent=None, builtin_functions=None):
         super().__init__(parent)
-
-        self.initializeFormats()
-
-        TemplateHighlighter.Rules.append((QRegExp(
-                r"\b[a-zA-Z]\w*\b(?!\(|\s+\()"
-                r"|\$+#?[a-zA-Z]\w*"),
-                "identifier"))
-
-        TemplateHighlighter.Rules.append((QRegExp(
-                "|".join([r"\b%s\b" % keyword for keyword in self.KEYWORDS])),
-                "keyword"))
-
-        TemplateHighlighter.Rules.append((QRegExp(
-                "|".join([r"\b%s\b" % builtin for builtin in
-                          (builtin_functions if builtin_functions else
-                                                formatter_functions().get_builtins())])),
-                "builtin"))
-
-        TemplateHighlighter.Rules.append((QRegExp(
-                r"\b[+-]?[0-9]+[lL]?\b"
-                r"|\b[+-]?0[xX][0-9A-Fa-f]+[lL]?\b"
-                r"|\b[+-]?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\b"),
-                "number"))
-
-        stringRe = QRegExp(r"""(?:[^:]'[^']*'|"[^"]*")""")
-        stringRe.setMinimal(True)
-        TemplateHighlighter.Rules.append((stringRe, "string"))
-
-        lparenRe = QRegExp(r'\(')
-        lparenRe.setMinimal(True)
-        TemplateHighlighter.Rules.append((lparenRe, "lparen"))
-        rparenRe = QRegExp(r'\)')
-        rparenRe.setMinimal(True)
-        TemplateHighlighter.Rules.append((rparenRe, "rparen"))
-
+        self.initialize_formats()
+        self.initialize_rules(builtin_functions)
         self.regenerate_paren_positions()
         self.highlighted_paren = False
 
-    def initializeFormats(self):
+    def initialize_rules(self, builtin_functions):
+        r = []
+
+        def a(a, b):
+            r.append((re.compile(a), b))
+
+        a(
+            r"\b[a-zA-Z]\w*\b(?!\(|\s+\()"
+            r"|\$+#?[a-zA-Z]\w*",
+            "identifier")
+
+        a(
+            "|".join([r"\b%s\b" % keyword for keyword in self.KEYWORDS]),
+            "keyword")
+
+        a(
+            "|".join([r"\b%s\b" % builtin for builtin in
+                        (builtin_functions if builtin_functions else
+                                            formatter_functions().get_builtins())]),
+            "builtin")
+
+        a(
+            r"\b[+-]?[0-9]+[lL]?\b"
+            r"|\b[+-]?0[xX][0-9A-Fa-f]+[lL]?\b"
+            r"|\b[+-]?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\b",
+            "number")
+
+        a(r"""(?<!:)'[^']*'|"[^"]*\"""", "string")
+
+        a(r'\(', "lparen")
+        a(r'\)', "rparen")
+        self.Rules = tuple(r)
+
+    def initialize_formats(self):
         font_name = gprefs.get('gpm_template_editor_font', None)
         size = gprefs['gpm_template_editor_font_size']
         if font_name is None:
@@ -97,36 +97,37 @@ class TemplateHighlighter(QSyntaxHighlighter):
             font.setFixedPitch(True)
             font.setPointSize(size)
             font_name = font.family()
-        Config = self.Config
-        Config["fontfamily"] = font_name
-        pal = QApplication.instance().palette()
+        config = self.Config = {}
+        config["fontfamily"] = font_name
+        app_palette = QApplication.instance().palette()
         for name, color, bold, italic in (
                 ("normal", None, False, False),
-                ("keyword", pal.color(QPalette.ColorRole.Link).name(), True, False),
-                ("builtin", pal.color(QPalette.ColorRole.Link).name(), False, False),
+                ("keyword", app_palette.color(QPalette.ColorRole.Link).name(), True, False),
+                ("builtin", app_palette.color(QPalette.ColorRole.Link).name(), False, False),
                 ("identifier", None, False, True),
                 ("comment", "#007F00", False, True),
                 ("string", "#808000", False, False),
                 ("number", "#924900", False, False),
                 ("lparen", None, True, True),
                 ("rparen", None, True, True)):
-            Config["%sfontcolor" % name] = color
-            Config["%sfontbold" % name] = bold
-            Config["%sfontitalic" % name] = italic
-        baseFormat = QTextCharFormat()
-        baseFormat.setFontFamily(Config["fontfamily"])
-        Config["fontsize"] = size
-        baseFormat.setFontPointSize(Config["fontsize"])
+            config["%sfontcolor" % name] = color
+            config["%sfontbold" % name] = bold
+            config["%sfontitalic" % name] = italic
+        base_format = QTextCharFormat()
+        base_format.setFontFamily(config["fontfamily"])
+        config["fontsize"] = size
+        base_format.setFontPointSize(config["fontsize"])
 
+        self.Formats = {}
         for name in ("normal", "keyword", "builtin", "comment", "identifier",
                      "string", "number", "lparen", "rparen"):
-            format_ = QTextCharFormat(baseFormat)
-            col = Config["%sfontcolor" % name]
-            if col:
-                format_.setForeground(QColor(col))
-            if Config["%sfontbold" % name]:
+            format_ = QTextCharFormat(base_format)
+            color = config["%sfontcolor" % name]
+            if color:
+                format_.setForeground(QColor(color))
+            if config["%sfontbold" % name]:
                 format_.setFontWeight(QFont.Weight.Bold)
-            format_.setFontItalic(Config["%sfontitalic" % name])
+            format_.setFontItalic(config["%sfontitalic" % name])
             self.Formats[name] = format_
 
     def find_paren(self, bn, pos):
@@ -145,39 +146,37 @@ class TemplateHighlighter(QSyntaxHighlighter):
             self.setFormat(0, textLength, self.Formats["comment"])
             return
 
-        for regex, format_ in TemplateHighlighter.Rules:
-            i = regex.indexIn(text)
-            while i >= 0:
-                length = regex.matchedLength()
+        for regex, format_ in self.Rules:
+            for m in regex.finditer(text):
+                i, length = m.start(), m.end() - m.start()
                 if format_ in ['lparen', 'rparen']:
                     pp = self.find_paren(bn, i)
                     if pp and pp.highlight:
                         self.setFormat(i, length, self.Formats[format_])
                 else:
                     self.setFormat(i, length, self.Formats[format_])
-                i = regex.indexIn(text, i + length)
 
         if self.generate_paren_positions:
             t = str(text)
             i = 0
-            foundQuote = False
+            found_quote = False
             while i < len(t):
                 c = t[i]
                 if c == ':':
                     # Deal with the funky syntax of template program mode.
                     # This won't work if there are more than one template
                     # expression in the document.
-                    if not foundQuote and i+1 < len(t) and t[i+1] == "'":
+                    if not found_quote and i+1 < len(t) and t[i+1] == "'":
                         i += 2
                 elif c in ["'", '"']:
-                    foundQuote = True
+                    found_quote = True
                     i += 1
                     j = t[i:].find(c)
                     if j < 0:
                         i = len(t)
                     else:
                         i = i + j
-                elif c in ['(', ')']:
+                elif c in ('(', ')'):
                     pp = ParenPosition(bn, i, c)
                     self.paren_positions.append(pp)
                     self.paren_pos_map[bn*self.BN_FACTOR+i] = pp
@@ -185,28 +184,28 @@ class TemplateHighlighter(QSyntaxHighlighter):
 
     def rehighlight(self):
         QApplication.setOverrideCursor(QCursor(Qt.CursorShape.WaitCursor))
-        QSyntaxHighlighter.rehighlight(self)
+        super().rehighlight()
         QApplication.restoreOverrideCursor()
 
     def check_cursor_pos(self, chr_, block, pos_in_block):
-        found_pp = -1
+        paren_pos = -1
         for i, pp in enumerate(self.paren_positions):
             pp.set_highlight(False)
             if pp.block == block and pp.pos == pos_in_block:
-                found_pp = i
+                paren_pos = i
 
-        if chr_ not in ['(', ')']:
+        if chr_ not in ('(', ')'):
             if self.highlighted_paren:
                 self.rehighlight()
                 self.highlighted_paren = False
             return
 
-        if found_pp >= 0:
+        if paren_pos >= 0:
             stack = 0
             if chr_ == '(':
-                list_ = self.paren_positions[found_pp+1:]
+                list_ = self.paren_positions[paren_pos+1:]
             else:
-                list_ = reversed(self.paren_positions[0:found_pp])
+                list_ = reversed(self.paren_positions[0:paren_pos])
             for pp in list_:
                 if pp.paren == chr_:
                     stack += 1
@@ -214,7 +213,7 @@ class TemplateHighlighter(QSyntaxHighlighter):
                     stack -= 1
                 else:
                     pp.set_highlight(True)
-                    self.paren_positions[found_pp].set_highlight(True)
+                    self.paren_positions[paren_pos].set_highlight(True)
                     break
         self.highlighted_paren = True
         self.rehighlight()
@@ -284,7 +283,7 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
                 self.icon_field.setVisible(False)
 
             for n1, k1 in cols:
-                self.icon_field.addItem('{} ({})'.format(n1, k1), k1)
+                self.icon_field.addItem(f'{n1} ({k1})', k1)
             self.icon_file_names = []
             d = os.path.join(config_dir, 'cc_icons')
             if os.path.exists(d):
@@ -369,11 +368,11 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
 
         tt = _('Template language tutorial')
         self.template_tutorial.setText(
-            '<a href="%s">%s</a>' % (
+            '<a href="{}">{}</a>'.format(
                 localize_user_manual_link('https://manual.calibre-ebook.com/template_lang.html'), tt))
         tt = _('Template function reference')
         self.template_func_reference.setText(
-            '<a href="%s">%s</a>' % (
+            '<a href="{}">{}</a>'.format(
                 localize_user_manual_link('https://manual.calibre-ebook.com/generated/en/template_ref.html'), tt))
 
         s = gprefs.get('template_editor_break_on_print', False)
@@ -395,7 +394,7 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
         self.load_button.clicked.connect(self.load_template_from_file)
         self.save_button.clicked.connect(self.save_template)
 
-        self.textbox.setWordWrapMode(QTextOption.WordWrap)
+        self.set_word_wrap(gprefs.get('gpm_template_editor_word_wrap_mode', True))
         self.textbox.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         self.textbox.customContextMenuRequested.connect(self.show_context_menu)
         # Now geometry
@@ -439,10 +438,19 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
                 # the columns will all be empty, which in some very unusual
                 # cases might cause formatter errors. We can live with that.
                 from calibre.gui2.ui import get_gui
-                mi.set_all_user_metadata(
-                      get_gui().current_db.new_api.field_metadata.custom_field_metadata())
+                fm = get_gui().current_db.new_api.field_metadata
+                mi.set_all_user_metadata(fm.custom_field_metadata())
             for col in mi.get_all_user_metadata(False):
-                mi.set(col, (col,), 0)
+                if fm[col]['datatype'] == 'datetime':
+                    mi.set(col, DEFAULT_DATE)
+                elif fm[col]['datatype'] in ('int', 'float', 'rating'):
+                    mi.set(col, 2)
+                elif fm[col]['datatype'] == 'bool':
+                    mi.set(col, False)
+                elif fm[col]['is_multiple']:
+                    mi.set(col, (col,))
+                else:
+                    mi.set(col, col, 1)
             mi = (mi, )
         self.mi = mi
         tv = self.template_value
@@ -476,19 +484,29 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
     def show_context_menu(self, point):
         m = self.textbox.createStandardContextMenu()
         m.addSeparator()
-        ca = m.addAction(_('Toggle word wrap'))
-        to_what = (QTextOption.NoWrap if self.textbox.wordWrapMode() == QTextOption.WordWrap
-                   else QTextOption.WordWrap)
-        ca.triggered.connect(lambda: self.textbox.setWordWrapMode(to_what))
+        word_wrapping = gprefs['gpm_template_editor_word_wrap_mode']
+        if word_wrapping:
+            ca = m.addAction(_('Disable word wrap'))
+            ca.setIcon(QIcon(I('list_remove.png')))
+        else:
+            ca = m.addAction(_('Enable word wrap'))
+            ca.setIcon(QIcon(I('ok.png')))
+        ca.triggered.connect(partial(self.set_word_wrap, not word_wrapping))
         m.addSeparator()
         ca = m.addAction(_('Load template from the Template tester'))
         ca.triggered.connect(self.load_last_template_text)
         m.addSeparator()
         ca = m.addAction(_('Load template from file'))
+        ca.setIcon(QIcon(I('document_open.png')))
         ca.triggered.connect(self.load_template_from_file)
         ca = m.addAction(_('Save template to file'))
+        ca.setIcon(QIcon(I('save.png')))
         ca.triggered.connect(self.save_template)
-        m.exec_(self.textbox.mapToGlobal(point))
+        m.exec(self.textbox.mapToGlobal(point))
+
+    def set_word_wrap(self, to_what):
+        gprefs['gpm_template_editor_word_wrap_mode'] = to_what
+        self.textbox.setWordWrapMode(QTextOption.WordWrap if to_what else QTextOption.NoWrap)
 
     def load_last_template_text(self):
         from calibre.customize.ui import find_plugin
@@ -538,7 +556,7 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
         self.textbox.setTabStopDistance(w)
         self.source_code.setTabStopDistance(w)
         self.textbox.setFont(font)
-        self.highlighter.initializeFormats()
+        self.highlighter.initialize_formats()
         self.highlighter.rehighlight()
 
     def set_up_font_boxes(self):
@@ -600,7 +618,7 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
                 return
             self.break_reporter_dialog = BreakReporter(self, mi_to_use,
                                                        txt, val, locals_, line_number)
-            if not self.break_reporter_dialog.exec_():
+            if not self.break_reporter_dialog.exec():
                 raise StopException()
 
     def filename_button_clicked(self):
@@ -877,8 +895,9 @@ class EmbeddedTemplateDialog(TemplateDialog):
 
 
 if __name__ == '__main__':
-    app = QApplication([])
+    from calibre.gui2 import Application
+    app = Application([])
     from calibre.ebooks.metadata.book.base import field_metadata
     d = TemplateDialog(None, '{title}', fm=field_metadata)
-    d.exec_()
+    d.exec()
     del app

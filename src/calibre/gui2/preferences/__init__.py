@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -378,7 +377,7 @@ def show_config_widget(category, name, gui=None, show_restart_msg=False,
         b.setDefault(True)
         b.setAutoDefault(True)
     w.changed_signal.connect(onchange)
-    bb.button(QDialogButtonBox.StandardButton.Cancel).setFocus(True)
+    bb.button(QDialogButtonBox.StandardButton.Cancel).setFocus(Qt.FocusReason.OtherFocusReason)
     l = QVBoxLayout()
     d.setLayout(l)
     l.addWidget(w)
@@ -391,7 +390,7 @@ def show_config_widget(category, name, gui=None, show_restart_msg=False,
     w.initialize()
     if geom is not None:
         QApplication.instance().safe_restore_geometry(d, geom)
-    d.exec_()
+    d.exec()
     geom = bytearray(d.saveGeometry())
     gprefs[conf_name] = geom
     rr = getattr(d, 'restart_required', False)

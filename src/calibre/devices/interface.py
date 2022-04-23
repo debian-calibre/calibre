@@ -8,6 +8,15 @@ from calibre.constants import iswindows
 from calibre.customize import Plugin
 
 
+class OpenPopupMessage:
+
+    def __init__(self, title='', message='', level='info', skip_dialog_skip_precheck=True):
+        self.title = title
+        self.message = message
+        self.level = level
+        self.skip_dialog_skip_precheck = skip_dialog_skip_precheck
+
+
 class DevicePlugin(Plugin):
     """
     Defines the interface that should be implemented by backends that
@@ -69,7 +78,7 @@ class DevicePlugin(Plugin):
     # Encapsulates an annotation fetched from the device
     UserAnnotation = namedtuple('Annotation','type, value')
 
-    #: GUI displays this as a message if not None. Useful if opening can take a
+    #: GUI displays this as a message if not None in the status bar. Useful if opening can take a
     #: long time
     OPEN_FEEDBACK_MESSAGE = None
 
@@ -125,6 +134,11 @@ class DevicePlugin(Plugin):
         if hasattr(cls, '__name__'):
             return cls.__name__
         return cls.name
+
+    @classmethod
+    def get_open_popup_message(self):
+        ' GUI displays this as a non-modal popup. Should be an instance of OpenPopupMessage '
+        return None
 
     # Device detection {{{
     def test_bcd(self, bcdDevice, bcd):
@@ -216,7 +230,7 @@ class DevicePlugin(Plugin):
         :param key: The key to unlock the device
         :param log_packets: If true the packet stream to/from the device is logged
         :param report_progress: Function that is called with a % progress
-                                (number between 0 and 100) for various tasks
+                                (number between 0 and 100) for various tasks.
                                 If it is called with -1 that means that the
                                 task does not have any progress information
         :param detected_device: Device information from the device scanner
@@ -302,7 +316,7 @@ class DevicePlugin(Plugin):
         Set a function to report progress information.
 
         :param report_progress: Function that is called with a % progress
-                                (number between 0 and 100) for various tasks
+                                (number between 0 and 100) for various tasks.
                                 If it is called with -1 that means that the
                                 task does not have any progress information
 

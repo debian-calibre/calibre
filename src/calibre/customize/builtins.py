@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
 
@@ -104,13 +101,22 @@ plugins += [HTML2ZIP, PML2PMLZ, TXT2TXTZ, ArchiveExtract, KPFExtract]
 class ComicMetadataReader(MetadataReaderPlugin):
 
     name = 'Read comic metadata'
-    file_types = {'cbr', 'cbz', 'cb7'}
+    file_types = {'cbr', 'cbz', 'cb7', 'cbc'}
     description = _('Extract cover from comic files')
 
     def customization_help(self, gui=False):
         return 'Read series number from volume or issue number. Default is volume, set this to issue to use issue number instead.'
 
     def get_metadata(self, stream, ftype):
+        if ftype == 'cbc':
+            from zipfile import ZipFile
+            zf = ZipFile(stream)
+            fcn = zf.open('comics.txt').read().decode('utf-8').splitlines()[0]
+            oname = getattr(stream, 'name', None)
+            stream = zf.open(fcn)
+            ftype = fcn.split('.')[-1].lower()
+            if oname:
+                stream.name = oname
         if hasattr(stream, 'seek') and hasattr(stream, 'tell'):
             pos = stream.tell()
             id_ = stream.read(3)
@@ -1811,16 +1817,6 @@ class StoreWeightlessBooksStore(StoreBase):
     formats = ['EPUB', 'HTML', 'LIT', 'MOBI', 'PDF']
 
 
-class StoreWHSmithUKStore(StoreBase):
-    name = 'WH Smith UK'
-    author = 'Charles Haley'
-    description = "Shop for savings on Books, discounted Magazine subscriptions and great prices on Stationery, Toys & Games"
-    actual_plugin = 'calibre.gui2.store.stores.whsmith_uk_plugin:WHSmithUKStore'
-
-    headquarters = 'UK'
-    formats = ['EPUB', 'PDF']
-
-
 class StoreWolneLekturyStore(StoreBase):
     name = 'Wolne Lektury'
     author = 'Tomasz Długosz'
@@ -1840,15 +1836,6 @@ class StoreWoblinkStore(StoreBase):
     headquarters = 'PL'
     formats = ['EPUB', 'MOBI', 'PDF', 'WOBLINK']
     affiliate = True
-
-
-class XinXiiStore(StoreBase):
-    name = 'XinXii'
-    description = ''
-    actual_plugin = 'calibre.gui2.store.stores.xinxii_plugin:XinXiiStore'
-
-    headquarters = 'DE'
-    formats = ['EPUB', 'PDF']
 
 
 plugins += [
@@ -1893,10 +1880,8 @@ plugins += [
     StoreSwiatEbookowStore,
     StoreVirtualoStore,
     StoreWeightlessBooksStore,
-    StoreWHSmithUKStore,
     StoreWolneLekturyStore,
     StoreWoblinkStore,
-    XinXiiStore
 ]
 
 # }}}

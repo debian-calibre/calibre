@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "نوفمبر 12, 2021" "5.32.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "أبريل 22, 2022" "5.41.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -50,7 +50,7 @@ The output e\-book format is guessed from the file extension of output_file. out
 After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
 For full documentation of the conversion system see
-conversion
+\fI\%E\-book conversion\fP
 .sp
 Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .sp
@@ -325,7 +325,11 @@ Convert fancy quotes, dashes and ellipsis to their plain equivalents.
 .UNINDENT
 .SH المعالجة الإرشادية
 .sp
-Modify the document text and structure using common patterns. Disabled by default. Use \-\-enable\-heuristics to enable.  Individual actions can be disabled with the \-\-disable\-* options.
+عدّل نص وبِنية الوثيقة باستخدام أنماط متعارفة. معطّل مبدئيا. استخدم \-\-enable\-heuristics لتمكينه. يمكن تعطيل إجراءات مفردة بإجراءات \-\-disable\-
+.nf
+*
+.fi
+\&.
 .INDENT 0.0
 .TP
 .B \-\-disable\-dehyphenate
@@ -383,7 +387,7 @@ Left aligned scene break markers are center aligned. Replace soft scene breaks t
 .UNINDENT
 .SH بحث إبدال
 .sp
-تعديل نص الوثيقة وهيكل استخدام أنماط يحددها المستخدم.
+عدّل نص وبِنية الوثيقة باستخدام أنماط عرّفها المستخدم.
 .INDENT 0.0
 .TP
 .B \-\-search\-replace
@@ -586,7 +590,7 @@ Set the series this e\-book belongs to.
 .INDENT 0.0
 .TP
 .B \-\-timestamp
-Set the book timestamp (no longer used anywhere)
+عيّن البصمة الزمنية للكتاب (لم تعدْ مستخدمة في أي مكان)
 .UNINDENT
 .INDENT 0.0
 .TP

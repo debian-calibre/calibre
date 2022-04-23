@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 # License: GPLv3 Copyright: 2009, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -155,12 +154,15 @@ class Develop(Command):
         self.success()
 
     def install_env_module(self):
-        import distutils.sysconfig as s
-        libdir = s.get_python_lib(prefix=self.opts.staging_root)
+        import sysconfig
+        libdir = os.path.join(
+            self.opts.staging_root, sysconfig.get_config_var('PLATLIBDIR') or 'lib',
+            os.path.basename(sysconfig.get_config_var('DESTLIB') or sysconfig.get_config_var('LIBDEST') or f'python{sysconfig.get_python_version()}'),
+            'site-packages')
         try:
             if not os.path.exists(libdir):
                 os.makedirs(libdir)
-        except EnvironmentError:
+        except OSError:
             self.warn('Cannot install calibre environment module to: '+libdir)
         else:
             path = os.path.join(libdir, 'init_calibre.py')
@@ -364,7 +366,7 @@ class Bootstrap(Command):
     def pre_sub_commands(self, opts):
         tdir = self.j(self.d(self.SRC), 'translations')
         clone_cmd = [
-            'git', 'clone', 'https://github.com/{}.git'.format(self.TRANSLATIONS_REPO), 'translations']
+            'git', 'clone', f'https://github.com/{self.TRANSLATIONS_REPO}.git', 'translations']
         if opts.ephemeral:
             if os.path.exists(tdir):
                 shutil.rmtree(tdir)

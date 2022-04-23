@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "novembre 12, 2021" "5.32.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "aprile 22, 2022" "5.41.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -41,7 +41,7 @@ calibre\-server [opzioni] [percorso cartella della biblioteca...]
 .UNINDENT
 .UNINDENT
 .sp
-Avvia il Server dei Contenuti di calibre. Il Server dei Contenuti di calibre rende
+Avvia il server dei contenuti di calibre. Il server dei contenuti di calibre rende
 visibili le tue biblioteche di calibre su internet. Puoi specificare il percorso
 delle cartelle della biblioteca come argomenti di \fBcalibre\-server\fP\&. Se non specifichi
 alcun percorso, verranno usate tutte le biblioteche che il programma
@@ -77,12 +77,12 @@ Numero di login falliti necessari per il ban.       Il numero di login falliti d
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-Banna gli indirizzi IP che hanno fallito più volte ad eseguire il login.    Blocca temporaneamente l\fB\(aq\fPaccesso per gli indirizzi IP che hanno fallito ripetutamente ad eseguire il login per il numero specificato di minuti. Utile per  prevenire tentativi di indovinare le password. Se impostato a zero non viene eseguito alcun ban
+Blocca gli indirizzi IP che hanno sbagliato più volte l\fB\(aq\fPaccesso.    Blocca temporaneamente l\fB\(aq\fPaccesso agli indirizzi IP che hanno fallito ripetutamente il login per il numero di minuti specificato. Utile per prevenire tentativi di indovinare la password. Se impostato su zero non viene eseguito alcun ban.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-book\-list\-mode
-Scegli la modalità predefinita per l\fB\(aq\fPelenco dei libri.      Imposta la modalità predefinita per l\fB\(aq\fPelenco dei libri che saraìà usata per i nuovi utenti. I singoli utenti possono cambiare l\fB\(aq\fPimpostazione predefinita nelle loro impostazioni personali. Come impostazione predefinita è usata la griglia delle copertine.
+Scegli la modalità predefinita per l\fB\(aq\fPelenco dei libri.      Imposta la modalità predefinita per l\fB\(aq\fPelenco dei libri che sarà usata per i nuovi utenti. I singoli utenti possono cambiare l\fB\(aq\fPimpostazione predefinita nelle loro impostazioni personali. Come impostazione predefinita è usata la griglia delle copertine.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -102,7 +102,7 @@ Esegui processo in backgroud come daemon (solo Linux).
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-Limita i campi definiti dall\fB\(aq\fPutente mostrati.       Lista separata da virgole di campi di metadati definiti dall\fB\(aq\fPutente che saranno mostrati dal Server dei Contenuti nelle interfacce /opds e /mobile. Se questa opzione è specificata, ogni campo assente da questa lista non sarà mostrato. Per esempio: my_rating,my_tags
+Limita i campi definiti dall\fB\(aq\fPutente mostrati.       Lista separata da virgole di campi di metadati definiti dall\fB\(aq\fPutente che saranno mostrati dal server dei contenuti nelle interfacce /opds e /mobile. Se questa opzione è specificata, ogni campo assente da questa lista non sarà mostrato. Per esempio: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -147,7 +147,7 @@ mostra questo messaggio di aiuto ed esci
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-Campi di metadati dell\fB\(aq\fPutente da ignorare.  Lista separata da virgole di campi di metadati definiti dall\fB\(aq\fPutente che non saranno mostrati dal Server dei Contenuti nelle interfacce /opds e /mobile. Per esempio: my_rating,my_tags
+Campi di metadati dell\fB\(aq\fPutente da ignorare.  Lista separata da virgole di campi di metadati definiti dall\fB\(aq\fPutente che non saranno mostrati dal server dei contenuti nelle interfacce /opds e /mobile. Per esempio: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -252,7 +252,7 @@ Un prefisso da anteporre a tutti gli URL.   Utile se desideri far operare questo
 .INDENT 0.0
 .TP
 .B \-\-userdb
-Percorso del database degli utenti da usare per l\fB\(aq\fPautenticazione. Il database è un file SQL. Per crearlo usa \fI\%\-\-manage\-users\fP\&. Puoi saperne di più sulla gestione degli utenti qui: \fI\%https://manual.calibre\-ebook.com/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
+Percorso del database degli utenti da usare per l\fB\(aq\fPautenticazione. Il database è un file SQL. Per crearlo usa \fI\%\-\-manage\-users\fP\&. Puoi saperne di più sulla gestione degli utenti qui: \fI\%https://manual.calibre\-ebook.com/it/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
 .UNINDENT
 .INDENT 0.0
 .TP

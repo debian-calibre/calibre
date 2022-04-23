@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -115,7 +114,7 @@ class LookAndFeelWidget(Widget, Ui_Form):
         from calibre.gui2.convert.font_key import FontKeyChooser
         d = FontKeyChooser(self, self.opt_base_font_size.value(),
                 str(self.opt_font_size_mapping.text()).strip())
-        if d.exec_() == QDialog.DialogCode.Accepted:
+        if d.exec() == QDialog.DialogCode.Accepted:
             self.opt_font_size_mapping.setText(', '.join(['%.1f'%x for x in
                 d.fsizes]))
             self.opt_base_font_size.setValue(d.dbase)

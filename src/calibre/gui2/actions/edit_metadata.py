@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -12,7 +11,8 @@ import shutil
 from functools import partial
 from io import BytesIO
 from qt.core import (
-    QAction, QApplication, QDialog, QIcon, QMenu, QMimeData, QModelIndex, QTimer, QUrl
+    QAction, QApplication, QDialog, QIcon, QMenu, QMimeData, QModelIndex, QTimer,
+    QUrl
 )
 
 from calibre.db.errors import NoSuchFormat
@@ -76,7 +76,7 @@ class EditMetadataAction(InterfaceAction):
         cm('bulk', _('Edit metadata in bulk'),
                 triggered=partial(self.edit_metadata, False, bulk=True))
         md.addSeparator()
-        cm('download', _('Download metadata and covers'),
+        cm('download', _('Download metadata and covers'), icon='download-metadata.png',
                 triggered=partial(self.download_metadata, ids=None),
                 shortcut='Ctrl+D')
         self.metadata_menu = md
@@ -96,7 +96,11 @@ class EditMetadataAction(InterfaceAction):
         self.merge_menu = mb
         md.addSeparator()
         self.action_copy = cm('copy', _('Copy metadata'), icon='edit-copy.png', triggered=self.copy_metadata)
-        self.action_paset = cm('paste', _('Paste metadata'), icon='edit-paste.png', triggered=self.paste_metadata)
+        self.action_paste = cm('paste', _('Paste metadata'), icon='edit-paste.png', triggered=self.paste_metadata)
+        self.action_paste_ignore_excluded = ac = cm(
+            'paste_include_excluded_fields', _('Paste metadata including excluded fields'), icon='edit-paste.png',
+            triggered=self.paste_metadata_including_excluded_fields)
+        ac.setVisible(False)
         self.action_merge = cm('merge', _('Merge book records'), icon='merge_books.png',
             shortcut=_('M'), triggered=self.merge_books)
         self.action_merge.setMenu(mb)
@@ -182,6 +186,12 @@ class EditMetadataAction(InterfaceAction):
         c.setMimeData(md)
 
     def paste_metadata(self):
+        self.do_paste()
+
+    def paste_metadata_including_excluded_fields(self):
+        self.do_paste(ignore_excluded_fields=True)
+
+    def do_paste(self, ignore_excluded_fields=False):
         rows = self.gui.library_view.selectionModel().selectedRows()
         if not rows or len(rows) == 0:
             return error_dialog(self.gui, _('Cannot paste metadata'),
@@ -199,7 +209,10 @@ class EditMetadataAction(InterfaceAction):
         data = bytes(md.data('application/calibre-book-metadata'))
         mi = OPF(BytesIO(data), populate_spine=False, read_toc=False, try_to_guess_cover=False).to_book_metadata()
         mi.application_id = mi.uuid_id = None
-        exclude = set(tweaks['exclude_fields_on_paste'])
+        if ignore_excluded_fields:
+            exclude = set()
+        else:
+            exclude = set(tweaks['exclude_fields_on_paste'])
         paste_cover = 'cover' not in exclude
         cover = md.imageData() if paste_cover else None
         exclude.discard('cover')
@@ -369,7 +382,7 @@ class EditMetadataAction(InterfaceAction):
                 action_button=(_('&View book'), I('view.png'), self.gui.iactions['View'].view_historical),
                 db=db
             )
-            if d.exec_() == QDialog.DialogCode.Accepted:
+            if d.exec() == QDialog.DialogCode.Accepted:
                 if d.mark_rejected:
                     failed_ids |= d.rejected_ids
                     restrict_to_failed = True
@@ -416,7 +429,7 @@ class EditMetadataAction(InterfaceAction):
         if not rows or len(rows) == 0:
             d = error_dialog(self.gui, _('Cannot edit metadata'),
                              _('No books selected'))
-            d.exec_()
+            d.exec()
             return
         row_list = [r.row() for r in rows]
         m = self.gui.library_view.model()
@@ -508,7 +521,7 @@ class EditMetadataAction(InterfaceAction):
         if not rows or len(rows) == 0:
             d = error_dialog(self.gui, _('Cannot edit metadata'),
                     _('No books selected'))
-            d.exec_()
+            d.exec()
             return
         self.do_edit_bulk_metadata(rows, ids)
 
@@ -776,7 +789,7 @@ class EditMetadataAction(InterfaceAction):
         model = view.model()
         result = model.get_collections_with_ids()
         d = DeviceCategoryEditor(self.gui, tag_to_match=None, data=result, key=sort_key)
-        d.exec_()
+        d.exec()
         if d.result() == QDialog.DialogCode.Accepted:
             to_rename = d.to_rename  # dict of new text to old ids
             to_delete = d.to_delete  # list of ids
@@ -965,7 +978,7 @@ class EditMetadataAction(InterfaceAction):
                     'Cannot read cover as the %s file is missing from this book') % 'PDF', show=True)
             from calibre.gui2.metadata.pdf_covers import PDFCovers
             d = PDFCovers(pdfpath, parent=self.gui)
-            ret = d.exec_()
+            ret = d.exec()
             if ret == QDialog.DialogCode.Accepted:
                 cpath = d.cover_path
                 if cpath:

@@ -7,15 +7,15 @@
 # Giulia Magni <giulia.magni88@outlook.com>, 2015
 # Leonardo Armando Iarrusso <trueliarx@gmail.com>, 2015
 # demetrio <mendem@tiscali.it>, 2021
-# Michele Galimberti <galimbertimichele@gmail.com>, 2021
+# Michele Galimberti <galimbertimichele@gmail.com>, 2021-2022
 # Vincenzo Reale <vinx.reale@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-11 06:01+0000\n"
-"PO-Revision-Date: 2021-11-10 16:04+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2022-02-03 02:30+0000\n"
+"PO-Revision-Date: 2022-02-01 09:57+0000\n"
+"Last-Translator: Michele Galimberti <galimbertimichele@gmail.com>\n"
 "Language-Team: Italian (http://www.transifex.com/calibre/calibre/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -65,7 +65,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:17
 msgid "Basic templates"
-msgstr "Modelli di Base"
+msgstr "Modelli di base"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:19
 msgid ""
@@ -121,8 +121,8 @@ msgstr "``{identifiers:select(isbn)}`` - Il codice ISBN del libro"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:42
 msgid ""
-"If the metadata for field for a given a book is not defined then the field "
-"in the template is replaced by the empty string (``''``). For example, "
+"If the metadata for the field for a given book is not defined then the field"
+" in the template is replaced by the empty string (``''``). For example, "
 "consider the following template::"
 msgstr ""
 
@@ -155,7 +155,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:61
 msgid "**Conditionally including text**"
-msgstr ""
+msgstr "**Inclusione di testo condizionale**"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:63
 msgid ""
@@ -190,11 +190,10 @@ msgstr "``{field:|prefix_text|suffix_text}``"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:73
 msgid ""
-"This ``template expression`` says that if ``field`` has the the value `XXXX`"
-" then the result will be `prefix_textXXXXXsuffix_text`. If ``field`` is "
-"empty (has no value) then the result will be the empty string (nothing) "
-"because the prefix and suffix are ignored. The prefix and suffix can contain"
-" blanks."
+"This ``template expression`` says that if ``field`` has the value `XXXX` "
+"then the result will be `prefix_textXXXXXsuffix_text`. If ``field`` is empty"
+" (has no value) then the result will be the empty string (nothing) because "
+"the prefix and suffix are ignored. The prefix and suffix can contain blanks."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:75
@@ -241,7 +240,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:89
 msgid "**Formatting**"
-msgstr ""
+msgstr "**Formattazione**"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:91
 msgid ""
@@ -294,7 +293,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:111
 msgid "Using templates to define custom columns"
-msgstr ""
+msgstr "Uso dei modelli per definire colonne personalizzate"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:113
 msgid ""
@@ -324,7 +323,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:122
 msgid "Using functions in templates - Single Function Mode"
-msgstr ""
+msgstr "Uso delle funzioni nei modelli - Modalità a Funzione Singola"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:124
 msgid ""
@@ -461,7 +460,7 @@ msgid ""
 "<https://www.loc.gov/standards/iso639-2/php/code_list.php>`_ for the "
 "`language codes <https://www.loc.gov/standards/iso639-2/php/code_list.php>`_"
 " passed in as the value. Example: ``{languages:language_strings()}``.  If "
-"`localize` is zero, return the strings in English. If ``localize`` is not "
+"``localize`` is zero, return the strings in English. If ``localize`` is not "
 "zero, return the strings in the language of the current locale. "
 "``Lang_codes`` is a comma-separated list."
 msgstr ""
@@ -522,11 +521,11 @@ msgid ""
 "the title with a length of at most 15 characters in length. One template "
 "that does this is ``{title:shorten(9,-,5)}``. For a book with the title "
 "`Ancient English Laws in the Times of Ivanhoe` the result will be `Ancient "
-"E-nhoe`: the first 9 characters of the title, a ``-``, then the last 5 "
+"E-anhoe`: the first 9 characters of the title, a ``-``, then the last 5 "
 "characters. If the value's length is less than ``left chars`` + ``right "
 "chars`` + the length of ``middle text`` then the value will be returned "
 "unchanged. For example, the title `The Dome` would not be changed."
-msgstr ""
+msgstr "shorten(car sin, testo cent, car dest) -- Restituisce una versione accorciata del valore, che consiste dei caratteri ``car sin`` dell'inizio del valore, seguiti da ``testo cent``,  seguiti dai caratteri ``car dest`` della fine del valore. ``car sin`` e ``car dest`` devono essere interi non negativi. Esempio: immagina di voler mostrare il titolo con una lunghezza di al più 15 caratteri. Un modello che lo fa è ``{title:shorten(9,-,5)}``. Per un libro con il titolo `Antiche Leggi Inglesi ai Tempi di Ivanhoe` il risultato sarà `Antiche L-anhoe`: i primi 9 caratteri del titolo, un ``-``, poi gli ultimi 5 caratteri. Se la lunghezza del valore è minore di ``car sin`` + ``car dest`` + la lunghezza di ``testo cent`` il valore sarà restituito intatto. Per esempio, il titolo `La Cupola` non verrebbe cambiato."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:165
 msgid ""
@@ -1156,7 +1155,7 @@ msgid ""
 " library if there is one, otherwise the empty string. Library name case is "
 "preserved. Example: ``program: current_virtual_library_name()``. This "
 "function works only in the GUI."
-msgstr ""
+msgstr "``current_virtual_library_name()`` -- restituisce il nome della biblioteca virtuale corrente se ce n'è una, altrimenti la stringa vuota. Le maiuscole del nome della biblioteca sono conservate. Esempio: ``program: current_virtual_library_name()``. Questa funzione può essere usata solo nell'interfaccia grafica."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:393
 msgid ""
@@ -1714,7 +1713,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:520
 msgid "More complex programs in template expressions - Template Program Mode"
-msgstr ""
+msgstr "Programmi più complessi nelle espressioni di modello - Modalità Programma di Modello"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:522
 msgid ""
@@ -1796,7 +1795,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:545
 msgid "Stored general program mode templates"
-msgstr ""
+msgstr "Salvataggio dei modelli in modalità programma generale"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:547
 msgid ""
@@ -1875,7 +1874,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:566
 msgid "Providing additional information to templates"
-msgstr ""
+msgstr "Fornire informazioni aggiuntive ai modelli"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:568
 msgid ""
@@ -1944,7 +1943,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:597
 msgid "Notes on the difference between modes"
-msgstr ""
+msgstr "Note sulla differenza tra le modalità"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:599
 msgid ""
@@ -2029,7 +2028,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:635
 msgid "User-defined Python template functions"
-msgstr ""
+msgstr "Funzioni di modello Python definite dall'utente"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:637
 msgid ""
@@ -2041,7 +2040,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:640
 msgid "Special notes for save/send templates"
-msgstr ""
+msgstr "Note particolari per i modelli di salvataggio/invio"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:642
 msgid ""
@@ -2103,7 +2102,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:659
 msgid "Templates and plugboards"
-msgstr ""
+msgstr "Modelli e pannelli di controllo"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:661
 msgid ""
@@ -2140,7 +2139,7 @@ msgstr ""
 msgid ""
 "a plugboard with an exact match on format and device, e.g., ``EPUB`` and "
 "``ANDROID``"
-msgstr ""
+msgstr "un pannello che corrisponde esattamente per formato e dispositivo, p.es., ``EPUB`` e ``ANDROID``"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:670
 msgid ""
@@ -2152,7 +2151,7 @@ msgstr ""
 msgid ""
 "a plugboard with the special ``any format`` choice and an exact match on "
 "device, e.g., ``any format`` and ``ANDROID``"
-msgstr ""
+msgstr "un pannello con la scelta speciale ``any format``e una corrispondenza esatta per il dispositivo, p.es. ``any format`` e ``ANDROID``"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:672
 msgid "a plugboard with ``any format`` and ``any device``"
@@ -2190,8 +2189,8 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:682
-msgid "Tips:"
-msgstr "Suggerimenti:"
+msgid "Tips"
+msgstr "Suggerimenti"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:684
 msgid ""
@@ -2220,4 +2219,4 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:692
 msgid "Function reference"
-msgstr ""
+msgstr "Riferimenti delle funzioni"

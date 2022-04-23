@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 __license__   = 'GPL v3'
 __copyright__ = '2009, John Schember <john at nachtimwald.com>'
 __docformat__ = 'restructuredtext en'
@@ -89,8 +86,9 @@ class NOOK_COLOR(NOOK):
         0x007,  # Glowlight from 2013
         0xb,    # Glowlight from 2017
         0xc,    # Glowlight from 2019
+        0xd,    # Glowlight from 2021
     ]
-    BCD         = [0x216, 0x9999]
+    BCD         = [0x216, 0x9999, 0x409]
 
     WINDOWS_MAIN_MEM = WINDOWS_CARD_A_MEM = ['EBOOK_DISK', 'NOOK_TABLET',
             'NOOK_SIMPLETOUCH', 'NOOK_GLOWLIGHT']
@@ -105,7 +103,7 @@ class NOOK_COLOR(NOOK):
         product_id = self.device_being_opened[1]
         if DEBUG:
             prints('Opened NOOK with product id:', product_id)
-        if product_id in (0xb, 0xc):
+        if product_id in (0xb, 0xc, 0xd):
             if DEBUG:
                 prints('Setting Nook upload directory to NOOK/My Files')
             self.EBOOK_DIR_MAIN = 'NOOK/My Files'

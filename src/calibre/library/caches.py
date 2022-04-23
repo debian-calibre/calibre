@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -850,7 +849,7 @@ class ResultCache(SearchQueryParser):  # {{{
     def _build_restriction_string(self, restriction):
         if self.base_restriction:
             if restriction:
-                return '(%s) and (%s)' % (self.base_restriction, restriction)
+                return f'({self.base_restriction}) and ({restriction})'
             else:
                 return self.base_restriction
         else:
@@ -866,7 +865,7 @@ class ResultCache(SearchQueryParser):  # {{{
         else:
             q = query
             if search_restriction:
-                q = '(%s) and (%s)' % (search_restriction, query)
+                q = f'({search_restriction}) and ({query})'
         if not q:
             if set_restriction_count:
                 self.search_restriction_book_count = len(self._map)
@@ -913,13 +912,12 @@ class ResultCache(SearchQueryParser):  # {{{
     def set_marked_ids(self, id_dict):
         '''
         ids in id_dict are "marked". They can be searched for by
-        using the search term ``marked:true``. Pass in an empty dictionary or
-        set to clear marked ids.
+        using the search term ``marked:true`` or ``marked:value``.
+        Pass in an empty dictionary or set to clear marked ids.
 
         :param id_dict: Either a dictionary mapping ids to values or a set
-        of ids. In the latter case, the value is set to 'true' for all ids. If
-        a mapping is provided, then the search can be used to search for
-        particular values: ``marked:value``
+        of ids. If a mapping is provided, then the search can be used to search
+        for particular values: ``marked:value``
         '''
         if not hasattr(id_dict, 'items'):
             # Simple list. Make it a dict of string 'true'

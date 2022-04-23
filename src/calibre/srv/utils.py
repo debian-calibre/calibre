@@ -1,11 +1,10 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 
 
 __license__ = 'GPL v3'
 __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
 
-import errno, socket, os, time
+import errno, socket, os
 from email.utils import formatdate
 from operator import itemgetter
 
@@ -99,12 +98,12 @@ class MultiDict(dict):  # {{{
         return ans if all else ans[-1]
 
     def __repr__(self):
-        return '{' + ', '.join('%s: %s' % (reprlib.repr(k), reprlib.repr(v)) for k, v in iteritems(self)) + '}'
+        return '{' + ', '.join(f'{reprlib.repr(k)}: {reprlib.repr(v)}' for k, v in iteritems(self)) + '}'
     __str__ = __unicode__ = __repr__
 
     def pretty(self, leading_whitespace=''):
         return leading_whitespace + ('\n' + leading_whitespace).join(
-            '%s: %s' % (k, (repr(v) if isinstance(v, bytes) else v)) for k, v in sorted(self.items(), key=itemgetter(0)))
+            f'{k}: {(repr(v) if isinstance(v, bytes) else v)}' for k, v in sorted(self.items(), key=itemgetter(0)))
 # }}}
 
 
@@ -428,7 +427,7 @@ def get_library_data(ctx, rd, strict_library_id=False):
     library_map, default_library = ctx.library_info(rd)
     if library_id not in library_map:
         if strict_library_id and library_id:
-            raise HTTPNotFound('No library with id: {}'.format(library_id))
+            raise HTTPNotFound(f'No library with id: {library_id}')
         library_id = default_library
     db = get_db(ctx, rd, library_id)
     return db, library_id, library_map, default_library
@@ -466,7 +465,3 @@ def get_use_roman():
         from calibre.gui2 import config
         _use_roman = config['use_roman_numerals_for_series_number']
     return _use_roman
-
-
-def fast_now_strftime(fmt):
-    return as_unicode(time.strftime(fmt), errors='replace')

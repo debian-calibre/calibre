@@ -38,11 +38,9 @@ series_index_auto_increment = 'next'
 use_series_auto_increment_tweak_when_importing = False
 
 #: Add separator after completing an author name
-# Should the completion separator be append
-# to the end of the completed text to
-# automatically begin a new completion operation
-# for authors.
-# Can be either True or False
+# Set this if the completion separator should be appended to the end of the
+# completed text to automatically begin a new completion operation for authors.
+# It can be either True or False
 authors_completer_append_separator = False
 
 #: Author sort name algorithm
@@ -206,7 +204,7 @@ gui_last_modified_display_format = 'dd MMM yyyy'
 # book will sort under 'T'.
 # This flag affects calibre's library display. It has no effect on devices. In
 # addition, titles for books added before changing the flag will retain their
-# order until the title is edited. Editing a title and hitting return
+# order until the title is edited. Editing a title and hitting Enter
 # without changing anything is sufficient to change the sort. Or you can use
 # the 'Update title sort' action in the Bulk metadata edit dialog to update
 # it for many books at once.
@@ -250,6 +248,8 @@ per_language_title_sort_articles = {
         # French
         'fra'  : (r'Le\s+', r'La\s+', r"L'", u'L´', u'L’', r'Les\s+', r'Un\s+', r'Une\s+',
                   r'Des\s+', r'De\s+La\s+', r'De\s+', r"D'", u'D´', u'L’'),
+        # Polish
+        'pol': (),
         # Italian
         'ita': ('Lo\\s+', 'Il\\s+', "L'", 'L´', 'La\\s+', 'Gli\\s+',
                 'I\\s+', 'Le\\s+', 'Uno\\s+', 'Un\\s+', 'Una\\s+', "Un'",
@@ -401,7 +401,7 @@ sort_dates_using_visible_fields = False
 cover_trim_fuzz_value = 10
 
 #: Control behavior of the book list
-# You can control the behavior of double clicks and pressing enter on the books
+# You can control the behavior of double clicks and pressing Enter on the books
 # list. Choices: open_viewer, do_nothing, show_book_details, edit_cell,
 # edit_metadata. Selecting anything other than open_viewer or show_book_details
 # has the side effect of disabling editing a field using a single click.
@@ -426,37 +426,6 @@ vertical_scrolling_per_row = False
 # Example: locale_for_sorting = 'nb' -- sort using Norwegian rules.
 locale_for_sorting =  ''
 
-#: Number of columns for custom metadata in the edit metadata dialog
-# Set whether to use one or two columns for custom metadata when editing
-# metadata  one book at a time. If True, then the fields are laid out using two
-# columns. If False, one column is used.
-metadata_single_use_2_cols_for_custom_fields = True
-
-#: Order of custom column(s) in edit metadata
-# Controls the order that custom columns are listed in edit metadata single
-# and bulk. The columns listed in the tweak are displayed first and in the
-# order provided. Any columns not listed are displayed after the listed ones,
-# in alphabetical order. Do note that this tweak does not change the size of
-# the edit widgets. Putting comments widgets in this list may result in some
-# odd widget spacing when using two-column mode.
-# Enter a comma-separated list of custom field lookup names, as in
-# metadata_edit_custom_column_order = ['#genre', '#mytags', '#etc']
-metadata_edit_custom_column_order = []
-
-#: Edit metadata custom column label width and elision point
-# Set the width of custom column labels shown in the edit metadata dialogs.
-# If metadata_edit_elide_labels is True then labels wider than the width
-# will be elided, otherwise they will be word wrapped. The maximum width is
-# computed by multiplying the average width of characters in the font by the
-# appropriate number.
-# Set the elision point to 'middle' to put the ellipsis (…) in the middle of
-# the label, 'right' to put it at the right end of the label, and 'left' to
-# put it at the left end.
-metadata_edit_elide_labels = True
-metadata_edit_bulk_cc_label_length = 25
-metadata_edit_single_cc_label_length = 12
-metadata_edit_elision_point = 'right'
-
 #: The number of seconds to wait before sending emails
 # The number of seconds to wait before sending emails when using a
 # public email server like GMX/Hotmail/Gmail. Default is: 5 minutes
@@ -466,7 +435,7 @@ metadata_edit_elision_point = 'right'
 # to be public relays here. Any relay host ending with one of the suffixes
 # in the list below will be considered a public email server.
 public_smtp_relay_delay = 301
-public_smtp_relay_host_suffixes = ['gmail.com', 'live.com', 'gmx.com']
+public_smtp_relay_host_suffixes = ['gmail.com', 'live.com', 'gmx.com', 'outlook.com']
 
 #: The maximum width and height for covers saved in the calibre library
 # All covers in the calibre library will be resized, preserving aspect ratio,
@@ -531,7 +500,14 @@ default_tweak_format = None
 # completions you will now have to press Tab to select one before pressing
 # Enter. Which technique you prefer will depend on the state of metadata in
 # your library and your personal editing style.
+#
+# If preselect_first_completion is False and you want Tab to accept what you
+# typed instead of the first completion then set tab_accepts_uncompleted_text
+# to True. If you do this then to select from the completions you must press
+# the Down or Up arrow keys. The tweak tab_accepts_uncompleted_text is ignored
+# if preselect_first_completion is True
 preselect_first_completion = False
+tab_accepts_uncompleted_text = False
 
 #: Completion mode when editing authors/tags/series/etc.
 # By default, when completing items, calibre will show you all the candidates
@@ -582,6 +558,8 @@ show_saved_search_box = False
 # Edit metadata->Copy metadata/Paste metadata actions. For example,
 # exclude_fields_on_paste = ['cover', 'timestamp', '#mycolumn']
 # to prevent pasting of the cover, Date and custom column, mycolumn.
+# You can also add a shortcut in Preferences->Shortcuts->Edit metadata
+# to paste metadata ignoring this tweak.
 exclude_fields_on_paste = []
 
 #: Skip internet connected check
@@ -594,3 +572,16 @@ skip_network_check = False
 # Sets the width of the tab stop in the template editor in "average characters".
 # For example, a value of 1 results in a space with the width of one average character.
 template_editor_tab_stop_width = 4
+
+#: Value for undefined numbers when sorting
+# Sets the value to use for undefined numbers when sorting.
+# For example, the value -10 sorts undefined numbers as if they were set to -10.
+# Use 'maximum' for the largest possible number. Use 'minimum' for the smallest
+# possible number. Quotes are optional if entering a number.
+# Examples:
+#   value_for_undefined_numbers_when_sorting = -100
+#   value_for_undefined_numbers_when_sorting = '2'
+#   value_for_undefined_numbers_when_sorting = -0.01
+#   value_for_undefined_numbers_when_sorting = 'minimum'
+#   value_for_undefined_numbers_when_sorting = 'maximum'
+value_for_undefined_numbers_when_sorting = 0

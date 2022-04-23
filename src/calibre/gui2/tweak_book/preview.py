@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 
 
@@ -14,14 +13,15 @@ from qt.core import (
 )
 from qt.webengine import (
     QWebEngineContextMenuData, QWebEnginePage, QWebEngineProfile, QWebEngineScript,
-    QWebEngineSettings, QWebEngineUrlRequestInfo, QWebEngineUrlRequestJob,
-    QWebEngineUrlSchemeHandler, QWebEngineView
+    QWebEngineSettings, QWebEngineUrlRequestJob, QWebEngineUrlSchemeHandler,
+    QWebEngineView
 )
 from threading import Thread
 
 from calibre import prints
 from calibre.constants import (
-    FAKE_HOST, FAKE_PROTOCOL, __version__, is_running_from_develop
+    FAKE_HOST, FAKE_PROTOCOL, __version__, is_running_from_develop, ismacos,
+    iswindows
 )
 from calibre.ebooks.oeb.base import OEB_DOCS, XHTML_MIME, serialize
 from calibre.ebooks.oeb.polish.parsing import parse
@@ -74,7 +74,7 @@ class ParseItem:
         self.parsing_done = False
 
     def __repr__(self):
-        return 'ParsedItem(name=%r, length=%r, fingerprint=%r, parsing_done=%r, parsed_data_is_None=%r)' % (
+        return 'ParsedItem(name={!r}, length={!r}, fingerprint={!r}, parsing_done={!r}, parsed_data_is_None={!r})'.format(
             self.name, self.length, self.fingerprint, self.parsing_done, self.parsed_data is None)
 
 
@@ -253,6 +253,7 @@ def get_editor_settings(tprefs):
         'bg': get_color('preview_background', dark_color),
         'fg': get_color('preview_foreground', dark_text_color),
         'link': get_color('preview_link_color', dark_link_color),
+        'os': 'windows' if iswindows else ('macos' if ismacos else 'linux'),
     }
 
 
@@ -338,15 +339,16 @@ class WebPage(QWebEnginePage):
         self.bridge = PreviewBridge(self)
 
     def javaScriptConsoleMessage(self, level, msg, linenumber, source_id):
-        prints('%s:%s: %s' % (source_id, linenumber, msg))
+        prints(f'{source_id}:{linenumber}: {msg}')
 
     def acceptNavigationRequest(self, url, req_type, is_main_frame):
-        if req_type == QWebEngineUrlRequestInfo.NavigationType.NavigationTypeReload:
+        if req_type in (QWebEnginePage.NavigationType.NavigationTypeReload, QWebEnginePage.NavigationType.NavigationTypeBackForward):
             return True
         if url.scheme() in (FAKE_PROTOCOL, 'data'):
             return True
-        if req_type == QWebEnginePage.NavigationType.NavigationTypeLinkClicked:
+        if url.scheme() in ('http', 'https') and req_type == QWebEnginePage.NavigationType.NavigationTypeLinkClicked:
             safe_open_url(url)
+        prints('Blocking navigation request to:', url.toString())
         return False
 
     def go_to_anchor(self, anchor):
@@ -403,7 +405,7 @@ class WebView(RestartingWebEngineView, OpenWithHandler):
     def __init__(self, parent=None):
         RestartingWebEngineView.__init__(self, parent)
         self.inspector = Inspector(self)
-        w = QApplication.instance().desktop().availableGeometry(self).width()
+        w = self.screen().availableSize().width()
         self._size_hint = QSize(int(w/3), int(w/2))
         self._page = WebPage(self)
         self.setPage(self._page)
@@ -484,7 +486,7 @@ class WebView(RestartingWebEngineView, OpenWithHandler):
                             mime = c.mime_map[resource_name]
                             if mime.startswith('image/'):
                                 menu.addAction(_('Edit %s') % resource_name, partial(self.edit_image, resource_name))
-        menu.exec_(ev.globalPos())
+        menu.exec(ev.globalPos())
 
     def open_with(self, file_name, fmt, entry):
         self.parent().open_file_with.emit(file_name, fmt, entry)
@@ -763,10 +765,10 @@ class Preview(QWidget):
 
     def apply_settings(self):
         s = self.view.settings()
-        s.setFontSize(QWebEngineSettings.FontSize.DefaultFontSize, tprefs['preview_base_font_size'])
-        s.setFontSize(QWebEngineSettings.FontSize.DefaultFixedFontSize, tprefs['preview_mono_font_size'])
-        s.setFontSize(QWebEngineSettings.FontSize.MinimumLogicalFontSize, tprefs['preview_minimum_font_size'])
-        s.setFontSize(QWebEngineSettings.FontSize.MinimumFontSize, tprefs['preview_minimum_font_size'])
+        s.setFontSize(QWebEngineSettings.FontSize.DefaultFontSize, int(tprefs['preview_base_font_size']))
+        s.setFontSize(QWebEngineSettings.FontSize.DefaultFixedFontSize, int(tprefs['preview_mono_font_size']))
+        s.setFontSize(QWebEngineSettings.FontSize.MinimumLogicalFontSize, int(tprefs['preview_minimum_font_size']))
+        s.setFontSize(QWebEngineSettings.FontSize.MinimumFontSize, int(tprefs['preview_minimum_font_size']))
         sf, ssf, mf = tprefs['engine_preview_serif_family'], tprefs['engine_preview_sans_family'], tprefs['engine_preview_mono_family']
         if sf:
             s.setFontFamily(QWebEngineSettings.FontFamily.SerifFont, sf)

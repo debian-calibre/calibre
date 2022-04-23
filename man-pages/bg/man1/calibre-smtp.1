@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "ноември 12, 2021" "5.32.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "април 22, 2022" "5.41.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -41,23 +41,23 @@ calibre\-smtp [options] [from to text]
 .UNINDENT
 .UNINDENT
 .sp
-Send mail using the SMTP protocol. \fBcalibre\-smtp\fP has two modes of operation. In the
-compose mode you specify from to and text and these are used to build and
-send an email message. In the filter mode, \fBcalibre\-smtp\fP reads a complete email
-message from STDIN and sends it.
+Изпращане на поща с помощта на SMTP протокола. \fBcalibre\-smtp\fP има два режима на работа. В
+съставен режим, който посочвате от до и текст и тези се използват за изграждане и
+изпращане на имейл съобщение. В режима на филтриране \fBcalibre\-smtp\fP чете пълно имейл
+съобщение от STDIN и гó изпраща.
 .sp
-text is the body of the email message.
-If text is not specified, a complete email message is read from STDIN.
-from is the email address of the sender and to is the email address
-of the recipient. When a complete email is read from STDIN, from and to
-are only used in the SMTP negotiation, the message headers are not modified.
+текст е тялото на имейл съобщението.
+Ако текстът не е указан, се чете пълно имейл съобщение от STDIN.
+от имейл адресът на подателя и до е имейл адрес
+на получателя. Когато пълен имейл се чете от STDIN, от и към
+се използват само в SMTP преговорите, заглавките на съобщението не се модифицират.
 .sp
-Whenever you pass arguments to \fBcalibre\-smtp\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Винаги, когато предавате аргументи на \fBcalibre\-smtp\fP, които имат интервали в тях, затворете аргументите в кавички. Например: "/some path/with spaces"
 .SH ОБЩИ НАСТРОЙКИ
 .INDENT 0.0
 .TP
 .B \-\-fork, \-f
-Fork and deliver message in background. If you use this option, you should also use \fI\%\-\-outbox\fP to handle delivery failures.
+Разкловяйте и предайте съобщение на заден план. Ако използвате тази опция, трябва също да използвайте \fB\-\-outbox,\fP за да се справите с отказите при доставка.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -67,22 +67,22 @@ Fork and deliver message in background. If you use this option, you should also 
 .INDENT 0.0
 .TP
 .B \-\-localhost, \-l
-Host name of localhost. Used when connecting to SMTP server.
+Име хост на локалхост. Използва се при свързване към SMTP сървър.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-outbox, \-o
-Path to maildir folder to store failed email messages in.
+Път до папката maildir за съхраняване на неуспешни имейл съобщения.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout, \-t
-Timeout for connection
+Изчакване за свързване
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Be more verbose
+Бъдете по\-многословни
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -91,54 +91,54 @@ Be more verbose
 .UNINDENT
 .SS COMPOSE MAIL
 .sp
-Options to compose an email. Ignored if text is not specified
+Опции за съставяне на имейл. Игнориран, ако текст не е указан
 .INDENT 0.0
 .TP
 .B \-\-attachment, \-a
-File to attach to the email
+Файл за прикачване към имейла
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-subject, \-s
-Subject of the email
+Предмет на имейла
 .UNINDENT
 .SS SMTP RELAY
 .sp
-Options to use an SMTP relay server to send mail. calibre will try to send the email directly unless \-\-relay is specified.
+Опции за използване на SMTP релейен сървър за изпращане на поща. calibre ще се опита да изпрати имейлът директно, освен ако \-\-relay не е посочено.
 .INDENT 0.0
 .TP
 .B \-\-cafile
-Path to a file of concatenated CA certificates in PEM format, used to verify the server certificate when using TLS. By default, the system CA certificates are used.
+Път до файл на свързани CA сертификати в PEM формат, използван за проверка сертификата на сървъра при използване на TLS. По подразбиране системните CA сертификати са използвани.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-verify\-server\-certificate
-Do not verify the server certificate when connecting using TLS. This used to be the default behavior in calibre versions before 3.27. If you are using a relay with a self\-signed or otherwise invalid certificate, you can use this option to restore the pre 3.27 behavior
+Не проверявайте сертификата на сървъра при свързване с помощта на TLS. Това е използвано преди да бъде поведението по подразбиране в calibre версии преди 3.27. Ако използвате a ретранслатор със самоподписан или по друг начин невалиден сертификат, може да използвате тази опция за възстановяване на поведението преди 3.27
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-encryption\-method, \-e
-Encryption method to use when connecting to relay. Choices are TLS, SSL and NONE. Default is TLS. WARNING: Choosing NONE is highly insecure
+Метод на шифроване, който да се използва при свързване с ретранслатор. Избор са TLS, SSL и НЯМА. По подразбиране е TLS. ВНИМАНИЕ: Изборът на НЯМА е силно несигурен
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password, \-p
-Password for relay
+Парола за препредаване
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-port
-Port to connect to on relay server. Default is to use 465 if encryption method is SSL and 25 otherwise.
+Порт, към който да се свържете на релейния сървър. По подразбиране е да използвате 465, ако шифроване метод е SSL и в противен случай 25.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-relay, \-r
-An SMTP relay server to use to send mail.
+SMTP релейен сървър, който да се използва за изпращане на поща.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-username, \-u
-Username for relay
+Потреб. име за препредаване
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

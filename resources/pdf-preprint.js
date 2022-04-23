@@ -31,7 +31,19 @@
         if (is_block) avoid_page_breaks_inside(img);
         else if (img.parentNode && img.parentNode.childElementCount === 1) avoid_page_breaks_inside(img.parentNode);
     }
-
+    // Change the hyphenate character to a plain ASCII minus (U+002d) the default
+    // is U+2010 but that does not render with the default Times font on macOS as of Monterey
+    // and Qt 15.5 See https://bugs.launchpad.net/bugs/1951467 and can be easily reproduced
+    // by converting a plain text file with the --pdf-hyphenate option
+    // https://bugs.chromium.org/p/chromium/issues/detail?id=1267606 (fix released Feb 1 2022 v98)
+    // See also settings.pyj
+    if (HYPHEN_CHAR) {
+        for (const elem of document.getElementsByTagName('*')) {
+            if (elem.style) {
+                elem.style.setProperty('-webkit-hyphenate-character', '"-"', 'important');
+            }
+        }
+    }
 })();
 
 

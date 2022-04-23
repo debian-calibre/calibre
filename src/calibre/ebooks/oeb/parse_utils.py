@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
 
 __license__   = 'GPL v3'
@@ -37,7 +36,7 @@ def namespace(name):
 
 
 def XHTML(name):
-    return '{%s}%s' % (XHTML_NS, name)
+    return f'{{{XHTML_NS}}}{name}'
 
 
 def xpath(elem, expr):
@@ -65,7 +64,8 @@ def merge_multiple_html_heads_and_bodies(root, log=None):
     for b in bodies:
         for x in b:
             body.append(x)
-    tuple(map(root.append, (head, body)))
+    for x in (head, body):
+        root.append(x)
     if log is not None:
         log.warn('Merging multiple <head> and <body> sections')
     return root

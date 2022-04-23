@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-03 07:43+0530\n"
+"POT-Creation-Date: 2022-03-02 13:48+0000\n"
 "PO-Revision-Date: 2020-07-03 02:15+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Persian (http://www.transifex.com/calibre/calibre/language/fa/)\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Language: fa\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:4
+#: ../../__w/calibre/calibre/manual/xpath.rst:4
 msgid "XPath tutorial"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:6
+#: ../../__w/calibre/calibre/manual/xpath.rst:6
 msgid ""
 "In this tutorial, you will be given a gentle introduction to `XPath "
 "<https://en.wikipedia.org/wiki/XPath>`_, a query language that can be used "
@@ -32,35 +32,35 @@ msgid ""
 "HTML document."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:16
+#: ../../__w/calibre/calibre/manual/xpath.rst:16
 msgid "Contents"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:19
+#: ../../__w/calibre/calibre/manual/xpath.rst:19
 msgid "Selecting by tag name"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:21
+#: ../../__w/calibre/calibre/manual/xpath.rst:21
 msgid ""
 "The simplest form of selection is to select tags by name. For example, "
 "suppose you want to select all the ``<h2>`` tags in a document. The XPath "
 "query for this is simply::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:27
+#: ../../__w/calibre/calibre/manual/xpath.rst:27
 msgid ""
 "The prefix `//` means *search at any level of the document*. Now suppose you"
 " want to search for ``<span>`` tags that are inside ``<a>`` tags. That can "
 "be achieved with::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:33
+#: ../../__w/calibre/calibre/manual/xpath.rst:33
 msgid ""
 "If you want to search for tags at a particular level in the document, change"
 " the prefix::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:39
+#: ../../__w/calibre/calibre/manual/xpath.rst:39
 msgid ""
 "This will match only ``<p>A very short e-book to demonstrate the use of "
 "XPath.</p>`` in the :ref:`sample_ebook` but not any of the other ``<p>`` "
@@ -70,7 +70,7 @@ msgid ""
 "tags."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:45
+#: ../../__w/calibre/calibre/manual/xpath.rst:45
 msgid ""
 "Now suppose you want to select both ``<h1>`` and ``<h2>`` tags. To do that, "
 "we need a XPath construct called *predicate*. A :dfn:`predicate` is simply a"
@@ -79,7 +79,7 @@ msgid ""
 "is created by enclosing the test expression in square brackets::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:53
+#: ../../__w/calibre/calibre/manual/xpath.rst:53
 msgid ""
 "There are several new features in this XPath expression. The first is the "
 "use of the wildcard ``*``. It means *match any tag*. Now look at the test "
@@ -91,69 +91,69 @@ msgid ""
 "will be introduced in this tutorial."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:62
+#: ../../__w/calibre/calibre/manual/xpath.rst:62
 msgid "Selecting by attributes"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:64
+#: ../../__w/calibre/calibre/manual/xpath.rst:64
 msgid ""
 "To select tags based on their attributes, the use of predicates is "
 "required::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:70
+#: ../../__w/calibre/calibre/manual/xpath.rst:70
 msgid ""
 "Here, the ``@`` operator refers to the attributes of the tag. You can use "
 "some of the `XPath built-in functions`_ to perform more sophisticated "
 "matching on attribute values."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:76
+#: ../../__w/calibre/calibre/manual/xpath.rst:76
 msgid "Selecting by tag content"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:78
+#: ../../__w/calibre/calibre/manual/xpath.rst:78
 msgid ""
 "Using XPath, you can even select tags based on the text they contain. The "
 "best way to do this is to use the power of *regular expressions* via the "
 "built-in function :term:`re:test()`::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:84
+#: ../../__w/calibre/calibre/manual/xpath.rst:84
 msgid ""
 "Here the ``.`` operator refers to the contents of the tag, just as the ``@``"
 " operator referred to its attributes."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:90
+#: ../../__w/calibre/calibre/manual/xpath.rst:90
 msgid "Sample e-book"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:96
+#: ../../__w/calibre/calibre/manual/xpath.rst:96
 msgid "XPath built-in functions"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:99
+#: ../../__w/calibre/calibre/manual/xpath.rst:99
 msgid "name()"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:101
+#: ../../__w/calibre/calibre/manual/xpath.rst:101
 msgid "The name of the current tag."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:102
+#: ../../__w/calibre/calibre/manual/xpath.rst:102
 msgid "contains()"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:104
+#: ../../__w/calibre/calibre/manual/xpath.rst:104
 msgid "``contains(s1, s2)`` returns `true` if s1 contains s2."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:105
+#: ../../__w/calibre/calibre/manual/xpath.rst:105
 msgid "re:test()"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/xpath.rst:107
+#: ../../__w/calibre/calibre/manual/xpath.rst:107
 msgid ""
 "``re:test(src, pattern, flags)`` returns `true` if the string `src` matches "
 "the regular expression `pattern`. A particularly useful flag is ``i``, it "

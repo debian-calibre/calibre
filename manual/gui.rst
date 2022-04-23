@@ -84,7 +84,7 @@ Edit metadata
     3. **Download metadata and covers**: Downloads metadata and covers (if available) for the books that are selected in the book list.
     4. **Merge book records**: Gives you the capability of merging the metadata and formats of two or more book records. You can choose to either delete or keep the records that were not clicked first.
 
-For more details see :ref:`metadata`.
+For more details, see :ref:`metadata`.
 
 .. _convert_ebooks:
 
@@ -163,7 +163,7 @@ The :guilabel:`Fetch news` action uses simple recipes (10-15 lines of code) for 
 The :guilabel:`Fetch news` action has three variations, accessed by doing a right-click on the button.
 
     1. **Schedule news download**: Allows you to schedule the download of your selected news sources from a list of hundreds available.  Scheduling can be set individually for each news source you select and the scheduling is flexible allowing you to select specific days of the week or a frequency of days between downloads.
-    2. **Add a custom news source**: Allows you to create a simple recipe for downloading news from a custom news site that you wish to access.  Creating the recipe can be as simple as specifying an RSS news feed URL, or you can be more prescriptive by creating Python-based code for the task. For more information see :ref:`news`.
+    2. **Add a custom news source**: Allows you to create a simple recipe for downloading news from a custom news site that you wish to access.  Creating the recipe can be as simple as specifying an RSS news feed URL, or you can be more prescriptive by creating Python-based code for the task. For more information, see :ref:`news`.
     3. **Download all scheduled news sources**: Causes calibre to immediately begin downloading all news sources that you have scheduled.
 
 
@@ -271,7 +271,7 @@ Remove books
     6. **Remove matching books from device**: Allows you to remove e-book files from a connected device that match the books that are selected in the book list.
 
 .. note::
-    Note that when you use :guilabel:`Remove books` to delete books from your calibre library, the book record is permanently deleted, but on Windows and macOS the files are placed into the recycle bin. This allows you to recover them if you change your mind.
+    Note that when you use :guilabel:`Remove books` to delete books from your calibre library, the book record is permanently deleted, but the files are placed into the :guilabel:`Recycle Bin/Trash`. This allows you to recover the files if you change your mind.
 
 .. _configuration:
 
@@ -485,6 +485,18 @@ partition your large collection of books into smaller, manageable chunks. To
 learn how to create and use Virtual libraries, see the tutorial:
 :ref:`virtual_libraries`.
 
+Temporarily marking books
+----------------------------
+
+You can temporarily mark arbitrary sets of books. Marked books will have a pin
+on them and can be searched for with ``marked:true``. To do so press
+:kbd:`Ctrl+m` or go to :guilabel:`Preferences->Toolbars & menus` and add the
+:guilabel:`Mark books` button to the main toolbar. You can even create multiple
+types of marks by right clicking the :guilabel:`Mark books` button and choosing
+:guilabel:`Mark books with text label`. The text label you enter, can later be
+searched for with: ``marked:the-text-you-entered``.
+
+
 .. _config_filename_metadata:
 
 Guessing metadata from file names
@@ -495,7 +507,7 @@ be configured to read metadata from the file name instead, via
 :guilabel:`Preferences->Import/export->Adding books->Read metadata from file contents`.
 
 You can also control how metadata is read from the filename using regular
-expressions (see :doc:`regexp`).  In the :guilabel:`Adding books` section of
+expressions (see :doc:`regexp`). In the :guilabel:`Adding books` section of
 the configuration dialog, you can specify a regular expression that calibre
 will use to try and guess metadata from the names of e-book files that you add
 to the library. The default regular expression is::
@@ -566,7 +578,7 @@ The first click on an item will restrict the list of books to those that contain
 
 Items in the Tag browser have their icons partially colored. The amount of color depends on the average rating of the books in that category. So for example if the books by Isaac Asimov have an average of four stars, the icon for Isaac Asimov in the Tag browser will be 4/5th colored. You can hover your mouse over the icon to see the average rating.
 
-The outer-level items in the :guilabel:`Tag browser`, such as Authors and Series, are called categories. You can create your own categories, called :guilabel:`User categories`, which are useful for organizing items. For example, you can use the :guilabel:`User categories editor` (click the :guilabel:`Configure` button at the lower-left of the :guilabel:`Tag browser` and choose :guilabel:`Manage authors, series, etc->User categories`) to create a User category called ``Favorite Authors``, then put the items for your favorites into the category. User categories can have sub-categories. For example, the User category ``Favorites.Authors`` is a sub-category of ``Favorites``. You might also have ``Favorites.Series``, in which case there will be two sub-categories under ``Favorites``. Sub-categories can be created by right-clicking on a User category, choosing :guilabel:`Add sub-category to...`, and entering the sub-category name; or by using the :guilabel:`User categories editor` by entering names like the Favorites example above.
+The outer-level items in the :guilabel:`Tag browser`, such as Authors and Series, are called categories. You can create your own categories, called :guilabel:`User categories`, which are useful for organizing items. For example, you can use the :guilabel:`User categories editor` (click the :guilabel:`Configure` button at the lower-left of the :guilabel:`Tag browser` and choose :guilabel:`Manage authors, tags, etc->User categories`) to create a User category called ``Favorite Authors``, then put the items for your favorites into the category. User categories can have sub-categories. For example, the User category ``Favorites.Authors`` is a sub-category of ``Favorites``. You might also have ``Favorites.Series``, in which case there will be two sub-categories under ``Favorites``. Sub-categories can be created by right-clicking on a User category, choosing :guilabel:`Add sub-category to...`, and entering the sub-category name; or by using the :guilabel:`User categories editor` by entering names like the Favorites example above.
 
 You can search User categories in the same way as built-in categories, by clicking on them. There are four different searches cycled through by clicking:
     1. "everything matching an item in the category" indicated by a single green plus sign.

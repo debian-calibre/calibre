@@ -75,7 +75,7 @@ Getting the code
 ------------------
 
 You can get the calibre source code in two ways, using a version control system or
-directly downloading a `tarball <https://calibre-ebook.com/dist/src>`_.
+directly downloading a :website_base:`tarball <dist/src>`.
 
 calibre uses `Git <https://www.git-scm.com/>`_, a distributed version control
 system. Git is available on all the platforms calibre supports.  After
@@ -89,7 +89,7 @@ calibre is a very large project with a very long source control history, so the
 above can take a while (10 mins to an hour depending on your internet speed).
 
 If you want to get the code faster, the source code for the latest release is
-always available as an `archive <https://calibre-ebook.com/dist/src>`_.
+always available as an :website_base:`archive <dist/src>`.
 
 To update a branch to the latest code, use the command::
 
@@ -210,9 +210,9 @@ Create a plain text file::
     export CALIBRE_DEVELOP_FROM="/Users/kovid/work/calibre/src"
     calibre-debug -g
 
-Save this file as ``/usr/bin/calibre-develop``, then set its permissions so that it can be executed::
+Save this file as :file:`/usr/local/bin/calibre-develop`, then set its permissions so that it can be executed::
 
-    chmod +x /usr/bin/calibre-develop
+    chmod +x /usr/local/bin/calibre-develop
 
 Once you have done this, run::
 
@@ -309,7 +309,7 @@ You can insert the following two lines of code to start an interactive Python se
     ipython(locals())
 
 When running from the command line, this will start an interactive Python interpreter with access to all
-locally defined variables (variables in the local scope). The interactive prompt even has TAB completion
+locally defined variables (variables in the local scope). The interactive prompt even has :kbd:`Tab` completion
 for object properties and you can use the various Python facilities for introspection, such as
 :func:`dir`, :func:`type`, :func:`repr`, etc.
 

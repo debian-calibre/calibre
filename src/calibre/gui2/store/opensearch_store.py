@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 __license__ = 'GPL 3'
 __copyright__ = '2011, John Schember <john@nachtimwald.com>'
 __docformat__ = 'restructuredtext en'
@@ -96,7 +93,7 @@ class OpenSearchOPDSStore(StorePlugin):
             d = WebStoreDialog(self.gui, self.web_url, parent, detail_item, create_browser=self.create_browser)
             d.setWindowTitle(self.name)
             d.set_tags(self.config.get('tags', ''))
-            d.exec_()
+            d.exec()
 
     def search(self, query, max_results=10, timeout=60):
         if not getattr(self, 'open_search_url', None):
