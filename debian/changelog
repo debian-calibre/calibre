@@ -4,6 +4,9 @@ calibre (5.41.0+dfsg-1~bpo11+1) bullseye-backports; urgency=medium
   * The 5.31-1+dfsg-2 release added support for the 2021 Kindle Paperwhite,
     and the Kobo Ellipsa.  As usual, other devices running upgraded firmware
     benefit (or sometimes require) a newer release of Calibre.
+  * Calibre >= 5.40 FTBFS due to failed tests with feedparser 5.x.x, so
+    qualify the python3-feedparser dependency with the first version
+    available in Debian (>=6.0.8-1~).
 
  -- Nicholas D Steeves <sten@debian.org>  Wed, 1 Dec 2021 20:59:21 -0500
 
