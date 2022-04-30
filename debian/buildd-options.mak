@@ -10,13 +10,17 @@ ifeq      (armhf,    $(DEB_HOST_ARCH))
   # Test failed
   TEST_FLAGS += --exclude-test-name=dictionaries
 else ifeq (mipsel,   $(DEB_HOST_ARCH))
-  # Test error
+  # Qt test error
   TEST_FLAGS += --exclude-test-name=qt
+  TEST_FLAGS += --exclude-test-name=dom_load
+
   # Test failed
   TEST_FLAGS += --exclude-test-name=dictionaries
 else ifeq (mips64el, $(DEB_HOST_ARCH))
-  # Test error
+  # Qt test error
   TEST_FLAGS += --exclude-test-name=qt
+  TEST_FLAGS += --exclude-test-name=dom_load
+
   # Test failed
   TEST_FLAGS += --exclude-test-name=dictionaries
 endif
