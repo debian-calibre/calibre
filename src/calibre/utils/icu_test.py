@@ -112,6 +112,22 @@ class TestICU(unittest.TestCase):
         self.assertTrue(icu.contains('', ''))
         self.assertFalse(icu.contains('xxx', 'xx'))
         self.assertTrue(icu.primary_contains('pena', 'peña'))
+        x = icu.primary_collator()
+        self.ae(x.get_attribute(icu._icu.UCOL_STRENGTH), icu._icu.UCOL_PRIMARY),
+        self.ae((0, 4), icu.primary_no_punc_find('pena"', 'peña'))
+        self.ae((0, 13), icu.primary_no_punc_find("typographers", 'typographer’s'))
+        self.ae((0, 7), icu.primary_no_punc_find('abcd', 'a\u00adb\u200cc\u200dd'))
+        self.ae((0, 5), icu.primary_no_punc_find('abcd', 'ab cd'))
+        # test find all
+        m = []
+        a = lambda p,l : m.append((p, l))
+        icu.primary_collator_without_punctuation().find_all('a', 'a a🐱a', a)
+        self.ae(m, [(0, 1), (2, 1), (5, 1)])
+        # test find whole words
+        c = icu.primary_collator_without_punctuation()
+        self.ae(c.find('a', 'abc a bc'), (0, 1))
+        self.ae(c.find('a', 'abc a bc', True), (4, 1))
+        self.ae(c.find('pena', 'a peñaabc peña', True), (10, 4))
 
     def test_collation_order(self):
         'Testing collation ordering'
@@ -227,6 +243,15 @@ class TestICU(unittest.TestCase):
         ):
             fpos = index_of(needle, haystack)
             self.ae(pos, fpos, 'Failed to find index of %r in %r (%d != %d)' % (needle, haystack, pos, fpos))
+
+    def test_remove_accents(self):
+        for func in (icu.remove_accents_icu, icu.remove_accents_regex):
+            for q, expected in {
+                'MännÄr': 'MannAr', 'Peña': 'Pena', 'Kátia': 'Katia',
+                'Málaga': 'Malaga', 'François': 'Francois', 'Phút Hơn': 'Phut Hon',
+                '中文':'中文'
+            }.items():
+                self.ae(expected, func(q))
 
 
 def find_tests():

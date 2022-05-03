@@ -11,6 +11,7 @@
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 #include <unicode/uversion.h>
+#include <unicode/uvernum.h>
 #include <unicode/utypes.h>
 #include <unicode/uclean.h>
 #include <unicode/utf16.h>
@@ -132,7 +133,7 @@ static UChar32* python_to_icu32(PyObject *obj, int32_t *osz) {
 #endif
 
 #ifndef NO_ICU_TO_PYTHON
-static PyObject* icu_to_python(UChar *src, int32_t sz) {
-    return PyUnicode_DecodeUTF16((char*) src, sz * sizeof(UChar), "replace", NULL);
+static PyObject* icu_to_python(const UChar *src, int32_t sz) {
+    return PyUnicode_DecodeUTF16((const char*) src, sz * sizeof(UChar), "replace", NULL);
 }
 #endif
