@@ -1,3 +1,15 @@
+calibre (5.41.0+dfsg-2~bpo11+1) bullseye-backports; urgency=medium
+
+  * Rebuild for bullseye-backports.
+  * The 5.31-1+dfsg-2 release added support for the 2021 Kindle Paperwhite,
+    and the Kobo Elipsa.  As usual, other devices running upgraded firmware
+    benefit (or sometimes require) a newer release of Calibre.
+  * Calibre >= 5.40 FTBFS due to failed tests with feedparser 5.x.x, so
+    qualify the python3-feedparser dependency with the first version
+    available in Debian (>=6.0.8-1~, also fixed in sid).
+
+ -- Nicholas D Steeves <sten@debian.org>  Sat, 07 May 2022 18:28:16 -0400
+
 calibre (5.41.0+dfsg-2) unstable; urgency=medium
 
   [ Nicholas D Steeves ]
@@ -8,20 +20,6 @@ calibre (5.41.0+dfsg-2) unstable; urgency=medium
   * Disable failed PyQt test on MIPS and MIPS64 (Closes: #1010185).
 
  -- Nicholas D Steeves <sten@debian.org>  Mon, 25 Apr 2022 20:27:04 -0400
-
-calibre (5.41.0+dfsg-1~bpo11+1) bullseye-backports; urgency=medium
-
-  * Rebuild for bullseye-backports.
-  * The 5.31-1+dfsg-2 release added support for the 2021 Kindle Paperwhite,
-    and the Kobo Ellipsa.  As usual, other devices running upgraded firmware
-    benefit (or sometimes require) a newer release of Calibre.
-  * Calibre >= 5.40 FTBFS due to failed tests with feedparser 5.x.x, so
-    qualify the python3-feedparser dependency with the first version
-    available in Debian (>=6.0.8-1~).
-  * Calibre >= 5.40 FTBFS due to failed tests with html5-parser 0.4.9, so
-    qualify the python3-html5-parser dep with (>=0.4.10-1~).
-
- -- Nicholas D Steeves <sten@debian.org>  Wed, 1 Dec 2021 20:59:21 -0500
 
 calibre (5.41.0+dfsg-1) unstable; urgency=medium
 
