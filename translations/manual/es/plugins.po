@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Adrián López Galera <adrian_201@hotmail.es>, 2015
+# Julvenzor <adrlopgal@disroot.org>, 2015
 # Albert, 2016
 # Albert, 2016
 # Angelica Bravo <dra.noika@gmail.com>, 2016
@@ -13,7 +13,7 @@
 # Darío Hereñú, 2018
 # Fernando Salazar, 2016
 # Jaime Marquínez Ferrándiz, 2016
-# Jellby <jellby@yahoo.com>, 2014-2021
+# Jellby <jellby@yahoo.com>, 2014-2022
 # j <jcn363@ikasle.aeg.es>, 2015
 # Jose11091 <josemanuellh@gmail.com>, 2015
 # Juana Perez Yanez <juanaperezyanez@gmail.com>, 2016
@@ -33,9 +33,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-01 12:56+0000\n"
-"PO-Revision-Date: 2021-11-29 19:05+0000\n"
-"Last-Translator: Jellby <jellby@yahoo.com>\n"
+"POT-Creation-Date: 2022-05-03 05:03+0000\n"
+"PO-Revision-Date: 2014-06-17 08:35+0000\n"
+"Last-Translator: Jellby <jellby@yahoo.com>, 2014-2022\n"
 "Language-Team: Spanish (http://www.transifex.com/calibre/calibre/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1448,9 +1448,9 @@ msgstr "Icono para este dispositivo"
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.devices.interface.DevicePlugin.OPEN_FEEDBACK_MESSAGE:1
 msgid ""
-"GUI displays this as a message if not None. Useful if opening can take a "
-"long time"
-msgstr "La interfaz gráfica muestra esto como un mensaje si no es None. Útil si la apertura puede llevar mucho tiempo"
+"GUI displays this as a message if not None in the status bar. Useful if "
+"opening can take a long time"
+msgstr "La interfaz gráfica muestra esto como un mensaje en la barra de estado si no es None. Útil si la apertura puede llevar mucho tiempo"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.devices.interface.DevicePlugin.VIRTUAL_BOOK_EXTENSIONS:1
@@ -1514,6 +1514,13 @@ msgid ""
 " the user with too many messages. This variable is checked after *every* "
 "callback, so only set it when you really need to."
 msgstr "Establezca esto a un diccionario de la forma {'title':título, 'msg':mensaje, 'det_msg':mensaje_detallado} para que calibre muestre una ventana con un mensaje para el usuario tras ejecutar varias acciones (actualmente sólo :meth:`upload_books`). Procure no mostrar demasiados mensajes al usuario. Esta variable se comprueba después de *cada* acción, así que establézcala sólo cuando sea realmente necesaria."
+
+#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.get_open_popup_message:1
+msgid ""
+"GUI displays this as a non-modal popup. Should be an instance of "
+"OpenPopupMessage"
+msgstr "La interfaz gráfica muestra esto como una ventana emergente no modal. Debe ser un ejemplar de :class:`OpenPopupMessage`"
 
 #: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.is_usb_connected:1

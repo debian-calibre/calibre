@@ -16919,9 +16919,9 @@ return this.__repr__();
             if (opts.color_scheme.link) {
                 des.setProperty("--calibre-viewer-link-color", opts.color_scheme.link);
             }
-            var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ document.documentElement, document.body ]));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                elem = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter2 = ρσ_Iterable(ρσ_list_decorate([ document.documentElement, document.body ]));
+            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                elem = ρσ_Iter2[ρσ_Index2];
                 elem.style.color = opts.color_scheme.foreground;
                 elem.style.backgroundColor = "transparent";
             }
@@ -16990,14 +16990,14 @@ return this.__repr__();
             if (style.selbg) {
                 style.selbg = make_selection_background_opaque(style.selbg);
             }
-            var ρσ_Iter1 = ρσ_Iterable(Object.keys(style));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                prop = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter3 = ρσ_Iterable(Object.keys(style));
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                prop = ρσ_Iter3[ρσ_Index3];
                 css_text += "" + ρσ_str.format("{}", prop) + ": " + ρσ_str.format("{}", style[(typeof prop === "number" && prop < 0) ? style.length + prop : prop]) + "; ";
             }
-            var ρσ_Iter2 = ρσ_Iterable(sheet.sheet.cssRules);
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                rule = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter4 = ρσ_Iterable(sheet.sheet.cssRules);
+            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                rule = ρσ_Iter4[ρσ_Index4];
                 if (rule.type === rule.STYLE_RULE && rule.selectorText.indexOf("selection") > -1) {
                     rule.style.cssText = css_text;
                 }
@@ -26415,7 +26415,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.41.0";
+        CALIBRE_VERSION = "5.42.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -42322,9 +42322,9 @@ return this.__repr__();
             clear(bar_container);
             bar_container.style.maxWidth = (self.supports_css_min_max) ? "min(40rem, 80vw)" : "40rem";
             bar_container.style.backgroundColor = get_color("window-background");
-            var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "height: 4ex; display: flex; align-items: center; padding: 5px; justify-content: center"})]), ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "border-top: solid 1px; margin: 0; padding: 0; display: none"})]), ρσ_interpolate_kwargs.call(E, E.div, [E.div()].concat([ρσ_desugar_kwargs({style: "display: none; padding: 5px; font-size: smaller"})])) ]));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                x = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter5 = ρσ_Iterable(ρσ_list_decorate([ ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "height: 4ex; display: flex; align-items: center; padding: 5px; justify-content: center"})]), ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "border-top: solid 1px; margin: 0; padding: 0; display: none"})]), ρσ_interpolate_kwargs.call(E, E.div, [E.div()].concat([ρσ_desugar_kwargs({style: "display: none; padding: 5px; font-size: smaller"})])) ]));
+            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                x = ρσ_Iter5[ρσ_Index5];
                 bar_container.appendChild(x);
             }
             bar = bar_container.firstChild;

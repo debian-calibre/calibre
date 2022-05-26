@@ -61,7 +61,7 @@ class MarkWithTextDialog(QDialog):
         layout.addWidget(button_box, button_rows+3, 0, 1, 2)
 
     def text(self):
-        return self.text_box.text()
+        return self.text_box.text().strip()
 
     def button_pushed(self, checked, text=''):
         self.text_box.setText(text)
@@ -69,11 +69,14 @@ class MarkWithTextDialog(QDialog):
         self.accept()
 
     def accept(self):
-        if not self.text_box.text():
+        if not self.text_box.text().strip():
             d = error_dialog(self.gui, _('Value cannot be empty'), _('You must provide a value'))
             d.exec_()
         else:
             super().accept()
+
+
+mark_books_with_text = None
 
 
 class MarkBooksAction(InterfaceAction):
@@ -119,12 +122,16 @@ class MarkBooksAction(InterfaceAction):
         m.aboutToShow.connect(self.about_to_show_menu)
         ma = partial(self.create_menu_action, m)
         self.show_marked_action = a = ma('mark_with_text', _('Mark books with text label'), icon='marked.png')
-        a.triggered.connect(self.mark_with_text)
+        a.triggered.connect(partial(self.mark_with_text, book_ids=None))
+        global mark_books_with_text
+        mark_books_with_text = self.mark_with_text
         self.show_marked_action = a = ma('show-marked', _('Show marked books'), icon='search.png', shortcut='Shift+Ctrl+M')
         a.triggered.connect(self.show_marked)
         self.show_marked_with_text = QMenu(_('Show marked books with text label'))
         self.show_marked_with_text.setIcon(self.search_icon)
         m.addMenu(self.show_marked_with_text)
+        self.clear_selected_marked_action = a = ma('clear-marks-on-selected', _('Clear marks for selected books'), icon='clear_left.png')
+        a.triggered.connect(self.clear_marks_on_selected_books)
         self.clear_marked_action = a = ma('clear-all-marked', _('Clear all marked books'), icon='clear_left.png')
         a.triggered.connect(self.clear_all_marked)
         m.addSeparator()
@@ -166,10 +173,14 @@ class MarkBooksAction(InterfaceAction):
         labels = sorted(counts.keys(), key=sort_key)
         self.show_marked_with_text.clear()
         if len(labels):
+            labs = labels[0:40]
             self.show_marked_with_text.setEnabled(True)
-            for t in labels:
+            for t in labs:
                 ac = self.show_marked_with_text.addAction(self.search_icon, f'{t} ({counts[t]})')
                 ac.triggered.connect(partial(self.show_marked_text, txt=t))
+            if len(labs) < len(labels):
+                self.show_marked_with_text.addAction(
+                    _('{0} labels not shown').format(len(labels) - len(labs)))
         else:
             self.show_marked_with_text.setEnabled(False)
 
@@ -226,8 +237,9 @@ class MarkBooksAction(InterfaceAction):
                 mids.pop(book_id, None)
         db.data.set_marked_ids(mids)
 
-    def mark_with_text(self):
-        book_ids = self._get_selected_ids()
+    def mark_with_text(self, book_ids=None):
+        if book_ids is None:
+            book_ids = self._get_selected_ids()
         if not book_ids:
             return
         dialog = MarkWithTextDialog(self.gui)
@@ -240,3 +252,13 @@ class MarkBooksAction(InterfaceAction):
         for book_id in book_ids:
             mids[book_id] = txt
         db.data.set_marked_ids(mids)
+
+    def clear_marks_on_selected_books(self):
+        book_ids = self._get_selected_ids()
+        if not book_ids:
+            return
+        db = self.gui.current_db
+        items = db.data.marked_ids.copy()
+        for book_id in book_ids:
+            items.pop(book_id, None)
+        self.gui.current_db.data.set_marked_ids(items)

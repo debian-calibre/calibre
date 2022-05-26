@@ -1,3 +1,29 @@
+calibre (5.42.0+dfsg-1) unstable; urgency=medium
+
+  [ uvok cheetah and Nicholas D Steeves ]
+  * Specify version of python3-feedparser.  Depend on version 6.0.8-1~ (sid
+    or backports).
+
+  [ Nicholas D Steeves ]
+  * Fulfill Norbert Preining's request to be dropped from Uploaders, and make
+    YOKOTA Hiroshi the primary Uploader.
+
+  [ YOKOTA Hiroshi ]
+  * New upstream version 5.42.0+dfsg
+  * Rediff patches
+  * Typo fix
+  * Python 3.10+ support for Lintian overrides
+  * Update Lintian overrides
+  * Update Lintian overrides for source code
+  * Rediff patches.
+    Drop 0006-BTS-944875-html_writer.patch:
+     This patch is obsolete.
+     QWebEngineProfile::setUrlRequestInterceptor() is available since Qt 5.13.
+     Current stable distribution "bullseye" uses Qt 5.15.2.
+  * Renumber patches
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Wed, 04 May 2022 02:08:43 +0900
+
 calibre (5.41.0+dfsg-2~bpo11+1) bullseye-backports; urgency=medium
 
   * Rebuild for bullseye-backports.

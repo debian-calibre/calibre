@@ -230,7 +230,7 @@ class Ui_Form(object):
         self.opt_highlight_search_matches.setText(_("&Highlight search results instead of restricting the book list to the results"))
         self.opt_show_highlight_toggle_button.setToolTip(_("<p>This option will cause a small button to appear next to the Search bar. Clicking the button will toggle between showing only the search results and showing all books with the search results highlighted."))
         self.opt_show_highlight_toggle_button.setText(_("Show a &quick toggle button to switch between highlighting and restricting results next to the Search bar"))
-        self.opt_use_primary_find_in_search.setText(_("Unaccented characters match &accented characters"))
+        self.opt_use_primary_find_in_search.setText(_("Unaccented characters match &accented characters and punctuation is ignored"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _("Genera&l"))
         self.groupBox_2.setTitle(_("Grouped search terms"))
         self.la10.setText(_("&Names:"))

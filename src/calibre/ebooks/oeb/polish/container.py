@@ -302,7 +302,10 @@ class Container(ContainerBase):  # {{{
     def refresh_mime_map(self):
         for item in self.opf_xpath('//opf:manifest/opf:item[@href and @media-type]'):
             href = item.get('href')
-            name = self.href_to_name(href, self.opf_name)
+            try:
+                name = self.href_to_name(href, self.opf_name)
+            except ValueError:
+                continue  # special filenames such as CON on windows cause relpath to fail
             mt = item.get('media-type')
             if name in self.mime_map and name != self.opf_name and mt:
                 # some epubs include the opf in the manifest with an incorrect mime type
@@ -323,7 +326,7 @@ class Container(ContainerBase):  # {{{
         }
 
     def clone_data(self, dest_dir):
-        Container.commit(self, keep_parsed=True)
+        Container.commit(self, keep_parsed=False)
         self.cloned = True
         clone_dir(self.root, dest_dir)
         return self.data_for_clone(dest_dir)
