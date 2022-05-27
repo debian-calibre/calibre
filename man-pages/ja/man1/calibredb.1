@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "5月 03, 2022" "5.42.0" "calibre"
+.TH "CALIBREDB" "1" "5月 27, 2022" "5.43.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -41,42 +41,37 @@ calibredb command [options] [arguments]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP is the command line interface to the calibre database. It has
-several sub\-commands, documented below.
+\fBcalibredb\fP は、calibre データベースへのコマンドラインインタフェースです。
+以下に説明するようなサブコマンドがあります。
 .sp
-\fBcalibredb\fP can be used to manipulate either a calibre database
-specified by path or a calibre Content server running either on
-the local machine or over the internet. You can start a calibre
-Content server using either the \fBcalibre\-server\fP
-program or in the main calibre program click Connect/share  → 
-Start Content server\&. Since \fBcalibredb\fP can make changes to your
-calibre libraries, you must setup authentication on the server first. There
-are two ways to do that:
+\fBcalibredb\fP はパスで指定した calibre データベース、またはローカルまたは
+インターネット上で実行中の calibre コンテンツサーバ に対して操作を行うのに
+利用できます。コンテンツサーバ を起動するには \fBcalibre\-server\fP プログラムを、
+使用するか、またはメインの calibre プログラム上で 接続/共有  →  コンテンツサーバを開始
+をクリックします。\fBcalibredb\fP は calibre ライブラリへの変更を行うことができるため、
+まずサーバ上に認証を設定しておく必要があります。それには次の 2 種類の方法があります。
 .INDENT 0.0
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-If you plan to connect only to a server running on the same computer,
-you can simply use the \fB\-\-enable\-local\-write\fP option of the
-Content server, to allow any program, including calibredb, running on
-the local computer to make changes to your calibre data. When running
-the server from the main calibre program, this option is in
-Preferences → Sharing over the net → Advanced\&.
+同じコンピュータ上で動作するサーバにのみアクセスする予定であれば、コンテンツサーバ
+のオプションとして \fB\-\-enable\-local\-write\fP を指定するだけでかまいません。これにより
+calibredb を含めてローカルなコンピュータ上で実行されるすべてのプログラムが calibre の
+のデータに変更を加えることができるようになります。サーバをメインの calibre プログラム
+から起動した場合、このオプションは 設定 → ネット共有 → 詳細 にあります。
 .IP \(bu 2
-If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
-options to \fBcalibredb\fP to give it access. You can setup
-user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
-option and using \fB\-\-manage\-users\fP to create the user accounts.
-If you are running the server from the main calibre program, use
-Preferences → Sharing over the net → Require username/password\&.
+インターネット越しの接続を許可したい場合、サーバ上にユーザアカウントを設定して
+\fI\%\-\-username\fP および \fI\%\-\-password\fP を使用して calibre へのアクセスを
+許可してください。\fBcalibre\-server\fP の認証は \fB\-\-enable\-auth\fP オプション
+を使用し、\fB\-\-manage\-users\fP を使ってユーザアカウントを作成します。
+メイン calibre からサーバを実行している場合には、環境設定 → ネット共有 → ユーザ名とパスワードを要求
+を使用してください。
 .UNINDENT
 .UNINDENT
 .UNINDENT
 .sp
-To connect to a running Content server, pass the URL of the server to the
-\fI\%\-\-with\-library\fP option, see the documentation of that option for
-details and examples.
+実行中のコンテンツサーバに接続するには、\fI\%\-\-with\-library\fP オプションにサーバへの URL を
+渡します。このオプションについての詳しい説明や使用例はドキュメントを参照してください。
 .INDENT 0.0
 .IP \(bu 2
 \fI\%グローバルオプション\fP
@@ -140,12 +135,12 @@ details and examples.
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Calibreライブラリへのpath。デフォルトでは設定画面で指定されたpathが使用されます。リモートライブラリに対して操作を行うためにCalibreコンテンツサーバに接続することも可能です。コンテンツサーバに接続するには、\fI\%http://hostname:port/#library_id\fP の形式のURLを指定します。例えば \fI\%http://localhost:8080/#mylibrary\fP のように指定します。library_id はコンテンツサーバ上の接続したいライブラリのIDです。特殊な library_id として \- を指定すると、そのサーバ上で利用可能なライブラリの一覧を表示できます。コンテンツサーバ経由でのアクセスを設定する方法について詳しくは \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP を参照してください。
+calibreライブラリへのパス。デフォルトでは設定画面で指定されたpathが使用されます。リモートライブラリに対して操作を行うためにcalibreコンテンツサーバに接続することも可能です。コンテンツサーバに接続するには、\fI\%http://hostname:port/#library_id\fP の形式のURLを指定します。例えば \fI\%http://localhost:8080/#mylibrary\fP のように指定します。library_id はコンテンツサーバ上の接続したいライブラリのIDです。特殊な library_id として \- を指定すると、そのサーバ上で利用可能なライブラリの一覧を表示できます。コンテンツサーバ経由でのアクセスを設定する方法について詳しくは \fI\%https://manual.calibre\-ebook.com/ja/generated/ja/calibredb.html\fP を参照してください。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password
-Calibreコンテンツサーバ接続用パスワード。標準入力からパスワードを読み取るには、特殊文字 <stdin> を使ってください。パスワードをファイルから読み込むには <f:/path/to/file> を使ってください。 (例えば先頭の <f: に続けてファイルへのフルパスを記述し、最後に > で閉じます。) カギ括弧は必須です。使用するシェルによっては、必要に応じてエスケープしたり引用符で囲ってください。
+calibreコンテンツサーバ接続用パスワード。標準入力からパスワードを読み取るには、特殊文字 <stdin> を使ってください。パスワードをファイルから読み込むには <f:/path/to/file> を使ってください。 (例えば先頭の <f: に続けてファイルへのフルパスを記述し、最後に > で閉じます。) カギ括弧は必須です。使用するシェルによっては、必要に応じてエスケープしたり引用符で囲ってください。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -155,7 +150,7 @@ Calibreコンテンツサーバ接続用パスワード。標準入力からパ�
 .INDENT 0.0
 .TP
 .B \-\-username
-Calibreコンテンツサーバ接続用ユーザ名
+calibreコンテンツサーバ接続用ユーザ名
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -174,7 +169,7 @@ calibredb list [options]
 .UNINDENT
 .UNINDENT
 .sp
-Calibreデータベースに存在する本のリスト
+calibreデータベースに存在する本のリスト
 .sp
 スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
 .INDENT 0.0
@@ -190,7 +185,7 @@ Calibreデータベースに存在する本のリスト
 .INDENT 0.0
 .TP
 .B \-\-for\-machine
-JSONフォーマットで出力します。JSONはコンピュータでの処理により適した形式です。このオプションを指定すると行幅とセパレーターオプションは無視されます。
+JSON形式で出力します。JSONはコンピュータでの処理により適した形式です。このオプションを指定すると行幅とセパレーターオプションは無視されます。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -210,7 +205,7 @@ JSONフォーマットで出力します。JSONはコンピュータでの処理
 .INDENT 0.0
 .TP
 .B \-\-search, \-s
-検索文字列で結果を絞り込む。検索文字列のフォーマットについては、ユーザマニュアルの検索関連のドキュメントを参照してください。デフォルトでは絞り込みを行いません。
+検索文字列で結果を絞り込む。検索文字列の形式については、ユーザマニュアルの検索関連のドキュメントを参照してください。デフォルトでは絞り込みを行いません。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -246,7 +241,7 @@ calibredb add [options] file1 file2 file3 ...
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-似たようなタイトルと著者の本が見つかった場合は、受信した形式（ファイル）を既存の本のレコードに自動的にマージします。 \fB\(aq\fPignore\fB\(aq\fPの値は、重複するフォーマットが破棄されることを意味します。 \fB\(aq\fPoverwrite\fB\(aq\fPの値は、ライブラリ内の重複する形式が新しく追加されたファイルで上書きされることを意味します。 \fB\(aq\fPnew_record\fB\(aq\fPの値は、重複する形式が新しいブックレコードに配置されることを意味します。
+似たようなタイトルと著者の本が見つかった場合は、受信した形式（ファイル）を既存の本のレコードに自動的にマージします。 \fB\(aq\fPignore\fB\(aq\fPの値は、重複する形式が破棄されることを意味します。 \fB\(aq\fPoverwrite\fB\(aq\fPの値は、ライブラリ内の重複する形式が新しく追加されたファイルで上書きされることを意味します。 \fB\(aq\fPnew_record\fB\(aq\fPの値は、重複する形式が新しいブックレコードに配置されることを意味します。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -261,7 +256,7 @@ calibredb add [options] file1 file2 file3 ...
 .INDENT 0.0
 .TP
 .B \-\-empty, \-e
-空の本を追加する（フォーマットが1つも無い本）
+空の本を追加する（形式が1つも無い本）
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -314,7 +309,7 @@ calibredb add [options] file1 file2 file3 ...
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-フォルダ毎に一冊の本が格納され、その中のすべてのファイルはその本の別の電子書籍フォーマットとみなす
+フォルダ毎に一冊の本が格納され、その中のすべてのファイルはその本の別の電子書籍形式とみなす
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -353,13 +348,13 @@ calibredb add_format [options] id ebook_file
 .UNINDENT
 .UNINDENT
 .sp
-ebook_file で指定する電子書籍ファイルを、id で指定された本の利用可能なフォーマットとして追加します。idはsearch コマンドで取得できます。フォーマットがすでに存在する場合は、置換しないオプションを有効にした場合をのぞいて、置換されます。
+ebook_file で指定する電子書籍ファイルを、id で指定された本の利用可能な形式として追加します。idはsearch コマンドで取得できます。形式がすでに存在する場合は、置換しないオプションを有効にした場合をのぞいて、置換されます。
 .sp
 スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
-フォーマットがすでに存在する場合に置換しない
+形式がすでに存在する場合に置換しない
 .UNINDENT
 .SH REMOVE_FORMAT
 .INDENT 0.0
@@ -373,7 +368,7 @@ calibredb remove_format [options] id fmt
 .UNINDENT
 .UNINDENT
 .sp
-fmt で指定したフォーマットを id で指定した本から削除します。id は search コマンドで取得できます。fmt はLRF, TXT, EPUB のようにファイルの拡張子で指定してください。本に指定したフォーマットがない場合、なにもしません。
+fmt で指定した形式を id で指定した本から削除します。id は search コマンドで取得できます。fmt はLRF, TXT, EPUB のようにファイルの拡張子で指定してください。本に指定した形式がない場合、なにもしません。
 .sp
 スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
 .SH SHOW_METADATA
@@ -388,13 +383,13 @@ calibredb show_metadata [options] id
 .UNINDENT
 .UNINDENT
 .sp
-id で指定された本の、Calibreのデータベースに保存された書誌情報を表示します。id はsearch コマンドで取得できるID番号です。
+id で指定された本の、calibreのデータベースに保存された書誌を表示します。id はsearch コマンドで取得できるID番号です。
 .sp
 スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
-OPFフォーマット(XML)で書誌情報を表示
+OPF 形式 (XML) で書誌を表示
 .UNINDENT
 .SH SET_METADATA
 .INDENT 0.0
@@ -405,7 +400,7 @@ OPFフォーマット(XML)で書誌情報を表示
    calibredb set_metadata [options] id [/path/to/metadata.opf]
 
 
-id で指定された本のCalibreのデータベースに保存された書誌情報に
+id で指定された本のcalibreのデータベースに保存された書誌に
 .ft P
 .fi
 .UNINDENT
@@ -427,7 +422,7 @@ OPF ファイルについて簡単に知りたい場合は、show_metadata コ�
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-\fI\%\-\-field\fP オプションで使用可能な書誌情報フィールド名のリストを表示
+\fI\%\-\-field\fP オプションで使用可能な書誌フィールド名のリストを表示
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -441,10 +436,10 @@ calibredb export [options] ids
 .UNINDENT
 .UNINDENT
 .sp
-指定したID(カンマ区切りリスト)の本をファイルシステムにエクスポートします。
-エクスポート処理では、すべてのフォーマットと表紙と書誌情報(OPFファイル)を
+指定した ID (カンマ区切りリスト) の本をファイルシステムにエクスポートします。
+エクスポート処理では、すべての形式と表紙と書誌 (OP Fファイル)を
 保存します。
-ID番号は search コマンドで取得できます。
+ID 番号は search コマンドで取得できます。
 .sp
 スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
 .INDENT 0.0
@@ -455,27 +450,27 @@ IDのリストを無視してデータベースからすべての本をエクス
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Have calibre convert all non English characters into English equivalents for the file names. This is useful if saving to a legacy filesystem without full support for Unicode filenames. このスイッチ指定すると、この挙動をOFFにできます。
+ファイル名の英語以外の文字をすべて英語相当の文字に calibre に変換させます。Unicode ファイル名を完全にサポートしていない古いファイルシステム上に保存するときに役に立ちます。 このスイッチ指定すると、この挙動をOFFにできます。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-save\-cover
-通常、Calibreは表紙を電子書籍ファイルとは別のファイルに保存します。 このスイッチ指定すると、この挙動をOFFにできます。
+通常、calibreは表紙を電子書籍ファイルとは別のファイルに保存します。 このスイッチ指定すると、この挙動をOFFにできます。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-update\-metadata
-通常、Calibreはライブラリ内のファイルの書誌情報をアップデートしますが、これはディスクへの保存を遅くします。 このスイッチ指定すると、この挙動をOFFにできます。
+通常、calibreはライブラリ内のファイルの書誌をアップデートしますが、これはディスクへの保存を遅くします。 このスイッチ指定すると、この挙動をOFFにできます。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-write\-opf
-通常、Calibreは電子書籍ファイル本体に付随する別個のOPFファイルに書誌情報を書き込みます。 このスイッチ指定すると、この挙動をOFFにできます。
+通常、calibreは電子書籍ファイル本体に付随する別個のOPFファイルに書誌を書き込みます。 このスイッチ指定すると、この挙動をOFFにできます。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-formats
-各本を保存する時のカンマ区切りのフォーマットのリスト。デフォルトではすべての存在するフォーマットが保存されます。
+各本を保存する時のカンマ区切りの形式のリスト。デフォルトではすべての存在する形式が保存されます。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -495,12 +490,12 @@ Have calibre convert all non English characters into English equivalents for the
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+保存したファイルのファイル名とフォルダ構成を制御するためのテンプレート。デフォルトは \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP で、タイトルと著者名をファイル名に含むフォルダに著者別に保存します。利用可能なコントロール: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timefmt
-日付表示時のフォーマット。 %d \- 日, %b \- 月(の名前), %m \- 月の番号, %Y \- 年. デフォルト: %b, %Y
+日付表示時の形式。 %d \- 日, %b \- 月(の名前), %m \- 月の番号, %Y \- 年. デフォルト: %b, %Y
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -543,7 +538,7 @@ see the different options, specify the name of the output file and then the
 .INDENT 0.0
 .TP
 .B \-\-search, \-s
-結果を検索文字列で絞り込みします。検索文字列のフォーマットについては、ユーザマニュアルの検索関連ドキュメントを参照してください。 デフォルト: 絞り込みなし
+結果を検索文字列で絞り込みします。検索文字列の形式については、ユーザマニュアルの検索関連ドキュメントを参照してください。 デフォルト: 絞り込みなし
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -554,7 +549,7 @@ see the different options, specify the name of the output file and then the
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title
-書誌情報のタイトルとして使われる、生成されたカタログのタイトル。 デフォルト: \fB\(aq\fPMy Books\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
+書誌のタイトルとして使われる、生成されたカタログのタイトル。 デフォルト: \fB\(aq\fPMy Books\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -564,7 +559,7 @@ see the different options, specify the name of the output file and then the
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+変換パイプラインからの別々のステージの出力を指定したフォルダに保存します。変換処理のどのステージで不具合が発生しているのか不明な場合に役立ちます。 デフォルト: \fB\(aq\fPNone\fB\(aq\fP 適用: AZW3, EPUB, MOBI 出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -629,7 +624,7 @@ Descriptionヘッダに挿入するノートを格納したカスタムフィー
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-既読本を示すプリフィックスや、ウィッシュリスト、その他ユーザ指定のプリフィックスを含めるために使用するルールを指定。 プリフィックスルールは (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP) のように指定します。 複数のルールが指定されている場合には、最初に一致したルールが使用されます。 デフォルト: \fB\(aq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
+既読本を示すプレフィックスや、ウィッシュリスト、その他ユーザ指定のプレフィックスを含めるために使用するルールを指定。 プレフィックスルールは (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP) のように指定します。 複数のルールが指定されている場合には、最初に一致したルールが使用されます。 デフォルト: \fB\(aq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -658,7 +653,7 @@ calibredb saved_searches [options] (list|add|remove)
 .UNINDENT
 .UNINDENT
 .sp
-データベースに格納された保存済み検索条件の管理。
+データベースに格納された保存済み検索の管理。
 既存の名称で検索条件を保存しようとした場合には、上書きされます。
 .sp
 追加の構文:
@@ -772,10 +767,10 @@ calibredb restore_database [options]
 .UNINDENT
 .UNINDENT
 .sp
-Calibreライブラリの各ディレクトリに保存されているOPFファイルから書誌情報を読み取り、データベースをリストアします。
+calibreライブラリの各ディレクトリに保存されている OPF ファイルから書誌を読み取り、データベースを復元します。
 これはmetadata.dbファイルが壊れてしまった時に有用です。
 .sp
-注意: このコマンドを実行すると、データベースを完全に再生成します。すべての保存済み検索条件、ユーザカテゴリ、書誌情報変換ルール、書誌ごとの変換設定、カスタムレシピは失われます。リストアされる書誌情報は、OPFファイルの内容と同等となります。
+注意: このコマンドを実行すると、データベースを完全に再生成します。すべての保存済み検索、ユーザカテゴリ、書誌変換ルール、書誌ごとの変換設定、カスタムレシピは失われます。復元される書誌は、OPFファイルの内容と同等となります。
 .sp
 スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
 .INDENT 0.0
@@ -851,7 +846,7 @@ DSVファイルのタイプ。選択肢: excel, excel\-tab, unix
 .INDENT 0.0
 .TP
 .B \-\-item_count, \-i
-カテゴリ内のアイテムのカウント番号ではなく、カテゴリ内のアイテム番号のみを出力します。
+カテゴリ内の項目別の数ではなく、カテゴリにある項目数のみを出力します。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -870,12 +865,12 @@ calibredb backup_metadata [options]
 .UNINDENT
 .UNINDENT
 .sp
-データベースに保存されているメタデータを、それぞれの個別のOPFファイルにバックアップします
-ブックフォルダ。これは通常自動的に行われますが、これを実行できます
-\-\-allオプションを指定して、OPFファイルの再生成を強制するコマンド。
+データベースに格納されている書誌を、本フォルダにある個別の OPF ファイルに
+バックアップします。通常は自動的に行われますが、\-\-all オプションをつけてコマンドを
+実行すれば、OPF ファイルを強制的に再生成することができます。
 .sp
-OPFファイルはメタデータが変更されるたびに自動的にバックアップされるため、
-通常はこれを行う必要がないことに注意してください。
+ただし普通はこれを行う必要はありません。OPF ファイルは書誌が変更されるたびに
+自動的にバックアップされるからです。
 .sp
 スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
 .INDENT 0.0
@@ -915,11 +910,11 @@ calibredb embed_metadata [options] book_id
 .UNINDENT
 .UNINDENT
 .sp
-Calibreライブラリ内に保存されている電子書籍ファイルの書誌情報を
-Calibreデータベースの書誌情報で更新します。
-通常、電子書籍ファイルの書誌情報の更新は、エクスポート時のみ
+calibreライブラリ内に保存されている電子書籍ファイルの書誌を
+calibreデータベースの書誌で更新します。
+通常、電子書籍ファイルの書誌の更新は、エクスポート時のみ
 行われますが、このコマンドはすぐに更新を行いたい場合に便利です。
-ファイルフォーマット毎にサポートする書誌情報のフィールドが
+ファイル形式毎にサポートする書誌のフィールドが
 異なることに留意ください。
 book_id に特別な値 \(aqall\(aq を指定すると、すべての本が更新されます。
 また、スペース区切りで複数のidを指定すること、ハイフン区切りで
@@ -930,7 +925,7 @@ book_id に特別な値 \(aqall\(aq を指定すると、すべての本が更�
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
-指定したフォーマットのファイルのみ書誌情報を更新します。複数のフォーマットを指定する場合は、オプションを複数回指定してください。デフォルトでは、すべてのフォーマットが更新されます。
+指定した形式のファイルのみ書誌を更新します。複数の形式を指定する場合は、オプションを複数回指定してください。デフォルトでは、すべての形式が更新されます。
 .UNINDENT
 .SH SEARCH
 .INDENT 0.0
@@ -944,7 +939,7 @@ calibredb search [options] search expression
 .UNINDENT
 .UNINDENT
 .sp
-検索条件を指定してライブラリを検索し、結果を本のIDのカンマ区切りリストで返します。出力された結果は、本のIDを引数にとる他のコマンドの入力として使用するのに便利です。以下のようにCalibreの強力な検索用言語が使用できます。例: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
+検索条件を指定してライブラリを検索し、結果を本のIDのカンマ区切りリストで返します。出力された結果は、本のIDを引数にとる他のコマンドの入力として使用するのに便利です。以下のようにcalibreの強力な検索用言語が使用できます。例: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
 .sp
 スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
 .INDENT 0.0
