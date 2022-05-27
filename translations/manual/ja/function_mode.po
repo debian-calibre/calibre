@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-07 03:23+0000\n"
-"PO-Revision-Date: 2021-10-03 01:41+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2022-05-25 15:31+0000\n"
+"PO-Revision-Date: 2014-11-21 02:54+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Japanese (http://www.transifex.com/calibre/calibre/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:2
 msgid "Function mode for Search & replace in the Editor"
-msgstr ""
+msgstr "エディタの検索と置換用の関数モード"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:4
 msgid ""
@@ -27,7 +27,7 @@ msgid ""
 "mode*. In this mode, you can combine regular expressions (see :doc:`regexp`)"
 " with arbitrarily powerful Python functions to do all sorts of advanced text"
 " processing."
-msgstr ""
+msgstr "エディタの :guilabel:`検索 & 置換` ツールは *関数モード* をサポートしています。このモードでは、正規表現 (:doc:`regexp` を参照) と任意の強力な Python 関数を組み合わせて利用することで、あらゆる種類の高度なテキスト処理を行えます。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:9
 msgid ""
@@ -37,29 +37,29 @@ msgid ""
 "template, you specify an arbitrary function, in the `Python programming "
 "language <https://docs.python.org>`_. This allows you to do lots of things "
 "that are not possible with simple templates."
-msgstr ""
+msgstr "検索と置換のための標準的な*正規表現*モードでは、検索のための正規表現とあわせて見つかったマッチをすべて置換するために使用するテンプレートの両方を指定します。関数モードでは、固定のテンプレートを使用する代わりに、`Python プログラミング言語 <https://docs.python.org>`_の任意の関数を指定します。これにより単純なテンプレートでは不可能だった多くのことを実行できるようになります。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:16
 msgid ""
 "Techniques for using function mode and the syntax will be described by means"
 " of examples, showing you how to create functions to perform progressively "
 "more complex tasks."
-msgstr ""
+msgstr "関数モードを使用するテクニックと構文を、例を用いて説明します。どのように関数を作成するかを、実行するタスクを少しずつ複雑にしながら説明します。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rstNone
 msgid "The Function mode"
-msgstr ""
+msgstr "関数モード"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:26
 msgid "Automatically fixing the case of headings in the document"
-msgstr ""
+msgstr "ドキュメントの見出しの大文字と小文字を自動修正"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:28
 msgid ""
 "Here, we will leverage one of the builtin functions in the editor to "
 "automatically change the case of all text inside heading tags to title "
 "case::"
-msgstr ""
+msgstr "ここではエディタのビルトイン関数を利用して、見出しタグ内のすべてのテキストの大文字と小文字を自動的にタイトルケースに変更します::"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:33
 msgid ""
@@ -67,11 +67,11 @@ msgid ""
 "tags)` builtin function. The will change titles that look like: ``<h1>some "
 "TITLE</h1>`` to ``<h1>Some Title</h1>``. It will work even if there are "
 "other HTML tags inside the heading tags."
-msgstr ""
+msgstr "関数にはビルトイン関数 :guilabel:`Title-case text (ignore tags)` を選択するだけです。これは ``<h1>some TITLE</h1>`` のようなタイトルを ``<h1>Some Title</h1>`` に変更します。これは見出しタグの内側に別のタグがあっても動作します。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:40
 msgid "Your first custom function - smartening hyphens"
-msgstr ""
+msgstr "最初のカスタム関数 - ハイフンをスマート化"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:42
 msgid ""
@@ -79,13 +79,13 @@ msgid ""
 "functions to process text in arbitrary ways. The Smarten Punctuation tool in"
 " the editor leaves individual hyphens alone, so you can use the this "
 "function to replace them with em-dashes."
-msgstr ""
+msgstr "関数モードの真の力は、テキストを任意の方法で処理する独自の関数を作成できる点にあります。エディタの Smarten Punctuation ツールは個々のハイフンをそのままにしておくため、このツールを使用して em-dash に置換できます。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:47
 msgid ""
 "To create a new function, simply click the :guilabel:`Create/edit` button to"
 " create a new function and copy the Python code from below."
-msgstr ""
+msgstr "新しい関数を作成するには、:guilabel:`作成/編集` ボタンをクリックして新しい関数を作成し、下の Python コードをコピーします。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:55
 msgid ""
@@ -94,38 +94,39 @@ msgid ""
 "arguments shown above. For the moment, we won't worry about all the "
 "different arguments to ``replace()`` function. Just focus on the ``match`` "
 "argument. It represents a match when running a search and replace. Its full "
-"documentation in available `here <https://docs.python.org/library/re.html"
-"#match-objects>`_. ``match.group()`` simply returns all the matched text and"
-" all we do is replace hyphens in that text with em-dashes, first replacing "
-"double hyphens and then single hyphens."
-msgstr ""
+"documentation in available `here "
+"<https://docs.python.org/library/re.html#match-objects>`_. ``match.group()``"
+" simply returns all the matched text and all we do is replace hyphens in "
+"that text with em-dashes, first replacing double hyphens and then single "
+"hyphens."
+msgstr ":guilabel:`検索 & 置換` カスタム関数は一意の名前を持ち、replace という名前の Python 関数で構成される必要があります。この関数は上に示すすべての引数を受け付けます。今のところは ``replace()`` 関数のすべての異なる引数について頭を悩ませる必要はありません。引数 ``match`` にだけ注目してください。これは検索と置換を実行するときのマッチを表します。詳細な説明は`こちら<https://docs.python.org/library/re.html#match-objects>`_です。``match.group()`` は、マッチしたテキストをすべて返します。そのテキスト内のハイフンを em-dash に置換すればよいのですが、その際にまずダブルハイフンを置換してから、次にシングルハイフンを置換します。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:65
 msgid "Use this function with the find regular expression::"
-msgstr ""
+msgstr "この関数を次の検索正規表現とともに使用してください::"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:69
 msgid ""
 "And it will replace all hyphens with em-dashes, but only in actual text and "
 "not inside HTML tag definitions."
-msgstr ""
+msgstr "そしてこれはすべてのハイフンを em-dash に置換しますが、置換するのは実際のテキストだけで、HTML のタグ定義の内側は置換しません。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:74
 msgid ""
 "The power of function mode - using a spelling dictionary to fix mis-"
 "hyphenated words"
-msgstr ""
+msgstr "関数モードの力 - スペル辞書を利用して誤ってハイフンでつながれた単語を修正"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:76
 msgid ""
 "Often, e-books created from scans of printed books contain mis-hyphenated "
 "words -- words that were split at the end of the line on the printed page. "
 "We will write a simple function to automatically find and fix such words."
-msgstr ""
+msgstr "印刷された本をスキャンして作られた電子書籍には、間違ってハイフンでつながれた単語、つまり印刷されたページの行末で分割された単語がしばしば含まれています。簡単な関数を書いて、そのような単語を自動的に探して修正してみましょう。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:101
 msgid "Use this function with the same find expression as before, namely::"
-msgstr ""
+msgstr "この関数は以前と同じ検索式で使用します。つまり次のようになります::"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:105
 msgid ""
@@ -136,18 +137,18 @@ msgid ""
 " for words separated by a hyphen, remove the hyphen and check if the "
 "dictionary recognizes the composite word, if it does, the original words are"
 " replaced by the hyphen free composite word."
-msgstr ""
+msgstr "そして、これは本のテキストの中にある誤ってハイフンでつながれたすべての単語を魔法のように修正します。主な秘訣は、replace 関数の便利な追加引数のひとつである ``dictionaries`` を利用することです。これはエディタ自身が本のテキストのスペルチェックに使用する辞書を参照します。この関数が行うのは、ハイフンで区切られた単語を探し、ハイフンを削除して合成した単語を辞書が認識するか確認し、認識した場合にはもとの単語をハイフンなしの合成語で置換します。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:113
 msgid ""
 "Note that one limitation of this technique is it will only work for mono-"
 "lingual books, because, by default, ``dictionaries.recognized()`` uses the "
 "main language of the book."
-msgstr ""
+msgstr "ただしこのテクニックの限界は、単一の言語で書かれた本にしか使えないことです。なぜならデフォルトでは ``dictionaries.recognized()`` は本の主要な言語を使用するからです。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:119
 msgid "Auto numbering sections"
-msgstr ""
+msgstr "章番号を自動割り当て"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:121
 msgid ""
@@ -156,23 +157,23 @@ msgid ""
 ":code:`<h2>Some text</h2>`. You can create a custom function that will "
 "automatically number these headings with consecutive section numbers, so "
 "that they look like :code:`<h2>1. Some text</h2>`."
-msgstr ""
+msgstr "さて、少し違うものを見てみましょう。HTML ファイルの中に多くの章があっていずれも :code:`<h2>` で囲ってあり、:code:`<h2>Some text</h2>` のようになっているとします。カスタム関数を作れば、この見出しに自動的に連番を振って :code:`<h2>1. Some text</h2>` のようにすることができます。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:137
 msgid "Use it with the find expression::"
-msgstr ""
+msgstr "次の検索式を使用してください::"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:141
 msgid ""
 "Place the cursor at the top of the file and click :guilabel:`Replace all`."
-msgstr ""
+msgstr "カーソルをファイルの先頭に置いて :guilabel:`すべて置換` をクリックします。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:143
 msgid ""
 "This function uses another of the useful extra arguments to ``replace()``: "
 "the ``number`` argument. When doing a :guilabel:`Replace All` number is "
 "automatically incremented for every successive match."
-msgstr ""
+msgstr "この関数では、``replace()`` の便利なもうひとつの追加引数である ``number`` を使用しています。:guilabel:`すべて置換` を実行するとき、number はマッチが成功するたびに自動的に数が増やされます。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:147
 msgid ""
@@ -180,11 +181,11 @@ msgid ""
 "``'spine'`` means that if this search is run on multiple HTML files, the "
 "files are processed in the order in which they appear in the book. See "
 ":ref:`file_order_replace_all` for details."
-msgstr ""
+msgstr "もうひとつの新しい機能は、``replace.file_order`` の利用です。これを ``'spine'`` に設定すると、この関数を複数の HTML ファイルに対して実行したときに、本に表示される順番でファイルを処理します。詳しくは :ref:`file_order_replace_all` を参照してください。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:154
 msgid "Auto create a Table of Contents"
-msgstr ""
+msgstr "目次の自動生成"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:156
 msgid ""
@@ -192,18 +193,18 @@ msgid ""
 "headings in ``h1`` and ``h2`` tags that look like ``<h1 id=\"someid\">Some "
 "Text</h1>``. We will auto-generate an HTML Table of Contents based on these "
 "headings. Create the custom function below:"
-msgstr ""
+msgstr "最後に、もう少し大がかりなことを試してみましょう。本の中に ``h1`` と ``h2`` タグの見出しがあり、``<h1 id=\"someid\">Some Text</h1>`` のようになっているとします。これらの見出しにもとづいて HTML の目次を自動生成します。下に示すカスタム関数を作成してください:"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:199
 msgid "And use it with the find expression::"
-msgstr ""
+msgstr "そしてこれを次の検索式で使用します::"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:203
 msgid ""
 "Run the search on :guilabel:`All text files` and at the end of the search, a"
 " window will popup with \"Debug output from your function\" which will have "
 "the HTML Table of Contents, ready to be pasted into :file:`toc.html`."
-msgstr ""
+msgstr "検索を :guilabel:`すべてのテキストファイル` に実行すると、\"関数からのデバッグ出力\" のウィンドウがポップアップ表示され、そこに HTML の目次が出力されているので、そのまま :file:`toc.html` に貼り付けて利用できます。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:207
 msgid ""
@@ -212,7 +213,7 @@ msgid ""
 "``replace()`` function, the ``data`` object. The ``data`` object is a Python"
 " *dict* that persists between all successive invocations of ``replace()`` "
 "during a single :guilabel:`Replace All` operation."
-msgstr ""
+msgstr "上の関数にはコメントがちりばめられているので、読みやすいはずです。重要な新機能は ``replace()`` のもうひとつの便利な追加引数である ``data`` オブジェクトの利用です。``data`` オブジェクトは Python の*辞書*で、:guilabel:`すべて置換` の実行中に連続して ``replace()`` を呼び出す間ずっと存続します。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:213
 msgid ""
@@ -220,7 +221,7 @@ msgid ""
 "to ``True`` on the ``replace()`` function means that the editor will call "
 "``replace()`` one extra time after all matches have been found. For this "
 "extra call, the match object will be ``None``."
-msgstr ""
+msgstr "もうひとつの新機能は ``call_after_last_match`` の利用です。``replace()`` 関数でこれを ``True`` に設定すると、すべてのマッチが見つかった後にエディタがもう一度 ``replace()`` を呼び出し、マッチオブジェクトは ``None`` になります。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:218
 msgid ""
@@ -228,17 +229,17 @@ msgid ""
 " really needed to generate a Table of Contents from headings in your book, "
 "you would be better off using the dedicated Table of Contents tool in "
 ":guilabel:`Tools->Table of Contents`."
-msgstr ""
+msgstr "これは関数モードの威力を紹介するための単なるデモにすぎません。もし本当に見出しから目次を生成する必要があるなら、:guilabel:`ツール->目次` にある目次専用のツールを使うことをお勧めします。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:224
 msgid "The API for the function mode"
-msgstr ""
+msgstr "関数モードの API"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:226
 msgid ""
 "All function mode functions must be Python functions named replace, with the"
 " following signature::"
-msgstr ""
+msgstr "関数モードの関数はすべて replace という名前の Python 関数でなくてはなりません。そして次のシグネチャを持ちます::"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:232
 msgid ""
@@ -247,11 +248,11 @@ msgid ""
 "match. If no replacements are to be done, it should return ``match.group()``"
 " which is the original string. The various arguments to the ``replace()`` "
 "function are documented below."
-msgstr ""
+msgstr "検索/置換が実行されると、マッチが見つかるたびに ``replace()`` 関数が呼び出され、そのマッチに対する置換文字列が返されます。置換が行われない場合には、もとの文字列である `match.group()`` を返します。``replace()`` の引数については下で説明します。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:239
 msgid "The ``match`` argument"
-msgstr ""
+msgstr "引数 ``match``"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:241
 msgid ""
@@ -260,22 +261,22 @@ msgid ""
 " most useful method is ``group()`` which can be used to get the matched text"
 " corresponding to individual capture groups in the search regular "
 "expression."
-msgstr ""
+msgstr "引数 ``match`` は現在見つかったマッチを表します。これは `Python Match オブジェクト<https://docs.python.org/library/re.html#match-objects>`_です。その最も便利なメソッドは ``group()`` で、これを使用すると検索正規表現の中の個別のキャプチャグループに対応するマッチしたテキストを取得できます。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:248
 msgid "The ``number`` argument"
-msgstr ""
+msgstr "引数 ``number``"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:250
 msgid ""
 "The ``number`` argument is the number of the current match. When you run "
 ":guilabel:`Replace All`, every successive match will cause ``replace()`` to "
 "be called with an increasing number. The first match has number 1."
-msgstr ""
+msgstr "引数 ``number`` は現在のマッチの番号です。:guilabel:`すべて置換`を実行すると、マッチが成功するたびに連番とともに ``replace()`` が呼び出されます。最初のマッチの番号は 1 です。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:255
 msgid "The ``file_name`` argument"
-msgstr ""
+msgstr "引数 `file_name``"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:257
 msgid ""
@@ -283,11 +284,11 @@ msgid ""
 "searching inside marked text, the ``file_name`` is empty. The ``file_name`` "
 "is in canonical form, a path relative to the root of the book, using ``/`` "
 "as the path separator."
-msgstr ""
+msgstr "現在のマッチが見つかったファイルのファイル名です。マークしたテキスト内を検索するときには、``file_name`` は空です。``file_name`` は基準形で、セパレータに ``/`` を使用した本のルートの相対パスです。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:263
 msgid "The ``metadata`` argument"
-msgstr ""
+msgstr "引数 ``metadata``"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:265
 msgid ""
@@ -296,11 +297,11 @@ msgid ""
 ":class:`calibre.ebooks.metadata.book.base.Metadata`. Useful attributes "
 "include, ``title``, ``authors`` (a list of authors) and ``language`` (the "
 "language code)."
-msgstr ""
+msgstr "これは現在の本の書誌を表します。タイトル、著者、言語などです。これは :class:`calibre.ebooks.metadata.book.base.Metadata` クラスのオブジェクトです。便利な属性には、``title``, ``authors`` (著者のリスト) および ``language`` (言語コード) があります。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:271
 msgid "The ``dictionaries`` argument"
-msgstr ""
+msgstr "引数 ``dictionaries``"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:273
 msgid ""
@@ -308,11 +309,11 @@ msgid ""
 "current book. Its most useful method is ``dictionaries.recognized(word)`` "
 "which will return ``True`` if the passed in word is recognized by the "
 "dictionary for the current book's language."
-msgstr ""
+msgstr "現在の本のスペルチェックに使われた辞書のコレクションを表します。その最も便利なメソッドは `dictionaries.recognized(word)`` で、渡された単語が現在の本の言語用の辞書で認識さたら `True`` を返します。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:279
 msgid "The ``data`` argument"
-msgstr ""
+msgstr "引数 ``data``"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:281
 msgid ""
@@ -320,11 +321,11 @@ msgid ""
 "successive match will cause ``replace()`` to be called with the same "
 "``dict`` as data. You can thus use it to store arbitrary data between "
 "invocations of ``replace()`` during a :guilabel:`Replace all` operation."
-msgstr ""
+msgstr "これは単なる Python の ``辞書`` です。:guilabel:`すべて置換` を実行したとき、マッチのたびに同じ ``dict`` をデータとして``replace()`` が呼び出されます。:guilabel:`すべて置換` の実行中、これを使うと ``replace()`` を呼び出すたびに任意のデータを格納できます。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:288
 msgid "The ``functions`` argument"
-msgstr ""
+msgstr "引数 ``functions``"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:290
 msgid ""
@@ -332,13 +333,13 @@ msgid ""
 "functions. This is useful for code re-use. You can define utility functions "
 "in one place and re-use them in all your other functions. For example, "
 "suppose you create a function name ``My Function`` like this:"
-msgstr ""
+msgstr "引数 ``functions`` を使うと他のすべてのユーザ定義関数にアクセスできます。コードの再利用に役立ちます。ユーティリティ関数を 1 か所で定義して、他のすべての関数からそれを再利用することができます。たとえば ``My Function`` と名付けた関数を次のように作成したとします:"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:303
 msgid ""
 "Then, in another function, you can access the ``utility()`` function like "
 "this:"
-msgstr ""
+msgstr "そして別の関数では、``utility()`` 関数に次のようにしてアクセスできます:"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:311
 msgid ""
@@ -347,11 +348,11 @@ msgid ""
 "when run with :guilabel:`Replace All` collects some data and another "
 "function that uses it when it is run afterwards. Consider the following two "
 "functions:"
-msgstr ""
+msgstr "functions オブジェクトを使って、他の関数から再利用できる永続データを格納することもできます。たとえば :guilabel:`すべて置換` で実行されたときにデータを収集し、後で別の関数が実行されたときにそれを使用するといったことが可能です。次の 2 つの関数のようなものを考えてみてください:"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:331
 msgid "Debugging your functions"
-msgstr ""
+msgstr "関数のデバッグ"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:333
 msgid ""
@@ -359,11 +360,11 @@ msgid ""
 "function from Python. The output of print will be displayed in a popup "
 "window after the Find/replace has completed. You saw an example of using "
 "``print()`` to output an entire table of contents above."
-msgstr ""
+msgstr "作成した関数をデバッグするには Python から標準の ``print()`` 関数を使用します。print の出力は検索/置換が完了した後にポップアップウィンドウに表示されます。``print()`` の使用例は、上で目次全体を出力する説明にあります。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:341
 msgid "Choose file order when running on multiple HTML files"
-msgstr ""
+msgstr "複数の HTML ファイルに実行する際にファイル順を選択"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:343
 msgid ""
@@ -371,19 +372,19 @@ msgid ""
 "which the files are processes depends on what files you have open for "
 "editing. You can force the search to process files in the order in which the"
 " appear by setting the ``file_order`` attribute on your function, like this:"
-msgstr ""
+msgstr ":guilabel:`すべて置換` を複数の HTML に対して実行するとき、ファイルが処理される順番は編集のために開いているファイルによって異なります。次のように、関数に ``file_order`` 属性を設定すると、検索がファイルを設定された順に処理するよう強制できます。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:355
 msgid ""
 "``file_order`` accepts two values, ``spine`` and ``spine-reverse`` which "
 "cause the search to process multiple files in the order they appear in the "
 "book, either forwards or backwards, respectively."
-msgstr ""
+msgstr "``file_order`` は ``spine`` と ``spine-reverse`` という 2 つの値を受け取り、検索が複数ファイルを処理するのに本の中に現れた順で、それぞれ降順または昇順に処理するようにします。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:360
 msgid ""
 "Having your function called an extra time after the last match is found"
-msgstr ""
+msgstr "最後のマッチが見つかった後にもう一度関数を呼び出させる"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:362
 msgid ""
@@ -391,11 +392,11 @@ msgid ""
 "useful to have your function called an extra time after the last match is "
 "found. You can do this by setting the ``call_after_last_match`` attribute on"
 " your function, like this:"
-msgstr ""
+msgstr "上で説明した目次の自動生成の例のように、最後のマッチが見つかった後に関数をもう一度呼び出させると便利な場合があります。これを行うには、次のように、関数の ``call_after_last_match`` 属性を設定します:"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:376
 msgid "Appending the output from the function to marked text"
-msgstr ""
+msgstr "関数の出力をマークしたテキストに追加"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:378
 msgid ""
@@ -403,26 +404,26 @@ msgid ""
 "append so text to the end of the marked text. You can do that by setting the"
 " ``append_final_output_to_marked`` attribute on your function (note that you"
 " also need to set ``call_after_last_match``), like this:"
-msgstr ""
+msgstr "マークしたテキストに検索と置換を実行するとき、マークしたテキストの最後にテキストを追加すると便利な場合があります。これを行うには、次のように、関数の ``append_final_output_to_marked`` を設定します (ただし ``call_after_last_match`` も設定する必要があります):"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:393
 msgid "Suppressing the result dialog when performing searches on marked text"
-msgstr ""
+msgstr "マークしたテキストに検索を実行したとき結果ダイアログを抑制"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:395
 msgid ""
 "You can also suppress the result dialog (which can slow down the repeated "
 "application of a search/replace on many blocks of text) by setting the "
 "``suppress_result_dialog`` attribute on your function, like this:"
-msgstr ""
+msgstr "結果ダイアログ (これがあると、検索/置換を数多くのテキストブロックに対して適用を繰り返すのが遅くなります) を抑制するには、次のように、関数の ``suppress_result_dialog`` 属性を設定します:"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:408
 msgid "More examples"
-msgstr ""
+msgstr "その他の例"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:410
 msgid ""
 "More useful examples, contributed by calibre users, can be found in the "
 "`calibre E-book editor forum "
 "<https://www.mobileread.com/forums/showthread.php?t=237181>`_."
-msgstr ""
+msgstr "この他にも calibre ユーザによって投稿された便利な例が `calibre 電子書籍エディタフォーラム <https://www.mobileread.com/forums/showthread.php?t=237181>`_にあります。"

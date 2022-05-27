@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "5月 03, 2022" "5.42.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "5月 27, 2022" "5.43.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -35,15 +35,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-calibre\-server [オプション] [ライブラリフォルダへのpath...]
+calibre\-server [オプション] [ライブラリフォルダへのパス...]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Calibreのコンテンツサーバを開始。コンテンツサーバはCalibreライブラリを
-インターネット上に公開します。\fBcalibre\-server\fP の引数としてライブラリフォルダへのpathを
-指定することができます。pathの指定がない場合には、Calibreプログラムの知っている
+calibreのコンテンツサーバを開始。コンテンツサーバはcalibreライブラリを
+インターネット上に公開します。\fBcalibre\-server\fP の引数としてライブラリフォルダへのパスを
+指定することができます。pathの指定がない場合には、calibreプログラムの知っている
 すべてのライブラリが対象となります。
 .sp
 スペースを含む引数を \fBcalibre\-server\fP に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
@@ -51,7 +51,7 @@ Calibreのコンテンツサーバを開始。コンテンツサーバはCalibre
 .INDENT 0.0
 .TP
 .B \-\-access\-log
-アクセスログファイルへのpath。このログにはクライアントからサーバへの接続や、要求についての情報が記録されます。デフォルトでは、アクセスログは記録しません。
+アクセスログファイルへのパス。このログにはクライアントからサーバへの接続や、要求についての情報が記録されます。デフォルトでは、アクセスログは記録しません。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -66,7 +66,7 @@ Calibreのコンテンツサーバを開始。コンテンツサーバはCalibre
 .INDENT 0.0
 .TP
 .B \-\-auto\-reload
-ソースコードが変更されたとき自動的にサーバーの再読み込みを行います。デバッグ時に有用です。シャットダウンタイムアウトに小さい値を指定するのもよいでしょう。
+ソースコードが変更されたとき自動的にサーバの再読み込みを行います。デバッグ時に有用です。シャットダウンタイムアウトに小さい値を指定するのもよいでしょう。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -76,12 +76,12 @@ Calibreのコンテンツサーバを開始。コンテンツサーバはCalibre
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-連続してログインに失敗したIPアドレスを遮断する.   繰り返しログインに失敗したIPアドレスを、指定した時間 (分単位) だけ一時的に遮断します。ブルートフォース攻撃への対策として有効です。0 を設定すると、遮断しません。
+連続してログインに失敗したIPアドレスを遮断.     繰り返しログインに失敗したIPアドレスを、指定した時間 (分単位) だけ一時的に遮断します。ブルートフォース攻撃への対策として有効です。0 を設定すると、遮断しません。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-book\-list\-mode
-デフォルトの書籍一覧モードを選択.   新しいユーザ向けのデフォルトの書籍一覧モードを設定します。個々のユーザは自分で設定することによりデフォルトのモードを上書きできます。初期設定ではカバーグリッドを使用します。
+デフォルトの本の一覧モードを選択.   新規ユーザ向けのデフォルトの本の一覧モードを設定します。個々のユーザは自分で設定することによりデフォルトのモードを上書きできます。初期設定ではカバーグリッドを使用します。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -91,7 +91,7 @@ Calibreのコンテンツサーバを開始。コンテンツサーバはCalibre
 .INDENT 0.0
 .TP
 .B \-\-custom\-list\-template
-カスタムな本一覧モードのテンプレートを格納したJSONへのpath。このテンプレートを作成する最も簡単な方法は、Calibreの「設定」→「ネット共有」→「書籍一覧テンプレート」へ行ってテンプレートを作成し、エクスポートすることです。
+カスタムな本一覧モードのテンプレートを格納した JSON へのパス。このテンプレートを作成する最も簡単な方法は、calibreの 環境設定\->ネット共有\->本の一覧テンプレート へ行ってテンプレートを作成し、エクスポートすることです。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -101,7 +101,7 @@ Calibreのコンテンツサーバを開始。コンテンツサーバはCalibre
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-表示するユーザ定義フィールドを限定.  コンテンツサーバ /opds および /mobile ビューで表示させるユーザ定義の書誌情報フィールドを、カンマ区切りで指定。このオプションを指定したとき、リストにないフィールドは表示されなくなります。例: my_rating,my_tags
+表示するユーザ定義フィールドを限定.  コンテンツサーバ /opds および /mobile ビューで表示させるユーザ定義の書誌フィールドを、カンマ区切りで指定。このオプションを指定したとき、リストにないフィールドは表示されなくなります。例: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -116,17 +116,17 @@ Calibreのコンテンツサーバを開始。コンテンツサーバはCalibre
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-自動認識したインタフェースにフォールバックする.    何らかの理由によりlisten_onオプションで指定されたインタフェースにサーバがバインドできない場合、外部に接続するインタフェースを検出してバインドしようと試みます。 デフォルトでは、このオプションは有効に設定されています。
+自動認識したインタフェースにフォールバック.      何らかの理由によりlisten_onオプションで指定されたインタフェースにサーバがバインドできない場合、外部に接続するインタフェースを検出してバインドしようと試みます。 デフォルトでは、このオプションは有効に設定されています。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-認証されていないローカルコネクションでの変更を許可する.        通常、認証を有効にしていない場合には、匿名ユーザがCalibreライブラリに変更を加えることができないよう、サーバは読み取り専用モードで動作します。このオプションを有効にすると、サーバと同じコンピュータからの接続の場合には、誰でも変更を加えることができるようになります。認証なしでサーバを運用しながら、Calibreライブラリを変更するのにcalibredbを利用する場合に便利です。 デフォルトでは、このオプションは無効に設定されています。
+認証されていないローカルコネクションでの変更を許可.  通常、認証を有効にしていない場合には、匿名ユーザがcalibreライブラリに変更を加えることができないよう、サーバは読み取り専用モードで動作します。このオプションを有効にすると、サーバと同じコンピュータからの接続の場合には、誰でも変更を加えることができるようになります。認証なしでサーバを運用しながら、calibreライブラリを変更するのにcalibredbを利用する場合に便利です。 デフォルトでは、このオプションは無効に設定されています。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-HTTP 404 (Not Found) 要求をログする.       通常、サーバはリソースが見つからなかったときのHTTP要求をログ保存します。しかしBOTの標的にされた場合には、ログがスパムであふれることになります。ログを止めるためにこのオプションを利用してください。 デフォルトでは、このオプションは有効に設定されています。
+HTTP 404 (Not Found) 要求をログに保存.      通常、サーバはリソースが見つからなかったときのHTTP要求をログ保存します。しかしBOTの標的にされた場合には、ログがスパムであふれることになります。ログを止めるためにこのオプションを利用してください。 デフォルトでは、このオプションは有効に設定されています。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -136,7 +136,7 @@ BonJour経由でOPDSフィードを公開する.    BonJourサービス経由で
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-性能向上のためゼロコピーでファイル転送する.      ネットワーク上でファイルを転送する際、性能向上のためにカーネル内転送にゼロコピーを使用します。ただし、変則的なファイルシステム上では転送されたファイルが破損することがあります。転送ファイルが破損していた場合には、無効に設定してください。 デフォルトでは、このオプションは有効に設定されています。
+性能向上のためゼロコピーでファイル転送.        ネットワーク上でファイルを転送する際、性能向上のためにカーネル内転送にゼロコピーを使用します。ただし、変則的なファイルシステム上では転送されたファイルが破損することがあります。転送ファイルが破損していた場合には、無効に設定してください。 デフォルトでは、このオプションは有効に設定されています。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -146,7 +146,7 @@ BonJour経由でOPDSフィードを公開する.    BonJourサービス経由で
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-無視するユーザ定義書誌情報フィールド.         コンテンツサーバに /opds および /mobile ビューで表示させないユーザ定義の書誌情報フィールドを、カンマ区切りで指定。例: my_rating,my_tags
+無視するユーザ定義書誌フィールド.   コンテンツサーバに /opds および /mobile ビューで表示させないユーザ定義の書誌フィールドを、カンマ区切りで指定。例: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -156,12 +156,12 @@ BonJour経由でOPDSフィードを公開する.    BonJourサービス経由で
 .INDENT 0.0
 .TP
 .B \-\-log
-サーバログファイルへのpath。このログにはサーバ情報とエラーが記録されますが、アクセスログは記録しません。デフォルトでは標準出力に出力されます。
+サーバログファイルへのパス。このログにはサーバ情報とエラーが記録されますが、アクセスログは記録しません。デフォルトでは標準出力に出力されます。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-manage\-users
-Manage the database of users allowed to connect to this server. You can use it in automated mode by adding a \-\-. See calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help for details. See also the \fI\%\-\-userdb\fP option.
+このサーバへの接続が許可されているユーザのデータベースを管理します。\-\- を追加することで自動モードで使用できます。詳細については calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help を参照してください。また \fI\%\-\-userdb\fP オプションも参照してください。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -191,7 +191,7 @@ OPDSフィード中の最大冊数.     サーバが単一のOPDSフィード内
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-ungrouped\-items
-フィード中でグループ化していないアイテム数のOPDS最大数.      著者やタグなどのカテゴリの1文字目の数がここで指定した数を超えた場合にグループ化します。0を指定するとグループ化しません。
+OPDS フィード内のグループ化されていない項目の最大数.       著者やタグなどのカテゴリの1文字目の数がここで指定した数を超えた場合にグループ化します。0を指定するとグループ化しません。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -216,7 +216,7 @@ OPDSフィード中の最大冊数.     サーバが単一のOPDSフィード内
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-「インターネットで検索」で使用する、URLを記述したJSONファイルへのパス。「設定」→「ネット共有」→「インターネットで検索」へ行き、URLを作成してエクスポートすると簡単にファイルを作成できます。
+「インターネットで検索」で使用する、URLを記述したJSONファイルへのパス。環境設定\->ネット共有\->インターネットで検索 へ行き、URLを作成してエクスポートすると簡単にファイルを作成できます。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -226,12 +226,12 @@ OPDSフィード中の最大冊数.     サーバが単一のOPDSフィード内
 .INDENT 0.0
 .TP
 .B \-\-ssl\-certfile
-SSL認証ファイルへのpath.
+SSL 認証ファイルへのパス.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-keyfile
-SSLプライベートキーファイルへのpath.
+SSL プライベートキーファイルへのパス.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -241,21 +241,21 @@ SSLプライベートキーファイルへのpath.
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-指定したIPからの非認証接続での変更を許可.      Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
+指定したIPからの非認証接続での変更を許可.      通常、認証を有効にしない場合にはサーバは読み取り専用モードで動作し、匿名ユーザがキャリバーライブラリに変更を加えることを許可しません。このオプションを使用すると、指定した IP アドレスから接続しているすべてのユーザに変更を許可します。TRUSTED_IP はアドレスまたはネットワークをカンマ区切りで指定します。認証なし実行しているサーバ上で calibredb を使用して calibre ライブラリに変更を加えたい場合に使える機能です。このオプションを有効にした場合には、指定した IP アドレスから接続するユーザは誰でもライブラリに変更を加えることができることに注意してください。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-url\-prefix
-すべてのURLに追加するプリフィックス.        リバースプロキシをはさんでサーバを運用する場合に有用です。使用例: URLプリフィックスとして /calibre
+すべてのURLに追加するプレフィックス.        リバースプロキシをはさんでサーバを運用する場合に有用です。使用例: URLプレフィックスとして /calibre
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-userdb
-認証に使用するユーザデータベースへのpath。データベースはSQLiteファイルです。データベース作成には:option:
+認証に使用するユーザデータベースへのパス。データベースは SQLite ファイルです。データベース作成には:option:
 .nf
 \(ga
 .fi
-\-\-manage\-users\(gaを使用します。ユーザ管理についての詳細は \fI\%https://manual.calibre\-ebook.com/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP を参照してください。
+\-\-manage\-users\(gaを使用します。ユーザ管理についての詳細は \fI\%https://manual.calibre\-ebook.com/ja/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP を参照してください。
 .UNINDENT
 .INDENT 0.0
 .TP

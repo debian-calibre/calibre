@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "5月 03, 2022" "5.42.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "5月 27, 2022" "5.43.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -110,7 +110,7 @@ localhostのホスト名。SMTPサーバとの接続時に使用します。
 .UNINDENT
 .SS SMTP RELAY
 .sp
-メールの送信にSMTPリレーサーバーを使う場合のオプション。\-\-relayが指定されていなかった場合、Calibreは電子メールを直接送信するよう試みます。
+メールの送信にSMTPリレーサーバを使う場合のオプション。\-\-relayが指定されていなかった場合、calibreは電子メールを直接送信するよう試みます。
 .INDENT 0.0
 .TP
 .B \-\-cafile
@@ -119,7 +119,7 @@ TLS接続時のサーバ認証に使用するPEM形式のCA証明書ファイル
 .INDENT 0.0
 .TP
 .B \-\-dont\-verify\-server\-certificate
-TLSを使った接続時にサーバ証明書の確認を行いません。これはバージョン3.27以前のCalibreにおけるデフォルトの動作でした。自己署名証明書あるいは不正な証明書を使った中継を利用している場合に、このオプションにより3.27以前と同様に動作させることができます。
+TLSを使った接続時にサーバ証明書の確認を行いません。これはバージョン3.27以前のcalibreにおけるデフォルトの動作でした。自己署名証明書あるいは不正な証明書を使った中継を利用している場合に、このオプションにより3.27以前と同様に動作させることができます。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -129,22 +129,22 @@ TLSを使った接続時にサーバ証明書の確認を行いません。こ�
 .INDENT 0.0
 .TP
 .B \-\-password, \-p
-リレーサーバーのパスワード
+リレーサーバのパスワード
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-port
-リレーサーバーとの接続に使用するポート。デフォルトは、SSLで暗号化を行う場合は 465 、そうでなければ 25です。
+リレーサーバとの接続に使用するポート。デフォルトは、SSLで暗号化を行う場合は 465 、そうでなければ 25です。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-relay, \-r
-メールの送信に使うSMTPリレーサーバー。
+メールの送信に使うSMTPリレーサーバ。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-username, \-u
-リレーサーバーのユーザ名
+リレーサーバのユーザ名
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE" "1" "5月 03, 2022" "5.42.0" "calibre"
+.TH "CALIBRE" "1" "5月 27, 2022" "5.43.0" "calibre"
 .SH NAME
 calibre \- calibre
 .
@@ -35,22 +35,22 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-calibre [options] [path_to_ebook or calibre url ...]
+calibre [オプション] [電子書籍へのパスまたは calibre URL ...]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Launch the main \fBcalibre\fP Graphical User Interface and optionally add the e\-book at
-path_to_ebook to the database. You can also specify \fBcalibre\fP URLs to perform various
-different actions, than just adding books. For example:
+メインの \fBcalibre\fP グラフィカルユーザインタフェースを起動し、指定があれば path_to_ebook
+に置かれた電子書籍をデータベースに追加します。\fBcalibre\fP URL を指定することにより、本を
+追加するだけでなく別の動作を行わせることも可能です。例えば次のように指定した場合
 .sp
 \fBcalibre\fP://view\-book/test_library/1842/epub
 .sp
-Will open the book with id 1842 in the EPUB format from the library
-"test_library" in the \fBcalibre\fP E\-book viewer. Library names are the folder names of the
-libraries with spaces replaced by underscores. A full description of the
-various URL based actions is in the User Manual.
+\fBcalibre\fP の "test_library" という名のライブラリにある EPUB 形式かつ ID が1842 の本を
+電子書籍ビューアで開きます。ライブラリ名にはライブラリのフォルダ名のスペースを
+アンダースコアで置換したものを指定します。URL ベースのさまざまな動作についての
+詳細はユーザマニュアルを参照してください。
 .sp
 スペースを含む引数を \fBcalibre\fP に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
 .SH [オプション]
@@ -67,7 +67,7 @@ various URL based actions is in the User Manual.
 .INDENT 0.0
 .TP
 .B \-\-ignore\-plugins
-カスタムプラグインを無視。プラグインでCalibreの起動ができない場合に有用。
+カスタムプラグインを無視。プラグインでcalibreの起動ができない場合に有用。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -77,7 +77,7 @@ various URL based actions is in the User Manual.
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-running\-calibre, \-s
-実行中のCalibreをシャットダウン。注意: ジョブが動作中であっても警告なしに終了するため、注意して実行してください。
+実行中のcalibreをシャットダウン。注意: ジョブが動作中であっても警告なしに終了するため、注意して実行してください。
 .UNINDENT
 .INDENT 0.0
 .TP
