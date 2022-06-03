@@ -40086,7 +40086,7 @@ msgid ""
 "    b = list_join('#@#', a, '#@#', $#genre, ',', $#people, '&')\n"
 "You can use expressions to generate a list. For example, assume you want items for ``authors`` and ``#genre``, but with the genre changed to the word 'Genre: ' followed by the first letter of the genre, i.e. the genre 'Fiction' becomes 'Genre: F'. The following will do that\n"
 "  program:\n"
-"    list_join('#@#', $authors, '&', list_re($#genre, ',', '^(.).*$', 'Genre: '),  ',')"
+"    list_join('#@#', $authors, '&', list_re($#genre, ',', '^(.).*$', 'Genre: \\1'),  ',')"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:1422
