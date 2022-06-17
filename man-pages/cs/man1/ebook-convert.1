@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "května 27, 2022" "5.43.0" "calibre"
-.SH NAME
-ebook-convert \- ebook-convert
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "EBOOK-CONVERT" "1" "června 17, 2022" "5.44.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -94,7 +94,7 @@ Zadejte vstupní profil. Vstupní profil dává převodnímu systému informaci,
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-Seznam vestavěných názvů předpisů. Z vestavěného předpisu můžete vytvořit e\-knihu takto: ebook\-convert \fB"\fPNazev Predpisu.recipe\fB"\fP output.epub
+Seznam vestavěných názvů předpisů. Z vestavěného předpisu můžete vytvořit e\-knihu takto: ebook\-convert \fB\(dq\fPNazev Predpisu.recipe\fB\(dq\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -183,7 +183,7 @@ Volby pro ovládání vzheldu a chování výstupu
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Překódovat znaky Unicode do ASCII. Používejte opatrně, protože to nahradí znaky Unicode za ASCII. Například to nahradí \fB"\fPPelé\fB"\fP za \fB"\fPPele\fB"\fP\&. Také pamatujte, že v případech, kdy je více zastoupení znaku (například znaky společné pro čínštinu a japonštinu), bude použito zastoupení podle aktuálního jazyku rozhraní Calibre.
+Překódovat znaky Unicode do ASCII. Používejte opatrně, protože to nahradí znaky Unicode za ASCII. Například to nahradí \fB\(dq\fPPelé\fB\(dq\fP za \fB\(dq\fPPele\fB\(dq\fP\&. Také pamatujte, že v případech, kdy je více zastoupení znaku (například znaky společné pro čínštinu a japonštinu), bude použito zastoupení podle aktuálního jazyku rozhraní Calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -193,7 +193,7 @@ Základní velikost písma v bodech. Všechny velikosti písma ve vytvořené kn
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-Změnit zarovnání textu. Hodnota \fB"\fPdoleva\fB"\fP převede všechen text zarovnaný do bloku ve zdroji na text zarovnaný vlevo (tj. nezarovnaný). Hodnota \fB"\fPdo bloku\fB"\fP převede všechen nezarovnaný text na zarovnaný. Hodnota \fB"\fPpůvodní\fB"\fP (výchozí) nezmění zarovnání ve zdrojovém souboru. Pamatujte, že pouze některé výstupní formáty podporují zarovnání.
+Změnit zarovnání textu. Hodnota \fB\(dq\fPdoleva\fB\(dq\fP převede všechen text zarovnaný do bloku ve zdroji na text zarovnaný vlevo (tj. nezarovnaný). Hodnota \fB\(dq\fPdo bloku\fB\(dq\fP převede všechen nezarovnaný text na zarovnaný. Hodnota \fB\(dq\fPpůvodní\fB\(dq\fP (výchozí) nezmění zarovnání ve zdrojovém souboru. Pamatujte, že pouze některé výstupní formáty podporují zarovnání.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -208,7 +208,7 @@ Vložit každé písmo, na které se odkazuje ve vstupním dokumentu, ale ješt�
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Vložit zadanou rodinu písem do knihy. To určuje \fB"\fPzákladní\fB"\fP písmo použité pro knihu. Pokud vstupní dokument určuje svá vlastní písma, mohou přepsat toto základní písmo. Můžete použít volbu filtrování stylu informací pro odebrání písem ze vstupního dokumentu. Pamatujte, že vkládání písem funguje pouze u některých výstupních formátů, hlavně EPUB a AZW3 a DOCX.
+Vložit zadanou rodinu písem do knihy. To určuje \fB\(dq\fPzákladní\fB\(dq\fP písmo použité pro knihu. Pokud vstupní dokument určuje svá vlastní písma, mohou přepsat toto základní písmo. Můžete použít volbu filtrování stylu informací pro odebrání písem ze vstupního dokumentu. Pamatujte, že vkládání písem funguje pouze u některých výstupních formátů, hlavně EPUB a AZW3 a DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -303,7 +303,7 @@ Podmnožina všech vložených písem. Každé vložené písmo je zmenšeno, ab
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Cesta k souboru obsahujícímu pravidla pro převod stylů CSS v této knize. Nejsnadnější způsob, jak vytvořit takový soubor, je použít průvodce pro vytváření pravidel v grafickém rozhraní Calibre. Přístup k němu získáte v oddílu \fB"\fPVzhled a chování\->Převod stylů\fB"\fP v dialogovém okně převodu. Jakmile vytvoříte pravidla, můžete použít tlačítko Exportovat pro jejich uložení do souboru.
+Cesta k souboru obsahujícímu pravidla pro převod stylů CSS v této knize. Nejsnadnější způsob, jak vytvořit takový soubor, je použít průvodce pro vytváření pravidel v grafickém rozhraní Calibre. Přístup k němu získáte v oddílu \fB\(dq\fPVzhled a chování\->Převod stylů\fB\(dq\fP v dialogovém okně převodu. Jakmile vytvoříte pravidla, můžete použít tlačítko Exportovat pro jejich uložení do souboru.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -421,12 +421,12 @@ Nastavení automatického rozpoznávání struktury dokumentu.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Výraz XPath pro rozpoznání nadpisů kapitol. Výchozí nastavení je považovat tagy <h1> nebo <h2> obsahující slova \fB"\fPchapter\fB"\fP (kapitola), \fB"\fPbook\fB"\fP (kniha), \fB"\fPsection\fB"\fP (oddíl), \fB"\fPprologue\fB"\fP (prolog), \fB"\fPepilogue\fB"\fP (epilog) nebo \fB"\fPpart\fB"\fP (část) za nadpisy kapitol, stejně jako jakékoliv tagy s class=\fB"\fPchapter\fB"\fP (třída kapitola). Použitý výraz musí vyhodnotit seznam prvků. Pro zakázání rozpoznávání kapitol použijte výraz \fB"\fP/\fB"\fP\&. Viz XPath Tutorial v ráži uživatelské příručce pro další pomoc pro použití této funkce.
+Výraz XPath pro rozpoznání nadpisů kapitol. Výchozí nastavení je považovat tagy <h1> nebo <h2> obsahující slova \fB\(dq\fPchapter\fB\(dq\fP (kapitola), \fB\(dq\fPbook\fB\(dq\fP (kniha), \fB\(dq\fPsection\fB\(dq\fP (oddíl), \fB\(dq\fPprologue\fB\(dq\fP (prolog), \fB\(dq\fPepilogue\fB\(dq\fP (epilog) nebo \fB\(dq\fPpart\fB\(dq\fP (část) za nadpisy kapitol, stejně jako jakékoliv tagy s class=\fB\(dq\fPchapter\fB\(dq\fP (třída kapitola). Použitý výraz musí vyhodnotit seznam prvků. Pro zakázání rozpoznávání kapitol použijte výraz \fB\(dq\fP/\fB\(dq\fP\&. Viz XPath Tutorial v ráži uživatelské příručce pro další pomoc pro použití této funkce.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Zadejte, jak označit rozpoznané kapitoly. Hodnota \fB"\fPkonecstránky\fB"\fP vloží před kapitoly konce stránek. Hodnota \fB"\fPčára\fB"\fP vloží před kapitoly čáru. Hodnota \fB"\fPžádné\fB"\fP zakáže označování kapitol a hodnota \fB"\fPobojí\fB"\fP použije pro označení kapitol jak konce stránek, tak čáry.
+Zadejte, jak označit rozpoznané kapitoly. Hodnota \fB\(dq\fPkonecstránky\fB\(dq\fP vloží před kapitoly konce stránek. Hodnota \fB\(dq\fPčára\fB\(dq\fP vloží před kapitoly čáru. Hodnota \fB\(dq\fPžádné\fB\(dq\fP zakáže označování kapitol a hodnota \fB\(dq\fPobojí\fB\(dq\fP použije pro označení kapitol jak konce stránek, tak čáry.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -517,7 +517,7 @@ Volby pro nastavení metadat ve výstupu
 .INDENT 0.0
 .TP
 .B \-\-authors
-Nastavit autory. Více autorů by mělo být odděleno znaky \fB"\fP&\fB"\fP\&.
+Nastavit autory. Více autorů by mělo být odděleno znaky \fB\(dq\fP&\fB\(dq\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP

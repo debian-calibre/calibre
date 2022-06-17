@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "maio 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibre-debug \- calibre-debug
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBRE-DEBUG" "1" "junho 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibre-debug \- calibre-debug
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -51,7 +51,7 @@ Pode ainda utilizar \fBcalibre\-debug\fP para executar scripts em modo independe
 .sp
 Tudo após \fB\-\-\fP será passado ao script como parâmetro.
 .sp
-Sempre que passar argumentos para o \fBcalibre\-debug\fP que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
+Sempre que passar argumentos para o \fBcalibre\-debug\fP que contenham espaços ponha\-os entre aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .SH [OPÇÕES]
 .INDENT 0.0
 .TP
@@ -81,7 +81,7 @@ Executar a ferramenta Diff do Calibre. Por exemplo:  Calibre\-debug \fI\%\-\-dif
 .INDENT 0.0
 .TP
 .B \-\-edit\-book, \-t
-Iniciar a ferramenta \fB"\fPEditar livro\fB"\fP em modo de depuração.
+Iniciar a ferramenta \fB\(dq\fPEditar livro\fB\(dq\fP em modo de depuração.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -96,7 +96,7 @@ Desconstruir o livro para a pasta especificada. Uso: \-x file.epub output_dir Ex
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Exportar todos os dados do Calibre (livros/configurações/plugins). Normalmente, ser\-lhe\-á pedido para definir uma pasta para onde exportar e quais as bibliotecas a exportar. Também pode fazer essa especificação por argumentos em linha de comandos e assim saltar as perguntas. Use caminhos absolutos para indicar a pasta para onde exportar e as bibliotecas a incluir. O termo especial \fB"\fPall\fB"\fP pode ser usado para exportar todas as bibliotecas.
+Exportar todos os dados do Calibre (livros/configurações/plugins). Normalmente, ser\-lhe\-á pedido para definir uma pasta para onde exportar e quais as bibliotecas a exportar. Também pode fazer essa especificação por argumentos em linha de comandos e assim saltar as perguntas. Use caminhos absolutos para indicar a pasta para onde exportar e as bibliotecas a incluir. O termo especial \fB\(dq\fPall\fB\(dq\fP pode ser usado para exportar todas as bibliotecas.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -146,7 +146,7 @@ Reinicializar a base de dados SQLite do Calibre no caminho especificado. Útil p
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-Run a plugin that provides a command line interface. For example: calibre\-debug \-r \fB"\fPPlugin name\fB"\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
+Executa um plugin que fornece uma interface de linha de comandos. Por exemplo: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Tudo o que surge após \fB\-\-\fP será passado para o plugin como argumentos.
 .UNINDENT
 .INDENT 0.0
 .TP

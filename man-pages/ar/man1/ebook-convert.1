@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "مايو 27, 2022" "5.43.0" "calibre"
-.SH NAME
-ebook-convert \- ebook-convert
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "EBOOK-CONVERT" "1" "يونيو 17, 2022" "5.44.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -45,14 +45,14 @@ Convert an e\-book from one format to another.
 .sp
 input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an "open e\-book" (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an \(dqopen e\-book\(dq (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
 .sp
 After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
 For full documentation of the conversion system see
 \fI\%E\-book conversion\fP
 .sp
-Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .sp
 The options and default values for the options change depending on both the
 input and output formats, so you should always check with:
@@ -79,7 +79,7 @@ options specific to every input and output format.
 .IP \(bu 2
 \fI\%المعالجة الإرشادية\fP
 .IP \(bu 2
-\fI\%بحث إبدال\fP
+\fI\%بحث واستبدال\fP
 .IP \(bu 2
 \fI\%كشف البِنية\fP
 .IP \(bu 2
@@ -102,7 +102,7 @@ show this help message and exit
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB\(dq\fPRecipe Name.recipe\fB\(dq\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -191,7 +191,7 @@ Title for any generated in\-line table of contents.
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPPelé\fB"\fP with \fB"\fPPele\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB\(dq\fPPelé\fB\(dq\fP with \fB\(dq\fPPele\fB\(dq\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -201,7 +201,7 @@ The base font size in pts. All font sizes in the produced book will be rescaled 
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-Change text justification. A value of \fB"\fPleft\fB"\fP converts all justified text in the source to left aligned (i.e. unjustified) text. A value of \fB"\fPjustify\fB"\fP converts all unjustified text to justified. A value of \fB"\fPoriginal\fB"\fP (the default) does not change justification in the source file. Note that only some output formats support justification.
+Change text justification. A value of \fB\(dq\fPleft\fB\(dq\fP converts all justified text in the source to left aligned (i.e. unjustified) text. A value of \fB\(dq\fPjustify\fB\(dq\fP converts all unjustified text to justified. A value of \fB\(dq\fPoriginal\fB\(dq\fP (the default) does not change justification in the source file. Note that only some output formats support justification.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -216,7 +216,7 @@ Embed every font that is referenced in the input document but not already embedd
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Embed the specified font family into the book. This specifies the \fB"\fPbase\fB"\fP font used for the book. If the input document specifies its own fonts, they may override this base font. You can use the filter style information option to remove fonts from the input document. Note that font embedding only works with some output formats, principally EPUB, AZW3 and DOCX.
+Embed the specified font family into the book. This specifies the \fB\(dq\fPbase\fB\(dq\fP font used for the book. If the input document specifies its own fonts, they may override this base font. You can use the filter style information option to remove fonts from the input document. Note that font embedding only works with some output formats, principally EPUB, AZW3 and DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -286,7 +286,7 @@ Set the top margin in pts. Default is 5.0. Setting this to less than zero will c
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-The minimum line height, as a percentage of the element\fB\(aq\fPs calculated font size. calibre will ensure that every element has a line height of at least this setting, irrespective of what the input document specifies. Set to zero to disable. Default is 120%. Use this setting in preference to the direct line height specification, unless you know what you are doing. For example, you can achieve \fB"\fPdouble spaced\fB"\fP text by setting this to 240.
+The minimum line height, as a percentage of the element\fB\(aq\fPs calculated font size. calibre will ensure that every element has a line height of at least this setting, irrespective of what the input document specifies. Set to zero to disable. Default is 120%. Use this setting in preference to the direct line height specification, unless you know what you are doing. For example, you can achieve \fB\(dq\fPdouble spaced\fB\(dq\fP text by setting this to 240.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -311,12 +311,12 @@ Subset all embedded fonts. Every embedded font is reduced to contain only the gl
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform styles\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB\(dq\fPLook & feel\->Transform styles\fB\(dq\fP section of the conversion dialog. Once you create the rules, you can use the \fB\(dq\fPExport\fB\(dq\fP button to save them to a file.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform HTML\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB\(dq\fPLook & feel\->Transform HTML\fB\(dq\fP section of the conversion dialog. Once you create the rules, you can use the \fB\(dq\fPExport\fB\(dq\fP button to save them to a file.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -385,7 +385,7 @@ Left aligned scene break markers are center aligned. Replace soft scene breaks t
 .B \-\-replace\-scene\-breaks
 استبدال فواصل المشهد مع النص المحدد. افتراضيا، يتم استخدام النص من مستند الإدخال.
 .UNINDENT
-.SH بحث إبدال
+.SH بحث واستبدال
 .sp
 عدّل نص وبِنية الوثيقة باستخدام أنماط عرّفها المستخدم.
 .INDENT 0.0
@@ -429,12 +429,12 @@ Path to a file containing search and replace regular expressions. The file must 
 .INDENT 0.0
 .TP
 .B \-\-chapter
-An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP as chapter titles as well as any tags that have class=\fB"\fPchapter\fB"\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB"\fP/\fB"\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB\(dq\fPchapter\fB\(dq\fP, \fB\(dq\fPbook\fB\(dq\fP, \fB\(dq\fPsection\fB\(dq\fP, \fB\(dq\fPprologue\fB\(dq\fP, \fB\(dq\fPepilogue\fB\(dq\fP or \fB\(dq\fPpart\fB\(dq\fP as chapter titles as well as any tags that have class=\fB\(dq\fPchapter\fB\(dq\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB\(dq\fP/\fB\(dq\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Specify how to mark detected chapters. A value of \fB"\fPpagebreak\fB"\fP will insert page breaks before chapters. A value of \fB"\fPrule\fB"\fP will insert a line before chapters. A value of \fB"\fPnone\fB"\fP will disable chapter marking and a value of \fB"\fPboth\fB"\fP will use both page breaks and lines to mark chapters.
+Specify how to mark detected chapters. A value of \fB\(dq\fPpagebreak\fB\(dq\fP will insert page breaks before chapters. A value of \fB\(dq\fPrule\fB\(dq\fP will insert a line before chapters. A value of \fB\(dq\fPnone\fB\(dq\fP will disable chapter marking and a value of \fB\(dq\fPboth\fB\(dq\fP will use both page breaks and lines to mark chapters.
 .UNINDENT
 .INDENT 0.0
 .TP

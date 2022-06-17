@@ -11,15 +11,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-03 02:30+0000\n"
-"PO-Revision-Date: 2022-01-23 07:19+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2022-06-17 02:39+0000\n"
+"PO-Revision-Date: 2014-06-17 08:36+0000\n"
+"Last-Translator: Claudio Rogerio Carvalho Filho <excriptbrasil@gmail.com>, 2020\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/calibre/calibre/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: ../../__w/calibre/calibre/manual/news_recipe.rst:4
 msgid "API documentation for recipes"
@@ -36,7 +36,7 @@ msgid ""
 "progressively more of the functionality in this class, you can make "
 "progressively more customized/powerful recipes. For a tutorial introduction "
 "to creating recipes, see :doc:`news`."
-msgstr ""
+msgstr "Classe de base que contém a lógica necessária em todas as receitas. Ao efetuar sobreposições progressivas das funcionalidades desta classe, pode criar, progressivamente, receitas mais personalizadas/poderosas. Para um tutorial introdutório à criação de receitas, veja :doc:`news`. "
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.abort_article:1
@@ -44,14 +44,14 @@ msgid ""
 "Call this method inside any of the preprocess methods to abort the download "
 "for the current article. Useful to skip articles that contain inappropriate "
 "content, such as pure video articles."
-msgstr ""
+msgstr "Invoque este método dentro de qualquer dos métodos de pré-processamento para abortar o descarregamento do artigo atual. É útil para descartar artigos que contêm conteúdo inapropriado, tais como artigos de vídeo puro. "
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.abort_recipe_processing:1
 msgid ""
 "Causes the recipe download system to abort the download of this recipe, "
 "displaying a simple feedback message to the user."
-msgstr ""
+msgstr "Provoca, por parte do sistema de descarregamento de receitas, o abortar do descarregamento desta receita, apresentado ao utilizador uma mensagem simples de informação. "
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.add_toc_thumbnail:1
@@ -62,7 +62,7 @@ msgid ""
 "actually used is device dependent (currently only used by the Kindles). Note"
 " that the referenced image must be one that was successfully downloaded, "
 "otherwise it will be ignored."
-msgstr ""
+msgstr "Invoque-o a partir de populate_article_metadata com o atributo src de uma etiqueta <img> no artigo que seja apropriado para uso como uma miniatura que represente o artigo no índice.  Se essa miniatura é de facto utilizada depende do dispositivo usado (atualmente é apenas usada pelos Kindle). Note que a imagem referenciada tem de ser uma que já tenha sido descarregada com sucesso, sendo ignorada em caso contrário."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.adeify_images:1
@@ -80,7 +80,7 @@ msgid ""
 "any query parameters, fragments, etc. The canonical representations must be "
 "unique across all URLs for this news source. If they are not, then internal "
 "links may be resolved incorrectly."
-msgstr ""
+msgstr "Devolve um conjunto de representações canónicas de ``url``. A implementação padrão usa apenas o nome do servidor e o caminho do URL, ignorando tudo o que sejam parâmetros de pesquisa, fragmentos, etc. As representações canónicas têm de ser únicas no conjunto dos URL para esta fonte de notícias. Se o não forem, então as hiperligações internas podem ser incorretamente resolvidas."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:0
@@ -93,7 +93,7 @@ msgstr ""
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:0
 msgid "Parameters"
-msgstr ""
+msgstr "Parâmetros"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:7
@@ -349,7 +349,7 @@ msgstr ""
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:3
 msgid "An OEBBook object"
-msgstr ""
+msgstr "Um objeto OEBBook"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:4
@@ -649,12 +649,12 @@ msgstr ""
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:7
 msgid "To use URLs instead, set it to::"
-msgstr ""
+msgstr "Para usar URL em vez disso, definir para::"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:11
 msgid "To match on title or URL, set it to::"
-msgstr ""
+msgstr "Para fazer coincidir no título ou URL, definir para::"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.keep_only_tags:1
@@ -786,7 +786,7 @@ msgstr ""
 msgid ""
 "List of tags to be removed. Specified tags are removed from downloaded HTML."
 " A tag is specified as a dictionary of the form::"
-msgstr ""
+msgstr "Lista de etiquetas a serem removidas. As etiquetas especificadas são removidas do HTML descarregado. Uma etiqueta é especificado como um dicionário na forma::"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags:9
@@ -802,14 +802,14 @@ msgstr ""
 msgid ""
 "This will remove all `<div class=\"advert\">` tags and all their children "
 "from the downloaded :term:`HTML`."
-msgstr ""
+msgstr "Isto removerá todos as etiquetas `<div class=\"advert\">` e respetivos descendentes do :term: `HTML` descarregado."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_after:1
 msgid ""
 "Remove all tags that occur after the specified tag. For the format for "
 "specifying a tag see :attr:`BasicNewsRecipe.remove_tags`. For example::"
-msgstr ""
+msgstr "Remove todos as etiquetas que ocorram depois da etiqueta especificada. Para informações sobre o formato de especificação de uma etiqueta, veja  :attr:`BasicNewsRecipe.remove_tags`. Por exemplo::"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_after:7
@@ -894,7 +894,7 @@ msgstr ""
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.timeout:1
 msgid "Timeout for fetching files from server in seconds"
-msgstr ""
+msgstr "Tempo de espera em segundos para obter ficheiros do servidor"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.title:1

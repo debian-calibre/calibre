@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "5月 27, 2022" "5.43.0" "calibre"
-.SH NAME
-ebook-convert \- ebook-convert
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "EBOOK-CONVERT" "1" "6月 17, 2022" "5.44.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -52,7 +52,7 @@ input_file には入力ファイル、output_file には出力ファイルを指
 変換システムの詳しい説明は次を参照してください。
 \fI\%電子書籍変換\fP
 .sp
-スペースを含む引数を \fBebook\-convert\fP に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
+スペースを含む引数を \fBebook\-convert\fP に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .sp
 指定できるオプションとデフォルト値は、入力形式と出力形式の
 両方に依存するので、以下で確認するようにしてください:
@@ -102,7 +102,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-ビルトイン・レシピ名の一覧を表示。以下のようにしてビルトイン・レシピから電子書籍を作成できます。: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+ビルトイン・レシピ名の一覧を表示。以下のようにしてビルトイン・レシピから電子書籍を作成できます。: ebook\-convert \fB\(dq\fPRecipe Name.recipe\fB\(dq\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -191,7 +191,7 @@ SVGの表紙を使う場合、このオプションは縦横比を保ったま�
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Unicode文字をASCII表記に翻訳します。Unicode文字がASCIIで置き換わることになるため注意して使ってください。例えば \fB"\fPPelé\fB"\fP は \fB"\fPPele\fB"\fPに置換されます。また文字に複数の表記がある場合（例えば中国語と日本語で共有されている文字）、表記は現在のcalibreのインタフェース言語が使われます。
+Unicode文字をASCII表記に翻訳します。Unicode文字がASCIIで置き換わることになるため注意して使ってください。例えば \fB\(dq\fPPelé\fB\(dq\fP は \fB\(dq\fPPele\fB\(dq\fPに置換されます。また文字に複数の表記がある場合（例えば中国語と日本語で共有されている文字）、表記は現在のcalibreのインタフェース言語が使われます。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -425,7 +425,7 @@ calibreがパラグラフ間の空白行を削除する時に、パラグラフ�
 .INDENT 0.0
 .TP
 .B \-\-chapter
-章タイトルを検出するためのXPathの式。デフォルトでは、<h1> または <h2> タグのうち \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP, \fB"\fPpart\fB"\fP を含むもの、および class=\fB"\fPchapter\fB"\fP のものを章タイトルとします。使用する式は、エレメントのリストを評価するものでなくてはなりません。章の検出を無効にするには、\fB"\fP/\fB"\fP 式を使用します。XPathのチュートリアルは、calibreのユーザマニュアルを参照してください。
+章タイトルを検出するためのXPathの式。デフォルトでは、<h1> または <h2> タグのうち \fB\(dq\fPchapter\fB\(dq\fP, \fB\(dq\fPbook\fB\(dq\fP, \fB\(dq\fPsection\fB\(dq\fP, \fB\(dq\fPprologue\fB\(dq\fP, \fB\(dq\fPepilogue\fB\(dq\fP, \fB\(dq\fPpart\fB\(dq\fP を含むもの、および class=\fB\(dq\fPchapter\fB\(dq\fP のものを章タイトルとします。使用する式は、エレメントのリストを評価するものでなくてはなりません。章の検出を無効にするには、\fB\(dq\fP/\fB\(dq\fP 式を使用します。XPathのチュートリアルは、calibreのユーザマニュアルを参照してください。
 .UNINDENT
 .INDENT 0.0
 .TP

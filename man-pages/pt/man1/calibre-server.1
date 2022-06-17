@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "maio 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibre-server \- calibre-server
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBRE-SERVER" "1" "junho 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibre-server \- calibre-server
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -43,7 +43,7 @@ calibre\-server [options] [path to library folder ...]
 .sp
 Inicie o servidor de conteúdos Calibre. O servidor de conteúdos do Calibre expõe a sua biblioteca Calibre na Internet. Você pode especificar o caminho para a pasta da biblioteca com os argumentos para \fBcalibre\-server\fP\&. Se não especificar qualquer caminho, serão utilizadas todas as bibliotecas que o programa principal Calibre conheça.
 .sp
-Sempre que passar argumentos para o \fBcalibre\-server\fP que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
+Sempre que passar argumentos para o \fBcalibre\-server\fP que contenham espaços ponha\-os entre aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .SH [OPÇÕES]
 .INDENT 0.0
 .TP
@@ -58,7 +58,7 @@ O tempo em segundos para aguardar por uma resposta do servidor ao efetuar pedido
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Escolher o tipo de autenticação a usar.     Define o modo de autenticação HTTP usado pelo servidor. Definir como \fB"\fPbasic\fB"\fP se usar o servidor atrás de um proxy SSL. Senão, deixe como \fB"\fPauto\fB"\fP, que usará \fB"\fPbasic\fB"\fP se o SSL estiver configurado, ou \fB"\fPdigest\fB"\fP se não estiver configurado.
+Escolher o tipo de autenticação a usar.     Define o modo de autenticação HTTP usado pelo servidor. Definir como \fB\(dq\fPbasic\fB\(dq\fP se usar o servidor atrás de um proxy SSL. Senão, deixe como \fB\(dq\fPauto\fB\(dq\fP, que usará \fB\(dq\fPbasic\fB\(dq\fP se o SSL estiver configurado, ou \fB\(dq\fPdigest\fB\(dq\fP se não estiver configurado.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -213,7 +213,7 @@ A porta onde escutar ligações.
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-Caminho para um ficheiro JSON contendo URLs para a funcionalidade \fB"\fPPesquisar na internet\fB"\fP\&. A maneira mais fácil de criar esse ficheiro é ir a Preferências\-> Partilhar na rede\->Pesquisar internet no Calibre, criar os URL e exportá\-los.
+Caminho para um ficheiro JSON contendo URLs para a funcionalidade \fB\(dq\fPPesquisar na internet\fB\(dq\fP\&. A maneira mais fácil de criar esse ficheiro é ir a Preferências\-> Partilhar na rede\->Pesquisar internet no Calibre, criar os URL e exportá\-los.
 .UNINDENT
 .INDENT 0.0
 .TP

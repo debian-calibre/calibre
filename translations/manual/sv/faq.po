@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-03 05:03+0000\n"
+"POT-Creation-Date: 2022-06-17 02:39+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2022\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
@@ -29,7 +29,7 @@ msgstr "Vanliga frågor"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:8
 #: ../../__w/calibre/calibre/manual/faq.rst:14
-#: ../../__w/calibre/calibre/manual/faq.rst:169
+#: ../../__w/calibre/calibre/manual/faq.rst:138
 #: ../../__w/calibre/calibre/manual/faq.rst:515
 #: ../../__w/calibre/calibre/manual/faq.rst:732
 msgid "Contents"
@@ -138,7 +138,7 @@ msgid ""
 " One is the traditional Table of Contents, like the ToC you find in paper "
 "books. This Table of Contents is part of the main document flow and can be "
 "styled however you like. This ToC is called the *content ToC*."
-msgstr "Det första man måste inse är att de flesta e-böcker har två innehållsförteckningar. Den ena är den traditionella innehållsförteckningen, som innehållsförteckningen du hittar i pappersboken. Denna innehållsförteckning är en del av huvuddokumentflödet och kan titulera hur du vill. Detta innehållsförteckningen kallas *innehålls innehållsförteckningen*."
+msgstr "Det första att inse är att de flesta e-böcker har två innehållsförteckningar. Den ena är den traditionella innehållsförteckningen, som innehållsförteckningen du hittar i pappersböcker. Den här innehållsförteckningen är en del av huvuddokumentflödet och kan utformas som du vill. Denna innehållsförteckning kallas *innehållets innehållsförteckningen*."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:58
 msgid ""
@@ -212,57 +212,10 @@ msgid ""
 msgstr "Det nyare AZW3-formatet har ordentligt stöd för metadatainnehållsförteckning. Emellertid tenderar Kindle-mjukvaran inte fungera om du inaktiverar skapande av slut-på-fil-indragsinnehållsförteckning. Så det rekommenderas att du lämnar den skapade innehållsförteckningen som den är. Om du skapar en AZW3-fil med metadatainnehållsförteckning och ingen slut-på-fil skapad innehållsförteckning, kommer vissa funktioner på Kindle inte att fungerar, till exempel sidväxlingsfunktionen."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:79
-msgid ""
-"The covers for my MOBI files have stopped showing up in Kindle for PC/Kindle"
-" for Android/iPad etc."
-msgstr "Omslagen för mina MOBI-filer har slutat visas i Kindle för PC/Kindle for Android/iPad o.s.v."
-
-#: ../../__w/calibre/calibre/manual/faq.rst:81
-msgid ""
-"This is caused by a bug in the Amazon software. You can work around it by "
-"going to :guilabel:`Preferences->Conversion->Output Options->MOBI output` "
-"and setting the :guilabel:`Enable sharing of book content` option. If you "
-"are reconverting a previously converted book, you will also have to enable "
-"the option in the conversion dialog for that individual book (as per book "
-"conversion settings are saved and take precedence)."
-msgstr "Detta orsakas av ett fel i Amazon-programmet. Du kan lösa det genom att gå till :guilabel:`Inställningar->Konvertera->Alternativ för utmatning->MOBI utmatning` och ställa in :guilabel:`Aktivera delning av bokinnehåll` alternativet. Om du kodar om  en tidigare konverterade bok, måste du också aktivera alternativet i konverteringsdialogrutan för att enskild bok (som per bok konverteringsinställningar sparas och har företräde)."
-
-#: ../../__w/calibre/calibre/manual/faq.rst:88
-msgid ""
-"Note that doing this will mean that the generated MOBI will show up under "
-"personal documents instead of Books on the Kindle Fire and Amazon "
-"whispersync will not work, but the covers will. It's your choice which "
-"functionality is more important to you. I encourage you to contact Amazon "
-"and ask them to fix this bug."
-msgstr "Observera att detta kommer att innebära att den skapade MOBI kommer att dyka upp i personliga dokument istället för böcker på Kindle Fire och Amazon Whispersync kommer inte att fungera, men omslagen kommer. Det är ditt val vilken funktion som är viktigare för dig. Jag uppmuntrar dig att kontakta Amazon och be dem att åtgärda detta problem."
-
-#: ../../__w/calibre/calibre/manual/faq.rst:94
-msgid ""
-"The bug in Amazon's software is that when you put a MOBI file on a Kindle, "
-"unless the file is marked as a Personal document, Amazon assumes you bought "
-"the book from it and tries to download the cover thumbnail for it from its "
-"servers. When the download fails, it refuses to fallback to the cover "
-"defined in the MOBI file. This is likely deliberate on Amazon's part to try "
-"to force authors to sell only through them. In other words, the Kindle only "
-"displays covers for books marked as Personal Documents or books bought "
-"directly from Amazon."
-msgstr "Felet i Amazons programvara är att när du lägger en MOBI-fil på en Kindle, om inte filen är markerad som ett personligt dokument, antar Amazon att du köpte boken från dem och försöker hämta miniatyrbilden för den från sina servrar. När hämtningen misslyckas vägrar den att återgå till omslaget som definieras i MOBI-filen. Detta är sannolikt avsiktligt från Amazons sida för att försöka tvinga författare att sälja endast genom dem. Med andra ord visar Kindle bara omslag för böcker markerade som personliga dokument eller böcker som köpts direkt från Amazon."
-
-#: ../../__w/calibre/calibre/manual/faq.rst:102
-msgid ""
-"If you send a MOBI file to an e-ink Kindle with calibre using a USB "
-"connection, calibre works around this Amazon bug by uploading a cover "
-"thumbnail itself. However, that workaround is only possible when using a USB"
-" connection and sending with calibre. Note that if you send using email, "
-"Amazon will automatically mark the MOBI file as a Personal Document and the "
-"cover will work, but the book will show up in Personal Documents."
-msgstr "Om du överför en MOBI-fil till en e-bläck Kindle med calibre med hjälp av en USB-anslutning, arbetar calibre runt detta Amazon-problem genom att överföra en miniatyrbild själv. Men denna lösning är bara möjligt när du använder en USB-anslutning och skickar med calibre. Observera att om du skickar via e-post, kommer Amazon automatiskt markera MOBI-filen som ett personligt dokument och omslaget kommer att fungera, men boken kommer att dyka upp i personliga dokument."
-
-#: ../../__w/calibre/calibre/manual/faq.rst:110
 msgid "How do I convert a collection of HTML files in a specific order?"
 msgstr "Hur konverterar jag en samling HTML-filer i en viss ordning?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:111
+#: ../../__w/calibre/calibre/manual/faq.rst:80
 msgid ""
 "In order to convert a collection of HTML files in a specific order, you have"
 " to create a table of contents file. That is, another HTML file that "
@@ -270,7 +223,7 @@ msgid ""
 "looks like::"
 msgstr "För att konvertera en samling HTML-filer i en viss ordning, måste du skapa en innehållsförteckningsfil. Det vill säga, en annan HTML fil som innehåller länkar till de andra filerna i önskad ordning. En sådan fil ser ut som::"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:128
+#: ../../__w/calibre/calibre/manual/faq.rst:97
 msgid ""
 "Then, just add this HTML file to the GUI and use the :guilabel:`Convert` "
 "button to create your e-book. You can use the option in the Table of "
@@ -278,7 +231,7 @@ msgid ""
 "Contents is generated."
 msgstr "Sedan är det bara lägga till den här HTML filen till grafiska gränssnittet och använd knappen :guilabel:`Konvertera` för att skapa din e-bok. Du kan använda alternativet i innehållsförteckningsavsnittet i dialogrutan för att anpassa konverteringen hur innehållsförteckningen skapas."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:132
+#: ../../__w/calibre/calibre/manual/faq.rst:101
 msgid ""
 "By default, when adding HTML files, calibre follows links in the files in "
 "*depth first* order. This means that if file A.html links to B.html and "
@@ -290,11 +243,11 @@ msgid ""
 ":guilabel:`HTML to ZIP` plugin."
 msgstr "Som standard när du lägger till HTML-filer, följer calibre länkar i filerna i *djup först* ordning. Detta innebär att om filen A.html länkar till B.html och C.html och D.html, men B.html länkar också till D.html, då  kommer filerna att vara i ordning A.html, B.html, D Html, C.html. Om du istället vill att för att ordningen ska vara A.html, B.html, C.html, D.html måste du berätta för calibre att lägga dina filer i *bredden först* ordning. Gör detta genom att gå till :guilabel:`Inställningar->Avancerat->Insticksmoduler->Filtyp` och anpassa :guilabel:`HTML till ZIP`-insticksmodulen."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:142
+#: ../../__w/calibre/calibre/manual/faq.rst:111
 msgid "The EPUB I produced with calibre is not valid?"
 msgstr "EPUB:n som producerades med calibre är inte giltig?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:144
+#: ../../__w/calibre/calibre/manual/faq.rst:113
 msgid ""
 "calibre does not guarantee that an EPUB produced by it is valid. The only "
 "guarantee it makes is that if you feed it valid XHTML 1.1 + CSS 2.1 it will "
@@ -309,11 +262,11 @@ msgid ""
 "input documents."
 msgstr "calibre garanterar inte att en EPUB-fil som produceras är giltigt. Den enda garantin den gör är att om du matar i den giltigt XHTML 1.1 + CSS 2.1 så kommer den att mata ut en giltig EPUB-fil. calibre anstränger sig hårt för att säkerställa att de EPUB-filer som produceras faktiskt fungerar som det är tänkt på en mängd olika enheter, ett mål som inte är förenligt med att producera giltiga EPUB-filer, och ett som är mycket viktigare för de allra flesta användare. Om du behöver ett verktyg som alltid producerar giltiga EPUB-filer är calibre inte för dig. Detta innebär att om du vill skicka en calibre-producerad EPUB-fil till en webbutik som använder en EPUB-giltighetskontrollerare, måste du själv se till att EPUB-filen är giltig, calibre gör det inte åt dig - med andra ord måste du mata calibre med giltigt XHTML + CSS som inmatningsdokument."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:157
+#: ../../__w/calibre/calibre/manual/faq.rst:126
 msgid "How do I use some of the advanced features of the conversion tools?"
 msgstr "Hur använder jag de avancerade funktionerna i konverteringsverktyget?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:158
+#: ../../__w/calibre/calibre/manual/faq.rst:127
 msgid ""
 "You can get help on any individual feature of the converters by mousing over"
 " it in the GUI or running ``ebook-convert dummy.html .epub -h`` at a "
@@ -322,15 +275,15 @@ msgid ""
 "<html-demo.zip>`."
 msgstr "Du kan få hjälp med vilken enskild funktion som helst av konverteringarna genom att föra muspekaren över den i det grafiska gränssnittet eller köra ``ebook-convert dummy.html .epub -h`` i en terminal. Ett bra ställe att börja är att titta på följande demofil som visar några av de avancerade funktionerna :download_file:`html-demo.zip <html-demo.zip>`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:165
+#: ../../__w/calibre/calibre/manual/faq.rst:134
 msgid "Device integration"
 msgstr "Enhetsintergration"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:172
+#: ../../__w/calibre/calibre/manual/faq.rst:141
 msgid "What devices does calibre support?"
 msgstr "Vilka enheter stöder calibre?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:173
+#: ../../__w/calibre/calibre/manual/faq.rst:142
 msgid ""
 "calibre can directly connect to all the major (and most of the minor) e-book"
 " reading devices, smartphones, tablets, etc.  In addition, using the "
@@ -339,27 +292,27 @@ msgid ""
 "any device that has a web browser using the calibre Content server."
 msgstr "calibre kan direkt ansluta till alla de stora (och de flesta av de mindre) e-bokläsenheterna, smarta mobiler, surfplattor o.s.v. Dessutom kan du använda funktionen :guilabel:`Anslut till mapp` med valfri e-bokläsenhet som exporterar sig själv som en USB-disk. Slutligen kan du ansluta trådlöst till någon enhet som har en webbläsare med hjälp av calibre-innehållsservern."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:182
+#: ../../__w/calibre/calibre/manual/faq.rst:151
 msgid "How can I help get my device supported in calibre?"
 msgstr "Hur kan jag hjälpa till för att min enhet ska få stöd i calibre?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:184
+#: ../../__w/calibre/calibre/manual/faq.rst:153
 msgid ""
 "If your device appears as a USB disk to the operating system, adding support"
 " for it to calibre is very easy. We just need some information from you:"
 msgstr "Om din enhet visas som en USB-disk för operativsystemet, att lägga till stöd för calibre är mycket enkelt. Vi behöver bara lite information från dig:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:187
+#: ../../__w/calibre/calibre/manual/faq.rst:156
 msgid "Complete list of e-book formats that your device supports."
 msgstr "Komplett lista med e-bokformat som din enhet stöder."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:188
+#: ../../__w/calibre/calibre/manual/faq.rst:157
 msgid ""
 "Is there a special folder on the device in which all e-book files should be "
 "placed? Also does the device detect files placed in sub-folders?"
 msgstr "Finns det en särskild mapp på enheten där alla e-bokfiler ska placeras? Också om inte enheten upptäcker filer som placeras i undermappar?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:189
+#: ../../__w/calibre/calibre/manual/faq.rst:158
 msgid ""
 "We also need information about your device that calibre will collect "
 "automatically. First, if your device supports SD cards, insert them. Then "
@@ -370,13 +323,13 @@ msgid ""
 "computer."
 msgstr "Vi behöver också information om din enhet som calibre samlar in automatiskt. Först, om din enhet har stöd för SD-kort, sätt in dem. Anslut sedan din enhet till datorn. I calibre gå till :guilabel:`Inställningar->Diverse` och klicka på knappen \"Felsök enhetsdetektering\". Detta kommer att skapa en del felsökningsutskrifter. Kopiera den till en fil och upprepa processen, den här gången med din enhet frånkopplad från din dator."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:193
+#: ../../__w/calibre/calibre/manual/faq.rst:162
 msgid ""
 "Send both the above outputs to us with the other information and we will "
 "write a device driver for your device."
 msgstr "Sänd båda ovanstående utmatning till oss med andra uppgifter och vi kommer att skriva en drivrutin för din enhet."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:196
+#: ../../__w/calibre/calibre/manual/faq.rst:165
 msgid ""
 "Once you send us the output for a particular operating system, support for "
 "the device in that operating system will appear in the next release of "
@@ -384,35 +337,35 @@ msgid ""
 "it. See :website:`how to report bugs <bugs>`."
 msgstr "När du skickar oss utmatningen för ett visst operativsystem, kommer stöd för enheten i det operativsystemet att visas i nästa version av calibre. För att skicka utmatningen till oss, öppna en felanmälan och utmatningen utdata till den. Se :website:`hur man gör felanmälningar <bugs>`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:201
+#: ../../__w/calibre/calibre/manual/faq.rst:170
 msgid "My device is not being detected by calibre?"
 msgstr "Min enhet upptäcks inte av calibre?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:203
+#: ../../__w/calibre/calibre/manual/faq.rst:172
 msgid "Follow these steps to find the problem:"
 msgstr "Följ dessa steg för att hitta problemet:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:205
+#: ../../__w/calibre/calibre/manual/faq.rst:174
 msgid ""
 "Make sure that you are connecting only a single device to your computer at a"
 " time. Do not have another calibre supported device like an iPhone/iPad etc."
 " at the same time."
 msgstr "Se till att du bara ansluter en enda enhet till din dator åt gången. Använd inte en annan enhet som stöds av calibre som en iPhone/iPad o.s.v. samtidigt."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:208
+#: ../../__w/calibre/calibre/manual/faq.rst:177
 msgid ""
 "If you are connecting an Apple iDevice (iPad, iPod Touch, iPhone), Apple no "
 "longer allows third party software to connect to their devices using a USB "
 "cable. Instead use a wireless connection, via the calibre Content server."
 msgstr "Om du ansluter en Apple iEnhet (iPad, iPod Touch, iPhone), Apple tillåter inte längre program från tredje part att ansluta till sina enheter med en USB-kabel. Använd i stället en trådlös anslutning via calibre-innehållsservern."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:212
+#: ../../__w/calibre/calibre/manual/faq.rst:181
 msgid ""
 "If you are connecting a Kindle Fire or other Android device, read the note "
 "under :ref:`android_usb`."
 msgstr "Om du ansluter en Kindle Fire eller annan Android-enhet, läs anteckningen under :ref:`android_usb`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:214
+#: ../../__w/calibre/calibre/manual/faq.rst:183
 #: ../../__w/calibre/calibre/manual/faq.rst:959
 msgid ""
 "On macOS if you get permission errors when connecting a device to calibre, "
@@ -420,7 +373,7 @@ msgid ""
 "and Privacy > Privacy > Files and Folders`."
 msgstr "På macOS om du får behörighetsfel när du ansluter en enhet till calibre kan du åtgärda det genom att titta under :guilabel:`Systeminställningar > Säkerhet och sekretess > Sekretess > Filer och mappar`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:217
+#: ../../__w/calibre/calibre/manual/faq.rst:186
 msgid ""
 "Make sure you are running the latest version of calibre (currently "
 "|version|). The latest version can always be downloaded from :website:`the "
@@ -428,19 +381,19 @@ msgid ""
 "currently running by looking at the bottom line of the main calibre window."
 msgstr "Se till att du kör den senaste versionen av calibre (för närvarande |version|). Den senaste versionen kan alltid hämtas från :website:`calibres webbplats <download>`. Du kan se vilken version av calibre du kör för närvarande genom att titta på den nedre raden av calibres huvudfönster."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:222
+#: ../../__w/calibre/calibre/manual/faq.rst:191
 msgid ""
 "Ensure your operating system is seeing the device. That is, the device "
 "should show up in Windows Explorer (in Windows) or Finder (in macOS)."
 msgstr "Försäkra att ditt operativsystem ser enheten. Det vill säga, enheten ska visas i utforskaren (i Windows) eller Finder (i macOS)."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:224
+#: ../../__w/calibre/calibre/manual/faq.rst:193
 msgid ""
 "In calibre, go to :guilabel:`Preferences->Ignored Devices` and check that "
 "your device is not being ignored"
 msgstr "I calibre, gå till :guilabel:`Inställningar->Ignorerade enheter` och kontrollera att din enhet inte ignoreras"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:226
+#: ../../__w/calibre/calibre/manual/faq.rst:195
 msgid ""
 "If all the above steps fail, go to :guilabel:`Preferences->Miscellaneous` "
 "and click :guilabel:`Debug device detection` with your device attached and "
@@ -448,11 +401,11 @@ msgid ""
 "<https://bugs.launchpad.net/calibre>`_."
 msgstr "Om alla ovanstående steg misslyckas går du till :guilabel:`Inställningar->Diverse` och klickar på :guilabel:`Felsök enhetsdetektering` med din enhet ansluten och lägg upp utmatningen som ett ärende på `felhanteringssystemet för calibre <https://bugs.launchpad.net/calibre>`_."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:231
+#: ../../__w/calibre/calibre/manual/faq.rst:200
 msgid "My device is non-standard or unusual. What can I do to connect to it?"
 msgstr "Min enhet är inte standard eller ovanlig. Vad kan jag göra för att ansluta till den?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:233
+#: ../../__w/calibre/calibre/manual/faq.rst:202
 msgid ""
 "In addition to the :guilabel:`Connect to folder` function found under the "
 ":guilabel:`Connect/share` button, calibre provides a ``User defined`` device"
@@ -466,36 +419,36 @@ msgid ""
 "builtin plugin first, so that your user defined plugin is used instead."
 msgstr "Förutom funktionen :guilabel:`Anslut till mapp` under knappen :guilabel:`Ansluta/dela`, ger calibre en ``Användardefinerad``-enhetsinsticksmodul som kan användas för att ansluta till en USB-enhet som dyker upp som en hårddisk i operativsystemet. Observera: Windows, måste enheten ha en enhetsbeteckning för calibre ska kunna använda den. Se enhets insticksmodulen ``Inställningar->Insticksmoduler->Enhets insticksmodul->Användardefinerad`` och ``Inställningar->Diverse->Få informationen för att ställa in användardefinierade enhet`` för mer information. Observera att om du använder det användardefinierade insticksmodulen för en enhet som normalt upptäcks av en inbyggd calibre-insticksmodul, måste du stänga av den inbyggda insticksmodulen först, så att din användardefinierade insticksmodul används istället."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:245
+#: ../../__w/calibre/calibre/manual/faq.rst:214
 msgid "How do I use calibre with my iPad/iPhone/iPod touch?"
 msgstr "Hur använder jag calibre med min iPad/iPhone/iPod touch?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:247
+#: ../../__w/calibre/calibre/manual/faq.rst:216
 msgid ""
 "An easy way to browse your calibre collection from your Apple device is by "
 "using :doc:`server`, which makes your collection available over the net. "
 "First perform the following steps in calibre"
 msgstr "Ett enkelt sätt att bläddra i din calibre-samling från din Apple-enhet är att använda :doc:`server`, som gör din samling tillgänglig över nätet. Utför först följande steg i calibre"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:251
+#: ../../__w/calibre/calibre/manual/faq.rst:220
 msgid ""
 "Set the Preferred Output Format in calibre to EPUB (The output format can be"
 " set under :guilabel:`Preferences->Interface->Behavior`)"
 msgstr "Ställ önskat utmatningsformat  i calibre till EPUB (Utmatningsformatet kan ställas in under :guilabel:`Inställningar->Gränssnitt->Beteende`)"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:253
+#: ../../__w/calibre/calibre/manual/faq.rst:222
 msgid ""
 "Set the output profile to iPad (this will work for iPhone/iPods as well), "
 "under :guilabel:`Preferences->Conversion->Common options->Page setup`"
 msgstr "Ställ in utmatningsprofil till iPad (detta kommer att fungera för iPhone/iPod också), enligt  :guilabel:`Inställnigar->Konvertera->Vanliga alternativ->Sidinställning`"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:255
+#: ../../__w/calibre/calibre/manual/faq.rst:224
 msgid ""
 "Convert the books you want to read on your iDevice to EPUB format by "
 "selecting them and clicking the :guilabel:`Convert` button."
 msgstr "Konvertera de böcker du vill läsa på din iEnhet till EPUB-format genom att välja dem och klicka på knappen :guilabel:`Konvertera`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:257
+#: ../../__w/calibre/calibre/manual/faq.rst:226
 msgid ""
 "Turn on the Content server by clicking the :guilabel:`Connect/share` button "
 "and leave calibre running. You can also tell calibre to automatically start "
@@ -503,7 +456,7 @@ msgid ""
 "net`."
 msgstr "Slå på innehållsservern genom att klicka på knappen :guilabel:`Ansluta/dela` och lämna calibre igång. Du kan även tala om för calibre att automatiskt starta innehållsservern via :guilabel:`Inställningar->Delning->Dela via nätet`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:261
+#: ../../__w/calibre/calibre/manual/faq.rst:230
 msgid ""
 "The Content server allows you to read books directly in Safari itself. In "
 "addition, there are many apps for your iDevice that can connect to the "
@@ -511,25 +464,25 @@ msgid ""
 "itself."
 msgstr "Innehållsservern låter dig läsa böcker direkt i Safari. Dessutom finns det många appar för din iEnhet som kan anslutas till calibre-innehållsservern. Exempel är: Marvin, Mapleread och iBooks."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:266
+#: ../../__w/calibre/calibre/manual/faq.rst:235
 msgid "Using the Content server"
 msgstr "Använda innehållsservern"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:268
+#: ../../__w/calibre/calibre/manual/faq.rst:237
 msgid ""
 "Start the Safari browser and type in the IP address and port of the computer"
 " running the calibre server, like this::"
 msgstr "Starta webbläsaren Safari och skriv in IP-adressen och porten på den dator som kör calibre-servern, så här::"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:273
-#: ../../__w/calibre/calibre/manual/faq.rst:343
+#: ../../__w/calibre/calibre/manual/faq.rst:242
+#: ../../__w/calibre/calibre/manual/faq.rst:312
 msgid ""
 "Replace ``192.168.1.2`` with the local IP address of the computer running "
 "calibre. See :doc:`server` for details on running the server and finding out"
 " the right IP address to use."
 msgstr "Ersätt ``192.168.1.2`` med den lokala IP-adressen på datorn som kör calibre. Se :doc:`server` för detaljer om hur du kör servern och tar reda på rätt IP-adress att använda."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:277
+#: ../../__w/calibre/calibre/manual/faq.rst:246
 msgid ""
 "You will see a list of books in Safari, tap on any book and you will be "
 "given the option to either download it, or read it in the browser itself. If"
@@ -537,8 +490,8 @@ msgid ""
 "iBooks."
 msgstr "Du kommer att se en lista med böcker i Safari, tryck på en bok och du kommer att få möjligheten att hämta den, eller läsa den i själva webbläsaren. Om du vill hämta den frågar Safari om du vill öppna den med iBooks."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:281
-#: ../../__w/calibre/calibre/manual/faq.rst:351
+#: ../../__w/calibre/calibre/manual/faq.rst:250
+#: ../../__w/calibre/calibre/manual/faq.rst:320
 msgid ""
 "Many reading apps support browsing the calibre library directly via its "
 "`OPDS <httpd://opds.io/>`__ support. In such apps you can go to the online "
@@ -546,11 +499,11 @@ msgid ""
 "download books from your calibre library within the app."
 msgstr "Många läsningsappar stöder att bläddra i calibre-biblioteket direkt via dess stöd för `OPDS <httpd://opds.io/>`__. I sådana appar kan du gå till katalogskärmen för nätet och lägga till IP-adressen för calibre-servern för att bläddra och hämta böcker från ditt calibre-bibliotek i appen."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:287
+#: ../../__w/calibre/calibre/manual/faq.rst:256
 msgid "How do I use calibre with my Android phone/tablet or Kindle Fire HD?"
 msgstr "Hur använder jag calibre med min Android-telefon/surfplatta eller Kindle Fire HD?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:289
+#: ../../__w/calibre/calibre/manual/faq.rst:258
 msgid ""
 "There are two ways that you can connect your Android device to calibre. "
 "Using a USB cable -- or wirelessly, over the air. The first step to using an"
@@ -568,11 +521,11 @@ msgid ""
 "<https://play.google.com/store/apps/details?id=com.amazon.kindle&feature=related_apps>`_."
 msgstr "Det finns två sätt som du kan ansluta din Android-enhet till calibre. Med hjälp av en USB-kabel - eller trådlöst, via etern. Det första steget till att använda en Android-enhet är att installerar en e-bok att läsa program på den. Det finns många gratis och betal e-bokläsningsapplikationer för Android: Några exempel (utan inbördes ordning):  `FBReader <https://play.google.com/store/apps/details?id=org.geometerplus.zlibrary.ui.android&hl=en>`_, `Moon+ <https://play.google.com/store/apps/details?id=com.flyersoft.moonreader&hl=en>`_, `Mantano <https://play.google.com/store/apps/details?id=com.mantano.reader.android.lite&hl=en>`_, `Aldiko <https://play.google.com/store/apps/details?id=com.aldiko.android&hl=en>`_, `Kindle <https://play.google.com/store/apps/details?id=com.amazon.kindle&feature=related_apps>`_."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:302
+#: ../../__w/calibre/calibre/manual/faq.rst:271
 msgid "Using a USB cable"
 msgstr "Med hjälp av en USB-kabel"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:304
+#: ../../__w/calibre/calibre/manual/faq.rst:273
 msgid ""
 "Simply plug your device into the computer with a USB cable. calibre should "
 "automatically detect the device and then you can transfer books to it by "
@@ -582,7 +535,7 @@ msgid ""
 "Transfer utility, etc."
 msgstr "Anslut helt enkelt din enhet till datorn med en USB-kabel. calibre ska automatiskt upptäcka enheten och sedan kan du överföra böcker till den genom att klicka på knappen :guilabel:`Överför till enhet`. Observera att på macOS och Linux kan endast ett enda program ansluta till en Android-enhet åt gången, så se till att enheten inte öppnas i OS File-hanteraren eller Android File Transfer-verktyget o.s.v."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:311
+#: ../../__w/calibre/calibre/manual/faq.rst:280
 msgid ""
 "With newer Android devices, you might have to jump through a few hoops to "
 "get the connection working, as Google really does not want you to be "
@@ -596,7 +549,7 @@ msgid ""
 "actually tries to connect to it, asking for permission, tap OK."
 msgstr "Med nyare Android-enheter kan du behöva gå igenom några hinder för att få anslutningen att fungera, eftersom Google verkligen inte vill att du ska vara oberoende av dess moln. Lås först upp skärmen innan du ansluter USB-kabeln. När du ansluter USB-kabeln får du en popup-avisering. Se till att det står något som \"Överföra mediefiler\" eller \"MTP (Media Transfer Mode)\". Om det inte gör det, tryck på aviseringen och ändra läget till Media Transfer (MTP). Du kan behöva starta om calibre vid denna tidpunkt för att din enhet ska kännas igen. Slutligen, kan du få en popup i enheten varje gång calibre eller operativsystemet försöker ansluta till den, och ber om tillåtelse, tryck på OK."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:323
+#: ../../__w/calibre/calibre/manual/faq.rst:292
 msgid ""
 "With the Kindle Fire 8 or newer there is an icon that shows up when the USB "
 "cable is plugged in, showing that the device is charging. Tap that and "
@@ -604,11 +557,11 @@ msgid ""
 "then be detected."
 msgstr "Med Kindle Fire 8 eller senare finns det en ikon som visas när USB-kabeln är ansluten, vilket visar att enheten laddas. Tryck på den och växla enheten till dataöverföringsläge och starta sedan calibre, den bör då upptäckas."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:329
+#: ../../__w/calibre/calibre/manual/faq.rst:298
 msgid "Over the air"
-msgstr "Över luftsnitt"
+msgstr "Över luften"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:331
+#: ../../__w/calibre/calibre/manual/faq.rst:300
 msgid ""
 "calibre has a builtin web server, the :doc:`server`. It makes your calibre "
 "collection available over the net. You can browse it on your device using a "
@@ -616,53 +569,53 @@ msgid ""
 " in calibre:"
 msgstr "calibre har en inbyggd webbserver, :doc:`server`. Den gör din calibre-samling tillgänglig över nätet. Du kan bläddra i den på din enhet med en enkel webbläsare eller en dedikerad applikation. Utför först följande steg i calibre:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:335
+#: ../../__w/calibre/calibre/manual/faq.rst:304
 msgid ""
 "Set the :guilabel:`Preferred Output Format` in calibre to EPUB for normal "
 "Android devices or MOBI for Kindles (The output format can be set under "
 ":guilabel:`Preferences->Interface->Behavior`)"
 msgstr "Ställ in :guilabel:`Önskat utmatningsformat` i calibre till EPUB för normala Android-enheter eller MOBI för Kindle-läsenheter (Utmatningsformatet kan ställas in under :guilabel:`Inställningar->Gränssnitt->Beteende`)"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:336
+#: ../../__w/calibre/calibre/manual/faq.rst:305
 msgid ""
 "Convert the books you want to read on your device to EPUB/MOBI format by "
 "selecting them and clicking the :guilabel:`Convert` button."
 msgstr "Konvertera de böcker du vill läsa på din iEnhet till EPUB-format genom att välja dem och klicka på knappen :guilabel:`Konvertera`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:337
+#: ../../__w/calibre/calibre/manual/faq.rst:306
 msgid ""
 "Turn on the :guilabel:`Content server` in calibre's preferences and leave "
 "calibre running."
 msgstr "Slå på :guilabel:`innehållsservern` i calibres inställningar och lämna calibre igång."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:339
+#: ../../__w/calibre/calibre/manual/faq.rst:308
 msgid "Now on your Android device, open the browser and browse to"
 msgstr "Nu på din Android-enhet, öppna webbläsaren och gå till"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:341
+#: ../../__w/calibre/calibre/manual/faq.rst:310
 msgid "http://192.168.1.2:8080/"
 msgstr "http://192.168.1.2:8080/"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:347
+#: ../../__w/calibre/calibre/manual/faq.rst:316
 msgid ""
 "You can now browse your book collection and download books from calibre to "
 "your device to open with whatever e-book reading software you have on your "
 "Android device."
 msgstr "Du kan nu bläddra i din boksamling och hämta böcker från calibre till din enhet för att öppna med någon e-bokläsningsmjukvara du har på din Android-enhet."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:358
+#: ../../__w/calibre/calibre/manual/faq.rst:327
 msgid ""
 "Can I access my calibre books using the web browser in my Kindle or other "
 "reading device?"
 msgstr "Kan jag komma åt mina calibre-böcker med hjälp av webbläsaren i min Kindle eller annan läsenhet?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:360
+#: ../../__w/calibre/calibre/manual/faq.rst:329
 msgid ""
 "calibre has a *Content server* that exports the books in calibre as a web "
 "page. See :doc:`server` for details."
 msgstr "calibre har en *innehållsserver* som exporterar böckerna i calibre som en webbsida. Se :doc:`server` för detaljer."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:362
+#: ../../__w/calibre/calibre/manual/faq.rst:331
 msgid ""
 "Some devices, like the Kindle (1/2/DX), do not allow you to access port 8080"
 " (the default port on which the content server runs). In that case, change "
@@ -672,18 +625,18 @@ msgid ""
 "router to forward requests on port 80 to port 8080)."
 msgstr "Vissa enheter, som Kindle (1/2/DX), tillåter dig inte att komma åt port 8080 (standardporten som innehållsservern körs på). Ändra i så fall porten i inställningarna för calibre till 80. (På vissa operativsystem kanske du inte kan köra servern på ett portnummer mindre än 1024 på grund av säkerhetsinställningar. I det här fallet är den enklaste lösningen att justera din router för att vidarebefordra förfrågningar på port 80 till port 8080)."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:367
+#: ../../__w/calibre/calibre/manual/faq.rst:336
 msgid ""
 "Also some devices do not have browsers advanced enough to run the app-like "
 "interface used by the Content server. For such devices, you can simply add "
 "``/mobile`` to the server URL to get a simplified, non-JavaScript interface."
 msgstr "Dessutom har vissa enheter inte tillräckligt avancerade webbläsare för att köra det appliknande gränssnittet som används av innehållsservern. För sådana enheter kan du helt enkelt lägga till ``/mobile`` i serverwebbadressen för att använda ett förenklat gränssnitt utan JavaScript."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:373
+#: ../../__w/calibre/calibre/manual/faq.rst:342
 msgid "I cannot send emails using calibre?"
 msgstr "Jag kan inte sända e-post med hjälp av calibre?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:375
+#: ../../__w/calibre/calibre/manual/faq.rst:344
 msgid ""
 "Because of the large amount of spam in email, sending email can be tricky, "
 "as different mail servers use different strategies to block email.  The most"
@@ -693,27 +646,27 @@ msgid ""
 "calibre is to do the following:"
 msgstr "På grund av den stora mängden skräppost i e-post kan det vara svårt att skicka e-post, eftersom olika e-postservrar använder olika strategier för att blockera e-post. Det vanligaste problemet är om du skickar e-post direkt (utan e-postreläserver) i calibre. Många servrar (till exempel Amazon) blockerar e-post som inte kommer från en välkänt reläserver. Det mest robusta sättet att ställa in e-postsändning i calibre är att göra följande:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:382
+#: ../../__w/calibre/calibre/manual/faq.rst:351
 msgid "Create a free GMX account at `GMX <https://www.gmx.com>`_."
 msgstr "Skapa ett gratis GMX-konto på `GMX <https://www.gmx.com>`_."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:383
+#: ../../__w/calibre/calibre/manual/faq.rst:352
 msgid ""
 "Goto :guilabel:`Preferences->Sharing->Sharing books by email` in calibre and"
 " click the :guilabel:`Use GMX` button and fill in the information asked for."
 msgstr "Gå till :guilabel:`Inställningar->Delning->Dela böcker via e-post` i calibre och klicka på knappen :guilabel:`Använd GMX` och fyll i den information som efterfrågas."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:384
+#: ../../__w/calibre/calibre/manual/faq.rst:353
 msgid ""
 "Log into your GMX account on the website and enable SMTP sending "
 "(`Settings->POP3 & IMAP->Send and receive emails via external program`)"
 msgstr "Logga in på ditt GMX-konto på webbplatsen och aktivera SMTP-sändning (`Inställningar->POP3 & IMAP->Skicka och ta emot e-post via externt program`)"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:385
+#: ../../__w/calibre/calibre/manual/faq.rst:354
 msgid "calibre will then be able to use GMX to send the mail."
 msgstr "calibre kommer då att kunna använda GMX för att skicka meddelandet."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:386
+#: ../../__w/calibre/calibre/manual/faq.rst:355
 msgid ""
 "If you are sending to your Kindle, remember to update the email preferences "
 "on your Amazon Kindle page to allow email sent from your GMX email address. "
@@ -723,7 +676,7 @@ msgid ""
 " actually delivered."
 msgstr "Om du skickar till din Kindle, kom ihåg att uppdatera e-postinställningarna på din Amazon Kindle-sida så att e-post skickas från din GMX-e-postadress. Observera också att Amazon inte tillåter e-postleverans av AZW3- och MOBI-filer i nytt format (KF8). Slutligen började Amazon nyligen skicka bekräftelse-e-postmeddelanden som du måste klicka på tillbaka till ditt GMX-konto innan boken faktiskt levereras."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:393
+#: ../../__w/calibre/calibre/manual/faq.rst:362
 msgid ""
 "Even after doing this, you may have problems. One common source of problems "
 "is that some poorly designed antivirus programs block calibre from opening a"
@@ -731,7 +684,7 @@ msgid ""
 "antivirus program."
 msgstr "Även efter att ha gjort detta, kan du få problem. En vanlig källa till problem är att vissa dåligt utformade antivirusprogram blockerar calibre från att öppna en anslutning för att sända e-post. Testa att lägga ett undantag för calibre i ditt antivirusprogram."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:398
+#: ../../__w/calibre/calibre/manual/faq.rst:367
 msgid ""
 "Microsoft/GMX can disable your account if you use it to send large amounts "
 "of email. So, when using these services to send mail calibre automatically "
@@ -740,7 +693,7 @@ msgid ""
 "going to :guilabel:`Preferences->Advanced->Tweaks` in calibre."
 msgstr "Microsoft/GMX kan inaktivera ditt konto om du använder det för att skicka stora mängder e-post. Så när du använder dessa tjänster för att skicka e-post begränsar calibre sig automatiskt till att skicka en bok var femte minut. Om du inte har något emot att riskera att ditt konto blockeras kan du minska detta fördröjningsintervall genom att gå till :guilabel:`Inställningar->Avancerat->Justeringar` i calibre."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:405
+#: ../../__w/calibre/calibre/manual/faq.rst:374
 msgid ""
 "Google recently deliberately broke their email sending protocol (SMTP) "
 "support in an attempt to force everyone to use their web interface so they "
@@ -748,39 +701,39 @@ msgid ""
 "is incorrect and simply an excuse. Use some other email provider instead."
 msgstr "Google bröt nyligen medvetet deras e-postsändningsprotokoll (SMTP) i ett försök att tvinga alla att använda deras webbgränssnitt så att de kan visa dig fler annonser. De försöker hävda att SMTP är osäkert, det är felaktigt och helt enkelt en ursäkt. Använd någon annan e-postleverantör istället."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:412
+#: ../../__w/calibre/calibre/manual/faq.rst:381
 msgid ""
 "If you are concerned about giving calibre access to your email account, "
 "simply create a new free email account with GMX or Outlook and use it only "
 "for calibre."
 msgstr "Om du är orolig för att ge calibre åtkomst till ditt e-postkonto, skapa helt enkelt ett nytt gratis e-postkonto med GMX eller Outlook och använd det endast för calibre."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:418
+#: ../../__w/calibre/calibre/manual/faq.rst:387
 msgid ""
 "My device is getting mounted read-only in Linux, so calibre cannot connect "
 "to it?"
 msgstr "Min enhet monteras som skrivskyddad i Linux, så calibre kan inte ansluta till den?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:420
+#: ../../__w/calibre/calibre/manual/faq.rst:389
 msgid ""
 "Linux kernels mount devices read-only when their filesystems have errors. "
 "You can repair the filesystem with::"
 msgstr "Linux-kärnor monterar enheter skrivskyddade när deras filsystem har fel. Du kan reparera filsystemet med::"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:424
+#: ../../__w/calibre/calibre/manual/faq.rst:393
 msgid ""
 "Replace /dev/sdc with the path to the device node of your device. You can "
 "find the device node of your device, which will always be under /dev by "
 "examining the output of::"
 msgstr "Ersätt /dev/sdc med sökvägen till enhetsnoden på din enhet. Du hittar enhetsnoden av enheten, som alltid kommer att vara under /dev genom att undersöka utmatning av::"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:431
+#: ../../__w/calibre/calibre/manual/faq.rst:400
 msgid ""
 "Why does calibre not support collections on the Kindle or shelves on the "
 "Nook?"
 msgstr "Varför stöder inte calibre samlingar på Kindle eller hyllor på Nook?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:433
+#: ../../__w/calibre/calibre/manual/faq.rst:402
 msgid ""
 "Neither the Kindle nor the Nook provide any way to manipulate collections "
 "over a USB connection.  If you really care about using collections, I would "
@@ -789,7 +742,7 @@ msgid ""
 "an e-ink screen 😇"
 msgstr "Varken Kindle eller Nook ger något sätt att manipulera samlingar över en USB-anslutning. Om du verkligen bryr dig om att använda samlingar vill jag uppmana dig att sälja din Kindle/Nook och skaffa en Kobo. Endast Kobo verkar förstå att livet är för kort för att skriva in samlingarna en efter en på en e-bläckskärm 😇"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:438
+#: ../../__w/calibre/calibre/manual/faq.rst:407
 msgid ""
 "Note that in the case of the Kindle, there is a way to manipulate "
 "collections via USB, but it requires that the Kindle be rebooted *every "
@@ -801,7 +754,7 @@ msgid ""
 "<https://www.mobileread.com/forums/showthread.php?t=244202>`_."
 msgstr "Observera att i fallet med Kindle, finns det ett sätt att manipulera samlingar via USB, men det kräver att Kindle startas om varje gång den kopplas bort från datorn, för ändringar i samlingarna ska erkännas. Som sådan, är det osannolikt att någon calibre-utvecklare någonsin kommer att känna sig motiverade nog att stöda det. Det finns dock en calibre-insticksmodul som låter dig skapa samlingar på din Kindle från calibre-metadata. Den är tillgänglig `härifrån <https://www.mobileread.com/forums/showthread.php?t=244202>`_."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:447
+#: ../../__w/calibre/calibre/manual/faq.rst:416
 msgid ""
 "Amazon have removed the ability to manipulate collections completely in "
 "their newer models, like the Kindle Touch and Kindle Fire, making even the "
@@ -809,12 +762,12 @@ msgid ""
 "firmware."
 msgstr "Amazon har tagit bort möjligheten att manipulera samlingar helt och hållet i sina nyare modeller, som Kindle Touch och Kindle Fire, vilket gör även ovanstående insticksmodul värdelös, om du inte \"rootar\" din Kindle och installerar anpassad mjukvara."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:452
+#: ../../__w/calibre/calibre/manual/faq.rst:421
 msgid ""
 "I am getting an error when I try to use calibre with my Kobo Touch/Glo/etc.?"
 msgstr "Jag får ett felmeddelande när jag försöker använda calibre med min Kobo Touch/Glo/o.s.v.?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:454
+#: ../../__w/calibre/calibre/manual/faq.rst:423
 msgid ""
 "The Kobo has very buggy firmware. Connecting to it has been known to fail at"
 " random. Certain combinations of motherboard, USB ports/cables/hubs can "
@@ -823,43 +776,43 @@ msgid ""
 "solved the problem for *some* calibre users."
 msgstr "Den Kobo har mjukvara med mycket fel. Anslutning till den har varit känt att slumpmässigt misslyckas. Vissa kombinationer av moderkort, USB-portar/kablar/hubbar kan förvärra denna tendens att misslyckas. Om du får ett felmeddelande när du ansluter till din beröring med calibre testa följande, som var och en har löst problemet för vissa calibre-användare."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:460
+#: ../../__w/calibre/calibre/manual/faq.rst:429
 msgid "Connect the Kobo directly to your computer, not via USB Hub"
 msgstr "Anslut Kobo direkt till din dator, inte via USB-hubb"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:461
+#: ../../__w/calibre/calibre/manual/faq.rst:430
 msgid "Try a different USB cable and a different USB port on your computer"
 msgstr "Försök med en annan USB-kabel och en annan USB-port på din dator"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:462
+#: ../../__w/calibre/calibre/manual/faq.rst:431
 msgid ""
 "Log out of the Kobo and log in again, this causes it to rebuild the "
 "database, fixing corrupted database errors."
 msgstr "Logga ut från Kobo och logga in igen, detta gör att databasen byggs om, reparerar korrupta databasfel."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:464
+#: ../../__w/calibre/calibre/manual/faq.rst:433
 msgid "Try upgrading the firmware on your Kobo Touch to the latest"
 msgstr "Försök uppgradera mjukvaran på din Kobo Touch till den senaste"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:465
+#: ../../__w/calibre/calibre/manual/faq.rst:434
 msgid ""
 "Try resetting the Kobo (sometimes this cures the problem for a little while,"
 " but then it re-appears, in which case you have to reset again and again)"
 msgstr "Testa att återställa Kobo (ibland botar problemet för ett tag, men sedan visas på nytt, i vilket fall du måste återställa igen och igen)"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:466
+#: ../../__w/calibre/calibre/manual/faq.rst:435
 msgid ""
 "Try only putting one or two books onto the Kobo at a time and do not keep "
 "large collections on the Kobo"
 msgstr "Försök bara att sätta en eller två böcker på Kobo i taget och ha inte stora samlingar på Kobo"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:470
+#: ../../__w/calibre/calibre/manual/faq.rst:439
 msgid ""
 "Covers for books I send to my e-ink Kindle show up momentarily and then are "
 "replaced by a generic cover?"
 msgstr "Omslag för böcker som jag överför till min e-bläck Kindle dyker upp en stund och ersätts sedan av ett generiskt omslag?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:472
+#: ../../__w/calibre/calibre/manual/faq.rst:441
 msgid ""
 "This happens because of an Amazon bug. They try to download a cover for the "
 "book from their servers and when that fails, they replace the existing cover"
@@ -871,19 +824,19 @@ msgid ""
 "to:"
 msgstr "Detta händer på grund av ett Amazon-fel. De försöker hämta ett omslag till boken från sina servrar och när det misslyckas ersätter de det befintliga omslaget som calibre skapade med ett generiskt omslag. För detaljer, se `denna forumtråd <https://www.mobileread.com/forums/showthread.php?t=329945>`_. Från version 4.17 har calibre en lösning, där om du ansluter Kindle till calibre efter att omslagen har förstörts av Amazon, kommer calibre återställa dem automatiskt. Så för att se omslagen på din Kindle, måste du:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:480
+#: ../../__w/calibre/calibre/manual/faq.rst:449
 msgid "Send the book to the Kindle with calibre"
 msgstr "Överför boken till Kindle med calibre"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:481
+#: ../../__w/calibre/calibre/manual/faq.rst:450
 msgid "Disconnect the Kindle and wait for Amazon to destroy the cover"
 msgstr "Koppla bort Kindle och vänta på att Amazon förstör omslaget"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:482
+#: ../../__w/calibre/calibre/manual/faq.rst:451
 msgid "Reconnect the Kindle to calibre"
 msgstr "Återanslut Kindle till calibre"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:484
+#: ../../__w/calibre/calibre/manual/faq.rst:453
 msgid ""
 "Note that this workaround only works for books sent with calibre 4.17 or "
 "later. Alternately, simply keep your Kindle in airplane mode, you don't "
@@ -892,11 +845,58 @@ msgid ""
 "Amazon will listen."
 msgstr "Observera att den här lösningen endast fungerar för böcker som överförs med calibre 4.17 eller nyare. Alternativt kan du helt enkelt hålla din Kindle i flygläge, du vill inte att Amazon känner till alla böcker som du läser ändå. Jag uppmuntrar dig att kontakta Amazons kundtjänst och klaga högt om detta fel. Kanske kommer Amazon att lyssna."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:491
+#: ../../__w/calibre/calibre/manual/faq.rst:460
 msgid ""
 "If the workaround is not working for you make sure you Kindle firmware is at"
 " least version 5.12.5, released in April 2020."
 msgstr "Om lösningen inte fungerar för dig måste du kontrollera att Kindle-mjukvaran åtminstone är version 5.12.5, släppt i april 2020."
+
+#: ../../__w/calibre/calibre/manual/faq.rst:464
+msgid ""
+"The covers for my MOBI files have stopped showing up in Kindle for PC/Kindle"
+" for Android/iPad etc."
+msgstr "Omslagen för mina MOBI-filer har slutat visas i Kindle för PC/Kindle for Android/iPad o.s.v."
+
+#: ../../__w/calibre/calibre/manual/faq.rst:466
+msgid ""
+"This is caused by a bug in the Amazon software. You can work around it by "
+"going to :guilabel:`Preferences->Conversion->Output Options->MOBI output` "
+"and setting the :guilabel:`Enable sharing of book content` option. If you "
+"are reconverting a previously converted book, you will also have to enable "
+"the option in the conversion dialog for that individual book (as per book "
+"conversion settings are saved and take precedence)."
+msgstr "Detta orsakas av ett fel i Amazon-programmet. Du kan lösa det genom att gå till :guilabel:`Inställningar->Konvertera->Alternativ för utmatning->MOBI utmatning` och ställa in :guilabel:`Aktivera delning av bokinnehåll` alternativet. Om du kodar om  en tidigare konverterade bok, måste du också aktivera alternativet i konverteringsdialogrutan för att enskild bok (som per bok konverteringsinställningar sparas och har företräde)."
+
+#: ../../__w/calibre/calibre/manual/faq.rst:473
+msgid ""
+"Note that doing this will mean that the generated MOBI will show up under "
+"personal documents instead of Books on the Kindle Fire and Amazon "
+"whispersync will not work, but the covers will. It's your choice which "
+"functionality is more important to you. I encourage you to contact Amazon "
+"and ask them to fix this bug."
+msgstr "Observera att detta kommer att innebära att den skapade MOBI kommer att dyka upp i personliga dokument istället för böcker på Kindle Fire och Amazon Whispersync kommer inte att fungera, men omslagen kommer. Det är ditt val vilken funktion som är viktigare för dig. Jag uppmuntrar dig att kontakta Amazon och be dem att åtgärda detta problem."
+
+#: ../../__w/calibre/calibre/manual/faq.rst:479
+msgid ""
+"The bug in Amazon's software is that when you put a MOBI file on a Kindle, "
+"unless the file is marked as a Personal document, Amazon assumes you bought "
+"the book from it and tries to download the cover thumbnail for it from its "
+"servers. When the download fails, it refuses to fallback to the cover "
+"defined in the MOBI file. This is likely deliberate on Amazon's part to try "
+"to force authors to sell only through them. In other words, the Kindle only "
+"displays covers for books marked as Personal Documents or books bought "
+"directly from Amazon."
+msgstr "Felet i Amazons programvara är att när du lägger en MOBI-fil på en Kindle, om inte filen är markerad som ett personligt dokument, antar Amazon att du köpte boken från dem och försöker hämta miniatyrbilden för den från sina servrar. När hämtningen misslyckas vägrar den att återgå till omslaget som definieras i MOBI-filen. Detta är sannolikt avsiktligt från Amazons sida för att försöka tvinga författare att sälja endast genom dem. Med andra ord visar Kindle bara omslag för böcker markerade som personliga dokument eller böcker som köpts direkt från Amazon."
+
+#: ../../__w/calibre/calibre/manual/faq.rst:487
+msgid ""
+"If you send a MOBI file to an e-ink Kindle with calibre using a USB "
+"connection, calibre works around this Amazon bug by uploading a cover "
+"thumbnail itself. However, that workaround is only possible when using a USB"
+" connection and sending with calibre. Note that if you send using email, "
+"Amazon will automatically mark the MOBI file as a Personal Document and the "
+"cover will work, but the book will show up in Personal Documents."
+msgstr "Om du överför en MOBI-fil till en e-bläck Kindle med calibre med hjälp av en USB-anslutning, arbetar calibre runt detta Amazon-problem genom att överföra en miniatyrbild själv. Men denna lösning är bara möjligt när du använder en USB-anslutning och skickar med calibre. Observera att om du skickar via e-post, kommer Amazon automatiskt markera MOBI-filen som ett personligt dokument och omslaget kommer att fungera, men boken kommer att dyka upp i personliga dokument."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:496
 msgid ""
@@ -953,7 +953,7 @@ msgid ""
 "library. You can have multiple such libraries. To manage the libraries, "
 "click the calibre icon on the toolbar. You can create new libraries, "
 "remove/rename existing ones and switch between libraries easily."
-msgstr "Biblioteksmappen och alla dess innehåll utgör vad som kallas en calibre-bibliotek. Du kan ha flera sådana bibliotek. För att hantera biblioteken, klickar du på ikonen calibre i verktygsfältet. Du kan skapa nya bibliotek, ta bort/byta namn på befintliga och växla mellan biblioteken lätt."
+msgstr "Biblioteksmappen och allt dess innehåll utgör vad som kallas ett calibre-bibliotek. Du kan ha flera sådana bibliotek. För att hantera biblioteken klickar du på calibre-ikonen i verktygsfältet. Du kan skapa nya bibliotek, ta bort/byta namn på befintliga och enkelt växla mellan bibliotek."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:525
 msgid ""

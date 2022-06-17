@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "mei 27, 2022" "5.43.0" "calibre"
-.SH NAME
-ebook-convert \- ebook-convert
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "EBOOK-CONVERT" "1" "juni 17, 2022" "5.44.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -45,14 +45,14 @@ Converteer een e\-boek van het ene naar het andere formaat.
 .sp
 input_file is de invoer en output_file is de uitvoer. Beiden moeten gespecificeerd worden als de eerste twee argumenten bij het commando.
 .sp
-Het e\-boek uitvoerformaat wordt geraden van de extensie van output_file. output_file kan ook van het speciale .EXT formaat zijn, waar EXT de uitvoerbestandextensie is. In dit geval wordt de naam van het invoerbestand die van het uitvoerbestand. Merk op dat de bestandsnaam niet mag beginnen met een koppelteken. Als, tot slot, output_file geen extensie heeft, wordt het gezien als een map en wordt een "open e\-boek" (OEB) bestaande uit HTML bestanden geschreven in die map. Deze bestanden zijn dezelfde die normaal gezien naar de uitvoer plug\-in zouden zijn gepasseerd.
+Het e\-boek uitvoerformaat wordt geraden van de extensie van output_file. output_file kan ook van het speciale .EXT formaat zijn, waar EXT de uitvoerbestandextensie is. In dit geval wordt de naam van het invoerbestand die van het uitvoerbestand. Merk op dat de bestandsnaam niet mag beginnen met een koppelteken. Als, tot slot, output_file geen extensie heeft, wordt het gezien als een map en wordt een \(dqopen e\-boek\(dq (OEB) bestaande uit HTML bestanden geschreven in die map. Deze bestanden zijn dezelfde die normaal gezien naar de uitvoer plug\-in zouden zijn gepasseerd.
 .sp
 Na specificatie van het invoer\- en uitvoerbestand kan u de conversie aanpassen door een aantal opties te kiezen. De beschikbare opties hangen af van het type invoer\- en uitvoerbestanden. Voor hulp specificeer het invoer\- en uitvoerbestand en gebruik dan de \-h optie.
 .sp
 Voor de volledige documentatie van het conversiesysteem zie
 \fI\%E\-book conversie\fP
 .sp
-Als u aan \fBebook\-convert\fP parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
+Als u aan \fBebook\-convert\fP parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: \(dq/some path/with spaces\(dq
 .sp
 De opties en standaard waarden voor de opties veranderen met de
 de input en output waarden. U moet dus altijd controleren bij:
@@ -94,7 +94,7 @@ Specificeer het invoerprofiel. Het invoerprofiel geeft het conversiesysteem info
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-Namen van ingebouwde recepten weergeven. U kunt de volgende opdracht gebruiken om met behulp van een recept een e\-boek te maken: eboek\-converteer \fB"\fPReceptnaam.recipe\fB"\fP uitvoer.epub
+Namen van ingebouwde recepten weergeven. U kunt de volgende opdracht gebruiken om met behulp van een recept een e\-boek te maken: eboek\-converteer \fB\(dq\fPReceptnaam.recipe\fB\(dq\fP uitvoer.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -183,7 +183,7 @@ Opties om uiterlijk van de uitvoer aan te passen
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Zet unicode karakters om naar ASCII tekens. Voorzichtig gebruiken want dit zal unicode karakters vervangen door ASCII. Bijvoorbeeld: \fB"\fPPelé\fB"\fP wordt vervangen door  \fB"\fPPele\fB"\fP\&. Merk ook op dat als er meerdere weergaven van een teken zijn (zoals bij gedeelde tekens uit Chinees en Japans), de weergave gekozen wordt op basis van de huidige taalinstellingen voor calibre.
+Zet unicode karakters om naar ASCII tekens. Voorzichtig gebruiken want dit zal unicode karakters vervangen door ASCII. Bijvoorbeeld: \fB\(dq\fPPelé\fB\(dq\fP wordt vervangen door  \fB\(dq\fPPele\fB\(dq\fP\&. Merk ook op dat als er meerdere weergaven van een teken zijn (zoals bij gedeelde tekens uit Chinees en Japans), de weergave gekozen wordt op basis van de huidige taalinstellingen voor calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -208,7 +208,7 @@ Alle lettertypes invoegen waaraan in het input\-document wordt gerefereerd maar 
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Het gespecificeerde lettertype inbedden in het boek. Dit specificeert het \fB"\fPbasis\fB"\fP lettertype voor het boek. Als het invoer document eigen lettertypes specificeert, kunnen deze het basis lettertype negeren. U kunt de filter stijlinformatie optie gebruiken om lettertypes uit het invoer document te verwijderen. Merk op: inbedden van lettertypes werkt alleen met bepaalde uitvoer indelingen, voornamelijk EPUB, AZW3 en DOCX.
+Het gespecificeerde lettertype inbedden in het boek. Dit specificeert het \fB\(dq\fPbasis\fB\(dq\fP lettertype voor het boek. Als het invoer document eigen lettertypes specificeert, kunnen deze het basis lettertype negeren. U kunt de filter stijlinformatie optie gebruiken om lettertypes uit het invoer document te verwijderen. Merk op: inbedden van lettertypes werkt alleen met bepaalde uitvoer indelingen, voornamelijk EPUB, AZW3 en DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -303,12 +303,12 @@ Uitdunnen van alle ingebedde lettertypes. Elk ingebed lettertype is beperkt tot 
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Pad naar een bestand met regels om de CSS\-stijlen in dit boek te transformeren. De eenvoudigste manier om een dergelijk bestand te maken is om de wizard te gebruiken voor het maken van regels in de GUI van calibre. Open het in de \fB"\fPUitstraling & gevoel\-> Transformeer stijlen\fB"\fP onderdeel van het conversie dialoogvenster. Nadat u de regels hebt gemaakt, kunt u de knop \fB"\fPExporteren\fB"\fP gebruiken om ze in een bestand op te slaan.
+Pad naar een bestand met regels om de CSS\-stijlen in dit boek te transformeren. De eenvoudigste manier om een dergelijk bestand te maken is om de wizard te gebruiken voor het maken van regels in de GUI van calibre. Open het in de \fB\(dq\fPUitstraling & gevoel\-> Transformeer stijlen\fB\(dq\fP onderdeel van het conversie dialoogvenster. Nadat u de regels hebt gemaakt, kunt u de knop \fB\(dq\fPExporteren\fB\(dq\fP gebruiken om ze in een bestand op te slaan.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Pad naar een bestand met regels om de HTML in dit boek te transformeren. De eenvoudigste manier om een zo\fB\(aq\fPn bestand te maken is de calibre GUI wizard te gebruiken voor het maken van regels. Open het in de \fB"\fPUitstraling & gevoel\-> Transformeer HTML\fB"\fP onderdeel van de conversiedialoog. Na maken van de regels, kunt u de knop \fB"\fPExporteren\fB"\fP gebruiken om ze in een bestand op te slaan.
+Pad naar een bestand met regels om de HTML in dit boek te transformeren. De eenvoudigste manier om een zo\fB\(aq\fPn bestand te maken is de calibre GUI wizard te gebruiken voor het maken van regels. Open het in de \fB\(dq\fPUitstraling & gevoel\-> Transformeer HTML\fB\(dq\fP onderdeel van de conversiedialoog. Na maken van de regels, kunt u de knop \fB\(dq\fPExporteren\fB\(dq\fP gebruiken om ze in een bestand op te slaan.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -417,12 +417,12 @@ Stel de auto\-detectie van de documentstructuur in.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Een XPath\-expressie om hoofdstuktitels te detecteren. De standaard is om <h1> of <h2> labels die de woorden \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP bevatten als hoofdstuktitels te overwegen, evenals labels met class = \fB"\fPchapter\fB"\fP\&. De gebruikte uitdrukking moet resulteren in een lijst met elementen. Gebruik de uitdrukking \fB"\fP/\fB"\fP om hoofdstukdetectie uit te schakelen. Raadpleeg de XPath zelfstudie in de calibre Gebruikershandleiding voor meer hulp bij het gebruik van deze functie.
+Een XPath\-expressie om hoofdstuktitels te detecteren. De standaard is om <h1> of <h2> labels die de woorden \fB\(dq\fPchapter\fB\(dq\fP, \fB\(dq\fPbook\fB\(dq\fP, \fB\(dq\fPsection\fB\(dq\fP, \fB\(dq\fPprologue\fB\(dq\fP, \fB\(dq\fPepilogue\fB\(dq\fP or \fB\(dq\fPpart\fB\(dq\fP bevatten als hoofdstuktitels te overwegen, evenals labels met class = \fB\(dq\fPchapter\fB\(dq\fP\&. De gebruikte uitdrukking moet resulteren in een lijst met elementen. Gebruik de uitdrukking \fB\(dq\fP/\fB\(dq\fP om hoofdstukdetectie uit te schakelen. Raadpleeg de XPath zelfstudie in de calibre Gebruikershandleiding voor meer hulp bij het gebruik van deze functie.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Specificeer hoe gedetecteerde hoofdstukken moeten worden gemarkeerd. Een waarde \fB"\fPpagebreak\fB"\fP zal een nieuwe pagina beginnen voor nieuwe hoofdstukken. Een waarde \fB"\fPrule\fB"\fP zal een streep toevoegen voor hoofdstukken. Een waarde \fB"\fPnone\fB"\fP zal hoofdstukmarkering uitschakelen, en een waarde \fB"\fPboth\fB"\fP zal zowel nieuwe pagina\fB\(aq\fPs als strepen gebruiken om hoofdstukken te markeren.
+Specificeer hoe gedetecteerde hoofdstukken moeten worden gemarkeerd. Een waarde \fB\(dq\fPpagebreak\fB\(dq\fP zal een nieuwe pagina beginnen voor nieuwe hoofdstukken. Een waarde \fB\(dq\fPrule\fB\(dq\fP zal een streep toevoegen voor hoofdstukken. Een waarde \fB\(dq\fPnone\fB\(dq\fP zal hoofdstukmarkering uitschakelen, en een waarde \fB\(dq\fPboth\fB\(dq\fP zal zowel nieuwe pagina\fB\(aq\fPs als strepen gebruiken om hoofdstukken te markeren.
 .UNINDENT
 .INDENT 0.0
 .TP

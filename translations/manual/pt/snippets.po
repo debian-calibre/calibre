@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-21 08:24+0000\n"
+"POT-Creation-Date: 2022-06-17 02:39+0000\n"
 "PO-Revision-Date: 2015-01-10 01:24+0000\n"
 "Last-Translator: Paulo Pereira <pauloizidoro@gmail.com>, 2016,2019-2020,2022\n"
 "Language-Team: Portuguese (http://www.transifex.com/calibre/calibre/language/pt/)\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: pt\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: ../../__w/calibre/calibre/manual/snippets.rst:2
 msgid "Snippets"
@@ -40,19 +40,19 @@ msgid ""
 "typing the filename, press |ct| again and the cursor will jump to the "
 "position in between the ``<a>`` tags so you can easily type in the text for "
 "the link."
-msgstr ""
+msgstr "Não apenas isto, a palavra ``filename`` será selecionada, com o cursor sobre ela, assim você pode facilmente digitar o verdadeiro nome do arquivos, usando o recurso astucioso do editor :ref:`editor_auto_complete`. Assim que você terminar de digitar o nome do arquivo, pressione |ct| novamente e o cursor se moverá para a posição entre as tags ``<a>``, assim você poderá facilmente digitar o texto para o link."
 
 #: ../../__w/calibre/calibre/manual/snippets.rst:21
 msgid ""
 "The snippets system in the editor is very sophisticated, there are a few "
 "built-in snippets and you can create your own to suit your editing style."
-msgstr ""
+msgstr "O sistema de trechos do editor é muito sofisticado, há uma pequena quantidade de trechos embutidos e você pode criar seus próprios trechos para se adequar ao seu estilo de edição."
 
 #: ../../__w/calibre/calibre/manual/snippets.rst:24
 msgid ""
 "The following discussion of the built-in snippets should help illustrate the"
 " power of the snippets system."
-msgstr ""
+msgstr "A seguinte discussão sobre os trechos embutidos devem ajudar a ilustrar o poder do sistema de trechos."
 
 #: ../../__w/calibre/calibre/manual/snippets.rst:28
 msgid ""
@@ -69,11 +69,11 @@ msgstr "Trechos integrados"
 msgid ""
 "The built-in snippets are described below. Note that you can override them "
 "by creating your own snippets with the same trigger text."
-msgstr ""
+msgstr "Os trechos embutidos estão descritos logo abaixo. Note que você pode substitui-los criando seus próprios trechos com o mesmo texto de ativação."
 
 #: ../../__w/calibre/calibre/manual/snippets.rst:39
 msgid "Inserting filler text [Lorem]"
-msgstr ""
+msgstr "Inserindo texto de preenchimento [Lorem]"
 
 #: ../../__w/calibre/calibre/manual/snippets.rst:41
 msgid ""
@@ -91,25 +91,25 @@ msgid ""
 "as ``Lorem`` and the template is defined simply as the literal text to be "
 "inserted. You can easily customize it to use your favorite form of filler "
 "text."
-msgstr ""
+msgstr "A definição deste trecho é bem simples, o texto de ativação é definido como ``Lorem`` e o modelo é definido simplesmente como o texto literal a ser inserido. Você pode facilmente personaliza-lo para usar sua forma favorita de texto de preenchimento."
 
 #: ../../__w/calibre/calibre/manual/snippets.rst:53
 msgid "Inserting a self-closing HTML tag [<>]"
-msgstr ""
+msgstr "Inserindo uma tag HTML de fechamento automático [<>]"
 
 #: ../../__w/calibre/calibre/manual/snippets.rst:55
 msgid ""
 "Now let's look at a simple example of the powerful concept of "
 "*placeholders*. Say you want to insert the self-closing tag ``<hr/>``. Just "
 "type ``<>``, and press |ct|, the editor will expand the snippet to::"
-msgstr ""
+msgstr "Agora olhe um simples exemplo do poderoso conceito de *placeholders*. Digamos que você queira inserir a tag de fechamento automático ``<hr/>``. Apenas digite ``<>``, e pressione |ct|, o editor expandirá o trecho para::"
 
 #: ../../__w/calibre/calibre/manual/snippets.rst:61
 msgid ""
 "Here, the ``|`` symbol represents the current cursor position. You can then "
 "type ``hr`` and press |ct| to move the cursor to after the end of the tag. "
 "This snippet is defined as::"
-msgstr ""
+msgstr "Aqui, o símbolo ``|`` representa a atual posição do cursor. Você pode então pressionar ``hr`` e pressionar |ct| para mover o cursor para o final da tag. Este trecho é definido como::"
 
 #: ../../__w/calibre/calibre/manual/snippets.rst:68
 msgid ""
@@ -118,7 +118,7 @@ msgid ""
 "placeholder (the placeholder with the lowest number). When you press |ct| "
 "again the cursor jumps to the next placeholder (the placeholder with the "
 "next higher number)."
-msgstr ""
+msgstr "Placeholders são simplesmente o símbolo dólar ($) seguido por um número. Quando o trecho é expandido ao pressionar |ct| o cursor é posicionado no primeiro placeholder (aquele com o menor número). Quando você pressionar |ct| novamente, o cursor move-se para o próximo placeholder (aquel com o próximo número superior)."
 
 #: ../../__w/calibre/calibre/manual/snippets.rst:75
 msgid "Inserting an HTML link tag [<a]"
@@ -131,7 +131,7 @@ msgid ""
 "typing them more efficient will introduce us to some more features of "
 "placeholders. To use this snippet, simply type ``<a`` and press |ct|. The "
 "editor will expand this to::"
-msgstr ""
+msgstr "Todas as tags HTML de link compartilham uma estrutura comum. Elas tem um atributo ``href`` e algum texto entre as tags de abertura e fechamento. Um trecho para tornar a digitação delas mais eficiente nos introduzirá a mais características dos placeholders. Para usar esse trecho, simplesmente digite ``<a`` e pressione |ct|. O editor vai expandir isso para::"
 
 #: ../../__w/calibre/calibre/manual/snippets.rst:85
 msgid ""
@@ -142,7 +142,7 @@ msgid ""
 "position in between the ``<a>`` tags so you can easily type in the text for "
 "the link. After you are done typing the text, press |ct| again to jump to "
 "the point after the closing tag.  This snippet is defined as::"
-msgstr ""
+msgstr "Não só isso, a palavra \"filename\" vai ser selecionada, com o cursor localizado sobre esta, assim você pode facilmente digitar no nome do arquivo, usando o recurso de estilo do editor :ref:`editor_auto_complete`. E uma vez que você acabou de digitar o nome do arquivo, pressione |ct| novamente e o cursor vai pular para a posição entre as tags ``<a>`` assim você pode facilmente digitar o texto para o link. Depois de você acabar de digitar o texto, pressione |ct| novamente para pular para o ponto depois da tag de fechamento. Esse fragmento é definido como::"
 
 #: ../../__w/calibre/calibre/manual/snippets.rst:96
 msgid ""
@@ -191,7 +191,7 @@ msgstr ""
 msgid ""
 "Type the tag name, for example: ``span`` and press |ct|, that will result "
 "in::"
-msgstr ""
+msgstr "Digite o nome da tag, por exemplo: ``span`` e pressione |ct|, isto irá resultar em::"
 
 #: ../../__w/calibre/calibre/manual/snippets.rst:136
 msgid ""
@@ -241,7 +241,7 @@ msgid ""
 " dialog that looks like:"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/snippets.rstNone
+#: ../../__w/calibre/calibre/manual/snippets.rst-1
 msgid "The create your own snippets tool"
 msgstr ""
 
@@ -267,4 +267,4 @@ msgid ""
 "The next step is to test your newly created snippet. Use the "
 ":guilabel:`Test` box at the bottom. Type in the trigger text and press |ct| "
 "to expand the snippet and jump between placeholders."
-msgstr ""
+msgstr "O próximo passo é testar o seu novo trecho criado. Use a caixa :guilabel:`Teste` na parte inferior. Digite o texto de ativação e pressione |ct| para expandir o trecho e mover-se entre os placeholders."

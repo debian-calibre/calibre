@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "травня 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibredb \- calibredb
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBREDB" "1" "червня 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -574,7 +574,7 @@ see the different options, specify the name of the output file and then the
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Визначає правила виключення книг зі створеного каталогу. Модель правила виключення записується у форматі (\fB\(aq\fP<назва правила>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<список міток, відокремлених комами>\fB\(aq\fP) або (\fB\(aq\fP<назва правила>\fB\(aq\fP,\fB\(aq\fP<нетиповий стовпчик>\fB\(aq\fP,\fB\(aq\fP<шаблон>\fB\(aq\fP). Приклад: ((\fB\(aq\fPАрхівовані книги\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) виключить книги зі значенням «Archived» у нетиповому стовпчику «status». Якщо визначено декілька правил, буде застосовано всі з них. Типове значення:  ((\fB\(aq\fPАрхівовані книги\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) виключить книги зі значенням «Archived» у нетиповому стовпчику «status». Якщо визначено декілька правил, буде застосовано всі з них. Типове значення:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Застосовується до форматів результатів AZW3, EPUB, MOBI
+Визначає правила виключення книг зі створеного каталогу. Модель правила виключення записується у форматі (\fB\(aq\fP<назва правила>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<список міток, відокремлених комами>\fB\(aq\fP) або (\fB\(aq\fP<назва правила>\fB\(aq\fP,\fB\(aq\fP<нетиповий стовпчик>\fB\(aq\fP,\fB\(aq\fP<шаблон>\fB\(aq\fP). Приклад: ((\fB\(aq\fPАрхівовані книги\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) виключить книги зі значенням «Archived» у нетиповому стовпчику «status». Якщо визначено декілька правил, буде застосовано всі з них. Типове значення:  ((\fB\(aq\fPАрхівовані книги\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) виключить книги зі значенням «Archived» у нетиповому стовпчику «status». Якщо визначено декілька правил, буде застосовано всі з них. Типове значення:  \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP Застосовується до форматів результатів AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -629,7 +629,7 @@ see the different options, specify the name of the output file and then the
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-Визначає правила, використані для включення префіксів, що позначають прочитані книги, пункти списку бажаних книг та інші визначені користувачами префікси. Модель правила префіксів є такою: (\fB\(aq\fP<назва правила>\fB\(aq\fP,\fB\(aq\fP<поле джерела>\fB\(aq\fP,\fB\(aq\fP<шаблон>\fB\(aq\fP,\fB\(aq\fP<префікс>\fB\(aq\fP). Якщо буде визначено декілька правил, застосовуватиметься лише перше відповідне з них. Типове значення: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Застосовується до форматів результатів AZW3, EPUB, MOBI
+Визначає правила, використані для включення префіксів, що позначають прочитані книги, пункти списку бажаних книг та інші визначені користувачами префікси. Модель правила префіксів є такою: (\fB\(aq\fP<назва правила>\fB\(aq\fP,\fB\(aq\fP<поле джерела>\fB\(aq\fP,\fB\(aq\fP<шаблон>\fB\(aq\fP,\fB\(aq\fP<префікс>\fB\(aq\fP). Якщо буде визначено декілька правил, застосовуватиметься лише перше відповідне з них. Типове значення: \fB\(dq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(dq\fP Застосовується до форматів результатів AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -691,7 +691,7 @@ calibredb add_custom_column [параметри] мітка назва тип_д
 .INDENT 0.0
 .TP
 .B \-\-display
-Набір параметрів для налаштовування обробки даних у цьому стовпчику. Має бути рядком JSON. Для стовпчиків нумерації скористайтеся \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPзначення1\e \fB"\fP, \e \fB"\fPзначення2\e \fB"\fP]}\fB"\fP Передбачено багато варіантів передавання значень показаній змінній. Серед варіантів за типами стовпчиків: мішаний тип: composite_template, composite_sort, make_category,contains_html, use_decorations дата і час: date_format нумерація: enum_values, enum_colors, use_decorations ціле, десятковий дріб: number_format текст: is_names, use_decorations  Найкращим способом визначення відповідних комбінацій є створення нетипового стовпчика відповідного типу за допомогою графічного інтерфейсу з наступним вивченням резервної копії OPF книги (переконайтеся, що новий OPF було створено після додавання стовпчика). У такому OPF можна знайти JSON для показу (\fB"\fPdisplay\fB"\fP) нового стовпчика.
+Набір параметрів для налаштовування обробки даних у цьому стовпчику. Має бути рядком JSON. Для стовпчиків нумерації скористайтеся \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPзначення1\e \fB\(dq\fP, \e \fB\(dq\fPзначення2\e \fB\(dq\fP]}\fB\(dq\fP Передбачено багато варіантів передавання значень показаній змінній. Серед варіантів за типами стовпчиків: мішаний тип: composite_template, composite_sort, make_category,contains_html, use_decorations дата і час: date_format нумерація: enum_values, enum_colors, use_decorations ціле, десятковий дріб: number_format текст: is_names, use_decorations  Найкращим способом визначення відповідних комбінацій є створення нетипового стовпчика відповідного типу за допомогою графічного інтерфейсу з наступним вивченням резервної копії OPF книги (переконайтеся, що новий OPF було створено після додавання стовпчика). У такому OPF можна знайти JSON для показу (\fB\(dq\fPdisplay\fB\(dq\fP) нового стовпчика.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -962,7 +962,7 @@ calibredb search [параметри] вираз для пошуку
 відповідних книг, відокремлених комами. Формат виведення даних корисний
 для передавання іншим командам, які приймають вхідні дані у форматі списку ідентифікаторів.
 .sp
-Виразом для пошуку може бути будь\-який запис потужною мовою запитів calibre. Приклад: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
+Виразом для пошуку може бути будь\-який запис потужною мовою запитів calibre. Приклад: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
 Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
 .INDENT 0.0

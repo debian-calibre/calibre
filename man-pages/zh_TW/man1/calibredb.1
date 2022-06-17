@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "5月 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibredb \- calibredb
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBREDB" "1" "6月 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -140,7 +140,7 @@ details and examples.
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \fI\%http://hostname:port/#library_id\fP for example, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
+calibre 書庫的路徑。預設是使用儲存在設定中的路徑。您還可以連接到 calibre 內容伺服器，以便在遠端書庫上執行操作。為此使用表單的 URL：\fI\%http://hostname:port/#library_id\fP 例如，\fI\%http://localhost:8080/#mylibrary\fP。library_id 是要在內容伺服器上連接的書庫的書庫 id。您可以使用特殊的 library_id 值來取得伺服器上可用書庫 id 的清單。有關如何透過內容伺服器設定存取的詳細資訊，請參閱https://manual.calibre\-ebook.com/generated/en/calibredb.html。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -176,7 +176,7 @@ calibredb list [options]
 .sp
 列出 calibre 資料庫中可用書本。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -185,7 +185,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-The fields to display when listing books in the database. Should be a comma separated list of fields. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Default: title,authors. The special field \fB"\fPall\fB"\fP can be used to select all fields. In addition to the builtin fields above, custom fields are also available as *field_name, for example, for a custom field #rating, use the name: *rating
+在列出数据库中书籍时要显示的字段。应该是逗号分隔的字段列表。 可用字段： author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid 默认值：title,authors。特殊字段“all”可用于选择所有字段。除了上述内置字段之外，自定义字段还等价于*field_name，例如，对于自定义字段#rating，使用名称：*rating
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -236,7 +236,7 @@ calibredb add [選項] file1 file2 file3 ...
 .sp
 加入指定檔案為書籍到資料庫。您可以指定目錄，請檢視下面目錄相關選項。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -265,7 +265,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Set the identifiers for this book, e.g. \-I asin:XXX \-I isbn:YYY
+为这本书设置标识符，例如 \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -308,7 +308,7 @@ Set the identifiers for this book, e.g. \-I asin:XXX \-I isbn:YYY
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For example: *.pdf will ignore all PDF files
+文件名模式 (glob) ，在扫描文件夹中的文件时，与此模式匹配的文件将被忽略。可以为多个模式多次指定。例如：*.pdf将忽略所有PDF文件
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -332,9 +332,9 @@ calibredb remove ids
 .UNINDENT
 .UNINDENT
 .sp
-Remove the books identified by ids from the database. ids should be a comma separated list of id numbers (you can get id numbers by using the search command). For example, 23,34,57\-85 (when specifying a range, the last number in the range is not included).
+从数据库移除指定 id 的书籍。ids 应为以逗号分隔的 id 号列表（你可以使用搜索命令来获得 id 号）。例如，23,34,57\-85（如果指定一个区间，该区间的最后一个数字不会被包括在内）。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-permanent
@@ -354,7 +354,7 @@ calibredb add_format [options] id ebook_file
 .sp
 用 ebook_file 將電子書加入到由 id 標識的邏輯圖書的可用格式中。如果格式已經存在，則取代它，除非指定了不取代選項。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -366,15 +366,15 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .sp
 .nf
 .ft C
-calibredb remove_format [options] id fmt
+calibredb remove_format [选项] id fmt
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Remove the format fmt from the logical book identified by id. You can get id by using the search command. fmt should be a file extension like LRF or TXT or EPUB. If the logical book does not have fmt available, do nothing.
+从ID识别的逻辑书中删除fmt格式。你可以通过使用搜索命令获取ID。fmt应该是形如LRF或TXT或EPUB的一个文件扩展名。如果逻辑书没有fmt可用则什么也不做。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -390,7 +390,7 @@ calibredb show_metadata [options] id
 顯示在 calibre 資料庫中儲存的 id 所標識的圖書的中繼資料。
 id 是來自搜尋命令的 id 編號。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -408,18 +408,16 @@ calibredb set_metadata [options] id [/path/to/metadata.opf]
 .UNINDENT
 .UNINDENT
 .sp
-Set the metadata stored in the calibre database for the book identified by id
-from the OPF file metadata.opf. id is an id number from the search command. You
-can get a quick feel for the OPF format by using the \-\-as\-opf switch to the
-show_metadata command. You can also set the metadata of individual fields with
-the \-\-field option. If you use the \-\-field option, there is no need to specify
-an OPF file.
+根據 OPF 檔案的 metadata.opf 設定儲存在 calibre 資料庫中的用於標識圖書的中繼資料。
+id 是來自搜尋命令的 id 編號。您可以透過使用 \-\-as\-opf 切換到 show_metadata 命令來快速
+瞭解 OPF 格式。還可以用 \-\-field 選項設定各個欄位的中繼資料。如果使用 \-\-field 選項則
+不需要指定 OPF 檔案。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-The field to set. Format is field_name:value, for example: \fI\%\-\-field\fP tags:tag1,tag2. Use \fI\%\-\-list\-fields\fP to get a list of all field names. You can specify this option multiple times to set multiple fields. Note: For languages you must use the ISO639 language codes (e.g. en for English, fr for French and so on). For identifiers, the syntax is \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. For boolean (yes/no) fields use true and false or yes and no.
+设置字段。格式是field_name:value，例如：\fI\%\-\-field\fP tags:tag1,tag2。使用:option:\fI\-\-list\-fields\(ga来获取所有字段名称的列表。你可以多次指定此选项来设置多个字段。注意：对于语言，你必须使用ISO639语言代码（例如en代表英文，fr代表法语等）。对于标识符，语法是:option:\fP\-\-field\(ga identifiers:isbn:XXXX,doi:YYYYY。对于布尔(是/否)字段使用真与假或是和否。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -442,7 +440,7 @@ calibredb export [options] ids
 匯出的動作會儲存書籍的所有格式、封面和中繼資料（在
 opf 檔案中）。您可以用 search 指令取得 id 編號。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -451,7 +449,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Have calibre convert all non English characters into English equivalents for the file names. This is useful if saving to a legacy filesystem without full support for Unicode filenames. 指定這個開關會關閉這個行為。
+让calibre将所有非英文字符转换成英文对应字符的文件名。如果保存到不完全支持Unicode文件名的旧文件系统中，这将非常有用。 指定這個開關會關閉這個行為。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -491,7 +489,7 @@ Normally, calibre will save the cover in a separate file along with the actual e
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+The template to control the filename and folder structure of the saved files. Default is \fB\(dq\fP{author_sort}/{title}/{title} \- {authors}\fB\(dq\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -526,7 +524,7 @@ Note that different \fBcatalog\fP formats support different sets of options. To
 see the different options, specify the name of the output file and then the
 \-\-help option.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
@@ -546,12 +544,12 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title
-Title of generated catalog used as title in metadata. Default: \fB\(aq\fPMy Books\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+生成目录的标题用作元数据标题。 默认值：\fB\(aq\fPMy Books\fB\(aq\fP 适用于：AZW3，ePub，MOBI 等输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cross\-reference\-authors
-Create cross\-references in Authors section for books with multiple authors. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+为具有多个作者的书籍在作者节中创建交叉引用。 默认值: \fB\(aq\fPFalse\fB\(aq\fP 适用于: AZW3, EPUB, MOBI输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -561,82 +559,82 @@ Save the output from different stages of the conversion pipeline to the specifie
 .INDENT 0.0
 .TP
 .B \-\-exclude\-genre
-Regex describing tags to exclude as genres. Default: \fB\(aq\fP[.+]|^+$\fB\(aq\fP excludes bracketed tags, e.g. \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, and \fB\(aq\fP+\fB\(aq\fP, the default tag for read books. Applies to: AZW3, EPUB, MOBI output formats
+描述以排除类型的标签正则表达式。 默认值： \fB\(aq\fP[.+]|^+$\fB\(aq\fP 不包括括号内的标签，例如 \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, 和 \fB\(aq\fP+\fB\(aq\fP, 默认的用于阅读书籍的标签。 适用于： AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Specifies the rules used to exclude books from the generated catalog. The model for an exclusion rule is either (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) or (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). For example: ((\fB\(aq\fPArchived books\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) will exclude a book with a value of \fB\(aq\fPArchived\fB\(aq\fP in the custom column \fB\(aq\fPstatus\fB\(aq\fP\&. When multiple rules are defined, all rules will be applied. Default:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Applies to: AZW3, EPUB, MOBI output formats
+指定用于从生成的目录中排除书籍的规则。 排除规则的模型是(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP标签\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) 或(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP)。 例如： ((\fB\(aq\fP存档的书籍\fB\(aq\fP,\fB\(aq\fP#状态\fB\(aq\fP,\fB\(aq\fP已存档\fB\(aq\fP),) 将在自定义列“状态”中排除值为“已存档”的图书。定义多个规则时，将应用所有规则。 默认: \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP 应用于AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-authors
-Include \fB\(aq\fPAuthors\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+目录中包括“作者”部分。 默认值： \fB\(aq\fPFalse\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-descriptions
-Include \fB\(aq\fPDescriptions\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+目录中包括“描述”部分。 默认值： \fB\(aq\fPFalse\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-genres
-Include \fB\(aq\fPGenres\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+目录中包括“类型”部分。 默认值： \fB\(aq\fPFalse\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-recently\-added
-Include \fB\(aq\fPRecently Added\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+目录中包括“最近添加”部分。 默认值： \fB\(aq\fPFalse\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-series
-Include \fB\(aq\fPSeries\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+目录中包括“丛书系列”部分。 默认值： \fB\(aq\fPFalse\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-titles
-Include \fB\(aq\fPTitles\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+目录中包括“标题”部分。 默认值： \fB\(aq\fPFalse\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-genre\-source\-field
-Source field for \fB\(aq\fPGenres\fB\(aq\fP section. Default: \fB\(aq\fP標籤\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+“类型”部分的源字段。 默认值： \fB\(aq\fP標籤\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-header\-note\-source\-field
-Custom field containing note text to insert in Description header. Default: \fB\(aq\fP\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+包含要在描述标头中插入的注释文本的自定义域。 默认值: \fB\(aq\fP\fB\(aq\fP 适用于: AZW3, EPUB, MOBI输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-merge\-comments\-rule
-#<custom field>:[before|after]:[True|False] specifying:  <custom field> Custom field containing notes to merge with comments  [before|after] Placement of notes with respect to comments  [True|False] \- A horizontal rule is inserted between notes and comments Default: \fB\(aq\fP::\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+#<custom field>:[before|after]:[True|False] 指定:  <custom field> 包含与注释合并的注释的自定义字段  [before|after] 关于注释的注释放置位置  [True|False] \- 在注意和注释之间插入水平规则 默认值: \fB\(aq\fP::\fB\(aq\fP 适用于: AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specifies the output profile. In some cases, an output profile is required to optimize the catalog for the device. For example, \fB\(aq\fPkindle\fB\(aq\fP or \fB\(aq\fPkindle_dx\fB\(aq\fP creates a structured Table of Contents with Sections and Articles. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+指定输出配置文件。在某些情况下，输出配置文件用于优化某些设备的书目分类。例如，\fB\(aq\fPkindle\fB\(aq\fP 或 \fB\(aq\fPkindle_dx\fB\(aq\fP 以章节和文章的方式来生成目录结构。默认：\fB\(aq\fPNone\fB\(aq\fP 适用于：AZW3、EPUB、MOBI 等输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-Specifies the rules used to include prefixes indicating read books, wishlist items and other user\-specified prefixes. The model for a prefix rule is (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). When multiple rules are defined, the first matching rule will be used. Default: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Applies to: AZW3, EPUB, MOBI output formats
+指定用于包括表示已读书籍，收藏清单项目和其他用户 定前缀的前缀的规则。前缀规则的模型  (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP)。 当定义了多个规则时，将使用第一个匹配规则 默认规则:\fB\(dq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(dq\fP适用于：AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-preset
-Use a named preset created with the GUI catalog builder. A preset specifies all settings for building a catalog. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+使用GUI目录生成器创建的命名预设。 预设指定用于构建目录的所有设置。 默认值: \fB\(aq\fPNone\fB\(aq\fP 适用于: AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-thumb\-width
-Size hint (in inches) for book covers in catalog. Range: 1.0 \- 2.0 Default: \fB\(aq\fP1.0\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+目录中书籍封面的大小提示(英寸)。 范围： 1.0 \- 2.0 默认值： \fB\(aq\fP1.0\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-use\-existing\-cover
-Replace existing cover when generating the catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+在生成目录时替换现有的封面。 默认值： \fB\(aq\fPFalse\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .SH SAVED_SEARCHES
 .INDENT 0.0
@@ -650,19 +648,19 @@ calibredb saved_searches [options] (list|add|remove)
 .UNINDENT
 .UNINDENT
 .sp
-Manage the saved searches stored in this database.
-If you try to add a query with a name that already exists, it will be
-replaced.
+管理存储在该数据库中的保存搜索。
+如果尝试添加已经存在的一个名称查询，
+则它将被替换。
 .sp
-Syntax for adding:
+添加语法：
 .sp
 calibredb \fBsaved_searches\fP add search_name search_expression
 .sp
-Syntax for removing:
+删除语法：
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -677,11 +675,11 @@ calibredb add_custom_column [options] label name datatype
 .sp
 建立一個自訂的欄位，標籤名為機器讀取用的名稱，不能包含空格或冒號。名稱則是方便人類閱讀。資料類型可為：bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-display
-一個自訂選項如何解釋該列中資料的字典。這是一個 JSON 字串。對於枚舉列，使用 \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP 有許多選項可以進入顯示變數，按列類型的選項是： composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations 找到適當組合的最好方法是在 GUI 中建立適當類型的自訂列，然後檢視圖書的備份 OPF (確保自從加入該列以來已經建立了新的 OPF)。在 OPF 中的新列中，您將看到 JSON 的「顯示」。
+一個自訂選項如何解釋該列中資料的字典。這是一個 JSON 字串。對於枚舉列，使用 \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP 有許多選項可以進入顯示變數，按列類型的選項是： composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations 找到適當組合的最好方法是在 GUI 中建立適當類型的自訂列，然後檢視圖書的備份 OPF (確保自從加入該列以來已經建立了新的 OPF)。在 OPF 中的新列中，您將看到 JSON 的「顯示」。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -700,9 +698,9 @@ calibredb custom_columns [options]
 .UNINDENT
 .UNINDENT
 .sp
-List available custom columns. Shows column labels and ids.
+列出可用的自定义列。显示列标签和ids。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -720,10 +718,9 @@ calibredb remove_custom_column [options] label
 .UNINDENT
 .UNINDENT
 .sp
-Remove the custom column identified by label. You can see available
-columns with the custom_columns command.
+用标签删除的自定义列标识。可以使用custom_columns command命令查看可用列
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -741,12 +738,11 @@ calibredb set_custom [options] column id value
 .UNINDENT
 .UNINDENT
 .sp
-Set the value of a custom column for the book identified by id.
-You can get a list of ids using the search command.
-You can get a list of custom column names using the custom_columns
-command.
+为 id 标识的书设置自定义列的值。
+您可以使用搜索命令获取 id 列表。
+您可以使用 custom_columns 命令获取自定义列名的列表。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -773,7 +769,7 @@ all saved searches, user categories, plugboards, stored per\-book conversion
 settings, and custom recipes. Restored metadata will only be as accurate as
 what is found in the OPF files.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -791,9 +787,9 @@ calibredb check_library [options]
 .UNINDENT
 .UNINDENT
 .sp
-Perform some checks on the filesystem representing a library. Reports are invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
+对表示库的文件系统执行一些检查。生成报告是invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -826,10 +822,10 @@ calibredb list_categories [options]
 .UNINDENT
 .UNINDENT
 .sp
-Produce a report of the category information in the database. The
-information is the equivalent of what is shown in the Tag browser.
+在数据库中生成一个目录信息的报告。
+该信息与标签窗格中显示的信息等效。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
@@ -861,20 +857,20 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .sp
 .nf
 .ft C
-calibredb backup_metadata [options]
+calibredb backup_metadata [选项]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Backup the metadata stored in the database into individual OPF files in each
-books folder. This normally happens automatically, but you can run this
-command to force re\-generation of the OPF files, with the \-\-all option.
+将存储在数据库中的元数据备份到每个图书文件夹中的
+单个OPF文件中。这通常是自动发生的，但是您可以运行
+此命令来强制重新生成OPF文件，并使用\-\-all选项。
 .sp
-Note that there is normally no need to do this, as the OPF files are backed up
-automatically, every time metadata is changed.
+请注意，通常不需要这样做，因为每次元数据更改时，
+OPF文件都会自动备份。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -896,7 +892,7 @@ calibredb 複製到 path/to/new/library
 .sp
 副本書庫將沒有任何書籍。如果您想要建立一個完整的副本書庫，包括所有的書籍，那麼只需使用您的檔案系統工具來複製書庫資料夾。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -909,15 +905,13 @@ calibredb embed_metadata [options] book_id
 .UNINDENT
 .UNINDENT
 .sp
-Update the metadata in the actual book files stored in the calibre library from
-the metadata in the calibre database.  Normally, metadata is updated only when
-exporting files from calibre, this command is useful if you want the files to
-be updated in place. Note that different file formats support different amounts
-of metadata. You can use the special value \(aqall\(aq for book_id to update metadata
-in all books. You can also specify many book ids separated by spaces and id ranges
-separated by hyphens. For example: calibredb \fBembed_metadata\fP 1 2 10\-15 23
+從 calibre 資料庫中的中繼資料更新儲存在 calibre 書庫中的實際圖書檔案中的中繼資料。
+通常，只有從 calibre 匯出檔案時才更新中繼資料，如果希望檔案就地更新，則此命
+令很有用。請注意，不同的檔案格式支援不同數量的中繼資料。您可以使用book_id
+的特殊值「all」來更新所有書籍中的中繼資料。還可以指定許多由空間分隔的書籍 ID
+和由連字號分隔的 ID 範圍。例如：calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
@@ -929,20 +923,16 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .sp
 .nf
 .ft C
-calibredb search [options] search expression
+calibredb搜索 [选项] 搜索表达式
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Search the library for the specified \fBsearch\fP term, returning a comma separated
-list of book ids matching the \fBsearch\fP expression. The output format is useful
-to feed into other commands that accept a list of ids as input.
+搜索书库中指定的搜索项，返回与搜索表达式匹配的以逗号分隔的图书ID列表。输出格式对于输入格式接受ID列表的其他命令非常有用。
+搜索表达式可以是来自calibre强大的搜索查询语言中的任何内容，例如：calibredb 搜索author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
-The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
-language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
-.sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l

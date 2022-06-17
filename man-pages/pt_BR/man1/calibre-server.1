@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "maio 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibre-server \- calibre-server
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBRE-SERVER" "1" "junho 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibre-server \- calibre-server
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -46,7 +46,7 @@ apresenta sua biblioteca calibre na internet. Você pode especificar
 o caminho para as pastas da biblioteca com os argumentos para \fBcalibre\-server\fP\&. Se você não
 especificar algum caminho,  todas as bibliotecas do programa calibre principal conhecidas serão usadas..
 .sp
-Sempre que você for passar argumentos para \fBcalibre\-server\fP que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
+Sempre que você for passar argumentos para \fBcalibre\-server\fP que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .SH [OPÇÕES]
 .INDENT 0.0
 .TP
@@ -61,7 +61,7 @@ Tempo (em segundos)  para esperar uma resposta do servidor quando rodando pesqui
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Escolha o tipo de autenticação usada.       Define o modo de autenticação HTTP usado pelo servidor. Defina como \fB"\fPbasic\fB"\fP se usar o servidor por meio de um proxy SSL. Senão, deixe como \fB"\fPauto\fB"\fP, que usará \fB"\fPbasic\fB"\fP se o SSL estiver configurado, ou \fB"\fPdigest\fB"\fP se não estiver configurado.
+Escolha o tipo de autenticação usada.       Define o modo de autenticação HTTP usado pelo servidor. Defina como \fB\(dq\fPbasic\fB\(dq\fP se usar o servidor por meio de um proxy SSL. Senão, deixe como \fB\(dq\fPauto\fB\(dq\fP, que usará \fB\(dq\fPbasic\fB\(dq\fP se o SSL estiver configurado, ou \fB\(dq\fPdigest\fB\(dq\fP se não estiver configurado.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -116,7 +116,7 @@ Autenticação baseada em senha para acessar o servidor.      Por padrão o serv
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Fallback para a interface auto detectada.   Se o servidor não conseguir associar a interface especificada na opção \fB"\fPlisten_on\fB"\fP, ele tentará detectar uma interface que se conecte com o mundo exterior e se associará a ela. Por padrão, esta opção está habilitada
+Fallback para a interface auto detectada.   Se o servidor não conseguir associar a interface especificada na opção \fB\(dq\fPlisten_on\fB\(dq\fP, ele tentará detectar uma interface que se conecte com o mundo exterior e se associará a ela. Por padrão, esta opção está habilitada
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -151,7 +151,7 @@ Campos de metadados definidos pelo usuário ignorados.       Lista separada por 
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-A interface que escurará por conexões.      O padrão é escutar em todas as interfaces IPv4 disponíveis. Você pode mudar isto para, por exemplo, \fB"\fP127.0.0.1\fB"\fP para somente escutar por conexões da máquina local, ou para \fB"\fP::\fB"\fP para escutar por todas as conexões IPv6 e IPv4.
+A interface que escurará por conexões.      O padrão é escutar em todas as interfaces IPv4 disponíveis. Você pode mudar isto para, por exemplo, \fB\(dq\fP127.0.0.1\fB\(dq\fP para somente escutar por conexões da máquina local, ou para \fB\(dq\fP::\fB\(dq\fP para escutar por todas as conexões IPv6 e IPv4.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -216,7 +216,7 @@ A porta que escutará por conexões.
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-Caminho para um arquivo JSON contendo URLs para a função \fB"\fPPesquisar na internet\fB"\fP\&. O jeito mais fácil de criar este arquivo é ir em Preferências\->Compartilhar pela rede\->Pesquisar na internet, criar as URLs e exportá\-las.
+Caminho para um arquivo JSON contendo URLs para a função \fB\(dq\fPPesquisar na internet\fB\(dq\fP\&. O jeito mais fácil de criar este arquivo é ir em Preferências\->Compartilhar pela rede\->Pesquisar na internet, criar as URLs e exportá\-las.
 .UNINDENT
 .INDENT 0.0
 .TP

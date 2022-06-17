@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "maj 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibre-debug \- calibre-debug
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBRE-DEBUG" "1" "juni 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibre-debug \- calibre-debug
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -56,7 +56,7 @@ Du kan också använda \fBcalibre\-debug\fP för att köra fristående skript. F
 .sp
 Allting efter \fB\-\-\fP skickas till skriptet.
 .sp
-När du skickar argument till \fBcalibre\-debug\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till \fBcalibre\-debug\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .SH [ALTERNATIV]
 .INDENT 0.0
 .TP
@@ -86,7 +86,7 @@ Kör diffverktyg för calibre. Till exempel: calibre\-debug \fI\%\-\-diff\fP fil
 .INDENT 0.0
 .TP
 .B \-\-edit\-book, \-t
-Starta calibre\-verktyget \fB"\fPRedigera book\fB"\fP i felsökningsläge.
+Starta calibre\-verktyget \fB\(dq\fPRedigera book\fB\(dq\fP i felsökningsläge.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -101,7 +101,7 @@ Bryt isär boken i den angivna mappen. Användning: \-x file.epub output_dir Exp
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Exportera alla calibre\-data (böcker/inställningar/insticksmoduler). Normalt kommer du att bli ombedd om exportmappen och biblioteken att exportera. Du kan även ange dem som kommandoradsargument för att hoppa över frågorna. Använd absoluta sökvägar för exportmappen och biblioteken. Det speciella nyckelordet \fB"\fPall\fB"\fP kan användas för att exportera alla bibliotek.
+Exportera alla calibre\-data (böcker/inställningar/insticksmoduler). Normalt kommer du att bli ombedd om exportmappen och biblioteken att exportera. Du kan även ange dem som kommandoradsargument för att hoppa över frågorna. Använd absoluta sökvägar för exportmappen och biblioteken. Det speciella nyckelordet \fB\(dq\fPall\fB\(dq\fP kan användas för att exportera alla bibliotek.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -151,7 +151,7 @@ Mata ut nödvändiga sökvägar för att anpassa calibre\-miljön
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-Run a plugin that provides a command line interface. For example: calibre\-debug \-r \fB"\fPPlugin name\fB"\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
+Kör en insticksmodul som tillhandahåller ett kommandoradsgränssnitt. Till exempel:  calibre\-debug \-r \fB\(dq\fPinsticksmodulsnamn\fB\(dq\fP \fB\-\-\fP fil1 \fB\-\-flagga1\fP Allt efter \fB\-\-\fP kommer att skickas till insticksmodulen som argument.
 .UNINDENT
 .INDENT 0.0
 .TP

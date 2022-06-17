@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "5月 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibredb \- calibredb
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBREDB" "1" "6月 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -171,7 +171,7 @@ calibredb list [options]
 .sp
 calibreデータベースに存在する本のリスト
 .sp
-スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -180,7 +180,7 @@ calibreデータベースに存在する本のリスト
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-データベース中の本の一覧を表示するときに表示するフィールド。フィールドをカンマ区切りで指定します。 指定可能なフィールド: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid デフォルト: title,authors  特殊フィールド名 \fB"\fPall\fB"\fP を指定するとすべてのフィールドを選択します。上記のビルトインフィールドの他、カスタムフィールドも *field_name として指定可能です。たとえば、カスタムフィールド #rating を表示させたいときには *rating と指定してください。
+データベース中の本の一覧を表示するときに表示するフィールド。フィールドをカンマ区切りで指定します。 指定可能なフィールド: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid デフォルト: title,authors  特殊フィールド名 \fB\(dq\fPall\fB\(dq\fP を指定するとすべてのフィールドを選択します。上記のビルトインフィールドの他、カスタムフィールドも *field_name として指定可能です。たとえば、カスタムフィールド #rating を表示させたいときには *rating と指定してください。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -232,7 +232,7 @@ calibredb add [options] file1 file2 file3 ...
 指定したファイルを本としてデータベースに追加します。フォルダを指定することもできます。参照
 以下のフォルダ関連のオプション。
 .sp
-スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -330,7 +330,7 @@ calibredb remove ids
 .sp
 idsに指定された本をデータベースから削除。idsには数字をカンマ区切りで指定します (本のIDはsearchコマンドで取得できます)。例: 23,34,57\-85 (範囲で指定した場合、範囲の終端は含まれません)
 .sp
-スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-permanent
@@ -350,7 +350,7 @@ calibredb add_format [options] id ebook_file
 .sp
 ebook_file で指定する電子書籍ファイルを、id で指定された本の利用可能な形式として追加します。idはsearch コマンドで取得できます。形式がすでに存在する場合は、置換しないオプションを有効にした場合をのぞいて、置換されます。
 .sp
-スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -370,7 +370,7 @@ calibredb remove_format [options] id fmt
 .sp
 fmt で指定した形式を id で指定した本から削除します。id は search コマンドで取得できます。fmt はLRF, TXT, EPUB のようにファイルの拡張子で指定してください。本に指定した形式がない場合、なにもしません。
 .sp
-スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -385,7 +385,7 @@ calibredb show_metadata [options] id
 .sp
 id で指定された本の、calibreのデータベースに保存された書誌を表示します。id はsearch コマンドで取得できるID番号です。
 .sp
-スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -413,7 +413,7 @@ OPF ファイルについて簡単に知りたい場合は、show_metadata コ�
 \-\-field オプションを使用する場合は OPFファイルを指定する必要は
 ありません。
 .sp
-スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
@@ -441,7 +441,7 @@ calibredb export [options] ids
 保存します。
 ID 番号は search コマンドで取得できます。
 .sp
-スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -490,7 +490,7 @@ IDのリストを無視してデータベースからすべての本をエクス
 .INDENT 0.0
 .TP
 .B \-\-template
-保存したファイルのファイル名とフォルダ構成を制御するためのテンプレート。デフォルトは \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP で、タイトルと著者名をファイル名に含むフォルダに著者別に保存します。利用可能なコントロール: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+保存したファイルのファイル名とフォルダ構成を制御するためのテンプレート。デフォルトは \fB\(dq\fP{author_sort}/{title}/{title} \- {authors}\fB\(dq\fP で、タイトルと著者名をファイル名に含むフォルダに著者別に保存します。利用可能なコントロール: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -525,7 +525,7 @@ Note that different \fBcatalog\fP formats support different sets of options. To
 see the different options, specify the name of the output file and then the
 \-\-help option.
 .sp
-スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
@@ -569,7 +569,7 @@ see the different options, specify the name of the output file and then the
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-生成したカタログから除外する本を指定するルール。 除外ルールはだいたい次のいずれかのようになります。 (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) または (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). 使用例: ((\fB\(aq\fPArchived books\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) 上記例では、カスタム列 \fB\(aq\fPstatus\fB\(aq\fP の値が \fB\(aq\fPArchived\fB\(aq\fP の本を除外します。 ルールが複数指定されている場合には、すべて適用されます。 デフォルト: \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP 適用: AZW3, EPUB, MOBI出力形式
+生成したカタログから除外する本を指定するルール。 除外ルールはだいたい次のいずれかのようになります。 (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) または (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). 使用例: ((\fB\(aq\fPArchived books\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) 上記例では、カスタム列 \fB\(aq\fPstatus\fB\(aq\fP の値が \fB\(aq\fPArchived\fB\(aq\fP の本を除外します。 ルールが複数指定されている場合には、すべて適用されます。 デフォルト: \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -664,7 +664,7 @@ calibredb \fBsaved_searches\fP add search_name search_expression
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
-スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -681,11 +681,11 @@ calibredb add_custom_column [options] label name datatype
 nameは人間に読みやすい列の名前。
 datatypeは以下のいずれか: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-display
-列のデータがどのように翻訳されるかをカスタマイズする辞書を指定するオプションです。JSON文字列で指定します。列挙型の列の場合、以下を使用してください:option:\fI\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP 。 値の表示方法には、様々なオプションがあります。列の型ごとのオプションは以下の通りです。 合成型: composite_template, composite_sort, make_category,contains_html, use_decorations 日付: date_format 列挙型: enum_values, enum_colors, use_decorations 整数、浮動小数点数: number_format テキスト: is_names, use_decorations  型とオプションの正しい組み合わせを知るには、GUIから適切な型のカスタム列を作成して、出力されるバックアップのOPFファイルを見てみるのが一番よい方法です(列を追加して以降にOPFが再生成されていることを確認してください)。OPFの新しい列に \fB"\fPdisplay\fB"\fP というJSONが見つかるでしょう。
+列のデータがどのように翻訳されるかをカスタマイズする辞書を指定するオプションです。JSON文字列で指定します。列挙型の列の場合、以下を使用してください:option:\fI\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP 。 値の表示方法には、様々なオプションがあります。列の型ごとのオプションは以下の通りです。 合成型: composite_template, composite_sort, make_category,contains_html, use_decorations 日付: date_format 列挙型: enum_values, enum_colors, use_decorations 整数、浮動小数点数: number_format テキスト: is_names, use_decorations  型とオプションの正しい組み合わせを知るには、GUIから適切な型のカスタム列を作成して、出力されるバックアップのOPFファイルを見てみるのが一番よい方法です(列を追加して以降にOPFが再生成されていることを確認してください)。OPFの新しい列に \fB\(dq\fPdisplay\fB\(dq\fP というJSONが見つかるでしょう。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -706,7 +706,7 @@ calibredb custom_columns [options]
 .sp
 利用可能なカスタム列の一覧を表示。列ラベルとIDを表示します。
 .sp
-スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -727,7 +727,7 @@ calibredb remove_custom_column [options] label
 labelで指定されるカスタム列を削除。
 custom_columns コマンドで存在するカスタム列を見ることができます。
 .sp
-スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -749,7 +749,7 @@ idで指定された本のカスタム列の値を設定します。
 search コマンドでIDのリストが取得できます。
 custom_columns コマンドでカスタム列の名前のリストが取得できます。
 .sp
-スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -772,7 +772,7 @@ calibreライブラリの各ディレクトリに保存されている OPF フ�
 .sp
 注意: このコマンドを実行すると、データベースを完全に再生成します。すべての保存済み検索、ユーザカテゴリ、書誌変換ルール、書誌ごとの変換設定、カスタムレシピは失われます。復元される書誌は、OPFファイルの内容と同等となります。
 .sp
-スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -792,7 +792,7 @@ calibredb check_library [options]
 .sp
 ライブラリのあるファイルシステムをチェックします。レポート：invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -827,7 +827,7 @@ calibredb list_categories [options]
 .sp
 データベース中のカテゴリ情報のレポートを作成します。情報はタグブラウザに表示されるものと同等です。
 .sp
-スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
@@ -872,7 +872,7 @@ calibredb backup_metadata [options]
 ただし普通はこれを行う必要はありません。OPF ファイルは書誌が変更されるたびに
 自動的にバックアップされるからです。
 .sp
-スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -897,7 +897,7 @@ calibredb clone path/to/new/library
 複製されたライブラリに本は含まれません。すべての本を含む複製を
 作成したい場合には、単にライブラリのフォルダをコピーしてください。
 .sp
-スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -921,7 +921,7 @@ book_id に特別な値 \(aqall\(aq を指定すると、すべての本が更�
 範囲を指定することができます。
 例: calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
-スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
@@ -939,9 +939,9 @@ calibredb search [options] search expression
 .UNINDENT
 .UNINDENT
 .sp
-検索条件を指定してライブラリを検索し、結果を本のIDのカンマ区切りリストで返します。出力された結果は、本のIDを引数にとる他のコマンドの入力として使用するのに便利です。以下のようにcalibreの強力な検索用言語が使用できます。例: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
+検索条件を指定してライブラリを検索し、結果を本のIDのカンマ区切りリストで返します。出力された結果は、本のIDを引数にとる他のコマンドの入力として使用するのに便利です。以下のようにcalibreの強力な検索用言語が使用できます。例: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
-スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l

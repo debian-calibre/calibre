@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "maio 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibre-smtp \- calibre-smtp
 .
 .nr rst2man-indent-level 0
 .
@@ -30,29 +27,32 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBRE-SMTP" "1" "junho 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibre-smtp \- calibre-smtp
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
-calibre\-smtp [options] [from to text]
+calibre\-smtp [options] [a partir do texto]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Send mail using the SMTP protocol. \fBcalibre\-smtp\fP has two modes of operation. In the
-compose mode you specify from to and text and these are used to build and
-send an email message. In the filter mode, \fBcalibre\-smtp\fP reads a complete email
-message from STDIN and sends it.
+Enviar mail usando o protocolo SMTP. \fBcalibre\-smtp\fP tem dois modos de operação. No
+modo de composição que você especifica de para e texto e estes são usados ​​para construir e
+enviar uma mensagem de e\-mail. No modo de filtro, \fBcalibre\-smtp\fP lê uma mensagem completa
+de e\-mail do STDIN e envia\-o.
 .sp
-text is the body of the email message.
-If text is not specified, a complete email message is read from STDIN.
-from is the email address of the sender and to is the email address
-of the recipient. When a complete email is read from STDIN, from and to
-are only used in the SMTP negotiation, the message headers are not modified.
+texto é o corpo da mensagem de e\-mail.
+Se o texto não for especificado, uma mensagem completa de e\-mail é lida de STDIN.
+é o endereço de e\-mail do remetente e é o endereço de e\-mail
+do destinatário. Quando um e\-mail completo é lido de STDIN, de e para
+apenas são usados ​​na negociação SMTP, os cabeçalhos das mensagens não são modificados.
 .sp
-Sempre que passar argumentos para o \fBcalibre\-smtp\fP que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
+Sempre que passar argumentos para o \fBcalibre\-smtp\fP que contenham espaços ponha\-os entre aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .SH [OPÇÕES]
 .INDENT 0.0
 .TP

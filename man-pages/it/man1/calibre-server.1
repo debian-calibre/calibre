@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "maggio 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibre-server \- calibre-server
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBRE-SERVER" "1" "giugno 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibre-server \- calibre-server
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -47,7 +47,7 @@ delle cartelle della biblioteca come argomenti di \fBcalibre\-server\fP\&. Se no
 alcun percorso, verranno usate tutte le biblioteche che il programma
 principale di calibre conosce.
 .sp
-Ogni qualvolta vengono passati argomenti con degli spazi a \fBcalibre\-server\fP, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a \fBcalibre\-server\fP, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .SH [OPZIONI]
 .INDENT 0.0
 .TP
@@ -62,7 +62,7 @@ Tempo (in secondi) di attesa di risposta dal server dopo una richiesta.
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Scegli il tipo di autenticazione adoperato.         Imposta la modalità di autenticazione HTTP usata dal server. Imposta su \fB"\fPbasic\fB"\fP se terrai questo server dietro un proxy SSL. Altrimenti lascia su \fB"\fPauto\fB"\fP, che utilizzerà \fB"\fPbasic\fB"\fP se SSL è configurato e \fB"\fPdigest\fB"\fP altrimenti.
+Scegli il tipo di autenticazione adoperato.         Imposta la modalità di autenticazione HTTP usata dal server. Imposta su \fB\(dq\fPbasic\fB\(dq\fP se terrai questo server dietro un proxy SSL. Altrimenti lascia su \fB\(dq\fPauto\fB\(dq\fP, che utilizzerà \fB\(dq\fPbasic\fB\(dq\fP se SSL è configurato e \fB\(dq\fPdigest\fB\(dq\fP altrimenti.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -152,7 +152,7 @@ Campi di metadati dell\fB\(aq\fPutente da ignorare.  Lista separata da virgole d
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-L\fB\(aq\fPinterfaccia su cui ascoltare in attesa di connessioni.    L\fB\(aq\fPimpostazione predefinita è di ascoltare su tutte le interfacce  IPv4 disponibili. Puoi cambiare questa opzione in, per esempio, \fB"\fP127.0.0.1\fB"\fP per ascoltare solo per connessioni dalla macchina locale, o in \fB"\fP::\fB"\fP per ascoltare tutte le connessioni IPv6 e IPv4 in ingresso.
+L\fB\(aq\fPinterfaccia su cui ascoltare in attesa di connessioni.    L\fB\(aq\fPimpostazione predefinita è di ascoltare su tutte le interfacce  IPv4 disponibili. Puoi cambiare questa opzione in, per esempio, \fB\(dq\fP127.0.0.1\fB\(dq\fP per ascoltare solo per connessioni dalla macchina locale, o in \fB\(dq\fP::\fB\(dq\fP per ascoltare tutte le connessioni IPv6 e IPv4 in ingresso.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -217,7 +217,7 @@ La porta di ascolto per la connessione.
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-Percorso di un file JSON contenente degli URL per la funzione \fB"\fPCerca in internet\fB"\fP\&. Il modo più semplice per creare un file del genere è andare in Preferenze\-> Condivisione via rete\-> Cerca in internet in calibre, creare gli URL ed esportarli.
+Percorso di un file JSON contenente degli URL per la funzione \fB\(dq\fPCerca in internet\fB\(dq\fP\&. Il modo più semplice per creare un file del genere è andare in Preferenze\-> Condivisione via rete\-> Cerca in internet in calibre, creare gli URL ed esportarli.
 .UNINDENT
 .INDENT 0.0
 .TP

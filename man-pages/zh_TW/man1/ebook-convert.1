@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "5月 27, 2022" "5.43.0" "calibre"
-.SH NAME
-ebook-convert \- ebook-convert
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "EBOOK-CONVERT" "1" "6月 17, 2022" "5.44.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -41,18 +41,22 @@ ebook\-convert input_file output_file [options]
 .UNINDENT
 .UNINDENT
 .sp
-Convert an e\-book from one format to another.
+转换不同格式的电子书。
 .sp
-input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+input_file 表示输入文件，output_file 表示输出文件。这两者作为命令行参数必须指定到最前面。
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an "open e\-book" (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
+输出的电子书格式可由 output_file 的扩展名得到。同时 output_file 也可以是一种以 .EXT 为扩展名的特殊格式。在这种情况下，输出文件的名称则使用输入文件的名称。注意：文件名不能以连字号作为开头。如果 output_file 不含扩展名，那么它将被视为一个目录并将会在该目录下生成 HTML 格式的“开放式电子书(OEB)”。这些文件会被视为正常文件而被输出插件所识别。
 .sp
-After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+在指定输入和输出文件后，你可以自定义特定的转换选项。根据输入和输出文件的类型不同可用的转换选项也不同。如需获取针对输入和输出文件的帮助，请在命令行中输入 \-h。
 .sp
-For full documentation of the conversion system see
+对于转换系统的完整文档请查阅
 \fI\%电子书转换\fP
 .sp
-Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的:command:
+.nf
+\(ga
+.fi
+ebook\-convert\(ga传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .sp
 選項以及選項的預設值都取決於輸入
 和輸出格式，所以您應該經常檢查
@@ -94,7 +98,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-列出內建食譜名稱。您可以從內建食譜建立電子書，就像：ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+列出內建食譜名稱。您可以從內建食譜建立電子書，就像：ebook\-convert \fB\(dq\fPRecipe Name.recipe\fB\(dq\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -145,7 +149,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extract the contents of the generated EPUB file to the specified folder. The contents of the folder are first deleted, so be careful.
+解压EPUB文件的内容到指定文件夹。请注意，该文件夹的内容会先被清空。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -183,17 +187,17 @@ Extract the contents of the generated EPUB file to the specified folder. The con
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPPelé\fB"\fP with \fB"\fPPele\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB\(dq\fPPelé\fB\(dq\fP with \fB\(dq\fPPele\fB\(dq\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-base\-font\-size
-The base font size in pts. All font sizes in the produced book will be rescaled based on this size. By choosing a larger size you can make the fonts in the output bigger and vice versa. By default, when the value is zero, the base font size is chosen based on the output profile you chose.
+PTS中的基本字体大小。在生成的书籍中所有的字体尺寸将基于这个大小重新缩放。通过选择更大的尺寸，可以使输出中的字体更大，反之亦然。默认情况下，当值为0时，根据你选择的输出配置文件选择基本字体大小。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-更改文本對齊方式。 使用值\fB"\fPleft\fB"\fP 將轉換資源中所有的文本為左對齊。 (如：未對齊) 使用值\fB"\fPjustify\fB"\fP 將轉換資源中所有的未對齊的文本為對齊。使用值\fB"\fPoriginal\fB"\fP(預設)則不更改源檔案的對齊方式。請注意，僅部分輸出格式支持對齊方式。
+更改文本對齊方式。 使用值\fB\(dq\fPleft\fB\(dq\fP 將轉換資源中所有的文本為左對齊。 (如：未對齊) 使用值\fB\(dq\fPjustify\fB\(dq\fP 將轉換資源中所有的未對齊的文本為對齊。使用值\fB\(dq\fPoriginal\fB\(dq\fP(預設)則不更改源檔案的對齊方式。請注意，僅部分輸出格式支持對齊方式。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -203,7 +207,7 @@ The base font size in pts. All font sizes in the produced book will be rescaled 
 .INDENT 0.0
 .TP
 .B \-\-embed\-all\-fonts
-Embed every font that is referenced in the input document but not already embedded. This will search your system for the fonts, and if found, they will be embedded. Embedding will only work if the format you are converting to supports embedded fonts, such as EPUB, AZW3, DOCX or PDF. Please ensure that you have the proper license for embedding the fonts used in this document.
+嵌入输入文档中引用到但未嵌入的字体。软件会在你的系统中查找这些字体，找到了就嵌入。字体嵌入只有当你的目的格式支持才有用，例如 EPUB、AZW3、DOCX 和 PDF。请保证你拥有在文档中嵌入字体的合适授权。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -258,22 +262,22 @@ pt 行高。控制兩行高度距離。僅僅適用於未定義行高的元素�
 .INDENT 0.0
 .TP
 .B \-\-margin\-bottom
-Set the bottom margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+设定下边距，单位pts。默认为 5.0。如果设置为负值表示不使用页边距（保留使用原始文档的页边距）。提示：页面原始格式如PDF和docx有自己优先的边距设置。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-left
-Set the left margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+设定左边距，单位pts。默认为 5.0。如果设置为负值表示不使用页边距（保留使用原始文档的页边距）。提示：页面原始格式如PDF和docx有自己优先的边距设置。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-right
-Set the right margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+设置右边距，单位pts，默认为 5.0。如果设置为负值表示不使用页边距（保留使用原始文档的页边距）。提示：页面原始格式如PDF和docx有自己优先的边距设置。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-top
-Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+设定上边距，单位pts。默认为 5.0。如果设置为负值表示不使用页边距（保留使用原始文档的页边距）。提示：页面原始格式如PDF和docx有自己优先的边距设置。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -293,7 +297,7 @@ Set the top margin in pts. Default is 5.0. Setting this to less than zero will c
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP\&.
+将普通引号、破折号和省略号转换为与它们对应的正确印刷体。有关详细信息, 请参阅 \fI\%https://daringfireball.net/projects/smartypants\fP。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -308,7 +312,7 @@ Convert plain quotes, dashes and ellipsis to their typographically correct equiv
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform HTML\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+包含转换本书中的HTML的规则的文件的路径。创建这样一个文件的最简单方法是在 calibre图形用户界面中使用向导创建规则。在“外观\->转换HTML”的转换对话框部分访问它。一旦创建规则，就可以使用“导出”按钮将它们保存到文件中。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -417,7 +421,7 @@ Path to a file containing rules to transform the HTML in this book. The easiest 
 .INDENT 0.0
 .TP
 .B \-\-chapter
-An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP as chapter titles as well as any tags that have class=\fB"\fPchapter\fB"\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB"\fP/\fB"\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+XPath 運算式用於偵測章節標題。預設考慮使用 <h1> 或 <h2> 標籤來涵括「章節」，「書籍」，「節選」，「前言」，「結束語」，或者使用任何標籤包含級別 =「章節」的「部分」做為章節標題。使用的運算式必須評估元素列表。要停用偵測章節，請使用運算式「/」。請參閱 calibre 使用者手冊中的 XPath 教學瞭解使用此功能的更多幫助。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -432,7 +436,7 @@ An XPath expression to detect chapter titles. The default is to consider <h1> or
 .INDENT 0.0
 .TP
 .B \-\-insert\-metadata
-Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
+将书籍元数据添加到书籍的开始。如果你的电子书阅读设备不支持显示和搜索元数据功能，该功能可以有所帮助。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -447,7 +451,7 @@ XPath 運算式。換頁符號要插入在指定元素之前。要停用則使�
 .INDENT 0.0
 .TP
 .B \-\-remove\-first\-image
-Remove the first image from the input e\-book. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+移除輸入電子書的第一張圖片。當輸入文件已有封面圖片但不想將它當作封面時很有用。在這個情況下，如果您在 calibre 中設定了封面，而您沒有指定這個選項，輸出的文件最後會有兩張封面。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -596,7 +600,7 @@ XPath 運算式指定所有標籤應添加在三級目錄表。每個條目加�
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring.
+在转换过程的不同阶段分别保存输出到指定目录。如果你不确定在哪个阶段出了问题，这个选项非常实用。
 .UNINDENT
 .INDENT 0.0
 .TP

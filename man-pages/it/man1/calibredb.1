@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "maggio 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibredb \- calibredb
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBREDB" "1" "giugno 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -180,7 +180,7 @@ calibredb list [opzioni]
 .sp
 Elenca i libri disponibili nel database di calibre.
 .sp
-Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -189,7 +189,7 @@ Ordina i risultati in ordine crescente
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-I campi da mostrare quando sono elencati i libri del database. Dovrebbe essere una lista separata da virgole di campi. Campi disponibili: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Valore predefinito: %predefinito. Il campo speciale \fB"\fPall\fB"\fP può essere usato per selezionare tutti i campi. Oltre ai campi integrati di cui sopra, sono disponibili anche campi personalizzati scritti come *nome_campo; per esempio, per un campo personalizzato #valutazione, usa il nome: *rating
+I campi da mostrare quando sono elencati i libri del database. Dovrebbe essere una lista separata da virgole di campi. Campi disponibili: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Valore predefinito: %predefinito. Il campo speciale \fB\(dq\fPall\fB\(dq\fP può essere usato per selezionare tutti i campi. Oltre ai campi integrati di cui sopra, sono disponibili anche campi personalizzati scritti come *nome_campo; per esempio, per un campo personalizzato #valutazione, usa il nome: *rating
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -241,7 +241,7 @@ calibredb add [opzioni] file1 file2 file3 ...
 Aggiungi come libri i file specificati nel database. Puoi anche specificare delle cartelle,
 vedi le opzioni riferite alle cartelle qui sotto.
 .sp
-Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -250,7 +250,7 @@ Imposta gli autori dei libri aggiunti
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-Se vengono trovati libri con titoli e autori simili, unisci automaticamente i formati (file) in arrivo con record di libri già esistenti. Un valore di \fB"\fPignora\fB"\fP significa che i formati duplicati vengono scartati. Un valore di \fB"\fPoverwrite\fB"\fP significa che i formati duplicati nella biblioteca vengono sovrascritti dai nuovi file aggiunti. Un valore di \fB"\fPnew_record\fB"\fP significa che i formati duplicati sono inseriti in un nuovo record libro.
+Se vengono trovati libri con titoli e autori simili, unisci automaticamente i formati (file) in arrivo con record di libri già esistenti. Un valore di \fB\(dq\fPignora\fB\(dq\fP significa che i formati duplicati vengono scartati. Un valore di \fB\(dq\fPoverwrite\fB\(dq\fP significa che i formati duplicati nella biblioteca vengono sovrascritti dai nuovi file aggiunti. Un valore di \fB\(dq\fPnew_record\fB\(dq\fP significa che i formati duplicati sono inseriti in un nuovo record libro.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -318,7 +318,7 @@ Uno schema per il nome del file (glob pattern), i file che corrispondono a quest
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Assumi che ogni cartella abbia un solo libro \fB"\fPlogico\fB"\fP e che tutti i file in essa contenuti siano differenti formati e\-book dello stesso libro
+Assumi che ogni cartella abbia un solo libro \fB\(dq\fPlogico\fB\(dq\fP e che tutti i file in essa contenuti siano differenti formati e\-book dello stesso libro
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -339,7 +339,7 @@ calibredb remove id
 .sp
 Rimuove dal database i libri identificati dagli id. Gli id dovrebbero essere una lista separata da virgole di numeri id (puoi ottenere i numeri id usando il comando search). Per esempio, 23,34,57\-85 (quando si specifica un intervallo, l\(aqultimo numero dell\(aqintervallo è escluso).
 .sp
-Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-permanent
@@ -359,7 +359,7 @@ calibredb add_format [options] id ebook_file
 .sp
 Aggiungi l\(aq e\-book in ebook_file ai formati disponibili per il libro identificato per id. Puoi trovare l\(aqid usando il comando cerca, se il formato è già presente verrà sostituito a meno che l\(aqopzione \(aqnon sostituire\(aq non sia stata specificata.
 .sp
-Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -379,7 +379,7 @@ calibredb remove_format [opzioni] id fmt
 .sp
 Rimuovi il formato fmt identificato da id dal libro logico. Puoi ottenere l\(aqid usando il comando search. fmt deve essere un\(aqestensione di file come LRF, TXT o EPUB. Se il libro logico non ha un fmt disponibile, non fa niente.
 .sp
-Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -395,7 +395,7 @@ calibredb show_metadata [opzioni] id
 Mostra i metadati salvati nel database di calibre per il libro identificato da id.
 id è un numero identificativo del comando di ricerca.
 .sp
-Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -420,7 +420,7 @@ comando show_metadata. Puoi anche inserire i metadati in campi individuali con
 l\(aqopzione \-\-field. Se usi quest\(aqultima opzione, non c\(aqè bisogno di specificare
 un file OPF.
 .sp
-Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
@@ -447,7 +447,7 @@ Esporta i libri specificati da id (una lista separata da virgole) su disco.
 L\(aqoperazione di esportazione salva tutti i formati del libro, la copertina e i metadati
 (in un file opf). Puoi ottenere i numeri di id dal comando cerca.
 .sp
-Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -496,7 +496,7 @@ Esporta tutti i libri in una singola cartella
 .INDENT 0.0
 .TP
 .B \-\-template
-Lo schema che controlla i nomi di file e l\fB\(aq\fPalbero delle cartelle dei file salvati. Il valore predefinito è \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP che salva i libri in una sottocartella per autore mentre i nomi di file contengono titolo e autore. I controlli disponibili sono: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+Lo schema che controlla i nomi di file e l\fB\(aq\fPalbero delle cartelle dei file salvati. Il valore predefinito è \fB\(dq\fP{author_sort}/{title}/{title} \- {authors}\fB\(dq\fP che salva i libri in una sottocartella per autore mentre i nomi di file contengono titolo e autore. I controlli disponibili sono: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -531,7 +531,7 @@ Note that different \fBcatalog\fP formats support different sets of options. To
 see the different options, specify the name of the output file and then the
 \-\-help option.
 .sp
-Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
@@ -571,7 +571,7 @@ Regex che descrive i tag da escludere come generi. Valore predefinito: \fB\(aq\f
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Specifica le regole usate per escludere i libri dal catalogo generato. Il modello per una regola di esclusione è o (\fB\(aq\fP<nome regola>\fB\(aq\fP,\fB\(aq\fPTag\fB\(aq\fP,\fB\(aq\fP<lista di tag separati da virgola>\fB\(aq\fP) o (\fB\(aq\fP<nome regola>\fB\(aq\fP,\fB\(aq\fP<colonna personalizzata>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). Ad Esempio: ((\fB\(aq\fPLibri archiviati\fB\(aq\fP,\fB\(aq\fP#stato,\fB\(aq\fPArchiviato\fB\(aq\fP),) escluderà un libro con valore \fB\(aq\fPArchiviato\fB\(aq\fP nella colonna personalizzata \fB\(aq\fPstato\fB\(aq\fP\&. Tutte le regole specificate verranno applicate. Valore predefinito:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Si applica a: formati di output AZW3, EPUB, MOBI
+Specifica le regole usate per escludere i libri dal catalogo generato. Il modello per una regola di esclusione è o (\fB\(aq\fP<nome regola>\fB\(aq\fP,\fB\(aq\fPTag\fB\(aq\fP,\fB\(aq\fP<lista di tag separati da virgola>\fB\(aq\fP) o (\fB\(aq\fP<nome regola>\fB\(aq\fP,\fB\(aq\fP<colonna personalizzata>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). Ad Esempio: ((\fB\(aq\fPLibri archiviati\fB\(aq\fP,\fB\(aq\fP#stato,\fB\(aq\fPArchiviato\fB\(aq\fP),) escluderà un libro con valore \fB\(aq\fPArchiviato\fB\(aq\fP nella colonna personalizzata \fB\(aq\fPstato\fB\(aq\fP\&. Tutte le regole specificate verranno applicate. Valore predefinito:  \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP Si applica a: formati di output AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -667,7 +667,7 @@ Sintassi per rimuovere:
 .sp
 calibredb \fBsaved_searches\fP remove nome_ricerca
 .sp
-Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -684,11 +684,11 @@ Crea una colonna personalizzata. etichetta è il nome amichevole della macchina 
 deve contenere spazi o punteggiatura. nome è il nome amichevole della colonna.
 tipo è uno di: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-display
-Un dizionario di opzioni per personalizzare l\fB\(aq\fPinterpretazione dei dati di questa colonna. Questa è una stringa JSON. Per le colonne di enumerazione, usare \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP\&. Ci sono molte opzioni che possono entrare nella variabile di visualizzazione. Le opzioni per tipo di colonna sono: composite: composite_template, composite_sort, make_category,contains_html, use_decorations data e ora: formato_data enumerazione: enum_valori, enum_colori, uso_decorazioni int, float: numero_formato testo: is_nomi, uso_decorazioni Il modo migliore per trovare combinazioni ammesse è quello di creare una colonna personalizzata del tipo appropriato nella GUI e poi guardare l\fB\(aq\fPOPF di backup per un libro (assicurarsi che sia stato creato un nuovo OPF da quando la colonna è stata aggiunta). Vedrete il JSON per il \fB"\fPdisplay\fB"\fP per la nuova colonna nell\fB\(aq\fPOPF.
+Un dizionario di opzioni per personalizzare l\fB\(aq\fPinterpretazione dei dati di questa colonna. Questa è una stringa JSON. Per le colonne di enumerazione, usare \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP\&. Ci sono molte opzioni che possono entrare nella variabile di visualizzazione. Le opzioni per tipo di colonna sono: composite: composite_template, composite_sort, make_category,contains_html, use_decorations data e ora: formato_data enumerazione: enum_valori, enum_colori, uso_decorazioni int, float: numero_formato testo: is_nomi, uso_decorazioni Il modo migliore per trovare combinazioni ammesse è quello di creare una colonna personalizzata del tipo appropriato nella GUI e poi guardare l\fB\(aq\fPOPF di backup per un libro (assicurarsi che sia stato creato un nuovo OPF da quando la colonna è stata aggiunta). Vedrete il JSON per il \fB\(dq\fPdisplay\fB\(dq\fP per la nuova colonna nell\fB\(aq\fPOPF.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -709,7 +709,7 @@ calibredb custom_columns [options]
 .sp
 Elenca le colonne personalizzate disponibili. Mostra le etichette delle colonne e gli ID.
 .sp
-Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -730,7 +730,7 @@ calibredb remove_custom_column [opzioni] etichetta
 Rimuove la colonna personalizzata identificata dall\(aqetichetta. Puoi
 vedere le colonne disponibili con il comando custom_columns.
 .sp
-Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -753,7 +753,7 @@ Puoi ottenere una lista di id usando il comando search.
 Puoi ottenere una lista dei nomi delle colonne personalizzate usando il comando
 custom_columns.
 .sp
-Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -780,7 +780,7 @@ tutte le ricerche salvate, le categorie utente, i pannelli di controllo, le impo
 di conversione per singolo libro e le ricette personalizzate. I metadati recuperati
 saranno accurati solo quanto lo erano i file OPF.
 .sp
-Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -800,7 +800,7 @@ calibredb check_library [opzioni]
 .sp
 Esegue alcuni controlli sul filesystem che rappresenta la biblioteca. I resoconti sono invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -836,7 +836,7 @@ calibredb list_categories [options]
 Crea un rapporto delle informazione sulle categorie del database.
 Le informazioni sono equivalenti a ciò che è mostrato nel navigatore dei Tag.
 .sp
-Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
@@ -881,7 +881,7 @@ comando per forzare una nuova creazione dei file OPF, con l\(aqopzione \-\-all.
 Nota che normalmente non è necessario farlo dato che il backup dei file OPF viene
 effettuato automaticamente ogni volta che i metadati cambiano.
 .sp
-Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -905,7 +905,7 @@ stesse colonne personalizzate, biblioteche virtuali e altre impostazioni della b
 La biblioteca clonata non conterrà libri. Se desideri creare un duplicato completo, che includa
 tutti i libri, è sufficiente usare gli strumenti del filesystem per copiare la cartella della biblioteca.
 .sp
-Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -927,7 +927,7 @@ differenti supportano diversi livelli di metadati. Puoi usare il valore speciale
 più id libro separati da spazi e intervalli di id separati da trattini. Per esempio:
 calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
-Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
@@ -951,9 +951,9 @@ Il formato di uscita è comodo da usare in altri comandi che accettano
 una lista di id in ingresso.
 .sp
 L\(aqespressione di ricerca può essere qualsiasi cosa che rispetti il potente
-linguaggio di ricerca di calibre, ad esempio: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
+linguaggio di ricerca di calibre, ad esempio: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
-Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l

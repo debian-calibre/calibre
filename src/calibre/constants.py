@@ -5,7 +5,7 @@ from functools import lru_cache
 import sys, locale, codecs, os, collections, collections.abc
 
 __appname__   = 'calibre'
-numeric_version = (5, 43, 0)
+numeric_version = (5, 44, 0)
 __version__   = '.'.join(map(str, numeric_version))
 git_version   = None
 __author__    = "Kovid Goyal <kovid@kovidgoyal.net>"
@@ -108,9 +108,13 @@ else:
 DEBUG = hasenv('CALIBRE_DEBUG')
 
 
-def debug():
+def debug(val=True):
     global DEBUG
-    DEBUG = True
+    DEBUG = bool(val)
+
+
+def is_debugging():
+    return DEBUG
 
 
 def _get_cache_dir():

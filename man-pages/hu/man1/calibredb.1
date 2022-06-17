@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "május 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibredb \- calibredb
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBREDB" "1" "június 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -156,7 +156,7 @@ súgó megjelenítése és kilépés
 .INDENT 0.0
 .TP
 .B \-\-password
-Jelszó a Calibre tartalomkiszolgálóhoz való csatlakozáshoz. A jelszó normál bemenetről történő olvasásához használja a speciális értéket: <stdin>. A jelszó fájlból való olvasásához használja: <f:/path/to/file> (azaz <f: followed by the full path to the file and a trailing >). A fenti szögletes zárójelek kötelezőek, ne felejtse el kihagyni őket, vagy használjon idézőjeleket a \fB"\fPshell\fB"\fP\-hez.
+Jelszó a Calibre tartalomkiszolgálóhoz való csatlakozáshoz. A jelszó normál bemenetről történő olvasásához használja a speciális értéket: <stdin>. A jelszó fájlból való olvasásához használja: <f:/path/to/file> (azaz <f: followed by the full path to the file and a trailing >). A fenti szögletes zárójelek kötelezőek, ne felejtse el kihagyni őket, vagy használjon idézőjeleket a \fB\(dq\fPshell\fB\(dq\fP\-hez.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -191,7 +191,7 @@ A Calibre adatbázisában lévő könyvek :command:
 .fi
 list\(gaája.
 .sp
-Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -200,7 +200,7 @@ Rendezési emelkedő sorrendben
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-A könyvek adatbázisban való listázásakor megjelenítendő mezők. A mezők vesszővel elválasztott listája legyen. Elérhető mezők: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Alapértelmezett: title,authors. Az \fB"\fPMind” speciális mezővel az összes mezőt kijelölhetjük. A fenti beépített mezőkön kívül egyéni mezők \fB\(aq\fP*field_name\fB\(aq\fP néven is elérhetők, például egyéni mezőhöz #rating használja a következő nevet: *értékelés
+A könyvek adatbázisban való listázásakor megjelenítendő mezők. A mezők vesszővel elválasztott listája legyen. Elérhető mezők: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Alapértelmezett: title,authors. Az \fB\(dq\fPMind” speciális mezővel az összes mezőt kijelölhetjük. A fenti beépített mezőkön kívül egyéni mezők \fB\(aq\fP*field_name\fB\(aq\fP néven is elérhetők, például egyéni mezőhöz #rating használja a következő nevet: *értékelés
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -252,7 +252,7 @@ calibredb add [opciók] fájl1 fájl2 fájl3 ...
 Adja hozzá a megadott fájlokat könyvként az adatbázishoz. Megadhat mappákat is,
 lásd alább a mappákkal kapcsolatos beállításokat.
 .sp
-Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -261,7 +261,7 @@ A hozzáadott könyv(ek) szerzőjének megadása
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-Ha hasonló címmel és szerzővel rendelkező könyveket talál, a bejövő formátumokat (fájlokat) automatikusan egyesíti a meglévő könyvrekordokba. Az \fB"\fPignore \- kihagyás\fB"\fP érték azt jelenti, hogy a duplikált formátumokat a rendszer elveti. Az \fB"\fPoverwrite \- felülírás\fB"\fP érték azt jelenti, hogy a könyvtárban található duplikált formátumok felülíródnak az újonnan hozzáadott fájlokkal. A \fB"\fPnew_record \- új_rekord\fB"\fP értéke azt jelenti, hogy a duplikált formátumok egy új könyvrekordba kerülnek.
+Ha hasonló címmel és szerzővel rendelkező könyveket talál, a bejövő formátumokat (fájlokat) automatikusan egyesíti a meglévő könyvrekordokba. Az \fB\(dq\fPignore \- kihagyás\fB\(dq\fP érték azt jelenti, hogy a duplikált formátumokat a rendszer elveti. Az \fB\(dq\fPoverwrite \- felülírás\fB\(dq\fP érték azt jelenti, hogy a könyvtárban található duplikált formátumok felülíródnak az újonnan hozzáadott fájlokkal. A \fB\(dq\fPnew_record \- új_rekord\fB\(dq\fP értéke azt jelenti, hogy a duplikált formátumok egy új könyvrekordba kerülnek.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -350,7 +350,7 @@ calibredb remove ids
 .sp
 eltávolítja az azonosítókkal azonosított könyveket az adatbázisból. Az id\-k az azonosítószámok vesszővel elválasztott listája kell lennie (az azonosítószámokat a keresés paranccsal kaphatja meg). Például 23,34,57\-85 (tartomány megadásakor a tartomány utolsó száma nem szerepel).
 .sp
-Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-permanent
@@ -370,7 +370,7 @@ calibredb add_format [options] id ebook_file
 .sp
 Hozzáadja az ebook_file fájlban található e\-könyvet az id által azonosított logikai könyv elérhető formátumaihoz. Az azonosítót a keresés paranccsal kaphatja meg. Ha a formátum már létezik, akkor a rendszer lecseréli, hacsak nincs megadva a nincs csere beállítás.
 .sp
-Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -390,7 +390,7 @@ calibredb remove_format [options] id fmt
 .sp
 Eltávolítja el az fmt formátumot az id által azonosított logikai könyvből. Az azonosítót a keresés paranccsal kaphatja meg. Az fmt egy fájlkiterjesztés, például LRF vagy TXT vagy EPUB. Ha a logikai könyvben nem elérhető az fmt, ne tegyen semmit.
 .sp
-Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -406,7 +406,7 @@ calibredb show_metadata [options] id
 Megjeleníti az id által azonosított könyv Calibre adatbázisában tárolt metaadatokat.
 Az id a keresési parancsból származó azonosítószám.
 .sp
-Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -430,7 +430,7 @@ származó azonosítószám. Gyorsan megismerheti az OPF formátumot a \-\-as\-o
 kapcsolóval a show_metadata parancsra. Az egyes mezők metaadatait is beállíthatja
 a \-\-field opcióval. Ha a \-\-field opciót használja, nincs szükség OPF fájl megadására.
 .sp
-Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
@@ -465,7 +465,7 @@ Az :command:
 export\(gaálási művelet a könyv összes formátumát, borítóját és metaadatait menti
 (egy opf fájlba). Az azonosító számokat a keresési parancsból kaphatja meg.
 .sp
-Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -514,7 +514,7 @@ Minden könyv exportálása külön mappába
 .INDENT 0.0
 .TP
 .B \-\-template
-A mentett fájlok fájlnevének és mappaszerkezetének szabályozására szolgáló sablon. Az alapértelmezett: \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP, amely a könyveket egy szerzőnkénti almappába menti, a címet és a szerzőt tartalmazó fájlnevekkel. A következő vezérlők állnak rendelkezésre {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+A mentett fájlok fájlnevének és mappaszerkezetének szabályozására szolgáló sablon. Az alapértelmezett: \fB\(dq\fP{author_sort}/{title}/{title} \- {authors}\fB\(dq\fP, amely a könyveket egy szerzőnkénti almappába menti, a címet és a szerzőt tartalmazó fájlnevekkel. A következő vezérlők állnak rendelkezésre {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -549,7 +549,7 @@ Note that different \fBcatalog\fP formats support different sets of options. To
 see the different options, specify the name of the output file and then the
 \-\-help option.
 .sp
-Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
@@ -574,7 +574,7 @@ A metaadatokban címként használt generált katalógus címe. Alapértelmezett
 .INDENT 0.0
 .TP
 .B \-\-cross\-reference\-authors
-Kereszthivatkozások létrehozása a \fB"\fPSzerzők\fB"\fP részben több szerzőt tartalmazó könyvekhez. Alapértelmezett: \fB\(aq\fPFalse\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
+Kereszthivatkozások létrehozása a \fB\(dq\fPSzerzők\fB\(dq\fP részben több szerzőt tartalmazó könyvekhez. Alapértelmezett: \fB\(aq\fPFalse\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -589,7 +589,7 @@ Műfajként kizárandó címkéket leíró reguláris kifejezés. Alapértelmeze
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Meghatározza azokat a szabályokat, amelyek segítségével kizárják a könyveket a létrehozott katalógusból. A kizárási szabály modellje vagy (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPCímkék\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) vagy (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). Például: ((\fB\(aq\fPArchivált könyvek\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchivált\fB\(aq\fP),) kizárja az „Archivált” értékű könyvet az \fB"\fPállapot” egyéni oszlopban. Ha több szabályt határoz meg, akkor az összes szabályt alkalmazni fogja. Alapértelmezett:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
+Meghatározza azokat a szabályokat, amelyek segítségével kizárják a könyveket a létrehozott katalógusból. A kizárási szabály modellje vagy (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPCímkék\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) vagy (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). Például: ((\fB\(aq\fPArchivált könyvek\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchivált\fB\(aq\fP),) kizárja az „Archivált” értékű könyvet az \fB\(dq\fPállapot” egyéni oszlopban. Ha több szabályt határoz meg, akkor az összes szabályt alkalmazni fogja. Alapértelmezett:  \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -604,7 +604,7 @@ Tartalmazza a \fB\(aq\fPLeírások\fB\(aq\fP részt a katalógusban. Alapértelm
 .INDENT 0.0
 .TP
 .B \-\-generate\-genres
-Tartalmazza a \fB"\fPMűfajok” részt a katalógusban. Alapértelmezett: \fB\(aq\fPFalse\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
+Tartalmazza a \fB\(dq\fPMűfajok” részt a katalógusban. Alapértelmezett: \fB\(aq\fPFalse\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -614,7 +614,7 @@ Tartalmazza a \fB\(aq\fPLegutóbb hozzáadva\fB\(aq\fP részt a katalógusban. A
 .INDENT 0.0
 .TP
 .B \-\-generate\-series
-Tartalmazza a \fB"\fPSorozatok” részt a katalógusban. Alapértelmezett: \fB\(aq\fPFalse\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
+Tartalmazza a \fB\(dq\fPSorozatok” részt a katalógusban. Alapértelmezett: \fB\(aq\fPFalse\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -624,12 +624,12 @@ Tartalmazza a \fB\(aq\fPCímek\fB\(aq\fP részt a katalógusban. Alapértelmezet
 .INDENT 0.0
 .TP
 .B \-\-genre\-source\-field
-A \fB"\fPMűfajok” rész forrásmezője. Alapértelmezett: \fB\(aq\fPCímke\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
+A \fB\(dq\fPMűfajok” rész forrásmezője. Alapértelmezett: \fB\(aq\fPCímke\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-header\-note\-source\-field
-Egyéni mező, amely a \fB"\fPLeírás\fB"\fP fejlécébe beillesztendő megjegyzésszöveget tartalmaz.za. Alapértelmezett: \fB\(aq\fP\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
+Egyéni mező, amely a \fB\(dq\fPLeírás\fB\(dq\fP fejlécébe beillesztendő megjegyzésszöveget tartalmaz.za. Alapértelmezett: \fB\(aq\fP\fB\(aq\fP Érvényes: AZW3, EPUB, MOBI kimeneti formátumokra
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -644,7 +644,7 @@ A kimeneti profil meghatározása. Egyes esetekben kimeneti profilra van szüks�
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-Meghatározza azokat a szabályokat, amelyek az olvasott könyveket, kívánságlista elemeket és más, felhasználó által megadott előtagokat jelölik. Az előtag szabály modellje (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). Ha több szabályt definiál, az első egyező szabály kerül felhasználásra. Alapértelmezett: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Alkalmazás: AZW3, EPUB, MOBI kimeneti formátumokhoz
+Meghatározza azokat a szabályokat, amelyek az olvasott könyveket, kívánságlista elemeket és más, felhasználó által megadott előtagokat jelölik. Az előtag szabály modellje (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). Ha több szabályt definiál, az első egyező szabály kerül felhasználásra. Alapértelmezett: \fB\(dq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(dq\fP Alkalmazás: AZW3, EPUB, MOBI kimeneti formátumokhoz
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -684,7 +684,7 @@ Szintaxis az eltávolításhoz:
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
-Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -702,11 +702,11 @@ tartalmazzon, de ne legyen benne szóköz és kettőspont. A „cím” az oszlo
 felhasználóbarát címe.
 Az „adattípus” lehet: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-display
-Az ebben az oszlopban lévő adatok értelmezési módjának testreszabására szolgáló lehetőségek szótára. Ez egy JSON karakterlánc. Felsorolási oszlopokhoz használja a \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP A megjelenítési változóban számos lehetőség szerepelhet. Az oszloptípus szerinti beállítások a következők: összetett: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format felsorolás: enum_values, enum_colors, use_decorations int, float: number_format szöveg: is_names, use_decorations  A legális kombinációk megtalálásának legjobb módja, ha létrehoz egy megfelelő típusú egyéni oszlopot a grafikus felhasználói felületen, majd megnézi a könyv biztonsági másolatát (győződjön meg arról, hogy az oszlop hozzáadása óta új OPF jött létre). Látni fogja a JSON\-t az új oszlop \fB"\fPmegjelenítéséhez” az OPF\-ben.
+Az ebben az oszlopban lévő adatok értelmezési módjának testreszabására szolgáló lehetőségek szótára. Ez egy JSON karakterlánc. Felsorolási oszlopokhoz használja a \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP A megjelenítési változóban számos lehetőség szerepelhet. Az oszloptípus szerinti beállítások a következők: összetett: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format felsorolás: enum_values, enum_colors, use_decorations int, float: number_format szöveg: is_names, use_decorations  A legális kombinációk megtalálásának legjobb módja, ha létrehoz egy megfelelő típusú egyéni oszlopot a grafikus felhasználói felületen, majd megnézi a könyv biztonsági másolatát (győződjön meg arról, hogy az oszlop hozzáadása óta új OPF jött létre). Látni fogja a JSON\-t az új oszlop \fB\(dq\fPmegjelenítéséhez” az OPF\-ben.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -727,7 +727,7 @@ calibredb custom_columns [options]
 .sp
 Az elérhető oszlopok kilistázása. Megjeleníti az oszlop tárolt címét és azonosítóját.
 .sp
-Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -748,7 +748,7 @@ calibredb remove_custom_column [options] label
 Eltávolítja a címkével azonosított egyéni oszlopot. Az elérhető
 oszlopokat a \(aqcustom_columns\(aq paranccsal tekintheti meg.
 .sp
-Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -771,7 +771,7 @@ Az azonosítók listáját a keresés paranccsal kaphatja meg.
 Az egyéni oszlopnevek listáját a \(aqcustom_columns\(aq paranccsal
 kaphatja meg.
 .sp
-Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -798,7 +798,7 @@ könyvenként tárolt átalakítási beállításokat és egyéni recepteket.
 A visszaállított metaadatok csak annyira pontosak, mint az
 OPF\-fájlokban találhatók.
 .sp
-Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -818,7 +818,7 @@ calibredb check_library [kapcsolók]
 .sp
 Néhány ellenőrzés lefuttatása a könyvtár belső fájlrendszerén. Visszajelzések: invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -854,7 +854,7 @@ calibredb list_categories [options]
 Jelentést készít az adatbázisban lévő kategóriainformációkról.
 Az információ megegyezik a Címkeböngészőben megjelenő információkkal.
 .sp
-Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
@@ -899,7 +899,7 @@ parancsot futtathatja az OPF fájlok újragenerálására az \(aq\-\-all\(aq kap
 Ne feledje, hogy erre általában nincs szükség, mivel az OPF\-fájlokról a rendszer automatikusan
 biztonsági másolatot készít minden metaadat megváltoztatásakor.
 .sp
-Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -925,7 +925,7 @@ A klónozott könyvtár nem tartalmaz majd könyveket. Ha teljes másolatot hozn
 beleértve az összes könyvet, egyszerűen használja a fájlrendszer eszközeit a könyvtármappa
 másolásához.
 .sp
-Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -942,11 +942,11 @@ Frissíti a Calibre könyvtárban tárolt tényleges könyvfájlok metaadatait a
 Normális esetben a metaadatok csak akkor frissülnek, ha fájlokat exportálunk a Calibre\-ből.
 Ez a parancs akkor hasznos, ha azt szeretné, hogy a fájlok a helyükön legyenek frissítve. Vegye figyelembe,
 hogy a különböző fájlformátumok eltérő mennyiségű metaadatot támogatnak.
-A book_id speciális "all” értékével frissítheti az összes könyv metaadatait. Számos könyvazonosítót is
+A book_id speciális \(dqall” értékével frissítheti az összes könyv metaadatait. Számos könyvazonosítót is
 megadhat szóközzel elválasztva, és azonosító tartományt kötőjellel elválasztva.
 Például: calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
-Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
@@ -968,9 +968,9 @@ Keres a könyvtárban a megadott keresési kifejezésre, és a keresési kifejez
 könyvazonosítók vesszővel elválasztott listáját adja vissza. A kimeneti formátum hasznos más olyan
 parancsok betáplálásához, amelyek elfogadják az azonosítók listáját bemenetként.
 .sp
-A keresési kifejezés bármi lehet a Calibre hatékony keresési lekérdezési nyelvéből, például: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
+A keresési kifejezés bármi lehet a Calibre hatékony keresési lekérdezési nyelvéből, például: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
-Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l

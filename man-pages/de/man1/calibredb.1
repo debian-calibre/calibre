@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "Mai 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibredb \- calibredb
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBREDB" "1" "Juni 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -140,12 +140,12 @@ Diesen Hilfetext anzeigen und beenden.
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Pfad zur Calibre\-Bibliothek. Standardmäßig wird der in den Einstellungen gespeicherte Pfad verwendet. Sie können auch mit einem Calibre\-Inhalteserver verbinden, um Aktionen auf Fernbibliotheken anzuwenden. Verwenden Sie hierfür eine URL der Form: \fI\%http://hostname:port/#bibliothek_id\fP, zum Beispiel \fI\%http://localhost:8080/#meinebibliothek\fP\&. bibliothek_id ist die Bibliothekskennung jener Bibliothek, zu der Sie auf dem Inhalteserver verbinden wollen. Um eine Liste aller auf dem Server verfügbaren Bibliothekskennungen zu erhalten, können Sie den Sonderwert \fB"\fP\-\fB"\fP verwenden. Für Details zum Einrichten des Zugriffs mittels Inhalteserver siehe \fI\%https://manual.calibre\-ebook.com/de/generated/de/calibredb.html\fP\&.
+Pfad zur Calibre\-Bibliothek. Standardmäßig wird der in den Einstellungen gespeicherte Pfad verwendet. Sie können auch mit einem Calibre\-Inhalteserver verbinden, um Aktionen auf Fernbibliotheken anzuwenden. Verwenden Sie hierfür eine URL der Form: \fI\%http://hostname:port/#bibliothek_id\fP, zum Beispiel \fI\%http://localhost:8080/#meinebibliothek\fP\&. bibliothek_id ist die Bibliothekskennung jener Bibliothek, zu der Sie auf dem Inhalteserver verbinden wollen. Um eine Liste aller auf dem Server verfügbaren Bibliothekskennungen zu erhalten, können Sie den Sonderwert \fB\(dq\fP\-\fB\(dq\fP verwenden. Für Details zum Einrichten des Zugriffs mittels Inhalteserver siehe \fI\%https://manual.calibre\-ebook.com/de/generated/de/calibredb.html\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password
-Passwort für die Verbindung zu einem Calibre\-Inhalteserver. Um das Passwort von der Standardeingabe zu lesen, verwenden Sie den Sonderwert <stdin>. Um das Passwort aus einer Datei zu lesen, verwenden Sie <f:/path/to/file> (d. h. \fB"\fP<f:\fB"\fP, gefolgt vom vollständigen Dateipfad und einem abschließenden \fB"\fP>\fB"\fP). Die spitzen Klammern sind erforderlich. Denken Sie daran, diese zu \fB"\fPescapen\fB"\fP oder verwenden Sie Anführungszeichen für Ihre Shell.
+Passwort für die Verbindung zu einem Calibre\-Inhalteserver. Um das Passwort von der Standardeingabe zu lesen, verwenden Sie den Sonderwert <stdin>. Um das Passwort aus einer Datei zu lesen, verwenden Sie <f:/path/to/file> (d. h. \fB\(dq\fP<f:\fB\(dq\fP, gefolgt vom vollständigen Dateipfad und einem abschließenden \fB\(dq\fP>\fB\(dq\fP). Die spitzen Klammern sind erforderlich. Denken Sie daran, diese zu \fB\(dq\fPescapen\fB\(dq\fP oder verwenden Sie Anführungszeichen für Ihre Shell.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -176,7 +176,7 @@ calibredb list [Optionen]
 .sp
 Auflisten der in der Calibre\-Datenbank verfügbaren Bücher.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -185,7 +185,7 @@ Ergebnisse in aufsteigender Reihenfolge sortieren
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Anzuzeigende Felder bei der Auflistung von Büchern in der Datenbank. Sollte eine kommagetrennte Liste von Feldern sein. Verfügbare Felder: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Standard: % default. Das Sonderfeld \fB"\fPall\fB"\fP kann für die Auswahl aller Felder verwendet werden. Zusätzlich zu den oben genannten integrierten Feldern sind auch benutzerdefinierte Felder als \fB"\fP*Feldname\fB"\fP verfügbar. Verwenden Sie beispielsweise für ein benutzerdefiniertes Feld \fB"\fP#Bewertung\fB"\fP den Namen \fB"\fP*Bewertung\fB"\fP\&.
+Anzuzeigende Felder bei der Auflistung von Büchern in der Datenbank. Sollte eine kommagetrennte Liste von Feldern sein. Verfügbare Felder: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Standard: % default. Das Sonderfeld \fB\(dq\fPall\fB\(dq\fP kann für die Auswahl aller Felder verwendet werden. Zusätzlich zu den oben genannten integrierten Feldern sind auch benutzerdefinierte Felder als \fB\(dq\fP*Feldname\fB\(dq\fP verfügbar. Verwenden Sie beispielsweise für ein benutzerdefiniertes Feld \fB\(dq\fP#Bewertung\fB\(dq\fP den Namen \fB\(dq\fP*Bewertung\fB\(dq\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -237,7 +237,7 @@ calibredb add [options] file1 file2 file3 ...
 Add the specified files as books to the database. You can also specify folders, see
 the folder related options below.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -246,7 +246,7 @@ Autor der hinzugefügten Bücher festlegen
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-Wenn Bücher mit ähnlichen Titeln und Verfassern gefunden werden führe die neuen Formate (Dateien) automatisch mit den vorhandenen Bucheinträgen zusammen. Der Wert \fB"\fPIgnorieren\fB"\fP bedeutet, dass doppelte Formate verworfen werden. Der Wert \fB"\fPÜberschreiben\fB"\fP bedeutet doppelte Formate in der Bibliothek werden von neu hinzugefügten Dateien überschrieben. Der Wert \fB"\fPNeuer Eintrag\fB"\fP bedeutet, dass doppelte Formate in einem neuen Bucheintrag gespeichert werden.
+Wenn Bücher mit ähnlichen Titeln und Verfassern gefunden werden führe die neuen Formate (Dateien) automatisch mit den vorhandenen Bucheinträgen zusammen. Der Wert \fB\(dq\fPIgnorieren\fB\(dq\fP bedeutet, dass doppelte Formate verworfen werden. Der Wert \fB\(dq\fPÜberschreiben\fB\(dq\fP bedeutet doppelte Formate in der Bibliothek werden von neu hinzugefügten Dateien überschrieben. Der Wert \fB\(dq\fPNeuer Eintrag\fB\(dq\fP bedeutet, dass doppelte Formate in einem neuen Bucheintrag gespeichert werden.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -336,7 +336,7 @@ calibredb remove IDs
 Entfernen der durch IDs bezeichneten Bücher aus der Datenbank.
 Die IDs müssen in Form einer kommagetrennten Liste von ID\-Nummern angegeben werden (Sie können ID\-Nummern mithilfe des Suchbefehls erhalten). Beispielsweise 23,34,57\-85 (bei Angabe eines Bereichs ist die letzte Nummer im Bereich nicht enthalten).
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-permanent
@@ -354,9 +354,9 @@ calibredb add_format [Optionen] ID eBook_Datei
 .UNINDENT
 .UNINDENT
 .sp
-Hinzufügen des eBooks in eBook_Datei zu den verfügbaren Formaten für das durch die ID bestimmte logische Buch. Sie können die ID durch die Verwendung des Suchbefehls erhalten. Falls das Format bereits existiert, wird es ersetzt, es sei denn, die "Nicht ersetzen"\-Option ist ausgewählt.
+Hinzufügen des eBooks in eBook_Datei zu den verfügbaren Formaten für das durch die ID bestimmte logische Buch. Sie können die ID durch die Verwendung des Suchbefehls erhalten. Falls das Format bereits existiert, wird es ersetzt, es sei denn, die \(dqNicht ersetzen\(dq\-Option ist ausgewählt.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -376,7 +376,7 @@ calibredb remove_format [Optionen] ID Fmt
 .sp
 Entfernen des Formats Fmt des durch die ID bezeichneten logischen Buches. Sie erhalten die ID durch Verwendung des Suchbefehls. fmt sollte eine Dateinamenerweiterung wie LRF, TXT oder EPUB sein. Falls das logische Buch nicht im angegebenen Format verfügbar ist, passiert gar nichts.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -392,7 +392,7 @@ calibredb show_metadata [Optionen] ID
 Anzeigen der in der Calibre\-Datenbank gespeicherten Metadaten für das durch die ID bezeichnete Buch.
 ID ist eine ID\-Nummer aus dem Suchbefehl.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -415,7 +415,7 @@ ID ist eine ID\-Nummer aus dem Suchbefehl.
 Sie können eine schnelle Vorstellung vom OPF\-Format erhalten, indem Sie die Option \-\-as\-opf für den Befehl show_metadata verwenden.
 Zudem lassen sich die Metadaten einzelner Felder mit der Option \-\-field festlegen. Wenn Sie die Option \-\-field verwenden, brauchen Sie keine OPF\-Datei anzugeben.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
@@ -442,7 +442,7 @@ Exportieren der durch IDs (eine kommagetrennte Liste) bestimmten Bücher in das 
 Der Exportiervorgang speichert alle Formate des Buchs, dessen Titelseite und Metadaten (in einer opf\-Datei).
 Die ID\-Nummern erhalten Sie mit dem Suchbefehl.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -491,7 +491,7 @@ Alle Bücher in einen einzigen Ordner exportieren
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+The template to control the filename and folder structure of the saved files. Default is \fB\(dq\fP{author_sort}/{title}/{title} \- {authors}\fB\(dq\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -526,7 +526,7 @@ Note that different \fBcatalog\fP formats support different sets of options. To
 see the different options, specify the name of the output file and then the
 \-\-help option.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
@@ -546,12 +546,12 @@ Detaillierte Ausgabeinformation anzeigen. Hilfreich zur Fehlerdiagnose
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title
-Titel des erzeugten Katalogs, wie er als Titel in den Metadaten verwendet wird. Standard: \fB"\fPMy Books\fB"\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
+Titel des erzeugten Katalogs, wie er als Titel in den Metadaten verwendet wird. Standard: \fB\(dq\fPMy Books\fB\(dq\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cross\-reference\-authors
-Querverweise im Abschnitt \fB"\fPAutoren\fB"\fP für Bücher mit unterschiedlichen Autoren erstellen. Standard: \fB"\fPFalse\fB"\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
+Querverweise im Abschnitt \fB\(dq\fPAutoren\fB\(dq\fP für Bücher mit unterschiedlichen Autoren erstellen. Standard: \fB\(dq\fPFalse\fB\(dq\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -561,52 +561,52 @@ Save the output from different stages of the conversion pipeline to the specifie
 .INDENT 0.0
 .TP
 .B \-\-exclude\-genre
-Regulärer Ausdruck, der die Schlagwörter beschreibt, die von den Genres ausgeschlossen werden sollen. Standard: \fB"\fP[.+]|^+$\fB"\fP schließt mit \fB"\fP[]\fB"\fP geklammerte Schlagwörter aus, z. B. \fB"\fP[Projekt Gutenberg]\fB"\fP, und \fB"\fP+\fB"\fP, das Standardschlagwort für gelesene Bücher. Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
+Regulärer Ausdruck, der die Schlagwörter beschreibt, die von den Genres ausgeschlossen werden sollen. Standard: \fB\(dq\fP[.+]|^+$\fB\(dq\fP schließt mit \fB\(dq\fP[]\fB\(dq\fP geklammerte Schlagwörter aus, z. B. \fB\(dq\fP[Projekt Gutenberg]\fB\(dq\fP, und \fB\(dq\fP+\fB\(dq\fP, das Standardschlagwort für gelesene Bücher. Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Geben Sie die Regeln an, die verwendet werden sollen, um Bücher aus dem generierten Katalog auszuschließen. Das Modell für eine Ausschlussregel ist entweder (\fB\(aq\fP<Regelname>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<kommagetrennte Tag\-Liste>\fB\(aq\fP) oder (\fB\(aq\fP<Regelname>\fB\(aq\fP,\fB\(aq\fP<Benutzerdefinierte Spalte>\fB\(aq\fP,\fB\(aq\fP<Muster>\fB\(aq\fP). Zum Beispiel: ((\fB\(aq\fPArchivierte Bücher\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchiviert\fB\(aq\fP),) wird ein Buch mit dem Wert \fB\(aq\fPArchived\fB\(aq\fP in der benutzerdefinierten Spalte \fB\(aq\fPstatus\fB\(aq\fP ausschließen. Wenn mehrere Regeln festgelegt sind, werden alle angewandt. Standard:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Anwendbar auf AZW3, ePub, MOBI\-Zielformate
+Geben Sie die Regeln an, die verwendet werden sollen, um Bücher aus dem generierten Katalog auszuschließen. Das Modell für eine Ausschlussregel ist entweder (\fB\(aq\fP<Regelname>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<kommagetrennte Tag\-Liste>\fB\(aq\fP) oder (\fB\(aq\fP<Regelname>\fB\(aq\fP,\fB\(aq\fP<Benutzerdefinierte Spalte>\fB\(aq\fP,\fB\(aq\fP<Muster>\fB\(aq\fP). Zum Beispiel: ((\fB\(aq\fPArchivierte Bücher\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchiviert\fB\(aq\fP),) wird ein Buch mit dem Wert \fB\(aq\fPArchived\fB\(aq\fP in der benutzerdefinierten Spalte \fB\(aq\fPstatus\fB\(aq\fP ausschließen. Wenn mehrere Regeln festgelegt sind, werden alle angewandt. Standard:  \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP Anwendbar auf AZW3, ePub, MOBI\-Zielformate
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-authors
-Abschnitt \fB"\fPAutoren\fB"\fP im Katalog einschließen. Standard: \fB"\fPFalse\fB"\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
+Abschnitt \fB\(dq\fPAutoren\fB\(dq\fP im Katalog einschließen. Standard: \fB\(dq\fPFalse\fB\(dq\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-descriptions
-Abschnitt \fB"\fPBeschreibungen\fB"\fP im Katalog einschließen. Standard: \fB"\fPFalse\fB"\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
+Abschnitt \fB\(dq\fPBeschreibungen\fB\(dq\fP im Katalog einschließen. Standard: \fB\(dq\fPFalse\fB\(dq\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-genres
-Abschnitt \fB"\fPGenres\fB"\fP im Katalog einschließen. Standard: \fB"\fPFalse\fB"\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
+Abschnitt \fB\(dq\fPGenres\fB\(dq\fP im Katalog einschließen. Standard: \fB\(dq\fPFalse\fB\(dq\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-recently\-added
-Abschnitt \fB"\fPKürzlich hinzugefügt\fB"\fP im Katalog einschließen. Standard: \fB"\fPFalse\fB"\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
+Abschnitt \fB\(dq\fPKürzlich hinzugefügt\fB\(dq\fP im Katalog einschließen. Standard: \fB\(dq\fPFalse\fB\(dq\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-series
-Abschnitt \fB"\fPSerien\fB"\fP im Katalog einschließen. Standard: \fB"\fPFalse\fB"\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
+Abschnitt \fB\(dq\fPSerien\fB\(dq\fP im Katalog einschließen. Standard: \fB\(dq\fPFalse\fB\(dq\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-titles
-Abschnitt \fB"\fPTitel\fB"\fP im Katalog einschließen. Standard: \fB"\fPFalse\fB"\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
+Abschnitt \fB\(dq\fPTitel\fB\(dq\fP im Katalog einschließen. Standard: \fB\(dq\fPFalse\fB\(dq\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-genre\-source\-field
-Quellfeld für \fB"\fPGenres\fB"\fP\-Abschnitt. Standard: \fB"\fPSchlagwörter\fB"\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
+Quellfeld für \fB\(dq\fPGenres\fB\(dq\fP\-Abschnitt. Standard: \fB\(dq\fPSchlagwörter\fB\(dq\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-header\-note\-source\-field
-Benutzerdefiniertes Feld, dessen Inhalt als Notiz in den Beschreibungskopf eingefügt wird. Standard: \fB"\fP\fB"\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
+Benutzerdefiniertes Feld, dessen Inhalt als Notiz in den Beschreibungskopf eingefügt wird. Standard: \fB\(dq\fP\fB\(dq\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -616,17 +616,17 @@ Benutzerdefiniertes Feld, dessen Inhalt als Notiz in den Beschreibungskopf einge
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Festlegen des Ausgabeprofils. In einigen Fällen ist ein Ausgabeprofil erforderlich, um den Katalog für ein Gerät zu optimieren. Zum Beispiel erstellt \fB"\fPkindle\fB"\fP oder \fB"\fPkindle_dx\fB"\fP ein strukturiertes Inhaltsverzeichnis mit Abschnitten und Beiträgen. Standard: \fB"\fPNone\fB"\fP Wird angewendet auf: AZW3\-, ePub\- und MOBI\-Zielformate
+Festlegen des Ausgabeprofils. In einigen Fällen ist ein Ausgabeprofil erforderlich, um den Katalog für ein Gerät zu optimieren. Zum Beispiel erstellt \fB\(dq\fPkindle\fB\(dq\fP oder \fB\(dq\fPkindle_dx\fB\(dq\fP ein strukturiertes Inhaltsverzeichnis mit Abschnitten und Beiträgen. Standard: \fB\(dq\fPNone\fB\(dq\fP Wird angewendet auf: AZW3\-, ePub\- und MOBI\-Zielformate
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-Definiert die Regeln um Präfixe zu verwendeten, welche gelesene Bücher, Wunschlisteneinträge und andere benutzerdefinierte Präfixe hervorheben. Das Modell einer Präfixregel ist (\fB\(aq\fP<Regelname>\fB\(aq\fP,\fB\(aq\fP<Quellenfeld>\fB\(aq\fP,\fB\(aq\fP<Muster>\fB\(aq\fP,\fB\(aq\fP<Präfix>\fB\(aq\fP). Wenn mehrere Regeln definiert wurden, wird der erste passende Regel verwendet. Voreinstellung: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
+Definiert die Regeln um Präfixe zu verwendeten, welche gelesene Bücher, Wunschlisteneinträge und andere benutzerdefinierte Präfixe hervorheben. Das Modell einer Präfixregel ist (\fB\(aq\fP<Regelname>\fB\(aq\fP,\fB\(aq\fP<Quellenfeld>\fB\(aq\fP,\fB\(aq\fP<Muster>\fB\(aq\fP,\fB\(aq\fP<Präfix>\fB\(aq\fP). Wenn mehrere Regeln definiert wurden, wird der erste passende Regel verwendet. Voreinstellung: \fB\(dq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(dq\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-preset
-Verwenden einer benannten Voreinstellung, die mit der Katalogerstellung der Benutzeroberfläche erstellt wurde. Eine Voreinstellung legt alle Einstellungen für die Erstellung eines Katalogs fest. Standard:  \fB"\fPNone\fB"\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
+Verwenden einer benannten Voreinstellung, die mit der Katalogerstellung der Benutzeroberfläche erstellt wurde. Eine Voreinstellung legt alle Einstellungen für die Erstellung eines Katalogs fest. Standard:  \fB\(dq\fPNone\fB\(dq\fP Anwendbar auf: AZW3\-, EPUB\- und MOBI\-Zielformate
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -653,15 +653,15 @@ calibredb saved_searches [Optionen] (list|add|remove)
 Verwalten der in der Calibre\-Datenbank gespeicherten Suchen.
 Falls Sie eine Suche hinzuzufügen, deren Name bereits existiert, so wird die bisherige ersetzt.
 .sp
-Syntax für Hinzufügen ("add"):
+Syntax für Hinzufügen (\(dqadd\(dq):
 .sp
 calibredb \fBsaved_searches\fP add Suchenname Suchausdruck
 .sp
-Syntax für Entfernen ("remove"):
+Syntax für Entfernen (\(dqremove\(dq):
 .sp
 calibredb \fBsaved_searches\fP remove Suchenname
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -679,11 +679,11 @@ Bezeichnung ist der maschinenfreundliche Name der Spalte, und sollte keine Leerz
 Name ist der anwenderfreundliche Name der Spalte.
 Datentyp ist einer von : bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-display
-Ein Wörterbuch von Optionen zum Anpassen, wie die Daten in dieser Spalte interpretiert werden. Das ist eine JSON\-Zeichenkette. Zum Aufzählen von Spalten verwenden Sie \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP Es gibt einige Optionen, die in der Anzeigevariable enthalten sein können. Diese Optionen nach Art der Spalten sind: Zusammengesetzt – composite: composite_template, composite_sort, make_category,contains_html, use_decorations Datum und Zeit – datetime: date_format Aufzählung – enumeration: enum_values, enum_colors, use_decorations Init, Fluss – int, float: number_format Text – text: is_names, use_decorations  Der beste Weg, um gültige Kombinationen zu finden, ist es, eine benutzerdefinierte Spalte des entsprechenden Typs im GUI zu erstellen und dann auf die Sicherung des OPF des Buches zu schauen. (Stellen Sie sicher, dass es ein neues OPF gibt, nachdem die Spalte hinzugefügt wurde.) Sie werden die JSON für die \fB"\fPAnzeige\fB"\fP in der neuen Spalte im OPF sehen.
+Ein Wörterbuch von Optionen zum Anpassen, wie die Daten in dieser Spalte interpretiert werden. Das ist eine JSON\-Zeichenkette. Zum Aufzählen von Spalten verwenden Sie \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP Es gibt einige Optionen, die in der Anzeigevariable enthalten sein können. Diese Optionen nach Art der Spalten sind: Zusammengesetzt – composite: composite_template, composite_sort, make_category,contains_html, use_decorations Datum und Zeit – datetime: date_format Aufzählung – enumeration: enum_values, enum_colors, use_decorations Init, Fluss – int, float: number_format Text – text: is_names, use_decorations  Der beste Weg, um gültige Kombinationen zu finden, ist es, eine benutzerdefinierte Spalte des entsprechenden Typs im GUI zu erstellen und dann auf die Sicherung des OPF des Buches zu schauen. (Stellen Sie sicher, dass es ein neues OPF gibt, nachdem die Spalte hinzugefügt wurde.) Sie werden die JSON für die \fB\(dq\fPAnzeige\fB\(dq\fP in der neuen Spalte im OPF sehen.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -704,7 +704,7 @@ calibredb custom_columns [Optionen]
 .sp
 Auflisten aller verfügbaren benutzerdefinierten Spalten. Zeigt Spaltenbezeichnungen und IDs an.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -725,7 +725,7 @@ calibredb remove_custom_column [Optionen] Bezeichnung
 Entfernen der bezeichneten benutzerdefinierten Spalte.
 Verfügbare Spalten können durch den Befehl custom_columns angezeigt werden.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -747,7 +747,7 @@ Festlegen des Werts einer benutzerdefinierte Spalte für das durch die ID bezeic
 Sie erhalten eine Liste der IDs mithilfe des Suchbefehls.
 Sie erhalten eine Liste der Namen von benutzerdefinierten Spalten mithilfe des Befehls custom_columns.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -774,7 +774,7 @@ all saved searches, user categories, plugboards, stored per\-book conversion
 settings, and custom recipes. Restored metadata will only be as accurate as
 what is found in the OPF files.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -794,7 +794,7 @@ calibredb check_library [Optionen]
 .sp
 Durchführen einiger Überprüfungen des Dateisystems einer Bibliothek. Berichte sind invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -830,7 +830,7 @@ calibredb list_categories [options]
 Produce a report of the category information in the database. The
 information is the equivalent of what is shown in the Tag browser.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
@@ -875,7 +875,7 @@ command to force re\-generation of the OPF files, with the \-\-all option.
 Note that there is normally no need to do this, as the OPF files are backed up
 automatically, every time metadata is changed.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -898,7 +898,7 @@ virtulellen Bibliothelen und anderen Einstellungen der aktuellen Bibliothek.
 .sp
 Die geklonte Bibliothek enthält keine Bücher. Wenn Sie eine Kopie mit allen Büchern erstellen möchten, nutzen Sie einfach die Werkzeuge Ihres Dateisystems, um den Bibliotheksordner zu kopieren.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -915,11 +915,11 @@ Aktualisieren der in den eigentlichen Buchdateien enthaltenen Metadaten auf Basi
 Die Metadaten werden normalerweise nur aktualisiert, wenn Dateien aus Calibre exportiert werden.
 Dieser Befehl ist hilfreich, wenn Dateien an Ort und Stelle aktualisiert werden sollen.
 Beachten Sie, dass unterschiedliche Formate unterschiedliche Metadaten unterstützen.
-Sie können den besonderen Wert "all" als Buch_ID verwenden, um die Metadaten aller Bücher zu aktualisieren.
+Sie können den besonderen Wert \(dqall\(dq als Buch_ID verwenden, um die Metadaten aller Bücher zu aktualisieren.
 Mehrere Bücher können ebenfalls mittels Leerzeichen voneinander getrennter Buch\-IDs und mittels Bindestrichen voneinander getrennter ID\-Bereiche angegeben werden.
 Beispiel: calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
@@ -942,9 +942,9 @@ list of book ids matching the \fBsearch\fP expression. The output format is usef
 to feed into other commands that accept a list of ids as input.
 .sp
 The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
-language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
+language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l

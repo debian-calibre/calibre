@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "Mai 27, 2022" "5.43.0" "calibre"
-.SH NAME
-ebook-convert \- ebook-convert
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "EBOOK-CONVERT" "1" "Juni 17, 2022" "5.44.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -45,14 +45,14 @@ Convert an e\-book from one format to another.
 .sp
 input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an "open e\-book" (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an \(dqopen e\-book\(dq (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
 .sp
 After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
 For full documentation of the conversion system see
 \fI\%eBook Konvertierung\fP
 .sp
-Wann immer Sie Argumente mit Leerzeichen an \fBebook\-convert\fP weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
+Wann immer Sie Argumente mit Leerzeichen an \fBebook\-convert\fP weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .sp
 Die Optionen und Standardwerte für die Optionen ändern sich je nach dem gewählten Quell\- und Zielformat. Überprüfen Sie deshalb diese immer mit nachfolgendem Befehl:
 .sp
@@ -92,7 +92,7 @@ Geben Sie das Eingabeprofil an. Das Eingabeprofil stellt dem Konvertierungssyste
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-Anzeigen der Namen der integrierten Nachrichtenquellen. Sie können aus einer integrierten Quelle ein eBook wie folgt erstellen: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+Anzeigen der Namen der integrierten Nachrichtenquellen. Sie können aus einer integrierten Quelle ein eBook wie folgt erstellen: ebook\-convert \fB\(dq\fPRecipe Name.recipe\fB\(dq\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -181,7 +181,7 @@ Optionen zur Steuerung des Erscheinungsbilds der Ausgabe
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliteriert Unicode\-Zeichen in eine ASCII\-Darstellung. Seien Sie vorsichtig, denn dadurch werden Unicode\-Zeichen durch ASCII\-Zeichen ersetzt. Zum Beispiel wird \fB"\fPPelé\fB"\fP durch \fB"\fPPele\fB"\fP ersetzt. Beachten Sie außerdem, dass in Fällen, in denen es mehrere Darstellungen eines Zeichens gibt (z. B. Zeichen, die von Chinesisch und Japanisch gemeinsam verwendet werden), die Darstellung verwendet wird, die auf der aktuellen Sprache der Calibre\-Schnittstelle basiert.
+Transliteriert Unicode\-Zeichen in eine ASCII\-Darstellung. Seien Sie vorsichtig, denn dadurch werden Unicode\-Zeichen durch ASCII\-Zeichen ersetzt. Zum Beispiel wird \fB\(dq\fPPelé\fB\(dq\fP durch \fB\(dq\fPPele\fB\(dq\fP ersetzt. Beachten Sie außerdem, dass in Fällen, in denen es mehrere Darstellungen eines Zeichens gibt (z. B. Zeichen, die von Chinesisch und Japanisch gemeinsam verwendet werden), die Darstellung verwendet wird, die auf der aktuellen Sprache der Calibre\-Schnittstelle basiert.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -191,7 +191,7 @@ Die Bezugsschriftgröße in pts. Alle Schriftgrößen im erstellten E\-Book werd
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-Ändern der Textausrichtung. Die Angabe \fB"\fPLinks\fB"\fP konvertiert den gesamten Blocksatz der Quelle zu Links ausgerichtet (also ohne Blocksatz). Die Angabe \fB"\fPBlocksatz\fB"\fP konvertiert die Ausrichtung zu Blocksatz. Und die Angabe \fB"\fPOriginal\fB"\fP (Standardeinstellung) ändert die Ausrichtung gegenüber der Quelldatei nicht. Beachten Sie, dass nicht alle Zielformate die Textausrichtung unterstützen.
+Ändern der Textausrichtung. Die Angabe \fB\(dq\fPLinks\fB\(dq\fP konvertiert den gesamten Blocksatz der Quelle zu Links ausgerichtet (also ohne Blocksatz). Die Angabe \fB\(dq\fPBlocksatz\fB\(dq\fP konvertiert die Ausrichtung zu Blocksatz. Und die Angabe \fB\(dq\fPOriginal\fB\(dq\fP (Standardeinstellung) ändert die Ausrichtung gegenüber der Quelldatei nicht. Beachten Sie, dass nicht alle Zielformate die Textausrichtung unterstützen.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -206,7 +206,7 @@ Alle Schriftarten einbetten, die im Eingabedokument referenziert, jedoch noch ni
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Die angegebene Schriftfamilie in das Buch einbetten. Dadurch wird die \fB"\fPBasisschriftart\fB"\fP festgelegt, die für das Buch verwendet wird. Falls das Quelldokument seine eigenen Schriftarten bestimmt, können diese die Basisschriftart außer Kraft setzen. Sie können Stilangaben filtern, um Schriftarten aus dem Quelldokument zu entfernen. Beachten Sie, dass das Einbetten von Schriftarten nur mit einigen Zielformaten funktioniert; prinzipiell sind das die Formate EPUB, AZW3 und DOCX.
+Die angegebene Schriftfamilie in das Buch einbetten. Dadurch wird die \fB\(dq\fPBasisschriftart\fB\(dq\fP festgelegt, die für das Buch verwendet wird. Falls das Quelldokument seine eigenen Schriftarten bestimmt, können diese die Basisschriftart außer Kraft setzen. Sie können Stilangaben filtern, um Schriftarten aus dem Quelldokument zu entfernen. Beachten Sie, dass das Einbetten von Schriftarten nur mit einigen Zielformaten funktioniert; prinzipiell sind das die Formate EPUB, AZW3 und DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -247,7 +247,7 @@ Höhe der eingefügten Leerzeilen (in em) festlegen. Die Höhe der Zeilen zwisch
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Ligaturen des Eingabedokuments beibehalten. Eine Ligatur ist eine besondere Form der Darstellung eines Zeichenpaars wie \fB"\fPff\fB"\fP, \fB"\fPfi\fB"\fP, \fB"\fPfl\fB"\fP usw. Die meisten Lesegeräte haben keine Unterstützung für Ligaturen in ihren Standardschriftarten, sodass diese wahrscheinlich nicht richtig dargestellt werden. Standardmäßig wird Calibre Ligaturen in die entsprechenden normalen Zeichenpaare umwandeln. Diese Option wird sie stattdessen beibehalten.
+Ligaturen des Eingabedokuments beibehalten. Eine Ligatur ist eine besondere Form der Darstellung eines Zeichenpaars wie \fB\(dq\fPff\fB\(dq\fP, \fB\(dq\fPfi\fB\(dq\fP, \fB\(dq\fPfl\fB\(dq\fP usw. Die meisten Lesegeräte haben keine Unterstützung für Ligaturen in ihren Standardschriftarten, sodass diese wahrscheinlich nicht richtig dargestellt werden. Standardmäßig wird Calibre Ligaturen in die entsprechenden normalen Zeichenpaare umwandeln. Diese Option wird sie stattdessen beibehalten.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -307,12 +307,12 @@ Alle eingebetteten Schriftarten reduzieren. Jede eingebettete Schriftart wird so
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Pfad zu einer Datei, die Regeln zum Umwandeln der CSS\-Styles in diesem Buch enthält. Der einfachste Weg, um eine solche Datei zu erstellen, ist die Verwendung des Assistenten zum Erstellen von Regeln in Calibres Benutzeroberfläche. Sie erreichen diesen über den Bereich \fB"\fPLayout\fB"\fP → \fB"\fPStyles umwandeln\fB"\fP des Dialogs \fB"\fPBücher konvertieren\fB"\fP\&. Sobald Sie Regeln erstellen, können Sie die Schaltfläche \fB"\fPExportieren\fB"\fP verwenden, um diese in eine Datei zu speichern.
+Pfad zu einer Datei, die Regeln zum Umwandeln der CSS\-Styles in diesem Buch enthält. Der einfachste Weg, um eine solche Datei zu erstellen, ist die Verwendung des Assistenten zum Erstellen von Regeln in Calibres Benutzeroberfläche. Sie erreichen diesen über den Bereich \fB\(dq\fPLayout\fB\(dq\fP → \fB\(dq\fPStyles umwandeln\fB\(dq\fP des Dialogs \fB\(dq\fPBücher konvertieren\fB\(dq\fP\&. Sobald Sie Regeln erstellen, können Sie die Schaltfläche \fB\(dq\fPExportieren\fB\(dq\fP verwenden, um diese in eine Datei zu speichern.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform HTML\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB\(dq\fPLook & feel\->Transform HTML\fB\(dq\fP section of the conversion dialog. Once you create the rules, you can use the \fB\(dq\fPExport\fB\(dq\fP button to save them to a file.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -392,32 +392,32 @@ Pfad zu einer Datei mit regulären Ausdrücken für das Suchen und Ersetzen. Die
 .INDENT 0.0
 .TP
 .B \-\-sr1\-replace
-Ersatz zum Ersetzen des mit \fB"\fPsr1\-search\fB"\fP gefundenen Textes.
+Ersatz zum Ersetzen des mit \fB\(dq\fPsr1\-search\fB\(dq\fP gefundenen Textes.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-sr1\-search
-Suchmuster (regulärer Ausdruck), das durch \fB"\fPsr1\-replace\fB"\fP ersetzt werden soll.
+Suchmuster (regulärer Ausdruck), das durch \fB\(dq\fPsr1\-replace\fB\(dq\fP ersetzt werden soll.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-sr2\-replace
-Ersatz zum Ersetzen des mit \fB"\fPsr2\-search\fB"\fP gefundenen Textes.
+Ersatz zum Ersetzen des mit \fB\(dq\fPsr2\-search\fB\(dq\fP gefundenen Textes.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-sr2\-search
-Suchmuster (regulärer Ausdruck), das durch \fB"\fPsr2\-replace\fB"\fP ersetzt werden soll.
+Suchmuster (regulärer Ausdruck), das durch \fB\(dq\fPsr2\-replace\fB\(dq\fP ersetzt werden soll.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-sr3\-replace
-Ersatz zum Ersetzen des mit \fB"\fPsr3\-search\fB"\fP gefundenen Textes.
+Ersatz zum Ersetzen des mit \fB\(dq\fPsr3\-search\fB\(dq\fP gefundenen Textes.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-sr3\-search
-Suchmuster (regulärer Ausdruck), das durch \fB"\fPsr3\-replace\fB"\fP ersetzt werden soll.
+Suchmuster (regulärer Ausdruck), das durch \fB\(dq\fPsr3\-replace\fB\(dq\fP ersetzt werden soll.
 .UNINDENT
 .SH STRUKTURERKENNUNG
 .sp
@@ -425,12 +425,12 @@ Kontrolle der automatischen Erkennung der Dokumentstruktur.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-XPath\-Ausdruck zum Erkennen von Kapitelüberschriften. Standardmässig werden <h1>\- oder <h2>\-Tags, welche die Wörter \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP oder \fB"\fPpart\fB"\fP enthalten, als Kapitelüberschrift behandelt, ebenso wie alle Tags, die class=\fB"\fPchapter\fB"\fP enthalten. Der verwendete Ausdruck muss eine Liste von Elementen bewerten. Um die Kapitelerkennung zu deaktivieren, verwenden Sie den Ausdruck \fB"\fP/\fB"\fP\&. Siehe das XPath\-Tutorial im Calibre\-Handbuch für weitere Hilfe zu diesem Feature.
+XPath\-Ausdruck zum Erkennen von Kapitelüberschriften. Standardmässig werden <h1>\- oder <h2>\-Tags, welche die Wörter \fB\(dq\fPchapter\fB\(dq\fP, \fB\(dq\fPbook\fB\(dq\fP, \fB\(dq\fPsection\fB\(dq\fP, \fB\(dq\fPprologue\fB\(dq\fP, \fB\(dq\fPepilogue\fB\(dq\fP oder \fB\(dq\fPpart\fB\(dq\fP enthalten, als Kapitelüberschrift behandelt, ebenso wie alle Tags, die class=\fB\(dq\fPchapter\fB\(dq\fP enthalten. Der verwendete Ausdruck muss eine Liste von Elementen bewerten. Um die Kapitelerkennung zu deaktivieren, verwenden Sie den Ausdruck \fB\(dq\fP/\fB\(dq\fP\&. Siehe das XPath\-Tutorial im Calibre\-Handbuch für weitere Hilfe zu diesem Feature.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Geben Sie an, wie erkannte Kapitel gekennzeichnet werden sollen. Der Wert \fB"\fPpagebreak\fB"\fP fügt Seitenumbrüche vor Kapiteln ein. Der Wert \fB"\fPrule\fB"\fP fügt eine Linie vor Kapiteln ein. Der Wert \fB"\fPnone\fB"\fP schaltet die Kapitelmarkierung aus und der Wert \fB"\fPboth\fB"\fP verwendet sowohl Seitenumbrüche als auch Linien zur Kapitelmarkierung.
+Geben Sie an, wie erkannte Kapitel gekennzeichnet werden sollen. Der Wert \fB\(dq\fPpagebreak\fB\(dq\fP fügt Seitenumbrüche vor Kapiteln ein. Der Wert \fB\(dq\fPrule\fB\(dq\fP fügt eine Linie vor Kapiteln ein. Der Wert \fB\(dq\fPnone\fB\(dq\fP schaltet die Kapitelmarkierung aus und der Wert \fB\(dq\fPboth\fB\(dq\fP verwendet sowohl Seitenumbrüche als auch Linien zur Kapitelmarkierung.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -445,7 +445,7 @@ Metadaten des Buchs am Buchanfang einfügen. Hilfreich, falls Ihr eBook\-Reader 
 .INDENT 0.0
 .TP
 .B \-\-page\-breaks\-before
-XPath\-Ausdruck. Seitenumbrüche werden vor den angegebenen Elementen eingefügt. Verwenden Sie zur Deaktivierung den Ausdruck: \fB"\fP/\fB"\fP\&.
+XPath\-Ausdruck. Seitenumbrüche werden vor den angegebenen Elementen eingefügt. Verwenden Sie zur Deaktivierung den Ausdruck: \fB\(dq\fP/\fB\(dq\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP

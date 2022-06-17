@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "Mai 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibre-server \- calibre-server
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBRE-SERVER" "1" "Juni 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibre-server \- calibre-server
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -45,7 +45,7 @@ Starten des Calibre\-Inhalteservers. Der Calibre\-Inhalteserver stellt Ihre Cali
 Sie können den Pfad zu den Bibliotheksordnern als Argumente von \fBcalibre\-server\fP angeben.
 Falls Sie keinen Pfad angeben, werden alle dem Calibre\-Hauptprogramm bekannten Bibliotheken verwendet.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an \fBcalibre\-server\fP weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
+Wann immer Sie Argumente mit Leerzeichen an \fBcalibre\-server\fP weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .SH [OPTIONEN]
 .INDENT 0.0
 .TP
@@ -60,7 +60,7 @@ Zeit (in Sekunden), um auf eine Antwort des Servers zu warten, wenn Anfragen ges
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Wählen Sie die verwendete Authentifizierungsart aus.        Festlegen des vom Server verwendeten HTTP\-Authentifizierungsmodus. Setzen Sie diesen auf \fB"\fPbasic\fB"\fP, falls Sie diesen Server hinter einem SSL\-Proxy verwenden. Belassen Sie ihn ansonsten auf \fB"\fPAuto\fB"\fP, was \fB"\fPBasic\fB"\fP verwendet, falls SSL konfiguriert ist, andernfalls wird \fB"\fPdigest\fB"\fP verwendet.
+Wählen Sie die verwendete Authentifizierungsart aus.        Festlegen des vom Server verwendeten HTTP\-Authentifizierungsmodus. Setzen Sie diesen auf \fB\(dq\fPbasic\fB\(dq\fP, falls Sie diesen Server hinter einem SSL\-Proxy verwenden. Belassen Sie ihn ansonsten auf \fB\(dq\fPAuto\fB\(dq\fP, was \fB\(dq\fPBasic\fB\(dq\fP verwendet, falls SSL konfiguriert ist, andernfalls wird \fB\(dq\fPdigest\fB\(dq\fP verwendet.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -100,7 +100,7 @@ Prozess im Hintergrund als Dienst ausführen (nur Linux).
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-Angezeigte benutzerdefinierte Felder beschränken.   Kommagetrennte Liste von benutzerdefinierten Metadatenfeldern, die vom Inhalteserver in den Ansichten \fB"\fP/opds\fB"\fP und \fB"\fP/mobile\fB"\fP angezeigt werden sollen. Falls Sie diese Option verwenden, werden sämtliche in der Liste nicht enthaltenen Felder nicht angezeigt. Zum Beispiel: my_rating,my_tags
+Angezeigte benutzerdefinierte Felder beschränken.   Kommagetrennte Liste von benutzerdefinierten Metadatenfeldern, die vom Inhalteserver in den Ansichten \fB\(dq\fP/opds\fB\(dq\fP und \fB\(dq\fP/mobile\fB\(dq\fP angezeigt werden sollen. Falls Sie diese Option verwenden, werden sämtliche in der Liste nicht enthaltenen Felder nicht angezeigt. Zum Beispiel: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -115,7 +115,7 @@ Passwortbasierte Authentifizierung für Serverzugriff.       Normalerweise ist d
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Rückgriff auf autom. erkannte Schnittstelle.        Falls es dem Server aus irgendeinem Grund nicht möglich ist, die in der Option \fB"\fPlisten_on\fB"\fP angegebene Schnittstelle einzubinden, wird versucht, eine Schnittstelle zu erkennen, die mit der Außenwelt verbindet, und dann diese einzubinden. Standardmäßig ist diese Optione aktiviert.
+Rückgriff auf autom. erkannte Schnittstelle.        Falls es dem Server aus irgendeinem Grund nicht möglich ist, die in der Option \fB\(dq\fPlisten_on\fB\(dq\fP angegebene Schnittstelle einzubinden, wird versucht, eine Schnittstelle zu erkennen, die mit der Außenwelt verbindet, und dann diese einzubinden. Standardmäßig ist diese Optione aktiviert.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -145,12 +145,12 @@ Diesen Hilfetext anzeigen und beenden.
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-Benutzerdefinierte Metadatenfelder ignoriert.       Kommagetrennte Liste von benutzerdefinierten Metadatenfeldern, die vom Inhalteserver in den Ansichten \fB"\fP/opds\fB"\fP und \fB"\fP/mobile\fB"\fP nicht angezeigt werden sollen. Zum Beispiel: my_rating,my_tags
+Benutzerdefinierte Metadatenfelder ignoriert.       Kommagetrennte Liste von benutzerdefinierten Metadatenfeldern, die vom Inhalteserver in den Ansichten \fB\(dq\fP/opds\fB\(dq\fP und \fB\(dq\fP/mobile\fB\(dq\fP nicht angezeigt werden sollen. Zum Beispiel: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-Schnittstelle, die auf eingehende Verbindungen warten soll.         The default is to listen on all available IPv4 interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
+Schnittstelle, die auf eingehende Verbindungen warten soll.         The default is to listen on all available IPv4 interfaces. You can change this to, for example, \fB\(dq\fP127.0.0.1\fB\(dq\fP to only listen for connections from the local machine, or to \fB\(dq\fP::\fB\(dq\fP to listen to all incoming IPv6 and IPv4 connections.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -215,7 +215,7 @@ Port, auf dem auf Verbindungen gewartet werden soll.
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-Path to a JSON file containing URLs for the \fB"\fPSearch the internet\fB"\fP feature. The easiest way to create such a file is to go to Preferences\-> Sharing over the net\->Search the internet in calibre, create the URLs and export them.
+Path to a JSON file containing URLs for the \fB\(dq\fPSearch the internet\fB\(dq\fP feature. The easiest way to create such a file is to go to Preferences\-> Sharing over the net\->Search the internet in calibre, create the URLs and export them.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -245,7 +245,7 @@ Erlauben Sie nicht authentifizierten lokalen Verbindungen, Änderungen vorzunehm
 .INDENT 0.0
 .TP
 .B \-\-url\-prefix
-Vorzustellendes Präfix für alle URLs.       Hilfreich, wenn Sie diesen Server hinter einem Reverse\-Proxy betreiben möchten. Verwenden Sie beispielsweise \fB"\fP/calibre\fB"\fP als das URL\-Präfix.
+Vorzustellendes Präfix für alle URLs.       Hilfreich, wenn Sie diesen Server hinter einem Reverse\-Proxy betreiben möchten. Verwenden Sie beispielsweise \fB\(dq\fP/calibre\fB\(dq\fP als das URL\-Präfix.
 .UNINDENT
 .INDENT 0.0
 .TP

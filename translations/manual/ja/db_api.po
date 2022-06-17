@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-01 12:56+0000\n"
-"PO-Revision-Date: 2021-11-23 15:49+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2022-06-17 02:39+0000\n"
+"PO-Revision-Date: 2014-07-05 16:49+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Japanese (http://www.transifex.com/calibre/calibre/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,19 +19,19 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/db_api.rst:4
 msgid "API documentation for the database interface"
-msgstr ""
+msgstr "データベースの API 説明書"
 
 #: ../../__w/calibre/calibre/manual/db_api.rst:9
 msgid ""
 "This API is thread safe (it uses a multiple reader, single writer locking "
 "scheme).  You can access this API like this::"
-msgstr ""
+msgstr "この API はスレッドセーフです。(複数のリーダ、単一のライタのロック機構を使用) この API には次のようにしてアクセスできます::"
 
 #: ../../__w/calibre/calibre/manual/db_api.rst:14
 msgid ""
 "If you are in a calibre plugin that is part of the main calibre GUI, you get"
 " access to it like this instead::"
-msgstr ""
+msgstr "メインの calibre GUI の一部である calibre プラグインにいるなら、代わりに次のようにしてアクセスします::"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache:1
@@ -39,7 +39,7 @@ msgid ""
 "An in-memory cache of the metadata.db file from a calibre library. This "
 "class also serves as a threadsafe API for accessing the database. The in-"
 "memory cache is maintained in normal form for maximum performance."
-msgstr ""
+msgstr "calibre ライブラリの metadata.db ファイルのメモリ内キャッシュ。このクラスはデータベースにアクセスするためのスレッドセーフな API としても機能します。メモリ内キャッシュは、性能を最大化するために通常の形式で維持されます。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache:5
@@ -47,12 +47,65 @@ msgid ""
 "SQLITE is simply used as a way to read and write from metadata.db robustly. "
 "All table reading/sorting/searching/caching logic is re-implemented. This "
 "was necessary for maximum performance and flexibility."
-msgstr ""
+msgstr "SQLITE は metadata.db に安全に読み書きするための手段として使用されます。テーブルの読取り/並べ替え/検索/キャッシュのロジックが再実装されます。これは性能の最大化と柔軟性のために必要です。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.listeners.EventType:1
 msgid "An enumeration."
-msgstr ""
+msgstr "列挙型。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.book_created:1
+msgid ""
+"When a new book record is created in the database, with the book id as the "
+"only argument"
+msgstr "本の ID を唯一の引数として新しい本のレコードをデータベースに作成するとき"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.book_edited:1
+msgid "When a book format is edited, with arguments: (book_id, fmt)"
+msgstr "次の引数とともに本の形式を編集するとき: (book_id, fmt)"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.books_removed:1
+msgid ""
+"When books are removed from the database with the list of book ids as the "
+"only argument"
+msgstr "本の ID を唯一の引数としてデータベースから本を削除するとき"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.format_added:1
+msgid "When a format is added to a book, with arguments: (book_id, format)"
+msgstr "次の引数とともに本に形式を追加するとき: (book_id, format)"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.formats_removed:1
+msgid ""
+"When formats are removed from a book, with arguments: (mapping of book id to"
+" set of formats removed from the book)"
+msgstr "次の引数とともに本から形式が削除されるとき: (book_id から、削除される本の形式のリストへのマッピング)"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.items_removed:1
+msgid ""
+"When items such as tags or authors are removed from some books. Arguments: "
+"(field_name, affected book ids, ids of removed items)"
+msgstr "タグや著者などの項目を一部の本から削除するとき。引数: (field_name, affected book ids, ids of removed items)"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.items_renamed:1
+msgid ""
+"When items such as tags or authors are renamed in some or all books. "
+"Arguments: (field_name, affected book ids, map of old item id to new item "
+"id)"
+msgstr "タグや著者などの項目の名前を一部またはすべての本で変更するとき。引数: (field_name, affected book ids, map of old item id to new item id)"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.metadata_changed:1
+msgid ""
+"When some metadata is changed for some books, with arguments: (name of "
+"changed field, set of affected book ids)"
+msgstr "次の引数とともに一部の本で一部の書誌を変更するとき: (変更したフィールド名, 影響する本の ID のセット)"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_books:1
@@ -61,7 +114,7 @@ msgid ""
 "2-tuples, each 2-tuple of the form :code:`(mi, format_map)` where mi is a "
 "Metadata object and format_map is a dictionary of the form :code:`{fmt: "
 "path_or_stream}`, for example: :code:`{'EPUB': '/path/to/file.epub'}`."
-msgstr ""
+msgstr "指定した本をライブラリに追加。本は 2 タプルの繰り返し可能なもので、各 2 タプルは :code:`(mi, format_map)` のフォームです。mi は Metadata オブジェクトで、format_map はフォーム :code:`{fmt: path_or_stream}` の辞書です。例: :code:`{'EPUB': '/path/to/file.epub'}`"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_books:6
@@ -70,21 +123,21 @@ msgid ""
 "ids for all newly created books in the database. ``duplicates`` contains the"
 " :code:`(mi, format_map)` for all books that already exist in the database "
 "as per the simple duplicate detection heuristic used by :meth:`has_book`."
-msgstr ""
+msgstr "リストのペア (:code:`ids, duplicates`) を返します。``ids`` にはデータベースに新しく作成されたすべての本の ID が含まれます。``duplicates`` には、:meth:`has_book` が使用する簡単な重複検出ヒューリスティックに従って、データベースにすでにある本の :code:`(mi, format_map)` が含まれます。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_custom_book_data:1
 msgid ""
 "Add data for name where val_map is a map of book_ids to values. If "
 "delete_first is True, all previously stored data for name will be removed."
-msgstr ""
+msgstr "name のデータを追加。val_map は book_ids の値へのマップです。delete_first が True のとき、以前格納していた name のデータはすべて削除されます。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:1
 msgid ""
 "Add a format to the specified book. Return True if the format was added "
 "successfully."
-msgstr ""
+msgstr "指定した本に形式を追加します。形式が正常に追加された場合は True を返します。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:0
@@ -107,26 +160,26 @@ msgstr ""
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:0
 msgid "Parameters"
-msgstr ""
+msgstr "パラメータ"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:3
 msgid ""
 "If True replace existing format, otherwise if the format already exists, "
 "return False."
-msgstr ""
+msgstr "True のとき既存の形式を置き換え、そうでなければ形式がすでに存在しているときに False を返します。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:4
 msgid ""
 "If True, file type plugins are run on the format before and after being "
 "added."
-msgstr ""
+msgstr "True のとき、追加の前後でファイルタイプのプラグインを形式に実行します。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:5
 msgid "Internal use only."
-msgstr ""
+msgstr "内部利用のみ。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_listener:1
@@ -134,41 +187,41 @@ msgid ""
 "Register a callback function that will be called after certain actions are "
 "taken on this database. The function must take three arguments: "
 "(:class:`EventType`, library_id, event_type_specific_data)"
-msgstr ""
+msgstr "このデータベースで特定のアクションが実行された後に呼び出されるコールバック関数を登録します。関数は 3 つの引数が必要です: (:class:`EventType`, library_id, event_type_specific_data)"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_book_ids:1
 msgid "Frozen set of all known book ids."
-msgstr ""
+msgstr "すべての既知の本の ID の凍結セット。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_field_for:1
 msgid "Same as field_for, except that it operates on multiple books at once"
-msgstr ""
+msgstr "field_for と同じですが、一度に複数の本を操作します"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_field_ids:1
 msgid "Frozen set of ids for all values in the field ``name``."
-msgstr ""
+msgstr "フィイールド ``name`` のすべての値の凍結セット。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_field_names:1
 msgid ""
 "Frozen set of all fields names (should only be used for many-one and many-"
 "many fields)"
-msgstr ""
+msgstr "すべてのフィールド名の凍結セット (多対 1 と多対多のフィールドにのみ使用)"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_data:1
 msgid "Return author data as a dictionary with keys: name, sort, link"
-msgstr ""
+msgstr "著者データをキー付きの辞書として返します: name, sort, link"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_data:3
 msgid ""
 "If no authors with the specified ids are found an empty dictionary is "
 "returned. If author_ids is None, data for all authors is returned."
-msgstr ""
+msgstr "指定された ID を持つ著者が見つからない場合は、空の辞書が返されます。 a uthor_ids が None の場合、すべての著者のデータが返されます。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_sort_from_authors:1
@@ -176,33 +229,33 @@ msgid ""
 "Given a list of authors, return the author_sort string for the authors, "
 "preferring the author sort associated with the author over the computed "
 "string."
-msgstr ""
+msgstr "著者のリストを指定して、著者の author_sort 文字列を返します。計算された文字列よりも、著者読みに関連付けられた著者の並べ替えを優先します。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:1
 msgid ""
 "Return all the books associated with the item identified by ``item_id``, "
 "where the item belongs to the field ``name``."
-msgstr ""
+msgstr "``item_id`` で指定される項目に関連付けられた本をすべて返します。ここで、項目はフィールド ``name`` に属しています。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:4
 msgid ""
 "Returned value is a set of book ids, or the empty set if the item or the "
 "field does not exist."
-msgstr ""
+msgstr "戻り値は本の ID のセット、または項目かフィールドが存在しなければ空のセットです。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_in_virtual_library:1
 msgid "Return the set of books in the specified virtual library"
-msgstr ""
+msgstr "指定された仮想ライブラリ内の本のセットを返します"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.compress_covers:1
 msgid ""
 "Compress the cover images for the specified books. A compression quality of "
 "100 will perform lossless compression, otherwise lossy compression."
-msgstr ""
+msgstr "指定した本の表紙画像を圧縮します。圧縮品質が 100 なら、可逆圧縮を実行します。それ以外は、不可逆圧縮を実行します。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.compress_covers:4
@@ -210,7 +263,7 @@ msgid ""
 "The progress callback will be called with the book_id and the old and new "
 "sizes for each book that has been processed. If an error occurs, the new "
 "size will be a string with the error details."
-msgstr ""
+msgstr "進行状況のコールバックは、book_id と、処理されたそれぞれの本の新旧のサイズとともに呼び出されます。エラーが発生すると、新しいサイズはエラーの詳細を含む文字列になります。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.copy_cover_to:1
@@ -219,7 +272,7 @@ msgid ""
 "exists or dest is the same file as the current cover. dest can also be a "
 "path in which case the cover is copied to it if and only if the path is "
 "different from the current path (taking case sensitivity into account)."
-msgstr ""
+msgstr "オブジェクト ``dest`` のようなファイルに表紙をコピーします。表紙が存在しない場合、または dest が現在の表紙と同じファイルである場合には、False を返します。 dest にはパスを指定することも可能です。その場合、パスが現在のパスと異なる場合にのみ、表紙をコピーします (大文字と小文字は区別されます)。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.copy_format_to:1
@@ -228,14 +281,14 @@ msgid ""
 "format does not exist, raises :class:`NoSuchFormat` error. dest can also be "
 "a path (to a file), in which case the format is copied to it, iff the path "
 "is different from the current path (taking case sensitivity into account)."
-msgstr ""
+msgstr "形式` `fmt`` をオブジェクト ``dest`` のようなファイルにコピーします。指定された形式が存在しない場合には、:class:`NoSuchFormat` エラーを発生させます。 destには (ファイルへの) パスを指定することも可能です。その場合、パスが現在のパスと異なる場合にのみ、形式をコピーします (大文字と小文字は区別されます)。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:1
 msgid ""
 "Return the cover image or None. By default, returns the cover as a "
 "bytestring."
-msgstr ""
+msgstr "表紙画像または None を返します。デフォルトでは表紙をバイト列で返します。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:4
@@ -243,30 +296,30 @@ msgid ""
 "WARNING: Using as_path will copy the cover to a temp file and return the "
 "path to the temp file. You should delete the temp file when you are done "
 "with it."
-msgstr ""
+msgstr "警告: as_path を使用すると、表紙が一時ファイルにコピーされ、一時ファイルへのパスが返されます。使い終わったら、一時ファイルを削除する必要があります。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:8
 msgid ""
 "If True return the image as an open file object (a SpooledTemporaryFile)"
-msgstr ""
+msgstr "True のとき、開いているファイルオブジェクト(SpooledTemporaryFile) として画像を返します "
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:9
 msgid "If True return the image as a QImage object"
-msgstr ""
+msgstr "True のとき、QImage オブジェクトとして画像を返します"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:10
 msgid "If True return the image as a path pointing to a temporary file"
-msgstr ""
+msgstr "True のとき、一時ファイルを指すパスとして画像を返します"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.data_for_find_identical_books:1
 msgid ""
 "Return data that can be used to implement :meth:`find_identical_books` in a "
 "worker process without access to the db. See db.utils for an implementation."
-msgstr ""
+msgstr "データベースにアクセスすることなくワーカープロセスで :meth:`find_identical_books` を実装するのに使えるデータを返します。実装については db.utils を参照してください。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.data_for_has_book:1
@@ -274,28 +327,28 @@ msgid ""
 "Return data suitable for use in :meth:`has_book`. This can be used for an "
 "implementation of :meth:`has_book` in a worker process without access to the"
 " db."
-msgstr ""
+msgstr ":meth:`has_book` での使用に適したデータを返します。これは、db にアクセスすることなくワーカープロセスで :meth:`has_book` を実装するために使用できます。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.delete_custom_book_data:1
 msgid ""
 "Delete data for name. By default deletes all data, if you only want to "
 "delete data for some book ids, pass in a list of book ids."
-msgstr ""
+msgstr "name で指定されたデータを削除します。デフォルトではすべてのデータを削除します。一部の本の ID のデータのみ削除したい場合には、本の ID のリストを渡します。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.embed_metadata:1
 msgid ""
 "Update metadata in all formats of the specified book_ids to current metadata"
 " in the database."
-msgstr ""
+msgstr "指定された book_ids のすべての形式の書誌を、データベース内の現在の書誌に更新します。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.fast_field_for:1
 msgid ""
 "Same as field_for, except that it avoids the extra lookup to get the field "
 "object"
-msgstr ""
+msgstr "field_for と同じですが、フィールドオブジェクトを取得するために余分な検索を回避します"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_for:1
@@ -303,7 +356,7 @@ msgid ""
 "Return the value of the field ``name`` for the book identified by "
 "``book_id``. If no such book exists or it has no defined value for the field"
 " ``name`` or no such field exists, then ``default_value`` is returned."
-msgstr ""
+msgstr "book_id で指定された本のフィールド ``name`` の値を返します。そのような本が存在しない、またはフィールド名に定義された値がない、またはそのようなフィールドが存在しない場合、``default_value``が返されます。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_for:6
@@ -311,7 +364,7 @@ msgid ""
 "``default_value`` is not used for title, title_sort, authors, author_sort "
 "and series_index. This is because these always have values in the db. "
 "``default_value`` is used for all custom columns."
-msgstr ""
+msgstr "``default_value`` は、title、title_sort、authors、author_sort、series_indexには使用されません。これらは常にデータベースに値を持っているためです。 default_valueは、すべてのカスタム列に使用されます。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_for:10
@@ -321,7 +374,7 @@ msgid ""
 "is identifiers for which the returned value is always a dict. The returned "
 "tuples are always in link order, that is, the order in which they were "
 "created."
-msgstr ""
+msgstr "is_multiple フィールドの戻り値は、値が見つからない場合でも常にタプルです (つまり、default_value は無視されます)。例外は、戻り値が常に dict である識別子です。返されるタプルは常にリンク順、つまり作成された順になります。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_ids_for:1
@@ -329,21 +382,21 @@ msgid ""
 "Return the ids (as a tuple) for the values that the field ``name`` has on "
 "the book identified by ``book_id``. If there are no values, or no such book,"
 " or no such field, an empty tuple is returned."
-msgstr ""
+msgstr "book_id で識別されるブックのフィールド名の値の ID を (タプルとして) 返します。値がない、またはそのような本がない、またはそのようなフィールドがない場合は、空のタプルが返されます。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.find_identical_books:1
 msgid ""
 "Finds books that have a superset of the authors in mi and the same title "
 "(title is fuzzy matched). See also :meth:`data_for_find_identical_books`."
-msgstr ""
+msgstr "mi に著者のスーパーセットがあり、タイトルが同じ本を検索します (タイトルはあいまい検索)。 :meth:`data_for_find_identical_books` も参照のこと。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:1
 msgid ""
 "Return the e-book format as a bytestring or `None` if the format doesn't "
 "exist, or we don't have permission to write to the e-book file."
-msgstr ""
+msgstr "電子書籍の形式をバイト列として返します。形式が存在しない場合、または電子書籍ファイルに書き込む権限がない場合は、None を返します。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:4
@@ -351,13 +404,13 @@ msgid ""
 "If True the e-book format is returned as a file object. Note that the file "
 "object is a SpooledTemporaryFile, so if what you want to do is copy the "
 "format to another file, use :meth:`copy_format_to` instead for performance."
-msgstr ""
+msgstr "True のとき、電子書籍の形式がファイルオブジェクトとして返されます。ただしファイルオブジェクトは SpooledTemporaryFile のため、形式を別のファイルにコピーする場合には、性能上の理由により、代わりに :meth:`copy_format_to` を使用してください。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:8
 msgid ""
 "Copies the format file to a temp file and returns the path to the temp file"
-msgstr ""
+msgstr "形式ファイルを一時ファイルにコピーし、一時ファイルへのパスを返します"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:10
@@ -365,7 +418,7 @@ msgid ""
 "If True and returning a path the filename is the same as that used in the "
 "library. Note that using this means that repeated calls yield the same temp "
 "file (which is re-created each time)"
-msgstr ""
+msgstr "True かつパスを返すとき、ファイル名はライブラリで使用されているものと同じです。ただしこれを使用すると、呼び出すたびに同じ一時ファイルを作成します (毎回作り直します)"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_abspath:1
@@ -373,7 +426,7 @@ msgid ""
 "Return absolute path to the e-book file of format `format`. You should "
 "almost never use this, as it breaks the threadsafe promise of this API. "
 "Instead use, :meth:`copy_format_to`."
-msgstr ""
+msgstr "`format` 形式の電子書籍ファイルへの絶対パスを返します。これはこのAPIのスレッドセーフの約束を破るため、原則的に使用すべきではありません。代わりに :meth:`copy_format_to` を使用してください。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_abspath:5
@@ -381,21 +434,21 @@ msgid ""
 "Currently used only in calibredb list, the viewer, edit book, compare_format"
 " to original format, open with, bulk metadata edit and the catalogs (via "
 "get_data_as_dict())."
-msgstr ""
+msgstr "現在これを使用しているのは、calibredbリスト、ビューア、編集ブック、元の形式とのcompare_format、アプリケーションを指定して開く、一括書誌編集、およびカタログ (get_data_as_dict() 経由で) のみです。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_abspath:9
 msgid ""
 "Apart from the viewer, open with and edit book, I don't believe any of the "
 "others do any file write I/O with the results of this call."
-msgstr ""
+msgstr "ビューア、アプリケーションを指定して本を開く、本の編集を除き、この呼び出しの結果を使用してファイル書き込み I/O を実行する人はいないと思います。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_hash:1
 msgid ""
 "Return the hash of the specified format for the specified book. The kind of "
 "hash is backend dependent, but is usually SHA-256."
-msgstr ""
+msgstr "指定された本の指定された形式のハッシュを返します。ハッシュの種類はバックエンドに依存しますが、通常はSHA-256です。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_metadata:1
@@ -404,7 +457,7 @@ msgid ""
 "book. You should not use path unless you absolutely have to, since accessing"
 " it directly breaks the threadsafe guarantees of this API. Instead use the "
 ":meth:`copy_format_to` method."
-msgstr ""
+msgstr "指定した本の指定した形式のパス、サイズ、および mtime を返します。パスに直接アクセスするとこのAPIのスレッドセーフの保証が破られるため、絶対に必要な場合を除いてはパスを使用しないでください。代わりに、:meth:`copy_format_to` メソッドを使用してください。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_metadata:6
@@ -412,25 +465,25 @@ msgid ""
 "If ``True`` cached values are used, otherwise a slow filesystem access is "
 "done. The cache values could be out of date if access was performed to the "
 "filesystem outside of this API."
-msgstr ""
+msgstr "``True`` のとき、キャッシュした値を使用します。そうでなければ遅いファイルアクセスが行われます。この API 以外からアクセスした場合、キャッシュ値が古い可能性があります。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_metadata:10
 msgid ""
 "If ``True`` The max_size field of the database is updated for this book."
-msgstr ""
+msgstr "`True`` のとき、この本の max_size フィールドをデータベースで更新します"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.formats:1
 msgid ""
 "Return tuple of all formats for the specified book. If verify_formats is "
 "True, verifies that the files exist on disk."
-msgstr ""
+msgstr "指定された本のすべての形式のタプルを返します。 verify_formats が True の場合、ファイルがディスク上に存在することを検証します。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_categories:1
 msgid "Used internally to implement the Tag Browser"
-msgstr ""
+msgstr "タグブラウザの実装のために内部的に使用。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_custom_book_data:1
@@ -438,33 +491,33 @@ msgid ""
 "Get data for name. By default returns data for all book_ids, pass in a list "
 "of book ids if you only want some data. Returns a map of book_id to values. "
 "If a particular value could not be decoded, uses default for it."
-msgstr ""
+msgstr "name のデータを取得します。デフォルトでは、すべての book_id のデータが返されます。一部のデータのみが必要な場合は、本の ID のリストを渡します。 book_id から値へのマップを返します。特定の値をデコードできなかった場合は、デフォルトを使用します。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_id_map:1
 msgid ""
 "Return a mapping of id numbers to values for the specified field. The field "
 "must be a many-one or many-many field, otherwise a ValueError is raised."
-msgstr ""
+msgstr "指定したフィールドの ID 番号から値へのマッピングを返します。フィールドは多対1または多対多のフィールドである必要があります。そうでない場合、ValueErrorが発生します。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_ids_for_custom_book_data:1
 msgid "Return the set of book ids for which name has data."
-msgstr ""
+msgstr "name がデータを持つ本の ID のセットを返します。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_id:1
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_ids:1
 msgid "Return the item id for item_name (case-insensitive)"
-msgstr ""
+msgstr "item_name の項目 ID を返します (大文字と小文字は区別しません)"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_name:1
 msgid ""
 "Return the item name for the item specified by item_id in the specified "
 "field. See also :meth:`get_id_map`."
-msgstr ""
+msgstr "指定したフィールドの item_id で指定された項目の項目名を返します。:meth:`get_id_map` も参照のこと。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_metadata:1
@@ -474,25 +527,25 @@ msgid ""
 "list of formats is not verified. If get_cover is True, the cover is "
 "returned, either a path to temp file as mi.cover or if cover_as_data is True"
 " then as mi.cover_data."
-msgstr ""
+msgstr ":class:`calibre.ebooks.metadata.book.base.Metadata` オブジェクトとして book_id が指定する本の書誌を返します。ただし形式のリストは検証されません。 get_cover が True のとき、表紙が返されます。mi.coverとして一時ファイルへのパス、または cover_as_data が True であれば mi.cover_data として返されます。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:1
 msgid ""
 "Return the next series index for the specified series, taking into account "
 "the various preferences that control next series number generation."
-msgstr ""
+msgstr "指定されたシリーズの次のシリーズインデックスを返します。このとき、次のシリーズ番号の生成を制御するさまざまな設定が考慮されます。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:4
 msgid "The series-like field (defaults to the builtin series column)"
-msgstr ""
+msgstr "シリーズのようなフィールド (デフォルトはビルトインのシリーズ列)"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:5
 msgid ""
 "If True, returns a mapping of book_id to current series_index value instead."
-msgstr ""
+msgstr "True のとき、代わりに book_id から現在の series_index 値へのマッピングを返します。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_proxy_metadata:1
@@ -501,14 +554,14 @@ msgid ""
 " only reads values from the database on demand. This is much faster than "
 "get_metadata when only a small number of fields need to be accessed from the"
 " returned metadata object."
-msgstr ""
+msgstr ":meth:`get_metadata` と同様ですが、オンデマンドでデータベースから値を読み取るだけの ProxyMetadata オブジェクトを返す点が異なります。これは、返された書誌オブジェクトから少数のフィールドにアクセスするだけでよい場合、 get_metadata よりもはるかに高速です。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_usage_count_by_id:1
 msgid ""
 "Return a mapping of id to usage count for all values of the specified field,"
 " which must be a many-one or many-many field."
-msgstr ""
+msgstr "IDから、指定したフィールドのすべての値の使用回数へのマッピングを返します。これは、多対1または多対多のフィールドである必要があります。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_book:1
@@ -516,50 +569,50 @@ msgid ""
 "Return True iff the database contains an entry with the same title as the "
 "passed in Metadata object. The comparison is case-insensitive. See also "
 ":meth:`data_for_has_book`."
-msgstr ""
+msgstr "渡された Metadata オブジェクトと同じタイトルのエントリがデータベースに含まれていれば True を返します。比較で大文字と小文字は区別されません。:meth:`data_for_has_book` も参照のこと。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_format:1
 msgid "Return True iff the format exists on disk"
-msgstr ""
+msgstr "ディスク上に形式が存在すれば True を返します。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_id:1
 msgid "Return True iff the specified book_id exists in the db"
-msgstr ""
+msgstr "指定した book_id が db に存在すれば True を返します"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.init:1
 msgid "Initialize this cache with data from the backend."
-msgstr ""
+msgstr "バックエンドからのデータでこのキャッシュを初期化します。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.multisort:1
 msgid ""
 "Return a list of sorted book ids. If ids_to_sort is None, all book ids are "
 "returned."
-msgstr ""
+msgstr "並べ替えられた本の ID のリストを返します。ids_to_sort が None のとき、すべての ID を返します。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.multisort:4
 msgid ""
 "fields must be a list of 2-tuples of the form (field_name, ascending=True or"
 " False). The most significant field is the first 2-tuple."
-msgstr ""
+msgstr "fields は、そのフォームの2 タプルのリストである必要があります (field_name、ascending=TrueまたはFalse)。最も重要なフィールドは最初の 2 タプルです。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.pref:1
 msgid ""
 "Return the value for the specified preference or the value specified as "
 "``default`` if the preference is not set."
-msgstr ""
+msgstr "指定した環境設定の値、または環境設定に指定がなければデフォルト値を返します。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.read_backup:1
 msgid ""
 "Return the OPF metadata backup for the book as a bytestring or None if no "
 "such backup exists."
-msgstr ""
+msgstr "本の OPF 書誌バックアップをバイト列として返します。バックアップが存在しない場合は None を返します。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_books:1
@@ -567,24 +620,24 @@ msgid ""
 "Remove the books specified by the book_ids from the database and delete "
 "their format files. If ``permanent`` is False, then the format files are "
 "placed in the recycle bin."
-msgstr ""
+msgstr "book_ids で指定した本をデータベースから削除し、それらの形式ファイルを削除します。``permanent`` が False のとき、形式ファイルはごみ箱に入れられます。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:1
 msgid "Remove the specified formats from the specified books."
-msgstr ""
+msgstr "指定した本から指定した形式を削除します。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:3
 msgid "A mapping of book_id to a list of formats to be removed from the book."
-msgstr ""
+msgstr "book_id から、削除される本の形式のリストへのマッピング。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:4
 msgid ""
 "If True, only remove the record for the format from the db, do not delete "
 "the actual format file from the filesystem."
-msgstr ""
+msgstr "True のとき、その形式のレコードを db からだけ削除し、ファイルシステムにある実際の形式ファイルは削除しません。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_items:1
@@ -592,33 +645,33 @@ msgid ""
 "Delete all items in the specified field with the specified ids. Returns the "
 "set of affected book ids. ``restrict_to_book_ids`` is an optional set of "
 "books ids. If specified the items will only be removed from those books."
-msgstr ""
+msgstr "指定した ID を持つ指定したフィールドのすべてのアイテムを削除します。影響を受ける本の ID のセットを返します。 ``restrict_to_book_ids`` は、オプションの本の ID のセットです。指定すると、項目はそれらの本からのみ削除されます。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_items:1
 msgid ""
 "Rename items from a many-one or many-many field such as tags or series."
-msgstr ""
+msgstr "タグやシリーズのような、多対多のフィールドから項目の名前を変更します。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_items:3
 msgid ""
 "When renaming in a series-like field also change the series_index values."
-msgstr ""
+msgstr "シリーズのようなフィールドで名前を変更する場合は、series_index の値も変更します。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_items:4
 msgid ""
 "An optional set of book ids for which the rename is to be performed, "
 "defaults to all books."
-msgstr ""
+msgstr "名前の変更を実施しようとしている本の ID のセット。デフォルトではすべての本。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.restore_book:1
 msgid ""
 "Restore the book entry in the database for a book that already exists on the"
 " filesystem"
-msgstr ""
+msgstr "ファイルシステムにすでに存在する本の、データベース内のエントリを復元します"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.restore_original_format:1
@@ -626,7 +679,7 @@ msgid ""
 "Restore the specified format from the previously saved ORIGINAL_FORMAT, if "
 "any. Return True on success. The ORIGINAL_FORMAT is deleted after a "
 "successful restore."
-msgstr ""
+msgstr "以前に保存した ORIGINAL_FORMAT に指定した形式があれば、復元します。成功時に True を返します。復元が成功すると ORIGINAL_FORMAT は削除されます。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.safe_read_lock:1
@@ -638,7 +691,7 @@ msgid ""
 "lock, but searching a composite column involves reading field values via "
 "ProxyMetadata which tries to get a shared lock. There may be other scenarios"
 " that trigger this as well."
-msgstr ""
+msgstr "安全な読み取りロックは、スレッドがすでに書き込みロックを持っている場合は何もせず、そうでない場合に読み取りロックを取得するロックです。これは、複合列が存在するときに検索キャッシュを更新すると発生する可能性がある DowngradeLockErrors を防ぐために必要です。検索キャッシュを更新すると排他ロックが保持されますが、複合列を検索するには、共有ロックを取得しようとする ProxyMetadata を介してフィールド値を読み取る必要があります。これのトリガーとなる別のシナリオもあるかもしれません。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.safe_read_lock:9
@@ -646,21 +699,21 @@ msgid ""
 "This property returns a new lock object on every access. This lock object is"
 " not recursive (for performance) and must only be used in a with statement "
 "as ``with cache.safe_read_lock:`` otherwise bad things will happen."
-msgstr ""
+msgstr "このプロパティは、アクセスごとに新しいロックオブジェクトを返します。このロックオブジェクトは (性能上の理由で) 再帰的ではなく、必ず ``with cache.safe_read_lock:`` として with 文とともに使用する必要があります。そうしないと、よくないことが起こります。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.save_original_format:1
 msgid ""
 "Save a copy of the specified format as ORIGINAL_FORMAT, overwriting any "
 "existing ORIGINAL_FORMAT."
-msgstr ""
+msgstr "指定した形式のコピーを ORIGINAL_FORMAT として保存し、既存の ORIGINAL_FORMAT を上書きします。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:1
 msgid ""
 "Search the database for the specified query, returning a set of matched book"
 " ids."
-msgstr ""
+msgstr "指定したクエリをデータベースで検索し、マッチした本のIDのセットを返します。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:3
@@ -668,24 +721,24 @@ msgid ""
 "A restriction that is ANDed to the specified query. Note that restrictions "
 "are cached, therefore the search for a AND b will be slower than a with "
 "restriction b."
-msgstr ""
+msgstr "指定したクエリに AND される制限。ただし制限がキャッシュされるため、AND bの 検索は、制限 b よりも遅くなります。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:6
 msgid "Used internally (virtual fields such as on_device to search over)."
-msgstr ""
+msgstr "内部使用 (検索する on_device のような仮想フィールド)"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:8
 msgid ""
 "If not None, a set of book ids for which books will be searched instead of "
 "searching all books."
-msgstr ""
+msgstr "None でないとき、すべての本を検索するのではなく、検索される本の ID のセット。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_conversion_options:1
 msgid "options must be a map of the form {book_id:conversion_options}"
-msgstr ""
+msgstr "options は、{book_id:conversion_options} 形式のマップでなくてはなりません"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_cover:1
@@ -693,19 +746,19 @@ msgid ""
 "Set the cover for this book. The data can be either a QImage, QPixmap, file "
 "object or bytestring. It can also be None, in which case any existing cover "
 "is removed."
-msgstr ""
+msgstr "この本の表紙を設定します。データは、QImage、QPixmap、ファイルオブジェクト、またはバイト列のいずれかです。 None にすることも可能で、その場合、既存の表紙はすべて削除されます。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:1
 msgid ""
 "Set the values of the field specified by ``name``. Returns the set of all "
 "book ids that were affected by the change."
-msgstr ""
+msgstr "``name`` で指定したフィールドの値を設定します。変更の影響を受けたすべての本 の IDのセットを返します。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:3
 msgid "Mapping of book_ids to values that should be applied."
-msgstr ""
+msgstr "book_id から、適用すべき値へのマッピング。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:4
@@ -714,17 +767,17 @@ msgid ""
 "example, if a  book has the tag ``tag1`` and you set the tag for another "
 "book to ``Tag1`` then the both books will have the tag ``Tag1`` if "
 "allow_case_change is True, otherwise they will both have the tag ``tag1``."
-msgstr ""
+msgstr "True のとき、多対1または多対多フィールドの大文字と小文字が変更されます。たとえば、本にタグ ``tag1`` があり、別の本のタグを ``Tag1`` に設定した場合、allow_case_change が True であれば両方の本にタグ ``Tag1`` が付けられ、そうでなければ両方にタグ ``tag1`` が付けられます。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:8
 msgid "Used internally, you should never change it."
-msgstr ""
+msgstr "内部利用。決して変更しないこと。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_metadata:1
 msgid "Set metadata for the book `id` from the `Metadata` object `mi`"
-msgstr ""
+msgstr "`Metadata` オブジェクト `mi` からの本 `id` の本に書誌を設定します"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_metadata:3
@@ -738,40 +791,40 @@ msgid ""
 "the book to have. Covers are always changed if a new cover is provided, but "
 "are never deleted. Also note that force_changes has no effect on setting "
 "title or authors."
-msgstr ""
+msgstr "force_changes= True を設定すると、miに空の値が含まれていても、強制的に set_metadata を更新します。この場合、'None' と 'empty' は区別されます。 mi.XXX が None のとき XXX は置き換えられませんが、そうでなければ置き換えられます。タグ、識別子、および表紙属性は特殊なケースです。タグと識別子は None に設定できないため、force_changes が true の場合は常に置き換えられます。mi には本に持たせたい値が必ず含まれるようにしてください。新しい表紙が提供されると表紙は常に変更されますが、削除されることはありません。なお、force_changes はタイトルや著者の設定には影響しません。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pref:1
 msgid ""
 "Set the specified preference to the specified value. See also :meth:`pref`."
-msgstr ""
+msgstr "指定した環境設定に指定した値を設定します。:meth:`pref` も参照のこと。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:1
 msgid ""
 "Return the ids of all books having the tag ``tag`` that are older than the "
 "specified time. tag comparison is case insensitive."
-msgstr ""
+msgstr "指定した時間より古いタグ ``tag`` を持つすべての本の ID を返します。tag の比較で大文字と小文字は区別されません。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:4
 msgid ""
 "A timedelta object or None. If None, then all ids with the tag are returned."
-msgstr ""
+msgstr "timedelta オブジェクト、または None。None のときにはそのタグの ID がすべて返されます。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:7
 msgid ""
 "If not None the list of matches will be restricted to books that have this "
 "tag"
-msgstr ""
+msgstr "None でないとき、マッチするリストはこのタグが付いた本に制限されます"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:10
 msgid ""
 "A list of authors. If not None the list of matches will be restricted to "
 "books that have these authors (case insensitive)."
-msgstr ""
+msgstr "著者のリスト。 None でないとき、マッチするリストは指定された著者の本に制限されます (大文字と小文字は区別されません)。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.user_categories_for_books:1
@@ -780,4 +833,4 @@ msgid ""
 "optional and is useful for a performance boost, in contexts where a "
 "ProxyMetadata object for the books already exists. It should be a mapping of"
 " book_ids to their corresponding ProxyMetadata objects."
-msgstr ""
+msgstr "指定した本のユーザカテゴリを返します。 proxy_metadata_map はオプションで、本の ProxyMetadata オブジェクトがすでに存在するコンテキストでパフォーマンスを向上させるのに役立ちます。これは、book_idsから対応するProxyMetadataオブジェクトへのマッピングでないといけません。"

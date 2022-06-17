@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-01 12:56+0000\n"
-"PO-Revision-Date: 2021-11-29 06:43+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2022-06-17 02:39+0000\n"
+"PO-Revision-Date: 2014-06-17 08:35+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/calibre/calibre/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,22 +19,22 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:4
 msgid "API documentation for plugins"
-msgstr ""
+msgstr "插件API文档"
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:9
 msgid ""
 "Defines various abstract base classes that can be subclassed to create "
 "powerful plugins. The useful classes are:"
-msgstr ""
+msgstr "定义了各种抽象的基类，它们的子类可以创建功能强大的插件。这些有用的类包括："
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:19
 msgid "Plugin"
-msgstr ""
+msgstr "插件"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:1
 msgid "A calibre plugin. Useful members include:"
-msgstr ""
+msgstr "一个 calibre 插件。重要的成员包括："
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:3
@@ -49,59 +49,75 @@ msgstr ""
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:5
 msgid "this plugin or None if it is a builtin plugin"
-msgstr ""
+msgstr "这个插件或空（当它是一个内建插件）"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:8
 msgid "``self.site_customization``: Stores a customization string entered"
-msgstr ""
+msgstr "``self.site_customization``: 存储一个用户输入的自定义字符串"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:8
 msgid "by the user."
-msgstr ""
+msgstr "。"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:10
 msgid "Methods that should be overridden in sub classes:"
-msgstr ""
+msgstr "在子类中应当重写的方法："
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:12
 msgid ":meth:`initialize`"
-msgstr ""
+msgstr ":meth:`initialize`"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:13
 msgid ":meth:`customization_help`"
-msgstr ""
+msgstr ":meth:`customization_help`"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:15
 msgid "Useful methods:"
-msgstr ""
+msgstr "有用的方法："
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:17
 msgid ":meth:`temporary_file`"
-msgstr ""
+msgstr ":meth:`temporary_file`"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:18
 msgid ":meth:`__enter__`"
-msgstr ""
+msgstr ":meth:`__enter__`"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:19
 msgid ":meth:`load_resources`"
-msgstr ""
+msgstr ":meth:`load_resources`"
 
 #: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.InterfaceActionBase.supported_platforms:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.MetadataReaderPlugin.supported_platforms:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.MetadataWriterPlugin.supported_platforms:1
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.Plugin.supported_platforms:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.PreferencesPlugin.supported_platforms:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.conversion.InputFormatPlugin.supported_platforms:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.conversion.OutputFormatPlugin.supported_platforms:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.devices.usbms.driver.USBMS.supported_platforms:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.ebooks.metadata.sources.base.Source.supported_platforms:1
 msgid ""
 "List of platforms this plugin works on. For example: ``['windows', 'osx', "
 "'linux']``"
-msgstr ""
+msgstr "插件工作平台列表，例如：``['windows', 'osx', 'linux']``"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.Plugin.name:1
@@ -111,17 +127,35 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.MetadataReaderPlugin.version:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.MetadataWriterPlugin.version:1
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.Plugin.version:1
 msgid "The version of this plugin as a 3-tuple (major, minor, revision)"
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.Plugin.description:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.devices.usbms.driver.USBMS.description:1
 msgid "A short string describing what this plugin does"
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.InterfaceActionBase.author:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.MetadataReaderPlugin.author:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.MetadataWriterPlugin.author:1
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.Plugin.author:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.PreferencesPlugin.author:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.devices.usbms.driver.USBMS.author:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.ebooks.metadata.sources.base.Source.author:1
 msgid "The author of this plugin"
 msgstr ""
 
@@ -145,13 +179,40 @@ msgid "The way this plugin is installed"
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.InterfaceActionBase.can_be_disabled:1
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.Plugin.can_be_disabled:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.PreferencesPlugin.can_be_disabled:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.conversion.InputFormatPlugin.can_be_disabled:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.conversion.OutputFormatPlugin.can_be_disabled:1
 msgid ""
 "If False, the user will not be able to disable this plugin. Use with care."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
-#: calibre.customize.Plugin.type:1
+#: calibre.customize.CatalogPlugin.type:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.FileTypePlugin.type:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.InterfaceActionBase.type:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.MetadataReaderPlugin.type:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.MetadataWriterPlugin.type:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.Plugin.type:1 ../../__w/calibre/calibre/manual/docstring
+#: of calibre.customize.PreferencesPlugin.type:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.conversion.InputFormatPlugin.type:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.conversion.OutputFormatPlugin.type:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.devices.interface.DevicePlugin.type:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.ebooks.metadata.sources.base.Source.type:1
 msgid "The type of this plugin. Used for categorizing plugins in the GUI"
 msgstr ""
 
@@ -217,31 +278,25 @@ msgid "Save the settings specified by the user with config_widget."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.Plugin.save_settings:0
+#: calibre.customize.CatalogPlugin.run:0
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.Plugin.load_resources:0
-#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.Plugin.customization_help:0
-#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.Plugin.temporary_file:0
-#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.FileTypePlugin.run:0
+#: calibre.customize.FileTypePlugin.postadd:0
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:0
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.FileTypePlugin.postadd:0
+#: calibre.customize.FileTypePlugin.run:0
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.MetadataReaderPlugin.get_metadata:0
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.MetadataWriterPlugin.set_metadata:0
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.CatalogPlugin.run:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
-#: of calibre.ebooks.metadata.sources.base.Source.customization_help:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
-#: of calibre.ebooks.metadata.sources.base.Source.save_settings:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
-#: of calibre.ebooks.metadata.sources.base.Source.identify:0
+#: calibre.customize.Plugin.customization_help:0
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.Plugin.load_resources:0
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.Plugin.save_settings:0
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.Plugin.temporary_file:0
 #: ../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring of
 #: calibre.customize.conversion.InputFormatPlugin.convert:0
 #: ../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring of
@@ -249,65 +304,73 @@ msgstr ""
 #: ../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring of
 #: calibre.customize.conversion.OutputFormatPlugin.specialize_css_for_output:0
 #: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.is_usb_connected:0
-#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.detect_managed_devices:0
-#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.reset:0
-#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.can_handle_windows:0
-#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.can_handle:0
-#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.open:0
-#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.set_progress_reporter:0
-#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.books:0
-#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.upload_books:0
+#: calibre.devices.interface.BookList.get_collections:0
 #: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.add_books_to_metadata:0
 #: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.remove_books_from_metadata:0
+#: calibre.devices.interface.DevicePlugin.books:0
 #: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.sync_booklists:0
+#: calibre.devices.interface.DevicePlugin.can_handle:0
+#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.can_handle_windows:0
+#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.detect_managed_devices:0
 #: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.get_file:0
 #: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.BookList.get_collections:0
-#: ../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring of
-#: calibre.devices.usbms.device.Device.reset:0
-#: ../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring of
-#: calibre.devices.usbms.device.Device.set_progress_reporter:0
+#: calibre.devices.interface.DevicePlugin.is_usb_connected:0
+#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.open:0
+#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.remove_books_from_metadata:0
+#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.reset:0
+#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.set_progress_reporter:0
+#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.sync_booklists:0
+#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.upload_books:0
 #: ../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring of
 #: calibre.devices.usbms.device.Device.can_handle_windows:0
 #: ../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring of
 #: calibre.devices.usbms.device.Device.open:0
-#: ../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring of
-#: calibre.devices.usbms.driver.USBMS.books:0
-#: ../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring of
-#: calibre.devices.usbms.driver.USBMS.upload_books:0
-#: ../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring of
-#: calibre.devices.usbms.driver.USBMS.upload_cover:0
+#: ../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring of
+#: calibre.devices.usbms.device.Device.reset:0
+#: ../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring of
+#: calibre.devices.usbms.device.Device.set_progress_reporter:0
 #: ../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring of
 #: calibre.devices.usbms.driver.USBMS.add_books_to_metadata:0
+#: ../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring of
+#: calibre.devices.usbms.driver.USBMS.books:0
 #: ../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring of
 #: calibre.devices.usbms.driver.USBMS.remove_books_from_metadata:0
 #: ../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring of
 #: calibre.devices.usbms.driver.USBMS.sync_booklists:0
+#: ../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring of
+#: calibre.devices.usbms.driver.USBMS.upload_books:0
+#: ../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring of
+#: calibre.devices.usbms.driver.USBMS.upload_cover:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
+#: of calibre.ebooks.metadata.sources.base.Source.customization_help:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
+#: of calibre.ebooks.metadata.sources.base.Source.identify:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
+#: of calibre.ebooks.metadata.sources.base.Source.save_settings:0
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction.create_menu_action:0
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
-#: calibre.gui2.actions.InterfaceAction.load_resources:0
+#: calibre.gui2.actions.InterfaceAction.library_about_to_change:0
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction.library_changed:0
-#: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
-#: of calibre.gui2.preferences.ConfigWidgetInterface.genesis:0
+#: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
+#: calibre.gui2.actions.InterfaceAction.load_resources:0
 #: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase.register:0
+#: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
+#: of calibre.gui2.preferences.ConfigWidgetInterface.genesis:0
 msgid "Parameters"
-msgstr ""
+msgstr "参数"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.save_settings:3
@@ -347,35 +410,35 @@ msgid "List of paths to resources in the ZIP file using / as separator"
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.Plugin.load_resources:0
-#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:0
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.MetadataReaderPlugin.get_metadata:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
-#: of calibre.ebooks.metadata.sources.base.Source.identify:0
-#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.get_device_information:0
-#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.total_space:0
-#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.free_space:0
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.Plugin.load_resources:0
 #: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.books:0
 #: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.upload_books:0
+#: calibre.devices.interface.DevicePlugin.free_space:0
+#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.get_device_information:0
 #: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_plugboards:0
-#: ../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring of
-#: calibre.devices.usbms.device.Device.total_space:0
+#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.total_space:0
+#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.upload_books:0
 #: ../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring of
 #: calibre.devices.usbms.device.Device.free_space:0
-#: ../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring of
-#: calibre.devices.usbms.driver.USBMS.get_device_information:0
+#: ../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring of
+#: calibre.devices.usbms.device.Device.total_space:0
 #: ../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring of
 #: calibre.devices.usbms.driver.USBMS.books:0
 #: ../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring of
+#: calibre.devices.usbms.driver.USBMS.get_device_information:0
+#: ../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring of
 #: calibre.devices.usbms.driver.USBMS.upload_books:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
+#: of calibre.ebooks.metadata.sources.base.Source.identify:0
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction.load_resources:0
 msgid "Returns"
@@ -448,29 +511,29 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:28
 msgid "FileTypePlugin"
-msgstr ""
+msgstr "文件类型插件"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.CatalogPlugin:1
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin:1
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.InterfaceActionBase:1
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.MetadataReaderPlugin:1
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.MetadataWriterPlugin:1
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.CatalogPlugin:1
-#: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
-#: of calibre.ebooks.metadata.sources.base.Source:1
+#: calibre.customize.PreferencesPlugin:1
 #: ../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring of
 #: calibre.customize.conversion.InputFormatPlugin:1
 #: ../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring of
 #: calibre.customize.conversion.OutputFormatPlugin:1
 #: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin:1
-#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.InterfaceActionBase:1
-#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.PreferencesPlugin:1
-msgid "Bases: :py:class:`calibre.customize.Plugin`"
+#: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
+#: of calibre.ebooks.metadata.sources.base.Source:1
+msgid "Bases: :py:class:`~calibre.customize.Plugin`"
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
@@ -549,9 +612,9 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.FileTypePlugin.postimport:6
-#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postadd:8
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postimport:6
 msgid "Database id of the added book."
 msgstr ""
 
@@ -592,7 +655,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:39
 msgid "Metadata plugins"
-msgstr ""
+msgstr "元数据插件"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.MetadataReaderPlugin:1
@@ -643,7 +706,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:54
 msgid "Catalog plugins"
-msgstr ""
+msgstr "书目插件"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.CatalogPlugin:1
@@ -715,7 +778,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:64
 msgid "Metadata download plugins"
-msgstr ""
+msgstr "元数据下载插件"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.ebooks.metadata.sources.base.Source.capabilities:1
@@ -1078,7 +1141,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:76
 msgid "Conversion plugins"
-msgstr ""
+msgstr "转换插件"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring of
 #: calibre.customize.conversion.InputFormatPlugin:1
@@ -1266,7 +1329,7 @@ msgid ""
 "using the given encoding and error handler. Otherwise, returns the result of"
 " object.__str__() (if defined) or repr(object). encoding defaults to "
 "sys.getdefaultencoding(). errors defaults to 'strict'."
-msgstr ""
+msgstr "从给定对象创建一个新的字符串对象。如果指定了编码或错误，则对象必须公开将使用给定编码和错误处理程序解码的数据缓冲区。否则，返回返回object.__str__()(如果已定义)或repr(对象)的结果。编码默认为sys.getdefaultencoding()。错误默认为“严格”。"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring of
 #: calibre.customize.conversion.OutputFormatPlugin.convert:1
@@ -1337,7 +1400,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:91
 msgid "Device drivers"
-msgstr ""
+msgstr "设备驱动程序"
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:95
 msgid ""
@@ -1345,7 +1408,7 @@ msgid ""
 "your device exposes itself as a USBMS drive to the operating system, you "
 "should use the USBMS class instead as it implements all the logic needed to "
 "support these kinds of devices."
-msgstr ""
+msgstr "所有设备驱动的基类都是：class:`设备插件`。但是，如果您的设备将自己作为一个USBMS驱动器暴露给操作系统，那么您应该使用USBMS类，因为它实现了支持这些类型设备所需的所有逻辑。"
 
 #: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin:1
@@ -1356,11 +1419,15 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.devices.interface.DevicePlugin.FORMATS:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.devices.usbms.driver.USBMS.FORMATS:1
 msgid "Ordered list of supported formats"
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.devices.interface.DevicePlugin.VENDOR_ID:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.devices.usbms.device.Device.VENDOR_ID:1
 msgid ""
 "VENDOR_ID can be either an integer, a list of integers or a dictionary If it"
 " is a dictionary, it must be a dictionary of dictionaries, of the form::"
@@ -1368,11 +1435,15 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.devices.interface.DevicePlugin.PRODUCT_ID:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.devices.usbms.device.Device.PRODUCT_ID:1
 msgid "An integer or a list of integers"
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.devices.interface.DevicePlugin.BCD:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.devices.usbms.device.Device.BCD:1
 msgid ""
 "BCD can be either None to not distinguish between devices based on BCD, or "
 "it can be a list of the BCD numbers of all devices supported by this driver."
@@ -1401,6 +1472,8 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.devices.interface.DevicePlugin.CAN_SET_METADATA:1
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.devices.usbms.driver.USBMS.CAN_SET_METADATA:1
 msgid "Whether the metadata on books can be set via the GUI."
 msgstr ""
 
@@ -1417,13 +1490,13 @@ msgstr ""
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.devices.interface.DevicePlugin.icon:1
 msgid "Icon for this device"
-msgstr ""
+msgstr "设备图标"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.devices.interface.DevicePlugin.OPEN_FEEDBACK_MESSAGE:1
 msgid ""
-"GUI displays this as a message if not None. Useful if opening can take a "
-"long time"
+"GUI displays this as a message if not None in the status bar. Useful if "
+"opening can take a long time"
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
@@ -1490,6 +1563,13 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.get_open_popup_message:1
+msgid ""
+"GUI displays this as a non-modal popup. Should be an instance of "
+"OpenPopupMessage"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.is_usb_connected:1
 msgid ""
 "Return True, device_info if a device handled by this plugin is currently "
@@ -1502,9 +1582,9 @@ msgid "List of devices currently connected"
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.detect_managed_devices:1
-#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.debug_managed_device_detection:1
+#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.detect_managed_devices:1
 msgid "Called only if MANAGES_DEVICE_PRESENCE is True."
 msgstr ""
 
@@ -1748,13 +1828,13 @@ msgid "Get total space available on the mountpoints:"
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.total_space:2
-#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.free_space:2
-#: ../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring of
-#: calibre.devices.usbms.device.Device.total_space:2
+#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.total_space:2
 #: ../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring of
 #: calibre.devices.usbms.device.Device.free_space:2
+#: ../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring of
+#: calibre.devices.usbms.device.Device.total_space:2
 msgid "Main memory"
 msgstr "主記憶體"
 
@@ -2126,17 +2206,17 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.get_option:5
+#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.is_dynamically_controllable:5
+#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.is_running:3
+#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.set_option:4
 #: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.start_plugin:5
 #: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.stop_plugin:6
-#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.get_option:5
-#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.set_option:4
-#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.is_running:3
 msgid ""
 "This method can be called on the GUI thread. A driver that implements this "
 "method must be thread safe."
@@ -2318,7 +2398,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:110
 msgid "USB Mass Storage based devices"
-msgstr ""
+msgstr "基于USB大容量存储的设备"
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:112
 msgid ""
@@ -2326,13 +2406,13 @@ msgid ""
 ":class:`calibre.devices.usbms.driver.USBMS`. This class in turn inherits "
 "some of its functionality from its bases, documented below. A typical basic "
 "USBMS based driver looks like this:"
-msgstr ""
+msgstr "此类设备的基类为：类：`校准设备.usbms.驱动程序.USBMS`. 这个类又继承了它的一些功能，如下所述。基于USBMS的典型基本驱动程序如下所示："
 
 #: ../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring of
 #: calibre.devices.usbms.device.Device:1
 msgid ""
-"Bases: :py:class:`calibre.devices.usbms.deviceconfig.DeviceConfig`, "
-":py:class:`calibre.devices.interface.DevicePlugin`"
+"Bases: :py:class:`~calibre.devices.usbms.deviceconfig.DeviceConfig`, "
+":py:class:`~calibre.devices.interface.DevicePlugin`"
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring of
@@ -2424,8 +2504,8 @@ msgstr ""
 #: ../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring of
 #: calibre.devices.usbms.driver.USBMS:1
 msgid ""
-"Bases: :py:class:`calibre.devices.usbms.cli.CLI`, "
-":py:class:`calibre.devices.usbms.device.Device`"
+"Bases: :py:class:`~calibre.devices.usbms.cli.CLI`, "
+":py:class:`~calibre.devices.usbms.device.Device`"
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring of
@@ -2475,11 +2555,11 @@ msgid ""
 "InterfaceActionBase and InterfaceAction. The :meth:`load_actual_plugin` "
 "method of your InterfaceActionBase subclass must return an instantiated "
 "object of your InterfaceBase subclass."
-msgstr ""
+msgstr "如果您要在ZIP文件中添加自己的插件，则应该将InterfaceActionBase和InterfaceAction都作为子类。InterfaceActionBase子类的：meth:`load_actual_plugin`方法必须返回InterfaceBase子类的实例化对象。"
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction:1
-msgid "Bases: :py:class:`PyQt5.QtCore.QObject`"
+msgid "Bases: :py:class:`~PyQt5.QtCore.QObject`"
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
@@ -2618,9 +2698,9 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
-#: calibre.gui2.actions.InterfaceAction.accept_enter_event:1
-#: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction.accept_drag_move_event:1
+#: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
+#: calibre.gui2.actions.InterfaceAction.accept_enter_event:1
 msgid ""
 "This method should return True iff this interface action is capable of "
 "handling the drag event. Do not call accept/ignore on the event, that will "
@@ -2736,8 +2816,20 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
+#: calibre.gui2.actions.InterfaceAction.library_about_to_change:1
+#: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction.library_changed:1
 msgid "Called whenever the current library is changed."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
+#: calibre.gui2.actions.InterfaceAction.library_about_to_change:3
+msgid "The LibraryDatabase corresponding to the previous library."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
+#: calibre.gui2.actions.InterfaceAction.library_about_to_change:4
+msgid "The LibraryDatabase corresponding to the new library."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
@@ -2784,7 +2876,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:175
 msgid "Preferences plugins"
-msgstr ""
+msgstr "首选项插件"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.PreferencesPlugin:1
@@ -2869,11 +2961,15 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.gui2.preferences.ConfigWidgetBase.changed_signal:1
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.gui2.preferences.ConfigWidgetInterface.changed_signal:1
 msgid ""
 "This signal must be emitted whenever the user changes a value in this widget"
 msgstr ""
 
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.gui2.preferences.ConfigWidgetBase.supports_restoring_to_defaults:1
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.gui2.preferences.ConfigWidgetInterface.supports_restoring_to_defaults:1
 msgid "Set to True iff the :meth:`restore_to_defaults` method is implemented."
@@ -2884,6 +2980,8 @@ msgstr ""
 msgid "The tooltip for the \"Restore defaults\" button"
 msgstr ""
 
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.gui2.preferences.ConfigWidgetBase.restart_critical:1
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.gui2.preferences.ConfigWidgetInterface.restart_critical:1
 msgid ""
@@ -2904,9 +3002,9 @@ msgid "The main calibre graphical user interface"
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
-#: of calibre.gui2.preferences.ConfigWidgetInterface.initialize:1
-#: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase.initialize:1
+#: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
+#: of calibre.gui2.preferences.ConfigWidgetInterface.initialize:1
 msgid ""
 "Should set all config values to their initial values (the values stored in "
 "the config files). A \"return\" statement is optional. Return False if the "
@@ -2914,16 +3012,16 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
-#: of calibre.gui2.preferences.ConfigWidgetInterface.restore_defaults:1
-#: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase.restore_defaults:1
+#: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
+#: of calibre.gui2.preferences.ConfigWidgetInterface.restore_defaults:1
 msgid "Should set all config values to their defaults."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
-#: of calibre.gui2.preferences.ConfigWidgetInterface.commit:1
-#: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase.commit:1
+#: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
+#: of calibre.gui2.preferences.ConfigWidgetInterface.commit:1
 msgid ""
 "Save any changed settings. Return True if the changes require a restart, "
 "False otherwise. Raise an :class:`AbortCommit` exception to indicate that an"

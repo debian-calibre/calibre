@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "Mayıs 27, 2022" "5.43.0" "calibre"
-.SH NAME
-ebook-convert \- ebook-convert
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "EBOOK-CONVERT" "1" "Haziran 17, 2022" "5.44.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -45,14 +45,14 @@ Convert an e\-book from one format to another.
 .sp
 input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an "open e\-book" (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an \(dqopen e\-book\(dq (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
 .sp
 After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
 For full documentation of the conversion system see
 \fI\%E\-book conversion\fP
 .sp
-Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .sp
 Seçenekler ve seçeneklerin varsayılan değerleri girdi ve çıktı biçimlerine göre
 değişiklik gösterir, her zaman şu şekilde kontrol etmelisiniz:
@@ -102,7 +102,7 @@ Girdi profilini belirleyin. Bu profil dönüştürme sistemine girdi dosyasında
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB\(dq\fPRecipe Name.recipe\fB\(dq\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -191,7 +191,7 @@ Oluşturulan İçindekiler (TOC) bölümü için başlık.
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPPelé\fB"\fP with \fB"\fPPele\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB\(dq\fPPelé\fB\(dq\fP with \fB\(dq\fPPele\fB\(dq\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -201,7 +201,7 @@ The base font size in pts. All font sizes in the produced book will be rescaled 
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-Metnin yaslama ayarlarını değiştir. \fB"\fPleft\fB"\fP değeri tüm çift tarafa da dayalı (justified) yazıyı sola dayalı yapar. \fB"\fPjustify\fB"\fP ise çift tarafa dayalı olmayan yazıları çift tarafa dayalı yapar. \fB"\fPoriginal\fB"\fP değeri ise kaynak dosyadaki değeri korur. Tüm çıktı formatlarının çift tarafa dayalı formatı desteklemediiğini unutmayın.
+Metnin yaslama ayarlarını değiştir. \fB\(dq\fPleft\fB\(dq\fP değeri tüm çift tarafa da dayalı (justified) yazıyı sola dayalı yapar. \fB\(dq\fPjustify\fB\(dq\fP ise çift tarafa dayalı olmayan yazıları çift tarafa dayalı yapar. \fB\(dq\fPoriginal\fB\(dq\fP değeri ise kaynak dosyadaki değeri korur. Tüm çıktı formatlarının çift tarafa dayalı formatı desteklemediiğini unutmayın.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -216,7 +216,7 @@ Henüz gömülmemiş ama girdi belgesinde başvurulan tüm yazı tiplerini göm.
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Belirtilen yazı tipi ailesini kitaba göm. Bu kitap için kullanılan \fB"\fPtemel\fB"\fP yazı tipini belirtir. Girdi belgesi kendi yazı tiplerini belirtmişse, bu temel yazı tipini ezebilir. Filtre biçim bilgisi seçeneğini kullanarak yazı tiplerini girdi belgesinden çıkarabilirsiniz. Yazı tipi gömmenin yalnızca bazı çıktı formatlarında çalıştığını unutmayın, özellikle EPUB, AZW3 ve DOCX.
+Belirtilen yazı tipi ailesini kitaba göm. Bu kitap için kullanılan \fB\(dq\fPtemel\fB\(dq\fP yazı tipini belirtir. Girdi belgesi kendi yazı tiplerini belirtmişse, bu temel yazı tipini ezebilir. Filtre biçim bilgisi seçeneğini kullanarak yazı tiplerini girdi belgesinden çıkarabilirsiniz. Yazı tipi gömmenin yalnızca bazı çıktı formatlarında çalıştığını unutmayın, özellikle EPUB, AZW3 ve DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -246,7 +246,7 @@ Paragraflar arasına boş satır ekle. Eğer kaynak dosyası paragraf (<p> or <d
 .INDENT 0.0
 .TP
 .B \-\-insert\-blank\-line\-size
-Eklenen boşlukların yüksekliğini \fB"\fPem\fB"\fP cinsinden ayarlayın. Parağraf arası boşluklar ise buradaki değerin iki katı olarak ayarlanacaktır.
+Eklenen boşlukların yüksekliğini \fB\(dq\fPem\fB\(dq\fP cinsinden ayarlayın. Parağraf arası boşluklar ise buradaki değerin iki katı olarak ayarlanacaktır.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -286,7 +286,7 @@ Set the top margin in pts. Default is 5.0. Setting this to less than zero will c
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-Unsurların hesaplanmış font büyüklüğünün yüzdesi olarak, minimum satır yüksekliği. Calibre bu ayar ile girdi dokümanının ne belirttiğinden bağımsız olarak her unsura bir satır yüksekliği atayacaktır. Devre dışı bırakmak için sıfıra ayarlayın. Varsayılan 120%. Ne yaptığınızı bilmiyorsanız, doğrudan satır yüksekliği belirmek yerine bu ayarı kullanın. Örneğin, bunu 240\fB\(aq\fPa ayarlayarak \fB"\fP2 kat satır aralıklı\fB"\fP metin elde edebilirsiniz.
+Unsurların hesaplanmış font büyüklüğünün yüzdesi olarak, minimum satır yüksekliği. Calibre bu ayar ile girdi dokümanının ne belirttiğinden bağımsız olarak her unsura bir satır yüksekliği atayacaktır. Devre dışı bırakmak için sıfıra ayarlayın. Varsayılan 120%. Ne yaptığınızı bilmiyorsanız, doğrudan satır yüksekliği belirmek yerine bu ayarı kullanın. Örneğin, bunu 240\fB\(aq\fPa ayarlayarak \fB\(dq\fP2 kat satır aralıklı\fB\(dq\fP metin elde edebilirsiniz.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -311,12 +311,12 @@ Tüm gömülü yazı tiplerini alt kümeye al. Gömülü tüm yazı tipleri yaln
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform styles\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB\(dq\fPLook & feel\->Transform styles\fB\(dq\fP section of the conversion dialog. Once you create the rules, you can use the \fB\(dq\fPExport\fB\(dq\fP button to save them to a file.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform HTML\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB\(dq\fPLook & feel\->Transform HTML\fB\(dq\fP section of the conversion dialog. Once you create the rules, you can use the \fB\(dq\fPExport\fB\(dq\fP button to save them to a file.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -425,12 +425,12 @@ dosya yapısının otomatik farkınıa varma kontrolü
 .INDENT 0.0
 .TP
 .B \-\-chapter
-An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP as chapter titles as well as any tags that have class=\fB"\fPchapter\fB"\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB"\fP/\fB"\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB\(dq\fPchapter\fB\(dq\fP, \fB\(dq\fPbook\fB\(dq\fP, \fB\(dq\fPsection\fB\(dq\fP, \fB\(dq\fPprologue\fB\(dq\fP, \fB\(dq\fPepilogue\fB\(dq\fP or \fB\(dq\fPpart\fB\(dq\fP as chapter titles as well as any tags that have class=\fB\(dq\fPchapter\fB\(dq\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB\(dq\fP/\fB\(dq\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Tesbit edilen bölümlerin nasıl işaretleneceğini belirleyin. \fB"\fPpagebreak\fB"\fP değeri bölümlerden önce sayfa sonu ekler. \fB"\fPrule\fB"\fP değeri bölümlerden önce bir çizgi ekler. \fB"\fPnone\fB"\fP değeri bölüm işaretlemeyi pasifleştirir ve \fB"\fPboth\fB"\fP değeri ise bölümlerden önce hem çizgi hem sayfa sonu ekler.
+Tesbit edilen bölümlerin nasıl işaretleneceğini belirleyin. \fB\(dq\fPpagebreak\fB\(dq\fP değeri bölümlerden önce sayfa sonu ekler. \fB\(dq\fPrule\fB\(dq\fP değeri bölümlerden önce bir çizgi ekler. \fB\(dq\fPnone\fB\(dq\fP değeri bölüm işaretlemeyi pasifleştirir ve \fB\(dq\fPboth\fB\(dq\fP değeri ise bölümlerden önce hem çizgi hem sayfa sonu ekler.
 .UNINDENT
 .INDENT 0.0
 .TP

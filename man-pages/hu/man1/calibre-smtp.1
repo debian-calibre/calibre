@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "május 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibre-smtp \- calibre-smtp
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBRE-SMTP" "1" "június 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibre-smtp \- calibre-smtp
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -52,12 +52,12 @@ A from a feladó e\-mail címe, a to pedig a címzett e\-mail címe. Ha egy telj
 e\-mailt beolvasnak az STDIN\-ből, akkor csak az SMTP\-egyeztetésben
 használják a feladó és a címzett e\-mailt, az üzenetfejlécek nem módosulnak.
 .sp
-Amikor olyan argumentumokat ad át \fBcalibre\-smtp\fP\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át \fBcalibre\-smtp\fP\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .SH [BEÁLLÍTÁSOK]
 .INDENT 0.0
 .TP
 .B \-\-fork, \-f
-\fB"\fPFork\fB"\fP és üzenet kézbesítés a háttérben. Ha ezt az opciót használja, akkor a \fB\-\-outboxot\fP is érdemes használnia a kézbesítési hibák kezelésére.
+\fB\(dq\fPFork\fB\(dq\fP és üzenet kézbesítés a háttérben. Ha ezt az opciót használja, akkor a \fB\-\-outboxot\fP is érdemes használnia a kézbesítési hibák kezelésére.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -67,12 +67,12 @@ súgó megjelenítése és kilépés
 .INDENT 0.0
 .TP
 .B \-\-localhost, \-l
-A \fB"\fPlocalhost\fB"\fP gazdagépneve. SMTP szerverhez való csatlakozáskor használatos.
+A \fB\(dq\fPlocalhost\fB\(dq\fP gazdagépneve. SMTP szerverhez való csatlakozáskor használatos.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-outbox, \-o
-A \fB"\fPmaildir\fB"\fP mappa elérési útja a sikertelen e\-mailek tárolására.
+A \fB\(dq\fPmaildir\fB\(dq\fP mappa elérési útja a sikertelen e\-mailek tárolására.
 .UNINDENT
 .INDENT 0.0
 .TP

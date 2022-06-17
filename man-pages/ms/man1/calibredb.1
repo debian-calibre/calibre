@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "Mei 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibredb \- calibredb
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBREDB" "1" "Jun 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -176,7 +176,7 @@ calibredb list [options]
 .sp
 Senaraikan buku tersedia dalam pangkalan data calibre.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -185,7 +185,7 @@ Isih keputusan dalam tertib menaik
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Medan yang dipaparkan bila menyenaraikan buku dalam pangkalan data.  Seharusnya senarai medan dipisah\-tanda\-koma. Medan tersedia: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Lalai: % lalai. Medan khas \fB"\fPall\fB"\fP boleh digunakan untuk pilih semua medan. Selain dari medan terbina\-dalam seperti di atas, medan suai juga tersedia seperti *field_name, sebagai contoh, untuk medan suai #rating, gunakan nama: *rating
+Medan yang dipaparkan bila menyenaraikan buku dalam pangkalan data.  Seharusnya senarai medan dipisah\-tanda\-koma. Medan tersedia: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Lalai: % lalai. Medan khas \fB\(dq\fPall\fB\(dq\fP boleh digunakan untuk pilih semua medan. Selain dari medan terbina\-dalam seperti di atas, medan suai juga tersedia seperti *field_name, sebagai contoh, untuk medan suai #rating, gunakan nama: *rating
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -237,7 +237,7 @@ calibredb add [options] file1 file2 file3 ...
 Add the specified files as books to the database. You can also specify folders, see
 the folder related options below.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -246,7 +246,7 @@ Tetapkan pengarang buku yang ditambah
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-If books with similar titles and authors are found, merge the incoming formats (files) automatically into existing book records. A value of \fB"\fPignore\fB"\fP means duplicate formats are discarded. A value of \fB"\fPoverwrite\fB"\fP means duplicate formats in the library are overwritten with the newly added files. A value of \fB"\fPnew_record\fB"\fP means duplicate formats are placed into a new book record.
+If books with similar titles and authors are found, merge the incoming formats (files) automatically into existing book records. A value of \fB\(dq\fPignore\fB\(dq\fP means duplicate formats are discarded. A value of \fB\(dq\fPoverwrite\fB\(dq\fP means duplicate formats in the library are overwritten with the newly added files. A value of \fB\(dq\fPnew_record\fB\(dq\fP means duplicate formats are placed into a new book record.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -335,7 +335,7 @@ calibredb remove ids
 .sp
 Buang buku yang dikenalpasti dengan id dari pangkalan data. id seharusnya senarai terpisah\-tanda\-koma nombor id (anda boleh dapatkan nombor id dengan menggunakan perintah gelintar). Sebagai contoh, 23,34,57\-85 (bila menyatakan julat, nombor terakhir dalam julat tidak disertakan).
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-permanent
@@ -355,7 +355,7 @@ calibredb add_format [options] id fail_ebuku
 .sp
 Tambah e\-buku dalam fail_ebuku kepada format tersedia untuk buku logikal yang dkenalpasti dengan id. Anda boleh dapatkan id menerusi perintah gelintar. Jika format sudah wujud, ia akan digantikan, melainkan pilihan tidak ganti dinyatakan.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -375,7 +375,7 @@ calibredb remove_format [options] id fmt
 .sp
 Buang format fmt dari buku logikal yang dikenalpasti dengan id. Anda boleh dapatkan id menerusi perintah gelintar. fmt seharusnya sambungan fail seperti LRF atau TXT atau EPUB. Jika buku logikal tidak mempunyai fmt, jangan buat apa\-apa.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -392,7 +392,7 @@ Tunjuk data meta yang tersimpan dalam pangkalan data calibre bagi buku
 yang dikenalpasti oleh id.
 id ialah nombor id dari perintah gelintar.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -417,7 +417,7 @@ dari perintah gelintar. Anda boleh dapatkan format OPF dengan menggunakan
 data meta bagi medan secara individu dengan pilihan \-\-field. Jika anda guna
 pilihan \-\-field, tidak perlu nyatakan fail OPF.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
@@ -445,7 +445,7 @@ sistem fail. Operasi eksport simpan semua format buku, kulit bukunya dan
 data meta (dalam fail opf). Anda boleh dapatan nombor id melalui
 perintah gelintar.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -494,7 +494,7 @@ Export all books into a single folder
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+The template to control the filename and folder structure of the saved files. Default is \fB\(dq\fP{author_sort}/{title}/{title} \- {authors}\fB\(dq\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -529,7 +529,7 @@ Note that different \fBcatalog\fP formats support different sets of options. To
 see the different options, specify the name of the output file and then the
 \-\-help option.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
@@ -569,7 +569,7 @@ Ungkapan nalar menjelaskan tag untuk diasing sebagai genre. Lalai: \fB\(aq\fP[.+
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Nyatakan peraturan yang digunakan untuk asingkan buku dari katalog terjana. Model peraturan pengecualian adalah sama ada (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) atau (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). Contohnya: ((\fB\(aq\fPArchived books\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) akan asingkan buku dengan nilai \fB\(aq\fPArchived\fB\(aq\fP dalam lajur suai \fB\(aq\fPstatus\fB\(aq\fP\&. Bila peraturan berbilang ditakrif, semua peraturan akan dilaksanakan. Lalai:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Dilaksana pada format output AZW3, EPUB, MOBI
+Nyatakan peraturan yang digunakan untuk asingkan buku dari katalog terjana. Model peraturan pengecualian adalah sama ada (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) atau (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). Contohnya: ((\fB\(aq\fPArchived books\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) akan asingkan buku dengan nilai \fB\(aq\fPArchived\fB\(aq\fP dalam lajur suai \fB\(aq\fPstatus\fB\(aq\fP\&. Bila peraturan berbilang ditakrif, semua peraturan akan dilaksanakan. Lalai:  \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP Dilaksana pada format output AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -624,7 +624,7 @@ Nyatakan profil output. Dalam sesetengah kes, satu profil output diperlukan untu
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-Nyatakan peraturan yang digunakan untuk disertakan awalan yang menunjukkan buku telah dibaca, item senarai idaman dan lain\-lain awalan khusus\-pengguna. Model untuk peraturan awalan ialah (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). Bila peraturan berbilang ditakrif, peraturan pertama yang sepadan akan digunaakn. Lalai: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Dilaksana pada format output AZW3, EPUB, MOBI
+Nyatakan peraturan yang digunakan untuk disertakan awalan yang menunjukkan buku telah dibaca, item senarai idaman dan lain\-lain awalan khusus\-pengguna. Model untuk peraturan awalan ialah (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). Bila peraturan berbilang ditakrif, peraturan pertama yang sepadan akan digunaakn. Lalai: \fB\(dq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(dq\fP Dilaksana pada format output AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -665,7 +665,7 @@ Sintaks untuk pembuangan:
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -682,11 +682,11 @@ Cipta lajur suai. label ialah nama mesra mesin bagi lajur. Seharusnya tidak
 mengandungi jarak atau titik bertindih. nama adalah nama lajur yang boleh dibaca
 oleh manusia. jenis data adalah salah satu dari: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-display
-Satu kamus pilihan untuk suaikan bagaimana data dalam lajur ini ditafsir. Ia adalah rentetan JSON. Untuk lajur enumerasi, guna \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP Terdapat banyak pilihan yang boleh pergi ke dalam pembolehubah paparan. Pilihan mengikut lajur adalah: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  Cara terbaik mencari gabungan sah ialah dengan mencipta lajur suai bagi jenis bersesuaian dalam GUI kemudian cari dalam sandar OPF bagi sesebuah buku (pastikan OPF baharu telah dicipta semenjak lajur telah ditambah). Anda akan lihat JSON untuk \fB"\fPdisplay\fB"\fP bagi lajur baharu dalam OPF.
+Satu kamus pilihan untuk suaikan bagaimana data dalam lajur ini ditafsir. Ia adalah rentetan JSON. Untuk lajur enumerasi, guna \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP Terdapat banyak pilihan yang boleh pergi ke dalam pembolehubah paparan. Pilihan mengikut lajur adalah: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  Cara terbaik mencari gabungan sah ialah dengan mencipta lajur suai bagi jenis bersesuaian dalam GUI kemudian cari dalam sandar OPF bagi sesebuah buku (pastikan OPF baharu telah dicipta semenjak lajur telah ditambah). Anda akan lihat JSON untuk \fB\(dq\fPdisplay\fB\(dq\fP bagi lajur baharu dalam OPF.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -708,7 +708,7 @@ Senaraikan lajur suai tersedia. Tunjuk label dan id lajur.
 .UNINDENT
 .UNINDENT
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -730,7 +730,7 @@ tersedia dengan perintah custom_columns.
 .UNINDENT
 .UNINDENT
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -753,7 +753,7 @@ Anda boleh dapatkan senarai id menggunakan perintah gelintar.
 Anda boleh dapatkan senarai nama lajur suai menggunakan perintah
 custom_columns.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -780,7 +780,7 @@ all saved searches, user categories, plugboards, stored per\-book conversion
 settings, and custom recipes. Restored metadata will only be as accurate as
 what is found in the OPF files.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -800,7 +800,7 @@ calibredb check_library [options]
 .sp
 Buat beberapa semakan pada sistem fail yang mewakili pustaka. Laporan adalah invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -836,7 +836,7 @@ calibredb list_categories [options]
 Produce a report of the category information in the database. The
 information is the equivalent of what is shown in the Tag browser.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
@@ -881,7 +881,7 @@ command to force re\-generation of the OPF files, with the \-\-all option.
 Note that there is normally no need to do this, as the OPF files are backed up
 automatically, every time metadata is changed.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -905,7 +905,7 @@ same custom columns, Virtual libraries and other settings as the current library
 The cloned library will contain no books. If you want to create a full duplicate, including
 all books, then simply use your filesystem tools to copy the library folder.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -927,7 +927,7 @@ untuk kemaskini data meta dalam semua buku. Anda juga boleh nyatakan banyak
 id buku dengan dipisah tanda jarak dan julat id dipisah dengan tanda sengkang.
 Contohnya: calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
@@ -950,9 +950,9 @@ list of book ids matching the \fBsearch\fP expression. The output format is usef
 to feed into other commands that accept a list of ids as input.
 .sp
 The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
-language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
+language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l

@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "toukokuuta 27, 2022" "5.43.0" "calibre"
-.SH NAME
-ebook-convert \- ebook-convert
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "EBOOK-CONVERT" "1" "kesäkuuta 17, 2022" "5.44.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -45,14 +45,14 @@ Convert an e\-book from one format to another.
 .sp
 input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an "open e\-book" (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an \(dqopen e\-book\(dq (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
 .sp
 After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
 For full documentation of the conversion system see
 \fI\%Ekirja muunnos\fP
 .sp
-Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .sp
 Vaihtoehdot ja oletusarvot asetuksille vaihtuvat sekä lähde\- että kohdeformaatin mukaan, joten tarkasta aina:
 .INDENT 0.0
@@ -95,7 +95,7 @@ Määritä syöttöprofiili. Syöttöprofiili antaa käännökselle järjestelm�
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-Luettelo sisäänrakennetuista resepteistä. Voit suorittaa muunnoksen sisäänrakennetulla reseptillä komennolla: ebook\-convert \fB"\fPReseptin Nimi.recipe\fB"\fP kohdenimi.epub
+Luettelo sisäänrakennetuista resepteistä. Voit suorittaa muunnoksen sisäänrakennetulla reseptillä komennolla: ebook\-convert \fB\(dq\fPReseptin Nimi.recipe\fB\(dq\fP kohdenimi.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -184,7 +184,7 @@ Asetukset, joilla kontrolloidaan ulostulon ulkoasua
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPPelé\fB"\fP with \fB"\fPPele\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB\(dq\fPPelé\fB\(dq\fP with \fB\(dq\fPPele\fB\(dq\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -194,7 +194,7 @@ Normaali tekstin koko pisteinä (pt). Kaikki teksti tuotetaan tätä kokoa skaal
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-Vaihda tekstin tasaus. Arvo \fB"\fPleft\fB"\fP muuntaa kaiken tekstin vasemmalle tasatuksi. Arvo \fB"\fPjustify\fB"\fP muuntaa kaiken tekstin tasapalstaksi. Arvo \fB"\fPoriginal\fB"\fP (oletus) säilyttää alkuperäisen tasauksen lähdetiedostosta. Huomaa, että vain jotkin kohdeformaatit tukevat tasapalstaa.
+Vaihda tekstin tasaus. Arvo \fB\(dq\fPleft\fB\(dq\fP muuntaa kaiken tekstin vasemmalle tasatuksi. Arvo \fB\(dq\fPjustify\fB\(dq\fP muuntaa kaiken tekstin tasapalstaksi. Arvo \fB\(dq\fPoriginal\fB\(dq\fP (oletus) säilyttää alkuperäisen tasauksen lähdetiedostosta. Huomaa, että vain jotkin kohdeformaatit tukevat tasapalstaa.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -209,7 +209,7 @@ Upota kaikki dokumentissa viitatut fontit jos ne eivät ole jo upotettuina. Font
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Upota valittu fonttitiedosto kirjaan. Tästä tulee kirjan \fB"\fPperusfontti\fB"\fP\&. Jos lähdetiedostossa on omat fonttinsa, ne voivat ohittaa tämän fontin. Voit käyttää tyyliasetusten suodatusta lähdetiedoston fonttien poistamiseen. Huomaa, että fontin upottaminen toimii vain joissakin formaateissa, kuten EPUB, AZW3 ja DOCX.
+Upota valittu fonttitiedosto kirjaan. Tästä tulee kirjan \fB\(dq\fPperusfontti\fB\(dq\fP\&. Jos lähdetiedostossa on omat fonttinsa, ne voivat ohittaa tämän fontin. Voit käyttää tyyliasetusten suodatusta lähdetiedoston fonttien poistamiseen. Huomaa, että fontin upottaminen toimii vain joissakin formaateissa, kuten EPUB, AZW3 ja DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -279,7 +279,7 @@ Aseta ylämarginaali pisteinä (pt). Oletus on 5.0. Nollaa pienempi luku estää
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-Rivinkorkeuden minimi, prosenttiarvona lasketusta tekstielementin korkeudesta. calibre tarkastaa, että kaikilla elementeillä on vähintään tämä rivinkorkeus, riippumatta lähdetiedoston asetuksista. Aseta 0 poistaaksesi käytöstä. Oletus on 120%. Käytä tätä asetusta suoran rivikorkeuden sijaan, ellet ole varma että haluat tehdä toisin. Esimerkiksi \fB"\fPtuplarivin\fB"\fP saat asettamalla arvoksi 240.
+Rivinkorkeuden minimi, prosenttiarvona lasketusta tekstielementin korkeudesta. calibre tarkastaa, että kaikilla elementeillä on vähintään tämä rivinkorkeus, riippumatta lähdetiedoston asetuksista. Aseta 0 poistaaksesi käytöstä. Oletus on 120%. Käytä tätä asetusta suoran rivikorkeuden sijaan, ellet ole varma että haluat tehdä toisin. Esimerkiksi \fB\(dq\fPtuplarivin\fB\(dq\fP saat asettamalla arvoksi 240.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -304,12 +304,12 @@ Osita kaikki upotetut fontit. Kaikki fontit rajataan vain dokumentissa käytetty
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Polku tiedostoon jossa on sääntöjä käytettäväksi kirjan CSS\-tyylien muunnoksessa. Helpoin tapa tällaisen tiedoston luomiseen on käyttää graafisen käyttöliittymän aputoimintoa sääntöjen luomiseen, \fB"\fPUlkoasu \-> Muunnostyylit\fB"\fP\-osassa muunnosikkunaa. Kun olet määritellyt säännöt, voit tallentaa ne tiedostoon \fB"\fPVie\fB"\fP\-painikkeella.
+Polku tiedostoon jossa on sääntöjä käytettäväksi kirjan CSS\-tyylien muunnoksessa. Helpoin tapa tällaisen tiedoston luomiseen on käyttää graafisen käyttöliittymän aputoimintoa sääntöjen luomiseen, \fB\(dq\fPUlkoasu \-> Muunnostyylit\fB\(dq\fP\-osassa muunnosikkunaa. Kun olet määritellyt säännöt, voit tallentaa ne tiedostoon \fB\(dq\fPVie\fB\(dq\fP\-painikkeella.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform HTML\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB\(dq\fPLook & feel\->Transform HTML\fB\(dq\fP section of the conversion dialog. Once you create the rules, you can use the \fB\(dq\fPExport\fB\(dq\fP button to save them to a file.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -422,12 +422,12 @@ Kontrolloi asiakirjan rakenteen automaattista tunnistusta.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-XPath\-lauseke lukujen otsikoiden poimimiseksi. Oletuksena huomioidaan <h1> tai <h2> tägit joissa on sanat \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP tai \fB"\fPpart\fB"\fP lukujen otsikoiksi, kuten myös tägit joiden class=\fB"\fPchapter\fB"\fP\&. Lauseke tulee kääntyä listaksi elementtejä. Poista otsikoiden tunnistaminen käytöstä arvolla \fB"\fP/\fB"\fP\&.  Katso calibren käyttöohjeesta XPathin käyttöopastus.
+XPath\-lauseke lukujen otsikoiden poimimiseksi. Oletuksena huomioidaan <h1> tai <h2> tägit joissa on sanat \fB\(dq\fPchapter\fB\(dq\fP, \fB\(dq\fPbook\fB\(dq\fP, \fB\(dq\fPsection\fB\(dq\fP, \fB\(dq\fPprologue\fB\(dq\fP, \fB\(dq\fPepilogue\fB\(dq\fP tai \fB\(dq\fPpart\fB\(dq\fP lukujen otsikoiksi, kuten myös tägit joiden class=\fB\(dq\fPchapter\fB\(dq\fP\&. Lauseke tulee kääntyä listaksi elementtejä. Poista otsikoiden tunnistaminen käytöstä arvolla \fB\(dq\fP/\fB\(dq\fP\&.  Katso calibren käyttöohjeesta XPathin käyttöopastus.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Aseta lukujen merkintätapa. Arvo \fB"\fPpagebreak\fB"\fP lisää sivunvaihdot ennen lukuja. Arvo \fB"\fPrule\fB"\fP lisää vaakaviivan ennen lukuja. Arvo \fB"\fPnone\fB"\fP estää lukujen merkitsemisen ja arvo \fB"\fPboth\fB"\fP lisää sekä sivunvaihdon että vaakaviivan.
+Aseta lukujen merkintätapa. Arvo \fB\(dq\fPpagebreak\fB\(dq\fP lisää sivunvaihdot ennen lukuja. Arvo \fB\(dq\fPrule\fB\(dq\fP lisää vaakaviivan ennen lukuja. Arvo \fB\(dq\fPnone\fB\(dq\fP estää lukujen merkitsemisen ja arvo \fB\(dq\fPboth\fB\(dq\fP lisää sekä sivunvaihdon että vaakaviivan.
 .UNINDENT
 .INDENT 0.0
 .TP

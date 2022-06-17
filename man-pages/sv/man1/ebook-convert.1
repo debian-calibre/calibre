@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "maj 27, 2022" "5.43.0" "calibre"
-.SH NAME
-ebook-convert \- ebook-convert
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "EBOOK-CONVERT" "1" "juni 17, 2022" "5.44.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -45,14 +45,14 @@ Konvertera en e\-bok från ett format till ett annat.
 .sp
 input_file är inmatningsfilen och output_file är utmatningsfilen. Båda måste anges som de två första argumenten i kommandot.
 .sp
-Utmatningsformatet för e\-boken uppskattas utifrån filändelsen i output_file. output_file kan även ges specialformatet .EXT, där EXT är utmatningsfilsändelsen. Om det används kommer namnet på utmatningsfilen att härledas från namnet på inmatningsfilen. Observera att filnamnen inte får börja med bindestreck. Om ingen filinsticksmodul har angivits för utmatningsfilen, så behandlas den som en mapp till vilken en "Öppen e\-bok" (OEB) bestående av HTML filer kommer att skrivas till den mappen. Dessa filer är de filer som normalt sett skulle ha skickats till utmatningsinsticksmodulen.
+Utmatningsformatet för e\-boken uppskattas utifrån filändelsen i output_file. output_file kan även ges specialformatet .EXT, där EXT är utmatningsfilsändelsen. Om det används kommer namnet på utmatningsfilen att härledas från namnet på inmatningsfilen. Observera att filnamnen inte får börja med bindestreck. Om ingen filinsticksmodul har angivits för utmatningsfilen, så behandlas den som en mapp till vilken en \(dqÖppen e\-bok\(dq (OEB) bestående av HTML filer kommer att skrivas till den mappen. Dessa filer är de filer som normalt sett skulle ha skickats till utmatningsinsticksmodulen.
 .sp
 Efter att ha angivit in\- och utmatningsfilerna kan du anpassa konverteringen genom att ange olika alternativ. Vilka alternativ som är tillgängliga beror på in\- och utmatningsfiltyperna. För att få hjälp med dem, ange in\- och utmatningsfilerna och lägg därefter till alternativet \-h.
 .sp
 För fullständig dokumentation om konverteringssystemet, gå till
 \fI\%Konvertering av e\-bok\fP
 .sp
-När du skickar argument till \fBebook\-convert\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till \fBebook\-convert\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .sp
 Alternativen och standardvärden för ändringsalternativ beror på både
 inmatning\- och utmatningsformat, därför bör du alltid kontrollera med:
@@ -102,7 +102,7 @@ Ange inmatningsprofilen. Inmatningsprofilen ger information till konverteringssy
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-Lista inbyggda receptnamn. Du kan skapa en e\-bok från ett inbyggt recept så här: ebook\-convert \fB"\fPReceptnamn.recipe\fB"\fP utmatning.epub
+Lista inbyggda receptnamn. Du kan skapa en e\-bok från ett inbyggt recept så här: ebook\-convert \fB\(dq\fPReceptnamn.recipe\fB\(dq\fP utmatning.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -191,7 +191,7 @@ Alternativ för att anpassa utmatningens utseende och känsla
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Translitterera Unicode\-tecken till en ASCII\-representation. Används med försiktighet, eftersom detta kommer att ersätta Unicode\-tecken med ASCII. Till exempel kommer det att ersätta \fB"\fPPelé\fB"\fP med \fB"\fPPele\fB"\fP\&. Tänk också på att i de fall där det finns flera representationer av ett tecken (exempelvis tecken som delas av kinesiska och japanska) kommer representationen som grundar sig på aktuella calibre\-gränssnittsspråket att användas.
+Translitterera Unicode\-tecken till en ASCII\-representation. Används med försiktighet, eftersom detta kommer att ersätta Unicode\-tecken med ASCII. Det kommer till exempel att ersätta \fB\(dq\fPPelé\fB\(dq\fP med \fB\(dq\fPPele\fB\(dq\fP\&. Observera också att i fall där det finns flera representationer av ett tecken (exempelvis tecken som delas av kinesiska och japanska) kommer representationen baserad på det aktuella calibre\-gränssnittsspråket att användas.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -201,7 +201,7 @@ Grundteckensnittsstorleken i punkter. Alla teckensnittsstorlekar i den producera
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-Ändra textjusteringen. Värdet \fB"\fPvänster\fB"\fP konverterar all marginaljusterad text i källan till vänsterjusterad text (d.v.s. ojusterad). Med värdet \fB"\fPjustera\fB"\fP konverteras all ojusterad text till mariginaljusterad. Värdet \fB"\fPoriginal\fB"\fP (standard) behåller de inställningar för justering som anges i källfilen. Observera att endast vissa format stöder mariginaljustering.
+Ändra textjusteringen. Värdet \fB\(dq\fPvänster\fB\(dq\fP konverterar all marginaljusterad text i källan till vänsterjusterad text (d.v.s. ojusterad). Med värdet \fB\(dq\fPjustera\fB\(dq\fP konverteras all ojusterad text till mariginaljusterad. Värdet \fB\(dq\fPoriginal\fB\(dq\fP (standard) behåller de inställningar för justering som anges i källfilen. Observera att endast vissa format stöder mariginaljustering.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -216,7 +216,7 @@ Bädda in varje teckensnitt som refereras i inmatningsdokumentet som inte redan 
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Bädda in den angivna teckensnittsfamiljen i boken. Här anges \fB"\fPbas\fB"\fP\-teckensnitt som används för boken. Om inmatningsdokumentet specificerar sina egna teckensnitt, kan de åsidosätta detta grundteckensnitt. Du kan använda informationsalternativet filterformat för att ta bort teckensnitt från inmatningsdokumentet. Observera att bädda in teckensnitt endast fungerar med vissa utmatningsformat, främst EPUB, AZW3 och DOCX.
+Bädda in den angivna teckensnittsfamiljen i boken. Här anges \fB\(dq\fPbas\fB\(dq\fP\-teckensnitt som används för boken. Om inmatningsdokumentet specificerar sina egna teckensnitt, kan de åsidosätta detta grundteckensnitt. Du kan använda informationsalternativet filterformat för att ta bort teckensnitt från inmatningsdokumentet. Observera att bädda in teckensnitt endast fungerar med vissa utmatningsformat, främst EPUB, AZW3 och DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -286,7 +286,7 @@ Ställ in övre marginalen i punkter. Standard är 5.0. Om du ställer in det h�
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-Minsta radavståndet, i procent av elementets beräknade teckensnittsstorlek. calibre kommer att säkerställa att varje element har ett radavstånd på åtminstone den här inställningen, oavsett vad ingångsdokumentet specificerar. Ställ in till noll för att inaktivera. Standard är 120%. Använd den här inställningen i stället för det direkt angivna radavståndet, om du inte vet vad du gör. Till exempel kan du uppnå \fB"\fPdubbel radavstånd\fB"\fP i texten genom att ställa in det här till 240.
+Minsta radavståndet, i procent av elementets beräknade teckensnittsstorlek. calibre kommer att säkerställa att varje element har ett radavstånd på åtminstone den här inställningen, oavsett vad ingångsdokumentet specificerar. Ställ in till noll för att inaktivera. Standard är 120%. Använd den här inställningen i stället för det direkt angivna radavståndet, om du inte vet vad du gör. Till exempel kan du uppnå \fB\(dq\fPdubbel radavstånd\fB\(dq\fP i texten genom att ställa in det här till 240.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -311,12 +311,12 @@ Använd delmängd av alla inbäddade teckensnitt. Varje inbäddat teckensnitt re
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Sökväg till en fil som innehåller regler för att omvandla CSS\-format i den här boken. Det enklaste sättet att skapa en sådan fil är att använda guiden för att skapa regler i det grafiska gränssnittet för calibre. Gå till det i avsnittet \fB"\fPUtseende och känsla\->Omvandla format\fB"\fP i konverteringsdialogrutan. När du har skapat reglerna kan du använda knappen \fB"\fPExportera\fB"\fP för att spara dem till en fil.
+Sökväg till en fil som innehåller regler för att omvandla CSS\-format i den här boken. Det enklaste sättet att skapa en sådan fil är att använda guiden för att skapa regler i det grafiska gränssnittet för calibre. Gå till det i avsnittet \fB\(dq\fPUtseende och känsla\->Omvandla format\fB\(dq\fP i konverteringsdialogrutan. När du har skapat reglerna kan du använda knappen \fB\(dq\fPExportera\fB\(dq\fP för att spara dem till en fil.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Sökväg till en fil som innehåller regler för att omvandla HTML i den här boken. Det enklaste sättet att skapa en sådan fil är att använda guiden för att skapa regler i det grafiska gränssnittet för calibre. Öppna den i avsnittet \fB"\fPUtseende och känsla\->Omvandla HTML\fB"\fP i konverteringsdialogrutan. När du har skapat reglerna kan du använda knappen \fB"\fPExportera\fB"\fP för att spara dem i en fil.
+Sökväg till en fil som innehåller regler för att omvandla HTML i den här boken. Det enklaste sättet att skapa en sådan fil är att använda guiden för att skapa regler i det grafiska gränssnittet för calibre. Öppna den i avsnittet \fB\(dq\fPUtseende och känsla\->Omvandla HTML\fB\(dq\fP i konverteringsdialogrutan. När du har skapat reglerna kan du använda knappen \fB\(dq\fPExportera\fB\(dq\fP för att spara dem i en fil.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -429,12 +429,12 @@ Anpassa automatisk identifiering av dokumentets struktur.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Ett XPath\-uttryck för att identifiera kapitelrubrikerna. Standard är att betrakta <h1>\- eller <h2>\-taggar som innehåller orden \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP eller \fB"\fPpart\fB"\fP som kapitelrubriker samt alla taggar som har class=\fB"\fPchapter\fB"\fP\&. Uttrycket som används måste utvärderas till en lista med element. För att inaktivera kapitelidentifiering, använd uttrycket \fB"\fP/\fB"\fP\&. Se XPath\-handledningen i användarmanualen för calibre för ytterligare hjälp med att använda den här funktionen.
+Ett XPath\-uttryck för att identifiera kapitelrubrikerna. Standard är att betrakta <h1>\- eller <h2>\-taggar som innehåller orden \fB\(dq\fPchapter\fB\(dq\fP, \fB\(dq\fPbook\fB\(dq\fP, \fB\(dq\fPsection\fB\(dq\fP, \fB\(dq\fPprologue\fB\(dq\fP, \fB\(dq\fPepilogue\fB\(dq\fP eller \fB\(dq\fPpart\fB\(dq\fP som kapitelrubriker samt alla taggar som har class=\fB\(dq\fPchapter\fB\(dq\fP\&. Uttrycket som används måste utvärderas till en lista med element. För att inaktivera kapitelidentifiering, använd uttrycket \fB\(dq\fP/\fB\(dq\fP\&. Se XPath\-handledningen i användarmanualen för calibre för ytterligare hjälp med att använda den här funktionen.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Anger hur upptäckta kapitel markeras. Värdet \fB"\fPpagebreak\fB"\fP infogar en sidbrytning före kapitel. Värdet \fB"\fPrule\fB"\fP infogar en tom rad före kapitel. Värdet \fB"\fPnone\fB"\fP inaktiverar kapitelmarkering och om värdet \fB"\fPboth\fB"\fP anges kommer både sidbrytningar och tomma rader att markera kapitel.
+Anger hur upptäckta kapitel markeras. Värdet \fB\(dq\fPpagebreak\fB\(dq\fP infogar en sidbrytning före kapitel. Värdet \fB\(dq\fPrule\fB\(dq\fP infogar en tom rad före kapitel. Värdet \fB\(dq\fPnone\fB\(dq\fP inaktiverar kapitelmarkering och om värdet \fB\(dq\fPboth\fB\(dq\fP anges kommer både sidbrytningar och tomma rader att markera kapitel.
 .UNINDENT
 .INDENT 0.0
 .TP

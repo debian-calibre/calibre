@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "5月 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibre-debug \- calibre-debug
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBRE-DEBUG" "1" "6月 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibre-debug \- calibre-debug
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -57,7 +57,7 @@ calibre デバッグ用に有用なコマンドラインインタフェイス。
 .sp
 ”\-\-” の後に付けるとスクリプトに渡します。
 .sp
-スペースを含む引数を \fBcalibre\-debug\fP に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
+スペースを含む引数を \fBcalibre\-debug\fP に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .SH [オプション]
 .INDENT 0.0
 .TP
@@ -156,7 +156,7 @@ calibreの環境設定に必要なpathを出力
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-コマンドラインインタフェースを提供するプラグインを実行。例: calibre\-debug \-r \fB"\fPPlugin name\fB"\fP \fB\-\-\fP file1 \fB\-\-option1\fP \fB\-\-\fP 以降にあるものは、すべてプラグインに引数として渡されます。
+コマンドラインインタフェースを提供するプラグインを実行。例: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP \fB\-\-\fP 以降にあるものは、すべてプラグインに引数として渡されます。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -166,7 +166,7 @@ calibreの環境設定に必要なpathを出力
 .INDENT 0.0
 .TP
 .B \-\-subset\-font, \-f
-指定されたフォントをサブセット化。このオプションの後に \fB"\fP\-\-\fB"\fP をつけるとフォント・サブセットプログラムにオプションを渡します。
+指定されたフォントをサブセット化。このオプションの後に \fB\(dq\fP\-\-\fB\(dq\fP をつけるとフォント・サブセットプログラムにオプションを渡します。
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "5月 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibre-server \- calibre-server
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBRE-SERVER" "1" "6月 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibre-server \- calibre-server
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -46,7 +46,7 @@ calibreのコンテンツサーバを開始。コンテンツサーバはcalibre
 指定することができます。pathの指定がない場合には、calibreプログラムの知っている
 すべてのライブラリが対象となります。
 .sp
-スペースを含む引数を \fBcalibre\-server\fP に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
+スペースを含む引数を \fBcalibre\-server\fP に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .SH [オプション]
 .INDENT 0.0
 .TP
@@ -61,7 +61,7 @@ calibreのコンテンツサーバを開始。コンテンツサーバはcalibre
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-使用する認証タイプ.  サーバが使用するHTTP認証モード。SSLプロキシを介してサーバを公開する場合には \fB"\fPbasic\fB"\fP を設定してください。そうでない場合には \fB"\fPauto\fB"\fP にしてください。\fB"\fPauto\fB"\fP は、SSLが設定されている場合には \fB"\fPbasic\fB"\fP を使用し、それ以外の場合には \fB"\fPdigest\fB"\fP を使用します。
+使用する認証タイプ.  サーバが使用するHTTP認証モード。SSLプロキシを介してサーバを公開する場合には \fB\(dq\fPbasic\fB\(dq\fP を設定してください。そうでない場合には \fB\(dq\fPauto\fB\(dq\fP にしてください。\fB\(dq\fPauto\fB\(dq\fP は、SSLが設定されている場合には \fB\(dq\fPbasic\fB\(dq\fP を使用し、それ以外の場合には \fB\(dq\fPdigest\fB\(dq\fP を使用します。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -151,7 +151,7 @@ BonJour経由でOPDSフィードを公開する.    BonJourサービス経由で
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-接続を待ち受けするインタフェース.   デフォルトでは、すべての利用可能なインタフェースで待ち受けします。これをたとえば \fB"\fP127.0.0.1\fB"\fP に変更するとローカルマシンからの接続に限定し、\fB"\fP::\fB"\fP に変更するとIPv6とIPv4の接続を待ち受けします。
+接続を待ち受けするインタフェース.   デフォルトでは、すべての利用可能なインタフェースで待ち受けします。これをたとえば \fB\(dq\fP127.0.0.1\fB\(dq\fP に変更するとローカルマシンからの接続に限定し、\fB\(dq\fP::\fB\(dq\fP に変更するとIPv6とIPv4の接続を待ち受けします。
 .UNINDENT
 .INDENT 0.0
 .TP
