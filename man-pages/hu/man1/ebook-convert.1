@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "május 27, 2022" "5.43.0" "calibre"
-.SH NAME
-ebook-convert \- ebook-convert
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "EBOOK-CONVERT" "1" "június 17, 2022" "5.44.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -45,14 +45,14 @@ Egy e\-könyv konvertálása egyik formátumból egy másikba.
 .sp
 input_file a bemenet és output_file a kimenet. Mindkettőt a parancs első két argumentumaként kell megadni.
 .sp
-A kimeneti e\-könyv formátumát az output_file fájlkiterjesztés alapján lehet kitalálni. A kimeneti fájl speciális .EXT formátumú is lehet, ahol az EXT a kimeneti fájl kiterjesztése. Ebben az esetben a kimeneti fájl neve a bemeneti fájl nevéből származik. Vegye figyelembe, hogy a fájlnevek nem kezdődhetnek kötőjellel. Végül, ha az output_file nem rendelkezik kiterjesztéssel, akkor mappaként kezeli, és egy HTML fájlokból álló "Open e\-book"\-t (OEB) ír ebbe a mappába. Ezek azok a fájlok, amelyeket általában a kimeneti beépülő modulnak kellett volna átadni.
+A kimeneti e\-könyv formátumát az output_file fájlkiterjesztés alapján lehet kitalálni. A kimeneti fájl speciális .EXT formátumú is lehet, ahol az EXT a kimeneti fájl kiterjesztése. Ebben az esetben a kimeneti fájl neve a bemeneti fájl nevéből származik. Vegye figyelembe, hogy a fájlnevek nem kezdődhetnek kötőjellel. Végül, ha az output_file nem rendelkezik kiterjesztéssel, akkor mappaként kezeli, és egy HTML fájlokból álló \(dqOpen e\-book\(dq\-t (OEB) ír ebbe a mappába. Ezek azok a fájlok, amelyeket általában a kimeneti beépülő modulnak kellett volna átadni.
 .sp
 A bemeneti és kimeneti fájl megadása után testreszabhatja az átalakítást különféle beállítások megadásával. Az elérhető opciók a bemeneti és kimeneti fájltípusoktól függenek. Ha segítségre van szüksége, adja meg a bemeneti és kimeneti fájlt, majd használja a \(aq\-h\(aq kapcsolót.
 .sp
 Az átalakítási rendszer teljes dokumentációját lásd
 \fI\%E\-book conversion\fP
 .sp
-Amikor olyan argumentumokat ad át \fBebook\-convert\fP\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át \fBebook\-convert\fP\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .sp
 TA beállítások és az opciók alapértelmezett értékei a bemeneti és kimeneti
 formátumtól függően változnak, ezért mindig ellenőrizze a következőket:
@@ -97,7 +97,7 @@ A forrás profil megadása. A bemeneti profil információt ad a konverziós ren
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-A beépített receptnevek listája. Létrehozhat egy e\-könyvet egy beépített receptből, így: ebook\-convert \fB"\fPRecept Name.recept\fB"\fP output.epub
+A beépített receptnevek listája. Létrehozhat egy e\-könyvet egy beépített receptből, így: ebook\-convert \fB\(dq\fPRecept Name.recept\fB\(dq\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -306,12 +306,12 @@ Minden beágyazott betűtípus csak azokat a betűket fogja tartalmazni, melyek 
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-A könyvben szereplő CSS\-stílusok átalakítására szolgáló szabályokat tartalmazó fájl elérési útja. Az ilyen fájl létrehozásának legegyszerűbb módja a varázsló használata a szabályok létrehozásához a Calibre  GUI\-ban. Hozzáférhet a \fB"\fPBeállítások\fB"\fP párbeszédpanel „Közös beállítások\->Kinézet és megjelenés\->Stílusok átalakítása” részében. Miután létrehozta a szabályokat, az \fB"\fPExportálás\fB"\fP gombbal mentheti őket fájlba.
+A könyvben szereplő CSS\-stílusok átalakítására szolgáló szabályokat tartalmazó fájl elérési útja. Az ilyen fájl létrehozásának legegyszerűbb módja a varázsló használata a szabályok létrehozásához a Calibre  GUI\-ban. Hozzáférhet a \fB\(dq\fPBeállítások\fB\(dq\fP párbeszédpanel „Közös beállítások\->Kinézet és megjelenés\->Stílusok átalakítása” részében. Miután létrehozta a szabályokat, az \fB\(dq\fPExportálás\fB\(dq\fP gombbal mentheti őket fájlba.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Útvonal egy olyan fájlhoz, amely szabályokat tartalmaz a könyv HTML\-kódjának átalakítására. Az ilyen fájl létrehozásának legegyszerűbb módja a varázsló használata a szabályok létrehozásához a Calibre GUI\-ban. Hozzáférhet a \fB"\fPBeállítások\fB"\fP  párbeszédpanel \fB"\fPKözös beállítások\->Kinézet és megjelenés\->HTML átalakítása\fB"\fP részében. Miután létrehozta a szabályokat, az \fB"\fPExportálás\fB"\fP gombbal mentheti őket fájlba.
+Útvonal egy olyan fájlhoz, amely szabályokat tartalmaz a könyv HTML\-kódjának átalakítására. Az ilyen fájl létrehozásának legegyszerűbb módja a varázsló használata a szabályok létrehozásához a Calibre GUI\-ban. Hozzáférhet a \fB\(dq\fPBeállítások\fB\(dq\fP  párbeszédpanel \fB\(dq\fPKözös beállítások\->Kinézet és megjelenés\->HTML átalakítása\fB\(dq\fP részében. Miután létrehozta a szabályokat, az \fB\(dq\fPExportálás\fB\(dq\fP gombbal mentheti őket fájlba.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -424,7 +424,7 @@ Dokumentum\-struktúra automatikus felismerése.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-XPath kifejezés a fejezetcímek észlelésére. Az alapértelmezés szerint minden <h1> vagy (or)  <h2> címkét, amely a „fejezet”, „könyv”, „szakasz”, „prológus”, „epilógus” vagy „rész” szavakat tartalmazza fejezetcímként kell kezelni, valamint minden olyan címkét, amelyhez class=\fB"\fPchapter tartozik. A használt kifejezésnek ki kell értékelnie egy elemlistát. A fejezetfelismerés letiltásához használja a \fB"\fP/\fB"\fP kifejezést. A funkció használatához további segítségért tekintse meg a Calibre felhasználói kézikönyv XPath oktatóanyagát.
+XPath kifejezés a fejezetcímek észlelésére. Az alapértelmezés szerint minden <h1> vagy (or)  <h2> címkét, amely a „fejezet”, „könyv”, „szakasz”, „prológus”, „epilógus” vagy „rész” szavakat tartalmazza fejezetcímként kell kezelni, valamint minden olyan címkét, amelyhez class=\fB\(dq\fPchapter tartozik. A használt kifejezésnek ki kell értékelnie egy elemlistát. A fejezetfelismerés letiltásához használja a \fB\(dq\fP/\fB\(dq\fP kifejezést. A funkció használatához további segítségért tekintse meg a Calibre felhasználói kézikönyv XPath oktatóanyagát.
 .UNINDENT
 .INDENT 0.0
 .TP

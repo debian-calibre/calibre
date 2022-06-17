@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "五月 27, 2022" "5.43.0" "calibre"
-.SH NAME
-ebook-convert \- ebook-convert
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "EBOOK-CONVERT" "1" "六月 17, 2022" "5.44.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -56,7 +56,7 @@ input_file 表示输入文件，output_file 表示输出文件。这两者作为
 .nf
 \(ga
 .fi
-ebook\-convert\(ga传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
+ebook\-convert\(ga传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .sp
 选项以及选项的默认值都取决于输入
 和输出格式，所以你应该经常检查
@@ -98,7 +98,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-列出内建的订阅清单名。你可以通过如下命令创建基于内建订阅清单的电子书： ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+列出内建的订阅清单名。你可以通过如下命令创建基于内建订阅清单的电子书： ebook\-convert \fB\(dq\fPRecipe Name.recipe\fB\(dq\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -187,7 +187,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPPelé\fB"\fP with \fB"\fPPele\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB\(dq\fPPelé\fB\(dq\fP with \fB\(dq\fPPele\fB\(dq\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -197,7 +197,7 @@ PTS中的基本字体大小。在生成的书籍中所有的字体尺寸将基�
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-更改文本对齐方式。 使用值\fB"\fPleft\fB"\fP 将转换资源中所有的文本为左对齐。 (如：未对齐) 使用值\fB"\fPjustify\fB"\fP 将转换资源中所有的未对齐的文本为对齐。使用值\fB"\fPoriginal\fB"\fP(默认)则不更改源文件的对齐方式。请注意，仅部分输出格式支持对齐方式。
+更改文本对齐方式。 使用值\fB\(dq\fPleft\fB\(dq\fP 将转换资源中所有的文本为左对齐。 (如：未对齐) 使用值\fB\(dq\fPjustify\fB\(dq\fP 将转换资源中所有的未对齐的文本为对齐。使用值\fB\(dq\fPoriginal\fB\(dq\fP(默认)则不更改源文件的对齐方式。请注意，仅部分输出格式支持对齐方式。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -426,7 +426,7 @@ XPath 表达式用于检测章节标题。默认考虑使用 <h1> 或 <h2> 标�
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-设置标注章节的模式. \fB"\fPpagebreak\fB"\fP模式会在章节前插入下一页控制符. \fB"\fPrule\fB"\fP模式会在章节前插入空行. \fB"\fPnone\fB"\fP模式不会在章节前插入控制. \fB"\fPboth\fB"\fP模式会在章节前插入下一页控制符和空行.
+设置标注章节的模式. \fB\(dq\fPpagebreak\fB\(dq\fP模式会在章节前插入下一页控制符. \fB\(dq\fPrule\fB\(dq\fP模式会在章节前插入空行. \fB\(dq\fPnone\fB\(dq\fP模式不会在章节前插入控制. \fB\(dq\fPboth\fB\(dq\fP模式会在章节前插入下一页控制符和空行.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-03 05:03+0000\n"
+"POT-Creation-Date: 2022-06-17 02:39+0000\n"
 "PO-Revision-Date: 2014-07-05 16:50+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2022\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
@@ -101,28 +101,26 @@ msgstr "Konvertera en absolut sökväg till en kanoniskt namn i förhållande ti
 #: of calibre.ebooks.oeb.polish.container.Container.commit:0
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.raw_data:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
-#: of calibre.ebooks.oeb.polish.replace.replace_links:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: of calibre.ebooks.oeb.polish.cover.mark_as_titlepage:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: of calibre.ebooks.oeb.polish.cover.set_cover:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
+#: calibre.ebooks.oeb.polish.css.filter_css:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
+#: calibre.ebooks.oeb.polish.css.remove_unused_css:0
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.rename_files:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: of calibre.ebooks.oeb.polish.replace.replace_links:0
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
-#: of calibre.ebooks.oeb.polish.split.split:0
+#: of calibre.ebooks.oeb.polish.split.merge:0
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.multisplit:0
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
-#: of calibre.ebooks.oeb.polish.split.merge:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
-#: of calibre.ebooks.oeb.polish.cover.set_cover:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
-#: of calibre.ebooks.oeb.polish.cover.mark_as_titlepage:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.remove_unused_css:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.filter_css:0
+#: of calibre.ebooks.oeb.polish.split.split:0
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring of
 #: calibre.ebooks.oeb.polish.toc.create_inline_toc:0
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:0
 #: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
 #: calibre.gui2.tweak_book.boss.Boss.apply_container_update_to_gui:0
 #: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
@@ -131,6 +129,8 @@ msgstr "Konvertera en absolut sökväg till en kanoniskt namn i förhållande ti
 #: calibre.gui2.tweak_book.boss.Boss.open_book:0
 #: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
 #: calibre.gui2.tweak_book.boss.Boss.show_current_diff:0
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
+#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:0
 msgid "Parameters"
 msgstr "Parametrar"
 
@@ -303,7 +303,7 @@ msgid ""
 "The names of all manifest items whose media-type matches predicate. "
 "`predicate` can be a set, a list, a string or a function taking a single "
 "argument, which will be called with the media-type."
-msgstr "Namnen på alla uppenbara poster vars medie typ matcher predikat. `predicate` kan vara en uppsättning, en lista, en sträng eller en funktion med ett enda argument, som kommer att kallas med media-typ."
+msgstr "Namnen på alla manifestposter vars medietyp matcher predikat. `predicate` kan vara en uppsättning, en lista, en sträng eller en funktion som tar ett enda argument, som kommer att anropas med medietypen."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
@@ -727,7 +727,7 @@ msgstr "Antingen den absoluta sökvägen till en bildfil eller kanoniska namn p�
 msgid ""
 "An optional callable that takes a single argument. It will be called with "
 "information about the tasks being processed."
-msgstr "En valfri anropsbar som tar ett enda argument. Det kommer att kallas med information om de uppgifter som behandlas."
+msgstr "En valfri anropningsbar som tar ett enda argument. Den kommer att anropas med information om de uppgifter som behandlas."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.set_cover:8
@@ -779,7 +779,7 @@ msgstr "Ta bort alla oanvända CSS-regler från boken. En oanvänd CSS-regel är
 msgid ""
 "An optional callable that takes a single argument. It is called with "
 "information about the operations being performed."
-msgstr "En valfri anropsbar som tar ett enda argument. Det kallas med information om den verksamhet som utförs."
+msgstr "En valfri anropningsbar som tar ett enda argument. Den anropas med information om de operationer som utförs."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
 #: calibre.ebooks.oeb.polish.css.remove_unused_css:4

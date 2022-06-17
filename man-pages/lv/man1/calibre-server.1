@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "maijs 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibre-server \- calibre-server
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBRE-SERVER" "1" "jūnijs 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibre-server \- calibre-server
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -46,7 +46,7 @@ calibre bibliotēkas internetam. Jūs varat norādīt ceļu uz bibliotēku
 Mapes kā arguments \fBcalibre\-server\fP\&. Ja jūs neesat norādījis nevienu ceļu,
 tiks izmantotas visas bibliotēkas, par kurām zina galvenā calibre programma.
 .sp
-Katru reizi, kad jūs nododat argumentus \fBcalibre\-server\fP, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
+Katru reizi, kad jūs nododat argumentus \fBcalibre\-server\fP, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: \(dq/some path/with spaces\(dq
 .SH [OPCIJAS]
 .INDENT 0.0
 .TP
@@ -61,7 +61,7 @@ Laiks (sekundēs) kad jāgaida atbilde no servera, veicot vaicājumus.
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Izvēlieties, kāda veida autentifikāciju izmantot.   Iestatiet HTTP autentifikācijas režīmu, ko izmanto serveris. Iestatīt uz \fB"\fPbasic\fB"\fP, ja jūs ievietojat šo serveri aiz SSL starpniekservera. Pretējā gadījumā atstājiet to kā \fB"\fPauto\fB"\fP, kas izmantos \fB"\fPbasic\fB"\fP, ja SSL konfigurēts citādi, tas izmantos \fB"\fPdigest\fB"\fP\&.
+Izvēlieties, kāda veida autentifikāciju izmantot.   Iestatiet HTTP autentifikācijas režīmu, ko izmanto serveris. Iestatīt uz \fB\(dq\fPbasic\fB\(dq\fP, ja jūs ievietojat šo serveri aiz SSL starpniekservera. Pretējā gadījumā atstājiet to kā \fB\(dq\fPauto\fB\(dq\fP, kas izmantos \fB\(dq\fPbasic\fB\(dq\fP, ja SSL konfigurēts citādi, tas izmantos \fB\(dq\fPdigest\fB\(dq\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -151,7 +151,7 @@ Ignorēt lietotāja definētus metadatu laukus.        Ar komatu atdalīts sarak
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-Saskarnes, lai klausītos ienākošos savienojumus.    Noklusējums ir klausīties visus pieejamos IPv4 interfeisus. To var mainīt, piemēram, \fB"\fP127.0.0.1\fB"\fP klausīties tikai savienojumus no lokālā datora vai \fB"\fP::\fB"\fP, lai klausītos visus ienākošos IPv6 un IPv4 savienojumus.
+Saskarnes, lai klausītos ienākošos savienojumus.    Noklusējums ir klausīties visus pieejamos IPv4 interfeisus. To var mainīt, piemēram, \fB\(dq\fP127.0.0.1\fB\(dq\fP klausīties tikai savienojumus no lokālā datora vai \fB\(dq\fP::\fB\(dq\fP, lai klausītos visus ienākošos IPv6 un IPv4 savienojumus.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -221,7 +221,7 @@ Ceļš uz JSON failu, kurā ir vietrāži URL funkcijai “Meklēt internetā”
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-timeout
-Kopējais gaidīšanas laiks, \fB"\fPtīrai izslēgšanai\fB"\fP sekundēs.
+Kopējais gaidīšanas laiks, \fB\(dq\fPtīrai izslēgšanai\fB\(dq\fP sekundēs.
 .UNINDENT
 .INDENT 0.0
 .TP

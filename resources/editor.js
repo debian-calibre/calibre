@@ -4972,16 +4972,20 @@ var str = ρσ_str, repr = ρσ_repr;;
         });
 
         function process_rules(node, rules, address, sheet, sheet_index, all_properties, node_style, is_ancestor, ans) {
-            var rule, rule_address, st, type, href, parts, q, properties, data, rule_index;
+            var offset, rule, rule_address, st, type, href, parts, q, properties, data, rule_index;
+            offset = 0;
             for (var ρσ_Index1 = 0; ρσ_Index1 < rules.length; ρσ_Index1++) {
                 rule_index = ρσ_Index1;
                 rule = rules[(typeof rule_index === "number" && rule_index < 0) ? rules.length + rule_index : rule_index];
-                rule_address = address.concat([rule_index]);
+                rule_address = address.concat([rule_index - offset]);
                 if (rule.type === CSSRule.MEDIA_RULE) {
                     process_rules(node, rule.cssRules, rule_address, sheet, sheet_index, all_properties, node_style, is_ancestor, ans);
                     continue;
                 }
                 if (rule.type !== CSSRule.STYLE_RULE) {
+                    if (rule.type === CSSRule.NAMESPACE_RULE) {
+                        offset += 1;
+                    }
                     continue;
                 }
                 st = rule.selectorText;

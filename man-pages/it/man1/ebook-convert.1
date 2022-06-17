@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "maggio 27, 2022" "5.43.0" "calibre"
-.SH NAME
-ebook-convert \- ebook-convert
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "EBOOK-CONVERT" "1" "giugno 17, 2022" "5.44.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -45,14 +45,14 @@ Converti un e\-book da un formato a un altro.
 .sp
 file_di_input è il file da convertire e file_di_output è il file convertito. Entrambi devono essere specificati come primi due argomenti del comando.
 .sp
-Il formato di output viene dedotto dall\(aqestensione del file convertito file_di_output. file_di_output può anche essere del formato speciale .EXT dove EXT è l\(aqestensione del file di output. In questo caso il nome del file di output è derivato dal nome del file di input. Nota che i nomi dei file non devono cominciare un un trattino. Infine, se file_di_output non ha estensione verrà trattato come cartella e un "open e\-book" (OEB) formato da file HTML viene inserito nella cartella. Questi file HTML sono quelli che normalmente sarebbero stati passati al plugin atto a generare l\(aqoutput.
+Il formato di output viene dedotto dall\(aqestensione del file convertito file_di_output. file_di_output può anche essere del formato speciale .EXT dove EXT è l\(aqestensione del file di output. In questo caso il nome del file di output è derivato dal nome del file di input. Nota che i nomi dei file non devono cominciare un un trattino. Infine, se file_di_output non ha estensione verrà trattato come cartella e un \(dqopen e\-book\(dq (OEB) formato da file HTML viene inserito nella cartella. Questi file HTML sono quelli che normalmente sarebbero stati passati al plugin atto a generare l\(aqoutput.
 .sp
 Dopo aver specificato i file di input e output è possibile personalizzare la conversione specificando varie opzioni. Le opzioni disponibili dipendono dal tipo di file di input e output. Per avere maggiori informazioni sulle opzioni specifiche, indica i file di input e output e poi inserisci l\(aqopzione \-h.
 .sp
 Per la documentazione completa sul sistema di conversione, vedi
 \fI\%Conversione E\-book\fP
 .sp
-Ogni qualvolta vengono passati argomenti con degli spazi a \fBebook\-convert\fP, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: "/some path/with spaces"
+Ogni qualvolta vengono passati argomenti con degli spazi a \fBebook\-convert\fP, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .sp
 Le opzioni e i valori predefiniti cambiano a seconda sia del
 formato di input che ti output, quindi bisognerebbe sempre controllare:
@@ -94,7 +94,7 @@ Specifica il profilo di input. Il profilo di input fornisce informazioni al sist
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-Elenca i nomi delle ricette integrate. Puoi creare un e\-book da una ricetta integrata in questo modo: ebook\-convert \fB"\fPNome Ricetta.recipe\fB"\fP output.epub
+Elenca i nomi delle ricette integrate. Puoi creare un e\-book da una ricetta integrata in questo modo: ebook\-convert \fB\(dq\fPNome Ricetta.recipe\fB\(dq\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -183,7 +183,7 @@ Opzioni per controllare l\(aqaspetto dell\(aqoutput
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Converti i caratteri Unicode in una rappresentazione ASCII. Usa con attenzione perché sostituirà i caratteri Unicode con caratteri ASCII. Per esempio sostituirà \fB"\fPPelé\fB"\fP con \fB"\fPPele\fB"\fP\&. In più, nota che nei casi in cui ci sia più di una rappresentazione per un carattere (caratteri presenti sia in cinese che in giapponese per esempio) la rappresentazione basata sul linguaggio corrente dell\fB\(aq\fPinterfaccia di calibre sarà usata.
+Converti i caratteri Unicode in una rappresentazione ASCII. Usa con attenzione perché sostituirà i caratteri Unicode con caratteri ASCII. Per esempio sostituirà \fB\(dq\fPPelé\fB\(dq\fP con \fB\(dq\fPPele\fB\(dq\fP\&. In più, nota che nei casi in cui ci sia più di una rappresentazione per un carattere (caratteri presenti sia in cinese che in giapponese per esempio) la rappresentazione basata sul linguaggio corrente dell\fB\(aq\fPinterfaccia di calibre sarà usata.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -193,7 +193,7 @@ La dimensione base dei caratteri in pt. Tutte le dimensioni dei caratteri nel li
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-Cambia allineamento del testo. Impostato a \fB"\fPsinistra\fB"\fP il testo della sorgente sarà convertito con un allineamento a sinistra. Impostato a \fB"\fPgiustificato\fB"\fP il testo verrà distribuito per larghezza della pagina. Impostato a \fB"\fPoriginale\fB"\fP (predefinito) l\fB\(aq\fPallineamento non verrà cambiato. Notare che solo alcuni formati di output supportano il testo giustificato.
+Cambia allineamento del testo. Impostato a \fB\(dq\fPsinistra\fB\(dq\fP il testo della sorgente sarà convertito con un allineamento a sinistra. Impostato a \fB\(dq\fPgiustificato\fB\(dq\fP il testo verrà distribuito per larghezza della pagina. Impostato a \fB\(dq\fPoriginale\fB\(dq\fP (predefinito) l\fB\(aq\fPallineamento non verrà cambiato. Notare che solo alcuni formati di output supportano il testo giustificato.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -208,7 +208,7 @@ Incorpora qualsiasi carattere che sia referenziato ma non ancora incorporato nel
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Incorpora la famiglia caratteri specificata nel libro. Permette di specificare il carattere di \fB"\fPbase\fB"\fP utilizzato per il libro. Se il documento di input specifica i propri caratteri, potrebbero sovrascrivere il carattere di base. Nota che l\fB\(aq\fPincorporamento dei caratteri funziona solo con alcuni formati di output, tra cui EPUB, AZW3 e DOCX.
+Incorpora la famiglia caratteri specificata nel libro. Permette di specificare il carattere di \fB\(dq\fPbase\fB\(dq\fP utilizzato per il libro. Se il documento di input specifica i propri caratteri, potrebbero sovrascrivere il carattere di base. Nota che l\fB\(aq\fPincorporamento dei caratteri funziona solo con alcuni formati di output, tra cui EPUB, AZW3 e DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -278,7 +278,7 @@ Imposta il margine superiore in pt. Il valore predefinito è 5.0. L\fB\(aq\fPimp
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-L\fB\(aq\fPaltezza minima della riga, come percentuale della dimensione degli elementi del carattere. Calibre farà in modo che ogni elemento abbia almeno questa dimensione, senza tenere conto di quanto specifica il documento in input. Per disabilitare, imposta il valore a zero. Il valore predefinito è 120%. Usa questa impostazione rispetto all\fB\(aq\fPimpostazione diretta dell\fB\(aq\fPaltezza della riga, a meno di conoscere esattamente cosa stai facendo. Ad esempio, è possibile impostare la \fB"\fPSpaziatura doppia\fB"\fP utilizzando il valore 240.
+L\fB\(aq\fPaltezza minima della riga, come percentuale della dimensione degli elementi del carattere. Calibre farà in modo che ogni elemento abbia almeno questa dimensione, senza tenere conto di quanto specifica il documento in input. Per disabilitare, imposta il valore a zero. Il valore predefinito è 120%. Usa questa impostazione rispetto all\fB\(aq\fPimpostazione diretta dell\fB\(aq\fPaltezza della riga, a meno di conoscere esattamente cosa stai facendo. Ad esempio, è possibile impostare la \fB\(dq\fPSpaziatura doppia\fB\(dq\fP utilizzando il valore 240.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -303,12 +303,12 @@ Crea un sottoinsieme di tutti i caratteri integrati. Ogni carattere integrato è
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Percorso a un file che contiene regole per trasformare gli stili CSS di questo libro. Il modo più semplice per creare questo file è quello di usare la procedura guidata per la creazione di regole nell\fB\(aq\fPinterfaccia utente di calibre. Avvialo dalla sezione della finestra di conversione \fB"\fPAspetto\->Trasforma stili\fB"\fP\&. Dopo aver creato queste regole, puoi usare il pulsante \fB"\fPEsporta\fB"\fP per salvarle in un file.
+Percorso a un file che contiene regole per trasformare gli stili CSS di questo libro. Il modo più semplice per creare questo file è quello di usare la procedura guidata per la creazione di regole nell\fB\(aq\fPinterfaccia utente di calibre. Avvialo dalla sezione della finestra di conversione \fB\(dq\fPAspetto\->Trasforma stili\fB\(dq\fP\&. Dopo aver creato queste regole, puoi usare il pulsante \fB\(dq\fPEsporta\fB\(dq\fP per salvarle in un file.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Percorso a un file che contiene regole per trasformare il codice HTML di questo libro. Il modo più semplice per creare questo file è quello di usare la procedura guidata per la creazione di regole nell\fB\(aq\fPinterfaccia utente di calibre. Avvialo dalla sezione della finestra di conversione \fB"\fPAspetto\->Trasforma HTML\fB"\fP\&. Dopo aver creato queste regole, puoi usare il pulsante \fB"\fPEsporta\fB"\fP per salvarle in un file.
+Percorso a un file che contiene regole per trasformare il codice HTML di questo libro. Il modo più semplice per creare questo file è quello di usare la procedura guidata per la creazione di regole nell\fB\(aq\fPinterfaccia utente di calibre. Avvialo dalla sezione della finestra di conversione \fB\(dq\fPAspetto\->Trasforma HTML\fB\(dq\fP\&. Dopo aver creato queste regole, puoi usare il pulsante \fB\(dq\fPEsporta\fB\(dq\fP per salvarle in un file.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -421,12 +421,12 @@ Controlla il rilevamento automatico della struttura del documento.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Un\fB\(aq\fPespressione XPath per rilevare i titoli dei capitoli. Per impostazione predefinita si considerano come titoli di capitolo i tag <h1> o <h2> che contengono le parole \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP o \fB"\fPpart\fB"\fP, così come ogni tag che contenga class=\fB"\fPchapter\fB"\fP\&. L\fB\(aq\fPespressione usata deve restituire un elenco di elementi. Per disabilitare la rilevazione dei capitoli, usa l\fB\(aq\fPespressione \fB"\fP/\fB"\fP\&. Vedi la Guida XPath nel manuale utente di calibre per ulteriore aiuto nell\fB\(aq\fPusare questa funzione.
+Un\fB\(aq\fPespressione XPath per rilevare i titoli dei capitoli. Per impostazione predefinita si considerano come titoli di capitolo i tag <h1> o <h2> che contengono le parole \fB\(dq\fPchapter\fB\(dq\fP, \fB\(dq\fPbook\fB\(dq\fP, \fB\(dq\fPsection\fB\(dq\fP, \fB\(dq\fPprologue\fB\(dq\fP, \fB\(dq\fPepilogue\fB\(dq\fP o \fB\(dq\fPpart\fB\(dq\fP, così come ogni tag che contenga class=\fB\(dq\fPchapter\fB\(dq\fP\&. L\fB\(aq\fPespressione usata deve restituire un elenco di elementi. Per disabilitare la rilevazione dei capitoli, usa l\fB\(aq\fPespressione \fB\(dq\fP/\fB\(dq\fP\&. Vedi la Guida XPath nel manuale utente di calibre per ulteriore aiuto nell\fB\(aq\fPusare questa funzione.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Specificare come marcare i capitoli rilevati. Il valore \fB"\fPpagebreak\fB"\fP inserirà un\fB\(aq\fPinterruzione di pagina prima del capitolo. Il valore \fB"\fPrule\fB"\fP inserirà una linea prima del capitolo. Il valore \fB"\fPnone\fB"\fP disabiliterà la marcatura dei capitoli e il valore \fB"\fPboth\fB"\fP userà sia l\fB\(aq\fPinterruzione di pagina che la linea per marcare i capitoli.
+Specificare come marcare i capitoli rilevati. Il valore \fB\(dq\fPpagebreak\fB\(dq\fP inserirà un\fB\(aq\fPinterruzione di pagina prima del capitolo. Il valore \fB\(dq\fPrule\fB\(dq\fP inserirà una linea prima del capitolo. Il valore \fB\(dq\fPnone\fB\(dq\fP disabiliterà la marcatura dei capitoli e il valore \fB\(dq\fPboth\fB\(dq\fP userà sia l\fB\(aq\fPinterruzione di pagina che la linea per marcare i capitoli.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -494,7 +494,7 @@ Non aggiungere i capitoli rilevati automaticamente all\fB\(aq\fPindice.
 .INDENT 0.0
 .TP
 .B \-\-toc\-filter
-Rimuovi dall\fB\(aq\fPindice le voci il cui titolo corrisponde alla espressione specificata. Le voci che corrispondono saranno rimosse insieme alle voci \fB"\fPfiglie\fB"\fP\&.
+Rimuovi dall\fB\(aq\fPindice le voci il cui titolo corrisponde alla espressione specificata. Le voci che corrispondono saranno rimosse insieme alle voci \fB\(dq\fPfiglie\fB\(dq\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP

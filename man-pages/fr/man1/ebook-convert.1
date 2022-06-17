@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "mai 27, 2022" "5.43.0" "calibre"
-.SH NAME
-ebook-convert \- ebook-convert
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "EBOOK-CONVERT" "1" "juin 17, 2022" "5.44.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -52,7 +52,7 @@ Après avoir spécifié le fichier d\(aqentrée et de sortie vous pouvez adapter
 Pour la documentation complète du système de conversion voir
 \fI\%Conversion de livre numérique\fP
 .sp
-Chaque fois que vous passez à \fBebook\-convert\fP des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
+Chaque fois que vous passez à \fBebook\-convert\fP des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: \(dq/some path/with spaces\(dq
 .sp
 Les options et les valeurs par défaut pour les options changent selon les
 formats d\(aqentrée et de sortie, aussi vous devriez toujours vérifier avec
@@ -102,7 +102,7 @@ Spécifier le profil d’entrée. Ce profil d’entrée indique au système de c
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-Liste les noms des recettes intégrées. Vous pouvez créer un livre numérique depuis une recette intégrée de la manière suivante : ebook\-convert \fB"\fPNom Recette.recipe\fB"\fP sortie.epub
+Liste les noms des recettes intégrées. Vous pouvez créer un livre numérique depuis une recette intégrée de la manière suivante : ebook\-convert \fB\(dq\fPNom Recette.recipe\fB\(dq\fP sortie.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -191,7 +191,7 @@ Options pour contrôler l’apparence de la sortie
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Translittère les caractères Unicode en une représentation ASCII. A utiliser avec précaution car cela remplacera les caractères Unicode par des caractères ASCII. Par exemple, elle remplacera \fB"\fPPelé\fB"\fP par \fB"\fPPele\fB"\fP\&. Notez également que dans les cas où il existe plusieurs représentations d\fB\(aq\fPun caractère (caractères partagés par le chinois et le japonais par exemple), la représentation basée sur la langue de l\fB\(aq\fPinterface actuelle de calibre sera utilisée.
+Translittère les caractères Unicode en une représentation ASCII. A utiliser avec précaution car cela remplacera les caractères Unicode par des caractères ASCII. Par exemple, elle remplacera \fB\(dq\fPPelé\fB\(dq\fP par \fB\(dq\fPPele\fB\(dq\fP\&. Notez également que dans les cas où il existe plusieurs représentations d\fB\(aq\fPun caractère (caractères partagés par le chinois et le japonais par exemple), la représentation basée sur la langue de l\fB\(aq\fPinterface actuelle de calibre sera utilisée.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -201,7 +201,7 @@ La taille de base pour la police de caractère en pts. Toutes les tailles de pol
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-Changer la justification du texte. Une valeur à \fB"\fPleft\fB"\fP convertit tout le texte justifié dans la source vers un alignement de texte à gauche (c.à.d non justifié). Une valeur à \fB"\fPjustify\fB"\fP convertit le texte non justifié en justifié. Une valeur à \fB"\fPoriginal\fB"\fP (par défaut) ne change pas la justification du fichier source. Notez que seuls certains formats prennent en charge la justification.
+Changer la justification du texte. Une valeur à \fB\(dq\fPleft\fB\(dq\fP convertit tout le texte justifié dans la source vers un alignement de texte à gauche (c.à.d non justifié). Une valeur à \fB\(dq\fPjustify\fB\(dq\fP convertit le texte non justifié en justifié. Une valeur à \fB\(dq\fPoriginal\fB\(dq\fP (par défaut) ne change pas la justification du fichier source. Notez que seuls certains formats prennent en charge la justification.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -216,7 +216,7 @@ Incorporer toutes les polices qui sont référencées dans le document mais pas 
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Inclut la famille de polices spécifiée dans le livre. Ceci précise la police de \fB"\fPbase\fB"\fP utilisée pour le livre. Si le document d\fB\(aq\fPentrée spécifie ses propres polices, elles peuvent primer sur la police de \fB"\fPbase\fB"\fP\&. Vous pouvez utilisez l\fB\(aq\fPoption de filtre de style pour enlever les polices du document d\fB\(aq\fPentrée. Notez que l\fB\(aq\fPinclusion de polices fonctionne seulement avec certains formats de sortie, principalement l\fB\(aq\fPEPUB,AZW3 et DOCX.
+Inclut la famille de polices spécifiée dans le livre. Ceci précise la police de \fB\(dq\fPbase\fB\(dq\fP utilisée pour le livre. Si le document d\fB\(aq\fPentrée spécifie ses propres polices, elles peuvent primer sur la police de \fB\(dq\fPbase\fB\(dq\fP\&. Vous pouvez utilisez l\fB\(aq\fPoption de filtre de style pour enlever les polices du document d\fB\(aq\fPentrée. Notez que l\fB\(aq\fPinclusion de polices fonctionne seulement avec certains formats de sortie, principalement l\fB\(aq\fPEPUB,AZW3 et DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -286,7 +286,7 @@ Régler la marge haute en pts. Le réglage par défaut est 5.0. Aucune marge ne 
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-La hauteur de ligne minimum, en pourcentage de la taille de la police de l’élément calculé. calibre s’assurera que chaque élément a une hauteur de ligne correspondant au moins à ce réglage, quelle que soit la spécification du document d’entrée. Fixer à 0 pour désactiver. Par défaut 120%. Utiliser cette option préférentiellement à une spécification de ligne directe, à moins de savoir ce que vous faites. Par exemple, vous pouvez obtenir un texte en \fB"\fPdouble interligne\fB"\fP en fixant cette valeur à 240%.
+La hauteur de ligne minimum, en pourcentage de la taille de la police de l’élément calculé. calibre s’assurera que chaque élément a une hauteur de ligne correspondant au moins à ce réglage, quelle que soit la spécification du document d’entrée. Fixer à 0 pour désactiver. Par défaut 120%. Utiliser cette option préférentiellement à une spécification de ligne directe, à moins de savoir ce que vous faites. Par exemple, vous pouvez obtenir un texte en \fB\(dq\fPdouble interligne\fB\(dq\fP en fixant cette valeur à 240%.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -311,12 +311,12 @@ Créer un sous\-ensemble de toutes les polices intégrées. Chaque police intég
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Chemin vers un fichier contenant les règles pour transformer les styles CSS dans ce livre. La manière la plus facile de créer un tel fichier est d\fB\(aq\fPutiliser l\fB\(aq\fPassistant pour la création de règles dans l\fB\(aq\fPinterface graphique utilisateur de calibre. Accédez\-y dans la section de la boite de dialogue conversion sous \fB"\fPApparence\->Transformer les styles\fB"\fP\&. Une fois fois que vous avez créé les règles, vous pouvez utiliser le bouton Exporter pour les sauvegarder en un fichier.
+Chemin vers un fichier contenant les règles pour transformer les styles CSS dans ce livre. La manière la plus facile de créer un tel fichier est d\fB\(aq\fPutiliser l\fB\(aq\fPassistant pour la création de règles dans l\fB\(aq\fPinterface graphique utilisateur de calibre. Accédez\-y dans la section de la boite de dialogue conversion sous \fB\(dq\fPApparence\->Transformer les styles\fB\(dq\fP\&. Une fois fois que vous avez créé les règles, vous pouvez utiliser le bouton Exporter pour les sauvegarder en un fichier.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Chemin vers un fichier contenant les règles pour transformer du HTML dans ce livre. La manière la plus facile de créer un tel fichier est d\fB\(aq\fPutiliser l\fB\(aq\fPassistant pour la création de règles dans l\fB\(aq\fPinterface graphique utilisateur de calibre. Accédez\-y dans la section de la boite de dialogue conversion sous \fB"\fPApparence\->Transformer du HTML\fB"\fP\&. Une fois fois que vous avez créé les règles, vous pouvez utiliser le bouton \fB"\fPExporter\fB"\fP pour les sauvegarder en un fichier.
+Chemin vers un fichier contenant les règles pour transformer du HTML dans ce livre. La manière la plus facile de créer un tel fichier est d\fB\(aq\fPutiliser l\fB\(aq\fPassistant pour la création de règles dans l\fB\(aq\fPinterface graphique utilisateur de calibre. Accédez\-y dans la section de la boite de dialogue conversion sous \fB\(dq\fPApparence\->Transformer du HTML\fB\(dq\fP\&. Une fois fois que vous avez créé les règles, vous pouvez utiliser le bouton \fB\(dq\fPExporter\fB\(dq\fP pour les sauvegarder en un fichier.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -429,12 +429,12 @@ Contrôle de l’auto\-détection de la structure du document.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Une expression XPath pour détecter les titres de chapitres. Par défaut, les étiquettes <h1> ou <h2> qui contiennent les mots \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP, ou \fB"\fPpart\fB"\fP ainsi que les étiquettes qui contiennent class=\fB"\fPchapter\fB"\fP\&. L’expression utilisée doit être évaluée comme une liste d’éléments. Pour désactiver la détection de chapitre, utiliser l’expression \fB"\fP/\fB"\fP\&. Regarder le tutoriel XPath dans le Manuel Utilisateur de calibre pour plus d’aide sur l’utilisation de cette fonction.
+Une expression XPath pour détecter les titres de chapitres. Par défaut, les étiquettes <h1> ou <h2> qui contiennent les mots \fB\(dq\fPchapter\fB\(dq\fP, \fB\(dq\fPbook\fB\(dq\fP, \fB\(dq\fPsection\fB\(dq\fP, \fB\(dq\fPprologue\fB\(dq\fP, \fB\(dq\fPepilogue\fB\(dq\fP, ou \fB\(dq\fPpart\fB\(dq\fP ainsi que les étiquettes qui contiennent class=\fB\(dq\fPchapter\fB\(dq\fP\&. L’expression utilisée doit être évaluée comme une liste d’éléments. Pour désactiver la détection de chapitre, utiliser l’expression \fB\(dq\fP/\fB\(dq\fP\&. Regarder le tutoriel XPath dans le Manuel Utilisateur de calibre pour plus d’aide sur l’utilisation de cette fonction.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Spécifier comment indiquer les chapitres détectés. Une valeur \fB"\fPpagebreak\fB"\fP insérera un saut de page avant chaque chapitre. Une valeur \fB"\fPrule\fB"\fP insérera un filet avant chaque chapitre. Une valeur \fB"\fPnone\fB"\fP désactivera le marquage des chapitres et une valeur \fB"\fPboth\fB"\fP utilisera à la fois un saut de page et un filet.
+Spécifier comment indiquer les chapitres détectés. Une valeur \fB\(dq\fPpagebreak\fB\(dq\fP insérera un saut de page avant chaque chapitre. Une valeur \fB\(dq\fPrule\fB\(dq\fP insérera un filet avant chaque chapitre. Une valeur \fB\(dq\fPnone\fB\(dq\fP désactivera le marquage des chapitres et une valeur \fB\(dq\fPboth\fB\(dq\fP utilisera à la fois un saut de page et un filet.
 .UNINDENT
 .INDENT 0.0
 .TP

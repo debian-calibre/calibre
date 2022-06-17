@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-21 08:44+0000\n"
+"POT-Creation-Date: 2022-06-17 02:39+0000\n"
 "PO-Revision-Date: 2014-07-05 16:50+0000\n"
 "Last-Translator: Paulo Pereira <pauloizidoro@gmail.com>, 2019-2022\n"
 "Language-Team: Portuguese (http://www.transifex.com/calibre/calibre/language/pt/)\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: pt\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: ../../__w/calibre/calibre/manual/polish.rst:4
 msgid "API documentation for the e-book editing tools"
@@ -98,28 +98,26 @@ msgstr "Converte um caminho absoluto para um nome canónico relativo ao :attr:`r
 #: of calibre.ebooks.oeb.polish.container.Container.commit:0
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.raw_data:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
-#: of calibre.ebooks.oeb.polish.replace.replace_links:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: of calibre.ebooks.oeb.polish.cover.mark_as_titlepage:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: of calibre.ebooks.oeb.polish.cover.set_cover:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
+#: calibre.ebooks.oeb.polish.css.filter_css:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
+#: calibre.ebooks.oeb.polish.css.remove_unused_css:0
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.rename_files:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: of calibre.ebooks.oeb.polish.replace.replace_links:0
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
-#: of calibre.ebooks.oeb.polish.split.split:0
+#: of calibre.ebooks.oeb.polish.split.merge:0
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.multisplit:0
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
-#: of calibre.ebooks.oeb.polish.split.merge:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
-#: of calibre.ebooks.oeb.polish.cover.set_cover:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
-#: of calibre.ebooks.oeb.polish.cover.mark_as_titlepage:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.remove_unused_css:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.filter_css:0
+#: of calibre.ebooks.oeb.polish.split.split:0
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring of
 #: calibre.ebooks.oeb.polish.toc.create_inline_toc:0
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:0
 #: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
 #: calibre.gui2.tweak_book.boss.Boss.apply_container_update_to_gui:0
 #: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
@@ -128,6 +126,8 @@ msgstr "Converte um caminho absoluto para um nome canónico relativo ao :attr:`r
 #: calibre.gui2.tweak_book.boss.Boss.open_book:0
 #: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
 #: calibre.gui2.tweak_book.boss.Boss.show_current_diff:0
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
+#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:0
 msgid "Parameters"
 msgstr "Parâmetros"
 
@@ -260,7 +260,7 @@ msgstr "Converte um href (relativo à base) para um nome. base tem de ser um nom
 msgid ""
 "Insert item into parent (or append if index is None), fixing indentation. "
 "Only works with self closing items."
-msgstr "Insere item no ascendente (ou acrescenta se Index for None), ajustando a indentação. Apenas funciona com itens que auto-fecháveis."
+msgstr "Insere item no contentor (ou acrescenta se Index for None), ajustando a indentação. Apenas funciona com itens auto-fecháveis."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.ebooks.oeb.polish.container.Container.is_dir:1
@@ -576,7 +576,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/polish.rst:47
 msgid "Pretty printing and auto fixing parse errors"
-msgstr ""
+msgstr "Impressão bonita e correção automática de erros de análise"
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
 #: of calibre.ebooks.oeb.polish.pretty.fix_html:1
@@ -634,7 +634,7 @@ msgstr "Efetua uma de duas operações: cria uma nova sobrecapa a partir dos met
 
 #: ../../__w/calibre/calibre/manual/polish.rst:74
 msgid "Splitting and merging of files"
-msgstr ""
+msgstr "Dividindo e mesclando arquivos"
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.split:1
@@ -852,7 +852,7 @@ msgstr ""
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring of
 #: calibre.ebooks.oeb.polish.toc.create_inline_toc:3
 msgid "The title for this table of contents."
-msgstr ""
+msgstr "O título para este índice."
 
 #: ../../__w/calibre/calibre/manual/polish.rst:122
 msgid "Edit book tool"
@@ -1003,14 +1003,14 @@ msgstr "Método :meth:`register_shortcut`."
 
 #: ../../__w/calibre/calibre/manual/polish.rst:131
 msgid "Controlling the editor's user interface"
-msgstr ""
+msgstr "Controlando a interface do usuário do editor"
 
 #: ../../__w/calibre/calibre/manual/polish.rst:133
 msgid ""
 "The e-book editor's user interface is controlled by a single global *Boss* "
 "object. This has many useful methods that can be used in plugin code to "
 "perform common tasks."
-msgstr ""
+msgstr "A interface do usuário do editor de e-book é controlada por um único objeto *Boss* global. Isso tem muitos métodos úteis que podem ser usados no código do plugin para realizar tarefas comuns."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
 #: calibre.gui2.tweak_book.boss.Boss.add_savepoint:1

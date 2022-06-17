@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "maio 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibredb \- calibredb
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBREDB" "1" "junho 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -174,7 +174,7 @@ calibredb list [opções]
 .UNINDENT
 .UNINDENT
 .sp
-Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
+Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -183,7 +183,7 @@ Ordenar resultados em ordem ascendente
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Campos que serão exibidos ao listar livros no banco de dados. Deve ser uma lista de campos separada por vírgulas. Campos disponíveis: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Padrão: title,authors. O campo especial \fB"\fPall\fB"\fP pode ser usado para selecionar todos os campos. Em complemento aos campos acima, campos personalizados também estão disponíveis como *field_name. Por exemplo, para um campo personalizado #rating, use o nome: *rating.
+Campos que serão exibidos ao listar livros no banco de dados. Deve ser uma lista de campos separada por vírgulas. Campos disponíveis: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Padrão: title,authors. O campo especial \fB\(dq\fPall\fB\(dq\fP pode ser usado para selecionar todos os campos. Em complemento aos campos acima, campos personalizados também estão disponíveis como *field_name. Por exemplo, para um campo personalizado #rating, use o nome: *rating.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -234,7 +234,7 @@ calibredb add [opções] arquivos1 arquivo2 arquivo3 ...
 .sp
 Adicionar os arquivos especificados como livros para a base de dados. Você pode também especificar pastas, consulte abaixo as opções relacionadas com pastas.
 .sp
-Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
+Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -243,7 +243,7 @@ Configure o(s) autor(es) do(s) livro(s) adicionado(s)
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-Se livros com títulos e autores similares forem encontrados, mescla os formatos (arquivos) de entrada aos registros de livros existentes. O valor \fB"\fPignore\fB"\fP significa que formatos duplicados são descartados. O valor \fB"\fPoverwrite\fB"\fP significa que os formatos duplicados na biblioteca são sobrescritos com os novos arquivos adicionados. O valor \fB"\fPnew_record\fB"\fP significa que formatos duplicados serão inseridos em um novo registro de livro.
+Se livros com títulos e autores similares forem encontrados, mescla os formatos (arquivos) de entrada aos registros de livros existentes. O valor \fB\(dq\fPignore\fB\(dq\fP significa que formatos duplicados são descartados. O valor \fB\(dq\fPoverwrite\fB\(dq\fP significa que os formatos duplicados na biblioteca são sobrescritos com os novos arquivos adicionados. O valor \fB\(dq\fPnew_record\fB\(dq\fP significa que formatos duplicados serão inseridos em um novo registro de livro.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -332,7 +332,7 @@ calibredb remove ids
 .sp
 Remove os livros identificados por IDs do banco de dados. IDs devem ser uma lista de números id separados por vírgulas (você pode pegar os números de ids utilizando o comando de busca). Por exemplo, 23 ,34,57\-85 (quando especificar um alcance, o último número não é incluído).
 .sp
-Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
+Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-permanent
@@ -352,7 +352,7 @@ calibredb add_format [options] id ebook_file
 .sp
 Adiciona o livro em ebook_file para os formatos disponíveis de livro lógico identificados por id. Você pode pegar um id usando o comando de busca. Se o formato já existe, ele é substituído, a menos que a opção de não substituir seja marcada.
 .sp
-Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
+Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -372,7 +372,7 @@ calibredb remove_format [options] id fmt
 .sp
 remove o formato fmt de um livro lógico identificado pelo id. Você pode pegar o id utilizando o comando de busca. fmt pode ser uma extensão de arquivo como LRF ou TXT ou EPUB. Se o arquivo lógica não tem fmt disponível, não faz nada.
 .sp
-Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
+Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -388,7 +388,7 @@ calibredb show_metada[options] id
 Apresenta os metadados armazenados na base de dados do calibre para o livro identificado pelo id.
 Id é um número de id do comando de busca.
 .sp
-Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
+Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -413,7 +413,7 @@ comando show_metadata. Você pode também setar o metadado de campos individuais
 a opção \-\-field. Se você utilizar a opção \-\-field, não é necessário especificar
 um arquivo OPF.
 .sp
-Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
+Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
@@ -440,7 +440,7 @@ Exportar os livros especificados pelos id (uma lista separada por vírgula) para
 A operação de exportação save todos os formatos do livro, suas capas e metadados(em
 um arquivo opf). Você pode pegar os números de id do comando de busca.
 .sp
-Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
+Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -479,7 +479,7 @@ Relatar progresso
 .INDENT 0.0
 .TP
 .B \-\-replace\-whitespace
-Substituir espaços em branco por \fB"\fP_\fB"\fP\&.
+Substituir espaços em branco por \fB\(dq\fP_\fB\(dq\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -489,7 +489,7 @@ Exportar todos os livros para uma única pasta
 .INDENT 0.0
 .TP
 .B \-\-template
-Modelo para controlar a estrutura de nome do arquivo e pasta dos arquivos salvos. O padrão é \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP, que vai salvar os livros em uma subpasta por autor com nomes de arquivos contendo título e autor. Os controles disponíveis são: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+Modelo para controlar a estrutura de nome do arquivo e pasta dos arquivos salvos. O padrão é \fB\(dq\fP{author_sort}/{title}/{title} \- {authors}\fB\(dq\fP, que vai salvar os livros em uma subpasta por autor com nomes de arquivos contendo título e autor. Os controles disponíveis são: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -524,7 +524,7 @@ Note that different \fBcatalog\fP formats support different sets of options. To
 see the different options, specify the name of the output file and then the
 \-\-help option.
 .sp
-Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
+Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
@@ -564,7 +564,7 @@ Expressão regular descrevendo etiquetas para excluir como gêneros. Padrão: \f
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Especifica as regras usadas para excluir livros do catálogo gerado. O modelo para uma regra de exclusão é (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPEtiquetas\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) ou (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). Por exemplo: ((\fB\(aq\fPLivros arquivados\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArquivado\fB\(aq\fP),) irá excluir um livro com um valor de \fB\(aq\fPArquivado\fB\(aq\fP na coluna personalizada \fB\(aq\fPstatus\fB\(aq\fP\&. Quando várias regras são definidas, todas as regras serão aplicadas. Padrão:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Aplica\-se aos formatos de saída AZW3, ePub, MOBI
+Especifica as regras usadas para excluir livros do catálogo gerado. O modelo para uma regra de exclusão é (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPEtiquetas\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) ou (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). Por exemplo: ((\fB\(aq\fPLivros arquivados\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArquivado\fB\(aq\fP),) irá excluir um livro com um valor de \fB\(aq\fPArquivado\fB\(aq\fP na coluna personalizada \fB\(aq\fPstatus\fB\(aq\fP\&. Quando várias regras são definidas, todas as regras serão aplicadas. Padrão:  \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP Aplica\-se aos formatos de saída AZW3, ePub, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -619,7 +619,7 @@ Especifica o perfil de saída. Em alguns casos, um perfil de saída é necessár
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-Especifica as regras usadas para incluir prefixos que indicam livros de leitura, lista de sonhos  e outros prefixos especificados pelo usuário. O modelo para uma regra de prefixo é (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). Quando várias regras são definidas, será usada a primeira regra correspondente. Padrão: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Aplica\-se a formatos de saída AZW3, ePub, MOBI
+Especifica as regras usadas para incluir prefixos que indicam livros de leitura, lista de sonhos  e outros prefixos especificados pelo usuário. O modelo para uma regra de prefixo é (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). Quando várias regras são definidas, será usada a primeira regra correspondente. Padrão: \fB\(dq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(dq\fP Aplica\-se a formatos de saída AZW3, ePub, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -660,7 +660,7 @@ Sintaxe para remover:
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
-Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
+Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -673,15 +673,15 @@ calibredb add_custom_column [opções] identificador nome tipo\-de\-dado
 .UNINDENT
 .UNINDENT
 .sp
-Criar uma coluna personalizada. "identificador" é o nome de máquina para coluna.
-Não pode conter espaços ou dois\-pontos. "nome" é o nome da coluna que será exibido.
+Criar uma coluna personalizada. \(dqidentificador\(dq é o nome de máquina para coluna.
+Não pode conter espaços ou dois\-pontos. \(dqnome\(dq é o nome da coluna que será exibido.
 tipo\-de\-dado pode ser um dos seguintes: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
+Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-display
-Um dicionário de opções para personalizar a forma como os dados nesta coluna serão interpretados. Esta é uma string JSON. Para colunas de enumeração, use \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP Existem muitas opções que podem ir para as opções de variáveis de exibição. As opções por tipo de coluna são: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  A melhor maneira de encontrar combinações legais é criar uma coluna personalizada do tipo apropriado na GUI e em seguida olhar para o backup OPF de um livro (assegure\-se que um novo OPF foi criado da coluna foi acrescentado). Você vai ver o JSON da \fB"\fPexibição\fB"\fP para a nova coluna em OPF.
+Um dicionário de opções para personalizar a forma como os dados nesta coluna serão interpretados. Esta é uma string JSON. Para colunas de enumeração, use \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP Existem muitas opções que podem ir para as opções de variáveis de exibição. As opções por tipo de coluna são: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  A melhor maneira de encontrar combinações legais é criar uma coluna personalizada do tipo apropriado na GUI e em seguida olhar para o backup OPF de um livro (assegure\-se que um novo OPF foi criado da coluna foi acrescentado). Você vai ver o JSON da \fB\(dq\fPexibição\fB\(dq\fP para a nova coluna em OPF.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -702,7 +702,7 @@ calibredb custom_columns [options]
 .sp
 Lista colunas personalizadas disponíveis. Exibe os nomes dos campos e seus IDs.
 .sp
-Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
+Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -723,7 +723,7 @@ calibredb remove_custom_column[options]label
 Remover a coluna customizada identificada pela etiqueta. Você poderá ver
 as colunas costumizadas com o comando custom_columns
 .sp
-Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
+Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -746,7 +746,7 @@ Você pode pegar a lista de ids usando o comando de pesquisa.
 Você pode pegar a lista de colunas costumizadas usando o custom_columns
 command.
 .sp
-Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
+Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -774,7 +774,7 @@ armazenadas por conversão de livros, e receitas personalizadas. Os metadados re
 serão apenas tão precisos quanto aos encontrados nos arquivos OPF
 \&.
 .sp
-Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
+Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -794,7 +794,7 @@ calibredb check_library [options]
 .sp
 Executar algumas verificações no sistema de arquivos representando uma biblioteca. Os relatórios são invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
+Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -830,7 +830,7 @@ calibredb list_categories [opções]
 Produz um relatório das informações da categoria no banco de dados. A
 informação é equivalente à que é mostrada no Navegador de etiquetas.
 .sp
-Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
+Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
@@ -875,7 +875,7 @@ comando para forçar uma nova geração dos arquivos OPF, com a opção \-\-all.
 Note que normalmente não há necessidade de fazer isso, pois os arquivos OPF são copiados
 automaticamente, toda vez que os metadados são alterados.
 .sp
-Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
+Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -899,7 +899,7 @@ colunas personalizadas, Bibliotecas virtuais e outros ajustes como a biblioteca 
 A biblioteca clonada não contêm livros. Se você quiser criar uma cópia completa, incluindo
 todos os livros, use em seguida suas ferramentas de sistema de arquivos para copiar a pasta da biblioteca.
 .sp
-Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
+Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -928,7 +928,7 @@ os metadados em todos os livros. Você também pode especificar várias ids de l
 .sp
 por espaços e intervalos de ID separados por hífens. Por exemplo: calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
-Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
+Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
@@ -951,9 +951,9 @@ separada por vírgula de ids de livros resultantes da expressão de busca. O for
 para alimentar outros comandos que aceitam uma lista de ids como entrada.
 .sp
 O comando de expressão poder ser qualquer coisa da poderosa consulta de busca do calibre
-por exemplo: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
+por exemplo: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
-Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
+Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l

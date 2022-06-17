@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "május 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibre-server \- calibre-server
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBRE-SERVER" "1" "június 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibre-server \- calibre-server
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -45,7 +45,7 @@ Elindítja el a Calibre tartalomkiszolgálót. A Calibre tartalomszerver az inte
 elérhetővé teszi a Calibre könyvtárait. Megadhatja a könyvtár mappáinak elérési útját \fBcalibre\-server\fP\&. argumentumaként.
 Ha nem ad meg egyetlen elérési utat sem, akkor a program minden olyan könyvtárat használ, amelyről a fő Calibre program tud.
 .sp
-Amikor olyan argumentumokat ad át \fBcalibre\-server\fP\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át \fBcalibre\-server\fP\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .SH [BEÁLLÍTÁSOK]
 .INDENT 0.0
 .TP
@@ -60,7 +60,7 @@ A szerver válaszának várakozási ideje (másodpercben) a lekérdezések sorá
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-A használt hitelesítés típusának kiválasztása.      Állítsa be a szerver által használt HTTP hitelesítési módot. Állítsa \fB"\fPbasic\fB"\fP értékre, ha ezt a szervert SSL proxy mögé helyezi. Ellenkező esetben hagyja \fB"\fPauto\fB"\fP\-módban, amely az \fB"\fPbasic\fB"\fP módot fogja használni, ha az SSL be van állítva, különben a \fB"\fPdigest\fB"\fP módot fogja használni.
+A használt hitelesítés típusának kiválasztása.      Állítsa be a szerver által használt HTTP hitelesítési módot. Állítsa \fB\(dq\fPbasic\fB\(dq\fP értékre, ha ezt a szervert SSL proxy mögé helyezi. Ellenkező esetben hagyja \fB\(dq\fPauto\fB\(dq\fP\-módban, amely az \fB\(dq\fPbasic\fB\(dq\fP módot fogja használni, ha az SSL be van állítva, különben a \fB\(dq\fPdigest\fB\(dq\fP módot fogja használni.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -95,7 +95,7 @@ Az egyéni könyvlista módhoz tartozó sablont tartalmazó JSON\-fájl elérés
 .INDENT 0.0
 .TP
 .B \-\-daemonize
-Folyamat futtatása a háttérben \fB"\fPdaemon\fB"\fP\-ként (csak Linuxon).
+Folyamat futtatása a háttérben \fB\(dq\fPdaemon\fB\(dq\fP\-ként (csak Linuxon).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -155,7 +155,7 @@ Az a felület, amelyen a kapcsolatok figyelhetők.    Alapértelmezés az össze
 .INDENT 0.0
 .TP
 .B \-\-log
-A szervernapló naplófájljának elérési útja. Ez a napló szerverinformációkat és hibákat tartalmaz, nem hozzáférési naplókat. Alapértelmezés szerint az \fB"\fPstdout\fB"\fP\-ba van írva.
+A szervernapló naplófájljának elérési útja. Ez a napló szerverinformációkat és hibákat tartalmaz, nem hozzáférési naplókat. Alapértelmezés szerint az \fB\(dq\fPstdout\fB\(dq\fP\-ba van írva.
 .UNINDENT
 .INDENT 0.0
 .TP

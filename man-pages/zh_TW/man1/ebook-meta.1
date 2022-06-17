@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-META" "1" "5月 27, 2022" "5.43.0" "calibre"
-.SH NAME
-ebook-meta \- ebook-meta
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "EBOOK-META" "1" "6月 17, 2022" "5.44.0" "calibre"
+.SH NAME
+ebook-meta \- ebook-meta
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -41,17 +41,21 @@ ebook\-meta ebook_file [options]
 .UNINDENT
 .UNINDENT
 .sp
-Read/Write metadata from/to e\-book files.
+对电子书文件读/写元数据
 .sp
-Supported formats for reading metadata: azw, azw1, azw3, azw4, cb7, cbc, cbr, cbz, chm, docx, epub, fb2, fbz, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
+支持读取元数据的格式：azw, azw1, azw3, azw4, cb7, cbc, cbr, cbz, chm, docx, epub, fb2, fbz, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
 .sp
-Supported formats for writing metadata: azw, azw1, azw3, azw4, docx, epub, fb2, fbz, htmlz, lrf, mobi, odt, pdb, pdf, prc, rtf, tpz, txtz
+支持写入元数据的格式：azw, azw1, azw3, azw4, docx, epub, fb2, fbz, htmlz, lrf, mobi, odt, pdb, pdf, prc, rtf, tpz, txtz
 .sp
-Different file types support different kinds of metadata. If you try to set
-some metadata on a file type that does not support it, the metadata will be
-silently ignored.
+不同的文件格式支持不同种类的元数据。
+如果你试图在不支持的格式上设置某种元数据，
+这种元数据就会被静默忽略。
 .sp
-Whenever you pass arguments to \fBebook\-meta\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的:command:
+.nf
+\(ga
+.fi
+ebook\-meta\(ga传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .SH [選項]
 .INDENT 0.0
 .TP
@@ -106,7 +110,7 @@ Whenever you pass arguments to \fBebook\-meta\fP that have spaces in them, enclo
 .INDENT 0.0
 .TP
 .B \-\-identifier
-Set the identifiers for the book, can be specified multiple times. For example: \fI\%\-\-identifier\fP uri:https://acme.com \fI\%\-\-identifier\fP isbn:12345 To remove an identifier, specify no value, \fI\%\-\-identifier\fP isbn: Note that for EPUB files, an identifier marked as the package identifier cannot be removed.
+设置书籍的标识符，可以多次指定。 例如：\fB\(dq\fP\fI\%\-\-identifier\fP uri：\fI\%https://acme.com\fP \fI\%\-\-identifier\fP isbn:12345\fB\(dq\fP；要删除标识符，请不要指定任何值，如：\fB\(dq\fP\fI\%\-\-identifier\fP isbn: \fB\(dq\fP。请注意，对于EPUB文件，不能删除标记为包标识符的标识符。
 .UNINDENT
 .INDENT 0.0
 .TP

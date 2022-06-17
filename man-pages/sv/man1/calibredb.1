@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "maj 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibredb \- calibredb
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBREDB" "1" "juni 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -176,7 +176,7 @@ calibredb list [options]
 .sp
 Lista de böcker som finns i calibre\-databasen.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -185,7 +185,7 @@ Sortera resultaten i stigande ordning
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Fälten som ska visas när böcker listar i databasen. Bör vara en kommaseparerad lista med fält. Tillgängliga fält: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Standard: title,authors. Specialfältet \fB"\fPalla\fB"\fP kan användas för att välja alla fält. Förutom de inbyggda fälten ovan är anpassade fält också tillgängliga som *field_name, till exempel för ett anpassat fält #rating, använd namnet: *rating
+Fälten som ska visas när böcker listar i databasen. Bör vara en kommaseparerad lista med fält. Tillgängliga fält: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Standard: title,authors. Specialfältet \fB\(dq\fPalla\fB\(dq\fP kan användas för att välja alla fält. Förutom de inbyggda fälten ovan är anpassade fält också tillgängliga som *field_name, till exempel för ett anpassat fält #rating, använd namnet: *rating
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -237,7 +237,7 @@ calibredb add [options] file1 file2 file3 ...
 Lägg till de angivna filerna som böcker i databasen. Du kan även ange mappar, se
 mapprelaterade alternativ nedan.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -246,7 +246,7 @@ Ange författarna för den tillagda boken eller de tillagda böckerna
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-Om böcker med liknande titlar och författare hittas, slå samman de inkommande formaten (filer) automatiskt med befintliga bokposter. Värdet \fB"\fPignore\fB"\fP betyder att dublettformat kasseras. Värdet \fB"\fPoverwrite\fB"\fP betyder att dublettformat i biblioteket skrivs över med de nyligen tillagda filerna. Värdet \fB"\fPnew_record\fB"\fP betyder att dublettformat placeras i en ny bokpost.
+Om böcker med liknande titlar och författare hittas, slå samman de inkommande formaten (filer) automatiskt med befintliga bokposter. Värdet \fB\(dq\fPignore\fB\(dq\fP betyder att dublettformat kasseras. Värdet \fB\(dq\fPoverwrite\fB\(dq\fP betyder att dublettformat i biblioteket skrivs över med de nyligen tillagda filerna. Värdet \fB\(dq\fPnew_record\fB\(dq\fP betyder att dublettformat placeras i en ny bokpost.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -335,7 +335,7 @@ calibredb remove ids
 .sp
 Ta bort böcker som identifierats av id från databasen. id:t ska vara en kommaseparerad lista med id\-nummer (du kan få id\-nummer med sökkommandot). Till exempel 23,34,57\-85 (när du anger ett intervall, det sista numret i intervallet inkluderas inte).
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-permanent
@@ -355,7 +355,7 @@ calibredb add_format [options] id ebook_file
 .sp
 Lägg e\-boken i ebook_file till tillgängliga format för den logiska boken som identifieras av id. Du kan få id genom att använda sökkommandot. Om formatet redan finns ersätts det, såvida inte ersätt inte flaggan anges.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -375,7 +375,7 @@ calibredb remove_format [options] id fmt
 .sp
 Ta bort formatet fmt från den logiska boken identifierad med hjälp av id. Du kan få id med sökkommandot. fmt bör vara en filändelse som LRF eller TXT eller EPUB. Om den logiska boken inte har fmt tillgängligt, görs inget.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -391,7 +391,7 @@ calibredb show_metadata [options] id
 Visa metadata lagrade i calibre\-databasen för boken identifierad av id.
 id är ett id\-nummer från sökkommandot.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -416,7 +416,7 @@ kommandot show_metadata. Du kan också ställa in metadata för enskilda fält m
 flaggan \-\-field. Om du använder flaggan \-\-field behöver du inte ange
 en OPF\-fil.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
@@ -443,7 +443,7 @@ Exportera böckerna som anges av id (en kommaseparerad lista) till filsystemet.
 Exporten sparar alla format av boken, dess omslag och metadata (i
 en OPF\-fil). Du kan få id\-nummer från sökkommandot.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -482,7 +482,7 @@ Rapportera förlopp
 .INDENT 0.0
 .TP
 .B \-\-replace\-whitespace
-Ersätt \fB"\fPwhitespace\fB"\fP med understreck.
+Ersätt \fB\(dq\fPwhitespace\fB\(dq\fP med understreck.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -492,7 +492,7 @@ Exportera alla böcker till en enda mapp
 .INDENT 0.0
 .TP
 .B \-\-template
-Mallen för att anpassa filnamn och mappstruktur för de sparade filerna. Standard är \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP vilket sparar böcker i en undermapp per författare med filnamn bestående av titel och författare. Tillgängliga kontroller är: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+Mallen för att anpassa filnamn och mappstruktur för de sparade filerna. Standard är \fB\(dq\fP{author_sort}/{title}/{title} \- {authors}\fB\(dq\fP vilket sparar böcker i en undermapp per författare med filnamn bestående av titel och författare. Tillgängliga kontroller är: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -527,7 +527,7 @@ Note that different \fBcatalog\fP formats support different sets of options. To
 see the different options, specify the name of the output file and then the
 \-\-help option.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
@@ -562,12 +562,12 @@ Spara utmatning från olika stadier av konverteringsprocessen till den angivna m
 .INDENT 0.0
 .TP
 .B \-\-exclude\-genre
-Regex beskriver taggar för att utesluta som genrer. Standard: \fB\(aq\fP[.+]|^+$\fB\(aq\fP utesluter parentestaggar, t.ex. \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, och \fB\(aq\fP+\fB\(aq\fP, standard\-tagg för lästa böcker. Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
+Regex beskriver taggar som ska exkluderas som genrer Standard: \fB\(aq\fP[.+]|^+$\fB\(aq\fP exkluderar parentestaggar, t.ex. \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, och \fB\(aq\fP+\fB\(aq\fP, standard\-tagg för lästa böcker. Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Anger de regler som används för att utesluta böcker från den skapade katalogen. Modellen för en undantagsregel är antingen (\fB\(aq\fP<regel namn>\fB\(aq\fP,\fB\(aq\fPTaggar\fB\(aq\fP,\fB\(aq\fP<komma\-separerad lista med taggar>\fB\(aq\fP) eller (\fB\(aq\fP<regel namn>\fB\(aq\fP,\fB\(aq\fP<anpassad column>\fB\(aq\fP,\fB\(aq\fP<mönster>\fB\(aq\fP). Till exempel: ((\fB"\fPArkiverade böcker\fB"\fP, \fB"\fP# status\fB"\fP, \fB"\fPArkiverade\fB"\fP),) kommer att utesluta en bok med ett värde på \fB"\fPstatus\fB"\fP \fB"\fPArkiverat\fB"\fP i den anpassade kolumnen. När flera regler är definierade, kommer alla regler tillämpas. Standard: \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
+Anger de regler som används för att exkludera böcker från den skapade katalogen. Modellen för en undantagsregel är antingen (\fB\(aq\fP<regel namn>\fB\(aq\fP,\fB\(aq\fPTaggar\fB\(aq\fP,\fB\(aq\fP<komma\-separerad lista med taggar>\fB\(aq\fP) eller (\fB\(aq\fP<regel namn>\fB\(aq\fP,\fB\(aq\fP<anpassad column>\fB\(aq\fP,\fB\(aq\fP<mönster>\fB\(aq\fP). Till exempel: ((\fB\(dq\fPArkiverade böcker\fB\(dq\fP, \fB\(dq\fP# status\fB\(dq\fP, \fB\(dq\fPArkiverade\fB\(dq\fP),) kommer att exkludera en bok med ett värde på \fB\(dq\fPstatus\fB\(dq\fP \fB\(dq\fPArkiverat\fB\(dq\fP i den anpassade kolumnen. När flera regler är definierade, kommer alla regler tillämpas. Standard: \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -602,7 +602,7 @@ Inkludera sektionen \fB\(aq\fPTitlar\fB\(aq\fP i katalogen. Standard: \fB\(aq\fP
 .INDENT 0.0
 .TP
 .B \-\-genre\-source\-field
-Källfältet för \fB"\fPGenrer\fB"\fP sektion. Standard: \fB\(aq\fPTaggar\fB\(aq\fP  Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
+Källfältet för \fB\(dq\fPGenrer\fB\(dq\fP sektion. Standard: \fB\(aq\fPTaggar\fB\(aq\fP  Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -617,12 +617,12 @@ Anpassat fält innehåller anmärkningstext att infoga i beskrivningsrubrik. Sta
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Anger utmatningsprofilen. I vissa fall krävs en utmatningsprofil för att optimera katalogen för enheten. Till exempel skapar \fB"\fPkindle\fB"\fP eller \fB"\fPkindle_dx\fB"\fP en strukturerad innehållsförteckning med avsnitt och artiklar. Standard: \fB\(aq\fPNone\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
+Anger utmatningsprofilen. I vissa fall krävs en utmatningsprofil för att optimera katalogen för enheten. Till exempel skapar \fB\(dq\fPkindle\fB\(dq\fP eller \fB\(dq\fPkindle_dx\fB\(dq\fP en strukturerad innehållsförteckning med avsnitt och artiklar. Standard: \fB\(aq\fPNone\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-Anger de regler som används för att inkludera prefix som indikerar lästa böcker, önskelistsposter och andra användardefinierade prefix. Modellen för en prefixregel är  (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). När flera regler är definierade, kommer den första matchande regeln användas. Standard: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
+Anger de regler som används för att inkludera prefix som indikerar lästa böcker, önskelistsposter och andra användardefinierade prefix. Modellen för en prefixregel är  (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). När flera regler är definierade, kommer den första matchande regeln användas. Standard: \fB\(dq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(dq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -663,7 +663,7 @@ Syntax för att ta bort:
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -680,11 +680,11 @@ Skapa en anpassad kolumn. label är det maskinvänliga namnet på kolumnen. Får
 inte innehålla blanksteg eller kolon. name är det människovänliga namnet på kolumnen.
 datatype är en av: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-display
-En ordbok med alternativ för att anpassa hur data i den här kolumnen ska tolkas. Det här är en JSON\-sträng. För uppräkningskolumner, använd \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP Det finns många alternativ som kan gå in i visningsvariabel. Alternativen per kolumntyp är: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  Det bästa sättet att hitta giltiga kombinationer är att skapa en anpassad kolumn av lämplig typ i gränssnittet och sedan titta på  OPF\-säkerhetskopian för en bok (se till att en ny OPF har skapats sedan kolumnen lades till). Du kommer att se JSON för \fB"\fPvisningen\fB"\fP av den nya kolumnen i OPF.
+En ordbok med alternativ för att anpassa hur data i den här kolumnen ska tolkas. Det här är en JSON\-sträng. För uppräkningskolumner, använd \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP Det finns många alternativ som kan gå in i visningsvariabel. Alternativen per kolumntyp är: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  Det bästa sättet att hitta giltiga kombinationer är att skapa en anpassad kolumn av lämplig typ i gränssnittet och sedan titta på  OPF\-säkerhetskopian för en bok (se till att en ny OPF har skapats sedan kolumnen lades till). Du kommer att se JSON för \fB\(dq\fPvisningen\fB\(dq\fP av den nya kolumnen i OPF.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -705,7 +705,7 @@ calibredb custom_columns [options]
 .sp
 Lista anpassade kolumner. Visar kolumnnamn och id.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -726,7 +726,7 @@ calibredb remove_custom_column [options] label
 Ta bort den anpassade kolumnen som identifieras med etikett. Du kan se
 tillgängliga kolumner med kommandot custom_columns.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -749,7 +749,7 @@ Du kan få en lista med id med hjälp av sökkommandot.
 Du kan få en lista med anpassade kolumnnamn med hjälp av custom_columns
 kommando.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -776,7 +776,7 @@ alla sparade sökningar, användarkategorier, pluggbrädor, lagrade
 konverterings inställningar per bok och anpassade recept. Återställda metadata är
 bara så exakta som det som finns i OPF\-filerna.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -796,7 +796,7 @@ calibredb check_library [options]
 .sp
 Utföra vissa kontroller av filsystemet som representerar ett bibliotek. Rapporter är invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -832,7 +832,7 @@ calibredb list_categories [options]
 Skapa en rapport om kategoriinformationen i databasen.
 Informationen motsvarar vad som visas i taggbläddraren.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
@@ -877,7 +877,7 @@ kommando för att tvinga nyskapande av OPF\-filer med flaggan \-\-all.
 Observera att det är normalt ingen anledning att göra det här, eftersom OPF\-filerna
 säkerhetskopieras automatiskt varje gång metadata ändras.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -900,7 +900,7 @@ samma anpassade kolumner, virtuella bibliotek och andra inställningar som det a
 .sp
 Det klonade biblioteket kommer inte att innehålla några böcker. Om du vill skapa en fullständig dubblett, inklusive alla böcker, använd helt enkelt dina filsystemverktyg för att kopiera biblioteksmappen.
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -921,7 +921,7 @@ metadata. Du kan använda specialvärdet \(aqall\(aq för book_id för att uppda
 i alla böcker. Du kan också ange många bok\-id åtskilda med blanksteg och id\-intervall
 åtskilda med bindestreck. Till exempel: calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
@@ -944,9 +944,9 @@ lista med bok\-id:er som matchar sökuttrycket. Utmatningsformatet är användba
 för att mata in andra kommandon som accepterar en lista med id:er som inmatning.
 .sp
 Sökuttrycket kan vara vad som helst från calibres kraftfulla sökfrågespråk,
-till exempel: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
+till exempel: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
-När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l

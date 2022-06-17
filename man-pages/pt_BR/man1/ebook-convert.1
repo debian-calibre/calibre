@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "maio 27, 2022" "5.43.0" "calibre"
-.SH NAME
-ebook-convert \- ebook-convert
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "EBOOK-CONVERT" "1" "junho 17, 2022" "5.44.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -45,14 +45,14 @@ Converta um e\-book de um formato para outro.
 .sp
 arquivo_entrada é a entrada e arquivo_saída é a saída. Ambos devem ser especificados como os dois primeiros argumentos para o comando.
 .sp
-O formato de e\-book de saída é adivinhado a partir da extensão de arquivo do arquivo_saída. O arquivo_saída também pode ser do formato especial .EXT, em que EXT é a extensão do arquivo de saída. Nesse caso, o nome do arquivo de saída é derivado do nome do arquivo de entrada. Observe que os nomes dos arquivos não devem começar com um hífen. Finalmente, se o arquivo_saida não tiver nenhuma extensão, ele será tratado como uma pasta e um "e\-book aberto" (OEB), consistindo de arquivos HTML, será gravado nessa pasta. Esses arquivos são os arquivos que normalmente teriam sido passados ​​para o plugin de saída.
+O formato de e\-book de saída é adivinhado a partir da extensão de arquivo do arquivo_saída. O arquivo_saída também pode ser do formato especial .EXT, em que EXT é a extensão do arquivo de saída. Nesse caso, o nome do arquivo de saída é derivado do nome do arquivo de entrada. Observe que os nomes dos arquivos não devem começar com um hífen. Finalmente, se o arquivo_saida não tiver nenhuma extensão, ele será tratado como uma pasta e um \(dqe\-book aberto\(dq (OEB), consistindo de arquivos HTML, será gravado nessa pasta. Esses arquivos são os arquivos que normalmente teriam sido passados ​​para o plugin de saída.
 .sp
 Depois de especificar o arquivo de entrada e saída, você pode personalizar a conversão especificando várias opções. As opções disponíveis dependem dos tipos de arquivo de entrada e saída. Para obter ajuda sobre eles, especifique o arquivo de entrada e saída e, em seguida, use a opção \-h.
 .sp
 Para documentação completa do sistema de conversão, consulte
 \fI\%Conversão de E\-book\fP
 .sp
-Sempre que você for passar argumentos para \fBebook\-convert\fP que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
+Sempre que você for passar argumentos para \fBebook\-convert\fP que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .sp
 As opções e valores padrão para as opções alteram dependendo dos formatos
 de entrada e saída, por isso você deve sempre verificar com:
@@ -102,7 +102,7 @@ Especificar o perfil de origem. O perfil de origem dá informações ao sistema 
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-Listar nomes de receita incorporados. Você pode criar um e\-book a partir de uma receita embutida como esta: ebook\-convert \fB"\fPNome da receita.recipe\fB"\fP output.epub
+Listar nomes de receita incorporados. Você pode criar um e\-book a partir de uma receita embutida como esta: ebook\-convert \fB\(dq\fPNome da receita.recipe\fB\(dq\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -191,7 +191,7 @@ Opções para controlar a aparência do arquivo de saída
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transformar caracteres Unicode em uma representação ASCII. Use com cuidado, porque isso irá substituir caracteres Unicode por ASCII. Por exemplo, ele irá substituir \fB"\fPPelé\fB"\fP com \fB"\fPPele\fB"\fP\&. Além disso, observe que nos casos em que existem várias representações de um caractere (caracteres compartilhados por chineses e japoneses, por exemplo), será usada a representação com base no idioma atual da interface do calibre.
+Transformar caracteres Unicode em uma representação ASCII. Use com cuidado, porque isso irá substituir caracteres Unicode por ASCII. Por exemplo, ele irá substituir \fB\(dq\fPPelé\fB\(dq\fP com \fB\(dq\fPPele\fB\(dq\fP\&. Além disso, observe que nos casos em que existem várias representações de um caractere (caracteres compartilhados por chineses e japoneses, por exemplo), será usada a representação com base no idioma atual da interface do calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -201,7 +201,7 @@ O tamanho da fonte base em pts. Todos os tamanhos de fonte no livro produzido se
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-Mudar a justificação do texto. Um valor de \fB"\fPEsquerda\fB"\fP converte todo o texto justificado na origem para texto alinhado a esqueda (por ex. sem justificação). Um valor de \fB"\fPJustificado\fB"\fP converte todo o texto não justificado para justificado. Um valor de \fB"\fPOriginal\fB"\fP (o padrão) não muda a justificação do arquivo de origem. Note que somente alguns formatos de saída suportam justificação.
+Mudar a justificação do texto. Um valor de \fB\(dq\fPEsquerda\fB\(dq\fP converte todo o texto justificado na origem para texto alinhado a esqueda (por ex. sem justificação). Um valor de \fB\(dq\fPJustificado\fB\(dq\fP converte todo o texto não justificado para justificado. Um valor de \fB\(dq\fPOriginal\fB\(dq\fP (o padrão) não muda a justificação do arquivo de origem. Note que somente alguns formatos de saída suportam justificação.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -216,7 +216,7 @@ Incorporar todas as fontes que referenciam o documento de entrada pode não esta
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Coloque a fonte especificada no livro. Isto especifica a fonte \fB"\fPbase\fB"\fP usada no livro. Se o documento de entrada especifica suas próprias fontes, elas podem sobrepor esta fonte base. Você pode usar a opção \fB"\fPFiltrar informação de estilo\fB"\fP para remover fontes do documento de entrada. Note que isso funciona somente com alguns formatos de saída, principalmente EPUB, AZW3 e AZW3.
+Coloque a fonte especificada no livro. Isto especifica a fonte \fB\(dq\fPbase\fB\(dq\fP usada no livro. Se o documento de entrada especifica suas próprias fontes, elas podem sobrepor esta fonte base. Você pode usar a opção \fB\(dq\fPFiltrar informação de estilo\fB\(dq\fP para remover fontes do documento de entrada. Note que isso funciona somente com alguns formatos de saída, principalmente EPUB, AZW3 e AZW3.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -286,7 +286,7 @@ Definir a margem superior em pts. O padrão é %d. Definir isso para menos de ze
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-A altura mínima de linha, como uma percentagem do tamanho do elemento de fonte calculado. O calibre irá garantir que cada elemento tenha uma altura de linha de pelo menos esta configuração, independentemente do que o documento de entrada especifica. Configure para zero para desativar. O padrão é 120%. Use esta configuração de preferência para a especificação direta de altura de linha, a menos que você saiba o que está fazendo. Por exemplo, você pode conseguir \fB"\fPespaço duplo\fB"\fP texto definindo isso para 240.
+A altura mínima de linha, como uma percentagem do tamanho do elemento de fonte calculado. O calibre irá garantir que cada elemento tenha uma altura de linha de pelo menos esta configuração, independentemente do que o documento de entrada especifica. Configure para zero para desativar. O padrão é 120%. Use esta configuração de preferência para a especificação direta de altura de linha, a menos que você saiba o que está fazendo. Por exemplo, você pode conseguir \fB\(dq\fPespaço duplo\fB\(dq\fP texto definindo isso para 240.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -296,7 +296,7 @@ Remove espaço entre parágrafos. Também configura um espaçamento de 1,5 linha
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing\-indent\-size
-Quando calibre remove linhas em branco entre parágrafos, ele insere automaticamente um recuo de linha, para garantir que parágrafos sejam facilmente distinguíveis. Esta opção controla o tamanho da quebra de linha (em \fB"\fPem\fB"\fP). Se você inserir um valor negativo, o recuo especificado no documento será utilizado, isso significa que calibre não modificará o recuo.
+Quando calibre remove linhas em branco entre parágrafos, ele insere automaticamente um recuo de linha, para garantir que parágrafos sejam facilmente distinguíveis. Esta opção controla o tamanho da quebra de linha (em \fB\(dq\fPem\fB\(dq\fP). Se você inserir um valor negativo, o recuo especificado no documento será utilizado, isso significa que calibre não modificará o recuo.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -311,12 +311,12 @@ Subconjunto de todas as fontes incorporadas. Cada fonte incorporada é reduzida 
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-￼Caminho para um arquivo contendo regras para transformar os estilos CSS neste livro. A maneira mais fácil de criar esse arquivo é usar o assistente para criar regras na GUI do calibre. Acesse\-o na seção \fB"\fPVeja & sinta\-> Transformação de estilos\fB"\fP da caixa de diálogo de conversão. Depois de criar as regras, você pode usar o botão \fB"\fPExportar\fB"\fP para salvá\-las em um arquivo.
+￼Caminho para um arquivo contendo regras para transformar os estilos CSS neste livro. A maneira mais fácil de criar esse arquivo é usar o assistente para criar regras na GUI do calibre. Acesse\-o na seção \fB\(dq\fPVeja & sinta\-> Transformação de estilos\fB\(dq\fP da caixa de diálogo de conversão. Depois de criar as regras, você pode usar o botão \fB\(dq\fPExportar\fB\(dq\fP para salvá\-las em um arquivo.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Caminho para um arquivo contendo regras para transformar o HTML deste livro. A maneira mais fácil de criar um arquivo como este é usar o Assistente para criar regras na interface gráfica do calibre. Acesse\-o na seção \fB"\fPAparência\->Transformar HTML\fB"\fP no diálogo de conversão. Uma vez criadas as regras, você pode usar o botão \fB"\fPExportar\fB"\fP para salvá\-las em um arquivo.
+Caminho para um arquivo contendo regras para transformar o HTML deste livro. A maneira mais fácil de criar um arquivo como este é usar o Assistente para criar regras na interface gráfica do calibre. Acesse\-o na seção \fB\(dq\fPAparência\->Transformar HTML\fB\(dq\fP no diálogo de conversão. Uma vez criadas as regras, você pode usar o botão \fB\(dq\fPExportar\fB\(dq\fP para salvá\-las em um arquivo.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -425,12 +425,12 @@ Auto\-detecção do controle da estrutura de documento.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Uma expressão XPath para detectar títulos de capítulos. O padrão é considerar tags <h1> ou <h2> que contenham as palavras \fB"\fPcapítulo\fB"\fP, \fB"\fPlivro\fB"\fP, \fB"\fPsessão\fB"\fP, \fB"\fPprólogo\fB"\fP, \fB"\fPepílogo\fB"\fP ou \fB"\fPparte\fB"\fP como títulos de capítulo, bem como quaisquer tags que tenham class = \fB"\fPchapter \fB"\fP\&. A expressão usada deve avaliar uma lista de elementos. Para desativar a detecção de capítulos, use a expressão \fB"\fP/\fB"\fP\&. Consulte o tutorial do XPath no manual do usuário do calibre para obter mais ajuda sobre como usar esse recurso.
+Uma expressão XPath para detectar títulos de capítulos. O padrão é considerar tags <h1> ou <h2> que contenham as palavras \fB\(dq\fPcapítulo\fB\(dq\fP, \fB\(dq\fPlivro\fB\(dq\fP, \fB\(dq\fPsessão\fB\(dq\fP, \fB\(dq\fPprólogo\fB\(dq\fP, \fB\(dq\fPepílogo\fB\(dq\fP ou \fB\(dq\fPparte\fB\(dq\fP como títulos de capítulo, bem como quaisquer tags que tenham class = \fB\(dq\fPchapter \fB\(dq\fP\&. A expressão usada deve avaliar uma lista de elementos. Para desativar a detecção de capítulos, use a expressão \fB\(dq\fP/\fB\(dq\fP\&. Consulte o tutorial do XPath no manual do usuário do calibre para obter mais ajuda sobre como usar esse recurso.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Especifique como marcar os capítulos detectados. O valor \fB"\fPpagebreak\fB"\fP irá inserir uma quebra de página antes dos capítulos. \fB"\fPRule\fB"\fP irá inserir uma linha antes de cada capítulo. \fB"\fPnone\fB"\fP irá desligar a marcação de capítulos, enquanto \fB"\fPboth\fB"\fP irá inserir uma quebra de página e uma linha para marcar os capítulos.
+Especifique como marcar os capítulos detectados. O valor \fB\(dq\fPpagebreak\fB\(dq\fP irá inserir uma quebra de página antes dos capítulos. \fB\(dq\fPRule\fB\(dq\fP irá inserir uma linha antes de cada capítulo. \fB\(dq\fPnone\fB\(dq\fP irá desligar a marcação de capítulos, enquanto \fB\(dq\fPboth\fB\(dq\fP irá inserir uma quebra de página e uma linha para marcar os capítulos.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -521,7 +521,7 @@ O texto a ser usado quando ordenando por autor.
 .INDENT 0.0
 .TP
 .B \-\-authors
-Configura os autores. Múltiplos autores devem ser separados por \fB"\fP&\fB"\fP\&.
+Configura os autores. Múltiplos autores devem ser separados por \fB\(dq\fP&\fB\(dq\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP

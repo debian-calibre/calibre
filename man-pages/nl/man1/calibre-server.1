@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "mei 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibre-server \- calibre-server
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBRE-SERVER" "1" "juni 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibre-server \- calibre-server
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -46,7 +46,7 @@ calibre bibliotheken via het internet. U kan het pad naar de bibliotheek
 mappen specificeren als argumenten bij \fBcalibre\-server\fP\&. Als u geen pad specificeert,
 worden alle bibliotheken die het calibre hoofdprogramma kent, gebruikt.
 .sp
-Als u aan \fBcalibre\-server\fP parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
+Als u aan \fBcalibre\-server\fP parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: \(dq/some path/with spaces\(dq
 .SH [OPTIES]
 .INDENT 0.0
 .TP
@@ -61,7 +61,7 @@ Tijd (in seconden) om te wachten op een antwoord van de server bij zoekopdrachte
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Kies het type authenticatie dat gebruikt is.        Stel de HTTP authenticatie modus in gebruikt door de server. Op \fB"\fPbasis\fB"\fP als u de server achter een proxy zet, laat het anders op \fB"\fPauto\fB"\fP wat \fB"\fPbasis\fB"\fP gebruikt als SSL is ingesteld, anders gebruikt het \fB"\fPdigest\fB"\fP\&.
+Kies het type authenticatie dat gebruikt is.        Stel de HTTP authenticatie modus in gebruikt door de server. Op \fB\(dq\fPbasis\fB\(dq\fP als u de server achter een proxy zet, laat het anders op \fB\(dq\fPauto\fB\(dq\fP wat \fB\(dq\fPbasis\fB\(dq\fP gebruikt als SSL is ingesteld, anders gebruikt het \fB\(dq\fPdigest\fB\(dq\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -116,7 +116,7 @@ Wachtwoord gebaseerde authenticatie voor toegang tot de server.     Normaal heef
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Terug vallen op automatisch gedetecteerde interface.        Als de server voor een bepaalde reden niet in staat is om te \fB"\fPbind\fB"\fPen  met de interface gespecificeerd in listen_on, probeert hij een interface te detecteren die met de buitenwereld verbindt en bind daarmee. Deze optie is standaard ingeschakeld.
+Terug vallen op automatisch gedetecteerde interface.        Als de server voor een bepaalde reden niet in staat is om te \fB\(dq\fPbind\fB\(dq\fPen  met de interface gespecificeerd in listen_on, probeert hij een interface te detecteren die met de buitenwereld verbindt en bind daarmee. Deze optie is standaard ingeschakeld.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -151,7 +151,7 @@ Genegeerde door de gebruiker gedefinieerde metadata velden.         Door komma\f
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-De interface waarop te luisteren voor verbindingen.         Standaard is luisteren op alle beschikbare IPv4 interfaces. U kan dit veranderen naar bv. \fB"\fP127.0.0.1\fB"\fP om enkel naar verbindingen van de lokale machine te luisteren of naar \fB"\fP::\fB"\fP om naar alle inkomende IPv6 en IPv4 verbindingen te luisteren.
+De interface waarop te luisteren voor verbindingen.         Standaard is luisteren op alle beschikbare IPv4 interfaces. U kan dit veranderen naar bv. \fB\(dq\fP127.0.0.1\fB\(dq\fP om enkel naar verbindingen van de lokale machine te luisteren of naar \fB\(dq\fP::\fB\(dq\fP om naar alle inkomende IPv6 en IPv4 verbindingen te luisteren.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -216,7 +216,7 @@ De poort waarop geluisterd word naar verbindingen.
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-Pad naar JSON bestand met URLs voor de \fB"\fPDoorzoek het internet\fB"\fP functie. De gemakkelijkste manier om zo\fB\(aq\fPn bestand te creëren is via Voorkeuren\->Delen\->Delen via (inter)net\->Doorzoek het internet in calibre, creëer de URLs en exporteer ze.
+Pad naar JSON bestand met URLs voor de \fB\(dq\fPDoorzoek het internet\fB\(dq\fP functie. De gemakkelijkste manier om zo\fB\(aq\fPn bestand te creëren is via Voorkeuren\->Delen\->Delen via (inter)net\->Doorzoek het internet in calibre, creëer de URLs en exporteer ze.
 .UNINDENT
 .INDENT 0.0
 .TP
