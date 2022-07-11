@@ -685,7 +685,7 @@ class LibraryPage(QWizardPage, LibraryUI):
         self.registerField('library_location', self.location)
         self.button_change.clicked.connect(self.change)
         self.init_languages()
-        self.language.currentIndexChanged[int].connect(self.change_language)
+        self.language.currentIndexChanged.connect(self.change_language)
         self.location.textChanged.connect(self.location_text_changed)
         self.set_move_lib_label_text()
 
@@ -911,7 +911,7 @@ class Wizard(QWizard):
     def __init__(self, parent):
         QWizard.__init__(self, parent)
         self.setWindowTitle(__appname__+' '+_('Welcome wizard'))
-        self.setPixmap(QWizard.WizardPixmap.LogoPixmap, QIcon(I('library.png')).pixmap(48, 48))
+        self.setPixmap(QWizard.WizardPixmap.LogoPixmap, QIcon.ic('library.png').pixmap(48, 48))
         self.setWizardStyle(QWizard.WizardStyle.ModernStyle)
         self.device_page = DevicePage()
         self.library_page = LibraryPage()
@@ -932,7 +932,7 @@ class Wizard(QWizard):
 
     def set_button_texts(self):
         for but, text in iteritems(self.BUTTON_TEXTS):
-            self.setButtonText(getattr(self, but+'Button'), _(text))
+            self.setButtonText(getattr(QWizard.WizardButton, but+'Button'), _(text))
 
     def retranslate(self):
         for pid in self.pageIds():
@@ -942,7 +942,7 @@ class Wizard(QWizard):
         self.set_finish_text()
 
     def accept(self):
-        pages = map(self.page, self.visitedPages())
+        pages = map(self.page, self.visitedIds())
         for page in pages:
             page.commit()
         QWizard.accept(self)

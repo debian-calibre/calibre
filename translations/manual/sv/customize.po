@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-03 05:03+0000\n"
+"POT-Creation-Date: 2022-07-10 16:17+0000\n"
 "PO-Revision-Date: 2014-06-17 08:37+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2022\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
@@ -124,9 +124,9 @@ msgstr "``CALIBRE_NO_NATIVE_FILEDIALOGS`` - får calibre att inte använda inbyg
 #: ../../__w/calibre/calibre/manual/customize.rst:43
 msgid ""
 "``CALIBRE_NO_NATIVE_MENUBAR`` - causes calibre to not create a native "
-"(global) menu on Ubuntu Unity and similar linux desktop environments. The "
+"(global) menu on Ubuntu Unity and similar Linux desktop environments. The "
 "menu is instead placed inside the window, as is traditional."
-msgstr "``CALIBRE_NO_NATIVE_MENUBAR`` - får calibre inte skapar en inbyggd (global) meny på Ubuntu Unity och liknande Linux-skrivbordsmiljöerna. Menyn placeras istället inuti fönstret, som är traditionellt."
+msgstr "``CALIBRE_NO_NATIVE_MENUBAR`` - gör att calibre inte skapar en inbyggd (global) meny på Ubuntu Unity och liknande Linux-skrivbordsmiljöer. Menyn placeras istället inuti fönstret, som är traditionellt."
 
 #: ../../__w/calibre/calibre/manual/customize.rst:44
 msgid ""
@@ -136,7 +136,7 @@ msgid ""
 " system Qt. The downside is that calibre may not follow the system look and "
 "feel. If you set this environment variable on Linux, it will cause calibre "
 "to use the system theme -- beware of crashes and hangs."
-msgstr "``CALIBRE_USE_SYSTEM_THEME`` - som standard använder calibre sin egen inbyggda Qt-stil i Linux. Detta för att undvika kraschar och hängningar orsakade av inkompatibiliteter mellan versionen av Qt-calibre är byggd mot och systemets Qt. Nackdelen är att calibre kanske inte följer systemets utseende och känsla. Om du ställer in denna miljövariabel i Linux kommer calibre att använder systemtemat - se upp för kraschar och hängningar."
+msgstr "``CALIBRE_USE_SYSTEM_THEME`` - som standard använder calibre sin egen inbyggda Qt-stil i Linux. Detta för att undvika kraschar och hängningar orsakade av inkompatibiliteter mellan versionen av Qt-calibre är byggd mot och systemets Qt. Nackdelen är att calibre kanske inte följer systemets utseende och känsla. Om du ställer in denna miljövariabel i Linux kommer calibre att använder systemtemat -- se upp för kraschar och hängningar."
 
 #: ../../__w/calibre/calibre/manual/customize.rst:50
 msgid ""
@@ -151,23 +151,15 @@ msgid ""
 msgstr "``CALIBRE_NO_DEFAULT_PROGRAMS`` - förhindra calibre från att automatiskt registrera de filtyper den är kapabel att hantera med Windows."
 
 #: ../../__w/calibre/calibre/manual/customize.rst:52
-msgid ""
-"``CALIBRE_USE_DARK_PALETTE`` - set it to ``1`` to have calibre use dark "
-"colors and ``0`` for normal colors (ignored on macOS). On Windows 10 in the "
-"absence of this variable, the Windows system preference for dark colors is "
-"used."
-msgstr "``CALIBRE_USE_DARK_PALETTE`` - ställ in den till ``1`` för att använda calibre i mörka färger och ``0`` för normala färger (ignoreras på macOS). I Windows 10 i avsaknad av denna variabel används Windows-systemets preferens för mörka färger."
-
-#: ../../__w/calibre/calibre/manual/customize.rst:54
 msgid "``SYSFS_PATH`` - Use if sysfs is mounted somewhere other than /sys"
 msgstr "``SYSFS_PATH`` - Använd om sysfs är monterad någon annanstans än /sys"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:55
+#: ../../__w/calibre/calibre/manual/customize.rst:53
 msgid ""
 "``http_proxy``, ``https_proxy`` - used on Linux to specify an HTTP(S) proxy"
 msgstr "``http_proxy``, ``https_proxy`` - används i Linux för att ange en HTTP(S)-proxy"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:57
+#: ../../__w/calibre/calibre/manual/customize.rst:55
 msgid ""
 "See `How to set environment variables in Windows "
 "<https://www.computerhope.com/issues/ch000549.htm>`_. If you are on macOS "
@@ -176,11 +168,11 @@ msgid ""
 "environment variables one per line in it, for example::"
 msgstr "Se `Hur man ställer in miljövariabler i Windows <https://www.computerhope.com/issues/ch000549.htm>`_. Om du använder macOS kan du ställa in miljövariabler genom att skapa :file:`~/Library/Preferences/calibre/macos-env.txt` och ställa in miljövariablerna en per rad i den, till exempel::"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:67
+#: ../../__w/calibre/calibre/manual/customize.rst:65
 msgid "Tweaks"
 msgstr "Justeringar"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:69
+#: ../../__w/calibre/calibre/manual/customize.rst:67
 msgid ""
 "Tweaks are small changes that you can specify to control various aspects of "
 "calibre's behavior. You can change them by going to "
@@ -188,20 +180,19 @@ msgid ""
 "reproduced below"
 msgstr "Justeringar är små ändringar som du kan specificera för att kontrollera olika aspekter av calibres beteende. Du kan ändra dem genom att gå till Inställningar->Avancerat->Justeringar. Standardvärdena för justeringarna återges nedan"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:76
+#: ../../__w/calibre/calibre/manual/customize.rst:74
 msgid "Overriding icons, templates, et cetera"
 msgstr "Åsidosätta ikoner, mallar o.s.v."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:79
+#: ../../__w/calibre/calibre/manual/customize.rst:77
 msgid ""
 "calibre has direct support for icon themes, there are several icon themes "
 "available for calibre, that you can use by going to "
-":guilabel:`Preferences->Interface->Look & Feel->Change Icon theme`. The icon"
-" themes use the same mechanism as described below for overriding static "
-"resources."
-msgstr "calibre har direkt stöd för ikonteman, det finns flera ikonteman tillgängliga för calibre som du kan använda genom att gå till :guilabel:`Inställningar->Gränssnitt->Utseende & känsla->Ändra ikontema`. Ikonteman använder samma mekanism som beskriven nedan för att åsidosätta statiska resurser."
+":guilabel:`Preferences->Interface->Look & Feel->Change Icon theme`. It is "
+"preferable to use icon themes over overriding individual icons."
+msgstr "calibre har direkt stöd för ikonteman, det finns flera ikonteman tillgängliga för calibre som du kan använda genom att gå till :guilabel:`Inställningar->Gränssnitt->Utseende & känsla->Ändra ikontema`. Det är att föredra att använda ikonteman framför åsidosättande enskilda ikoner."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:83
+#: ../../__w/calibre/calibre/manual/customize.rst:82
 msgid ""
 "calibre allows you to override the static resources, like icons, JavaScript "
 "and templates for the metadata jacket, catalogs, etc. with customized "
@@ -214,7 +205,7 @@ msgid ""
 "you choose to install calibre."
 msgstr "calibre låter dig åsidosätta de statiska resurserna, som ikoner, JavaScript och mallar för metadataomslag, kataloger o.s.v. med dina anpassade versioner. Alla statiska resurser lagras i undermappen för resurser på installationsplatsen för calibre. I Windows är detta vanligtvis  :file:`C:\\\\Program Files\\\\Calibre2\\\\resources`. På macOS :file:`/Applications/calibre.app/Contents/Resources/resources/`. I Linux, om du använder det binära installationsprogrammet från calibres webbplats blir det :file:`/opt/calibre/resources`. Dessa sökvägar kan ändras beroende på var du väljer att installera calibre."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:92
+#: ../../__w/calibre/calibre/manual/customize.rst:91
 msgid ""
 "You should not change the files in this resources folder, as your changes "
 "will get overwritten the next time you update calibre. Instead, go to "
@@ -226,7 +217,7 @@ msgid ""
 "file in preference to the built-in one the next time it is started."
 msgstr "Du ska inte ändra filer i denna resursmapp, eftersom dina ändringar kommer skrivas över nästa gång du uppdaterar calibre. Gå istället till :guilabel:`Inställningar->Avancerat->Diverse` och klicka :guilabel:`Öppna konfigurationsmappen för calibre`. I denna konfigurationsmapp skapar du en undermapp med namnet resurser och placerar filerna du vill åsidosätta i den. Placera filer i lämplig undermapp, som till exempel för bilder :file:`resources/images` o.s.v. calibre kommer automatisk använda dessa anpassade inställningarna istället för de inbyggda nästa gång det startar."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:101
+#: ../../__w/calibre/calibre/manual/customize.rst:100
 msgid ""
 "For example, if you wanted to change the icon for the :guilabel:`Remove "
 "books` action, you would first look in the built-in resources folder and see"
@@ -234,8 +225,10 @@ msgid ""
 "Assuming you have an alternate icon in PNG format called "
 ":file:`my_remove_books.png` you would save it in the configuration folder as"
 " :file:`resources/images/remove_books.png`. All the icons used by the "
-"calibre user interface are in :file:`resources/images` and its sub-folders."
-msgstr "Till exempel om du vill använda ikonen för åtgärden :guilabel:`Ta bort böcker`, ska du för titta i den inbyggda resursmappen och se att den relevanta filen är :file:`resources/images/remove_books.png`. Med antagandet att du har en alternativ ikon i PNG-format kallad :file:`my_remove_books.png` kommer du spara den i konfigurationsmappen som :file:`resources/images/remove_books.png`. Alla ikoner som används av calibres användargränssnitt är i :file:`resources/images` och dess undermappar."
+"calibre user interface are in :file:`resources/images` and its sub-folders. "
+"Placing an override file here will have even higher priority than a custom "
+"icon theme."
+msgstr "Till exempel om du vill använda ikonen för åtgärden :guilabel:`Ta bort böcker`, ska du för titta i den inbyggda resursmappen och se att den relevanta filen är :file:`resources/images/remove_books.png`. Med antagandet att du har en alternativ ikon i PNG-format kallad :file:`my_remove_books.png` kommer du spara den i konfigurationsmappen som :file:`resources/images/remove_books.png`. Alla ikoner som används av calibres användargränssnitt är i :file:`resources/images` och dess undermappar. Att placera en åsidosättande fil här kommer att ha ännu högre prioritet än ett anpassat ikontema."
 
 #: ../../__w/calibre/calibre/manual/customize.rst:110
 msgid "Creating your own icon theme for calibre"

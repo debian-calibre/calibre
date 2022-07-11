@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "czerwca 17, 2022" "5.44.0" "calibre"
+.TH "CALIBREDB" "1" "lipca 11, 2022" "6.0.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -140,7 +140,7 @@ Wyświetla ten tekst pomocy i kończy działanie
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Ścieżka do biblioteki calibre. Domyślnie używana jest ścieżka zapisana w ustawieniach. Możesz także połączyć się z serwerem zawartości kalibru, aby wykonywać działania na zdalnych bibliotekach. Aby to zrobić, użyj adresu URL w postaci: \fI\%http://nazwa_hosta:port/#id_biblioteki\fP, na przykład \fI\%http://localhost:8080/#mylibrary.id_biblioteki\fP to identyfikator biblioteki, z którą chcesz się połączyć na serwerze zawartości. Możesz użyć specjalnej wartości Library_id wynoszącej \-, aby uzyskać listę identyfikatorów bibliotek dostępnych na serwerze. Aby uzyskać szczegółowe informacje na temat konfigurowania dostępu przez serwer treści, zobacz \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
+Ścieżka do biblioteki calibre. Domyślnie używana jest ścieżka zapisana w ustawieniach. Możesz także połączyć się z serwerem zawartości kalibru, aby wykonywać działania na zdalnych bibliotekach. Aby to zrobić, użyj adresu URL w postaci: \fI\%http://nazwa_hosta:port/#id_biblioteki\fP, na przykład \fI\%http://localhost:8080/#mylibrary.id_biblioteki\fP to identyfikator biblioteki, z którą chcesz się połączyć na serwerze zawartości. Możesz użyć specjalnej wartości Library_id wynoszącej \-, aby uzyskać listę identyfikatorów bibliotek dostępnych na serwerze. Aby uzyskać szczegółowe informacje na temat konfigurowania dostępu przez serwer treści, zobacz \fI\%https://manual.calibre\-ebook.com/pl/generated/pl/calibredb.html\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -234,8 +234,8 @@ calibredb add [options] file1 file2 file3 ...
 .UNINDENT
 .UNINDENT
 .sp
-Add the specified files as books to the database. You can also specify folders, see
-the folder related options below.
+Dodaj określone pliki jako książki do bazy danych. Możesz także określić foldery, zobacz
+poniższe opcje związane z folderami.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -333,7 +333,7 @@ calibredb remove ids
 .UNINDENT
 .UNINDENT
 .sp
-Remove the books identified by ids from the database. ids should be a comma separated list of id numbers (you can get id numbers by using the search command). For example, 23,34,57\-85 (when specifying a range, the last number in the range is not included).
+Usuń książki zidentyfikowane przez identyfikatory z bazy danych. ids powinny być oddzieloną przecinkami listą numerów identyfikacyjnych (numery identyfikacyjne można uzyskać za pomocą polecenia wyszukiwania). Na przykład 23,34,57\-85 (przy określaniu zakresu ostatnia liczba z zakresu nie jest uwzględniana).
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -373,7 +373,7 @@ calibredb remove_format [options] id fmt
 .UNINDENT
 .UNINDENT
 .sp
-Remove the format fmt from the logical book identified by id. You can get id by using the search command. fmt should be a file extension like LRF or TXT or EPUB. If the logical book does not have fmt available, do nothing.
+Usuń format fmt z księgi logicznej zidentyfikowanej przez id. Możesz uzyskać id za pomocą polecenia wyszukiwania. fmt powinno być rozszerzeniem pliku, takim jak LRF, TXT lub EPUB. Jeśli książka logiczna nie ma dostępnego fmt, nie rób nic.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .SH SHOW_METADATA
@@ -439,9 +439,9 @@ calibredb export [options] ids
 .UNINDENT
 .UNINDENT
 .sp
-Export the books specified by ids (a comma separated list) to the filesystem.
-The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
-an opf file). You can get id numbers from the search command.
+Eksportuj książki określone przez identyfikatory (listę oddzieloną przecinkami) do systemu plików.
+Operacja eksportu zapisuje wszystkie formaty książki, jej okładkę i metadane (w
+plik opf). Możesz uzyskać numery identyfikacyjne z polecenia wyszukiwania.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -651,17 +651,17 @@ calibredb saved_searches [options] (list|add|remove)
 .UNINDENT
 .UNINDENT
 .sp
-Manage the saved searches stored in this database.
-If you try to add a query with a name that already exists, it will be
-replaced.
+Zarządzaj zapisanymi wyszukiwaniami przechowywanymi w tej bazie danych.
+Jeśli spróbujesz dodać zapytanie o nazwie, która już istnieje, będzie to
+wymieniony.
 .sp
-Syntax for adding:
+Składnia dodawania:
 .sp
 calibredb \fBsaved_searches\fP add search_name search_expression
 .sp
-Syntax for removing:
+Składnia do usuwania:
 .sp
-calibredb \fBsaved_searches\fP remove search_name
+%p rog \fBsaved_searches\fP remove search_name
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .SH ADD_CUSTOM_COLUMN
@@ -723,8 +723,8 @@ calibredb remove_custom_column [options] label
 .UNINDENT
 .UNINDENT
 .sp
-Remove the custom column identified by label. You can see available
-columns with the custom_columns command.
+Usuń niestandardową kolumnę oznaczoną etykietą. Możesz zobaczyć dostępne
+kolumny z poleceniem custom_columns.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -744,10 +744,10 @@ calibredb set_custom [options] column id value
 .UNINDENT
 .UNINDENT
 .sp
-Set the value of a custom column for the book identified by id.
-You can get a list of ids using the search command.
-You can get a list of custom column names using the custom_columns
-command.
+Ustaw wartość kolumny niestandardowej dla książki identyfikowanej przez identyfikator.
+Możesz uzyskać listę identyfikatorów za pomocą polecenia wyszukiwania.
+Możesz uzyskać listę niestandardowych nazw kolumn za pomocą custom_columns
+Komenda.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -767,14 +767,14 @@ calibredb restore_database [options]
 .UNINDENT
 .UNINDENT
 .sp
-Restore this database from the metadata stored in OPF files in each
-folder of the calibre library. This is useful if your metadata.db file
-has been corrupted.
+Przywróć tę bazę danych z metadanych przechowywanych w plikach OPF w każdym
+folder biblioteki kalibrów. Jest to przydatne, jeśli plik metadata.db
+został uszkodzony.
 .sp
-WARNING: This command completely regenerates your database. You will lose
-all saved searches, user categories, plugboards, stored per\-book conversion
-settings, and custom recipes. Restored metadata will only be as accurate as
-what is found in the OPF files.
+OSTRZEŻENIE: To polecenie całkowicie regeneruje twoją bazę danych. Przegrasz
+wszystkie zapisane wyszukiwania, kategorie użytkowników, wtyczki, zapisane konwersje według książki
+ustawienia i niestandardowe przepisy. Przywrócone metadane będą tak dokładne, jak
+co znajduje się w plikach OPF.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -829,8 +829,8 @@ calibredb list_categories [options]
 .UNINDENT
 .UNINDENT
 .sp
-Produce a report of the category information in the database. The
-information is the equivalent of what is shown in the Tag browser.
+Utwórz raport informacji o kategoriach w bazie danych. The
+informacja jest odpowiednikiem tego, co jest wyświetlane w przeglądarce znaczników.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -870,12 +870,12 @@ calibredb backup_metadata [options]
 .UNINDENT
 .UNINDENT
 .sp
-Backup the metadata stored in the database into individual OPF files in each
-books folder. This normally happens automatically, but you can run this
-command to force re\-generation of the OPF files, with the \-\-all option.
+Utwórz kopię zapasową metadanych przechowywanych w bazie danych w osobnych plikach OPF w każdym
+folder książek. Zwykle dzieje się to automatycznie, ale możesz to uruchomić
+polecenie, aby wymusić ponowne generowanie plików OPF, z opcją \-\-all.
 .sp
-Note that there is normally no need to do this, as the OPF files are backed up
-automatically, every time metadata is changed.
+Pamiętaj, że zwykle nie ma takiej potrzeby, ponieważ kopia zapasowa plików OPF jest tworzona
+automatycznie przy każdej zmianie metadanych.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -895,11 +895,11 @@ calibredb clone path/to/new/library
 .UNINDENT
 .UNINDENT
 .sp
-Create a \fBclone\fP of the current library. This creates a new, empty library that has all the
-same custom columns, Virtual libraries and other settings as the current library.
+Utwórz klon bieżącej biblioteki. Tworzy to nową, pustą bibliotekę, która zawiera wszystkie
+takie same kolumny niestandardowe, biblioteki wirtualne i inne ustawienia, jak bieżąca biblioteka.
 .sp
-The cloned library will contain no books. If you want to create a full duplicate, including
-all books, then simply use your filesystem tools to copy the library folder.
+Sklonowana biblioteka nie będzie zawierać żadnych książek. Jeśli chcesz utworzyć pełny duplikat, w tym
+wszystkie książki, a następnie po prostu użyj narzędzi systemu plików, aby skopiować folder biblioteki.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .SH EMBED_METADATA
@@ -940,12 +940,12 @@ calibredb search [options] search expression
 .UNINDENT
 .UNINDENT
 .sp
-Search the library for the specified \fBsearch\fP term, returning a comma separated
-list of book ids matching the \fBsearch\fP expression. The output format is useful
-to feed into other commands that accept a list of ids as input.
+Przeszukaj bibliotekę dla określonego wyszukiwanego terminu, zwracając przecinek rozdzielony
+lista identyfikatorów książek pasujących do wyrażenia wyszukiwania. Format wyjściowy jest przydatny
+do zasilania innych poleceń, które akceptują listę identyfikatorów jako dane wejściowe.
 .sp
-The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
-language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
+Wyrażenie wyszukiwania może być dowolne z potężnego zapytania wyszukiwania calibre
+język, na przykład: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0

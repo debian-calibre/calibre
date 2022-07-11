@@ -340,8 +340,8 @@ class TagsModel(QAbstractItemModel):  # {{{
             if len(icon.availableSizes()) > 0:
                 self.category_custom_icons[k] = icon
         self.categories_with_ratings = ['authors', 'series', 'publisher', 'tags']
-        self.icon_state_map = [None, QIcon(I('plus.png')), QIcon(I('plusplus.png')),
-                             QIcon(I('minus.png')), QIcon(I('minusminus.png'))]
+        self.icon_state_map = [None, QIcon.ic('plus.png'), QIcon.ic('plusplus.png'),
+                             QIcon.ic('minus.png'), QIcon.ic('minusminus.png')]
 
         self.hidden_categories = set()
         self.search_restriction = None
@@ -455,9 +455,9 @@ class TagsModel(QAbstractItemModel):  # {{{
                 tt = _('The lookup/search name is "{0}"{1}').format(key, cust_desc)
 
             if self.category_custom_icons.get(key, None) is None:
-                self.category_custom_icons[key] = QIcon(I(
+                self.category_custom_icons[key] = QIcon.ic(
                     category_icon_map['gst'] if is_gst else category_icon_map.get(
-                        key, (category_icon_map['user:'] if key.startswith('@') else category_icon_map['custom:']))))
+                        key, (category_icon_map['user:'] if key.startswith('@') else category_icon_map['custom:'])))
 
             if key.startswith('@'):
                 path_parts = [p for p in key.split('.')]

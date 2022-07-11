@@ -16,13 +16,14 @@ import shutil
 import sys
 import time
 import uuid
+from contextlib import suppress, closing
 from functools import partial
 
 from calibre import as_unicode, force_unicode, isbytestring, prints
 from calibre.constants import (
     filesystem_encoding, iswindows, plugins, preferred_encoding
 )
-from calibre.db import SPOOL_SIZE
+from calibre.db import SPOOL_SIZE, FTSQueryError
 from calibre.db.annotations import annot_db_data, unicode_normalize
 from calibre.db.delete_service import delete_service
 from calibre.db.errors import NoSuchFormat
@@ -52,14 +53,6 @@ from polyglot.builtins import (
 )
 
 # }}}
-
-
-class FTSQueryError(ValueError):
-
-    def __init__(self, query, sql_statement, apsw_error):
-        ValueError.__init__(self, f'Failed to parse search query: {query} with error: {apsw_error}')
-        self.query = query
-        self.sql_statement = sql_statement
 
 
 CUSTOM_DATA_TYPES = frozenset(('rating', 'text', 'comments', 'datetime',
@@ -337,6 +330,7 @@ class Connection(apsw.Connection):  # {{{
         set_ui_language(get_lang())
         super().__init__(path)
         plugins.load_apsw_extension(self, 'sqlite_extension')
+        self.fts_dbpath = None
 
         self.setbusytimeout(self.BUSY_TIMEOUT)
         self.execute('pragma cache_size=-5000')
@@ -376,10 +370,23 @@ class Connection(apsw.Connection):  # {{{
         ans = self.cursor().execute(*args)
         if kw.get('all', True):
             return ans.fetchall()
-        try:
+        with suppress(StopIteration, IndexError):
             return next(ans)[0]
-        except (StopIteration, IndexError):
-            return None
+
+    def get_dict(self, *args, all=True):
+        ans = self.cursor().execute(*args)
+        desc = ans.getdescription()
+        field_names = tuple(x[0] for x in desc)
+
+        def as_dict(row):
+            return dict(zip(field_names, row))
+
+        if all:
+            return tuple(map(as_dict, ans))
+        ans = ans.fetchone()
+        if ans is not None:
+            ans = as_dict(ans)
+        return ans
 
     def execute(self, sql, bindings=None):
         cursor = self.cursor()
@@ -564,6 +571,7 @@ class DB:
         defs['cover_browser_subtitle_field'] = 'rating'
         defs['styled_columns'] = {}
         defs['edit_metadata_ignore_display_order'] = False
+        defs['fts_enabled'] = False
 
         # Migrate the bool tristate tweak
         defs['bools_are_tristate'] = \
@@ -919,6 +927,78 @@ class DB:
 
     # }}}
 
+    def initialize_fts(self, dbref):
+        self.fts = None
+        if not self.prefs['fts_enabled']:
+            return
+        from .fts.connect import FTS
+        self.fts = FTS(dbref)
+        return self.fts
+
+    def enable_fts(self, dbref=None):
+        enabled = dbref is not None
+        self.prefs['fts_enabled'] = enabled
+        self.initialize_fts(dbref)
+        if self.fts is not None:
+            self.fts.dirty_existing()
+        return self.fts
+
+    @property
+    def fts_enabled(self):
+        return getattr(self, 'fts', None) is not None
+
+    @property
+    def fts_has_idle_workers(self):
+        return self.fts_enabled and self.fts.pool.num_of_idle_workers > 0
+
+    @property
+    def fts_num_of_workers(self):
+        return self.fts.pool.num_of_workers if self.fts_enabled else 0
+
+    @fts_num_of_workers.setter
+    def fts_num_of_workers(self, num):
+        if self.fts_enabled:
+            self.fts.pool.num_of_workers = num
+
+    def get_next_fts_job(self):
+        return self.fts.get_next_fts_job()
+
+    def reindex_fts(self):
+        if self.conn.fts_dbpath:
+            self.conn.execute('DETACH fts_db')
+            os.remove(self.conn.fts_dbpath)
+            self.conn.fts_dbpath = None
+
+    def remove_dirty_fts(self, book_id, fmt):
+        return self.fts.remove_dirty(book_id, fmt)
+
+    def queue_fts_job(self, book_id, fmt, path, fmt_size, fmt_hash):
+        return self.fts.queue_job(book_id, fmt, path, fmt_size, fmt_hash)
+
+    def commit_fts_result(self, book_id, fmt, fmt_size, fmt_hash, text, err_msg):
+        if self.fts is not None:
+            return self.fts.commit_result(book_id, fmt, fmt_size, fmt_hash, text, err_msg)
+
+    def fts_unindex(self, book_id, fmt=None):
+        self.fts.unindex(book_id, fmt=fmt)
+
+    def fts_search(self,
+        fts_engine_query, use_stemming, highlight_start, highlight_end, snippet_size, restrict_to_book_ids, return_text,
+    ):
+        yield from self.fts.search(fts_engine_query, use_stemming, highlight_start, highlight_end, snippet_size, restrict_to_book_ids, return_text,)
+
+    def shutdown_fts(self):
+        if self.fts_enabled:
+            self.fts.shutdown()
+
+    def join_fts(self):
+        if self.fts:
+            self.fts.pool.join()
+            self.fts = None
+
+    def get_connection(self):
+        return self.conn
+
     @property
     def conn(self):
         if self._conn is None:
@@ -1175,7 +1255,6 @@ class DB:
     def dump_and_restore(self, callback=None, sql=None):
         import codecs
         from apsw import Shell
-        from contextlib import closing
         if callback is None:
             callback = lambda x: x
         uv = int(self.user_version)
@@ -1205,6 +1284,8 @@ class DB:
 
     def vacuum(self):
         self.execute('VACUUM')
+        if self.fts_enabled:
+            self.fts.vacuum()
 
     @property
     def user_version(self):
@@ -1224,6 +1305,7 @@ class DB:
             cur.execute(metadata_sqlite)
         except:
             cur.execute('ROLLBACK')
+            raise
         else:
             cur.execute('COMMIT')
         if self.user_version == 0:
@@ -2101,14 +2183,18 @@ class DB:
         self.executemany('INSERT INTO data (book,format,uncompressed_size,name) VALUES (?,?,?,?)', vals)
 
     def backup_database(self, path):
-        dest_db = apsw.Connection(path)
-        with dest_db.backup('main', self.conn, 'main') as b:
-            while not b.done:
-                try:
-                    b.step(100)
-                except apsw.BusyError:
-                    pass
-        dest_db.cursor().execute('DELETE FROM metadata_dirtied; VACUUM;')
-        dest_db.close()
+        with closing(apsw.Connection(path)) as dest_db:
+            with dest_db.backup('main', self.conn, 'main') as b:
+                while not b.done:
+                    with suppress(apsw.BusyError):
+                        b.step(128)
+            dest_db.cursor().execute('DELETE FROM metadata_dirtied; VACUUM;')
 
+    def backup_fts_database(self, path):
+        with closing(apsw.Connection(path)) as dest_db:
+            with dest_db.backup('main', self.conn, 'fts_db') as b:
+                while not b.done:
+                    with suppress(apsw.BusyError):
+                        b.step(128)
+            dest_db.cursor().execute('VACUUM;')
     # }}}

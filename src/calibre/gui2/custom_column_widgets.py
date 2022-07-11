@@ -14,6 +14,7 @@ from qt.core import (Qt, QComboBox, QLabel, QSpinBox, QDoubleSpinBox,
         QSpacerItem, QIcon, QCheckBox, QWidget, QHBoxLayout, QLineEdit,
         QMessageBox, QToolButton, QPlainTextEdit, QApplication, QStyle, QDialog)
 
+from calibre.ebooks.metadata import title_sort
 from calibre.utils.date import qt_to_dt, now, as_local_time, as_utc, internal_iso_format_string
 from calibre.gui2.complete2 import EditWithComplete as EWC
 from calibre.gui2.comments_editor import Editor as CommentsEditor
@@ -87,7 +88,7 @@ class Base:
         self.editor = editor = edit_widget(parent)
         l.addWidget(editor)
         self.clear_button = QToolButton(parent)
-        self.clear_button.setIcon(QIcon(I('trash.png')))
+        self.clear_button.setIcon(QIcon.ic('trash.png'))
         self.clear_button.clicked.connect(self.set_to_undefined)
         self.clear_button.setToolTip(_('Clear {0}').format(self.col_metadata['name']))
         l.addWidget(self.clear_button)
@@ -191,32 +192,32 @@ class Bool(Base):
         l.addWidget(self.combobox)
 
         c = QToolButton(parent)
-        c.setIcon(QIcon(I('ok.png')))
+        c.setIcon(QIcon.ic('ok.png'))
         c.setToolTip(_('Set {} to yes').format(name))
         l.addWidget(c)
         c.clicked.connect(self.set_to_yes)
 
         c = QToolButton(parent)
-        c.setIcon(QIcon(I('list_remove.png')))
+        c.setIcon(QIcon.ic('list_remove.png'))
         c.setToolTip(_('Set {} to no').format(name))
         l.addWidget(c)
         c.clicked.connect(self.set_to_no)
 
         if self.db.new_api.pref('bools_are_tristate'):
             c = QToolButton(parent)
-            c.setIcon(QIcon(I('trash.png')))
+            c.setIcon(QIcon.ic('trash.png'))
             c.setToolTip(_('Clear {}').format(name))
             l.addWidget(c)
             c.clicked.connect(self.set_to_cleared)
 
         w = self.combobox
         items = [_('Yes'), _('No'), _('Undefined')]
-        icons = [I('ok.png'), I('list_remove.png'), I('blank.png')]
+        icons = ['ok.png', 'list_remove.png', 'blank.png']
         if not self.db.new_api.pref('bools_are_tristate'):
             items = items[:-1]
             icons = icons[:-1]
         for icon, text in zip(icons, items):
-            w.addItem(QIcon(icon), text)
+            w.addItem(QIcon.ic(icon), text)
 
     def setter(self, val):
         val = {None: 2, False: 1, True: 0}[val]
@@ -357,7 +358,7 @@ class DateTime(Base):
         l.addWidget(self.today_button)
 
         self.clear_button = QToolButton(parent)
-        self.clear_button.setIcon(QIcon(I('trash.png')))
+        self.clear_button.setIcon(QIcon.ic('trash.png'))
         self.clear_button.clicked.connect(dte.set_to_clear)
         self.clear_button.setToolTip(_('Clear {0}').format(self.col_metadata['name']))
         l.addWidget(self.clear_button)
@@ -446,7 +447,7 @@ class MultipleWidget(QWidget):
         layout.addWidget(self.tags_box, stretch=1000)
         self.editor_button = QToolButton(self)
         self.editor_button.setToolTip(_('Open Item editor. If CTRL or SHIFT is pressed, open Manage items'))
-        self.editor_button.setIcon(QIcon(I('chapters.png')))
+        self.editor_button.setIcon(QIcon.ic('chapters.png'))
         layout.addWidget(self.editor_button)
         self.setLayout(layout)
 
@@ -556,7 +557,7 @@ class Text(Base):
 
     def edit(self):
         ctrl_or_shift_pressed = (QApplication.keyboardModifiers() &
-                (Qt.KeyboardModifier.ControlModifier + Qt.KeyboardModifier.ShiftModifier))
+                (Qt.KeyboardModifier.ControlModifier | Qt.KeyboardModifier.ShiftModifier))
         if (self.getter() != self.initial_val and (self.getter() or self.initial_val)):
             d = _save_dialog(self.parent, _('Values changed'),
                     _('You have changed the values. In order to use this '
@@ -591,7 +592,7 @@ class Text(Base):
 class Series(Base):
 
     def setup_ui(self, parent):
-        w = EditWithComplete(parent)
+        w = EditWithComplete(parent, sort_func=title_sort)
         w.set_separator(None)
         w.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon)
         w.setMinimumContentsLength(25)
@@ -857,7 +858,7 @@ def populate_metadata_page(layout, db, book_id, bulk=False, two_column=False, pa
                 wij = w.widgets[c]
                 if label_width == 0:
                     font_metrics = wij.fontMetrics()
-                    colon_width = font_metrics.width(':')
+                    colon_width = font_metrics.horizontalAdvance(':')
                     if bulk:
                         label_width = (font_metrics.averageCharWidth() *
                                gprefs['edit_metadata_bulk_cc_label_length']) - colon_width
@@ -926,25 +927,25 @@ class BulkBase(Base):
         l = self.widgets[1].layout()
         if not is_bool or self.bools_are_tristate:
             self.clear_button = QToolButton(parent)
-            self.clear_button.setIcon(QIcon(I('trash.png')))
+            self.clear_button.setIcon(QIcon.ic('trash.png'))
             self.clear_button.setToolTip(_('Clear {0}').format(self.col_metadata['name']))
             self.clear_button.clicked.connect(self.set_to_undefined)
             l.insertWidget(1, self.clear_button)
         if is_bool:
             self.set_no_button = QToolButton(parent)
-            self.set_no_button.setIcon(QIcon(I('list_remove.png')))
+            self.set_no_button.setIcon(QIcon.ic('list_remove.png'))
             self.set_no_button.clicked.connect(lambda:self.main_widget.setCurrentIndex(1))
             self.set_no_button.setToolTip(_('Set {0} to No').format(self.col_metadata['name']))
             l.insertWidget(1, self.set_no_button)
             self.set_yes_button = QToolButton(parent)
-            self.set_yes_button.setIcon(QIcon(I('ok.png')))
+            self.set_yes_button.setIcon(QIcon.ic('ok.png'))
             self.set_yes_button.clicked.connect(lambda:self.main_widget.setCurrentIndex(0))
             self.set_yes_button.setToolTip(_('Set {0} to Yes').format(self.col_metadata['name']))
             l.insertWidget(1, self.set_yes_button)
         if add_edit_tags_button[0]:
             self.edit_tags_button = QToolButton(parent)
             self.edit_tags_button.setToolTip(_('Open Item editor'))
-            self.edit_tags_button.setIcon(QIcon(I('chapters.png')))
+            self.edit_tags_button.setIcon(QIcon.ic('chapters.png'))
             self.edit_tags_button.clicked.connect(add_edit_tags_button[1])
             l.insertWidget(1, self.edit_tags_button)
         l.insertStretch(2)
@@ -984,7 +985,7 @@ class BulkBase(Base):
             self.main_widget.textChanged.connect(self.a_c_checkbox_changed)
         if hasattr(self.main_widget, 'currentIndexChanged'):
             # combobox widgets
-            self.main_widget.currentIndexChanged[int].connect(self.a_c_checkbox_changed)
+            self.main_widget.currentIndexChanged.connect(self.a_c_checkbox_changed)
         if hasattr(self.main_widget, 'valueChanged'):
             # spinbox widgets
             self.main_widget.valueChanged.connect(self.a_c_checkbox_changed)
@@ -1018,10 +1019,10 @@ class BulkBool(BulkBase, Bool):
             items.append('')
         else:
             items.append(_('Undefined'))
-        icons = [I('ok.png'), I('list_remove.png'), I('blank.png')]
+        icons = ['ok.png', 'list_remove.png', 'blank.png']
         self.main_widget.blockSignals(True)
         for icon, text in zip(icons, items):
-            self.main_widget.addItem(QIcon(icon), text)
+            self.main_widget.addItem(QIcon.ic(icon), text)
         self.main_widget.blockSignals(False)
         self.finish_ui_setup(parent, is_bool=True)
 
@@ -1134,7 +1135,7 @@ class BulkDateTime(BulkBase):
         self.today_button.setText(_('Today'))
         l.insertWidget(1, self.today_button)
         self.clear_button = QToolButton(parent)
-        self.clear_button.setIcon(QIcon(I('trash.png')))
+        self.clear_button.setIcon(QIcon.ic('trash.png'))
         self.clear_button.setToolTip(_('Clear {0}').format(self.col_metadata['name']))
         l.insertWidget(2, self.clear_button)
         l.insertStretch(3)
@@ -1178,7 +1179,7 @@ class BulkDateTime(BulkBase):
 class BulkSeries(BulkBase):
 
     def setup_ui(self, parent):
-        self.make_widgets(parent, EditWithComplete)
+        self.make_widgets(parent, partial(EditWithComplete, sort_func=title_sort))
         values = self.all_values = list(self.db.all_custom(num=self.col_id))
         values.sort(key=sort_key)
         self.main_widget.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon)
@@ -1375,7 +1376,7 @@ class RemoveTags(QWidget):
         layout.addWidget(self.tags_box, stretch=3)
         self.remove_tags_button = QToolButton(parent)
         self.remove_tags_button.setToolTip(_('Open Item editor'))
-        self.remove_tags_button.setIcon(QIcon(I('chapters.png')))
+        self.remove_tags_button.setIcon(QIcon.ic('chapters.png'))
         layout.addWidget(self.remove_tags_button)
         self.checkbox = QCheckBox(_('Remove all tags'), parent)
         layout.addWidget(self.checkbox)

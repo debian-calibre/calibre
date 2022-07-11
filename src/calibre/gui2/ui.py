@@ -133,7 +133,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                 continue
             try:
                 ac = self.init_iaction(action)
-            except:
+            except Exception:
                 # Ignore errors in loading user supplied plugins
                 import traceback
                 try:
@@ -228,7 +228,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                 traceback.print_exc()
                 if getattr(ac, 'installation_type', None) is PluginInstallationType.BUILTIN:
                     raise
-        self.donate_action = QAction(QIcon(I('donate.png')),
+        self.donate_action = QAction(QIcon.ic('donate.png'),
                 _('&Donate to support calibre'), self)
         for st in self.istores.values():
             st.do_genesis()
@@ -268,11 +268,11 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                    ' does not support the StatusNotifier spec https://www.freedesktop.org/wiki/Specifications/StatusNotifierItem/',
                    file=sys.stderr, flush=True)
         self.system_tray_menu = QMenu(self)
-        self.toggle_to_tray_action = self.system_tray_menu.addAction(QIcon(I('page.png')), '')
+        self.toggle_to_tray_action = self.system_tray_menu.addAction(QIcon.ic('page.png'), '')
         self.toggle_to_tray_action.triggered.connect(self.system_tray_icon_activated)
         self.system_tray_menu.addAction(self.donate_action)
         self.eject_action = self.system_tray_menu.addAction(
-                QIcon(I('eject.png')), _('&Eject connected device'))
+                QIcon.ic('eject.png'), _('&Eject connected device'))
         self.eject_action.setEnabled(False)
         self.addAction(self.quit_action)
         self.system_tray_menu.addAction(self.quit_action)
@@ -1086,7 +1086,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         if self.system_tray_icon is not None and self.restart_after_quit:
             # Needed on windows to prevent multiple systray icons
             self.system_tray_icon.setVisible(False)
-        QApplication.instance().quit()
+        QApplication.instance().exit()
 
     def donate(self, *args):
         from calibre.utils.localization import localize_website_link

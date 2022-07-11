@@ -37,7 +37,7 @@ class PrintDialog(Dialog):
     def __init__(self, book_title, parent=None, prefs=vprefs):
         self.book_title = book_title
         self.default_file_name = sanitize_file_name(book_title[:75] + '.pdf')
-        self.paper_size_map = {a:getattr(QPageSize, a.capitalize()) for a in PAPER_SIZES}
+        self.paper_size_map = {a:getattr(QPageSize.PageSizeId, a.capitalize()) for a in PAPER_SIZES}
         Dialog.__init__(self, _('Print to PDF'), 'print-to-pdf', prefs=prefs, parent=parent)
 
     def setup_ui(self):
@@ -55,7 +55,7 @@ class PrintDialog(Dialog):
             val = os.path.dirname(val)
         f.setText(os.path.abspath(os.path.join(val, self.default_file_name)))
         self.browse_button = b = QToolButton(self)
-        b.setIcon(QIcon(I('document_open.png'))), b.setToolTip(_('Choose location for PDF file'))
+        b.setIcon(QIcon.ic('document_open.png')), b.setToolTip(_('Choose location for PDF file'))
         b.clicked.connect(self.choose_file)
         h.addWidget(f), h.addWidget(b)
         f.setMinimumWidth(350)
@@ -191,7 +191,7 @@ class Printing(QProgressDialog):
         QProgressDialog.__init__(self, _('Printing, this will take a while, please wait...'), _('&Cancel'), 0, 0, parent)
         self.show_file = show_file
         self.setWindowTitle(_('Printing...'))
-        self.setWindowIcon(QIcon(I('print.png')))
+        self.setWindowIcon(QIcon.ic('print.png'))
         self.thread = thread
         self.timer = t = QTimer(self)
         t.timeout.connect(self.check)

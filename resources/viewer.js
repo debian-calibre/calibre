@@ -7249,6 +7249,7 @@ return this.__repr__();
             }
             get_color_as_rgba.cache = Object.create(null);
             cached_color_to_rgba.cache = Object.create(null);
+            document.documentElement.style.colorScheme = (is_dark_theme) ? "dark" : "light";
         };
         if (!set_ui_colors.__argnames__) Object.defineProperties(set_ui_colors, {
             __argnames__ : {value: ["is_dark_theme"]},
@@ -7274,7 +7275,7 @@ return this.__repr__();
                 val = (ρσ_expr_temp = DEFAULT_COLORS[(typeof k === "number" && k < 0) ? DEFAULT_COLORS.length + k : k])[(typeof attr === "number" && attr < 0) ? ρσ_expr_temp.length + attr : attr];
                 ans.push("--calibre-color-" + ρσ_str.format("{}", k) + ": " + ρσ_str.format("{}", val) + ";");
             }
-            return ":root { " + ans.join("\n") + "}\n\n" + input_css;
+            return ":root { color-scheme: " + ρσ_str.format("{}", attr) + "; " + ans.join("\n") + "}\n\n" + input_css;
         };
         if (!css_for_variables.__module__) Object.defineProperties(css_for_variables, {
             __module__ : {value: "book_list.theme"}
@@ -16916,6 +16917,7 @@ return this.__repr__();
             des = document.documentElement.style;
             des.setProperty("--calibre-viewer-background-color", opts.color_scheme.background);
             des.setProperty("--calibre-viewer-foreground-color", opts.color_scheme.foreground);
+            des.colorScheme = (opts.is_dark_theme) ? "dark" : "light";
             if (opts.color_scheme.link) {
                 des.setProperty("--calibre-viewer-link-color", opts.color_scheme.link);
             }
@@ -26415,7 +26417,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "5.44.0";
+        CALIBRE_VERSION = "6.0.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();

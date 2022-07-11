@@ -219,8 +219,7 @@ def dnd_merge_ok(md):
 
 
 def dragEnterEvent(self, event):
-    if int(event.possibleActions() & Qt.DropAction.CopyAction) + \
-        int(event.possibleActions() & Qt.DropAction.MoveAction) == 0:
+    if not event.possibleActions() & (Qt.DropAction.CopyAction | Qt.DropAction.MoveAction):
         return
     paths = self.paths_from_event(event)
     md = event.mimeData()
@@ -233,7 +232,7 @@ def dropEvent(self, event):
     md = event.mimeData()
     if dnd_merge_ok(md):
         ids = set(map(int, filter(None, bytes(md.data('application/calibre+from_library')).decode('utf-8').split(' '))))
-        row = self.indexAt(event.pos()).row()
+        row = self.indexAt(event.position().toPoint()).row()
         if row > -1 and ids:
             book_id = self.model().id(row)
             if book_id and book_id not in ids:
@@ -499,7 +498,7 @@ class CoverDelegate(QStyledItemDelegate):
         if raw_icon is not None:
             ans = raw_icon.pixmap(sz, sz)
         elif name == ':ondevice':
-            ans = QIcon(I('ok.png')).pixmap(sz, sz)
+            ans = QIcon.ic('ok.png').pixmap(sz, sz)
         elif name:
             pmap = QIcon(os.path.join(config_dir, 'cc_icons', name)).pixmap(sz, sz)
             if not pmap.isNull():
@@ -591,7 +590,7 @@ class CoverDelegate(QStyledItemDelegate):
                 try:
                     p = self.on_device_emblem
                 except AttributeError:
-                    p = self.on_device_emblem = QIcon(I('ok.png')).pixmap(48, 48)
+                    p = self.on_device_emblem = QIcon.ic('ok.png').pixmap(48, 48)
                 self.paint_embossed_emblem(p, painter, orect, right_adjust, left=False)
         finally:
             painter.restore()
@@ -1143,6 +1142,7 @@ class GridView(QListView):
                 pass
 
     def moveCursor(self, action, modifiers):
+        action = QAbstractItemView.CursorAction(action)
         index = QListView.moveCursor(self, action, modifiers)
         if action in (QAbstractItemView.CursorAction.MoveLeft, QAbstractItemView.CursorAction.MoveRight) and index.isValid():
             ci = self.currentIndex()
@@ -1159,7 +1159,7 @@ class GridView(QListView):
         return super().selectionCommand(index, event)
 
     def wheelEvent(self, ev):
-        if ev.phase() not in (Qt.ScrollPhase.ScrollUpdate, 0, Qt.ScrollPhase.ScrollMomentum):
+        if ev.phase() not in (Qt.ScrollPhase.ScrollUpdate, Qt.ScrollPhase.NoScrollPhase, Qt.ScrollPhase.ScrollMomentum):
             return
         number_of_pixels = ev.pixelDelta()
         number_of_degrees = ev.angleDelta() / 8.0

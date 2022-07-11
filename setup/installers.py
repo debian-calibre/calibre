@@ -12,9 +12,7 @@ d = os.path.dirname
 
 def get_paths():
     base = d(d(os.path.abspath(__file__)))
-    traditional_bypy_location = os.path.join(d(base), 'bypy')
-    compat_bypy_location = os.path.join(base, 'bypy', 'b', 'bypy-old')
-    bypy = compat_bypy_location if os.path.exists(compat_bypy_location) else traditional_bypy_location
+    bypy = os.path.join(d(base), 'bypy')
     bypy = os.environ.get('BYPY_LOCATION', bypy)
     if not os.path.isdir(bypy):
         raise SystemExit(
@@ -27,18 +25,19 @@ def get_exe():
     return 'python3' if sys.version_info.major == 2 else sys.executable
 
 
-def get_cmd(exe, bypy, which, bitness, sign_installers, notarize=True, compression_level='9'):
+def get_cmd(exe, bypy, which, bitness, sign_installers=False, notarize=True, compression_level='9', action='program', dont_strip=False):
     cmd = [exe, bypy, which]
-    if bitness and bitness == '32':
-        cmd.append(bitness)
-    cmd.append('program')
-    if not sys.stdout.isatty():
-        cmd.append('--no-tty')
-    if sign_installers or notarize:
-        cmd.append('--sign-installers')
-    if notarize:
-        cmd.append('--notarize')
-    cmd.append('--compression-level=' + compression_level)
+    if bitness and bitness != '64':
+        cmd += ['--arch', bitness]
+    cmd.append(action)
+    if action == 'program':
+        if sign_installers or notarize:
+            cmd.append('--sign-installers')
+        if notarize:
+            cmd.append('--notarize')
+        if dont_strip:
+            cmd.append('--dont-strip')
+        cmd.append('--compression-level=' + compression_level)
     return cmd
 
 
@@ -64,15 +63,15 @@ def build_only(which, bitness, spec, shutdown=False):
     dist = get_dist(base, which, bitness)
     dist = os.path.join(dist, 'c-extensions')
     if shutdown:
-        cmd = [exe, bypy, which, 'shutdown']
+        cmd = get_cmd(exe, bypy, which, bitness, action='shutdown')
         subprocess.Popen(cmd).wait()
     return dist
 
 
-def build_single(which='windows', bitness='64', shutdown=True, sign_installers=True, notarize=True, compression_level='9'):
+def build_single(which='windows', bitness='64', shutdown=True, sign_installers=True, notarize=True, compression_level='9', dont_strip=False):
     base, bypy = get_paths()
     exe = get_exe()
-    cmd = get_cmd(exe, bypy, which, bitness, sign_installers, notarize, compression_level=compression_level)
+    cmd = get_cmd(exe, bypy, which, bitness, sign_installers, notarize, compression_level=compression_level, dont_strip=dont_strip)
     ret = subprocess.Popen(cmd).wait()
     if ret != 0:
         raise SystemExit(ret)
@@ -89,13 +88,17 @@ def build_single(which='windows', bitness='64', shutdown=True, sign_installers=T
             pass
         os.link(src, dest)
     if shutdown:
-        cmd = [exe, bypy, which, 'shutdown']
+        cmd = get_cmd(exe, bypy, which, bitness, action='shutdown')
         subprocess.Popen(cmd).wait()
 
 
 def build_dep(args):
     base, bypy = get_paths()
     exe = get_exe()
+    pl = args[0]
+    args.insert(1, 'dependencies')
+    if '-' in pl:
+        args[0:1] = pl.split('-')[0], f'--arch={pl.split("-")[-1]}'
     cmd = [exe, bypy] + list(args)
     ret = subprocess.Popen(cmd).wait()
     if ret != 0:
@@ -104,7 +107,8 @@ def build_dep(args):
 
 class BuildInstaller(Command):
 
-    OS = BITNESS = ''
+    OS = ''
+    BITNESS = ''
 
     def add_options(self, parser):
         parser.add_option(
@@ -131,42 +135,42 @@ class BuildInstaller(Command):
             choices=list('123456789'),
             help='Do not notarize the installers'
         )
+        parser.add_option(
+            '--dont-strip',
+            default=False,
+            action='store_true',
+            help='Do not strip the binaries'
+        )
 
     def run(self, opts):
         build_single(
             self.OS, self.BITNESS, not opts.dont_shutdown,
             not opts.dont_sign, not opts.dont_notarize,
-            compression_level=opts.compression_level
+            compression_level=opts.compression_level, dont_strip=opts.dont_strip
         )
 
 
 class BuildInstallers(BuildInstaller):
 
     OS = ''
+    ALL_ARCHES = '64',
 
     def run(self, opts):
-        bits = '64 32'.split()
-        for bitness in bits:
-            shutdown = bitness is bits[-1] and not opts.dont_shutdown
+        for bitness in self.ALL_ARCHES:
+            shutdown = bitness is self.ALL_ARCHES[-1] and not opts.dont_shutdown
             build_single(self.OS, bitness, shutdown)
-
-
-class Linux32(BuildInstaller):
-    OS = 'linux'
-    BITNESS = '32'
-    description = 'Build the 32-bit linux calibre installer'
 
 
 class Linux64(BuildInstaller):
     OS = 'linux'
     BITNESS = '64'
-    description = 'Build the 64-bit linux calibre installer'
+    description = 'Build the 64-bit Linux calibre installer'
 
 
-class Win32(BuildInstaller):
-    OS = 'windows'
-    BITNESS = '32'
-    description = 'Build the 32-bit windows calibre installers'
+class LinuxArm64(BuildInstaller):
+    OS = 'linux'
+    BITNESS = 'arm64'
+    description = 'Build the 64-bit ARM Linux calibre installer'
 
 
 class Win64(BuildInstaller):
@@ -181,6 +185,7 @@ class OSX(BuildInstaller):
 
 class Linux(BuildInstallers):
     OS = 'linux'
+    ALL_ARCHES = '64', 'arm64'
 
 
 class Win(BuildInstallers):
@@ -191,14 +196,15 @@ class BuildDep(Command):
 
     description = (
         'Build a calibre dependency. For example, build_dep windows expat.'
-        ' Without arguments builds all deps for specified platform. Use windows 32 for 32bit.'
+        ' Without arguments builds all deps for specified platform. Use linux-arm64 for Linux ARM.'
         ' Use build_dep all somedep to build a dep for all platforms.'
     )
 
     def run(self, opts):
         args = opts.cli_args
+
         if args and args[0] == 'all':
-            for x in ('linux', 'linux 32', 'macos', 'windows', 'windows 32'):
+            for x in ('linux', 'linux-arm64', 'macos', 'windows'):
                 build_dep(x.split() + list(args)[1:])
         else:
             build_dep(args)
@@ -211,10 +217,11 @@ class ExportPackages(Command):
     def run(self, opts):
         base, bypy = get_paths()
         exe = get_exe()
-        cmd = [exe, bypy, 'export'] + list(opts.cli_args) + ['download.calibre-ebook.com:/srv/download/ci/calibre3']
-        ret = subprocess.Popen(cmd).wait()
-        if ret != 0:
-            raise SystemExit(ret)
+        for which in ('linux', 'macos', 'windows'):
+            cmd = [exe, bypy, 'export'] + ['download.calibre-ebook.com:/srv/download/ci/calibre6'] + [which]
+            ret = subprocess.Popen(cmd).wait()
+            if ret != 0:
+                raise SystemExit(ret)
 
 
 class ExtDev(Command):

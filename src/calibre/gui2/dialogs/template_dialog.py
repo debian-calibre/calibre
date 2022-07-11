@@ -114,7 +114,7 @@ class TemplateHighlighter(QSyntaxHighlighter):
             config["%sfontbold" % name] = bold
             config["%sfontitalic" % name] = italic
         base_format = QTextCharFormat()
-        base_format.setFontFamily(config["fontfamily"])
+        base_format.setFontFamilies([config["fontfamily"]])
         config["fontsize"] = size
         base_format.setFontPointSize(config["fontsize"])
 
@@ -487,26 +487,26 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
         word_wrapping = gprefs['gpm_template_editor_word_wrap_mode']
         if word_wrapping:
             ca = m.addAction(_('Disable word wrap'))
-            ca.setIcon(QIcon(I('list_remove.png')))
+            ca.setIcon(QIcon.ic('list_remove.png'))
         else:
             ca = m.addAction(_('Enable word wrap'))
-            ca.setIcon(QIcon(I('ok.png')))
+            ca.setIcon(QIcon.ic('ok.png'))
         ca.triggered.connect(partial(self.set_word_wrap, not word_wrapping))
         m.addSeparator()
         ca = m.addAction(_('Load template from the Template tester'))
         ca.triggered.connect(self.load_last_template_text)
         m.addSeparator()
         ca = m.addAction(_('Load template from file'))
-        ca.setIcon(QIcon(I('document_open.png')))
+        ca.setIcon(QIcon.ic('document_open.png'))
         ca.triggered.connect(self.load_template_from_file)
         ca = m.addAction(_('Save template to file'))
-        ca.setIcon(QIcon(I('save.png')))
+        ca.setIcon(QIcon.ic('save.png'))
         ca.triggered.connect(self.save_template)
         m.exec(self.textbox.mapToGlobal(point))
 
     def set_word_wrap(self, to_what):
         gprefs['gpm_template_editor_word_wrap_mode'] = to_what
-        self.textbox.setWordWrapMode(QTextOption.WordWrap if to_what else QTextOption.NoWrap)
+        self.textbox.setWordWrapMode(QTextOption.WrapMode.WordWrap if to_what else QTextOption.WrapMode.NoWrap)
 
     def load_last_template_text(self):
         from calibre.customize.ui import find_plugin
@@ -561,7 +561,7 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
 
     def set_up_font_boxes(self):
         font = self.get_current_font()
-        self.font_box.setWritingSystem(QFontDatabase.Latin)
+        self.font_box.setWritingSystem(QFontDatabase.WritingSystem.Latin)
         self.font_box.setCurrentFont(font)
         self.font_box.setEditable(False)
         gprefs['gpm_template_editor_font'] = str(font.family())
@@ -676,7 +676,7 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
             self.last_text = cur_text
             self.highlighter.regenerate_paren_positions()
             self.text_cursor_changed()
-            if self.break_box.checkState() == 0:
+            if self.break_box.checkState() == Qt.CheckState.Unchecked:
                 self.display_values(cur_text)
 
     def display_values(self, txt):
@@ -812,12 +812,12 @@ class BreakReporter(QDialog):
 
         bb = QDialogButtonBox()
         b = bb.addButton(_('&Continue'), QDialogButtonBox.ButtonRole.AcceptRole)
-        b.setIcon(QIcon(I('sync-right.png')))
+        b.setIcon(QIcon.ic('sync-right.png'))
         b.setToolTip(_('Continue running the template'))
         b.setDefault(True)
         l.addWidget(bb)
         b = bb.addButton(_('&Stop'), QDialogButtonBox.ButtonRole.RejectRole)
-        b.setIcon(QIcon(I('list_remove.png')))
+        b.setIcon(QIcon.ic('list_remove.png'))
         b.setToolTip(_('Stop running the template'))
         l.addWidget(bb)
         bb.accepted.connect(self.accept)

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-03 05:03+0000\n"
+"POT-Creation-Date: 2022-07-10 14:55+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2014-2022\n"
 "Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
@@ -28,7 +28,7 @@ msgstr "Поширені питання та відповіді на них"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:8
 #: ../../__w/calibre/calibre/manual/faq.rst:14
-#: ../../__w/calibre/calibre/manual/faq.rst:169
+#: ../../__w/calibre/calibre/manual/faq.rst:138
 #: ../../__w/calibre/calibre/manual/faq.rst:515
 #: ../../__w/calibre/calibre/manual/faq.rst:732
 msgid "Contents"
@@ -211,57 +211,10 @@ msgid ""
 msgstr "У новішому форматі AZW3 передбачено належну підтримку змісту у метаданих. Втім, відомо, що програми Kindle можуть обробляти файл не так, як слід, якщо ви вимкнете створення вбудованого списку вмісту наприкінці файла. Отже, рекомендуємо вам не вимикати створення такого змісту. Якщо ви створите файл AZW3 зі змістом у метаданих і без змісту наприкінці тексту, деякі можливості на Kindle не працюватимуть, зокрема можливість гортати сторінки."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:79
-msgid ""
-"The covers for my MOBI files have stopped showing up in Kindle for PC/Kindle"
-" for Android/iPad etc."
-msgstr "Kindle не показує обкладинки для файлів MOBI на PC/Kindle, на Android/iPad тощо"
-
-#: ../../__w/calibre/calibre/manual/faq.rst:81
-msgid ""
-"This is caused by a bug in the Amazon software. You can work around it by "
-"going to :guilabel:`Preferences->Conversion->Output Options->MOBI output` "
-"and setting the :guilabel:`Enable sharing of book content` option. If you "
-"are reconverting a previously converted book, you will also have to enable "
-"the option in the conversion dialog for that individual book (as per book "
-"conversion settings are saved and take precedence)."
-msgstr "Причиною є вада у програмному забезпеченні Amazon. Ви можете обійти її за допомогою сторінки налаштувань calibre :guilabel:`Налаштування -> Перетворення -> Вихідні параметри -> Вивід у MOBI` і пункту «Увімкнути оприлюднення книги...». Якщо ви перетворюєте раніше перетворену книгу, вам також слід позначити цей пункт у діалоговому вікні перетворення для окремої книги (оскільки параметри перетворення окремих книг зберігаються і мають вищий пріоритет за загальні параметри)."
-
-#: ../../__w/calibre/calibre/manual/faq.rst:88
-msgid ""
-"Note that doing this will mean that the generated MOBI will show up under "
-"personal documents instead of Books on the Kindle Fire and Amazon "
-"whispersync will not work, but the covers will. It's your choice which "
-"functionality is more important to you. I encourage you to contact Amazon "
-"and ask them to fix this bug."
-msgstr "Зауважте, що після цього створений файл MOBI буде показано у розділі особистих документів, а не розділі «Книги» на Kindle Fire, а Amazon whispersync не працюватиме. Втім, обкладинки буде показано. Отже, ви можете вибрати ту функціональну можливість, яка є для вас важливішою. Вам варто зв’язатися із Amazon і попросити їх виправити цю ваду."
-
-#: ../../__w/calibre/calibre/manual/faq.rst:94
-msgid ""
-"The bug in Amazon's software is that when you put a MOBI file on a Kindle, "
-"unless the file is marked as a Personal document, Amazon assumes you bought "
-"the book from it and tries to download the cover thumbnail for it from its "
-"servers. When the download fails, it refuses to fallback to the cover "
-"defined in the MOBI file. This is likely deliberate on Amazon's part to try "
-"to force authors to sell only through them. In other words, the Kindle only "
-"displays covers for books marked as Personal Documents or books bought "
-"directly from Amazon."
-msgstr "Вада у програмному забезпеченні Amazon полягає у тому, що коли ви записуєте файл MOBI на Kindle, і файл не позначено як особистий документ, Amazon вважає, що ви придбали книгу у крамниці компанії і намагається отримати мініатюру обкладинки книги з серверів компанії. Якщо отримати мініатюру не вдасться, програма відмовляється використовувати зображення обкладинки з файла MOBI. Ймовірно, так зроблено навмисне з боку Amazon, щоб змусити авторів продавати книги лише за допомогою крамниці компанії. Іншими словами, Kindle показує лише обкладинки книг, які позначено як особисті документи, або обкладинки книг, які придбано у Amazon."
-
-#: ../../__w/calibre/calibre/manual/faq.rst:102
-msgid ""
-"If you send a MOBI file to an e-ink Kindle with calibre using a USB "
-"connection, calibre works around this Amazon bug by uploading a cover "
-"thumbnail itself. However, that workaround is only possible when using a USB"
-" connection and sending with calibre. Note that if you send using email, "
-"Amazon will automatically mark the MOBI file as a Personal Document and the "
-"cover will work, but the book will show up in Personal Documents."
-msgstr "Якщо ви надішлете файл MOBI на пристрій Kindle з електронним чорнилом за допомогою calibre і з’єднання USB, calibre обійде цю ваду у програмному забезпеченні Amazon, вивантаживши зображення обкладинки програмно. Втім, такий обхідний маневр можливий, лише якщо використовується з’єднання USB і надсилання даних відбувається за допомогою calibre. Зауважте, що якщо файл буде надіслано електронною поштою, програмне забезпечення Amazon автоматично позначить файл MOBI як особистий документ, обкладинку буде показано, але пункт книги з’явиться лише у списку особистих документів."
-
-#: ../../__w/calibre/calibre/manual/faq.rst:110
 msgid "How do I convert a collection of HTML files in a specific order?"
 msgstr "Як перетворити збірку файлів HTML у певному порядку?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:111
+#: ../../__w/calibre/calibre/manual/faq.rst:80
 msgid ""
 "In order to convert a collection of HTML files in a specific order, you have"
 " to create a table of contents file. That is, another HTML file that "
@@ -269,7 +222,7 @@ msgid ""
 "looks like::"
 msgstr "Щоб перетворити збірку файлів HTML у певному порядку, вам слід створити таблицю змісту файла. Тобто, слід створити ще один файл HTML, який міститиме посилання на усі інші файли у бажаному порядку. Вміст такого файла може бути подібним до наступного::"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:128
+#: ../../__w/calibre/calibre/manual/faq.rst:97
 msgid ""
 "Then, just add this HTML file to the GUI and use the :guilabel:`Convert` "
 "button to create your e-book. You can use the option in the Table of "
@@ -277,7 +230,7 @@ msgid ""
 "Contents is generated."
 msgstr "Далі, просто додайте цей файл HTML у графічному інтерфейсі редактора і скористайтеся кнопкою перетворення для створення книги. Ви можете скористатися пунктом у розділі таблиці змісту діалогового вікна перетворення для керування створенням таблиці змісту книги."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:132
+#: ../../__w/calibre/calibre/manual/faq.rst:101
 msgid ""
 "By default, when adding HTML files, calibre follows links in the files in "
 "*depth first* order. This means that if file A.html links to B.html and "
@@ -289,11 +242,11 @@ msgid ""
 ":guilabel:`HTML to ZIP` plugin."
 msgstr "Типово, під час додавання файлів HTML calibre проходить посилання у файлах у порядку *спершу глибина*. Це означає, що якщо файл A.html посилається на файл B.html, C.html і D.html, а файл B.html посилається на файл D.html, файли буде розташовано у такому порядку: A.html, B.html, D.html, C.html. Якщо ж вам потрібен порядок A.html, B.html, C.html, D.html, вам доведеться повідомити calibre, щоб програма додавала файли у порядку *спершу шлях*. Для цього відкрийте сторінку налаштувань :guilabel:`Налаштування -> Додатково -> Додатки -> Тип файла` і налаштуйте додаток :guilabel:`HTML у ZIP`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:142
+#: ../../__w/calibre/calibre/manual/faq.rst:111
 msgid "The EPUB I produced with calibre is not valid?"
 msgstr "Чому файл EPUB, який створено calibre, виявився некоректним?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:144
+#: ../../__w/calibre/calibre/manual/faq.rst:113
 msgid ""
 "calibre does not guarantee that an EPUB produced by it is valid. The only "
 "guarantee it makes is that if you feed it valid XHTML 1.1 + CSS 2.1 it will "
@@ -308,11 +261,11 @@ msgid ""
 "input documents."
 msgstr "Calibre не гарантує, що створений за допомогою програми код EPUB буде коректним. Єдиною гарантією є передавання програмі коректного коду XHTML 1.1 + CSS 2.1. Тоді програма гарантовано створить коректний код EPUB. calibre докладає значних зусиль для того, щоб створений код EPUB працював як слід на широкому спектрі пристроїв. Ця мета є несумісною зі створенням коректних EPUB, але є набагато важливішою для більшості користувачів. Якщо вам потрібна програма, яка завжди створює коректні EPUB, calibre не для вас. Це означає, що якщо ви захочете надіслати створений за допомогою calibre файл EPUB до інтернет-сховища, де використано засіб перевірки коректності EPUB, вам доведеться забезпечити коректність коду EPUB власноруч. Calibre не зробить цього за вас. Іншими словами, вам слід передавати програмі лише коректні вхідні дані XHTML + CSS."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:157
+#: ../../__w/calibre/calibre/manual/faq.rst:126
 msgid "How do I use some of the advanced features of the conversion tools?"
 msgstr "Як скористатися деякими додатковим можливостями інструментів перетворення?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:158
+#: ../../__w/calibre/calibre/manual/faq.rst:127
 msgid ""
 "You can get help on any individual feature of the converters by mousing over"
 " it in the GUI or running ``ebook-convert dummy.html .epub -h`` at a "
@@ -321,15 +274,15 @@ msgid ""
 "<html-demo.zip>`."
 msgstr "Ви можете отримати довідку щодо окремих можливостей засобів перетворення у відповідь на наведення вказівника миші на елемент графічного інтерфейсу або на команду ``ebook-convert dummy.html .epub -h`` у терміналі. Чудовим місцем для початку є перегляд цього демонстраційного файла розширених можливостей: :download_file:`html-demo.zip <html-demo.zip>`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:165
+#: ../../__w/calibre/calibre/manual/faq.rst:134
 msgid "Device integration"
 msgstr "Інтеграція з пристроями"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:172
+#: ../../__w/calibre/calibre/manual/faq.rst:141
 msgid "What devices does calibre support?"
 msgstr "Підтримку яких пристроїв передбачено у calibre?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:173
+#: ../../__w/calibre/calibre/manual/faq.rst:142
 msgid ""
 "calibre can directly connect to all the major (and most of the minor) e-book"
 " reading devices, smartphones, tablets, etc.  In addition, using the "
@@ -338,27 +291,27 @@ msgid ""
 "any device that has a web browser using the calibre Content server."
 msgstr "calibre може безпосередньо з’єднуватися з усіма поширеними (і більшістю малопоширених) пристроями для читання електронних книг, смартфонами, планшетами тощо. Крім того, за допомогою можливості :guilabel:`З’єднатися з текою` ви можете скористатися будь-яким пристроєм для читання електронних книг, який показує себе у системі як диск USB. Нарешті, ви можете встановити бездротове з'єднання із будь-яким пристроєм, де є програма для перегляду інтернету, за допомогою сервера даних Calibre."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:182
+#: ../../__w/calibre/calibre/manual/faq.rst:151
 msgid "How can I help get my device supported in calibre?"
 msgstr "Як допомогти у реалізації підтримки вашого пристрою у calibre?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:184
+#: ../../__w/calibre/calibre/manual/faq.rst:153
 msgid ""
 "If your device appears as a USB disk to the operating system, adding support"
 " for it to calibre is very easy. We just need some information from you:"
 msgstr "Якщо ваш пристрій ідентифікується системою як диск USB, додавання його підтримки до calibre є дуже простим. Для цього нам знадобляться від вас такі дані:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:187
+#: ../../__w/calibre/calibre/manual/faq.rst:156
 msgid "Complete list of e-book formats that your device supports."
 msgstr "Повний список форматів електронних книг, підтримку яких передбачено на вашому пристрої."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:188
+#: ../../__w/calibre/calibre/manual/faq.rst:157
 msgid ""
 "Is there a special folder on the device in which all e-book files should be "
 "placed? Also does the device detect files placed in sub-folders?"
 msgstr "Чи є на пристрої спеціальна тека, де повинні зберігатись всі книжкові файли? Чи знайде пристрій файли, розміщені у підтеках?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:189
+#: ../../__w/calibre/calibre/manual/faq.rst:158
 msgid ""
 "We also need information about your device that calibre will collect "
 "automatically. First, if your device supports SD cards, insert them. Then "
@@ -369,13 +322,13 @@ msgid ""
 "computer."
 msgstr "Нам також знадобляться дані щодо вашого пристрою, які calibre збере автоматично. По-перше, якщо на вашому пристрої передбачено підтримку карток SD, вставте їх. Далі, з’єднайте ваш пристрій з комп’ютером. У calibre скористайтеся пунктом :guilabel:`Налаштування -> Різне` і натисніть кнопку «Діагностика виявлення пристроїв». У відповідь буде створено діагностичні дані. Скопіюйте дані до файла і повторіть процедуру, цього разу з від’єднаним від вашого комп’ютера пристроєм."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:193
+#: ../../__w/calibre/calibre/manual/faq.rst:162
 msgid ""
 "Send both the above outputs to us with the other information and we will "
 "write a device driver for your device."
 msgstr "Надішліть обидва набори виведених даних нам із іншою інформацією, і ми напишемо драйвер для вашого пристрою."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:196
+#: ../../__w/calibre/calibre/manual/faq.rst:165
 msgid ""
 "Once you send us the output for a particular operating system, support for "
 "the device in that operating system will appear in the next release of "
@@ -383,43 +336,43 @@ msgid ""
 "it. See :website:`how to report bugs <bugs>`."
 msgstr "Після надсилання вами виведених даних для певної операційної системи підтримка пристрою у відповідній операційній системі з’явиться у наступному випуску calibre. Щоб надіслати нам дані, створіть сповіщення щодо вади і долучіть виведені дані до нього. Див. :website:`як звітувати щодо вад у calibre <bugs>`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:201
+#: ../../__w/calibre/calibre/manual/faq.rst:170
 msgid "My device is not being detected by calibre?"
 msgstr "Чому calibre не може виявити мій пристрій?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:203
+#: ../../__w/calibre/calibre/manual/faq.rst:172
 msgid "Follow these steps to find the problem:"
 msgstr "Виконайте ці кроки, щоб визначити причину:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:205
+#: ../../__w/calibre/calibre/manual/faq.rst:174
 msgid ""
 "Make sure that you are connecting only a single device to your computer at a"
 " time. Do not have another calibre supported device like an iPhone/iPad etc."
 " at the same time."
 msgstr "Переконайтеся, що з вашим комп’ютером одночасно з’єднано лише один пристрій. Не з’єднуйте з комп’ютером інших підтримуваних пристроїв, зокрема iPhone/iPad тощо."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:208
+#: ../../__w/calibre/calibre/manual/faq.rst:177
 msgid ""
 "If you are connecting an Apple iDevice (iPad, iPod Touch, iPhone), Apple no "
 "longer allows third party software to connect to their devices using a USB "
 "cable. Instead use a wireless connection, via the calibre Content server."
 msgstr "Якщо ви встановлюєте з'єднання із пристроєм виробництва Apple (iPad, iPod Touch, iPhone), слід зважати на те, що компанія Apple припинила підтримку можливості встановлення з'єднання за допомогою стороннього програмного забезпечення та кабеля USB. Замість цього, слід використовувати бездротове з'єднання за допомогою сервера даних calibre."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:212
+#: ../../__w/calibre/calibre/manual/faq.rst:181
 msgid ""
 "If you are connecting a Kindle Fire or other Android device, read the note "
 "under :ref:`android_usb`."
 msgstr "Якщо ви з'єднуєтеся із Kindle Fire або іншим пристроєм під керуванням Android, ознайомтеся із приміткою щодо :ref:`android_usb`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:214
-#: ../../__w/calibre/calibre/manual/faq.rst:959
+#: ../../__w/calibre/calibre/manual/faq.rst:183
+#: ../../__w/calibre/calibre/manual/faq.rst:989
 msgid ""
 "On macOS if you get permission errors when connecting a device to calibre, "
 "you can fix that by looking under :guilabel:`System Preferences > Security "
 "and Privacy > Privacy > Files and Folders`."
 msgstr "У macOS, якщо у вас виникають проблеми із правами доступу при з'єднанні пристрою із calibre, ви можете усунути їх за допомогою сторінки :guilabel:`Налаштування системи > Безпека і конфіденційність > Конфіденційність > Файли і теки`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:217
+#: ../../__w/calibre/calibre/manual/faq.rst:186
 msgid ""
 "Make sure you are running the latest version of calibre (currently "
 "|version|). The latest version can always be downloaded from :website:`the "
@@ -427,19 +380,19 @@ msgid ""
 "currently running by looking at the bottom line of the main calibre window."
 msgstr "Переконайтеся, що ви користуєтеся найсвіжішою версією calibre (зараз це |version|).. Найсвіжішу версію завжди можна отримати з :website:`сайта calibre <download>`. Дізнатися про те, якою версією calibre ви користуєтеся, можна за допомогою даних у нижньому рядку головного вікна calibre."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:222
+#: ../../__w/calibre/calibre/manual/faq.rst:191
 msgid ""
 "Ensure your operating system is seeing the device. That is, the device "
 "should show up in Windows Explorer (in Windows) or Finder (in macOS)."
 msgstr "Впевніться, що ваша операційна система бачить пристрій. Тобто, пристрій відображається у Windows Explorer (на Windows) чи у Finder (на macOS)."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:224
+#: ../../__w/calibre/calibre/manual/faq.rst:193
 msgid ""
 "In calibre, go to :guilabel:`Preferences->Ignored Devices` and check that "
 "your device is not being ignored"
 msgstr "У calibre, відкрийте :guilabel:`Налаштування -> Ігноровані пристрої` і перевірте, чи немає вашого пристрою у списку ігнорування."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:226
+#: ../../__w/calibre/calibre/manual/faq.rst:195
 msgid ""
 "If all the above steps fail, go to :guilabel:`Preferences->Miscellaneous` "
 "and click :guilabel:`Debug device detection` with your device attached and "
@@ -447,11 +400,11 @@ msgid ""
 "<https://bugs.launchpad.net/calibre>`_."
 msgstr "Якщо усі описані вище кроки не допомагають, перейдіть на сторінку :guilabel:`Налаштування -> Різне` і натисніть кнопку :guilabel:`Діагностика виявлення пристроїв`, перед цим з’єднавши ваш комп’ютер із пристроєм. Далі, додайте виведені дані до квитка у `системі стеження за вадами у calibre <https://bugs.launchpad.net/calibre>`_."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:231
+#: ../../__w/calibre/calibre/manual/faq.rst:200
 msgid "My device is non-standard or unusual. What can I do to connect to it?"
 msgstr "Нестандартний або незвичайний пристрій. Як з’єднати з ним комп’ютер?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:233
+#: ../../__w/calibre/calibre/manual/faq.rst:202
 msgid ""
 "In addition to the :guilabel:`Connect to folder` function found under the "
 ":guilabel:`Connect/share` button, calibre provides a ``User defined`` device"
@@ -465,36 +418,36 @@ msgid ""
 "builtin plugin first, so that your user defined plugin is used instead."
 msgstr "Окрім пункту :guilabel:`З’єднатися з текою`, доступ до якого можна отримати за допомогою кнопки :guilabel:`З’єднатись/Роздати`, у calibre передбачено додаток пристроїв ``Визначено користувачем``, яким можна скористатися для встановлення з’єднання із будь-яким пристроєм USB, який може працювати у режимі диска у вашій операційній системі. Зауваження: у Windows, щоб програма calibre могла скористатися пристроєм, з ним має бути пов’язано літеру. Щоб дізнатися більше, див. додаток пристрою ``Налаштування -> Додатки -> Додатки «Інтерфейс пристрою» -> User Defined`` і ``Налаштування -> Різне -> Отримати дані для налаштовування пристрою, визначеного користувачем``. Зауважте, що якщо ви використовуєте визначений користувачем додаток для пристрою, який зазвичай виявляється вбудованим додатком calibre, вам слід спочатку вимкнути вбудований додаток, щоб замість нього можна було використати визначений вами додаток."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:245
+#: ../../__w/calibre/calibre/manual/faq.rst:214
 msgid "How do I use calibre with my iPad/iPhone/iPod touch?"
 msgstr "Як скористатися calibre для роботи з iPad/iPhone/iPod touch?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:247
+#: ../../__w/calibre/calibre/manual/faq.rst:216
 msgid ""
 "An easy way to browse your calibre collection from your Apple device is by "
 "using :doc:`server`, which makes your collection available over the net. "
 "First perform the following steps in calibre"
 msgstr "Простим способом навігації вашою збіркою calibre з пристрою Apple є використання :doc:`сервера даних calibre <server>`, який робить вашу збірку доступною з інтернету. Спочатку виконайте такі кроки у calibre:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:251
+#: ../../__w/calibre/calibre/manual/faq.rst:220
 msgid ""
 "Set the Preferred Output Format in calibre to EPUB (The output format can be"
 " set under :guilabel:`Preferences->Interface->Behavior`)"
 msgstr "Встановіть бажаний формат виведення у calibre у значення EPUB (формат виведення можна вказати на сторінці :guilabel:`Налаштування -> Інтерфейс -> Поведінка`)"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:253
+#: ../../__w/calibre/calibre/manual/faq.rst:222
 msgid ""
 "Set the output profile to iPad (this will work for iPhone/iPods as well), "
 "under :guilabel:`Preferences->Conversion->Common options->Page setup`"
 msgstr "Встановіть профіль виведення у iPad (це також працює для iPhone/iPod) на сторінці :guilabel:`Налаштування -> Перетворення -> Загальні параметри -> Налаштування сторінки`"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:255
+#: ../../__w/calibre/calibre/manual/faq.rst:224
 msgid ""
 "Convert the books you want to read on your iDevice to EPUB format by "
 "selecting them and clicking the :guilabel:`Convert` button."
 msgstr "Перетворіть книги, які ви читатимете на вашому i-пристрої на формат EPUB: просто позначте їх у списку і натисніть кнопку :guilabel:`Перетворити`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:257
+#: ../../__w/calibre/calibre/manual/faq.rst:226
 msgid ""
 "Turn on the Content server by clicking the :guilabel:`Connect/share` button "
 "and leave calibre running. You can also tell calibre to automatically start "
@@ -502,7 +455,7 @@ msgid ""
 "net`."
 msgstr "Увімкніть сервер даних натисканням кнопки :guilabel:`З’єднатись/Роздати` і залиште calibre працювати. Ви також можете наказати calibre автоматично запускати сервер даних за допомогою сторінки :guilabel:`Налаштування -> Спільний доступ -> Обмін мережею`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:261
+#: ../../__w/calibre/calibre/manual/faq.rst:230
 msgid ""
 "The Content server allows you to read books directly in Safari itself. In "
 "addition, there are many apps for your iDevice that can connect to the "
@@ -510,25 +463,25 @@ msgid ""
 "itself."
 msgstr "Сервер даних надає вам змогу читати книги безпосередньо за допомогою Safari. Крім того, для пристроїв Apple створено багато програм, які можуть встановлювати з'єднання із сервером даних calibre. Ось приклади таких програм: Marvin, Mapleread та iBooks."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:266
+#: ../../__w/calibre/calibre/manual/faq.rst:235
 msgid "Using the Content server"
 msgstr "Користування сервером даних"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:268
+#: ../../__w/calibre/calibre/manual/faq.rst:237
 msgid ""
 "Start the Safari browser and type in the IP address and port of the computer"
 " running the calibre server, like this::"
 msgstr "Запустіть програму Safari і введіть IP-адресу і порт комп’ютера, на якому запущено сервер calibre. Ось так::"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:273
-#: ../../__w/calibre/calibre/manual/faq.rst:343
+#: ../../__w/calibre/calibre/manual/faq.rst:242
+#: ../../__w/calibre/calibre/manual/faq.rst:312
 msgid ""
 "Replace ``192.168.1.2`` with the local IP address of the computer running "
 "calibre. See :doc:`server` for details on running the server and finding out"
 " the right IP address to use."
 msgstr "Замініть ``192.168.1.2``на локальну IP-адресу комп’ютера, на якому запущено calibre. Докладний опис запуску сервера та визначення належної IP-адреси наведено у розділі :doc:`server`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:277
+#: ../../__w/calibre/calibre/manual/faq.rst:246
 msgid ""
 "You will see a list of books in Safari, tap on any book and you will be "
 "given the option to either download it, or read it in the browser itself. If"
@@ -536,8 +489,8 @@ msgid ""
 "iBooks."
 msgstr "У Safari ви побачите список книг. Після натискання пункту у ньому програма запропонує вам або отримати дані файла або прочитати файл у самій програмі для перегляду інтернету. Якщо ви виберете варіант із отриманням даних, Safari запропонує вам відкрити книгу у iBooks."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:281
-#: ../../__w/calibre/calibre/manual/faq.rst:351
+#: ../../__w/calibre/calibre/manual/faq.rst:250
+#: ../../__w/calibre/calibre/manual/faq.rst:320
 msgid ""
 "Many reading apps support browsing the calibre library directly via its "
 "`OPDS <httpd://opds.io/>`__ support. In such apps you can go to the online "
@@ -545,11 +498,11 @@ msgid ""
 "download books from your calibre library within the app."
 msgstr "У багатьох засобах для читання передбачено підтримку навігації бібліотекою calibre безпосередньо за допомогою її інтерфейсу `OPDS <httpd://opds.io/>`__. У таких програмах ви можете перейти на сторінку інтернет-каталогу і додати IP-адресу сервера calibre для навігації і отримання книг з вашої бібліотеки calibre у самій програмі."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:287
+#: ../../__w/calibre/calibre/manual/faq.rst:256
 msgid "How do I use calibre with my Android phone/tablet or Kindle Fire HD?"
 msgstr "Як скористатися calibre на моєму телефоні або планшеті під керуванням Android чи Kindle Fire HD?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:289
+#: ../../__w/calibre/calibre/manual/faq.rst:258
 msgid ""
 "There are two ways that you can connect your Android device to calibre. "
 "Using a USB cable -- or wirelessly, over the air. The first step to using an"
@@ -567,11 +520,11 @@ msgid ""
 "<https://play.google.com/store/apps/details?id=com.amazon.kindle&feature=related_apps>`_."
 msgstr "Існує два способи з’єднати ваш пристрій під керуванням Android із calibre. За допомогою кабелю USB або за допомогою бездротового зв’язку. Першим кроком у використанні пристрою під керуванням Android є встановлення на нього програми для читання електронних книг. Існує багато безкоштовних і комерційних програм для Android. Ось декілька прикладів (без певного пріоритету): `FBReader <https://play.google.com/store/apps/details?id=org.geometerplus.zlibrary.ui.android&hl=en>`_, `Moon+ <https://play.google.com/store/apps/details?id=com.flyersoft.moonreader&hl=en>`_, `Mantano <https://play.google.com/store/apps/details?id=com.mantano.reader.android.lite&hl=en>`_, `Aldiko <https://play.google.com/store/apps/details?id=com.aldiko.android&hl=en>`_, `Kindle <https://play.google.com/store/apps/details?id=com.amazon.kindle&feature=related_apps>`_."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:302
+#: ../../__w/calibre/calibre/manual/faq.rst:271
 msgid "Using a USB cable"
 msgstr "За допомогою кабеля USB"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:304
+#: ../../__w/calibre/calibre/manual/faq.rst:273
 msgid ""
 "Simply plug your device into the computer with a USB cable. calibre should "
 "automatically detect the device and then you can transfer books to it by "
@@ -581,7 +534,7 @@ msgid ""
 "Transfer utility, etc."
 msgstr "Просто з’єднайте ваш пристрій з комп’ютером за допомогою кабелю USB. calibre має автоматично виявити пристрій. Потім ви можете перенести книги на пристрій за допомогою натискання кнопки :guilabel:`Надіслати на пристрій`. Зауважте, що у macOS і Linux із пристроєм на Android може одночасно працювати лише одна програма, тому переконайтеся, що пристрій не відкрито у програмі для керування файлами системи або у допоміжному засобів передавання файлів на Android тощо."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:311
+#: ../../__w/calibre/calibre/manual/faq.rst:280
 msgid ""
 "With newer Android devices, you might have to jump through a few hoops to "
 "get the connection working, as Google really does not want you to be "
@@ -595,7 +548,7 @@ msgid ""
 "actually tries to connect to it, asking for permission, tap OK."
 msgstr "На новіших пристроях під керуванням Android вам доведеться скористатися певними хитрощами, щоб змусити з’єднання працювати, оскільки Google намагається ускладнити роботу поза «хмарою» компанії. По-перше, розблокуйте екран, перш ніж вставляти кабель USB. Після вставляння кабелю USB ви побачите контекстне сповіщення. У ньому має бути повідомлення щодо «Передавання мультимедійних файлів» («Transferring Media files») або «MTP (Media Transfer mode)». Якщо кнопки вибору немає, натисніть сповіщення і змініть режим на режим передавання мультимедійних даних (MTP). Можливо, на цьому кроці вам доведеться перезапустити calibre, щоб ваш пристрій було розпізнано. Нарешті, під час кожної спробуи з’єднання calibre або операційної системи з пристроєм може з’явитися сповіщення щодо дозволу на з’єднання. Натисніть ньому  кнопку «Гаразд» («OK»)."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:323
+#: ../../__w/calibre/calibre/manual/faq.rst:292
 msgid ""
 "With the Kindle Fire 8 or newer there is an icon that shows up when the USB "
 "cable is plugged in, showing that the device is charging. Tap that and "
@@ -603,11 +556,11 @@ msgid ""
 "then be detected."
 msgstr "При роботі із Kindle Fire 8 та новішими версіями цього пристрою піктограма, яку буде показано при вставлянні кабелю USB, вказуватиме на заряджання пристрою. Торкніться її і перемкніть пристрій у режим передавання даних, потім запустіть calibre — пристрій має бути виявлено."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:329
+#: ../../__w/calibre/calibre/manual/faq.rst:298
 msgid "Over the air"
 msgstr "За допомогою бездротового зв’язку"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:331
+#: ../../__w/calibre/calibre/manual/faq.rst:300
 msgid ""
 "calibre has a builtin web server, the :doc:`server`. It makes your calibre "
 "collection available over the net. You can browse it on your device using a "
@@ -615,53 +568,53 @@ msgid ""
 " in calibre:"
 msgstr "У calibre вбудовано вебсервер, :doc:`server`. Він робить доступною вашу збірку calibre у мережі. Ви можете здійснювати навігацію збіркою на вашому пристрої за допомогою простої програми для перегляду інтернету або спеціалізованої програми. Спочатку, слід виконати такі дії у calibre:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:335
+#: ../../__w/calibre/calibre/manual/faq.rst:304
 msgid ""
 "Set the :guilabel:`Preferred Output Format` in calibre to EPUB for normal "
 "Android devices or MOBI for Kindles (The output format can be set under "
 ":guilabel:`Preferences->Interface->Behavior`)"
 msgstr "Встановіть :guilabel:`Бажаний формат виведення` у calibre у значення EPUB для звичайних пристроїв під керуванням Android або MOBI для пристроїв Kindle (формат виведення можна вказати на сторінці :guilabel:`Налаштування -> Інтерфейс -> Поведінка`)"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:336
+#: ../../__w/calibre/calibre/manual/faq.rst:305
 msgid ""
 "Convert the books you want to read on your device to EPUB/MOBI format by "
 "selecting them and clicking the :guilabel:`Convert` button."
 msgstr "Перетворіть книги, які ви читатимете на вашому i-пристрої на формат EPUB: просто позначте їх у списку і натисніть кнопку :guilabel:`Перетворити`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:337
+#: ../../__w/calibre/calibre/manual/faq.rst:306
 msgid ""
 "Turn on the :guilabel:`Content server` in calibre's preferences and leave "
 "calibre running."
 msgstr "Увімкніть сервер даних у налаштуваннях calibre і не закривайте вікно calibre."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:339
+#: ../../__w/calibre/calibre/manual/faq.rst:308
 msgid "Now on your Android device, open the browser and browse to"
 msgstr "Далі, на вашому пристрої під керуванням Android відкрийте браузер і перейдіть до сторінки"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:341
+#: ../../__w/calibre/calibre/manual/faq.rst:310
 msgid "http://192.168.1.2:8080/"
 msgstr "http://192.168.1.2:8080/"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:347
+#: ../../__w/calibre/calibre/manual/faq.rst:316
 msgid ""
 "You can now browse your book collection and download books from calibre to "
 "your device to open with whatever e-book reading software you have on your "
 "Android device."
 msgstr "Тепер ви можете переглядати вміст вашої збірки книг та отримувати книги з calibre на ваш пристрій, а отже відкривати книги за допомогою будь-якої програми для читання електронних книг, яку встановлено на вашому пристрої під керуванням Android."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:358
+#: ../../__w/calibre/calibre/manual/faq.rst:327
 msgid ""
 "Can I access my calibre books using the web browser in my Kindle or other "
 "reading device?"
 msgstr "Чи можна отримувати доступ до книг calibre за допомогою програми для перегляду інтернету на Kindle або іншому пристрої для читання?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:360
+#: ../../__w/calibre/calibre/manual/faq.rst:329
 msgid ""
 "calibre has a *Content server* that exports the books in calibre as a web "
 "page. See :doc:`server` for details."
 msgstr "У calibre передбачено *сервер даних*, який експортує список книг у calibre у форматі вебсторінки. Докладніше про це у розділі :doc:`server`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:362
+#: ../../__w/calibre/calibre/manual/faq.rst:331
 msgid ""
 "Some devices, like the Kindle (1/2/DX), do not allow you to access port 8080"
 " (the default port on which the content server runs). In that case, change "
@@ -671,18 +624,18 @@ msgid ""
 "router to forward requests on port 80 to port 8080)."
 msgstr "На деяких пристроях, зокрема Kindle (1/2/DX), доступ до порту 8080 (типового порту, на якому працює сервер) заборонено. Якщо на вашому пристрої доступ до цього порту заборонено, змініть порт у налаштуваннях calibre на 80. (У деяких операційних системах не можна запускати сервер на порту із номером, який є меншим за 1024, з міркувань безпеки. У такому випадку найпростішим рішенням є налаштовування вашого маршрутизатора на переспрямоування запитів до порту 80 на порт 8080)."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:367
+#: ../../__w/calibre/calibre/manual/faq.rst:336
 msgid ""
 "Also some devices do not have browsers advanced enough to run the app-like "
 "interface used by the Content server. For such devices, you can simply add "
 "``/mobile`` to the server URL to get a simplified, non-JavaScript interface."
 msgstr "Крім того, програми для перегляду інтернету на деяких пристроях недостатньо розвинені, щоб показувати програмоподібний інтерфейс сервера даних. На таких пристроях ви можете просто додати ``/mobile`` до адреси сервера, щоб отримати доступ до спрощеного інтерфейсу без JavaScript."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:373
+#: ../../__w/calibre/calibre/manual/faq.rst:342
 msgid "I cannot send emails using calibre?"
 msgstr "Чому у мене не виходити надсилати електронну пошту за допомогою calibre?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:375
+#: ../../__w/calibre/calibre/manual/faq.rst:344
 msgid ""
 "Because of the large amount of spam in email, sending email can be tricky, "
 "as different mail servers use different strategies to block email.  The most"
@@ -692,27 +645,27 @@ msgid ""
 "calibre is to do the following:"
 msgstr "Через значну частку спаму у електронній пошті, надсилання повідомлень електронної пошти може бути проблемним, оскільки на різних поштових серверах використовують різні стратегії для блокування спаму. Найпоширенішою проблемою є безпосереднє надсилання пошти (без ретрансляції) у calibre. Багато серверів (наприклад, сервери Amazon) блокують поштові повідомлення, які не надходять від добре відомого ретранслятора. Найстійкішим до подібних проблем способом налаштувати надсилання електронної пошти у calibre є такий:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:382
+#: ../../__w/calibre/calibre/manual/faq.rst:351
 msgid "Create a free GMX account at `GMX <https://www.gmx.com>`_."
 msgstr "Створіть безкоштовний обліковий запис GMX на `GMX <https://www.gmx.com>`_."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:383
+#: ../../__w/calibre/calibre/manual/faq.rst:352
 msgid ""
 "Goto :guilabel:`Preferences->Sharing->Sharing books by email` in calibre and"
 " click the :guilabel:`Use GMX` button and fill in the information asked for."
 msgstr "Відкрийте сторінку :guilabel:`Налаштування -> Спільний доступ -> Обмін електронною поштою` у calibre, натисніть кнопку :guilabel:`Використовувати GMX` і вкажіть потрібні програмі значення."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:384
+#: ../../__w/calibre/calibre/manual/faq.rst:353
 msgid ""
 "Log into your GMX account on the website and enable SMTP sending "
 "(`Settings->POP3 & IMAP->Send and receive emails via external program`)"
 msgstr "Увійдіть до вашого облікового запису GMX на сайті і увімкніть надсилання за допомогою SMTP (`Settings->POP3 & IMAP->Send and receive emails via external program`)"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:385
+#: ../../__w/calibre/calibre/manual/faq.rst:354
 msgid "calibre will then be able to use GMX to send the mail."
 msgstr "Після цього calibre зможе використовувати GMX для надсилання поштових повідомлень."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:386
+#: ../../__w/calibre/calibre/manual/faq.rst:355
 msgid ""
 "If you are sending to your Kindle, remember to update the email preferences "
 "on your Amazon Kindle page to allow email sent from your GMX email address. "
@@ -722,7 +675,7 @@ msgid ""
 " actually delivered."
 msgstr "Якщо ви надсилатимете дані на ваш пристрій Kindle, не забудьте оновити параметри електронної пошти на вашій сторінці Amazon Kindle, щоб дозволити надсилання електронної пошти з вашої адреси на GMX. Крім того, зауважте, що Amazon забороняє отримання електронною поштою книг у форматі AZW3 та книг у новому стилі (KF8) MOBI. Нарешті, нещодавно Amazon почала розсилати повідомлення електронної пошти із проханням натиснути посилання на ваш обліковий запис GMX, перш ніж книгу буде надіслано."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:393
+#: ../../__w/calibre/calibre/manual/faq.rst:362
 msgid ""
 "Even after doing this, you may have problems. One common source of problems "
 "is that some poorly designed antivirus programs block calibre from opening a"
@@ -730,7 +683,7 @@ msgid ""
 "antivirus program."
 msgstr "Навіть після виконання цих дій у вас все ж можуть виникнути проблеми. Типовим джерелом проблем є те, що деякі не дуже вдало побудовані антивірусні програми забороняють calibre відкривати з’єднання для надсилання електронної пошти. Спробуйте створити запис виключення для calibre у вашій антивірусній програмі."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:398
+#: ../../__w/calibre/calibre/manual/faq.rst:367
 msgid ""
 "Microsoft/GMX can disable your account if you use it to send large amounts "
 "of email. So, when using these services to send mail calibre automatically "
@@ -739,7 +692,7 @@ msgid ""
 "going to :guilabel:`Preferences->Advanced->Tweaks` in calibre."
 msgstr "Microsoft або GMX можуть вимкнути ваш обліковий запис, якщо ви регулярно надсилатимете значний обсяг електронної пошти. Отже, якщо ви користуєтеся цими службами для надсилання пошти, calibre автоматично обмежуватиме надсилання книг однією книгою кожні п’ять хвилин. Якщо ви вважаєте, що ризику блокування облікового запису немає, ви можете зменшити цей інтервал очікування за допомогою сторінки налаштувань :guilabel:`Налаштування -> Додатково -> Коригування` у calibre."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:405
+#: ../../__w/calibre/calibre/manual/faq.rst:374
 msgid ""
 "Google recently deliberately broke their email sending protocol (SMTP) "
 "support in an attempt to force everyone to use their web interface so they "
@@ -747,39 +700,39 @@ msgid ""
 "is incorrect and simply an excuse. Use some other email provider instead."
 msgstr "Нещодавно Google довільним чином порушив стандарти підтримки протоколу надсилання електронної пошти (SMTP), намагаючись змусити усіх користуватися інтернет-інтерфейсом, де може бути показано більше реклами Компанія стверджує, що протокол SMTP є незахищеним. Це твердження є помилковим і не має ніякого підґрунтя. Скористайтеся якимось іншим надавачем послуг електронної пошти."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:412
+#: ../../__w/calibre/calibre/manual/faq.rst:381
 msgid ""
 "If you are concerned about giving calibre access to your email account, "
 "simply create a new free email account with GMX or Outlook and use it only "
 "for calibre."
 msgstr "Якщо ви не хочете надавати calibre доступ до вашого робочого облікового запису електронної пошти, створіть інший обліковий запис на службі надання безкоштовних послуг доступу до електронної пошти, наприклад GMX або Outlook, і користуйтеся ним у calibre."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:418
+#: ../../__w/calibre/calibre/manual/faq.rst:387
 msgid ""
 "My device is getting mounted read-only in Linux, so calibre cannot connect "
 "to it?"
 msgstr "Пристрій для читання книг монтується у Linux у режимі лише читання. Calibre не зможе отримувати до них доступу?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:420
+#: ../../__w/calibre/calibre/manual/faq.rst:389
 msgid ""
 "Linux kernels mount devices read-only when their filesystems have errors. "
 "You can repair the filesystem with::"
 msgstr "Ядра Linux монтують пристрої у режимі лише читання, якщо відповідні файлові системи містять помилки. Відновити працездатність файлової системи можна так::"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:424
+#: ../../__w/calibre/calibre/manual/faq.rst:393
 msgid ""
 "Replace /dev/sdc with the path to the device node of your device. You can "
 "find the device node of your device, which will always be under /dev by "
 "examining the output of::"
 msgstr "Замініть /dev/sdc на шлях до вузла пристрою. Визначити вузол вашого пристрою, який завжди розташовуватиметься у /dev, можна за допомогою даних, які буде виведено цією командою::"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:431
+#: ../../__w/calibre/calibre/manual/faq.rst:400
 msgid ""
 "Why does calibre not support collections on the Kindle or shelves on the "
 "Nook?"
 msgstr "Чому у calibre не передбачено підтримки збірок на Kindle або шаф на Nook?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:433
+#: ../../__w/calibre/calibre/manual/faq.rst:402
 msgid ""
 "Neither the Kindle nor the Nook provide any way to manipulate collections "
 "over a USB connection.  If you really care about using collections, I would "
@@ -788,7 +741,7 @@ msgid ""
 "an e-ink screen 😇"
 msgstr "Ні у Kindle, ні у Nook не передбачено жодного способу керування збірками за допомогою з’єднання USB. Якщо ви справді хочете користуватися збірками, рекомендуємо вам продати ваш Kindle/Nook і придбати Kobo. Лише розробники Kobo, здається, розуміють, що життя є надто коротким для введення назв збірок одна за одною за допомогою екрана з електронним чорнилом. 😇"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:438
+#: ../../__w/calibre/calibre/manual/faq.rst:407
 msgid ""
 "Note that in the case of the Kindle, there is a way to manipulate "
 "collections via USB, but it requires that the Kindle be rebooted *every "
@@ -800,7 +753,7 @@ msgid ""
 "<https://www.mobileread.com/forums/showthread.php?t=244202>`_."
 msgstr "Зауважте, що у випадку з Kindle існує один спосіб керування збірками за допомогою USB, але він потребує перезавантаження Kindle *кожного разу*, коли ви від’єднуватимете пристрій від комп’ютера, щоб програмне забезпечення пристрою змогло розпізнати зміни у збірках. Отже, малоймовірно, що у когось із розробників calibre колись виникне достатня мотивація для реалізації підтримки цього способу. Втім, існує додаток до calibre, який надає вам змогу створювати збірки на вашому пристрої Kindle на основі метаданих calibre. Його можна отримати `тут <https://www.mobileread.com/forums/showthread.php?t=244202>`_."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:447
+#: ../../__w/calibre/calibre/manual/faq.rst:416
 msgid ""
 "Amazon have removed the ability to manipulate collections completely in "
 "their newer models, like the Kindle Touch and Kindle Fire, making even the "
@@ -808,12 +761,12 @@ msgid ""
 "firmware."
 msgstr "Компанія Amazon повністю усунула можливість керування збірками у нових моделях своїх пристроїв, зокрема у Kindle Touch і Kindle Fire. Після цього навіть вказаний вище додаток втрачає сенс, якщо ви не отримаєте права адміністратора на вашому Kindle і не встановите нетипову мікропрограму."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:452
+#: ../../__w/calibre/calibre/manual/faq.rst:421
 msgid ""
 "I am getting an error when I try to use calibre with my Kobo Touch/Glo/etc.?"
 msgstr "Коли я намагаюся скористатися calibre з моїм Kobo Touch, Glo тощо, програма показує повідомлення про помилку. Що робити?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:454
+#: ../../__w/calibre/calibre/manual/faq.rst:423
 msgid ""
 "The Kobo has very buggy firmware. Connecting to it has been known to fail at"
 " random. Certain combinations of motherboard, USB ports/cables/hubs can "
@@ -822,43 +775,43 @@ msgid ""
 "solved the problem for *some* calibre users."
 msgstr "Мікропрограма Kobo сповнена вад. Не можна навіть вгадати, коли не вдасться встановити з’єднання із пристроєм. Причиною неможливості встановлення з’єднання може бути певна комбінація материнської плати, портів, кабелів, концентраторів USB. Якщо бачите повідомлення про помилку, коли намагаєтеся з’єднати ваш пристрій із calibre, спробуйте виконати вказані нижче дії, які допомогли *деяким* з користувачів calibre."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:460
+#: ../../__w/calibre/calibre/manual/faq.rst:429
 msgid "Connect the Kobo directly to your computer, not via USB Hub"
 msgstr "З’єднайте Kobo безпосередньо з вашим комп’ютером, без концентратора USB."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:461
+#: ../../__w/calibre/calibre/manual/faq.rst:430
 msgid "Try a different USB cable and a different USB port on your computer"
 msgstr "Спробуйте інший кабель USB або інший порт USB на вашому комп’ютері."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:462
+#: ../../__w/calibre/calibre/manual/faq.rst:431
 msgid ""
 "Log out of the Kobo and log in again, this causes it to rebuild the "
 "database, fixing corrupted database errors."
 msgstr "Вийдіть з Kobo і увійдіть знову. Таким чином ви накажете системі перезібрати базу даних і виправити помилки, які пов’язано із пошкодженнями у базі даних."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:464
+#: ../../__w/calibre/calibre/manual/faq.rst:433
 msgid "Try upgrading the firmware on your Kobo Touch to the latest"
 msgstr "Спробуйте оновити мікропрограму (прошивку) на вашому Kobo Touch до найсвіжішої версії."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:465
+#: ../../__w/calibre/calibre/manual/faq.rst:434
 msgid ""
 "Try resetting the Kobo (sometimes this cures the problem for a little while,"
 " but then it re-appears, in which case you have to reset again and again)"
 msgstr "Спробуйте скинути налаштування Kobo до типових (іноді це на певний час вирішує проблему, але потім вона з’являється знову, тому вам доведеться скидати налаштування знову і знову)."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:466
+#: ../../__w/calibre/calibre/manual/faq.rst:435
 msgid ""
 "Try only putting one or two books onto the Kobo at a time and do not keep "
 "large collections on the Kobo"
 msgstr "Спробуйте надсилати на Kobo одну чи дві книги за раз і не зберігайте на Kobo великих збірок."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:470
+#: ../../__w/calibre/calibre/manual/faq.rst:439
 msgid ""
 "Covers for books I send to my e-ink Kindle show up momentarily and then are "
 "replaced by a generic cover?"
 msgstr "Зображення обкладинок книг, які ви надсилаєте на Kindle з'являються на секунду, а потім замінюються на типове зображення обкладинки."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:472
+#: ../../__w/calibre/calibre/manual/faq.rst:441
 msgid ""
 "This happens because of an Amazon bug. They try to download a cover for the "
 "book from their servers and when that fails, they replace the existing cover"
@@ -870,19 +823,19 @@ msgid ""
 "to:"
 msgstr "Причиною є вада у Amazon. Вони намагаються отримати зображення обкладинки з власних серверів. Коли спроба зазнає невдачі, вони замінюють наявне зображення обкладинки calibre зображенням на основі типової обкладинки. Подробиці наведено у `цій гілці обговорення на форумі <https://www.mobileread.com/forums/showthread.php?t=329945>`_. Починаючи з версії 4.17, у calibre реалізовано обхідний маневр — після з'єднання Kindle з calibre і знищення обкладинок Amazon calibre відновить зображення автоматично. Тому, для того, щоб бачити зображення обкладинок на вашому Kindle, вам слід виконати такі дії:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:480
+#: ../../__w/calibre/calibre/manual/faq.rst:449
 msgid "Send the book to the Kindle with calibre"
 msgstr "Надішліть книгу на Kindle за допомогою calibre"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:481
+#: ../../__w/calibre/calibre/manual/faq.rst:450
 msgid "Disconnect the Kindle and wait for Amazon to destroy the cover"
 msgstr "Від'єднайте Kindle і зачекайте, доки Amazon знищить обкладинку"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:482
+#: ../../__w/calibre/calibre/manual/faq.rst:451
 msgid "Reconnect the Kindle to calibre"
 msgstr "Знову з'єднайте Kindle з calibre"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:484
+#: ../../__w/calibre/calibre/manual/faq.rst:453
 msgid ""
 "Note that this workaround only works for books sent with calibre 4.17 or "
 "later. Alternately, simply keep your Kindle in airplane mode, you don't "
@@ -891,11 +844,58 @@ msgid ""
 "Amazon will listen."
 msgstr "Зауважте, що цей обхідний маневр працює лише для книг, які надіслано за допомогою calibre 4.17 або пізніше. Крім того, можна просто працювати з Kindle у режимі польоту — насправді, вам зовсім не потрібно, щоб Amazon знала про всі книги, які ви читаєте. Радимо вам звернутися до служби підтримки Amazon і поскаржитися щодо цієї вади. Можливо, Amazon прислухається до вас."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:491
+#: ../../__w/calibre/calibre/manual/faq.rst:460
 msgid ""
 "If the workaround is not working for you make sure you Kindle firmware is at"
 " least version 5.12.5, released in April 2020."
 msgstr "Якщо ці поради не спрацюють, переконайтеся, що встановлено мікропрограму Kindle принаймні версії 5.12.5, яку випущено у квітні 2020 року."
+
+#: ../../__w/calibre/calibre/manual/faq.rst:464
+msgid ""
+"The covers for my MOBI files have stopped showing up in Kindle for PC/Kindle"
+" for Android/iPad etc."
+msgstr "Kindle не показує обкладинки для файлів MOBI на PC/Kindle, на Android/iPad тощо"
+
+#: ../../__w/calibre/calibre/manual/faq.rst:466
+msgid ""
+"This is caused by a bug in the Amazon software. You can work around it by "
+"going to :guilabel:`Preferences->Conversion->Output Options->MOBI output` "
+"and setting the :guilabel:`Enable sharing of book content` option. If you "
+"are reconverting a previously converted book, you will also have to enable "
+"the option in the conversion dialog for that individual book (as per book "
+"conversion settings are saved and take precedence)."
+msgstr "Причиною є вада у програмному забезпеченні Amazon. Ви можете обійти її за допомогою сторінки налаштувань calibre :guilabel:`Налаштування -> Перетворення -> Вихідні параметри -> Вивід у MOBI` і пункту «Увімкнути оприлюднення книги...». Якщо ви перетворюєте раніше перетворену книгу, вам також слід позначити цей пункт у діалоговому вікні перетворення для окремої книги (оскільки параметри перетворення окремих книг зберігаються і мають вищий пріоритет за загальні параметри)."
+
+#: ../../__w/calibre/calibre/manual/faq.rst:473
+msgid ""
+"Note that doing this will mean that the generated MOBI will show up under "
+"personal documents instead of Books on the Kindle Fire and Amazon "
+"whispersync will not work, but the covers will. It's your choice which "
+"functionality is more important to you. I encourage you to contact Amazon "
+"and ask them to fix this bug."
+msgstr "Зауважте, що після цього створений файл MOBI буде показано у розділі особистих документів, а не розділі «Книги» на Kindle Fire, а Amazon whispersync не працюватиме. Втім, обкладинки буде показано. Отже, ви можете вибрати ту функціональну можливість, яка є для вас важливішою. Вам варто зв’язатися із Amazon і попросити їх виправити цю ваду."
+
+#: ../../__w/calibre/calibre/manual/faq.rst:479
+msgid ""
+"The bug in Amazon's software is that when you put a MOBI file on a Kindle, "
+"unless the file is marked as a Personal document, Amazon assumes you bought "
+"the book from it and tries to download the cover thumbnail for it from its "
+"servers. When the download fails, it refuses to fallback to the cover "
+"defined in the MOBI file. This is likely deliberate on Amazon's part to try "
+"to force authors to sell only through them. In other words, the Kindle only "
+"displays covers for books marked as Personal Documents or books bought "
+"directly from Amazon."
+msgstr "Вада у програмному забезпеченні Amazon полягає у тому, що коли ви записуєте файл MOBI на Kindle, і файл не позначено як особистий документ, Amazon вважає, що ви придбали книгу у крамниці компанії і намагається отримати мініатюру обкладинки книги з серверів компанії. Якщо отримати мініатюру не вдасться, програма відмовляється використовувати зображення обкладинки з файла MOBI. Ймовірно, так зроблено навмисне з боку Amazon, щоб змусити авторів продавати книги лише за допомогою крамниці компанії. Іншими словами, Kindle показує лише обкладинки книг, які позначено як особисті документи, або обкладинки книг, які придбано у Amazon."
+
+#: ../../__w/calibre/calibre/manual/faq.rst:487
+msgid ""
+"If you send a MOBI file to an e-ink Kindle with calibre using a USB "
+"connection, calibre works around this Amazon bug by uploading a cover "
+"thumbnail itself. However, that workaround is only possible when using a USB"
+" connection and sending with calibre. Note that if you send using email, "
+"Amazon will automatically mark the MOBI file as a Personal Document and the "
+"cover will work, but the book will show up in Personal Documents."
+msgstr "Якщо ви надішлете файл MOBI на пристрій Kindle з електронним чорнилом за допомогою calibre і з’єднання USB, calibre обійде цю ваду у програмному забезпеченні Amazon, вивантаживши зображення обкладинки програмно. Втім, такий обхідний маневр можливий, лише якщо використовується з’єднання USB і надсилання даних відбувається за допомогою calibre. Зауважте, що якщо файл буде надіслано електронною поштою, програмне забезпечення Amazon автоматично позначить файл MOBI як особистий документ, обкладинку буде показано, але пункт книги з’явиться лише у списку особистих документів."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:496
 msgid ""
@@ -1374,59 +1374,107 @@ msgid "Miscellaneous"
 msgstr "Різне"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:735
+msgid "Amazon is stopping email delivery of MOBI files?"
+msgstr "Amazon припиняє надсилання файлів MOBI електронною поштою?"
+
+#: ../../__w/calibre/calibre/manual/faq.rst:737
+msgid ""
+"Amazon `have announced <https://blog.the-ebook-reader.com/2022/05/03/amazon-"
+"dropping-mobi-support-on-send-to-kindle-apps/>`__ that they will stop "
+"accepting MOBI files emailed to ``@kindle.com`` email addresses. You can "
+"instruct calibre to send EPUB instead of MOBI by going to "
+":guilabel:`Preferences->Sharing books by email` and then removing MOBI from "
+"the list of formats to send to your ``@kindle.com`` email address and adding"
+" EPUB instead."
+msgstr "Компанія Amazon `оголосила <https://blog.the-ebook-reader.com/2022/05/03/amazon-dropping-mobi-support-on-send-to-kindle-apps/>`__, що припиняє приймати файл MOBI, які надіслано електронною поштою на адреси ``@kindle.com``. Ви можете наказати calibre надсилати EPUB замість MOBI за допомогою сторінки :guilabel:`Налаштування->Обмін ел. поштою`, вилучивши MOBI зі списку форматів надсилання на вашу адресу електронної пошти ``@kindle.com`` і додавши туди EPUB."
+
+#: ../../__w/calibre/calibre/manual/faq.rst:745
+msgid ""
+"Note however, that Amazon's EPUB intake is very flawed, they will reject a "
+"number of EPUB files that work everywhere else. In such cases you can try "
+"the following trick:"
+msgstr "Втім, слід зауважити, що обробка Amazon файлів EPUB не завжди є коректною: може бути відмовлено в обробці файлів EPUB, які працюють деінде. У таких випадках ви можете скористатися чимось подібним до такої схеми:"
+
+#: ../../__w/calibre/calibre/manual/faq.rst:749
+msgid "Convert the EPUB file to MOBI"
+msgstr "Перетворіть файл EPUB на MOBI"
+
+#: ../../__w/calibre/calibre/manual/faq.rst:750
+msgid ""
+"Then convert the MOBI file back to EPUB and send the resulting EPUB file"
+msgstr "Потім перетворіть файл MOBI знову на EPUB і надішліть отриманий файл EPUB"
+
+#: ../../__w/calibre/calibre/manual/faq.rst:752
+msgid ""
+"This will remove all advanced formatting, embedded fonts, etc., but greatly "
+"increase the chances of Amazon accepting the EPUB."
+msgstr "У результаті перетворення буде усунуто усе розширене форматування, вбудовані шрифти тощо, але значно збільшено шанси на вдале прийняття Amazon файла EPUB."
+
+#: ../../__w/calibre/calibre/manual/faq.rst:755
+msgid ""
+"If you were previously using email delivery of periodicals downloaded by "
+"calibre, you will be better off sending those by USB cable or downloading "
+"them from the calibre Content server via the Kindle's built-in browser. "
+"However, if you want to continue using email delivery you can try changing "
+"the output format in Preferences->Behavior to EPUB, then calibre will "
+"download the news in EPUB format. Whether Amazon will accept the EPUB or not"
+" is a whole other question."
+msgstr "Якщо ви раніше користувалися доставленням електронною поштою періодичних видань, дані яких отримувала calibre, вам варто скористатися передаванням цих даних кабелем USB або отриманням їх з сервера даних calibre за допомогою вбудовано до Kindle браузера. Втім, якщо ви захочете продовжити користуватися доставленням електронною поштою, ви можете спробувати змінити формат виведення на сторінці «Налаштування->Поведінка» на EPUB, і calibre отримуватиме новини у форматі EPUB. Чи буде прийнятним для Amazon отриманий EPUB є цілком іншим питанням."
+
+#: ../../__w/calibre/calibre/manual/faq.rst:765
 msgid "I want calibre to download news from my favorite news website."
 msgstr "Як зробити так, щоб calibre отримувала новини з вашого улюбленого сайта новин?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:736
+#: ../../__w/calibre/calibre/manual/faq.rst:766
 msgid ""
 "If you are reasonably proficient with computers, you can teach calibre to "
 "download news from any website of your choosing. To learn how to do this see"
 " :ref:`news`."
 msgstr "Якщо ви достатньо знаєтеся на роботі з комп’ютерами ви можете навчити calibre отримувати новини з будь-якого сайта. Докладніше про це у розділі :ref:`news`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:738
+#: ../../__w/calibre/calibre/manual/faq.rst:768
 msgid ""
 "Otherwise, you can request a particular news site by posting in the `calibre"
 " Recipes forum <https://www.mobileread.com/forums/forumdisplay.php?f=228>`_."
 msgstr "Крім того, ви можете попросити реалізувати для вас отримання новин із сайта за допомогою `форуму рецептів calibre <https://www.mobileread.com/forums/forumdisplay.php?f=228>`_."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:742
+#: ../../__w/calibre/calibre/manual/faq.rst:772
 msgid "Why the name calibre?"
 msgstr "Чому програму названо calibre?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:747
+#: ../../__w/calibre/calibre/manual/faq.rst:777
 msgid "Take your pick:"
 msgstr "Виберіть будь-яку з причин:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:744
+#: ../../__w/calibre/calibre/manual/faq.rst:774
 msgid "Converter And LIBRary for E-books"
 msgstr "Converter And LIBRary for Ebooks (перетворювач і бібліотека для електронних книг)"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:745
+#: ../../__w/calibre/calibre/manual/faq.rst:775
 msgid "A high *calibre* product"
 msgstr "Високо*каліберний* продукт"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:746
+#: ../../__w/calibre/calibre/manual/faq.rst:776
 msgid ""
 "A tribute to the SONY Librie which was the first e-ink based e-book reader"
 msgstr "Присвята SONY Librie, першому пристрою для читання електронних книг на основі технології електронного чорнила."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:747
+#: ../../__w/calibre/calibre/manual/faq.rst:777
 msgid "My wife chose it ;-)"
 msgstr "Цю назву вибрала жінка автора ;-)"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:749
+#: ../../__w/calibre/calibre/manual/faq.rst:779
 msgid ""
 "calibre is pronounced as cal-i-ber *not* ca-li-bre. If you're wondering, "
 "calibre is the British/commonwealth spelling for caliber. Being Indian, "
 "that's the natural spelling for me."
 msgstr "calibre слід вимовляти як «ка-лі-бер», а не «ка-лі-бре». Якщо точніше, calibre — британський запис слова caliber, який використовується у країнах Співдружності. Оскільки автор програми є індійцем, для нього такий спосіб запису слова є природнім."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:752
+#: ../../__w/calibre/calibre/manual/faq.rst:782
 msgid "Why does calibre show only some of my fonts on macOS?"
 msgstr "Чому calibre показує лише частину встановлених шрифтів у macOS?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:754
+#: ../../__w/calibre/calibre/manual/faq.rst:784
 msgid ""
 "calibre embeds fonts in e-book files it creates. E-book files support "
 "embedding only TrueType and OpenType (.ttf and .otf) fonts. Most fonts on "
@@ -1436,54 +1484,54 @@ msgid ""
 " to the Library/Fonts folder in your home folder."
 msgstr "Calibre вбудовує шрифти до файлів електронних книг, які створює програма. У файлах електронних книг передбачено підтримку вбудовування лише шрифтів OpenType (.ttf та .otf). Більшість шрифтів у системах macOS зберігаються у форматі .dfont, отже їх не можна вбудовувати. Calibre показує лише файли TrueType і OpenType, які знайдено у вашій системі. Багато таких шрифтів можна отримати з інтернету. Просто збережіть файли .ttf/.otf і скопіюйте їх до теки Library/Fonts у вашій домашній теці."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:762
+#: ../../__w/calibre/calibre/manual/faq.rst:792
 msgid "calibre is not starting on Windows?"
 msgstr "Чому calibre не запускається у Windows?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:763
+#: ../../__w/calibre/calibre/manual/faq.rst:793
 msgid "There can be several causes for this:"
 msgstr "Може бути декілька причин:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:765
+#: ../../__w/calibre/calibre/manual/faq.rst:795
 msgid ""
 "If you get an error about calibre not being able to open a file because it "
 "is in use by another program, do the following:"
 msgstr "Якщо ви бачите повідомлення про те, що calibre не може відкрити файл, оскільки файл використовується іншою програмою, виконайте такі дії:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:767
+#: ../../__w/calibre/calibre/manual/faq.rst:797
 msgid "Uninstall calibre"
 msgstr "Вилучіть calibre"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:768
+#: ../../__w/calibre/calibre/manual/faq.rst:798
 msgid "Reboot your computer"
 msgstr "Перезавантажте систему"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:769
+#: ../../__w/calibre/calibre/manual/faq.rst:799
 msgid ""
 "Re-install calibre. But do not start calibre from the installation wizard."
 msgstr "Знову встановіть calibre, але не запускайте calibre з вікна майстра для встановлення."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:770
+#: ../../__w/calibre/calibre/manual/faq.rst:800
 msgid ""
 "Temporarily disable your antivirus program (disconnect from the Internet "
 "before doing so, to be safe)"
 msgstr "Тимчасово вимкніть програму-антивірус (щоб захистити при цьому ваш комп’ютер, перед цим від’єднайте комп’ютер від інтернету)."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:771
+#: ../../__w/calibre/calibre/manual/faq.rst:801
 msgid ""
 "Look inside the folder you chose for your calibre library. If you see a file"
 " named metadata.db, delete it."
 msgstr "Зазирніть до теки, яку ви вибрали для вашої бібліотеки calibre. Якщо у ній ви бачите файл із назвою metadata.db, вилучіть його."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:772
+#: ../../__w/calibre/calibre/manual/faq.rst:802
 msgid "Start calibre"
 msgstr "Запустіть calibre"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:773
+#: ../../__w/calibre/calibre/manual/faq.rst:803
 msgid "From now on you should be able to start calibre normally."
 msgstr "З цього моменту ви маєте отримати змогу запускати calibre у звичний спосіб."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:775
+#: ../../__w/calibre/calibre/manual/faq.rst:805
 msgid ""
 "If you get an error about a Python function terminating unexpectedly after "
 "upgrading calibre, first uninstall calibre, then delete the folders (if they"
@@ -1491,7 +1539,7 @@ msgid ""
 "Files\\\\Calibre2`. Now re-install and you should be fine."
 msgstr "Якщо система повідомляє вам про помилку, яку пов’язано із неочікуваним перериванням роботи функції Python, після оновлення calibre, спочатку вилучіть встановлену версію calibre, потім вилучіть такі теки (якщо вони існують) :file:`C:\\\\Program Files\\\\Calibre` і :file:`C:\\\\Program Files\\\\Calibre2`. Після цього повторно встановіть програму. Помилка має зникнути."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:777
+#: ../../__w/calibre/calibre/manual/faq.rst:807
 msgid ""
 "If you get an error in the :guilabel:`Welcome wizard` on an initial run of "
 "calibre, try choosing a folder like :file:`C:\\\\library` as the calibre "
@@ -1499,34 +1547,34 @@ msgid ""
 "contains non-English characters, or only numbers, etc.)"
 msgstr "Якщо ви бачите повідомлення про помилку під час роботи майстра початкового налаштовування при першому запуску calibre, спробуйте вибрати як теку бібліотеки :file:`C:\\\\library` (іноді у calibre виникають проблеми із теками бібліотеки, шляхи до яких містять нелатинські літери або лише цифри тощо)."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:779
+#: ../../__w/calibre/calibre/manual/faq.rst:809
 msgid ""
 "Try running it as administrator (Right click on the icon and select "
 ":guilabel:`Run as administrator`)"
 msgstr "Спробуйте запустити програму від імені адміністратора (клацніть правою кнопкою на піктограмі і виберіть у контекстному меню пункт :guilabel:`Запустити від імені адміністратора` (:guilabel:`Run as Administrator`)."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:781
+#: ../../__w/calibre/calibre/manual/faq.rst:811
 msgid ""
 "If it still won't launch, start a command prompt (press the Windows key and "
 "R; then type :command:`cmd.exe` in the Run dialog that appears). At the "
 "command prompt type the following command and press Enter::"
 msgstr "Якщо програма і далі відмовляється запускатися, відкрийте вікно командного рядка (натисніть клавішу Windows і клавішу R одночасно; потім введіть :command:`cmd.exe` у діалоговому вікні запуску програм, яке буде відкрито). У вікні командного рядка введіть вказану нижче команду і натисніть клавішу Enter::"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:785
+#: ../../__w/calibre/calibre/manual/faq.rst:815
 msgid ""
 "Post any output you see in a help message on the `Forum "
 "<https://www.mobileread.com/forums/forumdisplay.php?f=166>`_."
 msgstr "Додайте виведені у довідковому повідомленні дані до допису на `форумі <https://www.mobileread.com/forums/forumdisplay.php?f=166>`_."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:788
+#: ../../__w/calibre/calibre/manual/faq.rst:818
 msgid "calibre freezes/crashes occasionally?"
 msgstr "Чому calibre часом повисає або аварійно завершує роботу?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:790
+#: ../../__w/calibre/calibre/manual/faq.rst:820
 msgid "There are several possible things I know of, that can cause this:"
 msgstr "Існує декілька відомих причин:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:792
+#: ../../__w/calibre/calibre/manual/faq.rst:822
 msgid ""
 "You recently connected an external monitor or TV to your computer. In this "
 "case, whenever calibre opens a new window like the edit metadata window or "
@@ -1535,7 +1583,7 @@ msgid ""
 "monitor and restart calibre."
 msgstr "Нещодавно ви з’єднали з вашим комп’ютером зовнішній монітор або телевізор. У цьому випадку кожного разу, коли calibre відкриває якесь нове вікно, зокрема вікно редагування метаданих або діалогове вікно перетворення, воно з’являється на другому моніторі, де ви його не бачите, тому думаєте, що програма calibre «зависла». Від’єднайте другий монітор і перезапустіть calibre."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:798
+#: ../../__w/calibre/calibre/manual/faq.rst:828
 msgid ""
 "The following programs have been reported to cause crashes in calibre: If "
 "you are running any of these, close them before starting calibre, or "
@@ -1544,21 +1592,21 @@ msgid ""
 "Interface*, *Acronis True Image*."
 msgstr "Вказані далі програми, як нам повідомляли, призводять до аварійного завершення роботи calibre. Якщо ви запустили якусь з цих програм, завершіть її роботу до того, як запустите calibre або просто вилучіть пакунок із нею з системи. *RoboForm*, *Logitech SetPoint Settings*, *Constant Guard Protection by Xfinity*, *Spybot*, *Killer Network Manager*, *Nahimic UI Interface*, *Acronis True Image*."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:805
+#: ../../__w/calibre/calibre/manual/faq.rst:835
 msgid ""
 "You are using a Wacom branded USB mouse/tablet. There is an incompatibility "
 "between Wacom drivers and the graphics toolkit calibre uses. Try using a "
 "non-Wacom mouse."
 msgstr "Ви користуєтеся USB-мишею або планшетом від Wacom. На жаль, драйвери Wacom і набір бібліотек для побудови графічного інтерфейсу calibre несумісні. Спробуйте скористатися мишею чи планшетом іншого виробника."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:809
+#: ../../__w/calibre/calibre/manual/faq.rst:839
 msgid ""
 "On some 64 bit versions of Windows there are security software/settings that"
 " prevent 64-bit calibre from working properly. If you are using the 64-bit "
 "version of calibre try switching to the 32-bit version."
 msgstr "У деяких 64-бітових версіях Windows працює програмне забезпечення для захисту або налаштовано параметри, які не дають 64-бітовій версії calibre працювати належним чином. Якщо ви користуєтеся 64-бітовою версією calibre, спробуйте перемкнутися на 32-бітову версію."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:813
+#: ../../__w/calibre/calibre/manual/faq.rst:843
 msgid ""
 "If the crash happens when you are trying to copy text from the calibre "
 "E-book viewer, it is most likely caused by some clipboard "
@@ -1566,7 +1614,7 @@ msgid ""
 " be fine."
 msgstr "Якщо аварійне завершення трапляється, коли ви намагаєтеся скопіювати текст з вікна програми для перегляду електронних книг calibre, найімовірнішою причиною є запущена програма, яка спостерігає за вмістом буфера обміну даними або керує ним. Вимкніть цю програму, і все має запрацювати."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:818
+#: ../../__w/calibre/calibre/manual/faq.rst:848
 msgid ""
 "If the crashes happen specifically when you are using a file dialog, like "
 "clicking on the :guilabel:`Add books` button or the :guilabel:`Save to Disk`"
@@ -1581,7 +1629,7 @@ msgid ""
 "extensions."
 msgstr "Якщо аварійне завершення трапляється, коли ви використовуєте діалогове вікно роботи з файлами, зокрема натискаєте кнопку :guilabel:`Додати книги` або кнопку :guilabel:`Зберегти на диск`, тоді на вашому комп’ютері встановлено якесь програмне забезпечення, яке перешкоджає роботі розширень командної оболонки. Серед відомих прикладів такого програмного забезпечення *SpiderOak*, *odrive sync*, *Dell Backup and Recovery* та *NetDrive*. Якщо встановлено одну з цих програм, вилучіть її пакунок, і усе запрацює. Ви також можете скористатися `NirSoft Shell Extension Viewer <https://www.nirsoft.net/utils/shexview.html>`_, щоб переглянути встановлені розширення оболонки і вимкнути окремі з них, якщо ви не хочете вилучати усю програму. Не забудьте перезапустити Провідник або перезавантажити систему після вимикання розширень оболонки."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:830
+#: ../../__w/calibre/calibre/manual/faq.rst:860
 msgid ""
 "If none of the above apply to you, then there is some other program on your "
 "computer that is interfering with calibre. First reboot your computer in "
@@ -1593,18 +1641,18 @@ msgid ""
 "like Voice Control or a Screen Reader."
 msgstr "Якщо жоден із описаних варіантів не спрацьовує, на вашому комп’ютері встановлено якусь іншу програму, яка заважає роботі calibre. Спочатку перезавантажте ваш комп’ютер у безпечному режимі, щоб у системі працювало якомога менше програм, і подивіться, чи не позбавить це вас від аварійних завершень. Якщо усе працює, проблемою точно є якась програма. Найімовірнішими кандидатами є програми, які намагаються змінити поведінку інших програм, зокрема антивіруси, драйвери пристроїв, щось схоже на RoboForm (програму для автоматичного заповнення форм) або програми для людей із обмеженими можливостями, зокрема програми голосового керування чи читання з екрана комп’ютера."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:839
+#: ../../__w/calibre/calibre/manual/faq.rst:869
 msgid ""
 "The only way to find the culprit is to eliminate the programs one by one and"
 " see which one is causing the issue. Basically, stop a program, run calibre,"
 " check for crashes. If they still happen, stop another program and repeat."
 msgstr "Єдиним способом виявити причину є припинення роботи програм одна за іншою з метою визначення тієї з них, яка спричиняє проблеми. Тобто слід діяти так: зупинити роботу програми, запустити calibre, перевірити, чи немає аварійних завершень роботи. Якщо аварійне завершення трапилося, зупинити роботу іншої програми і повторити процедуру."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:845
+#: ../../__w/calibre/calibre/manual/faq.rst:875
 msgid "The calibre E-book viewer and Edit book tools do not work on Windows?"
 msgstr "Чому засіб для перегляду електронних книг calibre та засоби редагування книг не працюють у Windows?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:847
+#: ../../__w/calibre/calibre/manual/faq.rst:877
 msgid ""
 "These two programs use hardware acceleration as they embed a version of the "
 "Chrome browser to render HTML. If they do not work it will be because of "
@@ -1615,13 +1663,13 @@ msgid ""
 "<https://doc.qt.io/qt-5/qtwebengine-debugging.html>`_ for details."
 msgstr "У цих двох програмах використано апаратне прискорення обробки графіки, оскільки у них вбудовано версію браузера Chrome для показу HTML. Якщо програми не працюють, причиною є несумісність із драйверами до графічного процесора у вашій системі. Спробуйте оновити драйвери і перезавантажити систему. Якщо це не допоможе, ви можете встановити змінну середовища ``QTWEBENGINE_CHROMIUM_FLAGS`` у значення ``--disable-gpu``, щоб вимкнути апаратне прискорення обробки. Докладніше про це можна дізнатися з `цієї сторінки <https://doc.qt.io/qt-5/qtwebengine-debugging.html>`_."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:857
+#: ../../__w/calibre/calibre/manual/faq.rst:887
 msgid ""
 "Using the viewer or doing any conversions results in a permission denied "
 "error on Windows"
 msgstr "Використання засобу перегляду або виконання перетворень призводить до повідомлення про заборону доступу (permission denied) у Windows. Що робити?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:859
+#: ../../__w/calibre/calibre/manual/faq.rst:889
 msgid ""
 "Something on your computer is preventing calibre from accessing its own "
 "temporary files. Most likely the permissions on your :file:`Temp` folder are"
@@ -1632,7 +1680,7 @@ msgid ""
 " full control for this folder."
 msgstr "Щось на вашому комп’ютері заважає calibre отримати доступ до власних тимчасових файлів програми. Ймовірно, маємо помилкові права доступу до вашої теки Temp. Перейдіть до теки file:`C:\\\\Users\\\\USERNAME\\\\AppData\\\\Local` у Провіднику Windows, клацніть правою кнопкою миші на теці file:`Temp`, виберіть пункт :guilabel:`Властивості` і перейдіть на вкладку :guilabel:`Безпека`. Переконайтеся, що ваш обліковий запис користувача має повний контроль над цією текою."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:866
+#: ../../__w/calibre/calibre/manual/faq.rst:896
 msgid ""
 "Some users have reported that running the following command in an "
 "Administrator Command Prompt fixed their permissions.  To get an "
@@ -1642,22 +1690,22 @@ msgid ""
 "Enter::"
 msgstr "Деякими користувачами повідомлялося, що вказана нижче команда, віддана у командному рядку від імені адміністратора системи, виправила права доступу. Щоб відкрити командний рядок від імені адміністратора, пошукайте у меню «Пуск» cmd.exe, потім клацніть правою кнопкою миші на полі команди і виберіть :guilabel:`Запустити від імені адміністратора`. У вікні командного рядка впишіть вказану нижче команду і натисніть клавішу Enter::"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:874
+#: ../../__w/calibre/calibre/manual/faq.rst:904
 msgid ""
 "Alternately, you can run calibre as Administrator, but doing so will cause "
 "some functionality, such as drag and drop to not work."
 msgstr "Крім того, ви можете запустити calibre від імені адміністратора. Втім, робота у такому режимі призводить до недоступності частини можливостей програми, зокрема перетягування зі скиданням позначок файлів."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:877
+#: ../../__w/calibre/calibre/manual/faq.rst:907
 msgid ""
 "Finally, some users have reported that disabling UAC fixes the problem."
 msgstr "Нарешті, деякі користувачі повідомляють, що вимикання UAC усуває проблему."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:881
+#: ../../__w/calibre/calibre/manual/faq.rst:911
 msgid "calibre is not starting/crashing on macOS?"
 msgstr "Чому calibre не запускається або аварійно завершує роботу у macOS?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:883
+#: ../../__w/calibre/calibre/manual/faq.rst:913
 msgid ""
 "One common cause of failures on macOS is the use of accessibility "
 "technologies that are incompatible with the graphics toolkit calibre uses.  "
@@ -1667,14 +1715,14 @@ msgid ""
 "third party apps that modify system behavior, such as Smart Scroll."
 msgstr "Поширеною причиною аварійних завершень програми у macOS є використання технологій доступності, які несумісні із набором графічних бібліотек, які використовуються у calibre. Спробуйте вимкнути VoiceOver, якщо цю можливість увімкнено. Крім того, відкрийте сторінку :guilabel:`Системні параметри -> Система -> Універсальний доступ` і зніміть позначення з пункту уможливлення доступу до допоміжних пристроїв на усіх вкладках. Іншою причиною можуть бути деякі сторонні програми, які змінюють поведінку системи, зокрема Smart Scroll."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:890
+#: ../../__w/calibre/calibre/manual/faq.rst:920
 msgid ""
 "You can obtain debug output about why calibre is not starting by running "
 "`Console.app`. Debug output will be printed to it. If the debug output "
 "contains a line that looks like::"
 msgstr "Ви можете отримати діагностичні дані щодо того, чому не вдається запустити calibre, запустивши `Console.app`. Діагностичні дані буде виведено до вікна цієї програми. Якщо у діагностичних даних міститься рядок, який є подібним до такого::"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:895
+#: ../../__w/calibre/calibre/manual/faq.rst:925
 msgid ""
 "then the problem is probably a corrupted font cache. You can clear the cache"
 " by following these `instructions "
@@ -1685,11 +1733,11 @@ msgid ""
 "in the File menu, choose \"Validate fonts\"."
 msgstr "Це означає, що проблема, ймовірно, у пошкодженому кеші шрифтів. Щоб спорожнити кеш, скористайтеся цими `настановами <https://www.macworld.com/article/1139383/fontcacheclear.html>`_. Якщо вони не допоможуть вирішити проблему, пошукайте у вашій системі пошкоджений файл шрифту у каталозі ~/Library/Fonts або іншому подібному каталозі. Найпростішим способом виявлення пошкоджених шрифтів у macOS є використання програми «Книга шрифтів». Просто позначте усі шрифти і виберіть у меню «Файл» пункт «Перевірити шрифти» («Validate fonts»)."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:903
+#: ../../__w/calibre/calibre/manual/faq.rst:933
 msgid "I downloaded the installer, but it is not working?"
 msgstr "Мною отримано програму для встановлення. Чому вона не спрацьовує?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:905
+#: ../../__w/calibre/calibre/manual/faq.rst:935
 msgid ""
 "Downloading from the Internet can sometimes result in a corrupted download. "
 "If the calibre installer you downloaded is not opening, try downloading it "
@@ -1699,26 +1747,26 @@ msgid ""
 "it from running."
 msgstr "Іноді під час отримання даних з інтернету відбувається пошкодження цих даних. Якщо отримана вами програма для встановлення calibre не запускається, спробуйте отримати її ще раз. Якщо повторне отримання програми не допомагає, спробуйте отримати її з `альтернативного джерела <https://github.com/kovidgoyal/calibre/releases/latest>`_. Якщо програма для встановлення не запускається, щось на вашому комп’ютері заважає їй це зробити."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:907
+#: ../../__w/calibre/calibre/manual/faq.rst:937
 msgid ""
 "Try temporarily disabling your antivirus program (Microsoft Security "
 "Essentials, or Kaspersky or Norton or McAfee or whatever). This is most "
 "likely the culprit if the upgrade process is hanging in the middle."
 msgstr "Спробуйте тимчасово вимкнути програму-антивірус (Microsoft Security Essentials, Kaspersky, Norton або McAfee). Робота таких програм є найпоширенішою причиною повисання процесу оновлення у незавершеному стані."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:908
+#: ../../__w/calibre/calibre/manual/faq.rst:938
 msgid ""
 "Similarly, if the installer is failing/rolling back and you have Microsoft "
 "PowerToys running, quit it."
 msgstr "Так само, якщо засіб встановлення не може виконати завдання, і у вас запущено Microsoft PowerToys, завершіть їхню роботу."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:909
+#: ../../__w/calibre/calibre/manual/faq.rst:939
 msgid ""
 "Try rebooting your computer and running a registry cleaner like `Wise "
 "registry cleaner <https://www.wisecleaner.com>`_."
 msgstr "Спробуйте перезавантажити систему і запустіть програму для чищення регістру, наприклад `Wise registry cleaner <https://www.wisecleaner.com>`_."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:910
+#: ../../__w/calibre/calibre/manual/faq.rst:940
 msgid ""
 "Try a clean install. That is, uninstall calibre, delete :file:`C:\\\\Program"
 " Files\\\\Calibre2` (or wherever you previously chose to install calibre). "
@@ -1726,13 +1774,13 @@ msgid ""
 " settings."
 msgstr "Спробуйте встановити програму наново. Це означає, вилучіть calibre, витріть каталог :file:`C:\\\\Program Files\\\\Calibre2` (або каталог, який ви раніше вибрали для встановлення calibre). Потім повторно встановіть calibre. Зауважте, що вилучення пакунка не призведе до вилучення ваших книг або параметрів роботи програми."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:911
+#: ../../__w/calibre/calibre/manual/faq.rst:941
 msgid ""
 "Try downloading the installer with an alternate browser. For example if you "
 "are using Microsoft Edge, try using Firefox or Chrome instead."
 msgstr "Спробуйте отримати пакунок для встановлення за допомогою іншої програми для перегляду інтернету. Наприклад, якщо ви користувалися Microsoft Edge, спробуйте скористатися для отримання Firefox або Chrome."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:912
+#: ../../__w/calibre/calibre/manual/faq.rst:942
 msgid ""
 "If you get an error about a missing DLL on Windows, then most likely, the "
 "permissions on your temporary folder are incorrect. Go to the folder "
@@ -1742,18 +1790,18 @@ msgid ""
 "that your user account has full control for this folder."
 msgstr "Якщо система повідомляє вам про нестачу DLL у Windows, найімовірніше, маєте помилкові права доступу до вашого каталогу тимчасових даних. Перейдіть до теки :file:`C:\\\\Users\\\\КОРИСТУВАЧ\\\\AppData\\\\Local` у Провіднику Windows, клацніть правою кнопкою миші на теці :file:`Temp` виберіть пункт :guilabel:`Властивості` і перейдіть на вкладку :guilabel:`Безпека`. Переконайтеся, що користувач вашого облікового запису має повний контроль над цією текою."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:919
+#: ../../__w/calibre/calibre/manual/faq.rst:949
 msgid ""
 "If you still cannot get the installer to work and you are on Windows, you "
 "can use the :website:`calibre portable install <download_portable>`, which "
 "does not need an installer (it is just a ZIP file)."
 msgstr "Якщо вам не вдається змусити працювати засіб встановлення програми у Windows, ви можете скористатися :website:`портативною версією calibre <download_portable>`, яка не потребує встановлення (це просто архів ZIP із програмою)."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:922
+#: ../../__w/calibre/calibre/manual/faq.rst:952
 msgid "My antivirus program claims calibre is a virus/trojan?"
 msgstr "Антивірусна програма стверджує, що calibre є вірусом або троянською програмою. Щоб робити?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:924
+#: ../../__w/calibre/calibre/manual/faq.rst:954
 msgid ""
 "The first thing to check is that you are downloading calibre from the "
 ":website:`official website <download>`. Make sure you are clicking the "
@@ -1762,7 +1810,7 @@ msgid ""
 "offering it for download to fool the unwary."
 msgstr "По-перше, слід перевірити, чи отримали ви calibre з :website:`офіційного сайта <download>`. Переконайтеся, що ви натискали посилання для отримання програми ліворуч, а не пункти реклами праворуч. calibre — дуже популярна програма, тому шахраї намагаються створити сайти, які пропонують отримати програму, і вбудовують до коду програми шкідливий код."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:930
+#: ../../__w/calibre/calibre/manual/faq.rst:960
 msgid ""
 "If you have the official download and your antivirus program is still "
 "claiming calibre is a virus, then, your antivirus program is wrong. "
@@ -1776,11 +1824,11 @@ msgid ""
 " and then re-enable it."
 msgstr "Якщо ви отримали пакунок з програмою з офіційного джерела, а ваша антивірусна програма повідомляє, що calibre заражено вірусом, тоді ця антивірусна програма помиляється. У антивірусних програмах для пошуку вірусів використовують евристику, взірці коду, який «виглядає підозріливо». Це щось схоже за профілювання за кольором шкіри. Програма calibre є програмою з повністю відкритим кодом. Ви можете самі ознайомитися з кодом (або найняти когось, хто зробить це за вас) і переконатися, що у програмі немає вірусів. Будь ласка, повідомте про таку помилкову ідентифікацію програми як вірусу компанії, у якої ви придбали антивірусне програмне забезпечення. Якщо антивірусна програма не дає вам отримати або встановити calibre, тимчасово вимкніть її, встановіть calibre, а потім знову увімкніть."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:941
+#: ../../__w/calibre/calibre/manual/faq.rst:971
 msgid "How do I backup calibre?"
 msgstr "Як створити резервну копію даних calibre?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:943
+#: ../../__w/calibre/calibre/manual/faq.rst:973
 msgid ""
 "The most important thing to backup is the calibre library folder, that "
 "contains all your books and metadata. This is the folder you chose for your "
@@ -1789,7 +1837,7 @@ msgid ""
 " You must backup this complete folder with all its files and sub-folders."
 msgstr "Найважливішою є резервна копія теки бібліотеки calibre — у ній містяться усі книги і їхні метадані. Це тека, яку ви вибрали як теку бібліотеки calibre, коли запускали calibre вперше. Шлях до цієї теки можна визначити натисканням кнопки з піктограмою calibre на головній панелі інструментів. Вам слід зробити резервну копію усієї теки разом з усіма файлами та підтеками, які у ній зберігаються."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:945
+#: ../../__w/calibre/calibre/manual/faq.rst:975
 msgid ""
 "You can switch calibre to using a backed up library folder by simply "
 "clicking the calibre icon on the toolbar and choosing your backup library "
@@ -1797,7 +1845,7 @@ msgid ""
 "searches as well as all your books and metadata."
 msgstr "Ви можете перемкнути calibre на використання теки резервної копії бібліотеки простим натисканням кнопки з піктограмою calibre на панелі інструментів з наступним вибором теки резервної копії. У теці резервної копії зберігатимуться дані щодо нетипових стовпчиків та збережених пошуків, а також усі книги і їхні метадані."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:947
+#: ../../__w/calibre/calibre/manual/faq.rst:977
 msgid ""
 "If you want to backup the calibre configuration/plugins, you have to backup "
 "the config folder. You can find this config folder via "
@@ -1807,13 +1855,13 @@ msgid ""
 " to restore."
 msgstr "Якщо ви хочете створити резервну копію налаштувань і додатків calibre, вам слід створити резервну копію теки налаштувань. Визначити розташування теки налаштувань можна за допомогою сторінки :guilabel:`Налаштування -> Різне`. Зауважте, що підтримки відновлення даних з тек налаштувань офіційно не передбачено, але у більшості випадків таке відновлення має спрацювати. Достатньо просто скопіювати вміст теки резервної копії до поточного каталогу налаштувань, щоб відновити налаштування."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:950
+#: ../../__w/calibre/calibre/manual/faq.rst:980
 msgid ""
 "How do I use purchased EPUB books with calibre (or what do I do with .acsm "
 "files)?"
 msgstr "Як прочитати придбані книги EPUB у calibre (або що робити з файлами .acsm)?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:951
+#: ../../__w/calibre/calibre/manual/faq.rst:981
 msgid ""
 "Most purchased EPUB books have :doc:`DRM <drm>`. This prevents calibre from "
 "opening them. You can still use calibre to store and transfer them to your "
@@ -1826,44 +1874,44 @@ msgid ""
 "Editions\", from where you can add it to calibre."
 msgstr "У більшості книг EPUB реалізовано :doc:`DRM <drm>`. Calibre не може відкрити такі книги. Ви можете користуватися calibre для зберігання і передавання цих книг на ваш пристрій для читання електронних книг. Спочатку, вам слід уповноважити ваш пристрій для читання на комп'ютері Windows за допомогою Adobe Digital Editions. Після цього, книги EPUB, які передано за допомогою calibre, можна буде без проблем читати. Якщо ви придбаєте книгу epub на якомусь сайті, ви отримаєте файл «.acsm». Цей файл слід відкрити за допомогою Adobe Digital Editions — програми, яка отримає саму електронну книгу «.epub». Файл електронної книги буде збережено до теки «My Digital Editions», звідки ви можете додати його до бібліотеки calibre."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:954
+#: ../../__w/calibre/calibre/manual/faq.rst:984
 msgid "I am getting a \"Permission Denied\" error?"
 msgstr "Бачу повідомлення «Доступ заборонено» («Permission Denied»). Що робити?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:956
+#: ../../__w/calibre/calibre/manual/faq.rst:986
 msgid ""
 "A permission denied error can occur because of many possible reasons, none "
 "of them having anything to do with calibre."
 msgstr "Повідомлення про заборону доступу може мати багато причин, жодна з яких не пов’язана із calibre."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:958
+#: ../../__w/calibre/calibre/manual/faq.rst:988
 msgid ""
 "You can get permission denied errors if you are using an SD card with write "
 "protect enabled."
 msgstr "Ви можете отримати повідомлення щодо недостатні права доступу, якщо ви використовуєте картку SD із увімкненим захистом від запису."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:962
+#: ../../__w/calibre/calibre/manual/faq.rst:992
 msgid ""
 "If you, or some program you used changed the file permissions of the files "
 "in question to read only."
 msgstr "Якщо ви або якась програма, якою ви користувалися, змінила права доступу до файлів на такі, що передбачають лише читання."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:963
+#: ../../__w/calibre/calibre/manual/faq.rst:993
 msgid ""
 "If there is a filesystem error on the device which caused your operating "
 "system to mount the filesystem in read only mode or mark a particular file "
 "as read only pending recovery."
 msgstr "Якщо на пристрої є помилка файлової системи, яка спричиняє монтування файлової системи операційною системою комп’ютера у режимі лише читання або позначення певного файла як придатного лише до читання, такого, що потребує виправлення."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:964
+#: ../../__w/calibre/calibre/manual/faq.rst:994
 msgid "If the files have their owner set to a user other than you."
 msgstr "Якщо для файлів встановлено власника, який не є вашим користувачем."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:965
+#: ../../__w/calibre/calibre/manual/faq.rst:995
 msgid "If your file is open in another program."
 msgstr "Якщо файл відкрито у іншій програмі."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:966
+#: ../../__w/calibre/calibre/manual/faq.rst:996
 msgid ""
 "If the file resides on a device, you may have reached the limit of a maximum"
 " of 256 files in the root of the device. In this case you need to reformat "
@@ -1871,18 +1919,18 @@ msgid ""
 " or delete some files from the SD card/device memory."
 msgstr "Якщо файл зберігається на пристрої, можливо перевищено обмеження у 256 файлів у кореневій теці пристрою. Якщо це так, вам доведеться форматувати пристрій або картку SD, щодо якої було повідомлено про помилку, з використанням файлової системи FAT32 або вилучити якісь файли з цієї картки SD або пристрою."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:968
+#: ../../__w/calibre/calibre/manual/faq.rst:998
 msgid ""
 "You will need to fix the underlying cause of the permissions error before "
 "resuming to use calibre. Read the error message carefully, see what file it "
 "points to and fix the permissions on that file or its containing folders."
 msgstr "Перш ніж поновлювати користування calibre, вам слід виправити помилку, пов’язану із правами доступу. Уважно прочитайте повідомлення про помилку, подивіться, який саме файл там вказано і виправте права доступу до цього файла або теки, у якій він зберігається."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:971
+#: ../../__w/calibre/calibre/manual/faq.rst:1001
 msgid "Can I have the comment metadata show up on my reader?"
 msgstr "Як зробити, щоб метадані коментаря було показано на пристрої для читання?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:973
+#: ../../__w/calibre/calibre/manual/faq.rst:1003
 msgid ""
 "Most readers do not support this. You should complain to the manufacturer "
 "about it and hopefully if enough people complain, things will change. In the"
@@ -1895,7 +1943,7 @@ msgid ""
 "that format to the same format."
 msgstr "На більшості пристроїв для читання не передбачено підтримки показу коментарів. Вам слід поскаржитися виробникові про це і сподіватися на те, що під вашим тиском та тиском інших користувачів ситуація зміниться. Тим часом, ви можете вставити метадані, зокрема коментарі, на сторінку суперобкладинки, за допомогою пункту :guilabel:`Вставити метадані як сторінку на початку книги` у вікні перетворення. Цей пункт розташовано у розділі :guilabel:`Виявлення структури` параметрів перетворення. Зауважте, що отримання цієї сторінки з метаданими можливе лише після *перетворення* книги. Якщо ваша книга вже зберігається у форматі, який не потребує перетворення, ви можете перетворити її без зміни формату."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:975
+#: ../../__w/calibre/calibre/manual/faq.rst:1005
 msgid ""
 "Another alternative is to create a catalog in e-book form containing a "
 "listing of all the books in your calibre library, with their metadata. "
@@ -1904,11 +1952,11 @@ msgid ""
 "to\" books on your reader."
 msgstr "Ще одним варіантом є створення каталогу у форматі електронної книги, де міститиметься список усіх книг у вашій бібліотеці calibre з їхніми метаданими. Для отримання доступу до інструмента створення каталогу наведіть вказівник миші на кнопку перетворення на панелі інструментів, натисніть ліву кнопку миші і трохи її потримайте. І, перш ніж ви могли б спитати, ні, не можна створювати каталог, який безпосередньо посилатиметься на книги на вашому пристрої для читання електронних книг."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:978
+#: ../../__w/calibre/calibre/manual/faq.rst:1008
 msgid "How do I get calibre to use my HTTP proxy?"
 msgstr "Як налаштувати calibre на використання проксі-сервера HTTP?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:980
+#: ../../__w/calibre/calibre/manual/faq.rst:1010
 msgid ""
 "By default, calibre uses whatever proxy settings are set in your OS. "
 "Sometimes these are incorrect, for example, on Windows if you don't use "
@@ -1921,21 +1969,21 @@ msgid ""
 "current proxies used by calibre in Preferences->Miscellaneous."
 msgstr "Типово, calibre використовує параметри проксі-сервера, які визначено у вашій операційній системі на загальному рівні. Іноді ці параметри є помилковими, наприклад, у Windows, якщо ви не користуєтеся Microsoft Edge, параметри проксі-сервера можуть бути типовими або застарілими. Ви можете повідомити calibre про те, що слід використовувати певний проксі-сервер, встановленням змінних середовища ``http_proxy`` та ``https_proxy``. Формат значення для змінної такий: ``http://користувач:пароль@назва_сервера``. Правильне значення для цієї змінної можна дізнатися у адміністратора системи. Зауважте, що у calibre передбачено підтримку лише проксі-серверів HTTP, а не проксі-серверів SOCKS. Переглянути поточні параметри проксі-сервера можна за допомогою сторінки :guilabel:`Налаштування -> Різне`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:991
+#: ../../__w/calibre/calibre/manual/faq.rst:1021
 msgid "I want some feature added to calibre. What can I do?"
 msgstr "Я хочу реалізувати якісь нові можливості у calibre. Як це зробити?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:994
+#: ../../__w/calibre/calibre/manual/faq.rst:1024
 msgid "You have two choices:"
 msgstr "Маєте два варіанти:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:993
+#: ../../__w/calibre/calibre/manual/faq.rst:1023
 msgid ""
 "Create a patch by hacking on calibre and send it to me for review and "
 "inclusion. See :website:`Development <get-involved>`."
 msgstr "Створіть латку, змінивши код calibre, і надішліть її розробнику для рецензування та включення до основного сховища. Див. розділ :website:`Розробка <get-involved>`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:994
+#: ../../__w/calibre/calibre/manual/faq.rst:1024
 msgid ""
 ":website:`Open a bug requesting the feature <bugs>`. Remember that while you"
 " may think your feature request is extremely important/essential, calibre "
@@ -1946,15 +1994,15 @@ msgid ""
 ":ref:`pluginstutorial`."
 msgstr ":website:`Відкрийте запит на реалізацію можливості <bugs>`. Пам’ятайте, що хоча вам може здатися, що можливість, яку ви просите реалізувати, є надзвичайно важливою, з цим можуть не погодитися розробники calibre. На щастя, calibre — програма з відкритим кодом. Це означає, що ви завжди можете реалізувати можливість власноруч або найняти когось, хто реалізує її за вас. Більше того, архітектуру calibre побудовано на додатках, отже можливість можна реалізувати у форматі додатка, див. розділ :ref:`pluginstutorial`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:997
+#: ../../__w/calibre/calibre/manual/faq.rst:1027
 msgid "Why doesn't calibre have an automatic update?"
 msgstr "Чому у calibre немає системи автоматичного оновлення?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:999
+#: ../../__w/calibre/calibre/manual/faq.rst:1029
 msgid "For many reasons:"
 msgstr "Через багато причин:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1001
+#: ../../__w/calibre/calibre/manual/faq.rst:1031
 msgid ""
 "*There is no need to update every week*. If you are happy with how calibre "
 "works turn off the update notification and be on your merry way. Check back "
@@ -1962,7 +2010,7 @@ msgid ""
 " off the update notification, on the update notification itself."
 msgstr "*У оновленні щотижня немає потреби*. Якщо у вас немає проблем із працездатністю calibre, вимкніть сповіщення щодо оновлення і не переймайтеся ним. Можете перевіряти наявність оновлень щороку або щомісяця. Пункт вимикання сповіщень щодо оновлення є у самому діалоговому вікні сповіщення."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1006
+#: ../../__w/calibre/calibre/manual/faq.rst:1036
 msgid ""
 "calibre downloads currently use :website_base:`about 150TB of bandwidth a "
 "month <dynamic/downloads>`. Implementing automatic updates would greatly "
@@ -1970,7 +2018,7 @@ msgid ""
 " has to pay."
 msgstr "Обмін даними у процесі оновлення calibre на сьогодні складає :website_base:`близько 150 ТБ щомісяця <dynamic/downloads>`. Реалізація автоматичного оновлення значно збільшить цю цифру і коштуватиме авторам програми тисячі доларів щомісяця, які комусь доведеться платити."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1011
+#: ../../__w/calibre/calibre/manual/faq.rst:1041
 msgid ""
 "If I implement a dialog that downloads the update and launches it, instead "
 "of going to the website as it does now, that would save the most ardent "
@@ -1978,25 +2026,25 @@ msgid ""
 " things to do in calibre development."
 msgstr "Якщо розробники реалізують діалогове вікно для отримання оновлень і запуску програми для оновлення, замість відкриття сторінки сайта, як це робиться зараз, це збереже найпалкішим фанатам оновлення calibre *не більше п’яти клацань кнопкою миші*. У нас є набагато пріоритетніші завдання у розробці calibre."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1016
+#: ../../__w/calibre/calibre/manual/faq.rst:1046
 msgid ""
 "If you really, really hate downloading calibre every week but still want to "
 "be up to the latest, I encourage you to run from source, which makes "
 "updating trivial. Instructions are :ref:`available here <develop>`."
 msgstr "Якщо вам дуже-дуже не хочеться отримувати новий пакунок calibre щотижня, але хочеться користуватися найсвіжішим кодом, вам варто запускати програму з початкового коду, оскільки його оновлення є тривіальною справою. Настанови можна знайти :ref:`тут <develop>`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1020
+#: ../../__w/calibre/calibre/manual/faq.rst:1050
 msgid ""
 "There are third party automatic updaters for calibre made by calibre users "
 "in the `calibre forum "
 "<https://www.mobileread.com/forums/forumdisplay.php?f=238>`_."
 msgstr "Існують сторонні засоби автоматичного оновлення calibre, які створено користувачами calibre. Посилання на них розміщено на `форумі calibre <https://www.mobileread.com/forums/forumdisplay.php?f=238>`_."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1024
+#: ../../__w/calibre/calibre/manual/faq.rst:1054
 msgid "How is calibre licensed?"
 msgstr "Якими є умови ліцензування calibre?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1025
+#: ../../__w/calibre/calibre/manual/faq.rst:1055
 msgid ""
 "calibre is licensed under the GNU General Public License v3 (an open source "
 "license). This means that you are free to redistribute calibre as long as "
@@ -2009,30 +2057,30 @@ msgid ""
 "`The GNU GPL v3 <https://www.gnu.org/licenses/gpl.html>`_."
 msgstr "Програму calibre випущено за умов дотримання GNU General Public License v3 (ліцензії для програм з відкритим кодом). Це означає, що ви можете вільно розповсюджувати calibre, якщо залишатимете загальнодоступним початковий код програми. Отже, якщо ви хочете розмістити calibre на компакт-диску з вашим продуктом, вам також слід розмістити на компакт-диску початковий код програми. Початковий код можна отримати `тут <https://download.calibre-ebook.com>`_. Ви можете безкоштовно користуватися результатами перетворення даних за допомогою  calibre у будь-який бажаний для вас спосіб. Ви не можете використовувати код або бібліотеки з calibre у вашому програмному забезпеченні, не зробивши його код відкритим. Докладніше про це у тексті `GNU GPL v3 <https://www.gnu.org/licenses/gpl.html>`_."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1028
+#: ../../__w/calibre/calibre/manual/faq.rst:1058
 msgid "How do I run calibre from my USB stick?"
 msgstr "Як запустити calibre з флешки?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1030
+#: ../../__w/calibre/calibre/manual/faq.rst:1060
 msgid ""
 "A portable version of calibre is available :website:`here "
 "<download_portable>`."
 msgstr "Портативну версію calibre можна отримати :website:`тут <download_portable>`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1033
+#: ../../__w/calibre/calibre/manual/faq.rst:1063
 msgid ""
 "How do I run parts of calibre like news download and the Content server on "
 "my own Linux server?"
 msgstr "Як скористатися частинами calibre, зокрема засобом отримання новин та сервером даних, на сервері під керуванням Linux?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1035
+#: ../../__w/calibre/calibre/manual/faq.rst:1065
 msgid ""
 "First, you must install calibre onto your Linux server. If your server is "
 "using a modern Linux distribution, you should have no problems installing "
 "calibre onto it."
 msgstr "По-перше, вам слід встановити calibre на вашому сервері під керуванням Linux. Якщо на вашому сервері встановлено сучасний дистрибутив Linux, у вас не повинно бути проблем зі встановленням calibre."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1039
+#: ../../__w/calibre/calibre/manual/faq.rst:1069
 msgid ""
 "calibre needs GLIBC >= 2.18 and libstdc++ >= 6.0.21. If you have an older "
 "server, you will either need to compile these from source, or use calibre "
@@ -2045,34 +2093,34 @@ msgid ""
 "you are likely missing some X libraries."
 msgstr "Для роботи calibre потрібні бібліотеки GLIBC >= 2.18 і libstdc++ >= 6.0.21. Якщо ви маєте справу із застарілим сервером, вам доведеться або зібрати ці бібліотеки з початкових кодів, або скористатися calibre 3.48, які потрібна GLIBC >= 2.17, чи calibre 2.85.1, якій потрібна GLIBC >= 2.13, чи calibre версії 1.48, для якої достатньо GLIBC >= 2.10. Крім того, хоча для роботи інструментів командного рядка calibre не потрібен графічний сервер, деяким з них потрібні встановлені у вашій системі бібліотеки графічного сервера. Причиною є використання Qt (бібліотеки, яка використовується для виконання різноманітних завдань, які пов’язано із обробкою зображень) та компонування частин програми з цими бібліотеками. Якщо ви отримуєте повідомлення ImportError щодо якихось модулів Qt, ймовірно, у системі не вистачає деяких бібліотек сервера X (графічного сервера)."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1049
+#: ../../__w/calibre/calibre/manual/faq.rst:1079
 msgid "You can run the calibre server via the command::"
 msgstr "Запустити сервер calibre можна за допомогою такої команди::"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1053
+#: ../../__w/calibre/calibre/manual/faq.rst:1083
 msgid "You can download news and convert it into an e-book with the command::"
 msgstr "Отримати новини і перетворити їх дані на електронну книгу можна за допомогою такої команди::"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1057
+#: ../../__w/calibre/calibre/manual/faq.rst:1087
 msgid ""
 "If you want to generate MOBI, use outputfile.mobi instead and use "
 "``--output-profile kindle``."
 msgstr "Якщо ви хочете створити файл MOBI, скористайтеся outputfile.mobi і параметром ``--output-profile kindle``."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1059
+#: ../../__w/calibre/calibre/manual/faq.rst:1089
 msgid "You can email downloaded news with the command::"
 msgstr "Надіслати отримані новини електронною поштою можна за допомогою такої команди::"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1063
+#: ../../__w/calibre/calibre/manual/faq.rst:1093
 msgid ""
 "I leave figuring out the exact command line as an exercise for the reader."
 msgstr "Читач може сам повправлятися у визначення точного вигляду рядка команди."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1065
+#: ../../__w/calibre/calibre/manual/faq.rst:1095
 msgid "Finally, you can add downloaded news to the calibre library with::"
 msgstr "Нарешті, ви можете додати отримані новини до бібліотеки calibre ось так::"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1069
+#: ../../__w/calibre/calibre/manual/faq.rst:1099
 msgid ""
 "Remember to read the :ref:`cli` section of the calibre User Manual to learn "
 "more about these, and other commands."

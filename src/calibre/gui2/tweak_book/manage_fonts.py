@@ -16,7 +16,8 @@ from calibre.ebooks.oeb.polish.container import get_container
 from calibre.ebooks.oeb.polish.fonts import font_family_data, change_font
 from calibre.gui2 import error_dialog, info_dialog
 from calibre.gui2.tweak_book import current_container, set_current_container
-from calibre.gui2.tweak_book.widgets import Dialog, BusyCursor
+from calibre.gui2.tweak_book.widgets import Dialog
+from calibre.gui2.widgets import BusyCursor
 from calibre.utils.icu import primary_sort_key as sort_key
 from calibre.utils.fonts.scanner import font_scanner, NoFonts
 from calibre.utils.fonts.metadata import FontMetadata, UnsupportedFont
@@ -135,7 +136,7 @@ class AllFonts(QAbstractTableModel):
         if role == Qt.ItemDataRole.TextAlignmentRole:
             col = index.column()
             if col == 0:
-                return Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter
+                return int(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)  # https://bugreports.qt.io/browse/PYSIDE-1974
         if role in (Qt.ItemDataRole.UserRole, Qt.ItemDataRole.UserRole + 1):
             row = index.row()
             try:
@@ -239,7 +240,7 @@ class ManageFonts(Dialog):
         self.h = h = QHBoxLayout()
         h.setContentsMargins(0, 0, 0, 0)
         self.install_fonts_button = b = QPushButton(_('&Install fonts'), self)
-        h.addWidget(b), b.setIcon(QIcon(I('plus.png')))
+        h.addWidget(b), b.setIcon(QIcon.ic('plus.png'))
         b.setToolTip(textwrap.fill(_('Install fonts from .ttf/.otf files to make them available for embedding')))
         b.clicked.connect(self.install_fonts)
         l.addWidget(s), l.addLayout(h), h.addStretch(10), h.addWidget(self.bb)
@@ -261,24 +262,24 @@ class ManageFonts(Dialog):
         s.addWidget(fv), s.addWidget(c)
 
         self.cb = b = QPushButton(_('&Change selected fonts'))
-        b.setIcon(QIcon(I('wizard.png')))
+        b.setIcon(QIcon.ic('wizard.png'))
         b.clicked.connect(self.change_fonts)
         l.addWidget(b)
         self.rb = b = QPushButton(_('&Remove selected fonts'))
         b.clicked.connect(self.remove_fonts)
-        b.setIcon(QIcon(I('trash.png')))
+        b.setIcon(QIcon.ic('trash.png'))
         l.addWidget(b)
         self.eb = b = QPushButton(_('&Embed all fonts'))
-        b.setIcon(QIcon(I('embed-fonts.png')))
+        b.setIcon(QIcon.ic('embed-fonts.png'))
         b.clicked.connect(self.embed_fonts)
         l.addWidget(b)
         self.sb = b = QPushButton(_('&Subset all fonts'))
-        b.setIcon(QIcon(I('subset-fonts.png')))
+        b.setIcon(QIcon.ic('subset-fonts.png'))
         b.clicked.connect(self.subset_fonts)
         l.addWidget(b)
         self.refresh_button = b = self.bb.addButton(_('&Refresh'), QDialogButtonBox.ButtonRole.ActionRole)
         b.setToolTip(_('Rescan the book for fonts in case you have made changes'))
-        b.setIcon(QIcon(I('view-refresh.png')))
+        b.setIcon(QIcon.ic('view-refresh.png'))
         b.clicked.connect(self.refresh)
 
         self.la = la = QLabel(

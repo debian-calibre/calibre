@@ -59,7 +59,7 @@ def compiler():
 
     from calibre import walk
     from calibre.gui2 import must_use_qt
-    from calibre.gui2.webengine import secure_webengine
+    from calibre.utils.webengine import secure_webengine
     must_use_qt()
 
     with lzma.open(P(COMPILER_PATH, allow_user_override=False)) as lzf:
@@ -138,7 +138,7 @@ document.title = 'compiler initialized';
             QApplication.instance().processEvents(QEventLoop.ProcessEventsFlag.ExcludeUserInputEvents)
 
         def javaScriptConsoleMessage(self, level, msg, line_num, source_id):
-            if level:
+            if level == QWebEnginePage.JavaScriptConsoleMessageLevel.ErrorMessageLevel:
                 self.errors.append(msg)
             else:
                 print(f'{source_id}:{line_num}:{msg}')
@@ -205,7 +205,7 @@ def ok_to_import_webengine():
     from qt.core import QApplication
     if QApplication.instance() is None:
         return True
-    if 'PyQt5.QtWebEngineWidgets' in sys.modules:
+    if 'PyQt6.QtWebEngineCore' in sys.modules:
         return True
     return False
 
@@ -340,7 +340,7 @@ def run_rapydscript_tests():
     from calibre.constants import FAKE_HOST, FAKE_PROTOCOL
     from calibre.gui2 import must_use_qt
     from calibre.gui2.viewer.web_view import send_reply
-    from calibre.gui2.webengine import secure_webengine, insert_scripts, create_script
+    from calibre.utils.webengine import secure_webengine, insert_scripts, create_script
     must_use_qt()
     scheme = QWebEngineUrlScheme(FAKE_PROTOCOL.encode('ascii'))
     scheme.setSyntax(QWebEngineUrlScheme.Syntax.Host)
@@ -409,7 +409,7 @@ def run_rapydscript_tests():
             self.working = False
 
         def javaScriptConsoleMessage(self, level, msg, line_num, source_id):
-            print(msg, file=sys.stderr if level > 0 else sys.stdout)
+            print(msg, file=sys.stdout if level == QWebEnginePage.JavaScriptConsoleMessageLevel.InfoMessageLevel else sys.stderr)
 
     tester = Tester()
     result = tester.spin_loop()

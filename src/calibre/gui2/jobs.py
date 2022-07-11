@@ -48,13 +48,19 @@ def human_readable_interval(secs):
     seconds = secs % 60
     parts = []
     if days > 0:
-        parts.append('%dd' % days)
-    if hours > 0:
-        parts.append('%dh' % hours)
-    if minutes > 0:
-        parts.append('%dm' % minutes)
-    if secs > 0:
-        parts.append('%ds' % seconds)
+        parts.append(_('{} days').format(days))
+        if hours > 0:
+            parts.append(_('{} hours').format(hours))
+    elif hours > 0:
+        parts.append(_('{} hours').format(hours))
+        if minutes > 0:
+            parts.append(_('{} minutes').format(minutes))
+    elif minutes > 0:
+        parts.append(_('{} minutes').format(minutes))
+        if secs > 0:
+            parts.append(_('{} seconds').format(seconds))
+    elif secs > 0:
+        parts.append(_('{} seconds').format(seconds))
     return ' '.join(parts)
 
 
@@ -64,13 +70,14 @@ class JobManager(QAbstractTableModel, AdaptSQP):  # {{{
     job_done  = pyqtSignal(int)
 
     def __init__(self):
+        self.header_titles = _('Job'), _('Status'), _('Progress'), _('Running time'), _('Start time'),
         QAbstractTableModel.__init__(self)
         SearchQueryParser.__init__(self, ['all'])
 
-        self.wait_icon     = (QIcon(I('jobs.png')))
-        self.running_icon  = (QIcon(I('exec.png')))
-        self.error_icon    = (QIcon(I('dialog_error.png')))
-        self.done_icon     = (QIcon(I('ok.png')))
+        self.wait_icon     = (QIcon.ic('jobs.png'))
+        self.running_icon  = (QIcon.ic('exec.png'))
+        self.error_icon    = (QIcon.ic('dialog_error.png'))
+        self.done_icon     = (QIcon.ic('ok.png'))
 
         self.jobs          = []
         self.add_job       = Dispatcher(self._add_job)
@@ -90,18 +97,13 @@ class JobManager(QAbstractTableModel, AdaptSQP):  # {{{
         return len(self.jobs)
 
     def headerData(self, section, orientation, role):
-        if role != Qt.ItemDataRole.DisplayRole:
-            return None
-        if orientation == Qt.Orientation.Horizontal:
-            return ({
-              0: _('Job'),
-              1: _('Status'),
-              2: _('Progress'),
-              3: _('Running time'),
-              4: _('Start time'),
-            }.get(section, ''))
-        else:
-            return (section+1)
+        if role == Qt.ItemDataRole.DisplayRole:
+            if orientation == Qt.Orientation.Horizontal:
+                try:
+                    return self.header_titles[section]
+                except Exception:
+                    pass
+            return str(section + 1)
 
     def show_tooltip(self, arg):
         widget, pos = arg
@@ -465,7 +467,7 @@ class DetailView(Dialog):  # {{{
         l.addWidget(self.bb)
         self.bb.clear(), self.bb.setStandardButtons(QDialogButtonBox.StandardButton.Close)
         self.copy_button = b = self.bb.addButton(_('&Copy to clipboard'), QDialogButtonBox.ButtonRole.ActionRole)
-        b.setIcon(QIcon(I('edit-copy.png')))
+        b.setIcon(QIcon.ic('edit-copy.png'))
         b.clicked.connect(self.copy_to_clipboard)
         self.next_pos = 0
         self.update()
@@ -489,7 +491,11 @@ class DetailView(Dialog):  # {{{
             more = f.read()
             self.next_pos = f.tell()
             if more:
+                v = self.log.verticalScrollBar()
+                atbottom = v.value() >= v.maximum() - 1
                 self.log.appendPlainText(more.decode('utf-8', 'replace'))
+                if atbottom:
+                    v.setValue(v.maximum())
 # }}}
 
 
@@ -651,8 +657,9 @@ class JobsDialog(QDialog, Ui_JobsDialog):
             state = gprefs.get('jobs view column layout3', None)
             if state is not None:
                 self.jobs_view.horizontalHeader().restoreState(QByteArray(state))
-        except:
-            pass
+        except Exception:
+            import traceback
+            traceback.print_exc()
         idx = self.jobs_view.model().index(0, 0)
         if idx.isValid():
             sm = self.jobs_view.selectionModel()
@@ -660,12 +667,14 @@ class JobsDialog(QDialog, Ui_JobsDialog):
 
     def save_state(self):
         try:
-            state = bytearray(self.jobs_view.horizontalHeader().saveState())
-            gprefs['jobs view column layout3'] = state
-            geom = bytearray(self.saveGeometry())
-            gprefs['jobs_dialog_geometry'] = geom
-        except:
-            pass
+            with gprefs:
+                state = bytearray(self.jobs_view.horizontalHeader().saveState())
+                gprefs['jobs view column layout3'] = state
+                geom = bytearray(self.saveGeometry())
+                gprefs['jobs_dialog_geometry'] = geom
+        except Exception:
+            import traceback
+            traceback.print_exc()
 
     def show_job_details(self, index):
         index = self.proxy_model.mapToSource(index)

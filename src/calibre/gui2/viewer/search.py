@@ -319,9 +319,10 @@ def search_in_name(name, search_query, ctx_size=75):
                 yield match.span()
     else:
         spans = []
-        a = lambda s, l: spans.append((s, s + l))
-        primary_collator_without_punctuation().find_all(search_query.text, raw, a, search_query.mode == 'word')
         miter = lambda: spans
+        if raw:
+            a = lambda s, l: spans.append((s, s + l))
+            primary_collator_without_punctuation().find_all(search_query.text, raw, a, search_query.mode == 'word')
 
     for (start, end) in miter():
         before = raw[max(0, start-ctx_size):start]
@@ -357,14 +358,14 @@ class SearchInput(QWidget):  # {{{
         self.next_button = nb = QToolButton(self)
         h.addWidget(nb)
         nb.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-        nb.setIcon(QIcon(I('arrow-down.png')))
+        nb.setIcon(QIcon.ic('arrow-down.png'))
         nb.clicked.connect(self.find_next)
         nb.setToolTip(_('Find next match'))
 
         self.prev_button = nb = QToolButton(self)
         h.addWidget(nb)
         nb.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-        nb.setIcon(QIcon(I('arrow-up.png')))
+        nb.setIcon(QIcon.ic('arrow-up.png'))
         nb.clicked.connect(self.find_previous)
         nb.setToolTip(_('Find previous match'))
 
@@ -395,7 +396,7 @@ class SearchInput(QWidget):  # {{{
         h.addWidget(cs)
 
         self.return_button = rb = QToolButton(self)
-        rb.setIcon(QIcon(I('back.png')))
+        rb.setIcon(QIcon.ic('back.png'))
         rb.setToolTip(_('Go back to where you were before searching'))
         rb.clicked.connect(self.go_back)
         h.addWidget(rb)
@@ -454,9 +455,16 @@ class SearchInput(QWidget):  # {{{
     def find_previous(self):
         self.emit_search(backwards=True)
 
-    def focus_input(self, text=None):
+    def focus_input(self, text=None, search_type=None, case_sensitive=None):
         if text and hasattr(text, 'rstrip'):
             self.search_box.setText(text)
+        if search_type is not None:
+            idx = self.query_type.findData(search_type)
+            if idx < 0:
+                idx = self.query_type.findData('normal')
+            self.query_type.setCurrentIndex(idx)
+        if case_sensitive is not None:
+            self.case_sensitive.setChecked(bool(case_sensitive))
         self.search_box.setFocus(Qt.FocusReason.OtherFocusReason)
         le = self.search_box.lineEdit()
         le.end(False)
@@ -477,8 +485,8 @@ class Results(QTreeWidget):  # {{{
         self.delegate = ResultsDelegate(self)
         self.setItemDelegate(self.delegate)
         self.itemClicked.connect(self.item_activated)
-        self.blank_icon = QIcon(I('blank.png'))
-        self.not_found_icon = QIcon(I('dialog_warning.png'))
+        self.blank_icon = QIcon.ic('blank.png')
+        self.not_found_icon = QIcon.ic('dialog_warning.png')
         self.currentItemChanged.connect(self.current_item_changed)
         self.section_font = QFont(self.font())
         self.section_font.setItalic(True)
@@ -668,8 +676,8 @@ class SearchPanel(QWidget):  # {{{
     def update_hidden_message(self):
         self.hidden_message.setVisible(self.results.current_result_is_hidden)
 
-    def focus_input(self, text=None):
-        self.search_input.focus_input(text)
+    def focus_input(self, text=None, search_type=None, case_sensitive=None):
+        self.search_input.focus_input(text, search_type, case_sensitive)
 
     def search_cleared(self):
         self.results.clear_all_results()

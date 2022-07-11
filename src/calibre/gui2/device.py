@@ -6,9 +6,9 @@ import os, traceback, time, io, re, sys, weakref
 from threading import Thread, Event
 
 from qt.core import (
-    QMenu, QAction, QActionGroup, QIcon, Qt, pyqtSignal, QDialog,
-    QObject, QVBoxLayout, QDialogButtonBox, QCursor, QCoreApplication,
-    QApplication, QEventLoop, QTimer)
+    QMenu, QAction, QActionGroup, QIcon, pyqtSignal, QDialog,
+    QObject, QVBoxLayout, QDialogButtonBox, QCoreApplication,
+    QEventLoop, QTimer)
 
 from calibre.customize.ui import (available_input_formats, available_output_formats,
     device_plugins, disabled_device_plugins)
@@ -22,6 +22,7 @@ from calibre.devices.scanner import DeviceScanner
 from calibre.gui2 import (config, error_dialog, Dispatcher, dynamic,
         warning_dialog, info_dialog, choose_dir, FunctionDispatcher,
         show_restart_warning, gprefs, question_dialog)
+from calibre.gui2.widgets import BusyCursor
 from calibre.ebooks.metadata import authors_to_string
 from calibre import preferred_encoding, prints, force_unicode, as_unicode, sanitize_file_name
 from calibre.utils.filenames import ascii_filename
@@ -123,15 +124,6 @@ def device_name_for_plugboards(device_class):
     return device_class.__class__.__name__
 
 
-class BusyCursor:
-
-    def __enter__(self):
-        QApplication.setOverrideCursor(QCursor(Qt.CursorShape.WaitCursor))
-
-    def __exit__(self, *args):
-        QApplication.restoreOverrideCursor()
-
-
 def convert_open_popup(opm, skip_key):
     class OPM(OpenFeedback):
 
@@ -171,7 +163,7 @@ class DeviceManager(Thread):  # {{{
         '''
         :sleep_time: Time to sleep between device probes in secs
         '''
-        Thread.__init__(self, daemon=True)
+        Thread.__init__(self, name='DeviceManager', daemon=True)
         # [Device driver, Showing in GUI, Ejected]
         self.devices        = list(device_plugins())
         self.disabled_device_plugins = list(disabled_device_plugins())
@@ -736,7 +728,7 @@ class DeviceAction(QAction):  # {{{
     a_s = pyqtSignal(object)
 
     def __init__(self, dest, delete, specific, icon_path, text, parent=None):
-        QAction.__init__(self, QIcon(icon_path), text, parent)
+        QAction.__init__(self, QIcon.ic(icon_path), text, parent)
         self.dest = dest
         self.delete = delete
         self.specific = specific
@@ -764,32 +756,32 @@ class DeviceMenu(QMenu):  # {{{
         self._memory = []
 
         self.set_default_menu = QMenu(_('Set default send to device action'))
-        self.set_default_menu.setIcon(QIcon(I('config.png')))
+        self.set_default_menu.setIcon(QIcon.ic('config.png'))
 
         basic_actions = [
-                ('main:', False, False,  I('reader.png'),
+                ('main:', False, False,  'reader.png',
                     _('Send to main memory')),
-                ('carda:0', False, False, I('sd.png'),
+                ('carda:0', False, False, 'sd.png',
                     _('Send to storage card A')),
-                ('cardb:0', False, False, I('sd.png'),
+                ('cardb:0', False, False, 'sd.png',
                     _('Send to storage card B')),
         ]
 
         delete_actions = [
-                ('main:', True, False,   I('reader.png'),
+                ('main:', True, False,   'reader.png',
                     _('Main memory')),
-                ('carda:0', True, False,  I('sd.png'),
+                ('carda:0', True, False,  'sd.png',
                     _('Storage card A')),
-                ('cardb:0', True, False,  I('sd.png'),
+                ('cardb:0', True, False,  'sd.png',
                     _('Storage card B')),
         ]
 
         specific_actions = [
-                ('main:', False, True,  I('reader.png'),
+                ('main:', False, True,  'reader.png',
                     _('Main memory')),
-                ('carda:0', False, True, I('sd.png'),
+                ('carda:0', False, True, 'sd.png',
                     _('Storage card A')),
-                ('cardb:0', False, True, I('sd.png'),
+                ('cardb:0', False, True, 'sd.png',
                     _('Storage card B')),
         ]
 
@@ -842,7 +834,7 @@ class DeviceMenu(QMenu):  # {{{
         self.addMenu(later_menus[0])
         self.addSeparator()
 
-        mitem = self.addAction(QIcon(I('eject.png')), _('Eject device'))
+        mitem = self.addAction(QIcon.ic('eject.png'), _('Eject device'))
         mitem.setEnabled(False)
         connect_lambda(mitem.triggered, self, lambda self, x: self.disconnect_mounted_device.emit())
         self.disconnect_mounted_device_action = mitem
@@ -931,7 +923,7 @@ class DeviceMixin:  # {{{
     def init_device_mixin(self):
         self.device_error_dialog = error_dialog(self, _('Error'),
                 _('Error communicating with device'), ' ')
-        self.device_error_dialog.setModal(Qt.WindowModality.NonModal)
+        self.device_error_dialog.setModal(False)
         self.device_manager = DeviceManager(FunctionDispatcher(self.device_detected),
                 self.job_manager, Dispatcher(self.status_bar.show_message),
                 Dispatcher(self.show_open_feedback),
@@ -945,7 +937,7 @@ class DeviceMixin:  # {{{
         return question_dialog(self, _('Manage the %s?')%name,
                 _('Detected the <b>%s</b>. Do you want calibre to manage it?')%
                 name, show_copy_button=False,
-                override_icon=QIcon(icon))
+                override_icon=QIcon.ic(icon))
 
     def after_callback_feedback(self, feedback):
         title, msg, det_msg = feedback
@@ -1008,7 +1000,7 @@ class DeviceMixin:  # {{{
         config_dialog = QDialog(self)
 
         config_dialog.setWindowTitle(_('Configure %s')%dev.get_gui_name())
-        config_dialog.setWindowIcon(QIcon(I('config.png')))
+        config_dialog.setWindowIcon(QIcon.ic('config.png'))
         l = QVBoxLayout(config_dialog)
         config_dialog.setLayout(l)
         bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok|QDialogButtonBox.StandardButton.Cancel)

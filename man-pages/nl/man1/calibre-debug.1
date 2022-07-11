@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "juni 17, 2022" "5.44.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "juli 11, 2022" "6.0.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -43,7 +43,7 @@ calibre\-debug [opties]
 .sp
 Verscheidene commandoregel interfaces nuttig voor foutzoeken in calibre. Zonder opties
 start dit commando een geïntegreerde python vertaler. Men kan ook de hoofd calibre
-GUI gebruiken, het calibre leesvenster en de calibre editor in de foutzoekmodus.
+GUI gebruiken, het calibre leesvenster en de calibre bewerker in de foutzoekmodus.
 .sp
 Het bevat ook interfaces voor verschillende stukjes van calibre die geen specifieke
 commandoregel gereedschappen hebben, zoals font subsets, de e\-boek diff tool enzovoort.
@@ -86,7 +86,7 @@ Draait de calibre diff tool. Bijvoorbeeld: calibre\-debug \fI\%\-\-diff\fP besta
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-edit\-book, \-t
+.B \-\-edit\-book
 Start het calibre \fB\(dq\fPBewerk Boek\fB\(dq\fP tool in debug modus.
 .UNINDENT
 .INDENT 0.0
@@ -146,13 +146,13 @@ Output van de paden de nodig zijn voor de installatie van de calibre omgeving
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-reinitialize\-db
-Re\-initialiseren van de sqlite calibre database op het opgegeven pad. Nuttig bij herstellen van een corrupte database.
+.B \-\-run\-plugin, \-r
+plug\-inplug\-inVoer een plugin uit welke via opdracht\-prompt kan starten. Bijvoorbeeld: calibre\-debug \-r \fB\(dq\fPPlug\-in naam\fB\(dq\fP \fB\-\-\fP bestand1 \fB\-\-option1\fP Alles na de \fB\-\-\fP zal worden meegegeven aan de plugin als argumenten.
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-run\-plugin, \-r
-Run a plugin that provides a command line interface. For example: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
+.B \-\-run\-test, \-t
+Run the named test(s). Use the special value \fB\(dq\fPall\fB\(dq\fP to run all tests. If the test name starts with a period it is assumed to be a module name. If the test name starts with @ it is assumed to be a category name.
 .UNINDENT
 .INDENT 0.0
 .TP

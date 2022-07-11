@@ -40,7 +40,7 @@ Environment variables
     * ``CALIBRE_OVERRIDE_LANG`` - used to force the language used by the interface (ISO 639 language code)
     * ``CALIBRE_TEST_TRANSLATION`` - used to test a translation .po file (should be the path to the .po file)
     * ``CALIBRE_NO_NATIVE_FILEDIALOGS`` - causes calibre to not use native file dialogs for selecting files/folders.
-    * ``CALIBRE_NO_NATIVE_MENUBAR`` - causes calibre to not create a native (global) menu on Ubuntu Unity and similar linux desktop environments. The menu is instead placed inside the window, as is traditional.
+    * ``CALIBRE_NO_NATIVE_MENUBAR`` - causes calibre to not create a native (global) menu on Ubuntu Unity and similar Linux desktop environments. The menu is instead placed inside the window, as is traditional.
     * ``CALIBRE_USE_SYSTEM_THEME`` - by default, on Linux, calibre uses its own
       builtin Qt style. This is to avoid crashes and hangs caused by incompatibilities
       between the version of Qt calibre is built against and the system Qt. The
@@ -49,8 +49,6 @@ Environment variables
       the system theme -- beware of crashes and hangs.
     * ``CALIBRE_SHOW_DEPRECATION_WARNINGS`` - causes calibre to print deprecation warnings to stdout. Useful for calibre developers.
     * ``CALIBRE_NO_DEFAULT_PROGRAMS`` - prevent calibre from automatically registering the filetypes it is capable of handling with Windows.
-    * ``CALIBRE_USE_DARK_PALETTE`` - set it to ``1`` to have calibre use dark colors and ``0`` for normal colors (ignored on macOS).
-      On Windows 10 in the absence of this variable, the Windows system preference for dark colors is used.
     * ``SYSFS_PATH`` - Use if sysfs is mounted somewhere other than /sys
     * ``http_proxy``, ``https_proxy`` - used on Linux to specify an HTTP(S) proxy
 
@@ -76,9 +74,10 @@ Overriding icons, templates, et cetera
 ----------------------------------------
 
 .. note::
-    calibre has direct support for icon themes, there are several icon themes
-    available for calibre, that you can use by going to :guilabel:`Preferences->Interface->Look & Feel->Change Icon theme`.
-    The icon themes use the same mechanism as described below for overriding static resources.
+   calibre has direct support for icon themes, there are several icon themes
+   available for calibre, that you can use by going to :guilabel:`Preferences->Interface->Look & Feel->Change Icon theme`.
+   It is preferable to use icon themes over overriding individual icons.
+
 
 calibre allows you to override the static resources, like icons, JavaScript and
 templates for the metadata jacket, catalogs, etc. with customized versions that
@@ -104,7 +103,8 @@ relevant file is :file:`resources/images/remove_books.png`. Assuming you have an
 alternate icon in PNG format called :file:`my_remove_books.png` you would save it in
 the configuration folder as :file:`resources/images/remove_books.png`. All the
 icons used by the calibre user interface are in :file:`resources/images` and
-its sub-folders.
+its sub-folders. Placing an override file here will have even higher priority
+than a custom icon theme.
 
 Creating your own icon theme for calibre
 -------------------------------------------------------------

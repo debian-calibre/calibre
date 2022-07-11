@@ -31,8 +31,8 @@ def init_dateop(cb):
             ('>', _('after')),
             ('<=', _('before or equal to')),
             ('>=', _('after or equal to')),
-            ('s', _('set')),
-            ('u', _('unset')),
+            ('s', _('is set')),
+            ('u', _('is unset')),
     ]:
         cb.addItem(desc, op)
 
@@ -298,7 +298,7 @@ def create_template_tab(self):
 
 def setup_ui(self, db):
     self.setWindowTitle(_("Advanced search"))
-    self.setWindowIcon(QIcon(I('search.png')))
+    self.setWindowIcon(QIcon.ic('search.png'))
     self.l = l = QVBoxLayout(self)
     self.h = h = QHBoxLayout()
     self.v = v = QVBoxLayout()

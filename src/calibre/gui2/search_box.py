@@ -50,7 +50,7 @@ class SearchLineEdit(QLineEdit):  # {{{
         menu.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
         ac = menu.addAction(_('Paste and &search'))
         ac.setEnabled(bool(QApplication.clipboard().text()))
-        ac.setIcon(QIcon(I('search.png')))
+        ac.setIcon(QIcon.ic('search.png'))
         ac.triggered.connect(self.paste_and_search)
         for action in menu.actions():
             if action.text().startswith(_('&Paste') + '\t'):
@@ -131,7 +131,7 @@ class SearchBox2(QComboBox):  # {{{
 
         self.line_edit.key_pressed.connect(self.key_pressed, type=Qt.ConnectionType.DirectConnection)
         # QueuedConnection as workaround for https://bugreports.qt-project.org/browse/QTBUG-40807
-        self.activated[native_string_type].connect(self.history_selected, type=Qt.ConnectionType.QueuedConnection)
+        self.textActivated.connect(self.history_selected, type=Qt.ConnectionType.QueuedConnection)
         self.setEditable(True)
         self.as_you_type = True
         self.timer = QTimer()
@@ -146,7 +146,7 @@ class SearchBox2(QComboBox):  # {{{
 
     def add_action(self, icon, position=QLineEdit.ActionPosition.TrailingPosition):
         if not isinstance(icon, QIcon):
-            icon = QIcon(I(icon))
+            icon = QIcon.ic(icon)
         return self.lineEdit().addAction(icon, position)
 
     def initialize(self, opt_name, colorize=False, help_text=_('Search'), as_you_type=None):
@@ -285,7 +285,7 @@ class SearchBox2(QComboBox):  # {{{
 
     def set_search_string(self, txt, store_in_history=False, emit_changed=True):
         if not store_in_history:
-            self.activated[native_string_type].disconnect()
+            self.textActivated.disconnect()
         try:
             self.setFocus(Qt.FocusReason.OtherFocusReason)
             if not txt:
@@ -305,7 +305,7 @@ class SearchBox2(QComboBox):  # {{{
         finally:
             if not store_in_history:
                 # QueuedConnection as workaround for https://bugreports.qt-project.org/browse/QTBUG-40807
-                self.activated[native_string_type].connect(self.history_selected, type=Qt.ConnectionType.QueuedConnection)
+                self.textActivated.connect(self.history_selected, type=Qt.ConnectionType.QueuedConnection)
 
     def search_as_you_type(self, enabled):
         self.as_you_type = enabled
@@ -337,7 +337,7 @@ class SavedSearchBox(QComboBox):  # {{{
         self.line_edit = SearchLineEdit(self)
         self.setLineEdit(self.line_edit)
         self.line_edit.key_pressed.connect(self.key_pressed, type=Qt.ConnectionType.DirectConnection)
-        self.activated[native_string_type].connect(self.saved_search_selected)
+        self.textActivated.connect(self.saved_search_selected)
 
         # Turn off auto-completion so that it doesn't interfere with typing
         # names of new searches.
@@ -512,10 +512,10 @@ class SearchBoxMixin:  # {{{
     def set_highlight_only_button_icon(self):
         b = self.highlight_only_button
         if config['highlight_search_matches']:
-            b.setIcon(QIcon(I('highlight_only_on.png')))
+            b.setIcon(QIcon.ic('highlight_only_on.png'))
             b.setText(_('Filter'))
         else:
-            b.setIcon(QIcon(I('highlight_only_off.png')))
+            b.setIcon(QIcon.ic('highlight_only_off.png'))
             b.setText(_('Highlight'))
         self.highlight_only_button.setVisible(gprefs['show_highlight_toggle_button'])
         self.library_view.model().set_highlight_only(config['highlight_search_matches'])
@@ -576,21 +576,21 @@ class SavedSearchBoxMixin:  # {{{
            "Press and hold for a pop-up options menu.") + '</p>')
         self.save_search_button.setMenu(QMenu(self.save_search_button))
         self.save_search_button.menu().addAction(
-                            QIcon(I('plus.png')),
+                            QIcon.ic('plus.png'),
                             _('Create Saved search'),
                             self.saved_search.save_search_button_clicked)
         self.save_search_button.menu().addAction(
-            QIcon(I('trash.png')), _('Delete Saved search'), self.saved_search.delete_current_search)
+            QIcon.ic('trash.png'), _('Delete Saved search'), self.saved_search.delete_current_search)
         self.save_search_button.menu().addAction(
-            QIcon(I('search.png')), _('Manage Saved searches'), partial(self.do_saved_search_edit, None))
+            QIcon.ic('search.png'), _('Manage Saved searches'), partial(self.do_saved_search_edit, None))
         self.add_saved_search_button.setMenu(QMenu(self.add_saved_search_button))
         self.add_saved_search_button.menu().aboutToShow.connect(self.populate_add_saved_search_menu)
 
     def populate_add_saved_search_menu(self):
         m = self.add_saved_search_button.menu()
         m.clear()
-        m.addAction(QIcon(I('plus.png')), _('Add Saved search'), self.add_saved_search)
-        m.addAction(QIcon(I("search_copy_saved.png")), _('Get Saved search expression'),
+        m.addAction(QIcon.ic('plus.png'), _('Add Saved search'), self.add_saved_search)
+        m.addAction(QIcon.ic("search_copy_saved.png"), _('Get Saved search expression'),
                     self.get_saved_search_text)
         m.addActions(list(self.save_search_button.menu().actions())[-1:])
         m.addSeparator()

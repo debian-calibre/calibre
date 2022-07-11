@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "червня 17, 2022" "5.44.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "липня 11, 2022" "6.0.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -84,7 +84,7 @@ calibre\-debug [параметри]
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-edit\-book, \-t
+.B \-\-edit\-book
 Запустити засіб редагування книг calibre у режимі діагностики.
 .UNINDENT
 .INDENT 0.0
@@ -144,13 +144,13 @@ calibre\-debug [параметри]
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-reinitialize\-db
-Повторно ініціалізувати базу даних sqlite calibre за вказаним шляхом. Корисно для відновлення працездатності після пошкодження бази даних.
+.B \-\-run\-plugin, \-r
+Запустити додаток інтерфейсу командного рядка. Приклад: calibre\-debug \-r \fB\(dq\fPНазва додатка\fB\(dq\fP \fB\-\-\fP файл1 \fB\-\-option1\fP Всі дані після \fB\-\-\fP буде передано додатку як параметри.
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-run\-plugin, \-r
-Запустити додаток інтерфейсу командного рядка. Приклад: calibre\-debug \-r \fB\(dq\fPНазва додатка\fB\(dq\fP \fB\-\-\fP файл1 \fB\-\-option1\fP Всі дані після \fB\-\-\fP буде передано додатку як параметри.
+.B \-\-run\-test, \-t
+Запустити вказані перевірки. Скористайтеся особливим словом «all», щоб наказати виконати усі перевірки. Якщо назва перевірки починається з крапки, програма припускатиме, що вказано назву модуля. Якщо назва перевірки починається з @, програма вважатиме її назвою категорії.
 .UNINDENT
 .INDENT 0.0
 .TP

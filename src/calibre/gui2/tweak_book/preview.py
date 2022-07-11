@@ -12,9 +12,9 @@ from qt.core import (
     pyqtSignal
 )
 from qt.webengine import (
-    QWebEngineContextMenuData, QWebEnginePage, QWebEngineProfile, QWebEngineScript,
-    QWebEngineSettings, QWebEngineUrlRequestJob, QWebEngineUrlSchemeHandler,
-    QWebEngineView
+    QWebEngineContextMenuRequest, QWebEnginePage, QWebEngineProfile,
+    QWebEngineScript, QWebEngineSettings, QWebEngineUrlRequestJob,
+    QWebEngineUrlSchemeHandler, QWebEngineView
 )
 from threading import Thread
 
@@ -33,12 +33,12 @@ from calibre.gui2.palette import dark_color, dark_link_color, dark_text_color
 from calibre.gui2.tweak_book import TOP, actions, current_container, editors, tprefs
 from calibre.gui2.tweak_book.file_list import OpenWithHandler
 from calibre.gui2.viewer.web_view import handle_mathjax_request, send_reply
-from calibre.gui2.webengine import (
-    Bridge, RestartingWebEngineView, create_script, from_js, insert_scripts,
-    secure_webengine, to_js
-)
+from calibre.gui2.webengine import RestartingWebEngineView
 from calibre.gui2.widgets2 import HistoryLineEdit2
 from calibre.utils.ipc.simple_worker import offload_worker
+from calibre.utils.webengine import (
+    Bridge, create_script, from_js, insert_scripts, secure_webengine, to_js
+)
 from polyglot.builtins import iteritems
 from polyglot.queue import Empty, Queue
 from polyglot.urllib import urlparse
@@ -258,11 +258,9 @@ def get_editor_settings(tprefs):
 
 
 def create_dark_mode_script():
-    dark_mode_css = P('dark_mode.css', data=True, allow_user_override=False).decode('utf-8')
     return create_script('dark-mode.js', '''
     (function() {
         var settings = JSON.parse(navigator.userAgent.split('|')[1]);
-        var dark_css = CSS;
 
         function apply_body_colors(event) {
             if (document.documentElement) {
@@ -278,7 +276,7 @@ def create_dark_mode_script():
         function apply_css() {
             var css = '';
             if (settings.link) css += 'html > body :link, html > body :link * { color: ' + settings.link + ' !important; }';
-            if (settings.is_dark_theme) { css += dark_css; }
+            if (settings.is_dark_theme) { css = ':root { color-scheme: dark; }' + css; }
             var style = document.createElement('style');
             style.textContent = css;
             document.documentElement.appendChild(style);
@@ -288,7 +286,7 @@ def create_dark_mode_script():
         apply_body_colors();
         document.addEventListener("DOMContentLoaded", apply_css);
     })();
-    '''.replace('CSS', json.dumps(dark_mode_css), 1),
+    ''',
     injection_point=QWebEngineScript.InjectionPoint.DocumentCreation)
 
 
@@ -461,7 +459,7 @@ class WebView(RestartingWebEngineView, OpenWithHandler):
 
     def contextMenuEvent(self, ev):
         menu = QMenu(self)
-        data = self._page.contextMenuData()
+        data = self.lastContextMenuRequest()
         url = data.linkUrl()
         url = str(url.toString(NO_URL_FORMATTING)).strip()
         text = data.selectedText()
@@ -470,10 +468,10 @@ class WebView(RestartingWebEngineView, OpenWithHandler):
             if ca.isEnabled():
                 menu.addAction(ca)
         menu.addAction(actions['reload-preview'])
-        menu.addAction(QIcon(I('debug.png')), _('Inspect element'), self.inspect)
+        menu.addAction(QIcon.ic('debug.png'), _('Inspect element'), self.inspect)
         if url.partition(':')[0].lower() in {'http', 'https'}:
             menu.addAction(_('Open link'), partial(safe_open_url, data.linkUrl()))
-        if QWebEngineContextMenuData.MediaType.MediaTypeImage <= data.mediaType() <= QWebEngineContextMenuData.MediaType.MediaTypeFile:
+        if QWebEngineContextMenuRequest.MediaType.MediaTypeImage.value <= data.mediaType().value <= QWebEngineContextMenuRequest.MediaType.MediaTypeFile.value:
             url = data.mediaUrl()
             if url.scheme() == FAKE_PROTOCOL:
                 href = url.path().lstrip('/')
@@ -482,7 +480,7 @@ class WebView(RestartingWebEngineView, OpenWithHandler):
                     resource_name = c.href_to_name(href)
                     if resource_name and c.exists(resource_name) and resource_name not in c.names_that_must_not_be_changed:
                         self.add_open_with_actions(menu, resource_name)
-                        if data.mediaType() == QWebEngineContextMenuData.MediaType.MediaTypeImage:
+                        if data.mediaType() == QWebEngineContextMenuRequest.MediaType.MediaTypeImage:
                             mime = c.mime_map[resource_name]
                             if mime.startswith('image/'):
                                 menu.addAction(_('Edit %s') % resource_name, partial(self.edit_image, resource_name))
@@ -594,7 +592,7 @@ class Preview(QWidget):
     def find(self, direction):
         text = str(self.search.text())
         self.view._page.findText(text, (
-            QWebEnginePage.FindFlag.FindBackward if direction == 'prev' else QWebEnginePage.FindFlags(0)))
+            QWebEnginePage.FindFlag.FindBackward if direction == 'prev' else QWebEnginePage.FindFlag(0)))
 
     def find_next(self):
         self.find('next')

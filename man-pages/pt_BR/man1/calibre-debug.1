@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "junho 17, 2022" "5.44.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "julho 11, 2022" "6.0.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -94,7 +94,7 @@ Executar a ferramenta diff do calibre. Por exemplo: calibre\-debug \fI\%\-\-diff
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-edit\-book, \-t
+.B \-\-edit\-book
 Carregar a ferramenta \fB\(dq\fPEditar Livro\fB\(dq\fP do calibre em modo de depuração.
 .UNINDENT
 .INDENT 0.0
@@ -154,13 +154,13 @@ Saída dos caminhos necessários para configurar o ambiente do calibre
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-reinitialize\-db
-Reinicializar o banco de dados sqlite do calibre no caminho especificado. Útil para recuperar do bd corrompido.
+.B \-\-run\-plugin, \-r
+Executa um plugin que provê uma interface de linha de comando. Por exemplo: calibre\-debug \-r \fB\(dq\fPNome do plugin\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Tudo após o \fB\-\-\fP será passado ao plugin como argumentos.
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-run\-plugin, \-r
-Executa um plugin que fornece uma interface de linha de comandos. Por exemplo: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Tudo o que surge após \fB\-\-\fP será passado para o plugin como argumentos.
+.B \-\-run\-test, \-t
+Executar o(s) teste(s) nomeado(s). Use o valor especial \fB\(dq\fPall\fB\(dq\fP para executar todos os testes. Caso o nome do teste inicie com um ponto, será considerado como o nome de um módulo. Caso o nome do teste comece com @, será considerado o nome de uma categoria.
 .UNINDENT
 .INDENT 0.0
 .TP

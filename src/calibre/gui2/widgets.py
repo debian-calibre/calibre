@@ -10,7 +10,7 @@ from qt.core import (QIcon, QFont, QLabel, QListWidget, QAction, QEvent,
         QCursor, QColor, QWidget, QPixmap, QSplitterHandle, QToolButton,
         Qt, pyqtSignal, QSize, QSplitter, QPainter, QPageSize, QPrinter,
         QLineEdit, QComboBox, QPen, QGraphicsScene, QMenu, QStringListModel, QKeySequence,
-        QCompleter, QTimer, QRect, QGraphicsView, QPagedPaintDevice, QPalette, QClipboard)
+        QCompleter, QTimer, QRect, QGraphicsView, QPalette, QClipboard)
 
 from calibre.constants import iswindows, ismacos
 from calibre.gui2 import (error_dialog, pixmap_to_data, gprefs,
@@ -747,7 +747,7 @@ class ComboBoxWithHelp(QComboBox):  # {{{
 
     def __init__(self, parent=None):
         QComboBox.__init__(self, parent)
-        self.currentIndexChanged[int].connect(self.index_changed)
+        self.currentIndexChanged.connect(self.index_changed)
         self.help_text = ''
         self.state_set = False
 
@@ -867,7 +867,7 @@ class PythonHighlighter(QSyntaxHighlighter):  # {{{
                 r"|\b[+-]?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\b"),
                 "number")
         a(re.compile(
-                r"\bPyQt5\b|\bQt?[A-Z][a-z]\w+\b"), "pyqt")
+                r"\bPyQt6\b|\bQt?[A-Z][a-z]\w+\b"), "pyqt")
         a(re.compile(r"\b@\w+\b"), "decorator")
         stringRe = re.compile(r"""(?:'[^']*?'|"[^"]*?")""")
         a(stringRe, "string")
@@ -880,7 +880,7 @@ class PythonHighlighter(QSyntaxHighlighter):  # {{{
     @classmethod
     def initializeFormats(cls):
         baseFormat = QTextCharFormat()
-        baseFormat.setFontFamily('monospace')
+        baseFormat.setFontFamilies(['monospace'])
         p = QApplication.instance().palette()
         for name, color, bold, italic in (
                 ("normal", None, False, False),
@@ -1007,7 +1007,7 @@ class LayoutButton(QToolButton):
     def __init__(self, icon, text, splitter=None, parent=None, shortcut=None):
         QToolButton.__init__(self, parent)
         self.label = text
-        self.setIcon(QIcon(icon))
+        self.setIcon(QIcon.ic(icon))
         self.setCheckable(True)
         self.icname = os.path.basename(icon).rpartition('.')[0]
 
@@ -1097,7 +1097,7 @@ class Splitter(QSplitter):
             self.button.clicked.connect(self.double_clicked)
 
         if shortcut is not None:
-            self.action_toggle = QAction(QIcon(icon), _('Toggle') + ' ' + label,
+            self.action_toggle = QAction(QIcon.ic(icon), _('Toggle') + ' ' + label,
                     self)
             self.action_toggle.changed.connect(self.update_shortcut)
             self.action_toggle.triggered.connect(self.toggle_triggered)
@@ -1275,12 +1275,12 @@ class PaperSizes(QComboBox):  # {{{
             if iswindows or ismacos:
                 # On Linux, this can cause Qt to load the system cups plugin
                 # which can crash: https://bugs.launchpad.net/calibre/+bug/1861741
-                PaperSizes.system_default_paper_size = 'letter' if QPrinter().pageSize() == QPagedPaintDevice.PageSize.Letter else 'a4'
+                PaperSizes.system_default_paper_size = 'letter' if QPrinter().pageLayout().pageSize().id() == QPageSize.PageSizeId.Letter else 'a4'
         if not choices:
             from calibre.ebooks.conversion.plugins.pdf_output import PAPER_SIZES
             choices = PAPER_SIZES
         for a in sorted(choices, key=numeric_sort_key):
-            s = getattr(QPageSize, a.capitalize())
+            s = getattr(QPageSize.PageSizeId, a.capitalize())
             sz = QPageSize.definitionSize(s)
             unit = {QPageSize.Unit.Millimeter: 'mm', QPageSize.Unit.Inch: 'inch'}[QPageSize.definitionUnits(s)]
             name = f'{QPageSize.name(s)} ({sz.width():g} x {sz.height():g} {unit})'
@@ -1296,6 +1296,16 @@ class PaperSizes(QComboBox):  # {{{
         if idx == -1:
             idx = self.findData('a4')
         self.setCurrentIndex(idx)
+# }}}
+
+
+class BusyCursor:  # {{{
+
+    def __enter__(self):
+        QApplication.setOverrideCursor(QCursor(Qt.CursorShape.WaitCursor))
+
+    def __exit__(self, *args):
+        QApplication.restoreOverrideCursor()
 # }}}
 
 

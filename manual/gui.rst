@@ -348,7 +348,7 @@ There are four search kinds: `contains`, `equality`, `regular expression` (see `
 
 *'Contains' searches*
 
-Searches with no prefix character are `contains` and are by default case insensitive. An item matches if the search string appears anywhere in the indicated metadata. You can make `contains` searches case sensitive by checking the option `Case sensitive searching` in :guilabel:`Preferences / Searching`. If the search option `Unaccented characters match accented characters and punctuation is ignored` is checked then a character will match all its variants (e.g., `e` matches `é`, `è`, `ê`, and `ë`) and all punctuation including spaces are ignored. For example, if the `Unaccented characters match ...` option is checked then given the two book titles:
+Searches with no prefix character are `contains` and are by default case insensitive. An item matches if the search string appears anywhere in the indicated metadata. You can make `contains` searches case sensitive by checking the option `Case sensitive searching` in :guilabel:`Preferences / Searching`. If the search option `Unaccented characters match accented characters and punctuation is ignored` is checked then a character will match all its variants (e.g., `e` matches `é`, `è`, `ê`, and `ë`) and all punctuation and whitespace are ignored. For example, if the `Unaccented characters match ...` option is checked then given the two book titles:
 
   1. Big, Bothéred, and Bad
   2. Big Bummer
@@ -394,7 +394,7 @@ Character variant searches are indicated by prefixing the search string with a c
 
   * letter case is always ignored.
   * character variants always match each other.
-  * punctuation is always significant.
+  * punctuation and whitespace are always significant.
 
 The search options :guilabel:`Unaccented characters match accented characters and punctuation is ignored` and :guilabel:`Case sensitive searching` are ignored. They have no effect on this search's behavior.
 
@@ -545,6 +545,25 @@ Saving searches
 calibre allows you to save a frequently used search under a special name and then reuse that search with a single click. To do this, create your search either by typing it in the Search bar or using the Tag browser. Then type the name you would like to give to the search in the Saved Searches box next to the Search bar. Click the plus icon next to the saved searches box to save the search.
 
 Now you can access your saved search in the Tag browser under :guilabel:`Saved searches`. A single click will allow you to reuse any arbitrarily complex search easily, without needing to re-create it.
+
+Searching the full text of all books
+---------------------------------------
+
+.. |ftsb| image:: images/fts-button.png
+    :class: float-right-img
+
+|ftsb| calibre can *optionally* index the full text of books in the library to allow
+for instant searching of words inside any book. To use this functionality
+click the :guilabel:`FT` button at the left edge of the search bar.
+
+Then, enable indexing for the current library. Once indexing is complete you can
+search all the text in the full library. When you add new books to the library,
+they will be automatically indexed in the background. This search
+allows you to quickly find all books that contain a word or combination of
+words. You can even search for words that occur near other words, as shown in
+the examples in the search popup window. Note that this search tool will find only one
+occurrence of the search query in a particular book, not list every occurrence,
+for that it is best to search inside the book using the calibre :guilabel:`E-book viewer`.
 
 Virtual libraries
 -------------------
@@ -849,6 +868,8 @@ calibre has several keyboard shortcuts to save you time and mouse movement. Thes
       - Add empty books to calibre
     * - :kbd:`Ctrl+M`
       - Toggle mark/unmarked status on selected books
+    * - :kbd:`Ctrl+/` or :kbd:`Ctrl+Alt+F`
+      - Open the popup to search the full text of all books in the library
     * - :kbd:`Q`
       - Open the Quick View popup for viewing books in related series/tags/etc.
     * - :kbd:`Shift+Q`

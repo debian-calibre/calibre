@@ -91,7 +91,7 @@ def download_and_decompress(url, dest, compression=None):
 def install_qt_source_code():
     dest = os.path.expanduser('~/qt-base')
     os.mkdir(dest)
-    download_and_decompress('https://download.calibre-ebook.com/qtbase-everywhere-src-5.15.2.tar.xz', dest, 'J')
+    download_and_decompress('https://download.calibre-ebook.com/qtbase-everywhere-src-6.2.2.tar.xz', dest, 'J')
     qdir = glob.glob(dest + '/*')[0]
     os.environ['QT_SRC'] = qdir
 
@@ -107,7 +107,7 @@ def run_python(*args):
 def install_linux_deps():
     run('sudo', 'apt-get', 'update', '-y')
     # run('sudo', 'apt-get', 'upgrade', '-y')
-    run('sudo', 'apt-get', 'install', '-y', 'gettext', 'libgl1-mesa-dev')
+    run('sudo', 'apt-get', 'install', '-y', 'gettext', 'libgl1-mesa-dev', 'libxkbcommon-dev', 'libxkbcommon-x11-dev')
 
 
 def get_tx_tarball_url():
@@ -139,7 +139,7 @@ def main():
 
         tball = 'macos-64' if ismacos else 'linux-64'
         download_and_decompress(
-            f'https://download.calibre-ebook.com/ci/calibre3/{tball}.tar.xz', SW
+            f'https://download.calibre-ebook.com/ci/calibre6/{tball}.tar.xz', SW
         )
         if not ismacos:
             install_linux_deps()

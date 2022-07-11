@@ -38,8 +38,8 @@ class PluginModel(QAbstractItemModel, AdaptSQP):  # {{{
         QAbstractItemModel.__init__(self)
         SearchQueryParser.__init__(self, ['all'])
         self.show_only_user_plugins = show_only_user_plugins
-        self.icon = QIcon(I('plugins.png'))
-        p = QIcon(self.icon).pixmap(64, 64, QIcon.Mode.Disabled, QIcon.State.On)
+        self.icon = QIcon.ic('plugins.png')
+        p = self.icon.pixmap(64, 64, QIcon.Mode.Disabled, QIcon.State.On)
         self.disabled_icon = QIcon(p)
         self._p = p
         self.populate()
@@ -189,9 +189,8 @@ class PluginModel(QAbstractItemModel, AdaptSQP):  # {{{
 
     def flags(self, index):
         if not index.isValid():
-            return 0
-        flags = Qt.ItemFlag.ItemIsSelectable | Qt.ItemFlag.ItemIsEnabled
-        return flags
+            return Qt.ItemFlag.NoItemFlags
+        return Qt.ItemFlag.ItemIsSelectable | Qt.ItemFlag.ItemIsEnabled
 
     def data(self, index, role):
         if not index.isValid():

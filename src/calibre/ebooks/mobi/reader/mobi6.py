@@ -915,6 +915,9 @@ class MobiReader:
                     imgfmt = 'png'
                 except AnimatedGIF:
                     pass
+                except OSError:
+                    self.log.warn(f'Ignoring undecodeable GIF image at index {image_index}')
+                    continue
             path = os.path.join(output_dir, '%05d.%s' % (image_index, imgfmt))
             image_name_map[image_index] = os.path.basename(path)
             if imgfmt == 'png':

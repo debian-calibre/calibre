@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "června 17, 2022" "5.44.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "července 11, 2022" "6.0.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -84,7 +84,7 @@ Spustit rozdílový nástroj Calibre. Například: calibre\-debug \fI\%\-\-diff\
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-edit\-book, \-t
+.B \-\-edit\-book
 Spustit nástroj calibre Upravit knihu v režimu ladění.
 .UNINDENT
 .INDENT 0.0
@@ -144,13 +144,13 @@ Výstup cest potřebných pro nastavení prostředí Calibre
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-reinitialize\-db
-Znovu inicializovat SQLite databázi Calibre v zadané cestě. Užitečné pro obnovení po poškození databáze.
+.B \-\-run\-plugin, \-r
+Spustit modul poskytující rozhraní příkazového řádku. Například: calibre\-debug \-r „Název modulu“ \fB\-\-\fP soubor1 \fB\-\-volba1\fP Všechno za \fB\-\-\fP bude předáno modulu jako parametry.
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-run\-plugin, \-r
-Spustit modul poskytující rozhraní příkazového řádku. Například: calibre\-debug \-r „Název modulu“ \fB\-\-\fP soubor1 \fB\-\-volba1\fP Všechno za \fB\-\-\fP bude předáno modulu jako parametry.
+.B \-\-run\-test, \-t
+Run the named test(s). Use the special value \fB\(dq\fPall\fB\(dq\fP to run all tests. If the test name starts with a period it is assumed to be a module name. If the test name starts with @ it is assumed to be a category name.
 .UNINDENT
 .INDENT 0.0
 .TP

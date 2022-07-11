@@ -25,7 +25,7 @@ class Catalog(QDialog, Ui_Dialog):
 
     def __init__(self, parent, dbspec, ids, db):
         import re
-        from PyQt5.uic import compileUi
+        from PyQt6.uic import compileUi
 
         from calibre import prints as info
 
@@ -53,7 +53,7 @@ class Catalog(QDialog, Ui_Dialog):
                     pw = catalog_widget.PluginWidget()
                     pw.parent_ref = weakref.ref(self)
                     pw.initialize(name, db)
-                    pw.ICON = I('forward.png')
+                    pw.ICON = 'forward.png'
                     self.widgets.append(pw)
                     [self.fmts.append([file_type.upper(), pw.sync_enabled,pw]) for file_type in plugin.file_types]
                 except ImportError:
@@ -86,7 +86,7 @@ class Catalog(QDialog, Ui_Dialog):
                         catalog_widget = importlib.import_module(name)
                         pw = catalog_widget.PluginWidget()
                         pw.initialize(name)
-                        pw.ICON = I('forward.png')
+                        pw.ICON = 'forward.png'
                         self.widgets.append(pw)
                         [self.fmts.append([file_type.upper(), pw.sync_enabled,pw]) for file_type in plugin.file_types]
                     except ImportError:

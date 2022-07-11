@@ -81,9 +81,9 @@ class SearchDialog(QDialog, Ui_Dialog):
         self.button_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.button_layout.insertWidget(0, self.pi, 0, Qt.AlignmentFlag.AlignCenter)
 
-        self.adv_search_button.setIcon(QIcon(I('gear.png')))
+        self.adv_search_button.setIcon(QIcon.ic('gear.png'))
         self.adv_search_button.setToolTip(_('Advanced search'))
-        self.configure.setIcon(QIcon(I('config.png')))
+        self.configure.setIcon(QIcon.ic('config.png'))
 
         self.adv_search_button.clicked.connect(self.build_adv_search)
         self.search.clicked.connect(self.toggle_search)
@@ -120,7 +120,7 @@ class SearchDialog(QDialog, Ui_Dialog):
         store_list_layout = QGridLayout()
         stores_check_widget.setLayout(store_list_layout)
 
-        icon = QIcon(I('donate.png'))
+        icon = QIcon.ic('donate.png')
         for i, x in enumerate(sorted(self.gui.istores.keys(), key=lambda x: x.lower())):
             cbox = QCheckBox(x)
             cbox.setChecked(existing.get(x, first_run))
@@ -253,7 +253,7 @@ class SearchDialog(QDialog, Ui_Dialog):
         self.config['store_splitter_state'] = bytearray(self.store_splitter.saveState())
         self.config['results_view_column_width'] = [self.results_view.columnWidth(i) for i in range(self.results_view.model().columnCount())]
         self.config['sort_col'] = self.results_view.model().sort_col
-        self.config['sort_order'] = self.results_view.model().sort_order
+        self.config['sort_order'] = self.results_view.model().sort_order.value
         self.config['open_external'] = self.open_external.isChecked()
 
         store_check = {}
@@ -288,8 +288,11 @@ class SearchDialog(QDialog, Ui_Dialog):
                     self.store_checks[n].setChecked(store_check[n])
 
         self.results_view.model().sort_col = self.config.get('sort_col', 2)
-        self.results_view.model().sort_order = self.config.get('sort_order', Qt.SortOrder.AscendingOrder)
-        self.results_view.header().setSortIndicator(self.results_view.model().sort_col, self.results_view.model().sort_order)
+        so = self.config.get('sort_order', Qt.SortOrder.AscendingOrder)
+        if isinstance(so, int):
+            so = Qt.SortOrder(so)
+        self.results_view.model().sort_order = so
+        self.results_view.header().setSortIndicator(self.results_view.model().sort_col, so)
 
     def load_settings(self):
         # Seconds

@@ -15,7 +15,7 @@ from calibre.ebooks.oeb.polish.check.base import WARN, INFO, DEBUG, ERROR, CRITI
 from calibre.ebooks.oeb.polish.check.main import run_checks, fix_errors
 from calibre.gui2 import NO_URL_FORMATTING, safe_open_url
 from calibre.gui2.tweak_book import tprefs
-from calibre.gui2.tweak_book.widgets import BusyCursor
+from calibre.gui2.widgets import BusyCursor
 
 
 def icon_for_level(level):
@@ -27,7 +27,7 @@ def icon_for_level(level):
         icon = 'dialog_information.png'
     else:
         icon = None
-    return QIcon(I(icon)) if icon else QIcon()
+    return QIcon.ic(icon) if icon else QIcon()
 
 
 def prefix_for_level(level):
@@ -92,7 +92,7 @@ class Check(QSplitter):
     def context_menu(self, pos):
         m = QMenu(self)
         if self.items.count() > 0:
-            m.addAction(QIcon(I('edit-copy.png')), _('Copy list of errors to clipboard'), self.copy_to_clipboard)
+            m.addAction(QIcon.ic('edit-copy.png'), _('Copy list of errors to clipboard'), self.copy_to_clipboard)
         if list(m.actions()):
             m.exec(self.mapToGlobal(pos))
 

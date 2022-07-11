@@ -8,7 +8,7 @@ from collections import defaultdict, deque
 from qt.core import QTextCursor, QTextBlockUserData, QTextLayout, QTimer
 
 from ..themes import highlight_to_char_format
-from calibre.gui2.tweak_book.widgets import BusyCursor
+from calibre.gui2.widgets import BusyCursor
 from calibre.utils.icu import utf16_length
 from polyglot.builtins import iteritems
 
@@ -95,7 +95,7 @@ class SyntaxHighlighter:
             c.beginEditBlock()
             blk = old_doc.begin()
             while blk.isValid():
-                blk.layout().clearAdditionalFormats()
+                blk.layout().clearFormats()
                 blk = blk.next()
             c.endEditBlock()
         self.doc = self.doc_name = None
@@ -237,4 +237,4 @@ class SyntaxHighlighter:
                     r.start += preedit_length
                 elif r.start + r.length >= preedit_start:
                     r.length += preedit_length
-        layout.setAdditionalFormats(formats)
+        layout.setFormats(formats)

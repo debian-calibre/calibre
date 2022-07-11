@@ -61,7 +61,7 @@ class HeaderView(QHeaderView):  # {{{
 
     def event(self, e):
         if e.type() in (QEvent.Type.HoverMove, QEvent.Type.HoverEnter):
-            self.hover = self.logicalIndexAt(e.pos())
+            self.hover = self.logicalIndexAt(e.position().toPoint())
         elif e.type() in (QEvent.Type.Leave, QEvent.Type.HoverLeave):
             self.hover = -1
         return QHeaderView.event(self, e)
@@ -513,7 +513,7 @@ class BooksView(QTableView):  # {{{
         ans.addAction(_('Restore default layout'), partial(handler, action='defaults'))
         if self.can_add_columns:
             ans.addAction(
-                    QIcon(I('column.png')), _('Add your own columns'), partial(handler, action='addcustcol'))
+                    QIcon.ic('column.png'), _('Add your own columns'), partial(handler, action='addcustcol'))
         return ans
 
     def show_row_header_context_menu(self, pos):
@@ -604,9 +604,9 @@ class BooksView(QTableView):  # {{{
             previous[field] = ascending
             gprefs[pname] = previous
             return
-        previous[m.sorted_on[0]] = m.sorted_on[1]
+        previous[m.sorted_on[0]] = Qt.SortOrder(m.sorted_on[1]).value
         gprefs[pname] = previous
-        self.sort_by_named_field(field, previous[field])
+        self.sort_by_named_field(field, Qt.SortOrder(previous[field]))
 
     def about_to_be_sorted(self, idc):
         selected_rows = [r.row() for r in self.selectionModel().selectedRows()]
@@ -1233,6 +1233,7 @@ class BooksView(QTableView):  # {{{
 
     def moveCursor(self, action, modifiers):
         orig = self.currentIndex()
+        action = QAbstractItemView.CursorAction(action)
         index = QTableView.moveCursor(self, action, modifiers)
         if action == QAbstractItemView.CursorAction.MovePageDown:
             moved = index.row() - orig.row()
@@ -1520,6 +1521,7 @@ class DeviceBooksView(BooksView):  # {{{
 
     def reverse_sort(self):
         h = self.horizontalHeader()
-        h.setSortIndicator(h.sortIndicatorSection(), 1 - int(h.sortIndicatorOrder()))
+        h.setSortIndicator(
+            h.sortIndicatorSection(), Qt.SortOrder.AscendingOrder if h.sortIndicatorOrder() == Qt.SortOrder.DescendingOrder else Qt.SortOrder.DescendingOrder)
 
 # }}}

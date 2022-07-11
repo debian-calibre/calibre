@@ -9,9 +9,9 @@ from functools import partial
 from gettext import pgettext
 from itertools import product
 from qt.core import (
-    QAction, QApplication, QColor, QDockWidget, QEvent, QHBoxLayout, QIcon, QImage,
-    QLabel, QMenu, QPalette, QPixmap, QSize, QStackedWidget, Qt, QTabWidget, QTimer,
-    QUrl, QVBoxLayout, QWidget, pyqtSignal, QMenuBar
+    QAction, QApplication, QColor, QDockWidget, QEvent, QHBoxLayout, QIcon, QLabel,
+    QMenu, QMenuBar, QPalette, QSize, QStackedWidget, Qt, QTabWidget, QTimer, QUrl,
+    QVBoxLayout, QWidget, pyqtSignal
 )
 
 from calibre import prepare_string_for_xml, prints
@@ -85,13 +85,7 @@ class Central(QStackedWidget):  # {{{
         t.setDocumentMode(True)
         t.setTabsClosable(True)
         t.setMovable(True)
-        pal = self.palette()
-        if pal.color(QPalette.ColorRole.WindowText).lightness() > 128:
-            i = QImage(I('modified.png'))
-            i.invertPixels()
-            self.modified_icon = QIcon(QPixmap.fromImage(i))
-        else:
-            self.modified_icon = QIcon(I('modified.png'))
+        self.modified_icon = QIcon.ic('modified.png')
         self.editor_tabs.currentChanged.connect(self.current_editor_changed)
         self.editor_tabs.tabCloseRequested.connect(self._close_requested)
         self.search_panel = SearchPanel(self)
@@ -205,12 +199,12 @@ class Central(QStackedWidget):  # {{{
     def eventFilter(self, obj, event):
         base = super()
         if obj is not self.editor_tabs.tabBar() or event.type() != QEvent.Type.MouseButtonPress or event.button() not in (
-                Qt.MouseButton.RightButton, Qt.MouseButton.MidButton):
+                Qt.MouseButton.RightButton, Qt.MouseButton.MiddleButton):
             return base.eventFilter(obj, event)
         index = self.editor_tabs.tabBar().tabAt(event.pos())
         if index < 0:
             return base.eventFilter(obj, event)
-        if event.button() == Qt.MouseButton.MidButton:
+        if event.button() == Qt.MouseButton.MiddleButton:
             self._close_requested(index)
         ed = self.editor_tabs.widget(index)
         if ed is not None:
@@ -337,7 +331,7 @@ class Main(MainWindow):
             traceback.print_exc()
         self.setWindowTitle(self.APP_NAME)
         self.boss = Boss(self, notify=notify)
-        self.setWindowIcon(QIcon(I('tweak.png')))
+        self.setWindowIcon(QIcon.ic('tweak.png'))
         self.opts = opts
         self.path_to_ebook = None
         self.container = None
@@ -385,8 +379,8 @@ class Main(MainWindow):
         for v, h in product(('top', 'bottom'), ('left', 'right')):
             p = f'dock_{v}_{h}'
             pref = tprefs[p] or tprefs.defaults[p]
-            area = getattr(Qt, '%sDockWidgetArea' % capitalize({'vertical':h, 'horizontal':v}[pref]))
-            self.setCorner(getattr(Qt, '%s%sCorner' % tuple(map(capitalize, (v, h)))), area)
+            area = getattr(Qt.DockWidgetArea, '%sDockWidgetArea' % capitalize({'vertical':h, 'horizontal':v}[pref]))
+            self.setCorner(getattr(Qt.Corner, '%s%sCorner' % tuple(map(capitalize, (v, h)))), area)
         self.preview.apply_settings()
         self.live_css.apply_theme()
         for bar in (self.global_bar, self.tools_bar, self.plugins_bar):
@@ -407,7 +401,7 @@ class Main(MainWindow):
 
         def reg(icon, text, target, sid, keys, description, toolbar_allowed=False):
             if not isinstance(icon, QIcon):
-                icon = QIcon(I(icon))
+                icon = QIcon.ic(icon)
             ac = actions[sid] = QAction(icon, text, self) if icon else QAction(text, self)
             ac.setObjectName('action-' + sid)
             if toolbar_allowed:
@@ -727,7 +721,7 @@ class Main(MainWindow):
         e = b.addMenu(_('&Help'))
         a = e.addAction
         a(self.action_help)
-        a(QIcon(I('donate.png')), _('&Donate to support calibre development'), open_donate)
+        a(QIcon.ic('donate.png'), _('&Donate to support calibre development'), open_donate)
         a(self.action_preferences)
 
     def search_menu_about_to_show(self):

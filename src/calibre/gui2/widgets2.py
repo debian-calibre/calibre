@@ -394,7 +394,7 @@ class FlowLayout(QLayout):  # {{{
         self.do_layout(rect, apply_geometry=True)
 
     def expandingDirections(self):
-        return Qt.Orientations(0)
+        return Qt.Orientation(0)
 
     def minimumSize(self):
         size = QSize()
@@ -584,6 +584,8 @@ class HTMLDisplay(QTextBrowser):
                         '426082'))
             else:
                 return QByteArray(data)
+        elif qurl.scheme() == 'calibre-icon':
+            return QIcon.icon_as_png(qurl.path().lstrip('/'), as_bytearray=True)
         else:
             return QTextBrowser.loadResource(self, rtype, qurl)
 

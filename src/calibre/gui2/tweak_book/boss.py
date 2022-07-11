@@ -60,11 +60,12 @@ from calibre.gui2.tweak_book.spell import (
 from calibre.gui2.tweak_book.toc import TOCEditor
 from calibre.gui2.tweak_book.undo import GlobalUndoHistory
 from calibre.gui2.tweak_book.widgets import (
-    AddCover, BusyCursor, FilterCSS, ImportForeign, InsertLink, InsertSemantics,
+    AddCover, FilterCSS, ImportForeign, InsertLink, InsertSemantics,
     InsertTag, MultiSplit, QuickOpen, RationalizeFolders
 )
 from calibre.ptempfile import PersistentTemporaryDirectory, TemporaryDirectory
 from calibre.utils.config import JSONConfig
+from calibre.gui2.widgets import BusyCursor
 from calibre.utils.icu import numeric_sort_key
 from calibre.utils.imghdr import identify
 from calibre.utils.tdir_in_cache import tdir_in_cache
@@ -897,7 +898,7 @@ class Boss(QObject):
         bb.accepted.connect(d.accept)
         bb.rejected.connect(d.reject)
         d.b = b = bb.addButton(_('See what &changed'), QDialogButtonBox.ButtonRole.AcceptRole)
-        b.setIcon(QIcon(I('diff.png'))), b.setAutoDefault(False)
+        b.setIcon(QIcon.ic('diff.png')), b.setAutoDefault(False)
         bb.button(QDialogButtonBox.StandardButton.Close).setDefault(True)
         if d.exec() == QDialog.DialogCode.Accepted:
             self.show_current_diff(allow_revert=allow_revert, to_container=to_container)
@@ -1882,7 +1883,7 @@ class Boss(QObject):
         if not self.confirm_quit():
             return False
         self.shutdown()
-        QApplication.instance().quit()
+        QApplication.instance().exit()
         return True
 
     def confirm_quit(self):
@@ -1893,7 +1894,7 @@ class Boss(QObject):
             d.setWindowTitle(_('Unsaved changes'))
             d.i = QLabel('')
             d.i.setMaximumSize(QSize(64, 64))
-            d.i.setPixmap(QIcon(I('dialog_warning.png')).pixmap(d.i.maximumSize()))
+            d.i.setPixmap(QIcon.ic('dialog_warning.png').pixmap(d.i.maximumSize()))
             d.l.addWidget(d.i, 0, 0)
             d.m = QLabel(_('There are unsaved changes, if you quit without saving, you will lose them.'))
             d.m.setWordWrap(True)
@@ -1908,7 +1909,7 @@ class Boss(QObject):
                 d.do_save = x
                 d.accept()
             b = d.bb.addButton(_('&Save and Quit'), QDialogButtonBox.ButtonRole.ActionRole)
-            b.setIcon(QIcon(I('save.png')))
+            b.setIcon(QIcon.ic('save.png'))
             connect_lambda(b.clicked, d, lambda d: endit(d, True))
             b = d.bb.addButton(_('&Quit without saving'), QDialogButtonBox.ButtonRole.ActionRole)
             connect_lambda(b.clicked, d, lambda d: endit(d, False))
@@ -1935,7 +1936,7 @@ class Boss(QObject):
     def check_terminal_save(self):
         if self.doing_terminal_save and not self.save_manager.has_tasks:  # terminal save could have been aborted
             self.shutdown()
-            QApplication.instance().quit()
+            QApplication.instance().exit()
 
     def shutdown(self):
         self.save_state()
