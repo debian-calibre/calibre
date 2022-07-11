@@ -7,7 +7,6 @@ import os
 import re
 import shutil
 import sys
-from calibre_extensions import hunspell
 from collections import defaultdict, namedtuple
 from functools import partial
 from itertools import chain
@@ -164,6 +163,7 @@ def get_dictionary(locale, exact_match=False):
 
 
 def load_dictionary(dictionary):
+    from calibre_extensions import hunspell
 
     def fix_path(path):
         if isinstance(path, bytes):
@@ -450,8 +450,18 @@ def find_tests():
             d = load_dictionary(get_dictionary(parse_lang_code('es-ES'))).obj
             self.assertTrue(d.recognized('Ahí'))
             self.assertIn('one\u2010half', self.suggestions('oone\u2010half'))
+            d = load_dictionary(get_dictionary(parse_lang_code('es'))).obj
             self.assertIn('adequately', self.suggestions('ade-quately'))
             self.assertIn('magic. Wand', self.suggestions('magic.wand'))
             self.assertIn('List', self.suggestions('Lis𝑘t'))
 
     return unittest.TestLoader().loadTestsFromTestCase(TestDictionaries)
+
+
+def test():
+    from calibre.utils.run_tests import run_cli
+    run_cli(find_tests())
+
+
+if __name__ == '__main__':
+    test()

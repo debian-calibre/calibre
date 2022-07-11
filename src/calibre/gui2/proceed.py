@@ -57,7 +57,7 @@ class Icon(QWidget):
         elif icon is None:
             self.icon = self.default_icon
         else:
-            self.icon = QIcon(I(icon)).pixmap(self.sizeHint())
+            self.icon = QIcon.ic(icon).pixmap(self.sizeHint())
         self.update()
 
     def sizeHint(self):
@@ -113,7 +113,7 @@ class ProceedQuestion(QWidget):
         self.bb.accepted.connect(self.accept)
         self.bb.rejected.connect(self.reject)
         self.log_button = self.bb.addButton(_('View log'), QDialogButtonBox.ButtonRole.ActionRole)
-        self.log_button.setIcon(QIcon(I('debug.png')))
+        self.log_button.setIcon(QIcon.ic('debug.png'))
         self.log_button.clicked.connect(self.show_log)
         self.copy_button = self.bb.addButton(_('&Copy to clipboard'),
                 QDialogButtonBox.ButtonRole.ActionRole)
@@ -352,7 +352,7 @@ class ProceedQuestion(QWidget):
         :param focus_action: If True, the action button will be focused instead of the Yes button
         :param show_det: If True, the Detailed message will be shown initially
         :param show_ok: If True, OK will be shown instead of YES/NO
-        :param icon: The icon to be used for this popop (defaults to question mark). Can be either a QIcon or a string to be used with I()
+        :param icon: The icon to be used for this popop (defaults to question mark). Can be either a QIcon or a string to be used with QIcon.ic()
         :log_viewer_unique_name: If set, ViewLog will remember/reuse its size for this name in calibre.gui2.gprefs
         '''
         question = Question(

@@ -6,13 +6,12 @@ __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
 import json
-
 from collections import defaultdict
 from threading import Thread
 
 from qt.core import (
     QApplication, QFont, QFontInfo, QFontDialog, QColorDialog, QPainter, QDialog,
-    QAbstractListModel, Qt, QIcon, QKeySequence, QColor, pyqtSignal, QCursor, QListWidgetItem,
+    QAbstractListModel, Qt, QIcon, QKeySequence, QColor, pyqtSignal, QHeaderView, QListWidgetItem,
     QWidget, QSizePolicy, QBrush, QPixmap, QSize, QPushButton, QVBoxLayout, QItemSelectionModel,
     QTableWidget, QTableWidgetItem, QLabel, QFormLayout, QLineEdit, QComboBox, QDialogButtonBox
 )
@@ -21,8 +20,8 @@ from calibre import human_readable
 from calibre.ebooks.metadata.book.render import DEFAULT_AUTHOR_LINK
 from calibre.constants import ismacos, iswindows
 from calibre.ebooks.metadata.sources.prefs import msprefs
-from calibre.gui2 import default_author_link, choose_save_file, choose_files
 from calibre.gui2.custom_column_widgets import get_field_list as em_get_field_list
+from calibre.gui2 import default_author_link, icon_resource_manager, choose_save_file, choose_files
 from calibre.gui2.dialogs.template_dialog import TemplateDialog
 from calibre.gui2.preferences import ConfigWidgetBase, test_widget, CommaSeparatedList
 from calibre.gui2.preferences.look_feel_ui import Ui_Form
@@ -35,19 +34,11 @@ from calibre.gui2.book_details import get_field_list
 from calibre.gui2.dialogs.quickview import get_qv_field_list
 from calibre.gui2.preferences.coloring import EditRules
 from calibre.gui2.library.alternate_views import auto_height, CM_TO_INCH
+from calibre.gui2.widgets import BusyCursor
 from calibre.gui2.widgets2 import Dialog
 from calibre.gui2.actions.show_quickview import get_quickview_action_plugin
 from calibre.utils.resources import set_data
 from polyglot.builtins import iteritems
-
-
-class BusyCursor:
-
-    def __enter__(self):
-        QApplication.setOverrideCursor(QCursor(Qt.CursorShape.WaitCursor))
-
-    def __exit__(self, *args):
-        QApplication.restoreOverrideCursor()
 
 
 class DefaultAuthorLink(QWidget):  # {{{
@@ -181,14 +172,14 @@ class IdLinksEditor(Dialog):
             t.setItem(r, 1, QTableWidgetItem(val))
             t.setItem(r, 2, QTableWidgetItem(template))
         l.addWidget(t)
-        t.horizontalHeader().setSectionResizeMode(2, t.horizontalHeader().Stretch)
-        self.cb = b = QPushButton(QIcon(I('plus.png')), _('&Add rule'), self)
+        t.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeMode.Stretch)
+        self.cb = b = QPushButton(QIcon.ic('plus.png'), _('&Add rule'), self)
         connect_lambda(b.clicked, self, lambda self: self.edit_rule())
         self.bb.addButton(b, QDialogButtonBox.ButtonRole.ActionRole)
-        self.rb = b = QPushButton(QIcon(I('minus.png')), _('&Remove rule'), self)
+        self.rb = b = QPushButton(QIcon.ic('minus.png'), _('&Remove rule'), self)
         connect_lambda(b.clicked, self, lambda self: self.remove_rule())
         self.bb.addButton(b, QDialogButtonBox.ButtonRole.ActionRole)
-        self.eb = b = QPushButton(QIcon(I('modified.png')), _('&Edit rule'), self)
+        self.eb = b = QPushButton(QIcon.ic('modified.png'), _('&Edit rule'), self)
         connect_lambda(b.clicked, self, lambda self: self.edit_rule(self.table.currentRow()))
         self.bb.addButton(b, QDialogButtonBox.ButtonRole.ActionRole)
         l.addWidget(self.bb)
@@ -265,14 +256,14 @@ class DisplayedFields(QAbstractListModel):  # {{{
         if role == Qt.ItemDataRole.CheckStateRole:
             return Qt.CheckState.Checked if visible else Qt.CheckState.Unchecked
         if role == Qt.ItemDataRole.DecorationRole and field.startswith('#'):
-            return QIcon(I('column.png'))
+            return QIcon.ic('column.png')
         return None
 
     def toggle_all(self, show=True):
         for i in range(self.rowCount()):
             idx = self.index(i)
             if idx.isValid():
-                self.setData(idx, show, Qt.ItemDataRole.CheckStateRole)
+                self.setData(idx, Qt.CheckState.Checked if show else Qt.CheckState.Unchecked, Qt.ItemDataRole.CheckStateRole)
 
     def flags(self, index):
         ans = QAbstractListModel.flags(self, index)
@@ -281,7 +272,7 @@ class DisplayedFields(QAbstractListModel):  # {{{
     def setData(self, index, val, role):
         ret = False
         if role == Qt.ItemDataRole.CheckStateRole:
-            self.fields[index.row()][1] = bool(val)
+            self.fields[index.row()][1] = val in (Qt.CheckState.Checked, Qt.CheckState.Checked.value)
             self.changed = True
             ret = True
             self.dataChanged.emit(index, index)
@@ -414,7 +405,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         r = self.register
 
         try:
-            self.icon_theme_title = json.loads(I('icon-theme.json', data=True))['name']
+            self.icon_theme_title = icon_resource_manager.user_theme_title
         except Exception:
             self.icon_theme_title = _('Default icons')
         self.icon_theme.setText(_('Icon theme: <b>%s</b>') % self.icon_theme_title)
@@ -423,10 +414,8 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         self.default_author_link = DefaultAuthorLink(self.default_author_link_container)
         self.default_author_link.changed_signal.connect(self.changed_signal)
         r('gui_layout', config, restart_required=True, choices=[(_('Wide'), 'wide'), (_('Narrow'), 'narrow')])
-        r('hidpi', gprefs, restart_required=True, choices=[(_('Automatic'), 'auto'), (_('On'), 'on'), (_('Off'), 'off')])
-        if ismacos:
-            self.opt_hidpi.setVisible(False), self.label_hidpi.setVisible(False)
         r('ui_style', gprefs, restart_required=True, choices=[(_('System default'), 'system'), (_('calibre style'), 'calibre')])
+        r('color_palette', gprefs, restart_required=True, choices=[(_('System default'), 'system'), (_('Light'), 'light'), (_('Dark'), 'dark')])
         r('book_list_tooltips', gprefs)
         r('dnd_merge', gprefs)
         r('wrap_toolbar_text', gprefs, restart_required=True)
@@ -584,12 +573,12 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         self.edit_rules = EditRules(self.tabWidget)
         self.edit_rules.changed.connect(self.changed_signal)
         self.tabWidget.addTab(self.edit_rules,
-                QIcon(I('format-fill-color.png')), _('Column &coloring'))
+                QIcon.ic('format-fill-color.png'), _('Column &coloring'))
 
         self.icon_rules = EditRules(self.tabWidget)
         self.icon_rules.changed.connect(self.changed_signal)
         self.tabWidget.addTab(self.icon_rules,
-                QIcon(I('icon_choose.png')), _('Column &icons'))
+                QIcon.ic('icon_choose.png'), _('Column &icons'))
 
         self.grid_rules = EditRules(self.emblems_tab)
         self.grid_rules.changed.connect(self.changed_signal)
@@ -874,7 +863,6 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
             gprefs['cover_grid_texture'] = self.cg_bg_widget.btex
             if self.commit_icon_theme is not None:
                 self.commit_icon_theme()
-                rr = True
             gprefs['default_author_link'] = self.default_author_link.value
             bcss = self.opt_book_details_css.toPlainText().encode('utf-8')
             defcss = P('templates/book_details.css', data=True, allow_user_override=False)

@@ -10,7 +10,7 @@ import unicodedata
 from collections import OrderedDict
 from math import ceil
 from qt.core import (
-    QAbstractListModel, QApplication, QCheckBox, QComboBox, QCursor, QDialog,
+    QAbstractListModel, QApplication, QCheckBox, QComboBox, QDialog,
     QDialogButtonBox, QEvent, QFormLayout, QFrame, QGridLayout, QGroupBox,
     QHBoxLayout, QIcon, QItemSelectionModel, QLabel, QLineEdit, QListView, QMimeData,
     QModelIndex, QPainter, QPalette, QPixmap, QPlainTextEdit, QPoint, QRect, QSize,
@@ -43,15 +43,6 @@ from calibre.utils.matcher import (
 from polyglot.builtins import iteritems
 
 ROOT = QModelIndex()
-
-
-class BusyCursor:
-
-    def __enter__(self):
-        QApplication.setOverrideCursor(QCursor(Qt.CursorShape.WaitCursor))
-
-    def __exit__(self, *args):
-        QApplication.restoreOverrideCursor()
 
 
 class Dialog(BaseDialog):
@@ -216,7 +207,7 @@ class ImportForeign(Dialog):  # {{{
         src.setPlaceholderText(_('Choose the file to import'))
         h1.addWidget(src)
         self.b1 = b = QToolButton(self)
-        b.setIcon(QIcon(I('document_open.png')))
+        b.setIcon(QIcon.ic('document_open.png'))
         b.setText(_('Choose file'))
         h1.addWidget(b)
         l.addRow(_('Source file:'), h1)
@@ -228,7 +219,7 @@ class ImportForeign(Dialog):  # {{{
         src.setPlaceholderText(_('Choose the location for the newly created EPUB'))
         h1.addWidget(src)
         self.b2 = b = QToolButton(self)
-        b.setIcon(QIcon(I('document_open.png')))
+        b.setIcon(QIcon.ic('document_open.png'))
         b.setText(_('Choose file'))
         h1.addWidget(b)
         l.addRow(_('Destination file:'), h1)
@@ -1185,7 +1176,7 @@ class AddCover(Dialog):
         l.addWidget(self.bb)
         b = self.bb.addButton(_('Import &image'), QDialogButtonBox.ButtonRole.ActionRole)
         b.clicked.connect(self.import_image)
-        b.setIcon(QIcon(I('document_open.png')))
+        b.setIcon(QIcon.ic('document_open.png'))
         self.names.setFocus(Qt.FocusReason.OtherFocusReason)
         self.names.selectionModel().currentChanged.connect(self.current_image_changed)
         cname = get_raster_cover_name(self.container)

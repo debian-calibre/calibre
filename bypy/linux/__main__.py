@@ -13,7 +13,7 @@ import time
 from functools import partial
 
 from bypy.constants import (
-    OUTPUT_DIR, PREFIX, SRC as CALIBRE_DIR, is64bit, python_major_minor_version
+    OUTPUT_DIR, PREFIX, SRC as CALIBRE_DIR, python_major_minor_version
 )
 from bypy.freeze import (
     extract_extension_modules, fix_pycryptodome, freeze_python, path_to_freeze_dir
@@ -24,8 +24,10 @@ from bypy.utils import (
 
 j = os.path.join
 self_dir = os.path.dirname(os.path.abspath(__file__))
-arch = 'x86_64' if is64bit else 'i686'
-
+machine = (os.uname()[4] or '').lower()
+arch = 'x86_64'
+if machine.startswith('arm') or machine.startswith('aarch64'):
+    arch = 'arm64'
 py_ver = '.'.join(map(str, python_major_minor_version()))
 QT_PREFIX = os.path.join(PREFIX, 'qt')
 iv = globals()['init_env']
@@ -36,7 +38,7 @@ qt_get_dll_path = partial(get_dll_path, loc=os.path.join(QT_PREFIX, 'lib'))
 
 def binary_includes():
     return [
-        j(PREFIX, 'bin', x) for x in ('pdftohtml', 'pdfinfo', 'pdftoppm', 'optipng', 'JxrDecApp')] + [
+        j(PREFIX, 'bin', x) for x in ('pdftohtml', 'pdfinfo', 'pdftoppm', 'pdftotext', 'optipng', 'JxrDecApp')] + [
 
         j(PREFIX, 'private', 'mozjpeg', 'bin', x) for x in ('jpegtran', 'cjpeg')] + [
         ] + list(map(
@@ -46,8 +48,16 @@ def binary_includes():
              ' icudata icui18n icuuc icuio stemmer gcrypt gpg-error'
              ' gobject-2.0 glib-2.0 gthread-2.0 gmodule-2.0 gio-2.0 dbus-glib-1').split()
         )) + [
+            # debian/ubuntu for for some typical stupid reason use libpcre.so.3
+            # instead of libpcre.so.0 like other distros. And Qt's idiotic build
+            # system links against this pcre library despite being told to use
+            # the bundled pcre. Since libpcre doesn't depend on anything other
+            # than libc and libpthread we bundle the Ubuntu one here
+            glob.glob('/usr/lib/*/libpcre.so.3')[0],
+
             get_dll_path('podofo', 3), get_dll_path('bz2', 2), j(PREFIX, 'lib', 'libunrar.so'),
             get_dll_path('ssl', 2), get_dll_path('crypto', 2), get_dll_path('python' + py_ver, 2),
+
             # We dont include libstdc++.so as the OpenGL dlls on the target
             # computer fail to load in the QPA xcb plugin if they were compiled
             # with a newer version of gcc than the one on the build computer.

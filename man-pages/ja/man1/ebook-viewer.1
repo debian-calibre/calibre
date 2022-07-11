@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-VIEWER" "1" "6月 17, 2022" "5.44.0" "calibre"
+.TH "EBOOK-VIEWER" "1" "7月 11, 2022" "6.0.0" "calibre"
 .SH NAME
 ebook-viewer \- ebook-viewer
 .INDENT 0.0
@@ -73,7 +73,7 @@ ebook\-viewer [options] file
 .INDENT 0.0
 .TP
 .B \-\-open\-at
-指定した本の中の開く位置。指定する位置は、ビューアコントロールの移動 \-> 位置を使用して取得できる位置です。toc:something という形式を使用して \fB\(dq\fPsomething\fB\(dq\fP という文字列を含む最初の目次エントリで開くこともできます。toc\-href:something という形式は、目次ノードの href (内部リンク先) の中から完全一致するものを検索します。部分検索したい場合は、toc\-href\-contains:something と指定してください。ref:something と指定すると、参照モードの参照を検索します。
+The position at which to open the specified book. The position is a location or position you can get by using the Go to\->Location action in the viewer controls. Alternately, you can use the form toc:something and it will open at the location of the first Table of Contents entry that contains the string \fB\(dq\fPsomething\fB\(dq\fP\&. The form toc\-href:something will match the href (internal link destination) of toc nodes. The matching is exact. If you want to match a substring, use the form toc\-href\-contains:something. The form ref:something will use Reference mode references. The form search:something will search for something after opening the book. The form regex:something will search for the regular expression something after opening the book.
 .UNINDENT
 .INDENT 0.0
 .TP

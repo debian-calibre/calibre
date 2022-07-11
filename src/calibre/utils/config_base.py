@@ -28,7 +28,7 @@ def parse_old_style(src):
     try:
         if not isinstance(src, str):
             src = src.decode('utf-8')
-        src = src.replace('PyQt%d.QtCore' % 4, 'PyQt5.QtCore')
+        src = re.sub(r'PyQt(?:4|5).QtCore', r'PyQt6.QtCore', src)
         src = re.sub(r'cPickle\.loads\(([\'"])', r'cPickle.loads(b\1', src)
         exec(src, options)
     except Exception as err:
@@ -56,6 +56,9 @@ def to_json(obj):
     if hasattr(obj, 'toBase64'):  # QByteArray
         return {'__class__': 'bytearray',
                 '__value__': bytes(obj.toBase64()).decode('ascii')}
+    v = getattr(obj, 'value', None)
+    if isinstance(v, int):  # Possibly an enum with integer values like all the Qt enums
+        return v
     raise TypeError(repr(obj) + ' is not JSON serializable')
 
 

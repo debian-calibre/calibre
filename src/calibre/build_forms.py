@@ -20,7 +20,24 @@ def find_forms(srcdir):
     return forms
 
 
-def build_forms(srcdir, info=None, summary=False, check_for_migration=False):
+def ensure_icons_built(resource_dir, force_compile, info):
+    icons = os.path.join(resource_dir, 'icons.rcc')
+    images_dir = os.path.join(resource_dir, 'images')
+    if os.path.exists(icons) and not force_compile:
+        limit = os.stat(icons).st_mtime
+        for x in os.scandir(images_dir):
+            if x.name.endswith('.png'):
+                st = x.stat(follow_symlinks=False)
+                if st.st_mtime >= limit:
+                    break
+        else:
+            return
+    info('Building icons.rcc')
+    from calibre.utils.rcc import compile_icon_dir_as_themes
+    compile_icon_dir_as_themes(images_dir, icons)
+
+
+def build_forms(srcdir, info=None, summary=False, check_for_migration=False, check_icons=True):
     import re
     from qt.core import QT_VERSION_STR
     qt_major = QT_VERSION_STR.split('.')[0]
@@ -30,11 +47,6 @@ def build_forms(srcdir, info=None, summary=False, check_for_migration=False):
     forms = find_forms(srcdir)
     if info is None:
         info = print
-    pat = re.compile(r'''(['"]):/images/([^'"]+)\1''')
-
-    def sub(match):
-        ans = 'I(%s%s%s)'%(match.group(1), match.group(2), match.group(1))
-        return ans
 
     num = 0
     transdef_pat = re.compile(r'^\s+_translate\s+=\s+QtCore.QCoreApplication.translate$', flags=re.M)
@@ -46,6 +58,13 @@ def build_forms(srcdir, info=None, summary=False, check_for_migration=False):
     if check_for_migration:
         from calibre.gui2 import gprefs
         force_compile |= not gprefs.get(f'migrated_forms_to_qt{qt_major}', False)
+
+    icon_constructor_pat = re.compile(r'\s*\S+\s+=\s+QtGui.QIcon\(\)')
+    icon_pixmap_adder_pat = re.compile(r'''(\S+?)\.addPixmap\(.+?(['"]):/images/([^'"]+)\2.+''')
+
+    def icon_pixmap_sub(match):
+        ans = match.group(1) + ' = QtGui.QIcon.ic(' + match.group(2) + match.group(3) + match.group(2) + ')'
+        return ans
 
     for form in forms:
         compiled_form = form_to_compiled_form(form)
@@ -60,12 +79,16 @@ def build_forms(srcdir, info=None, summary=False, check_for_migration=False):
             dat = transpat.sub(r'_("\1")', dat)
             dat = dat.replace('_("MMM yyyy")', '"MMM yyyy"')
             dat = dat.replace('_("d MMM yyyy")', '"d MMM yyyy"')
-            dat = pat.sub(sub, dat)
+            dat = icon_constructor_pat.sub('', dat)
+            dat = icon_pixmap_adder_pat.sub(icon_pixmap_sub, dat)
             if not isinstance(dat, bytes):
                 dat = dat.encode('utf-8')
             open(compiled_form, 'wb').write(dat)
             num += 1
     if num:
         info('Compiled %d forms' % num)
+    if check_icons:
+        resource_dir = os.path.join(os.path.dirname(srcdir), 'resources')
+        ensure_icons_built(resource_dir, force_compile, info)
     if check_for_migration and force_compile:
         gprefs.set(f'migrated_forms_to_qt{qt_major}', True)

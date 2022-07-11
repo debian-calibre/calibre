@@ -12,7 +12,7 @@ from gettext import pgettext
 from qt.core import (QObject, QKeySequence, QAbstractItemModel, QModelIndex, QItemSelectionModel,
         Qt, QStyledItemDelegate, QTextDocument, QStyle, pyqtSignal, QFrame, QAbstractItemView, QMenu,
         QApplication, QSize, QRectF, QWidget, QTreeView, QHBoxLayout, QVBoxLayout, QAbstractItemDelegate,
-        QGridLayout, QLabel, QRadioButton, QPushButton, QToolButton, QIcon, QEvent, sip)
+        QGridLayout, QLabel, QRadioButton, QPushButton, QToolButton, QIcon, QEvent, sip, QKeyCombination)
 
 from calibre.utils.config import JSONConfig
 from calibre.constants import DEBUG
@@ -31,7 +31,7 @@ class NameConflict(ValueError):
 
 
 def keysequence_from_event(ev):  # {{{
-    k, mods = ev.key(), ev.modifiers()
+    k, mods = ev.keyCombination().key(), ev.modifiers()
     if k in (
             0, Qt.Key.Key_unknown, Qt.Key.Key_Shift, Qt.Key.Key_Control, Qt.Key.Key_Alt,
             Qt.Key.Key_Meta, Qt.Key.Key_AltGr, Qt.Key.Key_CapsLock, Qt.Key.Key_NumLock,
@@ -42,7 +42,7 @@ def keysequence_from_event(ev):  # {{{
         # Something like Shift+* or Shift+> we have to remove the shift,
         # since it is included in keycode.
         mods = mods & ~Qt.KeyboardModifier.ShiftModifier
-    return QKeySequence(k | int(mods))
+    return QKeySequence(QKeyCombination(mods, k))
 # }}}
 
 
@@ -423,7 +423,7 @@ class Editor(QFrame):  # {{{
             button.installEventFilter(self)
             setattr(self, 'button%d'%which, button)
             clear = QToolButton(self)
-            clear.setIcon(QIcon(I('clear_left.png')))
+            clear.setIcon(QIcon.ic('clear_left.png'))
             clear.clicked.connect(partial(self.clear_clicked, which=which))
             setattr(self, 'clear%d'%which, clear)
             l.addWidget(button, off+which, 1, 1, 1)
@@ -671,8 +671,8 @@ class ShortcutConfig(QWidget):  # {{{
         self._h = h = QHBoxLayout()
         l.addLayout(h)
         h.addWidget(self.search)
-        self.nb = QPushButton(QIcon(I('arrow-down.png')), _('&Next'), self)
-        self.pb = QPushButton(QIcon(I('arrow-up.png')), _('&Previous'), self)
+        self.nb = QPushButton(QIcon.ic('arrow-down.png'), _('&Next'), self)
+        self.pb = QPushButton(QIcon.ic('arrow-up.png'), _('&Previous'), self)
         self.nb.clicked.connect(self.find_next)
         self.pb.clicked.connect(self.find_previous)
         h.addWidget(self.nb), h.addWidget(self.pb)

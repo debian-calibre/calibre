@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "6월 17, 2022" "5.44.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "7월 11, 2022" "6.0.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -87,7 +87,7 @@ Python 코드를 실행합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-edit\-book, \-t
+.B \-\-edit\-book
 캘리버 책편집기 도구를 디버그 모드로 띄웁니다.
 .UNINDENT
 .INDENT 0.0
@@ -147,13 +147,13 @@ Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the 
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-reinitialize\-db
-지정된 경로이 있는 sqlite 캘리버 데이터베이스를 다시 초기화합니다. 손상된 DB를 복구할 때 유용합니다.
+.B \-\-run\-plugin, \-r
+Run a plugin that provides a command line interface. For example: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-run\-plugin, \-r
-Run a plugin that provides a command line interface. For example: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
+.B \-\-run\-test, \-t
+Run the named test(s). Use the special value \fB\(dq\fPall\fB\(dq\fP to run all tests. If the test name starts with a period it is assumed to be a module name. If the test name starts with @ it is assumed to be a category name.
 .UNINDENT
 .INDENT 0.0
 .TP

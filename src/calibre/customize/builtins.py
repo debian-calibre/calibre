@@ -855,6 +855,12 @@ class ActionBrowseAnnotations(InterfaceActionBase):
     description = _('Browse highlights and bookmarks from all books in the library')
 
 
+class ActionFullTextSearch(InterfaceActionBase):
+    name = 'Full Text Search'
+    actual_plugin = 'calibre.gui2.actions.fts:FullTextSearchAction'
+    description = _('Search the full text of all books in the calibre library')
+
+
 class ActionEditToC(InterfaceActionBase):
     name = 'Edit ToC'
     actual_plugin = 'calibre.gui2.actions.toc_edit:ToCEditAction'
@@ -1097,7 +1103,8 @@ plugins += [ActionAdd, ActionFetchAnnotations, ActionGenerateCatalog,
         ActionCopyToLibrary, ActionTweakEpub, ActionUnpackBook, ActionNextMatch, ActionStore,
         ActionPluginUpdater, ActionPickRandom, ActionEditToC, ActionSortBy,
         ActionMarkBooks, ActionEmbed, ActionTemplateTester, ActionTagMapper, ActionAuthorMapper,
-        ActionVirtualLibrary, ActionBrowseAnnotations, ActionTemplateFunctions, ActionAutoscrollBooks]
+        ActionVirtualLibrary, ActionBrowseAnnotations, ActionTemplateFunctions, ActionAutoscrollBooks,
+        ActionFullTextSearch,]
 
 # }}}
 
@@ -1106,7 +1113,7 @@ plugins += [ActionAdd, ActionFetchAnnotations, ActionGenerateCatalog,
 
 class LookAndFeel(PreferencesPlugin):
     name = 'Look & Feel'
-    icon = I('lookfeel.png')
+    icon = 'lookfeel.png'
     gui_name = _('Look & feel')
     category = 'Interface'
     gui_category = _('Interface')
@@ -1119,7 +1126,7 @@ class LookAndFeel(PreferencesPlugin):
 
 class Behavior(PreferencesPlugin):
     name = 'Behavior'
-    icon = I('config.png')
+    icon = 'config.png'
     gui_name = _('Behavior')
     category = 'Interface'
     gui_category = _('Interface')
@@ -1131,7 +1138,7 @@ class Behavior(PreferencesPlugin):
 
 class Columns(PreferencesPlugin):
     name = 'Custom Columns'
-    icon = I('column.png')
+    icon = 'column.png'
     gui_name = _('Add your own columns')
     category = 'Interface'
     gui_category = _('Interface')
@@ -1143,7 +1150,7 @@ class Columns(PreferencesPlugin):
 
 class Toolbar(PreferencesPlugin):
     name = 'Toolbar'
-    icon = I('wizard.png')
+    icon = 'wizard.png'
     gui_name = _('Toolbars & menus')
     category = 'Interface'
     gui_category = _('Interface')
@@ -1156,7 +1163,7 @@ class Toolbar(PreferencesPlugin):
 
 class Search(PreferencesPlugin):
     name = 'Search'
-    icon = I('search.png')
+    icon = 'search.png'
     gui_name = _('Searching')
     category = 'Interface'
     gui_category = _('Interface')
@@ -1168,7 +1175,7 @@ class Search(PreferencesPlugin):
 
 class InputOptions(PreferencesPlugin):
     name = 'Input Options'
-    icon = I('arrow-down.png')
+    icon = 'arrow-down.png'
     gui_name = _('Input options')
     category = 'Conversion'
     gui_category = _('Conversion')
@@ -1185,7 +1192,7 @@ class InputOptions(PreferencesPlugin):
 
 class CommonOptions(PreferencesPlugin):
     name = 'Common Options'
-    icon = I('convert.png')
+    icon = 'convert.png'
     gui_name = _('Common options')
     category = 'Conversion'
     gui_category = _('Conversion')
@@ -1197,7 +1204,7 @@ class CommonOptions(PreferencesPlugin):
 
 class OutputOptions(PreferencesPlugin):
     name = 'Output Options'
-    icon = I('arrow-up.png')
+    icon = 'arrow-up.png'
     gui_name = _('Output options')
     category = 'Conversion'
     gui_category = _('Conversion')
@@ -1209,7 +1216,7 @@ class OutputOptions(PreferencesPlugin):
 
 class Adding(PreferencesPlugin):
     name = 'Adding'
-    icon = I('add_book.png')
+    icon = 'add_book.png'
     gui_name = _('Adding books')
     category = 'Import/Export'
     gui_category = _('Import/export')
@@ -1222,7 +1229,7 @@ class Adding(PreferencesPlugin):
 
 class Saving(PreferencesPlugin):
     name = 'Saving'
-    icon = I('save.png')
+    icon = 'save.png'
     gui_name = _('Saving books to disk')
     category = 'Import/Export'
     gui_category = _('Import/export')
@@ -1235,7 +1242,7 @@ class Saving(PreferencesPlugin):
 
 class Sending(PreferencesPlugin):
     name = 'Sending'
-    icon = I('sync.png')
+    icon = 'sync.png'
     gui_name = _('Sending books to devices')
     category = 'Import/Export'
     gui_category = _('Import/export')
@@ -1248,7 +1255,7 @@ class Sending(PreferencesPlugin):
 
 class Plugboard(PreferencesPlugin):
     name = 'Plugboard'
-    icon = I('plugboard.png')
+    icon = 'plugboard.png'
     gui_name = _('Metadata plugboards')
     category = 'Import/Export'
     gui_category = _('Import/export')
@@ -1260,7 +1267,7 @@ class Plugboard(PreferencesPlugin):
 
 class TemplateFunctions(PreferencesPlugin):
     name = 'TemplateFunctions'
-    icon = I('template_funcs.png')
+    icon = 'template_funcs.png'
     gui_name = _('Template functions')
     category = 'Advanced'
     gui_category = _('Advanced')
@@ -1272,7 +1279,7 @@ class TemplateFunctions(PreferencesPlugin):
 
 class Email(PreferencesPlugin):
     name = 'Email'
-    icon = I('mail.png')
+    icon = 'mail.png'
     gui_name = _('Sharing books by email')
     category = 'Sharing'
     gui_category = _('Sharing')
@@ -1285,7 +1292,7 @@ class Email(PreferencesPlugin):
 
 class Server(PreferencesPlugin):
     name = 'Server'
-    icon = I('network-server.png')
+    icon = 'network-server.png'
     gui_name = _('Sharing over the net')
     category = 'Sharing'
     gui_category = _('Sharing')
@@ -1299,7 +1306,7 @@ class Server(PreferencesPlugin):
 
 class MetadataSources(PreferencesPlugin):
     name = 'Metadata download'
-    icon = I('download-metadata.png')
+    icon = 'download-metadata.png'
     gui_name = _('Metadata download')
     category = 'Sharing'
     gui_category = _('Sharing')
@@ -1311,7 +1318,7 @@ class MetadataSources(PreferencesPlugin):
 
 class IgnoredDevices(PreferencesPlugin):
     name = 'Ignored Devices'
-    icon = I('reader.png')
+    icon = 'reader.png'
     gui_name = _('Ignored devices')
     category = 'Sharing'
     gui_category = _('Sharing')
@@ -1324,7 +1331,7 @@ class IgnoredDevices(PreferencesPlugin):
 
 class Plugins(PreferencesPlugin):
     name = 'Plugins'
-    icon = I('plugins.png')
+    icon = 'plugins.png'
     gui_name = _('Plugins')
     category = 'Advanced'
     gui_category = _('Advanced')
@@ -1337,7 +1344,7 @@ class Plugins(PreferencesPlugin):
 
 class Tweaks(PreferencesPlugin):
     name = 'Tweaks'
-    icon = I('tweaks.png')
+    icon = 'tweaks.png'
     gui_name = _('Tweaks')
     category = 'Advanced'
     gui_category = _('Advanced')
@@ -1349,7 +1356,7 @@ class Tweaks(PreferencesPlugin):
 
 class Keyboard(PreferencesPlugin):
     name = 'Keyboard'
-    icon = I('keyboard-prefs.png')
+    icon = 'keyboard-prefs.png'
     gui_name = _('Shortcuts')
     category = 'Advanced'
     gui_category = _('Advanced')
@@ -1361,7 +1368,7 @@ class Keyboard(PreferencesPlugin):
 
 class Misc(PreferencesPlugin):
     name = 'Misc'
-    icon = I('exec.png')
+    icon = 'exec.png'
     gui_name = _('Miscellaneous')
     category = 'Advanced'
     gui_category = _('Advanced')
@@ -1650,7 +1657,7 @@ class StoreKoboStore(StoreBase):
 
     headquarters = 'CA'
     formats = ['EPUB']
-    affiliate = True
+    affiliate = False
 
 
 class StoreLegimiStore(StoreBase):

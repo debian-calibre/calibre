@@ -25,17 +25,20 @@ from bypy.constants import (
 from bypy.freeze import (
     extract_extension_modules, fix_pycryptodome, freeze_python, path_to_freeze_dir
 )
-from bypy.utils import current_dir, mkdtemp, py_compile, timeit, walk
+from bypy.utils import (
+    current_dir, get_arches_in_binary, mkdtemp, py_compile, timeit, walk
+)
 
 abspath, join, basename, dirname = os.path.abspath, os.path.join, os.path.basename, os.path.dirname
 iv = globals()['init_env']
 calibre_constants = iv['calibre_constants']
 QT_DLLS, QT_PLUGINS, PYQT_MODULES = iv['QT_DLLS'], iv['QT_PLUGINS'], iv['PYQT_MODULES']
+QT_MAJOR = iv['QT_MAJOR']
 py_ver = '.'.join(map(str, python_major_minor_version()))
 sign_app = runpy.run_path(join(dirname(abspath(__file__)), 'sign.py'))['sign_app']
 
 QT_PREFIX = join(PREFIX, 'qt')
-QT_FRAMEWORKS = [x.replace('5', '') for x in QT_DLLS]
+QT_FRAMEWORKS = [x.replace(f'{QT_MAJOR}', '') for x in QT_DLLS]
 
 ENV = dict(
     FONTCONFIG_PATH='@executable_path/../Resources/fonts',
@@ -44,6 +47,8 @@ ENV = dict(
 )
 APPNAME, VERSION = calibre_constants['appname'], calibre_constants['version']
 basenames, main_modules, main_functions = calibre_constants['basenames'], calibre_constants['modules'], calibre_constants['functions']
+ARCH_FLAGS = '-arch x86_64 -arch arm64'.split()
+EXPECTED_ARCHES = {'x86_64', 'arm64'}
 
 
 def compile_launcher_lib(contents_dir, gcc, base, pyver, inc_dir):
@@ -56,13 +61,19 @@ def compile_launcher_lib(contents_dir, gcc, base, pyver, inc_dir):
 
     dest = join(contents_dir, 'Frameworks', 'calibre-launcher.dylib')
     src = join(base, 'util.c')
-    cmd = [gcc] + '-Wall -dynamiclib -std=gnu99'.split() + [src] + \
+    cmd = [gcc] + ARCH_FLAGS + '-Wall -dynamiclib -std=gnu99'.split() + [src] + \
         ['-I' + base] + '-DPY_VERSION_MAJOR={} -DPY_VERSION_MINOR={}'.format(*pyver.split('.')).split() + \
         [f'-I{path_to_freeze_dir()}', f'-I{inc_dir}'] + \
         [f'-DENV_VARS={env}', f'-DENV_VAR_VALS={env_vals}'] + \
         ['-I%s/python/Python.framework/Versions/Current/Headers' % PREFIX] + \
         '-current_version 1.0 -compatibility_version 1.0'.split() + \
-        '-fvisibility=hidden -o'.split() + [dest] + \
+        '-fvisibility=hidden -o'.split() + [dest]
+    # We need libxml2.dylib linked because Apple's system frameworks link
+    # against a system version. And libxml2 uses global variables so we get
+    # crashes if the system libxml2 is loaded. Loading plugins like the Qt
+    # ones or usbobserver causes it to be loaded. So pre-load our libxml2
+    # to avoid it.
+    cmd += ['-L', f'{PREFIX}/lib', '-l', 'xml2'] + \
         ['-install_name',
          '@executable_path/../Frameworks/' + os.path.basename(dest)] + \
         [('-F%s/python' % PREFIX), '-framework', 'Python', '-framework', 'CoreFoundation', '-headerpad_max_install_names']
@@ -86,8 +97,8 @@ def compile_launchers(contents_dir, inc_dir, xprograms, pyver):
         out = join(contents_dir, 'MacOS', program)
         programs.append(out)
         is_gui = 'true' if ptype == 'gui' else 'false'
-        cmd = [
-            gcc, '-Wall', f'-DPROGRAM=L"{program}"', f'-DMODULE=L"{module}"', f'-DFUNCTION=L"{func}"', f'-DIS_GUI={is_gui}',
+        cmd = [gcc] + ARCH_FLAGS + [
+            '-Wall', f'-DPROGRAM=L"{program}"', f'-DMODULE=L"{module}"', f'-DFUNCTION=L"{func}"', f'-DIS_GUI={is_gui}',
             '-I' + base, src, lib, '-o', out, '-headerpad_max_install_names'
         ]
         # print('\t'+' '.join(cmd))
@@ -106,6 +117,12 @@ def flipwritable(fn, mode=None):
     old_mode = os.stat(fn).st_mode
     os.chmod(fn, stat.S_IWRITE | old_mode)
     return old_mode
+
+
+def check_universal(path):
+    arches = get_arches_in_binary(path)
+    if arches != EXPECTED_ARCHES:
+        raise SystemExit(f'The file {path} is not a universal binary, it only has arches: {", ".join(arches)}')
 
 
 STRIPCMD = ['/usr/bin/strip', '-x', '-S', '-']
@@ -272,6 +289,7 @@ class Freeze:
 
     @flush
     def fix_dependencies_in_lib(self, path_to_lib):
+        check_universal(path_to_lib)
         self.to_strip.append(path_to_lib)
         old_mode = flipwritable(path_to_lib)
         for dep, bname, is_id in self.get_local_dependencies(path_to_lib):
@@ -318,8 +336,8 @@ class Freeze:
             self.fix_dependencies_in_lib(l)
             x = os.path.relpath(l, ddir)
             self.set_id(l, '@executable_path/' + x)
-        webengine_process = join(
-            self.frameworks_dir, 'QtWebEngineCore.framework/Versions/5/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess')
+        webengine_process = os.path.realpath(join(
+            self.frameworks_dir, 'QtWebEngineCore.framework/Versions/Current/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess'))
         self.fix_dependencies_in_lib(webengine_process)
         cdir = dirname(dirname(webengine_process))
         dest = join(cdir, 'Frameworks')
@@ -397,8 +415,8 @@ class Freeze:
         for f in plugins:
             self.fix_dependencies_in_lib(f)
             if f.endswith('/podofo.so'):
-                self.change_dep('libpodofo.0.9.6.dylib',
-                    '@executable_path/../Frameworks/libpodofo.0.9.6.dylib', False, f)
+                self.change_dep('libpodofo.0.9.7.dylib',
+                    '@executable_path/../Frameworks/libpodofo.0.9.7.dylib', False, f)
 
     @flush
     def create_plist(self):
@@ -458,15 +476,15 @@ class Freeze:
     @flush
     def add_podofo(self):
         print('\nAdding PoDoFo')
-        pdf = join(PREFIX, 'lib', 'libpodofo.0.9.6.dylib')
+        pdf = join(PREFIX, 'lib', 'libpodofo.0.9.7.dylib')
         self.install_dylib(pdf)
 
     @flush
     def add_poppler(self):
         print('\nAdding poppler')
-        for x in ('libopenjp2.7.dylib', 'libpoppler.102.dylib',):
+        for x in ('libopenjp2.7.dylib', 'libpoppler.115.dylib',):
             self.install_dylib(join(PREFIX, 'lib', x))
-        for x in ('pdftohtml', 'pdftoppm', 'pdfinfo'):
+        for x in ('pdftohtml', 'pdftoppm', 'pdfinfo', 'pdftotext'):
             self.install_dylib(
                 join(PREFIX, 'bin', x), set_id=False, dest=self.helpers_dir)
 
@@ -509,7 +527,7 @@ class Freeze:
     def add_misc_libraries(self):
         for x in (
             'usb-1.0.0', 'mtp.9', 'chm.0', 'sqlite3.0', 'hunspell-1.7.0',
-            'icudata.67', 'icui18n.67', 'icuio.67', 'icuuc.67', 'hyphen.0',
+            'icudata.70', 'icui18n.70', 'icuio.70', 'icuuc.70', 'hyphen.0',
             'stemmer.0', 'xslt.1', 'exslt.0', 'xml2.2', 'z.1', 'unrar', 'lzma.5',
             'crypto.1.1', 'ssl.1.1', 'iconv.2',  # 'ltdl.7'
         ):
@@ -685,8 +703,8 @@ class Freeze:
                 plist['CFBundleExecutable'] = exe + '-placeholder-for-codesigning'
                 nexe = join(exe_dir, plist['CFBundleExecutable'])
                 base = os.path.dirname(abspath(__file__))
-                cmd = [
-                    gcc, '-Wall', '-Werror', '-DEXE_NAME="%s"' % exe, '-DREL_PATH="%s"' % rel_path,
+                cmd = [gcc] + ARCH_FLAGS + [
+                    '-Wall', '-Werror', '-DEXE_NAME="%s"' % exe, '-DREL_PATH="%s"' % rel_path,
                     join(base, 'placeholder.c'), '-o', nexe, '-headerpad_max_install_names'
                 ]
                 subprocess.check_call(cmd)

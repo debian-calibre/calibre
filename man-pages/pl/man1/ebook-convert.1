@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "czerwca 17, 2022" "5.44.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "lipca 11, 2022" "6.0.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -41,15 +41,15 @@ ebook\-convert input_file output_file [options]
 .UNINDENT
 .UNINDENT
 .sp
-Convert an e\-book from one format to another.
+Konwertuj e\-booka z jednego formatu na inny.
 .sp
-input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+input_file to dane wejściowe, a output_file to dane wyjściowe. Oba muszą być podane jako pierwsze dwa argumenty polecenia.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an \(dqopen e\-book\(dq (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
+Wyjściowy format e\-booka jest odgadywany na podstawie rozszerzenia pliku output_file. plik_wyjściowy może mieć również specjalny format .EXT, gdzie EXT jest rozszerzeniem pliku wyjściowego. W takim przypadku nazwa pliku wyjściowego pochodzi od nazwy pliku wejściowego. Zauważ, że nazwy plików nie mogą zaczynać się od myślnika. Wreszcie, jeśli plik_wyjściowy nie ma rozszerzenia, jest traktowany jako folder i do tego folderu jest zapisywany „otwarty e\-book” (OEB) składający się z plików HTML. Te pliki to pliki, które normalnie zostałyby przekazane do wtyczki wyjściowej.
 .sp
-After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+Po określeniu pliku wejściowego i wyjściowego możesz dostosować konwersję, określając różne opcje. Dostępne opcje zależą od typów plików wejściowych i wyjściowych. Aby uzyskać pomoc, podaj plik wejściowy i wyjściowy, a następnie użyj opcji \-h.
 .sp
-For full documentation of the conversion system see
+Pełna dokumentacja systemu konwersji zobacz
 \fI\%Konwersja książek\fP
 .sp
 Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq

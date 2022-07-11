@@ -60,7 +60,7 @@ class Wizard(QDialog):
 
         self.buttonBox.accepted.connect(self.accept)
         self.buttonBox.rejected.connect(self.reject)
-        self.setModal(Qt.WindowModality.WindowModal)
+        self.setWindowModality(Qt.WindowModality.WindowModal)
 
     @property
     def xpath(self):
@@ -76,7 +76,7 @@ class XPathEdit(QWidget):
         self.l = l = QVBoxLayout()
         h.addLayout(l)
         self.button = b = QToolButton(self)
-        b.setIcon(QIcon(I('wizard.png')))
+        b.setIcon(QIcon.ic('wizard.png'))
         b.setToolTip(_('Use a wizard to generate the XPath expression'))
         b.clicked.connect(self.wizard)
         h.addWidget(b)

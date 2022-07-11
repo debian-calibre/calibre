@@ -305,7 +305,7 @@ class EditMetadataAction(InterfaceAction):
             log_is_file=True, checkbox_msg=checkbox_msg,
             checkbox_checked=False, action_callback=review_apply,
             action_label=_('Revie&w downloaded metadata'),
-            action_icon=QIcon(I('auto_author_sort.png')))
+            action_icon=QIcon.ic('auto_author_sort.png'))
 
     def apply_downloaded_metadata(self, review, payload, *args):
         good_ids, tdir, log_file, lm_map, failed_ids = payload
@@ -379,7 +379,7 @@ class EditMetadataAction(InterfaceAction):
                 intro_msg=_('The downloaded metadata is on the left and the original metadata'
                             ' is on the right. If a downloaded value is blank or unknown,'
                             ' the original value is used.'),
-                action_button=(_('&View book'), I('view.png'), self.gui.iactions['View'].view_historical),
+                action_button=(_('&View book'), 'view.png', self.gui.iactions['View'].view_historical),
                 db=db
             )
             if d.exec() == QDialog.DialogCode.Accepted:

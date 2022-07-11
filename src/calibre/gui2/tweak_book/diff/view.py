@@ -10,7 +10,7 @@ from functools import partial
 from itertools import chain
 from math import ceil
 from qt.core import (
-    QApplication, QBrush, QColor, QCursor, QEvent, QEventLoop, QFont, QHBoxLayout,
+    QApplication, QBrush, QColor, QEvent, QEventLoop, QFont, QHBoxLayout,
     QIcon, QImage, QKeySequence, QMenu, QPainter, QPainterPath, QPalette, QPen,
     QPixmap, QPlainTextEdit, QRect, QScrollBar, QSplitter, QSplitterHandle, Qt,
     QTextCharFormat, QTextCursor, QTextLayout, QTimer, QWidget, pyqtSignal
@@ -25,20 +25,12 @@ from calibre.gui2.tweak_book.editor.text import (
     LineNumbers, PlainTextEdit, default_font_family
 )
 from calibre.gui2.tweak_book.editor.themes import get_theme, theme_color
+from calibre.gui2.widgets import BusyCursor
 from calibre.utils.icu import utf16_length
 from calibre.utils.xml_parse import safe_xml_fromstring
 from polyglot.builtins import as_bytes, iteritems
 
 Change = namedtuple('Change', 'ltop lbot rtop rbot kind')
-
-
-class BusyCursor:
-
-    def __enter__(self):
-        QApplication.setOverrideCursor(QCursor(Qt.CursorShape.WaitCursor))
-
-    def __exit__(self, *args):
-        QApplication.restoreOverrideCursor()
 
 
 def beautify_text(raw, syntax):
@@ -48,7 +40,10 @@ def beautify_text(raw, syntax):
     from calibre.ebooks.oeb.polish.parsing import parse
     from calibre.ebooks.oeb.polish.pretty import pretty_html_tree, pretty_xml_tree
     if syntax == 'xml':
-        root = safe_xml_fromstring(strip_encoding_declarations(raw))
+        try:
+            root = safe_xml_fromstring(strip_encoding_declarations(raw))
+        except etree.XMLSyntaxError:
+            return raw
         pretty_xml_tree(root)
     elif syntax == 'css':
         import logging
@@ -63,7 +58,7 @@ def beautify_text(raw, syntax):
                            # We dont care about @import rules
                            fetcher=lambda x: (None, None), log=_css_logger)
         data = parser.parseString(raw, href='<string>', validate=False)
-        return serialize(data, 'text/css')
+        return serialize(data, 'text/css').decode('utf-8')
     else:
         root = parse(raw, line_numbers=False)
         pretty_html_tree(None, root)
@@ -117,7 +112,7 @@ class TextBrowser(PlainTextEdit):  # {{{
         font.setPointSizeF(tprefs['editor_font_size'])
         self.setFont(font)
         self.calculate_metrics()
-        self.setTabStopWidth(tprefs['editor_tab_stop_width'] * self.space_width)
+        self.setTabStopDistance(tprefs['editor_tab_stop_width'] * self.space_width)
         font = self.heading_font = QFont(self.font())
         font.setPointSizeF(tprefs['editor_font_size'] * 1.5)
         font.setBold(True)
@@ -160,25 +155,25 @@ class TextBrowser(PlainTextEdit):  # {{{
             setattr(self, '%s_format' % x, f)
 
     def calculate_metrics(self):
-        w = self.fontMetrics()
-        self.number_width = max(map(lambda x:w.width(str(x)), range(10)))
-        self.space_width = w.width(' ')
+        fm = self.fontMetrics()
+        self.number_width = max(map(lambda x:fm.horizontalAdvance(str(x)), range(10)))
+        self.space_width = fm.horizontalAdvance(' ')
 
     def show_context_menu(self, pos):
         m = QMenu(self)
         a = m.addAction
         i = str(self.textCursor().selectedText()).rstrip('\0')
         if i:
-            a(QIcon(I('edit-copy.png')), _('Copy to clipboard'), self.copy).setShortcut(QKeySequence.StandardKey.Copy)
+            a(QIcon.ic('edit-copy.png'), _('Copy to clipboard'), self.copy).setShortcut(QKeySequence.StandardKey.Copy)
 
         if len(self.changes) > 0:
-            a(QIcon(I('arrow-up.png')), _('Previous change'), partial(self.next_change.emit, -1))
-            a(QIcon(I('arrow-down.png')), _('Next change'), partial(self.next_change.emit, 1))
+            a(QIcon.ic('arrow-up.png'), _('Previous change'), partial(self.next_change.emit, -1))
+            a(QIcon.ic('arrow-down.png'), _('Next change'), partial(self.next_change.emit, 1))
 
         if self.show_open_in_editor:
             b = self.cursorForPosition(pos).block()
             if b.isValid():
-                a(QIcon(I('tweak.png')), _('Open file in the editor'), partial(self.generate_sync_request, b.blockNumber()))
+                a(QIcon.ic('tweak.png'), _('Open file in the editor'), partial(self.generate_sync_request, b.blockNumber()))
 
         if len(m.actions()) > 0:
             m.exec(self.mapToGlobal(pos))
@@ -879,7 +874,7 @@ class DiffSplit(QSplitter):  # {{{
             for word in words[lo:hi]:
                 if word == '\n':
                     if fmts:
-                        block.layout().setAdditionalFormats(fmts)
+                        block.layout().setFormats(fmts)
                     pos, block, fmts = 0, block.next(), []
                     continue
 
@@ -897,7 +892,7 @@ class DiffSplit(QSplitter):  # {{{
             rsb, rpos, rfmts = do_tag(rsb, rl, rlo, rhi, rpos, rfmts)
         for block, fmts in ((lsb, lfmts), (rsb, rfmts)):
             if fmts:
-                block.layout().setAdditionalFormats(fmts)
+                block.layout().setFormats(fmts)
     # }}}
 
 # }}}

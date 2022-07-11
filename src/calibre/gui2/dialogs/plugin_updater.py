@@ -11,8 +11,7 @@ import traceback
 from qt.core import (
     QAbstractItemView, QAbstractTableModel, QAction, QApplication, QBrush, QComboBox,
     QDialog, QDialogButtonBox, QFont, QFrame, QHBoxLayout, QIcon, QLabel, QLineEdit,
-    QModelIndex, QPixmap, QSize, QSortFilterProxyModel, Qt, QTableView, QUrl,
-    QVBoxLayout
+    QModelIndex, QSize, QSortFilterProxyModel, Qt, QTableView, QUrl, QVBoxLayout
 )
 
 from calibre import prints
@@ -129,13 +128,12 @@ class ImageTitleLayout(QHBoxLayout):
         title_font = QFont()
         title_font.setPointSize(16)
         title_image_label = QLabel(parent)
-        pixmap = QPixmap()
-        pixmap.load(I(icon_name))
-        if pixmap is None:
+        ic = QIcon.ic(icon_name)
+        if ic.isNull():
             error_dialog(parent, _('Restart required'),
                          _('You must restart calibre before using this plugin!'), show=True)
         else:
-            title_image_label.setPixmap(pixmap)
+            title_image_label.setPixmap(ic.pixmap(32, 32))
         title_image_label.setMaximumSize(32, 32)
         title_image_label.setScaledContents(True)
         self.addWidget(title_image_label)
@@ -313,7 +311,7 @@ class DisplayPluginModel(QAbstractTableModel):
                 return self._get_status_icon(display_plugin)
             if col == 1:
                 if display_plugin.donation_link:
-                    return QIcon(I('donate.png'))
+                    return QIcon.ic('donate.png')
         elif role == Qt.ItemDataRole.ToolTipRole:
             if col == 1 and display_plugin.donation_link:
                 return _('This plugin is FREE but you can reward the developer for their effort\n'
@@ -387,7 +385,7 @@ class DisplayPluginModel(QAbstractTableModel):
                 icon_name = 'plugin_new_valid.png'
             else:
                 icon_name = 'plugin_new_invalid.png'
-        return QIcon(I('plugins/' + icon_name))
+        return QIcon.ic('plugins/' + icon_name)
 
     def _get_status_tooltip(self, display_plugin):
         if display_plugin.is_deprecated:
@@ -456,7 +454,7 @@ class PluginUpdaterDialog(SizePersistedDialog):
 
     def _initialize_controls(self):
         self.setWindowTitle(_('User plugins'))
-        self.setWindowIcon(QIcon(I('plugins/plugin_updater.png')))
+        self.setWindowIcon(QIcon.ic('plugins/plugin_updater.png'))
         layout = QVBoxLayout(self)
         self.setLayout(layout)
         title_layout = ImageTitleLayout(self, 'plugins/plugin_updater.png',
@@ -467,7 +465,7 @@ class PluginUpdaterDialog(SizePersistedDialog):
         layout.addLayout(header_layout)
         self.filter_combo = PluginFilterComboBox(self)
         self.filter_combo.setMinimumContentsLength(20)
-        self.filter_combo.currentIndexChanged[int].connect(self._filter_combo_changed)
+        self.filter_combo.currentIndexChanged.connect(self._filter_combo_changed)
         la = QLabel(_('Filter list of &plugins')+':', self)
         la.setBuddy(self.filter_combo)
         header_layout.addWidget(la)
@@ -529,12 +527,12 @@ class PluginUpdaterDialog(SizePersistedDialog):
 
     def _create_context_menu(self):
         self.plugin_view.setContextMenuPolicy(Qt.ContextMenuPolicy.ActionsContextMenu)
-        self.install_action = QAction(QIcon(I('plugins/plugin_upgrade_ok.png')), _('&Install'), self)
+        self.install_action = QAction(QIcon.ic('plugins/plugin_upgrade_ok.png'), _('&Install'), self)
         self.install_action.setToolTip(_('Install the selected plugin'))
         self.install_action.triggered.connect(self._install_clicked)
         self.install_action.setEnabled(False)
         self.plugin_view.addAction(self.install_action)
-        self.forum_action = QAction(QIcon(I('plugins/mobileread.png')), _('Plugin &forum thread'), self)
+        self.forum_action = QAction(QIcon.ic('plugins/mobileread.png'), _('Plugin &forum thread'), self)
         self.forum_action.triggered.connect(self._forum_label_activated)
         self.forum_action.setEnabled(False)
         self.plugin_view.addAction(self.forum_action)
@@ -558,7 +556,7 @@ class PluginUpdaterDialog(SizePersistedDialog):
         sep2.setSeparator(True)
         self.plugin_view.addAction(sep2)
 
-        self.donate_enabled_action = QAction(QIcon(I('donate.png')), _('Donate to developer'), self)
+        self.donate_enabled_action = QAction(QIcon.ic('donate.png'), _('Donate to developer'), self)
         self.donate_enabled_action.setToolTip(_('Donate to the developer of this plugin'))
         self.donate_enabled_action.triggered.connect(self._donate_clicked)
         self.donate_enabled_action.setEnabled(False)
@@ -568,7 +566,7 @@ class PluginUpdaterDialog(SizePersistedDialog):
         sep3.setSeparator(True)
         self.plugin_view.addAction(sep3)
 
-        self.configure_action = QAction(QIcon(I('config.png')), _('&Customize plugin'), self)
+        self.configure_action = QAction(QIcon.ic('config.png'), _('&Customize plugin'), self)
         self.configure_action.setToolTip(_('Customize the options for this plugin'))
         self.configure_action.triggered.connect(self._configure_clicked)
         self.configure_action.setEnabled(False)
@@ -724,7 +722,7 @@ class PluginUpdaterDialog(SizePersistedDialog):
                         'for the plugin to take effect.').format(plugin.name, plugin.type),
                     show_copy_button=False)
             b = d.bb.addButton(_('&Restart calibre now'), QDialogButtonBox.ButtonRole.AcceptRole)
-            b.setIcon(QIcon(I('lt.png')))
+            b.setIcon(QIcon.ic('lt.png'))
             d.do_restart = False
 
             def rf():

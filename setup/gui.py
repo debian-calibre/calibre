@@ -6,6 +6,7 @@ __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
 import os
+from contextlib import suppress
 
 from setup import Command, __appname__
 
@@ -14,6 +15,7 @@ class GUI(Command):
     description = 'Compile all GUI forms'
     PATH  = os.path.join(Command.SRC, __appname__, 'gui2')
     QRC = os.path.join(Command.RESOURCES, 'images.qrc')
+    RCC = os.path.join(Command.RESOURCES, 'icons.rcc')
 
     def add_options(self, parser):
         parser.add_option('--summary', default=False, action='store_true',
@@ -52,6 +54,10 @@ class GUI(Command):
             for root, _, files2 in os.walk('images'):
                 for name in files2:
                     sources.append(os.path.join(root, name))
+            if self.newer(self.RCC, sources):
+                self.info('Creating icon theme resource file')
+                from calibre.utils.rcc import compile_icon_dir_as_themes
+                compile_icon_dir_as_themes('images', self.RCC)
             if self.newer(self.QRC, sources):
                 self.info('Creating images.qrc')
                 for s in sources:
@@ -66,7 +72,7 @@ class GUI(Command):
 
     def build_forms(self, summary=False):
         from calibre.build_forms import build_forms
-        build_forms(self.SRC, info=self.info, summary=summary)
+        build_forms(self.SRC, info=self.info, summary=summary, check_icons=False)
 
     def clean(self):
         forms = self.find_forms()
@@ -74,5 +80,6 @@ class GUI(Command):
             c = self.form_to_compiled_form(form)
             if os.path.exists(c):
                 os.remove(c)
-        if os.path.exists(self.QRC):
-            os.remove(self.QRC)
+        for x in (self.QRC, self.RCC):
+            with suppress(FileNotFoundError):
+                os.remove(x)

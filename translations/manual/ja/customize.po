@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-17 02:39+0000\n"
+"POT-Creation-Date: 2022-07-10 16:17+0000\n"
 "PO-Revision-Date: 2014-06-17 08:37+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Japanese (http://www.transifex.com/calibre/calibre/language/ja/)\n"
@@ -117,9 +117,9 @@ msgstr "``CALIBRE_NO_NATIVE_FILEDIALOGS`` - ファイル/フォルダの選択�
 #: ../../__w/calibre/calibre/manual/customize.rst:43
 msgid ""
 "``CALIBRE_NO_NATIVE_MENUBAR`` - causes calibre to not create a native "
-"(global) menu on Ubuntu Unity and similar linux desktop environments. The "
+"(global) menu on Ubuntu Unity and similar Linux desktop environments. The "
 "menu is instead placed inside the window, as is traditional."
-msgstr "``CALIBRE_NO_NATIVE_MENUBAR`` - Ubuntu Uniti や類似の linux デスクトップ環境において calibre にネイティブ (グローバル) メニューを作成させない。メニューは従来どおりウィンドウの内側に配置されます。"
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/customize.rst:44
 msgid ""
@@ -144,23 +144,15 @@ msgid ""
 msgstr "``CALIBRE_NO_DEFAULT_PROGRAMS`` - Windows が扱えるファイルタイプを calibre に自動的に登録させない"
 
 #: ../../__w/calibre/calibre/manual/customize.rst:52
-msgid ""
-"``CALIBRE_USE_DARK_PALETTE`` - set it to ``1`` to have calibre use dark "
-"colors and ``0`` for normal colors (ignored on macOS). On Windows 10 in the "
-"absence of this variable, the Windows system preference for dark colors is "
-"used."
-msgstr "``CALIBRE_USE_DARK_PALETTE`` - ``1`` を設定すると calibre を暗い色、``0`` を設定すると通常の色 (macOS では無視されます)。Windows 10 ではこの変数がない場合にはダークモードを使用します。"
-
-#: ../../__w/calibre/calibre/manual/customize.rst:54
 msgid "``SYSFS_PATH`` - Use if sysfs is mounted somewhere other than /sys"
 msgstr "``SYSFS_PATH`` - sysfs が /sys 以外の場所にマウントされている場合に使用します。"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:55
+#: ../../__w/calibre/calibre/manual/customize.rst:53
 msgid ""
 "``http_proxy``, ``https_proxy`` - used on Linux to specify an HTTP(S) proxy"
 msgstr "``http_proxy``, ``https_proxy`` - Linux 上で HTTP(S) のプロキシを指定するために使用"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:57
+#: ../../__w/calibre/calibre/manual/customize.rst:55
 msgid ""
 "See `How to set environment variables in Windows "
 "<https://www.computerhope.com/issues/ch000549.htm>`_. If you are on macOS "
@@ -169,11 +161,11 @@ msgid ""
 "environment variables one per line in it, for example::"
 msgstr "`How to set environment variables in Windows <https://www.computerhope.com/issues/ch000549.htm>`_ を参照してください。macOS を使用している場合には :file:`~/Library/Preferences/calibre/macos-env.txt` を作成して環境変数を設定することができます。環境変数は 1 行に 1 つずつ記述します。使用例::"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:67
+#: ../../__w/calibre/calibre/manual/customize.rst:65
 msgid "Tweaks"
 msgstr "Tweaks"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:69
+#: ../../__w/calibre/calibre/manual/customize.rst:67
 msgid ""
 "Tweaks are small changes that you can specify to control various aspects of "
 "calibre's behavior. You can change them by going to "
@@ -181,20 +173,19 @@ msgid ""
 "reproduced below"
 msgstr "Tweak は、calibre のいろいろな動作を細かく制御するための変更です。設定 -> 高度な設定 -> Tweaks から設定ができます。Tweak のデフォルト値を以下に示します"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:76
+#: ../../__w/calibre/calibre/manual/customize.rst:74
 msgid "Overriding icons, templates, et cetera"
 msgstr "アイコンやテンプレートなどを上書き"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:79
+#: ../../__w/calibre/calibre/manual/customize.rst:77
 msgid ""
 "calibre has direct support for icon themes, there are several icon themes "
 "available for calibre, that you can use by going to "
-":guilabel:`Preferences->Interface->Look & Feel->Change Icon theme`. The icon"
-" themes use the same mechanism as described below for overriding static "
-"resources."
-msgstr "calibre はアイコンテーマを直接サポートしており、calibre で利用可能なさまざまなアイコンテーマがあります。アイコンテーマは :guilabel:`環境設定 -> 外観 -> 主要インタフェース -> アイコンテーマ` で変更できます。アイコンテーマは下に説明する静的リソースの上書きと同じメカニズムを使用しています。"
+":guilabel:`Preferences->Interface->Look & Feel->Change Icon theme`. It is "
+"preferable to use icon themes over overriding individual icons."
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/customize.rst:83
+#: ../../__w/calibre/calibre/manual/customize.rst:82
 msgid ""
 "calibre allows you to override the static resources, like icons, JavaScript "
 "and templates for the metadata jacket, catalogs, etc. with customized "
@@ -207,7 +198,7 @@ msgid ""
 "you choose to install calibre."
 msgstr "calibre では静的リソースを好きなようにカスタマイズしたバージョンで上書きすることができます。静的リソースとはたとえばアイコン、JavaScript、書誌の表紙用テンプレート、カタログなどのことです。 すべての静的リソースは、calibre をインストールした場所のサブフォルダに保存されます。Windows では、これは通常 :file:`C:\\\\Program Files\\\\Calibre2\\\\app\\\\resources` です。macOS では、:file:`/Applications/calibre.app/Contents/Resources/resources/` です。Linux では、calibre の Web サイトからバイナリインストーラを使用している場合には、:file:`/opt/calibre/resources` になります。これらのパスは、calibre をどこにインストールしたかによって変わる可能性があります。"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:92
+#: ../../__w/calibre/calibre/manual/customize.rst:91
 msgid ""
 "You should not change the files in this resources folder, as your changes "
 "will get overwritten the next time you update calibre. Instead, go to "
@@ -219,7 +210,7 @@ msgid ""
 "file in preference to the built-in one the next time it is started."
 msgstr "このリソースフォルダ内のファイルは変更しないでください。変更しても、calibre をアップデートすると変更内容が上書きされてしまいます。変更したい場合は、:guilabel:`環境設定 > 高度な設定 > その他` に移動し、:guilabel:`calibre の設定フォルダを開く` をクリックします。この設定用フォルダに resources という名前のサブフォルダを作成し、上書きしたいファイルをそのフォルダに配置します。ファイルは適切なサブフォルダに配置してください (たとえば画像は :file:`resources/images` に配置します)。次回の起動時から自動的に calibre は、組み込みのファイルではなくカスタムファイルを使用するようになります。"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:101
+#: ../../__w/calibre/calibre/manual/customize.rst:100
 msgid ""
 "For example, if you wanted to change the icon for the :guilabel:`Remove "
 "books` action, you would first look in the built-in resources folder and see"
@@ -227,8 +218,10 @@ msgid ""
 "Assuming you have an alternate icon in PNG format called "
 ":file:`my_remove_books.png` you would save it in the configuration folder as"
 " :file:`resources/images/remove_books.png`. All the icons used by the "
-"calibre user interface are in :file:`resources/images` and its sub-folders."
-msgstr "たとえば :guilabel:`本を削除` のアイコンを変更したい場合、まずビルトインのリソースフォルダの中を見ると、関連するファイルが :file:`resources/images/remove_books.png` であるとわかります。置き換えたいアイコンとして PNG 形式の :file:`my_remove_books.png` というファイルがあるとすると、それを設定フォルダに :file:`resources/images/remove_books.png` という名前で保存します。calibre のユーザインタフェースで使用されるすべてのアイコンは :file:`resources/images` およびそのサブフォルダ内にあります。"
+"calibre user interface are in :file:`resources/images` and its sub-folders. "
+"Placing an override file here will have even higher priority than a custom "
+"icon theme."
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/customize.rst:110
 msgid "Creating your own icon theme for calibre"

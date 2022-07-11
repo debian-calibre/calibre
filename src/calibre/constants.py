@@ -5,7 +5,7 @@ from functools import lru_cache
 import sys, locale, codecs, os, collections, collections.abc
 
 __appname__   = 'calibre'
-numeric_version = (5, 44, 0)
+numeric_version = (6, 0, 0)
 __version__   = '.'.join(map(str, numeric_version))
 git_version   = None
 __author__    = "Kovid Goyal <kovid@kovidgoyal.net>"
@@ -34,7 +34,7 @@ if iswindows:
     wver = sys.getwindowsversion()
     isxp = wver.major < 6
     isoldvista = wver.build < 6002
-is64bit = sys.maxsize > (1 << 32)
+is64bit = True
 isworker = hasenv('CALIBRE_WORKER') or hasenv('CALIBRE_SIMPLE_WORKER')
 if isworker:
     os.environ.pop(environ_item('CALIBRE_FORCE_ANSI'), None)
@@ -203,6 +203,15 @@ class DeVendor:
             return find_spec('feedparser')
         if fullname.startswith('calibre.ebooks.markdown'):
             return ModuleSpec(fullname, DeVendorLoader(fullname[len('calibre.ebooks.'):]))
+        if fullname.startswith('PyQt5'):
+            # this is present for third party plugin compat
+            if fullname == 'PyQt5':
+                return ModuleSpec(fullname, DeVendorLoader('qt'))
+            return ModuleSpec(fullname, DeVendorLoader('qt.webengine' if 'QWebEngine' in fullname else 'qt.core'))
+        if fullname.startswith('Cryptodome'):
+            # this is needed for py7zr which uses pycryptodomex instead of
+            # pycryptodome for some reason
+            return ModuleSpec(fullname, DeVendorLoader(fullname.replace('dome', '', 1)))
 
 
 class ExtensionsPackageLoader:
@@ -239,6 +248,7 @@ class ExtensionsImporter:
             'podofo',
             'cPalmdoc',
             'progress_indicator',
+            'rcc_backend',
             'icu',
             'speedup',
             'html_as_json',
@@ -334,6 +344,15 @@ class Plugins(collections.abc.Mapping):
         finally:
             conn.enableloadextension(False)
 
+    def load_sqlite3_extension(self, conn, name):
+        conn.enable_load_extension(True)
+        try:
+            ext = 'pyd' if iswindows else 'so'
+            path = os.path.join(plugins_loc, f'{name}.{ext}')
+            conn.load_extension(path)
+        finally:
+            conn.enable_load_extension(False)
+
 
 plugins = None
 if plugins is None:
@@ -403,8 +422,6 @@ def get_version():
             v = v[:-2]
     if is_running_from_develop:
         v += '*'
-    if iswindows and is64bit:
-        v += ' [64bit]'
 
     return v
 

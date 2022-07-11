@@ -9,7 +9,7 @@ import json
 import os
 import time
 from functools import partial
-from qt.core import QAction, QIcon, Qt, pyqtSignal, QDialog
+from qt.core import QAction, QIcon, pyqtSignal, QDialog
 
 from calibre.constants import ismacos, iswindows
 from calibre.gui2 import (
@@ -66,7 +66,7 @@ class ViewAction(InterfaceAction):
         self.internal_view_action = cm('internal', _('View with calibre E-book viewer'), icon='viewer.png', triggered=self.view_internal)
         self.action_pick_random = cm('pick random', _('Read a random book'),
                 icon='random.png', triggered=self.view_random)
-        self.view_menu.addAction(QIcon(I('highlight.png')), _('Browse annotations'), self.browse_annots)
+        self.view_menu.addAction(QIcon.ic('highlight.png'), _('Browse annotations'), self.browse_annots)
         self.clear_sep1 = self.view_menu.addSeparator()
         self.clear_sep2 = self.view_menu.addSeparator()
         self.clear_history_action = cm('clear history',
@@ -159,8 +159,8 @@ class ViewAction(InterfaceAction):
         self._view_file(job.result)
 
     def _launch_viewer(self, name=None, viewer='ebook-viewer', internal=True, calibre_book_data=None, open_at=None):
-        self.gui.setCursor(Qt.CursorShape.BusyCursor)
-        try:
+        from calibre.gui2.widgets import BusyCursor
+        with BusyCursor():
             if internal:
                 args = [viewer]
                 if ismacos and 'ebook' in viewer:
@@ -198,8 +198,6 @@ class ViewAction(InterfaceAction):
 
                 open_local_file(name)
                 time.sleep(2)  # User feedback
-        finally:
-            self.gui.unsetCursor()
 
     def _view_file(self, name, calibre_book_data=None, open_at=None):
         ext = os.path.splitext(name)[1].upper().replace('.',

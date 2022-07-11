@@ -11,7 +11,7 @@ from qt.webengine import QWebEnginePage, QWebEngineScript, QWebEngineView
 
 from calibre.gui2 import error_dialog, gprefs, is_dark_theme, question_dialog
 from calibre.gui2.palette import dark_color, dark_link_color, dark_text_color
-from calibre.gui2.webengine import secure_webengine
+from calibre.utils.webengine import secure_webengine
 from calibre.utils.logging import default_log
 from calibre.utils.short_uuid import uuid4
 
@@ -49,8 +49,6 @@ class Page(QWebEnginePage):  # {{{
             else:
                 settings = {}
         js = js.replace('SETTINGS', json.dumps(settings), 1)
-        dark_mode_css = P('dark_mode.css', data=True, allow_user_override=False).decode('utf-8')
-        js = js.replace('CSS', json.dumps(dark_mode_css), 1)
         s.setSourceCode(js)
         self.scripts().insert(s)
 
@@ -148,10 +146,10 @@ class ItemEdit(QWidget):
         s.setPlaceholderText(_('Search for text...'))
         s.returnPressed.connect(self.find_next)
         l.addWidget(s, 1, 0)
-        self.ns_button = b = QPushButton(QIcon(I('arrow-down.png')), _('Find &next'), self)
+        self.ns_button = b = QPushButton(QIcon.ic('arrow-down.png'), _('Find &next'), self)
         b.clicked.connect(self.find_next)
         l.addWidget(b, 1, 1)
-        self.ps_button = b = QPushButton(QIcon(I('arrow-up.png')), _('Find &previous'), self)
+        self.ps_button = b = QPushButton(QIcon.ic('arrow-up.png'), _('Find &previous'), self)
         l.addWidget(b, 1, 2)
         b.clicked.connect(self.find_previous)
 
@@ -209,7 +207,7 @@ class ItemEdit(QWidget):
 
     def find(self, forwards=True):
         text = str(self.search_text.text()).strip()
-        flags = QWebEnginePage.FindFlags(0) if forwards else QWebEnginePage.FindFlag.FindBackward
+        flags = QWebEnginePage.FindFlag(0) if forwards else QWebEnginePage.FindFlag.FindBackward
         self.find_data = text, flags, forwards
         self.view.findText(text, flags, self.find_callback)
 

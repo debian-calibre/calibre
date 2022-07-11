@@ -12,7 +12,7 @@ from qt.core import (Qt, QApplication, QStyle, QIcon,  QDoubleSpinBox, QStyleOpt
         QAbstractTextDocumentLayout, QFont, QFontInfo, QDate, QDateTimeEdit, QDateTime, QEvent,
         QStyleOptionComboBox, QStyleOptionSpinBox, QLocale, QSize, QLineEdit, QDialog, QPalette)
 
-from calibre.ebooks.metadata import rating_to_stars
+from calibre.ebooks.metadata import rating_to_stars, title_sort
 from calibre.gui2 import UNDEFINED_QDATETIME, rating_font, gprefs
 from calibre.constants import iswindows
 from calibre.gui2.widgets import EnLineEdit
@@ -157,7 +157,7 @@ ClearingDoubleSpinBox = make_clearing_spinbox(QDoubleSpinBox)
 
 
 def check_key_modifier(which_modifier):
-    v = int(QApplication.keyboardModifiers() & (Qt.KeyboardModifier.ControlModifier + Qt.KeyboardModifier.ShiftModifier))
+    v = QApplication.keyboardModifiers() & (Qt.KeyboardModifier.ControlModifier | Qt.KeyboardModifier.ShiftModifier)
     return v == which_modifier
 
 
@@ -240,7 +240,7 @@ class DateDelegate(QStyledItemDelegate, UpdateEditorGeometry):  # {{{
     def setEditorData(self, editor, index):
         if check_key_modifier(Qt.KeyboardModifier.ControlModifier):
             val = UNDEFINED_QDATETIME
-        elif check_key_modifier(Qt.KeyboardModifier.ShiftModifier + Qt.KeyboardModifier.ControlModifier):
+        elif check_key_modifier(Qt.KeyboardModifier.ShiftModifier | Qt.KeyboardModifier.ControlModifier):
             val = now()
         else:
             val = index.data(Qt.ItemDataRole.EditRole)
@@ -273,7 +273,7 @@ class PubDateDelegate(QStyledItemDelegate, UpdateEditorGeometry):  # {{{
         val = index.data(Qt.ItemDataRole.EditRole)
         if check_key_modifier(Qt.KeyboardModifier.ControlModifier):
             val = UNDEFINED_QDATETIME
-        elif check_key_modifier(Qt.KeyboardModifier.ShiftModifier + Qt.KeyboardModifier.ControlModifier):
+        elif check_key_modifier(Qt.KeyboardModifier.ShiftModifier | Qt.KeyboardModifier.ControlModifier):
             val = now()
         elif is_date_undefined(val):
             val = QDate.currentDate()
@@ -285,6 +285,8 @@ class PubDateDelegate(QStyledItemDelegate, UpdateEditorGeometry):  # {{{
 
 
 class TextDelegate(QStyledItemDelegate, UpdateEditorGeometry):  # {{{
+
+    use_title_sort = False
 
     def __init__(self, parent):
         '''
@@ -301,7 +303,10 @@ class TextDelegate(QStyledItemDelegate, UpdateEditorGeometry):  # {{{
 
     def createEditor(self, parent, option, index):
         if self.auto_complete_function:
-            editor = EditWithComplete(parent)
+            if self.use_title_sort:
+                editor = EditWithComplete(parent, sort_func=title_sort)
+            else:
+                editor = EditWithComplete(parent)
             editor.set_separator(None)
             editor.set_clear_button_enabled(False)
             complete_items = [i[1] for i in self.auto_complete_function()]
@@ -325,6 +330,8 @@ class TextDelegate(QStyledItemDelegate, UpdateEditorGeometry):  # {{{
 
 
 class SeriesDelegate(TextDelegate):  # {{{
+
+    use_title_sort = True
 
     def initStyleOption(self, option, index):
         TextDelegate.initStyleOption(self, option, index)
@@ -439,7 +446,7 @@ class CcDateDelegate(QStyledItemDelegate, UpdateEditorGeometry):  # {{{
     def setEditorData(self, editor, index):
         if check_key_modifier(Qt.KeyboardModifier.ControlModifier):
             val = UNDEFINED_QDATETIME
-        elif check_key_modifier(Qt.KeyboardModifier.ShiftModifier + Qt.KeyboardModifier.ControlModifier):
+        elif check_key_modifier(Qt.KeyboardModifier.ShiftModifier | Qt.KeyboardModifier.ControlModifier):
             val = now()
         else:
             val = index.data(Qt.ItemDataRole.EditRole)
@@ -461,6 +468,7 @@ class CcTextDelegate(QStyledItemDelegate, UpdateEditorGeometry):  # {{{
     '''
     Delegate for text data.
     '''
+    use_title_sort = False
 
     def __init__(self, parent):
         QStyledItemDelegate.__init__(self, parent)
@@ -471,7 +479,10 @@ class CcTextDelegate(QStyledItemDelegate, UpdateEditorGeometry):  # {{{
         col = m.column_map[index.column()]
         key = m.db.field_metadata.key_to_label(col)
         if m.db.field_metadata[col]['datatype'] != 'comments':
-            editor = EditWithComplete(parent)
+            if self.use_title_sort:
+                editor = EditWithComplete(parent, sort_func=title_sort)
+            else:
+                editor = EditWithComplete(parent)
             editor.set_separator(None)
             editor.set_clear_button_enabled(False)
             complete_items = sorted(list(m.db.all_custom(label=key)), key=sort_key)
@@ -497,6 +508,8 @@ class CcTextDelegate(QStyledItemDelegate, UpdateEditorGeometry):  # {{{
 
 
 class CcSeriesDelegate(CcTextDelegate):  # {{{
+
+    use_title_sort = True
 
     def initStyleOption(self, option, index):
         CcTextDelegate.initStyleOption(self, option, index)
@@ -704,13 +717,13 @@ class CcBoolDelegate(QStyledItemDelegate, UpdateEditorGeometry):  # {{{
     def createEditor(self, parent, option, index):
         editor = DelegateCB(parent)
         items = [_('Yes'), _('No'), _('Undefined')]
-        icons = [I('ok.png'), I('list_remove.png'), I('blank.png')]
+        icons = ['ok.png', 'list_remove.png', 'blank.png']
         if not index.model().db.new_api.pref('bools_are_tristate'):
             items = items[:-1]
             icons = icons[:-1]
         self.longest_text = ''
         for icon, text in zip(icons, items):
-            editor.addItem(QIcon(icon), text)
+            editor.addItem(QIcon.ic(icon), text)
             if len(text) > len(self.longest_text):
                 self.longest_text = text
         return editor
@@ -762,7 +775,7 @@ class CcTemplateDelegate(QStyledItemDelegate):  # {{{
         editor = TemplateDialog(parent, text, mi)
         editor.setWindowTitle(_("Edit template"))
         editor.textbox.setTabChangesFocus(False)
-        editor.textbox.setTabStopWidth(20)
+        editor.textbox.setTabStopDistance(20)
         d = editor.exec()
         if d:
             m.setData(index, (editor.rule[1]), Qt.ItemDataRole.EditRole)

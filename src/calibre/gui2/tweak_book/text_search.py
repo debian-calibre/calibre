@@ -12,7 +12,7 @@ from calibre import prepare_string_for_xml
 from calibre.gui2 import error_dialog
 from calibre.gui2.tweak_book import tprefs, editors, current_container
 from calibre.gui2.tweak_book.search import get_search_regex, InvalidRegex, initialize_search_request
-from calibre.gui2.tweak_book.widgets import BusyCursor
+from calibre.gui2.widgets import BusyCursor
 from calibre.gui2.widgets2 import HistoryComboBox
 from polyglot.builtins import iteritems, error_message
 
@@ -120,11 +120,11 @@ class TextSearch(QWidget):
         self.h3 = h = QHBoxLayout()
         l.addLayout(h)
         h.addStretch(10)
-        self.next_button = b = QPushButton(QIcon(I('arrow-down.png')), _('&Next'), self)
+        self.next_button = b = QPushButton(QIcon.ic('arrow-down.png'), _('&Next'), self)
         b.setToolTip(_('Find next match'))
         h.addWidget(b)
         connect_lambda(b.clicked, self, lambda self: self.do_search('down'))
-        self.prev_button = b = QPushButton(QIcon(I('arrow-up.png')), _('&Previous'), self)
+        self.prev_button = b = QPushButton(QIcon.ic('arrow-up.png'), _('&Previous'), self)
         b.setToolTip(_('Find previous match'))
         h.addWidget(b)
         connect_lambda(b.clicked, self, lambda self: self.do_search('up'))

@@ -28,7 +28,8 @@ from calibre.ebooks.oeb.polish.report import (
     gather_data, CSSEntry, CSSFileMatch, MatchLocation, ClassEntry,
     ClassFileMatch, ClassElement, CSSRule, LinkLocation)
 from calibre.gui2 import error_dialog, question_dialog, choose_save_file, open_url
-from calibre.gui2.webengine import secure_webengine, RestartingWebEngineView
+from calibre.utils.webengine import secure_webengine
+from calibre.gui2.webengine import RestartingWebEngineView
 from calibre.gui2.tweak_book import current_container, tprefs, dictionaries
 from calibre.gui2.tweak_book.widgets import Dialog
 from calibre.gui2.progress_indicator import ProgressIndicator
@@ -114,7 +115,7 @@ class FileCollection(QAbstractTableModel):
                     return self.COLUMN_HEADERS[section]
             elif role == Qt.ItemDataRole.TextAlignmentRole:
                 with suppress(IndexError):
-                    return self.alignments[section]
+                    return int(self.alignments[section])  # https://bugreports.qt.io/browse/PYSIDE-1974
         return QAbstractTableModel.headerData(self, section, orientation, role)
 
     def location(self, index):
@@ -279,7 +280,7 @@ class FilesModel(FileCollection):
             if col == 3:
                 return self.CATEGORY_NAMES.get(entry.category)
         elif role == Qt.ItemDataRole.TextAlignmentRole:
-            return Qt.AlignVCenter | self.alignments[index.column()]
+            return int(Qt.AlignVCenter | self.alignments[index.column()])  # https://bugreports.qt.io/browse/PYSIDE-1974
 
 
 class FilesWidget(QWidget):
@@ -467,9 +468,9 @@ class ImagesModel(FileCollection):
                 return self.files[index.row()]
             except IndexError:
                 pass
-        elif role == Qt.TextAlignmentRole:
+        elif role == Qt.ItemDataRole.TextAlignmentRole:
             with suppress(IndexError):
-                return self.alignments[index.column()]
+                return int(self.alignments[index.column()])  # https://bugreports.qt.io/browse/PYSIDE-1974
 
 
 class ImagesWidget(QWidget):
@@ -736,9 +737,9 @@ class WordsModel(FileCollection):
                 return self.files[index.row()]
             except IndexError:
                 pass
-        elif role == Qt.TextAlignmentRole:
+        elif role == Qt.ItemDataRole.TextAlignmentRole:
             with suppress(IndexError):
-                return self.alignments[index.column()]
+                return int(self.alignments[index.column()])  # https://bugreports.qt.io/browse/PYSIDE-1974
 
     def location(self, index):
         return None
@@ -828,9 +829,9 @@ class CharsModel(FileCollection):
                 return self.files[index.row()]
             except IndexError:
                 pass
-        elif role == Qt.TextAlignmentRole:
+        elif role == Qt.ItemDataRole.TextAlignmentRole:
             with suppress(IndexError):
-                return self.alignments[index.column()]
+                return int(self.alignments[index.column()])  # https://bugreports.qt.io/browse/PYSIDE-1974
 
     def location(self, index):
         return None
@@ -1077,7 +1078,7 @@ class CSSWidget(QWidget):
         o.addItems([_('Ascending'), _('Descending')])
         o.setCurrentIndex(0 if self.read_state('sort-ascending', True) else 1)
         o.setEditable(False)
-        o.currentIndexChanged[int].connect(self.resort)
+        o.currentIndexChanged.connect(self.resort)
         h.addWidget(o)
         h.addStretch(10)
         self.summary = la = QLabel('\xa0')
@@ -1392,7 +1393,7 @@ class Reports(Dialog):
         Dialog.__init__(self, _('Reports'), 'reports-dialog', parent=parent)
         self.data_gathered.connect(self.display_data, type=Qt.ConnectionType.QueuedConnection)
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose, False)
-        self.setWindowIcon(QIcon(I('reports.png')))
+        self.setWindowIcon(QIcon.ic('reports.png'))
 
     def setup_ui(self):
         self.l = l = QVBoxLayout(self)
@@ -1415,10 +1416,10 @@ class Reports(Dialog):
         self.bb.setStandardButtons(QDialogButtonBox.StandardButton.Close)
         self.refresh_button = b = self.bb.addButton(_('&Refresh'), QDialogButtonBox.ButtonRole.ActionRole)
         b.clicked.connect(self.refresh)
-        b.setIcon(QIcon(I('view-refresh.png')))
+        b.setIcon(QIcon.ic('view-refresh.png'))
         self.save_button = b = self.bb.addButton(_('&Save'), QDialogButtonBox.ButtonRole.ActionRole)
         b.clicked.connect(self.reports.to_csv)
-        b.setIcon(QIcon(I('save.png')))
+        b.setIcon(QIcon.ic('save.png'))
         b.setToolTip(_('Export the currently shown report as a CSV file'))
 
     def sizeHint(self):

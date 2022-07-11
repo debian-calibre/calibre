@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "juin 17, 2022" "5.44.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "juillet 11, 2022" "6.0.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -84,7 +84,7 @@ Exécuter l\fB\(aq\fPoutil calibre diff. Par exemple: calibre\-debug \fI\%\-\-di
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-edit\-book, \-t
+.B \-\-edit\-book
 Lancez l’Éditeur de livre calibre en mode débogage.
 .UNINDENT
 .INDENT 0.0
@@ -144,13 +144,13 @@ Sort les emplacements nécessaires pour configurer l\fB\(aq\fPenvironnement  de 
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-reinitialize\-db
-Réinitialiser la base de données sqlite de calibre à l\fB\(aq\fPemplacement spécifié. Utile pour récupérer une base de données corrompue.
+.B \-\-run\-plugin, \-r
+Exécuter une extension qui fournit une interface en ligne de commande. Par exemple : calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Tout ce qui se trouve après le \fB\-\-\fP sera passé à l\fB\(aq\fPextension en tant qu\fB\(aq\fParguments.
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-run\-plugin, \-r
-Exécuter une extension qui fournit une interface en ligne de commande. Par exemple : calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Tout ce qui se trouve après le \fB\-\-\fP sera passé à l\fB\(aq\fPextension en tant qu\fB\(aq\fParguments.
+.B \-\-run\-test, \-t
+Run the named test(s). Use the special value \fB\(dq\fPall\fB\(dq\fP to run all tests. If the test name starts with a period it is assumed to be a module name. If the test name starts with @ it is assumed to be a category name.
 .UNINDENT
 .INDENT 0.0
 .TP

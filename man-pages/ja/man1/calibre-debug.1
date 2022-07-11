@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "6月 17, 2022" "5.44.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "7月 11, 2022" "6.0.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -86,7 +86,7 @@ Windows の既定のプログラムに登録/登録解除 \fI\%\-\-default\-prog
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-edit\-book, \-t
+.B \-\-edit\-book
 書籍編集ツールをデバッグモードで起動
 .UNINDENT
 .INDENT 0.0
@@ -150,13 +150,13 @@ calibreの環境設定に必要なpathを出力
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-reinitialize\-db
-指定されたpathのsqliteのcalibreデータベースを再初期化。破損したデータベースを復旧したいときに有用です。
+.B \-\-run\-plugin, \-r
+コマンドラインインタフェースを提供するプラグインを実行。例: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP \fB\-\-\fP 以降にあるものは、すべてプラグインに引数として渡されます。
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-run\-plugin, \-r
-コマンドラインインタフェースを提供するプラグインを実行。例: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP \fB\-\-\fP 以降にあるものは、すべてプラグインに引数として渡されます。
+.B \-\-run\-test, \-t
+Run the named test(s). Use the special value \fB\(dq\fPall\fB\(dq\fP to run all tests. If the test name starts with a period it is assumed to be a module name. If the test name starts with @ it is assumed to be a category name.
 .UNINDENT
 .INDENT 0.0
 .TP

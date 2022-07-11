@@ -41,6 +41,7 @@ class Extension:
         self.headers = d['headers'] = absolutize(kwargs.get('headers', []))
         self.sip_files = d['sip_files'] = absolutize(kwargs.get('sip_files', []))
         self.needs_exceptions = d['needs_exceptions'] = kwargs.get('needs_exceptions', False)
+        self.qt_modules = d['qt_modules'] = kwargs.get('qt_modules', ["widgets"])
         self.inc_dirs = d['inc_dirs'] = absolutize(kwargs.get('inc_dirs', []))
         self.lib_dirs = d['lib_dirs'] = absolutize(kwargs.get('lib_dirs', []))
         self.extra_objs = d['extra_objs'] = absolutize(kwargs.get('extra_objs', []))
@@ -178,8 +179,11 @@ def get_python_include_paths():
     return sorted(frozenset(filter(None, map(gp, sorted(ans)))))
 
 
+is_macos_universal_build = ismacos and 'universal2' in sysconfig.get_platform()
+
+
 def init_env(debug=False, sanitize=False):
-    from setup.build_environment import win_ld, is64bit, win_inc, win_lib, NMAKE, win_cc
+    from setup.build_environment import win_ld, win_inc, win_lib, NMAKE, win_cc
     linker = None
     if isunix:
         cc = os.environ.get('CC', 'gcc')
@@ -222,6 +226,9 @@ def init_env(debug=False, sanitize=False):
         ldflags += (sysconfig.get_config_var('LINKFORSHARED') or '').split()
 
     if ismacos:
+        if is_macos_universal_build:
+            cflags.extend(['-arch', 'x86_64', '-arch', 'arm64'])
+            ldflags.extend(['-arch', 'x86_64', '-arch', 'arm64'])
         cflags.append('-D_OSX')
         ldflags.extend('-bundle -undefined dynamic_lookup'.split())
         cflags.extend(['-fno-common', '-dynamic'])
@@ -238,8 +245,7 @@ def init_env(debug=False, sanitize=False):
             ldflags.append('/DEBUG')
         # cflags = '/c /nologo /Ox /MD /W3 /EHsc /Zi'.split()
         # ldflags = '/DLL /nologo /INCREMENTAL:NO /DEBUG'.split()
-        if is64bit:
-            cflags.append('/GS-')
+        cflags.append('/GS-')
 
         for p in win_inc:
             cflags.append('-I'+p)
@@ -443,7 +449,7 @@ class Build(Command):
     def check_call(self, *args, **kwargs):
         """print cmdline if an error occurred
 
-        If something is missing (qmake e.g.) you get a non-informative error
+        If something is missing (cmake e.g.) you get a non-informative error
          self.check_call(qmc + [ext.name+'.pro'])
          so you would have to look at the source to see the actual command.
         """
@@ -458,7 +464,7 @@ class Build(Command):
         from setup.parallel_build import cpu_count
         if iswindows or ishaiku:
             return  # Dont have headless operation on these platforms
-        from setup.build_environment import ft_inc_dirs, QMAKE
+        from setup.build_environment import CMAKE, sw
         self.info('\n####### Building headless QPA plugin', '#'*7)
         a = absolutize
         headers = a([
@@ -470,50 +476,30 @@ class Build(Command):
             'calibre/headless/headless_backingstore.cpp',
             'calibre/headless/headless_integration.cpp',
         ])
-        if ismacos:
-            sources.extend(a(['calibre/headless/coretext_fontdatabase.mm']))
-        else:
-            headers.extend(a(['calibre/headless/fontconfig_database.h']))
-            sources.extend(a(['calibre/headless/fontconfig_database.cpp']))
         others = a(['calibre/headless/headless.json'])
         target = self.dest('headless')
+        if not ismacos:
+            target = target.replace('headless', 'libheadless')
         if not self.newer(target, headers + sources + others):
             return
 
-        pro = textwrap.dedent(
-        '''\
-            TARGET = headless
-            PLUGIN_TYPE = platforms
-            PLUGIN_CLASS_NAME = HeadlessIntegrationPlugin
-            QT += core-private gui-private
-            TEMPLATE = lib
-            CONFIG += plugin
-            QT += fontdatabase_support_private service_support_private eventdispatcher_support_private
-            HEADERS = {headers}
-            SOURCES = {sources}
-            OTHER_FILES = {others}
-            INCLUDEPATH += {freetype}
-            DESTDIR = {destdir}
-            CONFIG -= create_cmake  # Prevent qmake from generating a cmake build file which it puts in the calibre src directory
-            ''').format(
-                headers=' '.join(headers), sources=' '.join(sources), others=' '.join(others), destdir=self.d(
-                    target), freetype=' '.join(ft_inc_dirs))
         bdir = self.j(self.build_dir, 'headless')
-        if not os.path.exists(bdir):
-            os.makedirs(bdir)
-        pf = self.j(bdir, 'headless.pro')
-        open(self.j(bdir, '.qmake.conf'), 'wb').close()
-        with open(pf, 'wb') as f:
-            f.write(pro.encode('utf-8'))
+        if os.path.exists(bdir):
+            shutil.rmtree(bdir)
+        cmd = [CMAKE]
+        if is_macos_universal_build:
+            cmd += ['-DCMAKE_OSX_ARCHITECTURES=x86_64;arm64']
+        if sw and os.path.exists(os.path.join(sw, 'qt')):
+            cmd += ['-DCMAKE_SYSTEM_PREFIX_PATH=' + os.path.join(sw, 'qt').replace(os.sep, '/')]
+        os.makedirs(bdir)
         cwd = os.getcwd()
         os.chdir(bdir)
         try:
-            self.check_call([QMAKE] + [self.b(pf)])
+            self.check_call(cmd + ['-S', os.path.dirname(sources[0])])
             self.check_call([self.env.make] + ['-j%d'%(cpu_count or 1)])
         finally:
             os.chdir(cwd)
-        if ismacos:
-            os.rename(self.j(self.d(target), 'libheadless.dylib'), self.j(self.d(target), 'headless.so'))
+        os.rename(self.j(bdir, 'libheadless.so'), target)
 
     def create_sip_build_skeleton(self, src_dir, ext):
         from setup.build_environment import pyqt_sip_abi_version
@@ -530,7 +516,7 @@ build-backend = "sipbuild.api"
 
 [tool.sip.metadata]
 name = "{ext.name}"
-requires-dist = "PyQt5 (>=5.15)"
+requires-dist = "PyQt6 (>=6.2.1)"
 
 [tool.sip]
 project-factory = "pyqtbuild:PyQtProject"
@@ -539,12 +525,12 @@ project-factory = "pyqtbuild:PyQtProject"
 sip-files-dir = "."
 {abi_version}
 
-[tool.sip.bindings.pictureflow]
+[tool.sip.bindings.{ext.name}]
 headers = {ext.headers}
 sources = {ext.sources}
 exceptions = {needs_exceptions}
 include-dirs = {ext.inc_dirs}
-qmake-QT = ["widgets"]
+qmake-QT = {ext.qt_modules}
 sip-file = "{os.path.basename(sipf)}"
 ''')
         shutil.copy2(sipf, src_dir)

@@ -21,7 +21,7 @@ class SearchAndReplaceWidget(Widget, Ui_Form):
     TITLE = _('Search &\nreplace')
     HELP  = _('Modify the document text and structure using user defined patterns.')
     COMMIT_NAME = 'search_and_replace'
-    ICON = I('search.png')
+    ICON = 'search.png'
     STRIP_TEXT_FIELDS = False
 
     def __init__(self, parent, get_option, get_help, db=None, book_id=None):
@@ -44,7 +44,7 @@ class SearchAndReplaceWidget(Widget, Ui_Form):
         self.sr_search.doc_update.connect(self.update_doc)
 
         proto = QTableWidgetItem()
-        proto.setFlags(Qt.ItemFlags(Qt.ItemFlag.ItemIsSelectable + Qt.ItemFlag.ItemIsEnabled))
+        proto.setFlags(Qt.ItemFlag.ItemIsSelectable | Qt.ItemFlag.ItemIsEnabled)
         self.search_replace.setItemPrototype(proto)
         self.search_replace.setColumnCount(2)
         self.search_replace.setColumnWidth(0, 320)

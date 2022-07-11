@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-17 02:39+0000\n"
+"POT-Creation-Date: 2022-07-10 14:55+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2014,2017-2018,2020-2022\n"
 "Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
@@ -1113,11 +1113,68 @@ msgstr "``author_sorts(роздільник_значень)`` — поверта
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:416
 msgid ""
+"``book_count(query, use_vl)`` -- returns the count of books found by "
+"searching for ``query``. If ``use_vl`` is ``0`` (zero) then virtual "
+"libraries are ignored. This function and its companion ``book_values()`` are"
+" particularly useful in template searches, supporting searches that combine "
+"information from many books such as looking for series with only one book. "
+"It cannot be used in composite columns unless the tweak "
+"``allow_template_database_functions_in_composites`` is set to True. It can "
+"be used only in the GUI."
+msgstr "``book_count(запит, використати_віртуальні)`` — повертає кількість книг, які було знайдено за запитом ``запит``. Якщо значенням ``використати_віртуальні`` є ``0`` (нуль), віртуальні бібліотеки буде проігноровано. Ця функція і подібна до неї функція ``book_values()`` корисні, зокрема, у шаблонних пошуках, де передбачено підтримку пошуків, які поєднують відомості з багатьох книг, наприклад, пошуків циклів, де є лише одна книга. Функцією не можна користуватися у складених стовпчиках, якщо для коригування ``allow_template_database_functions_in_composites`` не встановлено значення True. Можна використовувати лише у графічному інтерфейсі."
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:418
+msgid ""
+"For example this template search uses this function and its companion to "
+"find all series with only one book:"
+msgstr "Наприклад, у цьому шаблонному пошуку використано цю функцію і подібну до неї функцію для пошуку усіх циклів, які містять лише одну книгу:"
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:420
+msgid ""
+"Define a stored template (using :guilabel:`Preferences->Advanced->Template "
+"functions`) named ``series_only_one_book`` (the name is arbitrary). The "
+"template is::"
+msgstr "Визначення збереженого шаблона (за допомогою пункту :guilabel:`Налаштування->Додатково->Шаблонні функції`) із назвою ``series_only_one_book`` (назва може бути довільною). Шаблон::"
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:435
+msgid ""
+"The first time the template runs (the first book checked) it stores the "
+"results of the database lookups in a ``global`` template variable named "
+"``vals``. These results are used to check subsequent books without redoing "
+"the lookups."
+msgstr "Під час першого запуску шаблона (перевірка першої книги) він зберігає результати пошуків у базі даних у ``загальній`` шаблонній змінній із назвою ``vals``. Ці результати буде використано для подальшого пошуку книг без повторної обробки усієї бази даних."
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:437
+msgid "Use the stored template in a template search::"
+msgstr "Використання збереженого шаблона у шаблонному пошуку::"
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:441
+msgid ""
+"Using a stored template instead of putting the template into the search "
+"eliminates problems caused by the requirement to escape quotes in search "
+"expressions."
+msgstr "Використання збереженого шаблона замість вписування шаблона у пошук усуває проблеми, які пов'язано із вимогою щодо екранування лапок у виразах для пошуку."
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:442
+msgid ""
+"``book_values(column, query, sep, use_vl)`` -- returns a list of the unique "
+"values contained in the column ``column`` (a lookup name), separated by "
+"``sep``, in the books found by searching for ``query``. If ``use_vl`` is "
+"``0`` (zero) then virtual libraries are ignored. This function and its "
+"companion ``book_count()`` are particularly useful in template searches, "
+"supporting searches that combine information from many books such as looking"
+" for series with only one book. It cannot be used in composite columns "
+"unless the tweak ``allow_template_database_functions_in_composites`` is set "
+"to True. It can be used only in the GUI."
+msgstr "``book_values(стовпчик, запит, роздільник, використати_віртуальні)`` — повертає список неповторюваних значень, що містяться у стовпчику ``стовпчик`` (назві пошуку), відокремлені роздільником ``роздільник``, у книгах, які було знайдено за запитом ``запит``. Якщо значенням ``використати_віртуальні`` є ``0`` (нуль), віртуальні бібліотеки буде проігноровано. Ця функція і подібна до неї функція ``book_count()`` корисні, зокрема, у шаблонних пошуках, де передбачено підтримку пошуків, які поєднують відомості з багатьох книг, наприклад, пошуків циклів, де є лише одна книга. Функцією не можна користуватися у складених стовпчиках, якщо для коригування ``allow_template_database_functions_in_composites`` не встановлено значення True. Можна використовувати лише у графічному інтерфейсі."
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:443
+msgid ""
 "``booksize()`` -- returns the value of the calibre 'size' field. Returns '' "
 "if there are no formats."
 msgstr "``booksize()`` — повертає значення поля calibre «size». Повертає '', якщо форматів немає."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:417
+#: ../../__w/calibre/calibre/manual/template_lang.rst:444
 msgid ""
 "``check_yes_no(field_name, is_undefined, is_false, is_true)`` -- checks if "
 "the value of the yes/no field named by the lookup name ``field_name`` is one"
@@ -1127,25 +1184,25 @@ msgid ""
 "that condition, otherwise set it to 0. Example:"
 msgstr "``check_yes_no(назва_поля, is_undefined, is_false, is_true)`` — перевіряє, чи дорівнює значення поля «так/ні», вказаного назвою для пошуку ``назва_поля``, значенню, вказаному параметрами, повертає ``'yes'``, якщо знайдено відповідник, інакше, повертає порожній рядок. Встановіть для параметрів ``is_undefined``, ``is_false`` або ``is_true`` значення 1 (число), щоб перевірити відповідну умову, інакше, встановіть 0. Приклад:"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:419
+#: ../../__w/calibre/calibre/manual/template_lang.rst:446
 msgid ""
 "``check_yes_no(\"#bool\", 1, 0, 1)`` returns ``'yes'`` if the yes/no field "
 "``#bool`` is either True or undefined (neither True nor False)."
 msgstr "``check_yes_no(\"#bool\", 1, 0, 1)`` повертає ``'yes'``, якщо ``\"#bool\"`` поля так/ні або не визначено (він не є істинним і не є хибним), або дорівнює True."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:421
+#: ../../__w/calibre/calibre/manual/template_lang.rst:448
 msgid ""
 "More than one of ``is_undefined``, ``is_false``, or ``is_true`` can be set "
 "to 1."
 msgstr "Значення 1 можна встановлювати для декількох записів з набору ``is_undefined``, ``is_false`` або ``is_true``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:422
+#: ../../__w/calibre/calibre/manual/template_lang.rst:449
 msgid ""
 "``ceiling(x)`` -- returns the smallest integer greater than or equal to "
 "``x``. Throws an exception if ``x`` is not a number."
 msgstr "``ceiling(x)`` — повертає найменше ціле число, яке є більшим або рівним ``x``. Надсилає виключення, якщо ``x`` не є числом."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:423
+#: ../../__w/calibre/calibre/manual/template_lang.rst:450
 msgid ""
 "``character(character_name)`` -- returns the character named by "
 "character_name. For example, ``character('newline')`` returns a newline "
@@ -1153,7 +1210,7 @@ msgid ""
 "``return``, ``tab``, and ``backslash``."
 msgstr "``character(назва_символу)`` — повертає символ із назвою «назва_символу». Наприклад, ``character('newline')`` повертає символ розриву рядка (``'\\n'``). Передбачено підтримку таки назв символів: ``newline``, ``return``, ``tab`` і ``backslash``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:424
+#: ../../__w/calibre/calibre/manual/template_lang.rst:451
 msgid ""
 "``cmp(x, y, lt, eq, gt)`` -- compares ``x`` and ``y`` after converting both "
 "to numbers. Returns ``lt`` if ``x <# y``, ``eq`` if ``x ==# y``, otherwise "
@@ -1161,7 +1218,7 @@ msgid ""
 "compare operators (``==#``, ``<#``, ``>#``, etc)."
 msgstr "``cmp(x, y, lt, eq, gt)`` — порівнює ``x`` і ``y`` після перетворення обох величин у числа. Повертає ``lt``, якщо `x <# y``, ``eq``, якщо ``x ==# y``, у всіх інших випадках повертає ``gt``. Цю функцію зазвичай можна замінити одним із операторів порівняння чисел (``==#``, ``<#``, ``>#`` тощо)."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:425
+#: ../../__w/calibre/calibre/manual/template_lang.rst:452
 msgid ""
 "``connected_device_name(storage_location_key)`` -- if a device is connected "
 "then return the device name, otherwise return the empty string. Each storage"
@@ -1170,7 +1227,7 @@ msgid ""
 "in the GUI."
 msgstr "``connected_device_name(ключ_розташування_сховища)`` — якщо пристрій з'єднано, повертає назву пристрою, якщо ні — порожній рядок. Кожне розташування сховища даних на пристрої має власну назву. Значення параметра ``ключ_розташування_сховища``: ``'main'``, ``'card'`` і ``'cardb'``. Ця функція працює лише у графічному інтерфейсі користувача."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:426
+#: ../../__w/calibre/calibre/manual/template_lang.rst:453
 msgid ""
 "``connected_device_uuid(storage_location_key)`` -- if a device is connected "
 "then return the device uuid (unique id), otherwise return the empty string. "
@@ -1179,19 +1236,19 @@ msgid ""
 "``'cardb'``. This function works only in the GUI."
 msgstr "``connected_device_uuid(ключ_розташування_сховища)`` — якщо пристрій з'єднано, повертає UUID (унікальний ідентифікатор) пристрою, якщо ні — порожній рядок. Кожне розташування сховища даних на пристрої має власний UUID. Значення параметра ``ключ_розташування_сховища``: ``'main'``, ``'carda'`` і ``'cardb'``. Ця функція працює лише у графічному інтерфейсі користувача."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:427
+#: ../../__w/calibre/calibre/manual/template_lang.rst:454
 msgid ""
 "``current_library_name()`` -- return the last name on the path to the "
 "current calibre library."
 msgstr "``current_library_name()`` — повертає останню адресу поточної бібліотеки calibre."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:428
+#: ../../__w/calibre/calibre/manual/template_lang.rst:455
 msgid ""
 "``current_library_path()`` -- return the full path to the current calibre "
 "library."
 msgstr "``current_library_path()`` — повертає повний шлях до поточної бібліотеки calibre."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:429
+#: ../../__w/calibre/calibre/manual/template_lang.rst:456
 msgid ""
 "``current_virtual_library_name()`` -- return the name of the current virtual"
 " library if there is one, otherwise the empty string. Library name case is "
@@ -1199,7 +1256,7 @@ msgid ""
 "function works only in the GUI."
 msgstr "``current_virtual_library_name()`` — повертає назву поточної віртуальної бібліотеки, якщо така є, і порожній рядок, якщо такої немає. Регістр символів назви бібліотеки буде збережено. Приклад: ``program: current_virtual_library_name()``. Ця функція працює лише у режимі графічного інтерфейсу користувача."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:430
+#: ../../__w/calibre/calibre/manual/template_lang.rst:457
 msgid ""
 "``date_arithmetic(date, calc_spec, fmt)`` -- Calculate a new date from "
 "``date`` using ``calc_spec``. Return the new date formatted according to "
@@ -1209,37 +1266,37 @@ msgid ""
 "the following letters:"
 msgstr "``date_arithmetic(дата, специфікація_обчислень, формат)`` — обчислення нової дати на основі дати ``дата`` з використанням ``специфікації_обчислень``. Повертає нову дату, форматовану відповідно до додаткового параметра ``формат``. Якщо формат не вказано, результат буде виведено у форматі ISO. Параметр ``специфікація_обчислень`` є рядком, який сформовано поєднанням пар ``зО`` (значенняОперація), де ``з`` є можливо від'ємним числом, а ``О`` є однією з таких літер:"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:432
+#: ../../__w/calibre/calibre/manual/template_lang.rst:459
 msgid "``s``: add ``v`` seconds to ``date``"
 msgstr "``s`` — додати ``з`` секунд до значення ``дата``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:433
+#: ../../__w/calibre/calibre/manual/template_lang.rst:460
 msgid "``m``: add ``v`` minutes to ``date``"
 msgstr "``m`` — додати ``з`` хвилин до значення ``дата``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:434
+#: ../../__w/calibre/calibre/manual/template_lang.rst:461
 msgid "``h``: add ``v`` hours to ``date``"
 msgstr "``h`` — додати ``з`` годин до значення ``дата``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:435
+#: ../../__w/calibre/calibre/manual/template_lang.rst:462
 msgid "``d``: add ``v`` days to ``date``"
 msgstr "``d`` — додати ``з`` днів до значення ``дата``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:436
+#: ../../__w/calibre/calibre/manual/template_lang.rst:463
 msgid "``w``: add ``v`` weeks to ``date``"
 msgstr "``w`` — додати ``з`` тижнів до значення ``дата``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:437
+#: ../../__w/calibre/calibre/manual/template_lang.rst:464
 msgid "``y``: add ``v`` years to ``date``, where a year is 365 days."
 msgstr "``y`` — додати ``з`` років до значення ``дата``, де роком вважаються 365 днів."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:439
+#: ../../__w/calibre/calibre/manual/template_lang.rst:466
 msgid ""
 "Example: ``'1s3d-1m'`` will add 1 second, add 3 days, and subtract 1 minute "
 "from ``date``."
 msgstr "Приклад: ``1s3d-1m`` — додати 1 секунду, додати 3 дні і відняти 1 хвилину від дати ``дата``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:440
+#: ../../__w/calibre/calibre/manual/template_lang.rst:467
 msgid ""
 "``days_between(date1, date2)`` -- return the number of days between "
 "``date1`` and ``date2``. The number is positive if ``date1`` is greater than"
@@ -1247,14 +1304,14 @@ msgid ""
 "dates, the function returns the empty string."
 msgstr "days_between(дата1, дата2) — повертає кількість днів між датою дата1 і датою дата2``. Кількість днів є додатною, якщо дата1 перевищує дата2, інакше значення буде від'ємним. Якщо значення дата1 або значення дата2 не вдасться обробити як дату, функція поверне порожній рядок."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:441
+#: ../../__w/calibre/calibre/manual/template_lang.rst:468
 msgid ""
 "``divide(x, y)`` -- returns ``x / y``. Throws an exception if either ``x`` "
 "or ``y`` are not numbers. This function can usually be replaced by the ``/``"
 " operator."
 msgstr "``divide(x, y)`` — повертає частку ``x / y``. Повідомляє про виключення, якщо ``x`` або ``y`` не є числом. Зазвичай, цю функцію можна замінити оператором ``/``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:442
+#: ../../__w/calibre/calibre/manual/template_lang.rst:469
 msgid ""
 "``eval(string)`` -- evaluates the string as a program, passing the local "
 "variables. This permits using the template processor to construct complex "
@@ -1267,20 +1324,20 @@ msgid ""
 "<template_mode>`."
 msgstr "``eval(рядок) — обробляє рядок як програму з передаванням локальних змінних <template_mode>`. Це надає змогу скористатися обробником шаблонів для побудови складних результатів на основі локальних змінних. У :ref:`режимі програмування шаблонів <template_mode>` символи «{» і «}» обробляють до обробки шаблона, тому вам слід використовувати «[[» для позначення символу «{» і «]]» для позначення символу «}». Перетворення буде виконано автоматично. Також слід зауважити, що у аргументі цієї функції не можна використовувати префікси і суфікси (тобто синтаксичні конструкції, подібні до «|префікс|суфікс»), якщо використовується :ref:`режим програмування шаблонів <template_mode>`."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:443
+#: ../../__w/calibre/calibre/manual/template_lang.rst:470
 msgid ""
 "``field(lookup_name)`` -- returns the value of the metadata field with "
 "lookup name ``lookup_name``."
 msgstr "``field(назва_для_пошуку)`` — повертає значення поля метаданих із назвою для пошуку ``назва_для_пошуку``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:444
+#: ../../__w/calibre/calibre/manual/template_lang.rst:471
 msgid ""
 "``field_exists(field_name)`` -- checks if a field (column) with the lookup "
 "name ``field_name`` exists, returning ``'1'`` if so and the empty string if "
 "not."
 msgstr "``field_exists(назва_поля)`` — перевіряє, чи існує поле (стовпчик) із назвою для пошуку ``назва_поля``. Повертає ``'1'``, якщо поле існує, і порожній рядок, якщо не існує."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:445
+#: ../../__w/calibre/calibre/manual/template_lang.rst:472
 msgid ""
 "``finish_formatting(val, fmt, prefix, suffix)`` -- apply the format, prefix,"
 " and suffix to a value in the same way as done in a template like "
@@ -1290,14 +1347,14 @@ msgid ""
 "output as the above template::"
 msgstr "``finish_formatting(значення, формат, префікс, суфікс)`` — застосувати формат, префікс і суфікс до значення у спосіб, у який це виконується шаблоном, зокрема ``{series_index:05.2f| - |- }``. Цю функцію створено для спрощення перетворення складних шаблонів режиму єдиної функції і програмного режиму до шаблонів загального програмного режиму. Наприклад, наведена нижче програма виводить ті самі дані, що і вказаний вище програма-шаблон::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:449
+#: ../../__w/calibre/calibre/manual/template_lang.rst:476
 msgid ""
 "Another example: for the template "
 "``{series:re(([^\\s])[^\\s]+(\\s|$),\\1)}{series_index:0>2s| - | - "
 "}{title}`` use::"
 msgstr "Інший приклад. Для шаблона ``{series:re(([^\\s])[^\\s]+(\\s|$),\\1)}{series_index:0>2s| - | - }{title}`` скористайтеся таким::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:458
+#: ../../__w/calibre/calibre/manual/template_lang.rst:485
 msgid ""
 "``first_matching_cmp(val, [ cmp, result, ]* else_result)`` -- compares ``val"
 " < cmp`` in sequence, returning the associated result for the first "
@@ -1305,124 +1362,124 @@ msgid ""
 "Example::"
 msgstr "``first_matching_cmp(значення, [ умова, результат, ]* інший_результат)`` — послідовно виконує порівняння ``значення < умова``, повертаючи пов'язаний результат для першої з виконаних умов у послідовності. Повертає інший_результат, якщо жодну з умов не буде виконано. Приклад::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:463
+#: ../../__w/calibre/calibre/manual/template_lang.rst:490
 msgid ""
 "returns ``\"large\"``. The same example with a first value of 16 returns "
 "``\"giant\"``."
 msgstr "повертає ``\"large\"``. Той самий приклад із першим значенням 16 повертатиме ``\"giant\"``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:465
+#: ../../__w/calibre/calibre/manual/template_lang.rst:492
 msgid ""
 "``first_non_empty(value [, value]*)`` -- returns the first ``value`` that is"
 " not empty. If all values are empty, then the empty string is returned. You "
 "can have as many values as you want."
 msgstr "``first_non_empty(значення [, значення]*)`` — повертає перше значення, яке не є порожнім. Якщо всі ``значення`` є порожніми, повертає порожній рядок. Ви можете вказати довільну кількість значень."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:466
+#: ../../__w/calibre/calibre/manual/template_lang.rst:493
 msgid ""
 "``floor(x)`` -- returns the largest integer less than or equal to ``x``. "
 "Throws an exception if ``x`` is not a number."
 msgstr "``floor(x)`` — повертає найбільше ціле число, яке є меншим або рівним ``x``. Надсилає виключення, якщо ``x`` не є числом."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:467
+#: ../../__w/calibre/calibre/manual/template_lang.rst:494
 msgid ""
 "``format_date(val, format_string)`` -- format the value, which must be a "
 "date string, using the format_string, returning a string. The formatting "
 "codes are:"
 msgstr "``format_date(значення, рядок_формату)`` — форматувати значення, яке має бути рядком дати, на основі значення рядок_формату, повернути рядок. Коди форматування:"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:469
+#: ../../__w/calibre/calibre/manual/template_lang.rst:496
 msgid "``d    :`` the day as number without a leading zero (1 to 31)"
 msgstr "``d    :`` номер дня без початкового нуля (від 1 до 31)"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:470
+#: ../../__w/calibre/calibre/manual/template_lang.rst:497
 msgid "``dd   :`` the day as number with a leading zero (01 to 31)"
 msgstr "``dd   :`` номер дня з початковим нулем (від 01 до 31)"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:471
+#: ../../__w/calibre/calibre/manual/template_lang.rst:498
 msgid "``ddd  :`` the abbreviated localized day name (e.g. \"Mon\" to \"Sun\")."
 msgstr "``ddd  :`` скорочена локалізована назва дня тижня (від «пн» до «нд»)."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:472
+#: ../../__w/calibre/calibre/manual/template_lang.rst:499
 msgid "``dddd :`` the long localized day name (e.g. \"Monday\" to \"Sunday\")."
 msgstr "``dddd :`` довга локалізована назва дня (від «понеділок» до «неділя»)."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:473
+#: ../../__w/calibre/calibre/manual/template_lang.rst:500
 msgid "``M    :`` the month as number without a leading zero (1 to 12)."
 msgstr "``M    :`` номер місяця без початкового нуля (від 1 до 12)."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:474
+#: ../../__w/calibre/calibre/manual/template_lang.rst:501
 msgid "``MM   :`` the month as number with a leading zero (01 to 12)"
 msgstr "``MM   :`` номер місяця з початковим нулем (від 01 до 12)"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:475
+#: ../../__w/calibre/calibre/manual/template_lang.rst:502
 msgid "``MMM  :`` the abbreviated localized month name (e.g. \"Jan\" to \"Dec\")."
 msgstr "``MMM  :`` скорочена локалізована назва місяця (від «січ» до «гру»)."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:476
+#: ../../__w/calibre/calibre/manual/template_lang.rst:503
 msgid "``MMMM :`` the long localized month name (e.g. \"January\" to \"December\")."
 msgstr "``MMMM :`` повна локалізована назва місяця (від «січень» до «грудень»)."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:477
+#: ../../__w/calibre/calibre/manual/template_lang.rst:504
 msgid "``yy   :`` the year as two digit number (00 to 99)."
 msgstr "``yy   :`` рік як двоцифрове значення (від 00 до 99)."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:478
+#: ../../__w/calibre/calibre/manual/template_lang.rst:505
 msgid "``yyyy :`` the year as four digit number."
 msgstr "``yyyy :`` рік як чотирицифрове значення."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:479
+#: ../../__w/calibre/calibre/manual/template_lang.rst:506
 msgid ""
 "``h    :`` the hours without a leading 0 (0 to 11 or 0 to 23, depending on "
 "am/pm)"
 msgstr "``h    :`` години без початкового 0 (від 0 до 11 або від 0 до 23, залежно від am/pm)"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:480
+#: ../../__w/calibre/calibre/manual/template_lang.rst:507
 msgid ""
 "``hh   :`` the hours with a leading 0 (00 to 11 or 00 to 23, depending on "
 "am/pm)"
 msgstr "``hh   :`` години з початковим 0 (від 00 до 11 або від 00 до 23, залежно від am/pm)"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:481
+#: ../../__w/calibre/calibre/manual/template_lang.rst:508
 msgid "``m    :`` the minutes without a leading 0 (0 to 59)"
 msgstr "``m    :`` хвилини без початкового 0 (від 0 до 59)"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:482
+#: ../../__w/calibre/calibre/manual/template_lang.rst:509
 msgid "``mm   :`` the minutes with a leading 0 (00 to 59)"
 msgstr "``mm   :`` хвилини з початковим 0 (від 00 до 59)"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:483
+#: ../../__w/calibre/calibre/manual/template_lang.rst:510
 msgid "``s    :`` the seconds without a leading 0 (0 to 59)"
 msgstr "``s    :`` секунди без початкового 0 (від 0 до 59)"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:484
+#: ../../__w/calibre/calibre/manual/template_lang.rst:511
 msgid "``ss   :`` the seconds with a leading 0 (00 to 59)"
 msgstr "``ss   :`` секунди з початковим 0 (від 00 до 59)"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:485
+#: ../../__w/calibre/calibre/manual/template_lang.rst:512
 msgid ""
 "``ap   :`` use a 12-hour clock instead of a 24-hour clock, with 'ap' "
 "replaced by the localized string for am or pm."
 msgstr "``ap   :`` використовувати 12-годинний формат замість 24-годинного, із 'ap', яке буде замінено на локалізований рядок для am або pm."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:486
+#: ../../__w/calibre/calibre/manual/template_lang.rst:513
 msgid ""
 "``AP   :`` use a 12-hour clock instead of a 24-hour clock, with 'AP' "
 "replaced by the localized string for AM or PM."
 msgstr "``AP   :`` використовувати 12-годинний формат замість 24-годинного, із 'AP', яке буде замінено на локалізований рядок для am або pm."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:487
+#: ../../__w/calibre/calibre/manual/template_lang.rst:514
 msgid ""
 "``iso  :`` the date with time and timezone. Must be the only format present."
 msgstr "``iso  :`` дата із часом і часовим поясом. Має бути єдиним вказаним значенням форматування."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:488
+#: ../../__w/calibre/calibre/manual/template_lang.rst:515
 msgid ""
 "``to_number   :`` convert the date & time into a floating point number (a "
 "`timestamp`)"
 msgstr "``to_number   :`` перетворити дату і час у число із рухомою крапкою (`часову позначку`)"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:489
+#: ../../__w/calibre/calibre/manual/template_lang.rst:516
 msgid ""
 "``from_number :`` convert a floating point number (a `timestamp`) into an "
 "``iso`` formatted date. If you want a different date format then add the "
@@ -1430,7 +1487,7 @@ msgid ""
 "Example: ``from_number:MMM dd yyyy``"
 msgstr "``from_number :`` перетворити число з рухомою крапкою (`часову позначку`) на дату у форматі ``iso``. Якщо вам потрібен інший формат дати, додайте бажаний рядок форматування після ``from_number`` і двокрапки (``:``). Приклад: ``from_number:MMM dd yyyy``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:491
+#: ../../__w/calibre/calibre/manual/template_lang.rst:518
 msgid ""
 "You might get unexpected results if the date you are formatting contains "
 "localized month names, which can happen if you changed the date format "
@@ -1438,11 +1495,11 @@ msgid ""
 "function as in::"
 msgstr "Результати можуть бути не такими, на які ви сподівалися, якщо форматована дата містить локалізовані назви місяців, що може трапитися, якщо ви змінили коригування формату на такі, які містять ``MMMM``. У цьому випадку скористайтеся функцією ``field()``, як у прикладі::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:495
+#: ../../__w/calibre/calibre/manual/template_lang.rst:522
 msgid "use the ``raw_field()`` function as in::"
 msgstr "скористайтеся функцією ``raw_field()``, як у::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:499
+#: ../../__w/calibre/calibre/manual/template_lang.rst:526
 msgid ""
 "``formats_modtimes(date_format_string)`` -- return a comma-separated list of"
 " colon-separated items ``FMT:DATE`` representing modification times for the "
@@ -1452,7 +1509,7 @@ msgid ""
 " format. Note that format names are always uppercase, as in EPUB."
 msgstr "``formats_modtimes(рядок_формату_дати)`` — повертає відокремлений комами список відокремлених двокрапками пунктів ``ФОРМАТ:ДАТА``, які відповідають часу внесення змін до файлів форматів книги. Параметр ``рядок_формату_дати`` визначає спосіб форматування дати. Докладніше про цей формат можна дізнатися з опису функції ``format_date()``. Для отримання даних щодо часу внесення змін до одного з форматів ви можете скористатися функцією ``select``. Зауважте, що назви форматів буде вказано великими літерами, наприклад EPUB."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:500
+#: ../../__w/calibre/calibre/manual/template_lang.rst:527
 msgid ""
 "``formats_paths()`` -- return a comma-separated list of colon-separated "
 "items ``FMT:PATH`` giving the full path to the formats of a book. You can "
@@ -1460,7 +1517,7 @@ msgid ""
 "format names are always uppercase, as in EPUB."
 msgstr "``formats_paths()`` — повернути розділений комами список розділених двокрапками записів ``ФОРМАТ:ШЛЯХ``, щоб відповідають шляхам до файлів книги у різних форматах. Для отримання шляху до файла певного формату ви можете скористатися функцією select. Зауважте, що назви форматів слід вказувати великими літерами, ось так: EPUB."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:501
+#: ../../__w/calibre/calibre/manual/template_lang.rst:528
 msgid ""
 "``formats_sizes()`` -- return a comma-separated list of colon-separated "
 "``FMT:SIZE`` items giving the sizes in bytes of the formats of a book. You "
@@ -1468,20 +1525,20 @@ msgid ""
 " format names are always uppercase, as in EPUB."
 msgstr "``formats_sizes()`` — повертає відокремлений комами список відокремлених двокрапками пунктів ``ФОРМАТ:РОЗМІР``, які відповідають об'єму у байтах файлів форматів книги. Для отримання даних щодо об'єму файла у одному з форматів ви можете скористатися функцією select. Зауважте, що назви форматів буде вказано великими літерами, наприклад EPUB."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:502
+#: ../../__w/calibre/calibre/manual/template_lang.rst:529
 msgid ""
 "``fractional_part(x)`` -- returns the value after the decimal point. For "
 "example, ``fractional_part(3.14)`` returns ``0.14``. Throws an exception if "
 "``x`` is not a number."
 msgstr "``fractional_part(x)`` — повертає дробову частину десяткового числа. Наприклад, ``fractional_part(3.14)`` дорівнює ``0.14``. Надсилає виключення, якщо ``x`` не є числом."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:503
+#: ../../__w/calibre/calibre/manual/template_lang.rst:530
 msgid ""
 "``has_cover()`` -- return ``'Yes'`` if the book has a cover, otherwise the "
 "empty string."
 msgstr "``hascover()`` — повертає «Yes», якщо у книги є зображення обкладинки, інакше повертає порожній рядок."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:504
+#: ../../__w/calibre/calibre/manual/template_lang.rst:531
 msgid ""
 "``is_marked()`` -- check whether the book is `marked` in calibre. If it is "
 "then return the value of the mark, either ``'true'`` (lower case) or a "
@@ -1489,7 +1546,7 @@ msgid ""
 "the book is not marked. This function works only in the GUI."
 msgstr "``is_marked()`` — перевірити, чи має книга стан `marked` у calibre. Якщо це так, буде повернуто значення позначки, або ``'true'`` (у нижньому регістрі), або список іменованих позначок, які відокремлено комами. Повертає ``''`` (порожній рядок), якщо книгу не позначено. Ця функція працює лише у графічному інтерфейсі."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:505
+#: ../../__w/calibre/calibre/manual/template_lang.rst:532
 msgid ""
 "``language_codes(lang_strings)`` -- return the `language codes "
 "<https://www.loc.gov/standards/iso639-2/php/code_list.php>`_ for the "
@@ -1497,7 +1554,7 @@ msgid ""
 " of the current locale. ``Lang_strings`` is a comma-separated list."
 msgstr "``language_codes(рядки_мов)`` — повертає `коди мов <https://www.loc.gov/standards/iso639-2/php/code_list.php>`_ для назв мов, які передано за допомогою аргументу `рядки_мов`. Рядки має бути вказано мовою поточної локалі. Аргумент ``рядки_мов`` є списком значень, які відокремлено комами."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:506
+#: ../../__w/calibre/calibre/manual/template_lang.rst:533
 msgid ""
 "``list_contains(value, separator, [ pattern, found_val, ]* not_found_val)`` "
 "-- (Alias of ``in_list``) Interpreting the value as a list of items "
@@ -1509,14 +1566,14 @@ msgid ""
 "is returned. Aliases: ``in_list()``, ``list_contains()``"
 msgstr "``list_contains(значення, роздільник, [ взірець, значення_якщо_знайдено, ] значення_якщо_не_знайдено)`` — (альтернатива ``in_list``) обробляє значення як список пунктів, відокремлених ``роздільником``, порівнює взірець з кожним зі значень у списку. Якщо рядок збігається зі значенням, повертає ``значення_якщо_знайдено``, інакше повертає ``значення_якщо_не_знайдено``. Значення ``взірець`` і ``значення_якщо_знайдено`` можна повторювати довільну кількість разів, залежно від пошуку. Перевірка взірців виконується послідовно. Функція повертає перший знайдений відповідник. Варіанти: ``in_list()``, ``list_contains()``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:507
+#: ../../__w/calibre/calibre/manual/template_lang.rst:534
 msgid ""
 "``list_count(value, separator)`` -- interprets ``value`` as a list of items "
 "separated by ``separator``, returning the count of items in the list. "
 "Aliases: ``count()``, ``list_count()``"
 msgstr "``list_count(значення, роздільник)`` — за заданим ``значенням`` списком пунктів, відокремлених роздільником ``роздільник``, повертає кількість пунктів у списку. Варіанти: ``count()``, ``list_count()``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:508
+#: ../../__w/calibre/calibre/manual/template_lang.rst:535
 msgid ""
 "``list_count_matching(list, pattern, separator)`` -- interprets ``list`` as "
 "a list of items separated by ``separator``, returning the number of items in"
@@ -1524,7 +1581,7 @@ msgid ""
 "``list_count_matching()``, ``count_matching()``"
 msgstr "``list_count_matching(список, взірець, роздільник)`` — за заданим значенням списком пунктів, відокремлених роздільником «роздільник», повертає кількість пунктів у списку, які відповідають заданому формальним виразом взірцю. Варіанти: ``list_count_matching()``, ``count_matching()``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:509
+#: ../../__w/calibre/calibre/manual/template_lang.rst:536
 msgid ""
 "``list_difference(list1, list2, separator)`` -- return a list made by "
 "removing from ``list1`` any item found in ``list2`` using a case-insensitive"
@@ -1532,7 +1589,7 @@ msgid ""
 "separator, as are the items in the returned list."
 msgstr "``list_difference(список1, список2, роздільник)`` — повертає список, створений вилученням зі списку ``список1`` всіх пунктів, які містяться у списку ``список2``, на основі порівняння без врахування регістру. Пункти у списках ``список1`` і ``список2`` відокремлюються роздільником «роздільник», як і пункти у повернутому функцією списку."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:510
+#: ../../__w/calibre/calibre/manual/template_lang.rst:537
 msgid ""
 "``list_equals(list1, sep1, list2, sep2, yes_val, no_val)`` -- return "
 "``yes_val`` if ``list1`` and `list2` contain the same items, otherwise "
@@ -1541,7 +1598,7 @@ msgid ""
 "in the lists is not relevant. The comparison is case-insensitive."
 msgstr "``list_equals(список1, роздільник1, список2, роздільник2, значення_якщо_так, значення_якщо_ні)`` — повертає ``значення_якщо_так``, якщо ``список1`` і ``список2`` містять однакові записи``. Якщо це не так, повертає ``значення_якщо_ні``. Записи визначаються поділом кожного зі списків на основі вказаного символу роздільника (``роздільник1`` або ``роздільник2``). Порядок записів у списках не береться до уваги. Порівняння виконуватиметься без врахування регістру символів."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:511
+#: ../../__w/calibre/calibre/manual/template_lang.rst:538
 msgid ""
 "``list_intersection(list1, list2, separator)`` -- return a list made by "
 "removing from ``list1`` any item not found in ``list2``, using a case-"
@@ -1549,7 +1606,7 @@ msgid ""
 "by separator, as are the items in the returned list."
 msgstr "``list_intersection(список1, список2, роздільник)`` — повертає список, створений вилученням зі списку ``список1`` всіх пунктів, яких немає у списку ``список2``, на основі порівняння без врахування регістру. Пункти у списках ``список1`` і ``список2`` відокремлюються роздільником «роздільник», як і пункти у повернутому функцією списку."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:512
+#: ../../__w/calibre/calibre/manual/template_lang.rst:539
 msgid ""
 "``list_join(with_separator, list1, separator1 [, list2, separator2]*)`` -- "
 "return a list made by joining the items in the source lists (``list1`` etc) "
@@ -1563,18 +1620,18 @@ msgid ""
 " than one character."
 msgstr "``list_join(із_роздільником, список1, роздільник1 [, список2, роздільник2]*)`` — повертає список, створений об'єднанням записів у початкових списках (``список1``, ``список2`` тощо) з використанням роздільника ``із_роздільником`` між записами у списку-результаті. Записи у кожному із початкових списків ``список[123...]`` розділено відповідним роздільником ``роздільник[123...]``. У списку можуть міститися нульові значення. Він може бути полем, подібним до поля видавця, яке має одне значення, фактично, списком з одного запису. Дублікати буде вилучено з використанням порівняння без врахування регістру символів. Записи буде повернуто у порядку, у якому їх вказано у початкових списках. Якщо записи у списках відрізняються лише регістром символів, буде використано останній з них. Усі роздільники можуть складатися з декількох символів."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:514
-#: ../../__w/calibre/calibre/manual/template_lang.rst:536
+#: ../../__w/calibre/calibre/manual/template_lang.rst:541
+#: ../../__w/calibre/calibre/manual/template_lang.rst:563
 msgid "Example::"
 msgstr "Приклад::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:519
+#: ../../__w/calibre/calibre/manual/template_lang.rst:546
 msgid ""
 "You can use ``list_join`` on the results of previous calls to ``list_join`` "
 "as follows::"
 msgstr "Ви можете скористатися ``list_join`` для обробки результатів попередніх викликів ``list_join`` ось так::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:525
+#: ../../__w/calibre/calibre/manual/template_lang.rst:552
 msgid ""
 "You can use expressions to generate a list. For example, assume you want "
 "items for ``authors`` and ``#genre``, but with the genre changed to the word"
@@ -1582,7 +1639,7 @@ msgid ""
 "\"Fiction\" becomes \"Genre: F\". The following will do that::"
 msgstr "Для створення списку ви можете скористатися виразами. Наприклад, припустімо, вам потрібні записи для ``authors`` і ``#genre``, але із жанром, заміненим на слово «Genre: », за яким має бути вказано першу літеру жанру, тобто, якщо жанром є «Fiction», матимемо «Genre: F». Результату можна досягти так::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:530
+#: ../../__w/calibre/calibre/manual/template_lang.rst:557
 msgid ""
 "``list_re(src_list, separator, include_re, opt_replace)`` -- Construct a "
 "list by first separating ``src_list`` into items using the ``separator`` "
@@ -1592,7 +1649,7 @@ msgid ""
 "returned list."
 msgstr "``list_re(початковий_список, роздільник, фв_пошуку, пар_заміни)`` — будує список таким чином: спочатку поділяє ``початковий_список`` на запис на основі вказаного символу ``роздільник``. Для кожного з записів у списку перевіряє відповідність формальному виразу ``фв_пошуку``. Якщо відповідність буде встановлено, запис буде додано до повернутого списку. Якщо параметр ``пар_заміни`` не буде порожнім, заміну буде виконано до додавання запису до повернутого списку."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:531
+#: ../../__w/calibre/calibre/manual/template_lang.rst:558
 msgid ""
 "``list_re_group(src_list, separator, include_re, search_re [, "
 "template_for_group]*)`` -- Like list_re except replacements are not "
@@ -1600,7 +1657,7 @@ msgid ""
 " replacements."
 msgstr "``list_re_group(список_джерел, роздільник, фв_включення, фв_пошуку [, шаблон_групи]*)`` — Подібне до list_re, але замінники є обов’язковими. Використовує ``re_group(пункт_списку, фв_пошуку, шаблон ...)`` під час виконання замін у остаточному списку."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:532
+#: ../../__w/calibre/calibre/manual/template_lang.rst:559
 msgid ""
 "``list_remove_duplicates(list, separator)`` -- return a list made by "
 "removing duplicate items in ``list``. If items differ only in case then the "
@@ -1608,7 +1665,7 @@ msgid ""
 "are the items in the returned list."
 msgstr "``list_remove_duplicatesunion(список, роздільник)`` — повертає список, створений вилученням дублікатів з початкового ``списку``. Якщо записи пунктів відрізнятимуться лише регістром символів, буде повернуто лише останній з них. Пункти у ``списку`` має бути відокремлено ``роздільником``, який також буде використано під час формування списку-результату."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:533
+#: ../../__w/calibre/calibre/manual/template_lang.rst:560
 msgid ""
 "``list_sort(list, direction, separator)`` -- return ``list`` sorted using a "
 "case-insensitive lexical sort. If ``direction`` is zero, ``list`` is sorted "
@@ -1616,7 +1673,7 @@ msgid ""
 "``separator``, as are the items in the returned list."
 msgstr "``list_sort(список, напрямок, роздільник)`` — повертає список, впорядкований без врахування регістру. Якщо значенням параметра ``напрямок`` є нуль, список буде впорядковано за зростанням. Якщо значення буде іншим, список впорядковуватиметься за спаданням. Записи у початковому списку має бути відокремлено ``роздільником``, як і записи у списку-результаті."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:534
+#: ../../__w/calibre/calibre/manual/template_lang.rst:561
 msgid ""
 "``list_split(list_val, sep, id_prefix)`` -- splits ``list_val`` into "
 "separate values using ``sep``, then assigns the values to local variables "
@@ -1625,11 +1682,11 @@ msgid ""
 "the list."
 msgstr "``lis_split(значення_список, роздільник, префікс_ідентифікатора)`` — ділить ``значення_список`` на окремі значення з використанням роздільника ``роздільник``, а потім надає значення локальним змінним із назвами ``префікс_ідентифікатора_N``, де N — позиція значення у списку. Перший запис має позицію 0 (нуль). Функція повертає останній елемент у списку."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:540
+#: ../../__w/calibre/calibre/manual/template_lang.rst:567
 msgid "is equivalent to::"
 msgstr "дає такий результат::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:546
+#: ../../__w/calibre/calibre/manual/template_lang.rst:573
 msgid ""
 "``list_union(list1, list2, separator)`` -- return a list made by merging the"
 " items in ``list1`` and ``list2``, removing duplicate items using a case-"
@@ -1639,33 +1696,33 @@ msgid ""
 "``list_union()``"
 msgstr "``list_union(список1, список2, роздільник)`` — повертає список, створений за допомогою об'єднання пунктів у списках ``список1`` і ``список2` з вилученням дублікатів, виявлених шляхом порівняння без врахування регістру символів. Якщо записи пунктів відрізнятимуться лише регістром символів, використовуватиметься пункт зі списку ``список1``. Пункти у списках ``список1`` і ``список2`` має бути відокремлено ``роздільником``, який також буде використано під час формування списку-результату. Варіанти: `merge_lists()``, ``list_union()``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:547
+#: ../../__w/calibre/calibre/manual/template_lang.rst:574
 msgid ""
 "``mod(x, y)`` -- returns the ``floor`` of the remainder of ``x / y``. Throws"
 " an exception if either ``x`` or ``y`` is not a number."
 msgstr "``mod(x)`` — повертає ``floor`` від лишку від ділення ``x / y``. Повідомляє про виключення, якщо ``x`` або ``y`` не є числом."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:548
+#: ../../__w/calibre/calibre/manual/template_lang.rst:575
 msgid ""
 "``multiply(x [, y]*)`` -- returns the product of its arguments. Throws an "
 "exception if any argument is not a number. This function can usually be "
 "replaced by the ``*`` operator."
 msgstr "``multiply(x [, y]*)`` — повертає добуток аргументів. Надсилає повідомлення про виключення, якщо аргумент не є числом. Зазвичай, цю функцію можна замінити оператором ``*``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:549
+#: ../../__w/calibre/calibre/manual/template_lang.rst:576
 msgid ""
 "``not(value)`` -- returns the string \"1\" if the value is empty, otherwise "
 "returns the empty string. This function can usually be replaced with the "
 "unary not (``!``) operator."
 msgstr "``not(значення)`` — повертає рядок «1», якщо значення не є порожнім. Якщо значення є порожнім, повертає порожній рядок. Зазвичай, цю функцію можна замінити на унарний оператор «НІ» (``!``)."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:550
+#: ../../__w/calibre/calibre/manual/template_lang.rst:577
 msgid ""
 "``ondevice()`` -- return the string ``'Yes'`` if ``ondevice`` is set, "
 "otherwise return the empty string."
 msgstr "ondevice() — повертає ``'Yes'``, якщо встановлено ``ondevice``, інакше повертає порожній рядок"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:551
+#: ../../__w/calibre/calibre/manual/template_lang.rst:578
 msgid ""
 "``or(value [, value]*)`` -- returns the string ``'1'`` if any value is not "
 "empty, otherwise returns the empty string. You can have as many values as "
@@ -1674,7 +1731,7 @@ msgid ""
 "because of side effects."
 msgstr "``or(значення [, значення]*)`` — повертає рядок ``\"'1\"``, якщо хоч одне значення не є порожнім. Якщо всі значення є порожніми, повертає порожній рядок. Кількість значень може бути довільною. Зазвичай, цю функцію можна замінити оператором ``||``. Причиною того, що її не можна замінити, є те, що при оптимізації обчислення може бути змінено результати через сторонні ефекти."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:552
+#: ../../__w/calibre/calibre/manual/template_lang.rst:579
 msgid ""
 "``print(a [, b]*)`` -- prints the arguments to standard output. Unless you "
 "start calibre from the command line (``calibre-debug -g``), the output will "
@@ -1682,7 +1739,7 @@ msgid ""
 "argument."
 msgstr "``print(a [, b]*)`` — виводить аргументи до стандартного виведення. Якщо ви не запускали calibre з командного рядка (calibre-debug -g), дані нікуди не буде виведено. Функція ``print`` завжди повертає свій перший аргумент."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:556
+#: ../../__w/calibre/calibre/manual/template_lang.rst:583
 msgid ""
 "``range(start, stop, step, limit)`` -- returns a list of numbers generated "
 "by looping over the range specified by the parameters start, stop, and step,"
@@ -1698,7 +1755,7 @@ msgid ""
 " ``stop``, ``step`` and ``limit``. Examples::"
 msgstr "``range(початок, кінець, крок, обмеження)`` — повертає список, який створено циклічним проходженням діапазону, який вказано параметрами «початок», «кінець» та «крок» із максимальною довжиною «обмеження». Першим значенням у списку буде «початок». Наступними значеннями будуть ``наступне_значення = поточне_значення + крок``. Проходження циклу триватиме, доки ``наступне_значення < кінець`` , якщо ``крок`` є додатним, інакше, доки ``наступне_значення > кінець``. Буде виведено порожній список, якщо не буде виконано умову ``початок >= кінець`` і ``крок`` є додатним. Значення ``обмеження`` встановлює максимальну довжину списку. Типовим значенням є 1000. Параметри ``початок``, ``крок`` і ``обмеження`` є необов'язковими. Виклик ``range()`` із одним аргументом задає ``кінець``. Два аргументи задають ``початок`` і ``кінець``. Три аргументи задають ``початок``, ``кінець`` і ``крок``. Чотири аргументи задають ``початок``, ``кінець``, ``крок`` і ``обмеження``. Приклади::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:566
+#: ../../__w/calibre/calibre/manual/template_lang.rst:593
 msgid ""
 "``raw_field(lookup_name [, optional_default])`` -- returns the metadata "
 "field named by ``lookup_name`` without applying any formatting. It evaluates"
@@ -1706,14 +1763,14 @@ msgid ""
 "field's value is undefined (``None``)."
 msgstr "``raw_field(назва_для_пошуку [, необов'язкове_типове_значення])`` — повертає вміст іменованого поля метаданих без застосування форматування. Обробляє і повертає додатковий другий аргумент, ``необов'язкове_типове_значення``, якщо значення поля не визначено (``None``)."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:567
+#: ../../__w/calibre/calibre/manual/template_lang.rst:594
 msgid ""
 "``raw_list(lookup_name, separator)`` -- returns the metadata list named by "
 "``lookup_name`` without applying any formatting or sorting, with the items "
 "separated by separator."
 msgstr "``raw_list(назва_для_пошуку, роздільник)`` — повертає список метаданих з назвою «назва_для_пошуку» без застосування будь-якого форматування або упорядковування. Записи у списку буде відокремлено значенням «роздільник»."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:568
+#: ../../__w/calibre/calibre/manual/template_lang.rst:595
 msgid ""
 "``re_group(value, pattern [, template_for_group]*)`` --  return a string "
 "made by applying the regular expression pattern to ``value`` and replacing "
@@ -1723,29 +1780,29 @@ msgid ""
 " for ``}``."
 msgstr "``re_group(значення, взірець [, шаблон_для_групи]*)`` — повертає рядок, створений за допомогою застосування формального виразу заданого зразком до ``значення`` та заміною кожного з відповідників значенням, повернутим відповідним шаблоном. У :ref:`режимі шаблонного програмування <template_mode>`, як і у функціях template та eval, замість ``{`` слід використовувати ``[[``, замість `}` — ``]]``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:570
+#: ../../__w/calibre/calibre/manual/template_lang.rst:597
 msgid ""
 "The following example looks for a series with more than one word and "
 "uppercases the first word::"
 msgstr "У наведеному нижче прикладі виконується пошук записів циклів із декількох слів і перша літера першого слова замінюється на велику::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:574
+#: ../../__w/calibre/calibre/manual/template_lang.rst:601
 msgid ""
 "``round(x)`` -- returns the nearest integer to ``x``. Throws an exception if"
 " ``x`` is not a number."
 msgstr "``round(x)`` — повертає найближче до ``x`` ціле число. Надсилає виключення, якщо ``x`` не є числом."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:575
+#: ../../__w/calibre/calibre/manual/template_lang.rst:602
 msgid "``series_sort()`` -- returns the series sort value."
 msgstr "series_sort() — повертає значення впорядкування циклу."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:576
+#: ../../__w/calibre/calibre/manual/template_lang.rst:603
 msgid ""
 "``strcat(a [, b]*)`` -- can take any number of arguments. Returns a string "
 "formed by concatenating all the arguments."
 msgstr "``strcat(a [, b]*)`` — може приймати довільну кількість аргументів. Повертає рядок, отриманий з'єднанням всіх аргументів.."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:577
+#: ../../__w/calibre/calibre/manual/template_lang.rst:604
 msgid ""
 "``strcat_max(max, string1 [, prefix2, string2]*)`` -- Returns a string "
 "formed by concatenating the arguments. The returned value is initialized to "
@@ -1755,7 +1812,7 @@ msgid ""
 "than ``max``. You can pass as many ``prefix, string`` pairs as you wish."
 msgstr "strcat_max(максимум, рядок1 [, префікс2, рядок2]*) — повертає рядок, утворений об’єднанням аргументів функції. Початковим значенням результату буде ``рядок1``. Пари ``префікс, рядок`` додаватимуться в кінець результату, якщо довжина рядка-результату не перевищуватиме значення ``максимум``. Префікси можуть бути порожніми. Значення ``рядок1`` буде повернуто, навіть якщо довжина рядка ``рядок1`` перевищує ``максимум``. Функції можна передавати довільну кількість пар ``префікс, рядок``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:578
+#: ../../__w/calibre/calibre/manual/template_lang.rst:605
 msgid ""
 "``strcmp(x, y, lt, eq, gt)`` -- does a case-insensitive lexical comparison "
 "of ``x`` and ``y``. Returns ``lt`` if ``x < y``, ``eq`` if ``x == y``, "
@@ -1763,11 +1820,11 @@ msgid ""
 "comparison operators (``==``, ``>``, ``<``, etc.)"
 msgstr "strcmp(x, y, lt, eq, gt) — виконує лексичне порівняння ``x`` і ``y`` без врахування регістру. Повертає ``lt``, якщо ``x < y`, ``eq``, якщо ``x == y``, в усіх інших випадках повертає ``gt``. Цю функцію часто може бути замінено одним із операторів лексичного порівняння (``==``, ``>``, ``<`` тощо)"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:579
+#: ../../__w/calibre/calibre/manual/template_lang.rst:606
 msgid "``strlen(value)`` -- Returns the length of the string ``value``."
 msgstr "``strlen(значення)`` — повертає довжину рядка ``значення``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:580
+#: ../../__w/calibre/calibre/manual/template_lang.rst:607
 msgid ""
 "``substr(str, start, end)`` -- returns the ``start``'th through the "
 "``end``'th characters of ``str``. The first character in ``str`` is the "
@@ -1777,14 +1834,14 @@ msgid ""
 "``'2345'``, and ``substr('12345', 1, -1)`` returns ``'234'``."
 msgstr "``substr(рядок, початок, кінець)`` — повертає символи від символу з номером ``початок`` до символу з номером ``кінець`` у рядку ``рядок``. Вважається, що у рядок починається з нульового символу. Якщо значення ``кінець`` є від’ємним, символи буде відраховано у напрямку до початку рядка. Якщо значенням ``кінець`` є нуль, кінцем вважатиметься останній символ. Приклади: ``substr('12345', 1, 0)`` повертає ``'2345'``, а ``substr('12345', 1, -1)`` повертає ``'234'``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:581
+#: ../../__w/calibre/calibre/manual/template_lang.rst:608
 msgid ""
 "``subtract(x, y)`` -- returns ``x - y``. Throws an exception if either ``x``"
 " or ``y`` are not numbers. This function can usually be replaced by the "
 "``-`` operator."
 msgstr "``subtract(x, y)`` — повертає різницю ``x - y``. Повідомляє про виключення, якщо ``x`` або ``y`` не є числом. Зазвичай, цю функцію можна замінити оператором ``-``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:582
+#: ../../__w/calibre/calibre/manual/template_lang.rst:609
 msgid ""
 "``today()`` -- return a date+time string for today (now). This value is "
 "designed for use in `format_date` or `days_between`, but can be manipulated "
@@ -1792,14 +1849,14 @@ msgid ""
 "<https://en.wikipedia.org/wiki/ISO_8601>`_ date/time format."
 msgstr "``today()`` — повертає сьогоднішню дату і час (зараз). Це значення створено для використання у `format_date` або `days_between`, але з ним можна працювати як зі звичайним рядком. Дату буде повернуто у форматі ISO <https://en.wikipedia.org/wiki/ISO_8601>`_."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:583
+#: ../../__w/calibre/calibre/manual/template_lang.rst:610
 msgid ""
 "``template(x)`` -- evaluates ``x`` as a template. The evaluation is done in "
 "its own context, meaning that variables are not shared between the caller "
 "and the template evaluation."
 msgstr "``template(x)`` — обробляє ``x`` як шаблон. Обробка виконується у власному контексті, тобто змінні не є спільними для обробки функції виклику і шаблона."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:584
+#: ../../__w/calibre/calibre/manual/template_lang.rst:611
 msgid ""
 "``urls_from_identifiers(identifiers, sort_results)`` -- given a comma-"
 "separated list of ``identifiers``, where an `identifier` is a colon-"
@@ -1811,11 +1868,11 @@ msgid ""
 "details`."
 msgstr "``urls_from_identifiers(ідентифікатори, упорядкувати_результати)`` — за заданим списком відокремлених комами ``ідентифікаторів``, де ідентифікатором є пара відокремлених двокрапкою значень (``назва:значення_ідентифікатора``), повертає список відокремлених комами адрес HTML на основі ідентифікаторів. Список лишиться неупорядкованим, якщо упорядкувати_результати має значення ``0`` (символ або число), інакше, список буде упорядковано за назвами ідентифікаторів. Адреси буде створено у той самий спосіб, що і для вбудованого стовпчика ідентифікаторів, який показано на панелі подробиць щодо книги."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:589
+#: ../../__w/calibre/calibre/manual/template_lang.rst:616
 msgid "More complex programs in template expressions - Template Program Mode"
 msgstr "Складніші програми у виразах шаблонів — режим програмування шаблонів."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:591
+#: ../../__w/calibre/calibre/manual/template_lang.rst:618
 msgid ""
 "`Template Program Mode` (`TPM`) is a blend of :ref:`General Program Mode "
 "<general_mode>` and :ref:`Single Function Mode <single_mode>`. `TPM` differs"
@@ -1827,7 +1884,7 @@ msgid ""
 " Program Mode expression list."
 msgstr "`Режим програмування шаблонів` є сумішшю :ref:`загального режиму програмування <general_mode>` і :ref:`режиму єдиної функції <single_mode>`. Режим програмування шаблонів відрізняється від режиму єдиної функції тим, що у ньому можна писати вирази шаблонів, які посилаються на інші поля метаданих, використовувати вкладені функції, змінювати значення змінних і виконувати арифметичні дії. Він відрізняється від загального режиму програмування тим, що шаблон міститься між символами ``{`` і ``}`` і не починається зі слова ``program:``. Програмна частина шаблона є списком виразів загального режиму програмування."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:594
+#: ../../__w/calibre/calibre/manual/template_lang.rst:621
 msgid ""
 "Example: assume you want a template to show the series for a book if it has "
 "one, otherwise show the value of a custom field #genre. You cannot do this "
@@ -1836,45 +1893,45 @@ msgid ""
 "you can, as the following expression demonstrates::"
 msgstr "Почнімо з прикладу. Припустімо, що ви хочете, щоб ваш шаблон показував цикл для книги, яка належить до циклу, і значення нетипового поля #genre, якщо книга не належить до циклів. Зробити це за допомогою :ref:`режиму єдиної функції <single_mode>` неможливо, оскільки ви не можете послатися на інше поле метаданих у виразі шаблона. Але у програмному режимі ви можете це зробити. Спрацює такий вираз::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:599
+#: ../../__w/calibre/calibre/manual/template_lang.rst:626
 msgid "The example shows several things:"
 msgstr "Приклад демонструє декілька речей:"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:601
+#: ../../__w/calibre/calibre/manual/template_lang.rst:628
 msgid ""
 "`TPM` is used if the expression begins with ``:'`` and ends with ``'``. "
 "Anything else is assumed to be in :ref:`Single Function Mode <single_mode>`."
 msgstr "`Режим програмування шаблонів` буде використано, якщо вираз починається з ``:'`` і завершується ``'``. Усі інші варіанти вважатимуться використанням :ref:`режиму єдиної функції <single_mode>`."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:602
+#: ../../__w/calibre/calibre/manual/template_lang.rst:629
 msgid ""
 "the variable ``$`` stands for the field named in the template: the "
 "expression is operating upon, ``#series`` in this case."
 msgstr "змінна ``$`` позначає іменоване у шаблоні поле, яке обробляє вираз; у нашому випадку це ``#series``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:603
+#: ../../__w/calibre/calibre/manual/template_lang.rst:630
 msgid ""
 "functions must be given all their arguments. There is no default value. For "
 "example, the standard built-in functions must be given an additional initial"
 " parameter indicating the source field."
 msgstr "функціями мають передаватися усі їхні аргументи. Типового значення немає. Наприклад, стандартним вбудованим функціями слід передавати додатковий початковий параметр, який вказує на поле джерела даних."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:604
+#: ../../__w/calibre/calibre/manual/template_lang.rst:631
 msgid "white space is ignored and can be used anywhere within the expression."
 msgstr "пробіли буде проігноровано; їх можна використовувати будь-де у виразі."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:605
+#: ../../__w/calibre/calibre/manual/template_lang.rst:632
 msgid ""
 "constant strings are enclosed in matching quotes, either ``'`` or ``\"``."
 msgstr "сталі рядки слід брати у відповідні лапки ``'`` або ``\"``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:607
+#: ../../__w/calibre/calibre/manual/template_lang.rst:634
 msgid ""
 "All the functions listed under `Single Function Mode` and `General Program "
 "Mode` can be used in `TPM`."
 msgstr "У `режимі програмування шаблонів` можна користуватися усіма функціями зі списків `режиму єдиної функції` і `загальному режимі програмування`."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:609
+#: ../../__w/calibre/calibre/manual/template_lang.rst:636
 msgid ""
 "In `TPM`, using ``{`` and ``}`` characters in string literals can lead to "
 "errors or unexpected results because they confuse the template processor. It"
@@ -1884,7 +1941,7 @@ msgid ""
 "you should use `General Program Mode`."
 msgstr "У режимі програмування шаблонів використання символів ``{`` і ``}`` у рядкових літералах режиму програмування шаблонів може призвести до помилок або неочікуваних результатів, оскільки ці символи заважають нормальній роботі обробника шаблонів. Він намагається обробити їх як межі виразу шаблона, а не символи. У деяких, але не в усіх випадках, ви можете замінити ``{`` на ``[[`` і ``}`` на `]]`. Загалом кажучи, якщо у вашій програмі є символи ``{`` і ``}``, вам слід користуватися `загальним режимом програмування`."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:611
+#: ../../__w/calibre/calibre/manual/template_lang.rst:638
 msgid ""
 "As with `General Program Mode`, for functions documented under :ref:`Single "
 "Function Mode <single_mode>` you must supply the value the function is to "
@@ -1893,11 +1950,11 @@ msgid ""
 "name`` for the template expression."
 msgstr "Як і у `загальному режимі програмування`, для функцій з документації до :ref:`режиму єдиної функції <single_mode>` вам доведеться передати функції значення, з яким вона має працювати, як перший параметр, додаткового до документованих параметрів. У режимі програмування шаблонів ви можете скористатися ``$`` для доступу до значення, яке вказано ``назвою для пошуку`` для виразу шаблона."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:614
+#: ../../__w/calibre/calibre/manual/template_lang.rst:641
 msgid "Stored general program mode templates"
 msgstr "Збережені шаблони загального режиму програмування"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:616
+#: ../../__w/calibre/calibre/manual/template_lang.rst:643
 msgid ""
 ":ref:`General Program Mode <general_mode>` supports saving templates and "
 "calling those templates from another template, much like calling stored "
@@ -1909,24 +1966,24 @@ msgid ""
 "named ``foo``:"
 msgstr "У :ref:`загальному режимі програмування <general_mode>` передбачено можливість збереження шаблонів загального режиму програмування та виклику цих шаблонів з інших шаблонів, подібно до виклику збережених функцій. Зберегти шаблони можна за допомогою пункту :guilabel:`Налаштування->Додатково->Шаблонні функції`. у відповідному діалоговому вікні буде наведено довідкову інформації. Викликати шаблон можна у той самий спосіб, що і функцію, передавши йому, якщо потрібно, позиційні аргументи. Аргументом може бути будь-який вираз. Приклади виклику шаблону, де ми припускаємо, що збережений шаблон має назву ``foo``:"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:618
+#: ../../__w/calibre/calibre/manual/template_lang.rst:645
 msgid "``foo()`` -- call the template passing no arguments."
 msgstr "``foo()`` — виклик шаблону без передавання аргументів."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:619
+#: ../../__w/calibre/calibre/manual/template_lang.rst:646
 msgid ""
 "``foo(a, b)`` call the template passing the values of the two variables "
 "``a`` and ``b``."
 msgstr "``foo(a, b)`` — виклик шаблону з передаванням значень двох змінних — ``a`` і ``b``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:620
+#: ../../__w/calibre/calibre/manual/template_lang.rst:647
 msgid ""
 "``foo(if field('series') then field('series_index') else 0 fi)`` -- if the "
 "book has a ``series`` then pass the ``series_index``, otherwise pass the "
 "value ``0``."
 msgstr "``foo(if field('series') then field('series_index') else 0 fi)`` — якщо книга належить до циклу, передати номер книги у циклі, інакше — передати значення ``0``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:622
+#: ../../__w/calibre/calibre/manual/template_lang.rst:649
 msgid ""
 "You retrieve the arguments passed in the call to the stored template using "
 "the ``arguments`` function. It both declares and initializes local "
@@ -1939,31 +1996,31 @@ msgid ""
 "``alternate``::"
 msgstr "Отримання аргументів відбувається за допомогою виклику збереженого шаблона за допомогою функції ``arguments``. Ця функція одразу оголошує і ініціалізує локальні змінні, які виконують роль параметрів. Ці змінні є позиційними — їм надається значення, яке стоїть у виклику на відповідній позиції. Якщо відповідне значення змінної не було надано у виклику, ``arguments`` надає параметру типового значення. Якщо типове значення не вказано, змінній буде надано значення порожнього рядка. Наприклад, наведена нижче функція ``arguments`` оголошує 2 змінні — ``key``, ``alternate``::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:626
+#: ../../__w/calibre/calibre/manual/template_lang.rst:653
 msgid "Examples, again assuming the stored template is named ``foo``:"
 msgstr "У наведених нижче прикладах знову припускаємо, що збережений шаблон має назву ``foo``:"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:628
+#: ../../__w/calibre/calibre/manual/template_lang.rst:655
 msgid ""
 "``foo('#myseries')`` -- argument ``key`` is assigned the value "
 "``'myseries'`` and the argument ``alternate`` is assigned the default value "
 "``'series'``."
 msgstr "``foo('#myseries')`` — аргумент ``key`` матиме значення ``'myseries'``, а аргумент ``alternate`` матиме типове значення ``'series'``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:629
+#: ../../__w/calibre/calibre/manual/template_lang.rst:656
 msgid ""
 "``foo('series', '#genre')`` the variable ``key`` is assigned the value "
 "``'series'`` and the variable ``alternate`` is assigned the value "
 "``'#genre'``."
 msgstr "``foo('series', '#genre')`` — змінній ``key`` буде надано значення ``'series'``, а змінній ``alternate`` — значення ``'#genre'``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:630
+#: ../../__w/calibre/calibre/manual/template_lang.rst:657
 msgid ""
 "``foo()`` -- the variable ``key`` is assigned the empty string and the "
 "variable ``alternate`` is assigned the value ``'series'``."
 msgstr "``foo()`` -— змінній ``key`` буде надано значення порожнього рядка, а змінній ``alternate`` — значення ``'series'``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:632
+#: ../../__w/calibre/calibre/manual/template_lang.rst:659
 msgid ""
 "An easy way to test stored templates is using the ``Template tester`` "
 "dialog. For ease of access give it a keyboard shortcut in "
@@ -1972,11 +2029,11 @@ msgid ""
 "rapidly between the tester and editing the stored template's source code."
 msgstr "Простим способом тестування збережених шаблонів є використання вікна ``Засіб тестування шаблонів``. Для полегшення доступу надайте цьому вікну клавіатурного скорочення за допомогою пункту :guilabel:`Налаштування->Додатково->Клавіатурні скорочення->Засіб тестування шаблонів`. Надання клавіатурного скорочення вікну ``Збережені шаблони`` допоможе вам швидше перемикатися між тестуванням та редагування початкового коду збереженого шаблону."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:635
+#: ../../__w/calibre/calibre/manual/template_lang.rst:662
 msgid "Providing additional information to templates"
 msgstr "Надання додаткової інформації шаблонам"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:637
+#: ../../__w/calibre/calibre/manual/template_lang.rst:664
 msgid ""
 "A developer can choose to pass additional information to the template "
 "processor, such as application-specific book metadata or information about "
@@ -1984,11 +2041,11 @@ msgid ""
 "information and use it during the evaluation."
 msgstr "Розробник може передати додаткові відомості обробнику шаблонів, зокрема, специфічні для книги метадані або відомості про те, що слід виконати обробнику. Шаблон може отримувати доступ до цих відомостей і використовувати їх під час обробки."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:639
+#: ../../__w/calibre/calibre/manual/template_lang.rst:666
 msgid "**Developer: how to pass additional information**"
 msgstr "**Розробник: як передати додаткові відомості**"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:641
+#: ../../__w/calibre/calibre/manual/template_lang.rst:668
 msgid ""
 "The additional information is a Python dictionary containing pairs "
 "``variable_name: variable_value`` where the values must be strings. The "
@@ -1999,23 +2056,23 @@ msgid ""
 "underscore."
 msgstr "Додатковими відомостями є словник Python, який містить пари ``назва_змінної: значення_змінної``, де значеннями мають бути рядки. Шаблон може отримувати доступ до словника, створюючи локальні змінні із назвами ``назва_змінної``, які міститимуть значення ``значення_змінної``. Користувач не може змінювати назву, тому краще користуватися назвами, які не збігатимуться із локальними змінними інших шаблонів. Можна, наприклад, додати до усіх назв початковий символ підкреслювання."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:643
+#: ../../__w/calibre/calibre/manual/template_lang.rst:670
 msgid ""
 "This dict is passed to the template processor (the ``formatter``) using the "
 "named parameter ``global_vars=your_dict``. The full method signature is::"
 msgstr "Цей словник буде передано обробнику шаблонів (``форматувальнику``) за допомогою іменованого параметра ``global_vars=ваш_словник``. Ось повний запис методу::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:651
+#: ../../__w/calibre/calibre/manual/template_lang.rst:678
 msgid "**Template writer: how to access the additional information**"
 msgstr "**Розробник шаблонів: як отримати доступ до додаткових відомостей**"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:653
+#: ../../__w/calibre/calibre/manual/template_lang.rst:680
 msgid ""
 "You access the additional information (the ``globals`` dict) in a template "
 "using the template function::"
 msgstr "Отримати доступ до додаткових відомостей (словника ``globals``) у шаблоні можна за допомогою шаблонної функції::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:657
+#: ../../__w/calibre/calibre/manual/template_lang.rst:684
 msgid ""
 "where ``id`` is any legal variable name. This function checks whether the "
 "additional information provided by the developer contains the name. If it "
@@ -2027,13 +2084,13 @@ msgid ""
 "the local variable."
 msgstr "де записом ``ідентифікатор`` є будь-яка коректна назва змінної. Ця функція перевіряє, чи у додаткових відомостях, наданих розробником, міститься відповідна назва. Якщо це так, функція призначає надане значення змінної локальній змінній із вказаною назвою. Якщо назву змінної не буде виявлено у додаткових відомостях і якщо вказано ``вираз``, буде виконано обчислення ``виразу`` із призначенням результату локальній змінній. Якщо не буде знайдено ні значення, ні виразу, локальній змінній буде призначено порожній рядок (``''``)."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:659
+#: ../../__w/calibre/calibre/manual/template_lang.rst:686
 msgid ""
 "A template can set a value in the ``globals`` dict using the template "
 "function::"
 msgstr "Шаблон може встановлювати значення у словнику ``globals`` за допомогою шаблонної функції::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:663
+#: ../../__w/calibre/calibre/manual/template_lang.rst:690
 msgid ""
 "This function sets the ``globals`` dict key:value pair ``id:value`` where "
 "``value`` is the value of the template local variable ``id``. If that local "
@@ -2041,11 +2098,11 @@ msgid ""
 "``expression``."
 msgstr "Ця функція встановлює значення пари словника ``globals`` ключ:значення ``ідентифікатор:значення``, де ``значенням`` є значення локальної змінної шаблона ``ідентифікатор``. Якщо такої локальної змінної не існує, ``значення`` буде встановлено для результату обчислення ``виразу``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:666
+#: ../../__w/calibre/calibre/manual/template_lang.rst:693
 msgid "Notes on the difference between modes"
 msgstr "Зауваження щодо відмінностей між режимами"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:668
+#: ../../__w/calibre/calibre/manual/template_lang.rst:695
 msgid ""
 "The three program modes, :ref:`Single Function Mode <single_mode>` (SFM), "
 ":ref:`Template Program Mode <template_mode>` (`TPM`), and :ref:`General "
@@ -2053,51 +2110,51 @@ msgid ""
 "be 'simple' so it hides a lot of programming language bits."
 msgstr "У роботі трьох режимів програмування, :ref:`режиму єдиної функції <single_mode>`, :ref:`режиму програмування шаблонів <template_mode>` та :ref:`загального режиму програмування <general_mode>` є відмінності. Режим єдиної функції є «простим», тому у ньому багато можливостей програмування «приховано»."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:670
+#: ../../__w/calibre/calibre/manual/template_lang.rst:697
 msgid "Differences:"
 msgstr "Відмінності:"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:672
+#: ../../__w/calibre/calibre/manual/template_lang.rst:699
 msgid ""
 "In SFM the value of the column is always passed as an 'invisible' first "
 "argument to a function included in the template."
 msgstr "У режимі єдиної функції значення стовпчика завжди передається як «невидимий» перший аргумент функції, включено до шаблона."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:673
+#: ../../__w/calibre/calibre/manual/template_lang.rst:700
 msgid ""
 "SFM doesn't support the difference between variables and strings; all values"
 " are strings."
 msgstr "У режимі єдиної функції не передбачено підтримки розрізнення між змінними і рядками; усі значення є рядками."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:674
+#: ../../__w/calibre/calibre/manual/template_lang.rst:701
 msgid ""
 "The following SFM template returns either the series name or the string \"no"
 " series\"::"
 msgstr "У наведеному нижче шаблоні режиму єдиної функції шаблон повертає або назву циклу, або рядок «no series»::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:678
+#: ../../__w/calibre/calibre/manual/template_lang.rst:705
 msgid "The equivalent template in `TPM` is ::"
 msgstr "Еквівалентний шаблон у режимі програмування шаблонів::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:682
+#: ../../__w/calibre/calibre/manual/template_lang.rst:709
 msgid "The equivalent template in `GPM` is::"
 msgstr "Еквівалентний шаблон у `режимі загального програмування`::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:686
+#: ../../__w/calibre/calibre/manual/template_lang.rst:713
 msgid ""
 "The first argument to ``ifempty`` is the value of the field ``series``. The "
 "second argument is the string ``no series``. In SFM the first argument, the "
 "value of the field, is automatically passed (the invisible argument)."
 msgstr "Першим аргументом ``ifempty`` є значення поля ``series``, а другим аргументом — рядок ``no series``. У режимі єдиної функції перший аргумент, значення поля, передається автоматично (невидимий аргумент)."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:687
+#: ../../__w/calibre/calibre/manual/template_lang.rst:714
 msgid ""
 "Several template functions, for example ``booksize()`` and "
 "``current_library_name()``, take no arguments. Because of the 'invisible "
 "argument' you cannot use these functions in SFM."
 msgstr "Декілька шаблонних функцій, зокрема ``booksize()`` і ``current_library_name()``, не приймають аргументів. Через наявність невидимого аргументу ви не зможете скористатися цими функціями у режимі єдиної функції."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:688
+#: ../../__w/calibre/calibre/manual/template_lang.rst:715
 msgid ""
 "Nested functions, where a function calls another function to compute an "
 "argument, cannot be used in SFM. For example this template, intended to "
@@ -2105,17 +2162,17 @@ msgid ""
 "SFM::"
 msgstr "У режимі єдиної функції не можна скористатися вкладеними функціями, коли одна з функцій викликає іншу функцію для обчислення свого аргументу. Наприклад, цей шаблон, який призначено для отримання перших 5 літер значення назви циклу у верхньому регістрі, не працюватиме у режимі єдиної функції::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:692
+#: ../../__w/calibre/calibre/manual/template_lang.rst:719
 msgid ""
 "`TPM` and `GPM` support nested functions. The above template in `TPM` would "
 "be::"
 msgstr "У шаблонному режимі програмування та загальному режимі програмування передбачено підтримку вкладених функцій. Наведений вище шаблон у шаблонному режимі програмування можна записати так::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:696
+#: ../../__w/calibre/calibre/manual/template_lang.rst:723
 msgid "In `GPM` it would be::"
 msgstr "У `загальному режимі програмування` це було б::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:700
+#: ../../__w/calibre/calibre/manual/template_lang.rst:727
 msgid ""
 "As noted in the above :ref:`Template Program Mode <template_mode>` section, "
 "using ``{`` and ``}`` characters in `TPM` string literals can lead to errors"
@@ -2126,11 +2183,11 @@ msgid ""
 "`General Program Mode`."
 msgstr "Як було зауважено вище у розділі :ref:`Режим програмування шаблонів <template_mode>`, використання символів ``{`` і ``}`` у рядкових літералах режиму програмування шаблонів може призвести до помилок або неочікуваних результатів, оскільки ці символи заважають нормальній роботі обробника шаблонів. Він намагається обробити їх як межі шаблона, а не символи. У деяких, але не в усіх випадках, ви можете замінити ``{`` на ``[[`` і ``}`` на `]]`. Загалом кажучи, якщо у вашій програмі є символи ``{`` і ``}``, вам слід користуватися `загальним режимом програмування`."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:704
+#: ../../__w/calibre/calibre/manual/template_lang.rst:731
 msgid "User-defined Python template functions"
 msgstr "Визначені користувачем шаблонні функції Python"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:706
+#: ../../__w/calibre/calibre/manual/template_lang.rst:733
 msgid ""
 "You can add your own Python functions to the template processor. Such "
 "functions can be used in any of the three template programming modes. The "
@@ -2138,11 +2195,11 @@ msgid ""
 "Template functions`. Instructions are shown in that dialog."
 msgstr "Ви можете додавати власні функції мовою Python до обробника шаблонів. Такими функціями можна скористатися в усіх трьох режимах програмування шаблонів. Додати функції можна за допомогою сторінки :guilabel:`Налаштування -> Додатково -> Шаблонні функції`. У діалоговому вікні, яке буде відкрито програмою, можна знайти відповідні настанови."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:709
+#: ../../__w/calibre/calibre/manual/template_lang.rst:736
 msgid "Special notes for save/send templates"
 msgstr "Спеціальні нотатки щодо шаблонів збереження або надсилання"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:711
+#: ../../__w/calibre/calibre/manual/template_lang.rst:738
 msgid ""
 "Special processing is applied when a template is used in a `save to disk` or"
 " `send to device` template. The values of the fields are cleaned, replacing "
@@ -2153,18 +2210,18 @@ msgid ""
 "create variable-depth folder structure."
 msgstr "До шаблонів, які використовуються для дій `зберегти на диск` і `надіслати на пристрій`, застосовується спеціальна обробка. Значення полів буде очищено із заміною символів, які мають спеціальне значення у файлових системах, зокрема символів похилих рисок, на символи підкреслювання. Це означає, що текст поля не можна використовувати для створення тек. Втім, похилі риски не замінюватимуться у рядках префікса і суфікса, отже похилі риски у цих рядках можна використати для створення тек. Таким чином, ви можете створити структуру тек довільного рівня вкладеності."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:713
+#: ../../__w/calibre/calibre/manual/template_lang.rst:740
 msgid ""
 "For example, assume we want the folder structure `series/series_index - "
 "title`, with the caveat that if series does not exist, then the title should"
 " be in the top folder. The template to do this is::"
 msgstr "Наприклад, припустімо ми хочемо створити структуру тек `цикл/номер_у_циклі - назва`, із умовою, що якщо циклу не існує, назву слід розташувати у верхній теці. Шаблон для виконання цього завдання::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:717
+#: ../../__w/calibre/calibre/manual/template_lang.rst:744
 msgid "The slash and the hyphen appear only if series is not empty."
 msgstr "Похила риска і дефіс мають з'являтися, лише якщо цикл не є порожнім."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:719
+#: ../../__w/calibre/calibre/manual/template_lang.rst:746
 msgid ""
 "The lookup function lets us do even fancier processing. For example, assume "
 "that if a book has a series, then we want the folder structure "
@@ -2174,25 +2231,25 @@ msgid ""
 "paths, depending on the value of series."
 msgstr "Функція `lookup` надає вам змогу виконувати виконувати навіть ще вишуканішу обробку. Наприклад, припустімо, що якщо книга належить до циклу, ми хочемо мати структуру тек `цикл/номер у циклі - назва.формат`. Якщо книга не належить до циклу, нам потрібна структура тек `жанр/упорядковане ім’я автора/назва.формат`. Якщо ж книга не належить до певного жанру, слід скористатися текою 'Unknown'. Нам потрібно два повністю різних шляхи, залежно від значення параметра циклу."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:721
+#: ../../__w/calibre/calibre/manual/template_lang.rst:748
 msgid "To accomplish this, we:"
 msgstr "Для виконання цього завдання ми:"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:723
+#: ../../__w/calibre/calibre/manual/template_lang.rst:750
 msgid ""
 "Create a composite field (give it lookup name #aa) containing "
 "``{series}/{series_index} - {title}``. If the series is not empty, then this"
 " template will produce `series/series_index - title`."
 msgstr "Створимо складене поле (надавши йому назву #aa), що міститиме дані ``{series}/{series_index} - {title}``. Якщо значення циклу (series) є непорожнім, такий шаблон дасть нам `цикл/номер_у_циклі - назва`."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:724
+#: ../../__w/calibre/calibre/manual/template_lang.rst:751
 msgid ""
 "Create a composite field (give it lookup name #bb) containing "
 "``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. This template produces "
 "`genre/author_sort/title`, where an empty genre is replaced with `Unknown`."
 msgstr "Створимо складене поле (надавши йому назву #bb) із вмістом ``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. Цей шаблон дає `жанр/упорядковані_автори/назва`. Якщо немає даних щодо жанру, запис жанру буде замінено на `Unknown`."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:725
+#: ../../__w/calibre/calibre/manual/template_lang.rst:752
 msgid ""
 "Set the save template to ``{series:lookup(.,#aa,#bb}``. This template "
 "chooses composite field ``#aa`` if series is not empty and composite field "
@@ -2200,11 +2257,11 @@ msgid ""
 "paths, depending on whether or not `series` is empty."
 msgstr "Встановимо шаблон збереження ``{series:lookup(.,#aa,#bb)}``. Цей шаблон вибирає складене поле ``#aa``, якщо значення запису циклу є непорожнім, і складене поле ``#bb``, якщо значення запису циклу є порожнім. Таким чином, ми матимемо повністю різні шляхи для збереження книг, залежно від того, чи є запис `series` порожнім."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:728
+#: ../../__w/calibre/calibre/manual/template_lang.rst:755
 msgid "Templates and plugboards"
 msgstr "Шаблони і набори метаданих"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:730
+#: ../../__w/calibre/calibre/manual/template_lang.rst:757
 msgid ""
 "Plugboards are used for changing the metadata written into books during "
 "send-to-device and save-to-disk operations. A plugboard permits you to "
@@ -2215,7 +2272,7 @@ msgid ""
 "display issues."
 msgstr "Набори метаданих використовуються для внесення змін до метаданих, що записуються до книг під час дій із надсилання на пристрій і збереження на диск. Набір метаданих надає вам змогу вказати шаблон для надання даних, які слід записати до метаданих книги. Ви можете скористатися наборами метаданих для внесення змін до таких полів: authors, author_sort, language, publisher, tags, title, title_sort. Набори метаданих допомагають у використанні спеціалізованих метаданих для книг на пристрої з метою усування проблем із упорядковуванням книг або їхнім показом."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:732
+#: ../../__w/calibre/calibre/manual/template_lang.rst:759
 msgid ""
 "When you create a plugboard, you specify the format and device for which the"
 " plugboard is to be used. A special device is provided, ``save_to_disk``, "
@@ -2226,7 +2283,7 @@ msgid ""
 "can of course use composite columns in these templates."
 msgstr "Під час створення набору метаданих ви визначаєте формат і пристрій, для яких використовуватиметься набір. Передбачено особливий пристрій, ``save_to_disk``, який використовується для збереження книг у певних форматах (на відміну від надсилання книг на пристрій). Після вибору формату і пристрою вам слід вибрати поля метаданих для внесення змін і надати шаблони для визначення нових значень цих полів. Ці шаблони буде `з’єднано` з відповідними полями призначення. Ви, звичайно ж, можете використовувати у шаблонах наборів метаданих складені стовпчики."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:734
+#: ../../__w/calibre/calibre/manual/template_lang.rst:761
 msgid ""
 "When a plugboard might apply (Content server, save to disk, or send to "
 "device), calibre searches the defined plugboards to choose the correct one "
@@ -2235,29 +2292,29 @@ msgid ""
 " the plugboards using the following search order:"
 msgstr "Якщо до метаданих може бути застосовано набір (на сервері даних, для збереження на диск або надсилання на пристрій), calibre шукає визначені набори метаданих і вибирає належний для заданого формату і пристрою. Наприклад, для того, щоб знайти належний набір метаданих для книги EPUB, яку надсилають на пристрій під керуванням ANDROID, calibre шукає набори метаданих у такому порядку:"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:738
+#: ../../__w/calibre/calibre/manual/template_lang.rst:765
 msgid ""
 "a plugboard with an exact match on format and device, e.g., ``EPUB`` and "
 "``ANDROID``"
 msgstr "набір метаданих із точною відповідністю за форматом і пристроєм, наприклад ``EPUB`` і ``ANDROID``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:739
+#: ../../__w/calibre/calibre/manual/template_lang.rst:766
 msgid ""
 "a plugboard with an exact match on format and the special ``any device`` "
 "choice, e.g., ``EPUB`` and ``any device``"
 msgstr "набір метаданих із точним відповідником за форматом і спеціальним варіантом ``any device``, наприклад ``EPUB`` і ``any device``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:740
+#: ../../__w/calibre/calibre/manual/template_lang.rst:767
 msgid ""
 "a plugboard with the special ``any format`` choice and an exact match on "
 "device, e.g., ``any format`` and ``ANDROID``"
 msgstr "набір метаданих із спеціальним варіантом ``any format`` і точною відповідністю за пристроєм, наприклад ``any format`` і ``ANDROID``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:741
+#: ../../__w/calibre/calibre/manual/template_lang.rst:768
 msgid "a plugboard with ``any format`` and ``any device``"
 msgstr "набір метаданих ``any format`` і ``any device``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:743
+#: ../../__w/calibre/calibre/manual/template_lang.rst:770
 msgid ""
 "The tags and authors fields have special treatment, because both of these "
 "fields can hold more than one item. A book can have many tags and many "
@@ -2269,7 +2326,7 @@ msgid ""
 "comma in the middle of a tag."
 msgstr "Поля міток (`tags`) і авторів (`authors`) обробляються у особливий спосіб, оскільки у обох цих полях може міститися декілька записів. У книги може бути багато міток і багато авторів. Якщо ви визначаєте одне з цих двох полів як таке, вміст якого слід змінити, результати використання шаблона буде перевірено на наявність декількох записів. Для міток результат буде розділено на записи за знайденими calibre комами. Наприклад, якщо шаблон створює значення ``Трилер, Жахи``, результатом буде дві мітки, ``Трилер`` і ``Жахи``. Способів додавання коми у окрему мітку не передбачено."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:746
+#: ../../__w/calibre/calibre/manual/template_lang.rst:773
 msgid ""
 "The same thing happens for authors, but using a different character for the "
 "cut, a `&` (ampersand) instead of a comma. For example, if the template "
@@ -2279,7 +2336,7 @@ msgid ""
 "author with a rather strange name."
 msgstr "Те саме стосується авторів, але для поділу на записи використовується інший символ, `&` (амперсанд), а не кома. Наприклад, якщо шаблоном створюється значення ``Blogs, Joe&Posts, Susan``, для книги буде визначено двоє авторів, ``Blogs, Joe`` і ``Posts, Susan``. Якщо ж шаблон створює значення ``Blogs, Joe;Posts, Susan``, книга матиме один запис автора із доволі чудернацьким іменем."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:748
+#: ../../__w/calibre/calibre/manual/template_lang.rst:775
 msgid ""
 "Plugboards affect the metadata written into the book when it is saved to "
 "disk or written to the device. Plugboards do not affect the metadata used by"
@@ -2288,35 +2345,35 @@ msgid ""
 "preferences window."
 msgstr "Набори метаданих впливають на метадані, які записуються до книги, коли її зберігають на диск або записують на пристрій для читання. Набори метаданих не змінюють метадані, які використовуються діями ``зберегти на диск`` та ``надіслати на пристрій`` для створення назв файлів. Назви файлів будуються за допомогою шаблонів, які вказано у відповідних місцях вікна налаштувань."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:751
+#: ../../__w/calibre/calibre/manual/template_lang.rst:778
 msgid "Tips"
 msgstr "Підказки"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:753
+#: ../../__w/calibre/calibre/manual/template_lang.rst:780
 msgid ""
 "Use the Template Tester to test templates. Add the tester to the context "
 "menu for books in the library and/or give it a keyboard shortcut."
 msgstr "Для перевірки шаблонів скористайтеся засобом перевірки шаблонів. Додайте пункт засобу до контекстного меню для книг у бібліотеці і/або встановіть для нього клавіатурне скорочення."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:754
+#: ../../__w/calibre/calibre/manual/template_lang.rst:781
 msgid ""
 "Templates can use other templates by referencing composite columns built "
 "with the desired template. Alternatively, you can use Stored Templates."
 msgstr "У шаблонах можна використовувати інші шаблони шляхом посилання на складені стовпчики, які побудовано за допомогою бажаних шаблонів. Крім того, ви можете скористатися «Збереженими шаблонами»."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:755
+#: ../../__w/calibre/calibre/manual/template_lang.rst:782
 msgid ""
 "In a plugboard, you can set a field to empty (or whatever is equivalent to "
 "empty) by using the special template ``{}``. This template will always "
 "evaluate to an empty string."
 msgstr "У наборі метаданих ви можете вказати порожні значення поля (або вказати будь-який еквівалент порожнього поля) за допомогою спеціального шаблона ``{}``. Цей шаблон завжди обробляється як порожній рядок."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:756
+#: ../../__w/calibre/calibre/manual/template_lang.rst:783
 msgid ""
 "The technique described above to show numbers even if they have a zero value"
 " works with the standard field series_index."
 msgstr "Описана вище методика для показу чисел працює зі стандартним полем series_index, навіть якщо вміст відповідного поля є порожнім."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:761
+#: ../../__w/calibre/calibre/manual/template_lang.rst:788
 msgid "Function reference"
 msgstr "Довідник з функцій"

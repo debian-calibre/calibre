@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 5.44.0\n"
+"Project-Id-Version: calibre 6.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-17 09:03+0530\n"
+"POT-Creation-Date: 2022-07-11 07:58+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -85,7 +85,7 @@ msgid "``CALIBRE_NO_NATIVE_FILEDIALOGS`` - causes calibre to not use native file
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:43
-msgid "``CALIBRE_NO_NATIVE_MENUBAR`` - causes calibre to not create a native (global) menu on Ubuntu Unity and similar linux desktop environments. The menu is instead placed inside the window, as is traditional."
+msgid "``CALIBRE_NO_NATIVE_MENUBAR`` - causes calibre to not create a native (global) menu on Ubuntu Unity and similar Linux desktop environments. The menu is instead placed inside the window, as is traditional."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:44
@@ -101,47 +101,43 @@ msgid "``CALIBRE_NO_DEFAULT_PROGRAMS`` - prevent calibre from automatically regi
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:52
-msgid "``CALIBRE_USE_DARK_PALETTE`` - set it to ``1`` to have calibre use dark colors and ``0`` for normal colors (ignored on macOS). On Windows 10 in the absence of this variable, the Windows system preference for dark colors is used."
-msgstr ""
-
-#: ../../home/kovid/work/calibre/manual/customize.rst:54
 msgid "``SYSFS_PATH`` - Use if sysfs is mounted somewhere other than /sys"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:55
+#: ../../home/kovid/work/calibre/manual/customize.rst:53
 msgid "``http_proxy``, ``https_proxy`` - used on Linux to specify an HTTP(S) proxy"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:57
+#: ../../home/kovid/work/calibre/manual/customize.rst:55
 msgid "See `How to set environment variables in Windows <https://www.computerhope.com/issues/ch000549.htm>`_. If you are on macOS you can set environment variables by creating the :file:`~/Library/Preferences/calibre/macos-env.txt` and putting the environment variables one per line in it, for example::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:67
+#: ../../home/kovid/work/calibre/manual/customize.rst:65
 msgid "Tweaks"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:69
+#: ../../home/kovid/work/calibre/manual/customize.rst:67
 msgid "Tweaks are small changes that you can specify to control various aspects of calibre's behavior. You can change them by going to Preferences->Advanced->Tweaks. The default values for the tweaks are reproduced below"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:76
+#: ../../home/kovid/work/calibre/manual/customize.rst:74
 msgid "Overriding icons, templates, et cetera"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:79
-msgid "calibre has direct support for icon themes, there are several icon themes available for calibre, that you can use by going to :guilabel:`Preferences->Interface->Look & Feel->Change Icon theme`. The icon themes use the same mechanism as described below for overriding static resources."
+#: ../../home/kovid/work/calibre/manual/customize.rst:77
+msgid "calibre has direct support for icon themes, there are several icon themes available for calibre, that you can use by going to :guilabel:`Preferences->Interface->Look & Feel->Change Icon theme`. It is preferable to use icon themes over overriding individual icons."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:83
+#: ../../home/kovid/work/calibre/manual/customize.rst:82
 msgid "calibre allows you to override the static resources, like icons, JavaScript and templates for the metadata jacket, catalogs, etc. with customized versions that you like.  All static resources are stored in the resources sub-folder of the calibre install location. On Windows, this is usually :file:`C:\\\\Program Files\\\\Calibre2\\\\app\\\\resources`. On macOS, :file:`/Applications/calibre.app/Contents/Resources/resources/`. On Linux, if you are using the binary installer from the calibre website it will be :file:`/opt/calibre/resources`. These paths can change depending on where you choose to install calibre."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:92
+#: ../../home/kovid/work/calibre/manual/customize.rst:91
 msgid "You should not change the files in this resources folder, as your changes will get overwritten the next time you update calibre. Instead, go to :guilabel:`Preferences->Advanced->Miscellaneous` and click :guilabel:`Open calibre configuration folder`. In this configuration folder, create a sub-folder called resources and place the files you want to override in it. Place the files in the appropriate sub folders, for example place images in :file:`resources/images`, etc. calibre will automatically use your custom file in preference to the built-in one the next time it is started."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:101
-msgid "For example, if you wanted to change the icon for the :guilabel:`Remove books` action, you would first look in the built-in resources folder and see that the relevant file is :file:`resources/images/remove_books.png`. Assuming you have an alternate icon in PNG format called :file:`my_remove_books.png` you would save it in the configuration folder as :file:`resources/images/remove_books.png`. All the icons used by the calibre user interface are in :file:`resources/images` and its sub-folders."
+#: ../../home/kovid/work/calibre/manual/customize.rst:100
+msgid "For example, if you wanted to change the icon for the :guilabel:`Remove books` action, you would first look in the built-in resources folder and see that the relevant file is :file:`resources/images/remove_books.png`. Assuming you have an alternate icon in PNG format called :file:`my_remove_books.png` you would save it in the configuration folder as :file:`resources/images/remove_books.png`. All the icons used by the calibre user interface are in :file:`resources/images` and its sub-folders. Placing an override file here will have even higher priority than a custom icon theme."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:110

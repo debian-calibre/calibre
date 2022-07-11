@@ -5,8 +5,11 @@
 #include <QColor>
 #include <QHash>
 #include <QPainter>
+#include <QMenu>
 #include <QPropertyAnimation>
 #include <QParallelAnimationGroup>
+#include <QProxyStyle>
+#include <QDialogButtonBox>
 
 #define arc_length_max 0.734f
 #define arc_length_min 0.02f
@@ -86,6 +89,24 @@ private:
 	QParallelAnimationGroup m_animation;
 };
 
+class CalibreStyle : public QProxyStyle {
+    protected:
+        QHash<unsigned long, QString> icon_map;
+        QByteArray desktop_environment;
+        QDialogButtonBox::ButtonLayout button_layout;
+        int transient_scroller;
+
+    public:
+        CalibreStyle(int transient_scroller);
+        void set_icon_map(QHash<unsigned long, QString> &icon_map);
+        virtual int styleHint(StyleHint hint, const QStyleOption *option = 0, const QWidget *widget = 0, QStyleHintReturn *returnData = 0) const;
+        virtual QIcon standardIcon(StandardPixmap standardIcon, const QStyleOption * option = 0, const QWidget * widget = 0) const;
+        virtual int pixelMetric(PixelMetric metric, const QStyleOption * option = 0, const QWidget * widget = 0) const;
+        virtual void drawComplexControl(ComplexControl control, const QStyleOptionComplex * option, QPainter * painter, const QWidget * widget = 0) const;
+        virtual void drawPrimitive(PrimitiveElement element, const QStyleOption * option, QPainter * painter, const QWidget * widget = 0) const;
+        virtual void drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const;
+};
+
 /*!
     \class QProgressIndicator
     \brief The QProgressIndicator class lets an application display a progress indicator to show that a lengthy task is under way.
@@ -137,6 +158,7 @@ private:
 	SpinAnimator m_animator;
 };
 
-int load_style(const QHash<unsigned long,QString> &icon_map, int transient_scroller=0);
 void set_no_activate_on_click(QWidget *widget);
 void draw_snake_spinner(QPainter &painter, QRect rect, int angle, const QColor & light, const QColor & dark);
+void set_menu_on_action(QAction* ac, QMenu* menu);
+QMenu* menu_for_action(const QAction *ac);

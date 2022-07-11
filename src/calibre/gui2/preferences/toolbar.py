@@ -75,7 +75,7 @@ class BaseModel(QAbstractListModel):
             ic = action[1]
             if ic is None:
                 ic = 'blank.png'
-            return (QIcon(I(ic)))
+            return (QIcon.ic(ic))
         if role == Qt.ItemDataRole.ToolTipRole and action[2] is not None:
             return (action[2])
         return None
@@ -268,7 +268,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
             current_model = CurrentModel(key, gui)
             self.models[key] = (all_model, current_model)
         self.what.setCurrentIndex(0)
-        self.what.currentIndexChanged[int].connect(self.what_changed)
+        self.what.currentIndexChanged.connect(self.what_changed)
         self.what_changed(0)
 
         self.add_action_button.clicked.connect(self.add_action)

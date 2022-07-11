@@ -226,13 +226,13 @@ class ToolBar(QToolBar):  # {{{
             m = ac.menu()
             if m is not None:
                 if menu_mode is not None:
-                    ch.setPopupMode(menu_mode)
+                    ch.setPopupMode(QToolButton.ToolButtonPopupMode(menu_mode))
             return ch
 
     # support drag&drop from/to library, from/to reader/card, enabled plugins
     def check_iactions_for_drag(self, event, md, func):
         if self.added_actions:
-            pos = event.pos()
+            pos = event.position().toPoint()
             for iac in itervalues(self.gui.iactions):
                 if iac.accepts_drops:
                     aa = iac.qaction
@@ -704,6 +704,6 @@ class BarsManager(QObject):
         for bar in self.bars:
             bar.setIconSize(QSize(sz, sz))
             bar.setToolButtonStyle(style)
-            if bar.showing_donate:
+            if bar.donate_button:
                 bar.donate_button.setIconSize(bar.iconSize())
                 bar.donate_button.setToolButtonStyle(style)

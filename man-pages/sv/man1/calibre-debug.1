@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "juni 17, 2022" "5.44.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "juli 11, 2022" "6.0.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -85,7 +85,7 @@ Kör diffverktyg för calibre. Till exempel: calibre\-debug \fI\%\-\-diff\fP fil
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-edit\-book, \-t
+.B \-\-edit\-book
 Starta calibre\-verktyget \fB\(dq\fPRedigera book\fB\(dq\fP i felsökningsläge.
 .UNINDENT
 .INDENT 0.0
@@ -145,13 +145,13 @@ Mata ut nödvändiga sökvägar för att anpassa calibre\-miljön
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-reinitialize\-db
-Återinitiera calibre\-databasen sqlite i angiven sökväg. Användbart vid återställning vid db\-korruption.
+.B \-\-run\-plugin, \-r
+Kör en insticksmodul som tillhandahåller ett kommandoradsgränssnitt. Till exempel:  calibre\-debug \-r \fB\(dq\fPinsticksmodulsnamn\fB\(dq\fP \fB\-\-\fP fil1 \fB\-\-flagga1\fP Allt efter \fB\-\-\fP kommer att skickas till insticksmodulen som argument.
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-run\-plugin, \-r
-Kör en insticksmodul som tillhandahåller ett kommandoradsgränssnitt. Till exempel:  calibre\-debug \-r \fB\(dq\fPinsticksmodulsnamn\fB\(dq\fP \fB\-\-\fP fil1 \fB\-\-flagga1\fP Allt efter \fB\-\-\fP kommer att skickas till insticksmodulen som argument.
+.B \-\-run\-test, \-t
+Kör de namngivna testerna. Använd specialvärdet \fB\(dq\fPalla\fB\(dq\fP för att köra alla tester. Om testnamnet börjar med en punkt antas det vara ett modulnamn. Om testnamnet börjar med @ antas det vara ett kategorinamn.
 .UNINDENT
 .INDENT 0.0
 .TP

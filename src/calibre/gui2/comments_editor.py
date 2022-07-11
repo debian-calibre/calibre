@@ -103,13 +103,13 @@ def remove_heading_font_styles(tag, style):
     expected_size = (None, 'xx-large', 'x-large', 'large', None, 'small', 'x-small')[lvl]
     if style.get('font-size', 1) == expected_size:
         del style['font-size']
-    if style.get('font-weight') == '600':
+    if style.get('font-weight') in ('600', '700', 'bold'):
         del style['font-weight']
 
 
 def use_implicit_styling_for_span(span, style):
     is_italic = style.get('font-style') == 'italic'
-    is_bold = style.get('font-weight') == '600'
+    is_bold = style.get('font-weight') in ('600', '700', 'bold')
     if is_italic and not is_bold:
         del style['font-style']
         span.tag = 'em'
@@ -206,6 +206,9 @@ def cleanup_qt_markup(root):
                     remove_zero_indents(ts)
     for style in itervalues(style_map):
         filter_qt_styles(style)
+        fw = style.get('font-weight')
+        if fw in ('600', '700'):
+            style['font-weight'] = 'bold'
     for tag, style in iteritems(style_map):
         if style:
             tag.set('style', '; '.join(f'{k}: {v}' for k, v in iteritems(style)))
@@ -258,7 +261,7 @@ class EditorWidget(QTextEdit, LineEditECM):  # {{{
         self.comments_pat = re.compile(r'<!--.*?-->', re.DOTALL)
 
         def r(name, icon, text, checkable=False, shortcut=None):
-            ac = QAction(QIcon(I(icon + '.png')), text, self)
+            ac = QAction(QIcon.ic(icon + '.png'), text, self)
             ac.setShortcutContext(Qt.ShortcutContext.WidgetWithChildrenShortcut)
             if checkable:
                 ac.setCheckable(checkable)
@@ -301,7 +304,7 @@ class EditorWidget(QTextEdit, LineEditECM):  # {{{
         r('insert_hr', 'format-text-hr', _('Insert separator'),)
         r('clear', 'trash', _('Clear'))
 
-        self.action_block_style = QAction(QIcon(I('format-text-heading.png')),
+        self.action_block_style = QAction(QIcon.ic('format-text-heading.png'),
                 _('Style text block'), self)
         self.action_block_style.setToolTip(
                 _('Style the selected text block'))
@@ -654,7 +657,7 @@ class EditorWidget(QTextEdit, LineEditECM):  # {{{
         d.setMinimumWidth(600)
         d.bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok|QDialogButtonBox.StandardButton.Cancel)
         d.br = b = QPushButton(_('&Browse'))
-        b.setIcon(QIcon(I('document_open.png')))
+        b.setIcon(QIcon.ic('document_open.png'))
 
         def cf():
             filetypes = []
@@ -1083,6 +1086,7 @@ class Editor(QWidget):  # {{{
         self.tabs.setTabPosition(QTabWidget.TabPosition.South)
         self.wyswyg = QWidget(self.tabs)
         self.code_edit = QPlainTextEdit(self.tabs)
+        self.code_edit.setTabChangesFocus(True)
         self.source_dirty = False
         self.wyswyg_dirty = True
 

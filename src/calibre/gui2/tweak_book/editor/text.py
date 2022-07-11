@@ -66,7 +66,7 @@ _dff = None
 def default_font_family():
     global _dff
     if _dff is None:
-        families = set(map(str, QFontDatabase().families()))
+        families = set(map(str, QFontDatabase.families()))
         for x in ('Ubuntu Mono', 'Consolas', 'Liberation Mono'):
             if x in families:
                 _dff = x
@@ -224,10 +224,10 @@ class TextEdit(PlainTextEdit):
         self.setLineWrapMode(QPlainTextEdit.LineWrapMode.WidgetWidth if prefs['editor_line_wrap'] else QPlainTextEdit.LineWrapMode.NoWrap)
         theme = get_theme(prefs['editor_theme'])
         self.apply_theme(theme)
-        w = self.fontMetrics()
-        self.space_width = w.width(' ')
+        fm = self.fontMetrics()
+        self.space_width = fm.horizontalAdvance(' ')
         self.tw = self.smarts.override_tab_stop_width if self.smarts.override_tab_stop_width is not None else prefs['editor_tab_stop_width']
-        self.setTabStopWidth(self.tw * self.space_width)
+        self.setTabStopDistance(self.tw * self.space_width)
         if dictionaries_changed:
             self.highlighter.rehighlight()
 
@@ -258,9 +258,9 @@ class TextEdit(PlainTextEdit):
         self.tooltip_font.setPointSizeF(font.pointSizeF() - 1.)
         self.setFont(font)
         self.highlighter.apply_theme(theme)
-        w = self.fontMetrics()
-        self.number_width = max(map(lambda x:w.width(str(x)), range(10)))
-        self.size_hint = QSize(self.expected_geometry[0] * w.averageCharWidth(), self.expected_geometry[1] * w.height())
+        fm = self.fontMetrics()
+        self.number_width = max(map(lambda x:fm.horizontalAdvance(str(x)), range(10)))
+        self.size_hint = QSize(self.expected_geometry[0] * fm.averageCharWidth(), self.expected_geometry[1] * fm.height())
         self.highlight_color = theme_color(theme, 'HighlightRegion', 'bg')
         self.highlight_cursor_line()
         self.completion_popup.clear_caches(), self.completion_popup.update()
@@ -276,7 +276,7 @@ class TextEdit(PlainTextEdit):
             self.smarts = sclass(self)
             if self.smarts.override_tab_stop_width is not None:
                 self.tw = self.smarts.override_tab_stop_width
-                self.setTabStopWidth(self.tw * self.space_width)
+                self.setTabStopDistance(self.tw * self.space_width)
         if isinstance(text, bytes):
             text = text.decode('utf-8', 'replace')
         self.setPlainText(unicodedata.normalize('NFC', str(text)))
@@ -566,7 +566,7 @@ class TextEdit(PlainTextEdit):
             c.movePosition(QTextCursor.MoveOperation.Start)
         block = c.block()
         while block.isValid():
-            for r in block.layout().additionalFormats():
+            for r in block.layout().formats():
                 if r.format.property(SPELL_PROPERTY):
                     if not from_cursor or block.position() + r.start + r.length > c.position():
                         c.setPosition(block.position() + r.start)
@@ -730,7 +730,7 @@ class TextEdit(PlainTextEdit):
         c.movePosition(QTextCursor.MoveOperation.Start)
         block = c.block()
         while block.isValid():
-            for r in block.layout().additionalFormats():
+            for r in block.layout().formats():
                 if r.format.property(SPELL_PROPERTY) and self.text_for_range(block, r) == word:
                     self.highlighter.reformat_block(block)
                     break
@@ -741,7 +741,7 @@ class TextEdit(PlainTextEdit):
         if cursor.isNull():
             return
         pos = cursor.positionInBlock()
-        for r in cursor.block().layout().additionalFormats():
+        for r in cursor.block().layout().formats():
             if r.start <= pos <= r.start + r.length and r.format.property(SYNTAX_PROPERTY):
                 return r
 

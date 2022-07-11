@@ -5,18 +5,21 @@ __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
+import hashlib
 import operator
 import os
 import random
 import shutil
 import sys
 import traceback
+import weakref
 from collections import defaultdict
 from collections.abc import MutableSet, Set
 from functools import partial, wraps
-from io import BytesIO
+from io import DEFAULT_BUFFER_SIZE, BytesIO
+from queue import Queue
 from threading import Lock
-from time import time
+from time import sleep, time
 
 from calibre import as_unicode, isbytestring
 from calibre.constants import iswindows, preferred_encoding
@@ -135,8 +138,10 @@ class Cache:
     was necessary for maximum performance and flexibility.
     '''
     EventType = EventType
+    fts_indexing_sleep_time = 4  # seconds
 
     def __init__(self, backend):
+        self.shutting_down = False
         self.backend = backend
         self.event_dispatcher = EventDispatcher()
         self.fields = {}
@@ -168,6 +173,7 @@ class Cache:
 
         self._search_api = Search(self, 'saved_searches', self.field_metadata.get_search_terms())
         self.initialize_dynamic()
+        self.initialize_fts()
 
     @property
     def new_api(self):
@@ -420,6 +426,175 @@ class Cache:
         if self.backend.prefs['update_all_last_mod_dates_on_start']:
             self.update_last_modified(self.all_book_ids())
             self.backend.prefs.set('update_all_last_mod_dates_on_start', False)
+
+    # FTS API {{{
+    def initialize_fts(self):
+        self.fts_queue_thread = None
+        self.fts_job_queue = Queue()
+        self.fts_indexing_left = self.fts_indexing_total = 0
+        fts = self.backend.initialize_fts(weakref.ref(self))
+        if self.is_fts_enabled():
+            self.start_fts_pool()
+        return fts
+
+    def start_fts_pool(self):
+        from threading import Thread
+        self.fts_queue_thread = Thread(name='FTSQueue', target=Cache.dispatch_fts_jobs, args=(self.fts_job_queue, weakref.ref(self)), daemon=True)
+        self.fts_queue_thread.start()
+        self.backend.fts.pool.initialize()
+        self.backend.fts.pool.initialized.wait()
+        self.queue_next_fts_job()
+
+    @read_api
+    def is_fts_enabled(self):
+        return self.backend.fts_enabled
+
+    @api
+    def fts_indexing_progress(self):
+        return self.fts_indexing_left, self.fts_indexing_total
+
+    def _update_fts_indexing_numbers(self):
+        # this is called when new formats are added and when a format is
+        # indexed, but NOT when books or formats are deleted, so total may not
+        # be up to date.
+        nl = self.backend.fts.number_dirtied()
+        nt = self.backend.get('SELECT COUNT(*) FROM main.data')[0][0] or 0
+        if (self.fts_indexing_left, self.fts_indexing_total) != (nl, nt):
+            self.fts_indexing_left = nl
+            self.fts_indexing_total = nt
+            self.event_dispatcher(EventType.indexing_progress_changed, nl, nt)
+
+    @write_api
+    def enable_fts(self, enabled=True, start_pool=True):
+        fts = self.backend.enable_fts(weakref.ref(self) if enabled else None)
+        if fts and start_pool:  # used in the tests
+            self.start_fts_pool()
+        if not fts and self.fts_queue_thread:
+            self.fts_job_queue.put(None)
+            self.fts_queue_thread = None
+            self.fts_job_queue = Queue()
+        if fts:
+            self._update_fts_indexing_numbers()
+        return fts
+
+    @write_api
+    def fts_unindex(self, book_id, fmt=None):
+        self.backend.fts_unindex(book_id, fmt=fmt)
+
+    @staticmethod
+    def dispatch_fts_jobs(queue, dbref):
+        from .fts.text import is_fmt_ok
+
+        def do_one():
+            self = dbref()
+            if self is None:
+                return False
+            with self.read_lock:
+                if not self.backend.fts_enabled:
+                    return False
+                book_id, fmt = self.backend.get_next_fts_job()
+                if book_id is None:
+                    return False
+                path = self._format_abspath(book_id, fmt)
+            if not path or not is_fmt_ok(fmt):
+                with self.write_lock:
+                    self.backend.remove_dirty_fts(book_id, fmt)
+                    self._update_fts_indexing_numbers()
+                return True
+
+            with self.read_lock, open(path, 'rb') as src, PersistentTemporaryFile(suffix=f'.{fmt.lower()}') as pt:
+                sz = 0
+                h = hashlib.sha1()
+                while True:
+                    chunk = src.read(DEFAULT_BUFFER_SIZE)
+                    if not chunk:
+                        break
+                    sz += len(chunk)
+                    h.update(chunk)
+                    pt.write(chunk)
+            with self.write_lock:
+                self.backend.queue_fts_job(book_id, fmt, pt.name, sz, h.hexdigest())
+                return self.backend.fts_has_idle_workers
+
+        def loop_while_more_available():
+            self = dbref()
+            if not self or not self.backend.fts_enabled:
+                return
+            has_more = True
+            while has_more and not self.shutting_down and self.backend.fts_enabled:
+                try:
+                    has_more = do_one()
+                except Exception:
+                    if self.backend.fts_enabled:
+                        import traceback
+                        traceback.print_exc()
+                sleep(self.fts_indexing_sleep_time)
+
+        while not getattr(dbref(), 'shutting_down', True):
+            x = queue.get()
+            if x is None:
+                break
+            loop_while_more_available()
+
+    @write_api
+    def queue_next_fts_job(self):
+        if not self.backend.fts_enabled:
+            return
+        self.fts_job_queue.put(True)
+        self._update_fts_indexing_numbers()
+
+    @write_api
+    def commit_fts_result(self, book_id, fmt, fmt_size, fmt_hash, text, err_msg):
+        ans = self.backend.commit_fts_result(book_id, fmt, fmt_size, fmt_hash, text, err_msg)
+        self._update_fts_indexing_numbers()
+        return ans
+
+    @api
+    def reindex_fts(self):
+        if not self.is_fts_enabled():
+            return
+        with self.write_lock:
+            self._shutdown_fts()
+        self._shutdown_fts(stage=2)
+        with self.write_lock:
+            self.backend.reindex_fts()
+            fts = self.initialize_fts()
+            fts.initialize(self.backend.conn)  # ensure fts is pre-initialized needed for the tests
+            self._queue_next_fts_job()
+        return fts
+
+    @api
+    def set_fts_num_of_workers(self, num=None):
+        existing = self.backend.fts_num_of_workers
+        if num is not None:
+            self.backend.fts_num_of_workers = num
+            if num > existing:
+                self.queue_next_fts_job()
+        return existing
+
+    @read_api
+    def fts_search(
+        self,
+        fts_engine_query,
+        use_stemming=True,
+        highlight_start=None,
+        highlight_end=None,
+        snippet_size=None,
+        restrict_to_book_ids=None,
+        return_text=True,
+        result_type=tuple,
+    ):
+        return result_type(self.backend.fts_search(
+            fts_engine_query,
+            use_stemming=use_stemming,
+            highlight_start=highlight_start,
+            highlight_end=highlight_end,
+            snippet_size=snippet_size,
+            return_text=return_text,
+            restrict_to_book_ids=restrict_to_book_ids,
+        ))
+
+    # }}}
 
     # Cache Layer API {{{
 
@@ -733,7 +908,7 @@ class Cache:
 
     @api
     def cover(self, book_id,
-            as_file=False, as_image=False, as_path=False):
+            as_file=False, as_image=False, as_path=False, as_pixmap=False):
         '''
         Return the cover image or None. By default, returns the cover as a
         bytestring.
@@ -744,6 +919,7 @@ class Cache:
 
         :param as_file: If True return the image as an open file object (a SpooledTemporaryFile)
         :param as_image: If True return the image as a QImage object
+        :param as_pixmap: If True return the image as a QPixmap object
         :param as_path: If True return the image as a path pointing to a
                         temporary file
         '''
@@ -758,16 +934,18 @@ class Cache:
                 if not self.copy_cover_to(book_id, pt):
                     return
             ret = pt.name
+        elif as_pixmap or as_image:
+            from qt.core import QPixmap, QImage
+            ret = QImage() if as_image else QPixmap()
+            with self.safe_read_lock:
+                path = self._format_abspath(book_id, '__COVER_INTERNAL__')
+                if path:
+                    ret.load(path)
         else:
             buf = BytesIO()
             if not self.copy_cover_to(book_id, buf):
                 return
             ret = buf.getvalue()
-            if as_image:
-                from qt.core import QImage
-                i = QImage()
-                i.loadFromData(ret)
-                ret = i
         return ret
 
     @read_api
@@ -1592,6 +1770,7 @@ class Cache:
             run_plugins_on_postimport(dbapi or self, book_id, fmt)
             stream_or_path.close()
 
+        self.queue_next_fts_job()
         return True
 
     @write_api
@@ -2237,17 +2416,41 @@ class Cache:
     def vacuum(self):
         self.backend.vacuum()
 
-    @write_api
+    def __del__(self):
+        self.close()
+
+    def _shutdown_fts(self, stage=1):
+        if stage == 1:
+            self.backend.shutdown_fts()
+            if self.fts_queue_thread is not None:
+                self.fts_job_queue.put(None)
+            return
+        # the fts supervisor thread could be in the middle of committing a
+        # result to the db, so holding a lock here will cause a deadlock
+        if self.fts_queue_thread is not None:
+            self.fts_queue_thread.join()
+            self.fts_queue_thread = None
+        self.backend.join_fts()
+
+    @api
     def close(self):
-        self.event_dispatcher.close()
-        from calibre.customize.ui import available_library_closed_plugins
-        for plugin in available_library_closed_plugins():
-            try:
-                plugin.run(self)
-            except Exception:
-                import traceback
-                traceback.print_exc()
-        self.backend.close()
+        with self.write_lock:
+            if hasattr(self, 'close_called'):
+                return
+            self.close_called = True
+            self.shutting_down = True
+            self.event_dispatcher.close()
+            self._shutdown_fts()
+            from calibre.customize.ui import available_library_closed_plugins
+            for plugin in available_library_closed_plugins():
+                try:
+                    plugin.run(self)
+                except Exception:
+                    import traceback
+                    traceback.print_exc()
+        self._shutdown_fts(stage=2)
+        with self.write_lock:
+            self.backend.close()
 
     @property
     def is_closed(self):
@@ -2417,7 +2620,9 @@ class Cache:
         key_prefix = as_hex_unicode(library_key)
         book_ids = self._all_book_ids()
         total = len(book_ids) + 1
-        format_metadata = {}
+        has_fts = self.is_fts_enabled()
+        if has_fts:
+            total += 1
         if progress is not None:
             progress('metadata.db', 0, total)
         pt = PersistentTemporaryFile('-export.db')
@@ -2427,12 +2632,28 @@ class Cache:
         with lopen(pt.name, 'rb') as f:
             exporter.add_file(f, dbkey)
         os.remove(pt.name)
+        poff = 1
+        if has_fts:
+            poff += 1
+            if progress is not None:
+                progress('full-text-search.db', 1, total)
+            pt = PersistentTemporaryFile('-export.db')
+            pt.close()
+            self.backend.backup_fts_database(pt.name)
+            ftsdbkey = key_prefix + ':::' + 'full-text-search.db'
+            with lopen(pt.name, 'rb') as f:
+                exporter.add_file(f, ftsdbkey)
+            os.remove(pt.name)
+
+        format_metadata = {}
         metadata = {'format_data':format_metadata, 'metadata.db':dbkey, 'total':total}
+        if has_fts:
+            metadata['full-text-search.db'] = ftsdbkey
         for i, book_id in enumerate(book_ids):
             if abort is not None and abort.is_set():
                 return
             if progress is not None:
-                progress(self._field_for('title', book_id), i + 1, total)
+                progress(self._field_for('title', book_id), i + poff, total)
             format_metadata[book_id] = {}
             for fmt in self._formats(book_id):
                 mdata = self.format_metadata(book_id, fmt)
@@ -2543,6 +2764,7 @@ def import_library(library_key, importer, library_path, progress=None, abort=Non
     from calibre.db.backend import DB
     metadata = importer.metadata[library_key]
     total = metadata['total']
+    poff = 1
     if progress is not None:
         progress('metadata.db', 0, total)
     if abort is not None and abort.is_set():
@@ -2551,6 +2773,16 @@ def import_library(library_key, importer, library_path, progress=None, abort=Non
         src = importer.start_file(metadata['metadata.db'], 'metadata.db for ' + library_path)
         shutil.copyfileobj(src, f)
         src.close()
+    if 'full-text-search.db' in metadata:
+        if progress is not None:
+            progress('full-text-search.db', 1, total)
+        if abort is not None and abort.is_set():
+            return
+        poff += 1
+        with open(os.path.join(library_path, 'full-text-search.db'), 'wb') as f:
+            src = importer.start_file(metadata['full-text-search.db'], 'full-text-search.db for ' + library_path)
+            shutil.copyfileobj(src, f)
+            src.close()
     cache = Cache(DB(library_path, load_user_formatter_functions=False))
     cache.init()
     format_data = {int(book_id):data for book_id, data in iteritems(metadata['format_data'])}
@@ -2559,7 +2791,7 @@ def import_library(library_key, importer, library_path, progress=None, abort=Non
             return
         title = cache._field_for('title', book_id)
         if progress is not None:
-            progress(title, i + 1, total)
+            progress(title, i + poff, total)
         cache._update_path((book_id,), mark_as_dirtied=False)
         for fmt, fmtkey in iteritems(fmt_key_map):
             if fmt == '.cover':

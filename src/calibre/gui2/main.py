@@ -132,7 +132,7 @@ def init_qt(args):
     # Ancient broken VNC servers cannot handle icons of size greater than 256
     # https://www.mobileread.com/forums/showthread.php?t=278447
     ic = 'lt.png' if is_x11 else 'library.png'
-    app.setWindowIcon(QIcon(I(ic, allow_user_override=False)))
+    app.setWindowIcon(QIcon.ic(ic))
     return app, opts, args
 
 
@@ -278,6 +278,7 @@ class GuiRunner(QObject):
                 default_dir=initial_dir)
 
     def show_error(self, title, msg, det_msg=''):
+        print(det_msg, file=sys.stderr)
         self.hide_splash_screen()
         with self.app:
             error_dialog(self.splash_screen, title, msg, det_msg=det_msg, show=True)
@@ -446,7 +447,11 @@ def run_gui_(opts, args, app, gui_debug=None):
 singleinstance_name = 'GUI'
 
 
-def send_message(msg):
+class FailedToCommunicate(Exception):
+    pass
+
+
+def send_message(msg, retry_communicate=False):
     try:
         send_message_in_process(msg)
     except Exception:
@@ -454,6 +459,10 @@ def send_message(msg):
         try:
             send_message_in_process(msg)
         except Exception as err:
+            # can happen because the Qt local server pipe is shutdown before
+            # the single instance mutex is released
+            if retry_communicate:
+                raise FailedToCommunicate('retrying')
             print(_('Failed to contact running instance of calibre'), file=sys.stderr, flush=True)
             print(err, file=sys.stderr, flush=True)
             if Application.instance():
@@ -475,14 +484,14 @@ def shutdown_other():
         raise SystemExit(_('Failed to shutdown running calibre instance'))
 
 
-def communicate(opts, args):
+def communicate(opts, args, retry_communicate=False):
     if opts.shutdown_running_calibre:
         shutdown_other()
     else:
         if len(args) > 1:
             args[1:] = [os.path.abspath(x) if os.path.exists(x) else x for x in args[1:]]
         import json
-        if not send_message(b'launched:'+as_bytes(json.dumps(args))):
+        if not send_message(b'launched:'+as_bytes(json.dumps(args)), retry_communicate=retry_communicate):
             raise SystemExit(_('Failed to contact running instance of calibre'))
     raise SystemExit(0)
 
@@ -532,18 +541,24 @@ def main(args=sys.argv):
         app, opts, args = init_qt(args)
     except AbortInit:
         return 1
-    with SingleInstance(singleinstance_name) as si:
-        if si and opts.shutdown_running_calibre:
-            return 0
-        run_main(app, opts, args, gui_debug, si)
+    try:
+        with SingleInstance(singleinstance_name) as si:
+            if si and opts.shutdown_running_calibre:
+                return 0
+            run_main(app, opts, args, gui_debug, si, retry_communicate=True)
+    except FailedToCommunicate:
+        with SingleInstance(singleinstance_name) as si:
+            if si and opts.shutdown_running_calibre:
+                return 0
+            run_main(app, opts, args, gui_debug, si, retry_communicate=False)
     if after_quit_actions['restart_after_quit']:
         restart_after_quit()
 
 
-def run_main(app, opts, args, gui_debug, si):
+def run_main(app, opts, args, gui_debug, si, retry_communicate=False):
     if si:
         return run_gui(opts, args, app, gui_debug=gui_debug)
-    communicate(opts, args)
+    communicate(opts, args, retry_communicate)
     return 0
 
 

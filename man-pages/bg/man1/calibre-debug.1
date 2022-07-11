@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "юни 17, 2022" "5.44.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "юли 11, 2022" "6.0.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -87,7 +87,7 @@ calibre GUI, calibre E\-book viewer и calibre editor в режим за отс�
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-edit\-book, \-t
+.B \-\-edit\-book
 Стартирай calibre книжен редактор в режим дебъгване.
 .UNINDENT
 .INDENT 0.0
@@ -147,13 +147,13 @@ calibre GUI, calibre E\-book viewer и calibre editor в режим за отс�
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-reinitialize\-db
-Повторно инициализиране на sqlite calibre база данни от зададения път. Полезно при възстановяване от грешки в базата данни.
+.B \-\-run\-plugin, \-r
+Run a plugin that provides a command line interface. For example: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
 .UNINDENT
 .INDENT 0.0
 .TP
-.B \-\-run\-plugin, \-r
-Run a plugin that provides a command line interface. For example: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
+.B \-\-run\-test, \-t
+Run the named test(s). Use the special value \fB\(dq\fPall\fB\(dq\fP to run all tests. If the test name starts with a period it is assumed to be a module name. If the test name starts with @ it is assumed to be a category name.
 .UNINDENT
 .INDENT 0.0
 .TP
