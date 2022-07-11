@@ -1,0 +1,22 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Mon, 11 Jul 2022 21:33:53 +0900
+Subject: "py7zr" uses PyCryptodome
+
+Forwarded: not-needed
+---
+ src/calibre/test_build.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
+index 67aacf6..26b3524 100644
+--- a/src/calibre/test_build.py
++++ b/src/calibre/test_build.py
+@@ -40,7 +40,7 @@ class BuildTest(unittest.TestCase):
+                     self.assertTrue(False, f'Failed to load DLL {x} with error: {err}')
+ 
+     def test_pycryptodome(self):
+-        from Crypto.Cipher import AES
++        from Cryptodome.Cipher import AES
+         del AES
+ 
+     @unittest.skipUnless(islinux, 'DBUS only used on linux')
