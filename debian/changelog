@@ -1,3 +1,25 @@
+calibre (6.0.0+dfsg-1~exp1) UNRELEASED; urgency=medium
+
+  * New upstream version 6.0.0+dfsg
+  * Move to PyQt6
+  * Rediff patches
+  * Rediff patches.
+    Change SIP search path to use PyQt6
+  * Debian uses "pycryptodomex" instead of "prcryptodome"
+  * Rediff patches.
+    Add 0017-py7zr-uses-PyCryptodome.patch: py7zr uses PyCryptodome
+    Drop 0008-dont-use-python-crypto.patch: py7zr uses PyCryptodome
+  * Add PyCryptodome to dependency list
+  * Rediff patches
+  * Add libqt6webenginecore6-bin for "QtWebEngineProcess"
+  * Remove unneeded dependency
+  * Use cmake to build binary plugins
+  * Display build commands while CMake build
+  * Renumber patches
+  * qtchooser is obsolete since Qt6
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Tue, 12 Jul 2022 07:39:25 +0900
+
 calibre (5.44.0+dfsg-1) unstable; urgency=medium
 
   * New upstream version 5.44.0+dfsg
