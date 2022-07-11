@@ -8,6 +8,8 @@ SETUP=$(PYTHON) setup.py
 # build options
 export DEB_BUILD_MAINT_OPTIONS=hardening=+all reproducible=+all
 
+# display build commands while CMake build
+export VERBOSE=1
 
 # Do all test by default
 TEST_FLAGS =
