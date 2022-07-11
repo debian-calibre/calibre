@@ -4,15 +4,15 @@ Subject: Sort object lists for reproducible build
 
 Forwarded: not-needed
 ---
- setup/build.py       | 10 +++++-----
+ setup/build.py       |  8 ++++----
  src/calibre/linux.py | 18 +++++++++---------
- 2 files changed, 14 insertions(+), 14 deletions(-)
+ 2 files changed, 13 insertions(+), 13 deletions(-)
 
 diff --git a/setup/build.py b/setup/build.py
-index 651d752..741b677 100644
+index c6e8950..d9d3ad7 100644
 --- a/setup/build.py
 +++ b/setup/build.py
-@@ -416,8 +416,8 @@ class Build(Command):
+@@ -422,8 +422,8 @@ class Build(Command):
          compiler = self.env.cxx if ext.needs_cxx else self.env.cc
          linker = self.env.linker if iswindows else compiler
          dest = self.dest(ext)
@@ -23,7 +23,7 @@ index 651d752..741b677 100644
          cmd = [linker]
          if iswindows:
              pre_ld_flags = []
-@@ -427,7 +427,7 @@ class Build(Command):
+@@ -433,7 +433,7 @@ class Build(Command):
              cmd += pre_ld_flags + self.env.ldflags + ext.ldflags + elib + xlib + \
                  ['/EXPORT:' + init_symbol_name(ext.name)] + objects + ext.extra_objs + ['/OUT:'+dest]
          else:
@@ -32,24 +32,15 @@ index 651d752..741b677 100644
          lddb.append({'arguments': cmd, 'directory': os.getcwd(), 'output': os.path.relpath(dest, os.getcwd())})
  
          if self.newer(dest, objects+ext.extra_objs):
-@@ -500,7 +500,7 @@ class Build(Command):
-             QMAKE_CXXFLAGS += {CXXFLAGS} {CPPFLAGS}
-             QMAKE_LFLAGS   += {LFLAGS}
-             ''').format(
--                headers=' '.join(headers), sources=' '.join(sources), others=' '.join(others), destdir=self.d(
-+                headers=' '.join(headers), sources=' '.join(sorted(sources)), others=' '.join(others), destdir=self.d(
-                     target), freetype=' '.join(ft_inc_dirs),
-                 CFLAGS   = os.environ.get('CFLAGS',   ''),
-                 CXXFLAGS = os.environ.get('CXXFLAGS', ''),
-@@ -550,7 +550,7 @@ sip-include-dirs = ["/usr/lib/python3/dist-packages/PyQt5/bindings"]
+@@ -529,7 +529,7 @@ sip-include-dirs = ["/usr/lib/python3/dist-packages/PyQt5/bindings"]
  
- [tool.sip.bindings.pictureflow]
+ [tool.sip.bindings.{ext.name}]
  headers = {ext.headers}
 -sources = {ext.sources}
 +sources = {sorted(ext.sources)}
  exceptions = {needs_exceptions}
  include-dirs = {ext.inc_dirs}
- qmake-QT = ["widgets"]
+ qmake-QT = {ext.qt_modules}
 diff --git a/src/calibre/linux.py b/src/calibre/linux.py
 index 7c31a58..dd39e59 100644
 --- a/src/calibre/linux.py

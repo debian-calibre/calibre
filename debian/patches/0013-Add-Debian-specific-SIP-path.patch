@@ -21,14 +21,14 @@ https://www.riverbankcomputing.com/static/Docs/sip/directives.html#std-directive
  1 file changed, 1 insertion(+)
 
 diff --git a/setup/build.py b/setup/build.py
-index ca67802..651d752 100644
+index 7454986..c6e8950 100644
 --- a/setup/build.py
 +++ b/setup/build.py
-@@ -546,6 +546,7 @@ project-factory = "pyqtbuild:PyQtProject"
+@@ -525,6 +525,7 @@ project-factory = "pyqtbuild:PyQtProject"
  [tool.sip.project]
  sip-files-dir = "."
  {abi_version}
 +sip-include-dirs = ["/usr/lib/python3/dist-packages/PyQt5/bindings"]
  
- [tool.sip.bindings.pictureflow]
+ [tool.sip.bindings.{ext.name}]
  headers = {ext.headers}

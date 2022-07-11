@@ -111,15 +111,15 @@ index 13870ce..8c1507b 100644
              service = b.services[0]
              self.ae(service.type, '_calibre._tcp.local.')
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index 2d9633d..a3423a0 100644
+index 881bdb1..2bf2916 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
-@@ -345,7 +345,7 @@ class BuildTest(unittest.TestCase):
+@@ -355,7 +355,7 @@ class BuildTest(unittest.TestCase):
  
-             p.runJavaScript('1 + 1', callback)
-             p.printToPdf(print_callback)
--            QTimer.singleShot(5000, lambda: QApplication.instance().quit())
-+            QTimer.singleShot(500000, lambda: QApplication.instance().quit())
+             p.titleChanged.connect(do_webengine_test)
+             p.runJavaScript(f'document.title = "test-run-{os.getpid()}";')
+-            timeout = 10
++            timeout = 1000
+             QTimer.singleShot(timeout * 1000, lambda: QApplication.instance().quit())
              QApplication.instance().exec()
-             test_flaky = ismacos and not is_ci
-             if not test_flaky:
+             self.assertTrue(hasattr(callback, 'result'), f'Qt WebEngine failed to run in {timeout} seconds')

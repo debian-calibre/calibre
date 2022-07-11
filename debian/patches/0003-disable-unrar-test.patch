@@ -10,7 +10,7 @@ disable unrar test since the module is not in Debian main
  1 file changed, 5 insertions(+)
 
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index 45c35a5..2d9633d 100644
+index c0f5029..881bdb1 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
 @@ -17,6 +17,10 @@ from polyglot.builtins import iteritems
@@ -22,9 +22,9 @@ index 45c35a5..2d9633d 100644
 +except ModuleNotFoundError:
 +    unrardll = None
  
- class BuildTest(unittest.TestCase):
- 
-@@ -374,6 +378,7 @@ class BuildTest(unittest.TestCase):
+ def print(*a):
+     builtins.print(*a, flush=True, file=sys.__stdout__)
+@@ -384,6 +388,7 @@ class BuildTest(unittest.TestCase):
          from calibre.gui2.win_file_dialogs import test
          test()
  

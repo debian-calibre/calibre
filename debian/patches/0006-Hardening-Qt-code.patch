@@ -6,14 +6,14 @@ Forwarded: not-needed
 
 Allow hardening flags from debhelper.
 ---
- setup/build.py | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ setup/build.py | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/setup/build.py b/setup/build.py
-index aa1013c..ca67802 100644
+index 498acd3..7454986 100644
 --- a/setup/build.py
 +++ b/setup/build.py
-@@ -191,6 +191,7 @@ def init_env(debug=False, sanitize=False):
+@@ -195,6 +195,7 @@ def init_env(debug=False, sanitize=False):
          ldflags = os.environ.get('OVERRIDE_LDFLAGS', '-Wall')
          ldflags = shlex.split(ldflags)
          cflags += shlex.split(os.environ.get('CFLAGS', ''))
@@ -21,25 +21,7 @@ index aa1013c..ca67802 100644
          ldflags += shlex.split(os.environ.get('LDFLAGS', ''))
          cflags += ['-fvisibility=hidden']
          if sanitize:
-@@ -495,9 +496,16 @@ class Build(Command):
-             INCLUDEPATH += {freetype}
-             DESTDIR = {destdir}
-             CONFIG -= create_cmake  # Prevent qmake from generating a cmake build file which it puts in the calibre src directory
-+            QMAKE_CFLAGS   += {CFLAGS}   {CPPFLAGS}
-+            QMAKE_CXXFLAGS += {CXXFLAGS} {CPPFLAGS}
-+            QMAKE_LFLAGS   += {LFLAGS}
-             ''').format(
-                 headers=' '.join(headers), sources=' '.join(sources), others=' '.join(others), destdir=self.d(
--                    target), freetype=' '.join(ft_inc_dirs))
-+                    target), freetype=' '.join(ft_inc_dirs),
-+                CFLAGS   = os.environ.get('CFLAGS',   ''),
-+                CXXFLAGS = os.environ.get('CXXFLAGS', ''),
-+                CPPFLAGS = os.environ.get('CPPFLAGS', ''),
-+                LFLAGS   = os.environ.get('LDFLAGS',  ''))
-         bdir = self.j(self.build_dir, 'headless')
-         if not os.path.exists(bdir):
-             os.makedirs(bdir)
-@@ -576,6 +584,15 @@ sip-file = "{os.path.basename(sipf)}"
+@@ -562,6 +563,15 @@ sip-file = "{os.path.basename(sipf)}"
          cwd = os.getcwd()
          try:
              os.chdir(os.path.join(src_dir, 'build'))
