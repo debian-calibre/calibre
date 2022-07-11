@@ -1,0 +1,24 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Mon, 11 Jul 2022 21:28:57 +0900
+Subject: Debian uses "pycryptodomex" instead of "prcryptodome"
+
+Forwarded: not-needed
+---
+ src/calibre/constants.py | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/src/calibre/constants.py b/src/calibre/constants.py
+index 0745b5f..25a506d 100644
+--- a/src/calibre/constants.py
++++ b/src/calibre/constants.py
+@@ -208,10 +208,6 @@ class DeVendor:
+             if fullname == 'PyQt5':
+                 return ModuleSpec(fullname, DeVendorLoader('qt'))
+             return ModuleSpec(fullname, DeVendorLoader('qt.webengine' if 'QWebEngine' in fullname else 'qt.core'))
+-        if fullname.startswith('Cryptodome'):
+-            # this is needed for py7zr which uses pycryptodomex instead of
+-            # pycryptodome for some reason
+-            return ModuleSpec(fullname, DeVendorLoader(fullname.replace('dome', '', 1)))
+ 
+ 
+ class ExtensionsPackageLoader:
