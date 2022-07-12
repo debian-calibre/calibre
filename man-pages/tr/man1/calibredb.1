@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "Mayıs 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibredb \- calibredb
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBREDB" "1" "Haziran 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -176,7 +176,7 @@ calibredb list [seçenekler]
 .sp
 Calibre veritabanındaki kullanılabilir kitapları listele.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -185,7 +185,7 @@ Sonuçları artan şekilde sırala
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Veritabanındaki kitaplar listelenirken görüntülenecek alanlar. Alanların virgülle ayrılmış bir listesi olmalıdır. Erişilebilir alanlar: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Öntanımlı: title,authors. \fB"\fPTümü\fB"\fP özel alanı tüm alanları seçmek için kullanılabilir. Yukarıdaki tümleşik alanlara ek olarak, *alan_adı şeklinde kişisel alanlara da erişilebilir. Mesela, #onaylama kişisel alanı için şu ismi kullanın: *onaylama
+Veritabanındaki kitaplar listelenirken görüntülenecek alanlar. Alanların virgülle ayrılmış bir listesi olmalıdır. Erişilebilir alanlar: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Öntanımlı: title,authors. \fB\(dq\fPTümü\fB\(dq\fP özel alanı tüm alanları seçmek için kullanılabilir. Yukarıdaki tümleşik alanlara ek olarak, *alan_adı şeklinde kişisel alanlara da erişilebilir. Mesela, #onaylama kişisel alanı için şu ismi kullanın: *onaylama
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -237,7 +237,7 @@ calibredb add [options] file1 file2 file3 ...
 Add the specified files as books to the database. You can also specify folders, see
 the folder related options below.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -246,7 +246,7 @@ Eklenen kitap(lar)ın yazarlarını ayarla
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-If books with similar titles and authors are found, merge the incoming formats (files) automatically into existing book records. A value of \fB"\fPignore\fB"\fP means duplicate formats are discarded. A value of \fB"\fPoverwrite\fB"\fP means duplicate formats in the library are overwritten with the newly added files. A value of \fB"\fPnew_record\fB"\fP means duplicate formats are placed into a new book record.
+If books with similar titles and authors are found, merge the incoming formats (files) automatically into existing book records. A value of \fB\(dq\fPignore\fB\(dq\fP means duplicate formats are discarded. A value of \fB\(dq\fPoverwrite\fB\(dq\fP means duplicate formats in the library are overwritten with the newly added files. A value of \fB\(dq\fPnew_record\fB\(dq\fP means duplicate formats are placed into a new book record.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -335,7 +335,7 @@ calibredb kimlikleri kaldır
 .sp
 Kimlikleri ile belirtilen kitapları veri tabanından sil. Kimlikler, kimlik numaralarının virgülle ayrılmış listesi olmalıdır (arama komutuyla kimlik numaralarını alabilirsiniz). Örneğin, 23,34,57\-85 (aralık belirtirken, aralıkta son numara dahil edilmez).
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-permanent
@@ -355,7 +355,7 @@ calibredb add_format [seçenekler] id e\-kitap_file
 .sp
 e\-kitap_file\(aqndaki e\-kitabı kimliği ile tanımlanan mantıksal kitap için kullanılabilir biçime ekle. Arama komutunu kullanarak kimlik alabilirsiniz. Biçim zaten mevcutsa, yer değiştirme seçeneği belirtilmediği takdirde yer değiştirilir.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -375,7 +375,7 @@ calibredb remove_format [seçenekler] id fmt
 .sp
 id ile tanımlanan mantıksal kitaptan fmt biçimini kaldır. Arama komutunu kullanarak id numarasını alabilirsiniz. fmt LRF veya TXT veya EPUB gibi bir dosya uzantısı olmalıdır. Mantıksal kitabın kullanılabilir fmt\(aqsi yoksa, hiçbir şey yapma.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -391,7 +391,7 @@ calibredb show_metadata [seçenekler] id
 id ile tanımlanan kitap için Calibre veri tabanında kayıtlı metadata\(aqyı göster.
 id, arama komutuyla gelen id numarasıdır.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -416,7 +416,7 @@ fikir edinebilirsiniz. Ayrıca \-\-field seçeneği ile değişik alanların met
 ayarlayabilirsiniz. \-\-field seçeneğini kullanırsanız, bir OPF dosyası belirtmeye
 gerek yoktur.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
@@ -443,7 +443,7 @@ ids ile (virgülle ayrılmış liste) belirtilen kitapları dosya sistemine çı
 Dışa aktarma işlemi kitabın tüm biçimlerini, kapak ve metadatada\(aqsını
 (opf dosyasına) kaydeder. Id numaralarını arama komutuyla alabilirsiniz.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -492,7 +492,7 @@ Export all books into a single folder
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+The template to control the filename and folder structure of the saved files. Default is \fB\(dq\fP{author_sort}/{title}/{title} \- {authors}\fB\(dq\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -527,7 +527,7 @@ Note that different \fBcatalog\fP formats support different sets of options. To
 see the different options, specify the name of the output file and then the
 \-\-help option.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
@@ -567,7 +567,7 @@ Regex describing tags to exclude as genres. Default: \fB\(aq\fP[.+]|^+$\fB\(aq\f
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Specifies the rules used to exclude books from the generated catalog. The model for an exclusion rule is either (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) or (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). For example: ((\fB\(aq\fPArchived books\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) will exclude a book with a value of \fB\(aq\fPArchived\fB\(aq\fP in the custom column \fB\(aq\fPstatus\fB\(aq\fP\&. When multiple rules are defined, all rules will be applied. Default:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Applies to: AZW3, EPUB, MOBI output formats
+Specifies the rules used to exclude books from the generated catalog. The model for an exclusion rule is either (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) or (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). For example: ((\fB\(aq\fPArchived books\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) will exclude a book with a value of \fB\(aq\fPArchived\fB\(aq\fP in the custom column \fB\(aq\fPstatus\fB\(aq\fP\&. When multiple rules are defined, all rules will be applied. Default:  \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP Applies to: AZW3, EPUB, MOBI output formats
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -622,7 +622,7 @@ Specifies the output profile. In some cases, an output profile is required to op
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-Specifies the rules used to include prefixes indicating read books, wishlist items and other user\-specified prefixes. The model for a prefix rule is (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). When multiple rules are defined, the first matching rule will be used. Default: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Applies to: AZW3, EPUB, MOBI output formats
+Specifies the rules used to include prefixes indicating read books, wishlist items and other user\-specified prefixes. The model for a prefix rule is (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). When multiple rules are defined, the first matching rule will be used. Default: \fB\(dq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(dq\fP Applies to: AZW3, EPUB, MOBI output formats
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -663,7 +663,7 @@ Syntax for removing:
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -679,11 +679,11 @@ calibredb add_custom_column [seçenekler] etiket isim veritürü
 Bir özel sütun oluştur. etiket sütunun makinenin anlayacağı ismidir. Boşluk veya sütun içermemelidir. name sütunun kullanıcı dostu ismidir.
 veritürü şunlardan biridir: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-display
-Bu sütundaki verinin nasıl yorumlanacağının özelleştirilmesi için seçenekler sözlüğü. Bu bir JSON  karater dizisidir. Sıralama sütunları için, \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP  kullanındisplay değişkenine verilebilecek bir çok seçenek vardır. Sütun türüne göre seçenekler: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  Uygun kombinasyonlar bulmanın en iyi yolu grafik arayüzden uygun türde bir özel sütun oluşturmak ardından kitap için OPF yedeğine bakmaktır (Sütun eklendikten sonra yeni bir OPF oluştuğundan emin olun). OPF\fB\(aq\fPde yeni sütun için \fB"\fPdisplay\fB"\fP JSON\fB\(aq\fPunu göreceksiniz.
+Bu sütundaki verinin nasıl yorumlanacağının özelleştirilmesi için seçenekler sözlüğü. Bu bir JSON  karater dizisidir. Sıralama sütunları için, \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP  kullanındisplay değişkenine verilebilecek bir çok seçenek vardır. Sütun türüne göre seçenekler: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  Uygun kombinasyonlar bulmanın en iyi yolu grafik arayüzden uygun türde bir özel sütun oluşturmak ardından kitap için OPF yedeğine bakmaktır (Sütun eklendikten sonra yeni bir OPF oluştuğundan emin olun). OPF\fB\(aq\fPde yeni sütun için \fB\(dq\fPdisplay\fB\(dq\fP JSON\fB\(aq\fPunu göreceksiniz.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -704,7 +704,7 @@ calibredb özel_sütunlar [seçenekler]
 .sp
 Kullanılabilir özel sütunları listele. Sütun etiketlerini ve kimliklerini gösterir.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -725,7 +725,7 @@ calibredb remove_custom_column [seçenekler] etiket
 Etiket tarafından belirlenmiş kişisel sütunu kaldır. Kullanılabilir sütunları
 custom_columns komutuyla görebilirsiniz.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -748,7 +748,7 @@ You can get a list of ids using the search command.
 You can get a list of custom column names using the custom_columns
 command.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -775,7 +775,7 @@ all saved searches, user categories, plugboards, stored per\-book conversion
 settings, and custom recipes. Restored metadata will only be as accurate as
 what is found in the OPF files.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -795,7 +795,7 @@ calibredb check_library [seçenekler]
 .sp
 Bir kitaplığı temsil eden dosya sisteminde bazı kontroller gerçekleştirir. Raporlar: invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -831,7 +831,7 @@ calibredb list_categories [options]
 Produce a report of the category information in the database. The
 information is the equivalent of what is shown in the Tag browser.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
@@ -876,7 +876,7 @@ command to force re\-generation of the OPF files, with the \-\-all option.
 Note that there is normally no need to do this, as the OPF files are backed up
 automatically, every time metadata is changed.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -900,7 +900,7 @@ same custom columns, Virtual libraries and other settings as the current library
 The cloned library will contain no books. If you want to create a full duplicate, including
 all books, then simply use your filesystem tools to copy the library folder.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -922,7 +922,7 @@ metadata güncelleyebilirsiniz. Ayrıca birden çok kitap kimliğini boşluklarl
 ve kimlik aralıklarını tire ile ayırarak belirtebilirsiniz. Örneğin:
 calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
@@ -945,9 +945,9 @@ list of book ids matching the \fBsearch\fP expression. The output format is usef
 to feed into other commands that accept a list of ids as input.
 .sp
 The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
-language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
+language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l

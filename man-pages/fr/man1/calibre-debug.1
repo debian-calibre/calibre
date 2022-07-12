@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "mai 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibre-debug \- calibre-debug
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBRE-DEBUG" "1" "juin 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibre-debug \- calibre-debug
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -55,7 +55,7 @@ Vous pouvez également utilisez \fBcalibre\-debug\fP pour exécuter des scripts 
 .sp
 Tout ce qui se trouve après le \fB\-\-\fP est pris en charge par le script.
 .sp
-Chaque fois que vous passez à \fBcalibre\-debug\fP des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
+Chaque fois que vous passez à \fBcalibre\-debug\fP des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: \(dq/some path/with spaces\(dq
 .SH [OPTIONS]
 .INDENT 0.0
 .TP
@@ -100,7 +100,7 @@ Décompacte le livre dans le dossier spécifié. Utilisation : \-x file.epub out
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Exporter toutes les données de calibre (livres/paramètres/extensions). Normalement, on vous demandera le dossier d\fB\(aq\fPexportation et les bibliothèques à exporter. Vous pouvez également les spécifier en tant qu\fB\(aq\fParguments de ligne de commande pour sauter les questions. Utilisez des chemins absolus pour le dossier d\fB\(aq\fPexportation et les bibliothèques. Le mot\-clé spécial \fB"\fPall\fB"\fP permet d\fB\(aq\fPexporter toutes les bibliothèques.
+Exporter toutes les données de calibre (livres/paramètres/extensions). Normalement, on vous demandera le dossier d\fB\(aq\fPexportation et les bibliothèques à exporter. Vous pouvez également les spécifier en tant qu\fB\(aq\fParguments de ligne de commande pour sauter les questions. Utilisez des chemins absolus pour le dossier d\fB\(aq\fPexportation et les bibliothèques. Le mot\-clé spécial \fB\(dq\fPall\fB\(dq\fP permet d\fB\(aq\fPexporter toutes les bibliothèques.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -150,7 +150,7 @@ Réinitialiser la base de données sqlite de calibre à l\fB\(aq\fPemplacement s
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-Run a plugin that provides a command line interface. For example: calibre\-debug \-r \fB"\fPPlugin name\fB"\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
+Exécuter une extension qui fournit une interface en ligne de commande. Par exemple : calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Tout ce qui se trouve après le \fB\-\-\fP sera passé à l\fB\(aq\fPextension en tant qu\fB\(aq\fParguments.
 .UNINDENT
 .INDENT 0.0
 .TP

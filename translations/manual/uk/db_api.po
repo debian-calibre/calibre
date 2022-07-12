@@ -4,15 +4,15 @@
 # 
 # Translators:
 # Zoriana Zaiats, 2014
-# Yuri Chornoivan <yurchor@ukr.net>, 2014,2017-2018,2021
+# Yuri Chornoivan <yurchor@ukr.net>, 2014,2017-2018,2021-2022
 # Zoriana Zaiats, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-01 12:56+0000\n"
-"PO-Revision-Date: 2021-11-23 15:56+0000\n"
-"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"POT-Creation-Date: 2022-06-17 02:39+0000\n"
+"PO-Revision-Date: 2014-07-05 16:49+0000\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2014,2017-2018,2021-2022\n"
 "Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -56,6 +56,59 @@ msgstr "SQLITE просто використовується як стійкий
 #: calibre.db.listeners.EventType:1
 msgid "An enumeration."
 msgstr "Нумерація."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.book_created:1
+msgid ""
+"When a new book record is created in the database, with the book id as the "
+"only argument"
+msgstr "Коли у базі даних буде створено новий запис книги із ідентифікатором книги, як єдиним аргументом"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.book_edited:1
+msgid "When a book format is edited, with arguments: (book_id, fmt)"
+msgstr "Коли буде змінено формат книги з аргументами: (ідентифікатор_книги, формат)"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.books_removed:1
+msgid ""
+"When books are removed from the database with the list of book ids as the "
+"only argument"
+msgstr "Коли книги буде вилучено з бази даних із списком ідентифікаторів книг, як єдиним аргументом"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.format_added:1
+msgid "When a format is added to a book, with arguments: (book_id, format)"
+msgstr "Коли до запису книги буде додано формат із аргументами: (ідентифікатор_книги, форма)"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.formats_removed:1
+msgid ""
+"When formats are removed from a book, with arguments: (mapping of book id to"
+" set of formats removed from the book)"
+msgstr "Коли формати буде вилучено з запису книги з аргументами: (відображення ідентифікатора книги на формати, які вилучено з запису книги)"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.items_removed:1
+msgid ""
+"When items such as tags or authors are removed from some books. Arguments: "
+"(field_name, affected book ids, ids of removed items)"
+msgstr "Коли з деяких книг вилучають записи, подібні до міток або записів авторів. Аргументи: (назва_поля, ідентифікатори книг, ідентифікатори записів, які вилучають)"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.items_renamed:1
+msgid ""
+"When items such as tags or authors are renamed in some or all books. "
+"Arguments: (field_name, affected book ids, map of old item id to new item "
+"id)"
+msgstr "Коли у деяких або усіх книгах перейменовують записи, подібні до міток або записів авторів. Аргументи: (назва_поля, ідентифікатори книг, відображення старого ідентифікатора запису на новий ідентифікатор запису)"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.metadata_changed:1
+msgid ""
+"When some metadata is changed for some books, with arguments: (name of "
+"changed field, set of affected book ids)"
+msgstr "Коли змінюють деякі метадані у деяких книгах з аргументами: (назва зміненого поля, набір ідентифікаторів книг)"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_books:1

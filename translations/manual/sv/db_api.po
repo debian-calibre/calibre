@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-03 05:03+0000\n"
+"POT-Creation-Date: 2022-06-17 02:39+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2022\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
@@ -59,6 +59,59 @@ msgstr "SQLITE används helt enkelt som ett sätt att läsa och skriva från met
 #: calibre.db.listeners.EventType:1
 msgid "An enumeration."
 msgstr "En uppräkning."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.book_created:1
+msgid ""
+"When a new book record is created in the database, with the book id as the "
+"only argument"
+msgstr "När en ny bokpost skapas i databasen, med bok-id som enda argument"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.book_edited:1
+msgid "When a book format is edited, with arguments: (book_id, fmt)"
+msgstr "När ett bokformat redigeras, med argument: (book_id, fmt)"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.books_removed:1
+msgid ""
+"When books are removed from the database with the list of book ids as the "
+"only argument"
+msgstr "När böcker tas bort från databasen med listan över bok-ID som enda argument"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.format_added:1
+msgid "When a format is added to a book, with arguments: (book_id, format)"
+msgstr "När ett format läggs till i en bok, med argument: (bok_id, format)"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.formats_removed:1
+msgid ""
+"When formats are removed from a book, with arguments: (mapping of book id to"
+" set of formats removed from the book)"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.items_removed:1
+msgid ""
+"When items such as tags or authors are removed from some books. Arguments: "
+"(field_name, affected book ids, ids of removed items)"
+msgstr "När objekt som taggar eller författare tas bort från vissa böcker. Argument: (field_name, berörda bok-ID, ID för borttagna objekt)"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.items_renamed:1
+msgid ""
+"When items such as tags or authors are renamed in some or all books. "
+"Arguments: (field_name, affected book ids, map of old item id to new item "
+"id)"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.metadata_changed:1
+msgid ""
+"When some metadata is changed for some books, with arguments: (name of "
+"changed field, set of affected book ids)"
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_books:1

@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "5월 27, 2022" "5.43.0" "calibre"
-.SH NAME
-ebook-convert \- ebook-convert
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "EBOOK-CONVERT" "1" "6월 17, 2022" "5.44.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -45,14 +45,14 @@ Convert an e\-book from one format to another.
 .sp
 input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an "open e\-book" (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an \(dqopen e\-book\(dq (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
 .sp
 After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
 For full documentation of the conversion system see
 \fI\%전자책 변환\fP
 .sp
-Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .sp
 The options and default values for the options change depending on both the
 input and output formats, so you should always check with:
@@ -102,7 +102,7 @@ options specific to every input and output format.
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-내장된 레시피 이름을 나열합니다. 다음과 같은 내장된 레시피에서 전자책을 만들 수 있습니다: ebook\-convert \fB"\fP레시피 이름.recipe\fB"\fP 출력.epub
+내장된 레시피 이름을 나열합니다. 다음과 같은 내장된 레시피에서 전자책을 만들 수 있습니다: ebook\-convert \fB\(dq\fP레시피 이름.recipe\fB\(dq\fP 출력.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -191,7 +191,7 @@ SVG 표지를 사용할 때 이 옵션을 사용하면 표지가 사용 가능�
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPPelé\fB"\fP with \fB"\fPPele\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB\(dq\fPPelé\fB\(dq\fP with \fB\(dq\fPPele\fB\(dq\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -201,7 +201,7 @@ Transliterate Unicode characters to an ASCII representation. Use with care becau
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-텍스트 자리 맞춤을 변경합니다. \fB"\fP왼쪽\fB"\fP 값은 원본의 모든 정렬된 텍스트를 왼쪽 정렬된(즉, 정렬되지 않은) 텍스트로 변환합니다. \fB"\fP양쪽 정렬\fB"\fP 값은 모든 정렬이 안된 본문을 양쪽 정렬하도록 변환합니다. \fB"\fP원본\fB"\fP(기본값) 값은 원본 파일의 자리 맞춤을 바꾸지 않습니다. 일부 출력 형식만 자리 맞춤을 지원합니다.
+텍스트 자리 맞춤을 변경합니다. \fB\(dq\fP왼쪽\fB\(dq\fP 값은 원본의 모든 정렬된 텍스트를 왼쪽 정렬된(즉, 정렬되지 않은) 텍스트로 변환합니다. \fB\(dq\fP양쪽 정렬\fB\(dq\fP 값은 모든 정렬이 안된 본문을 양쪽 정렬하도록 변환합니다. \fB\(dq\fP원본\fB\(dq\fP(기본값) 값은 원본 파일의 자리 맞춤을 바꾸지 않습니다. 일부 출력 형식만 자리 맞춤을 지원합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -216,7 +216,7 @@ Transliterate Unicode characters to an ASCII representation. Use with care becau
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-지정된 글꼴 모음을 책에 포함합니다. 책에 사용되는 \fB"\fP기본\fB"\fP 글꼴을 지정합니다. 입력 문서가 자체 글꼴을 지정하는 경우 이 기본 글꼴을 재정의할 수 있습니다. 필터 스타일 정보 옵션을 사용하여 입력 문서에서 글꼴을 제거할 수 있습니다. 글꼴 포함은 주로 EPUB, AZW3 및 DOCX와 같은 일부 출력 형식에서만 작동합니다.
+지정된 글꼴 모음을 책에 포함합니다. 책에 사용되는 \fB\(dq\fP기본\fB\(dq\fP 글꼴을 지정합니다. 입력 문서가 자체 글꼴을 지정하는 경우 이 기본 글꼴을 재정의할 수 있습니다. 필터 스타일 정보 옵션을 사용하여 입력 문서에서 글꼴을 제거할 수 있습니다. 글꼴 포함은 주로 EPUB, AZW3 및 DOCX와 같은 일부 출력 형식에서만 작동합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -286,7 +286,7 @@ pt 단위의 줄 간격 높이입니다. 자신들의 줄 간격을 직접 지�
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-해당 요소의 계산된 글꼴 크기에 대한 백분율로 표시되는 최소 줄 높이입니다. 캘리버는 입력 문서가 지정하는 것과 상관없이 모든 요소가 최소한 이 설정의 줄 높이를 갖도록 합니다. 비활성화하려면 0으로 설정하십시오. 기본값은 120%입니다. 현재 수행 중인 작업을 모르는 경우가 아니면 직접 라인 높이 사양보다 이 설정을 사용하십시오. 예를 들어, 이것을 240으로 설정하여 \fB"\fP이중 간격\fB"\fP 텍스트를 얻을 수 있습니다.
+해당 요소의 계산된 글꼴 크기에 대한 백분율로 표시되는 최소 줄 높이입니다. 캘리버는 입력 문서가 지정하는 것과 상관없이 모든 요소가 최소한 이 설정의 줄 높이를 갖도록 합니다. 비활성화하려면 0으로 설정하십시오. 기본값은 120%입니다. 현재 수행 중인 작업을 모르는 경우가 아니면 직접 라인 높이 사양보다 이 설정을 사용하십시오. 예를 들어, 이것을 240으로 설정하여 \fB\(dq\fP이중 간격\fB\(dq\fP 텍스트를 얻을 수 있습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -311,12 +311,12 @@ Convert plain quotes, dashes and ellipsis to their typographically correct equiv
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform styles\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB\(dq\fPLook & feel\->Transform styles\fB\(dq\fP section of the conversion dialog. Once you create the rules, you can use the \fB\(dq\fPExport\fB\(dq\fP button to save them to a file.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform HTML\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB\(dq\fPLook & feel\->Transform HTML\fB\(dq\fP section of the conversion dialog. Once you create the rules, you can use the \fB\(dq\fPExport\fB\(dq\fP button to save them to a file.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -425,12 +425,12 @@ Search pattern (regular expression) to be replaced with sr3\-replace.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-장(章)제목을 탐지하기 위한 XPath 표현식. 기본값은 \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP, 또는 \fB"\fPpart\fB"\fP란 단어를 장 제목으로 포함하는 <h1> 또는 <h2> 태그와 class=\fB"\fPchapter\fB"\fP 속성을 가지고 있는 태그들입니다. 사용된 표현식은 요소들의 목록을 평가할 수 있어야 합니다. 장 탐지를 비활성화 하려면 표현식 \fB"\fP/\fB"\fP을 사용하세요. 이 특정 기능에 대한 더 자세한 도움말을 보려면 캘리버 사용자 설명서의 XPath 지침서를 참조하세요.
+장(章)제목을 탐지하기 위한 XPath 표현식. 기본값은 \fB\(dq\fPchapter\fB\(dq\fP, \fB\(dq\fPbook\fB\(dq\fP, \fB\(dq\fPsection\fB\(dq\fP, \fB\(dq\fPprologue\fB\(dq\fP, \fB\(dq\fPepilogue\fB\(dq\fP, 또는 \fB\(dq\fPpart\fB\(dq\fP란 단어를 장 제목으로 포함하는 <h1> 또는 <h2> 태그와 class=\fB\(dq\fPchapter\fB\(dq\fP 속성을 가지고 있는 태그들입니다. 사용된 표현식은 요소들의 목록을 평가할 수 있어야 합니다. 장 탐지를 비활성화 하려면 표현식 \fB\(dq\fP/\fB\(dq\fP을 사용하세요. 이 특정 기능에 대한 더 자세한 도움말을 보려면 캘리버 사용자 설명서의 XPath 지침서를 참조하세요.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-탐지한 장을 표시할 방법을 지정합니다. \fB"\fPpagebreak\fB"\fP 값은 장 이전에 쪽 넘김을 삽입합니다. \fB"\fPrule\fB"\fP 값은 장 이전에 줄을 삽입합니다. \fB"\fPnone\fB"\fP 값은 장 표시를 하지 않고, \fB"\fPboth\fB"\fP 값은 쪽 넘김과 줄을 함께 사용합니다.
+탐지한 장을 표시할 방법을 지정합니다. \fB\(dq\fPpagebreak\fB\(dq\fP 값은 장 이전에 쪽 넘김을 삽입합니다. \fB\(dq\fPrule\fB\(dq\fP 값은 장 이전에 줄을 삽입합니다. \fB\(dq\fPnone\fB\(dq\fP 값은 장 표시를 하지 않고, \fB\(dq\fPboth\fB\(dq\fP 값은 쪽 넘김과 줄을 함께 사용합니다.
 .UNINDENT
 .INDENT 0.0
 .TP

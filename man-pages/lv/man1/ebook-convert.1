@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "maijs 27, 2022" "5.43.0" "calibre"
-.SH NAME
-ebook-convert \- ebook-convert
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "EBOOK-CONVERT" "1" "jūnijs 17, 2022" "5.44.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -45,14 +45,14 @@ Convert an e\-book from one format to another.
 .sp
 input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an "open e\-book" (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an \(dqopen e\-book\(dq (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
 .sp
 After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
 For full documentation of the conversion system see
 \fI\%E\-book conversion\fP
 .sp
-Katru reizi, kad jūs nododat argumentus \fBebook\-convert\fP, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
+Katru reizi, kad jūs nododat argumentus \fBebook\-convert\fP, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: \(dq/some path/with spaces\(dq
 .sp
 Papildiespējas un papildiespēju standartvērtības mainās atkarībā no
 ievades un izvades formāta, tāpēc jums vienmēr vajadzētu pārbaudīt ar:
@@ -102,7 +102,7 @@ Norādiet ievades profilu. Ievades profils nodrošina pārvēršanas sistēmu ar
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-Saraksts ar iebūvēto recepšu nosaukumiem. Jūs varat izveidot e\-grāmatu no iebūvētas receptes šādā veidā: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+Saraksts ar iebūvēto recepšu nosaukumiem. Jūs varat izveidot e\-grāmatu no iebūvētas receptes šādā veidā: ebook\-convert \fB\(dq\fPRecipe Name.recipe\fB\(dq\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -191,7 +191,7 @@ Papildiestatījumi, kas pārvalda rezultāta izskatu
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPPelé\fB"\fP with \fB"\fPPele\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB\(dq\fPPelé\fB\(dq\fP with \fB\(dq\fPPele\fB\(dq\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -201,7 +201,7 @@ Pamata fonta lielums pts. Visi fonta izmēri grāmatā tiks atkārtoti, pamatojo
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-Mainīt teksta izlīdzināšanu. Vērtība \fB"\fPpa kreisi\fB"\fP līdzinās visu tekstu pret kreiso malu. Vērtība \fB"\fPizlīdzināt\fB"\fP izlīdzinās visu tekstu pret abām malām. Vērtība \fB"\fPsākotnējā\fB"\fP (noklusētā) nemainīs izejas datnē atrodamo teksta līdzināšanu. Ņemiet vērā, ka tikai daži formāti atbalsta līdzināšanu.
+Mainīt teksta izlīdzināšanu. Vērtība \fB\(dq\fPpa kreisi\fB\(dq\fP līdzinās visu tekstu pret kreiso malu. Vērtība \fB\(dq\fPizlīdzināt\fB\(dq\fP izlīdzinās visu tekstu pret abām malām. Vērtība \fB\(dq\fPsākotnējā\fB\(dq\fP (noklusētā) nemainīs izejas datnē atrodamo teksta līdzināšanu. Ņemiet vērā, ka tikai daži formāti atbalsta līdzināšanu.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -216,7 +216,7 @@ Iegult visus oriģinālajā dokumentā izmantotos, taču vēl neiegultos fontus.
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Iegult norādīto fontu saimi grāmatā, tādējādi nosakot grāmatā izmantoto \fB"\fPpamata\fB"\fP fontu. Ja oriģinālais dokuments norāda pats savu specifisku fontu, pamata fonts var tikt ignorēts. Jūs varat izmantoto stilu filtra informācijas papildiespēju, lai aizvāktu fontus no oriģinālā dokumenta. Ņemiet vērā, ka fontu iegulšanas darbojas tikai ar atsevišķiem izvades formātiem, pamatā EPUB, AZW3 un DOCX.
+Iegult norādīto fontu saimi grāmatā, tādējādi nosakot grāmatā izmantoto \fB\(dq\fPpamata\fB\(dq\fP fontu. Ja oriģinālais dokuments norāda pats savu specifisku fontu, pamata fonts var tikt ignorēts. Jūs varat izmantoto stilu filtra informācijas papildiespēju, lai aizvāktu fontus no oriģinālā dokumenta. Ņemiet vērā, ka fontu iegulšanas darbojas tikai ar atsevišķiem izvades formātiem, pamatā EPUB, AZW3 un DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -286,7 +286,7 @@ Iestatīt augšējo piemali pts. Noklusējums ir 5.0. Ja iestatīsit to mazāk p
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-Minimālais rindas augstums procentos no elementa fonta lieluma. Calibre nodrošinās, ka visu elementu rindu augstumi būs vismaz šeit noteiktā lielumā neatkarīgi no iestatījumiem ievades dokumentā. Iestatiet 0, lai atslēgtu. Noklusētā vērtība ir 120%. Izmantojiet šo iestatījumu tieša rindas augstuma norādīšanas vietā, ja nav skaidrības par iespējamo rezultātu. Piemēram, \fB"\fPdubultu\fB"\fP rindu atstarpi var panākt norādot šeit 240.
+Minimālais rindas augstums procentos no elementa fonta lieluma. Calibre nodrošinās, ka visu elementu rindu augstumi būs vismaz šeit noteiktā lielumā neatkarīgi no iestatījumiem ievades dokumentā. Iestatiet 0, lai atslēgtu. Noklusētā vērtība ir 120%. Izmantojiet šo iestatījumu tieša rindas augstuma norādīšanas vietā, ja nav skaidrības par iespējamo rezultātu. Piemēram, \fB\(dq\fPdubultu\fB\(dq\fP rindu atstarpi var panākt norādot šeit 240.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -311,12 +311,12 @@ Izveidot iegulto fontu apakškopas. Ikviens iegultais fonts tiks samazināts lī
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Ceļš uz failu, kurā ir noteikumi, lai pārveidotu CSS stilus šajā grāmatā. Vieglākais veids, kā izveidot šādu failu, ir izmantot vedni, lai izveidotu noteikumus calibre GUI. Piekļūstiet dialogam sadaļā \fB"\fPIzskats\-> Pārveidot stilu\fB"\fP\&. Kad jūs izveidojat noteikumus, varat izmantot pogu \fB"\fPEksportēt\fB"\fP, lai tos saglabātu failā.
+Ceļš uz failu, kurā ir noteikumi, lai pārveidotu CSS stilus šajā grāmatā. Vieglākais veids, kā izveidot šādu failu, ir izmantot vedni, lai izveidotu noteikumus calibre GUI. Piekļūstiet dialogam sadaļā \fB\(dq\fPIzskats\-> Pārveidot stilu\fB\(dq\fP\&. Kad jūs izveidojat noteikumus, varat izmantot pogu \fB\(dq\fPEksportēt\fB\(dq\fP, lai tos saglabātu failā.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform HTML\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB\(dq\fPLook & feel\->Transform HTML\fB\(dq\fP section of the conversion dialog. Once you create the rules, you can use the \fB\(dq\fPExport\fB\(dq\fP button to save them to a file.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -425,12 +425,12 @@ Pārvalda dokumenta struktūras automātisku noteikšanu.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-XPath izteiksme, lai noteiktu nodaļu virsrakstus. Pēc noklusējuma ir jāņem vērā <h1>vai <h2>birkas, kas satur vārdu \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP vai \fB"\fPpart\fB"\fP, kā nodaļu virsraksts arī kā visas birkas kas ir klase = \fB"\fPchapter\fB"\fP\&. Izteiksme, ko izmanto, jāizvērtē elementu saraksts. Lai atspējotu nodaļas noteikšanu, izmantojiet izteiksmi \fB"\fP/\fB"\fP\&. Skatiet calibre \fB"\fPXPath Tutorial\fB"\fP lietotāja rokasgrāmatu, par turpmāku palīdzību šīs funkcijas izmantošanai.
+XPath izteiksme, lai noteiktu nodaļu virsrakstus. Pēc noklusējuma ir jāņem vērā <h1>vai <h2>birkas, kas satur vārdu \fB\(dq\fPchapter\fB\(dq\fP, \fB\(dq\fPbook\fB\(dq\fP, \fB\(dq\fPsection\fB\(dq\fP, \fB\(dq\fPprologue\fB\(dq\fP, \fB\(dq\fPepilogue\fB\(dq\fP vai \fB\(dq\fPpart\fB\(dq\fP, kā nodaļu virsraksts arī kā visas birkas kas ir klase = \fB\(dq\fPchapter\fB\(dq\fP\&. Izteiksme, ko izmanto, jāizvērtē elementu saraksts. Lai atspējotu nodaļas noteikšanu, izmantojiet izteiksmi \fB\(dq\fP/\fB\(dq\fP\&. Skatiet calibre \fB\(dq\fPXPath Tutorial\fB\(dq\fP lietotāja rokasgrāmatu, par turpmāku palīdzību šīs funkcijas izmantošanai.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Norādiet, kā izcelt noteiktās nodaļas. Vērtība \fB"\fPpagebreak\fB"\fP ievietos lappuses pārtraukumus pirms nodaļām. Vērtība \fB"\fPrule\fB"\fP ievietos tukšu rindu pirms nodaļām. Vērtība \fB"\fPnone\fB"\fP atslēgs nodaļu izcelšanu, vērtība \fB"\fPboth\fB"\fP nodaļu izcelšanai izmantos gan lappušu pārtraukumus, gan tukšas rindas.
+Norādiet, kā izcelt noteiktās nodaļas. Vērtība \fB\(dq\fPpagebreak\fB\(dq\fP ievietos lappuses pārtraukumus pirms nodaļām. Vērtība \fB\(dq\fPrule\fB\(dq\fP ievietos tukšu rindu pirms nodaļām. Vērtība \fB\(dq\fPnone\fB\(dq\fP atslēgs nodaļu izcelšanu, vērtība \fB\(dq\fPboth\fB\(dq\fP nodaļu izcelšanai izmantos gan lappušu pārtraukumus, gan tukšas rindas.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -460,7 +460,7 @@ Noņemt pirmo attēlu no ievades e\-grāmatas. Noderīgi, ja ievades dokumentam 
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-XPath izteiksme, lai noteiktu atrašanās vietu dokumentā, no kuras jāsāk lasīt. Dažas e\-grāmatu lasīšanas programmas (pirmkārt Kindle) šo vietu izmanto, lai atvērtu grāmatu. Lai iegūtu papildu palīdzību šīs funkcijas izmantošanai, skatiet calibre lietotāja rokasgrāmatā \fB"\fPXPath\fB"\fP sniegto pamācību.
+XPath izteiksme, lai noteiktu atrašanās vietu dokumentā, no kuras jāsāk lasīt. Dažas e\-grāmatu lasīšanas programmas (pirmkārt Kindle) šo vietu izmanto, lai atvērtu grāmatu. Lai iegūtu papildu palīdzību šīs funkcijas izmantošanai, skatiet calibre lietotāja rokasgrāmatā \fB\(dq\fPXPath\fB\(dq\fP sniegto pamācību.
 .UNINDENT
 .SH SATURA RĀDĪITĀJS
 .sp

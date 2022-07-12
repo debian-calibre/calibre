@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "maja 27, 2022" "5.43.0" "calibre"
-.SH NAME
-ebook-convert \- ebook-convert
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "EBOOK-CONVERT" "1" "czerwca 17, 2022" "5.44.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -45,14 +45,14 @@ Convert an e\-book from one format to another.
 .sp
 input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an "open e\-book" (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an \(dqopen e\-book\(dq (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
 .sp
 After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
 For full documentation of the conversion system see
 \fI\%Konwersja książek\fP
 .sp
-Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .sp
 Opcje i domyślne wartości są różne w zależności od formatu wejściowego i wyjściowego,
 zawsze więc należy je sprawdzić:
@@ -97,7 +97,7 @@ Określ profil wejścia. Profil wejścia dyktuje systemowi konwersji jak interpr
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-Lista wbudowanych źródeł. Korzystając ze źródła możesz utworzyć e\-booka za pomocą polecenia ebook\-convert \fB"\fPNazwa źródła.recipe\fB"\fP wynik.epub
+Lista wbudowanych źródeł. Korzystając ze źródła możesz utworzyć e\-booka za pomocą polecenia ebook\-convert \fB\(dq\fPNazwa źródła.recipe\fB\(dq\fP wynik.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -143,12 +143,12 @@ Umieść wstawiany spis treści na końcu książki zamiast na początku.
 .INDENT 0.0
 .TP
 .B \-\-epub\-version
-Wersja pliku EPUB, która zostanie wygenerowana. EPUB 2 jest najbardziej kompatybilny, skorzystaj z EPU\fB"\fPB 3 jeśli tylko wiesz, że takiej wersji potrzebujesz.
+Wersja pliku EPUB, która zostanie wygenerowana. EPUB 2 jest najbardziej kompatybilny, skorzystaj z EPU\fB\(dq\fPB 3 jeśli tylko wiesz, że takiej wersji potrzebujesz.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extract the contents of the generated EPUB file to the specified folder. The contents of the folder are first deleted, so be careful.
+Wyodrębnij zawartość wygenerowanego pliku EPUB do określonego folderu. Zawartość folderu jest najpierw usuwana, więc bądź ostrożny.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -186,7 +186,7 @@ Opcje umożliwiające kontrolę nad wyglądem pliku wyjściowego
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPPelé\fB"\fP with \fB"\fPPele\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Transliteruj znaki Unicode do reprezentacji ASCII. Używaj ostrożnie, ponieważ spowoduje to zamianę znaków Unicode na ASCII. Na przykład zamieni „Pelé” na „Pele”. Należy również pamiętać, że w przypadkach, gdy istnieje wiele reprezentacji znaku (znaki wspólne na przykład w języku chińskim i japońskim), zostanie użyta reprezentacja oparta na bieżącym języku interfejsu kalibru.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -196,7 +196,7 @@ Podstawowy rozmiar czcionki w pkt. Wszystkie rozmiary czcionek w wyprodukowanej 
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-Zmień justowanie. Wartość \fB"\fPlewy\fB"\fP wyrówna cały tekst do lewej. Wartość \fB"\fPwyjustuj\fB"\fP dokona wyjustowania całego tekstu. Wartość \fB"\fPoryginalny\fB"\fP (domyślna) nie zmieni justowania w pliku źródłowym. Weź pod uwagę fakt, że tylko niektóre formaty obsługują justowanie.
+Zmień justowanie. Wartość \fB\(dq\fPlewy\fB\(dq\fP wyrówna cały tekst do lewej. Wartość \fB\(dq\fPwyjustuj\fB\(dq\fP dokona wyjustowania całego tekstu. Wartość \fB\(dq\fPoryginalny\fB\(dq\fP (domyślna) nie zmieni justowania w pliku źródłowym. Weź pod uwagę fakt, że tylko niektóre formaty obsługują justowanie.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -211,7 +211,7 @@ Osadź wszystkie czcionki, które zostały użyte w dokumencie wejściowym, ale 
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Osadź wybraną czcionkę w pliku książki. Czcionka jest traktowana jako \fB"\fPbazowa\fB"\fP dla książki. Jeśli dokument wejściowy używa osobnej czcionki, jego ustawienia mogą nadpisać tę czcionkę bazową. Można użyć filtrów stylów aby usunąć czcionkę z dokumentu wejściowego. Należy pamiętać, że osadzanie czcionek działa tylko w niektórych formatach, głównie EPUB, AZW3 i DOCX.
+Osadź wybraną czcionkę w pliku książki. Czcionka jest traktowana jako \fB\(dq\fPbazowa\fB\(dq\fP dla książki. Jeśli dokument wejściowy używa osobnej czcionki, jego ustawienia mogą nadpisać tę czcionkę bazową. Można użyć filtrów stylów aby usunąć czcionkę z dokumentu wejściowego. Należy pamiętać, że osadzanie czcionek działa tylko w niektórych formatach, głównie EPUB, AZW3 i DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -251,7 +251,7 @@ Zachowuj ligatury istniejące w dokumencie. Ligatura to szczególna para znaków
 .INDENT 0.0
 .TP
 .B \-\-line\-height
-Wysokość wiersza w punktach. Służy do ustawienia odstępu między sąsiednimi wierszami. Jest stosowana tylko w tych elementach, które nie mają określonej własnej wysokości wiersza. W większości przypadków bardziej użyteczna jest opcja \fB"\fPminimalna wysokość wiersza\fB"\fP\&. Domyślnie wysokość wiersza nie jest zmieniana.
+Wysokość wiersza w punktach. Służy do ustawienia odstępu między sąsiednimi wierszami. Jest stosowana tylko w tych elementach, które nie mają określonej własnej wysokości wiersza. W większości przypadków bardziej użyteczna jest opcja \fB\(dq\fPminimalna wysokość wiersza\fB\(dq\fP\&. Domyślnie wysokość wiersza nie jest zmieniana.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -296,7 +296,7 @@ Kiedy calibre usuwa puste wiersze między akapitami, automatycznie dodaje wcięc
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP\&.
+Konwertuj zwykłe cudzysłowy, myślniki i wielokropki na ich poprawne typograficznie odpowiedniki. Aby uzyskać szczegółowe informacje, zobacz \fI\%https://daringfireball.net/projects/smartypants\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -306,12 +306,12 @@ Zredukuj osadzone czcionki. Każda osadzona czcionka zostanie zredukowana tak, a
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Ścieżka do pliku zawierającego reguły przetwarzania stylów CSS w tej książce. Najprostszym sposobem, by stworzyć taki plik, jest użycie kreatora reguł w interfejsie calibre. Dostań się do niego przez sekcję „Look & Fell → Transform styles” dialogu konwersji. Kiedy stworzysz reguły, możesz użyć przycisku \fB"\fPEksport\fB"\fP, aby zapisać je do pliku.
+Ścieżka do pliku zawierającego reguły przetwarzania stylów CSS w tej książce. Najprostszym sposobem, by stworzyć taki plik, jest użycie kreatora reguł w interfejsie calibre. Dostań się do niego przez sekcję „Look & Fell → Transform styles” dialogu konwersji. Kiedy stworzysz reguły, możesz użyć przycisku \fB\(dq\fPEksport\fB\(dq\fP, aby zapisać je do pliku.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform HTML\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+Ścieżka do pliku zawierającego reguły przekształcania kodu HTML w tej książce. Najłatwiejszym sposobem utworzenia takiego pliku jest skorzystanie z kreatora tworzenia reguł w GUI kalibru. Uzyskaj do niego dostęp w sekcji „Wygląd i styl\->Przekształć kod HTML” w oknie dialogowym konwersji. Po utworzeniu reguł możesz użyć przycisku „Eksportuj”, aby zapisać je do pliku.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -424,12 +424,12 @@ Kontrola autodetekcji struktury dokumentu.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP as chapter titles as well as any tags that have class=\fB"\fPchapter\fB"\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB"\fP/\fB"\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB\(dq\fPchapter\fB\(dq\fP, \fB\(dq\fPbook\fB\(dq\fP, \fB\(dq\fPsection\fB\(dq\fP, \fB\(dq\fPprologue\fB\(dq\fP, \fB\(dq\fPepilogue\fB\(dq\fP or \fB\(dq\fPpart\fB\(dq\fP as chapter titles as well as any tags that have class=\fB\(dq\fPchapter\fB\(dq\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB\(dq\fP/\fB\(dq\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Określ jak zaznaczać wykryte rozdziały. Wartość \fB"\fPpagebreak\fB"\fP dzieli stronę między rozdziałami. Wartość \fB"\fPlinia\fB"\fP wstawia linię przed rozdziałem. Wartość \fB"\fPbrak\fB"\fP wyłącza zaznaczanie rozdziałów, a \fB"\fPwszystko\fB"\fP włącza linie i podział strony jednocześnie.
+Określ jak zaznaczać wykryte rozdziały. Wartość \fB\(dq\fPpagebreak\fB\(dq\fP dzieli stronę między rozdziałami. Wartość \fB\(dq\fPlinia\fB\(dq\fP wstawia linię przed rozdziałem. Wartość \fB\(dq\fPbrak\fB\(dq\fP wyłącza zaznaczanie rozdziałów, a \fB\(dq\fPwszystko\fB\(dq\fP włącza linie i podział strony jednocześnie.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -520,7 +520,7 @@ Opcje odpowiedzialne za ustawienia metadanych w plikach wyjściowych
 .INDENT 0.0
 .TP
 .B \-\-authors
-Wpisz autorów. Jeśli jest więcej niż jeden, należy oddzielić ich znakami ampersand (\fB"\fP&\fB"\fP).
+Wpisz autorów. Jeśli jest więcej niż jeden, należy oddzielić ich znakami ampersand (\fB\(dq\fP&\fB\(dq\fP).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -603,7 +603,7 @@ Opcje pomocy przy debugowaniu konwersji
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring.
+Zapisz dane wyjściowe z różnych etapów potoku konwersji w określonym folderze. Przydatne, jeśli nie masz pewności, na którym etapie procesu konwersji występuje błąd.
 .UNINDENT
 .INDENT 0.0
 .TP

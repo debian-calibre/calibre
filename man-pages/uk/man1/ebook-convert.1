@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "травня 27, 2022" "5.43.0" "calibre"
-.SH NAME
-ebook-convert \- ebook-convert
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "EBOOK-CONVERT" "1" "червня 17, 2022" "5.44.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -92,7 +92,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-Показати список назв вбудованих рецептів. Ви можете створити електронну книгу на основі вбудованого рецепту ось так: ebook\-convert \fB"\fPНазва рецепту.recipe\fB"\fP файл_результату.epub
+Показати список назв вбудованих рецептів. Ви можете створити електронну книгу на основі вбудованого рецепту ось так: ebook\-convert \fB\(dq\fPНазва рецепту.recipe\fB\(dq\fP файл_результату.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -419,12 +419,12 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Вираз XPath для виявлення заголовків глав. Типово теґи <h1> або <h2>, які містять слова «chapter», «book», «section», «prologue», «epilogue» або «part», а також теґи, що містять class=\fB"\fPchapter\fB"\fP, вважатимуться теґами заголовків глав. Вказаний вираз має оброблятися як список елементів. Щоб вимкнути виявлення глав, скористайтеся виразом «/». Докладніший опис цієї можливості можна знайти у настановах щодо XPath у підручнику користувача calibre.
+Вираз XPath для виявлення заголовків глав. Типово теґи <h1> або <h2>, які містять слова «chapter», «book», «section», «prologue», «epilogue» або «part», а також теґи, що містять class=\fB\(dq\fPchapter\fB\(dq\fP, вважатимуться теґами заголовків глав. Вказаний вираз має оброблятися як список елементів. Щоб вимкнути виявлення глав, скористайтеся виразом «/». Докладніший опис цієї можливості можна знайти у настановах щодо XPath у підручнику користувача calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Вкажіть спосіб позначення виявлених глав. Значення \fB"\fPpagebreak\fB"\fP призведе до вставлення розривів сторінок перед главами. Значення \fB"\fPrule\fB"\fP призведе до вставлення лінії перед главами. Значення \fB"\fPnone\fB"\fP призведе до вимикання позначення глав, а значення \fB"\fPboth\fB"\fP — до використання розривів сторінок і ліній для позначення глав.
+Вкажіть спосіб позначення виявлених глав. Значення \fB\(dq\fPpagebreak\fB\(dq\fP призведе до вставлення розривів сторінок перед главами. Значення \fB\(dq\fPrule\fB\(dq\fP призведе до вставлення лінії перед главами. Значення \fB\(dq\fPnone\fB\(dq\fP призведе до вимикання позначення глав, а значення \fB\(dq\fPboth\fB\(dq\fP — до використання розривів сторінок і ліній для позначення глав.
 .UNINDENT
 .INDENT 0.0
 .TP

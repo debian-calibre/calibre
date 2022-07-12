@@ -1,0 +1,185 @@
+.\" Man page generated from reStructuredText.
+.
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.TH "CALIBRE-DEBUG" "1" "juin 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibre-debug \- calibre-debug
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibre\-debug [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Différentes interfaces en ligne de commande utiles pour dépanner calibre. Sans options,
+cette commande démarre un interprétateur Python intégré. Vous pouvez également exécuter l\(aqinterface
+utilisateur principale de calibre, la visionneuse de calibre et l\(aqéditeur de livre numérique de calibre en mode dépannage.
+.sp
+Il contient également des interfaces vers différentes parties de calibre qui n\(aqont pas
+d\(aqoutils en ligne de commande dédiés, comme le sous\-ensemble de police, l\(aqoutil diff e\-book
+etc.
+.sp
+Vous pouvez également utilisez \fBcalibre\-debug\fP pour exécuter des scripts autonomes. Pour faire cela utilisez\-le comme ceci :
+.sp
+\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
+.sp
+Tout ce qui se trouve après le \fB\-\-\fP est pris en charge par le script.
+.sp
+Chaque fois que vous passez à \fBcalibre\-debug\fP des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: \(dq/some path/with spaces\(dq
+.SH [OPTIONS]
+.INDENT 0.0
+.TP
+.B \-\-add\-simple\-plugin
+Ajouter une extension simple (par ex. une extension qui consiste en un unique fichier .py), en spécifiant le chemin vers le fichier py contenant le code de l\fB\(aq\fPextension.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-command, \-c
+Exécuter du code Python.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-debug\-device\-driver, \-d
+Debug device detection
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-default\-programs
+(Dés)enregistrer calibre des Programmes par Défaut de Windows \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-diff
+Exécuter l\fB\(aq\fPoutil calibre diff. Par exemple: calibre\-debug \fI\%\-\-diff\fP fichier1 fichier2
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-edit\-book, \-t
+Lancez l’Éditeur de livre calibre en mode débogage.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-exec\-file, \-e
+Exécuter le code Python dans le fichier
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-explode\-book, \-x
+Décompacte le livre dans le dossier spécifié. Utilisation : \-x file.epub output_dir Exporte le livre comme une collection de fichiers HTML et de métadonnées, qui peuvent être édités en utilisant des outils standards d\fB\(aq\fPédition HTML. Fonctionne avec des fichiers EPUB, AZW3, HTMLZ et DOCX
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-export\-all\-calibre\-data
+Exporter toutes les données de calibre (livres/paramètres/extensions). Normalement, on vous demandera le dossier d\fB\(aq\fPexportation et les bibliothèques à exporter. Vous pouvez également les spécifier en tant qu\fB\(aq\fParguments de ligne de commande pour sauter les questions. Utilisez des chemins absolus pour le dossier d\fB\(aq\fPexportation et les bibliothèques. Le mot\-clé spécial \fB\(dq\fPall\fB\(dq\fP permet d\fB\(aq\fPexporter toutes les bibliothèques.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-fix\-multiprocessing
+Pour usage interne
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui, \-g
+Exécuter le GUI avec le débogage activé. La sortie de débogage est inscrite dans stdout et stderr.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui\-debug
+Exécuter le GUI avec une console de débogage, inscrite à l\fB\(aq\fPemplacement spécifié. Pour usage interne uniquement, utiliser l\fB\(aq\fPoption \-g pour exécuter le GUI en mode débogage.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+affiche ce message d\fB\(aq\fPaide et quitte
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-implode\-book, \-i
+Re\-compacter un livre précédemment décompacté. Utilisation : \-i output_dir file.epub Importe le livre depuis les fichiers dans output_dir qui avaient été créé par une un appel précédent à call to \fI\%\-\-explode\-book\fP\&. Assurez\-vous de spécifier le même type de fichier que celui utilisé lors du décompactage.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-import\-calibre\-data
+Importer les données calibre précédemment exportées
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-inspect\-mobi, \-m
+Inspecter le(s) fichier(s) MOBI à/aux (l\fB\(aq\fP)emplacement(s) spécifié(s)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-paths
+Sort les emplacements nécessaires pour configurer l\fB\(aq\fPenvironnement  de calibre
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-reinitialize\-db
+Réinitialiser la base de données sqlite de calibre à l\fB\(aq\fPemplacement spécifié. Utile pour récupérer une base de données corrompue.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-run\-plugin, \-r
+Exécuter une extension qui fournit une interface en ligne de commande. Par exemple : calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Tout ce qui se trouve après le \fB\-\-\fP sera passé à l\fB\(aq\fPextension en tant qu\fB\(aq\fParguments.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-shutdown\-running\-calibre, \-s
+Provoque la fermeture de la session de calibre en cours (si elle existe). Remarquez que s’il y a des tâches en cours, elles seront annulées sur le champ. À utiliser avec prudence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-font, \-f
+Créer un sous\-ensemble avec les polices spécifiées. Utilisez \fB\-\-\fP après cette option pour passer l\fB\(aq\fPoption au programme de sous\-ensembles de police.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-test\-build
+Tester les modules binaires en construction
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+affiche le numéro de version du logiciel et quitte
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-viewer, \-w
+Exécuter la visionneuse de livre numérique en mode débogage
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

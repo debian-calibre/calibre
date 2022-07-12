@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "五月 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibredb \- calibredb
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBREDB" "1" "六月 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -176,7 +176,7 @@ calibredb list [选项]
 .sp
 列出 calibre 数据库中可用书籍。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -236,7 +236,7 @@ calibredb add [选项] file1 file2 file3 ...
 .sp
 添加指定文件为书籍到数据库。你可以指定目录，请查看下面目录相关选项。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -338,7 +338,7 @@ calibredb remove ids
 .sp
 从数据库移除指定 id 的书籍。ids 应为以逗号分隔的 id 号列表（你可以使用搜索命令来获得 id 号）。例如，23,34,57\-85（如果指定一个区间，该区间的最后一个数字不会被包括在内）。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-permanent
@@ -358,7 +358,7 @@ calibredb add_format [options] id ebook_file
 .sp
 用 ebook_file将电子书添加到由id标识的逻辑书的可用格式中。如果格式已经存在，则替换它，除非指定了不替换选项。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -378,7 +378,7 @@ calibredb remove_format [选项] id fmt
 .sp
 从ID识别的逻辑书中删除fmt格式。你可以通过使用搜索命令获取ID。fmt应该是形如LRF或TXT或EPUB的一个文件扩展名。如果逻辑书没有fmt可用则什么也不做。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -394,7 +394,7 @@ calibredb show_metadata [options] id
 显示在 calibre 数据库中存储的id所标识的图书的元数据。
 id是来自搜索命令的id号。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -417,7 +417,7 @@ id是来自搜索命令的id号。您可以通过使用\-\-as\-opf切换到show_
 了解OPF格式。还可以用\-\-field选项设置各个字段的元数据。如果使用\-\-field选项则
 不需要指定OPF文件。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
@@ -448,7 +448,7 @@ calibredb export [options] ids
 导出操作将保存书籍的所有格式，以及其封面和元数据(保存
 至一个 opf 文件)。你可以使用搜索命令来获得 id 号。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -497,7 +497,7 @@ calibredb export [options] ids
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+The template to control the filename and folder structure of the saved files. Default is \fB\(dq\fP{author_sort}/{title}/{title} \- {authors}\fB\(dq\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -532,7 +532,7 @@ Note that different \fBcatalog\fP formats support different sets of options. To
 see the different options, specify the name of the output file and then the
 \-\-help option.
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
@@ -572,7 +572,7 @@ Save the output from different stages of the conversion pipeline to the specifie
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-指定用于从生成的目录中排除书籍的规则。 排除规则的模型是(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP标签\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) 或(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP)。 例如： ((\fB\(aq\fP存档的书籍\fB\(aq\fP,\fB\(aq\fP#状态\fB\(aq\fP,\fB\(aq\fP已存档\fB\(aq\fP),) 将在自定义列“状态”中排除值为“已存档”的图书。定义多个规则时，将应用所有规则。 默认: \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP 应用于AZW3, EPUB, MOBI 输出格式
+指定用于从生成的目录中排除书籍的规则。 排除规则的模型是(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP标签\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) 或(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP)。 例如： ((\fB\(aq\fP存档的书籍\fB\(aq\fP,\fB\(aq\fP#状态\fB\(aq\fP,\fB\(aq\fP已存档\fB\(aq\fP),) 将在自定义列“状态”中排除值为“已存档”的图书。定义多个规则时，将应用所有规则。 默认: \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP 应用于AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -627,7 +627,7 @@ Save the output from different stages of the conversion pipeline to the specifie
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-指定用于包括表示已读书籍，收藏清单项目和其他用户 定前缀的前缀的规则。前缀规则的模型  (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP)。 当定义了多个规则时，将使用第一个匹配规则 默认规则:\fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP适用于：AZW3, EPUB, MOBI 输出格式
+指定用于包括表示已读书籍，收藏清单项目和其他用户 定前缀的前缀的规则。前缀规则的模型  (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP)。 当定义了多个规则时，将使用第一个匹配规则 默认规则:\fB\(dq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(dq\fP适用于：AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -668,7 +668,7 @@ calibredb \fBsaved_searches\fP add search_name search_expression
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -683,11 +683,11 @@ calibredb add_custom_column [options] label name datatype
 .sp
 创建一个自定义的栏目，栏目名为你自定义的名称，不能包含空格或冒号。数据类型可为：bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-display
-一个自定义选项如何解释该列中数据的字典。这是一个JSON字符串。对于枚举列，使用 \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP 有许多选项可以进入显示变量，按列类型的选项是： composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations 找到适当组合的最好方法是在GUI中创建适当类型的自定义列，然后查看图书的备份OPF（确保自从添加该列以来已经创建了新的OPF）。在OPF中的新列中，你将看到JSON的“显示”。
+一个自定义选项如何解释该列中数据的字典。这是一个JSON字符串。对于枚举列，使用 \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP 有许多选项可以进入显示变量，按列类型的选项是： composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations 找到适当组合的最好方法是在GUI中创建适当类型的自定义列，然后查看图书的备份OPF（确保自从添加该列以来已经创建了新的OPF）。在OPF中的新列中，你将看到JSON的“显示”。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -708,7 +708,7 @@ calibredb custom_columns [options]
 .sp
 列出可用的自定义列。显示列标签和ids。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -728,7 +728,7 @@ calibredb remove_custom_column [options] label
 .sp
 用标签删除的自定义列标识。可以使用custom_columns command命令查看可用列
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -750,7 +750,7 @@ calibredb set_custom [options] column id value
 您可以使用搜索命令获取 id 列表。
 您可以使用 custom_columns 命令获取自定义列名的列表。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -777,7 +777,7 @@ all saved searches, user categories, plugboards, stored per\-book conversion
 settings, and custom recipes. Restored metadata will only be as accurate as
 what is found in the OPF files.
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -797,7 +797,7 @@ calibredb check_library [options]
 .sp
 对表示库的文件系统执行一些检查。生成报告是invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -833,7 +833,7 @@ calibredb list_categories [options]
 在数据库中生成一个目录信息的报告。
 该信息与标签窗格中显示的信息等效。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
@@ -878,7 +878,7 @@ calibredb backup_metadata [选项]
 请注意，通常不需要这样做，因为每次元数据更改时，
 OPF文件都会自动备份。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -900,7 +900,7 @@ calibredb 拷贝到 path/to/new/library
 .sp
 副本书库将没有任何书籍。如果您想要创建一个完整的副本书库，包括所有的书籍，那么只需使用您的文件系统工具来复制书库文件夹。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -919,7 +919,7 @@ calibredb embed_metadata [options] book_id
 的特殊值“all”来更新所有书籍中的元数据。还可以指定许多由空间分隔的书籍ID
 和由连字符分隔的ID范围。例如：calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
@@ -938,9 +938,9 @@ calibredb搜索 [选项] 搜索表达式
 .UNINDENT
 .sp
 搜索书库中指定的搜索项，返回与搜索表达式匹配的以逗号分隔的图书ID列表。输出格式对于输入格式接受ID列表的其他命令非常有用。
-搜索表达式可以是来自calibre强大的搜索查询语言中的任何内容，例如：calibredb 搜索author:asimov \(aqtitle:"i robot"\(aq
+搜索表达式可以是来自calibre强大的搜索查询语言中的任何内容，例如：calibredb 搜索author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
+每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l

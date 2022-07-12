@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "maí 27, 2022" "5.43.0" "calibre"
-.SH NAME
-ebook-convert \- ebook-convert
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "EBOOK-CONVERT" "1" "júní 17, 2022" "5.44.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -45,14 +45,14 @@ Convert an e\-book from one format to another.
 .sp
 input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an "open e\-book" (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an \(dqopen e\-book\(dq (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
 .sp
 After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
 For full documentation of the conversion system see
 \fI\%E\-book conversion\fP
 .sp
-Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .sp
 Valkostir og sjálfgefnir valkostir breytast eftir sniði á hvoru tveggja inntaki
 og úttaki, þannig að best er að skoða ávallt með:
@@ -94,7 +94,7 @@ Tilgreindu inntakssnið. Inntakssnið veitir umbreytingarferlinu upplýsingar um
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB\(dq\fPRecipe Name.recipe\fB\(dq\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -183,7 +183,7 @@ Stillingar á útliti og framsetningu úttaks
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPPelé\fB"\fP with \fB"\fPPele\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB\(dq\fPPelé\fB\(dq\fP with \fB\(dq\fPPele\fB\(dq\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -193,7 +193,7 @@ Punktastærð grunnleturs. Allar leturstærðir í nýtilbúinni bók verða end
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-Breyta textajöfnun. Gildið \fB"\fPvinstri\fB"\fP breytir öllum jöfnuðum texta í frumskránni þannig að hann jafnast vinstra megin (þ.e. ójafnaður). Gildið \fB"\fPjafna\fB"\fP breytir öllum ójöfnuðum texta í jafnaðan. Gildið \fB"\fPupprunalegt\fB"\fP (sjálfgefið) breytir ekki jöfnun í frumskránni. Takið eftir að einungis sum úttakssnið styðja jöfnun.
+Breyta textajöfnun. Gildið \fB\(dq\fPvinstri\fB\(dq\fP breytir öllum jöfnuðum texta í frumskránni þannig að hann jafnast vinstra megin (þ.e. ójafnaður). Gildið \fB\(dq\fPjafna\fB\(dq\fP breytir öllum ójöfnuðum texta í jafnaðan. Gildið \fB\(dq\fPupprunalegt\fB\(dq\fP (sjálfgefið) breytir ekki jöfnun í frumskránni. Takið eftir að einungis sum úttakssnið styðja jöfnun.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -208,7 +208,7 @@ Gera alla endurkvörðun leturstærða óvirka.
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Ívefja tiltekna leturgerð inn í bókina. Þannig er \fB"\fPgrunn\fB"\fP leturgerð bókarinnar tilgreind. Ef innflutta skráin tilgreinir eigin leturgerð, þá gæti hún yfirprentað þessa grunnleturgerð. Þú getur notað leturgerðarsíu til að fjarlægja leturgerðir úr innfluttum skrám. Takið eftir að ívafning virkar einungis í vissum gerðum úttaksskráa, aðallega EPUB, AZW3 og DOCX.
+Ívefja tiltekna leturgerð inn í bókina. Þannig er \fB\(dq\fPgrunn\fB\(dq\fP leturgerð bókarinnar tilgreind. Ef innflutta skráin tilgreinir eigin leturgerð, þá gæti hún yfirprentað þessa grunnleturgerð. Þú getur notað leturgerðarsíu til að fjarlægja leturgerðir úr innfluttum skrám. Takið eftir að ívafning virkar einungis í vissum gerðum úttaksskráa, aðallega EPUB, AZW3 og DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -278,7 +278,7 @@ Set the top margin in pts. Default is 5.0. Setting this to less than zero will c
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-Lágmarkshæð línu, sem hlutfall af útreiknaðri leturstærð einingarinnar. Calibre mun tryggja að allar einingar fái línuhæð sem er að lágmarki þetta gildi, óháð því sem tilgreint er í inntaksskránni. Gildið núll gerir þetta óvirkt. Sjálfgefið er 120%. Notið það val í kjörstillingum til að tilgreina línuhæð, nema afleiðingar breytinga séu vel þekktar. Til dæmis, þá er hægt að hafa \fB"\fPtvöfalt línubil\fB"\fP með því að velja hér 240.
+Lágmarkshæð línu, sem hlutfall af útreiknaðri leturstærð einingarinnar. Calibre mun tryggja að allar einingar fái línuhæð sem er að lágmarki þetta gildi, óháð því sem tilgreint er í inntaksskránni. Gildið núll gerir þetta óvirkt. Sjálfgefið er 120%. Notið það val í kjörstillingum til að tilgreina línuhæð, nema afleiðingar breytinga séu vel þekktar. Til dæmis, þá er hægt að hafa \fB\(dq\fPtvöfalt línubil\fB\(dq\fP með því að velja hér 240.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -303,12 +303,12 @@ Setja alla ífafðar stafagerðir í undirmengi. Allar ívafðar stafagerðir er
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform styles\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB\(dq\fPLook & feel\->Transform styles\fB\(dq\fP section of the conversion dialog. Once you create the rules, you can use the \fB\(dq\fPExport\fB\(dq\fP button to save them to a file.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform HTML\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB\(dq\fPLook & feel\->Transform HTML\fB\(dq\fP section of the conversion dialog. Once you create the rules, you can use the \fB\(dq\fPExport\fB\(dq\fP button to save them to a file.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -417,12 +417,12 @@ Stilla sjálfvirka greiningu á byggingu skráa.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-XPath\-segð til að greina titla á köflum. Sjálfgefið er að skilgreina sem kaflatitla <h1> eða <h2> einindi sem innihalda orðin \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP aða \fB"\fPpart\fB"\fP jafnframt þeim einindum sem eru með class=\fB"\fPchapter\fB"\fP\&. Segðin verður að samsvara lista yfir eigindi. Til að gera greiningu kafla óvirka skaltu nota segðina \fB"\fP/\fB"\fP\&. Skoðaðu kennsluefnið yfir XPath í notendahandbók Calibre fyrir nánari upplýsingar um hvernig þetta er notað.
+XPath\-segð til að greina titla á köflum. Sjálfgefið er að skilgreina sem kaflatitla <h1> eða <h2> einindi sem innihalda orðin \fB\(dq\fPchapter\fB\(dq\fP, \fB\(dq\fPbook\fB\(dq\fP, \fB\(dq\fPsection\fB\(dq\fP, \fB\(dq\fPprologue\fB\(dq\fP, \fB\(dq\fPepilogue\fB\(dq\fP aða \fB\(dq\fPpart\fB\(dq\fP jafnframt þeim einindum sem eru með class=\fB\(dq\fPchapter\fB\(dq\fP\&. Segðin verður að samsvara lista yfir eigindi. Til að gera greiningu kafla óvirka skaltu nota segðina \fB\(dq\fP/\fB\(dq\fP\&. Skoðaðu kennsluefnið yfir XPath í notendahandbók Calibre fyrir nánari upplýsingar um hvernig þetta er notað.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Tilgreina hvernig á að merkja við kafla sem fundust. Gildið \fB"\fPsíðuskil\fB"\fP mun hafa síðuskil á undan köflum. Gildið \fB"\fPlína\fB"\fP mun setja línu á undan köflum. Gildið \fB"\fPekkert\fB"\fP mun gera kaflamerkingar óvirkar og gildið \fB"\fPhvoru tveggja\fB"\fP mun nota hvoru tveggja línuskil og línur til að marka kafla.
+Tilgreina hvernig á að merkja við kafla sem fundust. Gildið \fB\(dq\fPsíðuskil\fB\(dq\fP mun hafa síðuskil á undan köflum. Gildið \fB\(dq\fPlína\fB\(dq\fP mun setja línu á undan köflum. Gildið \fB\(dq\fPekkert\fB\(dq\fP mun gera kaflamerkingar óvirkar og gildið \fB\(dq\fPhvoru tveggja\fB\(dq\fP mun nota hvoru tveggja línuskil og línur til að marka kafla.
 .UNINDENT
 .INDENT 0.0
 .TP

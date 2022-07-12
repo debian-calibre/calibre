@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "maio 27, 2022" "5.43.0" "calibre"
-.SH NAME
-ebook-convert \- ebook-convert
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "EBOOK-CONVERT" "1" "junho 17, 2022" "5.44.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -45,14 +45,14 @@ Converte um formato de livro digital noutro formato
 .sp
 ficheiro_entrada (input_file) é a fonte e o ficheiro_saída (output_file) é o resultado final. Os dois devem ser especificados como os dois primeiros argumentos para o comando.
 .sp
-O formato do resultado final é calculado através da extensão de ficheiro do  ficheiro_saída. O ficheiro_saída pode ter também o formato especial .EXT onde EXT é a extensão do ficheiro de saída. Neste caso, o nome do formato do ficheiro de saída é derivado do nome do ficheiro de entrada. Note que o nome do ficheiro não pode começar com um hífen. Finalmente, se ficheiro_saída não tiver extensão, então será tratado como pasta e será gravado nessa pasta um "livro digital aberto" (OEB) composto por ficheiros HTML. Estes ficheiros são os ficheiros que normalmente seriam passados pelo plugin de saída.
+O formato do resultado final é calculado através da extensão de ficheiro do  ficheiro_saída. O ficheiro_saída pode ter também o formato especial .EXT onde EXT é a extensão do ficheiro de saída. Neste caso, o nome do formato do ficheiro de saída é derivado do nome do ficheiro de entrada. Note que o nome do ficheiro não pode começar com um hífen. Finalmente, se ficheiro_saída não tiver extensão, então será tratado como pasta e será gravado nessa pasta um \(dqlivro digital aberto\(dq (OEB) composto por ficheiros HTML. Estes ficheiros são os ficheiros que normalmente seriam passados pelo plugin de saída.
 .sp
 Depois de especificar o ficheiro de entrada e o de saída poderá personalizar a conversão através da especificação de várias opções. As opções disponíveis dependem dos tipos de ficheiro de entrada e do de saída. Para obter ajuda neste tópico indique o ficheiro de entrada e o de saída seguido da opção \-h .
 .sp
 Para obter a documentação completa do sistema de conversão veja
 \fI\%Conversão de livros digitais\fP
 .sp
-Sempre que passar argumentos para o \fBebook\-convert\fP que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
+Sempre que passar argumentos para o \fBebook\-convert\fP que contenham espaços ponha\-os entre aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .sp
 As opções e os valores das opções variam dependendo simultaneamente do formato de entrada e saída. Assim você deve sempre verificar com:
 .INDENT 0.0
@@ -100,7 +100,7 @@ Especificar o perfil de origem. O perfil de origem indica ao sistema de convers�
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-Listar nomes incorporados das receitas. Poderá criar um livro digital a partir das receitas criadas como em: ebook\-convert \fB"\fPNome da receita.receita\fB"\fP output.epub
+Listar nomes incorporados das receitas. Poderá criar um livro digital a partir das receitas criadas como em: ebook\-convert \fB\(dq\fPNome da receita.receita\fB\(dq\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -189,7 +189,7 @@ Opções para controlar o visual e funcionamento do ficheiro de destino
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterar caracteres Unicode para uma representação em ASCII. Utilize com cuidado porque irá substituir os caracteres Unicode por ASCII. Por exemplo, irá substituir \fB"\fPPelé\fB"\fP por \fB"\fPPele\fB"\fP\&. Note também que em certos casos onde existem representações múltiplas de um carácter (por exemplo caracteres partilhados pelo Chinês e Japonês) será utilizada a representação baseada no idioma da interface atual do Calibre.
+Transliterar caracteres Unicode para uma representação em ASCII. Utilize com cuidado porque irá substituir os caracteres Unicode por ASCII. Por exemplo, irá substituir \fB\(dq\fPPelé\fB\(dq\fP por \fB\(dq\fPPele\fB\(dq\fP\&. Note também que em certos casos onde existem representações múltiplas de um carácter (por exemplo caracteres partilhados pelo Chinês e Japonês) será utilizada a representação baseada no idioma da interface atual do Calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -199,7 +199,7 @@ O tamanho base do tipo de letra em pts. Todos os tamanhos dos tipos de letra no 
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-Mudar justificação do texto. Um valor de \fB"\fPleft\fB"\fP vai converter todo o texto justificado no original para texto com alinhamento à esquerda (ou seja, sem justificação). Um valor de \fB"\fPjustify\fB"\fP converte todo o texto sem justificação para justificado. Um valor de \fB"\fPoriginal\fB"\fP (a predefinição) não altera a justificação no ficheiro fonte. Tenha em conta que apenas alguns formatos de saída suportam a justificação de texto.
+Mudar justificação do texto. Um valor de \fB\(dq\fPleft\fB\(dq\fP vai converter todo o texto justificado no original para texto com alinhamento à esquerda (ou seja, sem justificação). Um valor de \fB\(dq\fPjustify\fB\(dq\fP converte todo o texto sem justificação para justificado. Um valor de \fB\(dq\fPoriginal\fB\(dq\fP (a predefinição) não altera a justificação no ficheiro fonte. Tenha em conta que apenas alguns formatos de saída suportam a justificação de texto.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -284,7 +284,7 @@ Definir a margem superior em pts. A predefinição é 5.0. Definir este valor pa
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-A altura mínima da linha, como percentagem calculada a partir do tamanho de letra do elemento. O Calibre irá assegurar\-se que cada elemento tem um altura de linha de pelo menos o valor aqui definido, independentemente do que o documento ativo especificar. Defina com Zero para desativar isto. A predefinição é 120% . Use de preferência esta definição em vez da especificação direta da altura de linha, a não ser que saiba exatamente o que está a fazer. Por exemplo, pode obter texto com \fB"\fPespaço duplo\fB"\fP se definir isto com 240.
+A altura mínima da linha, como percentagem calculada a partir do tamanho de letra do elemento. O Calibre irá assegurar\-se que cada elemento tem um altura de linha de pelo menos o valor aqui definido, independentemente do que o documento ativo especificar. Defina com Zero para desativar isto. A predefinição é 120% . Use de preferência esta definição em vez da especificação direta da altura de linha, a não ser que saiba exatamente o que está a fazer. Por exemplo, pode obter texto com \fB\(dq\fPespaço duplo\fB\(dq\fP se definir isto com 240.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -294,7 +294,7 @@ Remover o espaçamento entre parágrafos. Também define uma indentação nos pa
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing\-indent\-size
-Quando o Calibre remove linhas em branco entre parágrafos, insere automaticamente uma indentação de parágrafo para garantir que os parágrafos sejam facilmente distinguíveis. Esta opção controla o tamanho desse avanço (unidade de medida \fB"\fPem\fB"\fP). Se inserir um valor negativo, será utilizado o avanço especificado no documento, o que significa que o Calibre não modificará a indentação.
+Quando o Calibre remove linhas em branco entre parágrafos, insere automaticamente uma indentação de parágrafo para garantir que os parágrafos sejam facilmente distinguíveis. Esta opção controla o tamanho desse avanço (unidade de medida \fB\(dq\fPem\fB\(dq\fP). Se inserir um valor negativo, será utilizado o avanço especificado no documento, o que significa que o Calibre não modificará a indentação.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -309,12 +309,12 @@ Segmentar todos os tipos de letra incorporadas. Todos os tipos de letra incorpor
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Caminho para um ficheiro que contém as regras para transformar os estilos CSS neste livro. O modo mais fácil de criar este ficheiro é usar o Assistente para criar regras na interface gráfica do Calibre. Para tal, aceda à secção \fB"\fPAparência\->Transformar estilos\fB"\fP do diálogo de conversão. Uma vez criadas as regras, pode usar o botão \fB"\fPExportar\fB"\fP para as guardar num ficheiro.
+Caminho para um ficheiro que contém as regras para transformar os estilos CSS neste livro. O modo mais fácil de criar este ficheiro é usar o Assistente para criar regras na interface gráfica do Calibre. Para tal, aceda à secção \fB\(dq\fPAparência\->Transformar estilos\fB\(dq\fP do diálogo de conversão. Uma vez criadas as regras, pode usar o botão \fB\(dq\fPExportar\fB\(dq\fP para as guardar num ficheiro.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Caminho para um ficheiro que contém as regras para transformar o HTML neste livro. O modo mais fácil de criar este ficheiro é usar o Assistente para criar regras na interface gráfica do Calibre. Para tal, aceda à secção \fB"\fPAparência\->Transformar HTML\fB"\fP do diálogo de conversão. Uma vez criadas as regras, pode usar o botão \fB"\fPExportar\fB"\fP para as guardar num ficheiro.
+Caminho para um ficheiro que contém as regras para transformar o HTML neste livro. O modo mais fácil de criar este ficheiro é usar o Assistente para criar regras na interface gráfica do Calibre. Para tal, aceda à secção \fB\(dq\fPAparência\->Transformar HTML\fB\(dq\fP do diálogo de conversão. Uma vez criadas as regras, pode usar o botão \fB\(dq\fPExportar\fB\(dq\fP para as guardar num ficheiro.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -423,12 +423,12 @@ Controlar a deteção automática da estrutura do documento.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Uma expressão XPath para apagar os títulos dos capítulos. A predefinição é considerar as etiquetas <h1> ou <h2> que contém as palavras \fB"\fPcapítulo\fB"\fP,\fB"\fPlivro\fB"\fP,\fB"\fPsecção\fB"\fP, \fB"\fPprólogo\fB"\fP, \fB"\fPepilogo\fB"\fP ou \fB"\fPparte\fB"\fP como títulos de capítulos assim como quaisquer etiquetas que tenham class=\fB"\fPchapter\fB"\fP\&. A expressão usada deve avaliar uma lista de elementos. Para desativar a deteção de capítulos, use a expressão \fB"\fP/\fB"\fP\&. Veja o tutorial do XPath no Manual do Utilizador do Calibre para mais ajudas no uso desta função.
+Uma expressão XPath para apagar os títulos dos capítulos. A predefinição é considerar as etiquetas <h1> ou <h2> que contém as palavras \fB\(dq\fPcapítulo\fB\(dq\fP,\fB\(dq\fPlivro\fB\(dq\fP,\fB\(dq\fPsecção\fB\(dq\fP, \fB\(dq\fPprólogo\fB\(dq\fP, \fB\(dq\fPepilogo\fB\(dq\fP ou \fB\(dq\fPparte\fB\(dq\fP como títulos de capítulos assim como quaisquer etiquetas que tenham class=\fB\(dq\fPchapter\fB\(dq\fP\&. A expressão usada deve avaliar uma lista de elementos. Para desativar a deteção de capítulos, use a expressão \fB\(dq\fP/\fB\(dq\fP\&. Veja o tutorial do XPath no Manual do Utilizador do Calibre para mais ajudas no uso desta função.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Especificar como marcar os capítulos detetados. Um valor \fB"\fPquebra de página\fB"\fP vai inserir quebras de página antes dos capítulos. Um valor \fB"\fPregra\fB"\fP vai inserir uma linha antes dos capítulos. Um valor \fB"\fPnenhum\fB"\fP vai desativar a marcação de capítulos e um valor \fB"\fPambos\fB"\fP irá usar tanto quebras de página como linhas para marcar os capítulos.
+Especificar como marcar os capítulos detetados. Um valor \fB\(dq\fPquebra de página\fB\(dq\fP vai inserir quebras de página antes dos capítulos. Um valor \fB\(dq\fPregra\fB\(dq\fP vai inserir uma linha antes dos capítulos. Um valor \fB\(dq\fPnenhum\fB\(dq\fP vai desativar a marcação de capítulos e um valor \fB\(dq\fPambos\fB\(dq\fP irá usar tanto quebras de página como linhas para marcar os capítulos.
 .UNINDENT
 .INDENT 0.0
 .TP

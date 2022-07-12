@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "de maig 27, 2022" "5.43.0" "calibre"
-.SH NAME
-ebook-convert \- ebook-convert
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "EBOOK-CONVERT" "1" "de juny 17, 2022" "5.44.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -45,14 +45,14 @@ Convert an e\-book from one format to another.
 .sp
 input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an "open e\-book" (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an \(dqopen e\-book\(dq (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
 .sp
 After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
 For full documentation of the conversion system see
 \fI\%Conversió de llibres electrònics\fP
 .sp
-Sempre que passeu arguments a \fBebook\-convert\fP i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
+Sempre que passeu arguments a \fBebook\-convert\fP i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: \(dq/some path/with spaces\(dq
 .sp
 Les opcions i els valors predeterminats per al canvi d\(aqopcions depenen del format
 d\(aqentrada com del format de sortida, per tant, sempre és possible comprovar\-ho amb:
@@ -191,7 +191,7 @@ Opcions per a controlar l\(aqaparença de la sortida
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPPelé\fB"\fP with \fB"\fPPele\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB\(dq\fPPelé\fB\(dq\fP with \fB\(dq\fPPele\fB\(dq\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -201,7 +201,7 @@ La mida de lletra base en pts. Totes les mides de lletra al llibre produït canv
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-Canvia l\fB\(aq\fPalineació del text. Un valor d\fB\(aq\fP\fB"\fPesquerra\fB"\fP converteix tot el text alineat a l\fB\(aq\fPorigen en text alineat a l\fB\(aq\fPesquerra (és a dir, no alineat). Un valor d\fB\(aq\fP\fB"\fPalineat\fB"\fP converteix tot el text no alineat en text alineat. Un valor d\fB\(aq\fP\fB"\fPoriginal\fB"\fP (el predeterminat) no canvia l\fB\(aq\fPalineació del fitxer d\fB\(aq\fPorigen. Tingues en compte que només alguns formats de sortida són compatibles amb l\fB\(aq\fPalineació.
+Canvia l\fB\(aq\fPalineació del text. Un valor d\fB\(aq\fP\fB\(dq\fPesquerra\fB\(dq\fP converteix tot el text alineat a l\fB\(aq\fPorigen en text alineat a l\fB\(aq\fPesquerra (és a dir, no alineat). Un valor d\fB\(aq\fP\fB\(dq\fPalineat\fB\(dq\fP converteix tot el text no alineat en text alineat. Un valor d\fB\(aq\fP\fB\(dq\fPoriginal\fB\(dq\fP (el predeterminat) no canvia l\fB\(aq\fPalineació del fitxer d\fB\(aq\fPorigen. Tingues en compte que només alguns formats de sortida són compatibles amb l\fB\(aq\fPalineació.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -316,7 +316,7 @@ Camí al fitxer que conté les regles per transformar els estils CSS del llibre.
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform HTML\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB\(dq\fPLook & feel\->Transform HTML\fB\(dq\fP section of the conversion dialog. Once you create the rules, you can use the \fB\(dq\fPExport\fB\(dq\fP button to save them to a file.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -429,7 +429,7 @@ Controla l\(aqautodetecció de l\(aqestructura del document.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Una expressió XPath per detectar els títols dels capítols. Per defecte es considera <h1> o <h2> etiquetes que contenen les paraules  \fB"\fPcapítol\fB"\fP, \fB"\fPllibre\fB"\fP, \fB"\fPsecció\fB"\fP, \fB"\fPpròleg\fB"\fP, \fB"\fPepíleg\fB"\fP o \fB"\fPpart\fB"\fP així com títols de capítol i qualsevol etiqueta que tingui class=\fB"\fPcapítol\fB"\fP\&. L\fB\(aq\fPexpressió utilitzada s\fB\(aq\fPha d\fB\(aq\fPequiparar a una llista d\fB\(aq\fPelements. Per inhabilitar la detecció de capítols, utilitzeu l\fB\(aq\fPexpressió \fB"\fP/\fB"\fP\&. Vegeu el tutorial XPath al manual d\fB\(aq\fPusuari de calibre per més ajuda sobre aquesta funció.
+Una expressió XPath per detectar els títols dels capítols. Per defecte es considera <h1> o <h2> etiquetes que contenen les paraules  \fB\(dq\fPcapítol\fB\(dq\fP, \fB\(dq\fPllibre\fB\(dq\fP, \fB\(dq\fPsecció\fB\(dq\fP, \fB\(dq\fPpròleg\fB\(dq\fP, \fB\(dq\fPepíleg\fB\(dq\fP o \fB\(dq\fPpart\fB\(dq\fP així com títols de capítol i qualsevol etiqueta que tingui class=\fB\(dq\fPcapítol\fB\(dq\fP\&. L\fB\(aq\fPexpressió utilitzada s\fB\(aq\fPha d\fB\(aq\fPequiparar a una llista d\fB\(aq\fPelements. Per inhabilitar la detecció de capítols, utilitzeu l\fB\(aq\fPexpressió \fB\(dq\fP/\fB\(dq\fP\&. Vegeu el tutorial XPath al manual d\fB\(aq\fPusuari de calibre per més ajuda sobre aquesta funció.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -525,7 +525,7 @@ La cadena que s\fB\(aq\fPutilitzarà en l\fB\(aq\fPordenació per autor.
 .INDENT 0.0
 .TP
 .B \-\-authors
-Estableix els autors. Diversos autors haurien d\fB\(aq\fPestar separats per \fB"\fP&\fB"\fP\&.
+Estableix els autors. Diversos autors haurien d\fB\(aq\fPestar separats per \fB\(dq\fP&\fB\(dq\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP

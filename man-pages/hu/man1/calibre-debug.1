@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "május 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibre-debug \- calibre-debug
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBRE-DEBUG" "1" "június 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibre-debug \- calibre-debug
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -59,7 +59,7 @@ dedikált parancssori eszközökkel, mint például a betűkészlet\-alkészlet,
 .sp
 \-\- után mindent a szkript kezel.
 .sp
-Amikor olyan argumentumokat ad át \fBcalibre\-debug\fP\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: "/some path/with spaces"
+Amikor olyan argumentumokat ad át \fBcalibre\-debug\fP\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .SH [BEÁLLÍTÁSOK]
 .INDENT 0.0
 .TP
@@ -104,7 +104,7 @@ A könyv kicsomagolása a megadott mappába. Használat: \-x file.epub output_di
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Az összes calibre adat (könyvek/beállítások/pluginok) exportálása. Általában az exportálandó könyvtárak és az exportálandó könyvtárak mappáját kéri a rendszer. Ezeket parancssori argumentumként is megadhatja, hogy kihagyja a kérdéseket. Használjon abszolút elérési utakat az export mappához és a könyvtárakhoz. Az \fB"\fPall\fB"\fP speciális kulcsszóval az összes könyvtárat exportálhatja.
+Az összes calibre adat (könyvek/beállítások/pluginok) exportálása. Általában az exportálandó könyvtárak és az exportálandó könyvtárak mappáját kéri a rendszer. Ezeket parancssori argumentumként is megadhatja, hogy kihagyja a kérdéseket. Használjon abszolút elérési utakat az export mappához és a könyvtárakhoz. Az \fB\(dq\fPall\fB\(dq\fP speciális kulcsszóval az összes könyvtárat exportálhatja.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -154,7 +154,7 @@ A megadott elérési útvonallal rendelkező sqlite Calibre adatbázis újrainic
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-Run a plugin that provides a command line interface. For example: calibre\-debug \-r \fB"\fPPlugin name\fB"\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
+Run a plugin that provides a command line interface. For example: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "toukokuuta 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibredb \- calibredb
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBREDB" "1" "kesäkuuta 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -176,7 +176,7 @@ calibredb listaa[options]
 .sp
 Listaa calibre\-tietokannan kirjat.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -185,7 +185,7 @@ Järjestä tulokset nousevaan järjestykseen
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Kentät, jotka näytetään kirjoja listattaessa, pilkuin erotettuna sarjana. Käytettävissä olevat kentät: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Oletus: %. Erikoiskentällä \fB"\fPall\fB"\fP valitaan kaikki kentät. Valmiiden listojen lisäksi, mukautettuja listoja voi kutsua *kentän_nimi, esimerkiksi mukautetun kentän #arvio voit kutsua nimellä: *arvio
+Kentät, jotka näytetään kirjoja listattaessa, pilkuin erotettuna sarjana. Käytettävissä olevat kentät: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Oletus: %. Erikoiskentällä \fB\(dq\fPall\fB\(dq\fP valitaan kaikki kentät. Valmiiden listojen lisäksi, mukautettuja listoja voi kutsua *kentän_nimi, esimerkiksi mukautetun kentän #arvio voit kutsua nimellä: *arvio
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -237,7 +237,7 @@ calibredb add [options] file1 file2 file3 ...
 Add the specified files as books to the database. You can also specify folders, see
 the folder related options below.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -246,7 +246,7 @@ Annan tekijoiden nimet lisäty(i)lle.
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-If books with similar titles and authors are found, merge the incoming formats (files) automatically into existing book records. A value of \fB"\fPignore\fB"\fP means duplicate formats are discarded. A value of \fB"\fPoverwrite\fB"\fP means duplicate formats in the library are overwritten with the newly added files. A value of \fB"\fPnew_record\fB"\fP means duplicate formats are placed into a new book record.
+If books with similar titles and authors are found, merge the incoming formats (files) automatically into existing book records. A value of \fB\(dq\fPignore\fB\(dq\fP means duplicate formats are discarded. A value of \fB\(dq\fPoverwrite\fB\(dq\fP means duplicate formats in the library are overwritten with the newly added files. A value of \fB\(dq\fPnew_record\fB\(dq\fP means duplicate formats are placed into a new book record.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -335,7 +335,7 @@ calibredb remove ids
 .sp
 Poista id:itä vastaavat kirjat tietokannasta. Id:t tulee listata pilkuin erotettuna sarjana. Id:t löytyvät hakutoiminnolla. Esimerkki: 23,34,57\-85 (id\-välin viimeistä numeroa ei huomioida).
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-permanent
@@ -355,7 +355,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .sp
 Lisää ebook_filen e\-kirja käytettävissä oleviin formaatteihin id:n osoittamaan kirjaan. Löydät id:t hakukomennolla. Jos formaatti on jo olemassa, se korvataan, ellei ole asetettu älä korvaa \-valintaa.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -375,7 +375,7 @@ calibredb remove_format [options] id fmt
 .sp
 Poista formaatti fmt id:n osoittamasta loogisesta kirajsta. Löydät id:n hakutoiminnolla. fmt:n tulee vastata tiedostopäätettä kuten LRF, TXT tai EPUB. Jos fmt:a ei ole loogiselle kirjalle, älä tee mitään.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -391,7 +391,7 @@ calibredb show_metadata [vaihtoehdot] id
 Näytä tietokannan metatiedot id:n mukaiselle kirjalle.
 Saat listan id:istä haulla.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -413,7 +413,7 @@ Aseta id:n mukaisen kirjan metatiedot calibre\-tietokantaan opf\-tiedostosta.
 Id:n löydät hakutoiminnolla.
 Testaile OPF\-formaattia show_metadata\-komennon \-\-as\-opf \-valinnalla. Yksittäisten kenttien metatietoja voit täyttää \-\-field valinnalla. Tällöin ei ole tarvetta osoittaa OPF\-tiedostoa.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
@@ -439,7 +439,7 @@ calibredb vie [options] id:t
 Vie nimettyjä id:itä (pilkuin erotettussa listassa) vastaavat kirjat tiedostojärjestelmään.
 Vienti kattaa kaikki kirjan tiedostoformaatit, sen kannen sekä metatiedot (opt\-tiedostossa). Voit kerätä id:t hakutoiminnolla.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -488,7 +488,7 @@ Vie kaikki kirjat yhteen kansioon
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to control the filename and folder structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+The template to control the filename and folder structure of the saved files. Default is \fB\(dq\fP{author_sort}/{title}/{title} \- {authors}\fB\(dq\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -523,7 +523,7 @@ Note that different \fBcatalog\fP formats support different sets of options. To
 see the different options, specify the name of the output file and then the
 \-\-help option.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
@@ -563,7 +563,7 @@ Regex describing tags to exclude as genres. Default: \fB\(aq\fP[.+]|^+$\fB\(aq\f
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Specifies the rules used to exclude books from the generated catalog. The model for an exclusion rule is either (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) or (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). For example: ((\fB\(aq\fPArchived books\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) will exclude a book with a value of \fB\(aq\fPArchived\fB\(aq\fP in the custom column \fB\(aq\fPstatus\fB\(aq\fP\&. When multiple rules are defined, all rules will be applied. Default:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Applies to: AZW3, EPUB, MOBI output formats
+Specifies the rules used to exclude books from the generated catalog. The model for an exclusion rule is either (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) or (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). For example: ((\fB\(aq\fPArchived books\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) will exclude a book with a value of \fB\(aq\fPArchived\fB\(aq\fP in the custom column \fB\(aq\fPstatus\fB\(aq\fP\&. When multiple rules are defined, all rules will be applied. Default:  \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP Applies to: AZW3, EPUB, MOBI output formats
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -618,7 +618,7 @@ Specifies the output profile. In some cases, an output profile is required to op
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-Specifies the rules used to include prefixes indicating read books, wishlist items and other user\-specified prefixes. The model for a prefix rule is (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). When multiple rules are defined, the first matching rule will be used. Default: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Applies to: AZW3, EPUB, MOBI output formats
+Specifies the rules used to include prefixes indicating read books, wishlist items and other user\-specified prefixes. The model for a prefix rule is (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). When multiple rules are defined, the first matching rule will be used. Default: \fB\(dq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(dq\fP Applies to: AZW3, EPUB, MOBI output formats
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -659,7 +659,7 @@ Syntax for removing:
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -675,11 +675,11 @@ calibredb add_custom_column [options] otsikko nimi tietotyyppi
 Luo mukautettu sarake. Otsikko on koneystävällinen nimi sarakkeelle. Se ei saa sisältää välilyöntejä tai pisteitä.  Nimi on ihmisystävällinen nimi sarakkeelle.
 tietotyyppi on jokin näistä: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-display
-Lista vaihtohtoja tämän sarakkeen tietojen käsittelyyn. Tämä on JSON lauseke. Järjestäville sarakkeille käytetään \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP\&. Esitysmuuttujaan voi sisällyttää useita vaihtoehtoja. Sarakkeittain näitä ovat: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  Hyvä tapa toimivien yhdistelmien löytämiseen on tehdä mukautettu sarake sopivasta tyypistä GUI:ssa ja sitten etsiä OPF varmuuskopiosta kirjaa (varmista, että sarakkeen luomisen jälkeen luotiin uusi OPF). Uudessa OPF:ssä on nyt uuden sarakkeen esittävä JSON.
+Lista vaihtohtoja tämän sarakkeen tietojen käsittelyyn. Tämä on JSON lauseke. Järjestäville sarakkeille käytetään \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP\&. Esitysmuuttujaan voi sisällyttää useita vaihtoehtoja. Sarakkeittain näitä ovat: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  Hyvä tapa toimivien yhdistelmien löytämiseen on tehdä mukautettu sarake sopivasta tyypistä GUI:ssa ja sitten etsiä OPF varmuuskopiosta kirjaa (varmista, että sarakkeen luomisen jälkeen luotiin uusi OPF). Uudessa OPF:ssä on nyt uuden sarakkeen esittävä JSON.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -700,7 +700,7 @@ calibredb custom_columns [options]
 .sp
 Luettelo käytettävissä olevista sarakkeista. Näyttää sarakkeiden otsikot ja id:t.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -720,7 +720,7 @@ calibredb remove_custom_column [options] label
 .sp
 Poista viitteen mukainen mukautettu sarake. Näet käytettävissä olevat mukautetut sarakkeet custom_columns\-komennolla.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -742,7 +742,7 @@ Aseta arvo id:n mukaisen kirjan mukautettuun sarakkeeseen.
 Saat listan id:istä haulla.
 Saat listan mukautetuista sarakkeista custom_columns\-komennolla.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -769,7 +769,7 @@ all saved searches, user categories, plugboards, stored per\-book conversion
 settings, and custom recipes. Restored metadata will only be as accurate as
 what is found in the OPF files.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -789,7 +789,7 @@ calibredb check_library [options]
 .sp
 Tarkastaa kirjaston tiedostorakennetta. Raportit ovat invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -825,7 +825,7 @@ calibredb list_categories [options]
 Produce a report of the category information in the database. The
 information is the equivalent of what is shown in the Tag browser.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
@@ -870,7 +870,7 @@ command to force re\-generation of the OPF files, with the \-\-all option.
 Note that there is normally no need to do this, as the OPF files are backed up
 automatically, every time metadata is changed.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -894,7 +894,7 @@ same custom columns, Virtual libraries and other settings as the current library
 The cloned library will contain no books. If you want to create a full duplicate, including
 all books, then simply use your filesystem tools to copy the library folder.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -909,7 +909,7 @@ calibredb embed_metadata [options] book_id
 .sp
 Päivitä varsinaisten kirjatiedostojen metatiedot calibre\-kirjaston tietokannan metatietojen mukaisiksi. Yleensä metatiedot päivitetään vain vietäessä tiedostoja ulos calibresta, mutta näin voit muokata olemassa olevia tiedostoja. Huomaa, että eri formaatit sallivat erilaisia metatietoja. Voit käyttää valitsinta \(aqall\(aq kaikkien kirjojen metatietojen päivittämiseen. Voit myös osoittaa useita kirjoja id:illä ja id\-väleillä osoitettuna väliviivoilla. Esimerkiksi calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
@@ -932,9 +932,9 @@ list of book ids matching the \fBsearch\fP expression. The output format is usef
 to feed into other commands that accept a list of ids as input.
 .sp
 The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
-language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
+language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l

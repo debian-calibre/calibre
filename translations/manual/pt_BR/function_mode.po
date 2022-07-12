@@ -11,19 +11,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-07 03:23+0000\n"
-"PO-Revision-Date: 2021-10-03 01:41+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2022-06-17 02:39+0000\n"
+"PO-Revision-Date: 2014-11-21 02:54+0000\n"
+"Last-Translator: Victor Cornaglia Marques Ventura <euventura@gmail.com>, 2017\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/calibre/calibre/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:2
 msgid "Function mode for Search & replace in the Editor"
-msgstr ""
+msgstr "Modo de função para Procurar & Substituir no Editor"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:4
 msgid ""
@@ -50,7 +50,7 @@ msgid ""
 "more complex tasks."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/function_mode.rstNone
+#: ../../__w/calibre/calibre/manual/function_mode.rst-1
 msgid "The Function mode"
 msgstr ""
 
@@ -63,7 +63,7 @@ msgid ""
 "Here, we will leverage one of the builtin functions in the editor to "
 "automatically change the case of all text inside heading tags to title "
 "case::"
-msgstr ""
+msgstr "Aqui, potenciamos uma das funções implementadas no editor que modifica automaticamente a maiusculização de todo o texto contido nas etiquetas HTML de cabeçalho para a maiusculização de título::"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:33
 msgid ""
@@ -71,7 +71,7 @@ msgid ""
 "tags)` builtin function. The will change titles that look like: ``<h1>some "
 "TITLE</h1>`` to ``<h1>Some Title</h1>``. It will work even if there are "
 "other HTML tags inside the heading tags."
-msgstr ""
+msgstr "Para a função, basta escolher a função predefinida :guilabel:`Maiusculização de cabeçalhos (ignorar etiquetas)`. Isto irá alterar títulos que sejam parecidos com: ``<h1>CABEÇALHO exemplo</h1>`` para ``<h1>Cabeçalho Exemplo</h1>``. Tal funcionará mesmo que haja outras etiquetas HTML dentro das etiquetas Heading."
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:40
 msgid "Your first custom function - smartening hyphens"
@@ -83,13 +83,13 @@ msgid ""
 "functions to process text in arbitrary ways. The Smarten Punctuation tool in"
 " the editor leaves individual hyphens alone, so you can use the this "
 "function to replace them with em-dashes."
-msgstr ""
+msgstr "O verdadeiro poder do modo de função advém do facto de lhe permitir criar as suas próprias funções para processar texto de modo arbitrário. A ferramenta do editor de Pontuação inteligente deixa inalterados hífens individuais, pelo que pode usar a função this para os substituir por travessões."
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:47
 msgid ""
 "To create a new function, simply click the :guilabel:`Create/edit` button to"
 " create a new function and copy the Python code from below."
-msgstr ""
+msgstr "Para criar uma nova função, simplesmente clique no botão :guilabel:`Criar/editar` para criar uma nova função e copiar o código Python que se encontra abaixo."
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:55
 msgid ""
@@ -98,27 +98,28 @@ msgid ""
 "arguments shown above. For the moment, we won't worry about all the "
 "different arguments to ``replace()`` function. Just focus on the ``match`` "
 "argument. It represents a match when running a search and replace. Its full "
-"documentation in available `here <https://docs.python.org/library/re.html"
-"#match-objects>`_. ``match.group()`` simply returns all the matched text and"
-" all we do is replace hyphens in that text with em-dashes, first replacing "
-"double hyphens and then single hyphens."
+"documentation in available `here "
+"<https://docs.python.org/library/re.html#match-objects>`_. ``match.group()``"
+" simply returns all the matched text and all we do is replace hyphens in "
+"that text with em-dashes, first replacing double hyphens and then single "
+"hyphens."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:65
 msgid "Use this function with the find regular expression::"
-msgstr ""
+msgstr "Use esta função com a expressão regular de pesquisa:"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:69
 msgid ""
 "And it will replace all hyphens with em-dashes, but only in actual text and "
 "not inside HTML tag definitions."
-msgstr ""
+msgstr "E irá substituir todos os hifenes por travessões, mas apenas no texto e não dentro das definições das etiquetas HTML."
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:74
 msgid ""
 "The power of function mode - using a spelling dictionary to fix mis-"
 "hyphenated words"
-msgstr ""
+msgstr "O poder do modo de função - usando um dicionário ortográfico para corrigir palavras incorretamente hifenizadas."
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:76
 msgid ""
@@ -151,7 +152,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:119
 msgid "Auto numbering sections"
-msgstr ""
+msgstr "Secções autonumeráveis"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:121
 msgid ""
@@ -164,12 +165,12 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:137
 msgid "Use it with the find expression::"
-msgstr ""
+msgstr "Usar com a expressão de pesquisa:"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:141
 msgid ""
 "Place the cursor at the top of the file and click :guilabel:`Replace all`."
-msgstr ""
+msgstr "Posicione o cursor no topo do ficheiro e clique :guilabel:`Substituir todos`."
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:143
 msgid ""
@@ -200,7 +201,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:199
 msgid "And use it with the find expression::"
-msgstr ""
+msgstr "E use-o com a expressão de pesquisa:"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:203
 msgid ""
@@ -232,7 +233,7 @@ msgid ""
 " really needed to generate a Table of Contents from headings in your book, "
 "you would be better off using the dedicated Table of Contents tool in "
 ":guilabel:`Tools->Table of Contents`."
-msgstr ""
+msgstr "Isto foi apenas uma demonstração para lhe mostrar o poder do modo de função. Se tivesse realmente a necessidade de gerar um índice a partir dos cabeçalhos do seu livro, conseguiria melhores resultados usando a ferramenta dedicada de índice em  :guilabel:`Ferramentas->Índice`."
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:224
 msgid "The API for the function mode"
@@ -242,7 +243,7 @@ msgstr ""
 msgid ""
 "All function mode functions must be Python functions named replace, with the"
 " following signature::"
-msgstr ""
+msgstr "Todas as funções do modo de função têm de ser funções codificadas em Python, ter o nome replace, e a seguinte assinatura::"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:232
 msgid ""
@@ -304,7 +305,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:271
 msgid "The ``dictionaries`` argument"
-msgstr ""
+msgstr "O argumento ``dictionaries``"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:273
 msgid ""
@@ -316,7 +317,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:279
 msgid "The ``data`` argument"
-msgstr ""
+msgstr "O argumento ``data``"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:281
 msgid ""
@@ -328,7 +329,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:288
 msgid "The ``functions`` argument"
-msgstr ""
+msgstr "O argumento ``functions``"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:290
 msgid ""
@@ -355,7 +356,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:331
 msgid "Debugging your functions"
-msgstr ""
+msgstr "Depurar as suas funções"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:333
 msgid ""
@@ -367,7 +368,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:341
 msgid "Choose file order when running on multiple HTML files"
-msgstr ""
+msgstr "Escolha a ordem dos ficheiros ao executar em múltiplos ficheiros HTML"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:343
 msgid ""
@@ -422,7 +423,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:408
 msgid "More examples"
-msgstr ""
+msgstr "Mais exemplos"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:410
 msgid ""

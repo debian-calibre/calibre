@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "мај 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibre-server \- calibre-server
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBRE-SERVER" "1" "јун 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibre-server \- calibre-server
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -46,7 +46,7 @@ calibre libraries over the internet. You can specify the path to the library
 folders as arguments to \fBcalibre\-server\fP\&. If you do not specify any paths, all the
 libraries that the main calibre program knows about will be used.
 .sp
-Whenever you pass arguments to \fBcalibre\-server\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to \fBcalibre\-server\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .SH OPCIJE
 .INDENT 0.0
 .TP
@@ -61,7 +61,7 @@ Time (in seconds) to wait for a response from the server when making queries.
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Choose the type of authentication used.     Set the HTTP authentication mode used by the server. Set to \fB"\fPbasic\fB"\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB"\fPauto\fB"\fP, which will use \fB"\fPbasic\fB"\fP if SSL is configured otherwise it will use \fB"\fPdigest\fB"\fP\&.
+Choose the type of authentication used.     Set the HTTP authentication mode used by the server. Set to \fB\(dq\fPbasic\fB\(dq\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB\(dq\fPauto\fB\(dq\fP, which will use \fB\(dq\fPbasic\fB\(dq\fP if SSL is configured otherwise it will use \fB\(dq\fPdigest\fB\(dq\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -151,7 +151,7 @@ Ignored user\-defined metadata fields.       Comma separated list of user\-defin
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-The interface on which to listen for connections.   The default is to listen on all available IPv4 interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
+The interface on which to listen for connections.   The default is to listen on all available IPv4 interfaces. You can change this to, for example, \fB\(dq\fP127.0.0.1\fB\(dq\fP to only listen for connections from the local machine, or to \fB\(dq\fP::\fB\(dq\fP to listen to all incoming IPv6 and IPv4 connections.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -216,7 +216,7 @@ The port on which to listen for connections.
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-Path to a JSON file containing URLs for the \fB"\fPSearch the internet\fB"\fP feature. The easiest way to create such a file is to go to Preferences\-> Sharing over the net\->Search the internet in calibre, create the URLs and export them.
+Path to a JSON file containing URLs for the \fB\(dq\fPSearch the internet\fB\(dq\fP feature. The easiest way to create such a file is to go to Preferences\-> Sharing over the net\->Search the internet in calibre, create the URLs and export them.
 .UNINDENT
 .INDENT 0.0
 .TP

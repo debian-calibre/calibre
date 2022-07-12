@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-25 15:31+0000\n"
+"POT-Creation-Date: 2022-06-17 02:39+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
 "Last-Translator: Jellby <jellby@yahoo.com>, 2014-2018,2020-2022\n"
 "Language-Team: Spanish (http://www.transifex.com/calibre/calibre/language/es/)\n"
@@ -1805,11 +1805,23 @@ msgid ""
 "and the template evaluation."
 msgstr "``template(x)`` -- evalúa ``x`` como una plantilla. La evaluación se hace en su propio contexto, lo que significa que las variables no comparten entre quien llama a la función y la evaluación de la plantilla."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:588
+#: ../../__w/calibre/calibre/manual/template_lang.rst:584
+msgid ""
+"``urls_from_identifiers(identifiers, sort_results)`` -- given a comma-"
+"separated list of ``identifiers``, where an `identifier` is a colon-"
+"separated pair of values (``id_name:id_value``), returns a comma-separated "
+"list of HTML URLs generated from the identifiers. The list not sorted if "
+"sort_results is ``0`` (character or number), otherwise it is sorted "
+"alphabetically by the identifier name. The URLs are generated in the same "
+"way as the built-in identifiers column when shown in :guilabel:`Book "
+"details`."
+msgstr "``urls_from_identifiers(identificadores, ordenar_resultado)`` -- dada una lista de ``identificadores`` separados por comas, donde cada identificador es un par de valores separados por dos puntos (``nombre_id:valor_id``), devuelve una lista de URL HTML separados por comas, generados a partir de los identificadores. La lista no está ordenada si ``ordenar_resultado`` es ``0`` (carácter o número), en caso contrario se ordena alfabéticamente según el nombre del identificador. Los URL se generan de la misma manera que la columna predefinida de identificadores cuando se muestra en :guilabel:`Detalles del libro`."
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:589
 msgid "More complex programs in template expressions - Template Program Mode"
 msgstr "Programas más complejos en expresiones de plantilla: modo de programación de plantillas"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:590
+#: ../../__w/calibre/calibre/manual/template_lang.rst:591
 msgid ""
 "`Template Program Mode` (`TPM`) is a blend of :ref:`General Program Mode "
 "<general_mode>` and :ref:`Single Function Mode <single_mode>`. `TPM` differs"
@@ -1821,7 +1833,7 @@ msgid ""
 " Program Mode expression list."
 msgstr "El `modo de programación de plantillas` (`MPP`) es una mezcla entre el :ref:`modo de programación general <general_mode>` y el :ref:`modo de función única <single_mode>`. El `MPP` se diferencia del `modo de función única` en que permite escribir expresiones de plantilla que hacen referencia a otros campos de metadatos, usar funciones anidadas, modificar variables y hacer operaciones aritméticas. Se diferencia del `modo de programación general` en que la plantilla está entre caracteres ``{`` y ``}`` y no empieza por la palabra ``program``. La parte del programa de la plantilla es una ``expression_list`` del `modo de programación general`."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:593
+#: ../../__w/calibre/calibre/manual/template_lang.rst:594
 msgid ""
 "Example: assume you want a template to show the series for a book if it has "
 "one, otherwise show the value of a custom field #genre. You cannot do this "
@@ -1830,45 +1842,45 @@ msgid ""
 "you can, as the following expression demonstrates::"
 msgstr "Un ejemplo: supongamos que quiere una plantilla que muestre la serie de un libro si la tiene, y en caso contrario muestre el valor del campo personalizado ``#genre``. Esto no se puede hacer en el :ref:`modo de función única <single_mode>`, porque no se puede hacer referencia a otro campo en la expresión de la plantilla. En el `MPP` sí se puede. La siguiente expresión lo demuestra::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:598
+#: ../../__w/calibre/calibre/manual/template_lang.rst:599
 msgid "The example shows several things:"
 msgstr "El ejemplo muestra varias cosas:"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:600
+#: ../../__w/calibre/calibre/manual/template_lang.rst:601
 msgid ""
 "`TPM` is used if the expression begins with ``:'`` and ends with ``'``. "
 "Anything else is assumed to be in :ref:`Single Function Mode <single_mode>`."
 msgstr "El `MPP` se usa si la expresión empieza por ``:'`` y termina por ``'``. Cualquier otra cosa se supone que corresponde al :ref:`modo de función única <single_mode>`."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:601
+#: ../../__w/calibre/calibre/manual/template_lang.rst:602
 msgid ""
 "the variable ``$`` stands for the field named in the template: the "
 "expression is operating upon, ``#series`` in this case."
 msgstr "la variable ``$`` representa el campo nombrado en la plantilla sobre la que opera la expresión, ``#series`` en este caso."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:602
+#: ../../__w/calibre/calibre/manual/template_lang.rst:603
 msgid ""
 "functions must be given all their arguments. There is no default value. For "
 "example, the standard built-in functions must be given an additional initial"
 " parameter indicating the source field."
 msgstr "las funciones deben llevar todos sus argumentos. No hay valores predeterminados. Por ejemplo, las funciones estándar predefinidas deben tener un parámetro inicial que indique el campo de origen."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:603
+#: ../../__w/calibre/calibre/manual/template_lang.rst:604
 msgid "white space is ignored and can be used anywhere within the expression."
 msgstr "los espacios en blanco se ignoran y se pueden utilizar en cualquier lugar dentro de la expresión."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:604
+#: ../../__w/calibre/calibre/manual/template_lang.rst:605
 msgid ""
 "constant strings are enclosed in matching quotes, either ``'`` or ``\"``."
 msgstr "los textos constantes se encierran en comillas del mismo tipo, ya sea ``'`` o ``\"``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:606
+#: ../../__w/calibre/calibre/manual/template_lang.rst:607
 msgid ""
 "All the functions listed under `Single Function Mode` and `General Program "
 "Mode` can be used in `TPM`."
 msgstr "Todas las funciones descritas en el `modo de función única` y en el `modo de programación general` pueden usarse en el `MPP`."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:608
+#: ../../__w/calibre/calibre/manual/template_lang.rst:609
 msgid ""
 "In `TPM`, using ``{`` and ``}`` characters in string literals can lead to "
 "errors or unexpected results because they confuse the template processor. It"
@@ -1878,7 +1890,7 @@ msgid ""
 "you should use `General Program Mode`."
 msgstr "En el `MPP`, usar los caracteres ``{`` y ``}`` en textos literales puede conducir a errores o resultados inesperados porque confunden al procesador de plantillas. Éste intenta interpretarlos como límites de expresiones de plantilla y no como caracteres. En algunos casos, pero no todos, puede sustituir un ``{`` por ``[[`` y un ``}`` por ``]]``. En general, si un program contiene caracteres ``{`` y ``}``, debería usar el `modo de programación general`."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:610
+#: ../../__w/calibre/calibre/manual/template_lang.rst:611
 msgid ""
 "As with `General Program Mode`, for functions documented under :ref:`Single "
 "Function Mode <single_mode>` you must supply the value the function is to "
@@ -1887,11 +1899,11 @@ msgid ""
 "name`` for the template expression."
 msgstr "Como en el `modo de programación general`, para las funciones descritas en el :ref:`modo de función única <single_mode>` debe proporcionar el valor sobre el que opera la función como primer argumento, además de los argumentos descritos. En el `MPP` puede usar ``$`` para acceder al valor especificado por el ``nombre de búsqueda`` de la expresión de plantilla."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:613
+#: ../../__w/calibre/calibre/manual/template_lang.rst:614
 msgid "Stored general program mode templates"
 msgstr "Plantillas guardadas de modo de programa general"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:615
+#: ../../__w/calibre/calibre/manual/template_lang.rst:616
 msgid ""
 ":ref:`General Program Mode <general_mode>` supports saving templates and "
 "calling those templates from another template, much like calling stored "
@@ -1903,24 +1915,24 @@ msgid ""
 "named ``foo``:"
 msgstr "El :ref:`modo de programación general <general_mode>` permite guardar plantillas e invocarlas desde otra plantilla, casi como invocar funciones guardadas. Puede guardar plantillas en :guilabel:`Preferencias > Avanzado > Funciones de plantilla`. Hay más información en el diálogo correspondiente. Puede invocar una plantilla de la misma manera que una función, pasando argumentos por posición si lo desea. Un argumento puede ser una expresión. Ejemplos para invocar una plantilla, suponiendo que la plantilla guardada se llame ``foo``:"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:617
+#: ../../__w/calibre/calibre/manual/template_lang.rst:618
 msgid "``foo()`` -- call the template passing no arguments."
 msgstr "``lala()`` -- invoca la plantilla sin pasar argumentos."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:618
+#: ../../__w/calibre/calibre/manual/template_lang.rst:619
 msgid ""
 "``foo(a, b)`` call the template passing the values of the two variables "
 "``a`` and ``b``."
 msgstr "``lala(a, b)`` -- invoca la plantilla pasando los valores de las variables ``a`` y ``b``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:619
+#: ../../__w/calibre/calibre/manual/template_lang.rst:620
 msgid ""
 "``foo(if field('series') then field('series_index') else 0 fi)`` -- if the "
 "book has a ``series`` then pass the ``series_index``, otherwise pass the "
 "value ``0``."
 msgstr "``lala(if field('series') then field('series_index') else 0 fi)`` -- si el libro tiene ``series``, pasa el valor de ``series_index``, en caso contrario pasa el valor ``0``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:621
+#: ../../__w/calibre/calibre/manual/template_lang.rst:622
 msgid ""
 "You retrieve the arguments passed in the call to the stored template using "
 "the ``arguments`` function. It both declares and initializes local "
@@ -1933,31 +1945,31 @@ msgid ""
 "``alternate``::"
 msgstr "Puede obtener el valor de los argumentos pasados en la invocación de la plantilla guardada usando la función ``arguments``. Esta función declara e inicializa las variables locales, parámetros en la práctica. Las variables son posicionales: obtienen el valor del argumento usado en la misma posición en la invocación. Si el argumento correspondiente no aparece en la invocación, ``arguments`` asigna a esa variable el valor predeterminado suministrado. Si no hay valor predeterminado, será un texto vacío. Por ejemplo, la siguiente función ``arguments`` declara dos variables: ``key`` y ``alternate`::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:625
+#: ../../__w/calibre/calibre/manual/template_lang.rst:626
 msgid "Examples, again assuming the stored template is named ``foo``:"
 msgstr "Ejemplos, suponiendo de nuevo que la plantilla guardada se llame ``lala``:"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:627
+#: ../../__w/calibre/calibre/manual/template_lang.rst:628
 msgid ""
 "``foo('#myseries')`` -- argument ``key`` is assigned the value "
 "``'myseries'`` and the argument ``alternate`` is assigned the default value "
 "``'series'``."
 msgstr "``lala('#miserie')`` -- a la variable ``key`` se le asigna el valor ``'#miserie'`` y a la variable ``alternate`` se le asigna el valor predeterminado ``'serie'``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:628
+#: ../../__w/calibre/calibre/manual/template_lang.rst:629
 msgid ""
 "``foo('series', '#genre')`` the variable ``key`` is assigned the value "
 "``'series'`` and the variable ``alternate`` is assigned the value "
 "``'#genre'``."
 msgstr "``lala('series', '#genero')`` a la variable ``key`` se le asigna el valor ``'series'`` y a la variable ``alternate`` se le asigna el valor ``'#genero'``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:629
+#: ../../__w/calibre/calibre/manual/template_lang.rst:630
 msgid ""
 "``foo()`` -- the variable ``key`` is assigned the empty string and the "
 "variable ``alternate`` is assigned the value ``'series'``."
 msgstr "``lala()`` -- a la variable ``key`` se le asigna un texto vacío y a la variable ``alternate`` se le asigna el valor predeterminado ``'series'``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:631
+#: ../../__w/calibre/calibre/manual/template_lang.rst:632
 msgid ""
 "An easy way to test stored templates is using the ``Template tester`` "
 "dialog. For ease of access give it a keyboard shortcut in "
@@ -1966,11 +1978,11 @@ msgid ""
 "rapidly between the tester and editing the stored template's source code."
 msgstr "Una buena manera de probar las plantillas guardadas es usar el diálogo :guilabel:`Prueba de plantillas`. Para facilitar su acceso, asígnele un atajo de teclado en :guilabel:`Preferencias > Avanzado > Atajos > Prueba de plantillas`. Si le asigna un atajo de teclado podrá alternar rápidamente entre la prueba de plantillas y la modificación del código de programa de la plantilla."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:634
+#: ../../__w/calibre/calibre/manual/template_lang.rst:635
 msgid "Providing additional information to templates"
 msgstr "Pasar información adicional a las plantillas"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:636
+#: ../../__w/calibre/calibre/manual/template_lang.rst:637
 msgid ""
 "A developer can choose to pass additional information to the template "
 "processor, such as application-specific book metadata or information about "
@@ -1978,11 +1990,11 @@ msgid ""
 "information and use it during the evaluation."
 msgstr "Un desarrollador puede decidir pasar información adicional al procesador de plantillas, como metadatos del libro específicos para una aplicación o información sobre lo que se quiere que haga el procesador. Una plantilla puede acceder a esta información y usarla durante la evaluación."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:638
+#: ../../__w/calibre/calibre/manual/template_lang.rst:639
 msgid "**Developer: how to pass additional information**"
 msgstr "**Desarrollador: cómo pasar información adicional**"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:640
+#: ../../__w/calibre/calibre/manual/template_lang.rst:641
 msgid ""
 "The additional information is a Python dictionary containing pairs "
 "``variable_name: variable_value`` where the values must be strings. The "
@@ -1993,23 +2005,23 @@ msgid ""
 "underscore."
 msgstr "La información adicional es un diccionario Python que contiene pares ``nombre_de_variable: valor de variable`` donde los valores deberían ser textos. La plantilla puede acceder al diccionario, creando variables locales con nombre ``nombre_de_variable`` y valor ``valor de variable``. El usuario no puede cambiar el nombre, así que lo mejor es usar nombres que no entren en conflicto con otras variables locales, por ejemplo añadiendo un guión bajo al principio del nombre."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:642
+#: ../../__w/calibre/calibre/manual/template_lang.rst:643
 msgid ""
 "This dict is passed to the template processor (the ``formatter``) using the "
 "named parameter ``global_vars=your_dict``. The full method signature is::"
 msgstr "El diccionario se pasa al procesador de plantillas (el ``formatter``) usando el argumento ``global_vars=diccionario``. La forma completa del método es::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:650
+#: ../../__w/calibre/calibre/manual/template_lang.rst:651
 msgid "**Template writer: how to access the additional information**"
 msgstr "**Creador de plantillas: cómo acceder a la información adicional**"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:652
+#: ../../__w/calibre/calibre/manual/template_lang.rst:653
 msgid ""
 "You access the additional information (the ``globals`` dict) in a template "
 "using the template function::"
 msgstr "Puede acceder a la información adicional (el diccionario ``globals``) en una plantilla usando la función de plantilla::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:656
+#: ../../__w/calibre/calibre/manual/template_lang.rst:657
 msgid ""
 "where ``id`` is any legal variable name. This function checks whether the "
 "additional information provided by the developer contains the name. If it "
@@ -2021,13 +2033,13 @@ msgid ""
 "the local variable."
 msgstr "donde ``id`` es cualquier nombre de variable permitido. Esta función comprueba si la información adicional prevista por el desarrollador contiene el nombre. Si es así, la función asigna el valor a una variable local con ese nombre. Si el nombre no está presente en la información adicional y se suministra una ``expresión``, se evalua dicha ``expresión`` y el resultado se asigna a la variable local. Si no existe ni un valor ni una expresión, la función asigna el texto vacío (``''``) a la variable local."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:658
+#: ../../__w/calibre/calibre/manual/template_lang.rst:659
 msgid ""
 "A template can set a value in the ``globals`` dict using the template "
 "function::"
 msgstr "Una plantilla puede establecer un valor en el diccionario ``globals`` usando la función de plantilla::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:662
+#: ../../__w/calibre/calibre/manual/template_lang.rst:663
 msgid ""
 "This function sets the ``globals`` dict key:value pair ``id:value`` where "
 "``value`` is the value of the template local variable ``id``. If that local "
@@ -2035,11 +2047,11 @@ msgid ""
 "``expression``."
 msgstr "Esta función asigna la pareja ``id:valor`` del diccionario ``globals``, donde ``valor`` es el valor de la variable local de la plantilla ``id``. Si la variable no existe, ``valor`` se toma como el resultado de evaluar ``expresión``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:665
+#: ../../__w/calibre/calibre/manual/template_lang.rst:666
 msgid "Notes on the difference between modes"
 msgstr "Notas sobre las diferencias entre modos"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:667
+#: ../../__w/calibre/calibre/manual/template_lang.rst:668
 msgid ""
 "The three program modes, :ref:`Single Function Mode <single_mode>` (SFM), "
 ":ref:`Template Program Mode <template_mode>` (`TPM`), and :ref:`General "
@@ -2047,51 +2059,51 @@ msgid ""
 "be 'simple' so it hides a lot of programming language bits."
 msgstr "Los tres modos de programación, el :ref:`modo de funcíon única <single_mode>` (`MFU`), el :ref:`modo de programación de plantillas <template_mode>` (`MPP`) y el :ref:`modo de programación general <general_mode>` (`MPG`) funcionan de distinta manera. MFU pretende ser «sencillo» y oculta muchos elementos del lenguaje de programación."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:669
+#: ../../__w/calibre/calibre/manual/template_lang.rst:670
 msgid "Differences:"
 msgstr "Diferencias:"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:671
+#: ../../__w/calibre/calibre/manual/template_lang.rst:672
 msgid ""
 "In SFM the value of the column is always passed as an 'invisible' first "
 "argument to a function included in the template."
 msgstr "En el MFU el valor de la columna se pasa siempre como un primer argumento «invisible» a la función que se incluye en la plantilla."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:672
+#: ../../__w/calibre/calibre/manual/template_lang.rst:673
 msgid ""
 "SFM doesn't support the difference between variables and strings; all values"
 " are strings."
 msgstr "El MFU no hace distinciones entre variables y textos; todos los valores son textos."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:673
+#: ../../__w/calibre/calibre/manual/template_lang.rst:674
 msgid ""
 "The following SFM template returns either the series name or the string \"no"
 " series\"::"
 msgstr "La siguiente plantilla MFU devuelve el nombre de la serie o el texto ``'no series'``::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:677
+#: ../../__w/calibre/calibre/manual/template_lang.rst:678
 msgid "The equivalent template in `TPM` is ::"
 msgstr "La plantilla equivalente en `MPP` es::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:681
+#: ../../__w/calibre/calibre/manual/template_lang.rst:682
 msgid "The equivalent template in `GPM` is::"
 msgstr "La plantilla equivalente en `MPG` es::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:685
+#: ../../__w/calibre/calibre/manual/template_lang.rst:686
 msgid ""
 "The first argument to ``ifempty`` is the value of the field ``series``. The "
 "second argument is the string ``no series``. In SFM the first argument, the "
 "value of the field, is automatically passed (the invisible argument)."
 msgstr "El primer argumento de ``ifempty`` es el valor del campo ``series``. El segundo argumento es el texto ``no series``. En MFU el primer argumento, el valor, se pasa automáticamente (es el argumento invisible)."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:686
+#: ../../__w/calibre/calibre/manual/template_lang.rst:687
 msgid ""
 "Several template functions, for example ``booksize()`` and "
 "``current_library_name()``, take no arguments. Because of the 'invisible "
 "argument' you cannot use these functions in SFM."
 msgstr "Varias funciones de plantilla, como ``booksize()`` y ``current_library_name()``, no admiten argumentos. Debido al «argumento invisible», no puede usar estas funciones en MFU."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:687
+#: ../../__w/calibre/calibre/manual/template_lang.rst:688
 msgid ""
 "Nested functions, where a function calls another function to compute an "
 "argument, cannot be used in SFM. For example this template, intended to "
@@ -2099,17 +2111,17 @@ msgid ""
 "SFM::"
 msgstr "Las funciones anidadas, en las que una función invoca a otra función para evaluar un argumento, no pueden usarse en MFU. Por ejemplo, esta plantilla, que pretende devolver los primeros cinco caracteres del valor de la serie convertidos en mayúsculas, no funcionará en MFU::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:691
+#: ../../__w/calibre/calibre/manual/template_lang.rst:692
 msgid ""
 "`TPM` and `GPM` support nested functions. The above template in `TPM` would "
 "be::"
 msgstr "`MPP` y `MPG` permiten usar funciones anidadas. La plantilla anterior en `MPP` sería::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:695
+#: ../../__w/calibre/calibre/manual/template_lang.rst:696
 msgid "In `GPM` it would be::"
 msgstr "En `MPG` sería::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:699
+#: ../../__w/calibre/calibre/manual/template_lang.rst:700
 msgid ""
 "As noted in the above :ref:`Template Program Mode <template_mode>` section, "
 "using ``{`` and ``}`` characters in `TPM` string literals can lead to errors"
@@ -2120,11 +2132,11 @@ msgid ""
 "`General Program Mode`."
 msgstr "Como se mencionó ateriormente en la sección :ref:`modo de programación de plantillas`, en el `MPP`, usar los caracteres ``{`` y ``}`` en textos literales puede conducir a errores o resultados inesperados porque confunden al procesador de plantillas. Éste intenta interpretarlos como límites de plantilla y no como caracteres. En algunos casos, pero no todos, puede sustituir un ``{`` por ``[[`` y un ``}`` por ``]]``. En general, si un program contiene caracteres ``{`` y ``}``, debería usar el `modo de programación general`."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:703
+#: ../../__w/calibre/calibre/manual/template_lang.rst:704
 msgid "User-defined Python template functions"
 msgstr "Funciones de plantilla Python definidas por el usuario"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:705
+#: ../../__w/calibre/calibre/manual/template_lang.rst:706
 msgid ""
 "You can add your own Python functions to the template processor. Such "
 "functions can be used in any of the three template programming modes. The "
@@ -2132,11 +2144,11 @@ msgid ""
 "Template functions`. Instructions are shown in that dialog."
 msgstr "Puede añadir funciones propias al procesador de plantillas. Dichas funciones pueden usarse en cualquiera de los tres modos de programación de plantillas. Las funciones se añaden en :guilabel:`Preferencias > Avanzado > Funciones de plantilla`. Las instrucciones se muestran en el correspondiente cuadro de diálogo."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:708
+#: ../../__w/calibre/calibre/manual/template_lang.rst:709
 msgid "Special notes for save/send templates"
 msgstr "Notas especiales para plantillas de guardado o envío"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:710
+#: ../../__w/calibre/calibre/manual/template_lang.rst:711
 msgid ""
 "Special processing is applied when a template is used in a `save to disk` or"
 " `send to device` template. The values of the fields are cleaned, replacing "
@@ -2147,18 +2159,18 @@ msgid ""
 "create variable-depth folder structure."
 msgstr "Cuando una plantilla se usa como plantilla de «guardado a disco» o de «envío a dispositivo», ocurre un procesado especial. Los valores de los campos se sanean, eliminando caracteres especiales para los sistemas operativos por guiones bajos, incluyendo barras. Esto significa que el texto de los campos no puede usarse para crear carpetas. Sin embargo, las barras no se modifican en los textos de prefijo o sufijo, por lo que las barras en estos textos harán que se creen carpetas. Gracias a esto, es posible crear estructuras de carpetas de profundidad variable."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:712
+#: ../../__w/calibre/calibre/manual/template_lang.rst:713
 msgid ""
 "For example, assume we want the folder structure `series/series_index - "
 "title`, with the caveat that if series does not exist, then the title should"
 " be in the top folder. The template to do this is::"
 msgstr "Por ejemplo, supongamos que quiere una estructura de carpetas `serie/índice de serie - título`, con la salvedad de que si la serie no existe el título debe estar en la carpeta superior. La plantilla para conseguir esto es::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:716
+#: ../../__w/calibre/calibre/manual/template_lang.rst:717
 msgid "The slash and the hyphen appear only if series is not empty."
 msgstr "La barra y el guión sólo aparecen si la serie no está vacía."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:718
+#: ../../__w/calibre/calibre/manual/template_lang.rst:719
 msgid ""
 "The lookup function lets us do even fancier processing. For example, assume "
 "that if a book has a series, then we want the folder structure "
@@ -2168,25 +2180,25 @@ msgid ""
 "paths, depending on the value of series."
 msgstr "La función ``lookup()`` nos permite realizar un procesado aún más complejo. Por ejemplo, supongamos que si un libro tiene una serie, entonces queremos una estructura de carpetas `serie/índice de serie - título`. Si el libro no tiene una serie, entonces queremos la estructura `género/orden de autor/título`. Si el libro no tiene género, queremos que use «Desconocido». Queremos seguir dos caminos completamente distintos según el valor de la serie."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:720
+#: ../../__w/calibre/calibre/manual/template_lang.rst:721
 msgid "To accomplish this, we:"
 msgstr "Para lograr esto:"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:722
+#: ../../__w/calibre/calibre/manual/template_lang.rst:723
 msgid ""
 "Create a composite field (give it lookup name #aa) containing "
 "``{series}/{series_index} - {title}``. If the series is not empty, then this"
 " template will produce `series/series_index - title`."
 msgstr "Creamos un campo compuesto (démosle el nombre de consulta #aa) que contiene ``{series}/{series_index} - {title}``. Si la serie no está vacía, esta plantilla produce `serie/número_de_serie - título`."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:723
+#: ../../__w/calibre/calibre/manual/template_lang.rst:724
 msgid ""
 "Create a composite field (give it lookup name #bb) containing "
 "``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. This template produces "
 "`genre/author_sort/title`, where an empty genre is replaced with `Unknown`."
 msgstr "Creamos un campo compuesto (démosle el nombre de consulta #bb) que contenga ``{#genre:ifempty(Desconocido)}/{author_sort}/{title}``. Esta plantilla produce `género/orden de autor/título`, donde un género vacío se sustituye por `Desconocido`."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:724
+#: ../../__w/calibre/calibre/manual/template_lang.rst:725
 msgid ""
 "Set the save template to ``{series:lookup(.,#aa,#bb}``. This template "
 "chooses composite field ``#aa`` if series is not empty and composite field "
@@ -2194,11 +2206,11 @@ msgid ""
 "paths, depending on whether or not `series` is empty."
 msgstr "Establecemos la plantilla de guardado en ``{series:lookup(.,#aa,#bb)}``. Esta plantilla elige el campo compuesto ``#aa`` si la serie no está vacía y el campo compuesto ``#bb`` si la serie está vacía. Obtenemos por lo tanto dos rutas de guardado completamente diferentes según el campo `series` esté o no vacío."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:727
+#: ../../__w/calibre/calibre/manual/template_lang.rst:728
 msgid "Templates and plugboards"
 msgstr "Plantillas y controles de metadatos"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:729
+#: ../../__w/calibre/calibre/manual/template_lang.rst:730
 msgid ""
 "Plugboards are used for changing the metadata written into books during "
 "send-to-device and save-to-disk operations. A plugboard permits you to "
@@ -2209,7 +2221,7 @@ msgid ""
 "display issues."
 msgstr "Los paneles de conexiones se usan para cambiar los metadatos escritos en los libros durante las operaciones de guardado en disco y de envío a dispositivo. Un panel de conexiones le permite especificar una plantilla para suministrar los datos que se escribirán en los metadatos del libro. Puede usar los paneles de conexiones para modificar los siguientes campos: authors, author_sort, language, publisher, tags, title, title_sort. Esa función es útil para los que quieren usar metadatos diferentes en los libros de los dispositivos, para solucionar problemas de ordenación o de visualización."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:731
+#: ../../__w/calibre/calibre/manual/template_lang.rst:732
 msgid ""
 "When you create a plugboard, you specify the format and device for which the"
 " plugboard is to be used. A special device is provided, ``save_to_disk``, "
@@ -2220,7 +2232,7 @@ msgid ""
 "can of course use composite columns in these templates."
 msgstr "Cuando cree un panel de conexiones, especifique el formato y dispositivo para los que se usará. Hay un dispositivo especial ``save_to_disk``, que se usa para guardar formatos (en lugar de enviarlos a un dispositivo). Una vez que ha elegido el formato y dispositivo, elija los campos de metadatos para cambiar, y suministre plantillas para obtener los nuevos valores. Estas plantillas están `conectadas` con sus campos de destino, de ahí el nombre `panel de conexiones`. Por supuesto, puede usar columnas compuestas en estas plantillas."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:733
+#: ../../__w/calibre/calibre/manual/template_lang.rst:734
 msgid ""
 "When a plugboard might apply (Content server, save to disk, or send to "
 "device), calibre searches the defined plugboards to choose the correct one "
@@ -2229,29 +2241,29 @@ msgid ""
 " the plugboards using the following search order:"
 msgstr "Cuando un panel de conexiones pueda aplicarse (servidor de contenido, guardado en disco o envío a dispositivo), calibre busca los paneles definidos para elegir el correcto según el formato y dispositivo. Por ejemplo, para encontrar el panel de conexiones apropiado para enviar un libro EPUB a un dispositivo ANDROID, calibre busca en los paneles en el siguiente orden:"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:737
+#: ../../__w/calibre/calibre/manual/template_lang.rst:738
 msgid ""
 "a plugboard with an exact match on format and device, e.g., ``EPUB`` and "
 "``ANDROID``"
 msgstr "un panel de conexiones con una coincidencia exacta de formato y dispositivo, por ejemplo: ``EPUB`` y ``ANDROID``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:738
+#: ../../__w/calibre/calibre/manual/template_lang.rst:739
 msgid ""
 "a plugboard with an exact match on format and the special ``any device`` "
 "choice, e.g., ``EPUB`` and ``any device``"
 msgstr "un panel de conexiones con una coincidencia exacta de formato y el dispositivo especial ``any device``, por ejemplo ``EPUB`` y ``any device``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:739
+#: ../../__w/calibre/calibre/manual/template_lang.rst:740
 msgid ""
 "a plugboard with the special ``any format`` choice and an exact match on "
 "device, e.g., ``any format`` and ``ANDROID``"
 msgstr "un panel de conexiones con el formato especial ``any format`` y una coincidencia exacta de dispositivo, por ejemplo: ``any format`` y ``ANDROID``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:740
+#: ../../__w/calibre/calibre/manual/template_lang.rst:741
 msgid "a plugboard with ``any format`` and ``any device``"
 msgstr "un panel de conexiones con ``any format`` y ``any device``"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:742
+#: ../../__w/calibre/calibre/manual/template_lang.rst:743
 msgid ""
 "The tags and authors fields have special treatment, because both of these "
 "fields can hold more than one item. A book can have many tags and many "
@@ -2263,7 +2275,7 @@ msgid ""
 "comma in the middle of a tag."
 msgstr "Los campos etiquetas y autores tienen un trato especial, debido a que ambos pueden tener más de un elemento. Un libro puede poseer varias etiquetas y varios autores. Cuando indique que desea cambiar uno de estos campos, la plantilla se examina para comprobar si hay más de un elemento. Para las etiquetas, el resultado se divide dondequiera que calibre encuentre una coma. Por ejemplo, si la plantilla produce el valor ``Intriga, Terror``, el resultado serán dos etiquetas: ``Intriga`` y ``Terror``. No existe manera de poner una coma dentro de una etiqueta."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:745
+#: ../../__w/calibre/calibre/manual/template_lang.rst:746
 msgid ""
 "The same thing happens for authors, but using a different character for the "
 "cut, a `&` (ampersand) instead of a comma. For example, if the template "
@@ -2273,7 +2285,7 @@ msgid ""
 "author with a rather strange name."
 msgstr "Lo mismo ocurre con los autores, pero usando un carácter diferente para el corte, un signo «&» en lugar de una coma. Por ejemplo, si la plantilla produce el valor ``Blogs, Joe&Posts, Susan``, el libro acabará con dos autores, ``Blogs, Joe`` y ``Posts, Susan``. Si la plantilla produce el valor ``Blogs, Joe;Posts, Susan``, el libro tendrá un autor con un nombre peculiar."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:747
+#: ../../__w/calibre/calibre/manual/template_lang.rst:748
 msgid ""
 "Plugboards affect the metadata written into the book when it is saved to "
 "disk or written to the device. Plugboards do not affect the metadata used by"
@@ -2282,35 +2294,35 @@ msgid ""
 "preferences window."
 msgstr "Los paneles de conexiones afectan a los metadatos escritos en el libro cuando se guarda en disco o se escribe en un dispositivo. Los paneles de conexiones no afectan a los metadatos usados por las funciones :guilabel:`Guardar en el disco` :guilabel:`Enviar al dispositivo` para crear los nombres de archivo. En lugar de ello, los nombres de archivo se construyen usando las plantillas introducidas en la ventana de preferencias correspondiente."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:750
+#: ../../__w/calibre/calibre/manual/template_lang.rst:751
 msgid "Tips"
 msgstr "Consejos"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:752
+#: ../../__w/calibre/calibre/manual/template_lang.rst:753
 msgid ""
 "Use the Template Tester to test templates. Add the tester to the context "
 "menu for books in the library and/or give it a keyboard shortcut."
 msgstr "Use la prueba de plantillas para probar plantillas. Añada esta función al menú contextual para libros en lea biblioteca o asígnele un atajo de teclado."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:753
+#: ../../__w/calibre/calibre/manual/template_lang.rst:754
 msgid ""
 "Templates can use other templates by referencing composite columns built "
 "with the desired template. Alternatively, you can use Stored Templates."
 msgstr "Las plantillas pueden usar otras plantillas haciendo referencia a columnas compuestas construidas con la plantilla deseada. También puede usar plantillas guardadas."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:754
+#: ../../__w/calibre/calibre/manual/template_lang.rst:755
 msgid ""
 "In a plugboard, you can set a field to empty (or whatever is equivalent to "
 "empty) by using the special template ``{}``. This template will always "
 "evaluate to an empty string."
 msgstr "En un panel de conexiones, puede establecer un campo como vacío (o lo que sea equivalente a vacío) utilizando la plantilla especial ``{}``. Esta plantilla siempre producirá un texto vacío."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:755
+#: ../../__w/calibre/calibre/manual/template_lang.rst:756
 msgid ""
 "The technique described above to show numbers even if they have a zero value"
 " works with the standard field series_index."
 msgstr "La técnica descrita anteriormente para mostrar los números incluso si son cero funciona con el campo estándar ``series_index``."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:760
+#: ../../__w/calibre/calibre/manual/template_lang.rst:761
 msgid "Function reference"
 msgstr "Referencia de funciones"

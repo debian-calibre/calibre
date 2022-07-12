@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-25 15:31+0000\n"
+"POT-Creation-Date: 2022-06-17 02:39+0000\n"
 "PO-Revision-Date: 2014-11-21 02:54+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Japanese (http://www.transifex.com/calibre/calibre/language/ja/)\n"
@@ -37,7 +37,7 @@ msgid ""
 "template, you specify an arbitrary function, in the `Python programming "
 "language <https://docs.python.org>`_. This allows you to do lots of things "
 "that are not possible with simple templates."
-msgstr "検索と置換のための標準的な*正規表現*モードでは、検索のための正規表現とあわせて見つかったマッチをすべて置換するために使用するテンプレートの両方を指定します。関数モードでは、固定のテンプレートを使用する代わりに、`Python プログラミング言語 <https://docs.python.org>`_の任意の関数を指定します。これにより単純なテンプレートでは不可能だった多くのことを実行できるようになります。"
+msgstr "検索と置換のための *正規表現* モードでは、検索のための正規表現とあわせて見つかったマッチをすべて置換するために使用するテンプレートの両方を指定します。関数モードでは、固定のテンプレートを使用する代わりに、 `Python プログラミング言語 <https://docs.python.org>`_ の任意の関数を指定します。これにより単純なテンプレートでは不可能だった多くのことを実行できるようになります。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:16
 msgid ""
@@ -46,7 +46,7 @@ msgid ""
 "more complex tasks."
 msgstr "関数モードを使用するテクニックと構文を、例を用いて説明します。どのように関数を作成するかを、実行するタスクを少しずつ複雑にしながら説明します。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rstNone
+#: ../../__w/calibre/calibre/manual/function_mode.rst-1
 msgid "The Function mode"
 msgstr "関数モード"
 
@@ -99,7 +99,7 @@ msgid ""
 " simply returns all the matched text and all we do is replace hyphens in "
 "that text with em-dashes, first replacing double hyphens and then single "
 "hyphens."
-msgstr ":guilabel:`検索 & 置換` カスタム関数は一意の名前を持ち、replace という名前の Python 関数で構成される必要があります。この関数は上に示すすべての引数を受け付けます。今のところは ``replace()`` 関数のすべての異なる引数について頭を悩ませる必要はありません。引数 ``match`` にだけ注目してください。これは検索と置換を実行するときのマッチを表します。詳細な説明は`こちら<https://docs.python.org/library/re.html#match-objects>`_です。``match.group()`` は、マッチしたテキストをすべて返します。そのテキスト内のハイフンを em-dash に置換すればよいのですが、その際にまずダブルハイフンを置換してから、次にシングルハイフンを置換します。"
+msgstr ":guilabel:`検索 & 置換` カスタム関数は一意の名前を持ち、replace という名前の Python 関数で構成される必要があります。この関数は上に示すすべての引数を受け付けます。今のところは ``replace()`` 関数のすべての異なる引数について頭を悩ませる必要はありません。引数 ``match`` にだけ注目してください。これは検索と置換を実行するときのマッチを表します。詳細な説明は `こちら<https://docs.python.org/library/re.html#match-objects>`_ です。``match.group()`` は、マッチしたテキストをすべて返します。そのテキスト内のハイフンを em-dash に置換すればよいのですが、その際にまずダブルハイフンを置換してから、次にシングルハイフンを置換します。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:65
 msgid "Use this function with the find regular expression::"
@@ -213,7 +213,7 @@ msgid ""
 "``replace()`` function, the ``data`` object. The ``data`` object is a Python"
 " *dict* that persists between all successive invocations of ``replace()`` "
 "during a single :guilabel:`Replace All` operation."
-msgstr "上の関数にはコメントがちりばめられているので、読みやすいはずです。重要な新機能は ``replace()`` のもうひとつの便利な追加引数である ``data`` オブジェクトの利用です。``data`` オブジェクトは Python の*辞書*で、:guilabel:`すべて置換` の実行中に連続して ``replace()`` を呼び出す間ずっと存続します。"
+msgstr "上の関数にはコメントがちりばめられているので、読みやすいはずです。重要な新機能は ``replace()`` のもうひとつの便利な追加引数である ``data`` オブジェクトの利用です。``data`` オブジェクトは Python の *辞書* で、:guilabel:`すべて置換` の実行中に連続して ``replace()`` を呼び出す間ずっと存続します。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:213
 msgid ""
@@ -261,7 +261,7 @@ msgid ""
 " most useful method is ``group()`` which can be used to get the matched text"
 " corresponding to individual capture groups in the search regular "
 "expression."
-msgstr "引数 ``match`` は現在見つかったマッチを表します。これは `Python Match オブジェクト<https://docs.python.org/library/re.html#match-objects>`_です。その最も便利なメソッドは ``group()`` で、これを使用すると検索正規表現の中の個別のキャプチャグループに対応するマッチしたテキストを取得できます。"
+msgstr "引数 ``match`` は現在見つかったマッチを表します。これは `Python Match オブジェクト<https://docs.python.org/library/re.html#match-objects>`_ です。その最も便利なメソッドは ``group()`` で、これを使用すると検索正規表現の中の個別のキャプチャグループに対応するマッチしたテキストを取得できます。"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:248
 msgid "The ``number`` argument"
@@ -426,4 +426,4 @@ msgid ""
 "More useful examples, contributed by calibre users, can be found in the "
 "`calibre E-book editor forum "
 "<https://www.mobileread.com/forums/showthread.php?t=237181>`_."
-msgstr "この他にも calibre ユーザによって投稿された便利な例が `calibre 電子書籍エディタフォーラム <https://www.mobileread.com/forums/showthread.php?t=237181>`_にあります。"
+msgstr "この他にも calibre ユーザによって投稿された便利な例が `calibre 電子書籍エディタフォーラム <https://www.mobileread.com/forums/showthread.php?t=237181>`_ にあります。"

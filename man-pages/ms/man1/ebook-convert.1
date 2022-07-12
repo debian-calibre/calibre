@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "Mei 27, 2022" "5.43.0" "calibre"
-.SH NAME
-ebook-convert \- ebook-convert
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "EBOOK-CONVERT" "1" "Jun 17, 2022" "5.44.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -45,14 +45,14 @@ Convert an e\-book from one format to another.
 .sp
 input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an "open e\-book" (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an \(dqopen e\-book\(dq (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
 .sp
 After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
 For full documentation of the conversion system see
 \fI\%E\-book conversion\fP
 .sp
-Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .sp
 Pilihan dan nilai lalai bagi perubahan pilihan bergantung pada kedua\-dua
 format input dan output, jadi anda seharusnya sentiasa semak dengan:
@@ -102,7 +102,7 @@ Nyatakan profil input. Profil input memberikan maklumat sistem penukaran bagaima
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-Senaraikan nama resepi terbina\-dalam. Anda boleh cipta satu e\-buku melalui resepi terbina\-dalam seperti ini: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+Senaraikan nama resepi terbina\-dalam. Anda boleh cipta satu e\-buku melalui resepi terbina\-dalam seperti ini: ebook\-convert \fB\(dq\fPRecipe Name.recipe\fB\(dq\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -191,7 +191,7 @@ Pilihan untuk mengawal penampilan output
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB"\fPPelé\fB"\fP with \fB"\fPPele\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB\(dq\fPPelé\fB\(dq\fP with \fB\(dq\fPPele\fB\(dq\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -201,7 +201,7 @@ The base font size in pts. All font sizes in the produced book will be rescaled 
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-Ubah kewajaran teks. Nilai \fB"\fPkiri\fB"\fP tukar semua teks terwajar di dalam sumber menjadi teks terjajar kiri (iaitu. tidak terwajar). Nilai \fB"\fPwajar\fB"\fP tukar semua teks tidak terwajar menjadi terwajar. Nilai \fB"\fPasal\fB"\fP (lalai) tidak mengubah kewajaran fail sumber. Perhatian hanya beberapa format output menyokong kewajaran.
+Ubah kewajaran teks. Nilai \fB\(dq\fPkiri\fB\(dq\fP tukar semua teks terwajar di dalam sumber menjadi teks terjajar kiri (iaitu. tidak terwajar). Nilai \fB\(dq\fPwajar\fB\(dq\fP tukar semua teks tidak terwajar menjadi terwajar. Nilai \fB\(dq\fPasal\fB\(dq\fP (lalai) tidak mengubah kewajaran fail sumber. Perhatian hanya beberapa format output menyokong kewajaran.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -216,7 +216,7 @@ Benamkan setiap fon yang dirujuk dalam dokumen input tetapi sebenarnya tidak dib
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Benamkan keluarga fon tertentu ke dalam buku. Ini menyatakan fon \fB"\fPdasar\fB"\fP yang digunakan untuk buku. Jika dokumen input menyatakan fonnya sendiri, ia mungkin membatalkan fon dasar ini. Anda boleh guna pilihan maklumat gaya penapis untuk membuang fon dari dokumen input. Perhatian pembenaman fon hanya berfungsi dengan beberapa format output, biasanya EPUB, AZW3 dan DOCX.
+Benamkan keluarga fon tertentu ke dalam buku. Ini menyatakan fon \fB\(dq\fPdasar\fB\(dq\fP yang digunakan untuk buku. Jika dokumen input menyatakan fonnya sendiri, ia mungkin membatalkan fon dasar ini. Anda boleh guna pilihan maklumat gaya penapis untuk membuang fon dari dokumen input. Perhatian pembenaman fon hanya berfungsi dengan beberapa format output, biasanya EPUB, AZW3 dan DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -286,7 +286,7 @@ Tetapkan margin atas dalam pts. Lalai ialah 5.0. Tetapan ini adalah kurang dari 
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-Tinggi baris minimum, sebagai peratus unsur saiz fon yang dikira. calibre akan pastikan yang mana setiap  unsur mempunyai tinggi baris sekurang\-kurangnya ikut tetapan ini, tidak menuruti apakah input dokumen tentukan. Tetapkan sifar untuk lumpuhkan. Lalai ialah 120%. Guna tetapan ini dalam keutamaan ke spesifikasi tinggi baru, melainkan anda tahu apa yang anda buat. Contohnya, anda boleh dapat teks \fB"\fPberjarak ganda dua\fB"\fP dengan menetapkannya menjadi 240.
+Tinggi baris minimum, sebagai peratus unsur saiz fon yang dikira. calibre akan pastikan yang mana setiap  unsur mempunyai tinggi baris sekurang\-kurangnya ikut tetapan ini, tidak menuruti apakah input dokumen tentukan. Tetapkan sifar untuk lumpuhkan. Lalai ialah 120%. Guna tetapan ini dalam keutamaan ke spesifikasi tinggi baru, melainkan anda tahu apa yang anda buat. Contohnya, anda boleh dapat teks \fB\(dq\fPberjarak ganda dua\fB\(dq\fP dengan menetapkannya menjadi 240.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -311,12 +311,12 @@ Sebset semua fon terbenam. Setiap fon terbenam dikurangkan hanya untuk mengandun
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Laluan ke fail yang mengandungi peraturan pengubah gaya CSS dalam buku ini. Cara termudah mencipta fail sebegitu adalah dengan menggunakan bestari untuk mencipta peraturan di dalam GUI calibre. Capai ia dalam seksyen \fB"\fPPenampilan\->Ubah gaya\fB"\fP bagi dialog pertukaran. Seusai anda mewujudkan peraturan, anda boleh guna butang \fB"\fPEksport\fB"\fP untuk menyimpannya ke dalam fail.
+Laluan ke fail yang mengandungi peraturan pengubah gaya CSS dalam buku ini. Cara termudah mencipta fail sebegitu adalah dengan menggunakan bestari untuk mencipta peraturan di dalam GUI calibre. Capai ia dalam seksyen \fB\(dq\fPPenampilan\->Ubah gaya\fB\(dq\fP bagi dialog pertukaran. Seusai anda mewujudkan peraturan, anda boleh guna butang \fB\(dq\fPEksport\fB\(dq\fP untuk menyimpannya ke dalam fail.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform HTML\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB\(dq\fPLook & feel\->Transform HTML\fB\(dq\fP section of the conversion dialog. Once you create the rules, you can use the \fB\(dq\fPExport\fB\(dq\fP button to save them to a file.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -429,12 +429,12 @@ Kawal pengesanan\-automatik struktur dokumen.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Ungkapan XPath untuk mengesan tajuk bab. Lalai ialah dengan menganggap tag <h1> atau <h2> yang mengandungi perkataan \fB"\fPchapter\fB"\fP,\fB"\fPbook\fB"\fP,\fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP, atau \fB"\fPpart\fB"\fP sebahagian dari tajuk bab serta mana\-mana tag yang mempunyai class=\fB"\fPchapter\fB"\fP\&. Ungkapan digunakan mesti menilai senarai unsur. Untuk lumpuhkan pengesanan bab, guna ungkapan \fB"\fP/\fB"\fP\&. Sila rujuk Tutorial XPath di dalam Panduan Pengguna calibre untuk bantuan lanjut berkenaan penggunaan fitur ini.
+Ungkapan XPath untuk mengesan tajuk bab. Lalai ialah dengan menganggap tag <h1> atau <h2> yang mengandungi perkataan \fB\(dq\fPchapter\fB\(dq\fP,\fB\(dq\fPbook\fB\(dq\fP,\fB\(dq\fPsection\fB\(dq\fP, \fB\(dq\fPprologue\fB\(dq\fP, \fB\(dq\fPepilogue\fB\(dq\fP, atau \fB\(dq\fPpart\fB\(dq\fP sebahagian dari tajuk bab serta mana\-mana tag yang mempunyai class=\fB\(dq\fPchapter\fB\(dq\fP\&. Ungkapan digunakan mesti menilai senarai unsur. Untuk lumpuhkan pengesanan bab, guna ungkapan \fB\(dq\fP/\fB\(dq\fP\&. Sila rujuk Tutorial XPath di dalam Panduan Pengguna calibre untuk bantuan lanjut berkenaan penggunaan fitur ini.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Nyatakan bagaimana hendak tanda bab yang dikesan. Nilai \fB"\fPpagebreak\fB"\fP akan menyisip hentian halaman sebelum bab. Nilai \fB"\fPrule\fB"\fP akan menyisip satu baris sebelum bab. Nilai \fB"\fPnone\fB"\fP akan lumpuhkan penandaan bab dan nilai \fB"\fPboth\fB"\fP akan guna kedua\-dua hentian halaman dan baris untuk menanda bab.
+Nyatakan bagaimana hendak tanda bab yang dikesan. Nilai \fB\(dq\fPpagebreak\fB\(dq\fP akan menyisip hentian halaman sebelum bab. Nilai \fB\(dq\fPrule\fB\(dq\fP akan menyisip satu baris sebelum bab. Nilai \fB\(dq\fPnone\fB\(dq\fP akan lumpuhkan penandaan bab dan nilai \fB\(dq\fPboth\fB\(dq\fP akan guna kedua\-dua hentian halaman dan baris untuk menanda bab.
 .UNINDENT
 .INDENT 0.0
 .TP

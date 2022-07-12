@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "května 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibredb \- calibredb
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBREDB" "1" "června 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -491,7 +491,7 @@ Exportovat všechny knihy do jedné složky
 .INDENT 0.0
 .TP
 .B \-\-template
-Šablona pro ovládání názvu souboru a struktury složekukládaných souborů. Výchozí je \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP, což uloží knihy do podsložky podle autora s názvy souborů obsahujícími název a autora. Dostupné ovládací prvky jsou: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+Šablona pro ovládání názvu souboru a struktury složekukládaných souborů. Výchozí je \fB\(dq\fP{author_sort}/{title}/{title} \- {authors}\fB\(dq\fP, což uloží knihy do podsložky podle autora s názvy souborů obsahujícími název a autora. Dostupné ovládací prvky jsou: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -566,7 +566,7 @@ Regulární výraz popisující štítky, které vyloučit jako žánry. Výchoz
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Určuje pravidla použitá pro vyloučení knih z generovaného katalogu. Model pro pravidlo vyloučení je buď (\fB\(aq\fP<název pravidla>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<čárkami oddělený seznam štítků>\fB\(aq\fP) nebo (\fB\(aq\fP<název pravidla>\fB\(aq\fP,\fB\(aq\fP<vlastní sloupec>\fB\(aq\fP,\fB\(aq\fP<vzor>\fB\(aq\fP). Například: ((\fB\(aq\fPArchivované knihy\fB\(aq\fP,\fB\(aq\fP#stav\fB\(aq\fP,\fB\(aq\fPArchivováno\fB\(aq\fP),) vyloučí knihu s hodnotou \fB\(aq\fPArchivováno\fB\(aq\fP ve vlastním sloupci \fB\(aq\fPstav\fB\(aq\fP\&. Pokud je definováno více pravidel, budou použita všechna pravidla. Výchozí:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Použije se na výstupní formáty AZW3, EPUB, MOBI
+Určuje pravidla použitá pro vyloučení knih z generovaného katalogu. Model pro pravidlo vyloučení je buď (\fB\(aq\fP<název pravidla>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<čárkami oddělený seznam štítků>\fB\(aq\fP) nebo (\fB\(aq\fP<název pravidla>\fB\(aq\fP,\fB\(aq\fP<vlastní sloupec>\fB\(aq\fP,\fB\(aq\fP<vzor>\fB\(aq\fP). Například: ((\fB\(aq\fPArchivované knihy\fB\(aq\fP,\fB\(aq\fP#stav\fB\(aq\fP,\fB\(aq\fPArchivováno\fB\(aq\fP),) vyloučí knihu s hodnotou \fB\(aq\fPArchivováno\fB\(aq\fP ve vlastním sloupci \fB\(aq\fPstav\fB\(aq\fP\&. Pokud je definováno více pravidel, budou použita všechna pravidla. Výchozí:  \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP Použije se na výstupní formáty AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -683,7 +683,7 @@ Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete pa
 .INDENT 0.0
 .TP
 .B \-\-display
-Slovník voleb pro přizpůsobení, jak budou data v tomto sloupci interpretována. Toto je řetězec JSON. Pro sloupce výčtu použijte \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP Je mnoho voleb, které mohou přijít do proměnné display. Volby podle typu sloupce jsou: složené: composite_template, composite_sort, make_category,contains_html, use_decorations datum a čas: date_format výčet: enum_values, enum_colors, use_decorations celá část, plovoucí: number_format text: is_names, use_decorations  Nejlepší způsob jak najít zákonité kombinace, je vytvořit v grafickém rozhraní vlastní sloupec vhodného typu, pak vyhledat v záložním OPF knihu (ujistěte se, že byl vytvořen nový OPF od přidání sloupce). Uvidíte JSON pro \fB"\fPdisplay\fB"\fP pro nový sloupec v OPF.
+Slovník voleb pro přizpůsobení, jak budou data v tomto sloupci interpretována. Toto je řetězec JSON. Pro sloupce výčtu použijte \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP Je mnoho voleb, které mohou přijít do proměnné display. Volby podle typu sloupce jsou: složené: composite_template, composite_sort, make_category,contains_html, use_decorations datum a čas: date_format výčet: enum_values, enum_colors, use_decorations celá část, plovoucí: number_format text: is_names, use_decorations  Nejlepší způsob jak najít zákonité kombinace, je vytvořit v grafickém rozhraní vlastní sloupec vhodného typu, pak vyhledat v záložním OPF knihu (ujistěte se, že byl vytvořen nový OPF od přidání sloupce). Uvidíte JSON pro \fB\(dq\fPdisplay\fB\(dq\fP pro nový sloupec v OPF.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -946,7 +946,7 @@ identifikátorů knih odpovídající hledanému výrazu.Výstupní formát je u
 pro zásobení jiných příkazů, které přijímají seznam identifikátorů jako vstup.
 .sp
 Hledaný výraz může být cokoliv z výkonného jazyka vyhledávacích dotazů Calibre,
-například: calibredb \fBsearch\fP author:asimov \(aqtitle:"i robot"\(aq
+například: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
 Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
 .INDENT 0.0

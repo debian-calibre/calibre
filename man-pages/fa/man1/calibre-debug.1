@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "مهٔ 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibre-debug \- calibre-debug
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBRE-DEBUG" "1" "ژوئن 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibre-debug \- calibre-debug
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -58,7 +58,7 @@ You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use 
 .sp
 Everything after the \fB\-\-\fP is passed to the script.
 .sp
-Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .SH [گزینه ها]
 .INDENT 0.0
 .TP
@@ -88,7 +88,7 @@ Run the calibre diff tool. For example: calibre\-debug \fI\%\-\-diff\fP file1 fi
 .INDENT 0.0
 .TP
 .B \-\-edit\-book, \-t
-Launch the calibre \fB"\fPEdit book\fB"\fP tool in debug mode.
+Launch the calibre \fB\(dq\fPEdit book\fB\(dq\fP tool in debug mode.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -103,7 +103,7 @@ Explode the book into the specified folder. Usage: \-x file.epub output_dir Expo
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Export all calibre data (books/settings/plugins). Normally, you will be asked for the export folder and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export folder and libraries. The special keyword \fB"\fPall\fB"\fP can be used to export all libraries.
+Export all calibre data (books/settings/plugins). Normally, you will be asked for the export folder and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export folder and libraries. The special keyword \fB\(dq\fPall\fB\(dq\fP can be used to export all libraries.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -153,7 +153,7 @@ Re\-initialize the sqlite calibre database at the specified path. Useful to reco
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-Run a plugin that provides a command line interface. For example: calibre\-debug \-r \fB"\fPPlugin name\fB"\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
+Run a plugin that provides a command line interface. For example: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
 .UNINDENT
 .INDENT 0.0
 .TP

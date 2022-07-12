@@ -1,8 +1,5 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "mei 27, 2022" "5.43.0" "calibre"
-.SH NAME
-calibre-debug \- calibre-debug
 .
 .nr rst2man-indent-level 0
 .
@@ -30,6 +27,9 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
+.TH "CALIBRE-DEBUG" "1" "juni 17, 2022" "5.44.0" "calibre"
+.SH NAME
+calibre-debug \- calibre-debug
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -57,7 +57,7 @@ U kan ook \fBcalibre\-debug\fP gebruiken om zelfstandige scripts te draaien. Geb
 .sp
 Alles na de  \fB\-\-\fP wordt doorgegeven aan het script.
 .sp
-Als u aan \fBcalibre\-debug\fP parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: "/some path/with spaces"
+Als u aan \fBcalibre\-debug\fP parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: \(dq/some path/with spaces\(dq
 .SH [OPTIES]
 .INDENT 0.0
 .TP
@@ -87,7 +87,7 @@ Draait de calibre diff tool. Bijvoorbeeld: calibre\-debug \fI\%\-\-diff\fP besta
 .INDENT 0.0
 .TP
 .B \-\-edit\-book, \-t
-Start het calibre \fB"\fPBewerk Boek\fB"\fP tool in debug modus.
+Start het calibre \fB\(dq\fPBewerk Boek\fB\(dq\fP tool in debug modus.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -102,7 +102,7 @@ Explodeer het boek in de gespecificeerde map. Gebruik: \-x file.epub output_dir 
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Exporteer alle calibre data (boeken/instellingen/plug\-ins). Normaal vraagt men om de exportmap en bibliotheken om te exporteren. U kunt ze ook opgeven als opdrachtregelargumenten om de vragen over te slaan. Gebruik absolute paden voor de exportmap en bibliotheken. Het speciale sleutewoord \fB"\fPalle\fB"\fP kan u gebruiken om alle bibliotheken te exporteren.
+Exporteer alle calibre data (boeken/instellingen/plug\-ins). Normaal vraagt men om de exportmap en bibliotheken om te exporteren. U kunt ze ook opgeven als opdrachtregelargumenten om de vragen over te slaan. Gebruik absolute paden voor de exportmap en bibliotheken. Het speciale sleutewoord \fB\(dq\fPalle\fB\(dq\fP kan u gebruiken om alle bibliotheken te exporteren.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -152,7 +152,7 @@ Re\-initialiseren van de sqlite calibre database op het opgegeven pad. Nuttig bi
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-Run a plugin that provides a command line interface. For example: calibre\-debug \-r \fB"\fPPlugin name\fB"\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
+Run a plugin that provides a command line interface. For example: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
 .UNINDENT
 .INDENT 0.0
 .TP
