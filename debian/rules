@@ -26,7 +26,7 @@ endif
 
 .PHONY: calibre_auto_test calibre_auto_install
 
-DEB_DH_GENCONTROL_ARGS = -- -Vpyqt:Version=$(shell dpkg-query -f'$${Version}' -W python3-pyqt5)
+DEB_DH_GENCONTROL_ARGS = -- -Vpyqt:Version=$(shell dpkg-query -f'$${Version}' -W python3-pyqt6)
 
 export QT_SELECT=qt5
 
