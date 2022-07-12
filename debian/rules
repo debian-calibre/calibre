@@ -28,8 +28,6 @@ endif
 
 DEB_DH_GENCONTROL_ARGS = -- -Vpyqt:Version=$(shell dpkg-query -f'$${Version}' -W python3-pyqt6)
 
-export QT_SELECT=qt5
-
 override_dh_auto_configure:
 #	# use mathjax source package
 	$(SETUP) mathjax --mathjax-url="file://$(CURDIR)/debian/mathjax/3.1.4.tar.gz"
