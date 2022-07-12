@@ -9,6 +9,12 @@
 ifeq      (armhf,    $(DEB_HOST_ARCH))
   # Test failed
   TEST_FLAGS += --exclude-test-name=dictionaries
+
+  # seccomp-bpf crash
+  TEST_FLAGS += --exclude-test-name=qt
+else ifeq (i386,     $(DEB_HOST_ARCH))
+  # seccomp-bpf crash
+  TEST_FLAGS += --exclude-test-name=qt
 else ifeq (mipsel,   $(DEB_HOST_ARCH))
   # Qt test error
   TEST_FLAGS += --exclude-test-name=qt
