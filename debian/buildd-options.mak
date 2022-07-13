@@ -5,3 +5,11 @@
 # at inconvenient intervals and disturb the memory test
 # TEST_FLAGS += --exclude-test-name=mem_leaks
 
+# Disable some tests for specific platforms
+ifeq      (armhf, $(DEB_HOST_ARCH))
+  # seccomp-bpf crash
+  TEST_FLAGS += --exclude-test-name=qt
+else ifeq (i386,  $(DEB_HOST_ARCH))
+  # seccomp-bpf crash
+  TEST_FLAGS += --exclude-test-name=qt
+endif
