@@ -11,6 +11,10 @@ export DEB_BUILD_MAINT_OPTIONS=hardening=+all reproducible=+all
 # display build commands while CMake build
 export VERBOSE=1
 
+# Set hash seed to Qt resource compiler output will deterministic one.
+# See QHash class document on Qt document.
+export QT_HASH_SEED=0
+
 # Do all test by default
 TEST_FLAGS =
 CI_ENV =
