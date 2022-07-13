@@ -5,30 +5,3 @@
 # at inconvenient intervals and disturb the memory test
 # TEST_FLAGS += --exclude-test-name=mem_leaks
 
-# Disable some tests for specific platforms
-ifeq      (armhf,    $(DEB_HOST_ARCH))
-  # Test failed
-  TEST_FLAGS += --exclude-test-name=dictionaries
-
-  # seccomp-bpf crash
-  TEST_FLAGS += --exclude-test-name=qt
-  TEST_FLAGS += --exclude-test-name=dom_load
-else ifeq (i386,     $(DEB_HOST_ARCH))
-  # seccomp-bpf crash
-  TEST_FLAGS += --exclude-test-name=qt
-  TEST_FLAGS += --exclude-test-name=dom_load
-else ifeq (mipsel,   $(DEB_HOST_ARCH))
-  # Qt test error
-  TEST_FLAGS += --exclude-test-name=qt
-  TEST_FLAGS += --exclude-test-name=dom_load
-
-  # Test failed
-  TEST_FLAGS += --exclude-test-name=dictionaries
-else ifeq (mips64el, $(DEB_HOST_ARCH))
-  # Qt test error
-  TEST_FLAGS += --exclude-test-name=qt
-  TEST_FLAGS += --exclude-test-name=dom_load
-
-  # Test failed
-  TEST_FLAGS += --exclude-test-name=dictionaries
-endif
