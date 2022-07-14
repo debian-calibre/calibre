@@ -1,0 +1,56 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Thu, 14 Jul 2022 23:03:16 +0900
+Subject: Extend timeout limit
+
+Forwarded: not-needed
+---
+ src/calibre/db/tests/filesystem.py | 4 ++--
+ src/calibre/db/tests/fts_api.py    | 6 +++---
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/src/calibre/db/tests/filesystem.py b/src/calibre/db/tests/filesystem.py
+index e0703c1..d5958e4 100644
+--- a/src/calibre/db/tests/filesystem.py
++++ b/src/calibre/db/tests/filesystem.py
+@@ -167,12 +167,12 @@ class FilesystemTest(BaseTest):
+                         self.assertEqual(cache.format(book_id, fmt), ic.format(book_id, fmt))
+                         self.assertEqual(cache.format_metadata(book_id, fmt)['mtime'], cache.format_metadata(book_id, fmt)['mtime'])
+         cache.add_format(1, 'TXT', BytesIO(b'testing exim'))
+-        cache.fts_indexing_sleep_time = 0.001
++        cache.fts_indexing_sleep_time = 0.1
+         cache.enable_fts()
+         cache.set_fts_num_of_workers(4)
+         st = time.monotonic()
+         while cache.fts_indexing_left > 0 and time.monotonic() - st < 15:
+-            time.sleep(0.05)
++            time.sleep(5)
+         if cache.fts_indexing_left > 0:
+             raise ValueError('FTS indexing did not complete')
+         self.assertEqual(cache.fts_search('exim')[0]['id'], 1)
+diff --git a/src/calibre/db/tests/fts_api.py b/src/calibre/db/tests/fts_api.py
+index 2a0138f..4673c02 100644
+--- a/src/calibre/db/tests/fts_api.py
++++ b/src/calibre/db/tests/fts_api.py
+@@ -49,11 +49,11 @@ class FTSAPITest(BaseTest):
+         self.libraries_to_close.append(ans)
+         return ans
+ 
+-    def wait_for_fts_to_finish(self, fts, timeout=10):
++    def wait_for_fts_to_finish(self, fts, timeout=1000):
+         if fts.pool.initialized:
+             st = time.monotonic()
+             while fts.all_currently_dirty() and time.monotonic() - st < timeout:
+-                fts.pool.supervisor_thread.join(0.01)
++                fts.pool.supervisor_thread.join(1)
+ 
+     def text_records(self, fts):
+         return fts.get_connection().get_dict('SELECT * FROM fts_db.books_text')
+@@ -119,7 +119,7 @@ class FTSAPITest(BaseTest):
+ 
+         # check shutdown when workers have hung
+         for w in fts.pool.workers:
+-            w.code_to_exec = 'import time; time.sleep(100)'
++            w.code_to_exec = 'import time; time.sleep(10000)'
+         cache.add_format(1, 'TXTZ', self.make_txtz(b'hung worker'))
+         workers = list(fts.pool.workers)
+         cache.close()
