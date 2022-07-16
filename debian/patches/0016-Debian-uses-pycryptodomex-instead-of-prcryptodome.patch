@@ -8,10 +8,10 @@ Forwarded: not-needed
  1 file changed, 4 deletions(-)
 
 diff --git a/src/calibre/constants.py b/src/calibre/constants.py
-index 0745b5f..25a506d 100644
+index 811a461..1c45d23 100644
 --- a/src/calibre/constants.py
 +++ b/src/calibre/constants.py
-@@ -208,10 +208,6 @@ class DeVendor:
+@@ -209,10 +209,6 @@ class DeVendor:
              if fullname == 'PyQt5':
                  return ModuleSpec(fullname, DeVendorLoader('qt'))
              return ModuleSpec(fullname, DeVendorLoader('qt.webengine' if 'QWebEngine' in fullname else 'qt.core'))
