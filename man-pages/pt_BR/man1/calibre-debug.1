@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "julho 11, 2022" "6.0.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "julho 16, 2022" "6.1.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -41,29 +41,29 @@ calibre\-debug [options]
 .UNINDENT
 .UNINDENT
 .sp
-Diversas interfaces de linha de comando úteis para depurar o Calibre.
-Sem opções, esse comando inicia um intérprete Python incorporado.
-Você também pode executar a interface principal do calibre, o Visualizador de e\-books
-.INDENT 0.0
-.INDENT 3.5
-do calibre e o editor do Calibre no modo de depuração (debug mode).
-.UNINDENT
-.UNINDENT
+Diversas interfaces de linha de comando úteis para depurar o calibre. Sem opções,
+esse comando inicia um intérprete Python incorporado. Você também pode executar a
+interface principal do calibre, o Visualizador de e\-books e o editor do calibre no modo de depuração.
 .INDENT 0.0
 .TP
-.B Também contém interfaces para várias partes do Calibre que não possuem
-ferramentas de linha de comando dedicadas, como subdivisão de fontes
-(font subsetting), a Ferramenta de comparação de e\-books (diff tool), etc.
+.B Também contém interfaces para várias partes do calibre que não possuem
+ferramentas de linha de comando dedicadas, como subconjuntos de fontes, a ferramenta de comparação de e\-books, etc.
 .UNINDENT
 .sp
 Você também pode usar o \fBcalibre\-debug\fP para executar scripts isolados. Para isso, use\-o assim:
 .INDENT 0.0
 .INDENT 3.5
-\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
+\fBcalibre\-debug\fP \-e myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .UNINDENT
 .UNINDENT
 .sp
-Tudo após o \fB\-\-\fP é passado ao script.
+Tudo após o \fB\-\-\fP é passado ao script. Você também pode usar o \fBcalibre\-debug\fP
+com um shebang em scripts, assim:
+.INDENT 0.0
+.INDENT 3.5
+#!/usr/bin/env \-S \fBcalibre\-debug\fP \-e \fB\-\-\fP \-\-
+.UNINDENT
+.UNINDENT
 .sp
 Sempre que você for passar argumentos para \fBcalibre\-debug\fP que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .SH [OPÇÕES]
@@ -161,6 +161,11 @@ Executa um plugin que provê uma interface de linha de comando. Por exemplo: cal
 .TP
 .B \-\-run\-test, \-t
 Executar o(s) teste(s) nomeado(s). Use o valor especial \fB\(dq\fPall\fB\(dq\fP para executar todos os testes. Caso o nome do teste inicie com um ponto, será considerado como o nome de um módulo. Caso o nome do teste comece com @, será considerado o nome de uma categoria.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-run\-without\-debug
+Don\fB\(aq\fPt run with the DEBUG flag set
 .UNINDENT
 .INDENT 0.0
 .TP

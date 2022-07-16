@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "липня 11, 2022" "6.0.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "липня 16, 2022" "6.1.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -51,9 +51,15 @@ calibre\-debug [параметри]
 .sp
 Ви також можете скористатися \fBcalibre\-debug\fP для запуску окремих скриптів. Зробити це можна так:
 .sp
-\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
+\fBcalibre\-debug\fP \-e myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .sp
-Скрипту буде передано усі дані після \-\-.
+Скрипту буде передано усі дані після \-\-. Ви також можете скористатися \fBcalibre\-debug\fP
+як вступною частиною у скриптах, ось так:
+.INDENT 0.0
+.INDENT 3.5
+#!/usr/bin/env \-S \fBcalibre\-debug\fP \-e \fB\-\-\fP \-\-
+.UNINDENT
+.UNINDENT
 .sp
 Якщо ви передаєте аргументи \fBcalibre\-debug\fP, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
 .SH [ПАРАМЕТРИ]
@@ -151,6 +157,11 @@ calibre\-debug [параметри]
 .TP
 .B \-\-run\-test, \-t
 Запустити вказані перевірки. Скористайтеся особливим словом «all», щоб наказати виконати усі перевірки. Якщо назва перевірки починається з крапки, програма припускатиме, що вказано назву модуля. Якщо назва перевірки починається з @, програма вважатиме її назвою категорії.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-run\-without\-debug
+Не запускати із встановленим прапорцем DEBUG
 .UNINDENT
 .INDENT 0.0
 .TP

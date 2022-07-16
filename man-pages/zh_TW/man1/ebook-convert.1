@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "7月 11, 2022" "6.0.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "7月 16, 2022" "6.1.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -262,22 +262,22 @@ pt 行高。控制兩行高度距離。僅僅適用於未定義行高的元素�
 .INDENT 0.0
 .TP
 .B \-\-margin\-bottom
-设定下边距，单位pts。默认为 5.0。如果设置为负值表示不使用页边距（保留使用原始文档的页边距）。提示：页面原始格式如PDF和docx有自己优先的边距设置。
+Set the bottom margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-left
-设定左边距，单位pts。默认为 5.0。如果设置为负值表示不使用页边距（保留使用原始文档的页边距）。提示：页面原始格式如PDF和docx有自己优先的边距设置。
+Set the left margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-right
-设置右边距，单位pts，默认为 5.0。如果设置为负值表示不使用页边距（保留使用原始文档的页边距）。提示：页面原始格式如PDF和docx有自己优先的边距设置。
+Set the right margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-top
-设定上边距，单位pts。默认为 5.0。如果设置为负值表示不使用页边距（保留使用原始文档的页边距）。提示：页面原始格式如PDF和docx有自己优先的边距设置。
+Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -297,7 +297,7 @@ pt 行高。控制兩行高度距離。僅僅適用於未定義行高的元素�
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-将普通引号、破折号和省略号转换为与它们对应的正确印刷体。有关详细信息, 请参阅 \fI\%https://daringfireball.net/projects/smartypants\fP。
+Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -436,7 +436,7 @@ XPath 運算式用於偵測章節標題。預設考慮使用 <h1> 或 <h2> 標�
 .INDENT 0.0
 .TP
 .B \-\-insert\-metadata
-将书籍元数据添加到书籍的开始。如果你的电子书阅读设备不支持显示和搜索元数据功能，该功能可以有所帮助。
+Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
 .UNINDENT
 .INDENT 0.0
 .TP

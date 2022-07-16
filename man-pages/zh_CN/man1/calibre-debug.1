@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "七月 11, 2022" "6.0.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "七月 16, 2022" "6.1.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -41,22 +41,28 @@ calibre\-debug [选项]
 .UNINDENT
 .UNINDENT
 .sp
-多种命令行界面在排除 calibre 的故障时很有用。这个命令将无条件
-地开启内置的 python 编译器。你也可以在 debug 模式下运行主
-要的 cailbre GUI，calibre 阅读器和 calibre 编辑器。
+Various command line interfaces useful for debugging calibre. With no options,
+this command starts an embedded Python interpreter. You can also run the main
+calibre GUI, the calibre E\-book viewer and the calibre editor in debug mode.
 .sp
-它同时也包含了部分没有命令行工具的
-calibre 界面，比如字体子集，电子书区分
-工具等等。
+It also contains interfaces to various bits of calibre that do not have
+dedicated command line tools, such as font subsetting, the E\-book diff tool and so
+on.
 .sp
-你也能用 \fBcalibre\-debug\fP 来运行独立的脚本。像这样来操作：
+You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
 .INDENT 0.0
 .INDENT 3.5
-\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
+\fBcalibre\-debug\fP \-e myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .UNINDENT
 .UNINDENT
 .sp
-在 \fB\-\-\fP 后的的所有东西都被传输到了脚本里。
+Everything after the \fB\-\-\fP is passed to the script. You can also use \fBcalibre\-debug\fP
+as a shebang in scripts, like this:
+.INDENT 0.0
+.INDENT 3.5
+#!/usr/bin/env \-S \fBcalibre\-debug\fP \-e \fB\-\-\fP \-\-
+.UNINDENT
+.UNINDENT
 .sp
 每当向具有它们自己空间的:command:
 .nf
@@ -162,6 +168,11 @@ Run a plugin that provides a command line interface. For example: calibre\-debug
 .TP
 .B \-\-run\-test, \-t
 Run the named test(s). Use the special value \fB\(dq\fPall\fB\(dq\fP to run all tests. If the test name starts with a period it is assumed to be a module name. If the test name starts with @ it is assumed to be a category name.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-run\-without\-debug
+Don\fB\(aq\fPt run with the DEBUG flag set
 .UNINDENT
 .INDENT 0.0
 .TP

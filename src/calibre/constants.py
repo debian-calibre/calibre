@@ -5,7 +5,7 @@ from functools import lru_cache
 import sys, locale, codecs, os, collections, collections.abc
 
 __appname__   = 'calibre'
-numeric_version = (6, 0, 0)
+numeric_version = (6, 1, 0)
 __version__   = '.'.join(map(str, numeric_version))
 git_version   = None
 __author__    = "Kovid Goyal <kovid@kovidgoyal.net>"
@@ -39,6 +39,7 @@ isworker = hasenv('CALIBRE_WORKER') or hasenv('CALIBRE_SIMPLE_WORKER')
 if isworker:
     os.environ.pop(environ_item('CALIBRE_FORCE_ANSI'), None)
 FAKE_PROTOCOL, FAKE_HOST = 'clbr', 'internal.invalid'
+SPECIAL_TITLE_FOR_WEBENGINE_COMMS = '__webengine_messages_pending__'
 VIEWER_APP_UID = 'com.calibre-ebook.viewer'
 EDITOR_APP_UID = 'com.calibre-ebook.edit-book'
 MAIN_APP_UID = 'com.calibre-ebook.main-gui'
@@ -410,6 +411,9 @@ if getattr(sys, 'frozen', False):
         is_running_from_develop = running_in_develop_mode()
 
 in_develop_mode = os.getenv('CALIBRE_ENABLE_DEVELOP_MODE') == '1'
+if iswindows:
+    # Needed to get Qt to use the correct cache dir, relies on a patched Qt
+    os.environ['CALIBRE_QT_CACHE_LOCATION'] = cache_dir()
 
 
 def get_version():

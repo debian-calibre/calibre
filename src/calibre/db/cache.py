@@ -140,9 +140,11 @@ class Cache:
     EventType = EventType
     fts_indexing_sleep_time = 4  # seconds
 
-    def __init__(self, backend):
+    def __init__(self, backend, library_database_instance=None):
         self.shutting_down = False
         self.backend = backend
+        self.library_database_instance = (None if library_database_instance is None else
+                                          weakref.ref(library_database_instance))
         self.event_dispatcher = EventDispatcher()
         self.fields = {}
         self.composites = {}
@@ -186,6 +188,10 @@ class Cache:
     @property
     def dbpath(self):
         return self.backend.dbpath
+
+    @property
+    def is_fat_filesystem(self):
+        return self.backend.is_fat_filesystem
 
     @property
     def safe_read_lock(self):
@@ -548,6 +554,15 @@ class Cache:
         ans = self.backend.commit_fts_result(book_id, fmt, fmt_size, fmt_hash, text, err_msg)
         self._update_fts_indexing_numbers()
         return ans
+
+    @write_api
+    def reindex_fts_book(self, book_id, *fmts):
+        if not self.is_fts_enabled():
+            return
+        if not fmts:
+            fmts = self._formats(book_id)
+        self.backend.reindex_fts_book(book_id, *fmts)
+        self._queue_next_fts_job()
 
     @api
     def reindex_fts(self):
@@ -1831,7 +1846,7 @@ class Cache:
         index_map = {book_id:self._fast_field_for(idf, book_id, default_value=1.0) for book_id in books}
         if current_indices:
             return index_map
-        series_indices = sorted(itervalues(index_map))
+        series_indices = sorted(index_map.values(), key=lambda s: s or 0)
         return _get_next_series_num_for_list(tuple(series_indices), unwrap=False)
 
     @read_api

@@ -730,12 +730,6 @@ def download_and_extract(destdir, version):
     extract_tarball(raw, destdir)
 
 
-def check_version():
-    global calibre_version
-    if calibre_version == '%version':
-        calibre_version = urlopen('http://code.calibre-ebook.com/latest').read()
-
-
 def run_installer(install_dir, isolated, bin_dir, share_dir, version):
     destdir = os.path.abspath(os.path.expanduser(install_dir or '/opt'))
     if destdir == '/usr/bin':
@@ -797,6 +791,16 @@ def check_umask():
             raise SystemExit('The system umask is unsuitable, aborting')
 
 
+def check_for_libEGL():
+    import ctypes
+    try:
+        ctypes.CDLL('libEGL.so.1')
+        return
+    except Exception:
+        pass
+    raise SystemExit('You are missing the system library libEGL.so.1. Try installing packages such as libegl1 and libopengl0')
+
+
 def check_glibc_version(min_required=(2, 31), release_date='2020-02-01'):
     # See https://sourceware.org/glibc/wiki/Glibc%20Timeline
     import ctypes
@@ -823,7 +827,16 @@ def main(install_dir=None, isolated=False, bin_dir=None, share_dir=None, ignore_
             'You are running on a 32-bit system. The calibre binaries are only'
             ' available for 64-bit systems. You will have to compile from'
             ' source.')
-    check_glibc_version()
+    glibc_versions = {
+        (6, 0, 0) : {'min_required': (2, 31), 'release_date': '2020-02-01'}
+    }
+    q = tuple(map(int, version.split('.'))) if version else (sys.maxsize, 999, 999)
+    for key in sorted(glibc_versions, reverse=True):
+        if q >= key:
+            check_glibc_version(**glibc_versions[key])
+            break
+    if q[0] >= 6:
+        check_for_libEGL()
     run_installer(install_dir, isolated, bin_dir, share_dir, version)
 
 
