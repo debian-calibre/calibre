@@ -11,12 +11,12 @@ import threading
 from contextlib import contextmanager, suppress
 from functools import lru_cache
 from qt.core import (
-    QT_VERSION, QApplication, QBuffer, QByteArray, QColor, QDateTime,
-    QDesktopServices, QDialog, QDialogButtonBox, QEvent, QFile, QFileDialog,
-    QFileIconProvider, QFileInfo, QFont, QFontDatabase, QFontInfo, QFontMetrics,
-    QGuiApplication, QIcon, QIODevice, QLocale, QNetworkProxyFactory, QObject,
-    QPalette, QResource, QSettings, QSocketNotifier, QStringListModel, QStyle, Qt,
-    QThread, QTimer, QTranslator, QUrl, pyqtSignal, pyqtSlot
+    QApplication, QBuffer, QByteArray, QColor, QDateTime, QDesktopServices, QDialog,
+    QDialogButtonBox, QEvent, QFile, QFileDialog, QFileIconProvider, QFileInfo,
+    QFont, QFontDatabase, QFontInfo, QFontMetrics, QGuiApplication, QIcon, QIODevice,
+    QLocale, QNetworkProxyFactory, QObject, QPalette, QResource, QSettings,
+    QSocketNotifier, QStringListModel, QStyle, Qt, QThread, QTimer, QTranslator,
+    QUrl, pyqtSignal, pyqtSlot
 )
 from threading import Lock, RLock
 
@@ -33,8 +33,8 @@ from calibre.gui2.linux_file_dialogs import (
 from calibre.gui2.palette import dark_palette, fix_palette_colors
 from calibre.gui2.qt_file_dialogs import FileDialog
 from calibre.ptempfile import base_dir
-from calibre.utils.config_base import tweaks
 from calibre.utils.config import Config, ConfigProxy, JSONConfig, dynamic
+from calibre.utils.config_base import tweaks
 from calibre.utils.date import UNDEFINED_DATE
 from calibre.utils.file_type_icons import EXT_MAP
 from calibre.utils.localization import get_lang
@@ -163,8 +163,9 @@ class IconResourceManager:
             return QIcon(name)
         if self.override_icon_path:
             q = os.path.join(self.override_icon_path, name)
-            if os.path.exists(q):
-                return QIcon(q)
+            qi = QIcon(q)
+            if qi.is_ok():
+                return qi
         icon_name = os.path.splitext(name.replace('\\', '__').replace('/', '__'))[0]
         ans = QIcon.fromTheme(icon_name)
         if not ans.is_ok():
@@ -776,24 +777,29 @@ class FileIconProvider(QFileIconProvider):
     ICONS = EXT_MAP
 
     def __init__(self):
-        QFileIconProvider.__init__(self)
+        super().__init__()
         self.icons = {k:f'mimetypes/{v}.png' for k, v in self.ICONS.items()}
         self.icons['calibre'] = I('lt.png', allow_user_override=False)
         for i in ('dir', 'default', 'zero'):
             self.icons[i] = QIcon.ic(self.icons[i])
 
     def key_from_ext(self, ext):
-        key = ext if ext in list(self.icons.keys()) else 'default'
+        key = ext if ext in self.icons else 'default'
         if key == 'default' and ext.count('.') > 0:
             ext = ext.rpartition('.')[2]
-            key = ext if ext in list(self.icons.keys()) else 'default'
+            key = ext if ext in self.icons else 'default'
+        if key == 'default':
+            key = ext
         return key
 
     def cached_icon(self, key):
-        candidate = self.icons[key]
+        candidate = self.icons.get(key)
         if isinstance(candidate, QIcon):
             return candidate
+        candidate = candidate or f'mimetypes/{key}.png'
         icon = QIcon.ic(candidate)
+        if not icon.is_ok():
+            icon = self.icons['default']
         self.icons[key] = icon
         return icon
 
@@ -803,10 +809,9 @@ class FileIconProvider(QFileIconProvider):
 
     def load_icon(self, fileinfo):
         key = 'default'
-        icons = self.icons
         if fileinfo.isSymLink():
             if not fileinfo.exists():
-                return icons['zero']
+                return self.icons['zero']
             fileinfo = QFileInfo(fileinfo.readLink())
         if fileinfo.isDir():
             key = 'dir'
@@ -1042,7 +1047,10 @@ class Application(QApplication):
     shutdown_signal_received = pyqtSignal()
     palette_changed = pyqtSignal()
 
-    def __init__(self, args, force_calibre_style=False, override_program_name=None, headless=False, color_prefs=gprefs, windows_app_uid=None):
+    def __init__(self, args=(), force_calibre_style=False, override_program_name=None, headless=False, color_prefs=gprefs, windows_app_uid=None):
+        if not args:
+            args = sys.argv[:1]
+        args = [args[0]]
         if ismacos and not headless:
             from calibre_extensions.cocoa import set_appearance
             if gprefs['color_palette'] != 'system':
@@ -1059,16 +1067,22 @@ class Application(QApplication):
                 if set_app_uid(windows_app_uid):
                     self.windows_app_uid = windows_app_uid
         self.file_event_hook = None
-        if isfrozen and QT_VERSION <= 0x050700 and 'wayland' in os.environ.get('QT_QPA_PLATFORM', ''):
-            os.environ['QT_QPA_PLATFORM'] = 'xcb'
         if override_program_name:
             args = [override_program_name] + args[1:]
         if headless:
-            if not args:
-                args = sys.argv[:1]
             args.extend(['-platformpluginpath', plugins_loc, '-platform', 'headless'])
+        else:
+            if iswindows:
+                # passing darkmode=1 turns on dark window frames when windows
+                # is dark and darkmode=2 makes everything dark, but we have our
+                # own dark mode implementation when using calibre style so
+                # prefer that and use darkmode=1
+                if gprefs['ui_style'] == 'system' and not force_calibre_style:
+                    args.extend(['-platform', 'windows:darkmode=2'])
+                else:
+                    args.extend(['-platform', 'windows:darkmode=1'])
+
         self.headless = headless
-        qargs = [i.encode('utf-8') if isinstance(i, str) else i for i in args]
         from calibre_extensions import progress_indicator
         self.pi = progress_indicator
         QApplication.setOrganizationName('calibre-ebook.com')
@@ -1078,7 +1092,7 @@ class Application(QApplication):
         if override_program_name and hasattr(QApplication, 'setDesktopFileName'):
             QApplication.setDesktopFileName(override_program_name)
         QApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts, True)  # needed for webengine
-        QApplication.__init__(self, qargs)
+        QApplication.__init__(self, args)
         self.original_palette = self.palette()
         self.original_palette_modified = fix_palette_colors(self.original_palette)
         if iswindows:
@@ -1099,6 +1113,7 @@ class Application(QApplication):
                 show_temp_dir_error(err)
             raise SystemExit('Failed to create temporary folder')
         if DEBUG and not headless:
+            prints('QPA platform:', self.platformName())
             prints('devicePixelRatio:', self.devicePixelRatio())
             s = self.primaryScreen()
             if s:
@@ -1295,8 +1310,7 @@ class Application(QApplication):
     @lru_cache(maxsize=256)
     def cached_qpixmap(self, name):
         ic = QIcon.ic(name)
-        pmap = ic.pixmap(ic.availableSizes()[0])
-        return pmap
+        return ic.pixmap((ic.availableSizes() or (256,))[0])
 
     def on_palette_change(self):
         self.cached_qimage.cache_clear()
@@ -1319,7 +1333,20 @@ class Application(QApplication):
             '#FF2400' if is_error else '#50c878')
 
     def load_calibre_style(self):
+        from calibre.utils.resources import get_user_path
         icon_map = self.__icon_map_memory_ = {}
+        user_path = get_user_path()
+        if user_path:
+            user_path = os.path.join(user_path, 'images')
+
+        @lru_cache(maxsize=64)
+        def check_for_custom_icon(v):
+            if user_path:
+                q = os.path.join(user_path, v)
+                if os.path.exists(q):
+                    return q
+            return v.rpartition('.')[0]
+
         for k, v in {
             'DialogYesButton': 'ok.png',
             'DialogNoButton': 'window-close.png',
@@ -1340,7 +1367,7 @@ class Application(QApplication):
             'ToolBarHorizontalExtensionButton': 'v-ellipsis.png',
             'ToolBarVerticalExtensionButton': 'h-ellipsis.png',
         }.items():
-            icon_map[getattr(QStyle.StandardPixmap, 'SP_'+k).value] = v.rpartition('.')[0]
+            icon_map[getattr(QStyle.StandardPixmap, 'SP_'+k).value] = check_for_custom_icon(v)
         transient_scroller = 0
         if ismacos:
             from calibre_extensions.cocoa import transient_scroller

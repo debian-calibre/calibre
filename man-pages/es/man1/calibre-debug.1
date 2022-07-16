@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "julio 11, 2022" "6.0.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "julio 16, 2022" "6.1.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -47,9 +47,11 @@ También contiene interfaces para distintos aspectos de calibre que no tienen he
 .sp
 Se puede usar también \fBcalibre\-debug\fP para ejecutar scripts independientes. Para ello se usa de esta manera:
 .sp
-\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
+\fBcalibre\-debug\fP \-e myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .sp
-Todo lo que se ponga después de \fB\-\-\fP se pasará al script.
+Todo lo que se ponga después de \fB\-\-\fP se pasará al script. También puede usar \fBcalibre\-debug\fP como «shebang» en scripts, así:
+.sp
+#!/usr/bin/env \-S \fBcalibre\-debug\fP \-e \fB\-\-\fP \-\-
 .sp
 Cuando alguno de los argumentos de \fBcalibre\-debug\fP contenga espacios, póngalo entre comillas. Por ejemplo: \(dq/some path/with spaces\(dq
 .SH [OPCIONES]
@@ -146,7 +148,12 @@ Ejecutar un complemento que proporciona una interfaz de línea de órdenes. Por 
 .INDENT 0.0
 .TP
 .B \-\-run\-test, \-t
-Run the named test(s). Use the special value \fB\(dq\fPall\fB\(dq\fP to run all tests. If the test name starts with a period it is assumed to be a module name. If the test name starts with @ it is assumed to be a category name.
+Ejecutar los tests nombrados. Usar el valor especial \fB\(dq\fPall\fB\(dq\fP para ejecutar todos los tests. Si el nombre de test empieza por un punto se supone que es un nombre de módulo. Si el nombre de test empieza por @ se supone que es un nombre de categoría.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-run\-without\-debug
+No ejecutar con DEBUG activado
 .UNINDENT
 .INDENT 0.0
 .TP

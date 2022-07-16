@@ -41,8 +41,11 @@ You can also use %prog to run standalone scripts. To do that use it like this:
 
     {1}
 
-Everything after the -- is passed to the script.
-''').format(_('%prog [options]'), '%prog myscript.py -- --option1 --option2 file1 file2 ...'))
+Everything after the -- is passed to the script. You can also use calibre-debug
+as a shebang in scripts, like this:
+
+    {2}
+''').format(_('%prog [options]'), '%prog -e myscript.py -- --option1 --option2 file1 file2 ...', '#!/usr/bin/env -S calibre-debug -e -- --'))
     parser.add_option('-c', '--command', help=_('Run Python code.'))
     parser.add_option('-e', '--exec-file', help=_('Run the Python code in file.'))
     parser.add_option('-f', '--subset-font', action='store_true', default=False,
@@ -56,6 +59,7 @@ Everything after the -- is passed to the script.
                       help=_('Run the GUI with a debug console, logging to the'
                       ' specified path. For internal use only, use the -g'
                       ' option to run the GUI in debug mode'))
+    parser.add_option('--run-without-debug', default=False, action='store_true', help=_('Don\'t run with the DEBUG flag set'))
     parser.add_option('-w', '--viewer',  default=False, action='store_true',
                       help=_('Run the E-book viewer in debug mode'))
     parser.add_option('--paths', default=False, action='store_true',
@@ -215,7 +219,8 @@ def main(args=sys.argv):
         sys.argv = [sys.argv[0], '--multiprocessing-fork']
         exec(args[-1])
         return
-    debug()
+    if not opts.run_without_debug:
+        debug()
     if opts.gui:
         from calibre.gui_launch import calibre
         calibre(['calibre'] + args[1:])
@@ -260,7 +265,10 @@ def main(args=sys.argv):
         from calibre.utils.fonts.sfnt.subset import main
         main(['subset-font'] + args[1:])
     elif opts.exec_file:
-        run_script(opts.exec_file, args[1:])
+        if opts.exec_file == '--':
+            run_script(args[1], args[2:])
+        else:
+            run_script(opts.exec_file, args[1:])
     elif opts.run_plugin:
         from calibre.customize.ui import find_plugin
         plugin = find_plugin(opts.run_plugin)

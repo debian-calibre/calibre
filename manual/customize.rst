@@ -49,6 +49,7 @@ Environment variables
       the system theme -- beware of crashes and hangs.
     * ``CALIBRE_SHOW_DEPRECATION_WARNINGS`` - causes calibre to print deprecation warnings to stdout. Useful for calibre developers.
     * ``CALIBRE_NO_DEFAULT_PROGRAMS`` - prevent calibre from automatically registering the filetypes it is capable of handling with Windows.
+    * ``QT_QPA_PLATFORM`` - On Linux set this to ``wayland`` to force calibre to use Wayland and ``xcb`` to force use of X11.
     * ``SYSFS_PATH`` - Use if sysfs is mounted somewhere other than /sys
     * ``http_proxy``, ``https_proxy`` - used on Linux to specify an HTTP(S) proxy
 
@@ -75,7 +76,7 @@ Overriding icons, templates, et cetera
 
 .. note::
    calibre has direct support for icon themes, there are several icon themes
-   available for calibre, that you can use by going to :guilabel:`Preferences->Interface->Look & Feel->Change Icon theme`.
+   available for calibre, that you can use by going to :guilabel:`Preferences->Interface->Look & Feel->Change icon theme`.
    It is preferable to use icon themes over overriding individual icons.
 
 
@@ -120,6 +121,11 @@ icons. You can upload that to the calibre forum at `Mobileread
 <https://www.mobileread.com/forums/forumdisplay.php?f=166>`__ and then I will
 make your theme available via calibre's builtin icon theme system.
 
+As of calibre 6, you can have custom icons for light and dark mode. Simply
+create two versions of the icon and name the files with the suffix
+``-for-dark-theme`` and ``-for-light-theme``. For example,
+``modified-for-dark-theme.png`` and ``modified-for-light-theme.png``. Then
+calibre will automatically use the appropriate icon based on the current theme.
 
 Customizing calibre with plugins
 --------------------------------

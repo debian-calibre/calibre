@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "luglio 11, 2022" "6.0.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "luglio 16, 2022" "6.1.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -52,11 +52,17 @@ comparazione e\-book, ecc.
 Puoi anche usare \fBcalibre\-debug\fP per avviare script stand\-alone. Per farlo segui queste istruzioni:
 .INDENT 0.0
 .INDENT 3.5
-\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
+\fBcalibre\-debug\fP \-e myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .UNINDENT
 .UNINDENT
 .sp
-Tutto ciò che segue i \fB\-\-\fP è passato allo script.
+Tutto ciò che segue i \fB\-\-\fP è passato allo script. Puoi anche usare \fBcalibre\-debug\fP
+come shabang negli script, in questo modo:
+.INDENT 0.0
+.INDENT 3.5
+#!/usr/bin/env \-S \fBcalibre\-debug\fP \-e \fB\-\-\fP \-\-
+.UNINDENT
+.UNINDENT
 .sp
 Ogni qualvolta vengono passati argomenti con degli spazi a \fBcalibre\-debug\fP, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .SH [OPZIONI]
@@ -153,7 +159,12 @@ Esegui un plugin con un\fB\(aq\fPinterfaccia a linea di comando. Per esempio: ca
 .INDENT 0.0
 .TP
 .B \-\-run\-test, \-t
-Run the named test(s). Use the special value \fB\(dq\fPall\fB\(dq\fP to run all tests. If the test name starts with a period it is assumed to be a module name. If the test name starts with @ it is assumed to be a category name.
+Esegui i(l) test nominato(i). Usa il valore speciale \fB\(dq\fPall\fB\(dq\fP per eseguirli tutti. Se il nome del test inizia con un punto, è interpretato come nome di un modulo. Se il nome del test inizia con @, è interpretato come nome di una categoria.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-run\-without\-debug
+Non eseguire con il flag DEBUG attivato
 .UNINDENT
 .INDENT 0.0
 .TP

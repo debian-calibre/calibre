@@ -16,7 +16,7 @@ import shutil
 import sys
 import time
 import uuid
-from contextlib import suppress, closing
+from contextlib import closing, suppress
 from functools import partial
 
 from calibre import as_unicode, force_unicode, isbytestring, prints
@@ -40,8 +40,8 @@ from calibre.utils.config import from_json, prefs, to_json, tweaks
 from calibre.utils.date import EPOCH, parse_date, utcfromtimestamp, utcnow
 from calibre.utils.filenames import (
     WindowsAtomicFolderMove, ascii_filename, atomic_rename, copyfile_using_links,
-    copytree_using_links, hardlink_file, is_case_sensitive, remove_dir_if_empty,
-    samefile
+    copytree_using_links, hardlink_file, is_case_sensitive, is_fat_filesystem,
+    remove_dir_if_empty, samefile
 )
 from calibre.utils.formatter_functions import (
     compile_user_template_functions, formatter_functions,
@@ -470,6 +470,7 @@ class DB:
         if not os.path.exists(self.library_path):
             os.makedirs(self.library_path)
         self.is_case_sensitive = is_case_sensitive(self.library_path)
+        self.is_fat_filesystem = is_fat_filesystem(self.library_path)
 
         SchemaUpgrade(self, self.library_path, self.field_metadata)
 
@@ -981,6 +982,9 @@ class DB:
 
     def fts_unindex(self, book_id, fmt=None):
         self.fts.unindex(book_id, fmt=fmt)
+
+    def reindex_fts_book(self, book_id, *fmts):
+        return self.fts.dirty_book(book_id, *fmts)
 
     def fts_search(self,
         fts_engine_query, use_stemming, highlight_start, highlight_end, snippet_size, restrict_to_book_ids, return_text,
@@ -2115,7 +2119,7 @@ class DB:
     def get_top_level_move_items(self, all_paths):
         items = set(os.listdir(self.library_path))
         paths = set(all_paths)
-        paths.update({'metadata.db', 'metadata_db_prefs_backup.json'})
+        paths.update({'metadata.db', 'full-text-search.db', 'metadata_db_prefs_backup.json'})
         path_map = {x:x for x in paths}
         if not self.is_case_sensitive:
             for x in items:
