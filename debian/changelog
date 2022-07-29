@@ -6,8 +6,13 @@ calibre (6.2.0+dfsg-1) UNRELEASED; urgency=medium
     Drop 0008-Restore-chardet-module-support.patch: Upstream now uses uChardet
   * Rediff patches.
     Drop 0014-Extend-thread-wait-time-to-pass-test.patch: Fixed by upstream
+  * Drop MIPS build because Qt6 dose not support them
+  * Drop some architectures which not supported by Qt6
+  * Recommends Wayland QPA plugin for Wayland only machines (Closes: #1016214)
+    Move Wayland QPA plugin to "Recommends" section from "Suggests".
+    Some modern style machines drops Xwayland support.
 
- -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Fri, 29 Jul 2022 12:41:30 +0900
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sat, 30 Jul 2022 02:05:20 +0900
 
 calibre (6.1.0+dfsg-1) unstable; urgency=medium
 
