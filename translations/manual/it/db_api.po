@@ -4,22 +4,22 @@
 # 
 # Translators:
 # demetrio <mendem@tiscali.it>, 2020
-# Michele Galimberti <galimbertimichele@gmail.com>, 2021
+# Michele Galimberti <galimbertimichele@gmail.com>, 2021-2022
 # SKAL <sir_kalot@yahoo.it>, 2015
 # Vincenzo Reale <vinx.reale@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-16 10:49+0000\n"
-"PO-Revision-Date: 2021-12-09 14:13+0000\n"
-"Last-Translator: Michele Galimberti <galimbertimichele@gmail.com>\n"
+"POT-Creation-Date: 2022-07-20 07:12+0000\n"
+"PO-Revision-Date: 2014-07-05 16:49+0000\n"
+"Last-Translator: Michele Galimberti <galimbertimichele@gmail.com>, 2021-2022\n"
 "Language-Team: Italian (http://www.transifex.com/calibre/calibre/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: it\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: ../../__w/calibre/calibre/manual/db_api.rst:4
 msgid "API documentation for the database interface"
@@ -56,6 +56,64 @@ msgstr "SQLITE viene semplicemente utilizzato come modo per leggere e scrivere i
 #: ../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.listeners.EventType:1
 msgid "An enumeration."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.book_created:1
+msgid ""
+"When a new book record is created in the database, with the book id as the "
+"only argument"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.book_edited:1
+msgid "When a book format is edited, with arguments: (book_id, fmt)"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.books_removed:1
+msgid ""
+"When books are removed from the database with the list of book ids as the "
+"only argument"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.format_added:1
+msgid "When a format is added to a book, with arguments: (book_id, format)"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.formats_removed:1
+msgid ""
+"When formats are removed from a book, with arguments: (mapping of book id to"
+" set of formats removed from the book)"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.indexing_progress_changed:1
+msgid "When the indexing progress changes"
+msgstr "Quando cambia l'avanzamento dell'indicizzazione"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.items_removed:1
+msgid ""
+"When items such as tags or authors are removed from some books. Arguments: "
+"(field_name, affected book ids, ids of removed items)"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.items_renamed:1
+msgid ""
+"When items such as tags or authors are renamed in some or all books. "
+"Arguments: (field_name, affected book ids, map of old item id to new item "
+"id)"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.metadata_changed:1
+msgid ""
+"When some metadata is changed for some books, with arguments: (name of "
+"changed field, set of affected book ids)"
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -258,12 +316,17 @@ msgstr ""
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:9
 msgid "If True return the image as a QImage object"
-msgstr "Se Vero restituisce le immagini come oggetto QImage"
+msgstr "Se True restituisce l'immagine come oggetto QImage"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:10
+msgid "If True return the image as a QPixmap object"
+msgstr "Se True restituisce l'immagine come oggetto QPixmap"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.cover:11
 msgid "If True return the image as a path pointing to a temporary file"
-msgstr "Se Vero restituisce l'immagine come un percorso che punta a un file temporaneo"
+msgstr "Se True restituisce l'immagine come un percorso che punta a un file temporaneo"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.data_for_find_identical_books:1
@@ -525,7 +588,7 @@ msgstr ""
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_format:1
 msgid "Return True iff the format exists on disk"
-msgstr "Restituisce vero se il formato esiste sul disco"
+msgstr "Restituisce True se il formato esiste sul disco"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_id:1

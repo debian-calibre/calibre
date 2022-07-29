@@ -1,5 +1,138 @@
 [
     {
+        "version": "6.2.0",
+        "date": "2022-07-29",
+        "new features": [
+            {
+                "title": "Full text search: Ignore soft hyphens when extracting searchable text from books. Note that you will have to re-index your library to take advantage of this."
+            },
+            {
+                "title": "Content server: Have the Read button open PDF files in the browsers builtin PDF viewer rather than the calibre viewer since the calibre viewer is not well suited to PDF"
+            },
+            {
+                "title": "Kobo driver: Add support for new firmware"
+            },
+            {
+                "title": "Create icon theme dialog: Add a checkbox to install the newly created theme into calibre"
+            },
+            {
+                "title": "Allow re-indexing a book for FTS by right clicking the Book details panel"
+            }
+        ],
+        "bug fixes": [
+            {
+                "tickets": [
+                    1982060
+                ],
+                "title": "Content server: Workaround for chrome bug causing multiple sign in prompts when connecting to the server after restarting Chrome"
+            },
+            {
+                "title": "Fix a regression in 6.0 that broke rendering of first page of EPUB as cover when the EPUB has no actual cover"
+            },
+            {
+                "tickets": [
+                    1981886
+                ],
+                "title": "Content server: Fix a regression in 6.0 that caused incorrect rendering of comments metadata in the book details panel in dark mode"
+            },
+            {
+                "tickets": [
+                    1982743
+                ],
+                "title": "FB2 Input: Fix a regression in 6.0 that broke conversion of FB2 on macOS"
+            },
+            {
+                "tickets": [
+                    1982502
+                ],
+                "title": "Metadata download from Google: Switch to making the queries via a Google web search as this finds some books that searching via the API does not"
+            },
+            {
+                "tickets": [
+                    1982651
+                ],
+                "title": "Book details panel: Fix clicking on items from an enumerated column containing ampersands not searching correctly"
+            },
+            {
+                "title": "Image editor: Do not allow initial mouse drag to create selection rect outside the image bounds"
+            },
+            {
+                "title": "E-book viewer: Fix clicking on ToC entries moving keyboard focus to the ToC search box when the ToC window is floating"
+            },
+            {
+                "title": "Fix a regression in 6.0 that caused the default cover to be rendered small in some contexts"
+            },
+            {
+                "tickets": [
+                    1981882
+                ],
+                "title": "Various bug fixes related to the new dark/light icon theme switching. Make the icons more consistent even when using the system theme. Use calibre specific file type icons when using the non native file dialogs. Allow creating dark/light override icons manually in the configuration folder."
+            },
+            {
+                "tickets": [
+                    1981909
+                ],
+                "title": "Disable the color theme setting when using system style"
+            },
+            {
+                "title": "When using a fixed color palette and the system colors are of different type enforce the color palette"
+            },
+            {
+                "tickets": [
+                    1982050
+                ],
+                "title": "Ignore Qt generated application palette changes when using a fixed palette"
+            },
+            {
+                "title": "In the icon theme chooser dialog show themes show light and dark themes only in the light and dark tabs"
+            },
+            {
+                "tickets": [
+                    1982035
+                ],
+                "title": "Welcome wizard: Fix device names not being translated correctly leading to the same name being repeated for some devices"
+            },
+            {
+                "title": "Read aloud: Fix spurious error message on Linux about voices not being installed"
+            },
+            {
+                "title": "Linux binaries: Bundle brotli and graphite2 as well as Qt links against them"
+            },
+            {
+                "title": "FTS dialog: When keyboard navigation changes the current item ensure it stays visible"
+            },
+            {
+                "tickets": [
+                    1981887
+                ],
+                "title": "Binary builds: Fix Qt TLS backends not included"
+            },
+            {
+                "title": "Fix Qt WebEngine creating cache folders outside of the calibre cache directory"
+            }
+        ],
+        "improved recipes": [
+            "Frontline",
+            "HBR",
+            "The Australian",
+            "India Today",
+            "Indian Express",
+            "India Today",
+            "Live Mint",
+            "The Atlantic"
+        ],
+        "new recipes": [
+            {
+                "title": "The Athletic",
+                "author": "unkn0wn"
+            },
+            {
+                "title": "Various Russian and Ukranian news sources",
+                "author": "bugmen00t"
+            }
+        ]
+    },
+    {
         "version": "6.1.0",
         "date": "2022-07-16",
         "new features": [
@@ -10,7 +143,7 @@
                 "title": "Search queries now support quoting using \"docstrings\" for easier escaping"
             },
             {
-                "title": "Linux installer: Check for libEGL as the QtGui module in Qt 6 links against it and many Linux servers dont have it installed"
+                "title": "Linux installer: Check for libEGL as the QtGui module in Qt 6 links against it and many Linux servers don't have it installed"
             }
         ],
         "bug fixes": [
@@ -151,10 +284,10 @@
                 "title": "Workaround for Apple bug in macOS 13 that prevents device detection"
             },
             {
-                "title": "Dont use commas in filenames when sending to pbsync and kindle email addresses"
+                "title": "Don't use commas in filenames when sending to pbsync and kindle email addresses"
             },
             {
-                "title": "Edit book: When quitting while a save is in progress and the save completes while the confirmation popup is visible, dont abort the quit."
+                "title": "Edit book: When quitting while a save is in progress and the save completes while the confirmation popup is visible, don't abort the quit."
             }
         ],
         "improved recipes": [
@@ -722,7 +855,7 @@
                 "tickets": [
                     1960686
                 ],
-                "title": "Textile output: Dont fail if input document has invalid padding or margin specifications"
+                "title": "Textile output: Don't fail if input document has invalid padding or margin specifications"
             },
             {
                 "tickets": [
@@ -905,7 +1038,7 @@
                 "tickets": [
                     1956097
                 ],
-                "title": "MOBI output: Dont fail if input document contains invalid % based lengths"
+                "title": "MOBI output: Don't fail if input document contains invalid % based lengths"
             },
             {
                 "tickets": [
@@ -1712,7 +1845,7 @@
                 "tickets": [
                     1933989
                 ],
-                "title": "When searching for books by an author from the manage authors dialog, use exact matches"
+                "title": "When searching for books by an author from the Manage authors dialog, use exact matches"
             },
             {
                 "tickets": [

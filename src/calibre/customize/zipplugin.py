@@ -28,12 +28,14 @@ from polyglot.builtins import itervalues, reload, string_or_bytes
 # have non ASCII characters
 
 
-def get_resources(zfp, name_or_list_of_names):
+def get_resources(zfp, name_or_list_of_names, print_tracebacks_for_missing_resources=True):
     '''
     Load resources from the plugin zip file
 
     :param name_or_list_of_names: List of paths to resources in the zip file using / as
                 separator, or a single path
+
+    :param print_tracebacks_for_missing_resources: When True missing resources are reported to STDERR
 
     :return: A dictionary of the form ``{name : file_contents}``. Any names
                 that were not found in the zip file will not be present in the
@@ -49,15 +51,16 @@ def get_resources(zfp, name_or_list_of_names):
             try:
                 ans[name] = zf.read(name)
             except:
-                import traceback
-                traceback.print_exc()
+                if print_tracebacks_for_missing_resources:
+                    import traceback
+                    traceback.print_exc()
     if len(names) == 1:
         ans = ans.pop(names[0], None)
 
     return ans
 
 
-def get_icons(zfp, name_or_list_of_names, plugin_name=''):
+def get_icons(zfp, name_or_list_of_names, plugin_name='', print_tracebacks_for_missing_resources=True):
     '''
     Load icons from the plugin zip file
 
@@ -66,6 +69,8 @@ def get_icons(zfp, name_or_list_of_names, plugin_name=''):
 
     :param plugin_name: The human friendly name of the plugin, used to load icons from
                 the current theme, if present.
+
+    :param print_tracebacks_for_missing_resources: When True missing resources are reported to STDERR
 
     :return: A dictionary of the form ``{name : QIcon}``. Any names
                 that were not found in the zip file will be null QIcons.
@@ -86,7 +91,7 @@ def get_icons(zfp, name_or_list_of_names, plugin_name=''):
     else:
         failed = set(namelist)
     if failed:
-        from_zfp = get_resources(zfp, list(failed))
+        from_zfp = get_resources(zfp, list(failed), print_tracebacks_for_missing_resources=print_tracebacks_for_missing_resources)
         if from_zfp is None:
             from_zfp = {}
         elif isinstance(from_zfp, string_or_bytes):

@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "uztailak 16, 2022" "6.1.0" "calibre"
+.TH "CALIBREDB" "1" "uztailak 29, 2022" "6.2.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -41,42 +41,42 @@ calibredb agindua [aukera] [argumentuak]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP is the command line interface to the calibre database. It has
-several sub\-commands, documented below.
+\fBcalibredb\fP calibre datu\-baserako komando\-lerroko interfazea da. Hainbat
+hainbat azpi\-komando dauka, behean dokumentatuta.
 .sp
-\fBcalibredb\fP can be used to manipulate either a calibre database
-specified by path or a calibre Content server running either on
-the local machine or over the internet. You can start a calibre
-Content server using either the \fBcalibre\-server\fP
-program or in the main calibre program click Connect/share  → 
-Start Content server\&. Since \fBcalibredb\fP can make changes to your
-calibre libraries, you must setup authentication on the server first. There
-are two ways to do that:
-.INDENT 0.0
-.INDENT 3.5
+\fBcalibredb\fP kalibreko datu\-base bat manipulatzeko erabil daiteke
+bide edo Calibrek zehaztutako Eduki zerbitzaria exekutatzen ari den
+tokiko makina edo internet bidez. Calibre has dezakezu
+Eduki zerbitzaria \fBcalibre\-server\fP erabiliz
+programan edo kalibre nagusiko programan egin klik Konektatu/partekatu  → 
+Hasi Eduki zerbitzaria\&. \fBcalibredb\fP\-ek zurean aldaketak egin ditzakeenez
+Calibre liburutegiak, zerbitzarian autentifikazioa konfiguratu behar duzu lehenik. Han
+Horretarako bi modu daude:
 .INDENT 0.0
 .IP \(bu 2
-If you plan to connect only to a server running on the same computer,
-you can simply use the \fB\-\-enable\-local\-write\fP option of the
-Content server, to allow any program, including calibredb, running on
-the local computer to make changes to your calibre data. When running
-the server from the main calibre program, this option is in
-Preferences → Sharing over the net → Advanced\&.
-.IP \(bu 2
-If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
-options to \fBcalibredb\fP to give it access. You can setup
-user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
-option and using \fB\-\-manage\-users\fP to create the user accounts.
-If you are running the server from the main calibre program, use
-Preferences → Sharing over the net → Require username/password\&.
-.UNINDENT
-.UNINDENT
+Ordenagailu berean exekutatzen ari den zerbitzari batera soilik konektatzeko asmoa baduzu,
 .UNINDENT
 .sp
-To connect to a running Content server, pass the URL of the server to the
-\fI\%\-\-with\-library\fP option, see the documentation of that option for
-details and examples.
+besterik gabe erabil dezakezu \fB\-\-enable\-local\-write\fP aukera
+Eduki zerbitzaria, edozein programa martxan jartzeko, calibredb barne
+tokiko ordenagailua zure kalibreko datuetan aldaketak egiteko. Korrika egitean
+Calibre programa nagusiko zerbitzaria, aukera hau barne dago
+Hobespenak → Sarean partekatzea → Aurreratua\&.
+.INDENT 0.0
+.IP \(bu 2
+Internet bidez sarbidea gaitu nahi baduzu, konfiguratu beharko zenuke
+.UNINDENT
+.sp
+erabiltzaile\-kontuak zerbitzarian eta erabili \fI\%\-\-username\fP eta \fI\%\-\-password\fP
+aukerak \fBcalibredb\fP sarbidea emateko. Konfiguratu dezakezu
+erabiltzailearen autentifikazioa \fBcalibre\-server\fP \fB\-\-enable\-auth\fP erabiliz
+aukera eta \fB\-\-manage\-users\fP erabiliz erabiltzaile\-kontuak sortzeko.
+Zerbitzaria calibre programa nagusitik exekutatzen ari bazara, erabili
+Hobespenak → Sarean partekatzea → Erabiltzaile izena/pasahitza eskatu\&.
+.sp
+Abian dagoen Eduki zerbitzari batera konektatzeko, pasa zerbitzariaren URLa
+\fI\%\-\-with\-library\fP aukera, ikusi aukera horren dokumentazioa
+xehetasunak eta adibideak.
 .INDENT 0.0
 .IP \(bu 2
 \fI\%AUKERA GLOBALAK\fP
@@ -339,7 +339,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Do not use the Recycle Bin
+Do not use the Birziklatzeko paperontzia
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0

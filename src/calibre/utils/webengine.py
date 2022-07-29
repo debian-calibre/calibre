@@ -3,18 +3,41 @@
 # License: GPL v3 Copyright: 2021, Kovid Goyal <kovid at kovidgoyal.net>
 
 
-import json, os
+import json
+import os
 from qt.core import QBuffer, QIODevice, QObject, pyqtSignal, sip
-from qt.webengine import QWebEngineScript, QWebEngineSettings, QWebEngineProfile
+from qt.webengine import (
+    QWebEngineProfile, QWebEngineScript, QWebEngineSettings, QWebEngineUrlScheme
+)
 
-from calibre.constants import cache_dir, SPECIAL_TITLE_FOR_WEBENGINE_COMMS
+from calibre.constants import (
+    FAKE_PROTOCOL, SPECIAL_TITLE_FOR_WEBENGINE_COMMS, cache_dir
+)
+
+
+def setup_fake_protocol():
+    p = FAKE_PROTOCOL.encode('ascii')
+    if not QWebEngineUrlScheme.schemeByName(p).name():
+        scheme = QWebEngineUrlScheme(p)
+        scheme.setSyntax(QWebEngineUrlScheme.Syntax.Host)
+        scheme.setFlags(QWebEngineUrlScheme.Flag.SecureScheme)
+        QWebEngineUrlScheme.registerScheme(scheme)
+
+
+def setup_profile(profile):
+    # Qt uses persistent storage path to store cached GPU data even for OTR profiles
+    base = os.path.abspath(os.path.join(cache_dir(), 'qwe', profile.storageName() or 'dp'))
+    cp = os.path.join(base, 'c')
+    if profile.cachePath() != cp:
+        profile.setCachePath(cp)
+    sp = os.path.join(base, 'sp')
+    if profile.persistentStoragePath() != sp:
+        profile.setPersistentStoragePath(sp)
+    return profile
 
 
 def setup_default_profile():
-    p = QWebEngineProfile.defaultProfile()
-    q = os.path.join(cache_dir(), 'qt-webeng')
-    if p.cachePath() != q:
-        p.setCachePath(q)
+    return setup_profile(QWebEngineProfile.defaultProfile())
 
 
 def send_reply(rq, mime_type, data):

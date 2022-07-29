@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "июля 16, 2022" "6.1.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "июля 29, 2022" "6.2.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -41,28 +41,21 @@ calibre\-debug [options]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre E\-book viewer and the calibre editor in debug mode.
+Разные интерфейсы командной строки, полезные для отладки calibre. Без вариантов,
+эта команда запускает встроенный интерпретатор Python. Также можно запустить основной
+GUI calibre, просмотрщик электронных книг calibre и редактор calibre в режиме отладки.
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the E\-book diff tool and so
-on.
+Он также содержит интерфейсы для различных опций calibre, для которых нет
+отдельных инструментов командной строки, например выделение подмножества шрифтов, инструмент сравнения электронных книг и т. д.
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
-.INDENT 0.0
-.INDENT 3.5
+Вы также можете использовать \fBcalibre\-debug\fP для запуска автономных скриптов. Для этого используйте его так:
+.sp
 \fBcalibre\-debug\fP \-e myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
-.UNINDENT
-.UNINDENT
 .sp
-Everything after the \fB\-\-\fP is passed to the script. You can also use \fBcalibre\-debug\fP
-as a shebang in scripts, like this:
-.INDENT 0.0
-.INDENT 3.5
+Всё, что после \fB\-\-\fP передаётся в скрипт. Вы также можете использовать \fBcalibre\-debug\fP
+как шебанг (shebang) в скриптах, вот так:
+.sp
 #!/usr/bin/env \-S \fBcalibre\-debug\fP \-e \fB\-\-\fP \-\-
-.UNINDENT
-.UNINDENT
 .sp
 Когда вы передаёте аргументы с пробелами в \fBcalibre\-debug\fP, заключайте их в кавычки. Например: \(dq/some path/with spaces\(dq
 .SH [ОПЦИИ]
@@ -159,12 +152,12 @@ as a shebang in scripts, like this:
 .INDENT 0.0
 .TP
 .B \-\-run\-test, \-t
-Run the named test(s). Use the special value \fB\(dq\fPall\fB\(dq\fP to run all tests. If the test name starts with a period it is assumed to be a module name. If the test name starts with @ it is assumed to be a category name.
+Запустить упомянутый(\-е) тест(\-ы). Специальное значение all \- запустить все тесты. Если имя теста начинается с точки, предполагается, что это имя модуля. Если имя теста начинается с @, предполагается, что это имя категории.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-run\-without\-debug
-Don\fB\(aq\fPt run with the DEBUG flag set
+Не запускать с установленным флагом DEBUG
 .UNINDENT
 .INDENT 0.0
 .TP

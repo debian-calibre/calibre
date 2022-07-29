@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "7月 16, 2022" "6.1.0" "calibre"
+.TH "CALIBREDB" "1" "7月 29, 2022" "6.2.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -265,7 +265,7 @@ calibredb add [選項] file1 file2 file3 ...
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-为这本书设置标识符，例如 \-I asin:XXX \-I isbn:YYY
+為這本書設定識別項，例如 \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -308,7 +308,7 @@ calibredb add [選項] file1 file2 file3 ...
 .INDENT 0.0
 .TP
 .B \-\-ignore
-文件名模式 (glob) ，在扫描文件夹中的文件时，与此模式匹配的文件将被忽略。可以为多个模式多次指定。例如：*.pdf将忽略所有PDF文件
+檔名模式 (glob) ，在掃瞄資料夾中的檔案時，與此模式相符的檔案將被忽略。可以為多個模式多次指定。例如：*.pdf 將忽略所有 PDF 檔案
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -698,7 +698,7 @@ calibredb custom_columns [options]
 .UNINDENT
 .UNINDENT
 .sp
-列出可用的自定义列。显示列标签和ids。
+列出可用的自訂列欄位。顯示欄位標籤和 ids。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -787,7 +787,7 @@ calibredb check_library [options]
 .UNINDENT
 .UNINDENT
 .sp
-对表示库的文件系统执行一些检查。生成报告是invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
+對表示書庫的檔案系統執行一些檢查。產生報告是 invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -857,18 +857,18 @@ calibredb list_categories [options]
 .sp
 .nf
 .ft C
-calibredb backup_metadata [选项]
+calibredb backup_metadata [選項]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-将存储在数据库中的元数据备份到每个图书文件夹中的
-单个OPF文件中。这通常是自动发生的，但是您可以运行
-此命令来强制重新生成OPF文件，并使用\-\-all选项。
+將儲存在資料庫中的中繼資料備份到每個圖書資料夾中的
+單個 OPF 檔案中。這通常是自動發生的，但是您可以執行
+此命令來強制重新產生 OPF 檔案，並使用 \-\-all 選項。
 .sp
-请注意，通常不需要这样做，因为每次元数据更改时，
-OPF文件都会自动备份。
+請注意，通常不需要這樣做，因為每次中繼資料變更時，
+OPF 檔案都會自動備份。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
