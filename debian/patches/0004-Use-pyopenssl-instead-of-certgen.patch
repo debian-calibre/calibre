@@ -15,10 +15,10 @@ So it soleves OpenSSL license issues.
  3 files changed, 51 insertions(+), 26 deletions(-)
 
 diff --git a/setup/extensions.json b/setup/extensions.json
-index 29625fd..1fa5633 100644
+index ec8987a..7142dc8 100644
 --- a/setup/extensions.json
 +++ b/setup/extensions.json
-@@ -28,14 +28,6 @@
+@@ -35,14 +35,6 @@
          "libraries": "m",
          "windows_libraries": ""
      },
@@ -34,7 +34,7 @@ index 29625fd..1fa5633 100644
          "name": "html_syntax_highlighter",
          "sources": "calibre/gui2/tweak_book/editor/syntax/html.c"
 diff --git a/src/calibre/constants.py b/src/calibre/constants.py
-index 6eebc54..811a461 100644
+index 2ffa76f..61aaf99 100644
 --- a/src/calibre/constants.py
 +++ b/src/calibre/constants.py
 @@ -264,7 +264,6 @@ class ExtensionsImporter:
@@ -43,8 +43,8 @@ index 6eebc54..811a461 100644
              'tokenizer',
 -            'certgen',
              'sqlite_extension',
+             'uchardet',
          )
-         if iswindows:
 diff --git a/src/calibre/utils/certgen.py b/src/calibre/utils/certgen.py
 index 9a4bfd7..7bf64b4 100644
 --- a/src/calibre/utils/certgen.py
