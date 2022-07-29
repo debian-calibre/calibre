@@ -98,11 +98,11 @@ class FTSAPITest(BaseTest):
 
         # check enabling scans pre-exisintg
         cache = self.new_library()
-        cache.add_format(1, 'TXTZ', self.make_txtz(b'a test text'))
+        cache.add_format(1, 'TXTZ', self.make_txtz('a test te\u00adxt'.encode('utf-8')))
         fts = cache.enable_fts()
         self.wait_for_fts_to_finish(fts)
         check(id=1, book=1, format='TXTZ', searchable_text='a test text')
-        # check changing the format but not the text doesnt cause a rescan
+        # check changing the format but not the text doesn't cause a rescan
         cache.add_format(1, 'TXTZ', self.make_txtz(b'a test text', extra='xxx'))
         self.wait_for_fts_to_finish(fts)
         check(id=1, book=1, format='TXTZ', searchable_text='a test text')

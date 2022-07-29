@@ -611,7 +611,7 @@ class BuiltinSwitch(BuiltinFormatterFunction):
 
     def evaluate(self, formatter, kwargs, mi, locals, val, *args):
         if (len(args) % 2) != 1:
-            raise ValueError(_('switch requires an odd number of arguments'))
+            raise ValueError(_('switch requires an even number of arguments'))
         i = 0
         while i < len(args):
             if i + 1 >= len(args):
@@ -1415,7 +1415,7 @@ class BuiltinListJoin(BuiltinFormatterFunction):
                       "zero values. It can be a field like publisher that is "
                       "single-valued, effectively a one-item list. Duplicates "
                       "are removed using a case-insensitive comparison. Items are "
-                      " returned in the order they appear in the source lists. "
+                      "returned in the order they appear in the source lists. "
                       "If items on lists differ only in letter case then the last "
                       "is used. All separators can be more than one character.\n"
                       "Example:") + "\n\n" + (
@@ -1480,8 +1480,8 @@ class BuiltinRange(BuiltinFormatterFunction):
                       "with a maximum length of limit. The first value produced "
                       "is 'start'. Subsequent values next_v are "
                       "current_v+step. The loop continues while "
-                      "next_v<stop assuming step is positive, otherwise "
-                      "while next_v>stop. An empty list is produced if "
+                      "next_v < stop assuming step is positive, otherwise "
+                      "while next_v > stop. An empty list is produced if "
                       "start fails the test: start>=stop if step "
                       "is positive. The limit sets the maximum length of "
                       "the list and has a default of 1000. The parameters "
@@ -1490,10 +1490,10 @@ class BuiltinRange(BuiltinFormatterFunction):
                       "Two arguments specify start and stop. Three arguments "
                       "specify start, stop, and step. Four "
                       "arguments specify start, stop, step and limit. "
-                      "Examples: range(5)->'0,1,2,3,4'. range(0,5)->'0,1,2,3,4'. "
-                      "range(-1,5)->'-1,0,1,2,3,4'. range(1,5)->'1,2,3,4'. "
-                      "range(1,5,2)->'1,3'. range(1,5,2,5)->'1,3'. "
-                      "range(1,5,2,1)->error(limit exceeded).")
+                      "Examples: range(5) -> '0,1,2,3,4'. range(0,5) -> '0,1,2,3,4'. "
+                      "range(-1,5) -> '-1,0,1,2,3,4'. range(1,5) -> '1,2,3,4'. "
+                      "range(1,5,2) -> '1,3'. range(1,5,2,5) -> '1,3'. "
+                      "range(1,5,2,1) -> error(limit exceeded).")
 
     def evaluate(self, formatter, kwargs, mi, locals, *args):
         limit_val = 1000
@@ -2135,7 +2135,7 @@ class BuiltinArguments(BuiltinFormatterFunction):
                       '-- Used in a stored template to retrieve the arguments '
                       'passed in the call. It both declares and initializes '
                       'local variables, effectively parameters. The variables '
-                      'are positional; they get the value of the value given '
+                      'are positional; they get the value of the parameter given '
                       'in the call in the same position. If the corresponding '
                       'parameter is not provided in the call then arguments '
                       'assigns that variable the provided default value. If '

@@ -84,7 +84,7 @@ class Ui_Dialog(object):
         self.msg.setText(_("<p>Start wireless device connections.\n"
 "       <p>You may see some messages from your computer\'s firewall or anti-virus manager asking you if it is OK for calibre to connect to the network. <b>Please answer yes</b>. If you do not, wireless connections will not work."))
         self.label_23.setText(_("calibre IP addresses:"))
-        self.ip_addresses.setText(_("Possibe IP addresses:"))
+        self.ip_addresses.setText(_("Possible IP addresses:"))
         self.label_2.setText(_("Optional &password:"))
         self.password_box.setPlaceholderText(_("Optional password for security"))
         self.show_password.setText(_("&Show password"))

@@ -5,7 +5,7 @@ from functools import lru_cache
 import sys, locale, codecs, os, collections, collections.abc
 
 __appname__   = 'calibre'
-numeric_version = (6, 1, 0)
+numeric_version = (6, 2, 0)
 __version__   = '.'.join(map(str, numeric_version))
 git_version   = None
 __author__    = "Kovid Goyal <kovid@kovidgoyal.net>"
@@ -266,6 +266,7 @@ class ExtensionsImporter:
             'tokenizer',
             'certgen',
             'sqlite_extension',
+            'uchardet',
         )
         if iswindows:
             extra = ('winutil', 'wpd', 'winfonts', 'winsapi')
@@ -480,7 +481,7 @@ def get_umask():
     return mask
 
 
-# call this at startup as it changed process global state, which doesnt work
+# call this at startup as it changed process global state, which doesn't work
 # with multi-threading. It's absurd there is no way to safely read the current
 # umask of a process.
 get_umask()

@@ -13,10 +13,10 @@ from functools import lru_cache
 from qt.core import (
     QApplication, QBuffer, QByteArray, QColor, QDateTime, QDesktopServices, QDialog,
     QDialogButtonBox, QEvent, QFile, QFileDialog, QFileIconProvider, QFileInfo,
-    QFont, QFontDatabase, QFontInfo, QFontMetrics, QGuiApplication, QIcon, QIODevice,
-    QLocale, QNetworkProxyFactory, QObject, QPalette, QResource, QSettings,
-    QSocketNotifier, QStringListModel, QStyle, Qt, QThread, QTimer, QTranslator,
-    QUrl, pyqtSignal, pyqtSlot
+    QFont, QFontDatabase, QFontInfo, QFontMetrics, QGuiApplication, QIcon,
+    QImageReader, QImageWriter, QIODevice, QLocale, QNetworkProxyFactory, QObject,
+    QPalette, QResource, QSettings, QSocketNotifier, QStringListModel, Qt, QThread,
+    QTimer, QTranslator, QUrl, pyqtSignal, pyqtSlot
 )
 from threading import Lock, RLock
 
@@ -30,7 +30,7 @@ from calibre.ebooks.metadata import MetaInformation
 from calibre.gui2.linux_file_dialogs import (
     check_for_linux_native_dialogs, linux_native_dialog
 )
-from calibre.gui2.palette import dark_palette, fix_palette_colors
+from calibre.gui2.palette import PaletteManager
 from calibre.gui2.qt_file_dialogs import FileDialog
 from calibre.ptempfile import base_dir
 from calibre.utils.config import Config, ConfigProxy, JSONConfig, dynamic
@@ -44,8 +44,6 @@ from polyglot.builtins import iteritems, string_or_bytes
 
 del pqc
 NO_URL_FORMATTING = QUrl.UrlFormattingOption.None_
-if islinux:
-    from qt.dbus import QDBusConnection, QDBusMessage, QDBusVariant
 
 
 class IconResourceManager:
@@ -57,6 +55,7 @@ class IconResourceManager:
         self.light_theme_name = self.default_light_theme_name = 'calibre-default-light'
         self.user_any_theme_name = self.user_dark_theme_name = self.user_light_theme_name = None
         self.registered_user_resource_files = ()
+        self.color_palette = 'light'
 
     def user_theme_resource_file(self, which):
         return os.path.join(config_dir, f'icons-{which}.rcc')
@@ -137,6 +136,13 @@ class IconResourceManager:
             legacy_theme_metadata = os.path.join(q, 'icon-theme.json')
             if os.path.exists(legacy_theme_metadata):
                 self.migrate_legacy_icon_theme(legacy_theme_metadata)
+                items = os.listdir(q)
+            self.override_items = {'': frozenset(items)}
+            for k in ('devices', 'mimetypes', 'plugins'):
+                items = frozenset()
+                with suppress(OSError):
+                    items = frozenset(os.listdir(os.path.join(self.override_icon_path, k)))
+                self.override_items[k] = items
         self.register_user_resource_files()
 
     def migrate_legacy_icon_theme(self, legacy_theme_metadata):
@@ -154,6 +160,23 @@ class IconResourceManager:
             else:
                 os.remove(q)
 
+    def overriden_icon_path(self, name):
+        parts = name.replace(os.sep, '/').split('/')
+        ans = os.path.join(self.override_icon_path, name)
+        if len(parts) == 1:
+            sq, ext = os.path.splitext(parts[0])
+            sq = f'{sq}-for-{self.color_palette}-theme{ext}'
+            if sq in self.override_items['']:
+                ans = os.path.join(self.override_icon_path, sq)
+        elif len(parts) == 2:
+            entries = self.override_items.get(parts[0], ())
+            if entries:
+                sq, ext = os.path.splitext(parts[1])
+                sq = f'{sq}-for-{self.color_palette}-theme{ext}'
+                if sq in entries:
+                    ans = os.path.join(self.override_icon_path, parts[0], sq)
+        return ans
+
     def __call__(self, name):
         if isinstance(name, QIcon):
             return name
@@ -162,16 +185,14 @@ class IconResourceManager:
         if os.path.isabs(name):
             return QIcon(name)
         if self.override_icon_path:
-            q = os.path.join(self.override_icon_path, name)
-            qi = QIcon(q)
+            qi = QIcon(self.overriden_icon_path(name))
             if qi.is_ok():
                 return qi
         icon_name = os.path.splitext(name.replace('\\', '__').replace('/', '__'))[0]
         ans = QIcon.fromTheme(icon_name)
         if not ans.is_ok():
             if 'user-any' in QIcon.themeName():
-                tc = 'dark' if QApplication.instance().is_dark_theme else 'light'
-                q = QIcon(f':/icons/calibre-default-{tc}/images/{name}')
+                q = QIcon(f':/icons/calibre-default-{self.color_palette}/images/{name}')
                 if q.is_ok():
                     ans = q
         return ans
@@ -180,7 +201,6 @@ class IconResourceManager:
         ans = self(name)
         ba = QByteArray()
         if ans.availableSizes():
-            from qt.core import QImageWriter
             pmap = ans.pixmap(ans.availableSizes()[0])
             buf = QBuffer(ba)
             buf.open(QIODevice.OpenModeFlag.WriteOnly)
@@ -193,7 +213,9 @@ class IconResourceManager:
 
     def set_theme(self):
         current = QIcon.themeName()
-        new = self.dark_theme_name if QApplication.instance().is_dark_theme else self.light_theme_name
+        is_dark = QApplication.instance().is_dark_theme
+        self.color_palette = 'dark' if is_dark else 'light'
+        new = self.dark_theme_name if is_dark else self.light_theme_name
         if current == new and current not in (self.default_dark_theme_name, self.default_light_theme_name):
             # force reload of user icons by first changing theme to default and
             # then to user
@@ -812,7 +834,7 @@ class FileIconProvider(QFileIconProvider):
         if fileinfo.isSymLink():
             if not fileinfo.exists():
                 return self.icons['zero']
-            fileinfo = QFileInfo(fileinfo.readLink())
+            fileinfo = QFileInfo(fileinfo.symLinkTarget())
         if fileinfo.isDir():
             key = 'dir'
         else:
@@ -889,8 +911,7 @@ def choose_files_and_remember_all_files(
 
 def is_dark_theme():
     pal = QApplication.instance().palette()
-    col = pal.color(QPalette.ColorRole.Window)
-    return max(col.getRgb()[:3]) < 115
+    return pal.is_dark_theme()
 
 
 def choose_osx_app(window, name, title, default_dir='/Applications'):
@@ -1051,11 +1072,6 @@ class Application(QApplication):
         if not args:
             args = sys.argv[:1]
         args = [args[0]]
-        if ismacos and not headless:
-            from calibre_extensions.cocoa import set_appearance
-            if gprefs['color_palette'] != 'system':
-                set_appearance(gprefs['color_palette'])
-        self.ignore_palette_changes = False
         QNetworkProxyFactory.setUseSystemConfiguration(True)
         # Allow import of webengine after construction of QApplication on new
         # enough PyQt
@@ -1069,18 +1085,11 @@ class Application(QApplication):
         self.file_event_hook = None
         if override_program_name:
             args = [override_program_name] + args[1:]
+        self.palette_manager = PaletteManager(gprefs['color_palette'], gprefs['ui_style'], force_calibre_style, headless)
         if headless:
-            args.extend(['-platformpluginpath', plugins_loc, '-platform', 'headless'])
+            args.extend(('-platformpluginpath', plugins_loc, '-platform', 'headless'))
         else:
-            if iswindows:
-                # passing darkmode=1 turns on dark window frames when windows
-                # is dark and darkmode=2 makes everything dark, but we have our
-                # own dark mode implementation when using calibre style so
-                # prefer that and use darkmode=1
-                if gprefs['ui_style'] == 'system' and not force_calibre_style:
-                    args.extend(['-platform', 'windows:darkmode=2'])
-                else:
-                    args.extend(['-platform', 'windows:darkmode=1'])
+            args.extend(self.palette_manager.args_to_qt)
 
         self.headless = headless
         from calibre_extensions import progress_indicator
@@ -1093,11 +1102,7 @@ class Application(QApplication):
             QApplication.setDesktopFileName(override_program_name)
         QApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts, True)  # needed for webengine
         QApplication.__init__(self, args)
-        self.original_palette = self.palette()
-        self.original_palette_modified = fix_palette_colors(self.original_palette)
-        if iswindows:
-            self.win_event_filter = WinEventFilter()
-            self.installNativeEventFilter(self.win_event_filter)
+        self.palette_manager.initialize()
         icon_resource_manager.initialize()
         sh = self.styleHints()
         if hasattr(sh, 'setShowShortcutsInContextMenus'):
@@ -1123,11 +1128,8 @@ class Application(QApplication):
             self.setup_unix_signals()
         if islinux or isbsd:
             self.setAttribute(Qt.ApplicationAttribute.AA_DontUseNativeMenuBar, 'CALIBRE_NO_NATIVE_MENUBAR' in os.environ)
-        self.setup_styles(force_calibre_style)
+        self.palette_manager.setup_styles()
         self.setup_ui_font()
-        if not self.using_calibre_style and self.style().objectName() == 'fusion':
-            # Since Qt is using the fusion style anyway, specialize it
-            self.load_calibre_style()
         fi = gprefs['font']
         if fi is not None:
             font = QFont(*(fi[:4]))
@@ -1178,6 +1180,14 @@ class Application(QApplication):
             cft = cursor_blink_time()
             if cft >= 0:
                 self.setCursorFlashTime(int(cft))
+
+    @property
+    def is_dark_theme(self):
+        return self.palette_manager.is_dark_theme
+
+    @pyqtSlot(int, result=QIcon)
+    def get_qt_standard_icon(self, standard_pixmap):
+        return self.palette_manager.get_qt_standard_icon(standard_pixmap)
 
     def safe_restore_geometry(self, widget, geom):
         # See https://bugreports.qt.io/browse/QTBUG-77385
@@ -1235,146 +1245,26 @@ class Application(QApplication):
 
         load_builtin_fonts()
 
-    def set_dark_mode_palette(self):
-        self.set_palette(dark_palette())
-
-    def setup_styles(self, force_calibre_style):
-        if iswindows or ismacos:
-            using_calibre_style = gprefs['ui_style'] != 'system'
-        else:
-            using_calibre_style = os.environ.get('CALIBRE_USE_SYSTEM_THEME', '0') == '0'
-        if force_calibre_style:
-            using_calibre_style = True
-        if using_calibre_style:
-            if iswindows:
-                use_dark_palette = gprefs['color_palette'] == 'dark' or (gprefs['color_palette'] == 'system' and windows_is_system_dark_mode_enabled())
-            elif ismacos:
-                use_dark_palette = gprefs['color_palette'] == 'dark'
-            else:
-                use_dark_palette = gprefs['color_palette'] == 'dark' or (gprefs['color_palette'] == 'system' and linux_is_system_dark_mode_enabled())
-                bus = QDBusConnection.sessionBus()
-                bus.connect(
-                    'org.freedesktop.portal.Desktop', '/org/freedesktop/portal/desktop',
-                    'org.freedesktop.portal.Settings', 'SettingChanged', 'ssv', self.linux_desktop_setting_changed)
-            if use_dark_palette:
-                self.set_dark_mode_palette()
-            elif self.original_palette_modified:
-                self.set_palette(self.original_palette)
-
-        self.using_calibre_style = using_calibre_style
-        if DEBUG:
-            prints('Using calibre Qt style:', self.using_calibre_style)
-        if self.using_calibre_style:
-            self.load_calibre_style()
-        self.on_palette_change()
-
-    if islinux:
-        @pyqtSlot(str, str, QDBusVariant)
-        def linux_desktop_setting_changed(self, namespace, key, val):
-            if (namespace, key) == ('org.freedesktop.appearance', 'color-scheme'):
-                if gprefs['color_palette'] != 'system':
-                    return
-                use_dark_palette = val.variant() == 1
-                if use_dark_palette != bool(self.is_dark_theme):
-                    if use_dark_palette:
-                        self.set_dark_mode_palette()
-                    else:
-                        self.set_palette(self.original_palette)
-                self.on_palette_change()
-
-    def check_for_windows_palette_change(self):
-        if gprefs['color_palette'] != 'system':
-            return
-        use_dark_palette = bool(windows_is_system_dark_mode_enabled())
-        if bool(self.is_dark_theme) != use_dark_palette:
-            if use_dark_palette:
-                self.set_dark_mode_palette()
-            else:
-                self.set_palette(self.original_palette)
-            self.on_palette_change()
-
-    def set_palette(self, pal):
-        self.ignore_palette_changes = True
-        self.setPalette(pal)
-        # Needed otherwise Qt does not emit the paletteChanged signal when
-        # appearance is changed. And it has to be after current event
-        # processing finishes as of Qt 5.14 otherwise the palette change is
-        # ignored.
-        QTimer.singleShot(1000, lambda: QApplication.instance().setAttribute(Qt.ApplicationAttribute.AA_SetPalette, False))
-        self.ignore_palette_changes = False
+    @lru_cache(maxsize=256)
+    def cached_qimage(self, name, device_pixel_ratio=0):
+        return self.cached_qpixmap(name, device_pixel_ratio).toImage()
 
     @lru_cache(maxsize=256)
-    def cached_qimage(self, name):
-        return self.cached_qpixmap(name).toImage()
-
-    @lru_cache(maxsize=256)
-    def cached_qpixmap(self, name):
+    def cached_qpixmap(self, name, device_pixel_ratio=0):
+        # get the actual size of the image since QIcon does not tell us this for
+        # icons loaded from a theme
+        path = I(name, allow_user_override=False)
+        r = QImageReader(path)
         ic = QIcon.ic(name)
-        return ic.pixmap((ic.availableSizes() or (256,))[0])
-
-    def on_palette_change(self):
-        self.cached_qimage.cache_clear()
-        self.cached_qpixmap.cache_clear()
-        self.is_dark_theme = is_dark_theme()
-        self.update_icon_theme()
-        self.setProperty('is_dark_theme', self.is_dark_theme)
-        if self.using_calibre_style:
-            ss = 'QTabBar::tab:selected { font-style: italic }\n\n'
-            if self.is_dark_theme:
-                ss += 'QMenu { border: 1px solid palette(shadow); }'
-            self.setStyleSheet(ss)
-        self.palette_changed.emit()
-
-    def update_icon_theme(self):
-        icon_resource_manager.set_theme()
+        if not device_pixel_ratio:
+            device_pixel_ratio = self.devicePixelRatio()
+        ans = ic.pixmap(r.size())
+        ans.setDevicePixelRatio(device_pixel_ratio)
+        return ans
 
     def stylesheet_for_line_edit(self, is_error=False):
         return 'QLineEdit { border: 2px solid %s; border-radius: 3px }' % (
             '#FF2400' if is_error else '#50c878')
-
-    def load_calibre_style(self):
-        from calibre.utils.resources import get_user_path
-        icon_map = self.__icon_map_memory_ = {}
-        user_path = get_user_path()
-        if user_path:
-            user_path = os.path.join(user_path, 'images')
-
-        @lru_cache(maxsize=64)
-        def check_for_custom_icon(v):
-            if user_path:
-                q = os.path.join(user_path, v)
-                if os.path.exists(q):
-                    return q
-            return v.rpartition('.')[0]
-
-        for k, v in {
-            'DialogYesButton': 'ok.png',
-            'DialogNoButton': 'window-close.png',
-            'DialogCloseButton': 'close.png',
-            'DialogOkButton': 'ok.png',
-            'DialogCancelButton': 'window-close.png',
-            'DialogHelpButton': 'help.png',
-            'DialogOpenButton': 'document_open.png',
-            'DialogSaveButton': 'save.png',
-            'DialogApplyButton': 'ok.png',
-            'DialogDiscardButton': 'trash.png',
-            'MessageBoxInformation': 'dialog_information.png',
-            'MessageBoxWarning': 'dialog_warning.png',
-            'MessageBoxCritical': 'dialog_error.png',
-            'MessageBoxQuestion': 'dialog_question.png',
-            'BrowserReload': 'view-refresh.png',
-            'LineEditClearButton': 'clear_left.png',
-            'ToolBarHorizontalExtensionButton': 'v-ellipsis.png',
-            'ToolBarVerticalExtensionButton': 'h-ellipsis.png',
-        }.items():
-            icon_map[getattr(QStyle.StandardPixmap, 'SP_'+k).value] = check_for_custom_icon(v)
-        transient_scroller = 0
-        if ismacos:
-            from calibre_extensions.cocoa import transient_scroller
-            transient_scroller = transient_scroller()
-        self.calibre_style = style = self.pi.CalibreStyle(transient_scroller)
-        style.set_icon_map(icon_map)
-        self.setStyle(style)
 
     def _send_file_open_events(self):
         with self._file_open_lock:
@@ -1405,8 +1295,7 @@ class Application(QApplication):
             return True
         else:
             if etype == QEvent.Type.ApplicationPaletteChange:
-                if not self.ignore_palette_changes:
-                    self.on_palette_change()
+                self.palette_manager.on_qt_palette_change()
             return QApplication.event(self, e)
 
     @property
@@ -1555,6 +1444,7 @@ def ensure_app(headless=True):
                     os.environ['QT_MAC_DISABLE_FOREGROUND_APPLICATION_TRANSFORM'] = '1'
             if headless and iswindows:
                 QApplication.setAttribute(Qt.ApplicationAttribute.AA_UseSoftwareOpenGL, True)
+            QApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts)
             _store_app = QApplication(args)
             if headless and has_headless:
                 _store_app.headless = True
@@ -1682,48 +1572,6 @@ def add_to_recent_docs(path):
     from calibre_extensions import winutil
     app = QApplication.instance()
     winutil.add_to_recent_docs(str(path), app.windows_app_uid)
-
-
-if iswindows:
-    import ctypes
-    from qt.core import QAbstractNativeEventFilter
-
-    class WinEventFilter(QAbstractNativeEventFilter):
-
-        def nativeEventFilter(self, eventType, message):
-            if eventType == b"windows_generic_MSG":
-                msg = ctypes.wintypes.MSG.from_address(message.__int__())
-                # https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-settingchange
-                if msg.message == 0x001A and msg.lParam:  # WM_SETTINGCHANGE
-                    try:
-                        s = ctypes.wstring_at(msg.lParam)
-                    except OSError:
-                        pass
-                    else:
-                        if s == 'ImmersiveColorSet':
-                            QApplication.instance().check_for_windows_palette_change()
-                            # prevent Qt from handling this event
-                            return True, 0
-            return False, 0
-
-
-def windows_is_system_dark_mode_enabled():
-    s = QSettings(r"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", QSettings.Format.NativeFormat)
-    if s.status() == QSettings.Status.NoError:
-        return s.value("AppsUseLightTheme") == 0
-    return False
-
-
-def linux_is_system_dark_mode_enabled():
-    bus = QDBusConnection.sessionBus()
-    m = QDBusMessage.createMethodCall(
-        'org.freedesktop.portal.Desktop', '/org/freedesktop/portal/desktop',
-        'org.freedesktop.portal.Settings', 'Read'
-    )
-    m.setArguments(['org.freedesktop.appearance', 'color-scheme'])
-    reply = bus.call(m, timeout=1000)
-    a = reply.arguments()
-    return len(a) and isinstance(a[0], int) and a[0] == 1
 
 
 def make_view_use_window_background(view):

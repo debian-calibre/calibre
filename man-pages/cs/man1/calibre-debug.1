@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "července 16, 2022" "6.1.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "července 29, 2022" "6.2.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -41,23 +41,22 @@ calibre\-debug [options]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre E\-book viewer and the calibre editor in debug mode.
+Různá rozhraní příkazového řádku užitečná pro ladění Calibre. Bez voleb spouští
+tento příkaz vložený překladač Pythonu. Můžete také spustit hlavní grafické
+rozhraní Calibre, Prohlížeč e\-knih Calibre a editor Calibre v režimu ladění.
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the E\-book diff tool and so
-on.
+Také obsahuje rozhraní pro různé kusy Calibre, které neobsahují vyhrazené
+nástroje příkazového řádku, jako jsou částečné vkládání písma, nástroj Rozdílů
+e\-knih a tak dále.
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+Můžete také použít \fBcalibre\-debug\fP ke spuštění samostatných skriptů. K tomu ho použijte takto:
 .INDENT 0.0
 .INDENT 3.5
 \fBcalibre\-debug\fP \-e myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .UNINDENT
 .UNINDENT
 .sp
-Everything after the \fB\-\-\fP is passed to the script. You can also use \fBcalibre\-debug\fP
-as a shebang in scripts, like this:
+Všechno za \fB\-\-\fP je předáno skriptu. Ladění Calibre můžete také použít jako shebang ve skriptech, například takto:
 .INDENT 0.0
 .INDENT 3.5
 #!/usr/bin/env \-S \fBcalibre\-debug\fP \-e \fB\-\-\fP \-\-
@@ -159,12 +158,12 @@ Spustit modul poskytující rozhraní příkazového řádku. Například: calib
 .INDENT 0.0
 .TP
 .B \-\-run\-test, \-t
-Run the named test(s). Use the special value \fB\(dq\fPall\fB\(dq\fP to run all tests. If the test name starts with a period it is assumed to be a module name. If the test name starts with @ it is assumed to be a category name.
+Spusťte pojmenované testy. Pro spuštění všech testů použijte speciální hodnotu \fB\(dq\fPall\fB\(dq\fP\&. Pokud název testu začíná tečkou, je považován za název modulu. Pokud název testu začíná @, je považován za název kategorie.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-run\-without\-debug
-Don\fB\(aq\fPt run with the DEBUG flag set
+Nespouštějte s nastaveným příznakem DEBUG
 .UNINDENT
 .INDENT 0.0
 .TP

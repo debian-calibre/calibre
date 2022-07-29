@@ -73,7 +73,7 @@ def compile_launcher_lib(contents_dir, gcc, base, pyver, inc_dir):
     # crashes if the system libxml2 is loaded. Loading plugins like the Qt
     # ones or usbobserver causes it to be loaded. So pre-load our libxml2
     # to avoid it.
-    cmd += ['-L', f'{PREFIX}/lib', '-l', 'xml2'] + \
+    cmd += ['-L', f'{PREFIX}/lib', '-l', 'xml2', '-l', 'xslt',] + \
         ['-install_name',
          '@executable_path/../Frameworks/' + os.path.basename(dest)] + \
         [('-F%s/python' % PREFIX), '-framework', 'Python', '-framework', 'CoreFoundation', '-headerpad_max_install_names']
@@ -527,8 +527,9 @@ class Freeze:
     def add_misc_libraries(self):
         for x in (
             'usb-1.0.0', 'mtp.9', 'chm.0', 'sqlite3.0', 'hunspell-1.7.0',
-            'icudata.70', 'icui18n.70', 'icuio.70', 'icuuc.70', 'hyphen.0',
+            'icudata.70', 'icui18n.70', 'icuio.70', 'icuuc.70', 'hyphen.0', 'uchardet.0',
             'stemmer.0', 'xslt.1', 'exslt.0', 'xml2.2', 'z.1', 'unrar', 'lzma.5',
+            'brotlicommon.1', 'brotlidec.1', 'brotlienc.1',
             'crypto.1.1', 'ssl.1.1', 'iconv.2',  # 'ltdl.7'
         ):
             print('\nAdding', x)

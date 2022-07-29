@@ -396,9 +396,11 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
 
     def genesis(self, gui):
         self.gui = gui
+        self.ui_style_available = True
         if not ismacos and not iswindows:
             self.label_widget_style.setVisible(False)
             self.opt_ui_style.setVisible(False)
+            self.ui_style_available = False
 
         db = gui.library_view.model().db
 
@@ -632,6 +634,13 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         self.sections_view.setSpacing(4)
         self.sections_view.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.tabWidget.currentWidget().setFocus(Qt.FocusReason.OtherFocusReason)
+        self.opt_ui_style.currentIndexChanged.connect(self.update_color_palette_state)
+
+    def update_color_palette_state(self):
+        if self.ui_style_available:
+            enabled = self.opt_ui_style.currentData() == 'calibre'
+            self.opt_color_palette.setEnabled(enabled)
+            self.opt_color_palette_label.setEnabled(enabled)
 
     def em_export_layout(self):
         filename = choose_save_file(self, 'em_import_export_field_list',
@@ -742,6 +751,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         self.opt_book_details_css.setPlainText(P('templates/book_details.css', data=True).decode('utf-8'))
         self.opt_book_details_css.blockSignals(False)
         self.tb_focus_label.setVisible(self.opt_tag_browser_allow_keyboard_focus.isChecked())
+        self.update_color_palette_state()
 
     def open_cg_cache(self):
         open_local_file(self.gui.grid_view.thumbnail_cache.location)

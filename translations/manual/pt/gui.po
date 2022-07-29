@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-17 02:39+0000\n"
+"POT-Creation-Date: 2022-07-28 02:42+0000\n"
 "PO-Revision-Date: 2014-06-17 08:37+0000\n"
 "Last-Translator: Paulo Pereira <pauloizidoro@gmail.com>, 2016-2022\n"
 "Language-Team: Portuguese (http://www.transifex.com/calibre/calibre/language/pt/)\n"
@@ -58,7 +58,7 @@ msgid ""
 msgstr "A barra de ferramentas ações fornece atalhos convenientes para as ações mais usadas. Se você clicar com o botão direito do mouse nos botões, poderá executar variações na ação padrão. Observe que a barra de ferramentas ações terá uma aparência um pouco diferente, dependendo se você possui um leitor de e-book conectado ao seu computador."
 
 #: ../../__w/calibre/calibre/manual/gui.rst:41
-#: ../../__w/calibre/calibre/manual/gui.rst:765
+#: ../../__w/calibre/calibre/manual/gui.rst:804
 msgid "Add books"
 msgstr "Adicionar Livros"
 
@@ -266,7 +266,7 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/gui.rst:119
-#: ../../__w/calibre/calibre/manual/gui.rst:795
+#: ../../__w/calibre/calibre/manual/gui.rst:834
 msgid "View"
 msgstr "Ver"
 
@@ -286,7 +286,7 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/gui.rst:134
-#: ../../__w/calibre/calibre/manual/gui.rst:771
+#: ../../__w/calibre/calibre/manual/gui.rst:810
 msgid "Send to device"
 msgstr "Enviar para o dispositivo"
 
@@ -514,7 +514,7 @@ msgid ""
 msgstr "|dvi| A ação :guilabel:`Device` permite você ver os livros na memória principal ou cartão de memória do seu dispositivo, ou remover o dispositivo (retirá-lo do calibre). Esse ícone aparecerá automaticamente na barra de ferramentas principal do calibre quando você conectar um dispositivo que permita essa operação. Você pode clicar nele para ver os livros do seu dispositivo. Você também pode arrastar e soltar livros da sua biblioteca do calibre para o ícone para transferí-los para o seu dispositivo. Inversamente, você pode arrastar e soltar livros de seus dispositivos para o ícone de biblioteca da sua barra de ferramentas para transferir livros de seu dispositivo para a biblioteca do calibre."
 
 #: ../../__w/calibre/calibre/manual/gui.rst:206
-#: ../../__w/calibre/calibre/manual/gui.rst:791
+#: ../../__w/calibre/calibre/manual/gui.rst:830
 msgid "Save to disk"
 msgstr "Exportar para disco"
 
@@ -864,7 +864,7 @@ msgid ""
 "Searching`. If the search option `Unaccented characters match accented "
 "characters and punctuation is ignored` is checked then a character will "
 "match all its variants (e.g., `e` matches `é`, `è`, `ê`, and `ë`) and all "
-"punctuation including spaces are ignored. For example, if the `Unaccented "
+"punctuation and whitespace are ignored. For example, if the `Unaccented "
 "characters match ...` option is checked then given the two book titles:"
 msgstr ""
 
@@ -1007,9 +1007,10 @@ msgid ""
 "<https://docs.python.org/library/re.html>`__ can be used. Backslashes used "
 "to escape special characters in regular expressions must be doubled because "
 "single backslashes will be removed during query parsing. For example, to "
-"match a literal parenthesis you must enter ``\\\\(``. Regular expression "
-"searches are 'contains' searches unless the expression is anchored. "
-"Character variants are significant: ``~e`` doesn't match ``é``."
+"match a literal parenthesis you must enter ``\\\\(`` or alternatively use "
+"`super quotes` (see below). Regular expression searches are 'contains' "
+"searches unless the expression is anchored. Character variants are "
+"significant: ``~e`` doesn't match ``é``."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/gui.rst:391
@@ -1032,7 +1033,7 @@ msgid "character variants always match each other."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/gui.rst:397
-msgid "punctuation is always significant."
+msgid "punctuation and whitespace are always significant."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/gui.rst:399
@@ -1088,16 +1089,69 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/gui.rst:417
-msgid "*More information*"
+msgid "*Search Expression Syntax*"
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/gui.rst:419
+msgid ""
+"A `search expression` is a sequence of `search terms` optionally separated "
+"by the operators ``and`` and ``or``. If two search terms occur without a "
+"separating operator, ``and`` is assumed. The ``and`` operator has priority "
+"over the ``or`` operator; for example the expression ``a or b and c`` is the"
+" same as ``a or (b and c)``. You can use parenthesis to change the priority;"
+" for example ``(a or b) and c`` to make the ``or`` evaluate before the "
+"``and``. You can use the operator ``not`` to negate (invert) the result of "
+"evaluating a search expression. Examples:"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:421
+msgid "``not tag:foo`` finds all books that don't contain the tag ``foo``"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:422
+msgid ""
+"``not (author:Asimov or author:Weber)`` finds all books not written by "
+"either Asimov or Weber."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:424
+msgid ""
+"The above examples show examples of `search terms`. A basic `search term` is"
+" a sequence of characters not including spaces, quotes (``\"``), backslashes"
+" (``\\``), or parentheses (``( )``). It can be optionally preceded by a "
+"column name specifier: the `lookup name` of a column followed by a colon "
+"(``:``), for example ``author:Asimov``. If a search term must contain a "
+"space then the entire term must be enclosed in quotes, as in ``title:\"The "
+"Ring\"``. If the search term must contain quotes then they must be `escaped`"
+" with backslashes. For example, to search for a series named `The \"Ball\" "
+"and The \"Chain\"`, use::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:428
+msgid ""
+"If you need an actual backslash, something that happens frequently in "
+"`regular expression` searches, use two of them (``\\\\``)."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:430
+msgid ""
+"It is sometimes hard to get all the escapes right so the result is what you "
+"want, especially in `regular expression` and `template` searches. In these "
+"cases use the `super-quote`: ``\"\"\"sequence of characters\"\"\"``. Super-"
+"quoted characters are used unchanged: no escape processing is done."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:432
+msgid "*More information*"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:434
 msgid ""
 "To search for a string that begins with an equals, tilde, or caret; prefix "
 "the string with a backslash."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:421
+#: ../../__w/calibre/calibre/manual/gui.rst:436
 msgid ""
 "Enclose search strings with quotes (\") if the string contains parenthesis "
 "or spaces. For example, to find books with the tag ``Science Fiction`` you "
@@ -1106,18 +1160,18 @@ msgid ""
 "and the word ``fiction`` in any metadata."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:423
+#: ../../__w/calibre/calibre/manual/gui.rst:438
 msgid ""
 "You can build advanced search queries easily using the :guilabel:`Advanced "
 "search dialog` accessed by clicking the button |sbi| on the left of the "
 "search box."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:532
+#: ../../__w/calibre/calibre/manual/gui.rst:548
 msgid "sbi"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:426
+#: ../../__w/calibre/calibre/manual/gui.rst:441
 msgid ""
 "Available fields for searching are: ``tag, title, author, publisher, series,"
 " series_index, rating, cover, comments, format, identifiers, date, pubdate, "
@@ -1127,15 +1181,15 @@ msgid ""
 "custom column, hover your mouse over the column header in the library view."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:428
+#: ../../__w/calibre/calibre/manual/gui.rst:443
 msgid "*Dates*"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:430
+#: ../../__w/calibre/calibre/manual/gui.rst:445
 msgid "The syntax for searching for dates is::"
 msgstr "A sintaxe para pesquisar datas é::"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:436
+#: ../../__w/calibre/calibre/manual/gui.rst:451
 msgid ""
 "If the date is ambiguous then the current locale is used for date "
 "comparison. For example, in an mm/dd/yyyy locale 2/1/2009 is interpreted as "
@@ -1147,18 +1201,18 @@ msgid ""
 " a date some number of days ago. For example::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:446
+#: ../../__w/calibre/calibre/manual/gui.rst:461
 msgid ""
 "To avoid potential problems with translated strings when using a non-English"
 " version of calibre, the strings ``_today``, ``_yesterday``, ``_thismonth``,"
 " and ``_daysago`` are always available. They are not translated."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:448
+#: ../../__w/calibre/calibre/manual/gui.rst:463
 msgid "*Searching dates and numeric values with relational comparisons*"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:450
+#: ../../__w/calibre/calibre/manual/gui.rst:465
 msgid ""
 "Dates and numeric fields support the relational operators ``=`` (equals), "
 "``>`` (greater than), ``>=`` (greater than or equal to), ``<`` (less than), "
@@ -1167,21 +1221,21 @@ msgid ""
 "all books rated 3 or higher."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:455
+#: ../../__w/calibre/calibre/manual/gui.rst:470
 msgid ""
 "You can search for books that have a format of a certain size like this:"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:457
+#: ../../__w/calibre/calibre/manual/gui.rst:472
 msgid "``size:>1.1M`` will find books with a format larger than 1.1MB"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:458
+#: ../../__w/calibre/calibre/manual/gui.rst:473
 msgid ""
 "``size:<=1K``  will find books with a format smaller than or equal to 1KB"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:460
+#: ../../__w/calibre/calibre/manual/gui.rst:475
 msgid ""
 "You can search for the number of items in multiple-valued fields such as "
 "tags using the character ``#`` then using the same syntax as numeric fields."
@@ -1189,11 +1243,11 @@ msgid ""
 "find all books with exactly 10 tags use ``tags:#=10``."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:462
+#: ../../__w/calibre/calibre/manual/gui.rst:477
 msgid "*Series indices*"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:464
+#: ../../__w/calibre/calibre/manual/gui.rst:479
 msgid ""
 "Series indices are searchable. For the standard series, the search name is "
 "``series_index``. For custom series columns, use the column search name "
@@ -1203,11 +1257,11 @@ msgid ""
 "relational operators described above."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:469
+#: ../../__w/calibre/calibre/manual/gui.rst:484
 msgid "*Saved searches*"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:471
+#: ../../__w/calibre/calibre/manual/gui.rst:486
 msgid ""
 "The special field ``search`` is used for :ref:`saved searches "
 "<saved_searches>`. If you save a search with the name \"My spouse's books\" "
@@ -1215,11 +1269,11 @@ msgid ""
 "the saved search. More about saving searches below."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:475
+#: ../../__w/calibre/calibre/manual/gui.rst:490
 msgid "*Virtual libraries*"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:477
+#: ../../__w/calibre/calibre/manual/gui.rst:492
 msgid ""
 "The special field ``vl`` is used to search for books in a virtual library. "
 "For example, ``vl:Read`` will find all the books in the *Read* virtual "
@@ -1229,41 +1283,41 @@ msgid ""
 "virtual library name contains spaces then surround it with quotes."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:483
+#: ../../__w/calibre/calibre/manual/gui.rst:498
 msgid "*Whether a field has a value*"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:485
+#: ../../__w/calibre/calibre/manual/gui.rst:500
 msgid ""
 "You can search for the absence or presence of a value for a field using "
 "\"true\" and \"false\". For example:"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:487
+#: ../../__w/calibre/calibre/manual/gui.rst:502
 msgid "``cover:false`` finds all books without a cover"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:488
+#: ../../__w/calibre/calibre/manual/gui.rst:503
 msgid "``series:true`` finds all books that are in a series"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:489
+#: ../../__w/calibre/calibre/manual/gui.rst:504
 msgid "``series:false`` finds all books that are not in a series"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:490
+#: ../../__w/calibre/calibre/manual/gui.rst:505
 msgid "``comments:false`` finds all books with an empty comment"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:491
+#: ../../__w/calibre/calibre/manual/gui.rst:506
 msgid "``formats:false`` finds all books with no book files (empty records)"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:493
+#: ../../__w/calibre/calibre/manual/gui.rst:508
 msgid "*Yes/no custom columns*"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:495
+#: ../../__w/calibre/calibre/manual/gui.rst:510
 msgid ""
 "Searching Yes/no custom columns for ``false``, ``empty``, or ``blank`` will "
 "find all books with undefined values in the column. Searching for ``true`` "
@@ -1277,11 +1331,11 @@ msgid ""
 "``_empty`` are not translated."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:500
+#: ../../__w/calibre/calibre/manual/gui.rst:515
 msgid "*Identifiers*"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:502
+#: ../../__w/calibre/calibre/manual/gui.rst:517
 msgid ""
 "Identifiers (e.g., ISBN, DOI, LCCN, etc.) use an extended syntax. An "
 "identifier has the form ``type:value``, as in ``isbn:123456789``. The "
@@ -1290,67 +1344,67 @@ msgid ""
 "the :ref:`search kinds <search_kinds>`. Examples:"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:504
+#: ../../__w/calibre/calibre/manual/gui.rst:519
 msgid "``identifiers:true`` will find books with any identifier."
 msgstr "'identificadores: verdadeiro' encontrarão livros com qualquer identificador."
 
-#: ../../__w/calibre/calibre/manual/gui.rst:505
+#: ../../__w/calibre/calibre/manual/gui.rst:520
 msgid "``identifiers:false`` will find books with no identifier."
 msgstr "'identificadores: falso' encontrarão livros sem identificador."
 
-#: ../../__w/calibre/calibre/manual/gui.rst:506
+#: ../../__w/calibre/calibre/manual/gui.rst:521
 msgid ""
 "``identifiers:123`` will search for books with any type having a value "
 "containing `123`."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:507
+#: ../../__w/calibre/calibre/manual/gui.rst:522
 msgid ""
 "``identifiers:=123456789`` will search for books with any type having a "
 "value equal to `123456789`."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:508
+#: ../../__w/calibre/calibre/manual/gui.rst:523
 msgid ""
 "``identifiers:=isbn:`` and ``identifiers:isbn:true`` will find books with a "
 "type equal to ISBN having any value"
 msgstr "``identifiers:=isbn:`` irá encontrar livros que tenham um tipo para ISBN com um valor qualquer."
 
-#: ../../__w/calibre/calibre/manual/gui.rst:509
+#: ../../__w/calibre/calibre/manual/gui.rst:524
 msgid ""
 "``identifiers:=isbn:false`` will find books with no type equal to ISBN."
 msgstr "``identifiers:=isbn:false`` irá encontrar livros que não tenham um tipo para ISBN."
 
-#: ../../__w/calibre/calibre/manual/gui.rst:510
+#: ../../__w/calibre/calibre/manual/gui.rst:525
 msgid ""
 "``identifiers:=isbn:123`` will find books with a type equal to ISBN having a"
 " value containing `123`."
 msgstr "``identifiers:=isbn:123`` irá encontrar livros que tenham um tipo para ISBN com um valor contendo `123`."
 
-#: ../../__w/calibre/calibre/manual/gui.rst:511
+#: ../../__w/calibre/calibre/manual/gui.rst:526
 msgid ""
 "``identifiers:=isbn:=123456789`` will find books with a type equal to ISBN "
 "having a value equal to `123456789`."
 msgstr "``identifiers:=isbn:=123456789`` irá encontrar livros que tenham um tipo para ISBN com um valor igual a `123456789`."
 
-#: ../../__w/calibre/calibre/manual/gui.rst:512
+#: ../../__w/calibre/calibre/manual/gui.rst:527
 msgid ""
 "``identifiers:i:1`` will find books with a type containing an `i` having a "
 "value containing a `1`."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:514
+#: ../../__w/calibre/calibre/manual/gui.rst:529
 msgid "*Search using templates*"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:516
+#: ../../__w/calibre/calibre/manual/gui.rst:531
 msgid ""
 "You can search using a template in :ref:`templatelangcalibre` instead of a "
 "metadata field. To do so you enter a template, a search type, and the value "
 "to search for. The syntax is::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:520
+#: ../../__w/calibre/calibre/manual/gui.rst:535
 msgid ""
 "The ``template`` is any valid calibre template language template. The "
 "``search type`` must be one of ``t`` (text search), ``d`` (date search), "
@@ -1360,30 +1414,38 @@ msgid ""
 "search string if there are spaces anywhere in it."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:522
+#: ../../__w/calibre/calibre/manual/gui.rst:537
 msgid "Examples:"
 msgstr "Exemplos:"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:524
+#: ../../__w/calibre/calibre/manual/gui.rst:539
 msgid ""
 "``template:\"program: connected_device_name('main')#@#:t:kindle\"`` -- is "
 "true when the ``kindle`` device is connected."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:525
+#: ../../__w/calibre/calibre/manual/gui.rst:540
 msgid ""
 "``template:\"program: select(formats_sizes(), 'EPUB')#@#:n:>1000000\"`` -- "
 "finds books with EPUB files larger than 1 MB."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:526
+#: ../../__w/calibre/calibre/manual/gui.rst:541
 msgid ""
 "``template:\"program: select(formats_modtimes('iso'), "
 "'EPUB')#@#:d:>10daysago\"`` -- finds books with EPUB files newer than 10 "
 "days ago."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:528
+#: ../../__w/calibre/calibre/manual/gui.rst:542
+msgid ""
+"``template:\"\"\"program: book_count('tags:^\"' & $series & '\"', 0) != "
+"0#@#:n:1\"\"\"`` -- finds all books containing the series name in the tags. "
+"This example uses super-quoting because the template uses both single quotes"
+" (``'``) and double quotes (``\"``) when constructing the search expression."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:544
 msgid ""
 "You can build template search queries easily using the :guilabel:`Advanced "
 "search dialog` accessed by clicking the button |sbi|. You can test templates"
@@ -1393,19 +1455,19 @@ msgid ""
 ":guilabel:`Preferences->Shortcuts`."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:530
+#: ../../__w/calibre/calibre/manual/gui.rst:546
 msgid "*Advanced search dialog*"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:538
+#: ../../__w/calibre/calibre/manual/gui.rst:554
 msgid ":guilabel:`Advanced search dialog`"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:543
+#: ../../__w/calibre/calibre/manual/gui.rst:559
 msgid "Saving searches"
 msgstr "A guardar pesquisas"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:545
+#: ../../__w/calibre/calibre/manual/gui.rst:561
 msgid ""
 "calibre allows you to save a frequently used search under a special name and"
 " then reuse that search with a single click. To do this, create your search "
@@ -1415,18 +1477,54 @@ msgid ""
 "save the search."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:547
+#: ../../__w/calibre/calibre/manual/gui.rst:563
 msgid ""
 "Now you can access your saved search in the Tag browser under "
 ":guilabel:`Saved searches`. A single click will allow you to reuse any "
 "arbitrarily complex search easily, without needing to re-create it."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:550
+#: ../../__w/calibre/calibre/manual/gui.rst:566
+msgid "Searching the full text of all books"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:568
+msgid "ftsb"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:571
+msgid ""
+"|ftsb| calibre can *optionally* index the full text of books in the library "
+"to allow for instant searching of words inside any book. To use this "
+"functionality click the :guilabel:`FT` button at the left edge of the search"
+" bar."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:575
+msgid ""
+"Then, enable indexing for the current library. Once indexing is complete you"
+" can search all the text in the full library. When you add new books to the "
+"library, they will be automatically indexed in the background. This search "
+"allows you to quickly find all books that contain a word or combination of "
+"words. You can even search for words that occur near other words, as shown "
+"in the examples in the search popup window. Note that this search tool will "
+"find only one occurrence of the search query in a particular book, not list "
+"every occurrence, for that it is best to search inside the book using the "
+"calibre :guilabel:`E-book viewer`."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:584
+msgid ""
+"You can re-index an individual book by right clicking on the :guilabel:`Book"
+" details panel` in calibre and choosing :guilabel:`Re-index this book for "
+"full text searching`."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:589
 msgid "Virtual libraries"
 msgstr "Bibliotecas virtuais"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:552
+#: ../../__w/calibre/calibre/manual/gui.rst:591
 msgid ""
 "A :guilabel:`Virtual library` is a way to pretend that your calibre library "
 "has only a few books instead of its full collection. This is an excellent "
@@ -1435,11 +1533,11 @@ msgid ""
 ":ref:`virtual_libraries`."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:559
+#: ../../__w/calibre/calibre/manual/gui.rst:598
 msgid "Temporarily marking books"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:561
+#: ../../__w/calibre/calibre/manual/gui.rst:600
 msgid ""
 "You can temporarily mark arbitrary sets of books. Marked books will have a "
 "pin on them and can be found with the search ``marked:true``. To mark a book"
@@ -1447,7 +1545,7 @@ msgid ""
 "add the :guilabel:`Mark books` button to the main toolbar."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:563
+#: ../../__w/calibre/calibre/manual/gui.rst:602
 msgid ""
 "You can mark books with a specific text label by right clicking the "
 ":guilabel:`Mark books` button and choosing :guilabel:`Mark books with text "
@@ -1455,11 +1553,11 @@ msgid ""
 "``marked:\"=the-text-you-entered\"``."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:568
+#: ../../__w/calibre/calibre/manual/gui.rst:607
 msgid "Guessing metadata from file names"
 msgstr "Calcular metadados a partir do nome dos ficheiros"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:570
+#: ../../__w/calibre/calibre/manual/gui.rst:609
 msgid ""
 "Normally, calibre reads metadata from inside the book file. However, it can "
 "be configured to read metadata from the file name instead, via "
@@ -1467,7 +1565,7 @@ msgid ""
 " contents`."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:574
+#: ../../__w/calibre/calibre/manual/gui.rst:613
 msgid ""
 "You can also control how metadata is read from the filename using regular "
 "expressions (see :doc:`regexp`). In the :guilabel:`Adding books` section of "
@@ -1476,30 +1574,30 @@ msgid ""
 "add to the library. The default regular expression is::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:582
+#: ../../__w/calibre/calibre/manual/gui.rst:621
 msgid ""
 "that is, it assumes that all characters up to the first ``-`` are the title "
 "of the book and subsequent characters are the author of the book. For "
 "example, the filename::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:588
+#: ../../__w/calibre/calibre/manual/gui.rst:627
 msgid ""
 "will be interpreted to have the title: Foundation and Earth and author: "
 "Isaac Asimov"
 msgstr "será interpretada para ter o título: Fundação e Terra e autor: Isaac Asimov"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:591
+#: ../../__w/calibre/calibre/manual/gui.rst:630
 msgid ""
 "If the filename does not contain the hyphen, the above regular expression "
 "will fail."
 msgstr "Se o nome não contém o hífen, a expressão regular acima falhará."
 
-#: ../../__w/calibre/calibre/manual/gui.rst:597
+#: ../../__w/calibre/calibre/manual/gui.rst:636
 msgid "Book details"
 msgstr "Detalhes do livro"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:601
+#: ../../__w/calibre/calibre/manual/gui.rst:640
 msgid ""
 "The Book details display shows the cover and all the metadata for the "
 "currently selected book. It can be hidden via the :guilabel:`Layout` button "
@@ -1509,51 +1607,51 @@ msgid ""
 " on the author name and selecting Manage this author."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:608
+#: ../../__w/calibre/calibre/manual/gui.rst:647
 msgid ""
 "Similarly, if you download metadata for the book, the Book details panel "
 "will automatically show you links pointing to the web pages for the book on "
 "Amazon, WorldCat, etc. from where the metadata was downloaded."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:612
+#: ../../__w/calibre/calibre/manual/gui.rst:651
 msgid ""
 "You can right click on individual e-book formats in the Book details panel "
 "to delete them, compare them to their original versions, save them to disk, "
 "open them with an external program, etc."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:616
+#: ../../__w/calibre/calibre/manual/gui.rst:655
 msgid ""
 "You can change the cover of the book by simply drag and dropping an image "
 "onto the Book details panel. If you wish to edit the cover image in an "
 "external program, simply right click on it and choose :guilabel:`Open with`."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:620
+#: ../../__w/calibre/calibre/manual/gui.rst:659
 msgid ""
 "You can also add e-book files to the current book by drag and dropping the "
 "files onto the Book details panel."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:623
+#: ../../__w/calibre/calibre/manual/gui.rst:662
 msgid ""
 "Double clicking the Book details panel will open it up in a separate popup "
 "window."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:626
+#: ../../__w/calibre/calibre/manual/gui.rst:665
 msgid ""
 "Finally, you can customize exactly what information is displayed in the Book"
 " details panel via :guilabel:`Preferences->Interface->Look & feel->Book "
 "details`."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:636
+#: ../../__w/calibre/calibre/manual/gui.rst:675
 msgid "Tag browser"
 msgstr "Navegador de conteúdos"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:640
+#: ../../__w/calibre/calibre/manual/gui.rst:679
 msgid ""
 "The Tag browser allows you to easily browse your collection by "
 "Author/Tags/Series/etc. If you click on any item in the Tag browser, for "
@@ -1563,7 +1661,7 @@ msgid ""
 " series."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:642
+#: ../../__w/calibre/calibre/manual/gui.rst:681
 msgid ""
 "The first click on an item will restrict the list of books to those that "
 "contain or match the item. Continuing the above example, clicking on Isaac "
@@ -1581,7 +1679,7 @@ msgid ""
 "learn how to construct basic search expressions."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:644
+#: ../../__w/calibre/calibre/manual/gui.rst:683
 msgid ""
 "Items in the Tag browser have their icons partially colored. The amount of "
 "color depends on the average rating of the books in that category. So for "
@@ -1590,7 +1688,7 @@ msgid ""
 "your mouse over the icon to see the average rating."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:646
+#: ../../__w/calibre/calibre/manual/gui.rst:685
 msgid ""
 "The outer-level items in the :guilabel:`Tag browser`, such as Authors and "
 "Series, are called categories. You can create your own categories, called "
@@ -1609,38 +1707,38 @@ msgid ""
 "Favorites example above."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:652
+#: ../../__w/calibre/calibre/manual/gui.rst:691
 msgid ""
 "You can search User categories in the same way as built-in categories, by "
 "clicking on them. There are four different searches cycled through by "
 "clicking:"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:649
+#: ../../__w/calibre/calibre/manual/gui.rst:688
 msgid ""
 "\"everything matching an item in the category\" indicated by a single green "
 "plus sign."
 msgstr "\"tudo que corresponde um item na categoria\" indicado por um único sinal de mais verde."
 
-#: ../../__w/calibre/calibre/manual/gui.rst:650
+#: ../../__w/calibre/calibre/manual/gui.rst:689
 msgid ""
 "\"everything matching an item in the category or its sub-categories\" "
 "indicated by two green plus signs."
 msgstr "\"tudo que corresponde ao item na categoria ou suas subcategorias\" indicados por dois sinais de mais verdes."
 
-#: ../../__w/calibre/calibre/manual/gui.rst:651
+#: ../../__w/calibre/calibre/manual/gui.rst:690
 msgid ""
 "\"everything not matching an item in the category\" shown by a single red "
 "minus sign."
 msgstr "\"tudo que não corresponde ao item na categoria\" mostrado por um único sinal de meno vermelho."
 
-#: ../../__w/calibre/calibre/manual/gui.rst:652
+#: ../../__w/calibre/calibre/manual/gui.rst:691
 msgid ""
 "\"everything not matching an item in the category or its sub-categories\" "
 "shown by two red minus signs."
 msgstr "\"tudo que não corresponde ao item na categoria ou suas subcategorias\" mostrado por dois sinais de menos vermelhos"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:654
+#: ../../__w/calibre/calibre/manual/gui.rst:693
 msgid ""
 "It is also possible to create hierarchies inside some of the text categories"
 " such as tags, series, and custom columns. These hierarchies show with the "
@@ -1657,14 +1755,14 @@ msgid ""
 " \"genre\" <subgroups-tutorial>` for more information."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:656
+#: ../../__w/calibre/calibre/manual/gui.rst:695
 msgid ""
 "Hierarchical items (items with children) use the same four 'click-on' "
 "searches as User categories. Items that do not have children use two of the "
 "searches: \"everything matching\" and \"everything not matching\"."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:658
+#: ../../__w/calibre/calibre/manual/gui.rst:697
 msgid ""
 "You can drag and drop items in the Tag browser onto User categories to add "
 "them to that category. If the source is a User category, holding the "
@@ -1676,17 +1774,17 @@ msgid ""
 "History will add the tag History to the book's tags."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:660
+#: ../../__w/calibre/calibre/manual/gui.rst:699
 msgid ""
 "You can easily find any item in the Tag browser by clicking the search "
 "button at the lower-right corner. In addition, you can right click on any "
 "item and choose one of several operations. Some examples are to hide it, "
 "rename it, or open a \"Manage x\" dialog that allows you to manage items of "
-"that kind. For example, the \"Manage Authors\" dialog allows you to rename "
-"authors and control how their names are sorted."
+"that kind. For example, the :guilabel:`Manage authors` dialog allows you to "
+"rename authors and control how their names are sorted."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:662
+#: ../../__w/calibre/calibre/manual/gui.rst:701
 msgid ""
 "You can control how items are sorted in the Tag browser via the "
 ":guilabel:`Configure` button at the lower-left of the Tag browser. You can "
@@ -1695,11 +1793,11 @@ msgid ""
 " Isaac Asimov is the number of books in your library by Isaac Asimov)."
 msgstr "Pode controlar o modo como os itens são ordenados no navegador de etiquetas através do botão: guilabel: 'Configurar` no canto inferior esquerdo do navegador de etiquetas. Pode optar por classificar por nome, classificação média ou popularidade (popularidade é o número de livros com pelo menos um item na sua biblioteca. Por exemplo, a popularidade de Isaac Asimov é o número de livros de Isaac Asimov na sua biblioteca)."
 
-#: ../../__w/calibre/calibre/manual/gui.rst:669
+#: ../../__w/calibre/calibre/manual/gui.rst:708
 msgid "Cover grid"
 msgstr "Grelha de capas"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:674
+#: ../../__w/calibre/calibre/manual/gui.rst:713
 msgid ""
 "You can have calibre display a grid of book covers instead of a list of "
 "books, if you prefer to browse your collection by covers instead. The "
@@ -1711,11 +1809,11 @@ msgid ""
 "title or authors or rating or a custom column of your own devising."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:684
+#: ../../__w/calibre/calibre/manual/gui.rst:723
 msgid "Cover browser"
 msgstr "Navegador de capas"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:689
+#: ../../__w/calibre/calibre/manual/gui.rst:728
 msgid ""
 "In addition to the :guilabel:`Cover grid` described above, you can also have"
 " calibre display covers in the single row. This is activated via the "
@@ -1725,11 +1823,11 @@ msgid ""
 "browser` display itself in a separate popup window."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:696
+#: ../../__w/calibre/calibre/manual/gui.rst:735
 msgid "Quickview"
 msgstr "Visualização Rápida"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:698
+#: ../../__w/calibre/calibre/manual/gui.rst:737
 msgid ""
 "Sometimes you want to select a book and quickly get a list of books with the"
 " same value in some category (authors, tags, publisher, series, etc.) as the"
@@ -1745,53 +1843,53 @@ msgid ""
 "right."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:705
+#: ../../__w/calibre/calibre/manual/gui.rst:744
 msgid "Some example Quickview usages: quickly seeing what other books:"
 msgstr "Alguns exemplos de uso da visualização rápida: Ver se outros livros"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:701
+#: ../../__w/calibre/calibre/manual/gui.rst:740
 msgid "have some tag(s) applied to the currently selected book,"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:702
+#: ../../__w/calibre/calibre/manual/gui.rst:741
 msgid "are in the same series as the current book"
 msgstr "está na mesma série que o livro atual"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:703
+#: ../../__w/calibre/calibre/manual/gui.rst:742
 msgid "have the same values in a custom column as the current book"
 msgstr "Tem os mesmos valores do atual livro em uma coluna personalizada "
 
-#: ../../__w/calibre/calibre/manual/gui.rst:704
+#: ../../__w/calibre/calibre/manual/gui.rst:743
 msgid "are written by one of the same authors of the current book"
 msgstr "foram escritos por um dos mesmos autores do livro atual"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:705
+#: ../../__w/calibre/calibre/manual/gui.rst:744
 msgid "share values in a custom column"
 msgstr "partilhar valores numa coluna personalizada"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:707
+#: ../../__w/calibre/calibre/manual/gui.rst:746
 msgid "There are two choices for where the Quickview information appears:"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:709
+#: ../../__w/calibre/calibre/manual/gui.rst:748
 msgid ""
 "It can open \"undocked\": on top of the calibre window and will stay open "
 "until you explicitly close it."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:710
+#: ../../__w/calibre/calibre/manual/gui.rst:749
 msgid ""
 "It can open \"docked\": as a panel in the book list section of the calibre "
 "main window."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:712
+#: ../../__w/calibre/calibre/manual/gui.rst:751
 msgid ""
 "You can move the window from docked to undocked as desired using the "
 "\"Dock/Undock\" button."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:714
+#: ../../__w/calibre/calibre/manual/gui.rst:753
 msgid ""
 "The Quickview panel can be left open permanently, in which case it follows "
 "movements on the book list. For example, if you click in the calibre library"
@@ -1804,21 +1902,21 @@ msgid ""
 "panel to see the books with that different value."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:716
+#: ../../__w/calibre/calibre/manual/gui.rst:755
 msgid ""
 "Double-click on a book in the Quickview window to select that book in the "
 "library view. This will also change the items display in the QuickView "
 "window (the left-hand panel) to show the items in the newly-selected book."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:718
+#: ../../__w/calibre/calibre/manual/gui.rst:757
 msgid ""
 ":kbd:`Shift-` or :kbd:`Ctrl-` double-click on a book in the Quickview window"
 " to open the edit metadata dialog on that book in the calibre window. The "
 "edited book will be Quickview'ed when you close the edit metadata dialog."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:720
+#: ../../__w/calibre/calibre/manual/gui.rst:759
 msgid ""
 "You can see if a column can be Quickview'ed by hovering your mouse over the "
 "column heading and looking at the tooltip for that heading. You can also "
@@ -1827,47 +1925,47 @@ msgid ""
 " equivalent to pressing 'Q' in the current cell."
 msgstr "Você pode ver se uma coluna pode ser vista na Visualização Rápida passando o mouse sobre o cabeçalho da coluna e olhando no seu tooltip. Você pode também descobrir clicando com o botão direito do mouse no cabeçalho da coluna para ver se a opção \"Visualização rápida\" é mostrado, e selecionando essa opção é equivalente a pressionar 'Q' na célula atual."
 
-#: ../../__w/calibre/calibre/manual/gui.rst:722
+#: ../../__w/calibre/calibre/manual/gui.rst:761
 msgid "Options (in :guilabel:`Preferences->Look & feel->Quickview`):"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:724
+#: ../../__w/calibre/calibre/manual/gui.rst:763
 msgid ""
 "Respect (or not) the current Virtual library. If checked then Quickview "
 "shows only books in the current Virtual library. Default: respect Virtual "
 "libraries"
 msgstr "Respeitar (ou não) a biblioteca virtual atual. Se assinalado, a vista rápida mostra apenas livros na biblioteca virtual atual. Predefinição: Respeitar bibliotecas virtuais"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:725
+#: ../../__w/calibre/calibre/manual/gui.rst:764
 msgid ""
 "Change the Quickview window contents when the column is changed on the book "
 "list using the cursor keys. Default: don't follow changes made with cursor "
 "keys"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:726
+#: ../../__w/calibre/calibre/manual/gui.rst:765
 msgid ""
 "Change the column being \"quickview'ed\" when a cell in the Quickview window"
 " is double-clicked. Otherwise the book is changed but the column being "
 "examined is not. Default: change the column"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:727
+#: ../../__w/calibre/calibre/manual/gui.rst:766
 msgid ""
 "Change the column being \"quickview'ed\" to the current column when the "
 "return key is pressed in the Quickview panel. Otherwise the book is changed "
 "but the column being examined is not. Default: change the column"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:728
+#: ../../__w/calibre/calibre/manual/gui.rst:767
 msgid "Choose which columns are shown in the Quickview window/panel."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:737
+#: ../../__w/calibre/calibre/manual/gui.rst:776
 msgid "Jobs"
 msgstr "Processos"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:741
+#: ../../__w/calibre/calibre/manual/gui.rst:780
 msgid ""
 "The Jobs panel shows the number of currently running jobs. Jobs are tasks "
 "that run in a separate process. They include converting e-books and talking "
@@ -1877,11 +1975,11 @@ msgid ""
 "have completed successfully."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:748
+#: ../../__w/calibre/calibre/manual/gui.rst:787
 msgid "Keyboard shortcuts"
 msgstr "Atalhos de teclado"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:750
+#: ../../__w/calibre/calibre/manual/gui.rst:789
 msgid ""
 "calibre has several keyboard shortcuts to save you time and mouse movement. "
 "These shortcuts are active in the book list view (when you're not editing "
@@ -1890,418 +1988,426 @@ msgid ""
 "customised by clicking the :guilabel:`Preferences` button in the viewer."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:754
+#: ../../__w/calibre/calibre/manual/gui.rst:793
 msgid ""
 "Note: The calibre keyboard shortcuts do not require a modifier key (Command,"
 " Option, Control, etc.), unless specifically noted. You only need to press "
 "the letter key, e.g. E to edit."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:756
+#: ../../__w/calibre/calibre/manual/gui.rst:795
 msgid "Keyboard shortcuts for the main calibre program"
 msgstr "Atalhos de teclado para o programa Calibre"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:760
+#: ../../__w/calibre/calibre/manual/gui.rst:799
 msgid "Keyboard shortcut"
 msgstr "Atalho de teclado"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:761
+#: ../../__w/calibre/calibre/manual/gui.rst:800
 msgid "Action"
 msgstr "Ação"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:762
-msgid ":kbd:`F2 (Enter in macOS)`"
-msgstr ":kbd:`F2 (Enter em macOS)`"
+#: ../../__w/calibre/calibre/manual/gui.rst:801
+msgid ":kbd:`F2 (Enter for macOS)`"
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:763
+#: ../../__w/calibre/calibre/manual/gui.rst:802
 msgid "Edit the metadata of the currently selected field in the book list."
 msgstr "Editar os metadados do campo atualmente selecionado na lista de livros."
 
-#: ../../__w/calibre/calibre/manual/gui.rst:764
+#: ../../__w/calibre/calibre/manual/gui.rst:803
 msgid ":kbd:`A`"
 msgstr ":kbd:`A`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:766
+#: ../../__w/calibre/calibre/manual/gui.rst:805
 msgid ":kbd:`Shift+A`"
 msgstr ":kbd:`Shift+A`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:767
+#: ../../__w/calibre/calibre/manual/gui.rst:806
 msgid "Add formats to the selected books"
 msgstr "Adicionar formatos aos livros selecionados"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:768
+#: ../../__w/calibre/calibre/manual/gui.rst:807
 msgid ":kbd:`C`"
 msgstr ":kbd:`C`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:769
+#: ../../__w/calibre/calibre/manual/gui.rst:808
 msgid "Convert selected books"
 msgstr "Converter livros selecionados"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:770
+#: ../../__w/calibre/calibre/manual/gui.rst:809
 msgid ":kbd:`D`"
 msgstr ":kbd:`D`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:772
+#: ../../__w/calibre/calibre/manual/gui.rst:811
 msgid ":kbd:`Del`"
 msgstr ":kbd:`Del`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:773
+#: ../../__w/calibre/calibre/manual/gui.rst:812
 msgid "Remove selected books"
 msgstr "Remover livros selecionados"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:774
+#: ../../__w/calibre/calibre/manual/gui.rst:813
 msgid ":kbd:`E`"
 msgstr ":kbd:`E`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:775
+#: ../../__w/calibre/calibre/manual/gui.rst:814
 msgid "Edit metadata of selected books"
 msgstr "Editar metadados dos livros selecionados"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:776
+#: ../../__w/calibre/calibre/manual/gui.rst:815
 msgid ":kbd:`G`"
 msgstr ":kbd:`G`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:777
+#: ../../__w/calibre/calibre/manual/gui.rst:816
 msgid "Get books"
 msgstr "Obter livros"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:778
+#: ../../__w/calibre/calibre/manual/gui.rst:817
 msgid ":kbd:`I`"
 msgstr ":kbd:`I`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:779
+#: ../../__w/calibre/calibre/manual/gui.rst:818
 msgid "Show Book details"
 msgstr "Mostrar detalhes do livro"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:780
+#: ../../__w/calibre/calibre/manual/gui.rst:819
 msgid ":kbd:`K`"
 msgstr ":kbd:`K`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:781
+#: ../../__w/calibre/calibre/manual/gui.rst:820
 msgid "Edit Table of Contents"
 msgstr "Editar índice"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:782
+#: ../../__w/calibre/calibre/manual/gui.rst:821
 msgid ":kbd:`M`"
 msgstr ":kbd:`M`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:783
+#: ../../__w/calibre/calibre/manual/gui.rst:822
 msgid "Merge selected records"
 msgstr "Fundir os registos selecionados"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:784
+#: ../../__w/calibre/calibre/manual/gui.rst:823
 msgid ":kbd:`Alt+M`"
 msgstr ":kbd:`Alt+M`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:785
+#: ../../__w/calibre/calibre/manual/gui.rst:824
 msgid "Merge selected records, keeping originals"
 msgstr "Fundir os registos selecionados mas manter os originais"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:786
+#: ../../__w/calibre/calibre/manual/gui.rst:825
 msgid ":kbd:`O`"
 msgstr ":kbd:`O`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:787
+#: ../../__w/calibre/calibre/manual/gui.rst:826
 msgid "Open containing folder"
 msgstr "Abrir a pasta com o conteúdo"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:788
+#: ../../__w/calibre/calibre/manual/gui.rst:827
 msgid ":kbd:`P`"
 msgstr ":kbd:`P`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:789
+#: ../../__w/calibre/calibre/manual/gui.rst:828
 msgid "Polish books"
 msgstr "Refinar livros"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:790
+#: ../../__w/calibre/calibre/manual/gui.rst:829
 msgid ":kbd:`S`"
 msgstr ":kbd:`S`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:792
+#: ../../__w/calibre/calibre/manual/gui.rst:831
 msgid ":kbd:`T`"
 msgstr ":kbd:`T`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:793
+#: ../../__w/calibre/calibre/manual/gui.rst:832
 msgid "Edit book"
 msgstr "Editar livro"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:794
+#: ../../__w/calibre/calibre/manual/gui.rst:833
 msgid ":kbd:`V`"
 msgstr ":kbd:`V`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:796
+#: ../../__w/calibre/calibre/manual/gui.rst:835
 msgid ":kbd:`Shift+V`"
 msgstr ":kbd:`Shift+V`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:797
+#: ../../__w/calibre/calibre/manual/gui.rst:836
 msgid "View last read book"
 msgstr "Ver o último livro lido"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:798
-msgid ":kbd:`Alt+V/Cmd+V in macOS`"
-msgstr ":kbd:`Alt+V/Cmd+V em macOS`"
+#: ../../__w/calibre/calibre/manual/gui.rst:837
+msgid ":kbd:`Alt+V/Cmd+V for macOS`"
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:799
+#: ../../__w/calibre/calibre/manual/gui.rst:838
 msgid "View specific format"
 msgstr "Ver formato específico"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:800
+#: ../../__w/calibre/calibre/manual/gui.rst:839
 msgid ":kbd:`Alt+Shift+J`"
 msgstr ":kbd:`Alt+Shift+J`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:801
+#: ../../__w/calibre/calibre/manual/gui.rst:840
 msgid "Toggle jobs list"
 msgstr "Alternar lista de processos"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:802
+#: ../../__w/calibre/calibre/manual/gui.rst:841
 msgid ":kbd:`Alt+Shift+B`"
 msgstr ":kbd:`Alt+Shift+B`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:803
+#: ../../__w/calibre/calibre/manual/gui.rst:842
 msgid "Toggle Cover browser"
 msgstr "Alternar visualizador de capas"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:804
+#: ../../__w/calibre/calibre/manual/gui.rst:843
 msgid ":kbd:`Alt+Shift+D`"
 msgstr ":kbd:`Alt+Shift+D`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:805
+#: ../../__w/calibre/calibre/manual/gui.rst:844
 msgid "Toggle Book details panel"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:806
+#: ../../__w/calibre/calibre/manual/gui.rst:845
 msgid ":kbd:`Alt+Shift+T`"
 msgstr ":kbd:`Alt+Shift+T`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:807
+#: ../../__w/calibre/calibre/manual/gui.rst:846
 msgid "Toggle Tag browser"
 msgstr "Alternar navegador de conteúdos"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:808
+#: ../../__w/calibre/calibre/manual/gui.rst:847
 msgid ":kbd:`Alt+Shift+G`"
 msgstr ":kbd:`Alt+Shift+G`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:809
+#: ../../__w/calibre/calibre/manual/gui.rst:848
 msgid "Toggle Cover grid"
 msgstr "Alternar grelha de capas"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:810
+#: ../../__w/calibre/calibre/manual/gui.rst:849
 msgid ":kbd:`Alt+A`"
 msgstr ":kbd:`Alt+A`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:811
+#: ../../__w/calibre/calibre/manual/gui.rst:850
 msgid "Show books by the same author as the current book"
 msgstr "Mostrar livros do mesmo autor que o livro atual"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:812
+#: ../../__w/calibre/calibre/manual/gui.rst:851
 msgid ":kbd:`Alt+T`"
 msgstr ":kbd:`Alt+T`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:813
+#: ../../__w/calibre/calibre/manual/gui.rst:852
 msgid "Show books with the same tags as current book"
 msgstr "Mostrar livros com as mesmas etiquetas do livro atual"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:814
+#: ../../__w/calibre/calibre/manual/gui.rst:853
 msgid ":kbd:`Alt+P`"
 msgstr ":kbd:`Alt+P`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:815
+#: ../../__w/calibre/calibre/manual/gui.rst:854
 msgid "Show books by the same publisher as current book"
 msgstr "Mostrar livros publicados pela mesma editora do livro atual"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:816
+#: ../../__w/calibre/calibre/manual/gui.rst:855
 msgid ":kbd:`Alt+Shift+S`"
 msgstr ":kbd:`Alt+Shift+S`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:817
+#: ../../__w/calibre/calibre/manual/gui.rst:856
 msgid "Show books in the same series as current book"
 msgstr "Mostrar livros na mesma série do livro atual"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:818
+#: ../../__w/calibre/calibre/manual/gui.rst:857
 msgid ":kbd:`/, Ctrl+F`"
 msgstr ":kbd:`/, Ctrl+F`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:819
+#: ../../__w/calibre/calibre/manual/gui.rst:858
 msgid "Focus the Search bar"
 msgstr "Foco na barra de pesquisa"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:820
+#: ../../__w/calibre/calibre/manual/gui.rst:859
 msgid ":kbd:`Shift+Ctrl+F`"
 msgstr ":kbd:`Shift+Ctrl+F`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:821
+#: ../../__w/calibre/calibre/manual/gui.rst:860
 msgid "Open the Advanced search dialog"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:822
+#: ../../__w/calibre/calibre/manual/gui.rst:861
 msgid ":kbd:`Shift+Alt+F`"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:823
+#: ../../__w/calibre/calibre/manual/gui.rst:862
 msgid "Toggle the Search bar"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:824
+#: ../../__w/calibre/calibre/manual/gui.rst:863
 msgid ":kbd:`Esc`"
 msgstr ":kbd:`Esc`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:825
+#: ../../__w/calibre/calibre/manual/gui.rst:864
 msgid "Clear the current search"
 msgstr "Limpar a pesquisa atual"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:826
+#: ../../__w/calibre/calibre/manual/gui.rst:865
 msgid ":kbd:`Shift+Esc`"
 msgstr ":kbd:`Shift+Esc`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:827
+#: ../../__w/calibre/calibre/manual/gui.rst:866
 msgid "Focus the book list"
 msgstr "Focar a lista de livros"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:828
+#: ../../__w/calibre/calibre/manual/gui.rst:867
 msgid ":kbd:`Ctrl+Esc`"
 msgstr ":kbd:`Ctrl+Esc`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:829
+#: ../../__w/calibre/calibre/manual/gui.rst:868
 msgid "Clear the Virtual library"
 msgstr "Limpar a biblioteca virtual"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:830
+#: ../../__w/calibre/calibre/manual/gui.rst:869
 msgid ":kbd:`Alt+Esc`"
 msgstr ":kbd:`Alt+Esc`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:831
+#: ../../__w/calibre/calibre/manual/gui.rst:870
 msgid "Clear the additional restriction"
 msgstr "Limpar as restrições adicionais"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:832
+#: ../../__w/calibre/calibre/manual/gui.rst:871
 msgid ":kbd:`Ctrl+*`"
 msgstr ":kbd:`Ctrl+*`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:833
+#: ../../__w/calibre/calibre/manual/gui.rst:872
 msgid "Create a temporary Virtual library based on the current search"
 msgstr "Cria uma biblioteca virtual temporária a partir da pesquisa atual"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:834
+#: ../../__w/calibre/calibre/manual/gui.rst:873
 msgid ":kbd:`Ctrl+Right`"
 msgstr ":kbd:`Ctrl+Right`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:835
+#: ../../__w/calibre/calibre/manual/gui.rst:874
 msgid "Select the next Virtual library tab"
 msgstr "Selecionar a aba seguinte das bibliotecas virtuais"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:836
+#: ../../__w/calibre/calibre/manual/gui.rst:875
 msgid ":kbd:`Ctrl+Left`"
 msgstr ":kbd:`Ctrl+Left`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:837
+#: ../../__w/calibre/calibre/manual/gui.rst:876
 msgid "Select the previous Virtual library tab"
 msgstr "Selecionar a aba anterior das bibliotecas virtuais"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:838
+#: ../../__w/calibre/calibre/manual/gui.rst:877
 msgid ":kbd:`N or F3`"
 msgstr ":kbd:`N ou F3`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:839
+#: ../../__w/calibre/calibre/manual/gui.rst:878
 msgid ""
 "Find the next book that matches the current search (only works if search "
 "highlighting is turned on in search preferences)"
 msgstr "Ache o próximo livro que corresponde com os parâmetros atuais de pesquisa (funciona somente se o destaque da busca estiver ligado nas preferências de busca)"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:840
+#: ../../__w/calibre/calibre/manual/gui.rst:879
 msgid ":kbd:`Shift+N or Shift+F3`"
 msgstr ":kbd:`Shift+N ou Shift+F3`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:841
+#: ../../__w/calibre/calibre/manual/gui.rst:880
 msgid ""
 "Find the previous book that matches the current search (only works if search"
 " highlighting is turned on in search preferences)"
 msgstr "Ache o livro anterior que corresponde com os parâmetros atuais de pesquisa (funciona somente se o destaque da busca estiver ligado nas preferências de busca)"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:842
+#: ../../__w/calibre/calibre/manual/gui.rst:881
 msgid ":kbd:`Ctrl+D`"
 msgstr ":kbd:`Ctrl+D`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:843
+#: ../../__w/calibre/calibre/manual/gui.rst:882
 msgid "Download metadata and covers"
 msgstr "Descarregar metadados e capas"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:844
+#: ../../__w/calibre/calibre/manual/gui.rst:883
 msgid ":kbd:`Ctrl+R`"
 msgstr ":kbd:`Ctrl+R`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:845
+#: ../../__w/calibre/calibre/manual/gui.rst:884
 msgid "Restart calibre"
 msgstr "Reiniciar Calibre"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:846
+#: ../../__w/calibre/calibre/manual/gui.rst:885
 msgid ":kbd:`Ctrl+Shift+R`"
 msgstr ":kbd:`Ctrl+Shift+R`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:847
+#: ../../__w/calibre/calibre/manual/gui.rst:886
 msgid "Restart calibre in debug mode"
 msgstr "Reiniciar o calibre em modo de depuração"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:848
+#: ../../__w/calibre/calibre/manual/gui.rst:887
 msgid ":kbd:`Shift+Ctrl+E`"
 msgstr ":kbd:`Shift+Ctrl+E`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:849
+#: ../../__w/calibre/calibre/manual/gui.rst:888
 msgid "Add empty books to calibre"
 msgstr "Adicionar livros vazios ao Calibre"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:850
+#: ../../__w/calibre/calibre/manual/gui.rst:889
 msgid ":kbd:`Ctrl+M`"
 msgstr ":kbd:`Ctrl+M`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:851
+#: ../../__w/calibre/calibre/manual/gui.rst:890
 msgid "Toggle mark/unmarked status on selected books"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:852
+#: ../../__w/calibre/calibre/manual/gui.rst:891
+msgid ":kbd:`Ctrl+/` or :kbd:`Ctrl+Alt+F`"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:892
+msgid "Open the popup to search the full text of all books in the library"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:893
 msgid ":kbd:`Q`"
 msgstr ":kbd:`Q`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:853
+#: ../../__w/calibre/calibre/manual/gui.rst:894
 msgid ""
 "Open the Quick View popup for viewing books in related series/tags/etc."
 msgstr "Abra a janela flutuante da Vista rápida para ver livros em séries/etiquetas/etc relacionadas."
 
-#: ../../__w/calibre/calibre/manual/gui.rst:854
+#: ../../__w/calibre/calibre/manual/gui.rst:895
 msgid ":kbd:`Shift+Q`"
 msgstr ":kbd:`Shift+Q`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:855
+#: ../../__w/calibre/calibre/manual/gui.rst:896
 msgid "Focus the opened Quick View panel"
 msgstr "Centralize o painel de visualização rápida"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:856
+#: ../../__w/calibre/calibre/manual/gui.rst:897
 msgid ":kbd:`Shift+S`"
 msgstr ":kbd:`Shift+S`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:857
+#: ../../__w/calibre/calibre/manual/gui.rst:898
 msgid "Perform a search in the Quick View panel"
 msgstr "Realiza uma pesquisa no painel de vista rápida"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:858
+#: ../../__w/calibre/calibre/manual/gui.rst:899
 msgid ":kbd:`F5`"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/gui.rst:859
+#: ../../__w/calibre/calibre/manual/gui.rst:900
 msgid "Re-apply the current sort"
 msgstr "Reaplicar a ordenação atual"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:860
+#: ../../__w/calibre/calibre/manual/gui.rst:901
 msgid ":kbd:`Ctrl+Q`"
 msgstr ":kbd:`Ctrl+Q`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:861
+#: ../../__w/calibre/calibre/manual/gui.rst:902
 msgid "Quit calibre"
 msgstr "Sair do Calibre"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:862
+#: ../../__w/calibre/calibre/manual/gui.rst:903
 msgid ":kbd:`X`"
 msgstr ":kbd:`X`"
 
-#: ../../__w/calibre/calibre/manual/gui.rst:863
+#: ../../__w/calibre/calibre/manual/gui.rst:904
 msgid "Toggle auto scroll of the book list"
 msgstr ""
