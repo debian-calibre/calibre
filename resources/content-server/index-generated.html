@@ -1195,7 +1195,6 @@ if (!ρσ_list_extend.__argnames__) Object.defineProperties(ρσ_list_extend, {
 });
 
 function ρσ_list_index(val, start, stop) {
-    var idx;
     start = start || 0;
     if (start < 0) {
         start = this.length + start;
@@ -1204,11 +1203,7 @@ function ρσ_list_index(val, start, stop) {
         throw new ValueError(val + " is not in list");
     }
     if (stop === undefined) {
-        idx = this.indexOf(val, start);
-        if (idx === -1) {
-            throw new ValueError(val + " is not in list");
-        }
-        return idx;
+        stop = this.length;
     }
     if (stop < 0) {
         stop = this.length + stop;
@@ -1245,12 +1240,13 @@ if (!ρσ_list_pop.__argnames__) Object.defineProperties(ρσ_list_pop, {
 });
 
 function ρσ_list_remove(value) {
-    var idx;
-    idx = this.indexOf(value);
-    if (idx === -1) {
-        throw new ValueError(value + " not in list");
+    for (var i = 0; i < this.length; i++) {
+        if (((ρσ_expr_temp = this)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i] === value || typeof (ρσ_expr_temp = this)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i] === "object" && ρσ_equals((ρσ_expr_temp = this)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i], value))) {
+            this.splice(i, 1);
+            return;
+        }
     }
-    this.splice(idx, 1);
+    throw new ValueError(value + " not in list");
 };
 if (!ρσ_list_remove.__argnames__) Object.defineProperties(ρσ_list_remove, {
     __argnames__ : {value: ["value"]},
@@ -27289,7 +27285,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "6.2.0";
+        CALIBRE_VERSION = "6.2.1";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -35704,7 +35700,6 @@ return this.__repr__();
         function read_book(book_id) {
             var fmt;
             fmt = preferred_format(book_id);
-            fmt = "PDF";
             if (fmt && fmt.lower() === "pdf") {
                 window.open(download_url(book_id, fmt, "inline"), "_blank");
             } else {
