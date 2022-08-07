@@ -19,7 +19,7 @@ Build-Depends:
  libmtdev-dev [linux-any],
  libmtp-dev (>= 1.1.5),
  libpodofo-dev (>= 0.8.2),
- libqt6webenginecore6-bin [amd64 arm64 armhf i386],
+ libqt6webenginecore6-bin,
  libsqlite3-dev,
  libstemmer-dev,
  libuchardet-dev,
@@ -58,7 +58,7 @@ Build-Depends:
  python3-pyparsing,
  python3-pyqt6,
  python3-pyqt6.qtsvg,
- python3-pyqt6.qtwebengine [amd64 arm64 armhf i386],
+ python3-pyqt6.qtwebengine,
  python3-pyqtbuild,
  python3-regex,
  python3-routes,
@@ -84,7 +84,7 @@ Vcs-Git: https://github.com/debian-calibre/calibre.git
 Rules-Requires-Root: no
 
 Package: calibre
-Architecture: amd64 arm64 armhf i386
+Architecture: all
 Pre-Depends: dpkg (>= 1.17.14)
 Depends: calibre-bin (>= ${source:Version}), ${misc:Depends},
  fonts-liberation2,
@@ -128,7 +128,7 @@ Depends: calibre-bin (>= ${source:Version}), ${misc:Depends},
  xdg-utils,
 Recommends: python3-dnspython (>= 1.6.0), udisks2,
  python3-ipython, qt6-wayland,
-Suggests: python3-openssl, python3-unrardll [amd64],
+Suggests: python3-openssl, python3-unrardll,
 Description: powerful and easy to use e-book manager
  Calibre is a complete e-library solution. It includes library management,
  format conversion, news feeds to e-book conversion, e-book viewer and editor,
