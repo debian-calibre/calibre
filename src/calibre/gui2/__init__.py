@@ -24,7 +24,7 @@ import calibre.gui2.pyqt6_compat as pqc
 from calibre import as_unicode, prints
 from calibre.constants import (
     DEBUG, __appname__ as APP_UID, __version__, config_dir, is_running_from_develop,
-    isbsd, isfrozen, islinux, ismacos, iswindows, isxp, plugins_loc
+    isbsd, isfrozen, islinux, ismacos, iswindows, isxp, numeric_version, plugins_loc
 )
 from calibre.ebooks.metadata import MetaInformation
 from calibre.gui2.linux_file_dialogs import (
@@ -37,6 +37,7 @@ from calibre.utils.config import Config, ConfigProxy, JSONConfig, dynamic
 from calibre.utils.config_base import tweaks
 from calibre.utils.date import UNDEFINED_DATE
 from calibre.utils.file_type_icons import EXT_MAP
+from calibre.utils.img import set_image_allocation_limit
 from calibre.utils.localization import get_lang
 from calibre.utils.resources import user_dir
 from polyglot import queue
@@ -1063,6 +1064,21 @@ def setup_unix_signals(self):
     return original_handlers
 
 
+def setup_to_run_webengine():
+    # Allow import of webengine after construction of QApplication on new enough PyQt
+    QApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts)
+    try:
+        # this import is needed to have Qt call qt_registerDefaultPlatformBackingStoreOpenGLSupport
+        from qt.core import QOpenGLWidget
+        del QOpenGLWidget
+        from qt.core import QQuickWindow, QSGRendererInterface
+        QQuickWindow.setGraphicsApi(QSGRendererInterface.GraphicsApi.OpenGL)
+    except ImportError:
+        # for people running from source
+        if numeric_version >= (6, 3):
+            raise
+
+
 class Application(QApplication):
 
     shutdown_signal_received = pyqtSignal()
@@ -1073,9 +1089,7 @@ class Application(QApplication):
             args = sys.argv[:1]
         args = [args[0]]
         QNetworkProxyFactory.setUseSystemConfiguration(True)
-        # Allow import of webengine after construction of QApplication on new
-        # enough PyQt
-        QApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts)
+        setup_to_run_webengine()
         if iswindows:
             self.windows_app_uid = None
             if windows_app_uid:
@@ -1102,6 +1116,7 @@ class Application(QApplication):
             QApplication.setDesktopFileName(override_program_name)
         QApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts, True)  # needed for webengine
         QApplication.__init__(self, args)
+        set_image_allocation_limit()
         self.palette_manager.initialize()
         icon_resource_manager.initialize()
         sh = self.styleHints()
@@ -1446,6 +1461,7 @@ def ensure_app(headless=True):
                 QApplication.setAttribute(Qt.ApplicationAttribute.AA_UseSoftwareOpenGL, True)
             QApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts)
             _store_app = QApplication(args)
+            set_image_allocation_limit()
             if headless and has_headless:
                 _store_app.headless = True
             import traceback

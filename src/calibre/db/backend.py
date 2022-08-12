@@ -973,8 +973,8 @@ class DB:
     def remove_dirty_fts(self, book_id, fmt):
         return self.fts.remove_dirty(book_id, fmt)
 
-    def queue_fts_job(self, book_id, fmt, path, fmt_size, fmt_hash):
-        return self.fts.queue_job(book_id, fmt, path, fmt_size, fmt_hash)
+    def queue_fts_job(self, book_id, fmt, path, fmt_size, fmt_hash, start_time):
+        return self.fts.queue_job(book_id, fmt, path, fmt_size, fmt_hash, start_time)
 
     def commit_fts_result(self, book_id, fmt, fmt_size, fmt_hash, text, err_msg):
         if self.fts is not None:
@@ -987,9 +987,10 @@ class DB:
         return self.fts.dirty_book(book_id, *fmts)
 
     def fts_search(self,
-        fts_engine_query, use_stemming, highlight_start, highlight_end, snippet_size, restrict_to_book_ids, return_text,
+        fts_engine_query, use_stemming, highlight_start, highlight_end, snippet_size, restrict_to_book_ids, return_text, process_each_result
     ):
-        yield from self.fts.search(fts_engine_query, use_stemming, highlight_start, highlight_end, snippet_size, restrict_to_book_ids, return_text,)
+        yield from self.fts.search(
+            fts_engine_query, use_stemming, highlight_start, highlight_end, snippet_size, restrict_to_book_ids, return_text, process_each_result)
 
     def shutdown_fts(self):
         if self.fts_enabled:

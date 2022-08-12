@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "julho 29, 2022" "6.2.1" "calibre"
+.TH "CALIBREDB" "1" "agosto 12, 2022" "6.3.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -130,6 +130,10 @@ detalhes e exemplos.
 \fI\%embed_metadata\fP
 .IP \(bu 2
 \fI\%search\fP
+.IP \(bu 2
+\fI\%fts_index\fP
+.IP \(bu 2
+\fI\%fts_search\fP
 .UNINDENT
 .SH OPÇÕES GLOBAIS
 .INDENT 0.0
@@ -958,6 +962,99 @@ Sempre que você for passar argumentos para calibredb que possuem espaços em br
 .TP
 .B \-\-limit, \-l
 O número máximo de resultados para retornar. O padrão é todos os resultados.
+.UNINDENT
+.SH FTS_INDEX
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb fts_index [options] enable/disable/status/reindex
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Control the Full text search indexing process.
+.INDENT 0.0
+.TP
+.B enable
+Turns on FTS indexing for this library
+.TP
+.B disable
+Turns off FTS indexing for this library
+.TP
+.B status
+Shows the current indexing status
+.TP
+.B reindex
+Can be used to re\-index either particular books or
+the entire library. To re\-index particular books
+specify the book ids as additional arguments after the
+reindex command. If no book ids are specified the
+entire library is re\-indexed.
+.UNINDENT
+.sp
+Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-indexing\-speed
+The speed of indexing. Use fast for fast indexing using all your computers resources and slow for less resource intensive indexing. Note that the speed is reset to slow after every invocation.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-wait\-for\-completion
+Wait till all books are indexed, showing indexing progress periodically
+.UNINDENT
+.SH FTS_SEARCH
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb fts_search [options] search expression
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Do a full text search on the entire library or a subset of it.
+.sp
+Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-do\-not\-match\-on\-related\-words
+Only match on exact words not related words. So correction will not match correcting.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-include\-snippets
+Include snippets of the text surrounding each match. Note that this makes searching much slower.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-indexing\-threshold
+How much of the library must be indexed before searching is allowed, as a percentage. Defaults to 90
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-match\-end\-marker
+The marker used to indicate the end of a matched word inside a snippet
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-match\-start\-marker
+The marker used to indicate the start of a matched word inside a snippet
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output\-format
+The format to output the search results in. Either \fB\(dq\fPtext\fB\(dq\fP for plain text or \fB\(dq\fPjson\fB\(dq\fP for JSON output.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-restrict\-to
+Restrict the searched books, either using a search expression or ids. For example: ids:1,2,3 to restrict by ids or search:tag:foo to restrict to books having the tag foo.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

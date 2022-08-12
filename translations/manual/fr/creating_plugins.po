@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-15 10:25+0000\n"
+"POT-Creation-Date: 2022-08-10 17:06+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Ptit Prince <leporello1791@gmail.com>, 2016-2017,2019-2022\n"
 "Language-Team: French (http://www.transifex.com/calibre/calibre/language/fr/)\n"
@@ -425,52 +425,23 @@ msgid ""
 "plugin code are documented in :ref:`polish_api`."
 msgstr "Finalement, il y a ``self.current_container`` qui est ue référence au livre en cours d'édition comme un objet :class:`calibre.ebooks.oeb.polish.container.Container`. Ceci représente le livre comme une collection de ses fichiers constituants  HTML/CSS/image et a des méthodes commodes pour faire beaucoup de choses utiles. L'objet container et diverses fonctions de service utiles qui peuvent être réutilisées en votre code d'extension sont documentées dans :ref:`polish_api`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:260
-msgid "Running User Interface plugins in a separate process"
-msgstr "Exécution des plugins d'Interface Utilisateur dans un processus séparé"
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:262
-msgid ""
-"If you are writing a user interface plugin that needs to make use of Qt "
-"WebEngine, it cannot be run in the main calibre process as it is not "
-"possible to use WebEngine there. Instead you can copy the data your plugin "
-"needs to a temporary folder and run the plugin with that data in a separate "
-"process. A simple example plugin follows that shows how to do this."
-msgstr "Si vous écrivez un plugin d'interface utilisateur qui doit utiliser Qt WebEngine, il ne peut pas être exécuté dans le processus principal car il n'est pas possible d'y utiliser WebEngine. Au lieu de cela, vous pouvez copier les données dont votre plugin a besoin dans un dossier temporaire et exécuter le plugin avec ces données dans un processus séparé. Un exemple simple de plugin suit qui montre comment faire cela."
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:269
-msgid ""
-"You can download the plugin from :download_file:`webengine_demo_plugin.zip`."
-msgstr "Vous pouvez télécharger ce plugin à partir de :download_file:`webengine_demo_plugin.zip`."
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:272
-msgid "The important part of the plugin is in two functions:"
-msgstr "La partie importante du plugin est composée de deux fonctions :"
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:281
-msgid ""
-"The ``show_demo()`` function asks the user for a URL and then runs the "
-"``main()`` function passing it that URL. The ``main()`` function displays "
-"the URL in a ``QWebEngineView``."
-msgstr "La fonction ``show_demo()`` demande une URL à l'utilisateur et exécute ensuite la fonction ``main()`` en lui passant cette URL. La fonction ``main()`` affiche l'URL dans une ``QWebEngineView``."
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:287
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:259
 msgid "Adding translations to your plugin"
 msgstr "Ajout des traductions à votre extension"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:289
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:261
 msgid ""
 "You can have all the user interface strings in your plugin translated and "
 "displayed in whatever language is set for the main calibre user interface."
 msgstr "Vous pouvez avoir toutes les chaînes de l'interface utilisateur dans votre extension traduites et affichées dans n'importe quelle langue paramétrée pour l'interface utilisateur principale de calibre."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:292
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:264
 msgid ""
 "The first step is to go through your plugin's source code and mark all user "
 "visible strings as translatable, by surrounding them in _(). For example::"
 msgstr "La première étape est de faire le tour du code source de votre extension et marquer toutes les chaînes visibles par l'utilisateur comme traduisible, en les entourant dans _(). Par exemple::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:297
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:269
 msgid ""
 "Then use some program to generate .po files from your plugin source code. "
 "There should be one .po file for every language you want to translate into. "
@@ -478,17 +449,17 @@ msgid ""
 "`Poedit <https://poedit.net/>`_ program for this."
 msgstr "Utilisez alors un programme pour générer les fichiers .po à partir du code source de votre extension. Il devrait y avoir un fichier .po pour chaque langue dans laquelle vous voulez une traduction. Par exemple de.po pour l'allemand, fr.po pour le français et ainsi de suite. Vous pouvez utiliser le programme `Poedit <https://poedit.net/>`_ pour cela."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:302
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:274
 msgid ""
 "Send these .po files to your translators. Once you get them back, compile "
 "them into .mo files. You can again use Poedit for that, or just do::"
 msgstr "Envoyez ces fichiers .po à vos traducteurs. Une fois que vous les obtenez en retour, compilez les dans des fichiers .mo. Vous pouvez encore utilisez Poedit pour cela, ou juste faire::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:307
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:279
 msgid "Put the .mo files into the ``translations`` folder in your plugin."
 msgstr "Déposez les fichiers .mo dans le répertoire ``translations`` dans votre extension."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:309
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:281
 msgid ""
 "The last step is to simply call the function `load_translations()` at the "
 "top of your plugin's .py files. For performance reasons you should only call"
@@ -497,23 +468,23 @@ msgid ""
 "``ui.py`` but not ``__init__.py``."
 msgstr "La dernière étape est de simplement appeler la fonction `load_translations()` en haut de vos fichiers .py d'extension. Pour des raisons de performance, vous devriez seulement appeler cette fonction dans les fichiers .py qui ont réellement des chaînes traduisibles. Aussi dans une Interface Utilisateur typique vous devriez l'appeler en haut de ``ui.py`` mais pas de ``__init__.py``."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:315
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:287
 msgid ""
 "You can test the translations of your plugins by changing the user interface"
 " language in calibre under :guilabel:`Preferences->Interface->Look & feel` "
 "or by running calibre like this::"
 msgstr "Vous pouvez tester les traductions de vos extensions en changeant la langue de l'interface utilisateur dans calibre dans Préférences->Interface->Apparence et présentation ou en exécutant calibre comme ceci::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:321
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:293
 msgid ""
 "Replace ``de`` with the language code of the language you want to test."
 msgstr "Remplac``de`` avec le code de langue de la langue que vous voulez tester."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:324
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:296
 msgid "The plugin API"
 msgstr "L'API extension"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:326
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:298
 msgid ""
 "As you may have noticed above, a plugin in calibre is a class. There are "
 "different classes for the different types of plugins in calibre. Details on "
@@ -521,36 +492,36 @@ msgid ""
 ":ref:`plugins`."
 msgstr "Comme vous avez pu le constatez plus haut, une extension dans calibre est une  classe. Il a différentes classes pour les différents types d'extension dans calibre. Les détails sur chaque classe, incluant la classe de base de toutes les extensions peuvent être trouvés dans :ref:`plugins`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:329
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:301
 msgid ""
 "Your plugin is almost certainly going to use code from calibre. To learn how"
 " to find various bits of functionality in the calibre code base, read the "
 "section on the calibre :ref:`code_layout`."
 msgstr "Votre extension va presque certainement employer le code de calibre. Pour apprendre comment trouver les diverses parties de fonctionnalités dans le code de base de calibre, lisez la section sur le :ref:`code_layout` calibre."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:334
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:306
 msgid "Debugging plugins"
 msgstr "Dépannage des extensions"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:336
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:308
 msgid ""
 "The first, most important step is to run calibre in debug mode. You can do "
 "this from the command line with::"
 msgstr "Tout d'abord, l'étape la plus importante est d'exécuter calibre en mode dépannage. Vous pouvez faire cela depuis la ligne de commande avec::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:340
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:312
 msgid ""
 "Or from within calibre by right-clicking the :guilabel:`Preferences` button "
 "or using the :kbd:`Ctrl+Shift+R` keyboard shortcut."
 msgstr "Ou, dans calibre, en faisant un clic droit sur le bouton :guilabel:`Préférences` ou en utilisant le raccourci clavier :kbd:`Ctrl+Shift+R`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:342
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:314
 msgid ""
 "When running from the command line, debug output will be printed to the "
 "console, when running from within calibre the output will go to a txt file."
 msgstr "Lors de l'exécution en ligne de commande, la sortie de dépannage sera affichée dans la console, lors de l'exécution depuis calibre la sortie ira dans un fichier txt."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:344
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:316
 msgid ""
 "You can insert print statements anywhere in your plugin code, they will be "
 "output in debug mode. Remember, this is Python, you really shouldn't need "
@@ -558,33 +529,33 @@ msgid ""
 "using just this debugging technique."
 msgstr "Vous pouvez insérer des déclarations n'importe où dans votre code d'extension, elles seront reprises dans le mode dépannage. Rappelez-vous, ceci est du Python, vous ne devriez n'avoir vraiment  besoin de rien de plus que les déclarations pour corriger ;) J'ai développé entièrement calibre en utilisant juste cette technique d'élimination des imperfections."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:346
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:318
 msgid ""
 "You can quickly test changes to your plugin by using the following command "
 "line::"
 msgstr "Vous pouvez rapidement tester les changements de votre extension en utilisant la ligne de commande suivante::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:351
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:323
 msgid ""
 "This will shutdown a running calibre, wait for the shutdown to complete, "
 "then update your plugin in calibre and relaunch calibre."
 msgstr "Ceci arrêtera un calibre en cours d'exécution, attendez que l'arrêt soit complet, mettez alors à jour votre extension à jour  dans calibre et relancez calibre."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:354
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:326
 msgid "More plugin examples"
 msgstr "Plus d'exemples d'extensions"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:356
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:328
 msgid ""
 "You can find a list of many sophisticated calibre plugins `here "
 "<https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 msgstr "Vous pouvez trouver une liste de nombreuses extensions calibre sophistiquées `ici<https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:359
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:331
 msgid "Sharing your plugins with others"
 msgstr "Partager vos extensions avec les autres"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:361
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:333
 msgid ""
 "If you would like to share the plugins you have created with other users of "
 "calibre, post your plugin in a new thread in the `calibre plugins forum "

@@ -17,6 +17,9 @@ module_lists = {
         'QtNetwork',
         'QtSvg',
         'QtPrintSupport',
+        'QtOpenGL',
+        'QtOpenGLWidgets',
+        'QtQuick',
     ),
     'webengine': (
         'QtWebEngineCore',

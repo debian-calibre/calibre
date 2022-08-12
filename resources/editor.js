@@ -5156,9 +5156,9 @@ var str = ρσ_str, repr = ρσ_repr;;
         ToPython.prototype._register_signals = function _register_signals(signals) {
             var self = this;
             var signal_name;
-            var ρσ_Iter4 = ρσ_Iterable(signals);
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                signal_name = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter0 = ρσ_Iterable(signals);
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                signal_name = ρσ_Iter0[ρσ_Index0];
                 self[(typeof signal_name === "number" && signal_name < 0) ? self.length + signal_name : signal_name] = signal.bind(signal_name);
             }
         };
@@ -5339,9 +5339,9 @@ var str = ρσ_str, repr = ρσ_repr;;
         }).call(this);
         function go_to_line(lnum, sync_context) {
             var node;
-            var ρσ_Iter5 = ρσ_Iterable(document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", lnum) + "\"]"));
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                node = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter0 = ρσ_Iterable(document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", lnum) + "\"]"));
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                node = ρσ_Iter0[ρσ_Index0];
                 if (is_hidden(node)) {
                     continue;
                 }
@@ -5359,8 +5359,8 @@ var str = ρσ_str, repr = ρσ_repr;;
             var ρσ_anonfunc = function go_to_sourceline_address(sourceline, tags, sync_context) {
                 var nodes, node, index;
                 nodes = document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", sourceline) + "\"]");
-                for (var ρσ_Index6 = 0; ρσ_Index6 < nodes.length; ρσ_Index6++) {
-                    index = ρσ_Index6;
+                for (var ρσ_Index1 = 0; ρσ_Index1 < nodes.length; ρσ_Index1++) {
+                    index = ρσ_Index1;
                     node = nodes[(typeof index === "number" && index < 0) ? nodes.length + index : index];
                     if (index >= tags.length || node.tagName.toLowerCase() !== tags[(typeof index === "number" && index < 0) ? tags.length + index : index]) {
                         break;
@@ -5382,9 +5382,9 @@ var str = ρσ_str, repr = ρσ_repr;;
             var found_body, ans, node;
             found_body = false;
             ans = [];
-            var ρσ_Iter7 = ρσ_Iterable(document.getElementsByTagName("*"));
-            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                node = ρσ_Iter7[ρσ_Index7];
+            var ρσ_Iter2 = ρσ_Iterable(document.getElementsByTagName("*"));
+            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                node = ρσ_Iter2[ρσ_Index2];
                 if (!found_body && node.tagName.toLowerCase() === "body") {
                     found_body = true;
                 }
@@ -5403,9 +5403,9 @@ var str = ρσ_str, repr = ρσ_repr;;
             if (state.blocks_found) {
                 return;
             }
-            var ρσ_Iter8 = ρσ_Iterable(document.body.getElementsByTagName("*"));
-            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                elem = ρσ_Iter8[ρσ_Index8];
+            var ρσ_Iter3 = ρσ_Iterable(document.body.getElementsByTagName("*"));
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                elem = ρσ_Iter3[ρσ_Index3];
                 if (is_block(elem) && !in_table(elem)) {
                     elem.setAttribute("data-is-block", "1");
                 }
@@ -5521,9 +5521,9 @@ var str = ρσ_str, repr = ρσ_repr;;
                 }).call(this);
                 target = null;
                 i = 0;
-                var ρσ_Iter9 = ρσ_Iterable(document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", sourceline) + "\"]"));
-                for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                    node = ρσ_Iter9[ρσ_Index9];
+                var ρσ_Iter4 = ρσ_Iterable(document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", sourceline) + "\"]"));
+                for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                    node = ρσ_Iter4[ρσ_Index4];
                     tn = (node.tagName) ? node.tagName.toLowerCase() : "";
                     if (tn !== tags[(typeof i === "number" && i < 0) ? tags.length + i : i]) {
                         if (to_python.live_css_data) {
@@ -5570,9 +5570,9 @@ var str = ρσ_str, repr = ρσ_repr;;
             if (document.body.getElementsByTagNameNS("http://www.w3.org/1998/Math/MathML", "math").length > 0) {
                 return true;
             }
-            var ρσ_Iter10 = ρσ_Iterable(document.scripts);
-            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                s = ρσ_Iter10[ρσ_Index10];
+            var ρσ_Iter5 = ρσ_Iterable(document.scripts);
+            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                s = ρσ_Iter5[ρσ_Index5];
                 if (s.type === "text/x-mathjax-config") {
                     return true;
                 }

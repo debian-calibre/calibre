@@ -426,3 +426,70 @@ def type_safe_sort_key_function(keyfunc=None):
         return ans
 
     return key
+
+
+def human_readable_interval(secs):
+    secs = int(secs)
+    days = secs // 86400
+    hours = secs // 3600 % 24
+    minutes = secs // 60 % 60
+    seconds = secs % 60
+    parts = []
+    if days > 0:
+        parts.append(_('{} days').format(days))
+        if hours > 0:
+            parts.append(_('{} hours').format(hours))
+    elif hours > 0:
+        parts.append(_('{} hours').format(hours))
+        if minutes > 0:
+            parts.append(_('{} minutes').format(minutes))
+    elif minutes > 0:
+        parts.append(_('{} minutes').format(minutes))
+        if secs > 0:
+            parts.append(_('{} seconds').format(seconds))
+    elif secs > 0:
+        parts.append(_('{} seconds').format(seconds))
+    return ' '.join(parts)
+
+
+class IndexingProgress:
+
+    def __init__(self):
+        self.reset()
+
+    def __repr__(self):
+        return f'IndexingProgress(left={self.left}, total={self.total}, rate={self.indexing_rate})'
+
+    def reset(self):
+        self.left = self.total = -1
+        self.indexing_rate = None
+
+    def update(self, left, total, indexing_rate):
+        changed = (left, total, indexing_rate) != (self.left, self.total, self.indexing_rate)
+        self.indexing_rate = indexing_rate
+        self.left, self.total = left, total
+        return changed
+
+    @property
+    def complete(self):
+        return not self.left or not self.total
+
+    @property
+    def almost_complete(self):
+        return self.complete or (self.left / self.total) < 0.1
+
+    @property
+    def time_left(self):
+        if self.left < 0:
+            return _('calculating time left')
+        if self.left < 2:
+            return _('almost done')
+        if self.indexing_rate is None:
+            return _('calculating time left')
+        try:
+            seconds_left = self.left / self.indexing_rate
+            if seconds_left < 2:
+                return _('almost done')
+            return _('~{} left').format(human_readable_interval(seconds_left))
+        except Exception:
+            return _('calculating time left')

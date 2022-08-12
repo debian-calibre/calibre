@@ -12,15 +12,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-20 09:15+0000\n"
-"PO-Revision-Date: 2022-01-17 08:53+0000\n"
-"Last-Translator: Ptit Prince <leporello1791@gmail.com>\n"
+"POT-Creation-Date: 2022-08-10 17:06+0000\n"
+"PO-Revision-Date: 2014-06-17 08:36+0000\n"
+"Last-Translator: Ptit Prince <leporello1791@gmail.com>, 2017,2019-2022\n"
 "Language-Team: French (http://www.transifex.com/calibre/calibre/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: ../../__w/calibre/calibre/manual/viewer.rst:4
 msgid "The E-book viewer"
@@ -260,11 +260,59 @@ msgid ""
 "<https://www.mobileread.com/forums/showpost.php?p=4084051&postcount=108>`_."
 msgstr "Sous Windows, toutes les voix installées peuvent ne pas être visibles par le sous-système SAPI utilisé pour le text-to-speech. Il existe des instructions pour rendre toutes les voix visibles <https://www.mobileread.com/forums/showpost.php?p=4084051&postcount=108>`_."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:164
+#: ../../__w/calibre/calibre/manual/viewer.rst:163
+msgid "Searching the text"
+msgstr "Recherche dans le texte"
+
+#: ../../__w/calibre/calibre/manual/viewer.rst:165
+msgid ""
+"The viewer has very powerful search capabilities. Press the :kbd:`Ctrl+F` "
+"key or access the viewer controls and click search. The simplest form of "
+"searching is to just search for whatever text you enter in the text box. The"
+" different forms of searching are chosen by the search mode box below the "
+"search input. Available modes are:"
+msgstr "La visionneuse dispose de capacités de recherche très puissantes. Appuyez sur la touche :kbd:`Ctrl+F` ou accédez aux commandes de la visionneuse et cliquez sur rechercher. La forme la plus simple de recherche consiste à rechercher le texte que vous entrez dans la zone de texte. Les différentes formes de recherche sont choisies par la boîte de mode de recherche située sous l'entrée de recherche. Les modes disponibles sont les suivants :"
+
+#: ../../__w/calibre/calibre/manual/viewer.rst:171
+msgid ""
+":guilabel:`Contains` - The simplest default mode. The text entered in the "
+"search box is searched for anywhere. All punctuation, accents and spaces are"
+" ignored. For example, the search: ``Pena`` will match all of the following:"
+" ``penal, pen a, pen.a and Peña``. If you select the :guilabel:`Case "
+"sensitive` box then accents, spaces and punctuation are no longer ignored."
+msgstr ":guilabel:`Contains` - Le mode par défaut le plus simple. Le texte saisi dans le champ de recherche est recherché partout. La ponctuation, les accents et les espaces sont ignorés. Par exemple, la recherche : ``Pena`` correspondra à tout ce qui suit : ``pénal, pen a, pen.a et Peña``. Si vous sélectionnez la case :guilabel:`Sensible à la casse`, les accents, les espaces et la ponctuation ne sont plus ignorés."
+
+#: ../../__w/calibre/calibre/manual/viewer.rst:177
+msgid ""
+":guilabel:`Whole words` - Searches for whole words. So for example, the "
+"search ``pena`` will match the word ``Peña`` but not the word ``Penal``. As "
+"with :guilabel:`Contains` searches above, accents and punctuation are "
+"ignored unless the :guilabel:`Case sensitive` box is checked."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/viewer.rst:182
+msgid ""
+":guilabel:`Nearby words` - Searches for whole words that are near each "
+"other. So for example, the search ``calibre cool`` will match places where "
+"the words ``calibre`` and ``cool`` occur within sixty characters of each "
+"other. To change the number of characters add the new number to the end of "
+"the list of words. For instance, ``calibre cool awesome 120`` will match "
+"places where the three words occur within 120 characters of each other. Note"
+" that punctuation and accents are *not* ignored for these searches."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/viewer.rst:190
+msgid ""
+":guilabel:`Regex` - Interprets the search text as a *regular expression*. To"
+" learn more about using regular expressions, see :doc:`the tutorial "
+"<regexp>`."
+msgstr ":guilabel:`Regex` - Interprète le texte de recherche comme une *expression régulière*. Pour en savoir plus sur l'utilisation des expressions régulières, consultez :doc:`le tutoriel`."
+
+#: ../../__w/calibre/calibre/manual/viewer.rst:196
 msgid "Following links using only the keyboard"
 msgstr "Suivre les liens en utilisant uniquement le clavier"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:166
+#: ../../__w/calibre/calibre/manual/viewer.rst:198
 msgid ""
 "The E-book viewer has a :guilabel:`Hints mode` that allows you to click "
 "links in the text without using the mouse. Press the :kbd:`Alt+F` key and "
@@ -274,7 +322,7 @@ msgid ""
 "link."
 msgstr "La visionneuse de livres numériques dispose d'un :guilabel:`Mode Indices' qui vous permet de cliquer sur les liens dans le texte sans utiliser la souris. Appuyez sur la touche :kbd:`Alt+f` et tous les liens de l'écran en cours seront mis en évidence par un chiffre ou une lettre. Appuyez sur la lettre de votre clavier pour cliquer sur le lien.En appuyant sur la touche :kbd:`Echap`, vous annulerez le :guilabel:`Mode indices` sans sélectionner aucun lien."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:172
+#: ../../__w/calibre/calibre/manual/viewer.rst:204
 msgid ""
 "If more than thirty five links are on-screen then some of them will have "
 "multiple letters, in which case type the first and second, or the first and "
@@ -282,37 +330,37 @@ msgid ""
 " undo a mistake in typing."
 msgstr "Si plus de trente-cinq liens sont affichés à l'écran, certains d'entre eux comporteront plusieurs lettres, auquel cas tapez la première et la deuxième, ou la première et appuyez sur :kbd:`Entrer` pour les activer. Vous pouvez également utiliser la touche :kbd:`Retour arrière` pour annuler une erreur de frappe."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:179
+#: ../../__w/calibre/calibre/manual/viewer.rst:211
 msgid "Customizing the look and feel of your reading experience"
 msgstr "Personnalisation de l'aspect et de la convivialité de votre expérience de lecture"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:181
+#: ../../__w/calibre/calibre/manual/viewer.rst:213
 msgid ""
 "You can change font sizes on the fly by using :guilabel:`Font size` in the "
 "viewer controls or :kbd:`Ctrl++` or :kbd:`Ctrl+-` or holding the :kbd:`Ctrl`"
 " key and using the mouse wheel."
 msgstr "Vous pouvez changer la taille des polices à la volée en utilisant :guilabel:`Taille de police` dans les contrôles de la visionneuse ou :kbd:`Ctrl++` ou :kbd:`Ctrl+-` ou en maintenant la touche :kbd:`Ctrl' et en utilisant la molette de la souris."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:185
+#: ../../__w/calibre/calibre/manual/viewer.rst:217
 msgid ""
 "Colors can be changed in the :guilabel:`Colors` section of the viewer "
 "preferences."
 msgstr "Les couleurs peuvent être changées dans la section :guilabel:`Couleurs' des préférences de la visionneuse."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:188
+#: ../../__w/calibre/calibre/manual/viewer.rst:220
 msgid ""
 "You can change the number of pages displayed on the screen as well as page "
 "margins in :guilabel:`Page layout` in the viewer preferences."
 msgstr "Vous pouvez modifier le nombre de pages affichées à l'écran ainsi que les marges de page dans :guilabel:`Mise en page' dans les préférences de la visionneuse."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:191
+#: ../../__w/calibre/calibre/manual/viewer.rst:223
 msgid ""
 "You can display custom headers and footers such as time left to read, "
 "current chapter title, book position, etc. via the :guilabel:`Headers and "
 "footers` section of the viewer preferences."
 msgstr "Vous pouvez afficher des en-têtes et pieds de page personnalisés tels que le temps restant à lire, le titre du chapitre en cours, la position dans le livre, etc. via la section :guilabel:`En-têtes et pieds de page` des préférences de la visionneuse."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:195
+#: ../../__w/calibre/calibre/manual/viewer.rst:227
 msgid ""
 "More advanced customization can be achieved by the :guilabel:`Styles` "
 "settings. Here you can specify a background image to display under the text "
@@ -322,22 +370,22 @@ msgid ""
 "forums <https://www.mobileread.com/forums/showthread.php?t=51500>`_."
 msgstr "Une personnalisation plus avancée peut être réalisée par les réglages :guilabel:`Styles`. Ici, vous pouvez spécifier une image d'arrière-plan à afficher sous le texte ainsi qu'une feuille de style que vous pouvez définir et qui sera appliquée à chaque livre. En l'utilisant, vous pouvez faire des choses comme changer les styles de paragraphe, la justification du texte, etc. Pour des exemples de feuilles de style personnalisées utilisées par les utilisateurs de calibre, voir `les forums <https://www.mobileread.com/forums/showthread.php?t=51500>`_."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:203
+#: ../../__w/calibre/calibre/manual/viewer.rst:235
 msgid "Dictionary lookup"
 msgstr "Consultation du dictionnaire"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:205
+#: ../../__w/calibre/calibre/manual/viewer.rst:237
 msgid ""
 "You can look up the meaning of words in the current book by double clicking "
 "or long tapping the word you want to lookup and then clicking the lookup "
 "button that looks like a library."
 msgstr "You can look up the meaning of words in the current book by double clicking or long tapping the word you want to lookup and then clicking the lookup button that looks like a library."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:211
+#: ../../__w/calibre/calibre/manual/viewer.rst:243
 msgid "Copying text and images"
 msgstr "Copier du texte et des images"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:213
+#: ../../__w/calibre/calibre/manual/viewer.rst:245
 msgid ""
 "You can select text and images by dragging the content with your mouse and "
 "then right clicking and selecting :guilabel:`Copy` to copy to the clipboard."
@@ -345,22 +393,22 @@ msgid ""
 "and images."
 msgstr "Vous pouvez sélectionner du texte et des images avec votre souris puis faire un clic droit et sélectionner :guilabel:`Copier` pour copier dans le presse-papiers. Le matériel copié peut être collé dans une autre application sous forme de texte et d'images."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:219
+#: ../../__w/calibre/calibre/manual/viewer.rst:251
 msgid "Zooming in on images"
 msgstr "Zoom sur les images"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:221
+#: ../../__w/calibre/calibre/manual/viewer.rst:253
 msgid ""
 "You can zoom in to show an image at full size in a separate window by either"
 " double clicking or long tapping on it. You can also right click on it and "
 "choose :guilabel:`View image`."
 msgstr "Vous pouvez zoomer pour afficher une image en taille réelle dans une fenêtre séparée en double-cliquant ou en appuyant longuement sur celle-ci. Vous pouvez également faire un clic droit sur l'image et choisir :guilabel:`Voir l'image`."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:227
+#: ../../__w/calibre/calibre/manual/viewer.rst:259
 msgid "Non re-flowable content"
 msgstr "Contenu non fluide"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:229
+#: ../../__w/calibre/calibre/manual/viewer.rst:261
 msgid ""
 "Some books have very wide content that cannot be broken up at page "
 "boundaries. For example tables or :code:`<pre>` tags. In such cases, you "
@@ -370,50 +418,50 @@ msgid ""
 "break up lines of text in :code:`<pre>` tags::"
 msgstr "Certains livres ont un contenu tellement grand qu'ils ne peuvent pas être divisés aux limites de la page. Par exemple tables ou balises :code:`<pre>`. Dans ce cas, vous devez passer en mode *flow* en appuyant sur :kbd:`Ctrl+M` pour lire ce contenu. Alternativement, vous pouvez également ajouter le CSS suivant à la section :guilabel:`Styles` des préférences de la visionneuse pour forcer le visionneuse à décomposer des lignes de texte en balises :code:`<pre>` ::"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:240
+#: ../../__w/calibre/calibre/manual/viewer.rst:272
 msgid "Designing your book to work well with the calibre viewer"
 msgstr "Concevoir votre livre pour qu'il fonctionne bien avec la visionneuse de calibre"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:242
+#: ../../__w/calibre/calibre/manual/viewer.rst:274
 msgid ""
 "The calibre viewer will set the ``is-calibre-viewer`` class on the root "
 "element. So you can write CSS rules that apply only for it. Additionally, "
 "the viewer will set the following classes on the ``body`` element:"
 msgstr "La visionneuse calibre définira la classe \"is-calibre-viewer\" sur l'élément racine. Vous pouvez donc écrire des règles CSS qui ne s'appliquent qu'à cet élément. En outre, la visionneuse définira les classes suivantes sur l'élément ``body`` :"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:247
+#: ../../__w/calibre/calibre/manual/viewer.rst:279
 msgid "``body.calibre-viewer-dark-colors``"
 msgstr "``body.calibre-viewer-dark-colors``"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:247
+#: ../../__w/calibre/calibre/manual/viewer.rst:279
 msgid "Set when using a dark color scheme"
 msgstr "Défini lors de l'utilisation d'un schéma de couleur sombre"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:250
+#: ../../__w/calibre/calibre/manual/viewer.rst:282
 msgid "``body.calibre-viewer-light-colors``"
 msgstr "``body.calibre-viewer-light-colors``"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:250
+#: ../../__w/calibre/calibre/manual/viewer.rst:282
 msgid "Set when using a light color scheme"
 msgstr "Défini lors de l'utilisation d'un schéma de couleurs claires"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:253
+#: ../../__w/calibre/calibre/manual/viewer.rst:285
 msgid "``body.calibre-viewer-paginated``"
 msgstr "``body.calibre-viewer-paginated``"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:253
+#: ../../__w/calibre/calibre/manual/viewer.rst:285
 msgid "Set when in paged mode"
 msgstr "Défini en mode pagination"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:256
+#: ../../__w/calibre/calibre/manual/viewer.rst:288
 msgid "``body.calibre-viewer-scrolling``"
 msgstr "``body.calibre-viewer-scrolling``"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:256
+#: ../../__w/calibre/calibre/manual/viewer.rst:288
 msgid "Set when in flow (non-paginated) mode"
 msgstr "Défini en mode flux (non paginé)"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:258
+#: ../../__w/calibre/calibre/manual/viewer.rst:290
 msgid ""
 "Finally, you can use the calibre color scheme colors via `CSS variables "
 "<https://developer.mozilla.org/en-"

@@ -9,12 +9,13 @@ import re
 import time
 from collections import namedtuple
 from contextlib import contextmanager
+from threading import Lock
 
 try:
-    from urllib.parse import parse_qs, quote_plus, unquote, urlencode
+    from urllib.parse import parse_qs, quote_plus, unquote, urlencode, quote
 except ImportError:
     from urlparse import parse_qs
-    from urllib import quote_plus, urlencode, unquote
+    from urllib import quote_plus, urlencode, unquote, quote
 
 from lxml import etree
 
@@ -24,21 +25,25 @@ from calibre.ebooks.chardet import xml_to_unicode
 from calibre.utils.lock import ExclusiveFile
 from calibre.utils.random_ua import accept_header_for_ua
 
-current_version = (1, 0, 17)
+current_version = (1, 2, 1)
 minimum_calibre_version = (2, 80, 0)
+webcache = {}
+webcache_lock = Lock()
 
 
 Result = namedtuple('Result', 'url title cached_url')
 
 
 @contextmanager
-def rate_limit(name='test', time_between_visits=1, max_wait_seconds=5 * 60, sleep_time=0.2):
-    lock_file = os.path.join(cache_dir(), 'search-engines.' + name + '.lock')
+def rate_limit(name='test', time_between_visits=2, max_wait_seconds=5 * 60, sleep_time=0.2):
+    lock_file = os.path.join(cache_dir(), 'search-engine.' + name + '.lock')
     with ExclusiveFile(lock_file, timeout=max_wait_seconds, sleep_time=sleep_time) as f:
         try:
             lv = float(f.read().decode('utf-8').strip())
         except Exception:
             lv = 0
+        # we cannot use monotonic() as this is cross process and historical
+        # data as well
         delta = time.time() - lv
         if delta < time_between_visits:
             time.sleep(time_between_visits - delta)
@@ -106,6 +111,11 @@ def quote_term(x):
 
 # DDG + Wayback machine {{{
 
+
+def ddg_url_processor(url):
+    return url
+
+
 def ddg_term(t):
     t = t.replace('"', '')
     if t.lower() in {'map', 'news'}:
@@ -162,7 +172,10 @@ def ddg_search(terms, site=None, br=None, log=prints, safe_search=False, dump_ra
     root = query(br, url, 'ddg', dump_raw, timeout=timeout)
     ans = []
     for a in root.xpath('//*[@class="results"]//*[@class="result__title"]/a[@href and @class="result__a"]'):
-        ans.append(Result(ddg_href(a.get('href')), tostring(a), None))
+        try:
+            ans.append(Result(ddg_href(a.get('href')), tostring(a), None))
+        except KeyError:
+            log('Failed to find ddg href in:', a.get('href'))
     return ans, url
 
 
@@ -172,7 +185,7 @@ def ddg_develop():
         if '/dp/' in result.url:
             print(result.title)
             print(' ', result.url)
-            print(' ', wayback_machine_cached_url(result.url, br))
+            print(' ', get_cached_url(result.url, br))
             print()
 # }}}
 
@@ -252,11 +265,31 @@ def google_url_processor(url):
     return url
 
 
+def google_get_cached_url(url, br=None, log=prints, timeout=60):
+    ourl = url
+    if not isinstance(url, bytes):
+        url = url.encode('utf-8')
+    cu = quote(url, safe='')
+    if isinstance(cu, bytes):
+        cu = cu.decode('utf-8')
+    cached_url = 'https://webcache.googleusercontent.com/search?q=cache:' + cu
+    br = google_specialize_browser(br or browser())
+    try:
+        raw = query(br, cached_url, 'google-cache', parser=lambda x: x.encode('utf-8'), timeout=timeout)
+    except Exception as err:
+        log('Failed to get cached URL from google for URL: {} with error: {}'.format(ourl, err))
+    else:
+        with webcache_lock:
+            webcache[cached_url] = raw
+        return cached_url
+
+
 def google_extract_cache_urls(raw):
     if isinstance(raw, bytes):
         raw = raw.decode('utf-8', 'replace')
     pat = re.compile(r'\\x22(https://webcache\.googleusercontent\.com/.+?)\\x22')
     upat = re.compile(r'\\\\u([0-9a-fA-F]{4})')
+    xpat = re.compile(r'\\x([0-9a-fA-F]{2})')
     cache_pat = re.compile('cache:([^:]+):(.+)')
 
     def urepl(m):
@@ -266,6 +299,10 @@ def google_extract_cache_urls(raw):
     ans = {}
     for m in pat.finditer(raw):
         cache_url = upat.sub(urepl, m.group(1))
+        # the following two are necessary for results from Portugal
+        cache_url = xpat.sub(urepl, cache_url)
+        cache_url = cache_url.replace('&amp;', '&')
+
         m = cache_pat.search(cache_url)
         cache_id, src_url = m.group(1), m.group(2)
         if cache_id in seen:
@@ -308,7 +345,10 @@ def google_parse_results(root, raw, log=prints, ignore_uncached=True):
 
 
 def google_specialize_browser(br):
-    br.set_simple_cookie('CONSENT', 'YES+', '.google.com', path='/')
+    with webcache_lock:
+        if not hasattr(br, 'google_consent_cookie_added'):
+            br.set_simple_cookie('CONSENT', 'YES+', '.google.com', path='/')
+            br.google_consent_cookie_added = True
     return br
 
 
@@ -347,6 +387,15 @@ def google_develop(search_terms='1423146786', raw_from=''):
             print(' ', result.cached_url)
             print()
 # }}}
+
+
+def get_cached_url(url, br=None, log=prints, timeout=60):
+    return google_get_cached_url(url, br, log, timeout) or wayback_machine_cached_url(url, br, log, timeout)
+
+
+def get_data_for_cached_url(url):
+    with webcache_lock:
+        return webcache.get(url)
 
 
 def resolve_url(url):

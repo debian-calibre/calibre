@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "julho 29, 2022" "6.2.1" "calibre"
+.TH "CALIBRE-DEBUG" "1" "agosto 12, 2022" "6.3.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -41,23 +41,16 @@ calibre\-debug [opções]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre E\-book viewer and the calibre editor in debug mode.
+Várias interfaces de linhas de comando úteis para depurar o Calibre. Executado sem opções, este comando inicia um interpretador de Python. Pode também executar a interface de utilizador principal, o visualizador de ebooks e o editor Calibre em modo depuração.
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the E\-book diff tool and so
-on.
+Contém também as interfaces para várias partes do Calibre que não têm ferramentas de linha de comando dedicadas, tais como definição de fontes, ferramenta de diferenças entre livros digitais e outras.
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
-.INDENT 0.0
-.INDENT 3.5
+Pode ainda utilizar \fBcalibre\-debug\fP para executar scripts em modo independente. Para tal, corra o seguinte:
+.sp
 \fBcalibre\-debug\fP \-e myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
-.UNINDENT
-.UNINDENT
 .sp
-Everything after the \fB\-\-\fP is passed to the script. You can also use \fBcalibre\-debug\fP
-as a shebang in scripts, like this:
+Tudo após \fB\-\-\fP será passado ao script como parâmetro.
+Também pode usar \fBcalibre\-debug\fP como um Shebang em scripts, tal como:
 .INDENT 0.0
 .INDENT 3.5
 #!/usr/bin/env \-S \fBcalibre\-debug\fP \-e \fB\-\-\fP \-\-
@@ -164,7 +157,7 @@ Executar o(s) teste(s) nomeado(s). Use o valor especial \fB\(dq\fPall\fB\(dq\fP 
 .INDENT 0.0
 .TP
 .B \-\-run\-without\-debug
-Don\fB\(aq\fPt run with the DEBUG flag set
+Não executar com o sinalizador DEBUG definido
 .UNINDENT
 .INDENT 0.0
 .TP
