@@ -657,12 +657,17 @@ class ChooseLibraryAction(InterfaceAction):
         library_path = db.library_path
 
         d = DBCheck(self.gui, db)
-        d.start()
         try:
-            m.close()
-        except:
-            pass
-        d.break_cycles()
+            d.start()
+            from calibre.gui2.widgets import BusyCursor
+            with BusyCursor():
+                d.exec()
+            try:
+                m.close()
+            except Exception:
+                pass
+        finally:
+            d.break_cycles()
         self.gui.library_moved(library_path)
         if d.rejected:
             return

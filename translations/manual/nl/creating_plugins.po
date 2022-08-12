@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-28 02:42+0000\n"
+"POT-Creation-Date: 2022-08-10 17:06+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: peter <petertje@tuta.io>, 2021-2022\n"
 "Language-Team: Dutch (http://www.transifex.com/calibre/calibre/language/nl/)\n"
@@ -430,52 +430,23 @@ msgid ""
 "plugin code are documented in :ref:`polish_api`."
 msgstr "Tenslotte is er ``self.current_container'', een verwijzing naar het boek dat wordt bewerkt als :class:`calibre.ebooks.oeb.polish.container.Container` object. Dit stelt het boek voor als een verzameling van z'n samenstellende HTML/CSS/afbeeldingsbestanden en heeft handige methoden om veel nuttige dingen te doen. Het containerobject en verschillende handige hulpprogramma's die kunnen worden herbruikt in uw plug-incode zijn gedocumenteerd in :ref: `polish_api`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:260
-msgid "Running User Interface plugins in a separate process"
-msgstr "Gebruikersinterfaceplug-ins uitvoeren in een afzonderlijk proces"
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:262
-msgid ""
-"If you are writing a user interface plugin that needs to make use of Qt "
-"WebEngine, it cannot be run in the main calibre process as it is not "
-"possible to use WebEngine there. Instead you can copy the data your plugin "
-"needs to a temporary folder and run the plugin with that data in a separate "
-"process. A simple example plugin follows that shows how to do this."
-msgstr "Als u een gebruikersinterfaceplug-in schrijft die Qt WebEngine nodig heeft, kan deze niet in het calibre hoofdproces draaien omdat men WebEngine daar niet kan gebruiken. In plaats daarvan kan u de data die uw plug-in nodig heeft naar een tijdelijke map kopiëren en de plug-in met die data in een apart proces draaien. Een simpele voorbeeld plug-in die toont hoe dat te doen volgt."
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:269
-msgid ""
-"You can download the plugin from :download_file:`webengine_demo_plugin.zip`."
-msgstr "U kan de plugin downloaden van :download_file:`webengine_demo_plugin.zip`."
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:272
-msgid "The important part of the plugin is in two functions:"
-msgstr "Het belangrijke deel van de plug-in zit in twee functies:"
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:281
-msgid ""
-"The ``show_demo()`` function asks the user for a URL and then runs the "
-"``main()`` function passing it that URL. The ``main()`` function displays "
-"the URL in a ``QWebEngineView``."
-msgstr "De functie ``show_demo()`` vraagt de gebruiker om een URL en voert vervolgens de functie ``main ()'' uit met deze URL. De functie ``main()`` geeft de URL weer in een ``QWebEngineView'."
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:287
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:259
 msgid "Adding translations to your plugin"
 msgstr "Vertalingen toevoegen aan uw plugin"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:289
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:261
 msgid ""
 "You can have all the user interface strings in your plugin translated and "
 "displayed in whatever language is set for the main calibre user interface."
 msgstr "U kunt de teksten in het gebruikersinterface in uw plugin laten vertalen in elke taal die is ingesteld voor de calibre gebruikersinterface."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:292
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:264
 msgid ""
 "The first step is to go through your plugin's source code and mark all user "
 "visible strings as translatable, by surrounding them in _(). For example::"
 msgstr "De eerste stap is door uw plug-in's broncodes te gaan en alle voor gebruikers zichtbare teksten te markeren als vertaalbaar door ze te omgeven met _(). Bijvoorbeeld::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:297
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:269
 msgid ""
 "Then use some program to generate .po files from your plugin source code. "
 "There should be one .po file for every language you want to translate into. "
@@ -483,17 +454,17 @@ msgid ""
 "`Poedit <https://poedit.net/>`_ program for this."
 msgstr "Gebruik dan een programma om .po bestanden te genereren uit uw plug-in's broncode . Er moet één .po-bestand zijn voor elke taal waarin u wilt vertalen. Bijvoorbeeld: nl.po voor Nederlands, fr.po voor Frans enzovoort. U kunt hiervoor het `Poedit <https://poedit.net/>`_program gebruiken."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:302
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:274
 msgid ""
 "Send these .po files to your translators. Once you get them back, compile "
 "them into .mo files. You can again use Poedit for that, or just do::"
 msgstr "Stuur deze .po-bestanden naar uw vertalers. Zodra u ze terug krijgt, compileer ze in .mo-bestanden. U kunt opnieuw Poedit daarvoor gebruiken, of doe gewoon:"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:307
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:279
 msgid "Put the .mo files into the ``translations`` folder in your plugin."
 msgstr "Plaats de .mo-bestanden in de ``vertalingen``-map in uw plug-in."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:309
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:281
 msgid ""
 "The last step is to simply call the function `load_translations()` at the "
 "top of your plugin's .py files. For performance reasons you should only call"
@@ -502,23 +473,23 @@ msgid ""
 "``ui.py`` but not ``__init__.py``."
 msgstr "De laatste stap is om gewoon de functie `load_translations()` te roepen bovenaan uw plugin's .py bestanden. Voor prestatie redenen deze functie alleen aanroepen in die .py-bestanden die echt vertaalbare teksten bevatten. Dus in een normale Gebruikersinterfaceplug-in roept u deze functie aan bovenin ``ui.py`` maar niet in ``__init__.py``."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:315
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:287
 msgid ""
 "You can test the translations of your plugins by changing the user interface"
 " language in calibre under :guilabel:`Preferences->Interface->Look & feel` "
 "or by running calibre like this::"
 msgstr "U kunt de vertalingen van uw plug-ins testen door de taal van de gebruikersinterface in calibre te wijzigen onder :guilabel:`Voorkeuren->Interface->Uitstraling & gevoel` of door calibre zo uit te voeren:"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:321
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:293
 msgid ""
 "Replace ``de`` with the language code of the language you want to test."
 msgstr "Vervang ``de`` met de taalcode van de taal die u wilt testen."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:324
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:296
 msgid "The plugin API"
 msgstr "De plug-in API"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:326
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:298
 msgid ""
 "As you may have noticed above, a plugin in calibre is a class. There are "
 "different classes for the different types of plugins in calibre. Details on "
@@ -526,36 +497,36 @@ msgid ""
 ":ref:`plugins`."
 msgstr "Zoals u misschien heeft opgemerkt is een plug-in in calibre een class. Er zijn verschillende classes voor verschillende types plug-ins. Details van iedere class, inclusief de basis class van alle plugins zijn te vinden in :ref:`plugins`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:329
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:301
 msgid ""
 "Your plugin is almost certainly going to use code from calibre. To learn how"
 " to find various bits of functionality in the calibre code base, read the "
 "section on the calibre :ref:`code_layout`."
 msgstr "Uw plugin zal bijna zeker code gebruiken van calibre. Om te leren hoe u diverse stukjes functionaliteit vindt in de calibre code basis, lees de sectie over calibre's :ref:`code_layout`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:334
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:306
 msgid "Debugging plugins"
 msgstr "Plug-ins foutopsporing"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:336
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:308
 msgid ""
 "The first, most important step is to run calibre in debug mode. You can do "
 "this from the command line with::"
 msgstr "De eerste, belangrijkste stap is calibre draaien in foutenopsporingsmodus. U kunt dit doen in de opdrachtregel met::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:340
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:312
 msgid ""
 "Or from within calibre by right-clicking the :guilabel:`Preferences` button "
 "or using the :kbd:`Ctrl+Shift+R` keyboard shortcut."
 msgstr "Of vanuit calibre door met de rechts te klikken op de :guilabel:`Preferences` knop of gebruik te maken van de :kbd:`Ctrl+Shift+R` sneltoets ."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:342
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:314
 msgid ""
 "When running from the command line, debug output will be printed to the "
 "console, when running from within calibre the output will go to a txt file."
 msgstr "Wanneer u werkt met de opdrachtregel verschijnt de foutoplossing op de console, wanneer u werkt in calibre zal dit naar een .txt-bestand worden geschreven."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:344
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:316
 msgid ""
 "You can insert print statements anywhere in your plugin code, they will be "
 "output in debug mode. Remember, this is Python, you really shouldn't need "
@@ -563,33 +534,33 @@ msgid ""
 "using just this debugging technique."
 msgstr "U kunt overal printinstructies invoegen in uw plug-incode, deze worden uitgevoerd in de foutopsporingsmodus. Vergeet niet, dit is Python, uzou echt niets meer nodig moeten hebben dan print commando's om te debuggen ;) Ik heb heel calibre ontwikkeld met alleen deze foutopsporingstechniek."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:346
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:318
 msgid ""
 "You can quickly test changes to your plugin by using the following command "
 "line::"
 msgstr "U kunt snel wijzigingen aan uw plugin testen met behulp van de volgende opdrachtregel::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:351
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:323
 msgid ""
 "This will shutdown a running calibre, wait for the shutdown to complete, "
 "then update your plugin in calibre and relaunch calibre."
 msgstr "Dit sluit een lopende calibre af, wacht totdat het programma geheel afgesloten is, dan uw plugin updaten in calibre en calibre herstarten."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:354
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:326
 msgid "More plugin examples"
 msgstr "Meer voorbeelden van plugins"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:356
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:328
 msgid ""
 "You can find a list of many sophisticated calibre plugins `here "
 "<https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 msgstr "U kan een lijst met gesofisticeerde calibre plug-ins vinden `hier <https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:359
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:331
 msgid "Sharing your plugins with others"
 msgstr "Uw plugins delen met anderen"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:361
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:333
 msgid ""
 "If you would like to share the plugins you have created with other users of "
 "calibre, post your plugin in a new thread in the `calibre plugins forum "

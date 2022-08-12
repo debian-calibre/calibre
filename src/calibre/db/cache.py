@@ -19,9 +19,9 @@ from functools import partial, wraps
 from io import DEFAULT_BUFFER_SIZE, BytesIO
 from queue import Queue
 from threading import Lock
-from time import sleep, time
+from time import monotonic, sleep, time
 
-from calibre import as_unicode, isbytestring
+from calibre import as_unicode, detect_ncpus, isbytestring
 from calibre.constants import iswindows, preferred_encoding
 from calibre.customize.ui import (
     run_plugins_on_import, run_plugins_on_postadd, run_plugins_on_postimport
@@ -142,6 +142,7 @@ class Cache:
 
     def __init__(self, backend, library_database_instance=None):
         self.shutting_down = False
+        self.is_doing_rebuild_or_vacuum = False
         self.backend = backend
         self.library_database_instance = (None if library_database_instance is None else
                                           weakref.ref(library_database_instance))
@@ -436,6 +437,8 @@ class Cache:
     # FTS API {{{
     def initialize_fts(self):
         self.fts_queue_thread = None
+        self.fts_measuring_rate = None
+        self.fts_num_done_since_start = 0
         self.fts_job_queue = Queue()
         self.fts_indexing_left = self.fts_indexing_total = 0
         fts = self.backend.initialize_fts(weakref.ref(self))
@@ -444,8 +447,10 @@ class Cache:
         return fts
 
     def start_fts_pool(self):
-        from threading import Thread
-        self.fts_queue_thread = Thread(name='FTSQueue', target=Cache.dispatch_fts_jobs, args=(self.fts_job_queue, weakref.ref(self)), daemon=True)
+        from threading import Event, Thread
+        self.fts_dispatch_stop_event = Event()
+        self.fts_queue_thread = Thread(name='FTSQueue', target=Cache.dispatch_fts_jobs, args=(
+            self.fts_job_queue, self.fts_dispatch_stop_event, weakref.ref(self)), daemon=True)
         self.fts_queue_thread.start()
         self.backend.fts.pool.initialize()
         self.backend.fts.pool.initialized.wait()
@@ -455,20 +460,32 @@ class Cache:
     def is_fts_enabled(self):
         return self.backend.fts_enabled
 
-    @api
-    def fts_indexing_progress(self):
-        return self.fts_indexing_left, self.fts_indexing_total
+    @write_api
+    def fts_start_measuring_rate(self, measure=True):
+        self.fts_measuring_rate = monotonic() if measure else None
+        self.fts_num_done_since_start = 0
 
-    def _update_fts_indexing_numbers(self):
+    def _update_fts_indexing_numbers(self, job_time=None):
         # this is called when new formats are added and when a format is
         # indexed, but NOT when books or formats are deleted, so total may not
         # be up to date.
         nl = self.backend.fts.number_dirtied()
         nt = self.backend.get('SELECT COUNT(*) FROM main.data')[0][0] or 0
-        if (self.fts_indexing_left, self.fts_indexing_total) != (nl, nt):
+        if not nl:
+            self._fts_start_measuring_rate(measure=False)
+        if job_time is not None and self.fts_measuring_rate is not None:
+            self.fts_num_done_since_start += 1
+        if (self.fts_indexing_left, self.fts_indexing_total) != (nl, nt) or job_time is not None:
             self.fts_indexing_left = nl
             self.fts_indexing_total = nt
-            self.event_dispatcher(EventType.indexing_progress_changed, nl, nt)
+            self.event_dispatcher(EventType.indexing_progress_changed, *self._fts_indexing_progress())
+
+    @read_api
+    def fts_indexing_progress(self):
+        rate = None
+        if self.fts_measuring_rate is not None and self.fts_num_done_since_start > 4:
+            rate = self.fts_num_done_since_start / (monotonic() - self.fts_measuring_rate)
+        return self.fts_indexing_left, self.fts_indexing_total, rate
 
     @write_api
     def enable_fts(self, enabled=True, start_pool=True):
@@ -488,13 +505,14 @@ class Cache:
         self.backend.fts_unindex(book_id, fmt=fmt)
 
     @staticmethod
-    def dispatch_fts_jobs(queue, dbref):
+    def dispatch_fts_jobs(queue, stop_dispatch, dbref):
         from .fts.text import is_fmt_ok
 
         def do_one():
             self = dbref()
             if self is None:
                 return False
+            start_time = monotonic()
             with self.read_lock:
                 if not self.backend.fts_enabled:
                     return False
@@ -519,7 +537,9 @@ class Cache:
                     h.update(chunk)
                     pt.write(chunk)
             with self.write_lock:
-                self.backend.queue_fts_job(book_id, fmt, pt.name, sz, h.hexdigest())
+                queued = self.backend.queue_fts_job(book_id, fmt, pt.name, sz, h.hexdigest(), start_time)
+                if not queued:  # means a dirtied book was removed from the dirty list because the text has not changed
+                    self._update_fts_indexing_numbers(monotonic() - start_time)
                 return self.backend.fts_has_idle_workers
 
         def loop_while_more_available():
@@ -527,7 +547,7 @@ class Cache:
             if not self or not self.backend.fts_enabled:
                 return
             has_more = True
-            while has_more and not self.shutting_down and self.backend.fts_enabled:
+            while has_more and not self.shutting_down and self.backend.fts_enabled and not stop_dispatch.is_set():
                 try:
                     has_more = do_one()
                 except Exception:
@@ -550,9 +570,9 @@ class Cache:
         self._update_fts_indexing_numbers()
 
     @write_api
-    def commit_fts_result(self, book_id, fmt, fmt_size, fmt_hash, text, err_msg):
+    def commit_fts_result(self, book_id, fmt, fmt_size, fmt_hash, text, err_msg, start_time):
         ans = self.backend.commit_fts_result(book_id, fmt, fmt_size, fmt_hash, text, err_msg)
-        self._update_fts_indexing_numbers()
+        self._update_fts_indexing_numbers(monotonic() - start_time)
         return ans
 
     @write_api
@@ -578,14 +598,29 @@ class Cache:
             self._queue_next_fts_job()
         return fts
 
-    @api
-    def set_fts_num_of_workers(self, num=None):
+    @write_api
+    def set_fts_num_of_workers(self, num):
         existing = self.backend.fts_num_of_workers
-        if num is not None:
+        if num != existing:
             self.backend.fts_num_of_workers = num
             if num > existing:
-                self.queue_next_fts_job()
-        return existing
+                self._queue_next_fts_job()
+            return True
+        return False
+
+    @write_api
+    def set_fts_speed(self, slow=True):
+        orig = self.fts_indexing_sleep_time
+        if slow:
+            self.fts_indexing_sleep_time = Cache.fts_indexing_sleep_time
+            changed = self._set_fts_num_of_workers(1)
+        else:
+            self.fts_indexing_sleep_time = 0.1
+            changed = self._set_fts_num_of_workers(max(1, detect_ncpus()))
+        changed = changed or orig != self.fts_indexing_sleep_time
+        if changed and self.fts_measuring_rate is not None:
+            self._fts_start_measuring_rate()
+        return changed
 
     @read_api
     def fts_search(
@@ -598,6 +633,7 @@ class Cache:
         restrict_to_book_ids=None,
         return_text=True,
         result_type=tuple,
+        process_each_result=None,
     ):
         return result_type(self.backend.fts_search(
             fts_engine_query,
@@ -607,6 +643,7 @@ class Cache:
             snippet_size=snippet_size,
             return_text=return_text,
             restrict_to_book_ids=restrict_to_book_ids,
+            process_each_result=process_each_result,
         ))
 
     # }}}
@@ -614,14 +651,17 @@ class Cache:
     # Cache Layer API {{{
 
     @write_api
-    def add_listener(self, event_callback_function):
+    def add_listener(self, event_callback_function, check_already_added=False):
         '''
         Register a callback function that will be called after certain actions are
         taken on this database. The function must take three arguments:
         (:class:`EventType`, library_id, event_type_specific_data)
         '''
         self.event_dispatcher.library_id = getattr(self, 'server_library_id', self.library_id)
+        if check_already_added and event_callback_function in self.event_dispatcher:
+            return False
         self.event_dispatcher.add_listener(event_callback_function)
+        return True
 
     @write_api
     def remove_listener(self, event_callback_function):
@@ -950,7 +990,7 @@ class Cache:
                     return
             ret = pt.name
         elif as_pixmap or as_image:
-            from qt.core import QPixmap, QImage
+            from qt.core import QImage, QPixmap
             ret = QImage() if as_image else QPixmap()
             with self.safe_read_lock:
                 path = self._format_abspath(book_id, '__COVER_INTERNAL__')
@@ -2429,7 +2469,11 @@ class Cache:
 
     @write_api
     def vacuum(self):
-        self.backend.vacuum()
+        self.is_doing_rebuild_or_vacuum = True
+        try:
+            self.backend.vacuum()
+        finally:
+            self.is_doing_rebuild_or_vacuum = False
 
     def __del__(self):
         self.close()
@@ -2439,6 +2483,8 @@ class Cache:
             self.backend.shutdown_fts()
             if self.fts_queue_thread is not None:
                 self.fts_job_queue.put(None)
+            if hasattr(self, 'fts_dispatch_stop_event'):
+                self.fts_dispatch_stop_event.set()
             return
         # the fts supervisor thread could be in the middle of committing a
         # result to the db, so holding a lock here will cause a deadlock
@@ -2456,13 +2502,17 @@ class Cache:
             self.shutting_down = True
             self.event_dispatcher.close()
             self._shutdown_fts()
-            from calibre.customize.ui import available_library_closed_plugins
-            for plugin in available_library_closed_plugins():
-                try:
-                    plugin.run(self)
-                except Exception:
-                    import traceback
-                    traceback.print_exc()
+            try:
+                from calibre.customize.ui import available_library_closed_plugins
+            except ImportError:
+                pass  # happens during interpreter shutdown
+            else:
+                for plugin in available_library_closed_plugins():
+                    try:
+                        plugin.run(self)
+                    except Exception:
+                        import traceback
+                        traceback.print_exc()
         self._shutdown_fts(stage=2)
         with self.write_lock:
             self.backend.close()

@@ -240,6 +240,7 @@ class BooksModel(QAbstractTableModel):  # {{{
         self.highlight_only = False
         self.row_height = 0
         self.marked_text_icons = {}
+        self.db_prefs = {'column_color_rules': (), 'column_icon_rules': ()}
         self.read_config()
 
     def marked_text_icon_for(self, label):
@@ -312,7 +313,7 @@ class BooksModel(QAbstractTableModel):  # {{{
             if font_type != 'normal':
                 self.styled_columns[colname] = getattr(self, f'{font_type}_font')
                 old[colname] = font_type
-            self.db.new_api.set_pref('styled_columns', old)
+            db.set_pref('styled_columns', old)
             col = self.column_map.index(colname)
             for row in range(self.rowCount(QModelIndex())):
                 self.dataChanged.emit(self.index(row, col), self.index(row,
@@ -348,6 +349,7 @@ class BooksModel(QAbstractTableModel):  # {{{
         self.ids_to_highlight_set = set()
         self.current_highlighted_idx = None
         self.db = db
+        self.update_db_prefs_cache()
         self.custom_columns = self.db.field_metadata.custom_field_metadata()
         self.column_map = list(self.orig_headers.keys()) + \
                           list(self.custom_columns)
@@ -371,6 +373,12 @@ class BooksModel(QAbstractTableModel):  # {{{
         self.database_changed.emit(db)
         self.stop_metadata_backup()
         self.start_metadata_backup()
+
+    def update_db_prefs_cache(self):
+        self.db_prefs = {
+            'column_icon_rules': tuple(self.db.new_api.pref('column_icon_rules', ())),
+            'column_color_rules': tuple(self.db.new_api.pref('column_color_rules', ())),
+        }
 
     def start_metadata_backup(self):
         from calibre.db.backup import MetadataBackup
@@ -966,6 +974,8 @@ class BooksModel(QAbstractTableModel):  # {{{
         self.column_to_dc_decorator_map = [self.dc_decorator.get(col, None) for col in self.column_map]
 
     def data(self, index, role):
+        if self.db.new_api.is_doing_rebuild_or_vacuum:
+            return None
         col = index.column()
         # in obscure cases where custom columns are both edited and added, for a time
         # the column map does not accurately represent the screen. In these cases,
@@ -973,7 +983,7 @@ class BooksModel(QAbstractTableModel):  # {{{
         if col >= len(self.column_to_dc_map) or col < 0:
             return None
         if role == Qt.ItemDataRole.DisplayRole:
-            rules = self.db.new_api.pref('column_icon_rules')
+            rules = self.db_prefs['column_icon_rules']
             if rules:
                 key = self.column_map[col]
                 id_ = None
@@ -1006,7 +1016,7 @@ class BooksModel(QAbstractTableModel):  # {{{
             id_ = self.id(index)
             self.column_color.mi = None
 
-            for k, fmt in self.db.new_api.pref('column_color_rules', ()):
+            for k, fmt in self.db_prefs['column_color_rules']:
                 if k == key:
                     ccol = self.column_color(id_, key, fmt, self.db,
                                          self.color_cache, self.color_template_cache)
@@ -1030,7 +1040,7 @@ class BooksModel(QAbstractTableModel):  # {{{
 
             if self.color_row_fmt_cache is None:
                 self.color_row_fmt_cache = tuple(fmt for key, fmt in
-                    self.db.new_api.pref('column_color_rules', ()) if key == color_row_key)
+                    self.db_prefs['column_color_rules'] if key == color_row_key)
             for fmt in self.color_row_fmt_cache:
                 ccol = self.column_color(id_, color_row_key, fmt, self.db,
                                          self.color_cache, self.color_template_cache)
@@ -1043,7 +1053,7 @@ class BooksModel(QAbstractTableModel):  # {{{
             default_icon = None
             if self.column_to_dc_decorator_map[col] is not None:
                 default_icon = self.column_to_dc_decorator_map[index.column()](index.row())
-            rules = self.db.new_api.pref('column_icon_rules')
+            rules = self.db_prefs['column_icon_rules']
             if rules:
                 key = self.column_map[col]
                 id_ = None
@@ -1594,7 +1604,7 @@ class DeviceBooksModel(BooksModel):  # {{{
         else:
             self.sorted_map = list(range(len(self.db)))
             self.sorted_map.sort(key=keygen, reverse=descending)
-        self.sorted_on = (self.column_map[col], order)
+        self.sorted_on = (self.column_map[col], not descending)
         self.sort_history.insert(0, self.sorted_on)
         if hasattr(keygen, 'db'):
             keygen.db = None

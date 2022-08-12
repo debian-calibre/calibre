@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-10 16:17+0000\n"
+"POT-Creation-Date: 2022-08-10 17:06+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Japanese (http://www.transifex.com/calibre/calibre/language/ja/)\n"
@@ -420,52 +420,23 @@ msgid ""
 "plugin code are documented in :ref:`polish_api`."
 msgstr "最後に ``self.current_container`` があり、これは編集されようとしている本を :class:`calibre.ebooks.oeb.polish.container.Container` オブジェクトへの参照です。これは本をその構成要素であるHTML/CSS/画像 ファイルの集まりとして表し、役に立ついろいろなことができる便利なメソッドを備えています。プラグインコードで再利用可能なコンテナオブジェクトとさまざまな便利なユーティリティ関数については、:ref:`polish_api` に説明があります。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:260
-msgid "Running User Interface plugins in a separate process"
-msgstr "別プロセスでユーザインタフェースプラグインを実行"
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:262
-msgid ""
-"If you are writing a user interface plugin that needs to make use of Qt "
-"WebEngine, it cannot be run in the main calibre process as it is not "
-"possible to use WebEngine there. Instead you can copy the data your plugin "
-"needs to a temporary folder and run the plugin with that data in a separate "
-"process. A simple example plugin follows that shows how to do this."
-msgstr "Qt WebEngine を利用する必要のあるユーザインタフェースプラグインを書いているのであれば、メインの calibre プロセスの中では実行できません。そこでは WebEngine を使うことができないためです。その代わりにプラグインが必要とするデータを一時フォルダにコピーして、そのデータを使ってプラグインを別プロセスとして実行します。次に示すシンプルなプラグインの例で、このやり方を紹介します。"
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:269
-msgid ""
-"You can download the plugin from :download_file:`webengine_demo_plugin.zip`."
-msgstr "このプラグインは :download_file:`webengine_demo_plugin.zip` からダウンロード可能です。"
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:272
-msgid "The important part of the plugin is in two functions:"
-msgstr "プラグインの重要な部分は、ふたつの関数内にあります:"
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:281
-msgid ""
-"The ``show_demo()`` function asks the user for a URL and then runs the "
-"``main()`` function passing it that URL. The ``main()`` function displays "
-"the URL in a ``QWebEngineView``."
-msgstr "``show_demo()`` 関数はユーザに URL を尋ね、それからその URL を渡して `main()`` 関数を実行します。`main()`` 関数は URL を ``QWebEngineView`` に表示します。"
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:287
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:259
 msgid "Adding translations to your plugin"
 msgstr "プラグインに翻訳を追加"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:289
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:261
 msgid ""
 "You can have all the user interface strings in your plugin translated and "
 "displayed in whatever language is set for the main calibre user interface."
 msgstr "プラグインのユーザインタフェース上のすべての文字列は翻訳して、メインの calibre ユーザインタフェースで設定された言語で表示することができます。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:292
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:264
 msgid ""
 "The first step is to go through your plugin's source code and mark all user "
 "visible strings as translatable, by surrounding them in _(). For example::"
 msgstr "最初のステップはプラグインのソースコードを調べ、ユーザに表示される文字列すべてを _() で囲むことにより翻訳可能としてマークすることです。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:297
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:269
 msgid ""
 "Then use some program to generate .po files from your plugin source code. "
 "There should be one .po file for every language you want to translate into. "
@@ -473,17 +444,17 @@ msgid ""
 "`Poedit <https://poedit.net/>`_ program for this."
 msgstr "それから何らかのプログラムを使ってプラグインのソースコードから .po ファイルを生成してください。翻訳したい言語ごとにひとつの .po ファイルが必要です。たとえばドイツ語用に de.po、フランス語用に fr.po といった具合です。これには `Poedit <https://poedit.net/>`_ が使えます。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:302
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:274
 msgid ""
 "Send these .po files to your translators. Once you get them back, compile "
 "them into .mo files. You can again use Poedit for that, or just do::"
 msgstr "これらの .po ファイルを翻訳者に送信しましょう。戻ってきたら .mo ファイルにコンパイルします。これにも Poedit を利用できます。または次のようにします::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:307
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:279
 msgid "Put the .mo files into the ``translations`` folder in your plugin."
 msgstr ".mo ファイルをプラグインの ``translations`` フォルダに置きます。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:309
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:281
 msgid ""
 "The last step is to simply call the function `load_translations()` at the "
 "top of your plugin's .py files. For performance reasons you should only call"
@@ -492,23 +463,23 @@ msgid ""
 "``ui.py`` but not ``__init__.py``."
 msgstr "最後のステップは、ただ単にプラグインの .pu ファイルの先頭で関数 `load_translations()` を呼び出すだけです。性能上の理由からこの関数を呼び出すのは、実際に翻訳可能な文字列が含まれている .py ファイルに限るべきです。したがって典型的なユーザインタフェースプラグインではこの関数は ``__init__.py`` ではなく ``ui.py`` の先頭で呼び出します。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:315
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:287
 msgid ""
 "You can test the translations of your plugins by changing the user interface"
 " language in calibre under :guilabel:`Preferences->Interface->Look & feel` "
 "or by running calibre like this::"
 msgstr "プラグインの翻訳をテストするには、:guilabel:`環境設定->インタフェース->外観` でcalibre のユーザインタフェース言語を変更するか、calibre を次のようにして実行します::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:321
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:293
 msgid ""
 "Replace ``de`` with the language code of the language you want to test."
 msgstr "``de`` の部分はテスとしたい言語の言語コードに置き換えてください。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:324
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:296
 msgid "The plugin API"
 msgstr "プラグイン API"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:326
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:298
 msgid ""
 "As you may have noticed above, a plugin in calibre is a class. There are "
 "different classes for the different types of plugins in calibre. Details on "
@@ -516,36 +487,36 @@ msgid ""
 ":ref:`plugins`."
 msgstr "すでにお気づきかもしれませんが、calibre のプラグインとはクラスです。calibre プラグインの種類ごとに異なるクラスがあります。すｓべてのプラグインの基底クラスのを含め、それぞれのクラスについての詳細は :ref:`plugins` に記載されています。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:329
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:301
 msgid ""
 "Your plugin is almost certainly going to use code from calibre. To learn how"
 " to find various bits of functionality in the calibre code base, read the "
 "section on the calibre :ref:`code_layout`."
 msgstr "プラグインはほぼ確実に calibre のコードを使用します。calibre のコードベースの機能についてすみからすみまで学ぶには、calibre の:ref:`code_layout` の章をお読みください。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:334
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:306
 msgid "Debugging plugins"
 msgstr "デバッグプラグイン"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:336
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:308
 msgid ""
 "The first, most important step is to run calibre in debug mode. You can do "
 "this from the command line with::"
 msgstr "最初の、そして最も重要なステップは calibre をデバッグモードで実行することです。これはコマンドラインから次のようにして実行できます::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:340
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:312
 msgid ""
 "Or from within calibre by right-clicking the :guilabel:`Preferences` button "
 "or using the :kbd:`Ctrl+Shift+R` keyboard shortcut."
 msgstr "または calibre の中で :guilabel:`環境設定` ボタンを右クリックするか、キーボードショートカットの :kbd:`Ctrl+Shift+R` を使用します。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:342
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:314
 msgid ""
 "When running from the command line, debug output will be printed to the "
 "console, when running from within calibre the output will go to a txt file."
 msgstr "コマンドラインから実行すると、デバッグ出力はコンソール上に表示されます。calibre の中から実行するとテキストファイルに保存されます。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:344
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:316
 msgid ""
 "You can insert print statements anywhere in your plugin code, they will be "
 "output in debug mode. Remember, this is Python, you really shouldn't need "
@@ -553,33 +524,33 @@ msgid ""
 "using just this debugging technique."
 msgstr "プラグインコードのどこにでも print 文を挿入できます。これはデバッグモードで出力されます。これは Python ですから、デバッグには print 文以上のものが必要になることはありません。calibre はこのデバッグ手法だけを用いて開発されました。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:346
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:318
 msgid ""
 "You can quickly test changes to your plugin by using the following command "
 "line::"
 msgstr "プラグインへの変更は次のコマンドラインを使ってすぐにテストできます::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:351
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:323
 msgid ""
 "This will shutdown a running calibre, wait for the shutdown to complete, "
 "then update your plugin in calibre and relaunch calibre."
 msgstr "これは calibre をシャットダウンし、シャットダウンの完了を待ち、calibre のプラグインを更新し、calibre を再起動します。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:354
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:326
 msgid "More plugin examples"
 msgstr "プラグインのその他の例"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:356
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:328
 msgid ""
 "You can find a list of many sophisticated calibre plugins `here "
 "<https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 msgstr "多くの洗練された calibre プラグインの一覧は `こちら <https://www.mobileread.com/forums/showthread.php?t=118764>`_ にあります。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:359
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:331
 msgid "Sharing your plugins with others"
 msgstr "プラグインの共有"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:361
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:333
 msgid ""
 "If you would like to share the plugins you have created with other users of "
 "calibre, post your plugin in a new thread in the `calibre plugins forum "

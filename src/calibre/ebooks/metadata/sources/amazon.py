@@ -18,6 +18,8 @@ try:
 except ImportError:
     from urlparse import urlparse
 
+from mechanize import HTTPError
+
 from calibre import as_unicode, browser, random_user_agent, xml_replace_entities
 from calibre.ebooks.metadata import check_isbn
 from calibre.ebooks.metadata.book.base import Metadata
@@ -63,6 +65,18 @@ class SearchFailed(ValueError):
     pass
 
 
+class UrlNotFound(ValueError):
+
+    def __init__(self, url):
+        ValueError.__init__(self, 'The URL {} was not found (HTTP 404)'.format(url))
+
+
+class UrlTimedOut(ValueError):
+
+    def __init__(self, url):
+        ValueError.__init__(self, 'Timed out fetching {} try again later'.format(url))
+
+
 def parse_html(raw):
     try:
         from html5_parser import parse
@@ -78,23 +92,32 @@ def parse_details_page(url, log, timeout, browser, domain):
     from calibre.utils.cleantext import clean_ascii_chars
     from calibre.ebooks.chardet import xml_to_unicode
     from lxml.html import tostring
-    log('Getting details from:', url)
     try:
-        raw = browser.open_novisit(url, timeout=timeout).read().strip()
-    except Exception as e:
-        if callable(getattr(e, 'getcode', None)) and \
-                e.getcode() == 404:
-            log.error('URL malformed: %r' % url)
-            return
-        attr = getattr(e, 'args', [None])
-        attr = attr if attr else [None]
-        if isinstance(attr[0], socket.timeout):
-            msg = 'Details page timed out. Try again later.'
-            log.error(msg)
-        else:
-            msg = 'Failed to make details query: %r' % url
-            log.exception(msg)
-        return
+        from calibre.ebooks.metadata.sources.update import search_engines_module
+        get_data_for_cached_url = search_engines_module().get_data_for_cached_url
+    except Exception:
+        get_data_for_cached_url = lambda *a: None
+    raw = get_data_for_cached_url(url)
+    if raw:
+        log('Using cached details for url:', url)
+    else:
+        log('Downloading details from:', url)
+        try:
+            raw = browser.open_novisit(url, timeout=timeout).read().strip()
+        except Exception as e:
+            if callable(getattr(e, 'getcode', None)) and e.getcode() == 404:
+                log.error('URL not found: %r' % url)
+                raise UrlNotFound(url)
+            attr = getattr(e, 'args', [None])
+            attr = attr if attr else [None]
+            if isinstance(attr[0], socket.timeout):
+                msg = 'Details page timed out. Try again later.'
+                log.error(msg)
+                raise UrlTimedOut(url)
+            else:
+                msg = 'Failed to make details query: %r' % url
+                log.exception(msg)
+                raise ValueError('Could not make details query for {}'.format(url))
 
     oraw = raw
     if 'amazon.com.br' in url:
@@ -103,7 +126,7 @@ def parse_details_page(url, log, timeout, browser, domain):
     raw = xml_to_unicode(raw, strip_encoding_pats=True,
                          resolve_entities=True)[0]
     if '<title>404 - ' in raw:
-        raise ValueError('URL malformed: %r' % url)
+        raise ValueError('Got a 404 page for: %r' % url)
     if '>Could not find the requested document in the cache.<' in raw:
         raise ValueError('No cached entry for %s found' % url)
 
@@ -112,7 +135,7 @@ def parse_details_page(url, log, timeout, browser, domain):
     except Exception:
         msg = 'Failed to parse amazon details page: %r' % url
         log.exception(msg)
-        return
+        raise ValueError(msg)
     if domain == 'jp':
         for a in root.xpath('//a[@href]'):
             if ('black-curtain-redirect.html' in a.get('href')) or ('/black-curtain/save-eligibility/black-curtain' in a.get('href')):
@@ -128,7 +151,7 @@ def parse_details_page(url, log, timeout, browser, domain):
         msg = 'Failed to parse amazon details page: %r' % url
         msg += tostring(errmsg, method='text', encoding='unicode').strip()
         log.error(msg)
-        return
+        raise ValueError(msg)
 
     from css_selectors import Select
     selector = Select(root)
@@ -404,7 +427,7 @@ class Worker(Thread):  # Get details {{{
             with tempfile.NamedTemporaryFile(prefix=(asin or type('')(uuid.uuid4())) + '_',
                                              suffix='.html', delete=False) as f:
                 f.write(raw)
-            print('Downloaded html for', asin, 'saved in', f.name)
+            print('Downloaded HTML for', asin, 'saved in', f.name)
 
         try:
             title = self.parse_title(root)
@@ -992,7 +1015,7 @@ class Worker(Thread):  # Get details {{{
 class Amazon(Source):
 
     name = 'Amazon.com'
-    version = (1, 2, 28)
+    version = (1, 3, 1)
     minimum_calibre_version = (2, 82, 0)
     description = _('Downloads metadata and covers from Amazon')
 
@@ -1027,6 +1050,7 @@ class Amazon(Source):
         'bing': _('Bing search cache'),
         'google': _('Google search cache'),
         'wayback': _('Wayback machine cache (slow)'),
+        'ddg': _('DuckDuckGo search and Google cache'),
     }
 
     options = (
@@ -1453,20 +1477,30 @@ class Amazon(Source):
 
     def search_search_engine(self, br, testing, log, abort, title, authors, identifiers, timeout, override_server=None):  # {{{
         from calibre.ebooks.metadata.sources.update import search_engines_module
+        se = search_engines_module()
         terms, domain = self.create_query(log, title=title, authors=authors,
                                           identifiers=identifiers, for_amazon=False)
         site = self.referrer_for_domain(
             domain)[len('https://'):].partition('/')[0]
         matches = []
-        se = search_engines_module()
         server = override_server or self.server
-        if server in ('bing',):
+        urlproc, sfunc = se.google_url_processor, se.google_search
+        if server == 'bing':
             urlproc, sfunc = se.bing_url_processor, se.bing_search
-        elif server in ('auto', 'google'):
-            urlproc, sfunc = se.google_url_processor, se.google_search
         elif server == 'wayback':
             urlproc, sfunc = se.wayback_url_processor, se.ddg_search
-        results, qurl = sfunc(terms, site, log=log, br=br, timeout=timeout)
+        elif server == 'ddg':
+            urlproc, sfunc = se.ddg_url_processor, se.ddg_search
+        try:
+            results, qurl = sfunc(terms, site, log=log, br=br, timeout=timeout)
+        except HTTPError as err:
+            if err.code == 429 and sfunc is se.google_search:
+                log('Got too many requests error from Google, trying via DuckDuckGo')
+                urlproc, sfunc = se.ddg_url_processor, se.ddg_search
+                results, qurl = sfunc(terms, site, log=log, br=br, timeout=timeout)
+            else:
+                raise
+
         br.set_current_header('Referer', qurl)
         for result in results:
             if abort.is_set():
@@ -1476,8 +1510,7 @@ class Amazon(Source):
             if '/dp/' in purl.path and site in purl.netloc:
                 url = result.cached_url
                 if url is None:
-                    url = se.wayback_machine_cached_url(
-                        result.url, br, timeout=timeout)
+                    url = se.get_cached_url(result.url, br, timeout=timeout)
                 if url is None:
                     log('Failed to find cached page for:', result.url)
                     continue
@@ -1807,9 +1840,13 @@ def manual_tests(domain, **kw):  # {{{
 
     all_tests['br'] = [  # {{{
         (
+            {'title': 'A Ascensão da Sombra'},
+            [title_test('A Ascensão da Sombra'), authors_test(['Robert Jordan'])]
+        ),
+
+        (
             {'title': 'Guerra dos Tronos'},
-            [title_test('A Guerra dos Tronos - As Crônicas de Gelo e Fogo',
-                        exact=True), authors_test(['George R. R. Martin'])
+            [title_test('A Guerra dos Tronos. As Crônicas de Gelo e Fogo - Livro 1'), authors_test(['George R. R. Martin'])
              ]
 
         ),

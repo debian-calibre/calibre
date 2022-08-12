@@ -21293,7 +21293,7 @@ return this.__repr__();
         });
         EditNotesAndColors.prototype.__init__ = function __init__(container, is_dark_theme, current_notes, current_style, annot_id, close_editor) {
             var self = this;
-            var remove_button, apply_button, c, custom_highlight_styles, raw, parent;
+            var remove_button, apply_button, stop_propagation, c, custom_highlight_styles, raw, parent;
             self.initial_style = current_style;
             self.is_dark_theme = is_dark_theme;
             self.annot_id = annot_id;
@@ -21328,7 +21328,7 @@ return this.__repr__();
             remove_button.classList.add("remove-custom-color");
             apply_button = create_button((self.annot_id) ? _("Apply") : _("Create"), "check", finish, ((self.annot_id) ? _("Finish editing highlight") : _("Create highlight")) + " [Ctrl+Enter]", true);
             apply_button.style.marginLeft = apply_button.style.marginTop = "auto";
-            c = ρσ_interpolate_kwargs.call(E, E.div, [E.div(ρσ_interpolate_kwargs.call(E, E.textarea, [ρσ_desugar_kwargs({placeholder: _("Add notes for this highlight. Double click or long tap on a highlight to read its notes."), rows: "10", spellcheck: "true", style: "width: 90%;", onkeydown: handle_keypress})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "color-block", style: "display: flex; flex-wrap: wrap; width: 100%; justify-content: center"})]), ρσ_interpolate_kwargs.call(E, E.div, [create_button(_("Cancel"), "close", abort, _("Abort") + " [Esc]"), E.span(" "), remove_button, apply_button].concat([ρσ_desugar_kwargs({style: "width: 100%; display: flex; flex-wrap: wrap"})])))].concat([ρσ_desugar_kwargs({style: "background: " + ρσ_str.format("{}", get_color("window-background")) + "; margin: auto; text-align: center; padding: 1ex;", onclick: (function() {
+            stop_propagation = (function() {
                 var ρσ_anonfunc = function (ev) {
                     ev.stopPropagation();
                 };
@@ -21337,7 +21337,8 @@ return this.__repr__();
                     __module__ : {value: "read_book.highlights"}
                 });
                 return ρσ_anonfunc;
-            })(), id: unique_id()})]));
+            })();
+            c = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.textarea, [ρσ_desugar_kwargs({placeholder: _("Add notes for this highlight. Double click or long tap on a highlight to read its notes."), rows: "10", spellcheck: "true", style: "width: 90%;", onkeydown: handle_keypress})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "color-block", style: "display: flex; flex-wrap: wrap; width: 100%; justify-content: center"})]), ρσ_interpolate_kwargs.call(E, E.div, [create_button(_("Cancel"), "close", abort, _("Abort") + " [Esc]"), E.span(" "), remove_button, apply_button].concat([ρσ_desugar_kwargs({style: "width: 100%; display: flex; flex-wrap: wrap"})]))].concat([ρσ_desugar_kwargs({ontouchstart: stop_propagation, ontouchmove: stop_propagation, ontouchend: stop_propagation, ontouchcancel: stop_propagation, oncontextmenu: stop_propagation})]))].concat([ρσ_desugar_kwargs({style: "background: " + ρσ_str.format("{}", get_color("window-background")) + "; margin: auto; text-align: center; padding: 1ex;", onclick: stop_propagation, id: unique_id()})]));
             self.container_id = c.id;
             container.appendChild(c);
             container.style.maxWidth = "40rem";
@@ -26417,7 +26418,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "6.2.1";
+        CALIBRE_VERSION = "6.3.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -29238,6 +29239,7 @@ return this.__repr__();
 
         var runtime = ρσ_modules["read_book.globals"].runtime;
         var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
+        var is_dark_theme = ρσ_modules["read_book.globals"].is_dark_theme;
 
         var load_resources = ρσ_modules["read_book.resources"].load_resources;
 
@@ -29378,6 +29380,7 @@ return this.__repr__();
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
             iframe = ρσ_unpack[0];
             self.iframe_wrapper = ρσ_unpack[1];
+            iframe.style.colorScheme = (is_dark_theme()) ? "dark" : "light";
             c = self.container;
             c.firstChild.appendChild(iframe);
         };
@@ -29431,6 +29434,13 @@ return this.__repr__();
             c = self.container.firstChild;
             c.style.backgroundColor = bg;
             c.style.color = fg;
+            try {
+                self.iframe.style.colorScheme = (is_dark_theme()) ? "dark" : "light";
+            } catch (ρσ_Exception) {
+                ρσ_last_exception = ρσ_Exception;
+                {
+                } 
+            }
         };
         if (!ContentPopupOverlay.prototype.apply_color_scheme.__argnames__) Object.defineProperties(ContentPopupOverlay.prototype.apply_color_scheme, {
             __argnames__ : {value: ["bg", "fg"]},
@@ -45683,10 +45693,13 @@ return this.__repr__();
         });
         View.prototype.apply_color_scheme = function apply_color_scheme() {
             var self = this;
-            var ans, m, s, mc, ρσ_unpack, which, sd, iframe, bg_image;
+            var ans, iframe, m, s, mc, ρσ_unpack, which, sd, bg_image;
             self.current_color_scheme = ans = resolve_color_scheme();
+            iframe = self.iframe;
             if (runtime.is_standalone_viewer) {
                 set_ui_colors(self.current_color_scheme.is_dark_theme);
+            } else {
+                iframe.style.colorScheme = (self.current_color_scheme.is_dark_theme) ? "dark" : "light";
             }
             is_dark_theme(self.current_color_scheme.is_dark_theme);
             var ρσ_Iter5 = ρσ_Iterable("left top right bottom".split(" "));
@@ -45706,7 +45719,6 @@ return this.__repr__();
                 }
             }
             sd = get_session_data();
-            iframe = self.iframe;
             iframe.style.backgroundColor = ans.background || "white";
             bg_image = sd.get("background_image");
             if (bg_image) {
