@@ -1,3 +1,16 @@
+calibre (6.3.0+dfsg-3) UNRELEASED; urgency=medium
+
+  * Revert "Add "Conflicts" for incompatible update between Calibre v5 and v6"
+    This reverts commit 8b2c70ce08765a266345c73180f8e5098f150850.
+    This fix is not effective.
+  * Revert "Drop some architectures which not supported by Qt6"
+    This reverts commit 45a1068be0924bfe3b57c6df1e24d71e5f2b6eb7.
+    Use RM request for "ftp.debian.org" package to remove obsolete MIPS build.
+    See also bug 1018067.
+  * Rediff patches
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sat, 27 Aug 2022 22:21:49 +0900
+
 calibre (6.3.0+dfsg-2) unstable; urgency=medium
 
   * "Pre-Depends" is not recommended for most use case
