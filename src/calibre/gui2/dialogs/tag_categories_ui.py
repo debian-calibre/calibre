@@ -79,10 +79,9 @@ class Ui_TagCategories(object):
         self.apply_vl_checkbox = QtWidgets.QCheckBox(TagCategories)
         self.apply_vl_checkbox.setObjectName("apply_vl_checkbox")
         self.gridLayout.addWidget(self.apply_vl_checkbox, 1, 0, 1, 3)
-        self.blank = QtWidgets.QLabel(TagCategories)
-        self.blank.setText("")
-        self.blank.setObjectName("blank")
-        self.gridLayout.addWidget(self.blank, 2, 0, 1, 1)
+        self.hide_hidden_categories_checkbox = QtWidgets.QCheckBox(TagCategories)
+        self.hide_hidden_categories_checkbox.setObjectName("hide_hidden_categories_checkbox")
+        self.gridLayout.addWidget(self.hide_hidden_categories_checkbox, 2, 0, 1, 3)
         self.gridLayout_4.addLayout(self.gridLayout, 0, 1, 1, 3)
         self.vboxlayout.addLayout(self.gridLayout_4)
         self.gridLayout_2 = QtWidgets.QGridLayout()
@@ -135,7 +134,7 @@ class Ui_TagCategories(object):
     def retranslateUi(self, TagCategories):
 
         TagCategories.setWindowTitle(_("User categories editor"))
-        self.label_3.setText(_("Category &name: "))
+        self.label_3.setText(_("&User category name: "))
         self.category_box.setToolTip(_("Select a category to edit"))
         self.copy_category_name_to_clipboard.setToolTip(_("Copy the category name to the clipboard"))
         self.label_5.setText(_("&Category filter: "))
@@ -149,10 +148,14 @@ class Ui_TagCategories(object):
         self.add_category_button.setText(_("..."))
         self.rename_category_button.setToolTip(_("Rename the current category to what is in the box"))
         self.rename_category_button.setText(_("..."))
-        self.apply_vl_checkbox.setToolTip(_("<p>Show items in the Available items box only if they appear in the\n"
-"            current Virtual library. Applied items not in the Virtual library will be marked\n"
-"            \"not on any book\".</p>"))
-        self.apply_vl_checkbox.setText(_("&Show only available items in current Virtual library"))
+        self.apply_vl_checkbox.setToolTip(_("<p>Only show items that are visible in current Virtual\n"
+"            library. Applied items not shown in the Virtual library will be\n"
+"            marked \"Hidden by Virtual library\".</p>"))
+        self.apply_vl_checkbox.setText(_("&Only show items visible in current Virtual library"))
+        self.hide_hidden_categories_checkbox.setToolTip(_("<p>Don\'t show items that are hidden in the Tag browser.\n"
+"          Applied items not shown in the Tag browser will be marked\n"
+"          \"Hidden in Tag browser\".</p>"))
+        self.hide_hidden_categories_checkbox.setText(_("&Don\'t show items hidden in the Tag browser"))
         self.label.setText(_("&Available items"))
         self.apply_button.setToolTip(_("Apply items to current category"))
         self.apply_button.setText(_("..."))

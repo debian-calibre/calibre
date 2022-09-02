@@ -19,7 +19,7 @@ class Ui_Form(object):
         self.label.setWordWrap(True)
         self.label.setObjectName("label")
         self.gridLayout.addWidget(self.label, 0, 0, 1, 2)
-        self.opt_columns = QtWidgets.QTableWidget(Form)
+        self.opt_columns = TableWidgetWithMoveByKeyPress(Form)
         self.opt_columns.setAlternatingRowColors(True)
         self.opt_columns.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectionBehavior.SelectRows)
         self.opt_columns.setObjectName("opt_columns")
@@ -90,3 +90,4 @@ class Ui_Form(object):
         self.column_down.setToolTip(_("Move column down"))
         self.column_down.setText(_("..."))
         self.add_col_button.setText(_("Add &custom column"))
+from calibre.gui2.preferences import TableWidgetWithMoveByKeyPress

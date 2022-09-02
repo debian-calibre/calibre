@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "八月 12, 2022" "6.3.0" "calibre"
+.TH "CALIBREDB" "1" "九月 02, 2022" "6.4.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -822,6 +822,11 @@ calibredb check_library [options]
 .B \-\-report, \-r
 逗号分隔的报表列表。 默认值: 全部
 .UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-vacuum\-fts\-db
+Vacuum the full text search database. This can be very slow and memory intensive, depending on the size of the database.
+.UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
 .INDENT 3.5
@@ -986,12 +991,12 @@ entire library is re\-indexed.
 .INDENT 0.0
 .TP
 .B \-\-indexing\-speed
-The speed of indexing. Use fast for fast indexing using all your computers resources and slow for less resource intensive indexing. Note that the speed is reset to slow after every invocation.
+索引的速度。使用快速索引可使用所有计算机资源进行快速索引，使用慢速索引可使用较少的资源进行索引。请注意，每次调用索引后，索引速度都会重置为Slow。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-wait\-for\-completion
-Wait till all books are indexed, showing indexing progress periodically
+等到所有图书都被编入索引，定期显示索引进度
 .UNINDENT
 .SH FTS_SEARCH
 .INDENT 0.0

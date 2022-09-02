@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "srpna 12, 2022" "6.3.0" "calibre"
+.TH "CALIBREDB" "1" "září 02, 2022" "6.4.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -820,6 +820,11 @@ Výstup v CSV
 .B \-\-report, \-r
 Čárkami oddělený seznam hlášení. Výchozí: vše
 .UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-vacuum\-fts\-db
+Vyčistit databázi fulltextového vyhledávání. V závislosti na velikosti databáze to může být velmi pomalé a náročné na paměť.
+.UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
 .INDENT 3.5
@@ -964,42 +969,42 @@ Maximální počet výsledků k navrácení. Výchozí je všechny výsledky.
 .sp
 .nf
 .ft C
-calibredb fts_index [options] enable/disable/status/reindex
+calibredb fts_index [volby] enable/disable/status/reindex
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Control the Full text search indexing process.
+Ovládání procesu indexování fulltextového vyhledávání.
 .INDENT 0.0
 .TP
 .B enable
-Turns on FTS indexing for this library
+Zapne indexování FTV pro tuto knihovnu.
 .TP
 .B disable
-Turns off FTS indexing for this library
+Vypne indexování FTV pro tuto knihovnu.
 .TP
 .B status
-Shows the current indexing status
+Zobrazí aktuální stav indexování
 .TP
 .B reindex
-Can be used to re\-index either particular books or
-the entire library. To re\-index particular books
-specify the book ids as additional arguments after the
-reindex command. If no book ids are specified the
-entire library is re\-indexed.
+Může být použito ke znovu indexování buď konkrétních
+knih, nebo celé knihovny. Pro znovu indexování konkrétních
+knih zadejte identifikátory knih jako další argumenty za
+příkazem reindex. Pokud nejsou zadány žádné identifikátory
+knih, bude znovu indexována celá knihovna.
 .UNINDENT
 .sp
 Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
 .INDENT 0.0
 .TP
 .B \-\-indexing\-speed
-The speed of indexing. Use fast for fast indexing using all your computers resources and slow for less resource intensive indexing. Note that the speed is reset to slow after every invocation.
+Rychlost indexování. Použijte rychlé pro rychlé indexování využívající všechny zdroje vašeho počítače a pomalé pro indexování méně náročné na zdroje. Pamatujte, že rychlost se po každém vyvolání obnoví na pomalou.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-wait\-for\-completion
-Wait till all books are indexed, showing indexing progress periodically
+Čekat, dokud nejsou všechny knihy indexovány, pravidelně zobrazovat průběh indexování
 .UNINDENT
 .SH FTS_SEARCH
 .INDENT 0.0
@@ -1007,49 +1012,49 @@ Wait till all books are indexed, showing indexing progress periodically
 .sp
 .nf
 .ft C
-calibredb fts_search [options] search expression
+calibredb fts_search [volby] vyhledávací výraz
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Do a full text search on the entire library or a subset of it.
+Provede fulltextové vyhledávání v celé knihovně nebo její podmnožině.
 .sp
 Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
 .INDENT 0.0
 .TP
 .B \-\-do\-not\-match\-on\-related\-words
-Only match on exact words not related words. So correction will not match correcting.
+Porovnávat pouze přesná slova, nikoliv související slova. Takže oprava se nebude shodovat s opravou.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-include\-snippets
-Include snippets of the text surrounding each match. Note that this makes searching much slower.
+Zahrnout úryvky textu obklopující každou shodu. Pamatujte, že to výrazně zpomaluje vyhledávání.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-indexing\-threshold
-How much of the library must be indexed before searching is allowed, as a percentage. Defaults to 90
+Kolik v procentech z knihovny musí být indexováno, než je povoleno vyhledávání. Výchozí nastavení je 90
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-end\-marker
-The marker used to indicate the end of a matched word inside a snippet
+Značka použitá k označení konce shodného slova uvnitř úryvku
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-start\-marker
-The marker used to indicate the start of a matched word inside a snippet
+Značka použitá k označení začátku shodného slova uvnitř úryvku
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-format
-The format to output the search results in. Either \fB\(dq\fPtext\fB\(dq\fP for plain text or \fB\(dq\fPjson\fB\(dq\fP for JSON output.
+Formát, ve kterém vypisovat výsledky vyhledávání. Buď „text“ pro prostý text, nebo „json“ pro výstup JSON.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-restrict\-to
-Restrict the searched books, either using a search expression or ids. For example: ids:1,2,3 to restrict by ids or search:tag:foo to restrict to books having the tag foo.
+Omezit vyhledávané knihy buď pomocí vyhledávacího výrazu, nebo identifikátorů. Například: ids:1,2,3 pro omezení podle identifikátorů nebo search:tag:foo pro omezení na knihy se značkou foo.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

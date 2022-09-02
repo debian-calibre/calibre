@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "augustus 12, 2022" "6.3.0" "calibre"
+.TH "CALIBREDB" "1" "september 02, 2022" "6.4.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -831,6 +831,11 @@ Kommagescheiden lijst van te negeren namen. Standaard: all
 .B \-\-report, \-r
 Kommagescheiden lijst van rapporten. Standaard: all
 .UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-vacuum\-fts\-db
+Vacuum the full text search database. This can be very slow and memory intensive, depending on the size of the database.
+.UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
 .INDENT 3.5
@@ -951,7 +956,7 @@ Update alleen de metadata in specifieke bestands types. Gebruik dit meerdere ker
 .sp
 .nf
 .ft C
-calibredb search [opties] zoek uitdrukking
+calibredb search [opties] zoekopdracht
 .ft P
 .fi
 .UNINDENT
@@ -961,7 +966,7 @@ Doorzoek de bibliotheek voor de specifieke zoekterm, geeft een komma gescheiden
 lijst van boek IDs terug overeenkomend met de zoekuitdrukking. Het uitvoerformaat is nuttig
 om andere commando\(aqs uit te voeren die een lijst van IDs aanvaarden als invoer
 .sp
-De zoekexpressie kan eerder wat zijn uit calibre\(aqs krachtige zoek querytaal
+De zoekopdracht kan eerder wat zijn uit calibre\(aqs krachtige zoek querytaal
 bijvoorbeeld: %p rog \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
 Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: \(dq/some path/with spaces\(dq
@@ -982,36 +987,36 @@ calibredb fts_index [options] enable/disable/status/reindex
 .UNINDENT
 .UNINDENT
 .sp
-Control the Full text search indexing process.
+Controleer het Volledige tekst doorzoeken indexeren proces.
 .INDENT 0.0
 .TP
 .B enable
-Turns on FTS indexing for this library
+Schakelt FTS indexeren in voor deze bibliotheek
 .TP
 .B disable
-Turns off FTS indexing for this library
+Schakelt FTS indexeren uit voor deze bibliotheek
 .TP
 .B status
-Shows the current indexing status
+Toont de huidige indexeringsstatus
 .TP
 .B reindex
-Can be used to re\-index either particular books or
-the entire library. To re\-index particular books
-specify the book ids as additional arguments after the
-reindex command. If no book ids are specified the
-entire library is re\-indexed.
+Kan gebruikt worden om bepaalde boeken te re\-indexeren
+of de hele bibliotheek. Om bepaalde boeken te re\-indexeren
+specificeer de boek IDs als extra argumenten na de
+reindex opdracht. Als geen boek IDs gespecificeerd werden,
+wordt de hele bibliotheek geherindexeerd.
 .UNINDENT
 .sp
 Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-indexing\-speed
-The speed of indexing. Use fast for fast indexing using all your computers resources and slow for less resource intensive indexing. Note that the speed is reset to slow after every invocation.
+Indexeersnelheid. Gebruik snel voor snel indexeren met alle kracht van uw pc en traag voor minder intensief indexeren. Merk op dat de snelheid terug op traag wordt gezet na elk gebruik.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-wait\-for\-completion
-Wait till all books are indexed, showing indexing progress periodically
+Wacht tot alle boeken geïndexeerd zijn, indexeringsvoortgang wordt regelmatig getoond
 .UNINDENT
 .SH FTS_SEARCH
 .INDENT 0.0
@@ -1019,13 +1024,13 @@ Wait till all books are indexed, showing indexing progress periodically
 .sp
 .nf
 .ft C
-calibredb fts_search [options] search expression
+calibredb fts_search [options] zoekopdracht
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Do a full text search on the entire library or a subset of it.
+Doe een volledige tekstzoek op de gehele bibliotheek of een onderdeel ervan.
 .sp
 Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -1061,7 +1066,7 @@ The format to output the search results in. Either \fB\(dq\fPtext\fB\(dq\fP for 
 .INDENT 0.0
 .TP
 .B \-\-restrict\-to
-Restrict the searched books, either using a search expression or ids. For example: ids:1,2,3 to restrict by ids or search:tag:foo to restrict to books having the tag foo.
+Beperk de doorzochte boeken, ofwel met een zoekopdracht ofwel met IDs. Bijvoorbeeld: IDs: 1,2,3 om te beperken op ID of search:tag:foo om te beperken tot boeken met label foo.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

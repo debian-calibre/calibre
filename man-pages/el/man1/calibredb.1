@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "Αυγούστου 12, 2022" "6.3.0" "calibre"
+.TH "CALIBREDB" "1" "Σεπτεμβρίου 02, 2022" "6.4.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -819,6 +819,11 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .TP
 .B \-\-report, \-r
 Διαχωριζόμενη από κόμματα λίστα από αναφορές. Προεπιλογή: όλες
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-vacuum\-fts\-db
+Vacuum the full text search database. This can be very slow and memory intensive, depending on the size of the database.
 .UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0

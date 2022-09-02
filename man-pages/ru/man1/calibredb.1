@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "августа 12, 2022" "6.3.0" "calibre"
+.TH "CALIBREDB" "1" "сентября 02, 2022" "6.4.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -217,7 +217,7 @@ calibredb список [options]
 .INDENT 0.0
 .TP
 .B \-\-separator
-Разделитель полей. По умолчанию \- пробел.
+Разделитель полей. По умолчанию это пробел.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -815,6 +815,11 @@ calibredb check_library [настройки]
 .B \-\-report, \-r
 Разделённый запятыми список отчётов. По умолчанию: все (all).
 .UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-vacuum\-fts\-db
+Сжать (командой Vacuum) базу данных полнотекстового поиска. Если база данных велика, это может занять много времени и памяти.
+.UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
 .INDENT 3.5
@@ -957,30 +962,30 @@ calibredb search [опции] поисковое выражение
 .sp
 .nf
 .ft C
-calibredb fts_index [options] enable/disable/status/reindex
+calibredb fts_index [параметры] enable/disable/status/reindex
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Control the Full text search indexing process.
+Управление индексом для полнотекстового поиска.
 .INDENT 0.0
 .TP
 .B enable
-Turns on FTS indexing for this library
+Включить индексирование для данной библиотеки
 .TP
 .B disable
-Turns off FTS indexing for this library
+Включить индексирование для данной библиотеки
 .TP
 .B status
-Shows the current indexing status
+Показать состояние индексирования
 .TP
 .B reindex
-Can be used to re\-index either particular books or
-the entire library. To re\-index particular books
-specify the book ids as additional arguments after the
-reindex command. If no book ids are specified the
-entire library is re\-indexed.
+Переиндексировать отдельные книги или
+библиотеку целиком. Для отдельных книг, укажите
+их идентификаторы после команды reindex.
+Если идентификаторы не указаны, то переиндексируется
+вся библиотека.
 .UNINDENT
 .sp
 Когда вы передаёте аргументы с пробелами в calibredb, заключайте их в кавычки. Например: \(dq/some path/with spaces\(dq
@@ -1000,49 +1005,49 @@ Wait till all books are indexed, showing indexing progress periodically
 .sp
 .nf
 .ft C
-calibredb fts_search [options] search expression
+calibredb fts_search [параметры] выражение поиска
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Do a full text search on the entire library or a subset of it.
+Полнотекстовый поиск в библиотеке или ее фрагменте.
 .sp
 Когда вы передаёте аргументы с пробелами в calibredb, заключайте их в кавычки. Например: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-do\-not\-match\-on\-related\-words
-Only match on exact words not related words. So correction will not match correcting.
+Точное совпадение вместо родственных слов, напр. correction не совпадает с correcting.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-include\-snippets
-Include snippets of the text surrounding each match. Note that this makes searching much slower.
+Выводить фрагменты текста вокруг совпадений. Это существенно замедлит поиск.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-indexing\-threshold
-How much of the library must be indexed before searching is allowed, as a percentage. Defaults to 90
+Сколько процентов библиотеки должно быть проиндексировано для включения полнотекстового поиска. По умолчанию 90
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-end\-marker
-The marker used to indicate the end of a matched word inside a snippet
+Маркер конца совпавшего слова во фрагменте
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-start\-marker
-The marker used to indicate the start of a matched word inside a snippet
+Маркер начала совпавшего слова во фрагменте
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-format
-The format to output the search results in. Either \fB\(dq\fPtext\fB\(dq\fP for plain text or \fB\(dq\fPjson\fB\(dq\fP for JSON output.
+Формат вывода результатов: \fB\(dq\fPtext\fB\(dq\fP для обычного текста или \fB\(dq\fPjson\fB\(dq\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-restrict\-to
-Restrict the searched books, either using a search expression or ids. For example: ids:1,2,3 to restrict by ids or search:tag:foo to restrict to books having the tag foo.
+Ограничьте искомые книги, используя поисковое выражение или идентификаторы. Например: ids:1,2,3 для ограничения по идентификаторам или search:tag:foo для ограничения книг с тегом foo.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

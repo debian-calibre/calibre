@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "agosto 12, 2022" "6.3.0" "calibre"
+.TH "CALIBREDB" "1" "settembre 02, 2022" "6.4.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -825,6 +825,11 @@ Elenco separato da virgole dei nomi da ignorare. Predefinito: tutti
 .B \-\-report, \-r
 Elenco separato da virgole dei resoconti. Predefinito: tutti
 .UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-vacuum\-fts\-db
+Vacuum the full text search database. This can be very slow and memory intensive, depending on the size of the database.
+.UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
 .INDENT 3.5
@@ -975,36 +980,36 @@ calibredb fts_index [options] enable/disable/status/reindex
 .UNINDENT
 .UNINDENT
 .sp
-Control the Full text search indexing process.
+Controlla il processo di indicizzazione dei contenuti.
 .INDENT 0.0
 .TP
 .B enable
-Turns on FTS indexing for this library
+Abilita l\(aqindicizzazione per la Ricerca FT in questa biblioteca
 .TP
 .B disable
-Turns off FTS indexing for this library
+Disbilita l\(aqindicizzazione per la Ricerca FT in questa biblioteca
 .TP
 .B status
-Shows the current indexing status
+Mostra lo stato di indicizzazione corrente
 .TP
 .B reindex
-Can be used to re\-index either particular books or
-the entire library. To re\-index particular books
-specify the book ids as additional arguments after the
-reindex command. If no book ids are specified the
-entire library is re\-indexed.
+Può essere usato per reindicizzare libri specifici o
+anche l\(aqintera biblioteca. Per reindicizzare libri specifici
+devi fornire i loro id come argomenti aggiuntivi dopo il
+il comando reindex. Se non viene specificato alcun id,
+l\(aqintera biblioteca verrà reindicizzata.
 .UNINDENT
 .sp
 Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-indexing\-speed
-The speed of indexing. Use fast for fast indexing using all your computers resources and slow for less resource intensive indexing. Note that the speed is reset to slow after every invocation.
+La velocità di indicizzazione. Usa rapida per fare in modo che l\fB\(aq\fPindicizzazione usi tutte le risorse disponibili del computer, lenta per un\fB\(aq\fPindicizzazione con meno impatto sulle risorse. Tieni presente che la velocità è riportata a lenta dopo ogni utilizzo.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-wait\-for\-completion
-Wait till all books are indexed, showing indexing progress periodically
+Aspetta che tutti i libri siano indicizzati, mostrando periodicamente il progresso dell\fB\(aq\fPindicizzazione
 .UNINDENT
 .SH FTS_SEARCH
 .INDENT 0.0
@@ -1018,43 +1023,43 @@ calibredb fts_search [options] search expression
 .UNINDENT
 .UNINDENT
 .sp
-Do a full text search on the entire library or a subset of it.
+Esegui una ricerca nei contenuti sull\(aqintera biblioteca o su una sua parte.
 .sp
 Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-do\-not\-match\-on\-related\-words
-Only match on exact words not related words. So correction will not match correcting.
+Trova solo le parole esatte e non quelle derivate. Per esempio, correggere non troverà correzione.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-include\-snippets
-Include snippets of the text surrounding each match. Note that this makes searching much slower.
+Includi estratti del testo nelle vicinanze dei risultati. Tieni presente che questo rende la ricerca molto più lenta.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-indexing\-threshold
-How much of the library must be indexed before searching is allowed, as a percentage. Defaults to 90
+Quale percentuale della biblioteca deve essere indicizzata prima che la ricerca sia permessa. Il valore predefinito è 90
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-end\-marker
-The marker used to indicate the end of a matched word inside a snippet
+Il marcatore usato per indicare la fine di una parola corrispondente dentro un estratto
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-start\-marker
-The marker used to indicate the start of a matched word inside a snippet
+Il marcatore usato per indicare l\fB\(aq\fPinizio di una parola corrispondente dentro un estratto
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-format
-The format to output the search results in. Either \fB\(dq\fPtext\fB\(dq\fP for plain text or \fB\(dq\fPjson\fB\(dq\fP for JSON output.
+Il formato da usare per i risultati. La scelta è tra \fB\(dq\fPtext\fB\(dq\fP per testo semplice e \fB\(dq\fPjson\fB\(dq\fP per il formato JSON.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-restrict\-to
-Restrict the searched books, either using a search expression or ids. For example: ids:1,2,3 to restrict by ids or search:tag:foo to restrict to books having the tag foo.
+Limita la ricerca a libri specifici, usando un\fB\(aq\fPespressione di ricerca oppure gli id. Per esempio: ids:1,2,3 limita usando gli id, mentre search:tag:qualcosa limita la ricerca ai libri con il tag \fB\(dq\fPqualcosa\fB\(dq\fP\&.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal
