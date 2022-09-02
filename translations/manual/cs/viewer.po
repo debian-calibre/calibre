@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-20 09:15+0000\n"
-"PO-Revision-Date: 2022-01-11 14:40+0000\n"
-"Last-Translator: Trottel <trottel09@gmail.com>\n"
+"POT-Creation-Date: 2022-09-01 01:59+0000\n"
+"PO-Revision-Date: 2014-06-17 08:36+0000\n"
+"Last-Translator: Trottel <trottel09@gmail.com>, 2014,2017,2019-2022\n"
 "Language-Team: Czech (http://www.transifex.com/calibre/calibre/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -257,11 +257,59 @@ msgid ""
 "<https://www.mobileread.com/forums/showpost.php?p=4084051&postcount=108>`_."
 msgstr "V systému Windows nemusí být všechny nainstalované hlasy viditelné pro podsystém SAPI, který se používá pro převod textu na řeč. Existují `pokyny ke zviditelnění všech hlasů <https://www.mobileread.com/forums/showpost.php?p=4084051&postcount=108>`_."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:164
+#: ../../__w/calibre/calibre/manual/viewer.rst:163
+msgid "Searching the text"
+msgstr "Vyhledávání textu"
+
+#: ../../__w/calibre/calibre/manual/viewer.rst:165
+msgid ""
+"The viewer has very powerful search capabilities. Press the :kbd:`Ctrl+F` "
+"key or access the viewer controls and click search. The simplest form of "
+"searching is to just search for whatever text you enter in the text box. The"
+" different forms of searching are chosen by the search mode box below the "
+"search input. Available modes are:"
+msgstr "Prohlížeč má velmi výkonné možnosti vyhledávání. Stiskněte klávesu :kbd:`Ctrl+F` nebo vstupte do ovládacích prvků prohlížeče a klikněte na vyhledávání. Nejjednodušší formou vyhledávání je prostě vyhledat jakýkoliv text, který zadáte do textového pole. Různé formy vyhledávání se volí pomocí pole režimu vyhledávání pod vstupem pro vyhledávání. Dostupné jsou tyto režimy:"
+
+#: ../../__w/calibre/calibre/manual/viewer.rst:171
+msgid ""
+":guilabel:`Contains` - The simplest default mode. The text entered in the "
+"search box is searched for anywhere. All punctuation, accents and spaces are"
+" ignored. For example, the search: ``Pena`` will match all of the following:"
+" ``penal, pen a, pen.a and Peña``. If you select the :guilabel:`Case "
+"sensitive` box then accents, spaces and punctuation are no longer ignored."
+msgstr ":guilabel:`Obsahuje` - Nejjednodušší výchozí režim. Text zadaný do vyhledávacího pole se hledá kdekoliv. Veškerá interpunkce, diakritika a mezery jsou ignorovány. Například vyhledávání: ``Pena`` bude odpovídat všemu následujícímu: ``penal, pen a, pen.a a Peña``. Pokud zaškrtnete políčko :guilabel:`Rozlišovat velikost písmen`, pak už diakritika, mezery a interpunkce nebudou ignorovány."
+
+#: ../../__w/calibre/calibre/manual/viewer.rst:177
+msgid ""
+":guilabel:`Whole words` - Searches for whole words. So for example, the "
+"search ``pena`` will match the word ``Peña`` but not the word ``Penal``. As "
+"with :guilabel:`Contains` searches above, accents and punctuation are "
+"ignored unless the :guilabel:`Case sensitive` box is checked."
+msgstr ":guilabel:`Celá slova` - Vyhledává celá slova. Takže například vyhledávání ``pena`` bude odpovídat slovu ``Peña``, ale ne slovu ``Penal``. Stejně jako u výše uvedeného vyhledávání :guilabel:`Obsahuje` je diakritika a interpunkce ignorována, pokud není zaškrtnuto políčko :guilabel:`Rozlišovat velikost písmen`."
+
+#: ../../__w/calibre/calibre/manual/viewer.rst:182
+msgid ""
+":guilabel:`Nearby words` - Searches for whole words that are near each "
+"other. So for example, the search ``calibre cool`` will match places where "
+"the words ``calibre`` and ``cool`` occur within sixty characters of each "
+"other. To change the number of characters add the new number to the end of "
+"the list of words. For instance, ``calibre cool awesome 120`` will match "
+"places where the three words occur within 120 characters of each other. Note"
+" that punctuation and accents are *not* ignored for these searches."
+msgstr ":guilabel:`Slova poblíž` - Vyhledává celá slova, která jsou blízko sebe. Takže například vyhledání ``calibre skvělé`` bude hledat místa, kde se slova ``calibre`` a ``skvělé`` vyskytují do šedesáti znaků od sebe. Pokud chcete změnit počet znaků, přidejte nové číslo na konec seznamu slov. Například ``calibre skvělé úžasné 120`` bude odpovídat místům, kde se tato tři slova vyskytují do 120 znaků od sebe. Pamatujte, že interpunkce a diakritika *není* při tomto vyhledávání ignorována."
+
+#: ../../__w/calibre/calibre/manual/viewer.rst:190
+msgid ""
+":guilabel:`Regex` - Interprets the search text as a *regular expression*. To"
+" learn more about using regular expressions, see :doc:`the tutorial "
+"<regexp>`."
+msgstr ":guilabel:`Regulární výraz` - Interpretuje hledaný text jako *regulární výraz*. Více informací o používání regulárních výrazů naleznete v :doc:`návodu <regexp>`."
+
+#: ../../__w/calibre/calibre/manual/viewer.rst:196
 msgid "Following links using only the keyboard"
 msgstr "Následování odkazů pouze pomocí klávesnice"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:166
+#: ../../__w/calibre/calibre/manual/viewer.rst:198
 msgid ""
 "The E-book viewer has a :guilabel:`Hints mode` that allows you to click "
 "links in the text without using the mouse. Press the :kbd:`Alt+F` key and "
@@ -271,7 +319,7 @@ msgid ""
 "link."
 msgstr "Prohlížeč e-knih má :guilabel:`Režim rad`, který umožňuje klikat na odkazy v textu bez použití myši. Stiskněte klávesy :kbd:`Alt+F` a všechny odkazy na aktuální obrazovce budou zvýrazněny číslem nebo písmenem. Stisknutím písmene na klávesnici kliknete na odkaz. Stisknutím klávesy :kbd:`Esc` přerušíte :guilabel:`Režim rad`, aniž byste vybrali jakýkoliv odkaz."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:172
+#: ../../__w/calibre/calibre/manual/viewer.rst:204
 msgid ""
 "If more than thirty five links are on-screen then some of them will have "
 "multiple letters, in which case type the first and second, or the first and "
@@ -279,37 +327,37 @@ msgid ""
 " undo a mistake in typing."
 msgstr "Pokud je na obrazovce více než třicet pět odkazů, některé z nich budou mít více písmen, v takovém případě zadejte první a druhé nebo první a aktivujte je stisknutím :kbd:`Enter`. Klávesu :kbd:`Backspace` můžete také použít k vrácení chyby při psaní."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:179
+#: ../../__w/calibre/calibre/manual/viewer.rst:211
 msgid "Customizing the look and feel of your reading experience"
 msgstr "Přizpůsobení vzhledu a chování vašeho zážitku ze čtení"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:181
+#: ../../__w/calibre/calibre/manual/viewer.rst:213
 msgid ""
 "You can change font sizes on the fly by using :guilabel:`Font size` in the "
 "viewer controls or :kbd:`Ctrl++` or :kbd:`Ctrl+-` or holding the :kbd:`Ctrl`"
 " key and using the mouse wheel."
 msgstr "Velikost písma můžete změnit za běhu pomocí :guilabel:`Velikost písma` v ovládacích prvcích prohlížeče nebo pomocí :kbd:`Ctrl++` a :kbd:`Ctrl+-` nebo držením klávesy :kbd:`Ctrl` a použitím kolečka myši."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:185
+#: ../../__w/calibre/calibre/manual/viewer.rst:217
 msgid ""
 "Colors can be changed in the :guilabel:`Colors` section of the viewer "
 "preferences."
 msgstr "Barvy lze změnit v oddílu :guilabel:`Barvy` v předvolbách prohlížeče."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:188
+#: ../../__w/calibre/calibre/manual/viewer.rst:220
 msgid ""
 "You can change the number of pages displayed on the screen as well as page "
 "margins in :guilabel:`Page layout` in the viewer preferences."
 msgstr "Počet stránek zobrazených na obrazovce stejně jako okraje stránky můžete změnit v :guilabel:`Rozložení stránky` v předvolbách prohlížeče."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:191
+#: ../../__w/calibre/calibre/manual/viewer.rst:223
 msgid ""
 "You can display custom headers and footers such as time left to read, "
 "current chapter title, book position, etc. via the :guilabel:`Headers and "
 "footers` section of the viewer preferences."
 msgstr "Vlastní záhlaví a zápatí, jako je zbývající čas čtení, název aktuální kapitoly, pozice v knize atd., můžete zobrazit prostřednictvím oddílu :guilabel:`Záhlaví a zápatí` předvoleb prohlížeče."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:195
+#: ../../__w/calibre/calibre/manual/viewer.rst:227
 msgid ""
 "More advanced customization can be achieved by the :guilabel:`Styles` "
 "settings. Here you can specify a background image to display under the text "
@@ -319,22 +367,22 @@ msgid ""
 "forums <https://www.mobileread.com/forums/showthread.php?t=51500>`_."
 msgstr "Pokročilejší přizpůsobení může být dosaženo nastavením :guilabel:`Stylů`. Zde můžete zadat obrázek pozadí, který bude zobrazen pod textem, a také šablonu stylů, kterou můžete nastavit, aby se použila na každou knihu. Pomocí ní můžete dělat věci, jako jsou změna stylů odstavců, zarovnání textu do bloku atd. Pro příklady vlastních šablon stylů používaných uživateli Calibre navštivte `fórum <https://www.mobileread.com/forums/showthread.php?t=51500>`_."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:203
+#: ../../__w/calibre/calibre/manual/viewer.rst:235
 msgid "Dictionary lookup"
 msgstr "Vyhledávání ve slovníku"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:205
+#: ../../__w/calibre/calibre/manual/viewer.rst:237
 msgid ""
 "You can look up the meaning of words in the current book by double clicking "
 "or long tapping the word you want to lookup and then clicking the lookup "
 "button that looks like a library."
 msgstr "Význam slov v aktuální knize můžete vyhledat poklepáním nebo dlouhým klepnutím na slovo, které chcete vyhledat, a následným kliknutím na tlačítko vyhledávání, které vypadá jako knihovna."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:211
+#: ../../__w/calibre/calibre/manual/viewer.rst:243
 msgid "Copying text and images"
 msgstr "Kopírování textu a obrázků"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:213
+#: ../../__w/calibre/calibre/manual/viewer.rst:245
 msgid ""
 "You can select text and images by dragging the content with your mouse and "
 "then right clicking and selecting :guilabel:`Copy` to copy to the clipboard."
@@ -342,22 +390,22 @@ msgid ""
 "and images."
 msgstr "Text a obrázky můžete vybrat přetažením obsahu myší a potom kliknutím pravým tlačítkem myši a výběrem :guilabel:`Kopírovat` pro zkopírování do schránky. Zkopírovaný materiál může být vložen do jiné aplikace jako prostý text a obrázky."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:219
+#: ../../__w/calibre/calibre/manual/viewer.rst:251
 msgid "Zooming in on images"
 msgstr "Přibližování obrázků"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:221
+#: ../../__w/calibre/calibre/manual/viewer.rst:253
 msgid ""
 "You can zoom in to show an image at full size in a separate window by either"
 " double clicking or long tapping on it. You can also right click on it and "
 "choose :guilabel:`View image`."
 msgstr "Přiblížit obrázek pro zobrazení v plné velikosti v samostatném okně můžete buď poklepáním nebo dlouhým klepnutím na něj. Můžete na něj také kliknout pravým tlačítkem myši a zvolit :guilabel:`Zobrazit obrázek`."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:227
+#: ../../__w/calibre/calibre/manual/viewer.rst:259
 msgid "Non re-flowable content"
 msgstr "Neplovoucí obsah"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:229
+#: ../../__w/calibre/calibre/manual/viewer.rst:261
 msgid ""
 "Some books have very wide content that cannot be broken up at page "
 "boundaries. For example tables or :code:`<pre>` tags. In such cases, you "
@@ -367,50 +415,50 @@ msgid ""
 "break up lines of text in :code:`<pre>` tags::"
 msgstr "Některé knihy mají velmi široký obsah, který nemůže být zalomen na ohraničeních stránky. Například tabulky nebo značky :code:`<pre>`. V takových případech byste měli přepnout prohlížeč do *plovoucího režimu* stisknutím :kbd:`Ctrl+M` pro čtení tohoto obsahu. Alternativně můžete také přidat následující CSS do oddílu :guilabel:`Styly` v předvolbách prohlížeče, abyste prohlížeč donutili rozdělit řádky textu ve značkách :code:`<pre>`::"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:240
+#: ../../__w/calibre/calibre/manual/viewer.rst:272
 msgid "Designing your book to work well with the calibre viewer"
 msgstr "Navrhování knihy tak, aby dobře fungovala s prohlížečem Calibre"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:242
+#: ../../__w/calibre/calibre/manual/viewer.rst:274
 msgid ""
 "The calibre viewer will set the ``is-calibre-viewer`` class on the root "
 "element. So you can write CSS rules that apply only for it. Additionally, "
 "the viewer will set the following classes on the ``body`` element:"
 msgstr "Prohlížeč Calibre nastaví třídu ``is-calibre-viewer`` na kořenovém elementu. Můžete tedy napsat pravidla CSS, která se vztahují pouze na něj. Kromě toho prohlížeč nastaví následující třídy na prvku ``body``:"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:247
+#: ../../__w/calibre/calibre/manual/viewer.rst:279
 msgid "``body.calibre-viewer-dark-colors``"
 msgstr "``body.calibre-viewer-dark-colors``"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:247
+#: ../../__w/calibre/calibre/manual/viewer.rst:279
 msgid "Set when using a dark color scheme"
 msgstr "Nastavit při použití tmavého barevného schématu"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:250
+#: ../../__w/calibre/calibre/manual/viewer.rst:282
 msgid "``body.calibre-viewer-light-colors``"
 msgstr "``body.calibre-viewer-light-colors``"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:250
+#: ../../__w/calibre/calibre/manual/viewer.rst:282
 msgid "Set when using a light color scheme"
 msgstr "Nastavit při použití světlého barevného schématu"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:253
+#: ../../__w/calibre/calibre/manual/viewer.rst:285
 msgid "``body.calibre-viewer-paginated``"
 msgstr "``body.calibre-viewer-paginated``"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:253
+#: ../../__w/calibre/calibre/manual/viewer.rst:285
 msgid "Set when in paged mode"
 msgstr "Nastavit při použití režimu stránek"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:256
+#: ../../__w/calibre/calibre/manual/viewer.rst:288
 msgid "``body.calibre-viewer-scrolling``"
 msgstr "``body.calibre-viewer-scrolling``"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:256
+#: ../../__w/calibre/calibre/manual/viewer.rst:288
 msgid "Set when in flow (non-paginated) mode"
 msgstr "Nastavit při použití plovoucího režimu"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:258
+#: ../../__w/calibre/calibre/manual/viewer.rst:290
 msgid ""
 "Finally, you can use the calibre color scheme colors via `CSS variables "
 "<https://developer.mozilla.org/en-"

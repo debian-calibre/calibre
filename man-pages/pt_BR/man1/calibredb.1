@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "agosto 12, 2022" "6.3.0" "calibre"
+.TH "CALIBREDB" "1" "setembro 02, 2022" "6.4.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -819,6 +819,11 @@ Lista de nomes separados por vírgula para ignorar. Padrão: tudo
 .B \-\-report, \-r
 Lista de relatórios separados por vírgula. Padrão: tudo
 .UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-vacuum\-fts\-db
+Vacuum the full text search database. This can be very slow and memory intensive, depending on the size of the database.
+.UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
 .INDENT 3.5
@@ -969,42 +974,42 @@ O número máximo de resultados para retornar. O padrão é todos os resultados.
 .sp
 .nf
 .ft C
-calibredb fts_index [options] enable/disable/status/reindex
+calibredb fts_index [opções] enable/disable/status/reindex
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Control the Full text search indexing process.
+Controla o processo de indexação da pesquisa no texto completo.
 .INDENT 0.0
 .TP
 .B enable
-Turns on FTS indexing for this library
+Habilita a indexação nesta biblioteca
 .TP
 .B disable
-Turns off FTS indexing for this library
+Desabilita a indexação nesta biblioteca
 .TP
 .B status
-Shows the current indexing status
+Mostra o status atual da indexação
 .TP
 .B reindex
-Can be used to re\-index either particular books or
-the entire library. To re\-index particular books
-specify the book ids as additional arguments after the
-reindex command. If no book ids are specified the
-entire library is re\-indexed.
+Pode ser usado para reindexar livros específicos ou
+a biblioteca inteira. Para reindexar livros específicos,
+especifique os ids como um argumento adicional após o
+comando reindex. Se nenhum id for especificado, a
+biblioteca inteira é reindexada.
 .UNINDENT
 .sp
 Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-indexing\-speed
-The speed of indexing. Use fast for fast indexing using all your computers resources and slow for less resource intensive indexing. Note that the speed is reset to slow after every invocation.
+A velocidade da indexação. Use \fB\(aq\fPfast\fB\(aq\fP para indexação rápida, utilizando todos os recursos de seu computador, ou \fB\(aq\fPslow\fB\(aq\fP para indexação menos intensa, consumindo menos recursos. Note que a velocidade é redefinida para lenta após cada invocação.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-wait\-for\-completion
-Wait till all books are indexed, showing indexing progress periodically
+Aguarde até que todos os livros sejam indexados, exibindo periodicamente o progresso da indexação
 .UNINDENT
 .SH FTS_SEARCH
 .INDENT 0.0
@@ -1012,24 +1017,24 @@ Wait till all books are indexed, showing indexing progress periodically
 .sp
 .nf
 .ft C
-calibredb fts_search [options] search expression
+calibredb fts_search [opções] expressão de busca
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Do a full text search on the entire library or a subset of it.
+Pesquisa no texto completo de toda a biblioteca ou em um subgrupo.
 .sp
 Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-do\-not\-match\-on\-related\-words
-Only match on exact words not related words. So correction will not match correcting.
+Encontrar apenas palavras exatas, e não palavras relacionadas. Dessa forma, \fB\(aq\fPcorrigir\fB\(aq\fP não irá encontrar \fB\(aq\fPcorrigindo\fB\(aq\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-include\-snippets
-Include snippets of the text surrounding each match. Note that this makes searching much slower.
+Incluir trechos do texto ao redor de cada correspondência. Note que isso torna a pesquisa muito mais lenta.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1039,12 +1044,12 @@ How much of the library must be indexed before searching is allowed, as a percen
 .INDENT 0.0
 .TP
 .B \-\-match\-end\-marker
-The marker used to indicate the end of a matched word inside a snippet
+O marcador usado para indicar o final de uma palavra correspondente dentro de um trecho
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-start\-marker
-The marker used to indicate the start of a matched word inside a snippet
+O marcador usado para indicar o início de uma palavra correspondente dentro de um trecho
 .UNINDENT
 .INDENT 0.0
 .TP

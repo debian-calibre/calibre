@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "8월 12, 2022" "6.3.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "9월 02, 2022" "6.4.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -286,7 +286,7 @@ pt 단위의 줄 간격 높이입니다. 자신들의 줄 간격을 직접 지�
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-해당 요소의 계산된 글꼴 크기에 대한 백분율로 표시되는 최소 줄 높이입니다. 캘리버는 입력 문서가 지정하는 것과 상관없이 모든 요소가 최소한 이 설정의 줄 높이를 갖도록 합니다. 비활성화하려면 0으로 설정하십시오. 기본값은 120%입니다. 현재 수행 중인 작업을 모르는 경우가 아니면 직접 라인 높이 사양보다 이 설정을 사용하십시오. 예를 들어, 이것을 240으로 설정하여 \fB\(dq\fP이중 간격\fB\(dq\fP 텍스트를 얻을 수 있습니다.
+해당 요소의 계산된 글꼴 크기에 대한 백분율로 표시되는 최소 줄 높이입니다. 캘리버는 입력 문서가 지정하는 것과 상관없이 모든 요소가 최소한 이 설정의 줄 높이를 갖도록 합니다. 비활성화하려면 0으로 설정하십시오. 기본값은 120%입니다. 현재 수행 중인 작업을 모르는 경우가 아니면 직접 라인 높이 사양에 대해 우선적으로 이 설정을 사용하십시오. 예를 들어, 이것을 240으로 설정하여 \fB\(dq\fP이중 간격\fB\(dq\fP 텍스트를 얻을 수 있습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -425,7 +425,7 @@ Search pattern (regular expression) to be replaced with sr3\-replace.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-장(章)제목을 탐지하기 위한 XPath 표현식. 기본값은 \fB\(dq\fPchapter\fB\(dq\fP, \fB\(dq\fPbook\fB\(dq\fP, \fB\(dq\fPsection\fB\(dq\fP, \fB\(dq\fPprologue\fB\(dq\fP, \fB\(dq\fPepilogue\fB\(dq\fP, 또는 \fB\(dq\fPpart\fB\(dq\fP란 단어를 장 제목으로 포함하는 <h1> 또는 <h2> 태그와 class=\fB\(dq\fPchapter\fB\(dq\fP 속성을 가지고 있는 태그들입니다. 사용된 표현식은 요소들의 목록을 평가할 수 있어야 합니다. 장 탐지를 비활성화 하려면 표현식 \fB\(dq\fP/\fB\(dq\fP을 사용하세요. 이 특정 기능에 대한 더 자세한 도움말을 보려면 캘리버 사용자 설명서의 XPath 지침서를 참조하세요.
+장(章)제목을 탐지하기 위한 XPath 표현식. 기본값은 \fB\(dq\fPchapter\fB\(dq\fP, \fB\(dq\fPbook\fB\(dq\fP, \fB\(dq\fPsection\fB\(dq\fP, \fB\(dq\fPprologue\fB\(dq\fP, \fB\(dq\fPepilogue\fB\(dq\fP, 또는 \fB\(dq\fPpart\fB\(dq\fP란 단어를 장 제목으로 포함하는 <h1> 또는 <h2> 태그와 class=\fB\(dq\fPchapter\fB\(dq\fP 속성을 가지고 있는 태그들입니다. 사용된 표현식은 요소들의 목록을 평가할 수 있어야 합니다. 장 탐지를 비활성화 하려면 표현식 \fB\(dq\fP/\fB\(dq\fP을 사용하세요. 이 특정 기능에 대한 더 자세한 도움말을 보려면 캘리버 사용자 설명서의 XPath 튜토리얼을 참조하세요.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -450,7 +450,7 @@ XPath 표현식. 지정된 요소의 앞에 쪽 넘김이 삽입됩니다. 비�
 .INDENT 0.0
 .TP
 .B \-\-prefer\-metadata\-cover
-지정된 표지보다 먼저 원본 파일에서 감지된 표지를 사용합니다.
+지정된 표지보다 우선적으로 원본 파일에서 감지된 표지를 사용합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -460,11 +460,11 @@ XPath 표현식. 지정된 요소의 앞에 쪽 넘김이 삽입됩니다. 비�
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-문서에서의 읽기 시작 지점을 탐지하기 위한 XPath 표현식. 몇몇 프로그램(대표적으로 Kindle)은 책을 열 때 이 위치를 사용합니다. 이 특정 기능을 사용하는데 대한 더 많은 도움말은 캘리버 사용자 설명서의 XPath 지침서를 참고하세요.
+문서에서의 읽기 시작 지점을 탐지하기 위한 XPath 표현식. 몇몇 프로그램(대표적으로 Kindle)은 책을 열 때 이 위치를 사용합니다. 이 특정 기능을 사용하는데 대한 더 많은 도움말은 캘리버 사용자 설명서의 XPath 튜토리얼을 참고하세요.
 .UNINDENT
 .SH 목차
 .sp
-목차의 자동 생성을 제어합니다. 기본값으로 원본 파일이 목차를 가지고 있다면, 자동으로 생성된 목차를 우선적으로 사용할 것입니다.
+목차의 자동 생성을 제어합니다. 기본적으로 원본 파일에 목차가 있는 경우, 자동으로 생성된 파일에 대한 환경설정에 사용됩니다.
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc
@@ -473,17 +473,17 @@ XPath 표현식. 지정된 요소의 앞에 쪽 넘김이 삽입됩니다. 비�
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-목차의 1단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 이 칸이 지정되어있다면, 다른 형태의 자동감지를 우선합니다. 예시를 보려면 캘리버 사용자 설명서 안의 XPath 지침서를 참조하세요.
+목차의 1단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 이 칸이 지정되어있다면, 다른 형태의 자동감지를 우선합니다. 예시를 보려면 캘리버 사용자 설명서 안의 XPath 튜토리얼을 참조하세요.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-목차의 2단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 각 항목은 이전의 1단계 항목 아래에 추가됩니다. 예시를 보려면 캘리버 사용자 설명서 안의 XPath 지침서를 참조하세요.
+목차의 2단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 각 항목은 이전의 1단계 항목 아래에 추가됩니다. 예시를 보려면 캘리버 사용자 설명서 안의 XPath 튜토리얼을 참조하세요.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-목차의 3단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 각 항목은 이전의 2단계 항목 아래에 추가됩니다. 예시를 보려면 캘리버 사용자 설명서 안의 XPath 지침서를 참조하세요.
+목차의 3단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 각 항목은 이전의 2단계 항목 아래에 추가됩니다. 예시를 보려면 캘리버 사용자 설명서 안의 XPath 튜토리얼을 참조하세요.
 .UNINDENT
 .INDENT 0.0
 .TP

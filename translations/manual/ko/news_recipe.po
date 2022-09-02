@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Jung Hee Lee <daemul72@gmail.com>, 2022
+# Junghee Lee <daemul72@gmail.com>, 2022
+# Junghee Lee <daemul72@gmail.com>, 2022
 # Seo, HyunTae <acrab001@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-03 02:30+0000\n"
-"PO-Revision-Date: 2022-01-23 07:19+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2022-09-01 01:59+0000\n"
+"PO-Revision-Date: 2014-06-17 08:36+0000\n"
+"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022\n"
 "Language-Team: Korean (http://www.transifex.com/calibre/calibre/language/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,7 +35,7 @@ msgid ""
 "progressively more of the functionality in this class, you can make "
 "progressively more customized/powerful recipes. For a tutorial introduction "
 "to creating recipes, see :doc:`news`."
-msgstr "모든 레시피에 필요한 논리를 포함하는 기본 클래스입니다. 이 클래스의 기능들을 하나하나 수정하여 덮어써나감으로써 점점 더 사용자에게 알맞으면서도 강력한 레시피로 만들어 갈 수 있습니다. 레시피를 생성하는 법에 대한 기초 사항은 :doc:`뉴스`를 참조하십시오."
+msgstr "모든 레시피에 필요한 논리를 포함하는 기본 클래스입니다. 이 클래스의 기능들을 하나하나 수정하여 덮어써나감으로써 점점 더 사용자에게 알맞으면서도 강력한 레시피로 만들어 갈 수 있습니다. 레시피 작성에 대한 튜토리얼 소개는 :doc:`뉴스`를 참조하십시오."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.abort_article:1
@@ -135,7 +136,7 @@ msgid ""
 "method should be called only once on a particular Recipe instance. Calling "
 "it more than once will lead to undefined behavior. :return: Path to "
 "index.html"
-msgstr "이 레시피의 피드들에 해당하는 모든 기사를 다운로드하고 전처리를 합니다. 이 메소드는 특정 레시피 인스턴스에서 단 한번만 호출되어야 합니다. 한번 이상 호출할 시, 정의되지 않은 동작을 일으킬 수 있습니다. index.html에 대한 경로를 리턴합니다."
+msgstr "이 레시피의 피드들에 해당하는 모든 기사를 다운로드하고 전처리를 합니다. 이 메소드는 특정 레시피 인스턴스에서 단 한번만 호출되어야 합니다. 한번 이상 호출할 시, 정의되지 않은 작동 방식을 일으킬 수 있습니다. index.html에 대한 경로를 리턴합니다."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.extract_readable_article:1
@@ -237,7 +238,8 @@ msgstr ""
 #: calibre.web.feeds.news.BasicNewsRecipe.image_url_processor:1
 msgid ""
 "Perform some processing on image urls (perhaps removing size restrictions "
-"for dynamically generated images, etc.) and return the precessed URL."
+"for dynamically generated images, etc.) and return the precessed URL. Return"
+" None or an empty string to skip fetching the image."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
@@ -427,6 +429,13 @@ msgid ""
 "Take a `url` pointing to the webpage with article content and return the "
 ":term:`URL` pointing to the print version of the article. By default does "
 "nothing. For example::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.publication_date:1
+msgid ""
+"Use this method to set the date when this issue was published. Defaults to "
+"the moment of download. Must return a :class:`datetime.datetime` object."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of

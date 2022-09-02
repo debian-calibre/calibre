@@ -4,10 +4,11 @@
 
 import sys
 import textwrap
+from functools import lru_cache
 from qt.core import (
     QAbstractItemView, QApplication, QCheckBox, QComboBox, QDialog, QDialogButtonBox,
     QFormLayout, QHBoxLayout, QIcon, QLabel, QLineEdit, QListWidget, QListWidgetItem,
-    QPushButton, QSize, Qt, QTimer, QUrl, QVBoxLayout, QWidget, pyqtSignal
+    QPalette, QPushButton, QSize, Qt, QTimer, QUrl, QVBoxLayout, QWidget, pyqtSignal
 )
 from qt.webengine import (
     QWebEnginePage, QWebEngineProfile, QWebEngineScript, QWebEngineView
@@ -17,14 +18,33 @@ from calibre import prints, random_user_agent
 from calibre.gui2 import error_dialog
 from calibre.gui2.viewer.web_view import apply_font_settings, vprefs
 from calibre.gui2.widgets2 import Dialog
+from calibre.utils.localization import canonicalize_lang, get_lang, lang_as_iso639_1
 from calibre.utils.webengine import (
     create_script, insert_scripts, secure_webengine, setup_profile
 )
+
+
+@lru_cache
+def lookup_lang():
+    ans = canonicalize_lang(get_lang())
+    if ans:
+        ans = lang_as_iso639_1(ans) or ans
+    return ans
+
+
+def google_dictionary(word):
+    ans = f'https://www.google.com/search?q=define:{word}'
+    lang = lookup_lang()
+    if lang:
+        ans += f'#dobc={lang}'
+    return ans
+
 
 vprefs.defaults['lookup_locations'] = [
     {
         'name': 'Google dictionary',
         'url': 'https://www.google.com/search?q=define:{word}',
+        'special_processor': google_dictionary,
         'langs': [],
     },
 
@@ -244,6 +264,18 @@ def set_sync_override(allowed):
         li.set_sync_override(allowed)
 
 
+def blank_html():
+    msg = _('Double click on a word in the book\'s text to look it up.')
+    html = '<p>' + msg
+    app = QApplication.instance()
+    if app.is_dark_theme:
+        pal = app.palette()
+        bg = pal.color(QPalette.ColorRole.Base).name()
+        fg = pal.color(QPalette.ColorRole.Text).name()
+        html = f'<style> * {{ color: {fg}; background-color: {bg} }} </style>' + html
+    return html
+
+
 class Lookup(QWidget):
 
     def __init__(self, parent):
@@ -269,8 +301,7 @@ class Lookup(QWidget):
         l.addWidget(self.view)
         self.populate_sources()
         self.source_box.currentIndexChanged.connect(self.source_changed)
-        self.view.setHtml('<p>' + _('Double click on a word in the book\'s text'
-            ' to look it up.'))
+        self.view.setHtml(blank_html())
         self.add_button = b = QPushButton(QIcon.ic('plus.png'), _('Add sources'))
         b.setToolTip(_('Add more sources at which to lookup words'))
         b.clicked.connect(self.add_sources)
@@ -359,6 +390,12 @@ class Lookup(QWidget):
             return self.source_box.itemData(idx)['url']
 
     @property
+    def special_processor(self):
+        idx = self.source_box.currentIndex()
+        if idx > -1:
+            return self.source_box.itemData(idx).get('special_processor')
+
+    @property
     def query_is_up_to_date(self):
         query = self.selected_text or self.current_query
         return self.current_query == query and self.current_source == self.url_template
@@ -376,8 +413,12 @@ class Lookup(QWidget):
         if not self.is_visible or not query:
             return
         self.current_source = self.url_template
-        url = self.current_source.format(word=query)
-        _('meaning')  # to be used later
+        sp = self.special_processor
+        if sp is None:
+            url = self.current_source.format(word=query)
+        else:
+            url = sp(query)
+
         self.view.load(QUrl(url))
         self.current_query = query
         self.update_refresh_button_status()

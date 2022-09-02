@@ -50,7 +50,7 @@ class Ui_Form(object):
         self.verticalLayout_11.setObjectName("verticalLayout_11")
         self.horizontalLayout_10 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_10.setObjectName("horizontalLayout_10")
-        self.opt_input_order = QtWidgets.QListWidget(self.groupBox_5)
+        self.opt_input_order = ListWidgetWithMoveByKeyPress(self.groupBox_5)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -180,3 +180,4 @@ class Ui_Form(object):
         self.reset_confirmation_button.setText(_("Reset all disabled &confirmation dialogs"))
         self.groupBox_3.setTitle(_("Use internal &viewer for:"))
         self.label_170.setText(_("Virtual library to apply when the current &library is opened:"))
+from calibre.gui2.preferences import ListWidgetWithMoveByKeyPress

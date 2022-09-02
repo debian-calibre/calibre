@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "augusti 12, 2022" "6.3.0" "calibre"
+.TH "CALIBREDB" "1" "september 02, 2022" "6.4.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -144,7 +144,7 @@ visa denna hjälptext och avsluta
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Sökväg till calibre\-biblioteket. Standard är att använda sökvägen lagrad i inställningarna. Du kan också ansluta till en calibre\-innehållsserver för att utföra åtgärder på fjärrbibliotek. Så här använder du en webbadress av formen: \fI\%http://hostname:port/#bibliotek_id\fP till exempel \fI\%http://localhost:8080/#mittbibliotek\fP\&. Bibliotek_id är bibliotekets ID för det bibliotek du vill ansluta till på innehållsservern. Du kan använda det speciella bibliotek_id\-värdet för att få en lista över biblioteks\-id:n tillgängliga på servern. Mer information om hur du anpassar åtkomst via en innehållsserver finns i https://manual.calibre\-ebook.com/sv/generated/sv/calibredb.html.
+Sökväg till calibre\-biblioteket. Standard är att använda sökvägen lagrad i inställningarna. Du kan också ansluta till en calibre\-innehållsserver för att utföra åtgärder på fjärrbibliotek. Så här använder du en webbadress av formen: \fI\%http://hostname:port/#bibliotek_id\fP till exempel \fI\%http://localhost:8080/#mittbibliotek\fP\&. Bibliotek_id är bibliotekets identifierare för det bibliotek du vill ansluta till på innehållsservern. Du kan använda det speciella bibliotek_id\-värdet för att få en lista över biblioteksidentifierare tillgängliga på servern. Mer information om hur du anpassar åtkomst via en innehållsserver finns i \fI\%https://manual.calibre\-ebook.com/sv/generated/sv/calibredb.html\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -250,7 +250,7 @@ Ange författarna för den tillagda boken eller de tillagda böckerna
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-Om böcker med liknande titlar och författare hittas, slå samman de inkommande formaten (filer) automatiskt med befintliga bokposter. Värdet \fB\(dq\fPignore\fB\(dq\fP betyder att dublettformat kasseras. Värdet \fB\(dq\fPoverwrite\fB\(dq\fP betyder att dublettformat i biblioteket skrivs över med de nyligen tillagda filerna. Värdet \fB\(dq\fPnew_record\fB\(dq\fP betyder att dublettformat placeras i en ny bokpost.
+Om böcker med liknande titlar och författare hittas, slå samman de inkommande formaten (filer) automatiskt med befintliga bokposter. Värdet \fB\(dq\fPignore\fB\(dq\fP betyder att dubblettformat kasseras. Värdet \fB\(dq\fPoverwrite\fB\(dq\fP betyder att dubblettformat i biblioteket skrivs över med de nyligen tillagda filerna. Värdet \fB\(dq\fPnew_record\fB\(dq\fP betyder att dubblettformat placeras i en ny bokpost.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -443,7 +443,7 @@ calibredb export [options] ids
 .UNINDENT
 .UNINDENT
 .sp
-Exportera böckerna som anges av id (en kommaseparerad lista) till filsystemet.
+Exportera böckerna som anges av identifierare (en kommaseparerad lista) till filsystemet.
 Exporten sparar alla format av boken, dess omslag och metadata (i
 en OPF\-fil). Du kan få id\-nummer från sökkommandot.
 .sp
@@ -707,7 +707,7 @@ calibredb custom_columns [options]
 .UNINDENT
 .UNINDENT
 .sp
-Lista anpassade kolumner. Visar kolumnnamn och id.
+Lista anpassade kolumner. Visar kolumnnamn och identifierare.
 .sp
 När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -748,7 +748,7 @@ calibredb set_custom [options] column id value
 .UNINDENT
 .UNINDENT
 .sp
-Ställ in värdet på en anpassad kolumn för boken som identifieras av id.
+Ställ in värdet på en anpassad kolumn för boken som identifieras av identifierare.
 Du kan få en lista med id med hjälp av sökkommandot.
 Du kan få en lista med anpassade kolumnnamn med hjälp av custom_columns
 kommando.
@@ -820,6 +820,11 @@ Kommaseparerad lista över namn att ignorera. Standard: Alla
 .TP
 .B \-\-report, \-r
 Kommaseparerad lista över rapporter. Standard: Alla
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-vacuum\-fts\-db
+Rensa heltextsökningsdatabasen. Detta kan vara mycket långsamt och minneskrävande, beroende på databasens storlek.
 .UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
@@ -922,7 +927,7 @@ metadata i calibre\-databasen. Normalt uppdateras metadata endast vid
 export av filer från calibre, det här kommandot är användbart om du vill att filerna ska
 uppdateras på plats. Observera att olika filformat stöder olika mängder
 metadata. Du kan använda specialvärdet \(aqall\(aq för book_id för att uppdatera metadata
-i alla böcker. Du kan också ange många bok\-id åtskilda med blanksteg och id\-intervall
+i alla böcker. Du kan också ange många bokidentifierare åtskilda med blanksteg och id\-intervall
 åtskilda med bindestreck. Till exempel: calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
 När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
@@ -944,8 +949,8 @@ calibredb search [options] sökuttryck
 .UNINDENT
 .sp
 Sök i biblioteket efter den angivna söktermen och returnera en kommaseparerad
-lista med bok\-id:er som matchar sökuttrycket. Utmatningsformatet är användbart
-för att mata in andra kommandon som accepterar en lista med id:er som inmatning.
+lista med bokidentifierare som matchar sökuttrycket. Utmatningsformatet är användbart
+för att mata in andra kommandon som accepterar en lista med identifierare som inmatning.
 .sp
 Sökuttrycket kan vara vad som helst från calibres kraftfulla sökfrågespråk,
 till exempel: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
@@ -968,24 +973,24 @@ calibredb fts_index [options] enable/disable/status/reindex
 .UNINDENT
 .UNINDENT
 .sp
-Control the Full text search indexing process.
+Kontrollera indexeringsprocessen för heltextsökning.
 .INDENT 0.0
 .TP
 .B enable
-Turns on FTS indexing for this library
+Aktiverar FTS\-indexering för det här biblioteket
 .TP
 .B disable
-Turns off FTS indexing for this library
+Inaktiverar av FTS\-indexering för det här biblioteket
 .TP
 .B status
-Shows the current indexing status
+Visar aktuell indexeringsstatus
 .TP
 .B reindex
-Can be used to re\-index either particular books or
-the entire library. To re\-index particular books
-specify the book ids as additional arguments after the
-reindex command. If no book ids are specified the
-entire library is re\-indexed.
+Kan användas för att återindexera antingen vissa böcker eller
+hela biblioteket. För att återindexera vissa böcker,
+specificera bok\-id:n som ytterligare argument efter
+kommandot reindex. Om inga bokidentifierare anges
+återindexeras hela biblioteket.
 .UNINDENT
 .sp
 När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
@@ -1005,24 +1010,24 @@ Vänta tills alla böcker har indexerats och visar indexeringsförlopp med jämn
 .sp
 .nf
 .ft C
-calibredb fts_search [options] search expression
+calibredb fts_search [options] sökuttryck
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Do a full text search on the entire library or a subset of it.
+Gör en heltextsökning på hela biblioteket eller en delmängd av det.
 .sp
 När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-do\-not\-match\-on\-related\-words
-Only match on exact words not related words. So correction will not match correcting.
+Matcha endast på exakta ord, inte relaterade ord. Så korrigering kommer inte att matcha korrigering.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-include\-snippets
-Include snippets of the text surrounding each match. Note that this makes searching much slower.
+Inkludera kodavsnitt som omger varje matchning. Observera att detta gör sökningen mycket långsammare.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1032,22 +1037,22 @@ Hur mycket av biblioteket som måste indexeras innan sökning är tillåten, i p
 .INDENT 0.0
 .TP
 .B \-\-match\-end\-marker
-The marker used to indicate the end of a matched word inside a snippet
+Markören som används för att indikera slutet på ett matchat ord i ett kodavsnitt
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-start\-marker
-The marker used to indicate the start of a matched word inside a snippet
+Markören som används för att indikera början på ett matchat ord i ett kodavsnitt
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-format
-The format to output the search results in. Either \fB\(dq\fPtext\fB\(dq\fP for plain text or \fB\(dq\fPjson\fB\(dq\fP for JSON output.
+Formatet att mata ut sökresultaten i. Antingen \fB\(dq\fPtext\fB\(dq\fP för vanlig text eller \fB\(dq\fPjson\fB\(dq\fP för JSON\-utmatning.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-restrict\-to
-Restrict the searched books, either using a search expression or ids. For example: ids:1,2,3 to restrict by ids or search:tag:foo to restrict to books having the tag foo.
+Begränsa de sökta böckerna, antingen med ett sökuttryck eller identifierare. Till exempel: ids:1,2,3 för att begränsa med id eller search:tag:foo för att begränsa till böcker med taggen foo.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

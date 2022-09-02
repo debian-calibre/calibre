@@ -8782,6 +8782,25 @@ return this.__repr__();
             __module__ : {value: "date"}
         });
 
+        function as_iso(date) {
+            var tzo, dif;
+            tzo = -date.getTimezoneOffset();
+            dif = (tzo >= 0) ? "+" : "-";
+            function pad(num) {
+                return ((num < 10) ? "0" : "") + num;
+            };
+            if (!pad.__argnames__) Object.defineProperties(pad, {
+                __argnames__ : {value: ["num"]},
+                __module__ : {value: "date"}
+            });
+
+            return date.getFullYear() + "-" + pad(date.getMonth() + 1) + "-" + pad(date.getDate()) + " " + pad(date.getHours()) + ":" + pad(date.getMinutes()) + ":" + pad(date.getSeconds()) + dif + pad(Math.floor(Math.abs(tzo) / 60)) + ":" + pad(Math.abs(tzo) % 60);
+        };
+        if (!as_iso.__argnames__) Object.defineProperties(as_iso, {
+            __argnames__ : {value: ["date"]},
+            __module__ : {value: "date"}
+        });
+
         function format_date() {
             var date = (arguments[0] === undefined || ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? format_date.__defaults__.date : arguments[0];
             var fmt = (arguments[1] === undefined || ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? format_date.__defaults__.fmt : arguments[1];
@@ -8806,6 +8825,9 @@ return this.__repr__();
             date = date || new Date;
             if (is_date_undefined(date)) {
                 return "";
+            }
+            if (fmt === "iso") {
+                return as_iso(date);
             }
             return fmt.replace(fmt_date_pat(), (function() {
                 var ρσ_anonfunc = function (match) {
@@ -8856,6 +8878,7 @@ return this.__repr__();
         ρσ_modules.date.fd_format_month = fd_format_month;
         ρσ_modules.date.fd_format_year = fd_format_year;
         ρσ_modules.date.am_pm_pat = am_pm_pat;
+        ρσ_modules.date.as_iso = as_iso;
         ρσ_modules.date.format_date = format_date;
     })();
 
@@ -14944,9 +14967,9 @@ return this.__repr__();
             __argnames__ : {value: ["title", "new_title"]},
             __module__ : {value: "read_book.annotations"}
         });
-        AnnotationsManager.prototype.default_bookmark_title = function default_bookmark_title() {
+        AnnotationsManager.prototype.default_bookmark_title = function default_bookmark_title(base_default_title) {
             var self = this;
-            var all_titles, bm, base_default_title, c, default_title;
+            var all_titles, bm, c, default_title;
             all_titles = (function() {
                 var ρσ_Iter = ρσ_Iterable(self.bookmarks), ρσ_Result = Object.create(null), bm;
                 for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
@@ -14957,7 +14980,7 @@ return this.__repr__();
                 }
                 return ρσ_Result;
             })();
-            base_default_title = _("Bookmark");
+            base_default_title = base_default_title || _("Bookmark");
             c = 0;
             while (true) {
                 c += 1;
@@ -14967,7 +14990,8 @@ return this.__repr__();
                 }
             }
         };
-        if (!AnnotationsManager.prototype.default_bookmark_title.__module__) Object.defineProperties(AnnotationsManager.prototype.default_bookmark_title, {
+        if (!AnnotationsManager.prototype.default_bookmark_title.__argnames__) Object.defineProperties(AnnotationsManager.prototype.default_bookmark_title, {
+            __argnames__ : {value: ["base_default_title"]},
             __module__ : {value: "read_book.annotations"}
         });
         AnnotationsManager.prototype.set_highlights = function set_highlights(highlights) {
@@ -24971,7 +24995,7 @@ return this.__repr__();
             __module__ : {value: "read_book.toc"}
         });
 
-        function get_highlighted_toc_nodes(toc, parent_map, id_map) {
+        function get_highlighted_toc_nodes(toc, parent_map, id_map, skip_parents) {
             var data, ans, before, p, node_id;
             data = update_visible_toc_nodes.data;
             ans = Object.create(null);
@@ -24987,19 +25011,21 @@ return this.__repr__();
                     }
                 }
             }
-            var ρσ_Iter3 = ρσ_Iterable(Object.keys(ans));
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                node_id = ρσ_Iter3[ρσ_Index3];
-                p = parent_map[(typeof node_id === "number" && node_id < 0) ? parent_map.length + node_id : node_id];
-                while (p && p.title) {
-                    ans[ρσ_bound_index(p.id, ans)] = true;
-                    p = parent_map[ρσ_bound_index(p.id, parent_map)];
+            if (!skip_parents) {
+                var ρσ_Iter3 = ρσ_Iterable(Object.keys(ans));
+                for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                    node_id = ρσ_Iter3[ρσ_Index3];
+                    p = parent_map[(typeof node_id === "number" && node_id < 0) ? parent_map.length + node_id : node_id];
+                    while (p && p.title) {
+                        ans[ρσ_bound_index(p.id, ans)] = true;
+                        p = parent_map[ρσ_bound_index(p.id, parent_map)];
+                    }
                 }
             }
             return ans;
         };
         if (!get_highlighted_toc_nodes.__argnames__) Object.defineProperties(get_highlighted_toc_nodes, {
-            __argnames__ : {value: ["toc", "parent_map", "id_map"]},
+            __argnames__ : {value: ["toc", "parent_map", "id_map", "skip_parents"]},
             __module__ : {value: "read_book.toc"}
         });
 
@@ -25031,6 +25057,28 @@ return this.__repr__();
         };
         if (!get_toc_maps.__argnames__) Object.defineProperties(get_toc_maps, {
             __argnames__ : {value: ["toc"]},
+            __module__ : {value: "read_book.toc"}
+        });
+
+        function get_book_mark_title() {
+            var toc, ρσ_unpack, parent_map, id_map, highlighted_toc_nodes, node, node_id;
+            toc = current_book().manifest.toc;
+            ρσ_unpack = get_toc_maps(toc);
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+            parent_map = ρσ_unpack[0];
+            id_map = ρσ_unpack[1];
+            highlighted_toc_nodes = get_highlighted_toc_nodes(toc, parent_map, id_map, true);
+            var ρσ_Iter5 = ρσ_Iterable(Object.keys(highlighted_toc_nodes));
+            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                node_id = ρσ_Iter5[ρσ_Index5];
+                node = id_map[(typeof node_id === "number" && node_id < 0) ? id_map.length + node_id : node_id];
+                if (node.title) {
+                    return node.title;
+                }
+            }
+            return "";
+        };
+        if (!get_book_mark_title.__module__) Object.defineProperties(get_book_mark_title, {
             __module__ : {value: "read_book.toc"}
         });
 
@@ -25103,9 +25151,9 @@ return this.__repr__();
             search_bar = ρσ_interpolate_kwargs.call(this, create_search_bar, [do_search.bind(toc_panel_id), "search-book-toc"].concat([ρσ_desugar_kwargs({button: search_button, placeholder: t})]));
             ρσ_interpolate_kwargs.call(this, set_css, [search_bar].concat([ρσ_desugar_kwargs({flex_grow: "10", margin_right: "1em"})]));
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [search_bar, search_button].concat([ρσ_desugar_kwargs({style: "margin: 1ex 1em; display: flex; align-items: center"})])));
-            var ρσ_Iter5 = ρσ_Iterable(container.childNodes);
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                child = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter6 = ρσ_Iterable(container.childNodes);
+            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                child = ρσ_Iter6[ρσ_Index6];
                 child.style.flexShrink = "0";
             }
             toc_panel.style.flexGrow = "100";
@@ -25125,9 +25173,9 @@ return this.__repr__();
                 am = Object.create(null);
                 anchors = [];
                 pos_map = Object.create(null);
-                var ρσ_Iter6 = ρσ_Iterable(enumerate(tam[(typeof name === "number" && name < 0) ? tam.length + name : name] || []));
-                for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                    ρσ_unpack = ρσ_Iter6[ρσ_Index6];
+                var ρσ_Iter7 = ρσ_Iterable(enumerate(tam[(typeof name === "number" && name < 0) ? tam.length + name : name] || []));
+                for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                    ρσ_unpack = ρσ_Iter7[ρσ_Index7];
                     i = ρσ_unpack[0];
                     anchor = ρσ_unpack[1];
                     val = anchor_funcs.pos_for_elem();
@@ -25175,9 +25223,9 @@ return this.__repr__();
             before = after = null;
             visible_anchors = Object.create(null);
             has_visible = false;
-            var ρσ_Iter7 = ρσ_Iterable(tam.sorted_anchors);
-            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                anchor_id = ρσ_Iter7[ρσ_Index7];
+            var ρσ_Iter8 = ρσ_Iterable(tam.sorted_anchors);
+            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
+                anchor_id = ρσ_Iter8[ρσ_Index8];
                 pos = (ρσ_expr_temp = tam.pos_map)[(typeof anchor_id === "number" && anchor_id < 0) ? ρσ_expr_temp.length + anchor_id : anchor_id];
                 visibility = anchor_funcs.visibility(pos);
                 if (visibility < 0) {
@@ -25220,9 +25268,9 @@ return this.__repr__();
                     }
                     return ρσ_Result;
                 })();
-                var ρσ_Iter8 = ρσ_Iterable(tam.sorted_anchors);
-                for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                    anchor_id = ρσ_Iter8[ρσ_Index8];
+                var ρσ_Iter9 = ρσ_Iterable(tam.sorted_anchors);
+                for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
+                    anchor_id = ρσ_Iter9[ρσ_Index9];
                     anchor = amap[(typeof anchor_id === "number" && anchor_id < 0) ? amap.length + anchor_id : anchor_id];
                     is_before = true;
                     if (anchor.frag) {
@@ -25257,6 +25305,7 @@ return this.__repr__();
         ρσ_modules["read_book.toc"].get_current_toc_nodes = get_current_toc_nodes;
         ρσ_modules["read_book.toc"].get_highlighted_toc_nodes = get_highlighted_toc_nodes;
         ρσ_modules["read_book.toc"].get_toc_maps = get_toc_maps;
+        ρσ_modules["read_book.toc"].get_book_mark_title = get_book_mark_title;
         ρσ_modules["read_book.toc"].create_toc_tree = create_toc_tree;
         ρσ_modules["read_book.toc"].do_search = do_search;
         ρσ_modules["read_book.toc"].create_toc_panel = create_toc_panel;
@@ -26418,7 +26467,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "6.3.0";
+        CALIBRE_VERSION = "6.4.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -29090,6 +29139,8 @@ return this.__repr__();
 
         var create_button = ρσ_modules.widgets.create_button;
 
+        var get_book_mark_title = ρσ_modules["read_book.toc"].get_book_mark_title;
+
         function goto_cfi(cfi, view) {
             view.goto_cfi(cfi, true);
         };
@@ -29165,8 +29216,9 @@ return this.__repr__();
         });
 
         function create_new_bookmark(annotations_manager, data) {
-            var title, cfi;
-            title = window.prompt(_("Enter title for bookmark:"), data.selected_text || annotations_manager.default_bookmark_title());
+            var base_default_title, title, cfi;
+            base_default_title = get_book_mark_title() || _("Bookmark");
+            title = window.prompt(_("Enter title for bookmark:"), data.selected_text || annotations_manager.default_bookmark_title(base_default_title));
             if (!title) {
                 return false;
             }

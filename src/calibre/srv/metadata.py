@@ -10,7 +10,7 @@ from functools import partial
 from threading import Lock
 
 from calibre.constants import config_dir
-from calibre.db.categories import Tag
+from calibre.db.categories import Tag, category_display_order
 from calibre.ebooks.metadata.sources.identify import urls_from_identifiers
 from calibre.utils.date import isoformat, UNDEFINED_DATE, local_tz
 from calibre.utils.config import tweaks
@@ -216,16 +216,13 @@ def categories_settings(query, db, gst_container=GroupedSearchTerms):
         hidden_categories, query.get('hide_empty_categories') == 'yes')
 
 
-def create_toplevel_tree(category_data, items, field_metadata, opts):
+def create_toplevel_tree(category_data, items, field_metadata, opts, db):
     # Create the basic tree, containing all top level categories , user
     # categories and grouped search terms
     last_category_node, category_node_map, root = None, {}, {'id':None, 'children':[]}
     node_id_map = {}
     category_nodes, recount_nodes = [], []
-    order = tweaks['tag_browser_category_order']
-    defvalue = order.get('*', 100)
-    categories = [category for category in field_metadata if category in category_data]
-    scats = sorted(categories, key=lambda x: order.get(x, defvalue))
+    scats = category_display_order(db.pref('tag_browser_category_order', []), list(category_data.keys()))
 
     for category in scats:
         is_user_category = category.startswith('@')
@@ -361,6 +358,9 @@ def process_category_node(
         opts, tag_map, hierarchical_tags, node_to_tag_map, collapse_nodes,
         intermediate_nodes, hierarchical_items):
     category = items[category_node['id']]['category']
+    if category not in category_data:
+        # This can happen for user categories that are hierarchical and missing their parent.
+        return
     category_items = category_data[category]
     cat_len = len(category_items)
     if cat_len <= 0:
@@ -522,7 +522,7 @@ def fillout_tree(root, items, node_id_map, category_nodes, category_data, field_
 def render_categories(opts, db, category_data):
     items = {}
     with db.safe_read_lock:
-        root, node_id_map, category_nodes, recount_nodes = create_toplevel_tree(category_data, items, db.field_metadata, opts)
+        root, node_id_map, category_nodes, recount_nodes = create_toplevel_tree(category_data, items, db.field_metadata, opts, db)
         fillout_tree(root, items, node_id_map, category_nodes, category_data, db.field_metadata, opts, db.fields['rating'].book_value_map)
     for node in recount_nodes:
         item = items[node['id']]

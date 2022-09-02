@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "أغسطس 12, 2022" "6.3.0" "calibre"
+.TH "CALIBREDB" "1" "سبتمبر 02, 2022" "6.4.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -232,14 +232,14 @@ Filter the results by the search query. For the format of the search query, plea
 .sp
 .nf
 .ft C
-calibredb add [options] file1 file2 file3 ...
+rog add [options] file1 file2 file3‎ ‎.‎.‎.‎%p
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Add the specified files as books to the database. You can also specify folders, see
-the folder related options below.
+أضف الملفات المحددة على أنها كتب إلى قاعدة البيانات. يمكنك تحديد مجلدات كذلك، انظر
+خيارات المجلدات في الأسفل.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -270,7 +270,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Set the identifiers for this book, e.g. \-I asin:XXX \-I isbn:YYY
+اضبط المعرّفات لهذا الكتاب، مثلًا ‎\-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -280,7 +280,7 @@ Set the identifiers for this book, e.g. \-I asin:XXX \-I isbn:YYY
 .INDENT 0.0
 .TP
 .B \-\-languages, \-l
-A comma separated list of languages (best to use ISO639 language codes, though some language names may also be recognized)
+قائمة لغات تفصل بينها فاصلة (يفضل استخدام رموز لغة ISO639، على أن بعض أسماء اللغات قد تُعرف)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -308,12 +308,12 @@ A comma separated list of languages (best to use ISO639 language codes, though s
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+نمط اسم الملف (glob)، عند فحص المجلدات بحثًا عن الملفات ستضاف الملفات المطابقة لهذا النمط، حتى لو لم تكن من نوع e\-book معروف. يجوز تعيينها عدة مرات لأنماط متعددة.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For example: *.pdf will ignore all PDF files
+نمط اسم الملف (glob)، عند فحص المجلدات بحثًا عن الملفات سيتم تجاهل الملفات المطابقة لهذا النمط. يجوز تعيينها عدة مرات لأنماط متعددة. مثل: * .pdf يتجاهل جميع ملفات PDF
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -323,7 +323,7 @@ A filename (glob) pattern, files matching this pattern will be ignored when scan
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Process folders recursively
+معالجة المجلدات بشكل دوري
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -820,6 +820,11 @@ Comma\-separated list of names to ignore. Default: all
 .TP
 .B \-\-report, \-r
 لائحة مفصولة بفوارز من التقارير. المبدئي: الكل
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-vacuum\-fts\-db
+Vacuum the full text search database. This can be very slow and memory intensive, depending on the size of the database.
 .UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0

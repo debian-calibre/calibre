@@ -15,7 +15,7 @@ from qt.core import (
 )
 
 from calibre.constants import config_dir
-from calibre.db.categories import Tag
+from calibre.db.categories import Tag, category_display_order
 from calibre.ebooks.metadata import rating_to_stars
 from calibre.gui2 import config, error_dialog, file_icon_provider, gprefs, question_dialog
 from calibre.gui2.dialogs.confirm_delete import confirm
@@ -264,7 +264,9 @@ class TagTreeItem:  # {{{
         '''
         if set_to is None:
             while True:
-                self.tag.state = (self.tag.state + 1)%5
+                tag_search_order_graph = gprefs.get('tb_search_order')
+                # JSON dumps converts integer keys to strings, so do it explicitly
+                self.tag.state = tag_search_order_graph[str(self.tag.state)]
                 if self.tag.state == TAG_SEARCH_STATES['mark_plus'] or \
                         self.tag.state == TAG_SEARCH_STATES['mark_minus']:
                     if self.tag.is_searchable:
@@ -390,7 +392,7 @@ class TagsModel(QAbstractItemModel):  # {{{
         if hidden_cats is None:
             hidden_cats = config['tag_browser_hidden_categories']
         self.hidden_categories = set()
-        # strip out any non-existence field keys
+        # strip out any non-existent field keys
         for cat in hidden_cats:
             if cat in db.field_metadata:
                 self.hidden_categories.add(cat)
@@ -399,6 +401,17 @@ class TagsModel(QAbstractItemModel):  # {{{
             self.hidden_categories = hidden_categories
 
         self.db = db
+        self._run_rebuild()
+        self.endResetModel()
+
+    def reset_tag_browser(self):
+        self.beginResetModel()
+        hidden_cats = self.db.new_api.pref('tag_browser_hidden_categories', {})
+        self.hidden_categories = set()
+        # strip out any non-existent field keys
+        for cat in hidden_cats:
+            if cat in self.db.field_metadata:
+                self.hidden_categories.add(cat)
         self._run_rebuild()
         self.endResetModel()
 
@@ -535,7 +548,9 @@ class TagsModel(QAbstractItemModel):  # {{{
             is_gst = category.is_gst
             if key not in data:
                 return
-            if key in self.prefs['tag_browser_dont_collapse']:
+            # Use old pref if new one doesn't exist
+            if key in self.db.prefs.get('tag_browser_dont_collapse',
+                                       self.prefs['tag_browser_dont_collapse']):
                 collapse_model = 'disable'
             cat_len = len(data[key])
             if cat_len <= 0:
@@ -1118,6 +1133,15 @@ class TagsModel(QAbstractItemModel):  # {{{
             return self.db.search('', return_matches=True, sort_results=False)
         return None
 
+    def get_ordered_categories(self, use_defaults=False, pref_data_override=None):
+        if use_defaults:
+            tbo = []
+        elif pref_data_override:
+            tbo = [k for k,_ in pref_data_override]
+        else:
+            tbo = self.db.new_api.pref('tag_browser_category_order', [])
+        return category_display_order(tbo, list(self.categories.keys()))
+
     def _get_category_nodes(self, sort):
         '''
         Called by __init__. Do not directly call this method.
@@ -1157,32 +1181,40 @@ class TagsModel(QAbstractItemModel):  # {{{
             if category in data:  # The search category can come and go
                 self.categories[category] = tb_categories[category]['name']
 
-        # Now build the list of fields in display order
-        order = tweaks.get('tag_browser_category_default_sort', None)
-        if order not in ('default', 'display_name', 'lookup_name'):
-            print('Tweak tag_browser_category_default_sort is not valid. Ignored')
-            order = 'default'
-        if order == 'default':
-            self.row_map = self.categories.keys()
+        # Now build the list of fields in display order. A lot of this is to
+        # maintain compatibility with the tweaks.
+        order_pref = self.db.new_api.pref('tag_browser_category_order', None)
+        if order_pref is not None:
+            # Keys are in order
+            self.row_map = self.get_ordered_categories()
         else:
-            def key_func(val):
-                if order == 'display_name':
-                    return icu_lower(self.db.field_metadata[val]['name'])
-                return icu_lower(val[1:] if val.startswith('#') or val.startswith('@') else val)
-            direction = tweaks.get('tag_browser_category_default_sort_direction', None)
-            if direction not in ('ascending', 'descending'):
-                print('Tweak tag_browser_category_default_sort_direction is not valid. Ignored')
-                direction = 'ascending'
-            self.row_map = sorted(self.categories, key=key_func, reverse=direction == 'descending')
-        try:
-            order = tweaks['tag_browser_category_order']
-            if not isinstance(order, dict):
-                raise TypeError()
-        except:
-            print('Tweak tag_browser_category_order is not valid. Ignored')
-            order = {'*': 100}
-        defvalue = order.get('*', 100)
-        self.row_map = sorted(self.row_map, key=lambda x: order.get(x, defvalue))
+            order = tweaks.get('tag_browser_category_default_sort', 'default')
+            self.row_map = list(self.categories.keys())
+            if order not in ('default', 'display_name', 'lookup_name'):
+                print('Tweak tag_browser_category_default_sort is not valid. Ignored')
+                order = 'default'
+            if order != 'default':
+                def key_func(val):
+                    if order == 'display_name':
+                        return icu_lower(self.db.field_metadata[val]['name'])
+                    return icu_lower(val[1:] if val.startswith('#') or val.startswith('@') else val)
+                direction = tweaks.get('tag_browser_category_default_sort_direction', 'ascending')
+                if direction not in ('ascending', 'descending'):
+                    print('Tweak tag_browser_category_default_sort_direction is not valid. Ignored')
+                    direction = 'ascending'
+                self.row_map.sort(key=key_func, reverse=direction == 'descending')
+                try:
+                    order = tweaks.get('tag_browser_category_order', {'*':1})
+                    if not isinstance(order, dict):
+                        raise TypeError()
+                except:
+                    print('Tweak tag_browser_category_order is not valid. Ignored')
+                    order = {'*': 1000}
+                defvalue = order.get('*', 1000)
+                self.row_map.sort(key=lambda x: order.get(x, defvalue))
+            # Migrate the tweak to the new pref. First, make sure the order is valid
+            self.row_map = self.get_ordered_categories(pref_data_override=[[k,None] for k in self.row_map])
+            self.db.new_api.set_pref('tag_browser_category_order', self.row_map)
         return data
 
     def set_categories_filter(self, txt):
