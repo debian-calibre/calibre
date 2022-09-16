@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "9月 02, 2022" "6.4.0" "calibre"
+.TH "CALIBREDB" "1" "9月 16, 2022" "6.5.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -189,7 +189,7 @@ calibredb list [options]
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-在列出数据库中书籍时要显示的字段。应该是逗号分隔的字段列表。 可用字段： author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid 默认值：title,authors。特殊字段“all”可用于选择所有字段。除了上述内置字段之外，自定义字段还等价于*field_name，例如，对于自定义字段#rating，使用名称：*rating
+在列出資料庫中書籍時要顯示的欄位。應該是逗號分隔的欄位列表。 可用欄位： author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid 預設值：title,authors。特殊欄位「all」可用於選擇所有欄位。除了上述內建欄位之外，自訂欄位還等價於*field_name，例如，對於自訂欄位#rating，使用名稱：*rating
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -336,7 +336,7 @@ calibredb remove ids
 .UNINDENT
 .UNINDENT
 .sp
-从数据库移除指定 id 的书籍。ids 应为以逗号分隔的 id 号列表（你可以使用搜索命令来获得 id 号）。例如，23,34,57\-85（如果指定一个区间，该区间的最后一个数字不会被包括在内）。
+從資料庫移除指定 id 的書籍。ids 應為以逗號分隔的 id 號列表(您可以使用搜尋命令來取得 id 號)。例如，23,34,57\-85 (如果指定一個區間，該區間的最後一個數字不會被包括在內)。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -370,13 +370,13 @@ calibredb add_format [options] id ebook_file
 .sp
 .nf
 .ft C
-calibredb remove_format [选项] id fmt
+calibredb remove_format [options] id fmt
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-从ID识别的逻辑书中删除fmt格式。你可以通过使用搜索命令获取ID。fmt应该是形如LRF或TXT或EPUB的一个文件扩展名。如果逻辑书没有fmt可用则什么也不做。
+從 ID 辨識的邏輯書中刪除 fmt 格式。您可以透過使用搜尋命令取得 ID。fmt 應該是形如 LRF 或 TXT 或 EPUB 的一個檔案副檔名。如果邏輯書沒有 fmt 可用則什麼也不做。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .SH SHOW_METADATA
@@ -421,7 +421,7 @@ id 是來自搜尋命令的 id 編號。您可以透過使用 \-\-as\-opf 切換
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-设置字段。格式是field_name:value，例如：\fI\%\-\-field\fP tags:tag1,tag2。使用:option:\fI\-\-list\-fields\(ga来获取所有字段名称的列表。你可以多次指定此选项来设置多个字段。注意：对于语言，你必须使用ISO639语言代码（例如en代表英文，fr代表法语等）。对于标识符，语法是:option:\fP\-\-field\(ga identifiers:isbn:XXXX,doi:YYYYY。对于布尔(是/否)字段使用真与假或是和否。
+設定欄位。格式是field_name:value，例如：\fI\%\-\-field\fP tags:tag1,tag2。使用:option:\fI\-\-list\-fields\(ga來取得所有欄位名稱的列表。您可以多次指定此選項來設定多個欄位。注意：對於語言，您必須使用ISO639語言代碼 (例如en代表英文，fr代表法語等)。對於識別項，語法是:option:\fP\-\-field\(ga identifiers:isbn:XXXX,doi:YYYYY。對於布林(是/否)欄位使用真與假或是和否。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -448,7 +448,7 @@ opf 檔案中）。您可以用 search 指令取得 id 編號。
 .INDENT 0.0
 .TP
 .B \-\-all
-導出資料庫中所有的書本，忽略 id 列表。
+匯出資料庫中所有的書本，忽略 id 列表。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -638,7 +638,7 @@ Save the output from different stages of the conversion pipeline to the specifie
 .INDENT 0.0
 .TP
 .B \-\-use\-existing\-cover
-在生成目录时替换现有的封面。 默认值： \fB\(aq\fPFalse\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
+在產生目錄時取代現有的封面。 預設值： \fB\(aq\fPFalse\fB\(aq\fP 適用於： AZW3, EPUB, MOBI 輸出格式
 .UNINDENT
 .SH SAVED_SEARCHES
 .INDENT 0.0
@@ -652,15 +652,15 @@ calibredb saved_searches [options] (list|add|remove)
 .UNINDENT
 .UNINDENT
 .sp
-管理存储在该数据库中的保存搜索。
-如果尝试添加已经存在的一个名称查询，
-则它将被替换。
+管理儲存在該資料庫中的儲存搜尋。
+如果嘗試加入已經存在的一個名稱查詢，
+則它將被取代。
 .sp
-添加语法：
+加入語法：
 .sp
 calibredb \fBsaved_searches\fP add search_name search_expression
 .sp
-删除语法：
+刪除語法：
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
@@ -722,7 +722,7 @@ calibredb remove_custom_column [options] label
 .UNINDENT
 .UNINDENT
 .sp
-用标签删除的自定义列标识。可以使用custom_columns command命令查看可用列
+用標籤刪除的自訂列標識。可以使用custom_columns command命令檢視可用列
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -742,9 +742,9 @@ calibredb set_custom [options] column id value
 .UNINDENT
 .UNINDENT
 .sp
-为 id 标识的书设置自定义列的值。
-您可以使用搜索命令获取 id 列表。
-您可以使用 custom_columns 命令获取自定义列名的列表。
+為 id 標識的書設定自訂列的值。
+您可以使用搜尋命令取得 id 列表。
+您可以使用 custom_columns 命令取得自訂列名的列表。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -817,7 +817,7 @@ calibredb check_library [options]
 .INDENT 0.0
 .TP
 .B \-\-vacuum\-fts\-db
-Vacuum the full text search database. This can be very slow and memory intensive, depending on the size of the database.
+清空全文搜尋資料庫。這可能非常緩慢且佔用大量記憶體，具體取決於資料庫的大小。
 .UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
@@ -831,8 +831,8 @@ calibredb list_categories [options]
 .UNINDENT
 .UNINDENT
 .sp
-在数据库中生成一个目录信息的报告。
-该信息与标签窗格中显示的信息等效。
+在資料庫中產生一個目錄資訊的報告。
+該資訊與標籤窗格中顯示的資訊等效。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -932,14 +932,14 @@ calibredb embed_metadata [options] book_id
 .sp
 .nf
 .ft C
-calibredb搜索 [选项] 搜索表达式
+calibredb search [options] search expression
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-搜索书库中指定的搜索项，返回与搜索表达式匹配的以逗号分隔的图书ID列表。输出格式对于输入格式接受ID列表的其他命令非常有用。
-搜索表达式可以是来自calibre强大的搜索查询语言中的任何内容，例如：calibredb 搜索author:asimov \(aqtitle:\(dqi robot\(dq\(aq
+搜尋書庫中指定的搜尋項目，返回與搜尋運算式相符的以逗號分隔的圖書ID列表。輸出格式對於輸入格式接受ID列表的其他命令非常有用。
+搜尋運算式可以是來自calibre強大的搜尋查詢語言中的任何內容，例如：calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -983,12 +983,12 @@ entire library is re\-indexed.
 .INDENT 0.0
 .TP
 .B \-\-indexing\-speed
-The speed of indexing. Use fast for fast indexing using all your computers resources and slow for less resource intensive indexing. Note that the speed is reset to slow after every invocation.
+索引的速度。使用快速索引可使用所有電腦資源進行快速索引，使用慢速索引可使用較少的資源進行索引。請注意，每次呼叫索引後，索引速度都會重設為 Slow。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-wait\-for\-completion
-Wait till all books are indexed, showing indexing progress periodically
+等到所有圖書都被編入索引，定期顯示索引進度
 .UNINDENT
 .SH FTS_SEARCH
 .INDENT 0.0

@@ -197,6 +197,27 @@ class BuiltinStrcmp(BuiltinFormatterFunction):
         return gt
 
 
+class BuiltinStrcmpcase(BuiltinFormatterFunction):
+    name = 'strcmpcase'
+    arg_count = 5
+    category = 'Relational'
+    __doc__ = doc = _('strcmpcase(x, y, lt, eq, gt) -- does a case-sensitive comparison of x '
+            'and y as strings. Returns lt if x < y. Returns eq if x == y. '
+            'Otherwise returns gt.\n'
+            'Note: This is NOT the default behavior used by calibre, for example, in the '
+            'lexical comparison operators (==, >, <, etc.). This function could '
+            'cause unexpected results, preferably use strcmp() whenever possible.')
+
+    def evaluate(self, formatter, kwargs, mi, locals, x, y, lt, eq, gt):
+        from calibre.utils.icu import case_sensitive_strcmp as case_strcmp
+        v = case_strcmp(x, y)
+        if v < 0:
+            return lt
+        if v == 0:
+            return eq
+        return gt
+
+
 class BuiltinCmp(BuiltinFormatterFunction):
     name = 'cmp'
     category = 'Relational'
@@ -2209,6 +2230,17 @@ class BuiltinCharacter(BuiltinFormatterFunction):
         raise NotImplementedError()
 
 
+class BuiltinToHex(BuiltinFormatterFunction):
+    name = 'to_hex'
+    arg_count = 1
+    category = 'String manipulation'
+    __doc__ = doc = _('to_hex(val) -- returns the string encoded in hex. '
+                      'This is useful when constructing calibre URLs.')
+
+    def evaluate(self, formatter, kwargs, mi, locals, val):
+        return val.encode().hex()
+
+
 class BuiltinUrlsFromIdentifiers(BuiltinFormatterFunction):
     name = 'urls_from_identifiers'
     arg_count = 2
@@ -2325,11 +2357,11 @@ _formatter_builtins = [
     BuiltinRawField(), BuiltinRawList(),
     BuiltinRe(), BuiltinReGroup(), BuiltinRound(), BuiltinSelect(), BuiltinSeriesSort(),
     BuiltinSetGlobals(), BuiltinShorten(), BuiltinStrcat(), BuiltinStrcatMax(),
-    BuiltinStrcmp(), BuiltinStrInList(), BuiltinStrlen(), BuiltinSubitems(),
+    BuiltinStrcmp(), BuiltinStrcmpcase(), BuiltinStrInList(), BuiltinStrlen(), BuiltinSubitems(),
     BuiltinSublist(),BuiltinSubstr(), BuiltinSubtract(), BuiltinSwapAroundArticles(),
     BuiltinSwapAroundComma(), BuiltinSwitch(),
-    BuiltinTemplate(), BuiltinTest(), BuiltinTitlecase(),
-    BuiltinToday(), BuiltinTransliterate(), BuiltinUppercase(), BuiltinUrlsFromIdentifiers(),
+    BuiltinTemplate(), BuiltinTest(), BuiltinTitlecase(), BuiltinToday(),
+    BuiltinToHex(), BuiltinTransliterate(), BuiltinUppercase(), BuiltinUrlsFromIdentifiers(),
     BuiltinUserCategories(), BuiltinVirtualLibraries(), BuiltinAnnotationCount()
 ]
 

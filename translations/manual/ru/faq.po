@@ -9,14 +9,14 @@
 # ashed <craysy@gmail.com>, 2020-2022
 # Hellbartonio <hellbartonio@mail.ru>, 2016
 # EL Records <radiodao@gmail.com>, 2016
-# ruVlad, 2015
+# Vlad Loktionov, 2015
 # Родион Р., 2020
 # Родион Р., 2019
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-20 07:12+0000\n"
+"POT-Creation-Date: 2022-09-15 08:35+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: ashed <craysy@gmail.com>, 2020-2022\n"
 "Language-Team: Russian (http://www.transifex.com/calibre/calibre/language/ru/)\n"
@@ -1379,7 +1379,7 @@ msgstr "Разное"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:735
 msgid "Amazon is stopping email delivery of MOBI files?"
-msgstr ""
+msgstr "Amazon прекращает доставку файлов MOBI по электронной почте?"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:737
 msgid ""
@@ -1390,29 +1390,29 @@ msgid ""
 ":guilabel:`Preferences->Sharing books by email` and then removing MOBI from "
 "the list of formats to send to your ``@kindle.com`` email address and adding"
 " EPUB instead."
-msgstr ""
+msgstr "Amazon «объявила https://blog.the-ebook-reader.com/2022/05/03/amazon-dropping-mobi-support-on-send-to-kindle-apps/`__, что прекратит принимать MOBI. файлы, отправленные по электронной почте на адреса электронной почты ``@kindle.com``. Вы можете настроить calibre на отправку EPUB вместо MOBI, перейдя в :guilabel:`Настройки-Обмен книгами по электронной почте`, а затем удалив MOBI из списка форматов для отправки на ваш адрес электронной почты ``@kindle.com`` и добавив вместо этого EPUB."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:745
 msgid ""
 "Note however, that Amazon's EPUB intake is very flawed, they will reject a "
 "number of EPUB files that work everywhere else. In such cases you can try "
 "the following trick:"
-msgstr ""
+msgstr "Однако обратите внимание, что прием EPUB в Amazon очень несовершенен, они отклонят ряд файлов EPUB, которые работают везде. В таких случаях можно попробовать следующий трюк:"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:749
 msgid "Convert the EPUB file to MOBI"
-msgstr ""
+msgstr "Конвертируйте файл EPUB в MOBI"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:750
 msgid ""
 "Then convert the MOBI file back to EPUB and send the resulting EPUB file"
-msgstr ""
+msgstr "Затем конвертируйте файл MOBI обратно в EPUB и отправьте полученный файл EPUB."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:752
 msgid ""
 "This will remove all advanced formatting, embedded fonts, etc., but greatly "
 "increase the chances of Amazon accepting the EPUB."
-msgstr ""
+msgstr "Это удалит всё расширенное форматирование, встроенные шрифты и т. д., но значительно повысит шансы на то, что Amazon примет EPUB."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:755
 msgid ""
@@ -1423,7 +1423,7 @@ msgid ""
 "the output format in Preferences->Behavior to EPUB, then calibre will "
 "download the news in EPUB format. Whether Amazon will accept the EPUB or not"
 " is a whole other question."
-msgstr ""
+msgstr "Если вы ранее использовали доставку по электронной почте периодических изданий, загруженных calibre, вам будет лучше отправлять их по USB-кабелю или загружать их с сервера контента калибровки через встроенный браузер Kindle. Однако, если вы хотите продолжить использовать доставку по электронной почте, вы можете попробовать изменить формат вывода в Preferences-Behavior на EPUB, тогда caliber будет загружать новости в формате EPUB. Примет ли Amazon EPUB или нет — это совсем другой вопрос."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:765
 msgid "I want calibre to download news from my favorite news website."
@@ -1740,7 +1740,7 @@ msgstr "тогда проблема, вероятно, связана с пов�
 #: ../../__w/calibre/calibre/manual/faq.rst:932
 msgid ""
 "I get only a black or white screen when running the calibre E-book viewer?"
-msgstr ""
+msgstr "Я получаю только чёрный или белый экран при запуске просмотрщика электронных книг Calibre?"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:934
 msgid ""
@@ -1750,7 +1750,7 @@ msgid ""
 "hardware acceleration in Qt WebEngine by setting the environment variable "
 "``QTWEBENGINE_CHROMIUM_FLAGS`` to the value ``--disable-gpu``. See "
 ":ref:`customize_env_vars` for how to change environment variables."
-msgstr ""
+msgstr "Это происходит из-за несовместимости между Qt WebEngine, который средство просмотра использует для рендеринга, и драйверами графического процессора в вашей системе. Сначала попробуйте обновить драйверы графического процессора. Если это не поможет, вы можете попробовать отключить аппаратное ускорение в Qt WebEngine, установив для переменной среды ``QTWEBENGINE_CHROMIUM_FLAGS`` значение ``--disable-gpu``. См. :ref:`customize_env_vars`, чтобы узнать, как изменить переменные среды."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:943
 msgid "I downloaded the installer, but it is not working?"
@@ -2111,7 +2111,7 @@ msgid ""
 "against these libraries. If you get an ImportError about some Qt modules, "
 "you are likely missing some X libraries. Typical candidates are: ``libxcb-"
 "xinerama0``, ``libegl1``, ``libopengl0``."
-msgstr ""
+msgstr "calibre требуется GLIBC = 2.31 и libstdc++ = 6.0.28. Если у вас более старый сервер, вам нужно либо скомпилировать их из исходного кода, либо использовать калибр 3.48, для которого требуется GLIBC = 2.17, или 2.85.1, для которого требуется GLIBC = 2.13, или калибр 1.48, для которого требуется только GLIBC = 2.10. Кроме того, хотя утилитам командной строки caulibre не требуется работающий X-сервер, некоторые из них требуют, чтобы в вашей системе были установлены библиотеки X-сервера. Это из-за Qt, который используется для различных задач обработки изображений, и ссылок на эти библиотеки. Если вы получаете сообщение ImportError о некоторых модулях Qt, вероятно, вам не хватает некоторых X-библиотек. Типичными кандидатами являются: ``libxcb-xinerama0``, ``libegl1``, ``libopengl0``."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1090
 msgid "You can run the calibre server via the command::"
@@ -2125,7 +2125,7 @@ msgstr "Вы можете скачать новости и преобразов�
 msgid ""
 "If you want to generate MOBI, use :file:`outputfile.mobi` instead and use "
 "``--output-profile kindle``."
-msgstr ""
+msgstr "Если вы хотите сгенерировать MOBI, используйте :file:`outputfile.mobi` вместо этого и используйте ``--output-profile kindle``."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1100
 msgid "You can email downloaded news with the command::"

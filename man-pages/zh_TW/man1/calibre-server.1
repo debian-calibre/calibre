@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "9月 02, 2022" "6.4.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "9月 16, 2022" "6.5.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
@@ -62,27 +62,27 @@ calibre\-server\(ga传递参数时，用引号括起这些参数。例如: \(dq/
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-选择认证方式.     設定此伺服器的HTTP驗證方式，如果你將此伺服器至於反向代理後面的話請選擇\fB\(dq\fPbasic\fB\(dq\fP；除此之外請選擇\fB\(dq\fPauto\fB\(dq\fP。
+選擇認證方式.     設定此伺服器的HTTP驗證方式，如果你將此伺服器至於反向代理後面的話請選擇\fB\(dq\fPbasic\fB\(dq\fP；除此之外請選擇\fB\(dq\fPauto\fB\(dq\fP。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-auto\-reload
-当源代码更改时自动重新加载服务器。有利于开发。还应该为关闭超时指定一个小值。
+當原始碼變更時自動重新載入伺服器。有利於開發。還應該為關閉逾時指定一個小值。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-after
-禁止登录失败次数.   禁止IP地址后的登录失败次数
+停用登錄失敗次數.   停用 IP 位址後的登錄失敗次數
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-禁止登录失败的IP地址重复次数.    临时禁止在指定的分钟数上重复登录失败的IP地址的访问。有助于防止猜测密码的尝试。如果设置为零则不禁止。
+停用登錄失敗的 IP 位址重複次數.  臨時停用在指定的分鐘數上重複登錄失敗的 IP 位址的存取。有助於防止猜測密碼的嘗試。如果設定為零則不停用。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-book\-list\-mode
-选择默认的书籍列表显示模式.      设置默认的书籍显示模式. 每一名用户都可以单独重新设置此选项. The default is to use a cover grid.
+選擇預設的書籍列表顯示模式.      设置默认的书籍显示模式. 每一名用户都可以单独重新设置此选项. The default is to use a cover grid.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -97,47 +97,47 @@ calibre\-server\(ga传递参数时，用引号括起这些参数。例如: \(dq/
 .INDENT 0.0
 .TP
 .B \-\-daemonize
-后台进程运行为守护进程（仅Linux）。
+背景處理程序執行為守護處理程序 (僅Linux)。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-限制显示的用户定义字段.        逗号分隔的用户定义元数据字段的列表，将由内容服务器在 /opds 和 /mobile 视图中显示。如果指定此选项，则不会显示任何在此列表中的字段。例如: my_rating,my_tags
+限制顯示的使用者定義欄位.       逗号分隔的用户定义元数据字段的列表，将由内容服务器在 /opds 和 /mobile 视图中显示。如果指定此选项，则不会显示任何在此列表中的字段。例如: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-allow\-socket\-preallocation, \-\-disable\-allow\-socket\-preallocation
-套接字预分配，例如，systemd套接字激活. 默认情况下, 此选项是启用的。
+套接字预分配，例如，systemd套接字激活. 預設情況下，此選項是啟用的。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-auth, \-\-disable\-auth
-访问服务器的基于密码的身份验证.    通常，服务器是不受限制的，允许任何人访问它。你可以使用此选项限制对预定义用户的访问。 默认情况下, 此选项是禁用的。
+存取伺服器的基於密碼的身份驗證.    通常，伺服器是不受限制的，允許任何人存取它。您可以使用此選項限制對預定義使用者的存取。 預設情況下，此選項是停用的。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-返回到自动检测界面.  如果由于某种原因，服务器无法绑定到listen_on选项中指定的接口，那么它将尝试检测连接到外部世界的接口并绑定到该接口。 默认情况下, 此选项是启用的。
+返回到自動偵測介面.  如果由於某種原因，伺服器無法繫結到 listen_on 選項中指定的介面，那麼它將嘗試偵測連接到外部世界的介面並繫結到該介面。 預設情況下，此選項是啟用的。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-允许未经身份验证的本地连接进行更改.  通常，如果您不開啟身份驗證，則伺服器以唯讀模式執行，從而不允許匿名使用者變更您的 calibre 書庫。此選項允許任何人從伺服器上執行的同一台電腦連接來進行變更。如果您想在沒有身份驗證的情況下執行伺服器，但仍然使用 calibredb 對您的 calibre 書庫進行變更，那麼這選項是非常有用。請注意，開啟這個選項後意味著在電腦上執行的任何程式都可以對您的 calibre 書庫進行變更。 默认情况下, 此选项是禁用的。
+允許未經身份驗證的本地連接進行變更.  通常，如果您不開啟身份驗證，則伺服器以唯讀模式執行，從而不允許匿名使用者變更您的 calibre 書庫。此選項允許任何人從伺服器上執行的同一台電腦連接來進行變更。如果您想在沒有身份驗證的情況下執行伺服器，但仍然使用 calibredb 對您的 calibre 書庫進行變更，那麼這選項是非常有用。請注意，開啟這個選項後意味著在電腦上執行的任何程式都可以對您的 calibre 書庫進行變更。 預設情況下，此選項是停用的。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-记录HTTP 404(未找到)的请求.         通常，服务器记录所有未找到的资源的HTTP请求。这可能产生大量的日志垃圾，如果你的服务器是蠕虫攻击的目标。请使用此选项关闭它。 默认情况下, 此选项是启用的。
+記錄HTTP 404(未找到)的請求.         通常，伺服器記錄所有未找到的資源的HTTP請求。這可能產生大量的日誌垃圾，如果您的伺服器是蠕蟲攻擊的目標。請使用此選項關閉它。 預設情況下，此選項是啟用的。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
-通过BonJour供稿广告OPDS.  通过BonJour服务宣传OPDS提要，这样基于OPDS的阅读应用程序就可以自动检测和连接到服务器。 默认情况下, 此选项是启用的。
+透過 BonJour 供稿廣告 OPDS.       透過 BonJour 服務宣傳 OPDS 提要，這樣基於 OPDS 的閱讀應用程式就可以自動偵測和連接到伺服器。 預設情況下，此選項是啟用的。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-零复制文件传输以提高性能.       當透過網路傳送檔案時這將在核心傳輸中使用零複製，從而提高效能。然而，它可能導致損壞的檔案傳輸在一些崩潰的檔案系統上。如果您經歷了損壞的檔案傳輸，關掉它。 默认情况下, 此选项是启用的。
+零複製檔案傳輸以提高效能.       當透過網路傳送檔案時這將在核心傳輸中使用零複製，從而提高效能。然而，它可能導致損壞的檔案傳輸在一些崩潰的檔案系統上。如果您經歷了損壞的檔案傳輸，關掉它。 預設情況下，此選項是啟用的。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -147,12 +147,12 @@ calibre\-server\(ga传递参数时，用引号括起这些参数。例如: \(dq/
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-忽略用户定义的元数据字段.       逗号分隔用户定义元数据字段的列表，该内容字段将不能显示在内容服务器的 /opds 和 /mobile 的视图中。例如: my_rating,my_tags
+忽略使用者定義的中繼資料欄位.     逗号分隔用户定义元数据字段的列表，该内容字段将不能显示在内容服务器的 /opds 和 /mobile 的视图中。例如: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-侦听连接的界面.    默认情况下侦听所有可用的IPv4接口。例如，您可以将其更改为“127.0.0.1”以仅侦听来自本地计算机的连接，或更改为“：：”以侦听所有传入的IPv6和IPv4连接。
+接聽連接的介面.    預設情況下接聽所有可用的 IPv4 介面。例如，您可以將其變更為「127.0.0.1」以僅接聽來自本地電腦的連接，或變更為「::」以接聽所有傳入的 IPv6 和 IPv4 連接。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -182,17 +182,17 @@ Manage the database of users allowed to connect to this server. You can use it i
 .INDENT 0.0
 .TP
 .B \-\-max\-log\-size
-日志文件最大大小（MB）.       由服务器生成的日志文件的最大容量。当日志变得大于这个容量时，它将自动旋转。设置为零时禁用日志旋转。
+日誌檔案最大大小(MB).       由伺服器產生的日誌檔案的最大容量。當日誌變得大於這個容量時，它將自動旋轉。設定為零時停用日誌旋轉。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-items
-OPDS供稿的最大书目数.       服务器将在单个OPDS采集原料中返回的最大图书数量。
+OPDS 供稿的最大書目數.      伺服器將在單個OPDS採集原料中返回的最大圖書數量。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-ungrouped\-items
-在OPDS源中未分组项目的最大项目数.         当有超过这个设定数量的项目时将以如作者/标签的首字母对类别进行分组。设置为零以禁用。
+在OPDS來源中未分組項目的最大項目數.        當有超過這個設定數量的項目時將以如作者/標籤的首字母對類別進行分組。設定為零以停用。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -202,7 +202,7 @@ OPDS供稿的最大书目数.       服务器将在单个OPDS采集原料中返�
 .INDENT 0.0
 .TP
 .B \-\-num\-per\-page
-在一页中显示的图书数量.        浏览器中单个页面显示的图书数量。
+在一页中显示的图书数量.        瀏覽器中單個頁面顯示的圖書數量。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -242,7 +242,7 @@ SSL私鑰檔案路徑.
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-允许来自特定IP地址的未经身份验证的连接进行更改.   通常，如果您不打开身份验证，服务器将以只读模式运行，从而不允许匿名用户更改您的Calibre库。此选项允许从指定IP地址连接的任何人进行更改。必须是逗号分隔的地址或网络规范列表。如果您希望在不进行身份验证的情况下运行服务器，但仍使用Calibredb对您的Calibre库进行更改，则此功能非常有用。请注意，启用此选项意味着从指定IP地址连接的任何人都可以更改您的Calibre库。
+允許來自特定IP位址的未經身份驗證的連接進行變更.   通常，如果您不開啟身份驗證，伺服器將以唯讀模式執行，從而不允許匿名使用者變更您的 Calibre 書庫。此選項允許從指定 IP 位址連接的任何人進行變更。必須是逗號分隔的位址或網路規範列表。如果您希望在不進行身份驗證的情況下執行伺服器，但仍使用 Calibredb 對您的 Calibre 書庫進行變更，則此功能非常有用。請注意，啟用此選項意味著從指定 IP 位址連接的任何人都可以變更您的 Calibre 書庫。
 .UNINDENT
 .INDENT 0.0
 .TP

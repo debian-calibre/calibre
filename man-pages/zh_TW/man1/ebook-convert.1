@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "9月 02, 2022" "6.4.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "9月 16, 2022" "6.5.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -41,15 +41,15 @@ ebook\-convert input_file output_file [options]
 .UNINDENT
 .UNINDENT
 .sp
-转换不同格式的电子书。
+轉換不同格式的電子書。
 .sp
-input_file 表示输入文件，output_file 表示输出文件。这两者作为命令行参数必须指定到最前面。
+input_file 表示輸入檔案，output_file 表示輸出檔案。這兩者作為命令行參數必須指定到最前面。
 .sp
-输出的电子书格式可由 output_file 的扩展名得到。同时 output_file 也可以是一种以 .EXT 为扩展名的特殊格式。在这种情况下，输出文件的名称则使用输入文件的名称。注意：文件名不能以连字号作为开头。如果 output_file 不含扩展名，那么它将被视为一个目录并将会在该目录下生成 HTML 格式的“开放式电子书(OEB)”。这些文件会被视为正常文件而被输出插件所识别。
+輸出的電子書格式可由 output_file 的副檔名得到。同時 output_file 也可以是一種以 .EXT 為副檔名的特殊格式。在這種情況下，輸出檔案的名稱則使用輸入檔案的名稱。注意：檔案名不能以連字號作為開頭。如果 output_file 不含副檔名，那麼它將被視為一個目錄並將會在該目錄下產生 HTML 格式的「開放式電子書(OEB)」。這些檔案會被視為正常檔案而被輸出外掛所辨識。
 .sp
-在指定输入和输出文件后，你可以自定义特定的转换选项。根据输入和输出文件的类型不同可用的转换选项也不同。如需获取针对输入和输出文件的帮助，请在命令行中输入 \-h。
+在指定輸入和輸出檔案後，您可以自訂特定的轉換選項。根據輸入和輸出檔案的類型不同可用的轉換選項也不同。如需取得針對輸入和輸出檔案的幫助，請在命令行中輸入 \-h。
 .sp
-对于转换系统的完整文档请查阅
+對於轉換系統的完整文件請查閱
 \fI\%电子书转换\fP
 .sp
 每当向具有它们自己空间的:command:
@@ -149,7 +149,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-解压EPUB文件的内容到指定文件夹。请注意，该文件夹的内容会先被清空。
+解壓EPUB檔案的內容到指定資料夾。請注意，該資料夾的內容會先被清空。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -192,7 +192,7 @@ Transliterate Unicode characters to an ASCII representation. Use with care becau
 .INDENT 0.0
 .TP
 .B \-\-base\-font\-size
-PTS中的基本字体大小。在生成的书籍中所有的字体尺寸将基于这个大小重新缩放。通过选择更大的尺寸，可以使输出中的字体更大，反之亦然。默认情况下，当值为0时，根据你选择的输出配置文件选择基本字体大小。
+PTS中的基本字型大小。在產生的書籍中所有的字型尺寸將基於這個大小重新縮放。透過選擇更大的尺寸，可以使輸出中的字型更大，反之亦然。預設情況下，當值為0時，根據您選擇的輸出設定檔案選擇基本字型大小。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -207,7 +207,7 @@ PTS中的基本字体大小。在生成的书籍中所有的字体尺寸将基�
 .INDENT 0.0
 .TP
 .B \-\-embed\-all\-fonts
-嵌入输入文档中引用到但未嵌入的字体。软件会在你的系统中查找这些字体，找到了就嵌入。字体嵌入只有当你的目的格式支持才有用，例如 EPUB、AZW3、DOCX 和 PDF。请保证你拥有在文档中嵌入字体的合适授权。
+嵌入輸入文件中引用到但未嵌入的字型。軟體會在您的系統中尋找這些字型，找到了就嵌入。字型嵌入只有當您的目的格式支援才有用，例如 EPUB、AZW3、DOCX 和 PDF。請保證您擁有在文件中嵌入字型的合適授權。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -312,7 +312,7 @@ Convert plain quotes, dashes and ellipsis to their typographically correct equiv
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-包含转换本书中的HTML的规则的文件的路径。创建这样一个文件的最简单方法是在 calibre图形用户界面中使用向导创建规则。在“外观\->转换HTML”的转换对话框部分访问它。一旦创建规则，就可以使用“导出”按钮将它们保存到文件中。
+包含轉換本書中的HTML的規則的檔案的路徑。建立這樣一個檔案的最簡單方法是在 calibre圖形使用者介面中使用嚮導建立規則。在「外觀\->轉換HTML」的轉換對話框部分存取它。一旦建立規則，就可以使用「匯出」按鈕將它們儲存到檔案中。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -600,7 +600,7 @@ XPath 運算式指定所有標籤應添加在三級目錄表。每個條目加�
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-在转换过程的不同阶段分别保存输出到指定目录。如果你不确定在哪个阶段出了问题，这个选项非常实用。
+在轉換過程的不同階段分別儲存輸出到指定目錄。如果您不確定在哪個階段出了問題，這個選項非常實用。
 .UNINDENT
 .INDENT 0.0
 .TP
