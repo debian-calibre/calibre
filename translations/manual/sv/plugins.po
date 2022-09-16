@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-20 07:12+0000\n"
+"POT-Creation-Date: 2022-09-15 08:35+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2022\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
@@ -2649,17 +2649,17 @@ msgstr "Menypopuptypen för när denna insticksmodul läggs till i ett verktygsf
 msgid ""
 "Whether this action should be auto repeated when its shortcut key is held "
 "down."
-msgstr "Huruvida denna åtgärd bör automatiskt upprepas när dess kortkommando hålls nere."
+msgstr "Huruvida denna åtgärd ska upprepas automatiskt när dess genvägsknapp hålls nedtryckt."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.gui2.actions.InterfaceAction.action_spec:1
 msgid ""
-"Of the form: (text, icon_path, tooltip, keyboard shortcut) icon, tooltip and"
-" keyboard shortcut can be None shortcut must be a string, None or tuple of "
-"shortcuts. If None, a keyboard shortcut corresponding to the action is not "
-"registered. If you pass an empty tuple, then the shortcut is registered with"
-" no default key binding."
-msgstr "Av formen: (text, icon_path, verktygstips, kortkommando) ikonen, verktygstips och kortkommandot kan vara None genväg måste vara en sträng, None eller tupel av genvägar. Om None är ett kortkommando som motsvarar åtgärden inte är registrerad. Om du skickar en tom tabellrad, då registreras genvägen utan bindande standardnyckel."
+"Of the form: (text, icon_path, tooltip, keyboard shortcut). icon, tooltip "
+"and keyboard shortcut can be None. keyboard shortcut must be either a "
+"string, None or tuple of shortcuts. If None, a keyboard shortcut "
+"corresponding to the action is not registered. If you pass an empty tuple, "
+"then the shortcut is registered with no default key binding."
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.gui2.actions.InterfaceAction.action_add_menu:1
@@ -2765,7 +2765,7 @@ msgid ""
 "is registered for this action. If None, a keyboard shortcut with no default "
 "keybinding is registered. String and list of strings register a shortcut "
 "with default keybinding as specified."
-msgstr "En sträng, en lista med strängar, None eller False. Om False har inget kortkommando registrerats för denna åtgärd. Om None har ett kortkommando med ingen standardtangentbindning registrerats. Sträng och lista med strängar registrerar en genväg med standardtangentbindning som anges."
+msgstr "En sträng, en lista med strängar, None eller False. Om False har ingen tangentbordsgenväg registrerats för denna åtgärd. Om None har ett tangentbordsgenväg med ingen standardtangentbindning registrerats. Sträng och lista med strängar registrerar en genväg med standardtangentbindning som angetts."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction.create_menu_action:18
@@ -2783,7 +2783,7 @@ msgstr "En anropbar som är ansluten till den utlösta signalen i den skapade å
 msgid ""
 "The text displayed to the user when customizing the keyboard shortcuts for "
 "this action. By default it is set to the value of ``text``."
-msgstr "Texten visas för användaren när du anpassar kortkommandon för denna åtgärd. Som standard är det inställt till värdet på ``text``."
+msgstr "Texten som visas för användaren när man anpassar tangentbordsgenvägar för denna åtgärd. Som standard är den inställd på värdet ``text``."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction.create_menu_action:25
@@ -2791,7 +2791,7 @@ msgid ""
 "Shortcuts for actions that don't always appear, or are library dependent, "
 "may disappear when other keyboard shortcuts are edited unless "
 "```persist_shortcut``` is set True."
-msgstr "Kortkommandon för åtgärder som inte alltid visas eller är biblioteksberoende kan försvinna när andra kortkommandon redigeras om inte ```persist_shortcut``` är inställt som True."
+msgstr "Genvägar för åtgärder som inte alltid visas, eller som är biblioteksberoende, kan försvinna när andra tangentbordsgenvägar redigeras om inte ```persist_shortcut``` är inställt på True."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction.load_resources:12
@@ -3043,6 +3043,13 @@ msgid ""
 "to reread any changed settings. Note that by default the GUI re-initializes "
 "various elements anyway, so most widgets won't need to use this method."
 msgstr "Anropas en gång efter denna gränssnittskomponent läggs in. Ansvarig för att orsakat gui att läsa om ändrade inställningar. Observera att som standard åter initierar grafiska gränssnittet olika element i alla fall, så de flesta gränssnittskomponenter inte behöver använda den här metoden."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
+#: of calibre.gui2.preferences.ConfigWidgetInterface.initial_tab_changed:1
+msgid ""
+"Called if the initially displayed tab is changed before the widget is shown,"
+" but after it is initialized."
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase:1

@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "september 02, 2022" "6.4.0" "calibre"
+.TH "CALIBREDB" "1" "september 16, 2022" "6.5.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -834,7 +834,7 @@ Kommagescheiden lijst van rapporten. Standaard: all
 .INDENT 0.0
 .TP
 .B \-\-vacuum\-fts\-db
-Vacuum the full text search database. This can be very slow and memory intensive, depending on the size of the database.
+Leeg de volledige tekstzoek database. Dit kan erg traag en geheugenintensief zijn, afhankelijk van de grootte van de database
 .UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
@@ -956,7 +956,7 @@ Update alleen de metadata in specifieke bestands types. Gebruik dit meerdere ker
 .sp
 .nf
 .ft C
-calibredb search [opties] zoekopdracht
+calibredb search [opties] zoekexpressie
 .ft P
 .fi
 .UNINDENT
@@ -966,7 +966,7 @@ Doorzoek de bibliotheek voor de specifieke zoekterm, geeft een komma gescheiden
 lijst van boek IDs terug overeenkomend met de zoekuitdrukking. Het uitvoerformaat is nuttig
 om andere commando\(aqs uit te voeren die een lijst van IDs aanvaarden als invoer
 .sp
-De zoekopdracht kan eerder wat zijn uit calibre\(aqs krachtige zoek querytaal
+De zoekexpressie kan eerder wat zijn uit calibre\(aqs krachtige zoek querytaal
 bijvoorbeeld: %p rog \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
 Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: \(dq/some path/with spaces\(dq
@@ -1024,49 +1024,49 @@ Wacht tot alle boeken geïndexeerd zijn, indexeringsvoortgang wordt regelmatig g
 .sp
 .nf
 .ft C
-calibredb fts_search [options] zoekopdracht
+calibredb fts_search [options] zoekexpressie
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Doe een volledige tekstzoek op de gehele bibliotheek of een onderdeel ervan.
+Doe een volledige tekstopzoeking op de gehele bibliotheek of een onderdeel ervan.
 .sp
 Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-do\-not\-match\-on\-related\-words
-Only match on exact words not related words. So correction will not match correcting.
+Match alleen op exacte woorden, niet op verwante woorden. Correctie komt dus niet overeen met corrigeren.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-include\-snippets
-Include snippets of the text surrounding each match. Note that this makes searching much slower.
+Voeg fragmenten toe van de tekst rond elke overeenkomst. Merk op dat dit het zoeken veel langzamer maakt.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-indexing\-threshold
-How much of the library must be indexed before searching is allowed, as a percentage. Defaults to 90
+Hoeveel procent van de bibliotheek moet worden geïndexeerd voordat zoeken is toegestaan. Standaard ingesteld op 90
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-end\-marker
-The marker used to indicate the end of a matched word inside a snippet
+De markering die wordt gebruikt om het einde van een overeenkomend woord in een fragment aan te geven
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-start\-marker
-The marker used to indicate the start of a matched word inside a snippet
+De markering die wordt gebruikt om het begin van een overeenkomend woord in een fragment aan te geven
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-format
-The format to output the search results in. Either \fB\(dq\fPtext\fB\(dq\fP for plain text or \fB\(dq\fPjson\fB\(dq\fP for JSON output.
+De indeling waarin de zoekresultaten moeten worden uitgevoerd. Ofwel \fB\(aq\fPtekst\fB\(aq\fP voor platte tekst of \fB\(aq\fPjson\fB\(aq\fP voor JSON\-uitvoer.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-restrict\-to
-Beperk de doorzochte boeken, ofwel met een zoekopdracht ofwel met IDs. Bijvoorbeeld: IDs: 1,2,3 om te beperken op ID of search:tag:foo om te beperken tot boeken met label foo.
+Beperk de doorzochte boeken, ofwel met een zoekexpressie ofwel met IDs. Bijvoorbeeld: IDs: 1,2,3 om te beperken op ID of search:tag:foo om te beperken tot boeken met label foo.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

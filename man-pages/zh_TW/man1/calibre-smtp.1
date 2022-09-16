@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SMTP" "1" "9月 02, 2022" "6.4.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "9月 16, 2022" "6.5.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .INDENT 0.0
@@ -58,7 +58,7 @@ calibre\-smtp\(ga传递参数时，用引号括起这些参数。例如: \(dq/so
 .INDENT 0.0
 .TP
 .B \-\-fork, \-f
-在后台发送邮件。如果使用此选项, 还应使用 \fI\%\-\-outbox\fP 处理传递失败。
+在背景傳送郵件。如果使用此選項，還應使用 \fI\%\-\-outbox\fP 處理傳遞失敗。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -73,12 +73,12 @@ localhost 的主機名稱。使用於連線至 SMTP 伺服器時。
 .INDENT 0.0
 .TP
 .B \-\-outbox, \-o
-在邮件文件夹中存储失败电子邮件的路径。
+在郵件資料夾中儲存失敗電子郵件的路徑。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout, \-t
-连接超时
+連接逾時
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -92,7 +92,7 @@ localhost 的主機名稱。使用於連線至 SMTP 伺服器時。
 .UNINDENT
 .SS COMPOSE MAIL
 .sp
-撰写电子邮件的选项。如果正文未设置，将被忽略。
+撰寫電子郵件的選項。如果正文未設定，將被忽略。
 .INDENT 0.0
 .TP
 .B \-\-attachment, \-a
@@ -109,12 +109,12 @@ localhost 的主機名稱。使用於連線至 SMTP 伺服器時。
 .INDENT 0.0
 .TP
 .B \-\-cafile
-一个以PEM格式连接的CA证书文件(用于在使用TLS时验证服务器证书)的路径。默认情况下，使用系统CA证书。
+一個以PEM格式連接的CA證書檔案 (用於在使用TLS時驗證伺服器證書)的路徑。預設情況下，使用系統CA證書。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-verify\-server\-certificate
-在使用TLS连接时不验证服务器证书。这是caliber 3.27版之前的默认行为。如果要使用带有自签名证书或其他无效证书的中继，则可以使用此选项恢复之前3.27版的行为
+在使用TLS連接時不驗證伺服器憑證。這是caliber 3.27版之前的預設行為。如果要使用帶有自我簽署憑證或其他無效憑證的中繼，則可以使用此選項復原之前3.27版的行為
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -124,7 +124,7 @@ localhost 的主機名稱。使用於連線至 SMTP 伺服器時。
 .INDENT 0.0
 .TP
 .B \-\-password, \-p
-中继的密码
+中繼的密碼
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -139,7 +139,7 @@ SMTP 轉送伺服器，用以傳送信件
 .INDENT 0.0
 .TP
 .B \-\-username, \-u
-中继的用户名
+中繼的使用者名稱
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

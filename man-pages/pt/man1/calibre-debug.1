@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "setembro 02, 2022" "6.4.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "setembro 16, 2022" "6.5.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -43,14 +43,14 @@ calibre\-debug [opções]
 .sp
 Várias interfaces de linhas de comando úteis para depurar o Calibre. Executado sem opções, este comando inicia um interpretador de Python. Pode também executar a interface de utilizador principal, o visualizador de ebooks e o editor Calibre em modo depuração.
 .sp
-Contém também as interfaces para várias partes do Calibre que não têm ferramentas de linha de comando dedicadas, tais como definição de fontes, ferramenta de diferenças entre livros digitais e outras.
+Contém também as interfaces para várias partes do Calibre que não têm ferramentas de linha de comando dedicadas, tais como subconjuntos de fontes, ferramenta de diferenças entre livros digitais e outras.
 .sp
 Pode ainda utilizar \fBcalibre\-debug\fP para executar scripts em modo independente. Para tal, corra o seguinte:
 .sp
 \fBcalibre\-debug\fP \-e myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .sp
 Tudo após \fB\-\-\fP será passado ao script como parâmetro.
-Também pode usar \fBcalibre\-debug\fP como um Shebang em scripts, tal como:
+Também pode usar \fBcalibre\-debug\fP como uma linha Shebang em scripts, tal como:
 .INDENT 0.0
 .INDENT 3.5
 #!/usr/bin/env \-S \fBcalibre\-debug\fP \-e \fB\-\-\fP \-\-

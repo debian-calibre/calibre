@@ -8,14 +8,15 @@
 # Dmitry <dmitry@shishkin.us>, 2016
 # Alexander Filёv, 2015
 # Николай Кочкин <urfiner@gmail.com>, 2015
+# Виктор, 2022
 # Родион Р., 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-10 14:55+0000\n"
+"POT-Creation-Date: 2022-09-15 08:35+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
-"Last-Translator: ashed <craysy@gmail.com>, 2020-2022\n"
+"Last-Translator: Виктор, 2022\n"
 "Language-Team: Russian (http://www.transifex.com/calibre/calibre/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,7 +26,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:4
 msgid "API documentation for plugins"
-msgstr "Документация API плагинов"
+msgstr "Документация по API для плагинов"
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:9
 msgid ""
@@ -40,17 +41,17 @@ msgstr "Плагин"
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:1
 msgid "A calibre plugin. Useful members include:"
-msgstr "Плагин calibre. Среди полезных членов:"
+msgstr "Плагин calibre. Включая эти полезные плагины:"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:3
 msgid "``self.installation_type``: Stores how the plugin was installed."
-msgstr "``self.installation_type``: Сохраняет способ установки плагина."
+msgstr "``self.installation_type``: Хранит способ установки плагина."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:5
 msgid "``self.plugin_path``: Stores path to the ZIP file that contains"
-msgstr "``self.plugin_path``: Сохраняет путь к содержащему его ZIP-файлу"
+msgstr "``self.plugin_path``: Хранит путь к ZIP-файлу, содержащему"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:5
@@ -139,7 +140,7 @@ msgstr "Название этого плагина. Вы должны устан
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.Plugin.version:1
 msgid "The version of this plugin as a 3-tuple (major, minor, revision)"
-msgstr "Версия этого плагина в виде трех кортежей (основная, дополнительная, ревизия)"
+msgstr "Версия этого плагина в виде 3 выпусков (основной, дополнительный, ревизия)"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.Plugin.description:1
@@ -229,7 +230,7 @@ msgid ""
 "initialized every time a new plugin is added. Also note that if the plugin "
 "is run in a worker process, such as for adding books, then the plugin will "
 "be initialized for every new worker process."
-msgstr "Вызывается один раз при инициализации подключаемых модулей calibre. Плагины повторно инициализируются каждый раз, когда добавляется новый плагин. Также обратите внимание, что если плагин запускается в рабочем процессе, например, для добавления книг, то плагин будет инициализирован для каждого нового рабочего процесса."
+msgstr "Вызывается один раз при инициализации подключаемых модулей calibre. Плагины повторно инициализируются каждый раз, когда добавляется новый плагин. Также обратите внимание, что если плагин запускается в рабочем процессе, например, добавлении книг, то плагин будет инициализирован для каждого нового рабочего процесса."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.initialize:6
@@ -2566,7 +2567,7 @@ msgstr "Если вы добавляете свой собственный пл�
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction:1
 msgid "Bases: :py:class:`~PyQt6.QtCore.QObject`"
-msgstr ""
+msgstr "Основы: :py:class:`~PyQt6.QtCore.QObject`"
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction:1
@@ -2653,12 +2654,12 @@ msgstr "Следует ли автоматически повторять это
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.gui2.actions.InterfaceAction.action_spec:1
 msgid ""
-"Of the form: (text, icon_path, tooltip, keyboard shortcut) icon, tooltip and"
-" keyboard shortcut can be None shortcut must be a string, None or tuple of "
-"shortcuts. If None, a keyboard shortcut corresponding to the action is not "
-"registered. If you pass an empty tuple, then the shortcut is registered with"
-" no default key binding."
-msgstr "Форма: (текст, путь к значку, всплывающая подсказка, сочетание клавиш) значок, всплывающая подсказка и сочетание клавиш могут иметь значение None, сочетание клавиш должно быть строкой, None или кортежем сочетаний клавиш. Если None, сочетание клавиш, соответствующее действию, не регистрируется. Если вы передаете пустой кортеж, ярлык регистрируется без привязки клавиш по умолчанию."
+"Of the form: (text, icon_path, tooltip, keyboard shortcut). icon, tooltip "
+"and keyboard shortcut can be None. keyboard shortcut must be either a "
+"string, None or tuple of shortcuts. If None, a keyboard shortcut "
+"corresponding to the action is not registered. If you pass an empty tuple, "
+"then the shortcut is registered with no default key binding."
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.gui2.actions.InterfaceAction.action_add_menu:1
@@ -2755,7 +2756,7 @@ msgstr "Текст действия."
 msgid ""
 "Either a QIcon or a file name. The file name is passed to the QIcon.ic() "
 "builtin, so you do not need to pass the full path to the images folder."
-msgstr ""
+msgstr "Либо QIcon, либо имя файла. Имя файла передается встроенной функции QIcon.ic(), поэтому вам не нужно передавать полный путь к папке с изображениями."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction.create_menu_action:14
@@ -2984,7 +2985,7 @@ msgstr "Установить значение True, если реализова�
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.gui2.preferences.ConfigWidgetInterface.restore_defaults_desc:1
 msgid "The tooltip for the \"Restore defaults\" button"
-msgstr "Всплывающая подсказка для кнопки \"Восстановить умолчания\""
+msgstr "Подсказка для кнопки \"Восстановить по умолчанию\""
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.gui2.preferences.ConfigWidgetBase.restart_critical:1
@@ -3042,6 +3043,13 @@ msgid ""
 "to reread any changed settings. Note that by default the GUI re-initializes "
 "various elements anyway, so most widgets won't need to use this method."
 msgstr "Вызывается один раз после фиксации этого виджета. Отвечает за то, что пользовательский интерфейс перечитывает любые измененные настройки. Обратите внимание, что по умолчанию графический интерфейс в любом случае повторно инициализирует различные элементы, поэтому большинству виджетов не нужно использовать этот метод."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
+#: of calibre.gui2.preferences.ConfigWidgetInterface.initial_tab_changed:1
+msgid ""
+"Called if the initially displayed tab is changed before the widget is shown,"
+" but after it is initialized."
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase:1

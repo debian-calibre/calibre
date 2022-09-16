@@ -3,17 +3,17 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# ashed <craysy@gmail.com>, 2020-2021
+# ashed <craysy@gmail.com>, 2020-2022
 # Igor Petrov <igorpetrov1991@gmail.com>, 2015
-# ruVlad, 2015
+# Vlad Loktionov, 2015
 # Родион Р., 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-20 07:12+0000\n"
+"POT-Creation-Date: 2022-09-15 08:35+0000\n"
 "PO-Revision-Date: 2014-06-17 08:37+0000\n"
-"Last-Translator: ashed <craysy@gmail.com>, 2020-2021\n"
+"Last-Translator: ashed <craysy@gmail.com>, 2020-2022\n"
 "Language-Team: Russian (http://www.transifex.com/calibre/calibre/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -123,7 +123,7 @@ msgid ""
 "``CALIBRE_NO_NATIVE_MENUBAR`` - causes calibre to not create a native "
 "(global) menu on Ubuntu Unity and similar Linux desktop environments. The "
 "menu is instead placed inside the window, as is traditional."
-msgstr ""
+msgstr "``CALIBRE_NO_NATIVE_MENUBAR`` - заставляет calibre не создавать собственное (глобальное) меню в Ubuntu Unity и аналогичных средах рабочего стола Linux. Вместо этого меню, как обычно, помещается внутри окна."
 
 #: ../../__w/calibre/calibre/manual/customize.rst:47
 msgid ""
@@ -151,7 +151,7 @@ msgstr "``CALIBRE_NO_DEFAULT_PROGRAMS`` - не позволять calibre авт
 msgid ""
 "``QT_QPA_PLATFORM`` - On Linux set this to ``wayland`` to force calibre to "
 "use Wayland and ``xcb`` to force use of X11."
-msgstr ""
+msgstr "``QT_QPA_PLATFORM`` - в Linux установите для этого параметра значение ``wayland``, чтобы заставить calibre использовать Wayland, и ``xcb``, чтобы принудительно использовать X11."
 
 #: ../../__w/calibre/calibre/manual/customize.rst:56
 msgid "``SYSFS_PATH`` - Use if sysfs is mounted somewhere other than /sys"
@@ -193,7 +193,7 @@ msgid ""
 "available for calibre, that you can use by going to "
 ":guilabel:`Preferences->Interface->Look & Feel->Change icon theme`. It is "
 "preferable to use icon themes over overriding individual icons."
-msgstr ""
+msgstr "У calibre есть прямая поддержка тем значков, несколько из этих тем можно использовать, перейдя в :guilabel:`Параметры->Интерфейс->Оформление->Изменить набор значков`. Темы значков используют описанный ниже механизм для переопределения статических ресурсов."
 
 #: ../../__w/calibre/calibre/manual/customize.rst:86
 msgid ""
@@ -231,7 +231,7 @@ msgid ""
 "calibre user interface are in :file:`resources/images` and its sub-folders. "
 "Placing an override file here will have even higher priority than a custom "
 "icon theme."
-msgstr ""
+msgstr "Например, если вы хотите изменить значок для действия :guilabel: `Remove books`, вы сначала должны заглянуть во встроенную папку ресурсов и увидеть, что соответствующий файл :file:`resources/images/remove_books.png `. Предполагая, что у вас есть альтернативный значок в формате PNG с именем :file:`my_remove_books.png`, вы должны сохранить его в папке конфигурации как :file:`resources/images/remove_books.png`. Все значки, используемые пользовательским интерфейсом calibre, находятся в :file:`resources/images` и её подпапках. Размещение файла переопределения здесь будет иметь даже более высокий приоритет, чем пользовательская тема значков."
 
 #: ../../__w/calibre/calibre/manual/customize.rst:114
 msgid "Creating your own icon theme for calibre"
@@ -252,7 +252,7 @@ msgid ""
 "current theme in calibre. If you are testing your theme, remember to remove "
 "the images from the :file:`resources/images` folder so that the icons from "
 "the theme are used."
-msgstr ""
+msgstr "Если вы создали красивый набор значков и хотите поделиться ими с другими пользователями calibre с помощью встроенной поддержки тем значков calibre, вы можете легко упаковать свои значки в тему. Для этого перейдите в :guilabel:`Preferences-Miscellaneous-Create icon theme`, выберите папку, в которую вы поместили свои значки (обычно это папка :file:`resources/images` в папке конфигурации calibre, как описано выше) . Затем заполните метаданные темы и нажмите ОК. Создастся ZIP-файл, содержащий значки темы. Вы можете загрузить его на форум calibre по адресу `Mobileread <https://www.mobileread.com/forums/forumdisplay.php?f=166>`_, а затем я сделаю вашу тему доступной через встроенную систему тем значков calibre. По умолчанию только что созданная тема значков также будет установлена ​​как текущая тема в calibre. Если вы тестируете свою тему, не забудьте удалить изображения из папки :file:`resources/images`, чтобы использовались значки из темы."
 
 #: ../../__w/calibre/calibre/manual/customize.rst:130
 msgid ""
@@ -261,7 +261,7 @@ msgid ""
 "dark-theme`` and ``-for-light-theme``. For example, ``modified-for-dark-"
 "theme.png`` and ``modified-for-light-theme.png``. Then calibre will "
 "automatically use the appropriate icon based on the current theme."
-msgstr ""
+msgstr "Начиная с calibre 6, у вас могут быть собственные значки для светлого и тёмного режима. Просто создайте две версии значка и назовите файлы с суффиксом ``-for-dark-theme`` и ``-for-light-theme``. Например, ``modified-for-dark-theme.png`` и ``modified-for-light-theme.png``. Затем calibre автоматически использует соответствующий значок в зависимости от текущей темы."
 
 #: ../../__w/calibre/calibre/manual/customize.rst:137
 msgid "Customizing calibre with plugins"

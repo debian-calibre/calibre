@@ -21276,6 +21276,7 @@ return this.__repr__();
             this.set_visibility_of_remove_button = EditNotesAndColors.prototype.set_visibility_of_remove_button.bind(this);
             this.add_color = EditNotesAndColors.prototype.add_color.bind(this);
             this.remove_custom_color = EditNotesAndColors.prototype.remove_custom_color.bind(this);
+            this.do_remove_custom_color = EditNotesAndColors.prototype.do_remove_custom_color.bind(this);
             this.change_color = EditNotesAndColors.prototype.change_color.bind(this);
             this.make_swatch_current = EditNotesAndColors.prototype.make_swatch_current.bind(this);
         }});
@@ -21518,6 +21519,24 @@ return this.__repr__();
         });
         EditNotesAndColors.prototype.remove_custom_color = function remove_custom_color() {
             var self = this;
+            question_dialog(_("Are you sure?"), _("Do you want to permanently delete this highlighting style?"), (function() {
+                var ρσ_anonfunc = function (yes) {
+                    if (yes) {
+                        self.do_remove_custom_color();
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["yes"]},
+                    __module__ : {value: "read_book.highlights"}
+                });
+                return ρσ_anonfunc;
+            })());
+        };
+        if (!EditNotesAndColors.prototype.remove_custom_color.__module__) Object.defineProperties(EditNotesAndColors.prototype.remove_custom_color, {
+            __module__ : {value: "read_book.highlights"}
+        });
+        EditNotesAndColors.prototype.do_remove_custom_color = function do_remove_custom_color() {
+            var self = this;
             var item, cct, p, sd, custom_highlight_styles, ans, x;
             item = self.container.getElementsByClassName("current-swatch")[0];
             cct = JSON.parse(item.dataset.style);
@@ -21536,7 +21555,7 @@ return this.__repr__();
             }
             sd.set("custom_highlight_styles", ans);
         };
-        if (!EditNotesAndColors.prototype.remove_custom_color.__module__) Object.defineProperties(EditNotesAndColors.prototype.remove_custom_color, {
+        if (!EditNotesAndColors.prototype.do_remove_custom_color.__module__) Object.defineProperties(EditNotesAndColors.prototype.do_remove_custom_color, {
             __module__ : {value: "read_book.highlights"}
         });
         EditNotesAndColors.prototype.change_color = function change_color(evt) {
@@ -26467,7 +26486,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "6.4.0";
+        CALIBRE_VERSION = "6.5.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -31430,10 +31449,9 @@ return this.__repr__();
 
             name = fm.name || field;
             datatype = fm.datatype;
-            if (field === "comments" || datatype === "comments") {
+            if (field === "comments") {
                 return;
             }
-            func = null;
             if (datatype === "composite") {
                 func = process_composite;
             } else if (field === "formats") {
@@ -31452,6 +31470,12 @@ return this.__repr__();
                 func = process_datetime;
             } else if (datatype === "series") {
                 func = process_series;
+            } else if (datatype === "comments") {
+                if (ρσ_exists.d(fm.display).interpret_as === "short-text") {
+                    return add_val(val);
+                } else {
+                    return;
+                }
             } else if (field.endswith("_index")) {
                 func = process_series_index;
             } else if (field === "size") {

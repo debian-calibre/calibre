@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-10 14:55+0000\n"
+"POT-Creation-Date: 2022-09-15 08:35+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2014,2016-2022\n"
 "Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
@@ -2651,12 +2651,12 @@ msgstr "Визначає, чи має ця дія повторюватися, я
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.gui2.actions.InterfaceAction.action_spec:1
 msgid ""
-"Of the form: (text, icon_path, tooltip, keyboard shortcut) icon, tooltip and"
-" keyboard shortcut can be None shortcut must be a string, None or tuple of "
-"shortcuts. If None, a keyboard shortcut corresponding to the action is not "
-"registered. If you pass an empty tuple, then the shortcut is registered with"
-" no default key binding."
-msgstr "У такій формі: (текст, шлях до піктограми, підказка, клавіатурне скорочення). Піктограма, підказка і клавіатурне скорочення можуть мати значення `None`. Клавіатурне скорочення мєа бути рядком, `None` або кортежем скорочень. Якщо має значення `None`, клавіатурне скорочення для дії не реєструватиметься. Якщо передано порожній кортеж, буде зареєстровано скорочення без типової прив’язки до клавіш."
+"Of the form: (text, icon_path, tooltip, keyboard shortcut). icon, tooltip "
+"and keyboard shortcut can be None. keyboard shortcut must be either a "
+"string, None or tuple of shortcuts. If None, a keyboard shortcut "
+"corresponding to the action is not registered. If you pass an empty tuple, "
+"then the shortcut is registered with no default key binding."
+msgstr "У такій формі: (текст, шлях до піктограми, підказка, клавіатурне скорочення). Піктограма, підказка і клавіатурне скорочення можуть мати значення `None`. Клавіатурне скорочення має бути рядком, `None` або кортежем скорочень. Якщо має значення `None`, клавіатурне скорочення для дії не реєструватиметься. Якщо передано порожній кортеж, буде зареєстровано скорочення без типової прив’язки до клавіш."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.gui2.actions.InterfaceAction.action_add_menu:1
@@ -3040,6 +3040,13 @@ msgid ""
 "to reread any changed settings. Note that by default the GUI re-initializes "
 "various elements anyway, so most widgets won't need to use this method."
 msgstr "Викликається один раз після надсилання цього віджета. Відповідає за повторне читання графічним інтерфейсом усіх змінених параметрів. Зауважте, що типово графічний інтерфейс попри усе повторно ініціалізує різноманітні елементи, отже для більшості віджетів потреби у використанні цього методу немає."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
+#: of calibre.gui2.preferences.ConfigWidgetInterface.initial_tab_changed:1
+msgid ""
+"Called if the initially displayed tab is changed before the widget is shown,"
+" but after it is initialized."
+msgstr "Буде викликано, якщо до початково показаної вкладки було внесено зміни до показу віджета, але після його ініціалізації."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase:1

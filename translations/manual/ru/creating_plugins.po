@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-10 17:06+0000\n"
+"POT-Creation-Date: 2022-09-15 08:35+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: ashed <craysy@gmail.com>, 2020-2022\n"
 "Language-Team: Russian (http://www.transifex.com/calibre/calibre/language/ru/)\n"
@@ -279,11 +279,11 @@ msgid ""
 "name was not found in the ZIP file. If you pass in more than one name then "
 "it returns a dict mapping the names to bytes.  If a name is not found, it "
 "will not be present in the returned dict."
-msgstr ""
+msgstr "Эта функция должна вызываться со списком путей к файлам внутри ZIP-файла. Например, чтобы получить доступ к файлу icon.png в папке images в ZIP-файле, вы должны использовать: ``images/icon.png``. Всегда используйте косую черту в качестве разделителя пути, даже в Windows. Когда вы передаете одно имя, функция вернет необработанные байты этого файла или None, если имя не было найдено в ZIP-файле. Если вы передаете более одного имени, он возвращает dict, сопоставляющий имена с байтами. Если имя не найдено, его не будет в возвращаемом dict."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:157
 msgid "**get_icons(name_or_list_of_names, plugin_name='')**"
-msgstr ""
+msgstr "**get_icons(name_or_list_of_names, plugin_name='')**"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:151
 msgid ""
@@ -293,7 +293,7 @@ msgid ""
 "in the human friendly name of your plugin as ``plugin_name``. If the user is"
 " using an icon theme with icons for your plugin, they will be loaded "
 "preferentially."
-msgstr ""
+msgstr "Обёртка для get_resources(), которая создает объекты QIcon из необработанных байтов, возвращенных get_resources. Если имя не найдено в ZIP-файле, соответствующий QIcon будет нулевым. Чтобы поддерживать тему значков, передайте человекопонятное имя вашего плагина как ``plugin_name``. Если пользователь использует тему значков с иконками для вашего плагина, они будут загружены в первую очередь."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:160
 msgid "Enabling user configuration of your plugin"
@@ -469,8 +469,9 @@ msgstr "Последний шаг - просто вызвать функцию `
 msgid ""
 "You can test the translations of your plugins by changing the user interface"
 " language in calibre under :guilabel:`Preferences->Interface->Look & feel` "
-"or by running calibre like this::"
-msgstr "Вы можете проверить переводы ваших плагинов, изменив язык интерфейса пользователя в calibre в :guilabel:`Preferences-> Interface-> Look & feel` или запустив calibre следующим образом::"
+"or by running calibre with the ``CALIBRE_OVERRIDE_LANG`` environment "
+"variable set. For example::"
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:293
 msgid ""

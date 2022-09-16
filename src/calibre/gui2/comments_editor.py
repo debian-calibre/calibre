@@ -55,10 +55,12 @@ def lift_styles(tag, style_map):
     has_text = bool(tag.text)
     child_styles = []
     for child in tag.iterchildren('*'):
-        if child.tail:
+        if child.tail and child.tail.strip():
             has_text = True
         style = style_map[child]
         child_styles.append(style)
+        if not child.text and len(child) == 0:
+            continue
         if common_props is None:
             common_props = style.copy()
         else:
@@ -75,7 +77,7 @@ def lift_styles(tag, style_map):
         if lifted_props:
             for style in child_styles:
                 for k in lifted_props:
-                    del style[k]
+                    style.pop(k, None)
 
 
 def filter_qt_styles(style):
@@ -103,7 +105,7 @@ def remove_heading_font_styles(tag, style):
     expected_size = (None, 'xx-large', 'x-large', 'large', None, 'small', 'x-small')[lvl]
     if style.get('font-size', 1) == expected_size:
         del style['font-size']
-    if style.get('font-weight') in ('600', '700', 'bold'):
+    if style.get('font-weight') in ('0', '600', '700', 'bold'):
         del style['font-weight']
 
 
@@ -183,6 +185,7 @@ def cleanup_qt_markup(root):
     style_map = defaultdict(dict)
     for tag in root.xpath('//*[@style]'):
         style_map[tag] = parse_style(tag.get('style'))
+    convert_anchors_to_ids(root)
     block_tags = root.xpath('//body/*')
     for tag in block_tags:
         lift_styles(tag, style_map)
@@ -218,7 +221,6 @@ def cleanup_qt_markup(root):
         lift(span)
 
     merge_contiguous_links(root)
-    convert_anchors_to_ids(root)
 # }}}
 
 
@@ -537,7 +539,7 @@ class EditorWidget(QTextEdit, LineEditECM):  # {{{
             cf = QTextCharFormat()
             bcf = c.blockCharFormat()
             lvl = self.level_for_block_type(name)
-            wt = QFont.Weight.Bold if lvl else None
+            wt = QFont.Weight.Bold if lvl else QFont.Weight.Normal
             adjust = (0, 3, 2, 1, 0, -1, -1)[lvl]
             pos = None
             if not c.hasSelection():
@@ -562,12 +564,10 @@ class EditorWidget(QTextEdit, LineEditECM):  # {{{
             bf.setLeftMargin(hmargin), bf.setRightMargin(hmargin)
             bf.setTopMargin(tmargin), bf.setBottomMargin(bmargin)
             bf.setHeadingLevel(lvl)
-            if adjust:
-                bcf.setProperty(QTextFormat.Property.FontSizeAdjustment, adjust)
-                cf.setProperty(QTextFormat.Property.FontSizeAdjustment, adjust)
-            if wt:
-                bcf.setProperty(QTextFormat.Property.FontWeight, wt)
-                cf.setProperty(QTextFormat.Property.FontWeight, wt)
+            bcf.setProperty(QTextFormat.Property.FontSizeAdjustment, adjust)
+            cf.setProperty(QTextFormat.Property.FontSizeAdjustment, adjust)
+            bcf.setFontWeight(wt)
+            cf.setFontWeight(wt)
             c.setBlockCharFormat(bcf)
             c.mergeCharFormat(cf)
             c.mergeBlockFormat(bf)

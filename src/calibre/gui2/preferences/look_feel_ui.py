@@ -12,7 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(1083, 791)
+        Form.resize(1096, 791)
         self.gridLayout_2 = QtWidgets.QGridLayout(Form)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.tabWidget = ScrollingTabWidget(Form)
@@ -166,6 +166,11 @@ class Ui_Form(object):
         self.gridLayout_4 = QtWidgets.QGridLayout(self.groupBox_4)
         self.gridLayout_4.setObjectName("gridLayout_4")
         self.cover_size_label = QtWidgets.QLabel(self.groupBox_4)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.cover_size_label.sizePolicy().hasHeightForWidth())
+        self.cover_size_label.setSizePolicy(sizePolicy)
         self.cover_size_label.setWordWrap(True)
         self.cover_size_label.setObjectName("cover_size_label")
         self.gridLayout_4.addWidget(self.cover_size_label, 0, 0, 1, 5)
@@ -920,8 +925,8 @@ class Ui_Form(object):
         self.opt_edit_metadata_single_cc_label_length.setToolTip(_("The maximum width of a custom column label for the single metadata edit dialog in average characters."))
         self.opt_edit_metadata_single_cc_label_length.setSuffix(_(" chars"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.edit_metadata_tab), _("Edit &metadata"))
-        self.label.setText(_("Select the categories to display in the Tag browser, and their &order"))
         self.label.setToolTip(_("User categories and Saved searches cannot be moved"))
+        self.label.setText(_("Select the categories to display in the Tag browser, and their &order"))
         self.tb_up_button.setToolTip(_("Move up. User categories and Saved searches cannot be moved. Keyboard shortcut: Ctrl-Up arrow"))
         self.tb_down_button.setToolTip(_("Move down. User categories and Saved searches cannot be moved. Keyboard shortcut: Ctrl-Down arrow"))
         self.tb_reset_layout_button.setToolTip(_("Click this button to reset the list to its default order."))
@@ -983,13 +988,13 @@ class Ui_Form(object):
         self.label_101.setText(_("Co&llapse when more items than:"))
         self.opt_tags_browser_collapse_at.setToolTip(_("<p>If a Tag browser category has more than this number of items, it is divided\n"
 "up into subcategories. If the partition method is set to disable, this value is ignored.</p>"))
-        self.label2.setText(_("Select categories to &partition:"))
         self.label2.setToolTip(_("<p>Check the box for categories that are to\n"
 "be partitioned using the criteria above. Uncheck the box if you don\'t want to\n"
 "partition a category even if the number of items is larger than\n"
 "the value shown above. This option can be used to\n"
 "avoid collapsing hierarchical categories that have only\n"
 "a few top-level elements.</p>"))
+        self.label2.setText(_("Select categories to &partition:"))
         self.tb_partition_reset_button.setToolTip(_("Click this button to reset the list to its default order."))
         self.tb_partition_reset_button.setText(_("Reset list"))
         self.tb_partition_import_layout_button.setToolTip(_("<p>Click this button to set the list to one\n"
@@ -1001,7 +1006,6 @@ class Ui_Form(object):
 "structure and you want to use the same for each one.</p>"))
         self.tb_partition_export_layout_button.setText(_("Export list"))
         self.tag_browser_tab.setTabText(self.tag_browser_tab.indexOf(self.tb_tab2), _("&Partitioning and collapsing"))
-        self.label3.setText(_("Select categories with &hierarchical items:"))
         self.label3.setToolTip(_("<p>Check the box for an item if it is to be displayed as a\n"
 "hierarchical tree in the Tag browser. For example, if you check\n"
 "\'tags\' then tags of the form \'Mystery.English\'\n"
@@ -1010,6 +1014,7 @@ class Ui_Form(object):
 "then the tags will be displayed each on their own line.</p>\n"
 "<p>The categories \'authors\', \'publisher\', \'news\', \'formats\', and \'rating\'\n"
 "cannot be hierarchical.</p>"))
+        self.label3.setText(_("Select categories with &hierarchical items:"))
         self.tb_hierarchy_reset_layout_button.setToolTip(_("Click this button to reset the list to its default order."))
         self.tb_hierarchy_reset_layout_button.setText(_("Reset list"))
         self.tb_hierarchy_import_layout_button.setToolTip(_("<p>Click this button to set the list to one\n"
@@ -1020,11 +1025,11 @@ class Ui_Form(object):
 "settings to a file. This could be useful if you have several libraries with similar\n"
 "structure and you want to use the same for each one.</p>"))
         self.tb_hierarchy_export_layout_button.setText(_("Export list"))
-        self.label4.setText(_("Set the &order of searches when clicking on items"))
         self.label4.setToolTip(_("<p>Set the order of the searches when clicking on an item in\n"
 "the Tag browser. The \'or its children\' options are ignored when clicking on\n"
 "top-level categories, items that aren\'t in a hierarchical category, and items\n"
 "that don\'t have children.</p>"))
+        self.label4.setText(_("Set the &order of searches when clicking on items"))
         self.tb_search_order_up_button.setToolTip(_("Move up. Keyboard shortcut: Ctrl-Up arrow"))
         self.tb_search_order_down_button.setToolTip(_("Move down. Keyboard shortcut: Ctrl-Down arrow"))
         self.tb_search_order_reset_button.setToolTip(_("Click this button to reset the list to its default order."))
