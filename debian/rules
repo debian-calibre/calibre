@@ -55,9 +55,8 @@ calibre_auto_test:
 	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC $(CI_ENV) $(SETUP) test --test-name=qt        $(TEST_FLAGS)
 	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC $(CI_ENV) $(SETUP) test --test-name=dom_load  $(TEST_FLAGS)
 
-override_dh_install:
+execute_before_dh_install:
 	dh_buildinfo
-	dh_install
 
 override_dh_auto_install:
 	dh_auto_install -O--buildsystem=makefile -- -f debian/calibre-builder.mak
