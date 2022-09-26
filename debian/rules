@@ -1,5 +1,8 @@
 #!/usr/bin/make -f
 
+# help for reproducible build
+export LANG=C.UTF-8
+
 # building with python3
 PYTHON=$(shell py3versions -d)
 PYTHON_PATH=$(shell command -v $(PYTHON))
