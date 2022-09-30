@@ -9,6 +9,7 @@ import time, traceback, locale
 from itertools import repeat
 from datetime import timedelta
 from threading import Thread
+from contextlib import suppress
 
 from calibre.utils.config import tweaks, prefs
 from calibre.utils.date import parse_date, now, UNDEFINED_DATE, clean_date_for_sort
@@ -929,14 +930,13 @@ class ResultCache(SearchQueryParser):  # {{{
 
         # Set the values in the cache
         marked_col = self.FIELD_MAP['marked']
+        in_tag_browser_col = self.FIELD_MAP['in_tag_browser']
         for r in self.iterall():
-            r[marked_col] = None
+            r[marked_col] = r[in_tag_browser_col] = None
 
-        for id_, val in iteritems(self.marked_ids_dict):
-            try:
+        for id_, val in self.marked_ids_dict.items():
+            with suppress(Exception):
                 self._data[id_][marked_col] = val
-            except:
-                pass
 
     def get_marked(self, idx, index_is_id=True, default_value=None):
         id_ = idx if index_is_id else self[idx][0]
@@ -1056,7 +1056,7 @@ class ResultCache(SearchQueryParser):  # {{{
             if item is not None:
                 item.append(db.book_on_device_string(item[0]))
                 # Temp mark and series_sort columns
-                item.extend((None, None))
+                item.extend((None, None, None))
 
         marked_col = self.FIELD_MAP['marked']
         for id_,val in iteritems(self.marked_ids_dict):
@@ -1064,6 +1064,10 @@ class ResultCache(SearchQueryParser):  # {{{
                 self._data[id_][marked_col] = val
             except:
                 pass
+
+        in_tag_browser_col = self.FIELD_MAP['in_tag_browser']
+        for r in self.iterall():
+            r[in_tag_browser_col] = None
 
         self._map = [i[0] for i in self._data if i is not None]
         if field is not None:

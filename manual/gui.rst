@@ -526,6 +526,20 @@ Identifiers (e.g., ISBN, DOI, LCCN, etc.) use an extended syntax. An identifier 
     * ``identifiers:=isbn:=123456789`` will find books with a type equal to ISBN having a value equal to `123456789`.
     * ``identifiers:i:1`` will find books with a type containing an `i` having a value containing a `1`.
 
+*Categories visible in the Tag browser*
+
+The search ``in_tag_browser:true`` finds all books that are in categories
+(tags, authors, etc.) currently shown in the :guilabel:`Tag browser`. This is
+useful if you set the two preferences :guilabel:`Preferences->Look & feel->Tag
+browser->Hide empty categories` and :guilabel:`Find shows all items that
+match`. With those two preferences set, doing a :guilabel:`Find` in the
+:guilabel:`Tag browser` shows only categories containing items matched by the
+:guilabel:`Find`. Then, the search ``in_tag_browser:true`` additionally finds books
+with these categories / items. You can easily run this search by pressing the
+key :kbd:`Ctrl+Alt+Shift+F` or clicking the configure button in the
+:guilabel:`Tag browser` and choosing the :guilabel:`Show only books that have
+visible categories` entry.
+
 *Search using templates*
 
 You can search using a template in :ref:`templatelangcalibre` instead of a metadata field. To do so you enter a template, a search type, and the value to search for. The syntax is::
@@ -902,3 +916,6 @@ calibre has several keyboard shortcuts to save you time and mouse movement. Thes
       - Quit calibre
     * - :kbd:`X`
       - Toggle auto scroll of the book list
+    * - :kbd:`Ctrl+Alt+Shift+F`
+      - Restrict the displayed books to only those books that are in a category
+        currently displayed in the :guilabel:`Tag browser`

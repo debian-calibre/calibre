@@ -280,6 +280,11 @@ def find_existing_nav_toc(container):
         return name
 
 
+def mark_as_nav(container, name):
+    if container.opf_version_parsed.major > 2:
+        container.apply_unique_properties(name, 'nav')
+
+
 def get_x_toc(container, find_toc, parse_toc, verify_destinations=True):
     def empty_toc():
         ans = TOC()

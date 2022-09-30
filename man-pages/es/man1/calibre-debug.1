@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "septiembre 16, 2022" "6.5.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "septiembre 30, 2022" "6.6.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -73,7 +73,7 @@ Depurar detección de dispositivos
 .INDENT 0.0
 .TP
 .B \-\-default\-programs
-(Des)registrar calibre como programa predeterminado de Windows \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
+(Des)registrar calibre como programa predeterminado de Windows. \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -98,7 +98,7 @@ Expandir el libro en la carpeta especificada. Empleo: \-x archivo.epub dir_salid
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Exportar todos los datos de calibre (libros, configuraciones, complementos). Normalmente, se le pedirá la carpeta de exportación y las bibliotecas para exportar. También puede especificarlos como argumentos de línea de órdenes para evitar las preguntas. Use rutas de acceso absolutas para la carpeta de exportación y las bibliotecas. Puede usarse la palabra clave «all» para exportar todas las bibliotecas.
+Exportar todos los datos de calibre (libros, configuración, complementos). Normalmente se le pedirá la carpeta donde exportar y las bibliotecas a exportar. También puede especificarlas como argumentos de línea de órdenes para evitar las preguntas. Use rutas absolutas para la carpeta de exportación y las bibliotecas. Puede usarse la palabra clave «all» para exportar todas las biblietecas. Ejemplos:    calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP # para uso interactivo   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /ruta/a/carpeta/de/exportación/vacía /ruta/a/carpeta/de/biblioteca1 /ruta/a/carpeta/de/biblioteca2   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /carpeta/de/exportación all # exportar todas las bibliotecas conocidas
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -108,12 +108,12 @@ Para uso interno
 .INDENT 0.0
 .TP
 .B \-\-gui, \-g
-Ejecutar la interfaz gráfica en modo de depuración. La salida de depuración se imprime en los flujos de salida y error estándar
+Ejecutar la interfaz gráfica en modo de depuración. La salida de depuración se imprime en los flujos de salida y error estándar.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-gui\-debug
-Ejecutar la interfaz gráfica con consola de depuración, con registro en la ruta especificada. Para uso interno, use la opción \-g para ejecutar la interfaz gráfica en modo de depuración.
+Ejecutar la interfaz gráfica con consola de depuración, con registro en la ruta especificada. Para uso interno, use la opción \-g para ejecutar la interfaz gráfica en modo de depuración
 .UNINDENT
 .INDENT 0.0
 .TP

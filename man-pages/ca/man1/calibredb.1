@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "de setembre 16, 2022" "6.5.0" "calibre"
+.TH "CALIBREDB" "1" "de setembre 30, 2022" "6.6.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -232,14 +232,14 @@ Camps pels quals s\fB\(aq\fPordenaran els resultats. Camps disponibles: author_s
 .sp
 .nf
 .ft C
-calibredb add [options] file1 file2 file3 ...
+calibredb add [opcions] fitxer1 fitxer2 fitxer3 ...
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Add the specified files as books to the database. You can also specify folders, see
-the folder related options below.
+Afegeix els fitxers especificats com a llibres a la base de dades. Podeu  indicar també
+directoris, vegeu les opcions relacionades amb els directoris més avall.
 .sp
 Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -250,7 +250,7 @@ Estableix els autors del(s) llibre(s) afegit(s)
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-If books with similar titles and authors are found, merge the incoming formats (files) automatically into existing book records. A value of \fB\(dq\fPignore\fB\(dq\fP means duplicate formats are discarded. A value of \fB\(dq\fPoverwrite\fB\(dq\fP means duplicate formats in the library are overwritten with the newly added files. A value of \fB\(dq\fPnew_record\fB\(dq\fP means duplicate formats are placed into a new book record.
+Si es troben llibres amb títols i autors similars, fusiona els formats (fitxers) entrants automàticament amb els registres de llibres existents. El valor \fB\(dq\fPignore\fB\(dq\fP significa que es descarten els formats duplicats. El valor \fB\(dq\fPsobreescriure\fB\(dq\fP significa que els formats duplicats de la biblioteca se sobreescriuen amb els fitxers afegits recentment. Un valor de \fB\(dq\fPnew_record\fB\(dq\fP significa que els formats duplicats es col·loquen en un registre de llibre nou.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -270,7 +270,7 @@ Afegeix un llibre en blanc (un llibre sense format)
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Set the identifiers for this book, e.g. \-I asin:XXX \-I isbn:YYY
+Estableix els identificadors per a aquest llibre, p. ex. \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
