@@ -7375,7 +7375,7 @@ return this.__repr__();
 
     (function(){
         var __name__ = "utils";
-        var is_ios, copy_hash, _roman, _data_ns;
+        var is_ios, ios_major_version, v, copy_hash, _roman, _data_ns;
         var encode_query = ρσ_modules.ajax.encode_query;
 
         var hexlify = ρσ_modules.encodings.hexlify;
@@ -7383,8 +7383,15 @@ return this.__repr__();
         var get_font_family = ρσ_modules["book_list.theme"].get_font_family;
 
         is_ios = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+        ios_major_version = 0;
         if (!is_ios && !!navigator.platform && (typeof window !== "undefined" && window !== null) && window.navigator.platform === "MacIntel" && window.navigator.maxTouchPoints > 1) {
             is_ios = true;
+        }
+        if (is_ios) {
+            v = navigator.appVersion.match(/OS (\d+)/);
+            if (v && v[1]) {
+                ios_major_version = parseInt(v[1], 10) || 0;
+            }
         }
         function default_context_menu_should_be_allowed(evt) {
             if (evt.target && evt.target.tagName && ρσ_in(evt.target.tagName.toLowerCase(), ["input", 
@@ -7899,6 +7906,8 @@ return this.__repr__();
         });
 
         ρσ_modules.utils.is_ios = is_ios;
+        ρσ_modules.utils.ios_major_version = ios_major_version;
+        ρσ_modules.utils.v = v;
         ρσ_modules.utils.copy_hash = copy_hash;
         ρσ_modules.utils._roman = _roman;
         ρσ_modules.utils._data_ns = _data_ns;
@@ -8097,7 +8106,7 @@ return this.__repr__();
                 library_data.field_names = Object.create(null);
             }
             library_data.for_library = current_library_id();
-            var ρσ_Iter0 = ρσ_Iterable("search_result sortable_fields field_metadata metadata virtual_libraries book_display_fields bools_are_tristate".split(" "));
+            var ρσ_Iter0 = ρσ_Iterable("search_result sortable_fields field_metadata metadata virtual_libraries book_display_fields bools_are_tristate book_details_vertical_categories".split(" "));
             for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
                 key = ρσ_Iter0[ρσ_Index0];
                 library_data[(typeof key === "number" && key < 0) ? library_data.length + key : key] = data[(typeof key === "number" && key < 0) ? data.length + key : key];
@@ -12693,7 +12702,7 @@ return this.__repr__();
 
         var document_height = ρσ_modules.utils.document_height;
         var document_width = ρσ_modules.utils.document_width;
-        var is_ios = ρσ_modules.utils.is_ios;
+        var ios_major_version = ρσ_modules.utils.ios_major_version;
 
         function ScrollViewport() {
             if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
@@ -13335,7 +13344,7 @@ return this.__repr__();
         };
         Object.defineProperty(IOSScrollViewport.prototype, "__bases__", {value: [ScrollViewport]});
 
-        if (is_ios) {
+        if (1 < ios_major_version && ios_major_version < 15) {
             scroll_viewport = new IOSScrollViewport;
         } else {
             scroll_viewport = new ScrollViewport;
@@ -26486,7 +26495,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "6.5.0";
+        CALIBRE_VERSION = "6.6.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -34268,7 +34277,7 @@ return this.__repr__();
         });
 
         function render_metadata(mi, table, book_id, iframe_css) {
-            var field_metadata, interface_data, fields, comments, fm, field, all_html, name, ρσ_unpack, comment, iframe;
+            var field_metadata, interface_data, fields, vertical_categories, x, comments, fm, field, all_html, name, ρσ_unpack, comment, iframe;
             field_metadata = library_data.field_metadata;
             interface_data = get_interface_data();
             function allowed_fields(field) {
@@ -34296,6 +34305,14 @@ return this.__repr__();
             });
 
             fields = library_data.book_display_fields;
+            vertical_categories = (function() {
+                var ρσ_Iter = ρσ_Iterable(library_data.book_details_vertical_categories || []), ρσ_Result = Object.create(null), x;
+                for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                    x = ρσ_Iter[ρσ_Index];
+                    ρσ_Result[x] = (true);
+                }
+                return ρσ_Result;
+            })();
             if (!fields || !fields.length || get_session_data().get("show_all_metadata")) {
                 fields = ρσ_interpolate_kwargs.call(this, sorted, [filter(allowed_fields, mi)].concat([ρσ_desugar_kwargs({key: field_sorter(field_metadata)})]));
             } else {
@@ -34303,13 +34320,14 @@ return this.__repr__();
             }
             comments = [];
             function add_row() {
-                var name = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
-                var val = ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[1];
-                var is_searchable = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? add_row.__defaults__.is_searchable : arguments[2];
-                var is_html = (arguments[3] === undefined || ( 3 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? add_row.__defaults__.is_html : arguments[3];
-                var join = (arguments[4] === undefined || ( 4 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? add_row.__defaults__.join : arguments[4];
-                var search_text = (arguments[5] === undefined || ( 5 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? add_row.__defaults__.search_text : arguments[5];
-                var use_quotes = (arguments[6] === undefined || ( 6 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? add_row.__defaults__.use_quotes : arguments[6];
+                var field = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+                var name = ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[1];
+                var val = ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[2];
+                var is_searchable = (arguments[3] === undefined || ( 3 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? add_row.__defaults__.is_searchable : arguments[3];
+                var is_html = (arguments[4] === undefined || ( 4 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? add_row.__defaults__.is_html : arguments[4];
+                var join = (arguments[5] === undefined || ( 5 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? add_row.__defaults__.join : arguments[5];
+                var search_text = (arguments[6] === undefined || ( 6 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? add_row.__defaults__.search_text : arguments[6];
+                var use_quotes = (arguments[7] === undefined || ( 7 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? add_row.__defaults__.use_quotes : arguments[7];
                 var ρσ_kwargs_obj = arguments[arguments.length-1];
                 if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
                 if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "is_searchable")){
@@ -34327,10 +34345,11 @@ return this.__repr__();
                 if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "use_quotes")){
                     use_quotes = ρσ_kwargs_obj.use_quotes;
                 }
-                var v;
+                var is_vertical, v;
                 if (val === undefined || val === null) {
                     return;
                 }
+                is_vertical = vertical_categories[(typeof field === "number" && field < 0) ? vertical_categories.length + field : field];
                 function add_val(v) {
                     var text_rep;
                     if (!v.appendChild) {
@@ -34364,7 +34383,11 @@ return this.__repr__();
                             v = ρσ_Iter5[ρσ_Index5];
                             add_val(v);
                             if (v !== val[val.length-1]) {
-                                table.lastChild.lastChild.appendChild(document.createTextNode(join));
+                                if (is_vertical) {
+                                    table.lastChild.lastChild.appendChild(E.br());
+                                } else {
+                                    table.lastChild.lastChild.appendChild(document.createTextNode(join));
+                                }
                             }
                         }
                     }
@@ -34374,21 +34397,21 @@ return this.__repr__();
             if (!add_row.__defaults__) Object.defineProperties(add_row, {
                 __defaults__ : {value: {is_searchable:false, is_html:false, join:null, search_text:null, use_quotes:true}},
                 __handles_kwarg_interpolation__ : {value: true},
-                __argnames__ : {value: ["name", "val", "is_searchable", "is_html", "join", "search_text", "use_quotes"]},
+                __argnames__ : {value: ["field", "name", "val", "is_searchable", "is_html", "join", "search_text", "use_quotes"]},
                 __module__ : {value: "book_list.book_details"}
             });
 
             function process_composite(field, fm, name, val) {
                 var all_vals;
                 if (fm.display && fm.display.contains_html) {
-                    ρσ_interpolate_kwargs.call(this, add_row, [name, val].concat([ρσ_desugar_kwargs({is_html: true})]));
+                    ρσ_interpolate_kwargs.call(this, add_row, [field, name, val].concat([ρσ_desugar_kwargs({is_html: true})]));
                     return;
                 }
                 if (fm.is_multiple && fm.is_multiple.list_to_ui) {
                     all_vals = filter(null, map(str.strip, val.split(fm.is_multiple.list_to_ui)));
-                    ρσ_interpolate_kwargs.call(this, add_row, [name, all_vals].concat([ρσ_desugar_kwargs({is_searchable: field, join: fm.is_multiple.list_to_ui})]));
+                    ρσ_interpolate_kwargs.call(this, add_row, [field, name, all_vals].concat([ρσ_desugar_kwargs({is_searchable: field, join: fm.is_multiple.list_to_ui})]));
                 } else {
-                    ρσ_interpolate_kwargs.call(this, add_row, [name, val].concat([ρσ_desugar_kwargs({is_searchable: field})]));
+                    ρσ_interpolate_kwargs.call(this, add_row, [field, name, val].concat([ρσ_desugar_kwargs({is_searchable: field})]));
                 }
             };
             if (!process_composite.__argnames__) Object.defineProperties(process_composite, {
@@ -34397,7 +34420,7 @@ return this.__repr__();
             });
 
             function process_authors(field, fm, name, val) {
-                ρσ_interpolate_kwargs.call(this, add_row, [name, val].concat([ρσ_desugar_kwargs({is_searchable: field, join: " & "})]));
+                ρσ_interpolate_kwargs.call(this, add_row, [field, name, val].concat([ρσ_desugar_kwargs({is_searchable: field, join: " & "})]));
             };
             if (!process_authors.__argnames__) Object.defineProperties(process_authors, {
                 __argnames__ : {value: ["field", "fm", "name", "val"]},
@@ -34405,7 +34428,7 @@ return this.__repr__();
             });
 
             function process_publisher(field, fm, name, val) {
-                ρσ_interpolate_kwargs.call(this, add_row, [name, val].concat([ρσ_desugar_kwargs({is_searchable: field})]));
+                ρσ_interpolate_kwargs.call(this, add_row, [field, name, val].concat([ρσ_desugar_kwargs({is_searchable: field})]));
             };
             if (!process_publisher.__argnames__) Object.defineProperties(process_publisher, {
                 __argnames__ : {value: ["field", "fm", "name", "val"]},
@@ -34439,7 +34462,7 @@ return this.__repr__();
                 val = int(val || 0);
                 if (val > 0) {
                     add_stars_to(stars, val, ρσ_exists.d(fm.display).allow_half_stars);
-                    ρσ_interpolate_kwargs.call(this, add_row, [name, stars].concat([ρσ_desugar_kwargs({is_searchable: field, search_text: val / 2 + ""})]));
+                    ρσ_interpolate_kwargs.call(this, add_row, [field, name, stars].concat([ρσ_desugar_kwargs({is_searchable: field, search_text: val / 2 + ""})]));
                 }
             };
             if (!process_rating.__argnames__) Object.defineProperties(process_rating, {
@@ -34505,11 +34528,11 @@ return this.__repr__();
             function process_size(field, fm, name, val) {
                 if (val) {
                     try {
-                        add_row(name, human_readable(int(val)));
+                        add_row(field, name, human_readable(int(val)));
                     } catch (ρσ_Exception) {
                         ρσ_last_exception = ρσ_Exception;
                         {
-                            add_row(name, val + "");
+                            add_row(field, name, val + "");
                         } 
                     }
                 }
@@ -34550,7 +34573,7 @@ return this.__repr__();
                     fmt = interface_data[ρσ_bound_index("gui_" + field + "_display_format", interface_data)] || (fm["display"] || Object.create(null)).date_format;
                     formatted_val = format_date(val, fmt);
                     if (formatted_val) {
-                        ρσ_interpolate_kwargs.call(this, add_row, [name, formatted_val].concat([ρσ_desugar_kwargs({is_searchable: field, search_text: val})]));
+                        ρσ_interpolate_kwargs.call(this, add_row, [field, name, formatted_val].concat([ρσ_desugar_kwargs({is_searchable: field, search_text: val})]));
                     }
                 }
             };
@@ -34606,13 +34629,13 @@ return this.__repr__();
                     hp = ρσ_exists.d(fm.display).heading_position || "hide";
                     if (ias === "long-text") {
                         if (hp === "side") {
-                            add_row(name, val).style.whiteSpace = "pre-wrap";
+                            add_row(field, name, val).style.whiteSpace = "pre-wrap";
                             return;
                         }
                         val = ρσ_interpolate_kwargs.call(E, E.pre, [val].concat([ρσ_desugar_kwargs({style: "white-space:pre-wrap"})])).outerHTML;
                     } else if (ias === "short-text") {
                         if (hp === "side") {
-                            add_row(name, val);
+                            add_row(field, name, val);
                             return;
                         }
                         val = E.span(val).outerHTML;
@@ -34630,7 +34653,7 @@ return this.__repr__();
                         }
                     }
                     if (hp === "side") {
-                        ρσ_interpolate_kwargs.call(this, add_row, [name, val].concat([ρσ_desugar_kwargs({is_html: true})]));
+                        ρσ_interpolate_kwargs.call(this, add_row, [field, name, val].concat([ρσ_desugar_kwargs({is_html: true})]));
                         return;
                     }
                     comments.push([field, val]);
@@ -34664,7 +34687,7 @@ return this.__repr__();
                     if (datatype === "text" || datatype === "enumeration") {
                         if (val !== undefined && val !== null) {
                             join = (fm.is_multiple) ? fm.is_multiple.list_to_ui : null;
-                            ρσ_interpolate_kwargs.call(this, add_row, [name, val].concat([ρσ_desugar_kwargs({join: join, is_searchable: field})]));
+                            ρσ_interpolate_kwargs.call(this, add_row, [field, name, val].concat([ρσ_desugar_kwargs({join: join, is_searchable: field})]));
                         }
                     } else if (datatype === "bool") {
                         if (library_data.bools_are_tristate) {
@@ -34673,7 +34696,7 @@ return this.__repr__();
                             v = (val) ? _("Yes") : _("No");
                         }
                         if (v) {
-                            ρσ_interpolate_kwargs.call(this, add_row, [name, v].concat([ρσ_desugar_kwargs({is_searchable: field, use_quotes: false})]));
+                            ρσ_interpolate_kwargs.call(this, add_row, [field, name, v].concat([ρσ_desugar_kwargs({is_searchable: field, use_quotes: false})]));
                         }
                     } else if (datatype === "int" || datatype === "float") {
                         if (val !== undefined && val !== null) {
@@ -34682,11 +34705,11 @@ return this.__repr__();
                                 formatted_val = fmt.format(val);
                                 if (formatted_val) {
                                     val += "";
-                                    ρσ_interpolate_kwargs.call(this, add_row, [name, formatted_val].concat([ρσ_desugar_kwargs({is_searchable: field, search_text: val})]));
+                                    ρσ_interpolate_kwargs.call(this, add_row, [field, name, formatted_val].concat([ρσ_desugar_kwargs({is_searchable: field, search_text: val})]));
                                 }
                             } else {
                                 val += "";
-                                ρσ_interpolate_kwargs.call(this, add_row, [name, val].concat([ρσ_desugar_kwargs({is_searchable: field, search_text: val})]));
+                                ρσ_interpolate_kwargs.call(this, add_row, [field, name, val].concat([ρσ_desugar_kwargs({is_searchable: field, search_text: val})]));
                             }
                         }
                     }

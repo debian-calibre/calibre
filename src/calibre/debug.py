@@ -89,7 +89,11 @@ as a shebang in scripts, like this:
             ' be asked for the export folder and the libraries to export. You can also specify them'
             ' as command line arguments to skip the questions.'
             ' Use absolute paths for the export folder and libraries.'
-            ' The special keyword "all" can be used to export all libraries.'))
+            ' The special keyword "all" can be used to export all libraries. Examples:\n\n'
+            '  calibre-debug --export-all-calibre-data  # for interactive use\n'
+            '  calibre-debug --export-all-calibre-data /path/to/empty/export/folder /path/to/library/folder1 /path/to/library2\n'
+            '  calibre-debug --export-all-calibre-data /export/folder all  # export all known libraries'
+    ))
     parser.add_option('--import-calibre-data', default=False, action='store_true',
         help=_('Import previously exported calibre data'))
     parser.add_option('-s', '--shutdown-running-calibre', default=False,
@@ -295,7 +299,7 @@ def main(args=sys.argv):
     elif opts.export_all_calibre_data:
         args = args[1:]
         from calibre.utils.exim import run_exporter
-        run_exporter(args=args)
+        run_exporter(args=args, check_known_libraries=False)
     elif opts.import_calibre_data:
         from calibre.utils.exim import run_importer
         run_importer()
