@@ -1,0 +1,22 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Sat, 1 Oct 2022 15:29:06 +0900
+Subject: Sort directory and file names to reproducible build
+
+Forwarded: not-needed
+---
+ src/calibre/utils/rcc/__init__.py | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/calibre/utils/rcc/__init__.py b/src/calibre/utils/rcc/__init__.py
+index 94ac2cf..d982001 100644
+--- a/src/calibre/utils/rcc/__init__.py
++++ b/src/calibre/utils/rcc/__init__.py
+@@ -111,6 +111,8 @@ def compile_icon_dir_as_themes(
+             file('/'.join(dest))
+ 
+         for dirpath, dirnames, filenames in os.walk(path_to_dir):
++            dirnames.sort()
++            filenames.sort()
+             if 'textures' in dirnames:
+                 dirnames.remove('textures')
+             if os.path.basename(tdir) in dirnames:
