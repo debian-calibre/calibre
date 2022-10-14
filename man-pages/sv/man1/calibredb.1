@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "september 30, 2022" "6.6.1" "calibre"
+.TH "CALIBREDB" "1" "oktober 14, 2022" "6.7.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -255,7 +255,7 @@ Om böcker med liknande titlar och författare hittas, slå samman de inkommande
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-Vägen till omslaget för att använda för extra bok
+Sökväg till omslaget att använda för den tillagda boken
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -407,18 +407,18 @@ Skriv metadata i OPF\-form (XML)
 .sp
 .nf
 .ft C
-calibredb set_metadata [options] id [/path/to/metadata.opf]
+calibredb set_metadata [options] book_id [/path/to/metadata.opf]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Ställ in metadata som lagras i calibre\-databasen för den bok som identifieras med id
-från OPF\-filen metadata.opf. id är ett id\-nummer från sökkommandot. Du
-kan få en snabb känsla för OPF\-format med hjälp av \-\-as\-opf valet till
-kommandot show_metadata. Du kan också ställa in metadata för enskilda fält med
-flaggan \-\-field. Om du använder flaggan \-\-field behöver du inte ange
-en OPF\-fil.
+Set the metadata stored in the calibre database for the book identified by
+book_id from the OPF file metadata.opf. book_id is a book id number from the
+search command. You can get a quick feel for the OPF format by using the
+\-\-as\-opf switch to the show_metadata command. You can also set the metadata of
+individual fields with the \-\-field option. If you use the \-\-field option, there
+is no need to specify an OPF file.
 .sp
 När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0

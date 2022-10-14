@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "setembro 30, 2022" "6.6.1" "calibre"
+.TH "CALIBREDB" "1" "outubro 14, 2022" "6.7.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -404,18 +404,18 @@ Imprimir metadados num formulário OPF (XML)
 .sp
 .nf
 .ft C
-calibredb set_metadata [options] id [/path/to/metadata.opf]
+calibredb set_metadata [options] book_id [/path/to/metadata.opf]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Seta o metadado armazenado na base de dados do calibre para o livro identificado pelo id
-para o arquivo OPF metadata.opf. Id é um número de id do comando de busca. Você
-pode pegar rapidamente para o formato OPF utilizando \-\-as\-opf no
-comando show_metadata. Você pode também setar o metadado de campos individuais com
-a opção \-\-field. Se você utilizar a opção \-\-field, não é necessário especificar
-um arquivo OPF.
+Set the metadata stored in the calibre database for the book identified by
+book_id from the OPF file metadata.opf. book_id is a book id number from the
+search command. You can get a quick feel for the OPF format by using the
+\-\-as\-opf switch to the show_metadata command. You can also set the metadata of
+individual fields with the \-\-field option. If you use the \-\-field option, there
+is no need to specify an OPF file.
 .sp
 Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -822,7 +822,7 @@ Lista de relatórios separados por vírgula. Padrão: tudo
 .INDENT 0.0
 .TP
 .B \-\-vacuum\-fts\-db
-Vacuum the full text search database. This can be very slow and memory intensive, depending on the size of the database.
+Limpar a base de dados da pesquisa no texto completo. Isto pode ser muito lento e utilizar muita memória, dependendo do tamanho da base de dados.
 .UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
@@ -1039,7 +1039,7 @@ Incluir trechos do texto ao redor de cada correspondência. Note que isso torna 
 .INDENT 0.0
 .TP
 .B \-\-indexing\-threshold
-How much of the library must be indexed before searching is allowed, as a percentage. Defaults to 90
+O quanto da biblioteca deve estar indexado antes de permitir a pesquisa, como porcentagem. O padrão é 90
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1054,12 +1054,12 @@ O marcador usado para indicar o início de uma palavra correspondente dentro de 
 .INDENT 0.0
 .TP
 .B \-\-output\-format
-The format to output the search results in. Either \fB\(dq\fPtext\fB\(dq\fP for plain text or \fB\(dq\fPjson\fB\(dq\fP for JSON output.
+O formato para a saída de resultado de pesquisa. Pode ser \fB\(dq\fPtext\fB\(dq\fP para texto simples ou \fB\(dq\fPjson\fB\(dq\fP para saída JSON.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-restrict\-to
-Restrict the searched books, either using a search expression or ids. For example: ids:1,2,3 to restrict by ids or search:tag:foo to restrict to books having the tag foo.
+Restringir os livros pesquisados, seja usando uma expressão de busca ou ids. Por exemplo: ids:1,2,3 para restringir por ids ou search:tag:foo para restringir a livros com a etiqueta \fB\(aq\fPfoo\fB\(aq\fP\&.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

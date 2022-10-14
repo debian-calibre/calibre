@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "de setembre 30, 2022" "6.6.1" "calibre"
+.TH "CALIBREDB" "1" "d’octubre 14, 2022" "6.7.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -407,18 +407,18 @@ Imprimeix les metadades en format OPF (XML)
 .sp
 .nf
 .ft C
-calibredb set_metadata [opcions] id [/camí/a/metadata.opf]
+calibredb set_metadata [options] book_id [/path/to/metadata.opf]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Estableix les metadades emmagatzemades a la base de dades de calibre per al llibre
-identificat per l\(aqID del fitxer OPF «metadata.opf». L\(aqID és un nombre d\(aqidentificador
-de l\(aqordre «search». Podeu fer\-vos una idea ràpida del format OPF amb l\(aqús del
-commutador «\-\-as\-opf» a l\(aqordre «show_metadata». També podeu establir les metadades
-de camps individuals amb l\(aqopció «\-\-field». Si utilitzeu l\(aqopció «\-\-field», no cal especificar
-un fitxer OPF.
+Set the metadata stored in the calibre database for the book identified by
+book_id from the OPF file metadata.opf. book_id is a book id number from the
+search command. You can get a quick feel for the OPF format by using the
+\-\-as\-opf switch to the show_metadata command. You can also set the metadata of
+individual fields with the \-\-field option. If you use the \-\-field option, there
+is no need to specify an OPF file.
 .sp
 Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: \(dq/some path/with spaces\(dq
 .INDENT 0.0

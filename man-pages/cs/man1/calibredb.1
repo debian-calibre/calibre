@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "září 30, 2022" "6.6.1" "calibre"
+.TH "CALIBREDB" "1" "října 14, 2022" "6.7.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -406,18 +406,18 @@ Vypsat metadata v podobě OPF (XML)
 .sp
 .nf
 .ft C
-calibredb set_metadata [options] id [/path/to/metadata.opf]
+calibredb set_metadata [options] book_id [/path/to/metadata.opf]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Nastavit metadata uložená v databázi Calibre pro knihu identifikovanou
-identifikátorem ze souboru OPF metadata.opf. Identifikátor je identifikační
-číslo z příkazu search. Můžete získat rychlé chování pro formát OPF pomocí
-přepínače \-\-as\-opf příkazu show_metadata. Můžete také nastavit metadata
-jednotlivých polí pomocí volby \-\-field. Pokud použijete volbu \-\-field,
-není potřeba zadávat soubor OPF.
+Set the metadata stored in the calibre database for the book identified by
+book_id from the OPF file metadata.opf. book_id is a book id number from the
+search command. You can get a quick feel for the OPF format by using the
+\-\-as\-opf switch to the show_metadata command. You can also set the metadata of
+individual fields with the \-\-field option. If you use the \-\-field option, there
+is no need to specify an OPF file.
 .sp
 Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
 .INDENT 0.0

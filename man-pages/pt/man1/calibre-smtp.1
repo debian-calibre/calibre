@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SMTP" "1" "setembro 30, 2022" "6.6.1" "calibre"
+.TH "CALIBRE-SMTP" "1" "outubro 14, 2022" "6.7.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .INDENT 0.0
@@ -35,22 +35,17 @@ calibre-smtp \- calibre-smtp
 .sp
 .nf
 .ft C
-calibre\-smtp [options] [a partir do texto]
+calibre\-smtp [options] [from to text]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Enviar mail usando o protocolo SMTP. \fBcalibre\-smtp\fP tem dois modos de operação. No
-modo de composição que você especifica de para e texto e estes são usados ​​para construir e
-enviar uma mensagem de e\-mail. No modo de filtro, \fBcalibre\-smtp\fP lê uma mensagem completa
-de e\-mail do STDIN e envia\-o.
+Enviar email usando o protocolo SMTP. \fBcalibre\-smtp\fP tem dois modos de operação. No modo de composição você especifica destinatário (from) e texto (text)e estes são usados ​​para construir e enviar uma mensagem de email.
+No modo de filtro, \fBcalibre\-smtp\fP lê uma mensagem completa de email do STDIN e envia\-o.
 .sp
-texto é o corpo da mensagem de e\-mail.
-Se o texto não for especificado, uma mensagem completa de e\-mail é lida de STDIN.
-é o endereço de e\-mail do remetente e é o endereço de e\-mail
-do destinatário. Quando um e\-mail completo é lido de STDIN, de e para
-apenas são usados ​​na negociação SMTP, os cabeçalhos das mensagens não são modificados.
+TEXT é o corpo da mensagem de email. Se o texto não for especificado, uma mensagem completa de email é lida de STDIN.
+FROM (De) é o endereço de email do remetente e TO (para) é o endereço de email do destinatário.  Quando um email completo é lido de STDIN, de e para são usados apenas ​​na negociação SMTP, sendo que os cabeçalhos das mensagens não são modificados.
 .sp
 Sempre que passar argumentos para o \fBcalibre\-smtp\fP que contenham espaços ponha\-os entre aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .SH [OPÇÕES]
