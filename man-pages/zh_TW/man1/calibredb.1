@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "9月 30, 2022" "6.6.1" "calibre"
+.TH "CALIBREDB" "1" "10月 14, 2022" "6.7.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -406,16 +406,18 @@ id 是來自搜尋命令的 id 編號。
 .sp
 .nf
 .ft C
-calibredb set_metadata [options] id [/path/to/metadata.opf]
+calibredb set_metadata [options] book_id [/path/to/metadata.opf]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-根據 OPF 檔案的 metadata.opf 設定儲存在 calibre 資料庫中的用於標識圖書的中繼資料。
-id 是來自搜尋命令的 id 編號。您可以透過使用 \-\-as\-opf 切換到 show_metadata 命令來快速
-瞭解 OPF 格式。還可以用 \-\-field 選項設定各個欄位的中繼資料。如果使用 \-\-field 選項則
-不需要指定 OPF 檔案。
+Set the metadata stored in the calibre database for the book identified by
+book_id from the OPF file metadata.opf. book_id is a book id number from the
+search command. You can get a quick feel for the OPF format by using the
+\-\-as\-opf switch to the show_metadata command. You can also set the metadata of
+individual fields with the \-\-field option. If you use the \-\-field option, there
+is no need to specify an OPF file.
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0

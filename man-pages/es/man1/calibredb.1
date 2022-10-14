@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "septiembre 30, 2022" "6.6.1" "calibre"
+.TH "CALIBREDB" "1" "octubre 14, 2022" "6.7.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -385,13 +385,13 @@ Imprimir los metadatos en formato OPF (XML)
 .sp
 .nf
 .ft C
-calibredb set_metadata [opciones] ID [/ruta/a/metadatos.opf]
+calibredb set_metadata [opciones] id_de_libro [/ruta/a/metadatos.opf]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Asignar los metadatos del libro identificado por ID a partir del archivo OPF metadatos.opf. El ID es un identificador dado por la orden «search». Puede ver en qué consiste el formato OPF usando la opción \-\-as\-opf en la orden «show_metadata». También puede asignar metadatos a campos individuales con la opción \-\-field.
+Asignar los metadatos del libro identificado por id_de_libro a partir del archivo OPF metadatos.opf. El id_de_libro es un identificador dado por la orden «search». Puede ver en qué consiste el formato OPF usando la opción \-\-as\-opf en la orden «show_metadata». También puede asignar metadatos a campos individuales con la opción \-\-field.
 .sp
 Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -632,7 +632,7 @@ reemplazada.
 .sp
 Sintaxis para añadir:
 .sp
-calibredb \fBsaved_searches\fP add nombre_de_búsqueda expresión de búsqueda
+calibredb \fBsaved_searches\fP add nombre_de_búsqueda expresión_de_búsqueda
 .sp
 Sintaxis para eliminar:
 .sp

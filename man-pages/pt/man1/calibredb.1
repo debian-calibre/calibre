@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "setembro 30, 2022" "6.6.1" "calibre"
+.TH "CALIBREDB" "1" "outubro 14, 2022" "6.7.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -387,16 +387,18 @@ Imprimir os metadados no formulário OPF (XML)
 .sp
 .nf
 .ft C
-calibredb set_metadata [options] id [/path/to/metadata.opf]
+calibredb set_metadata [options] book_id [/path/to/metadata.opf]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Definir os metadados armazenados na base de dados Calibre para o livro identificado pelo ID do ficheiro OPF metadata.opf.
-ID é um número de identificação do comando pesquisa. Pode ter uma ideia do formato OPF utilizando a opção \-\-as\-opf alternando para o comando show_metadata.
-Também pode definir os metadados de campos individuais com a opção \-\-field.
-Se usar a opção \-\-field, não haverá necessidade de especificar um ficheiro OPF.
+Set the metadata stored in the calibre database for the book identified by
+book_id from the OPF file metadata.opf. book_id is a book id number from the
+search command. You can get a quick feel for the OPF format by using the
+\-\-as\-opf switch to the show_metadata command. You can also set the metadata of
+individual fields with the \-\-field option. If you use the \-\-field option, there
+is no need to specify an OPF file.
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -795,7 +797,7 @@ Lista separada por vírgulas de relatórios: Predefinição: todos
 .INDENT 0.0
 .TP
 .B \-\-vacuum\-fts\-db
-Vacuum the full text search database. This can be very slow and memory intensive, depending on the size of the database.
+Esvaziar a base de dados de pesquisa em texto integral. Dependendo do tamanho da base de dados isto pode ser muito lento e consumir muita memória.
 .UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
@@ -982,7 +984,7 @@ Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os e
 .INDENT 0.0
 .TP
 .B \-\-do\-not\-match\-on\-related\-words
-Only match on exact words not related words. So correction will not match correcting.
+Encontrar apenas palavras exatas, e não palavras relacionadas. Dessa forma, \fB\(aq\fPcorrigir\fB\(aq\fP não irá encontrar \fB\(aq\fPcorrigindo\fB\(aq\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -992,7 +994,7 @@ Include snippets of the text surrounding each match. Note that this makes search
 .INDENT 0.0
 .TP
 .B \-\-indexing\-threshold
-How much of the library must be indexed before searching is allowed, as a percentage. Defaults to 90
+A parte da biblioteca que deve ser indexada antes que a pesquisa seja permitida, tal como uma percentagem. Valor predefinido é 90
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1007,7 +1009,7 @@ The marker used to indicate the start of a matched word inside a snippet
 .INDENT 0.0
 .TP
 .B \-\-output\-format
-The format to output the search results in. Either \fB\(dq\fPtext\fB\(dq\fP for plain text or \fB\(dq\fPjson\fB\(dq\fP for JSON output.
+O formato de saída dos resultados da pesquisa. Use \fB\(dq\fPtext\fB\(dq\fP para texto simples ou \fB\(dq\fPjson\fB\(dq\fP para saída JSON.
 .UNINDENT
 .INDENT 0.0
 .TP

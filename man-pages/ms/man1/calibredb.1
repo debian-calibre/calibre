@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "September 30, 2022" "6.6.1" "calibre"
+.TH "CALIBREDB" "1" "Oktober 14, 2022" "6.7.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -408,18 +408,18 @@ Cetak data meta dalam bentuk OPF (XML)
 .sp
 .nf
 .ft C
-calibredb set_metadata [options] id [/laluan/ke/metadata.opf]
+calibredb set_metadata [options] book_id [/path/to/metadata.opf]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Tetapan data meta yang tersimpan dalam pangkalan data calibre bagi buku
-yang dikenalpasti dengan id dari fail OPF metadata.opf. id ialah nombor id
-dari perintah gelintar. Anda boleh dapatkan format OPF dengan menggunakan
-\-\-as\-opf yang ditukar ke perintah show_metadata. Anda juga boleh tetapkan
-data meta bagi medan secara individu dengan pilihan \-\-field. Jika anda guna
-pilihan \-\-field, tidak perlu nyatakan fail OPF.
+Set the metadata stored in the calibre database for the book identified by
+book_id from the OPF file metadata.opf. book_id is a book id number from the
+search command. You can get a quick feel for the OPF format by using the
+\-\-as\-opf switch to the show_metadata command. You can also set the metadata of
+individual fields with the \-\-field option. If you use the \-\-field option, there
+is no need to specify an OPF file.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0

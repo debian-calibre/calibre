@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "9月 30, 2022" "6.6.1" "calibre"
+.TH "CALIBREDB" "1" "10月 14, 2022" "6.7.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -401,21 +401,18 @@ OPF 形式 (XML) で書誌を表示
 .sp
 .nf
 .ft C
-   calibredb set_metadata [options] id [/path/to/metadata.opf]
-
-
-id で指定された本のcalibreのデータベースに保存された書誌に
+calibredb set_metadata [options] book_id [/path/to/metadata.opf]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-metadata.opf で指定したOPFファイルの内容を設定します。
-id はsearch コマンドで取得できるID番号です。
-OPF ファイルについて簡単に知りたい場合は、show_metadata コマンドの
-\-\-as\-opfオプションを使用してみてください。
-\-\-field オプションを使用する場合は OPFファイルを指定する必要は
-ありません。
+Set the metadata stored in the calibre database for the book identified by
+book_id from the OPF file metadata.opf. book_id is a book id number from the
+search command. You can get a quick feel for the OPF format by using the
+\-\-as\-opf switch to the show_metadata command. You can also set the metadata of
+individual fields with the \-\-field option. If you use the \-\-field option, there
+is no need to specify an OPF file.
 .sp
 スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .INDENT 0.0

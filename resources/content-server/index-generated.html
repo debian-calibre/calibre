@@ -17862,6 +17862,53 @@ return this.__repr__();
             __module__ : {value: "range_utils"}
         });
 
+        function all_annots_in_range(r, annot_id_uuid_map, ans) {
+            var parent, doc, iterator, in_range, node, annot_id;
+            parent = r.commonAncestorContainer;
+            doc = parent.ownerDocument || document;
+            iterator = doc.createNodeIterator(parent);
+            in_range = false;
+            while (true) {
+                node = iterator.nextNode();
+                if (!node) {
+                    break;
+                }
+                if (!in_range && node.isSameNode(r.startContainer)) {
+                    in_range = true;
+                }
+                if (in_range) {
+                    if (node.dataset && node.dataset.calibreRangeWrapper) {
+                        annot_id = annot_id_uuid_map[ρσ_bound_index(node.dataset.calibreRangeWrapper, annot_id_uuid_map)];
+                        if (annot_id) {
+                            ans.push(annot_id);
+                        }
+                    }
+                    if (node.isSameNode(r.endContainer)) {
+                        break;
+                    }
+                }
+            }
+            return ans;
+        };
+        if (!all_annots_in_range.__argnames__) Object.defineProperties(all_annots_in_range, {
+            __argnames__ : {value: ["r", "annot_id_uuid_map", "ans"]},
+            __module__ : {value: "range_utils"}
+        });
+
+        function all_annots_in_selection(sel, annot_id_uuid_map) {
+            var ans, i;
+            ans = [];
+            for (var ρσ_Index0 = 0; ρσ_Index0 < sel.rangeCount; ρσ_Index0++) {
+                i = ρσ_Index0;
+                all_annots_in_range(sel.getRangeAt(i), annot_id_uuid_map, ans);
+            }
+            return ans;
+        };
+        if (!all_annots_in_selection.__argnames__) Object.defineProperties(all_annots_in_selection, {
+            __argnames__ : {value: ["sel", "annot_id_uuid_map"]},
+            __module__ : {value: "range_utils"}
+        });
+
         function remove(node) {
             if (node.parentNode) {
                 node.parentNode.removeChild(node);
@@ -17900,9 +17947,9 @@ return this.__repr__();
 
         function unwrap_crw(crw) {
             var node;
-            var ρσ_Iter0 = ρσ_Iterable(document.querySelectorAll("span[data-calibre-range-wrapper=\"" + ρσ_str.format("{}", crw) + "\"]"));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                node = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter1 = ρσ_Iterable(document.querySelectorAll("span[data-calibre-range-wrapper=\"" + ρσ_str.format("{}", crw) + "\"]"));
+            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                node = ρσ_Iter1[ρσ_Index1];
                 unwrap(node);
             }
         };
@@ -17913,9 +17960,9 @@ return this.__repr__();
 
         function unwrap_all_crw() {
             var node;
-            var ρσ_Iter1 = ρσ_Iterable(document.querySelectorAll("span[data-calibre-range-wrapper]"));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                node = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter2 = ρσ_Iterable(document.querySelectorAll("span[data-calibre-range-wrapper]"));
+            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                node = ρσ_Iter2[ρσ_Index2];
                 unwrap(node);
             }
         };
@@ -18110,6 +18157,8 @@ return this.__repr__();
         ρσ_modules.range_utils.is_non_empty_text_node = is_non_empty_text_node;
         ρσ_modules.range_utils.text_nodes_in_range = text_nodes_in_range;
         ρσ_modules.range_utils.first_annot_in_range = first_annot_in_range;
+        ρσ_modules.range_utils.all_annots_in_range = all_annots_in_range;
+        ρσ_modules.range_utils.all_annots_in_selection = all_annots_in_selection;
         ρσ_modules.range_utils.remove = remove;
         ρσ_modules.range_utils.replace_node = replace_node;
         ρσ_modules.range_utils.unwrap = unwrap;
@@ -27226,6 +27275,7 @@ return this.__repr__();
 
         var IframeClient = ρσ_modules.iframe_comm.IframeClient;
 
+        var all_annots_in_selection = ρσ_modules.range_utils.all_annots_in_selection;
         var highlight_associated_with_selection = ρσ_modules.range_utils.highlight_associated_with_selection;
         var last_span_for_crw = ρσ_modules.range_utils.last_span_for_crw;
         var reset_highlight_counter = ρσ_modules.range_utils.reset_highlight_counter;
@@ -27343,7 +27393,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "6.6.1";
+        CALIBRE_VERSION = "6.7.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -27530,6 +27580,7 @@ return this.__repr__();
             this.add_search_result_to_history_stack = IframeBoss.prototype.add_search_result_to_history_stack.bind(this);
             this.ensure_search_result_visible = IframeBoss.prototype.ensure_search_result_visible.bind(this);
             this.set_reference_mode = IframeBoss.prototype.set_reference_mode.bind(this);
+            this.apply_highlight = IframeBoss.prototype.apply_highlight.bind(this);
             this.annotations_msg_received = IframeBoss.prototype.annotations_msg_received.bind(this);
             this.apply_highlights_on_load = IframeBoss.prototype.apply_highlights_on_load.bind(this);
             this.replace_highlights = IframeBoss.prototype.replace_highlights.bind(this);
@@ -28681,9 +28732,62 @@ return this.__repr__();
             __argnames__ : {value: ["data"]},
             __module__ : {value: "read_book.iframe"}
         });
+        IframeBoss.prototype.apply_highlight = function apply_highlight(uuid, existing, has_notes, style) {
+            var self = this;
+            var sel, anchor_before, text, bounds, cls, ρσ_unpack, annot_id, intersecting_wrappers, removed_highlights, intersecting_uuids, x, crw;
+            sel = window.getSelection();
+            if (!sel.rangeCount) {
+                return;
+            }
+            anchor_before = find_anchor_before_range(sel.getRangeAt(0), self.book.manifest.toc_anchor_map, self.anchor_funcs);
+            text = sel.toString();
+            bounds = cfi_for_selection();
+            style = highlight_style_as_css(style, opts.is_dark_theme, opts.color_scheme.foreground);
+            cls = (has_notes) ? "crw-has-dot" : null;
+            ρσ_unpack = wrap_text_in_range(style, null, cls, self.add_highlight_listeners);
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+            annot_id = ρσ_unpack[0];
+            intersecting_wrappers = ρσ_unpack[1];
+            removed_highlights = [];
+            if (annot_id !== null) {
+                intersecting_uuids = (function() {
+                    var ρσ_Iter = ρσ_Iterable(intersecting_wrappers), ρσ_Result = Object.create(null), x;
+                    for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                        x = ρσ_Iter[ρσ_Index];
+                        ρσ_Result[annot_id_uuid_map[(typeof x === "number" && x < 0) ? annot_id_uuid_map.length + x : x]] = (true);
+                    }
+                    return ρσ_Result;
+                })();
+                if (existing && intersecting_uuids[(typeof existing === "number" && existing < 0) ? intersecting_uuids.length + existing : existing]) {
+                    uuid = existing;
+                } else if (intersecting_wrappers.length === 1 && annot_id_uuid_map[ρσ_bound_index(intersecting_wrappers[0], annot_id_uuid_map)]) {
+                    uuid = annot_id_uuid_map[ρσ_bound_index(intersecting_wrappers[0], annot_id_uuid_map)];
+                    intersecting_wrappers = [];
+                }
+                removed_highlights = Object.create(null);
+                var ρσ_Iter5 = ρσ_Iterable(intersecting_wrappers);
+                for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                    crw = ρσ_Iter5[ρσ_Index5];
+                    unwrap_crw(crw);
+                    if (annot_id_uuid_map[(typeof crw === "number" && crw < 0) ? annot_id_uuid_map.length + crw : crw] && annot_id_uuid_map[(typeof crw === "number" && crw < 0) ? annot_id_uuid_map.length + crw : crw] !== uuid) {
+                        removed_highlights[ρσ_bound_index(annot_id_uuid_map[(typeof crw === "number" && crw < 0) ? annot_id_uuid_map.length + crw : crw], removed_highlights)] = true;
+                        delete annot_id_uuid_map[crw];
+                    }
+                }
+                removed_highlights = Object.keys(removed_highlights);
+                sel.removeAllRanges();
+                annot_id_uuid_map[(typeof annot_id === "number" && annot_id < 0) ? annot_id_uuid_map.length + annot_id : annot_id] = uuid;
+            }
+            ρσ_interpolate_kwargs.call(self, self.send_message, ["annotations"].concat([ρσ_desugar_kwargs({type: "highlight-applied", uuid: uuid, ok: annot_id !== null, bounds: bounds, removed_highlights: removed_highlights, highlighted_text: text, anchor_before: anchor_before})]));
+            reset_find_caches();
+        };
+        if (!IframeBoss.prototype.apply_highlight.__argnames__) Object.defineProperties(IframeBoss.prototype.apply_highlight, {
+            __argnames__ : {value: ["uuid", "existing", "has_notes", "style"]},
+            __module__ : {value: "read_book.iframe"}
+        });
         IframeBoss.prototype.annotations_msg_received = function annotations_msg_received(data) {
             var self = this;
-            var dtype, sel, ρσ_unpack, end_node, end_offset, crw_, cls, node, anchor_before, text, bounds, style, annot_id, intersecting_wrappers, removed_highlights, intersecting_uuids, x, crw;
+            var dtype, sel, ρσ_unpack, end_node, end_offset, crw_, cls, node, existing, bounds, text;
             dtype = (typeof data !== "undefined" && data !== null ? data : Object.create(null)).type;
             if (dtype === "move-end-of-selection") {
                 move_end_of_selection(data.pos, data.start);
@@ -28788,58 +28892,20 @@ return this.__repr__();
                     window.getSelection().removeAllRanges();
                 }
             } else if (dtype === "apply-highlight") {
-                sel = window.getSelection();
-                if (!sel.rangeCount) {
-                    return;
+                existing = all_annots_in_selection(window.getSelection(), annot_id_uuid_map);
+                if (existing.length === 0 || existing.length === 1 && existing[0] === data.existing) {
+                    self.apply_highlight(data.uuid, data.existing, data.has_notes, data.style);
+                } else {
+                    ρσ_interpolate_kwargs.call(self, self.send_message, ["annotations"].concat([ρσ_desugar_kwargs({type: "highlight-overlapped", uuid: data.uuid, existing: data.existing, has_notes: data.has_notes, style: data.style})]));
                 }
-                anchor_before = find_anchor_before_range(sel.getRangeAt(0), self.book.manifest.toc_anchor_map, self.anchor_funcs);
-                text = sel.toString();
-                bounds = cfi_for_selection();
-                style = highlight_style_as_css(data.style, opts.is_dark_theme, opts.color_scheme.foreground);
-                cls = (data.has_notes) ? "crw-has-dot" : null;
-                ρσ_unpack = wrap_text_in_range(style, null, cls, self.add_highlight_listeners);
-ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
-                annot_id = ρσ_unpack[0];
-                intersecting_wrappers = ρσ_unpack[1];
-                removed_highlights = [];
-                if (annot_id !== null) {
-                    intersecting_uuids = (function() {
-                        var ρσ_Iter = ρσ_Iterable(intersecting_wrappers), ρσ_Result = Object.create(null), x;
-                        for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
-                            x = ρσ_Iter[ρσ_Index];
-                            ρσ_Result[annot_id_uuid_map[(typeof x === "number" && x < 0) ? annot_id_uuid_map.length + x : x]] = (true);
-                        }
-                        return ρσ_Result;
-                    })();
-                    if (data.existing && intersecting_uuids[ρσ_bound_index(data.existing, intersecting_uuids)]) {
-                        data.uuid = data.existing;
-                    } else if (intersecting_wrappers.length === 1 && annot_id_uuid_map[ρσ_bound_index(intersecting_wrappers[0], annot_id_uuid_map)]) {
-                        data.uuid = annot_id_uuid_map[ρσ_bound_index(intersecting_wrappers[0], annot_id_uuid_map)];
-                        intersecting_wrappers = [];
-                    }
-                    removed_highlights = Object.create(null);
-                    var ρσ_Iter5 = ρσ_Iterable(intersecting_wrappers);
-                    for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                        crw = ρσ_Iter5[ρσ_Index5];
-                        unwrap_crw(crw);
-                        if (annot_id_uuid_map[(typeof crw === "number" && crw < 0) ? annot_id_uuid_map.length + crw : crw] && annot_id_uuid_map[(typeof crw === "number" && crw < 0) ? annot_id_uuid_map.length + crw : crw] !== data.uuid) {
-                            removed_highlights[ρσ_bound_index(annot_id_uuid_map[(typeof crw === "number" && crw < 0) ? annot_id_uuid_map.length + crw : crw], removed_highlights)] = true;
-                            delete annot_id_uuid_map[crw];
-                        }
-                    }
-                    removed_highlights = Object.keys(removed_highlights);
-                    sel.removeAllRanges();
-                    annot_id_uuid_map[(typeof annot_id === "number" && annot_id < 0) ? annot_id_uuid_map.length + annot_id : annot_id] = data.uuid;
-                }
-                ρσ_interpolate_kwargs.call(self, self.send_message, ["annotations"].concat([ρσ_desugar_kwargs({type: "highlight-applied", uuid: data.uuid, ok: annot_id !== null, bounds: bounds, removed_highlights: removed_highlights, highlighted_text: text, anchor_before: anchor_before})]));
-                reset_find_caches();
+            } else if (dtype === "apply-highlight-overwrite") {
+                self.apply_highlight(data.uuid, data.existing, data.has_notes, data.style);
             } else if (dtype === "cite-current-selection") {
                 sel = window.getSelection();
                 if (!sel.rangeCount) {
                     return;
                 }
                 bounds = cfi_for_selection();
-                anchor_before = find_anchor_before_range(sel.getRangeAt(0), self.book.manifest.toc_anchor_map, self.anchor_funcs);
                 text = sel.toString();
                 ρσ_interpolate_kwargs.call(self, self.send_message, ["annotations"].concat([ρσ_desugar_kwargs({type: "cite-data", bounds: bounds, highlighted_text: text})]));
             } else {
@@ -28929,16 +28995,14 @@ return this.__repr__();
         IframeBoss.prototype.copy_selection = function copy_selection() {
             var self = this;
             var s, text, container, i;
-            if (!runtime.is_standalone_viewer) {
-                try {
-                    if (document.execCommand("copy")) {
-                        return;
-                    }
-                } catch (ρσ_Exception) {
-                    ρσ_last_exception = ρσ_Exception;
-                    {
-                    } 
+            try {
+                if (document.execCommand("copy")) {
+                    return;
                 }
+            } catch (ρσ_Exception) {
+                ρσ_last_exception = ρσ_Exception;
+                {
+                } 
             }
             s = window.getSelection();
             text = s.toString();
@@ -40366,6 +40430,23 @@ return this.__repr__();
                     }
                 }
                 self.annotations_manager.add_highlight(msg, self.current_highlight_style.style, notes, toc_family);
+            } else if (msg.type === "highlight-overlapped") {
+                question_dialog(_("Are you sure?"), _("This highlight overlaps existing highlights. Creating it will cause notes in the existing highlights to be lost. Create it anyway?"), (function() {
+                    var ρσ_anonfunc = function (yes) {
+                        if (yes) {
+                            ρσ_interpolate_kwargs.call(self, self.send_message, ["apply-highlight-overwrite"].concat([ρσ_desugar_kwargs({style: msg.style, uuid: msg.uuid, existing: msg.existing, has_notes: msg.has_notes})]));
+                        } else {
+                            if (self.current_notes) {
+                                self.show_editor(self.current_highlight_style, self.current_notes);
+                            }
+                        }
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["yes"]},
+                        __module__ : {value: "read_book.selection_bar"}
+                    });
+                    return ρσ_anonfunc;
+                })());
             } else if (msg.type === "edit-highlight") {
                 if (self.state === WAITING) {
                     self.create_highlight();
