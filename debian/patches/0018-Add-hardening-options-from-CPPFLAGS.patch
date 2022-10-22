@@ -1,0 +1,26 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Sat, 22 Oct 2022 09:05:32 +0900
+Subject: Add hardening options from CPPFLAGS
+
+Forwarded: not-needed
+
+cmake(1) accepts CXXFLAGS only for C++ compilations.
+
+Add CPPFLAGS for C++ compilation flags to add hardening flags
+like "-D_FORTIFY_SOURCE=2".
+---
+ src/calibre/headless/CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/calibre/headless/CMakeLists.txt b/src/calibre/headless/CMakeLists.txt
+index 9de5e10..e805b98 100644
+--- a/src/calibre/headless/CMakeLists.txt
++++ b/src/calibre/headless/CMakeLists.txt
+@@ -1,6 +1,7 @@
+ project(headless)
+ cmake_minimum_required(VERSION 3.21)
+ set(CMAKE_AUTOMOC ON)
++set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} $ENV{CPPFLAGS}")
+ find_package(Qt6Gui REQUIRED)
+ add_library(headless MODULE main.cpp headless_backingstore.cpp headless_integration.cpp)
+ set_property(TARGET headless PROPERTY QT_PLUGIN_TYPE "platforms")
