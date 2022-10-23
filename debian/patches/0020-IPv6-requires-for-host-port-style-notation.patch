@@ -11,7 +11,7 @@ ex)
  2 files changed, 24 insertions(+)
 
 diff --git a/src/calibre/gui2/actions/device.py b/src/calibre/gui2/actions/device.py
-index 665c9b9..c496db0 100644
+index 665c9b9..a5bba39 100644
 --- a/src/calibre/gui2/actions/device.py
 +++ b/src/calibre/gui2/actions/device.py
 @@ -15,10 +15,22 @@ from calibre.utils.smtp import config as email_config
@@ -23,7 +23,7 @@ index 665c9b9..c496db0 100644
 +        try:
 +            socket.inet_pton(socket.AF_INET6, addr)
 +            return True
-+        except socket.error:
++        except OSError:
 +            return False
 +
      from calibre.srv.opts import server_config
@@ -38,7 +38,7 @@ index 665c9b9..c496db0 100644
      prefix = opts.url_prefix or ''
      port = opts.port
 diff --git a/src/calibre/gui2/preferences/server.py b/src/calibre/gui2/preferences/server.py
-index 5323c4c..9b206bc 100644
+index 5323c4c..2a3fab5 100644
 --- a/src/calibre/gui2/preferences/server.py
 +++ b/src/calibre/gui2/preferences/server.py
 @@ -1298,10 +1298,22 @@ class ConfigWidget(ConfigWidgetBase):
@@ -50,7 +50,7 @@ index 5323c4c..9b206bc 100644
 +            try:
 +                socket.inet_pton(socket.AF_INET6, addr)
 +                return True
-+            except socket.error:
++            except OSError:
 +                return False
 +
          prefix = self.advanced_tab.get('url_prefix') or ''
