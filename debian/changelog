@@ -1,9 +1,25 @@
 calibre (6.7.1+dfsg-2) UNRELEASED; urgency=medium
 
+  [ Nicholas D Steeves ]
   * Declare minimum required cmake version to solve FTBFS when
     backporting.
 
- -- Nicholas D Steeves <sten@debian.org>  Sun, 16 Oct 2022 20:06:58 -0400
+  [ YOKOTA Hiroshi ]
+  * Add another blhc(1) false positive data
+  * Add hardening options from CPPFLAGS
+  * Add FAQ document for IPv6 (Closes: #1021175)
+  * Use IPv6 address for content server default value
+  * IPv6 requires [] for host:port style notation
+  * Rediff patches.
+    Use socket class to check IPv6 address
+  * Rediff patches
+    socket.error is deprecated
+  * Keep original IP address if the IP address is not in address map
+  * Return None if IP address string is None
+  * Add [] for IPv6 address in log file
+  * Reorder patches
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sun, 23 Oct 2022 16:00:45 +0900
 
 calibre (6.7.1+dfsg-1) unstable; urgency=medium
 
