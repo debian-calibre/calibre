@@ -6,20 +6,25 @@ ex)
   IPv4: 127.0.0.1:8080
   IPv6: [::1]:8080
 ---
- src/calibre/gui2/actions/device.py     | 7 +++++++
- src/calibre/gui2/preferences/server.py | 7 +++++++
- 2 files changed, 14 insertions(+)
+ src/calibre/gui2/actions/device.py     | 12 ++++++++++++
+ src/calibre/gui2/preferences/server.py | 12 ++++++++++++
+ 2 files changed, 24 insertions(+)
 
 diff --git a/src/calibre/gui2/actions/device.py b/src/calibre/gui2/actions/device.py
-index 665c9b9..f5d37a5 100644
+index 665c9b9..c496db0 100644
 --- a/src/calibre/gui2/actions/device.py
 +++ b/src/calibre/gui2/actions/device.py
-@@ -15,10 +15,17 @@ from calibre.utils.smtp import config as email_config
+@@ -15,10 +15,22 @@ from calibre.utils.smtp import config as email_config
  
  
  def local_url_for_content_server():
 +    def is_ipv6_addr(addr):
-+        return (addr != None) and (":" in addr) and ("." not in addr)
++        import socket
++        try:
++            socket.inet_pton(socket.AF_INET6, addr)
++            return True
++        except socket.error:
++            return False
 +
      from calibre.srv.opts import server_config
      opts = server_config()
@@ -33,15 +38,20 @@ index 665c9b9..f5d37a5 100644
      prefix = opts.url_prefix or ''
      port = opts.port
 diff --git a/src/calibre/gui2/preferences/server.py b/src/calibre/gui2/preferences/server.py
-index 5323c4c..d0b05da 100644
+index 5323c4c..9b206bc 100644
 --- a/src/calibre/gui2/preferences/server.py
 +++ b/src/calibre/gui2/preferences/server.py
-@@ -1298,10 +1298,17 @@ class ConfigWidget(ConfigWidgetBase):
+@@ -1298,10 +1298,22 @@ class ConfigWidget(ConfigWidgetBase):
          self.stopping_msg.accept()
  
      def test_server(self):
 +        def is_ipv6_addr(addr):
-+            return (addr != None) and (":" in addr) and ("." not in addr)
++            import socket
++            try:
++                socket.inet_pton(socket.AF_INET6, addr)
++                return True
++            except socket.error:
++                return False
 +
          prefix = self.advanced_tab.get('url_prefix') or ''
          protocol = 'https' if self.advanced_tab.has_ssl else 'http'
