@@ -1,0 +1,24 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Sun, 23 Oct 2022 01:57:14 +0900
+Subject: Return None if IP address string is None
+
+"ip_address" parameter is None when content server config value
+"listen_on" is blank string.
+---
+ src/calibre/utils/mdns.py | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/src/calibre/utils/mdns.py b/src/calibre/utils/mdns.py
+index 051e505..4233a3e 100644
+--- a/src/calibre/utils/mdns.py
++++ b/src/calibre/utils/mdns.py
+@@ -77,6 +77,9 @@ def _get_external_ip():
+ 
+ 
+ def verify_ipV4_address(ip_address):
++    if ip_address == None:
++        return None
++
+     result = None
+     if ip_address != '0.0.0.0' and ip_address != '::':
+         # do some more sanity checks on the address
