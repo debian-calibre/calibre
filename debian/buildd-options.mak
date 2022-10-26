@@ -15,3 +15,10 @@ else ifeq (i386,  $(DEB_HOST_ARCH))
   TEST_FLAGS += --exclude-test-name=qt
   TEST_FLAGS += --exclude-test-name=dom_load
 endif
+
+# Some specific host fails "dh_auto_test" target by "Illegal instruction"
+ifeq (armhf, $(DEB_HOST_ARCH))
+  ifeq (armhf, $(DEB_BUILD_ARCH))
+    TEST_NOCHECK = true
+  endif
+endif
