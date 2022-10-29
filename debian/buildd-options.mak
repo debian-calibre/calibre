@@ -18,7 +18,9 @@ endif
 
 # Some specific host fails "dh_auto_test" target by "Illegal instruction"
 ifeq (armhf, $(DEB_HOST_ARCH))
-  ifeq (armhf, $(DEB_BUILD_ARCH))
+  HOSTNAME=$(shell hostname -s)
+
+  ifneq (, $(findstring $(HOSTNAME), hartmann hasse henze hoiby))
     TEST_NOCHECK = true
   endif
 endif
