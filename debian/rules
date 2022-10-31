@@ -20,7 +20,6 @@ export QT_HASH_SEED=0
 
 # Do all test by default
 TEST_FLAGS =
-TEST_NOCHECK =
 CI_ENV =
 
 # Disable some test when in package builder environment
@@ -54,13 +53,11 @@ override_dh_auto_test:
 
 # "test_ajax_book" fails if previous test is "test_workers" (Closes: #973458)
 calibre_auto_test:
-ifeq (,$(TEST_NOCHECK))
 	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC $(CI_ENV) $(SETUP) test $(TEST_FLAGS) --exclude-test-name=ajax_book --exclude-test-name=workers --exclude-test-name=qt --exclude-test-name=dom_load
 	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC $(CI_ENV) $(SETUP) test --test-name=ajax_book $(TEST_FLAGS)
 	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC $(CI_ENV) $(SETUP) test --test-name=workers   $(TEST_FLAGS)
 	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC $(CI_ENV) $(SETUP) test --test-name=qt        $(TEST_FLAGS)
 	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC $(CI_ENV) $(SETUP) test --test-name=dom_load  $(TEST_FLAGS)
-endif
 
 execute_before_dh_install:
 	dh_buildinfo
