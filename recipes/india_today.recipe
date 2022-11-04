@@ -33,7 +33,7 @@ class IndiaToday(BasicNewsRecipe):
     extra_css = '''
         #sub-d {font-style:italic; color:#202020;}
         .story__byline {font-size:small; text-align:left;}
-        .body_caption, .mos__alt {font-size:small; text-align:center;}
+        .body_caption, .mos__alt .caption, .caption-drupal-entity {font-size:small; text-align:center;}
         blockquote{color:#404040;}
     '''
 
@@ -43,6 +43,9 @@ class IndiaToday(BasicNewsRecipe):
             dict(attrs={'id':'tab-link-wrapper-plugin'}),
             dict(name='div', attrs={'amp-access':'NOT granted'})
         ]
+
+    def preprocess_raw_html(self, raw_html, url):
+        return raw_html.replace('â€”', '--')
 
     def get_cover_url(self):
         soup = self.index_to_soup(

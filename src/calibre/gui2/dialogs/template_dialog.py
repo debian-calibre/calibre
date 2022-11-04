@@ -7,10 +7,11 @@ __license__   = 'GPL v3'
 
 import json, os, traceback, re
 from functools import partial
+import sys
 
 from qt.core import (Qt, QDialog, QDialogButtonBox, QSyntaxHighlighter, QFont,
                       QApplication, QTextCharFormat, QColor, QCursor,
-                      QIcon, QSize, QPalette, QLineEdit, QByteArray, QFontInfo,
+                      QIcon, QSize, QPalette, QLineEdit, QFontInfo,
                       QFontDatabase, QVBoxLayout, QTableWidget, QTableWidgetItem,
                       QComboBox, QAbstractItemView, QTextOption, QFontMetrics)
 
@@ -25,7 +26,7 @@ from calibre.library.coloring import (displayable_columns, color_row_key)
 from calibre.utils.config_base import tweaks
 from calibre.utils.date import DEFAULT_DATE
 from calibre.utils.formatter_functions import formatter_functions, StoredObjectType
-from calibre.utils.formatter import StopException
+from calibre.utils.formatter import StopException, PythonTemplateContext
 from calibre.utils.icu import sort_key
 from calibre.utils.localization import localize_user_manual_link
 
@@ -312,7 +313,8 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
     def __init__(self, parent, text, mi=None, fm=None, color_field=None,
                  icon_field_key=None, icon_rule_kind=None, doing_emblem=False,
                  text_is_placeholder=False, dialog_is_st_editor=False,
-                 global_vars=None, all_functions=None, builtin_functions=None):
+                 global_vars=None, all_functions=None, builtin_functions=None,
+                 python_context_object=None):
         QDialog.__init__(self, parent)
         Ui_TemplateDialog.__init__(self)
         self.setupUi(self)
@@ -321,10 +323,8 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
         self.iconing = icon_field_key is not None
         self.embleming = doing_emblem
         self.dialog_is_st_editor = dialog_is_st_editor
-        if global_vars is None:
-            self.global_vars = {}
-        else:
-            self.global_vars = global_vars
+        self.global_vars = global_vars or {}
+        self.python_context_object = python_context_object or PythonTemplateContext()
 
         cols = []
         self.fm = fm
@@ -390,6 +390,18 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
         self.builtins = (builtin_functions if builtin_functions else
                          formatter_functions().get_builtins_and_aliases())
 
+        # Set up the breakpoint bar
+        s = gprefs.get('template_editor_break_on_print', False)
+        self.go_button.setEnabled(s)
+        self.remove_all_button.setEnabled(s)
+        self.set_all_button.setEnabled(s)
+        self.toggle_button.setEnabled(s)
+        self.breakpoint_line_box.setEnabled(s)
+        self.breakpoint_line_box_label.setEnabled(s)
+        self.break_box.setChecked(s)
+        self.break_box.stateChanged.connect(self.break_box_changed)
+        self.go_button.clicked.connect(self.go_button_pressed)
+
         # Set up the display table
         self.table_column_widths = None
         try:
@@ -452,16 +464,6 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
             '<a href="{}">{}</a>'.format(
                 localize_user_manual_link('https://manual.calibre-ebook.com/generated/en/template_ref.html'), tt))
 
-        s = gprefs.get('template_editor_break_on_print', False)
-        self.go_button.setEnabled(s)
-        self.remove_all_button.setEnabled(s)
-        self.set_all_button.setEnabled(s)
-        self.toggle_button.setEnabled(s)
-        self.breakpoint_line_box.setEnabled(s)
-        self.breakpoint_line_box_label.setEnabled(s)
-        self.break_box.setChecked(s)
-        self.break_box.stateChanged.connect(self.break_box_changed)
-        self.go_button.clicked.connect(self.go_button_pressed)
         self.textbox.setFocus()
         self.set_up_font_boxes()
         self.toggle_button.clicked.connect(self.toggle_button_pressed)
@@ -475,12 +477,7 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
         self.textbox.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         self.textbox.customContextMenuRequested.connect(self.show_context_menu)
         # Now geometry
-        try:
-            geom = gprefs.get('template_editor_dialog_geometry', None)
-            if geom is not None:
-                QApplication.instance().safe_restore_geometry(self, QByteArray(geom))
-        except Exception:
-            pass
+        self.restore_geometry(gprefs, 'template_editor_dialog_geometry')
 
     def setup_saved_template_editor(self, show_buttonbox, show_doc_and_name):
         self.buttonBox.setVisible(show_buttonbox)
@@ -552,11 +549,19 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
         for r in range(0, len(mi)):
             w = QLineEdit(tv)
             w.setReadOnly(True)
+            w.setText(mi[r].title)
             tv.setCellWidget(r, 0, w)
             w = QLineEdit(tv)
             w.setReadOnly(True)
             tv.setCellWidget(r, 1, w)
-        self.display_values('')
+        self.set_waiting_message()
+
+    def set_waiting_message(self):
+        if self.break_box.isChecked():
+            for i in range(len(self.mi)):
+                self.template_value.cellWidget(i, 1).setText('')
+            self.template_value.cellWidget(0, 1).setText(
+                _("*** Breakpoints are enabled. Waiting for the 'Go' button to be pressed"))
 
     def show_context_menu(self, point):
         m = self.textbox.createStandardContextMenu()
@@ -590,9 +595,11 @@ def evaluate(book, context):
     # book is a calibre metadata object
     # context is an instance of calibre.utils.formatter.PythonTemplateContext,
     # which currently contains the following attributes:
-    # db: a calibre legacy database object
-    # globals: the template global variable dictionary
-    # arguments: is a list of arguments if the template is called by a GPM template, otherwise None
+    # db: a calibre legacy database object.
+    # globals: the template global variable dictionary.
+    # arguments: is a list of arguments if the template is called by a GPM template, otherwise None.
+    # funcs: used to call Built-in/User functions and Stored GPM/Python templates.
+    # Example: context.funcs.list_re_group()
 
     # your Python code goes here
     return 'a string'
@@ -682,6 +689,8 @@ def evaluate(book, context):
         self.breakpoint_line_box_label.setEnabled(new_state != 0)
         if new_state == 0:
             self.display_values(str(self.textbox.toPlainText()))
+        else:
+            self.set_waiting_message()
 
     def go_button_pressed(self):
         self.display_values(str(self.textbox.toPlainText()))
@@ -764,14 +773,17 @@ def evaluate(book, context):
         c = app.clipboard()
         c.setText(str(self.icon_files.currentText()))
 
+    @property
+    def is_python(self):
+        return self.textbox.toPlainText().startswith('python:')
+
     def textbox_changed(self):
         cur_text = str(self.textbox.toPlainText())
-        if cur_text.startswith('python:'):
+        if self.is_python:
             if self.highlighting_gpm is True:
                 self.highlighter.initialize_rules(self.builtins, True)
                 self.highlighting_gpm = False
-                self.break_box.setChecked(False)
-                self.break_box.setEnabled(False)
+                self.break_box.setEnabled(True)
         elif not self.highlighting_gpm:
             self.highlighter.initialize_rules(self.builtins, False)
             self.highlighting_gpm = True
@@ -780,8 +792,33 @@ def evaluate(book, context):
             self.last_text = cur_text
             self.highlighter.regenerate_paren_positions()
             self.text_cursor_changed()
-            if self.break_box.checkState() == Qt.CheckState.Unchecked:
+            if not self.break_box.isChecked():
                 self.display_values(cur_text)
+            else:
+                self.set_waiting_message()
+
+    def trace_lines(self, frame, event, arg):
+        if event != 'line':
+            return
+        # Only respond to events in the "string" which is the template
+        if frame.f_code.co_filename != '<string>':
+            return
+        # Check that there is a breakpoint at the line
+        if frame.f_lineno not in self.textbox.clicked_line_numbers:
+            return
+        l = self.template_value.selectionModel().selectedRows()
+        mi_to_use = self.mi[0 if len(l) == 0 else l[0].row()]
+        self.break_reporter_dialog = PythonBreakReporter(self, mi_to_use, frame)
+        if not self.break_reporter_dialog.exec():
+            raise StopException()
+
+    def trace_calls(self, frame, event, arg):
+        if event != 'call':
+            return
+        # If this is the "string" file (the template), return the trace_lines function
+        if frame.f_code.co_filename == '<string>':
+            return self.trace_lines
+        return None
 
     def display_values(self, txt):
         tv = self.template_value
@@ -791,13 +828,21 @@ def evaluate(book, context):
             w = tv.cellWidget(r, 0)
             w.setText(mi.title)
             w.setCursorPosition(0)
-            v = SafeFormat().safe_format(txt, mi, _('EXCEPTION:'),
-                             mi, global_vars=self.global_vars,
-                             template_functions=self.all_functions,
-                             break_reporter=self.break_reporter if r == break_on_mi else None)
-            w = tv.cellWidget(r, 1)
-            w.setText(v.translate(translate_table))
-            w.setCursorPosition(0)
+            if self.break_box.isChecked() and r == break_on_mi and self.is_python:
+                sys.settrace(self.trace_calls)
+            else:
+                sys.settrace(None)
+            try:
+                v = SafeFormat().safe_format(txt, mi, _('EXCEPTION:'),
+                                 mi, global_vars=self.global_vars,
+                                 template_functions=self.all_functions,
+                                 break_reporter=self.break_reporter if r == break_on_mi else None,
+                                 python_context_object=self.python_context_object)
+                w = tv.cellWidget(r, 1)
+                w.setText(v.translate(translate_table))
+                w.setCursorPosition(0)
+            finally:
+                sys.settrace(None)
 
     def text_cursor_changed(self):
         cursor = self.textbox.textCursor()
@@ -840,7 +885,7 @@ def evaluate(book, context):
 
     def save_geometry(self):
         gprefs['template_editor_table_widths'] = self.table_column_widths
-        gprefs['template_editor_dialog_geometry'] = bytearray(self.saveGeometry())
+        super().save_geometry(gprefs, 'template_editor_dialog_geometry')
 
     def keyPressEvent(self, ev):
         if ev.key() == Qt.Key.Key_Escape:
@@ -899,20 +944,21 @@ class BreakReporterItem(QTableWidgetItem):
 
     def __init__(self, txt):
         super().__init__(txt.translate(translate_table) if txt else txt)
-        self.setFlags(self.flags() & ~(Qt.ItemFlag.ItemIsEditable|Qt.ItemFlag.ItemIsSelectable))
+        self.setFlags(self.flags() & ~(Qt.ItemFlag.ItemIsEditable))
 
 
-class BreakReporter(QDialog):
+class BreakReporterBase(QDialog):
 
-    def __init__(self, parent, mi, op_label, op_value, locals_, line_number):
-        super().__init__(parent)
+    def setup_ui(self, mi, line_number, locals_, leading_rows):
         self.mi = mi
+        self.leading_rows = leading_rows
         self.setModal(True)
         l = QVBoxLayout(self)
         t = self.table = QTableWidget(self)
+        t.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
         t.setColumnCount(2)
         t.setHorizontalHeaderLabels((_('Name'), _('Value')))
-        t.setRowCount(2)
+        t.setRowCount(leading_rows)
         l.addWidget(t)
 
         self.table_column_widths = None
@@ -938,40 +984,34 @@ class BreakReporter(QDialog):
         bb.accepted.connect(self.accept)
         bb.rejected.connect(self.reject)
         self.setLayout(l)
-
         self.setWindowTitle(_('Break: line {0}, book {1}').format(line_number, self.mi.title))
 
-        local_names = sorted(locals_.keys())
-        rows = len(local_names)
-        self.table.setRowCount(rows+2)
-        self.table.setItem(0, 0, BreakReporterItem(op_label))
-        self.table.item(0,0).setToolTip(_('The name of the template language operation'))
-        self.table.setItem(0, 1, BreakReporterItem(op_value))
-
         self.mi_combo = QComboBox()
-        t.setCellWidget(1, 0, self.mi_combo)
+        t.setCellWidget(leading_rows-1, 0, self.mi_combo)
         self.mi_combo.addItems(self.get_field_keys())
         self.mi_combo.setToolTip('Choose a book metadata field to display')
-        self.mi_combo.setCurrentIndex(-1)
         self.mi_combo.currentTextChanged.connect(self.get_field_value)
-        for i,k in enumerate(local_names):
-            itm = BreakReporterItem(k)
-            itm.setToolTip(_('A variable in the template'))
-            self.table.setItem(i+2, 0, itm)
-            itm = BreakReporterItem(locals_[k])
-            itm.setToolTip(_('The value of the variable'))
-            self.table.setItem(i+2, 1, itm)
+        self.mi_combo.setCurrentIndex(self.mi_combo.findText('title'))
+        self.restore_geometry(gprefs, 'template_editor_break_geometry')
+        self.setup_locals(locals_)
 
-        try:
-            geom = gprefs.get('template_editor_break_geometry', None)
-            if geom is not None:
-                QApplication.instance().safe_restore_geometry(self, QByteArray(geom))
-        except Exception:
-            pass
+    def setup_locals(self, locals_):
+        raise NotImplementedError
+
+    def add_local_line(self, locals, row, key):
+        itm = BreakReporterItem(key)
+        itm.setToolTip(_('A variable in the template'))
+        self.table.setItem(row, 0, itm)
+        itm = BreakReporterItem(repr(locals[key]))
+        itm.setToolTip(_('The value of the variable'))
+        self.table.setItem(row, 1, itm)
 
     def get_field_value(self, field):
-        val = self.mi.format_field('timestamp' if field == 'date' else field)[1]
-        self.table.setItem(1, 1, BreakReporterItem(val))
+        val = self.displayable_field_value(self.mi, field)
+        self.table.setItem(self.leading_rows-1, 1, BreakReporterItem(val))
+
+    def displayable_field_value(self, mi, field):
+        raise NotImplementedError
 
     def table_column_resized(self, col, old, new):
         self.table_column_widths = []
@@ -988,7 +1028,7 @@ class BreakReporter(QDialog):
         return sorted(keys)
 
     def save_geometry(self):
-        gprefs['template_editor_break_geometry'] = bytearray(self.saveGeometry())
+        super().save_geometry(gprefs, 'template_editor_break_geometry')
         gprefs['template_editor_break_table_widths'] = self.table_column_widths
 
     def reject(self):
@@ -998,6 +1038,50 @@ class BreakReporter(QDialog):
     def accept(self):
         self.save_geometry()
         QDialog.accept(self)
+
+
+class BreakReporter(BreakReporterBase):
+
+    def __init__(self, parent, mi, op_label, op_value, locals_, line_number):
+        super().__init__(parent)
+        self.setup_ui(mi, line_number, locals_, leading_rows=2)
+        self.table.setItem(0, 0, BreakReporterItem(op_label))
+        self.table.item(0,0).setToolTip(_('The name of the template language operation'))
+        self.table.setItem(0, 1, BreakReporterItem(op_value))
+
+    def setup_locals(self, locals):
+        local_names = sorted(locals.keys())
+        rows = len(local_names)
+        self.table.setRowCount(rows+2)
+        for i,k in enumerate(local_names, start=2):
+            self.add_local_line(locals, i, k)
+
+    def displayable_field_value(self, mi, field):
+        return self.mi.format_field('timestamp' if field == 'date' else field)[1]
+
+
+class PythonBreakReporter(BreakReporterBase):
+
+    def __init__(self, parent, mi, frame):
+        super().__init__(parent)
+        self.frame = frame
+        line_number = frame.f_lineno
+        locals = frame.f_locals
+        self.setup_ui(mi, line_number, locals, leading_rows=1)
+
+    def setup_locals(self, locals):
+        locals = self.frame.f_locals
+        local_names = sorted(k for k in locals.keys() if k not in ('book', 'context'))
+        rows = len(local_names)
+        self.table.setRowCount(rows+1)
+
+        for i,k in enumerate(local_names, start=1):
+            if k in ('book', 'context'):
+                continue
+            self.add_local_line(locals, i, k)
+
+    def displayable_field_value(self, mi, field):
+        return repr(self.mi.get('timestamp' if field == 'date' else field))
 
 
 class EmbeddedTemplateDialog(TemplateDialog):
