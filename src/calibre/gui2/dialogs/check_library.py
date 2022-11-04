@@ -9,9 +9,9 @@ import os
 import weakref
 from qt.core import (
     QApplication, QCheckBox, QCursor, QDialog, QDialogButtonBox, QGridLayout,
-    QHBoxLayout, QIcon, QLabel, QLineEdit, QProgressBar, QPushButton, QSplitter,
+    QHBoxLayout, QIcon, QLabel, QLineEdit, QProgressBar, QPushButton,
     QStackedLayout, Qt, QTextEdit, QTreeWidget, QTreeWidgetItem, QVBoxLayout,
-    QWidget, pyqtSignal
+    QWidget, pyqtSignal, QSplitter
 )
 from threading import Thread
 
@@ -132,6 +132,7 @@ class CheckLibraryDialog(QDialog):
         self.splitter.addWidget(self.helpw)
         self._tl.addWidget(self.splitter)
         self._layout = QVBoxLayout()
+        self._layout.setContentsMargins(0, 0, 0, 0)
         self.left.setLayout(self._layout)
         self.helpw.setReadOnly(True)
         self.helpw.setText(_('''\

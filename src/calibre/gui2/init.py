@@ -8,7 +8,7 @@ __docformat__ = 'restructuredtext en'
 import functools
 from qt.core import (
     QAction, QApplication, QDialog, QEvent, QIcon, QLabel, QMenu, QPixmap, QUrl,
-    QSizePolicy, QSplitter, QStackedWidget, QStatusBar, QStyle, QStyleOption,
+    QSizePolicy, QStackedWidget, QStatusBar, QStyle, QStyleOption, QSplitter,
     QStylePainter, Qt, QTabBar, QTimer, QToolButton, QVBoxLayout, QWidget
 )
 
@@ -115,7 +115,7 @@ class LibraryViewMixin:  # {{{
 class QuickviewSplitter(QSplitter):  # {{{
 
     def __init__(self, parent=None, orientation=Qt.Orientation.Vertical, qv_widget=None):
-        QSplitter.__init__(self, parent=parent, orientation=orientation)
+        super().__init__(parent=parent, orientation=orientation)
         self.splitterMoved.connect(self.splitter_moved)
         self.setChildrenCollapsible(False)
         self.qv_widget = qv_widget
@@ -124,7 +124,7 @@ class QuickviewSplitter(QSplitter):  # {{{
         gprefs['quickview_dialog_heights'] = self.sizes()
 
     def resizeEvent(self, *args):
-        QSplitter.resizeEvent(self, *args)
+        super().resizeEvent(*args)
         if self.sizes()[1] != 0:
             gprefs['quickview_dialog_heights'] = self.sizes()
 
@@ -441,15 +441,18 @@ class VLTabs(QTabBar):  # {{{
     def unlock_tab(self):
         gprefs['vl_tabs_closable'] = True
         self.setTabsClosable(True)
-        try:
-            self.tabButton(0, QTabBar.ButtonPosition.RightSide).setVisible(False)
-        except AttributeError:
-            try:
-                self.tabButton(0, QTabBar.ButtonPosition.LeftSide).setVisible(False)
-            except AttributeError:
-                # On some OS X machines (using native style) the tab button is
-                # on the left
-                pass
+        for idx in range(self.count()):
+            if not self.tabData(idx):
+                try:
+                    self.tabButton(idx, QTabBar.ButtonPosition.RightSide).setVisible(False)
+                except AttributeError:
+                    try:
+                        self.tabButton(idx, QTabBar.ButtonPosition.LeftSide).setVisible(False)
+                    except AttributeError:
+                        # On some OS X machines (using native style) the tab button is
+                        # on the left
+                        pass
+                break
 
     def tab_changed(self, idx):
         if self.ignore_tab_changed:

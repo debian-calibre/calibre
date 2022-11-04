@@ -7259,6 +7259,13 @@ return this.__repr__();
             __module__ : {value: "book_list.theme"}
         });
 
+        function color_scheme() {
+            return (browser_in_dark_mode() || document.documentElement.style.colorScheme === "dark") ? "dark" : "light";
+        };
+        if (!color_scheme.__module__) Object.defineProperties(color_scheme, {
+            __module__ : {value: "book_list.theme"}
+        });
+
         function css_for_variables() {
             var input_css, is_dark_theme, attr, ans, val, k;
             input_css = "\n        input, textarea {\n            color: var(--calibre-color-input-foreground);             background-color: var(--calibre-color-input-background);         }\n        input:focus, textarea:focus {\n            outline-color: var(--calibre-color-input-focus-outline-color);         }\n    ";
@@ -7364,6 +7371,7 @@ return this.__repr__();
         ρσ_modules["book_list.theme"].c = c;
         ρσ_modules["book_list.theme"].set_ui_colors = set_ui_colors;
         ρσ_modules["book_list.theme"].browser_in_dark_mode = browser_in_dark_mode;
+        ρσ_modules["book_list.theme"].color_scheme = color_scheme;
         ρσ_modules["book_list.theme"].css_for_variables = css_for_variables;
         ρσ_modules["book_list.theme"].get_color = get_color;
         ρσ_modules["book_list.theme"].color_to_rgba = color_to_rgba;
@@ -26545,7 +26553,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "6.7.1";
+        CALIBRE_VERSION = "6.8.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -34025,7 +34033,7 @@ return this.__repr__();
         var open_book = ρσ_modules["book_list.router"].open_book;
         var report_a_load_failure = ρσ_modules["book_list.router"].report_a_load_failure;
 
-        var browser_in_dark_mode = ρσ_modules["book_list.theme"].browser_in_dark_mode;
+        var color_scheme = ρσ_modules["book_list.theme"].color_scheme;
         var get_color = ρσ_modules["book_list.theme"].get_color;
         var get_color_as_rgba = ρσ_modules["book_list.theme"].get_color_as_rgba;
         var get_font_size = ρσ_modules["book_list.theme"].get_font_size;
@@ -34313,10 +34321,9 @@ return this.__repr__();
             window.addEventListener("resize", debounce(adjust_all_iframes, 250));
         }
         function adjusting_sandboxed_html(html, extra_css) {
-            var color, cs, css, ans;
+            var color, css, ans;
             color = get_color_as_rgba("window-foreground");
-            cs = (browser_in_dark_mode()) ? "dark" : "light";
-            css = "\n\n:root { color-scheme: " + ρσ_str.format("{}", cs) + " }\n\nhtml, body { overflow: hidden; color: rgba(" + ρσ_str.format("{}", color[0]) + ", " + ρσ_str.format("{}", color[1]) + ", " + ρσ_str.format("{}", color[2]) + ", " + ρσ_str.format("{}", color[3]) + ") }";
+            css = "\n\n:root { color-scheme: " + ρσ_str.format("{}", color_scheme()) + " }\n\nhtml, body { overflow: hidden; color: rgba(" + ρσ_str.format("{}", color[0]) + ", " + ρσ_str.format("{}", color[1]) + ", " + ρσ_str.format("{}", color[2]) + ", " + ρσ_str.format("{}", color[3]) + ") }";
             if (extra_css) {
                 css += "\n\n" + extra_css;
             }

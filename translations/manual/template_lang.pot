@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 6.7.1\n"
+"Project-Id-Version: calibre 6.8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-15 07:36+0530\n"
+"POT-Creation-Date: 2022-11-04 07:47+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1179,19 +1179,23 @@ msgstr ""
 msgid "A PTM template begins with:"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:668
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:670
 msgid "You can add the above text to your template using the context menu, usually accessed with a right click. The comments are not significant and can be removed. You must use python indenting."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:670
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:672
 msgid "The context object supports ``str(context)`` that returns a string of the context's contents, and ``context.attributes`` that returns a list of the attribute names in the context."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:672
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:674
+msgid "The ``context.funcs`` attribute allows calling Built-in and User template functions, and Stored GPM/Python templates, so that you can execute them directly in your code. The functions are retrieved using their names. If the name conflicts with a Python keyword, add an underscore to the end of the name. Examples:"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:681
 msgid "Here is an example of a PTM template that produces a list of all the authors for a series. The list is stored in a `Column built from other columns, behaves like tags`. It shows in :guilabel:`Book details` and has the :guilabel:`on separate lines` checked (in :guilabel:`Preferences->Look & feel->Book details`). That option requires the list to be comma-separated. To satisfy that requirement the template converts commas in author names to semicolons then builds a comma-separated list of authors. The authors are then sorted, which is why the template uses author_sort."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:693
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:702
 msgid "The output in :guilabel:`Book details` looks like this:"
 msgstr ""
 
@@ -1199,258 +1203,258 @@ msgstr ""
 msgid "E-book conversion dialog"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:701
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:710
 msgid "Stored templates"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:703
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:712
 msgid "Both :ref:`General Program Mode <general_mode>` and :ref:`Python Template Mode <python_mode>` support saving templates and calling those templates from another template, much like calling stored functions. You save templates using :guilabel:`Preferences->Advanced->Template functions`. More information is provided in that dialog. You call a template the same way you call a function, passing positional arguments if desired. An argument can be any expression. Examples of calling a template, assuming the stored template is named ``foo``:"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:705
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:714
 msgid "``foo()`` -- call the template passing no arguments."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:706
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:715
 msgid "``foo(a, b)`` call the template passing the values of the two variables ``a`` and ``b``."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:707
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:716
 msgid "``foo(if field('series') then field('series_index') else 0 fi)`` -- if the book has a ``series`` then pass the ``series_index``, otherwise pass the value ``0``."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:709
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:718
 msgid "In GPM you retrieve the arguments passed in the call to the stored template using the ``arguments`` function. It both declares and initializes local variables, effectively parameters. The variables are positional; they get the value of the parameter given in the call in the same position. If the corresponding parameter is not provided in the call then ``arguments`` assigns that variable the provided default value. If there is no default value then the variable is set to the empty string. For example, the following ``arguments`` function declares 2 variables, ``key``, ``alternate``::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:713
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:722
 msgid "Examples, again assuming the stored template is named ``foo``:"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:715
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:724
 msgid "``foo('#myseries')`` -- argument ``key`` is assigned the value ``'myseries'`` and the argument ``alternate`` is assigned the default value ``'series'``."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:716
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:725
 msgid "``foo('series', '#genre')`` the variable ``key`` is assigned the value ``'series'`` and the variable ``alternate`` is assigned the value ``'#genre'``."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:717
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:726
 msgid "``foo()`` -- the variable ``key`` is assigned the empty string and the variable ``alternate`` is assigned the value ``'series'``."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:719
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:728
 msgid "In PTM the arguments are passed in the ``arguments`` parameter, which is a list of strings. There isn't any way to specify default values. You must check the length of the ``arguments`` list to be sure that the number of arguments is what you expect."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:721
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:730
 msgid "An easy way to test stored templates is using the ``Template tester`` dialog. For ease of access give it a keyboard shortcut in :guilabel:`Preferences->Advanced->Keyboard shortcuts->Template tester`. Giving the ``Stored templates`` dialog a shortcut will help switching more rapidly between the tester and editing the stored template's source code."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:724
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:733
 msgid "Providing additional information to templates"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:726
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:735
 msgid "A developer can choose to pass additional information to the template processor, such as application-specific book metadata or information about what the processor is being asked to do. A template can access this information and use it during the evaluation."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:728
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:737
 msgid "**Developer: how to pass additional information**"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:730
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:739
 msgid "The additional information is a Python dictionary containing pairs ``variable_name: variable_value`` where the values must be strings. The template can access the dict, creating template local variables named ``variable_name`` containing the value ``variable_value``. The user cannot change the name so it is best to use names that won't collide with other template local variables, for example by prefixing the name with an underscore."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:732
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:741
 msgid "This dict is passed to the template processor (the ``formatter``) using the named parameter ``global_vars=your_dict``. The full method signature is::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:740
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:749
 msgid "**Template writer: how to access the additional information**"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:742
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:751
 msgid "You access the additional information (the ``globals`` dict) in a template using the template function::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:746
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:755
 msgid "where ``id`` is any legal variable name. This function checks whether the additional information provided by the developer contains the name. If it does then the function assigns the provided value to a template local variable with that name. If the name is not in the additional information and if an ``expression`` is provided, the ``expression`` is evaluated and the result is assigned to the local variable. If neither a value nor an expression is provided, the function assigns the empty string (``''``) to the local variable."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:748
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:757
 msgid "A template can set a value in the ``globals`` dict using the template function::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:752
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:761
 msgid "This function sets the ``globals`` dict key:value pair ``id:value`` where ``value`` is the value of the template local variable ``id``. If that local variable doesn't exist then ``value`` is set to the result of evaluating ``expression``."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:755
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:764
 msgid "Notes on the difference between modes"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:757
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:766
 msgid "The three program modes, :ref:`Single Function Mode <single_mode>` (SFM), :ref:`Template Program Mode <template_mode>` (`TPM`), and :ref:`General Program Mode <general_mode>` (`GPM`), work differently. SFM is intended to be 'simple' so it hides a lot of programming language bits."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:759
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:768
 msgid "Differences:"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:761
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:770
 msgid "In SFM the value of the column is always passed as an 'invisible' first argument to a function included in the template."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:762
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:771
 msgid "SFM doesn't support the difference between variables and strings; all values are strings."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:763
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:772
 msgid "The following SFM template returns either the series name or the string \"no series\"::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:767
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:776
 msgid "The equivalent template in `TPM` is ::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:771
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:780
 msgid "The equivalent template in `GPM` is::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:775
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:784
 msgid "The first argument to ``ifempty`` is the value of the field ``series``. The second argument is the string ``no series``. In SFM the first argument, the value of the field, is automatically passed (the invisible argument)."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:776
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:785
 msgid "Several template functions, for example ``booksize()`` and ``current_library_name()``, take no arguments. Because of the 'invisible argument' you cannot use these functions in SFM."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:777
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:786
 msgid "Nested functions, where a function calls another function to compute an argument, cannot be used in SFM. For example this template, intended to return the first 5 characters of the series value uppercased, won't work in SFM::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:781
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:790
 msgid "`TPM` and `GPM` support nested functions. The above template in `TPM` would be::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:785
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:794
 msgid "In `GPM` it would be::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:789
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:798
 msgid "As noted in the above :ref:`Template Program Mode <template_mode>` section, using ``{`` and ``}`` characters in `TPM` string literals can lead to errors or unexpected results because they confuse the template processor. It tries to treat them as template boundaries, not characters. In some but not all cases you can replace a ``{`` with ``[[`` and a ``}`` with `]]`. Generally, if your program contains ``{`` and ``}`` characters then you should use `General Program Mode`."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:793
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:802
 msgid "User-defined Python template functions"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:795
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:804
 msgid "You can add your own Python functions to the template processor. Such functions can be used in any of the three template programming modes. The functions are added by going to :guilabel:`Preferences -> Advanced -> Template functions`. Instructions are shown in that dialog."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:798
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:807
 msgid "Special notes for save/send templates"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:800
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:809
 msgid "Special processing is applied when a template is used in a `save to disk` or `send to device` template. The values of the fields are cleaned, replacing characters that are special to file systems with underscores, including slashes. This means that field text cannot be used to create folders. However, slashes are not changed in prefix or suffix strings, so slashes in these strings will cause folders to be created. Because of this, you can create variable-depth folder structure."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:802
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:811
 msgid "For example, assume we want the folder structure `series/series_index - title`, with the caveat that if series does not exist, then the title should be in the top folder. The template to do this is::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:806
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:815
 msgid "The slash and the hyphen appear only if series is not empty."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:808
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:817
 msgid "The lookup function lets us do even fancier processing. For example, assume that if a book has a series, then we want the folder structure `series/series index - title.fmt`. If the book does not have a series then we want the folder structure `genre/author_sort/title.fmt`. If the book has no genre then we want to use 'Unknown'. We want two completely different paths, depending on the value of series."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:810
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:819
 msgid "To accomplish this, we:"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:812
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:821
 msgid "Create a composite field (give it lookup name #aa) containing ``{series}/{series_index} - {title}``. If the series is not empty, then this template will produce `series/series_index - title`."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:813
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:822
 msgid "Create a composite field (give it lookup name #bb) containing ``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. This template produces `genre/author_sort/title`, where an empty genre is replaced with `Unknown`."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:814
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:823
 msgid "Set the save template to ``{series:lookup(.,#aa,#bb}``. This template chooses composite field ``#aa`` if series is not empty and composite field ``#bb`` if series is empty. We therefore have two completely different save paths, depending on whether or not `series` is empty."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:817
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:826
 msgid "Templates and plugboards"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:819
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:828
 msgid "Plugboards are used for changing the metadata written into books during send-to-device and save-to-disk operations. A plugboard permits you to specify a template to provide the data to write into the book's metadata. You can use plugboards to modify the following fields: authors, author_sort, language, publisher, tags, title, title_sort. This feature helps people who want to use different metadata in books on devices to solve sorting or display issues."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:821
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:830
 msgid "When you create a plugboard, you specify the format and device for which the plugboard is to be used. A special device is provided, ``save_to_disk``, that is used when saving formats (as opposed to sending them to a device). Once you have chosen the format and device, you choose the metadata fields to change, providing templates to supply the new values. These templates are `connected` to their destination fields, hence the name `plugboards`. You can of course use composite columns in these templates."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:823
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:832
 msgid "When a plugboard might apply (Content server, save to disk, or send to device), calibre searches the defined plugboards to choose the correct one for the given format and device. For example, to find the appropriate plugboard for an EPUB book being sent to an ANDROID device, calibre searches the plugboards using the following search order:"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:827
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:836
 msgid "a plugboard with an exact match on format and device, e.g., ``EPUB`` and ``ANDROID``"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:828
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:837
 msgid "a plugboard with an exact match on format and the special ``any device`` choice, e.g., ``EPUB`` and ``any device``"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:829
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:838
 msgid "a plugboard with the special ``any format`` choice and an exact match on device, e.g., ``any format`` and ``ANDROID``"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:830
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:839
 msgid "a plugboard with ``any format`` and ``any device``"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:832
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:841
 msgid "The tags and authors fields have special treatment, because both of these fields can hold more than one item. A book can have many tags and many authors. When you specify that one of these two fields is to be changed, the template's result is examined to see if more than one item is there. For tags, the result is cut apart wherever calibre finds a comma. For example, if the template produces the value ``Thriller, Horror``, then the result will be two tags, ``Thriller`` and ``Horror``. There is no way to put a comma in the middle of a tag."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:835
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:844
 msgid "The same thing happens for authors, but using a different character for the cut, a `&` (ampersand) instead of a comma. For example, if the template produces the value ``Blogs, Joe&Posts, Susan``, then the book will end up with two authors, ``Blogs, Joe`` and ``Posts, Susan``. If the template produces the value ``Blogs, Joe;Posts, Susan``, then the book will have one author with a rather strange name."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:837
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:846
 msgid "Plugboards affect the metadata written into the book when it is saved to disk or written to the device. Plugboards do not affect the metadata used by ``save to disk`` and ``send to device`` to create the file names. Instead, file names are constructed using the templates entered on the appropriate preferences window."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:840
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:849
 msgid "Tips"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:842
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:851
 msgid "Use the Template Tester to test templates. Add the tester to the context menu for books in the library and/or give it a keyboard shortcut."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:843
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:852
 msgid "Templates can use other templates by referencing composite columns built with the desired template. Alternatively, you can use Stored Templates."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:844
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:853
 msgid "In a plugboard, you can set a field to empty (or whatever is equivalent to empty) by using the special template ``{}``. This template will always evaluate to an empty string."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:845
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:854
 msgid "The technique described above to show numbers even if they have a zero value works with the standard field series_index."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:850
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:859
 msgid "Function reference"
 msgstr ""

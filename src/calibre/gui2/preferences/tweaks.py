@@ -22,7 +22,7 @@ from qt.core import (QAbstractItemView, QAbstractListModel, QApplication,
                      QComboBox, QDialog, QDialogButtonBox, QFont, QGridLayout,
                      QGroupBox, QIcon, QItemSelectionModel, QLabel, QListView,
                      QMenu, QModelIndex, QPlainTextEdit, QPushButton,
-                     QSizePolicy, QSplitter, Qt, QVBoxLayout, QWidget,
+                     QSizePolicy, Qt, QVBoxLayout, QWidget, QSplitter,
                      pyqtSignal)
 
 ROOT = QModelIndex()

@@ -8,21 +8,39 @@
 
 
 from qt.core import QRect, QScreen, QSize, QWidget, QApplication, Qt
-from calibre.constants import DEBUG
+from calibre.constants import is_debugging as _is_debugging
+from calibre.utils.config_base import tweaks
+
+
+def is_debugging():
+    return _is_debugging() and not tweaks.get('suppress_geometry_debug_output')
 
 
 def debug(*a, **kw):
-    if DEBUG:
-        from pprint import pprint
-        pprint(*a, **kw)
+    if is_debugging():
+        from pprint import pformat
+        items = []
+        for x in a:
+            if not isinstance(x, str):
+                x = pformat(x)
+            items.append(x)
+        print(*items)
 
 
 def size_as_dict(self: QSize):
     return {'width': self.width(), 'height': self.height()}
 
 
+def dict_as_size(x: dict) -> QSize:
+    return QSize(x['width'], x['height'])
+
+
 def rect_as_dict(self: QRect):
     return {'x': self.left(), 'y': self.top(), 'width': self.width(), 'height': self.height()}
+
+
+def dict_as_rect(g: dict) -> QRect:
+    return QRect(g['x'], g['y'], g['width'], g['height'])
 
 
 def screen_as_dict(self: QScreen):
@@ -62,19 +80,20 @@ def geometry_for_restore_as_dict(self: QWidget):
 def save_geometry(self: QWidget, prefs: dict, name: str):
     x = geometry_for_restore_as_dict(self)
     if x:
-        if DEBUG:
+        if is_debugging():
             debug('Saving geometry for:', name)
             debug(x)
+        x['qt'] = bytearray(self.saveGeometry())
         prefs.set(f'geometry-of-{name}', x)
 
 
 def find_matching_screen(screen_as_dict):
     screens = QApplication.instance().screens()
-    size = QSize(**screen_as_dict['size'])
-    vg = QRect(**screen_as_dict['virtual_geometry'])
+    size = dict_as_size(screen_as_dict['size_in_logical_pixels'])
+    vg = dict_as_rect(screen_as_dict['virtual_geometry'])
+    dpr = screen_as_dict['device_pixel_ratio']
     screens_of_matching_size = tuple(
-        s for s in screens if
-        s.size() == size and vg == s.virtualGeometry() and s.devicePixelRatio() == screen_as_dict['device_pixel_ratio'])
+        s for s in screens if s.size() == size and vg == s.virtualGeometry() and s.devicePixelRatio() == dpr)
     if screen_as_dict['serial']:
         for q in screens_of_matching_size:
             if q.serialNumber() == screen_as_dict['serial']:
@@ -87,9 +106,11 @@ def find_matching_screen(screen_as_dict):
     for q in screens_of_matching_size:
         if match('name', q.name()) and match('manufacturer', q.manufacturer()) and match('model', q.model()):
             return q
+    if len(screens_of_matching_size) == 1:
+        return screens_of_matching_size[0]
 
 
-def _do_restore(self: QWidget, s: QScreen, geometry: QRect, x: dict):
+def _do_restore(self: QWidget, s: QScreen, geometry: QRect, saved_data: dict):
     ws = self.windowState()
     if ws & (Qt.WindowState.WindowFullScreen | Qt.WindowState.WindowMaximized):
         debug('Not restoring geometry as widget is already maximized or fullscreen')
@@ -97,27 +118,25 @@ def _do_restore(self: QWidget, s: QScreen, geometry: QRect, x: dict):
     if self.screen() is not s:
         debug('Moving widget to saved screen')
         self.setScreen(s)
-    debug('Setting widget geometry to:', geometry)
+    debug('Setting widget geometry to:', rect_as_dict(geometry))
     self.setGeometry(geometry)
-    if x['full_screened']:
+    if saved_data['full_screened']:
         debug('Restoring widget to full screen')
         self.showFullScreen()
-    elif x['maximized']:
+    elif saved_data['maximized']:
         debug('Restoring widget to maximized')
         self.showMaximized()
     return True
 
 
 def _restore_to_matching_screen(self: QWidget, s: QScreen, saved_data: dict) -> bool:
-    x = saved_data
-    saved_geometry = QRect(**x['geometry'])
-    return _do_restore(self, s, saved_geometry, x)
+    saved_geometry = dict_as_rect(saved_data['geometry'])
+    return _do_restore(self, s, saved_geometry, saved_data)
 
 
 def _restore_to_new_screen(self: QWidget, s: QScreen, saved_data: dict) -> bool:
-    x = saved_data
-    saved_geometry = QRect(**x['geometry'])
-    saved_frame_geometry = QRect(**x['frame_geometry'])
+    saved_geometry = dict_as_rect(saved_data['geometry'])
+    saved_frame_geometry = dict_as_rect(saved_data['frame_geometry'])
     if not saved_geometry.isValid() or not saved_frame_geometry.isValid():
         return False
     frame_height = max(0, saved_frame_geometry.height() - saved_geometry.height())
@@ -130,20 +149,25 @@ def _restore_to_new_screen(self: QWidget, s: QScreen, saved_data: dict) -> bool:
     max_left = available_geometry.left() + (available_size.width() - sz.width())
     max_top = available_geometry.top() + (available_size.height() - sz.height())
     geometry = QRect(min(saved_geometry.left(), max_left), min(saved_geometry.top(), max_top), sz.width(), sz.height())
-    return _do_restore(self, s, geometry, x)
+    return _do_restore(self, s, geometry, saved_data)
 
 
-def _restore_geometry(self: QWidget, prefs: dict, name: str) -> bool:
+def _restore_geometry(self: QWidget, prefs: dict, name: str, get_legacy_saved_geometry: callable = None) -> bool:
     x = prefs.get(f'geometry-of-{name}')
     if not x:
+        old = get_legacy_saved_geometry() if get_legacy_saved_geometry else prefs.get(name)
+        if old is not None:
+            return self.restoreGeometry(old)
         return False
-    if DEBUG:
+    if is_debugging():
         debug('Restoring geometry for:', name)
-        debug(x)
+        dx =  x.copy()
+        del dx['qt']
+        debug(dx)
     s = find_matching_screen(x['screen'])
     debug('Matching screen:', screen_as_dict(s) if s else None)
     if s is None:
-        if DEBUG:
+        if is_debugging():
             debug('No screens matched saved screen. Available screens:', tuple(map(screen_as_dict, QApplication.instance().screens())))
         p = self.nativeParentWidget()
         if p is not None:
@@ -159,8 +183,17 @@ def _restore_geometry(self: QWidget, prefs: dict, name: str) -> bool:
     return _restore_to_new_screen(self, s, x)
 
 
-def restore_geometry(self: QWidget, prefs: dict, name: str) -> bool:
-    if restore_geometry(self, prefs, name):
+screen_debug_has_been_output = False
+
+
+def restore_geometry(self: QWidget, prefs: dict, name: str, get_legacy_saved_geometry: callable = None) -> bool:
+    global screen_debug_has_been_output
+    if not screen_debug_has_been_output:
+        screen_debug_has_been_output = True
+        debug('Screens currently in system:')
+        for screen in QApplication.instance().screens():
+            debug(screen_as_dict(screen))
+    if _restore_geometry(self, prefs, name, get_legacy_saved_geometry):
         return True
     sz = self.sizeHint()
     if sz.isValid():
