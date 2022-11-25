@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "de novembre 04, 2022" "6.8.0" "calibre"
+.TH "CALIBREDB" "1" "de novembre 25, 2022" "6.9.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -189,7 +189,7 @@ Ordena els resultats en ordre ascendent
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Els camps que es mostraran quan es llistin els llibres a la base de dades. Hauria de ser una llista de camps separada per comes. Camps disponibles: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Per defecte: %per defecte. El camp especial \fB\(dq\fPtots\fB\(dq\fP es pot utilitzar per seleccionar tots els camps. A més dels camps predefinits abans, hi ha camps personalitzats disponibles amb *nom_del_camp, per exemple, per a un camp personalitzat #valoració, utilitzaríeu el nom: *valoració
+Els camps que es mostraran quan es llistin els llibres a la base de dades. Hauria de ser una llista de camps separada per comes. Camps disponibles: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Per defecte: %per defecte. El camp especial \fB\(dq\fPtots\fB\(dq\fP es pot utilitzar per seleccionar tots els camps. A més dels camps predefinits abans, hi ha camps personalitzats disponibles amb *nom_del_camp, per exemple, per a un camp personalitzat #valoració, utilitzaríeu el nom: *valoració
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -224,7 +224,22 @@ Cadena que s\fB\(aq\fPutilitzarà per separar els camps. Per defecte és un espa
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-Camps pels quals s\fB\(aq\fPordenaran els resultats. Camps disponibles: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Per defecte: id
+Camps pels quals s\fB\(aq\fPordenaran els resultats. Camps disponibles: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Per defecte: id
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template
+The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_file, \-t
+Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_heading
+Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
 .UNINDENT
 .SH ADD
 .INDENT 0.0

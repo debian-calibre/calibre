@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "листопада 04, 2022" "6.8.0" "calibre"
+.TH "CALIBREDB" "1" "листопада 25, 2022" "6.9.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -192,7 +192,7 @@ calibredb list [параметри]
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Поля, які слід показувати у списку книг бази даних. Поля у списку слід відокремлювати комами. Можливі поля: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Типовий список: title,authors. Особливим значенням «all» можна скористатися для вибору всіх полів. Крім вбудованих полів, назви яких наведено вище, можна скористатися нетиповими полями, доступ до яких здійснюється у форматі *назва_поля, наприклад, для нетипового поля #rating, слід скористатися назвою *rating
+Поля, які слід показувати у списку книг бази даних. Поля у списку слід відокремлювати комами. Можливі поля: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Типовий список: title,authors. Особливим значенням «all» можна скористатися для вибору всіх полів. Крім вбудованих полів, назви яких наведено вище, можна скористатися нетиповими полями, доступ до яких здійснюється у форматі *назва_поля, наприклад, для нетипового поля #rating, слід скористатися назвою *rating
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -227,7 +227,22 @@ calibredb list [параметри]
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-Поле, за яким буде виконано впорядковування результатів. Можливі поля: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Типове значення: id
+Поле, за яким буде виконано впорядковування результатів. Можливі поля: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Типове значення: id
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template
+Шаблон, який слід запустити, якщо у списку полів є «template». Типове значення: немає
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_file, \-t
+Шлях до файла, що містить шаблон, який слід запустити, якщо у списку полів є «template». Типове значення: немає
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_heading
+Заголовок стовпчика шаблонів. Типове значення: template. Цей параметр буде проігноровано, якщо встановлено параметр \fI\%\-\-for\-machine\fP
 .UNINDENT
 .SH ADD
 .INDENT 0.0

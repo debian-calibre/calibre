@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "November 04, 2022" "6.8.0" "calibre"
+.TH "CALIBREDB" "1" "November 25, 2022" "6.9.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -189,7 +189,7 @@ Isih keputusan dalam tertib menaik
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Medan yang dipaparkan bila menyenaraikan buku dalam pangkalan data.  Seharusnya senarai medan dipisah\-tanda\-koma. Medan tersedia: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Lalai: % lalai. Medan khas \fB\(dq\fPall\fB\(dq\fP boleh digunakan untuk pilih semua medan. Selain dari medan terbina\-dalam seperti di atas, medan suai juga tersedia seperti *field_name, sebagai contoh, untuk medan suai #rating, gunakan nama: *rating
+Medan yang dipaparkan bila menyenaraikan buku dalam pangkalan data.  Seharusnya senarai medan dipisah\-tanda\-koma. Medan tersedia: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Lalai: % lalai. Medan khas \fB\(dq\fPall\fB\(dq\fP boleh digunakan untuk pilih semua medan. Selain dari medan terbina\-dalam seperti di atas, medan suai juga tersedia seperti *field_name, sebagai contoh, untuk medan suai #rating, gunakan nama: *rating
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -224,7 +224,22 @@ Rentetan yang digunakan untuk memisahkan medan. Lalai ialah jarak.
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-Medan yang mana mengisih keputusan. Medan tersedia: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Lalai: id
+Medan yang mana mengisih keputusan. Medan tersedia: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Lalai: id
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template
+The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_file, \-t
+Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_heading
+Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
 .UNINDENT
 .SH ADD
 .INDENT 0.0

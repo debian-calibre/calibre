@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "marraskuuta 04, 2022" "6.8.0" "calibre"
+.TH "CALIBREDB" "1" "marraskuuta 25, 2022" "6.9.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -189,7 +189,7 @@ Järjestä tulokset nousevaan järjestykseen
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Kentät, jotka näytetään kirjoja listattaessa, pilkuin erotettuna sarjana. Käytettävissä olevat kentät: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Oletus: %. Erikoiskentällä \fB\(dq\fPall\fB\(dq\fP valitaan kaikki kentät. Valmiiden listojen lisäksi, mukautettuja listoja voi kutsua *kentän_nimi, esimerkiksi mukautetun kentän #arvio voit kutsua nimellä: *arvio
+Kentät, jotka näytetään kirjoja listattaessa, pilkuin erotettuna sarjana. Käytettävissä olevat kentät: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Oletus: %. Erikoiskentällä \fB\(dq\fPall\fB\(dq\fP valitaan kaikki kentät. Valmiiden listojen lisäksi, mukautettuja listoja voi kutsua *kentän_nimi, esimerkiksi mukautetun kentän #arvio voit kutsua nimellä: *arvio
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -224,7 +224,22 @@ Kenttien erottamiseen käytettävät välimerkit. Oletus on välilyönti.
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-Listauksen järjestämiseen käytettävä kenttä. Käytettävissä olevat kentät: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Oletus: id
+Listauksen järjestämiseen käytettävä kenttä. Käytettävissä olevat kentät: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Oletus: id
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template
+The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_file, \-t
+Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_heading
+Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
 .UNINDENT
 .SH ADD
 .INDENT 0.0

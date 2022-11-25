@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "novembro 04, 2022" "6.8.0" "calibre"
+.TH "CALIBREDB" "1" "novembro 25, 2022" "6.9.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -187,7 +187,7 @@ Ordenar resultados em ordem ascendente
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Campos que serão exibidos ao listar livros no banco de dados. Deve ser uma lista de campos separada por vírgulas. Campos disponíveis: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Padrão: title,authors. O campo especial \fB\(dq\fPall\fB\(dq\fP pode ser usado para selecionar todos os campos. Em complemento aos campos acima, campos personalizados também estão disponíveis como *field_name. Por exemplo, para um campo personalizado #rating, use o nome: *rating.
+Campos que serão exibidos ao listar livros no banco de dados. Deve ser uma lista de campos separada por vírgulas. Campos disponíveis: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Padrão: title,authors. O campo especial \fB\(dq\fPall\fB\(dq\fP pode ser usado para selecionar todos os campos. Em complemento aos campos acima, campos personalizados também estão disponíveis como *field_name. Por exemplo, para um campo personalizado #rating, use o nome: *rating.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -222,7 +222,22 @@ O Caractere usado para separar os campos. O padrão é um espaço.
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-O campo pelo qual ordenar os resultados. Campos disponíveis: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Padrão: id
+O campo pelo qual ordenar os resultados. Campos disponíveis: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Padrão: id
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template
+The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_file, \-t
+Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_heading
+Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
 .UNINDENT
 .SH ADD
 .INDENT 0.0

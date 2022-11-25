@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2022-11-01 03:08+UTC\n"
+"POT-Creation-Date: 2022-11-23 14:31+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
 "Last-Translator: Dimitris Adam <gt.dimitris@gmail.com>, 2022\n"
 "Language-Team: Greek (http://www.transifex.com/calibre/calibre/language/el/)\n"
@@ -270,7 +270,7 @@ msgstr "Δεν κάνει απολύτως τίποτα"
 #: /__w/calibre/calibre/src/calibre/gui2/add.py:354
 #: /__w/calibre/calibre/src/calibre/gui2/add.py:414
 #: /__w/calibre/calibre/src/calibre/gui2/add.py:470
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:1222
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:1224
 #: /__w/calibre/calibre/src/calibre/gui2/convert/__init__.py:51
 #: /__w/calibre/calibre/src/calibre/gui2/convert/metadata.py:145
 #: /__w/calibre/calibre/src/calibre/gui2/convert/metadata.py:161
@@ -315,7 +315,7 @@ msgstr "Δεν κάνει απολύτως τίποτα"
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:484
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:485
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/bookmarks.py:252
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:249
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:274
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/search.py:565
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/search.py:569
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/search.py:583
@@ -654,7 +654,7 @@ msgid "Choose a random book from your calibre library"
 msgstr "Επιλογή ενός τυχαίου βιβλίου από τη βιβλιοθήκη του calibre"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1057
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:51
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:40
 msgid "Sort the list of books"
 msgstr "Ταξινόμηση λίστας βιβλίων"
 
@@ -1259,7 +1259,7 @@ msgstr "Κατάλογος"
 #: /__w/calibre/calibre/src/calibre/db/fields.py:772
 #: /__w/calibre/calibre/src/calibre/db/fields.py:787
 #: /__w/calibre/calibre/src/calibre/db/tests/legacy.py:410
-#: /__w/calibre/calibre/src/calibre/devices/nook/driver.py:123
+#: /__w/calibre/calibre/src/calibre/devices/nook/driver.py:122
 #: /__w/calibre/calibre/src/calibre/devices/prs505/sony_cache.py:451
 #: /__w/calibre/calibre/src/calibre/devices/prs505/sony_cache.py:474
 #: /__w/calibre/calibre/src/calibre/devices/prst1/driver.py:777
@@ -1272,8 +1272,8 @@ msgstr "Κατάλογος"
 #: /__w/calibre/calibre/src/calibre/devices/utils.py:118
 #: /__w/calibre/calibre/src/calibre/gui2/actions/fetch_news.py:87
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:623
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1689
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1691
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1703
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1705
 #: /__w/calibre/calibre/src/calibre/library/database2.py:373
 #: /__w/calibre/calibre/src/calibre/library/database2.py:386
 #: /__w/calibre/calibre/src/calibre/library/database2.py:3398
@@ -1350,7 +1350,7 @@ msgstr "Αποθηκευμένες Αναζητήσεις"
 #: /__w/calibre/calibre/src/calibre/db/lazy.py:222
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/base.py:681
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:215
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1017
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1016
 #: /__w/calibre/calibre/src/calibre/gui2/library/delegates.py:720
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:931
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:359
@@ -1932,14 +1932,18 @@ msgstr "{0} μέσω {1}"
 msgid "Error: You must specify the search expression"
 msgstr "Σφάλμα: Πρέπει να καθορίσετε την έκφραση αναζήτησης"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:226
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:170
+msgid "You must provide a template"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:252
 msgid ""
 "%prog list [options]\n"
 "\n"
 "List the books available in the calibre database.\n"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:238
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:264
 #, python-format
 msgid ""
 "The fields to display when listing books in the database. Should be a comma separated list of fields.\n"
@@ -1947,7 +1951,7 @@ msgid ""
 "Default: %%default. The special field \"all\" can be used to select all fields. In addition to the builtin fields above, custom fields are also available as *field_name, for example, for a custom field #rating, use the name: *rating"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:251
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:277
 #, python-brace-format
 msgid ""
 "The field by which to sort the results.\n"
@@ -1955,42 +1959,59 @@ msgid ""
 "Default: {1}"
 msgstr "Το πεδίο βάσει του οποίου θα ταξινομούνται τα αποτελέσματα.\nΔιαθέσιμα πεδία: {0}\nΠροεπιλεχθέν: {1}"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:258
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:284
 msgid "Sort results in ascending order"
 msgstr "Ταξινόμηση αποτελεσμάτων κατά αύξουσα σειρά"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:265
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:291
 msgid ""
 "Filter the results by the search query. For the format of the search query, "
 "please see the search related documentation in the User Manual. Default is "
 "to do no filtering."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:275
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:302
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list_categories.py:66
 msgid ""
 "The maximum width of a single line in the output. Defaults to detecting "
 "screen size."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:281
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:308
 msgid "The string used to separate fields. Default is a space."
 msgstr "Η συμβολοσειρά που χρησιμοποιείται για να διαχωρίζει τα πεδία. Προεπιλέχθηκε ο χαρακτήρας διαστήματος."
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:287
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:314
 msgid ""
 "The prefix for all file paths. Default is the absolute path to the library "
 "folder."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:294
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:321
 msgid "The maximum number of results to display. Default: all"
 msgstr "Ο μέγιστος αριθμός αποτελεσμάτων προς παρουσίαση. Εξ ορισμού: όλα"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:301
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:328
 msgid ""
 "Generate output in JSON format, which is more suitable for machine parsing. "
 "Causes the line width and separator options to be ignored."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:335
+msgid "The template to run if \"{}\" is in the field list. Default: None"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:341
+msgid ""
+"Path to a file containing the template to run if \"{}\" is in the field "
+"list. Default: None"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:347
+#, python-format
+msgid ""
+"Heading for the template column. Default: %default. This option is ignored "
+"if the option {} is set"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list_categories.py:23
@@ -7089,7 +7110,7 @@ msgstr "Εξαγωγή συνηθισμένων μορφών ψηφιακών β
 
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/base.py:681
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:215
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1017
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1016
 #: /__w/calibre/calibre/src/calibre/gui2/library/delegates.py:720
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:931
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:360
@@ -7390,115 +7411,115 @@ msgstr "Amazon"
 msgid "Google Images"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1020
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1036
 msgid "Downloads metadata and covers from Amazon"
 msgstr "Λήψη μεταδεδομένων και  εξώφυλλων από το Amazon"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1031
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1047
 msgid "US"
 msgstr "ΗΠΑ"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1032
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1048
 msgid "France"
 msgstr "Γαλλία"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1033
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1049
 msgid "Germany"
 msgstr "Γερμανία"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1034
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1050
 msgid "UK"
 msgstr "Ηνωμένο Βασίλειο"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1035
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1051
 msgid "Australia"
 msgstr "Αυστραλία"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1036
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1052
 msgid "Italy"
 msgstr "Ιταλία"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1037
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1053
 msgid "Japan"
 msgstr "Ιαπωνία"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1038
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1054
 msgid "Spain"
 msgstr "Ισπανία"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1039
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1055
 msgid "Brazil"
 msgstr "Βραζιλία"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1040
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1056
 msgid "India"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1041
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1057
 msgid "Netherlands"
 msgstr "Ολλανδία"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1042
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1058
 msgid "China"
 msgstr "Κίνα"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1043
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1059
 msgid "Canada"
 msgstr "Καναδάς"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1044
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1060
 msgid "Sweden"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1048
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1064
 msgid "Choose server automatically"
 msgstr "Αυτόματη επιλογή διακομιστή"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1049
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1065
 msgid "Amazon servers"
 msgstr "διακομιστές Amazon"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1050
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1066
 msgid "Bing search cache"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1051
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1067
 msgid "Google search cache"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1052
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1068
 msgid "Wayback machine cache (slow)"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1053
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1069
 msgid "DuckDuckGo search and Google cache"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1057
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1073
 msgid "Amazon country website to use:"
 msgstr "Ποιας χώρας την ιστοσελίδα Amazon να χρησιμοποιεί:"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1058
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1074
 msgid ""
 "Metadata from Amazon will be fetched using this country's Amazon website."
 msgstr "Τα μεταδεδομένα από το Amazon θα ληφθούν χρησιμοποιώντας την ιστοσελίδα του Amazon της κάθε χώρας."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1060
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1076
 msgid "Server to get data from:"
 msgstr "Ο διακομιστής από τον οποίο θα πάρετε δεδομένα:"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1062
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1078
 msgid ""
 "Amazon has started blocking attempts to download metadata from its servers. "
 "To get around this problem, calibre can fetch the Amazon data from many "
 "different places where it is cached. Choose the source you prefer."
 msgstr "Η Amazon έχει αρχίσει να παρεμποδίζει προσπάθειες λήψης μεταδεδομένων από τους διακομιστές της. Για να παρακάμψει το πρόβλημα αυτό, το calibre μπορεί να πάρει δεδομένα από την Amazon από πολλές διαφορετικές τοποθεσίες στις οποίες βρίσκονται αποθηκευμένα. Επιλέξτε την πηγή που προτιμάτε."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1067
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1083
 msgid "Use the MOBI-ASIN for metadata search"
 msgstr "Χρήση του MOBI-ASIN για αναζήτηση μεταδεδομένων"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1069
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1085
 msgid ""
 "Enable this option to search for metadata with an ASIN identifier from the "
 "MOBI file at the current country website, unless any other amazon id is "
@@ -7506,18 +7527,18 @@ msgid ""
 "store, you could get incorrect results."
 msgstr "Ενεργοποιήστε την επιλογή αυτή για αναζήτηση μεταδεδομένων  βάσει αναγνωριστικού ASIN από το αρχείο MOBI στην ιστοσελίδα του καταστήματος της τρέχουσας χώρας, εκτός και αν κάποιο άλλο αναγνωριστικό amazon είναι διαθέσιμο. Σημειώστε πως αν το αρχείο MOBI προήλθε από κατάστημα Amazon άλλης χώρας, μπορείτε να πάρετε εσφαλμένα αποτελέσματα."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1075
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1091
 msgid "Prefer the Kindle edition, when available"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1077
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1093
 msgid ""
 "When searching for a book and the search engine returns both paper and "
 "Kindle editions, always prefer the Kindle edition, instead of whatever the "
 "search engine returns at the top."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1445
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1461
 msgid "Amazon timed out. Try again later."
 msgstr ""
 
@@ -9216,7 +9237,7 @@ msgstr "ΛΑΘΟΣ:"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/confirm_merge.py:71
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:335
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:418
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:615
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:628
 msgid "Show this confirmation again"
 msgstr "Να ξαναεμφανιστεί η επιβεβαίωση"
 
@@ -9432,7 +9453,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:778
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:788
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1889
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1438
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1442
 #: /__w/calibre/calibre/src/calibre/gui2/wizard/send_email.py:306
 msgid "Are you sure?"
 msgstr "Είστε σίγουροι;"
@@ -9644,7 +9665,7 @@ msgstr "Προσκόμιση σχολίων (πειραματικό)"
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:752
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1002
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1051
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1383
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1387
 msgid "Not supported"
 msgstr "Δεν υποστηρίζεται"
 
@@ -9714,11 +9735,11 @@ msgstr ""
 msgid "X"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/booklist_context_menu.py:13
+#: /__w/calibre/calibre/src/calibre/gui2/actions/booklist_context_menu.py:11
 msgid "Book list header menu"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/booklist_context_menu.py:14
+#: /__w/calibre/calibre/src/calibre/gui2/actions/booklist_context_menu.py:12
 msgid "Show the book list header context menu"
 msgstr ""
 
@@ -10124,7 +10145,7 @@ msgstr "Τα αρχεία στη βιβλιοθήκη σας ταιριάζου�
 #: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:534
 #: /__w/calibre/calibre/src/calibre/gui2/actions/save_to_disk.py:92
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:1623
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:200
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:198
 msgid "Not allowed"
 msgstr "Δεν επιτρέπεται"
 
@@ -11876,36 +11897,37 @@ msgstr "Βιβλία από αυτό τον εκδότη"
 msgid "Books with the same tags"
 msgstr "Βιβλία με τις ίδιες ετικέτες"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:51
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:40
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:697
 msgid "Sort by"
 msgstr "Ταξινόμηση κατά"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:67
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:56
 msgid "Reverse current sort"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:67
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:56
 msgid "Reverse the current sort order"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:68
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:57
 msgid "Re-apply current sort"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:68
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:57
 msgid "Re-apply the current sort"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:103
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:92
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:134
 msgid "Select sortable columns"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:104
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:93
 msgid "Sort on multiple columns"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:123
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:105
 #, python-format
 msgid "%s [reverse current sort]"
 msgstr "%s [αντιστροφή τρέχουσας ταξινόμησης]"
@@ -12738,7 +12760,7 @@ msgid "Edit"
 msgstr "Επεξεργασία"
 
 #: /__w/calibre/calibre/src/calibre/gui2/bars.py:460
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:459
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:461
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:294
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:326
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:267
@@ -12758,76 +12780,76 @@ msgstr "Επικόλληση"
 msgid "Select all"
 msgstr "Επιλογή όλων"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:99
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:101
 msgid "Search the internet for the author {}"
 msgstr "Διαδικτυακή αναζήτηση για το συγγραφέα {}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:101
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:103
 msgid "Search the internet for this book"
 msgstr "Διαδικτυακή αναζήτηση για το βιβλίο αυτό"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:133
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:944
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:949
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:135
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:958
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:963
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:967
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:970
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:977
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:981
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:984
 #, python-format
 msgid "Manage %s"
 msgstr "Διαχείριση %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:143
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:145
 #, python-format
 msgid "Find %s in the Tag browser"
 msgstr "Εύρεση %s στον Περιηγητή ετικετών"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:177
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:179
 #, python-format
 msgid "Search calibre for %s"
 msgstr "Αναζήτηση στο calibre για %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:181
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:183
 #, python-format
 msgid "in category %s"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:187
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:189
 #, python-format
 msgid "in grouped search %s"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:192
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:194
 #, python-brace-format
 msgid "Search calibre for {val} in category {name}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:286
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:288
 #, python-format
 msgid "Delete the %s format"
 msgstr "Διαγραφή μορφής %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:287
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:289
 #, python-format
 msgid "Save the %s format to disk"
 msgstr "Αποθήκευση της μορφής %s στο δίσκο"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:288
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:290
 #, python-format
 msgid "Restore the %s format"
 msgstr "Επαναφορά της μορφής %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:290
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:292
 #, python-format
 msgid "Set the book cover from the %s file"
 msgstr "Βάλε ως εξώφυλλο αυτό που έχει το αρχείο %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:297
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:299
 #, python-format
 msgid "Compare to the %s format"
 msgstr "Σύγκριση με τη μορφή %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:306
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:313
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:308
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:315
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/choose_format.py:64
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/choose_format.py:72
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:204
@@ -12836,82 +12858,82 @@ msgstr "Σύγκριση με τη μορφή %s"
 msgid "Open %s with..."
 msgstr "Άνοιξε το %s με..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:316
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:318
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/choose_format.py:67
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:214
 #, python-format
 msgid "Add other application for %s files..."
 msgstr "Προσθήκη άλλης εφαρμογής για αρχεία %s..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:317
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:529
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:319
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:531
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:215
 msgid "Edit Open with applications..."
 msgstr "Επεξεργασία του Άνοιγμα με εφαρμογές..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:322
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:324
 #, python-format
 msgid "Edit %s format"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:329
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:331
 msgid "Path to file"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:334
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:336
 msgid "Re-index the {} format for full text searching"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:345
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:412
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:420
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:347
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:414
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:422
 msgid "The text: {}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:355
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:357
 msgid "&Author link"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:366
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:368
 #, python-brace-format
 msgid "Search {0} for {1}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:372
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:416
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:374
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:418
 #, python-format
 msgid "Remove %s from this book"
 msgstr "Αφαίρεση %s από αυτό το βιβλίο"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:380
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:382
 msgid "The location of the book"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:391
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:393
 msgid "&Identifier"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:440
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:442
 msgid "Link to show book in calibre"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:448
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:450
 msgid "Link to show books matching {} in calibre"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:453
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:455
 msgid "Link to view {} format of book"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:460
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:462
 msgid "All book details"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:462
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:464
 msgid "Selected text"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:466
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:468
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/match_books_ui.py:72
 #: /__w/calibre/calibre/src/calibre/gui2/font_family_chooser.py:235
 #: /__w/calibre/calibre/src/calibre/gui2/layout.py:249
@@ -12932,106 +12954,106 @@ msgstr ""
 msgid "Search"
 msgstr "Αναζήτηση"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:478
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:480
 msgid "Copy link location"
 msgstr "Αντιγραφή θέσης συνδέσμου"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:491
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:493
 #, python-brace-format
 msgid "Search {0} for this book"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:501
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:503
 msgid "Open the Book details window"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:504
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:506
 msgid "Open the Edit metadata window"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:508
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:510
 msgid "Re-index this book for full text searching"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:518
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:525
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:520
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:527
 msgid "Open cover with..."
 msgstr "Άνοιγμα εξωφύλλου με..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:528
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:530
 msgid "Add another application to open cover with..."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:647
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:649
 #: /__w/calibre/calibre/src/calibre/gui2/widgets.py:278
 msgid "Paste cover"
 msgstr "Επικόλληση εξωφύλλου"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:648
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:650
 #: /__w/calibre/calibre/src/calibre/gui2/widgets.py:279
 msgid "Copy cover"
 msgstr "Αντιγραφή εξωφύλλου"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:649
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:651
 msgid "Save cover to disk"
 msgstr "Αποθήκευση εξωφύλλου στο δίσκο"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:650
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:652
 msgid "Remove cover"
 msgstr "Αφαίρεση εξωφύλλου"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:651
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:653
 msgid "Generate cover from metadata"
 msgstr "Δημιουργία εξωφύλλου από τα μεταδεδομένα"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:655
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:657
 msgid "Trim cover"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:656
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:658
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1145
 msgid "Automatically trim borders"
 msgstr "Αυτόματη αποψίλωση περιθωρίων"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:657
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:659
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1147
 msgid "Trim borders manually"
 msgstr "Χειροκίνητη αποψίλωση περιθωρίων"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:659
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:661
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1148
 msgid "Undo last trim"
 msgstr "Αναίρεση τελευταίας αποψίλωσης"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:735
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:737
 msgid "Choose cover save location"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:736
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:738
 msgid "JPEG images"
 msgstr "εικόνες JPEG"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:767
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:769
 msgid ""
 "Are you sure you want to replace the cover? The existing cover will be "
 "permanently lost."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:774
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:776
 msgid "Are you sure you want to delete the cover permanently?"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:790
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:792
 msgid "Double click to open the Book details window"
 msgstr "Διπλό κλικ για να ανοίξετε το παράθυρο λεπτομερειών βιβλίου"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:791
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:793
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/delete_matching_from_device.py:84
 #: /__w/calibre/calibre/src/calibre/library/field_metadata.py:228
 msgid "Path"
 msgstr "Διαδρομή"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:792
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:794
 #: /__w/calibre/calibre/src/calibre/gui2/convert/metadata.py:126
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/book_info.py:329
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1295
@@ -13039,15 +13061,15 @@ msgstr "Διαδρομή"
 msgid "Cover size: %(width)d x %(height)d pixels"
 msgstr "Μέγεθος εξωφύλλου: %(width)d x %(height)d πίξελ"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:836
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:838
 msgid "Edit identifiers for this book"
 msgstr "Επεξεργασία αναγνωριστικών για το βιβλίο αυτό"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:841
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:843
 msgid "Identifier &URL"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:852
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:854
 msgid "Are you sure you want to delete <b>{}</b> from the book?"
 msgstr ""
 
@@ -13143,7 +13165,7 @@ msgstr "έξοδος"
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins_ui.py:99
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/save_template_ui.py:52
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/saving_ui.py:66
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:220
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:223
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/sending_ui.py:60
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions_ui.py:132
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar_ui.py:117
@@ -13323,7 +13345,7 @@ msgstr "Αληθές"
 #: /__w/calibre/calibre/src/calibre/gui2/tts/macos_config.py:30
 #: /__w/calibre/calibre/src/calibre/gui2/tts/windows_config.py:26
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:239
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:802
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:806
 msgid "Name"
 msgstr "Όνομα"
 
@@ -13368,7 +13390,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:704
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:288
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions_ui.py:153
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:496
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:521
 #: /__w/calibre/calibre/src/calibre/gui2/widgets2.py:142
 msgid "Delete"
 msgstr "Διαγραφή"
@@ -13498,7 +13520,7 @@ msgstr "Επαναφορά προεπιλογών"
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/columns_ui.py:87
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/columns_ui.py:89
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/columns_ui.py:91
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:244
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:252
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar_ui.py:122
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar_ui.py:124
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar_ui.py:127
@@ -13778,7 +13800,7 @@ msgstr "&Περιήγηση"
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:294
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:60
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1009
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1334
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1338
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:93
 #: /__w/calibre/calibre/src/calibre/gui2/win_file_dialogs.py:279
 msgid "Images"
@@ -15156,7 +15178,7 @@ msgid "Load a list of expressions from a previously saved file"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/search_and_replace_ui.py:150
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:546
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:549
 #: /__w/calibre/calibre/src/calibre/gui2/css_transform_rules.py:304
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/multisort.py:79
 #: /__w/calibre/calibre/src/calibre/gui2/tag_mapper.py:519
@@ -15168,13 +15190,13 @@ msgid "Save this list of expressions so that you can re-use it easily"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/search_and_replace_ui.py:152
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:543
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:546
 #: /__w/calibre/calibre/src/calibre/gui2/css_transform_rules.py:300
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/multisort.py:74
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:356
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:251
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:259
 #: /__w/calibre/calibre/src/calibre/gui2/tag_mapper.py:516
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1428
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1432
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:437
 msgid "&Save"
 msgstr "&Αποθήκευση"
@@ -15199,7 +15221,7 @@ msgid ""
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/single.py:87
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:541
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:544
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/book_info.py:92
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:233
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:336
@@ -15737,91 +15759,91 @@ msgstr "Αλλαγή του προτύπου υπο&σέλιδου"
 msgid "The footer template"
 msgstr "Πρότυπο υποσέλιδου"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:401
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:404
 msgid "My Color Scheme"
 msgstr "Ο Συνδυασμός Χρωμάτων μου"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:413
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:416
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1017
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:938
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1154
 msgid "Cannot edit"
 msgstr "Αδύνατη η επεξεργασία"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:414
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:417
 msgid "Cannot edit a builtin color scheme. Create a new color scheme instead."
 msgstr "Δεν είναι δυνατή η επεξεργασία ενσωματωμένων συνδυασμών χρωμάτων. Δημιουργήστε νέο συνδυασμό χρωμάτων."
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:431
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:434
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/texture_chooser.py:145
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar.py:341
 msgid "Cannot remove"
 msgstr "Αδύνατη η αφαίρεση"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:432
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:435
 msgid "Cannot remove a builtin color scheme."
 msgstr "Δεν είναι δυνατή η αφαίρεση ενσωματωμένων συνδυασμών χρωμάτων."
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:484
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:487
 msgid "A sample book"
 msgstr "Ένα υπόδειγμα βιβλίου"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:484
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:487
 msgid "Author One"
 msgstr "Πρώτος συγγραφέας"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:484
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:487
 msgid "Author Two"
 msgstr "Δεύτερος συγγραφέας"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:485
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:488
 msgid "A series of samples"
 msgstr "Μια σειρά δειγμάτων"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:487
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:490
 msgid "Tag One"
 msgstr "Πρώτη ετικέτα"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:487
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:490
 msgid "Tag Two"
 msgstr "Δεύτερη ετικέτα"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:488
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:491
 msgid "Some publisher"
 msgstr "Κάποιος εκδότης"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:530
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:533
 msgid "Cover generation settings"
 msgstr "Επιλογές δημιουργίας εξωφύλλου"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:535
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:538
 msgid "Save these settings as the &defaults for future use"
 msgstr "Αποθήκευση αυτών των ρυθμίσεων ως π&ροκαθορισμένων για μελλοντική χρήση"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:545
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:548
 msgid "Save the current cover generation settings for later re-use"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:550
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:553
 msgid "Load previously saved cover generation settings"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:552
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:555
 msgid ""
 "Save the current settings as the settings to use always instead of just this"
 " time. Remember that for styles and colors the actual style or color used is"
 " chosen at random from the list of checked styles/colors."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:565
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:568
 msgid "My cover style"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:565
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:568
 msgid "Name for these settings"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:565
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:568
 msgid "Theme name:"
 msgstr ""
 
@@ -15972,14 +15994,14 @@ msgid "Choose file to import rules from"
 msgstr "Επιλέξτε αρχείο για εισαγωγή κανόνων"
 
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:56
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:605
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:604
 msgid " index"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:93
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:364
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:932
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1140
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:363
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:931
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1139
 #, python-brace-format
 msgid "Clear {0}"
 msgstr ""
@@ -15999,10 +16021,10 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:215
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:256
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:323
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:353
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1022
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1072
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1153
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:352
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1021
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1071
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1152
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:533
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:542
 #: /__w/calibre/calibre/src/calibre/gui2/library/delegates.py:563
@@ -16012,63 +16034,63 @@ msgstr ""
 msgid "Undefined"
 msgstr "Μη ορισμένο"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:357
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1136
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:356
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1135
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:245
 msgid "Today"
 msgstr "Σήμερα"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:450
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:449
 msgid "Open Item editor. If CTRL or SHIFT is pressed, open Manage items"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:563
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1501
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:562
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1500
 msgid "Values changed"
 msgstr "Οι τιμές μεταβλήθηκαν"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:564
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:563
 msgid ""
 "You have changed the values. In order to use this editor, you must either "
 "discard or apply these changes. Apply changes?"
 msgstr " Έχετε αλλάξει τις τιμές. Για να μπορέσετε να χρησιμοποιήσετε τον επεξεργαστή, πρέπει είτε να απορρίψετε, είτε να εφαρμόσετε αυτές τις αλλαγές. Να εφαρμοστούν οι αλλαγές;"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:696
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:695
 #, python-brace-format
 msgid ""
 "The enumeration \"{0}\" contains an invalid value that will be set to the "
 "default"
 msgstr "Η απαρίθμηση \"{0}\" περιέχει μια αντικανονική τιμή που θα πάρει την προεπιλεγμένη της τιμή"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:939
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:938
 #, python-brace-format
 msgid "Set {0} to No"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:944
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:943
 #, python-brace-format
 msgid "Set {0} to Yes"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:948
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1379
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:947
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1378
 msgid "Open Item editor"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:975
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:974
 msgid "Apply changes"
 msgstr "Εφαρμογή αλλαγών"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1193
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1192
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:201
 msgid "Clear series"
 msgstr "Καθαρισμός σειράς"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1196
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1195
 msgid "Automatically number books"
 msgstr "Αυτόματη αρίθμηση βιβλίων"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1198
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1197
 msgid ""
 "If not checked, the series number for the books will be set to 1. If "
 "checked, selected books will be automatically numbered, in the order you "
@@ -16076,41 +16098,41 @@ msgid ""
 "series number 1 and Book B series number 2."
 msgstr "Αν δεν επιλεγεί, θα θέσει ως δείκτη σειράς για τα βιβλία το 1. Αν επιλεγεί, τα επιλεγμένα βιβλία θα αριθμηθούν αυτομάτως, με βάση τη σειρά που τα επιλέξατε. Έτσι, αν επιλέξατε το Βιβλίο Α και μετά το Βιβλίο Β, το Βιβλίο Α θα έχει δείκτη σειράς 1, ενώ το Βιβλίο Β θα έχει δείκτη σειράς 2."
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1205
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1204
 msgid "Force numbers to start with "
 msgstr "Επιβολή τιμής εκκίνησης σε"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1207
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1206
 msgid ""
 "Series will normally be renumbered from the highest number in the database "
 "for that series. Checking this box will tell calibre to start numbering from"
 " the value in the box"
 msgstr "Οι σειρές κανονικά συνεχίζουν την αρίθμηση ξεκινώντας με τον μεγαλύτερο αριθμοδείκτη που υπάρχει στη βάση δεδομένων για τη σειρά αυτή. Επιλέγοντας το κουτί αυτό, μπορείτε να κάνετε το calibre να ξεκινήσει την αρίθμηση από την τιμή που εισάγετε στο κουτί"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1222
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1221
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:649
 msgid ""
 "The amount by which to increment the series number for successive books. "
 "Only applicable when using force series numbers."
 msgstr "Το ποσό με το οποίο θα αυξάνεται ο δείκτης σειράς για κάθε\nεπόμενο βιβλίο. Εφαρμόζεται μόνο όταν γίνεται επιβολή τιμής\nεκκίνησης στις σειρές."
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1329
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1328
 #, python-brace-format
 msgid ""
 "The enumeration \"{0}\" contains invalid values that will not appear in the "
 "list"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1382
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1381
 msgid "Remove all tags"
 msgstr "Αφαίρεση όλων των ετικετών"
 
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1411
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1412
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1413
 msgid "tags to remove"
 msgstr "Ετικέτες προς αφαίρεση"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1502
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1501
 msgid ""
 "You have entered values. In order to use this editor you must first discard "
 "them. Discard the values?"
@@ -16222,7 +16244,7 @@ msgstr "Ανιχνεύθηκε <b>%s</b>. Θέλετε να το διαχειρ�
 
 #: /__w/calibre/calibre/src/calibre/gui2/device.py:965
 #: /__w/calibre/calibre/src/calibre/gui2/device.py:1592
-#: /__w/calibre/calibre/src/calibre/gui2/email.py:496
+#: /__w/calibre/calibre/src/calibre/gui2/email.py:500
 msgid "No suitable formats"
 msgstr ""
 
@@ -17557,13 +17579,13 @@ msgstr "%(curr)s (ήταν %(initial)s)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/device_category_editor.py:87
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:530
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1310
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1321
 msgid "Item is blank"
 msgstr "Το στοιχείο είναι κενό"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/device_category_editor.py:88
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:531
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1311
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1322
 msgid "An item cannot be set to nothing. Delete it instead."
 msgstr "Δεν γίνεται να θέσετε ένα στοιχείο στο τίποτα. Διαγράψτε το."
 
@@ -17725,7 +17747,7 @@ msgid "Copy to author"
 msgstr "Αντιγραφή σε συγγραφέα"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:493
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1361
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1372
 msgid "Invalid author name"
 msgstr "Μη έγκυρο όνομα συγγραφέα"
 
@@ -19384,7 +19406,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/check_links.py:86
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:247
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:280
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1425
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1429
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:984
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/toc.py:150
 msgid "&Refresh"
@@ -19502,7 +19524,7 @@ msgstr "Άκυρη αποθηκευμένη αναζήτηση"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/saved_search_editor.py:96
 #: /__w/calibre/calibre/src/calibre/gui2/search_box.py:442
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:977
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:991
 msgid "Manage Saved searches"
 msgstr "Διαχείριση αποθηκευμένων αναζητήσεων"
 
@@ -21057,32 +21079,38 @@ msgstr "από"
 msgid "in the %s format."
 msgstr "στη μορφή %s."
 
-#: /__w/calibre/calibre/src/calibre/gui2/email.py:443
+#: /__w/calibre/calibre/src/calibre/gui2/email.py:446
+#: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:640
+#, python-brace-format
+msgid "{series_index} of {series}"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/email.py:447
 msgid "About this book:"
 msgstr "Σχετικά με αυτό το βιβλίο:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/email.py:459
+#: /__w/calibre/calibre/src/calibre/gui2/email.py:463
 msgid "Sending email to"
 msgstr "Αποστολή ηλεκτρονικής αλληλογραφίας σε"
 
-#: /__w/calibre/calibre/src/calibre/gui2/email.py:490
+#: /__w/calibre/calibre/src/calibre/gui2/email.py:494
 #, python-format
 msgid "Auto convert the following books to %s before sending via email?"
 msgstr "Αυτόματη μετατροπή των ακόλουθων βιβλίων σε %s πριν τα αποστείλετε με ηλεκτρονικο ταχυδρομείο;"
 
-#: /__w/calibre/calibre/src/calibre/gui2/email.py:497
+#: /__w/calibre/calibre/src/calibre/gui2/email.py:501
 msgid "Could not email the following books as no suitable formats were found:"
 msgstr "Αδυναμία αποστολής των ακόλουθων βιβλίων μέσω ηλεκτρονικής αλληλογραφίας, καθώς δε βρέθηκε καμία κατάλληλη μορφή:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/email.py:503
+#: /__w/calibre/calibre/src/calibre/gui2/email.py:507
 msgid "Failed to email book"
 msgstr "Αποτυχία αποστολής του βιβλίου με ηλεκτρονικό ταχυδρομείο"
 
-#: /__w/calibre/calibre/src/calibre/gui2/email.py:506
+#: /__w/calibre/calibre/src/calibre/gui2/email.py:510
 msgid "sent"
 msgstr "Εστάλη"
 
-#: /__w/calibre/calibre/src/calibre/gui2/email.py:537
+#: /__w/calibre/calibre/src/calibre/gui2/email.py:541
 msgid "Sent news to"
 msgstr "Αποστολή ειδήσεων προς"
 
@@ -21429,7 +21457,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:683
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:376
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:256
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:202
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:227
 msgid "Expand all"
 msgstr ""
 
@@ -21438,8 +21466,8 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:377
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:257
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:679
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1081
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:203
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1124
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:228
 msgid "Collapse all"
 msgstr "Σύμπτυξη όλων"
 
@@ -21488,11 +21516,6 @@ msgid ""
 "This book has been scheduled for re-indexing, which typically takes a few "
 "seconds, if no other books are being re-indexed. Once indexing is complete, "
 "you can re-run the search to see updated results."
-msgstr ""
-
-#: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:640
-#, python-brace-format
-msgid "{series_index} of {series}"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:643
@@ -22256,7 +22279,7 @@ msgstr "Αναζήτηση για συντόμευση βάσει ονόματο
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search.py:390
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1042
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1076
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:527
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:552
 msgid "No matches"
 msgstr "Καμία αντιστοιχία"
 
@@ -22396,7 +22419,7 @@ msgid "File for exports"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:300
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:146
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:133
 msgid "Unknown chapter"
 msgstr ""
 
@@ -22411,8 +22434,8 @@ msgid "Show in calibre"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:368
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:404
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:437
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:429
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:462
 msgid "Edit notes"
 msgstr ""
 
@@ -22608,7 +22631,7 @@ msgid "Click in this column and press Q to Quickview books with the same \"%s\""
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1117
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:468
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:478
 #: /__w/calibre/calibre/src/calibre/srv/metadata.py:239
 msgid "Description:"
 msgstr "Περιγραφή:"
@@ -22763,12 +22786,12 @@ msgid "Sort on %s"
 msgstr "Ταξινόμηση κατά %s"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:550
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1086
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1090
 msgid "Ascending"
 msgstr "Αύξουσα"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:551
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1086
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1090
 msgid "Descending"
 msgstr "Φθίνουσα"
 
@@ -22828,7 +22851,7 @@ msgid "Quickview column %s"
 msgstr "Γρήγορη ματιά, στήλη %s"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:593
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:957
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:971
 #, python-format
 msgid "Edit permissible values for %s"
 msgstr ""
@@ -23974,7 +23997,7 @@ msgid "Choose a program"
 msgstr "Επιλογή ενός προγράμματος"
 
 #: /__w/calibre/calibre/src/calibre/gui2/open_with.py:295
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1420
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1424
 msgid "Gathering data, please wait..."
 msgstr ""
 
@@ -24008,7 +24031,7 @@ msgstr "Αλλαγή &ονόματος"
 #: /__w/calibre/calibre/src/calibre/gui2/open_with.py:424
 #: /__w/calibre/calibre/src/calibre/gui2/open_with.py:444
 #: /__w/calibre/calibre/src/calibre/gui2/open_with.py:458
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:368
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:370
 msgid "No selection"
 msgstr "Καμία επιλογή"
 
@@ -25876,7 +25899,7 @@ msgid "If there is enough room"
 msgstr "Αν υπάρχει αρκετός χώρος"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:648
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1024
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1067
 msgid "By first letter"
 msgstr "Με βάση το πρώτο γράμμα"
 
@@ -26224,7 +26247,7 @@ msgid ""
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:876
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1022
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1065
 msgid "Disable"
 msgstr "Απενεργοποίηση"
 
@@ -26823,7 +26846,7 @@ msgid ""
 msgstr "Οι αλλαγές που έχετε κάνει απαιτούν την άμεση επανεκκίνηση του calibre. Δεν θα σας επιτραπεί να αλλάξετε καμιά άλλη ρύθμιση μέχρι την επανεκκίνηση του προγράμματος."
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/metadata_sources.py:52
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:538
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:542
 msgid "Source"
 msgstr "Πηγή"
 
@@ -27367,14 +27390,14 @@ msgstr "Αποθήκευση μεταδεδομένων σε ξεχωριστό 
 msgid "&Show files in the file browser after saving to disk"
 msgstr "&Παρουσίαση των αρχείων στον εξερευνητή αρχείων του συστήματος μετά την αποθήκευσή τους στο δίσκο"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:41
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:44
 #, python-brace-format
 msgid ""
 "Searching will ignore accents on characters as well as punctuation and spaces.\n"
 "So for example: {0} will match {1}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:44
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:47
 msgid ""
 "<b>Grouped search terms</b> are search names that permit a query to "
 "automatically search across more than one column. For example, if you create"
@@ -27399,77 +27422,95 @@ msgid ""
 " have hierarchical categories (categories that contain categories)."
 msgstr "Οι <b>ομαδοποιημένες εκφράσεις αναζήτησης</b> είναι ονόματα εκφράσεων αναζήτησης που επιτρέπουν αυτομάτως την έρευνα σε περισσότερες από μια στήλες. Για παράδειγμα, αν δημιουργήσετε μια έκφραση ομαδοποιημένης αναζήτησης <code>allseries</code> με τιμή <code>series, #myseries, #myseries2</code>, τότε η αναζήτηση <code>allseries:adhoc</code> θα ψάχνει το 'adhoc' σε οποιαδήποτε από τις στήλες <code>series</code>, <code>#myseries</code>, και <code>#myseries2</code>.<p> Εισάγετε το όνομα της έκφρασης ομαδοποιημένης αναζήτησης στο πεδίο Ονόματα, εισάγετε τη λίστα των στηλών στις οποίες θα ψάχνει στο πεδίο Τιμή, και μετά πατήστε το κουμπί Αποθήκευση. <p>Σημείωση: Οι εκφράσεις αναζήτησης μετατρέπονται υποχρεωτικά σε πεζούς χαρακτήρες - <code>MySearch</code> και <code>mysearch</code> είναι η ίδια έκφραση.<p>Μπορείτε να κάνετε την έκφραση ομαδοποιημένης αναζήτησής σας να εμφανίζεται ως μια κατηγορία χρήστη στον Περιηγητή ετικετών. Απλώς προσθέστε το όνομα της έκφρασης ομαδοποιημένης αναζήτησης στο κουτί Δημιουργία κατηγορίας χρήστη από. Μπορείτε να προσθέσετε πολλές εκφράσεις, διαχωρίζοντάς τις με κόμματα. Η νέα κατηγορία χρήστη θα εποικιστεί αυτομάτως με όλα τα στοιχεία των κατηγοριών που συμπεριλήφθηκαν στην έκφραση ομαδοποιημένης αναζήτησης. <p>Οι αυτόματες κατηγορίες χρήστη σας επιτρέπουν να δείτε εύκολα όλα τα στοιχεία της κατηγορίας που βρίσκονται στις συμπεριλαμβανόμενες από την έκφραση ομαδοποιημένης αναζήτησης στήλες. Χρησιμοποιώντας το παραπάνω παράδειγμα <code>allseries</code>, η αυτομάτως δημιουργημένη κατηγορία χρήστη θα περιέχει όλες τις σειρές που αναφέρονται στις στήλες <code>series</code>, <code>#myseries</code>, και <code>#myseries2</code>. Αυτό μπορεί να είναι χρήσιμο στον έλεγχο για διπλότυπα στοιχεία, στο να βρίσκετε ποια στήλη περιέχει κάποιο συγκεκριμένο στοιχείο, ή στο να έχετε ιεραρχικές κατηγορίες (κατηγορίες που περιέχουν άλλες κατηγορίες)."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:79
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:82
 msgid "Enter new or select existing name"
 msgstr "Εισάγετε ένα νέο όνομα ή επιλέξτε ένα υπάρχον"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:81
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:84
 msgid "Enter list of column lookup names to search"
 msgstr "Εισαγωγή καταλόγου ονομασιών ευρετηρίου στηλών για την αναζήτηση"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:84
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:87
 msgid "Match all"
 msgstr "Ταίριασμα όλων"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:84
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:87
 msgid "Match any"
 msgstr "Ταίριασμα με οποιοδήποτε"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:146
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:156
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:160
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:166
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:179
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:236
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:157
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:170
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:174
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:180
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:192
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:244
 msgid "Grouped search terms"
 msgstr "Εκφράσεις ομαδοποιημένης αναζήτησης"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:147
-msgid "The search term cannot be blank"
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:158
+msgid "The search term name cannot be blank"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:157
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:161
+msgid "Invalid grouped search name"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:162
+msgid "The grouped search term name cannot contain spaces"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:171
 msgid "That name is already used for a column or grouped search term"
 msgstr "Το όνομα αυτό χρησιμοποιείται ήδη για μια στήλη ή για μια ομαδοποιημένη αναζήτηση"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:161
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:175
 msgid "That name is already used for User category"
 msgstr "Το όνομα αυτό χρησιμοποιείται ήδη για Κατηγορία χρήστη"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:167
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:181
 msgid "The value box cannot be empty"
 msgstr "Το πεδίο τιμής δεν μπορεί να είναι κενό"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:180
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:193
 msgid "The empty grouped search term cannot be deleted"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:222
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:235
 msgid "Incompatible options"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:223
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:236
 msgid ""
 "The option to have un-accented characters match accented characters has no "
 "effect if you also turn on case-sensitive searching. So only turn on one of "
 "those options"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:221
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:242
+msgid "Missing grouped search terms"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:243
+msgid ""
+"The option \"Make user categories from\" contains names that aren't grouped "
+"search terms: {}"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:224
 msgid ""
 "Clear search histories from all over calibre. Including the book list, "
 "E-book viewer, fetch news dialog, etc."
 msgstr "Καθαρισμός ιστορικού αναζητήσεων από ολόκληρο το calibre. Περιλαμβάνει τη λίστα βιβλίων, τον προβολέα βιβλίων, το διάλογο λήψης ειδήσεων κτλ."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:222
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:225
 msgid "Clear search &histories"
 msgstr "Καθαρισμός ιστορικού &αναζητήσεων"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:223
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:226
 msgid "What to search by default"
 msgstr "Το εξ ορισμού εύρος αναζήτησης "
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:224
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:227
 msgid ""
 "When you enter a search term without a prefix, by default calibre will "
 "search all metadata for matches. For example, entering, \"asimov\" will "
@@ -27477,15 +27518,15 @@ msgid ""
 "options if you would like to change this behavior."
 msgstr "Όταν εισάγετε μια έκφραση αναζήτησης χωρίς πρόθεμα, το calibre εξ ορισμού θα ψάξει όλα τα μεταδεδομένα για συμφωνίες. Για παράδειγμα, εισάγοντας \"asimov\", θα ψάξετε όχι μόνο στους συγγραφείς αλλά επίσης στους τίτλους, τις ετικέτες, τις σειρές, τα σχόλια κτλ. Χρησιμοποιήστε τις επιλογές αυτές αν θέλετε να αλλάξετε τη συμπεριφορά αυτή."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:225
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:228
 msgid "&Limit the searched metadata"
 msgstr "&Περιορισμός αναζήτησης σε υποσύνολα μεταδεδομένων"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:226
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:229
 msgid "&Columns that non-prefixed searches are limited to:"
 msgstr "Οι &στήλες στις οποίες περιορίζεται μια αναζήτηση χωρίς πρόθεμα:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:227
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:230
 msgid ""
 "Note that this option affects all searches, including saved searches and "
 "restrictions. Therefore, if you use this option, it is best to ensure that "
@@ -27493,51 +27534,63 @@ msgid ""
 "\"series:Foundation\" rather than just \"Foundation\" in a saved search."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:228
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:231
 msgid "Search as you &type"
 msgstr "Αναζήτηση καθώς &πληκτρολογείτε"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:229
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:232
 msgid "Case &sensitive searching"
 msgstr "&Διάκριση πεζών-κεφαλαίων κατά την αναζήτηση"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:230
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:233
 msgid ""
 "&Highlight search results instead of restricting the book list to the "
 "results"
 msgstr "&Επισήμανση αποτελεσμάτων αναζήτησης αντί για περιορισμό του καταλόγου βιβλίων στα αποτελέσματα"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:231
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:234
 msgid ""
 "<p>This option will cause a small button to appear next to the Search bar. "
 "Clicking the button will toggle between showing only the search results and "
 "showing all books with the search results highlighted."
 msgstr "<p>Η επιλογή αυτή προσθέτει ένα μικρό κουμπί δίπλα στη μπάρα αναζητήσεων. Πατώντας το κουμπί θα μπορείτε να μεταβείτε από την κατάσταση στην οποία εμφανίζονται μόνο τα αποτελέσματα της αναζήτησης, στην κατάσταση στην οποία εμφανίζονται όλα τα βιβλία με επισήμανση όσων πληρούν τους όρους της αναζήτησης."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:232
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:235
 msgid ""
 "Show a &quick toggle button to switch between highlighting and restricting "
 "results next to the Search bar"
 msgstr "Εμφάνιση κουμπιού &γρήγορης μετάβασης μεταξύ επισήμανσης / περιορισμού των αποτελεσμάτων αναζήτησης δίπλα στη μπάρα αναζητήσεων"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:233
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:236
 msgid ""
 "Unaccented characters match &accented characters and punctuation is ignored"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:234
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:237
 msgid "Show text next to buttons in the search bar"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:235
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:238
+msgid "Show saved searches as a hierarchy"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:239
+msgid ""
+"<p>Hierarchical items are separated by periods.\n"
+"                  Changing this box will also change the 'Saved Searches' box\n"
+"                  in Preferences / Look & feel / Tag browser /\n"
+"                  Hierarchy and searching</p>"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:243
 msgid "Genera&l"
 msgstr "&Γενικά"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:237
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:245
 msgid "&Names:"
 msgstr "&Ονόματα:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:238
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:246
 msgid ""
 "Contains the names of the currently-defined group search terms.\n"
 "Create a new name by entering it into the empty box, then\n"
@@ -27546,46 +27599,46 @@ msgid ""
 "a search term by changing the value box then pressing Save."
 msgstr "Περιέχει τα ονόματα των ήδη υπαρχόντων εκφράσεων\nομαδοποιημένης αναζήτησης. Για να δημιουργήσετε ένα\nνέο όνομα, εισάγετέ το στο κενό πεδίο και μετά πατήστε\nτο κουμπί Αποθήκευση. Για να μετονομάσετε μια έκφραση\nαναζήτησης, επιλέξτε την, μετά αλλάξτε το όνομά της και\nπατήστε το κουμπί Αποθήκευση. Για να αλλάξετε την τιμή\nμιας έκφρασης αναζήτησης αλλάξτε το πεδίο Τιμή και μετά\nπατήστε Αποθήκευση."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:243
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:251
 msgid "Delete the current search term"
 msgstr "Διαγραφή της τρέχουσας έκφρασης αναζήτησης"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:245
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:253
 msgid "&Value:"
 msgstr "Τιμή:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:246
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:254
 msgid ""
 "Enter a comma-separated list of lookup names of the columns\n"
 "to include in the grouped search term"
 msgstr "Εισαγωγή ενός διαχωριζόμενου από κόμματα καταλόγου\nονομασιών ευρετηρίου στηλών. Οι στήλες αυτές θα\nσυμπεριληφθούν στην έκφραση ομαδοποιημένης αναζήτησης"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:248
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:256
 msgid ""
 "Save the current search term. You can rename a search term by\n"
 "changing the name then pressing Save. You can change the value\n"
 "of a search term by changing the value box then pressing Save."
 msgstr "Αποθήκευση της τρέχουσας έκφρασης αναζήτησης. Μπορείτε\nνα μετονομάσετε μια έκφραση αναζήτησης αλλάζοντας το\nόνομα και πατώντας το κουμπί Αποθήκευση. Μπορείτε να\nαλλάξετε την τιμή μιας έκφρασης αναζήτησης αλλάζοντας το\nπεριεχόμενο του πεδίου Τιμή και πατώντας το κουμπί Αποθήκευση."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:252
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:260
 msgid "Make &user categories from:"
 msgstr "Δημιουργία κατηγοριών &χρήστη από:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:253
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:261
 msgid ""
 "Enter the names of any grouped search terms you wish\n"
 "to be shown as user categories"
 msgstr "Εισάγετε τα ονόματα των εκφράσεων ομαδοποιημένης\nαναζήτησης που επιθυμείτε να εμφανίζονται ως κατηγορίες\nχρήστη"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:255
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:263
 msgid "&Grouped searches"
 msgstr "&Ομαδοποιημένες αναζητήσεις"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:256
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:264
 msgid "What to search when searching similar books"
 msgstr "Το εξ ορισμού εύρος αναζήτησης για τα παρόμοια βιβλία"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:257
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:265
 msgid ""
 "<p>When you search for similar books by right clicking the\n"
 "         book and selecting \"Similar books\",\n"
@@ -27594,23 +27647,23 @@ msgid ""
 "         search multiple columns at once.</p>"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:262
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:270
 msgid "S&imilar authors: "
 msgstr "Παρόμοιοι &συγγραφείς:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:263
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:271
 msgid "Si&milar series: "
 msgstr "Παρόμοιες σε&ιρές:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:264
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:272
 msgid "Similar &tags: "
 msgstr "Παρόμοιες ε&τικέτες:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:265
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:273
 msgid "Simi&lar publishers: "
 msgstr "Παρόμοιοι &εκδότες:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:266
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:274
 msgid "&Similar books"
 msgstr "&Παρόμοια βιβλία"
 
@@ -28713,12 +28766,12 @@ msgid ""
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/search_box.py:385
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:300
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:496
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:616
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:764
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:856
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1062
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:304
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:500
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:620
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:768
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:860
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1066
 msgid "Filter"
 msgstr ""
 
@@ -28730,7 +28783,7 @@ msgstr "Προσθήκη νέας αποθηκευμένης αναζήτηση�
 msgid "Get Saved search expression"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/search_box.py:502
+#: /__w/calibre/calibre/src/calibre/gui2/search_box.py:508
 msgid "Current search is not a saved search"
 msgstr "Η τρέχουσα αναζήτηση δεν είναι αποθηκευμένη αναζήτηση"
 
@@ -29413,90 +29466,94 @@ msgid ""
 "library"
 msgstr "Η λήψη του {0} έχει ολοκληρωθεί, το βιβλίο προστέθηκε στη βιβλιοθήκη calibre σας"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:227
-#, python-format
-msgid "Average rating for books in this category: %.1f"
-msgstr "Μέση αξιολόγηση βιβλίων στην κατηγορία αυτή: %.1f"
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:226
+msgid "{} is not a saved search"
+msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:229
-msgid "Books in this category are unrated"
-msgstr "Τα βιβλία της κατηγορίας αυτής δεν είναι αξιολογημένα"
-
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:231
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:228
 #: /__w/calibre/calibre/src/calibre/srv/manage_users_cli.py:354
 msgid "Search expression:"
 msgstr "Αναζήτηση γα την έκφραση:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:233
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:236
+#, python-format
+msgid "Average rating for books in this category: %.1f"
+msgstr "Μέση αξιολόγηση βιβλίων στην κατηγορία αυτή: %.1f"
+
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:238
+msgid "Books in this category are unrated"
+msgstr "Τα βιβλία της κατηγορίας αυτής δεν είναι αξιολογημένα"
+
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:240
 #, python-format
 msgid "Number of books: %s"
 msgstr "Αριθμός βιβλίων: %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:314
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:322
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:139
 msgid "Rename in Virtual library"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:315
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:323
 msgid ""
 "Do you want this rename to apply only to books in the current Virtual "
 "library?"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:317
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:325
 msgid "Yes, apply only in VL"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:318
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:326
 msgid "No, apply in entire library"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:458
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:468
 #: /__w/calibre/calibre/src/calibre/srv/metadata.py:232
 #, python-brace-format
 msgid "The grouped search term name is \"{0}\""
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:469
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:479
 #: /__w/calibre/calibre/src/calibre/srv/metadata.py:240
 #, python-brace-format
 msgid "The lookup/search name is \"{0}\"{1}"
 msgstr "Η ονομασία ευρετηρίου/ταξινόμησης είναι \"{0}\"{1}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1100
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1111
 msgid "Changing the authors for several books can take a while. Are you sure?"
 msgstr "Η αλλαγή των συγγραφέων σε αρκετά βιβλία μπορεί να πάρει κάποιο χρόνο. Είστε σίγουροι;"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1105
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1116
 msgid ""
 "Changing the metadata for that many books can take a while. Are you sure?"
 msgstr "Η αλλαγή των μεταδεδομένων σε τόσο πολλά βιβλία μπορεί να πάρει κάποιο χρόνο. Είστε σίγουροι;"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1315
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1339
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1347
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1326
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1350
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1358
 msgid "Rename User category"
 msgstr "Μετονομασία κατηγορίας χρήστη"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1316
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1327
 msgid "You cannot use periods in the name when renaming User categories"
 msgstr "Δεν μπορείτε να χρησιμοποιήσετε τελείες στο όνομα όταν μετονομάζετε κατηγορίες Χρήστη"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1340
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1348
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1351
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1359
 #, python-format
 msgid "The name %s is already used"
 msgstr "Το όνομα %s χρησιμοποιείται ήδη"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1362
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1373
 msgid "Author names cannot contain & characters."
 msgstr "Τα ονόματα των συγγραφέων δεν μπορούν να περιέχουν & χαρακτήρες."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1369
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1380
 msgid "Duplicate search name"
 msgstr "Διπλότυπο όνομα αναζήτησης  "
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1369
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1380
 #, python-format
 msgid "The saved search name %s is already used."
 msgstr "Το αποθηκευμένο όνομα αναζήτησης %s χρησιμοποιείται ήδη"
@@ -29740,195 +29797,216 @@ msgstr ""
 msgid "No, apply only in Virtual library"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:515
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:528
 #, python-format
 msgid "Change icon for: %s"
 msgstr "Αλλαγή εικόνας για: %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:612
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:625
 msgid "Delete Saved search"
 msgstr "Διαγραφή αποθηκευμένης αναζήτησης"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:613
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:626
 msgid "Delete the saved search: {}?"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:710
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:724
 msgid "Show category"
 msgstr "Προβολή κατηγορίας"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:720
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:734
 msgid "All categories"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:756
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:770
 #, python-format
 msgid "Rename %s in Virtual library"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:760
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:823
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:889
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:774
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:837
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:903
 #, python-format
 msgid "Rename %s"
 msgstr "Μετονομασία %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:767
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:781
 #, python-format
 msgid "Delete %s in Virtual library"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:772
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:839
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:786
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:853
 #, python-format
 msgid "Delete %s"
 msgstr "Διαγραφή %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:777
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:791
 #, python-format
 msgid "Edit sort for %s"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:780
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:794
 #, python-format
 msgid "Edit link for %s"
 msgstr "Επεξεργασία συνδέσμου για %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:786
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:800
 #, python-format
 msgid "Add %s to User category"
 msgstr "Προσθήκη %s στις κατηγορίες χρήστη"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:802
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:816
 #, python-format
 msgid "Children of %s"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:813
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:827
 #, python-format
 msgid "Add/remove %s to selected books"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:815
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:829
 #, python-format
 msgid "Add %s to selected books"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:818
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:832
 #, python-format
 msgid "Remove %s from selected books"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:827
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:841
 #, python-format
 msgid "Delete Saved search %s"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:833
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:847
 #, python-format
 msgid "Delete %s in Virtual Library"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:846
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:860
 #, python-format
 msgid "Remove %(item)s from category %(cat)s"
 msgstr "Αφαίρεση %(item)s από την κατηγορία %(cat)s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:854
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:905
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:921
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:868
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:919
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:935
 msgid "Search for"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:865
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:879
 #, python-format
 msgid "%s and its children"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:870
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:913
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:884
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:927
 #, python-format
 msgid "Everything but %s"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:876
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:890
 #, python-format
 msgid "Everything but %s and its children"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:882
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:896
 msgid "The saved search expression"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:893
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:907
 #, python-format
 msgid "Add sub-category to %s"
 msgstr "Προσθήκη υποκατηγορίας στην %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:897
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:911
 #, python-format
 msgid "Delete User category %s"
 msgstr "Διαγραφή κατηγορίας χρήστη %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:927
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:941
 #, python-format
 msgid "Books in category %s"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:933
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:947
 #, python-format
 msgid "Books not in category %s"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:981
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:995
 msgid "Remove the {} format from selected books"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:990
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1004
 #, python-format
 msgid "Hide category %s"
 msgstr "Απόκρυψη κατηγορίας %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:997
-msgid "Change category icon"
-msgstr "Αλλαγή εικονιδίου κατηγορίας"
-
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:999
-msgid "Restore default icon"
-msgstr "Επαναφορά προεπιλεγμένου εικονιδίου"
-
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1007
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1012
+msgid "Change {} category icon"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1016
+msgid "Restore {} category default icon"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1021
+msgid "Change Saved searches folder icon"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1023
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1027
+msgid "Saved searches folder"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1025
+msgid "Restore Saved searches folder default icon"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1035
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1040
 msgid "Manage User categories"
 msgstr "Διαχείριση κατηγοριών χρήστη"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1020
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1054
+msgid "Sub-categorize {}"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1058
+msgid "Don't sub-categorize {}"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1063
 msgid "Change sub-categorization scheme"
 msgstr "Αλλαγή οργάνωσης υποκατηγοριοποιήσεων"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1026
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1069
 msgid "Partition"
 msgstr "Κατάτμηση"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1041
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1084
 msgid "First letter is usable only when sorting by name"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1049
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1092
 msgid "Expand or collapse"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1057
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1100
 #, python-brace-format
 msgid "Expand {0}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1060
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1103
 #, python-brace-format
 msgid "Expand {0} and its children"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1080
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1123
 #, python-brace-format
 msgid "Collapse {0}"
 msgstr ""
@@ -30602,7 +30680,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/tts/linux_config.py:25
 #: /__w/calibre/calibre/src/calibre/gui2/tts/macos_config.py:30
 #: /__w/calibre/calibre/src/calibre/gui2/tts/windows_config.py:26
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:702
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:706
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:623
 msgid "Language"
 msgstr "Γλώσσα"
@@ -32489,7 +32567,7 @@ msgstr "Γραμματοσειρά"
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/completion/basic.py:89
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/text.py:909
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:242
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:439
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:443
 msgid "Image"
 msgstr "Εικόνα"
 
@@ -32771,44 +32849,44 @@ msgid ""
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:93
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:264
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:262
 msgid "Trim image"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:102
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:272
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:270
 msgid "Auto-trim image"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:110
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:265
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:263
 msgid "Rotate image"
 msgstr "Περιστροφή εικόνας"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:121
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:266
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:264
 msgid "Resize image"
 msgstr "Αλλαγή μεγέθους εικόνας"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:134
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:273
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:315
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:271
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:313
 msgid "Sharpen image"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:147
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:274
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:321
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:272
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:319
 msgid "Blur image"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:156
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:277
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:275
 msgid "Make image look like an oil painting"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:168
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:275
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:273
 msgid "De-speckle image"
 msgstr ""
 
@@ -32817,7 +32895,7 @@ msgid "Normalize image"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:208
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:355
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:357
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:319
 msgid "No image"
 msgstr ""
@@ -32841,22 +32919,22 @@ msgstr "Αυτή η εικόνα δεν είναι έγκυρη"
 msgid "Drop image"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:353
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:306
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:355
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:304
 msgid "Paste image"
 msgstr "Επικόλληση εικόνας"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:356
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:358
 msgid "No image available in the clipboard"
 msgstr "Δεν υπάρχει διαθέσιμη εικόνα στο πρόχειρο"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:369
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:371
 msgid ""
 "No active selection, first select a region in the image, by dragging with "
 "your mouse"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:606
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:608
 msgid "Not a valid image"
 msgstr "Μη έγκυρη εικόνα"
 
@@ -32872,62 +32950,62 @@ msgstr "&Πλάτος:"
 msgid "&Height:"
 msgstr "&Ύψος:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:201
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:199
 msgid ""
 "Cutting of images is not allowed. If you want to delete the image, use the "
 "files browser to do it."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:252
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:250
 msgid "File actions tool bar"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:256
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:254
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:350
 msgid "Edit actions tool bar"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:268
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:266
 msgid "Image filters"
 msgstr "Φίτρα εικόνας"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:276
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:274
 msgid "Improve contrast (normalize image)"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:279
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:277
 msgid "Image information bar"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:302
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:300
 msgid "Copy selected region"
 msgstr "Αντιγραφή επιλεγμένης περιοχής"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:303
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:301
 msgid "Paste into selected region"
 msgstr "Επικόλληση στην επιλεγμένη περιοχή"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:305
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:303
 msgid "Copy image"
 msgstr "Αντιγραφή εικόνας"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:316
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:314
 msgid ""
 "The standard deviation for the Gaussian sharpen operation (higher means more"
 " sharpening)"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:322
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:320
 msgid ""
 "The standard deviation for the Gaussian blur operation (higher means more "
 "blurring)"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:327
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:325
 msgid "Oilify image"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:328
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:326
 msgid "The strength of the operation (higher numbers have larger effects)"
 msgstr ""
 
@@ -34025,7 +34103,7 @@ msgstr "Επιλογή τοποθεσίας"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:987
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1004
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1324
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1328
 #: /__w/calibre/calibre/src/calibre/gui2/win_file_dialogs.py:76
 msgid "Files"
 msgstr "Αρχεία"
@@ -34966,183 +35044,187 @@ msgid "Folder"
 msgstr "Φάκελος"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:239
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:439
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:443
 msgid "Size (KB)"
 msgstr "Μέγεθος (KB)"
+
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:239
+msgid "Word count"
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:245
 msgid "Style"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:320
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:324
 #, python-brace-format
 msgid "Total uncompressed size of all files: {0} :: Images: {1} :: Fonts: {2}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:439
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:443
 msgid "Resolution"
 msgstr "Ανάλυση"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:439
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:702
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:802
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:443
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:706
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:806
 msgid "Times used"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:527
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:531
 #, python-format
 msgid "Edit the image: %s"
 msgstr "Επεξεργασία της εικόνας: %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:538
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:542
 msgid "Anchor"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:538
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:542
 msgid "Source text"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:538
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:542
 msgid "Target"
 msgstr "Στόχος"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:538
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:542
 msgid "Target text"
 msgstr "Στοχευμένο κείμενο"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:585
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:589
 msgid "The link destination does not exist"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:585
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:589
 msgid "The link destination exists"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:586
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:590
 msgid "The link destination could not be verified"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:650
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:654
 msgid "Click entries above to see their destination here"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:670
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:674
 msgid "No destination found for this link"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:702
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:706
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:623
 msgid "Word"
 msgstr "Λέξη"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:782
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:786
 #, python-brace-format
 msgid "Words: {2} :: Unique Words: :: {0} :: Languages: {1}"
 msgstr "Λέξεις: {2} :: Ανεπανάληπτες λέξεις: :: {0} :: Γλώσσες: {1}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:802
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:806
 msgid "Character"
 msgstr "Χαρακτήρας"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:802
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:806
 msgid "Codepoint"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:868
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:872
 msgid "All the characters in the book"
 msgstr "Όλοι οι χαρακτήρες στο βιβλίο"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:998
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1220
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1002
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1224
 #, python-brace-format
 msgid "{0} [{1} elements]"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1076
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1080
 msgid "Sort by:"
 msgstr "Ταξινόμηση κατά:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1077
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1081
 msgid "&Counts"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1080
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1084
 msgid "&Name"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1104
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1108
 #, python-brace-format
 msgid "{0} rules, {1} unused"
 msgstr "{0} κανόνες, {1} αχρησιμοποίητος"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1124
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1270
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1128
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1274
 msgid "Number of matches"
 msgstr "Πλήθος συμφωνιών"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1124
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1128
 msgid "Style Rule"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1265
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1269
 #, python-brace-format
 msgid "{0} classes, {1} unused"
 msgstr "{0} κλάσεις, {1} αχρησιμοποίητη"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1270
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1274
 msgid "Class"
 msgstr "Κλάση"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1328
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1332
 msgid "Words"
 msgstr "Λέξεις"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1338
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1342
 msgid "Style rules"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1342
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1346
 msgid "Style classes"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1346
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1350
 msgid "Characters"
 msgstr "Χαρακτήρες"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1350
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1354
 msgid "Links"
 msgstr "Σύνδεσμοι"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1384
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1388
 #, python-format
 msgid "Export of %s data is not supported"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1386
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1390
 msgid "Choose a filename for the data"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1387
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1391
 msgid "CSV files"
 msgstr "Αρχεία CSV"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1401
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1405
 msgid "Reports"
 msgstr "Αναφορές"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1431
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1435
 msgid "Export the currently shown report as a CSV file"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1439
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1443
 msgid "Are you sure you want to delete the selected files?"
 msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε τα επιλεγμένα αρχεία;"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1467
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1471
 msgid "Failed to gather data"
 msgstr "Αποτυχία συλλογής δεδομένων"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1468
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1472
 msgid ""
 "Failed to gather data for the report. Click \"Show details\" for more "
 "information."
@@ -35478,7 +35560,7 @@ msgid "Export saved searches"
 msgstr "Εξαγωγή αποθηκευμένων αναζητήσεων"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1009
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:497
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:522
 msgid "Export"
 msgstr "Εξαγωγή"
 
@@ -37372,78 +37454,78 @@ msgstr "Προσθήκη σελιδοδείκτη"
 msgid "Enter title for bookmark:"
 msgstr "Πλήρης τίτλος για σελιδοδείκτη:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:129
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:161
 msgid "calibre highlights"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:132
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:164
 msgid "highlights"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:196
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:221
 msgid "Modify this highlight"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:197
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:222
 msgid "Edit notes for this highlight"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:199
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:224
 msgid "Delete this highlight"
 msgid_plural "Delete selected highlights"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:235
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:260
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/search.py:585
 msgid "Table of Contents section:"
 msgid_plural "Table of Contents sections:"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:472
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:497
 msgid "Double click to jump to an entry"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:495
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:520
 msgid "Modify"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:495
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:520
 msgid "Modify the selected highlight"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:496
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:521
 msgid "Delete the selected highlights"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:497
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:522
 msgid "Export all highlights"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:528
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:553
 msgid "No highlights match the search: {}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:544
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:569
 msgid "No selected highlight"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:545
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:570
 msgid "No highlight is currently selected"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:562
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:587
 msgid "Are you sure you want to delete this highlight permanently?"
 msgid_plural "Are you sure you want to delete all {} highlights permanently?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:573
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:598
 msgid "No highlights"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:573
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:598
 msgid "This book has no highlights to export"
 msgstr ""
 

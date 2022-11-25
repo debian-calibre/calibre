@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "十一月 04, 2022" "6.8.0" "calibre"
+.TH "CALIBREDB" "1" "十一月 25, 2022" "6.9.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -198,7 +198,7 @@ calibredb list [选项]
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-在列出数据库中书籍时要显示的字段。应该是逗号分隔的字段列表。 可用字段： author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid 默认值：title,authors。特殊字段“all”可用于选择所有字段。除了上述内置字段之外，自定义字段还等价于*field_name，例如，对于自定义字段#rating，使用名称：*rating
+在列出数据库中书籍时要显示的字段。应该是逗号分隔的字段列表。 可用字段： author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid 默认值：title,authors。特殊字段“all”可用于选择所有字段。除了上述内置字段之外，自定义字段还等价于*field_name，例如，对于自定义字段#rating，使用名称：*rating
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -233,7 +233,22 @@ calibredb list [选项]
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-排序结果的字段。 可用字段：author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid 默认值：id
+排序结果的字段。 可用字段：author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid 默认值：id
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template
+The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_file, \-t
+Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_heading
+Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
 .UNINDENT
 .SH ADD
 .INDENT 0.0

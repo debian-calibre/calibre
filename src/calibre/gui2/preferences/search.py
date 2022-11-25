@@ -33,6 +33,9 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         r('limit_search_columns', prefs)
         r('use_primary_find_in_search', prefs)
         r('search_tool_bar_shows_text', gprefs)
+        ossm = self.opt_saved_search_menu_is_hierarchical
+        ossm.setChecked('search' in db.new_api.pref('categories_using_hierarchy', []))
+        ossm.stateChanged.connect(self.changed_signal)
         r('case_sensitive', prefs)
         fl = db.field_metadata.get_search_terms()
         r('limit_search_columns_to', prefs, setting=CommaSeparatedList, choices=fl)
@@ -130,7 +133,15 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         if dex >= 0:
             field.setCurrentIndex(dex)
         else:
-            field.setCurrentIndex(0)
+            # The field no longer exists. Try the default
+            dex = field.findText(self.db.prefs.defaults[name])
+            if dex >= 0:
+                field.setCurrentIndex(dex)
+            else:
+                # The default doesn't exist! Pick the first field in the list
+                field.setCurrentIndex(0)
+            # Emit a changed signal after all the other events have been processed
+            QTimer.singleShot(0, self.changed_signal.emit)
         field.blockSignals(False)
 
     def something_changed(self, dex):
@@ -144,8 +155,11 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         name = icu_lower(str(self.gst_names.currentText()))
         if not name:
             return error_dialog(self.gui, _('Grouped search terms'),
-                                _('The search term cannot be blank'),
+                                _('The search term name cannot be blank'),
                                 show=True)
+        if ' ' in name:
+            return error_dialog(self.gui, _('Invalid grouped search name'),
+                _('The grouped search term name cannot contain spaces'), show=True)
         if idx != 0:
             orig_name = str(self.gst_names.itemData(idx) or '')
         else:
@@ -165,7 +179,6 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         if not val:
             return error_dialog(self.gui, _('Grouped search terms'),
                 _('The value box cannot be empty'), show=True)
-
         if orig_name and name != orig_name:
             del self.gst[orig_name]
         self.gst_changed = True
@@ -223,7 +236,16 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
                 'The option to have un-accented characters match accented characters has no effect'
                 ' if you also turn on case-sensitive searching. So only turn on one of those options'), show=True)
             raise AbortCommit()
-        if self.gst_changed:
+        ucs = (m.strip() for m in self.opt_grouped_search_make_user_categories.text().split(',') if m.strip())
+        ucs -= (self.gst.keys())
+        if ucs:
+            error_dialog(self, _('Missing grouped search terms'), _(
+                'The option "Make user categories from" contains names that '
+                "aren't grouped search terms: {}").format(', '.join(sorted(ucs))), show=True)
+            raise AbortCommit()
+
+        restart = ConfigWidgetBase.commit(self)
+        if self.gst_changed or self.muc_changed:
             self.db.new_api.set_pref('grouped_search_terms', self.gst)
             self.db.field_metadata.add_grouped_search_terms(self.gst)
         self.db.new_api.set_pref('similar_authors_search_key',
@@ -234,7 +256,14 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
                           str(self.similar_series_search_key.currentText()))
         self.db.new_api.set_pref('similar_publisher_search_key',
                           str(self.similar_publisher_search_key.currentText()))
-        return ConfigWidgetBase.commit(self)
+
+        cats = set(self.db.new_api.pref('categories_using_hierarchy', []))
+        if self.opt_saved_search_menu_is_hierarchical.isChecked():
+            cats.add('search')
+        else:
+            cats.discard('search')
+        self.db.new_api.set_pref('categories_using_hierarchy', list(cats))
+        return restart
 
     def refresh_gui(self, gui):
         gui.refresh_search_bar_widgets()
@@ -242,8 +271,8 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         gui.current_db.new_api.clear_caches()
         set_use_primary_find_in_search(prefs['use_primary_find_in_search'])
         gui.set_highlight_only_button_icon()
-        if self.muc_changed:
-            gui.tags_view.recount()
+        if self.gst_changed or self.muc_changed:
+            gui.tags_view.model().reset_tag_browser()
         gui.search.search_as_you_type(config['search_as_you_type'])
         gui.search.do_search()
 

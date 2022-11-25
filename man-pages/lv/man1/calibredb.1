@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "novembris 04, 2022" "6.8.0" "calibre"
+.TH "CALIBREDB" "1" "novembris 25, 2022" "6.9.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -189,7 +189,7 @@ Kārtot rezultātus augošā secībā
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Lauki, kas jāuzrāda, iekļaujot grāmatas datu bāzē. Lauku sarakstu jāatdala ar komatu. Pieejamie lauki:author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Noklusējums: title,authors. Īpašo lauku \fB\(dq\fPall\fB\(dq\fP , var izmantot, lai atlasītu visus laukus. Papildus iepriekš minētajiem laukiem, pielāgotie lauki ir pieejami arī kā * field_name, piemēram, pielāgotajam laukam #rating, izmantojiet nosaukumu: *rating
+Lauki, kas jāuzrāda, iekļaujot grāmatas datu bāzē. Lauku sarakstu jāatdala ar komatu. Pieejamie lauki:author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Noklusējums: title,authors. Īpašo lauku \fB\(dq\fPall\fB\(dq\fP , var izmantot, lai atlasītu visus laukus. Papildus iepriekš minētajiem laukiem, pielāgotie lauki ir pieejami arī kā * field_name, piemēram, pielāgotajam laukam #rating, izmantojiet nosaukumu: *rating
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -224,7 +224,22 @@ Teksts, ar kuru atdalīta laukus. Pēc noklusējuma tā ir atstarpe.
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-Lauks, pēc kura kārtot rezultātus. Pieejamie lauki: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Noklusējums: id
+Lauks, pēc kura kārtot rezultātus. Pieejamie lauki: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Noklusējums: id
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template
+The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_file, \-t
+Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_heading
+Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
 .UNINDENT
 .SH ADD
 .INDENT 0.0

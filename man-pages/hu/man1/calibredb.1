@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "november 04, 2022" "6.8.0" "calibre"
+.TH "CALIBREDB" "1" "november 25, 2022" "6.9.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -204,7 +204,7 @@ Rendezési emelkedő sorrendben
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-A könyvek adatbázisban való listázásakor megjelenítendő mezők. A mezők vesszővel elválasztott listája legyen. Elérhető mezők: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Alapértelmezett: title,authors. Az \fB\(dq\fPMind” speciális mezővel az összes mezőt kijelölhetjük. A fenti beépített mezőkön kívül egyéni mezők \fB\(aq\fP*field_name\fB\(aq\fP néven is elérhetők, például egyéni mezőhöz #rating használja a következő nevet: *értékelés
+A könyvek adatbázisban való listázásakor megjelenítendő mezők. A mezők vesszővel elválasztott listája legyen. Elérhető mezők: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Alapértelmezett: title,authors. Az \fB\(dq\fPMind” speciális mezővel az összes mezőt kijelölhetjük. A fenti beépített mezőkön kívül egyéni mezők \fB\(aq\fP*field_name\fB\(aq\fP néven is elérhetők, például egyéni mezőhöz #rating használja a következő nevet: *értékelés
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -239,7 +239,22 @@ A mezők elválasztására szolgáló karakter vagy szöveg. Alapbeállítás a 
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-A mező, ami alapján az eredmény rendezve lesz. Elérhető mezők:  author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Alapértelmezett:  id
+A mező, ami alapján az eredmény rendezve lesz. Elérhető mezők:  author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Alapértelmezett:  id
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template
+The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_file, \-t
+Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_heading
+Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
 .UNINDENT
 .SH ADD
 .INDENT 0.0

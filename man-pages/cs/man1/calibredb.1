@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "listopadu 04, 2022" "6.8.0" "calibre"
+.TH "CALIBREDB" "1" "listopadu 25, 2022" "6.9.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -189,7 +189,7 @@ Seřadit výsledky ve vzestupném pořadí
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Zobrazená pole při výpisu knih v databázi. Měl by to být čárkami oddělený seznam polí. Dostupná pole: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Výchozí: title,authors. Pro výběr všech polí může být použito speciální pole „all“. Kromě výše uvedených polí jsou také dostupná vlastní pole, jako například *field_name, pro vlastní pole #rating použijte název *rating
+Zobrazená pole při výpisu knih v databázi. Měl by to být čárkami oddělený seznam polí. Dostupná pole: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Výchozí: title,authors. Pro výběr všech polí může být použito speciální pole „all“. Kromě výše uvedených polí jsou také dostupná vlastní pole, jako například *field_name, pro vlastní pole #rating použijte název *rating
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -224,7 +224,22 @@ Filtrovat výsledky podle vyhledávacího dotazu. Pro formát vyhledávacího do
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-Pole, podle kterého řadit výsledky. Dostupná pole: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Výchozí: id
+Pole, podle kterého řadit výsledky. Dostupná pole: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Výchozí: id
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template
+Šablona, kterou spustit, pokud je „template“ v seznamu polí. Výchozí: Žádná
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_file, \-t
+Cesta k souboru obsahujícímu šablonu, kterou spustit, pokud je „template“ v seznamu polí. Výchozí: Žádná
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_heading
+Záhlaví sloupce šablony. Výchozí: %dvýchozí. Tato volba je ignorována, pokud je nastavena volba \fI\%\-\-for\-machine\fP
 .UNINDENT
 .SH ADD
 .INDENT 0.0

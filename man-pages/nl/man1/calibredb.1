@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "november 04, 2022" "6.8.0" "calibre"
+.TH "CALIBREDB" "1" "november 25, 2022" "6.9.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -198,7 +198,7 @@ Sorteer resultaten in oplopende volgorde
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Velden te tonen bij het maken van boekenlijsten in de database. Moet een lijst met komma\-gescheiden waarden zijn. Beschikbare velden: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Standaard: title,authors. Het speciale veld \fB\(dq\fPalle\fB\(dq\fP kan dienen om alle velden te selecteren. Naast de ingebouwde velden boven zijn ook aangepaste velden beschikbaar als *field_name, bijvoorbeeld, voor een aangepast veld #rating, gebruik de naam: *rating
+Velden te tonen bij het maken van boekenlijsten in de database. Moet een lijst met komma\-gescheiden waarden zijn. Beschikbare velden: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Standaard: title,authors. Het speciale veld \fB\(dq\fPalle\fB\(dq\fP kan dienen om alle velden te selecteren. Naast de ingebouwde velden boven zijn ook aangepaste velden beschikbaar als *field_name, bijvoorbeeld, voor een aangepast veld #rating, gebruik de naam: *rating
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -233,7 +233,22 @@ De string gebruikt om velden van elkaar te scheiden. Standaard is dit een spatie
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-Het veld waarop de resultaten worden gesorteerd. Beschikbare velden: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Standaard: id
+Het veld waarop de resultaten worden gesorteerd. Beschikbare velden: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Standaard: id
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template
+The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_file, \-t
+Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_heading
+Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
 .UNINDENT
 .SH ADD
 .INDENT 0.0

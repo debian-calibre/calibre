@@ -71,6 +71,9 @@ class Ui_Form(object):
         self.opt_search_tool_bar_shows_text = QtWidgets.QCheckBox(self.tab)
         self.opt_search_tool_bar_shows_text.setObjectName("opt_search_tool_bar_shows_text")
         self.gridLayout_6.addWidget(self.opt_search_tool_bar_shows_text, 5, 0, 1, 1)
+        self.opt_saved_search_menu_is_hierarchical = QtWidgets.QCheckBox(self.tab)
+        self.opt_saved_search_menu_is_hierarchical.setObjectName("opt_saved_search_menu_is_hierarchical")
+        self.gridLayout_6.addWidget(self.opt_saved_search_menu_is_hierarchical, 6, 0, 1, 1)
         self.tabWidget.addTab(self.tab, "")
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_2")
@@ -232,6 +235,11 @@ class Ui_Form(object):
         self.opt_show_highlight_toggle_button.setText(_("Show a &quick toggle button to switch between highlighting and restricting results next to the Search bar"))
         self.opt_use_primary_find_in_search.setText(_("Unaccented characters match &accented characters and punctuation is ignored"))
         self.opt_search_tool_bar_shows_text.setText(_("Show text next to buttons in the search bar"))
+        self.opt_saved_search_menu_is_hierarchical.setText(_("Show saved searches as a hierarchy"))
+        self.opt_saved_search_menu_is_hierarchical.setToolTip(_("<p>Hierarchical items are separated by periods.\n"
+"                  Changing this box will also change the \'Saved Searches\' box\n"
+"                  in Preferences / Look & feel / Tag browser /\n"
+"                  Hierarchy and searching</p>"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _("Genera&l"))
         self.groupBox_2.setTitle(_("Grouped search terms"))
         self.la10.setText(_("&Names:"))

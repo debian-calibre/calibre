@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "November 04, 2022" "6.8.0" "calibre"
+.TH "CALIBREDB" "1" "November 25, 2022" "6.9.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -189,7 +189,7 @@ Ergebnisse in aufsteigender Reihenfolge sortieren
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Anzuzeigende Felder bei der Auflistung von Büchern in der Datenbank. Sollte eine kommagetrennte Liste von Feldern sein. Verfügbare Felder: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Standard: % default. Das Sonderfeld \fB\(dq\fPall\fB\(dq\fP kann für die Auswahl aller Felder verwendet werden. Zusätzlich zu den oben genannten integrierten Feldern sind auch benutzerdefinierte Felder als \fB\(dq\fP*Feldname\fB\(dq\fP verfügbar. Verwenden Sie beispielsweise für ein benutzerdefiniertes Feld \fB\(dq\fP#Bewertung\fB\(dq\fP den Namen \fB\(dq\fP*Bewertung\fB\(dq\fP\&.
+Anzuzeigende Felder bei der Auflistung von Büchern in der Datenbank. Sollte eine kommagetrennte Liste von Feldern sein. Verfügbare Felder: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Standard: % default. Das Sonderfeld \fB\(dq\fPall\fB\(dq\fP kann für die Auswahl aller Felder verwendet werden. Zusätzlich zu den oben genannten integrierten Feldern sind auch benutzerdefinierte Felder als \fB\(dq\fP*Feldname\fB\(dq\fP verfügbar. Verwenden Sie beispielsweise für ein benutzerdefiniertes Feld \fB\(dq\fP#Bewertung\fB\(dq\fP den Namen \fB\(dq\fP*Bewertung\fB\(dq\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -224,7 +224,22 @@ Zeichenfolge zur Unterscheidung der Felder. Die Voreinstellung ist ein Leerzeich
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-Das Feld, nach dem die Ergebnisse sortiert werden. Verfügbare Felder: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Voreinstellung: id
+Das Feld, nach dem die Ergebnisse sortiert werden. Verfügbare Felder: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Voreinstellung: id
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template
+The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_file, \-t
+Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_heading
+Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
 .UNINDENT
 .SH ADD
 .INDENT 0.0

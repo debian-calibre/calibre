@@ -3,6 +3,7 @@
 # 
 # Translators:
 # Alex Chen <alex.szchen@gmail.com>, 2016
+# Alice Jim, 2022
 # Andrew Chen <751970186@qq.com>, 2016
 # Angyucheng Yi, 2022
 # hjings <hjings@gmail.com>, 2019
@@ -107,9 +108,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2022-11-01 03:08+UTC\n"
+"POT-Creation-Date: 2022-11-23 14:31+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
-"Last-Translator: RERBIN MA, 2022\n"
+"Last-Translator: oyqy <oyqy@vip.qq.com>, 2018-2022\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/calibre/calibre/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -351,7 +352,7 @@ msgstr "不做修改"
 #: /__w/calibre/calibre/src/calibre/gui2/add.py:354
 #: /__w/calibre/calibre/src/calibre/gui2/add.py:414
 #: /__w/calibre/calibre/src/calibre/gui2/add.py:470
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:1222
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:1224
 #: /__w/calibre/calibre/src/calibre/gui2/convert/__init__.py:51
 #: /__w/calibre/calibre/src/calibre/gui2/convert/metadata.py:145
 #: /__w/calibre/calibre/src/calibre/gui2/convert/metadata.py:161
@@ -396,7 +397,7 @@ msgstr "不做修改"
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:484
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:485
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/bookmarks.py:252
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:249
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:274
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/search.py:565
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/search.py:569
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/search.py:583
@@ -735,7 +736,7 @@ msgid "Choose a random book from your calibre library"
 msgstr "从书库中随机抽选一本书"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1057
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:51
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:40
 msgid "Sort the list of books"
 msgstr "以列表方式排列书籍"
 
@@ -1340,7 +1341,7 @@ msgstr "书目"
 #: /__w/calibre/calibre/src/calibre/db/fields.py:772
 #: /__w/calibre/calibre/src/calibre/db/fields.py:787
 #: /__w/calibre/calibre/src/calibre/db/tests/legacy.py:410
-#: /__w/calibre/calibre/src/calibre/devices/nook/driver.py:123
+#: /__w/calibre/calibre/src/calibre/devices/nook/driver.py:122
 #: /__w/calibre/calibre/src/calibre/devices/prs505/sony_cache.py:451
 #: /__w/calibre/calibre/src/calibre/devices/prs505/sony_cache.py:474
 #: /__w/calibre/calibre/src/calibre/devices/prst1/driver.py:777
@@ -1353,8 +1354,8 @@ msgstr "书目"
 #: /__w/calibre/calibre/src/calibre/devices/utils.py:118
 #: /__w/calibre/calibre/src/calibre/gui2/actions/fetch_news.py:87
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:623
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1689
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1691
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1703
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1705
 #: /__w/calibre/calibre/src/calibre/library/database2.py:373
 #: /__w/calibre/calibre/src/calibre/library/database2.py:386
 #: /__w/calibre/calibre/src/calibre/library/database2.py:3398
@@ -1431,7 +1432,7 @@ msgstr "保存搜索结果"
 #: /__w/calibre/calibre/src/calibre/db/lazy.py:222
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/base.py:681
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:215
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1017
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1016
 #: /__w/calibre/calibre/src/calibre/gui2/library/delegates.py:720
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:931
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:359
@@ -2013,14 +2014,18 @@ msgstr "{0} 自 {1}"
 msgid "Error: You must specify the search expression"
 msgstr "错误：你必须指定搜索表达式"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:226
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:170
+msgid "You must provide a template"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:252
 msgid ""
 "%prog list [options]\n"
 "\n"
 "List the books available in the calibre database.\n"
 msgstr "%prog list [选项]\n\n列出 calibre 数据库中可用书籍。\n"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:238
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:264
 #, python-format
 msgid ""
 "The fields to display when listing books in the database. Should be a comma separated list of fields.\n"
@@ -2028,7 +2033,7 @@ msgid ""
 "Default: %%default. The special field \"all\" can be used to select all fields. In addition to the builtin fields above, custom fields are also available as *field_name, for example, for a custom field #rating, use the name: *rating"
 msgstr "在列出数据库中书籍时要显示的字段。应该是逗号分隔的字段列表。\n可用字段： %s\n默认值：%%default。特殊字段“all”可用于选择所有字段。除了上述内置字段之外，自定义字段还等价于*field_name，例如，对于自定义字段#rating，使用名称：*rating"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:251
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:277
 #, python-brace-format
 msgid ""
 "The field by which to sort the results.\n"
@@ -2036,43 +2041,60 @@ msgid ""
 "Default: {1}"
 msgstr "排序结果的字段。\n可用字段：{0}\n默认值：{1}"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:258
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:284
 msgid "Sort results in ascending order"
 msgstr "升序排列结果"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:265
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:291
 msgid ""
 "Filter the results by the search query. For the format of the search query, "
 "please see the search related documentation in the User Manual. Default is "
 "to do no filtering."
 msgstr "通过搜索请求过滤结果。对于每个搜索请求的格式，请参见用户手册中搜索相关的文档。默认为不做过滤。"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:275
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:302
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list_categories.py:66
 msgid ""
 "The maximum width of a single line in the output. Defaults to detecting "
 "screen size."
 msgstr "输出中单行宽度最大值。默认检测屏幕大小。"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:281
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:308
 msgid "The string used to separate fields. Default is a space."
 msgstr "分隔各个字段的字符串。默认是空格。"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:287
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:314
 msgid ""
 "The prefix for all file paths. Default is the absolute path to the library "
 "folder."
 msgstr "所有文件路径前缀。默认为书库目录绝对路径。"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:294
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:321
 msgid "The maximum number of results to display. Default: all"
 msgstr "结果显示的最大数目。默认：全部"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:301
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:328
 msgid ""
 "Generate output in JSON format, which is more suitable for machine parsing. "
 "Causes the line width and separator options to be ignored."
 msgstr "以 JSON 格式输出，更适合机器解析。忽略每行长度和分隔符选项。"
+
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:335
+msgid "The template to run if \"{}\" is in the field list. Default: None"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:341
+msgid ""
+"Path to a file containing the template to run if \"{}\" is in the field "
+"list. Default: None"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:347
+#, python-format
+msgid ""
+"Heading for the template column. Default: %default. This option is ignored "
+"if the option {} is set"
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list_categories.py:23
 msgid ""
@@ -7170,7 +7192,7 @@ msgstr "从存档文件 (ZIP/RAR) 中提取公共电子书格式。如果它们�
 
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/base.py:681
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:215
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1017
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1016
 #: /__w/calibre/calibre/src/calibre/gui2/library/delegates.py:720
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:931
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:360
@@ -7470,115 +7492,115 @@ msgstr "亚马逊"
 msgid "Google Images"
 msgstr "Google图像"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1020
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1036
 msgid "Downloads metadata and covers from Amazon"
 msgstr "从 Amazon 下载元数据和封面"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1031
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1047
 msgid "US"
 msgstr "美国"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1032
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1048
 msgid "France"
 msgstr "法国"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1033
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1049
 msgid "Germany"
 msgstr "德国"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1034
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1050
 msgid "UK"
 msgstr "英国"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1035
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1051
 msgid "Australia"
 msgstr "澳大利亚"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1036
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1052
 msgid "Italy"
 msgstr "意大利"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1037
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1053
 msgid "Japan"
 msgstr "日本"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1038
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1054
 msgid "Spain"
 msgstr "西班牙"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1039
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1055
 msgid "Brazil"
 msgstr "巴西"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1040
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1056
 msgid "India"
 msgstr "印度"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1041
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1057
 msgid "Netherlands"
 msgstr "荷兰"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1042
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1058
 msgid "China"
 msgstr "中国"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1043
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1059
 msgid "Canada"
 msgstr "加拿大"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1044
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1060
 msgid "Sweden"
 msgstr "瑞典"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1048
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1064
 msgid "Choose server automatically"
 msgstr "选择服务器自动"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1049
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1065
 msgid "Amazon servers"
 msgstr "亚马逊服务器"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1050
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1066
 msgid "Bing search cache"
 msgstr "Bing 搜索缓存"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1051
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1067
 msgid "Google search cache"
 msgstr "谷歌搜索缓存"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1052
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1068
 msgid "Wayback machine cache (slow)"
 msgstr "时光机缓存（慢）"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1053
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1069
 msgid "DuckDuckGo search and Google cache"
 msgstr "DuckDuckGo搜索和Google缓存"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1057
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1073
 msgid "Amazon country website to use:"
 msgstr "使用亚马逊国家网站："
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1058
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1074
 msgid ""
 "Metadata from Amazon will be fetched using this country's Amazon website."
 msgstr "使用所选择国家的 Amazon 网站上数据做为元数据。"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1060
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1076
 msgid "Server to get data from:"
 msgstr "服务器从这里获取数据："
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1062
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1078
 msgid ""
 "Amazon has started blocking attempts to download metadata from its servers. "
 "To get around this problem, calibre can fetch the Amazon data from many "
 "different places where it is cached. Choose the source you prefer."
 msgstr "Amazon已经开始阻止尝试从服务器下载元数据。为了解决这个问题，calibre 可以从许多不同的地方的缓存获取Amazon数据。选择你喜欢的资源。"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1067
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1083
 msgid "Use the MOBI-ASIN for metadata search"
 msgstr "使用mobi-asin编号查找元数据"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1069
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1085
 msgid ""
 "Enable this option to search for metadata with an ASIN identifier from the "
 "MOBI file at the current country website, unless any other amazon id is "
@@ -7586,18 +7608,18 @@ msgid ""
 "store, you could get incorrect results."
 msgstr "开启此选项以在任何其他Amazon的id均不可用时，在当前国家的Amazon网站上使用MOBI文件的ASIN标识符来查找元数据。注意若此MOBI文件来自其他国家的Amazon商店，你可能会得到错误的结果。"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1075
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1091
 msgid "Prefer the Kindle edition, when available"
 msgstr "如果可用，首选Kindle版本"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1077
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1093
 msgid ""
 "When searching for a book and the search engine returns both paper and "
 "Kindle editions, always prefer the Kindle edition, instead of whatever the "
 "search engine returns at the top."
 msgstr "当搜索一本书时，搜索引擎同时返回纸质版和Kindle版，优先Kindle版本，而不是搜索引擎在顶部返回的任何版本。"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1445
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1461
 msgid "Amazon timed out. Try again later."
 msgstr "Amazon 网站访问超时，请稍候再试。"
 
@@ -9290,7 +9312,7 @@ msgstr "错误："
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/confirm_merge.py:71
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:335
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:418
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:615
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:628
 msgid "Show this confirmation again"
 msgstr "再次显示该确认"
 
@@ -9506,7 +9528,7 @@ msgstr "没有文件被拷贝到剪贴板"
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:778
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:788
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1889
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1438
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1442
 #: /__w/calibre/calibre/src/calibre/gui2/wizard/send_email.py:306
 msgid "Are you sure?"
 msgstr "你确定吗？"
@@ -9715,7 +9737,7 @@ msgstr "读取 Kindle 标注（测试功能）"
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:752
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1002
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1051
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1383
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1387
 msgid "Not supported"
 msgstr "不被支持"
 
@@ -9782,11 +9804,11 @@ msgstr "自动滚动书籍列表，在封面浏览器打开时特别有用"
 msgid "X"
 msgstr "X"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/booklist_context_menu.py:13
+#: /__w/calibre/calibre/src/calibre/gui2/actions/booklist_context_menu.py:11
 msgid "Book list header menu"
 msgstr "书籍列表头部菜单"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/booklist_context_menu.py:14
+#: /__w/calibre/calibre/src/calibre/gui2/actions/booklist_context_menu.py:12
 msgid "Show the book list header context menu"
 msgstr ""
 
@@ -10191,7 +10213,7 @@ msgstr "你的书库中的文件和数据库信息相符合。"
 #: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:534
 #: /__w/calibre/calibre/src/calibre/gui2/actions/save_to_disk.py:92
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:1623
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:200
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:198
 msgid "Not allowed"
 msgstr "不允许"
 
@@ -11932,36 +11954,37 @@ msgstr "同一出版商的书籍"
 msgid "Books with the same tags"
 msgstr "同一标签的书籍"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:51
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:40
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:697
 msgid "Sort by"
 msgstr "排序"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:67
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:56
 msgid "Reverse current sort"
 msgstr "反向当前排序"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:67
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:56
 msgid "Reverse the current sort order"
 msgstr "反向当前排序方式"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:68
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:57
 msgid "Re-apply current sort"
 msgstr "重新应用当前排序"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:68
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:57
 msgid "Re-apply the current sort"
 msgstr "重新应用当前排序"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:103
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:92
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:134
 msgid "Select sortable columns"
 msgstr "选择排序的列"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:104
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:93
 msgid "Sort on multiple columns"
 msgstr "按多列排序"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:123
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:105
 #, python-format
 msgid "%s [reverse current sort]"
 msgstr "%s [颠倒当前排序方式]"
@@ -12790,7 +12813,7 @@ msgid "Edit"
 msgstr "编辑"
 
 #: /__w/calibre/calibre/src/calibre/gui2/bars.py:460
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:459
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:461
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:294
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:326
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:267
@@ -12810,76 +12833,76 @@ msgstr "粘贴"
 msgid "Select all"
 msgstr "全选"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:99
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:101
 msgid "Search the internet for the author {}"
 msgstr "在网络上搜索作者 {}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:101
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:103
 msgid "Search the internet for this book"
 msgstr "在网上搜索这本书"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:133
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:944
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:949
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:135
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:958
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:963
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:967
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:970
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:977
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:981
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:984
 #, python-format
 msgid "Manage %s"
 msgstr "管理 %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:143
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:145
 #, python-format
 msgid "Find %s in the Tag browser"
 msgstr "在标记浏览器中查找 %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:177
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:179
 #, python-format
 msgid "Search calibre for %s"
 msgstr "在 calibre 搜索 %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:181
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:183
 #, python-format
 msgid "in category %s"
 msgstr "在%s分类中"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:187
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:189
 #, python-format
 msgid "in grouped search %s"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:192
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:194
 #, python-brace-format
 msgid "Search calibre for {val} in category {name}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:286
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:288
 #, python-format
 msgid "Delete the %s format"
 msgstr "删除 %s 格式"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:287
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:289
 #, python-format
 msgid "Save the %s format to disk"
 msgstr "保存 %s 格式到磁盘"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:288
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:290
 #, python-format
 msgid "Restore the %s format"
 msgstr "恢复 %s 格式"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:290
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:292
 #, python-format
 msgid "Set the book cover from the %s file"
 msgstr "采用该 %s 文件的封面"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:297
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:299
 #, python-format
 msgid "Compare to the %s format"
 msgstr "与 %s 格式比较"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:306
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:313
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:308
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:315
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/choose_format.py:64
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/choose_format.py:72
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:204
@@ -12888,82 +12911,82 @@ msgstr "与 %s 格式比较"
 msgid "Open %s with..."
 msgstr "%s 的打开方式"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:316
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:318
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/choose_format.py:67
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:214
 #, python-format
 msgid "Add other application for %s files..."
 msgstr "添加 %s 文件的打开方式…"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:317
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:529
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:319
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:531
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:215
 msgid "Edit Open with applications..."
 msgstr "编辑“打开方式”应用程序…"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:322
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:324
 #, python-format
 msgid "Edit %s format"
-msgstr ""
+msgstr "编辑 %s 格式"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:329
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:331
 msgid "Path to file"
 msgstr "文件的路径"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:334
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:336
 msgid "Re-index the {} format for full text searching"
 msgstr "重新索引{}格式以进行全文搜索"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:345
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:412
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:420
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:347
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:414
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:422
 msgid "The text: {}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:355
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:357
 msgid "&Author link"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:366
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:368
 #, python-brace-format
 msgid "Search {0} for {1}"
 msgstr "在 {0} 中搜索 {1}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:372
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:416
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:374
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:418
 #, python-format
 msgid "Remove %s from this book"
 msgstr "从此书中删除 %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:380
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:382
 msgid "The location of the book"
 msgstr "书籍的位置"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:391
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:393
 msgid "&Identifier"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:440
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:442
 msgid "Link to show book in calibre"
 msgstr "在 calibre 中显示这本书的链接"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:448
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:450
 msgid "Link to show books matching {} in calibre"
 msgstr "在 calibre 中显示匹配 {} 的书籍的链接"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:453
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:455
 msgid "Link to view {} format of book"
 msgstr "阅读书籍 {} 格式的链接"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:460
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:462
 msgid "All book details"
 msgstr "书籍的所有详细信息"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:462
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:464
 msgid "Selected text"
 msgstr "选中的文本"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:466
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:468
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/match_books_ui.py:72
 #: /__w/calibre/calibre/src/calibre/gui2/font_family_chooser.py:235
 #: /__w/calibre/calibre/src/calibre/gui2/layout.py:249
@@ -12984,106 +13007,106 @@ msgstr "选中的文本"
 msgid "Search"
 msgstr "搜索"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:478
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:480
 msgid "Copy link location"
 msgstr "复制链接位置"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:491
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:493
 #, python-brace-format
 msgid "Search {0} for this book"
 msgstr "在 {0} 上搜索这本书"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:501
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:503
 msgid "Open the Book details window"
 msgstr "打开书籍详情窗口"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:504
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:506
 msgid "Open the Edit metadata window"
 msgstr "打开编辑元数据窗口"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:508
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:510
 msgid "Re-index this book for full text searching"
 msgstr "重新索引这本书以进行全文搜索"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:518
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:525
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:520
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:527
 msgid "Open cover with..."
 msgstr "封面的打开方式"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:528
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:530
 msgid "Add another application to open cover with..."
 msgstr "添加其他打开封面的程序…"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:647
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:649
 #: /__w/calibre/calibre/src/calibre/gui2/widgets.py:278
 msgid "Paste cover"
 msgstr "粘贴封面"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:648
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:650
 #: /__w/calibre/calibre/src/calibre/gui2/widgets.py:279
 msgid "Copy cover"
 msgstr "复制封面"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:649
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:651
 msgid "Save cover to disk"
 msgstr "保存封面到磁盘"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:650
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:652
 msgid "Remove cover"
 msgstr "移除封面"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:651
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:653
 msgid "Generate cover from metadata"
 msgstr "使用元数据生成封面"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:655
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:657
 msgid "Trim cover"
 msgstr "剪裁封面"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:656
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:658
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1145
 msgid "Automatically trim borders"
 msgstr "自动裁剪封面"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:657
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:659
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1147
 msgid "Trim borders manually"
 msgstr "手动裁剪封面"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:659
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:661
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1148
 msgid "Undo last trim"
 msgstr "撤销最后一次裁剪"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:735
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:737
 msgid "Choose cover save location"
 msgstr "选择封面保存位置"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:736
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:738
 msgid "JPEG images"
 msgstr "JPEG 图像"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:767
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:769
 msgid ""
 "Are you sure you want to replace the cover? The existing cover will be "
 "permanently lost."
 msgstr "确定要替换封面吗？当前封面将会永久消失。"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:774
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:776
 msgid "Are you sure you want to delete the cover permanently?"
 msgstr "你确认要永久删除封面吗？"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:790
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:792
 msgid "Double click to open the Book details window"
 msgstr "双击打开书籍详细信息窗口"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:791
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:793
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/delete_matching_from_device.py:84
 #: /__w/calibre/calibre/src/calibre/library/field_metadata.py:228
 msgid "Path"
 msgstr "路径"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:792
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:794
 #: /__w/calibre/calibre/src/calibre/gui2/convert/metadata.py:126
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/book_info.py:329
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1295
@@ -13091,15 +13114,15 @@ msgstr "路径"
 msgid "Cover size: %(width)d x %(height)d pixels"
 msgstr "封面大小：%(width)d x %(height)d 像素"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:836
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:838
 msgid "Edit identifiers for this book"
 msgstr "编辑书籍的标识码"
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:841
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:843
 msgid "Identifier &URL"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:852
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:854
 msgid "Are you sure you want to delete <b>{}</b> from the book?"
 msgstr "你确定要从书籍中删除<b>{}</b>吗？"
 
@@ -13195,7 +13218,7 @@ msgstr "输出"
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins_ui.py:99
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/save_template_ui.py:52
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/saving_ui.py:66
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:220
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:223
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/sending_ui.py:60
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions_ui.py:132
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar_ui.py:117
@@ -13375,7 +13398,7 @@ msgstr "正确"
 #: /__w/calibre/calibre/src/calibre/gui2/tts/macos_config.py:30
 #: /__w/calibre/calibre/src/calibre/gui2/tts/windows_config.py:26
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:239
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:802
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:806
 msgid "Name"
 msgstr "名称"
 
@@ -13420,7 +13443,7 @@ msgstr "删除当前预设"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:704
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:288
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions_ui.py:153
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:496
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:521
 #: /__w/calibre/calibre/src/calibre/gui2/widgets2.py:142
 msgid "Delete"
 msgstr "删除"
@@ -13550,7 +13573,7 @@ msgstr "重设为默认值"
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/columns_ui.py:87
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/columns_ui.py:89
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/columns_ui.py:91
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:244
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:252
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar_ui.py:122
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar_ui.py:124
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar_ui.py:127
@@ -13830,7 +13853,7 @@ msgstr "浏览(&B)"
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:294
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:60
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1009
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1334
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1338
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:93
 #: /__w/calibre/calibre/src/calibre/gui2/win_file_dialogs.py:279
 msgid "Images"
@@ -15208,7 +15231,7 @@ msgid "Load a list of expressions from a previously saved file"
 msgstr "从先前保存的文件中加载表达式列表"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/search_and_replace_ui.py:150
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:546
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:549
 #: /__w/calibre/calibre/src/calibre/gui2/css_transform_rules.py:304
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/multisort.py:79
 #: /__w/calibre/calibre/src/calibre/gui2/tag_mapper.py:519
@@ -15220,13 +15243,13 @@ msgid "Save this list of expressions so that you can re-use it easily"
 msgstr "保存当前表达式列表以便你能轻松地重新使用"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/search_and_replace_ui.py:152
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:543
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:546
 #: /__w/calibre/calibre/src/calibre/gui2/css_transform_rules.py:300
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/multisort.py:74
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:356
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:251
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:259
 #: /__w/calibre/calibre/src/calibre/gui2/tag_mapper.py:516
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1428
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1432
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:437
 msgid "&Save"
 msgstr "保存(&S)"
@@ -15251,7 +15274,7 @@ msgid ""
 msgstr "<p>使用<i>正则表达式</i>进行查找和替换。 如果之前未使用过正则表达式，可查看<a href=\"%s\">正则表达式教程</a>以获取相关信息 。点击向导按钮，可在当前输入文档上测试表达式。 如果测试结果令你满意，点击添加按钮将表达式加入列表。"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/single.py:87
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:541
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:544
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/book_info.py:92
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:233
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:336
@@ -15789,91 +15812,91 @@ msgstr "更改页脚模板(&f)"
 msgid "The footer template"
 msgstr "页脚模板"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:401
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:404
 msgid "My Color Scheme"
 msgstr "我的配色方案"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:413
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:416
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1017
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:938
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1154
 msgid "Cannot edit"
 msgstr "无法编辑"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:414
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:417
 msgid "Cannot edit a builtin color scheme. Create a new color scheme instead."
 msgstr "无法编辑内置配色方案，你可以重新建立一个。"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:431
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:434
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/texture_chooser.py:145
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar.py:341
 msgid "Cannot remove"
 msgstr "无法移除"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:432
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:435
 msgid "Cannot remove a builtin color scheme."
 msgstr "无法移除内置配色方案"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:484
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:487
 msgid "A sample book"
 msgstr "书籍样本"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:484
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:487
 msgid "Author One"
 msgstr "第一作者"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:484
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:487
 msgid "Author Two"
 msgstr "第二作者"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:485
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:488
 msgid "A series of samples"
 msgstr "一些样本"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:487
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:490
 msgid "Tag One"
 msgstr "标签甲"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:487
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:490
 msgid "Tag Two"
 msgstr "标签乙"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:488
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:491
 msgid "Some publisher"
 msgstr "某些出版商"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:530
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:533
 msgid "Cover generation settings"
 msgstr "封面生成设置"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:535
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:538
 msgid "Save these settings as the &defaults for future use"
 msgstr "保存为默认设置(&d)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:545
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:548
 msgid "Save the current cover generation settings for later re-use"
 msgstr "保存当前封面生成设置以供以后重复使用"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:550
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:553
 msgid "Load previously saved cover generation settings"
 msgstr "加载以前保存的封面生成设置"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:552
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:555
 msgid ""
 "Save the current settings as the settings to use always instead of just this"
 " time. Remember that for styles and colors the actual style or color used is"
 " chosen at random from the list of checked styles/colors."
 msgstr "将当前设置保存为始终使用的设置，而不仅是本次使用。请记住，对于样式和颜色，使用的实际样式或颜色是从选中的样式/颜色列表中随机选择的。"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:565
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:568
 msgid "My cover style"
 msgstr "我的封面样式"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:565
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:568
 msgid "Name for these settings"
 msgstr "这些设置的名称"
 
-#: /__w/calibre/calibre/src/calibre/gui2/covers.py:565
+#: /__w/calibre/calibre/src/calibre/gui2/covers.py:568
 msgid "Theme name:"
 msgstr "主题名："
 
@@ -16024,14 +16047,14 @@ msgid "Choose file to import rules from"
 msgstr "选择要导入的规则文件"
 
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:56
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:605
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:604
 msgid " index"
 msgstr " 索引"
 
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:93
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:364
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:932
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1140
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:363
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:931
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1139
 #, python-brace-format
 msgid "Clear {0}"
 msgstr "清除 {0}"
@@ -16051,10 +16074,10 @@ msgstr "清除 {}"
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:215
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:256
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:323
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:353
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1022
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1072
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1153
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:352
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1021
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1071
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1152
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:533
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:542
 #: /__w/calibre/calibre/src/calibre/gui2/library/delegates.py:563
@@ -16064,63 +16087,63 @@ msgstr "清除 {}"
 msgid "Undefined"
 msgstr "未定义"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:357
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1136
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:356
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1135
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:245
 msgid "Today"
 msgstr "今天"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:450
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:449
 msgid "Open Item editor. If CTRL or SHIFT is pressed, open Manage items"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:563
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1501
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:562
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1500
 msgid "Values changed"
 msgstr "值已改变"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:564
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:563
 msgid ""
 "You have changed the values. In order to use this editor, you must either "
 "discard or apply these changes. Apply changes?"
 msgstr "你已经修改了值。为了使用此编辑器，你必须放弃或应用这些更改。应用更改吗？"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:696
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:695
 #, python-brace-format
 msgid ""
 "The enumeration \"{0}\" contains an invalid value that will be set to the "
 "default"
 msgstr "\"{0}\" 的枚举值中包含无效的值，将使用默认值替换"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:939
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:938
 #, python-brace-format
 msgid "Set {0} to No"
 msgstr "设置  {0} 为否"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:944
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:943
 #, python-brace-format
 msgid "Set {0} to Yes"
 msgstr "设置 {0} 为是"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:948
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1379
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:947
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1378
 msgid "Open Item editor"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:975
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:974
 msgid "Apply changes"
 msgstr "应用改变"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1193
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1192
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:201
 msgid "Clear series"
 msgstr "清除丛书名"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1196
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1195
 msgid "Automatically number books"
 msgstr "为书籍自动编号"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1198
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1197
 msgid ""
 "If not checked, the series number for the books will be set to 1. If "
 "checked, selected books will be automatically numbered, in the order you "
@@ -16128,41 +16151,41 @@ msgid ""
 "series number 1 and Book B series number 2."
 msgstr "如果未勾选，图书的序列号将设置为1。如果勾选，选定的图书将按您选择的排列顺序自动编号。所以，如果你选择了图书A，然后Book B，书A将有序列号1和B系列数字2。"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1205
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1204
 msgid "Force numbers to start with "
 msgstr "强制起始编号为 "
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1207
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1206
 msgid ""
 "Series will normally be renumbered from the highest number in the database "
 "for that series. Checking this box will tell calibre to start numbering from"
 " the value in the box"
 msgstr "丛书系列通常会从该系列数据库中最高的数字重新编号。选中此选项将告诉 calibre 从选框中的值开始编号。"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1222
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1221
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:649
 msgid ""
 "The amount by which to increment the series number for successive books. "
 "Only applicable when using force series numbers."
 msgstr "连续书籍编号的递增数值。仅在使用强制编号时生效。"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1329
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1328
 #, python-brace-format
 msgid ""
 "The enumeration \"{0}\" contains invalid values that will not appear in the "
 "list"
 msgstr "\"{0}\" 的枚举值中包含无效的值，这些无效值将不会出现在列表中"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1382
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1381
 msgid "Remove all tags"
 msgstr "移除所有标签"
 
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1411
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1412
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1413
 msgid "tags to remove"
 msgstr "要移除的标签"
 
-#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1502
+#: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1501
 msgid ""
 "You have entered values. In order to use this editor you must first discard "
 "them. Discard the values?"
@@ -16273,7 +16296,7 @@ msgstr "检测 <b>%s</b>。你要 calibre 来管理它吗？"
 
 #: /__w/calibre/calibre/src/calibre/gui2/device.py:965
 #: /__w/calibre/calibre/src/calibre/gui2/device.py:1592
-#: /__w/calibre/calibre/src/calibre/gui2/email.py:496
+#: /__w/calibre/calibre/src/calibre/gui2/email.py:500
 msgid "No suitable formats"
 msgstr "无合适格式"
 
@@ -17608,13 +17631,13 @@ msgstr "%(curr)s (原始为： %(initial)s)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/device_category_editor.py:87
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:530
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1310
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1321
 msgid "Item is blank"
 msgstr "项目为空"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/device_category_editor.py:88
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:531
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1311
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1322
 msgid "An item cannot be set to nothing. Delete it instead."
 msgstr "项目不能设置为什么也没有。请删除之。"
 
@@ -17775,7 +17798,7 @@ msgid "Copy to author"
 msgstr "复制到“作者”"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:493
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1361
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1372
 msgid "Invalid author name"
 msgstr "无效的作者名"
 
@@ -17900,7 +17923,7 @@ msgstr "颜色规格无效"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/enum_values_edit.py:173
 msgid "Either all values or no values must have colors"
-msgstr ""
+msgstr "所有值或没有值都必须有颜色"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/exim.py:48
 msgid "Previous location: "
@@ -19432,7 +19455,7 @@ msgstr "<p>当书库视图上的选择发生更改时，选择以防止快速查
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/check_links.py:86
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:247
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:280
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1425
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1429
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:984
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/toc.py:150
 msgid "&Refresh"
@@ -19550,7 +19573,7 @@ msgstr "无效的保存搜索"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/saved_search_editor.py:96
 #: /__w/calibre/calibre/src/calibre/gui2/search_box.py:442
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:977
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:991
 msgid "Manage Saved searches"
 msgstr "管理已存搜索数据"
 
@@ -21105,32 +21128,38 @@ msgstr "由"
 msgid "in the %s format."
 msgstr "使用 %s 格式."
 
-#: /__w/calibre/calibre/src/calibre/gui2/email.py:443
+#: /__w/calibre/calibre/src/calibre/gui2/email.py:446
+#: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:640
+#, python-brace-format
+msgid "{series_index} of {series}"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/email.py:447
 msgid "About this book:"
 msgstr "关于本书："
 
-#: /__w/calibre/calibre/src/calibre/gui2/email.py:459
+#: /__w/calibre/calibre/src/calibre/gui2/email.py:463
 msgid "Sending email to"
 msgstr "正在发送邮件至"
 
-#: /__w/calibre/calibre/src/calibre/gui2/email.py:490
+#: /__w/calibre/calibre/src/calibre/gui2/email.py:494
 #, python-format
 msgid "Auto convert the following books to %s before sending via email?"
 msgstr "你要在发送邮件前自动将下列书籍转换为 %s 吗？"
 
-#: /__w/calibre/calibre/src/calibre/gui2/email.py:497
+#: /__w/calibre/calibre/src/calibre/gui2/email.py:501
 msgid "Could not email the following books as no suitable formats were found:"
 msgstr "由于无法找到合适的文件格式无法通过电子邮件发送下列书籍:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/email.py:503
+#: /__w/calibre/calibre/src/calibre/gui2/email.py:507
 msgid "Failed to email book"
 msgstr "无法通过电子邮件发送书籍"
 
-#: /__w/calibre/calibre/src/calibre/gui2/email.py:506
+#: /__w/calibre/calibre/src/calibre/gui2/email.py:510
 msgid "sent"
 msgstr "已发送"
 
-#: /__w/calibre/calibre/src/calibre/gui2/email.py:537
+#: /__w/calibre/calibre/src/calibre/gui2/email.py:541
 msgid "Sent news to"
 msgstr "将新闻发送到"
 
@@ -21452,7 +21481,7 @@ msgstr "未知书籍"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:119
 msgid "Unknown author"
-msgstr ""
+msgstr "未知作者"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:411
 msgid "Invalid search query"
@@ -21477,7 +21506,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:683
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:376
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:256
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:202
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:227
 msgid "Expand all"
 msgstr "全部展开"
 
@@ -21486,8 +21515,8 @@ msgstr "全部展开"
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:377
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:257
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:679
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1081
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:203
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1124
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:228
 msgid "Collapse all"
 msgstr "全部收起"
 
@@ -21535,11 +21564,6 @@ msgid ""
 "This book has been scheduled for re-indexing, which typically takes a few "
 "seconds, if no other books are being re-indexed. Once indexing is complete, "
 "you can re-run the search to see updated results."
-msgstr ""
-
-#: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:640
-#, python-brace-format
-msgid "{series_index} of {series}"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:643
@@ -22298,7 +22322,7 @@ msgstr "按名称查找键盘快捷键"
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search.py:390
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1042
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1076
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:527
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:552
 msgid "No matches"
 msgstr "无匹配项"
 
@@ -22438,7 +22462,7 @@ msgid "File for exports"
 msgstr "导出的文件"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:300
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:146
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:133
 msgid "Unknown chapter"
 msgstr ""
 
@@ -22453,8 +22477,8 @@ msgid "Show in calibre"
 msgstr "在 calibre中显示"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:368
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:404
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:437
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:429
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:462
 msgid "Edit notes"
 msgstr "编辑注释"
 
@@ -22646,7 +22670,7 @@ msgid "Click in this column and press Q to Quickview books with the same \"%s\""
 msgstr "单击此列并按下 Q 键来使用相同的 %s 快速阅读书籍"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1117
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:468
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:478
 #: /__w/calibre/calibre/src/calibre/srv/metadata.py:239
 msgid "Description:"
 msgstr "描述："
@@ -22801,12 +22825,12 @@ msgid "Sort on %s"
 msgstr "按%s排序"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:550
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1086
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1090
 msgid "Ascending"
 msgstr "升序"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:551
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1086
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1090
 msgid "Descending"
 msgstr "降序"
 
@@ -22866,7 +22890,7 @@ msgid "Quickview column %s"
 msgstr "快速查看%s栏"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:593
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:957
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:971
 #, python-format
 msgid "Edit permissible values for %s"
 msgstr "编辑可接受的数值 %s"
@@ -24007,7 +24031,7 @@ msgid "Choose a program"
 msgstr "选择程序"
 
 #: /__w/calibre/calibre/src/calibre/gui2/open_with.py:295
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1420
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1424
 msgid "Gathering data, please wait..."
 msgstr "正在获取数据，请稍候…"
 
@@ -24041,7 +24065,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/open_with.py:424
 #: /__w/calibre/calibre/src/calibre/gui2/open_with.py:444
 #: /__w/calibre/calibre/src/calibre/gui2/open_with.py:458
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:368
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:370
 msgid "No selection"
 msgstr "未选择"
 
@@ -25908,7 +25932,7 @@ msgid "If there is enough room"
 msgstr "仅当空间足够时"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:648
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1024
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1067
 msgid "By first letter"
 msgstr "首字母"
 
@@ -26256,7 +26280,7 @@ msgid ""
 msgstr "calibre 使用两种缓存来提高在窗格视图中渲染封面的性能：硬盘上存储缩略图的缓存以及内存中的缓存，用来确保平滑的渲染。为获得最佳效果，确保内存缓存较小而磁盘缓存较大，除非你的计算机上有很多空闲内存，而不介意作为内存缓存使用。"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:876
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1022
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1065
 msgid "Disable"
 msgstr "禁用"
 
@@ -26388,7 +26412,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1030
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1047
 msgid "Reset list"
-msgstr ""
+msgstr "重置列表"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:906
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:945
@@ -26406,7 +26430,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1014
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1034
 msgid "Import list"
-msgstr ""
+msgstr "导入列表"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:913
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:952
@@ -26421,7 +26445,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1018
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1038
 msgid "Export list"
-msgstr ""
+msgstr "导出列表"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:917
 msgid ""
@@ -26439,19 +26463,19 @@ msgstr "编辑元数据时按默认顺序显示所有列(&A)"
 msgid ""
 "If checked then labels wider than the label width\n"
 "will be elided, otherwise they will be word wrapped."
-msgstr ""
+msgstr "选此时超宽的标签名将被省略号替代\n否则他将被文字环绕."
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:924
 msgid "&Elide labels when editing custom columns"
-msgstr ""
+msgstr "编辑自定义列时可用省略号显示标签(&E)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:925
 msgid "Elision point:"
-msgstr ""
+msgstr "省略号显示在:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:926
 msgid "Choose where in the label to put the..."
-msgstr ""
+msgstr "选择将...显示在哪边"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:927
 msgid ""
@@ -26462,7 +26486,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:930
 msgid "&Tab key doesn't edit column templates in the book list"
-msgstr ""
+msgstr "&Tab键不编辑图书列表中的列模板"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:931
 msgid "Use &two columns for custom columns in the Default layout"
@@ -26470,7 +26494,7 @@ msgstr "在默认布局中为自定义列使用两列（&T）"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:932
 msgid "&Bulk edit custom column label length:"
-msgstr ""
+msgstr "批量编辑界面的自定义列标签长度（&B）："
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:933
 msgid ""
@@ -26481,11 +26505,11 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:934
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:937
 msgid " chars"
-msgstr ""
+msgstr "字符"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:935
 msgid "&Single edit custom column label length:"
-msgstr ""
+msgstr "单独编辑界面的自定义列标签长度（&S）："
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:936
 msgid ""
@@ -26602,7 +26626,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:988
 msgid "Di&splay"
-msgstr ""
+msgstr "显示(&S)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:989
 msgid "&Category partitioning method:"
@@ -26670,7 +26694,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1019
 msgid "&Partitioning and collapsing"
-msgstr ""
+msgstr "分区和折叠(&P)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1020
 msgid ""
@@ -26702,7 +26726,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1048
 msgid "&Hierarchy and searching"
-msgstr ""
+msgstr "层次结构和搜索（&H）"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1049
 msgid "&Tag browser"
@@ -26759,7 +26783,7 @@ msgstr "副标题栏目(&L)："
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1065
 #, python-format
 msgid "You can press the %s key to toggle full screen mode."
-msgstr ""
+msgstr "按 %s 键切换全屏显示模式。"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1066
 msgid "Show ne&xt cover during auto scroll after:"
@@ -26855,7 +26879,7 @@ msgid ""
 msgstr "刚才所做的修改使 calibre 必须立即重启。重启之前不能再修改更多选项了。"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/metadata_sources.py:52
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:538
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:542
 msgid "Source"
 msgstr "数据源"
 
@@ -27399,14 +27423,14 @@ msgstr "在独立的 &OPF 文件中保存元数据"
 msgid "&Show files in the file browser after saving to disk"
 msgstr "保存到磁盘后在文件浏览器中显示文件(&S)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:41
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:44
 #, python-brace-format
 msgid ""
 "Searching will ignore accents on characters as well as punctuation and spaces.\n"
 "So for example: {0} will match {1}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:44
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:47
 msgid ""
 "<b>Grouped search terms</b> are search names that permit a query to "
 "automatically search across more than one column. For example, if you create"
@@ -27431,77 +27455,95 @@ msgid ""
 " have hierarchical categories (categories that contain categories)."
 msgstr "<b>分组搜索项</b>是允许查询在多个列上自动搜索的搜索名称。例如，如果你使用值系列<code>series, #myseries, #myseries2</code>创建分组搜索项<code>allseries</code>，然后查询<code>allseries:adhoc</code>将发现'adhoc'在列中的任何一个系列<code>series</code>, <code>#myseries</code>,  <code>#myseries2</code>中。<p> 在下拉框中输入分组搜索项的名称，在值框中输入要搜索列的列表，然后按保存按钮。 <p>注意：搜索条件被强制为小写； <code>MySearch</code> 和 <code>mysearch</code> 是相同的术语。<p>你可以将你的分组搜索项显示为标签浏览器中的用户类别。只需将分组搜索项名称从选框中添加到生成用户类别。可以添加逗号分隔的多个术语。新用户类别将自动填充到在分组搜索项中包含的类别中的所有项目中。自动用户类别允许你轻松地查看分组搜索项中包含的列中的所有类别项。使用上述<code>allseries</code>示例，自动生成的用户类别将包含系列<code>#myseries</code>和<code>#myseries2</code>中提到的所有<code>系列</code>。这对于检查副本、查找哪个列包含特定项或具有分层类别（包含类别的类别）非常有用。"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:79
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:82
 msgid "Enter new or select existing name"
 msgstr "输入新的或选择现有的名称"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:81
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:84
 msgid "Enter list of column lookup names to search"
 msgstr "输入查找列名称列表以便查找"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:84
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:87
 msgid "Match all"
 msgstr "匹配所有"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:84
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:87
 msgid "Match any"
 msgstr "匹配任一"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:146
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:156
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:160
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:166
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:179
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:236
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:157
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:170
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:174
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:180
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:192
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:244
 msgid "Grouped search terms"
 msgstr "组合查找项"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:147
-msgid "The search term cannot be blank"
-msgstr "组合查找项名称不能为空"
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:158
+msgid "The search term name cannot be blank"
+msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:157
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:161
+msgid "Invalid grouped search name"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:162
+msgid "The grouped search term name cannot contain spaces"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:171
 msgid "That name is already used for a column or grouped search term"
 msgstr "该名称已经被栏目名称或其它组合查找项名称占用"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:161
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:175
 msgid "That name is already used for User category"
 msgstr "该名称已用于用户类别"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:167
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:181
 msgid "The value box cannot be empty"
 msgstr "组合查找项的列值不能为空"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:180
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:193
 msgid "The empty grouped search term cannot be deleted"
 msgstr "不能删除空的组合查找项"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:222
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:235
 msgid "Incompatible options"
 msgstr "不兼容的选项"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:223
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:236
 msgid ""
 "The option to have un-accented characters match accented characters has no "
 "effect if you also turn on case-sensitive searching. So only turn on one of "
 "those options"
 msgstr "如果你还打开了区分大小写的搜索，则使非重音字符与重音字符匹配的选项没有效果。所以只需打开其中一个选项"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:221
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:242
+msgid "Missing grouped search terms"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:243
+msgid ""
+"The option \"Make user categories from\" contains names that aren't grouped "
+"search terms: {}"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:224
 msgid ""
 "Clear search histories from all over calibre. Including the book list, "
 "E-book viewer, fetch news dialog, etc."
 msgstr "清除 calibre 中的搜索历史记录。包括在书籍列表、电子书阅读器和获取新闻对话框等处的记录。"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:222
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:225
 msgid "Clear search &histories"
 msgstr "清除搜索历史记录(&H)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:223
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:226
 msgid "What to search by default"
 msgstr "默认搜索列"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:224
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:227
 msgid ""
 "When you enter a search term without a prefix, by default calibre will "
 "search all metadata for matches. For example, entering, \"asimov\" will "
@@ -27509,67 +27551,79 @@ msgid ""
 "options if you would like to change this behavior."
 msgstr "当你输入一个不包含前缀的搜索关键字，默认情况下 calibre 会搜索所有的元数据字段。比如，输入 \"asimov\" 不会仅仅搜索作者字段，并且还同时会搜索书名、标签、丛书、描述等字段。通过这里的选项可以改变这个行为。"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:225
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:228
 msgid "&Limit the searched metadata"
 msgstr "限制要搜索的元数据(&L)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:226
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:229
 msgid "&Columns that non-prefixed searches are limited to:"
 msgstr "无前缀搜索关键字要搜索的列(&C)："
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:227
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:230
 msgid ""
 "Note that this option affects all searches, including saved searches and "
 "restrictions. Therefore, if you use this option, it is best to ensure that "
 "you always use prefixes in your saved searches. For example, use "
 "\"series:Foundation\" rather than just \"Foundation\" in a saved search."
-msgstr ""
+msgstr "请注意，此选项会影响所有的搜索，包括保存的搜索和限制。因此，如果你使用这个选项，请确保你在保存的搜索中总是使用前缀。例如，在保存的搜索中使用 \"series:基地\"，而不仅仅是 \"基地\"。"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:228
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:231
 msgid "Search as you &type"
-msgstr "输入的同时进行查找(&S)"
+msgstr "输入的同时搜索(&S)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:229
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:232
 msgid "Case &sensitive searching"
 msgstr "匹配大小写搜索(&S)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:230
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:233
 msgid ""
 "&Highlight search results instead of restricting the book list to the "
 "results"
 msgstr "高亮显示查找结果，不要采用过滤书籍列表的方式显示查找结果(&H)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:231
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:234
 msgid ""
 "<p>This option will cause a small button to appear next to the Search bar. "
 "Clicking the button will toggle between showing only the search results and "
 "showing all books with the search results highlighted."
 msgstr "<p>此选项将导致一个小按钮出现在搜索栏旁边。点击按钮将只显示搜索结果和显示所有搜索结果高亮的书籍。"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:232
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:235
 msgid ""
 "Show a &quick toggle button to switch between highlighting and restricting "
 "results next to the Search bar"
 msgstr "显示快速切换按钮以切换高亮显示和限制搜索栏旁边的结果(&Q)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:233
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:236
 msgid ""
 "Unaccented characters match &accented characters and punctuation is ignored"
-msgstr ""
+msgstr "未加变音符号的字符与加变音符号的字符匹配并忽略标点符号&A"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:234
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:237
 msgid "Show text next to buttons in the search bar"
+msgstr "在搜索栏中显示按钮旁边的文字"
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:238
+msgid "Show saved searches as a hierarchy"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:235
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:239
+msgid ""
+"<p>Hierarchical items are separated by periods.\n"
+"                  Changing this box will also change the 'Saved Searches' box\n"
+"                  in Preferences / Look & feel / Tag browser /\n"
+"                  Hierarchy and searching</p>"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:243
 msgid "Genera&l"
 msgstr "常规(&L)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:237
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:245
 msgid "&Names:"
 msgstr "名称(&N)："
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:238
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:246
 msgid ""
 "Contains the names of the currently-defined group search terms.\n"
 "Create a new name by entering it into the empty box, then\n"
@@ -27578,46 +27632,46 @@ msgid ""
 "a search term by changing the value box then pressing Save."
 msgstr "<p>包含已定义的组合查找项名称。在空白框中输入一个新的名称并保存即可创建一个新项；选择一个现有项改变它的名称并保存即可重命名现有项。改变组合查找项的值并保存就可以改变已经定义的组合查找项。"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:243
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:251
 msgid "Delete the current search term"
 msgstr "删除当前搜索项"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:245
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:253
 msgid "&Value:"
 msgstr "值(&V):"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:246
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:254
 msgid ""
 "Enter a comma-separated list of lookup names of the columns\n"
 "to include in the grouped search term"
 msgstr "输入逗号分隔的列查找名称列表，以使包含在分组搜索项中"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:248
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:256
 msgid ""
 "Save the current search term. You can rename a search term by\n"
 "changing the name then pressing Save. You can change the value\n"
 "of a search term by changing the value box then pressing Save."
 msgstr "保存当前的组合查找项。你可以通过改变名称并保存来重命名组合查找项，也可以改变组合查找项的值并保存来改变已经定义的组合查找项。"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:252
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:260
 msgid "Make &user categories from:"
 msgstr "创建自定义分类(&U)："
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:253
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:261
 msgid ""
 "Enter the names of any grouped search terms you wish\n"
 "to be shown as user categories"
 msgstr "输入你希望创建成为自定义分类的组合查找项名称"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:255
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:263
 msgid "&Grouped searches"
 msgstr "分组搜索(&G)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:256
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:264
 msgid "What to search when searching similar books"
 msgstr "搜索类似的书籍时，搜索什么"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:257
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:265
 msgid ""
 "<p>When you search for similar books by right clicking the\n"
 "         book and selecting \"Similar books\",\n"
@@ -27626,23 +27680,23 @@ msgid ""
 "         search multiple columns at once.</p>"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:262
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:270
 msgid "S&imilar authors: "
 msgstr "类似作者(&I):"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:263
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:271
 msgid "Si&milar series: "
 msgstr "类似系列(&M):"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:264
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:272
 msgid "Similar &tags: "
 msgstr "类似标签(&T):"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:265
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:273
 msgid "Simi&lar publishers: "
 msgstr "类似出版商(&L):"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:266
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:274
 msgid "&Similar books"
 msgstr "类似书籍(&S)"
 
@@ -28743,12 +28797,12 @@ msgid ""
 msgstr "这将设置如何进行搜索操作。当你进行搜索时，只会显示匹配的书籍，所有找到的匹配书籍将以高亮的方进行显示。你确定继续吗？"
 
 #: /__w/calibre/calibre/src/calibre/gui2/search_box.py:385
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:300
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:496
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:616
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:764
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:856
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1062
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:304
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:500
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:620
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:768
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:860
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1066
 msgid "Filter"
 msgstr "过滤器"
 
@@ -28760,7 +28814,7 @@ msgstr "添加保存搜索"
 msgid "Get Saved search expression"
 msgstr "获取保存搜索的表达式"
 
-#: /__w/calibre/calibre/src/calibre/gui2/search_box.py:502
+#: /__w/calibre/calibre/src/calibre/gui2/search_box.py:508
 msgid "Current search is not a saved search"
 msgstr "当前搜索不是一个保存搜索"
 
@@ -29443,90 +29497,94 @@ msgid ""
 "library"
 msgstr "{0}的下载已完成，该书已添加到您的calibre书库中"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:227
-#, python-format
-msgid "Average rating for books in this category: %.1f"
-msgstr "此分类中书籍的平均评分：%.1f"
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:226
+msgid "{} is not a saved search"
+msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:229
-msgid "Books in this category are unrated"
-msgstr "在此分类的书籍未评分"
-
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:231
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:228
 #: /__w/calibre/calibre/src/calibre/srv/manage_users_cli.py:354
 msgid "Search expression:"
 msgstr "搜索表达式:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:233
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:236
+#, python-format
+msgid "Average rating for books in this category: %.1f"
+msgstr "此分类中书籍的平均评分：%.1f"
+
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:238
+msgid "Books in this category are unrated"
+msgstr "在此分类的书籍未评分"
+
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:240
 #, python-format
 msgid "Number of books: %s"
 msgstr "书籍数量：%s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:314
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:322
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:139
 msgid "Rename in Virtual library"
 msgstr "虚拟书库中重命名"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:315
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:323
 msgid ""
 "Do you want this rename to apply only to books in the current Virtual "
 "library?"
 msgstr "你想要仅重命名当前虚拟书库的图书吗？"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:317
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:325
 msgid "Yes, apply only in VL"
 msgstr "是的，只应用于虚拟书库"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:318
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:326
 msgid "No, apply in entire library"
 msgstr "不，应用于整个书库"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:458
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:468
 #: /__w/calibre/calibre/src/calibre/srv/metadata.py:232
 #, python-brace-format
 msgid "The grouped search term name is \"{0}\""
 msgstr "分组搜索条件名是 \"{0}\""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:469
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:479
 #: /__w/calibre/calibre/src/calibre/srv/metadata.py:240
 #, python-brace-format
 msgid "The lookup/search name is \"{0}\"{1}"
 msgstr "搜索字串前缀为 \"{0}\"{1}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1100
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1111
 msgid "Changing the authors for several books can take a while. Are you sure?"
 msgstr "改变多本书的作者需要花费一些时间。你确定要这样做吗？"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1105
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1116
 msgid ""
 "Changing the metadata for that many books can take a while. Are you sure?"
 msgstr "更新这么多本书的元数据需要花费一些时间。你确定要这样做吗？"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1315
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1339
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1347
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1326
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1350
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1358
 msgid "Rename User category"
 msgstr "重命名用户类别"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1316
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1327
 msgid "You cannot use periods in the name when renaming User categories"
 msgstr "重命名用户类别时不能在名称中使用句点"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1340
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1348
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1351
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1359
 #, python-format
 msgid "The name %s is already used"
 msgstr "%s 这个名称已经被占用"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1362
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1373
 msgid "Author names cannot contain & characters."
 msgstr "作者名中不能包含&符号"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1369
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1380
 msgid "Duplicate search name"
 msgstr "复制搜索名称"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1369
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1380
 #, python-format
 msgid "The saved search name %s is already used."
 msgstr "已存搜索名 %s 被占用。"
@@ -29770,195 +29828,216 @@ msgstr "是的，应用于整个书库"
 msgid "No, apply only in Virtual library"
 msgstr "不，只应用于虚拟书库"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:515
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:528
 #, python-format
 msgid "Change icon for: %s"
 msgstr "更改%s图标"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:612
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:625
 msgid "Delete Saved search"
 msgstr "删除已保存搜索"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:613
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:626
 msgid "Delete the saved search: {}?"
 msgstr "删除已经保存的搜索: {}？"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:710
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:724
 msgid "Show category"
 msgstr "显示分类"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:720
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:734
 msgid "All categories"
 msgstr "所有类别"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:756
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:770
 #, python-format
 msgid "Rename %s in Virtual library"
 msgstr "虚拟书库中重命名%s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:760
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:823
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:889
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:774
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:837
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:903
 #, python-format
 msgid "Rename %s"
 msgstr "重命名 %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:767
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:781
 #, python-format
 msgid "Delete %s in Virtual library"
 msgstr "虚拟书库中删除%s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:772
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:839
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:786
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:853
 #, python-format
 msgid "Delete %s"
 msgstr "删除%s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:777
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:791
 #, python-format
 msgid "Edit sort for %s"
 msgstr "调整%s排序方式"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:780
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:794
 #, python-format
 msgid "Edit link for %s"
 msgstr "修改%s的链接"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:786
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:800
 #, python-format
 msgid "Add %s to User category"
 msgstr "添加 %s 到用户类别"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:802
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:816
 #, python-format
 msgid "Children of %s"
 msgstr "%s 的子项"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:813
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:827
 #, python-format
 msgid "Add/remove %s to selected books"
 msgstr "向被选中的书籍添加/删除 %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:815
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:829
 #, python-format
 msgid "Add %s to selected books"
 msgstr "添加 %s 到选中的书籍"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:818
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:832
 #, python-format
 msgid "Remove %s from selected books"
 msgstr "从选中的书籍移除 %s "
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:827
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:841
 #, python-format
 msgid "Delete Saved search %s"
 msgstr "删除已保存的搜索 %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:833
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:847
 #, python-format
 msgid "Delete %s in Virtual Library"
 msgstr "从虚拟书库中删除 %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:846
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:860
 #, python-format
 msgid "Remove %(item)s from category %(cat)s"
 msgstr "移除%(cat)s分类的%(item)s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:854
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:905
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:921
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:868
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:919
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:935
 msgid "Search for"
 msgstr "搜索"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:865
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:879
 #, python-format
 msgid "%s and its children"
 msgstr "%s 和其子项目"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:870
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:913
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:884
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:927
 #, python-format
 msgid "Everything but %s"
 msgstr "所有除了 %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:876
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:890
 #, python-format
 msgid "Everything but %s and its children"
 msgstr "所有除了 %s 和其子项目"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:882
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:896
 msgid "The saved search expression"
 msgstr "已经保存搜索的表达式"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:893
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:907
 #, python-format
 msgid "Add sub-category to %s"
 msgstr "添加子分类到%s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:897
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:911
 #, python-format
 msgid "Delete User category %s"
 msgstr "删除用户分类 %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:927
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:941
 #, python-format
 msgid "Books in category %s"
 msgstr "分类中的书籍 %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:933
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:947
 #, python-format
 msgid "Books not in category %s"
 msgstr "不在分类中的书籍 %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:981
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:995
 msgid "Remove the {} format from selected books"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:990
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1004
 #, python-format
 msgid "Hide category %s"
 msgstr "隐藏%s分类"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:997
-msgid "Change category icon"
-msgstr "更改分类图标"
-
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:999
-msgid "Restore default icon"
-msgstr "恢复默认图标"
-
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1007
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1012
+msgid "Change {} category icon"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1016
+msgid "Restore {} category default icon"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1021
+msgid "Change Saved searches folder icon"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1023
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1027
+msgid "Saved searches folder"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1025
+msgid "Restore Saved searches folder default icon"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1035
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1040
 msgid "Manage User categories"
 msgstr "管理用户分类数据"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1020
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1054
+msgid "Sub-categorize {}"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1058
+msgid "Don't sub-categorize {}"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1063
 msgid "Change sub-categorization scheme"
 msgstr "编辑子分类模式"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1026
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1069
 msgid "Partition"
 msgstr "分区"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1041
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1084
 msgid "First letter is usable only when sorting by name"
 msgstr "首字母只在按名称排序时可用"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1049
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1092
 msgid "Expand or collapse"
 msgstr "开展或收起"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1057
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1100
 #, python-brace-format
 msgid "Expand {0}"
 msgstr "展开{0}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1060
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1103
 #, python-brace-format
 msgid "Expand {0} and its children"
 msgstr "展开{0} 和其子项目"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1080
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1123
 #, python-brace-format
 msgid "Collapse {0}"
 msgstr "收起 {0}"
@@ -30632,7 +30711,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/tts/linux_config.py:25
 #: /__w/calibre/calibre/src/calibre/gui2/tts/macos_config.py:30
 #: /__w/calibre/calibre/src/calibre/gui2/tts/windows_config.py:26
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:702
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:706
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:623
 msgid "Language"
 msgstr "语言"
@@ -32517,7 +32596,7 @@ msgstr "字体"
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/completion/basic.py:89
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/text.py:909
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:242
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:439
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:443
 msgid "Image"
 msgstr "图像"
 
@@ -32796,44 +32875,44 @@ msgid ""
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:93
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:264
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:262
 msgid "Trim image"
 msgstr "裁剪"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:102
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:272
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:270
 msgid "Auto-trim image"
 msgstr "自动裁剪封面"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:110
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:265
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:263
 msgid "Rotate image"
 msgstr "旋转图像"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:121
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:266
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:264
 msgid "Resize image"
 msgstr "改变图像大小"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:134
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:273
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:315
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:271
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:313
 msgid "Sharpen image"
 msgstr "锐化图像"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:147
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:274
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:321
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:272
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:319
 msgid "Blur image"
 msgstr "模糊图像"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:156
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:277
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:275
 msgid "Make image look like an oil painting"
 msgstr "将图像改成油画风格"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:168
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:275
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:273
 msgid "De-speckle image"
 msgstr "除噪点图像"
 
@@ -32842,7 +32921,7 @@ msgid "Normalize image"
 msgstr "标准化图像"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:208
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:355
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:357
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:319
 msgid "No image"
 msgstr "无图片"
@@ -32866,22 +32945,22 @@ msgstr "当前图片不是有效的"
 msgid "Drop image"
 msgstr "裁剪图片"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:353
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:306
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:355
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:304
 msgid "Paste image"
 msgstr "粘贴图片"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:356
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:358
 msgid "No image available in the clipboard"
 msgstr "剪贴板内无图形可用"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:369
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:371
 msgid ""
 "No active selection, first select a region in the image, by dragging with "
 "your mouse"
 msgstr "没有主动选择，首先通过鼠标拖动来选择图像中的区域"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:606
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:608
 msgid "Not a valid image"
 msgstr "不是有效的图形文件"
 
@@ -32897,62 +32976,62 @@ msgstr "宽度(&W)："
 msgid "&Height:"
 msgstr "高度(&H)："
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:201
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:199
 msgid ""
 "Cutting of images is not allowed. If you want to delete the image, use the "
 "files browser to do it."
 msgstr "不允许剪切图像。如果你想删除该图像，用文件浏览器。"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:252
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:250
 msgid "File actions tool bar"
 msgstr "文件操作工具栏"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:256
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:254
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:350
 msgid "Edit actions tool bar"
 msgstr "编辑操作工具栏"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:268
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:266
 msgid "Image filters"
 msgstr "图片过滤器"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:276
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:274
 msgid "Improve contrast (normalize image)"
 msgstr "改善对比度（标准化图像）"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:279
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:277
 msgid "Image information bar"
 msgstr "图像信息栏"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:302
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:300
 msgid "Copy selected region"
 msgstr "复制选区"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:303
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:301
 msgid "Paste into selected region"
 msgstr "粘贴至选区"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:305
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:303
 msgid "Copy image"
 msgstr "复制图像"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:316
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:314
 msgid ""
 "The standard deviation for the Gaussian sharpen operation (higher means more"
 " sharpening)"
 msgstr "高斯锐化操作的标准偏差（更高意味着更锐化）"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:322
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:320
 msgid ""
 "The standard deviation for the Gaussian blur operation (higher means more "
 "blurring)"
 msgstr "高斯模糊操作的标准偏差（更高意味着更模糊）"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:327
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:325
 msgid "Oilify image"
 msgstr "Oilify 图片"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:328
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:326
 msgid "The strength of the operation (higher numbers have larger effects)"
 msgstr "操作的强度（较高的数字具有较大的效果）"
 
@@ -34048,7 +34127,7 @@ msgstr "选择路径"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:987
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1004
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1324
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1328
 #: /__w/calibre/calibre/src/calibre/gui2/win_file_dialogs.py:76
 msgid "Files"
 msgstr "文件"
@@ -34987,183 +35066,187 @@ msgid "Folder"
 msgstr "文件名"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:239
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:439
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:443
 msgid "Size (KB)"
 msgstr "大小 (KB)"
+
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:239
+msgid "Word count"
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:245
 msgid "Style"
 msgstr "样式"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:320
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:324
 #, python-brace-format
 msgid "Total uncompressed size of all files: {0} :: Images: {1} :: Fonts: {2}"
 msgstr "所有文件{0}的未压缩大小:  :: 图像: {1} :: 字体: {2}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:439
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:443
 msgid "Resolution"
 msgstr "分辨率"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:439
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:702
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:802
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:443
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:706
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:806
 msgid "Times used"
 msgstr "已用时间"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:527
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:531
 #, python-format
 msgid "Edit the image: %s"
 msgstr "编辑图像：%s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:538
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:542
 msgid "Anchor"
 msgstr "锚"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:538
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:542
 msgid "Source text"
 msgstr "源文本"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:538
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:542
 msgid "Target"
 msgstr "目标"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:538
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:542
 msgid "Target text"
 msgstr "目标文字"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:585
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:589
 msgid "The link destination does not exist"
 msgstr "目标链接不存在"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:585
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:589
 msgid "The link destination exists"
 msgstr "目标链接已存在"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:586
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:590
 msgid "The link destination could not be verified"
 msgstr "无法验证目标链接"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:650
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:654
 msgid "Click entries above to see their destination here"
 msgstr "点击上方的条目在此查看链接的目标"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:670
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:674
 msgid "No destination found for this link"
 msgstr "无法找到该链接的目标"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:702
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:706
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:623
 msgid "Word"
 msgstr "单词"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:782
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:786
 #, python-brace-format
 msgid "Words: {2} :: Unique Words: :: {0} :: Languages: {1}"
 msgstr "单词数量：{2} :: 不同的单词：:: {0} :: 语言数量：{1}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:802
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:806
 msgid "Character"
 msgstr "字符"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:802
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:806
 msgid "Codepoint"
 msgstr "码位"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:868
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:872
 msgid "All the characters in the book"
 msgstr "书中的所有字符"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:998
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1220
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1002
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1224
 #, python-brace-format
 msgid "{0} [{1} elements]"
 msgstr "{0} [{1} 个元素]"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1076
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1080
 msgid "Sort by:"
 msgstr "排序:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1077
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1081
 msgid "&Counts"
 msgstr "数量(&C)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1080
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1084
 msgid "&Name"
 msgstr "名称(&N)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1104
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1108
 #, python-brace-format
 msgid "{0} rules, {1} unused"
 msgstr "共 {0} 条规则， {1} 条未使用"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1124
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1270
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1128
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1274
 msgid "Number of matches"
 msgstr "匹配数目"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1124
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1128
 msgid "Style Rule"
 msgstr "样式规则"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1265
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1269
 #, python-brace-format
 msgid "{0} classes, {1} unused"
 msgstr "共 {0} 个类， {1} 个未使用"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1270
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1274
 msgid "Class"
 msgstr "分类"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1328
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1332
 msgid "Words"
 msgstr "单词数"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1338
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1342
 msgid "Style rules"
 msgstr "样式规则"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1342
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1346
 msgid "Style classes"
 msgstr "样式类别"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1346
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1350
 msgid "Characters"
 msgstr "字符"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1350
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1354
 msgid "Links"
 msgstr "链接"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1384
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1388
 #, python-format
 msgid "Export of %s data is not supported"
 msgstr "不支持导出 %s 类型的文件"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1386
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1390
 msgid "Choose a filename for the data"
 msgstr "选择数据文件名"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1387
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1391
 msgid "CSV files"
 msgstr "CSV 文件"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1401
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1405
 msgid "Reports"
 msgstr "报表"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1431
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1435
 msgid "Export the currently shown report as a CSV file"
 msgstr "导出当前显示的报表为CSV文件"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1439
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1443
 msgid "Are you sure you want to delete the selected files?"
 msgstr "你确认要删除所选文件吗？"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1467
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1471
 msgid "Failed to gather data"
 msgstr "收集数据失败"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1468
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1472
 msgid ""
 "Failed to gather data for the report. Click \"Show details\" for more "
 "information."
@@ -35499,7 +35582,7 @@ msgid "Export saved searches"
 msgstr "导出保存搜索"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1009
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:497
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:522
 msgid "Export"
 msgstr "导出"
 
@@ -37390,75 +37473,75 @@ msgstr "添加书签"
 msgid "Enter title for bookmark:"
 msgstr "编辑书签标题："
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:129
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:161
 msgid "calibre highlights"
 msgstr "calibre突出显示"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:132
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:164
 msgid "highlights"
 msgstr "突出显示"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:196
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:221
 msgid "Modify this highlight"
 msgstr "编辑该突出显示"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:197
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:222
 msgid "Edit notes for this highlight"
 msgstr "为此突出显示编辑注释"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:199
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:224
 msgid "Delete this highlight"
 msgid_plural "Delete selected highlights"
 msgstr[0] "删除选定的高亮显示"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:235
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:260
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/search.py:585
 msgid "Table of Contents section:"
 msgid_plural "Table of Contents sections:"
 msgstr[0] "目录章节："
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:472
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:497
 msgid "Double click to jump to an entry"
 msgstr "双击可跳转到一个条目"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:495
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:520
 msgid "Modify"
 msgstr "修改"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:495
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:520
 msgid "Modify the selected highlight"
 msgstr "编辑该选定的高亮显示"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:496
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:521
 msgid "Delete the selected highlights"
 msgstr "删除选定的高亮显示"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:497
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:522
 msgid "Export all highlights"
 msgstr "导出所有突出显示"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:528
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:553
 msgid "No highlights match the search: {}"
 msgstr "没有与搜索匹配的高亮显示：{}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:544
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:569
 msgid "No selected highlight"
 msgstr "没有选定的高亮显示"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:545
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:570
 msgid "No highlight is currently selected"
 msgstr "当前未选择任何高亮显示"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:562
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:587
 msgid "Are you sure you want to delete this highlight permanently?"
 msgid_plural "Are you sure you want to delete all {} highlights permanently?"
 msgstr[0] "你确认要永久删除所有 {} 突出显示区域么？"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:573
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:598
 msgid "No highlights"
 msgstr "没有高亮显示"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:573
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:598
 msgid "This book has no highlights to export"
 msgstr "此书没有要导出的突出显示"
 
@@ -37923,7 +38006,7 @@ msgstr "配置朗读功能"
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/tts.py:87
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/tts.py:94
 msgid "Text-to-Speech unavailable"
-msgstr ""
+msgstr "文字转语音（TTS）服务不可用"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:70
 msgid "Lookup"
@@ -38000,7 +38083,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:472
 msgid "Book does not exist"
-msgstr ""
+msgstr "书籍不存在"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:473
 msgid "Cannot open {} as it no longer exists"
@@ -40236,7 +40319,7 @@ msgid ""
 "Spanish it will only match n. Note that this is much slower than a simple "
 "search on very large libraries. Also, this option will have no effect if you"
 " turn on case-sensitive searching."
-msgstr ""
+msgstr "在搜索框中输入的字符将根据你为 calibre 界面选择的语言匹配其加了变音符号的版本。例如，在英语中，搜索 n 将同时匹配 {} 和 n，但如果你的语言是西班牙语，它将只匹配 n。注意，开启此选项会比不开启时在搜索非常大的书库时慢很多。另外，如果你打开了匹配大小写搜索，此选项没有效果。"
 
 #: /__w/calibre/calibre/src/calibre/utils/config_base.py:590
 msgid "Make searches case-sensitive"
