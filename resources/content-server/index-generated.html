@@ -14407,7 +14407,7 @@ return this.__repr__();
                         return diff;
                     }
                 }
-                diff = a.length - b.length;
+                diff = a.steps.length - b.steps.length;
                 if (diff !== 0) {
                     return diff;
                 }
@@ -22604,6 +22604,95 @@ return this.__repr__();
             __module__ : {value: "read_book.highlights"}
         });
 
+        function ChapterGroup() {
+            if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
+            ChapterGroup.prototype.__bind_methods__.call(this);
+            ChapterGroup.prototype.__init__.apply(this, arguments);
+        }
+        Object.defineProperty(ChapterGroup.prototype, "__bind_methods__", {value: function () {
+            this.add_annot = ChapterGroup.prototype.add_annot.bind(this);
+            this.group_for_title = ChapterGroup.prototype.group_for_title.bind(this);
+            this.render_as_text = ChapterGroup.prototype.render_as_text.bind(this);
+        }});
+        ChapterGroup.prototype.__init__ = function __init__(title, level) {
+            var self = this;
+            self.level = level || 0;
+            self.title = title || "";
+            self.subgroups = {};
+            self.subgroups_in_order = [];
+            self.annotations = [];
+        };
+        if (!ChapterGroup.prototype.__init__.__argnames__) Object.defineProperties(ChapterGroup.prototype.__init__, {
+            __argnames__ : {value: ["title", "level"]},
+            __module__ : {value: "read_book.highlights"}
+        });
+        ChapterGroup.__argnames__ = ChapterGroup.prototype.__init__.__argnames__;
+        ChapterGroup.__handles_kwarg_interpolation__ = ChapterGroup.prototype.__init__.__handles_kwarg_interpolation__;
+        ChapterGroup.prototype.add_annot = function add_annot(a) {
+            var self = this;
+            var titles, node, title;
+            titles = a["toc_family_titles"];
+            if (!titles) {
+                titles = ρσ_list_decorate([ _("Unknown chapter") ]);
+            }
+            node = self;
+            var ρσ_Iter12 = ρσ_Iterable(titles);
+            for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
+                title = ρσ_Iter12[ρσ_Index12];
+                node = node.group_for_title(title);
+            }
+            node.annotations.push(a);
+        };
+        if (!ChapterGroup.prototype.add_annot.__argnames__) Object.defineProperties(ChapterGroup.prototype.add_annot, {
+            __argnames__ : {value: ["a"]},
+            __module__ : {value: "read_book.highlights"}
+        });
+        ChapterGroup.prototype.group_for_title = function group_for_title(title) {
+            var self = this;
+            var ans;
+            ans = (ρσ_expr_temp = self.subgroups)[(typeof title === "number" && title < 0) ? ρσ_expr_temp.length + title : title];
+            if (!ans) {
+                ans = new ChapterGroup(title, self.level + 1);
+                (ρσ_expr_temp = self.subgroups)[(typeof title === "number" && title < 0) ? ρσ_expr_temp.length + title : title] = ans;
+                self.subgroups_in_order.push(title);
+            }
+            return ans;
+        };
+        if (!ChapterGroup.prototype.group_for_title.__argnames__) Object.defineProperties(ChapterGroup.prototype.group_for_title, {
+            __argnames__ : {value: ["title"]},
+            __module__ : {value: "read_book.highlights"}
+        });
+        ChapterGroup.prototype.render_as_text = function render_as_text(lines, link_prefix, current_query, as_markdown) {
+            var self = this;
+            var hl, sg, title;
+            if (self.title) {
+                lines.push("#".repeat(self.level) + " " + self.title);
+                lines.push("");
+            }
+            var ρσ_Iter13 = ρσ_Iterable(self.annotations);
+            for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
+                hl = ρσ_Iter13[ρσ_Index13];
+                render_highlight_as_text(hl, lines, link_prefix, current_query, as_markdown);
+            }
+            var ρσ_Iter14 = ρσ_Iterable(self.subgroups_in_order);
+            for (var ρσ_Index14 = 0; ρσ_Index14 < ρσ_Iter14.length; ρσ_Index14++) {
+                title = ρσ_Iter14[ρσ_Index14];
+                sg = (ρσ_expr_temp = self.subgroups)[(typeof title === "number" && title < 0) ? ρσ_expr_temp.length + title : title];
+                sg.render_as_text(lines, link_prefix, current_query, as_markdown);
+            }
+        };
+        if (!ChapterGroup.prototype.render_as_text.__argnames__) Object.defineProperties(ChapterGroup.prototype.render_as_text, {
+            __argnames__ : {value: ["lines", "link_prefix", "current_query", "as_markdown"]},
+            __module__ : {value: "read_book.highlights"}
+        });
+        ChapterGroup.prototype.__repr__ = function __repr__ () {
+                        return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
+        };
+        ChapterGroup.prototype.__str__ = function __str__ () {
+            return this.__repr__();
+        };
+        Object.defineProperty(ChapterGroup.prototype, "__bases__", {value: []});
+
         function show_export_dialog(annotations_manager) {
             var sd, fmt, all_highlights, selected_highlight_items, key, e, h, ta_id, href, idx, current_query, link_prefix;
             sd = get_session_data();
@@ -22641,7 +22730,7 @@ return this.__repr__();
             current_query = Object.assign(Object.create(null), get_current_query());
             link_prefix = get_current_link_prefix();
             function update_text() {
-                var data, as_markdown, lines, hl;
+                var data, as_markdown, lines, root, a;
                 if (fmt === "calibre_annotations_collection") {
                     data = (function(){
                         var ρσ_d = Object.create(null);
@@ -22655,11 +22744,13 @@ return this.__repr__();
                 }
                 as_markdown = fmt === "markdown";
                 lines = [];
-                var ρσ_Iter12 = ρσ_Iterable(all_highlights);
-                for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
-                    hl = ρσ_Iter12[ρσ_Index12];
-                    ρσ_interpolate_kwargs.call(this, render_highlight_as_text, [hl, lines, link_prefix, current_query].concat([ρσ_desugar_kwargs({as_markdown: as_markdown})]));
+                root = new ChapterGroup;
+                var ρσ_Iter15 = ρσ_Iterable(all_highlights);
+                for (var ρσ_Index15 = 0; ρσ_Index15 < ρσ_Iter15.length; ρσ_Index15++) {
+                    a = ρσ_Iter15[ρσ_Index15];
+                    root.add_annot(a);
                 }
+                root.render_as_text(lines, link_prefix, current_query, as_markdown);
                 document.getElementById(ta_id).textContent = lines.join("\n");
             };
             if (!update_text.__module__) Object.defineProperties(update_text, {
@@ -22780,9 +22871,9 @@ return this.__repr__();
                 all_highlights.reverse();
             }
             q = text.toLowerCase();
-            var ρσ_Iter13 = ρσ_Iterable(all_highlights);
-            for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
-                h = ρσ_Iter13[ρσ_Index13];
+            var ρσ_Iter16 = ρσ_Iterable(all_highlights);
+            for (var ρσ_Index16 = 0; ρσ_Index16 < ρσ_Iter16.length; ρσ_Index16++) {
+                h = ρσ_Iter16[ρσ_Index16];
                 if (h.dataset.title.toLowerCase().indexOf(q) > -1 || h.dataset.notes.toLowerCase().indexOf(q) > -1) {
                     set_current_highlight_entry(h);
                     h.scrollIntoView();
@@ -22906,9 +22997,9 @@ return this.__repr__();
                     return;
                 }
                 pos = 0;
-                var ρσ_Iter14 = ρσ_Iterable(urls);
-                for (var ρσ_Index14 = 0; ρσ_Index14 < ρσ_Iter14.length; ρσ_Index14++) {
-                    ρσ_unpack = ρσ_Iter14[ρσ_Index14];
+                var ρσ_Iter17 = ρσ_Iterable(urls);
+                for (var ρσ_Index17 = 0; ρσ_Index17 < ρσ_Iter17.length; ρσ_Index17++) {
+                    ρσ_unpack = ρσ_Iter17[ρσ_Index17];
                     s = ρσ_unpack[0];
                     e = ρσ_unpack[1];
                     if (s > pos) {
@@ -22925,9 +23016,9 @@ return this.__repr__();
                 __module__ : {value: "read_book.highlights"}
             });
 
-            var ρσ_Iter15 = ρσ_Iterable(notes.splitlines());
-            for (var ρσ_Index15 = 0; ρσ_Index15 < ρσ_Iter15.length; ρσ_Index15++) {
-                line = ρσ_Iter15[ρσ_Index15];
+            var ρσ_Iter18 = ρσ_Iterable(notes.splitlines());
+            for (var ρσ_Index18 = 0; ρσ_Index18 < ρσ_Iter18.length; ρσ_Index18++) {
+                line = ρσ_Iter18[ρσ_Index18];
                 if (!line || !line.strip()) {
                     if (current_para.childNodes.length) {
                         add_para();
@@ -22957,9 +23048,9 @@ return this.__repr__();
         function set_current_highlight_entry(entry) {
             var c, h;
             c = get_container();
-            var ρσ_Iter16 = ρσ_Iterable(c.querySelectorAll(".highlight"));
-            for (var ρσ_Index16 = 0; ρσ_Index16 < ρσ_Iter16.length; ρσ_Index16++) {
-                h = ρσ_Iter16[ρσ_Index16];
+            var ρσ_Iter19 = ρσ_Iterable(c.querySelectorAll(".highlight"));
+            for (var ρσ_Index19 = 0; ρσ_Index19 < ρσ_Iter19.length; ρσ_Index19++) {
+                h = ρσ_Iter19[ρσ_Index19];
                 h.classList.remove("current");
             }
             entry.classList.add("current");
@@ -23044,9 +23135,9 @@ return this.__repr__();
         function item_select_toggled() {
             var entries, e;
             entries = all_selected_entries();
-            var ρσ_Iter17 = ρσ_Iterable(document.querySelectorAll("#" + ρσ_str.format("{}", get_container_id()) + " .sel-button"));
-            for (var ρσ_Index17 = 0; ρσ_Index17 < ρσ_Iter17.length; ρσ_Index17++) {
-                e = ρσ_Iter17[ρσ_Index17];
+            var ρσ_Iter20 = ρσ_Iterable(document.querySelectorAll("#" + ρσ_str.format("{}", get_container_id()) + " .sel-button"));
+            for (var ρσ_Index20 = 0; ρσ_Index20 < ρσ_Iter20.length; ρσ_Index20++) {
+                e = ρσ_Iter20[ρσ_Index20];
                 e.style.display = (entries.length) ? "block" : "none";
             }
         };
@@ -23056,9 +23147,9 @@ return this.__repr__();
 
         function clear_selection() {
             var e;
-            var ρσ_Iter18 = ρσ_Iterable(document.querySelectorAll(".highlight input:checked"));
-            for (var ρσ_Index18 = 0; ρσ_Index18 < ρσ_Iter18.length; ρσ_Index18++) {
-                e = ρσ_Iter18[ρσ_Index18];
+            var ρσ_Iter21 = ρσ_Iterable(document.querySelectorAll(".highlight input:checked"));
+            for (var ρσ_Index21 = 0; ρσ_Index21 < ρσ_Iter21.length; ρσ_Index21++) {
+                e = ρσ_Iter21[ρσ_Index21];
                 e.checked = false;
             }
             item_select_toggled();
@@ -23069,9 +23160,9 @@ return this.__repr__();
 
         function select_all() {
             var e;
-            var ρσ_Iter19 = ρσ_Iterable(document.querySelectorAll(".highlight input"));
-            for (var ρσ_Index19 = 0; ρσ_Index19 < ρσ_Iter19.length; ρσ_Index19++) {
-                e = ρσ_Iter19[ρσ_Index19];
+            var ρσ_Iter22 = ρσ_Iterable(document.querySelectorAll(".highlight input"));
+            for (var ρσ_Index22 = 0; ρσ_Index22 < ρσ_Iter22.length; ρσ_Index22++) {
+                e = ρσ_Iter22[ρσ_Index22];
                 e.checked = true;
             }
         };
@@ -23090,9 +23181,9 @@ return this.__repr__();
                 var ρσ_anonfunc = function (yes) {
                     var entry;
                     if (yes) {
-                        var ρσ_Iter20 = ρσ_Iterable(selected_highlight_items);
-                        for (var ρσ_Index20 = 0; ρσ_Index20 < ρσ_Iter20.length; ρσ_Index20++) {
-                            entry = ρσ_Iter20[ρσ_Index20];
+                        var ρσ_Iter23 = ρσ_Iterable(selected_highlight_items);
+                        for (var ρσ_Index23 = 0; ρσ_Index23 < ρσ_Iter23.length; ρσ_Index23++) {
+                            entry = ρσ_Iter23[ρσ_Index23];
                             entry.style.display = "none";
                             view.highlight_action(entry.dataset.uuid, "delete");
                         }
@@ -23192,9 +23283,9 @@ return this.__repr__();
             container.appendChild(c);
             toc_groups = Object.create(null);
             toc_tt = Object.create(null);
-            var ρσ_Iter21 = ρσ_Iterable(annotations_manager.all_highlights());
-            for (var ρσ_Index21 = 0; ρσ_Index21 < ρσ_Iter21.length; ρσ_Index21++) {
-                h = ρσ_Iter21[ρσ_Index21];
+            var ρσ_Iter24 = ρσ_Iterable(annotations_manager.all_highlights());
+            for (var ρσ_Index24 = 0; ρσ_Index24 < ρσ_Iter24.length; ρσ_Index24++) {
+                h = ρσ_Iter24[ρσ_Index24];
                 toc = _("Unknown");
                 if (ρσ_exists.d(h.toc_family_titles).length) {
                     toc = (ρσ_expr_temp = h.toc_family_titles)[ρσ_expr_temp.length-1];
@@ -23203,9 +23294,9 @@ return this.__repr__();
                     toc_groups[(typeof toc === "number" && toc < 0) ? toc_groups.length + toc : toc] = [];
                     if (ρσ_exists.d(h.toc_family_titles).length) {
                         lines = [];
-                        var ρσ_Iter22 = ρσ_Iterable(enumerate(h.toc_family_titles));
-                        for (var ρσ_Index22 = 0; ρσ_Index22 < ρσ_Iter22.length; ρσ_Index22++) {
-                            ρσ_unpack = ρσ_Iter22[ρσ_Index22];
+                        var ρσ_Iter25 = ρσ_Iterable(enumerate(h.toc_family_titles));
+                        for (var ρσ_Index25 = 0; ρσ_Index25 < ρσ_Iter25.length; ρσ_Index25++) {
+                            ρσ_unpack = ρσ_Iter25[ρσ_Index25];
                             i = ρσ_unpack[0];
                             node = ρσ_unpack[1];
                             lines.push("  ".repeat(i) + "➤ " + node);
@@ -23228,9 +23319,9 @@ return this.__repr__();
                 __module__ : {value: "read_book.highlights"}
             });
 
-            var ρσ_Iter23 = ρσ_Iterable(Object.keys(toc_groups));
-            for (var ρσ_Index23 = 0; ρσ_Index23 < ρσ_Iter23.length; ρσ_Index23++) {
-                group = ρσ_Iter23[ρσ_Index23];
+            var ρσ_Iter26 = ρσ_Iterable(Object.keys(toc_groups));
+            for (var ρσ_Index26 = 0; ρσ_Index26 < ρσ_Iter26.length; ρσ_Index26++) {
+                group = ρσ_Iter26[ρσ_Index26];
                 highlights = toc_groups[(typeof group === "number" && group < 0) ? toc_groups.length + group : group];
                 g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.h3, [tree_icon("caret-right"), tree_icon("caret-down"), E.div(" " + group)].concat([ρσ_desugar_kwargs({title: toc_tt[(typeof group === "number" && group < 0) ? toc_tt.length + group : group] || "", onclick: (function() {
                     var ρσ_anonfunc = function (ev) {
@@ -23252,9 +23343,9 @@ return this.__repr__();
                 })()})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-left: 1rem"})])].concat([ρσ_desugar_kwargs({class_: "toc-group expanded"})]));
                 c.appendChild(g);
                 ic = g.lastChild;
-                var ρσ_Iter24 = ρσ_Iterable(highlights);
-                for (var ρσ_Index24 = 0; ρσ_Index24 < ρσ_Iter24.length; ρσ_Index24++) {
-                    h = ρσ_Iter24[ρσ_Index24];
+                var ρσ_Iter27 = ρσ_Iterable(highlights);
+                for (var ρσ_Index27 = 0; ρσ_Index27 < ρσ_Iter27.length; ρσ_Index27++) {
+                    h = ρσ_Iter27[ρσ_Index27];
                     ic.appendChild(highlight_entry(h, onclick, annotations_manager.view, hide_panel));
                 }
             }
@@ -23293,6 +23384,7 @@ return this.__repr__();
         ρσ_modules["read_book.highlights"].get_current_link_prefix = get_current_link_prefix;
         ρσ_modules["read_book.highlights"].link_to_epubcfi = link_to_epubcfi;
         ρσ_modules["read_book.highlights"].render_highlight_as_text = render_highlight_as_text;
+        ρσ_modules["read_book.highlights"].ChapterGroup = ChapterGroup;
         ρσ_modules["read_book.highlights"].show_export_dialog = show_export_dialog;
         ρσ_modules["read_book.highlights"].focus_search = focus_search;
         ρσ_modules["read_book.highlights"].find = find;
@@ -27401,7 +27493,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "6.8.0";
+        CALIBRE_VERSION = "6.9.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();

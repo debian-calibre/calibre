@@ -504,11 +504,24 @@ class TagsView(QTreeView):  # {{{
 
     def context_menu_handler(self, action=None, category=None,
                              key=None, index=None, search_state=None,
-                             is_first_letter=False, ignore_vl=False):
+                             is_first_letter=False, ignore_vl=False,
+                             extra=None):
         if not action:
             return
         from calibre.gui2.ui import get_gui
         try:
+            if action == 'dont_collapse_category':
+                if key not in extra:
+                    extra.append(key)
+                self.db.prefs.set('tag_browser_dont_collapse', extra)
+                self.recount()
+                return
+            if action == 'collapse_category':
+                if key in extra:
+                    extra.remove(key)
+                self.db.prefs.set('tag_browser_dont_collapse', extra)
+                self.recount()
+                return
             if action == 'set_icon':
                 try:
                     path = choose_files(self, 'choose_category_icon',
@@ -702,6 +715,7 @@ class TagsView(QTreeView):  # {{{
         index = self.indexAt(point)
         self.context_menu = QMenu(self)
         added_show_hidden_categories = False
+        key = None
 
         def add_show_hidden_categories():
             nonlocal added_show_hidden_categories
@@ -977,7 +991,7 @@ class TagsView(QTreeView):  # {{{
                     self.context_menu.addAction(_('Manage Saved searches'),
                         partial(self.context_menu_handler, action='manage_searches',
                                 category=tag.name if tag else None))
-                elif key == 'formats':
+                elif key == 'formats' and tag is not None:
                     self.context_menu.addAction(_('Remove the {} format from selected books').format(tag.name), partial(
                         self.context_menu_handler, action='remove_format', key=tag.name))
 
@@ -993,11 +1007,25 @@ class TagsView(QTreeView):  # {{{
                 add_show_hidden_categories()
 
                 if tag is None:
-                    self.context_menu.addSeparator()
-                    self.context_menu.addAction(_('Change category icon'),
-                            partial(self.context_menu_handler, action='set_icon', key=key)).setIcon(QIcon.ic('icon_choose.png'))
-                    self.context_menu.addAction(_('Restore default icon'),
-                            partial(self.context_menu_handler, action='clear_icon', key=key)).setIcon(QIcon.ic('edit-clear.png'))
+                    cm = self.context_menu
+                    cm.addSeparator()
+                    sm = cm.addAction(_('Change {} category icon').format(category),
+                                      partial(self.context_menu_handler, action='set_icon',
+                                              key=key, category=category))
+                    sm.setIcon(QIcon.ic('icon_choose.png'))
+                    sm = cm.addAction(_('Restore {} category default icon').format(category),
+                                      partial(self.context_menu_handler, action='clear_icon',
+                                              key=key, category=category))
+                    sm.setIcon(QIcon.ic('edit-clear.png'))
+                    if key == 'search' and 'search' in self.db.new_api.pref('categories_using_hierarchy', ()):
+                        sm = cm.addAction(_('Change Saved searches folder icon'),
+                                          partial(self.context_menu_handler, action='set_icon',
+                                                  key='search_folder:', category=_('Saved searches folder')))
+                        sm.setIcon(QIcon.ic('icon_choose.png'))
+                        sm = cm.addAction(_('Restore Saved searches folder default icon'),
+                             partial(self.context_menu_handler, action='clear_icon',
+                                     key='search_folder:', category=_('Saved searches folder')))
+                        sm.setIcon(QIcon.ic('edit-clear.png'))
 
                 # Always show the User categories editor
                 self.context_menu.addSeparator()
@@ -1017,6 +1045,21 @@ class TagsView(QTreeView):  # {{{
                 self.context_menu.addSeparator()
             add_show_hidden_categories()
 
+        # partioning. If partitioning is active, provide a way to turn it on or
+        # off for this category.
+        if gprefs['tags_browser_partition_method'] != 'disable' and key is not None:
+            m = self.context_menu
+            p = self.db.prefs.get('tag_browser_dont_collapse', gprefs['tag_browser_dont_collapse'])
+            if key in p:
+                a = m.addAction(_('Sub-categorize {}').format(category),
+                                partial(self.context_menu_handler, action='collapse_category',
+                                        category=category, key=key, extra=p))
+            else:
+                a = m.addAction(_("Don't sub-categorize {}").format(category),
+                                partial(self.context_menu_handler, action='dont_collapse_category',
+                                        category=category, key=key, extra=p))
+            a.setIcon(QIcon.ic('config.png'))
+        # Set the partitioning scheme
         m = self.context_menu.addMenu(_('Change sub-categorization scheme'))
         m.setIcon(QIcon.ic('config.png'))
         da = m.addAction(_('Disable'),

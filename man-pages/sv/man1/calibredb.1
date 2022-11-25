@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "november 04, 2022" "6.8.0" "calibre"
+.TH "CALIBREDB" "1" "november 25, 2022" "6.9.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -189,7 +189,7 @@ Sortera resultaten i stigande ordning
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Fälten som ska visas när böcker listar i databasen. Bör vara en kommaseparerad lista med fält. Tillgängliga fält: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Standard: title,authors. Specialfältet \fB\(dq\fPalla\fB\(dq\fP kan användas för att välja alla fält. Förutom de inbyggda fälten ovan är anpassade fält också tillgängliga som *field_name, till exempel för ett anpassat fält #rating, använd namnet: *rating
+Fälten som ska visas när böcker listar i databasen. Bör vara en kommaseparerad lista med fält. Tillgängliga fält: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Standard: title,authors. Specialfältet \fB\(dq\fPalla\fB\(dq\fP kan användas för att välja alla fält. Förutom de inbyggda fälten ovan är anpassade fält också tillgängliga som *field_name, till exempel för ett anpassat fält #rating, använd namnet: *rating
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -224,7 +224,22 @@ Sträng som används för att separera fält. Standard är blanksteg.
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-Fältet av för att sortera resultat. Tillgängliga fält: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Standard: id
+Fältet av för att sortera resultat. Tillgängliga fält: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Standard: id
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template
+The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_file, \-t
+Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_heading
+Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
 .UNINDENT
 .SH ADD
 .INDENT 0.0

@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "11月 04, 2022" "6.8.0" "calibre"
+.TH "CALIBREDB" "1" "11月 25, 2022" "6.9.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -189,7 +189,7 @@ calibredb list [options]
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-在列出資料庫中書籍時要顯示的欄位。應該是逗號分隔的欄位列表。 可用欄位： author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid 預設值：title,authors。特殊欄位「all」可用於選擇所有欄位。除了上述內建欄位之外，自訂欄位還等價於*field_name，例如，對於自訂欄位#rating，使用名稱：*rating
+在列出資料庫中書籍時要顯示的欄位。應該是逗號分隔的欄位列表。 可用欄位： author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid 預設值：title,authors。特殊欄位「all」可用於選擇所有欄位。除了上述內建欄位之外，自訂欄位還等價於*field_name，例如，對於自訂欄位#rating，使用名稱：*rating
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -224,7 +224,22 @@ calibredb list [options]
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-用來排序結果的欄位。 可用的欄位：author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid 預設值：id
+用來排序結果的欄位。 可用的欄位：author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid 預設值：id
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template
+The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_file, \-t
+Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_heading
+Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
 .UNINDENT
 .SH ADD
 .INDENT 0.0

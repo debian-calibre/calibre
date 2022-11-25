@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "noviembre 04, 2022" "6.8.0" "calibre"
+.TH "CALIBREDB" "1" "noviembre 25, 2022" "6.9.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -168,7 +168,7 @@ Ordenar los resultados en orden ascendente
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Los campos que se mostrarán cuando se listen los libros en la base de datos. Debe ser una lista de campos separada por comas. Campos disponibles: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Valor predeterminado: title,authors. El campo especial «all» puede usarse para seleccionar todos los campos. Además de los campos incorporados anteriores, también están disponibles los campos personalizados como *nombre_campo; por ejemplo, para un campo personalizado llamado #puntos, use el nombre: *puntos
+Los campos que se mostrarán cuando se listen los libros en la base de datos. Debe ser una lista de campos separada por comas. Campos disponibles: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Valor predeterminado: title,authors. El campo especial «all» puede usarse para seleccionar todos los campos. Además de los campos incorporados anteriores, también están disponibles los campos personalizados como *nombre_campo; por ejemplo, para un campo personalizado llamado #puntos, use el nombre: *puntos
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -203,7 +203,22 @@ El texto usado para separar campos. El valor predeterminado es un espacio.
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-El campo por el que se ordenan los resultados. Campos disponibles: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Valor predeterminado: id
+El campo por el que se ordenan los resultados. Campos disponibles: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Valor predeterminado: id
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template
+The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_file, \-t
+Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_heading
+Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
 .UNINDENT
 .SH ADD
 .INDENT 0.0

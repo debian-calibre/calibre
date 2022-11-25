@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "11月 04, 2022" "6.8.0" "calibre"
+.TH "CALIBREDB" "1" "11月 25, 2022" "6.9.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -184,7 +184,7 @@ calibreデータベースに存在する本のリスト
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-データベース中の本の一覧を表示するときに表示するフィールド。フィールドをカンマ区切りで指定します。 指定可能なフィールド: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid デフォルト: title,authors  特殊フィールド名 \fB\(dq\fPall\fB\(dq\fP を指定するとすべてのフィールドを選択します。上記のビルトインフィールドの他、カスタムフィールドも *field_name として指定可能です。たとえば、カスタムフィールド #rating を表示させたいときには *rating と指定してください。
+データベース中の本の一覧を表示するときに表示するフィールド。フィールドをカンマ区切りで指定します。 指定可能なフィールド: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid デフォルト: title,authors  特殊フィールド名 \fB\(dq\fPall\fB\(dq\fP を指定するとすべてのフィールドを選択します。上記のビルトインフィールドの他、カスタムフィールドも *field_name として指定可能です。たとえば、カスタムフィールド #rating を表示させたいときには *rating と指定してください。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -219,7 +219,22 @@ JSON形式で出力します。JSONはコンピュータでの処理により適
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-整列に使用するフィールド 使用可能フィールド: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid デフォルト: id
+整列に使用するフィールド 使用可能フィールド: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid デフォルト: id
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template
+The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_file, \-t
+Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_heading
+Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
 .UNINDENT
 .SH ADD
 .INDENT 0.0

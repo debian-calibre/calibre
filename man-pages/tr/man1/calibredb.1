@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "Kasım 04, 2022" "6.8.0" "calibre"
+.TH "CALIBREDB" "1" "Kasım 25, 2022" "6.9.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -189,7 +189,7 @@ Sonuçları artan şekilde sırala
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Veritabanındaki kitaplar listelenirken görüntülenecek alanlar. Alanların virgülle ayrılmış bir listesi olmalıdır. Erişilebilir alanlar: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Öntanımlı: title,authors. \fB\(dq\fPTümü\fB\(dq\fP özel alanı tüm alanları seçmek için kullanılabilir. Yukarıdaki tümleşik alanlara ek olarak, *alan_adı şeklinde kişisel alanlara da erişilebilir. Mesela, #onaylama kişisel alanı için şu ismi kullanın: *onaylama
+Veritabanındaki kitaplar listelenirken görüntülenecek alanlar. Alanların virgülle ayrılmış bir listesi olmalıdır. Erişilebilir alanlar: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Öntanımlı: title,authors. \fB\(dq\fPTümü\fB\(dq\fP özel alanı tüm alanları seçmek için kullanılabilir. Yukarıdaki tümleşik alanlara ek olarak, *alan_adı şeklinde kişisel alanlara da erişilebilir. Mesela, #onaylama kişisel alanı için şu ismi kullanın: *onaylama
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -224,7 +224,22 @@ Alanları ayırmak için kullanılan karakter dizisi. Varsayılan olarak boşluk
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-Sonuçların sıralanacağı alan. Kullanılabilir alanlar: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Varsayılan: id
+Sonuçların sıralanacağı alan. Kullanılabilir alanlar: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Varsayılan: id
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template
+The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_file, \-t
+Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_heading
+Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
 .UNINDENT
 .SH ADD
 .INDENT 0.0

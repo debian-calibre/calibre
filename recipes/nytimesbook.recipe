@@ -4,7 +4,7 @@
 
 from calibre.web.feeds.news import BasicNewsRecipe
 
-use_wayback_machine = False
+use_wayback_machine = True
 
 
 def absolutize(url):
@@ -23,6 +23,7 @@ class NewYorkTimesBookReview(BasicNewsRecipe):
     no_javascript = True
     ignore_duplicate_articles = {'title', 'url'}
     encoding = 'utf-8'
+    delay = 0 if use_wayback_machine else 1
 
     articles_are_obfuscated = use_wayback_machine
 

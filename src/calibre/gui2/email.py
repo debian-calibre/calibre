@@ -148,7 +148,7 @@ gui_sendmail = Sendmail()
 
 
 def is_for_kindle(to):
-    return isinstance(to, str) and ('@kindle.com' in to or '@kindle.cn' in to)
+    return isinstance(to, str) and ('@kindle.com' in to or '@kindle.cn' in to or '@free.kindle.com' in to or '@free.kindle.cn' in to)
 
 
 def send_mails(jobnames, callback, attachments, to_s, subjects,
@@ -440,6 +440,10 @@ class EmailMixin:  # {{{
                         os.path.splitext(f)[1][1:].upper())
                 if mi.comments and gprefs['add_comments_to_email']:
                     from calibre.utils.html2text import html2text
+                    from calibre.ebooks.metadata import fmt_sidx
+                    if mi.series:
+                        sidx=fmt_sidx(1.0 if mi.series_index is None else mi.series_index, use_roman=config['use_roman_numerals_for_series_number'])
+                        texts[-1] += '\n\n' + _('{series_index} of {series}').format(series_index=sidx, series=mi.series)
                     texts[-1] += '\n\n' + _('About this book:') + '\n\n' + textwrap.fill(html2text(mi.comments))
                 if is_for_kindle(to):
                     prefix = str(newmi.title or t)
