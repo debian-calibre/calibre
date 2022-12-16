@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "十一月 25, 2022" "6.9.0" "calibre"
+.TH "CALIBREDB" "1" "十二月 16, 2022" "6.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -238,17 +238,17 @@ calibredb list [选项]
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+如果 \fB\(dq\fPtemplate\fB\(dq\fP在字段列表中，则要运行的模板。默认值：无
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template_file, \-t
-Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+如果\fB\(dq\fPtemplate\fB\(dq\fP 在字段列表中，则包含要运行的模板的文件的路径。默认值：无
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template_heading
-Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
+模板栏的标题。默认值 template. 如果设置了选项:option:\fI\-\-for\-machine\fP ，则忽略此选项
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -297,7 +297,7 @@ calibredb add [选项] file1 file2 file3 ...
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-为这本书设置标识符，例如 \-I asin:XXX \-I isbn:YYY
+为这本书设置书号，例如 \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -525,7 +525,7 @@ calibredb export [options] ids
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to control the filename and folder structure of the saved files. Default is \fB\(dq\fP{author_sort}/{title}/{title} \- {authors}\fB\(dq\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+该模板用来控制保存到设备的文件的文件名和目录结构。默认是\fB\(dq\fP{author_sort}/{title}/{title} \- {authors}\fB\(dq\fP，它将把书籍保存到包含标题和作者的文件名的每个作者目录中。可用的控制项是: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -590,7 +590,7 @@ see the different options, specify the name of the output file and then the
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+在转换过程的不同阶段分别保存输出到指定目录。如果您检查在转换过程的哪个阶段发生了错误，这非常有用。 默认: \fB\(aq\fPNone\fB\(aq\fP 适用于: AZW3, EPUB, MOBI 的输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -600,7 +600,7 @@ Save the output from different stages of the conversion pipeline to the specifie
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-指定用于从生成的目录中排除书籍的规则。 排除规则的模型是(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP标签\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) 或(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP)。 例如： ((\fB\(aq\fP存档的书籍\fB\(aq\fP,\fB\(aq\fP#状态\fB\(aq\fP,\fB\(aq\fP已存档\fB\(aq\fP),) 将在自定义列“状态”中排除值为“已存档”的图书。定义多个规则时，将应用所有规则。 默认: \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP 应用于AZW3, EPUB, MOBI 输出格式
+指定用于从生成的目录中排除书籍的规则。 排除规则的模型是(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP标签\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) 或(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP)。 例如： ((\fB\(aq\fP存档的书籍\fB\(aq\fP,\fB\(aq\fP#状态\fB\(aq\fP,\fB\(aq\fP已存档\fB\(aq\fP),) 将在自定义栏目“状态”中排除值为“已存档”的图书。定义多个规则时，将应用所有规则。 默认: \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP 应用于AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -715,12 +715,12 @@ calibredb add_custom_column [options] label name datatype
 .INDENT 0.0
 .TP
 .B \-\-display
-一个自定义选项如何解释该列中数据的字典。这是一个JSON字符串。对于枚举列，使用 \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP 有许多选项可以进入显示变量，按列类型的选项是： composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations 找到适当组合的最好方法是在GUI中创建适当类型的自定义列，然后查看图书的备份OPF（确保自从添加该列以来已经创建了新的OPF）。在OPF中的新列中，你将看到JSON的“显示”。
+一个自定义选项如何解释该栏目中数据的字典。这是一个JSON字符串。对于枚举列，使用 \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP 有许多选项可以进入显示变量，按列类型的选项是： composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations 找到适当组合的最好方法是在GUI中创建适当类型的自定义栏目，然后查看图书的备份OPF（确保自从添加该列以来已经创建了新的OPF）。在OPF中的新列中，你将看到JSON的“显示”。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-is\-multiple
-此列存储类似数据的标签(即多个逗号分隔值)。仅当数据类型为文本时才适用。
+此栏目存储类似数据的标签(即多个逗号分隔值)。仅当数据类型为文本时才适用。
 .UNINDENT
 .SH CUSTOM_COLUMNS
 .INDENT 0.0
@@ -734,13 +734,13 @@ calibredb custom_columns [options]
 .UNINDENT
 .UNINDENT
 .sp
-列出可用的自定义列。显示列标签和ids。
+列出可用的自定义栏目。显示列标签和ids。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
-每栏显示细节。
+显示每栏细节。
 .UNINDENT
 .SH REMOVE_CUSTOM_COLUMN
 .INDENT 0.0
@@ -754,7 +754,7 @@ calibredb remove_custom_column [options] label
 .UNINDENT
 .UNINDENT
 .sp
-用标签删除的自定义列标识。可以使用custom_columns command命令查看可用列
+用标签删除的自定义栏目标识。可以使用custom_columns command命令查看可用栏目
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -774,15 +774,15 @@ calibredb set_custom [options] column id value
 .UNINDENT
 .UNINDENT
 .sp
-为 id 标识的书设置自定义列的值。
+为 id 标识的书设置自定义栏目的值。
 您可以使用搜索命令获取 id 列表。
-您可以使用 custom_columns 命令获取自定义列名的列表。
+您可以使用 custom_columns 命令获取自定义栏目名的列表。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
-如果栏存有多个值，将指定值附加到已有值之后，而非覆盖。
+如果栏目存有多个值，将指定值附加到已有值之后，而非覆盖。
 .UNINDENT
 .SH RESTORE_DATABASE
 .INDENT 0.0
@@ -796,14 +796,9 @@ calibredb restore_database [options]
 .UNINDENT
 .UNINDENT
 .sp
-Restore this database from the metadata stored in OPF files in each
-folder of the calibre library. This is useful if your metadata.db file
-has been corrupted.
+从calibre书库每个目录中OPF文件含有的元数据恢复此数据库，如果你的metadata.db文件已损坏，此方法很有用。
 .sp
-WARNING: This command completely regenerates your database. You will lose
-all saved searches, user categories, plugboards, stored per\-book conversion
-settings, and custom recipes. Restored metadata will only be as accurate as
-what is found in the OPF files.
+警告：此命令会完全重新生成数据库。你会丢失所有已保存的搜索，自定义分类，插板，已保存的每本书的版本设置和自定义配方。恢复的元数据和OPF文件中的一样准确。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -870,7 +865,7 @@ calibredb list_categories [options]
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
-逗号分隔类别列表查找名称。默认值：全部
+逗号分隔类别列表检索名。默认值：全部
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -929,7 +924,7 @@ calibredb 拷贝到 path/to/new/library
 .UNINDENT
 .UNINDENT
 .sp
-创建当前书库的副本。它创建了一个新的、空的书库，它所有的自定义列、虚拟书库和其他设置与当前书库相同。
+创建当前书库的副本。它创建了一个新的、空的书库，它所有的自定义栏目、虚拟书库和其他设置与当前书库相同。
 .sp
 副本书库将没有任何书籍。如果您想要创建一个完整的副本书库，包括所有的书籍，那么只需使用您的文件系统工具来复制书库文件夹。
 .sp
@@ -991,24 +986,31 @@ calibredb fts_index [options] enable/disable/status/reindex
 .UNINDENT
 .UNINDENT
 .sp
-Control the Full text search indexing process.
+控制全文搜索索引进程。
 .INDENT 0.0
 .TP
 .B enable
-Turns on FTS indexing for this library
+启用此书库的全文索引
 .TP
 .B disable
-Turns off FTS indexing for this library
+关闭此书库的全文索引
 .TP
 .B status
-Shows the current indexing status
+显示当前索引的状态
 .TP
 .B reindex
-Can be used to re\-index either particular books or
-the entire library. To re\-index particular books
-specify the book ids as additional arguments after the
-reindex command. If no book ids are specified the
-entire library is re\-indexed.
+.INDENT 7.0
+.INDENT 3.5
+可用于重新索引特定书籍或
+整个书库。要重新索引特定书籍
+请在reindex命令后将书籍ID指定为
+.UNINDENT
+.UNINDENT
+.INDENT 7.0
+.TP
+.B 附加参数。如果未指定图书ID，则会重新
+索引整个书库。
+.UNINDENT
 .UNINDENT
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
@@ -1028,13 +1030,13 @@ entire library is re\-indexed.
 .sp
 .nf
 .ft C
-calibredb fts_search [options] search expression
+calibredb fts_search [options] 搜索表达式
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Do a full text search on the entire library or a subset of it.
+对整个书库或其子集进行全文搜索。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -1065,7 +1067,7 @@ Do a full text search on the entire library or a subset of it.
 .INDENT 0.0
 .TP
 .B \-\-output\-format
-The format to output the search results in. Either \fB\(dq\fPtext\fB\(dq\fP for plain text or \fB\(dq\fPjson\fB\(dq\fP for JSON output.
+输出搜索结果的格式。纯文本为“text”，JSON输出为“json”。
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -1,0 +1,452 @@
+# vim:fileencoding=utf-8
+# License: GPL v3 Copyright: 2022, Kovid Goyal <kovid at kovidgoyal.net>
+from __python__ import bound_methods, hash_literals
+
+from elementmaker import E
+
+from ajax import ajax, ajax_send
+from book_list.cover_grid import THUMBNAIL_MAX_HEIGHT, THUMBNAIL_MAX_WIDTH
+from book_list.globals import get_current_query, get_session_data
+from book_list.library_data import current_library_id, download_url
+from book_list.router import back, open_book_url, push_state
+from book_list.top_bar import create_top_bar
+from book_list.ui import set_panel_handler
+from book_list.views import create_image
+from complete import create_search_bar
+from dom import add_extra_css, clear, set_css, svgicon
+from gettext import gettext as _
+from modals import create_custom_dialog, error_dialog, info_dialog, question_dialog
+from widgets import create_button, create_spinner
+
+overall_container_id = ''
+current_fts_query = {}
+query_id_counter = 0
+
+add_extra_css(def():
+    sel = '.fts-help-display '
+    style = f'{sel} ' + '{ padding-top: 0.5ex }\n'
+    style += f'{sel} div' + ' { margin-top: 0.5ex }\n'
+    style += f'{sel} .h' + ' { font-weight: bold; padding-bottom: 0.25ex }\n'
+    style += f'{sel} .bq' + ' { margin-left: 1em; margin-top: 0.5ex; margin-bottom: 0.5ex; font-style: italic }\n'
+    style += f'{sel} p' + ' { margin: 0}\n'
+    style += '.fts-highlight-match { font-style: italic; font-weight: bold }\n'
+    return style
+)
+
+def component(name):
+    return document.getElementById(overall_container_id)?.querySelector(f'[data-component="{name}"]')
+
+
+def showing_search_panel():
+    c = component('search')
+    return bool(c and c.style.display is 'block')
+
+
+def make_new_fts_query(q):
+    nonlocal current_fts_query, query_id_counter
+    query_id_counter += 1
+    current_fts_query = {'query_id': query_id_counter + ''}
+    if current_library_id():
+        current_fts_query.library_id = current_library_id()
+    Object.assign(current_fts_query, q)
+    xhr = ajax('fts/search', on_initial_fts_fetched, query=current_fts_query, bypass_cache=True)
+    xhr.send()
+
+
+def enable_indexing():
+    def on_response(end_type, xhr, ev):
+        if end_type is 'abort' or not showing_search_panel():
+            return
+        if end_type is not 'load':
+            if xhr.status is 403:
+                return error_dialog(_('Permission denied'), _(
+                    'You do not have permission to enable indexing. Only logged in users with write permission are allowed.'), xhr.error_html)
+            return error_dialog(_('Failed to enable indexing'), _('Enabling indexing failed. Click "Show details" for more information.'), xhr.error_html)
+        info_dialog(_('Indexing enabled'), _('Indexing of this library has been enabled. Depending on library size it can take a long time to index all books.'))
+    ajax_send(f'fts/indexing', True, on_response)
+
+
+def report_fts_not_enabled():
+    question_dialog(_('Full text searching disabled'), _(
+        'Full text search indexing has not been enabled for this library. Once enabled, indexing'
+        ' will take some time to complete after which searching will work. Enable indexing?'),
+        def (yes):
+            if yes:
+                enable_indexing()
+    )
+
+def on_initial_fts_fetched(end_type, xhr, ev):
+    if end_type is 'abort' or not showing_search_panel():
+        return
+    if end_type is not 'load':
+        clear_to_waiting_for_results(_('No matches found'))
+        if xhr.status is 428:
+            return report_fts_not_enabled()
+        return error_dialog(_('Failed to search'), _('The search failed. Click "Show details" for more information.'), xhr.error_html)
+    try:
+        results = JSON.parse(xhr.responseText)
+    except Exception as err:
+        return error_dialog(_('Server error'), _('Failed to parse search response from server.'), err + '')
+    if results.query_id + '' is not current_fts_query.query_id:
+        return
+    current_fts_query.results = results
+    show_initial_results()
+
+
+def execute_search_interactive():
+    nonlocal current_fts_query
+    query = component('query').querySelector('input').value
+    if not query or query.length < 1:
+        error_dialog(_('No search query specified'), _('A search word/phrase must be specified before attempting to search'))
+        return
+    q = get_current_query()
+    q.fts_panel = 'search'
+    q.fts_query = query
+    q.fts_use_stemming = 'y' if component('related_words').checked else 'n'
+    current_fts_query = {}
+    push_state(q, replace=True)
+
+
+def build_search_page():
+    # search input container
+    container = component('search')
+    clear(container)
+    search_button = create_button(_('Search'), icon='search', tooltip=_('Do the search'))
+    search_bar = create_search_bar(execute_search_interactive, 'search-books-fts', tooltip=_('Search for books'), placeholder=_('Enter words to search for'), button=search_button)
+    set_css(search_bar, flex_grow='10', margin_right='0.5em')
+    search_bar.dataset.component = 'query'
+    container.appendChild(E.div(style="display: flex; width: 100%; align-items: center", svgicon('fts'), E.span('\xa0'), search_bar, search_button))
+    sd = get_session_data()
+    related_words = E.label(E.input(
+        type="checkbox", data_component="related_words", checked=bool(sd.get('fts_related_words'))),
+        onchange=def():
+            sd = get_session_data()
+            rw = bool(component('related_words').checked)
+            if rw is not sd.get('fts_related_words'):
+                get_session_data().set('fts_related_words', rw)
+        , ' ' + _('Match on related words'),
+        title=_(
+            'With this option searching for words will also match on any related words (supported in several languages). For'
+            ' example, in the English language: {0} matches {1} and {2} as well').format(
+            'correction', 'correcting', 'corrected')
+    )
+    container.appendChild(E.div(style="padding-top: 1ex; border-bottom: solid 1px currentColor; width: 100%", related_words))
+
+    # Search help
+    container.appendChild(E.div(data_component='results'))
+
+
+def clear_to_waiting_for_results(msg):
+    container = component('results')
+    if not container:
+        return
+    clear(container)
+    msg = msg or (_('Searching, please wait') + '…')
+    container.appendChild(E.div(
+        style='margin: auto; width: 100%; text-align: center; margin-top: 4ex',
+        create_spinner(), '\xa0' + msg
+    ))
+
+
+def clear_to_help():
+    container = component('results')
+    if not container:
+        return
+    clear(container)
+    container.appendChild(E.div(class_='fts-help-display'))
+    container.appendChild(E.div(
+        style='margin-top: 1ex',
+        E.a(_('Re-index all books in this library'), class_='blue-link', href='javascript:void(0)', onclick=reindex_all),
+    ))
+    container = container.firstChild
+    fts_url = 'https://www.sqlite.org/fts5.html#full_text_query_syntax'
+    html = _('''
+<div class="h">Search for single words</div>
+<p>Simply type the word:</p>
+<div class="bq">awesome<br>calibre</div>
+
+<div class="h">Search for phrases</div>
+<p>Enclose the phrase in quotes:</p>
+<div class="bq">"early run"<br>"song of love"</div>
+
+<div class="h">Boolean searches</div>
+<div class="bq">(calibre AND ebook) NOT gun<br>simple NOT ("high bar" OR hard)</div>
+
+<div class="h">Phrases near each other</div>
+<div class="bq">NEAR("people" "in Asia" "try")<br>NEAR("Kovid" "calibre", 30)</div>
+<p>Here, 30 is the most words allowed between near groups. Defaults to 10 when unspecified.</p>
+
+<div style="margin-top: 1em"><a href="{fts_url}">Full syntax reference</a></div>
+''' + '</div>').format(fts_url=fts_url)
+    container.innerHTML = html
+    a = container.querySelector('a[href]')
+    a.setAttribute('target', '_new')
+    a.classList.add('blue-link')
+
+
+def apply_search_panel_state():
+    q = get_current_query()
+    ftsq = {'query': q.fts_query or '', 'use_stemming': q.fts_use_stemming or 'y'}
+    component('query').querySelector('input').value = ftsq.query
+    component('related_words').checked = ftsq.use_stemming is 'y'
+    if not ftsq.query:
+        clear_to_help()
+        return
+    if current_fts_query.query is not ftsq.query or current_fts_query.use_stemming is not ftsq.use_stemming:
+        make_new_fts_query(ftsq)
+        clear_to_waiting_for_results(_('Searching for {}, please wait…').format(ftsq.query))
+        return
+    show_initial_results()
+
+
+def open_format(book_id, fmt):
+    snippets = current_fts_query.results?.snippets
+    if snippets:
+        snippets = snippets[book_id]
+    text = ''
+    if snippets and fmt is not 'PDF':
+        for s in snippets:
+            if s.formats.indexOf(fmt) > -1:
+                text = s.text
+                break
+    url = open_book_url(book_id, fmt)
+    if fmt is 'PDF':
+        url = download_url(book_id, fmt, 'inline')
+    w = window.open(url, '_blank')
+    if text:
+        text = str.strip(text, '…').replaceAll('\x1c', '').replaceAll('\x1e', '')
+        w.read_book_initial_open_search_text = {'text': text, 'query': current_fts_query.query}
+
+
+def reindex_book(book_id):
+    def on_response(end_type, xhr, ev):
+        if end_type is 'abort' or not showing_search_panel():
+            return
+        if end_type is not 'load':
+            if xhr.status is 403:
+                return error_dialog(_('Permission denied'), _(
+                    'You do not have permission to re-index books. Only logged in users with write permission are allowed to re-index'), xhr.error_html)
+            return error_dialog(_('Failed to re-index'), _('Re-indexing the book failed. Click "Show details" for more information.'), xhr.error_html)
+        info_dialog(_('Re-indexing scheduled'), _('The book has been scheduled for re-indexing') if book_id else _(
+            'All books have been scheduled for re-indexing')
+        )
+
+    if book_id:
+        ajax_send(f'fts/reindex', {book_id: v'[]'}, on_response)
+    else:
+        ajax_send(f'fts/reindex', 'all', on_response)
+
+
+def reindex_all():
+    question_dialog(_('Are you sure?'), _('Re-indexing all books in the library can take a long time. Are you sure you want to proceed?'),
+        def (yes):
+            if yes:
+                reindex_book()
+    )
+
+
+def book_result_tile_clicked(ev):
+    result_tile = ev.currentTarget
+    bid = int(result_tile.dataset.bookId)
+    results = current_fts_query.results
+    formats = v'[]'
+    for x in results.results:
+        if x.book_id is bid:
+            formats.push(x.format)
+    create_custom_dialog(result_tile.title, def(parent, close_modal):
+        fmc = E.div(
+            style='display: flex; flex-wrap: wrap; margin-top: 1ex'
+        )
+
+        def open_format_and_close(book_id, fmt):
+            open_format(book_id, fmt)
+            close_modal()
+
+        def reindex(book_id):
+            close_modal()
+            reindex_book(book_id)
+
+        for fmt in formats:
+            a = E.a(fmt, class_='blue-link', style='cursor: pointer; margin: 1ex; display: block', href='javascript: void(0)', onclick=open_format_and_close.bind(None, bid, fmt))
+            fmc.appendChild(a)
+        parent.appendChild(E.div(
+            _('Click one of the formats below to open the book at this search result (except PDF which will open at the start):'),
+            fmc
+        ))
+        parent.appendChild(E.div(
+            style='margin-top: 1ex',
+            E.a(_('Re-index this book'), class_='blue-link', href='javascript: void(0)', onclick=reindex.bind(None, bid))
+        ))
+    )
+
+
+def book_result_tile(book_id, title, authors):
+    tile_height, img_max_width = '16ex', '12ex'
+    img = create_image(book_id, THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT, def():pass;)
+    img.style.maxHeight = tile_height
+    img.style.maxWidth = img_max_width
+    tooltip = (title) + ' ' + _('by') + ' ' + (authors)
+    img.alt = _('Cover of') + ' ' + tooltip
+    return E.div(
+        onclick=book_result_tile_clicked,
+        title=tooltip,
+        data_book_id=book_id + '', data_snippets_needed='1',
+        style=f'cursor: pointer; margin-bottom: 1ex; display:flex; height: {tile_height}; max-height: {tile_height}; width: 100%; align-items: stretch',
+        E.div(
+            style=f'margin-right: 1ex; width: {img_max_width}',
+            img
+        ),
+
+        E.div(
+            style=f'display:flex; flex-direction: column; height: 100%; overflow-y: auto',
+            E.div(E.span(style='font-size: small; font-style: italic; opacity: 0.5;', _('loading'), '…'), class_='snippets_container'),
+        )
+    )
+
+
+def on_snippets_fetched(end_type, xhr, ev):
+    if end_type is 'abort' or not showing_search_panel():
+        return
+    if end_type is not 'load':
+        return error_dialog(_('Failed to search'), _('The search failed. Click "Show details" for more information.'), xhr.error_html)
+    container = component('results')
+    if not container:
+        return
+    try:
+        results = JSON.parse(xhr.responseText)
+    except Exception as err:
+        return error_dialog(_('Server error'), _('Failed to parse search response from server.'), err + '')
+    if results.query_id is not current_fts_query.query_id:
+        return
+    if not current_fts_query.results.snippets:
+        current_fts_query.results.snippets = {}
+    Object.assign(current_fts_query.results.snippets, results.snippets)
+    show_snippets(results.snippets)
+    fetch_snippets()
+
+
+def render_text(parent, text):
+    in_highlighted = False
+    while text.length > 0:
+        q = '\x1e' if in_highlighted else '\x1c'
+        idx = text.indexOf(q)
+        if idx < 0:
+            idx = text.length
+        chunk = text[:idx]
+        text = text[idx+1:]
+        if in_highlighted:
+            parent.append(E.span(class_='fts-highlight-match', chunk))
+            in_highlighted = False
+        else:
+            parent.append(E.span(chunk))
+            in_highlighted = True
+
+
+def show_snippets(snippets):
+    container = component('results')
+    for book_id in Object.keys(snippets):
+        c = container.querySelector(f'[data-book-id="{book_id}"]')
+        v'delete c.dataset.snippetsNeeded'
+        s = c.querySelector('.snippets_container')
+        clear(s)
+        for x in snippets[book_id]:
+            f = ' '.join(x.formats)
+            e = E.div(E.code(
+                style='border: solid 1px currentColor; border-radius: 6px; padding: 0 4px; font-size: smaller',
+                data_formats=f, f)
+            )
+            e.appendChild(E.span(' '))
+            render_text(e, x.text)
+            s.appendChild(e)
+
+
+def fetch_snippets():
+    container = component('results')
+    if not container:
+        return
+    ids = v'[]'
+    for x in container.querySelectorAll('[data-snippets-needed="1"]'):
+        book_id = int(x.dataset.bookId)
+        ids.push(book_id)
+        if ids.length > 1:
+            break
+    if ids.length < 1:
+        return
+    ids = ','.join(ids)
+    q = {}
+    Object.assign(q, current_fts_query)
+    q.results = v'undefined'
+    xhr = ajax(f'fts/snippets/{ids}', on_snippets_fetched, query=q, bypass_cache=True)
+    xhr.send()
+
+
+def show_initial_results():
+    container = component('results')
+    if not container:
+        return
+    clear(container)
+    results = current_fts_query.results
+    left, total = results.indexing_status['left'], results.indexing_status['total']
+    if left > 0:
+        pc = int(((total-left) / total) * 100)
+        container.appendChild(E.div(
+            style='margin-top: 0.5ex',
+            E.span(_('WARNING:'), style='color: red; font-weight: bold'), '\xa0',
+            _('Indexing of library only {}% complete, search results may be incomplete.').format(pc)
+        ))
+    rc = E.div(style='margin-top: 0.5ex')
+    container.appendChild(rc)
+    mm = results.metadata
+    seen = {}
+    for r in results.results:
+        bid = r['book_id']
+        m = mm[bid]
+        if not seen[bid]:
+            rc.appendChild(book_result_tile(bid, m['title'], m['authors']))
+            seen[bid] = rc.lastChild
+            rc.appendChild(E.hr())
+    if results.results.length < 1:
+        rc.appendChild(E.div(_('No matches found')))
+    fetch_snippets()
+
+
+
+def show_panel(visible):
+    c = component(visible)
+    if c:
+        x = c.parentNode.firstChild
+        while x:
+            if x.nodeType is 1 and x is not c:
+                x.style.display = 'none'
+            x = x.nextSibling
+        c.style.display = 'block'
+
+
+def show_search_panel():
+    show_panel('search')
+    apply_search_panel_state()
+
+
+def show_index_panel():
+    show_panel('index')
+
+
+def init(container_id):
+    nonlocal overall_container_id
+    overall_container_id = container_id
+    container = document.getElementById(container_id)
+    create_top_bar(container, title=_('Search text of books'), action=back, icon='close')
+    container.appendChild(E.div(data_component='index'))
+    container.appendChild(E.div(
+        data_component='search',
+        style="padding:1ex 1em; margin-top: 0.5ex;"
+    ))
+    build_search_page()
+    q = get_current_query()
+    if not q.fts_panel or q.fts_panel is 'search':
+        show_search_panel()
+    elif q.fts_panel is 'index':
+        show_index_panel()
+
+
+set_panel_handler('fts', init)

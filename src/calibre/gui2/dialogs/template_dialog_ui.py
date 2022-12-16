@@ -400,9 +400,9 @@ class Ui_TemplateDialog(object):
         self.set_all_button.setToolTip(_("Set breakpoint on every line"))
         self.textbox.setToolTip(_("<p>The text of the template program goes in this box.\n"
 "            A General Program Mode template must begin with the word \"program:\".\n"
-"            A python template must begin with the word \"python:\" followed by a\n"
+"            A Python template must begin with the word \"python:\" followed by a\n"
 "            function definition line. There is a context menu item you can use\n"
-"            to enter the first lines of a python template.</p>"))
+"            to enter the first lines of a Python template.</p>"))
         self.new_doc_label.setText(_("D&ocumentation:"))
         self.new_doc.setToolTip(_("Documentation for the function being defined or edited"))
         self.label2.setText(_("Template value:"))

@@ -622,7 +622,7 @@ class Cache:
             self._fts_start_measuring_rate()
         return changed
 
-    @read_api
+    @write_api  # we need to use write locking as SQLITE gives a locked table error is multiple FTS queries are made at the same time
     def fts_search(
         self,
         fts_engine_query,
@@ -2348,6 +2348,13 @@ class Cache:
             # Composite field
             return f.get_books_for_val(item_id_or_composite_value, self._get_proxy_metadata, self._all_book_ids())
         return self._books_for_field(f.name, int(item_id_or_composite_value))
+
+    @read_api
+    def split_if_is_multiple_composite(self, f, v):
+        fm = self.field_metadata.get(f, None)
+        if fm and fm['datatype'] == 'composite' and fm['is_multiple']:
+            return [v.strip() for v in v.split(',') if v.strip()]
+        return v
 
     @read_api
     def data_for_find_identical_books(self):

@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "november 25, 2022" "6.9.0" "calibre"
+.TH "CALIBREDB" "1" "december 16, 2022" "6.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -238,17 +238,17 @@ Het veld waarop de resultaten worden gesorteerd. Beschikbare velden: author_sort
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+Het sjabloon dat moet worden uitgevoerd als \fB\(dq\fPtemplate\fB\(dq\fP in de veld\-lijst staat. Standaard: Geen
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template_file, \-t
-Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+Pad naar een bestand met het sjabloon dat moet worden uitgevoerd als \fB\(dq\fPtemplate\fB\(dq\fP in de veld\-lijst staat. Standaard: Geen
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template_heading
-Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
+Kop voor de sjabloonkolom. Standaard: stan%daard. Deze optie wordt genegeerd als de optie \fI\%\-\-for\-machine\fP is ingesteld
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -437,12 +437,12 @@ calibredb set_metadata [options] book_id [/path/to/metadata.opf]
 .UNINDENT
 .UNINDENT
 .sp
-Set the metadata stored in the calibre database for the book identified by
-book_id from the OPF file metadata.opf. book_id is a book id number from the
-search command. You can get a quick feel for the OPF format by using the
-\-\-as\-opf switch to the show_metadata command. You can also set the metadata of
-individual fields with the \-\-field option. If you use the \-\-field option, there
-is no need to specify an OPF file.
+Stel de metadata in die zijn opgeslagen in de Calibre\-database voor het boek geïdentificeerd door
+book_id uit het OPF\-bestand metadata.opf. book_id is een boek\-id\-nummer van de
+zoek opdracht. U kunt snel een idee krijgen van het OPF\-formaat door de
+\-\-as\-opf schakelt over naar de opdracht show_metadata. U kunt ook de metagegevens van
+individuele velden met de optie \-\-field. Als u de optie \-\-field gebruikt, is er
+het is niet nodig om een OPF\-bestand op te geven.
 .sp
 Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: \(dq/some path/with spaces\(dq
 .INDENT 0.0

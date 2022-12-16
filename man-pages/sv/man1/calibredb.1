@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "november 25, 2022" "6.9.0" "calibre"
+.TH "CALIBREDB" "1" "december 16, 2022" "6.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -229,17 +229,17 @@ Fältet av för att sortera resultat. Tillgängliga fält: author_sort, authors,
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+Mallen som ska köras om \fB\(dq\fPtemplate\fB\(dq\fP finns i fältlistan. Standard: Ingen
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template_file, \-t
-Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+Sökväg till en fil som innehåller mallen som ska köras om \fB\(dq\fPtemplate\fB\(dq\fP finns i fältlistan. Standard: Ingen
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template_heading
-Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
+Rubrik till mallkolumnen. Standard: template. Det här alternativet ignoreras om alternativet \fI\%\-\-for\-machine\fP är inställt
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -428,12 +428,11 @@ calibredb set_metadata [options] book_id [/path/to/metadata.opf]
 .UNINDENT
 .UNINDENT
 .sp
-Set the metadata stored in the calibre database for the book identified by
-book_id from the OPF file metadata.opf. book_id is a book id number from the
-search command. You can get a quick feel for the OPF format by using the
-\-\-as\-opf switch to the show_metadata command. You can also set the metadata of
-individual fields with the \-\-field option. If you use the \-\-field option, there
-is no need to specify an OPF file.
+Ställ in metadata som lagras i calibre\-databasen för den bok som identifieras med
+book_id från OPF\-filen metadata.opf. book_id är ett bok\-id\-nummer från
+sökkommandot. Du kan få en snabb känsla för OPF\-formatet genom att använda
+omkopplaren \-\-as\-opf till kommandot show_metadata. Du kan också ställa in metadata för
+enskilda fält med flaggan \-\-field. Om du använder flaggan \-\-field behöver du inte ange en OPF\-fil.
 .sp
 När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
