@@ -1,0 +1,26 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Thu, 15 Dec 2022 00:28:11 +0900
+Subject: Sort files and directories for reproducible build
+
+note:
+  os.walk() returns generator, not list.
+  sorted() is not usable here.
+---
+ setup/gui.py | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/setup/gui.py b/setup/gui.py
+index 22ef575..b4c986a 100644
+--- a/setup/gui.py
++++ b/setup/gui.py
+@@ -51,7 +51,9 @@ class GUI(Command):
+         try:
+             os.chdir(self.RESOURCES)
+             sources, files = [], []
+-            for root, _, files2 in os.walk('images'):
++            for root, dirs, files2 in os.walk('images'):
++                dirs.sort()
++                files2.sort()
+                 for name in files2:
+                     sources.append(os.path.join(root, name))
+             if self.newer(self.RCC, sources):
