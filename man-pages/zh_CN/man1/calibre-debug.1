@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "十一月 25, 2022" "6.9.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "十二月 16, 2022" "6.10.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -41,27 +41,24 @@ calibre\-debug [选项]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre E\-book viewer and the calibre editor in debug mode.
+多种命令行界面在排除 calibre 的故障时很有用。这个命令将无条件
+地开启内置的 python 编译器。你也可以在 debug 模式下运行主
+要的 cailbre GUI，calibre 电子书阅读器和 calibre 编辑器。
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the E\-book diff tool and so
-on.
+它同时也包含了部分没有命令行工具的
+calibre 界面，比如字体子集，电子书区分
+工具等等。
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+你也能用 \fBcalibre\-debug\fP 来运行独立的脚本。像这样来操作：
 .INDENT 0.0
 .INDENT 3.5
 \fBcalibre\-debug\fP \-e myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .UNINDENT
 .UNINDENT
-.sp
-Everything after the \fB\-\-\fP is passed to the script. You can also use \fBcalibre\-debug\fP
-as a shebang in scripts, like this:
 .INDENT 0.0
-.INDENT 3.5
+.TP
+.B 在 \fB\-\-\fP 后的的所有东西都被传输到了脚本里。类似这样：
 #!/usr/bin/env \-S \fBcalibre\-debug\fP \-e \fB\-\-\fP \-\-
-.UNINDENT
 .UNINDENT
 .sp
 每当向具有它们自己空间的:command:
@@ -113,7 +110,7 @@ calibre\-debug\(ga传递参数时，用引号括起这些参数。例如: \(dq/s
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Export all calibre data (books/settings/plugins). Normally, you will be asked for the export folder and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export folder and libraries. The special keyword \fB\(dq\fPall\fB\(dq\fP can be used to export all libraries. Examples:    calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP  # for interactive use   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /path/to/empty/export/folder /path/to/library/folder1 /path/to/library2   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /export/folder all  # export all known libraries
+导出所有calibre数据（书籍/设置/插件）。通常，系统会要求您输入要导出的导出文件夹和书库。您可以将它们指定为命令行参数以跳过这些问题。导出文件夹和书库使用绝对路径。特殊关键字“all”可用于导出所有库。例如：    calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP  # 用于交互使用   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /path/to/empty/export/folder /path/to/library/folder1 /path/to/library2   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /export/folder all  # 导出所有已知书库
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -162,12 +159,12 @@ Export all calibre data (books/settings/plugins). Normally, you will be asked fo
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-Run a plugin that provides a command line interface. For example: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
+执行一个提供命令行界面的插件。例如： calibre\-debug \-r“插件名称”\-\- file1 \fB\-\-option1\fP 在\-\-后方的内容将被当作参数传递给插件。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-run\-test, \-t
-Run the named test(s). Use the special value \fB\(dq\fPall\fB\(dq\fP to run all tests. If the test name starts with a period it is assumed to be a module name. If the test name starts with @ it is assumed to be a category name.
+运行命名的测试。使用特殊值“all”运行所有测试。如果测试名称以句点开头，则假定为模块名称。如果测试名称以@开头，则假定为类别名称。
 .UNINDENT
 .INDENT 0.0
 .TP

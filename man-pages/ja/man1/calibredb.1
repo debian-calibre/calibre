@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "11月 25, 2022" "6.9.0" "calibre"
+.TH "CALIBREDB" "1" "12月 16, 2022" "6.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -832,7 +832,7 @@ CSVで出力
 .INDENT 0.0
 .TP
 .B \-\-vacuum\-fts\-db
-Vacuum the full text search database. This can be very slow and memory intensive, depending on the size of the database.
+全文検索データベースより抽出を行います。この操作はデータベースのサイズによっては非常に遅くなり、またメモリーを消費する場合があります。
 .UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
@@ -980,24 +980,20 @@ calibredb fts_index [options] enable/disable/status/reindex
 .UNINDENT
 .UNINDENT
 .sp
-Control the Full text search indexing process.
+全文検索用インデックス生成処理の設定
 .INDENT 0.0
 .TP
 .B enable
-Turns on FTS indexing for this library
+このライブラリーの FTS インデックスを有効にする
 .TP
 .B disable
-Turns off FTS indexing for this library
+このライブラリーの FTS インデックスを無効にする
 .TP
 .B status
-Shows the current indexing status
+現在のインデックス化状態を表示
 .TP
 .B reindex
-Can be used to re\-index either particular books or
-the entire library. To re\-index particular books
-specify the book ids as additional arguments after the
-reindex command. If no book ids are specified the
-entire library is re\-indexed.
+特定のブックまたはライブラリー全体の再インデックス化を行えます。特定ブックの再インデックス化の場合はブックのidを reindex コマンドの後ろに引数として付けてください。ブックid が指定されない場合はライブラリー全体が再インデックス化されます。
 .UNINDENT
 .sp
 スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
@@ -1009,7 +1005,7 @@ The speed of indexing. Use fast for fast indexing using all your computers resou
 .INDENT 0.0
 .TP
 .B \-\-wait\-for\-completion
-Wait till all books are indexed, showing indexing progress periodically
+全てのブックのインデックス生成までお待ちください。インデックス化の進捗は定期的に表示されます
 .UNINDENT
 .SH FTS_SEARCH
 .INDENT 0.0

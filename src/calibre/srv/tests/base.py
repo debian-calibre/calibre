@@ -34,13 +34,14 @@ class BaseTest(SimpleTest):
         for i in range(max_retries + 1):
             failures_before = len(result.failures)
             errors_before = len(result.errors)
-            super().run(result=result)
+            ret = super().run(result=result)
             if len(result.failures) == failures_before and len(result.errors) == errors_before:
-                return
+                return ret
             print(f'Retrying test {self._testMethodName} after failure/error')
-            q = result.failures if len(result.failures) > failures_before else result.errors
-            q.pop(-1)
-            time.sleep(1)
+            if i < max_retries:
+                q = result.failures if len(result.failures) > failures_before else result.errors
+                q.pop(-1)
+                time.sleep(1)
 
 
 class LibraryBaseTest(BaseTest):
@@ -79,7 +80,8 @@ class LibraryBaseTest(BaseTest):
         db.init()
         db.set_cover({1:I('lt.png', data=True), 2:I('polish.png', data=True)})
         db.add_format(1, 'FMT1', BytesIO(b'book1fmt1'), run_hooks=False)
-        db.add_format(1, 'EPUB', open(P('quick_start/eng.epub'), 'rb'), run_hooks=False)
+        with open(P('quick_start/eng.epub'), 'rb') as src:
+            db.add_format(1, 'EPUB', src, run_hooks=False)
         db.add_format(1, 'FMT2', BytesIO(b'book1fmt2'), run_hooks=False)
         db.add_format(2, 'FMT1', BytesIO(b'book2fmt1'), run_hooks=False)
         db.backend.conn.close()

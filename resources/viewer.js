@@ -6583,6 +6583,7 @@ return parser;
             ρσ_d["show_all_metadata"] = false;
             ρσ_d["sort"] = "timestamp.desc";
             ρσ_d["view_mode"] = "cover_grid";
+            ρσ_d["fts_related_words"] = true;
             ρσ_d["and_search_terms"] = false;
             ρσ_d["collapse_at"] = 25;
             ρσ_d["dont_collapse"] = "";
@@ -8323,7 +8324,14 @@ return this.__repr__();
         });
 
         function thumbnail_url(book_id, width, height) {
-            return absolute_path("get/thumb/{}/{}?sz={}x{}".format(book_id, loaded_books_query().library_id, Math.ceil(width * window.devicePixelRatio), Math.ceil(height * window.devicePixelRatio)));
+            var query, prefix, lid;
+            query = "sz=" + ρσ_str.format("{}", Math.ceil(width * window.devicePixelRatio)) + "x" + ρσ_str.format("{}", Math.ceil(height * window.devicePixelRatio)) + "";
+            prefix = "get/thumb/" + ρσ_str.format("{}", book_id) + "";
+            lid = loaded_books_query().library_id || current_library_id();
+            if (lid) {
+                prefix += "/" + ρσ_str.format("{}", lid) + "";
+            }
+            return absolute_path("" + ρσ_str.format("{}", prefix) + "?" + ρσ_str.format("{}", query) + "");
         };
         if (!thumbnail_url.__argnames__) Object.defineProperties(thumbnail_url, {
             __argnames__ : {value: ["book_id", "width", "height"]},
@@ -8442,7 +8450,7 @@ return this.__repr__();
             self.cache = new LRUCache(size);
         };
         if (!ThumbnailCache.prototype.__init__.__defaults__) Object.defineProperties(ThumbnailCache.prototype.__init__, {
-            __defaults__ : {value: {size:250}},
+            __defaults__ : {value: {size:256}},
             __handles_kwarg_interpolation__ : {value: true},
             __argnames__ : {value: ["size"]},
             __module__ : {value: "book_list.library_data"}
@@ -8466,7 +8474,7 @@ return this.__repr__();
                 img.onerror = self.load_finished.bind(null, item, "error");
                 img.onload = self.load_finished.bind(null, item, "load");
                 img.onabort = self.load_finished.bind(null, item, "abort");
-                img.dataset.bookId = str(book_id);
+                img.dataset.bookId = book_id + "";
                 img.src = url;
                 self.cache.set(url, item);
                 return img;
@@ -10343,7 +10351,7 @@ return this.__repr__();
         Object.defineProperty(ModalContainer.prototype, "__bases__", {value: []});
         
 
-        function create_simple_dialog_markup(title, msg, details, icon, prefix, parent) {
+        function create_simple_dialog_markup(title, msg, details, icon, prefix, icon_color, parent) {
             var show_details, is_html_msg, html_container, details_container;
             details = details || "";
             show_details = ρσ_interpolate_kwargs.call(E, E.a, [_("Show details")].concat([ρσ_desugar_kwargs({class_: "blue-link", style: "padding-top:1em; display:inline-block; margin-left: auto"})]));
@@ -10373,10 +10381,10 @@ return this.__repr__();
             } else {
                 prefix = " ";
             }
-            parent.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.h2, [ρσ_interpolate_kwargs.call(E, E.span, [svgicon(icon)].concat([ρσ_desugar_kwargs({style: "color:red"})])), prefix, title].concat([ρσ_desugar_kwargs({style: "font-weight: bold; font-size: " + get_font_size("title")})])), ρσ_interpolate_kwargs.call(E, E.div, [(is_html_msg) ? html_container : msg].concat([ρσ_desugar_kwargs({style: "padding-top: 1em; margin-top: 1em; border-top: 1px solid currentColor"})])), ρσ_interpolate_kwargs.call(E, E.div, [show_details, ρσ_interpolate_kwargs.call(E, E.div, [details_container].concat([ρσ_desugar_kwargs({style: "display:none; white-space:pre-wrap; font-size: smaller; margin-top: 1em; border-top: solid 1px currentColor; padding-top: 1em"})]))].concat([ρσ_desugar_kwargs({style: "display: " + ((details) ? "block" : "none")})]))].concat([ρσ_desugar_kwargs({style: "max-width:40em; text-align: left"})])));
+            parent.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.h2, [ρσ_interpolate_kwargs.call(E, E.span, [svgicon(icon)].concat([ρσ_desugar_kwargs({style: "color:" + ρσ_str.format("{}", icon_color) + ""})])), prefix, title].concat([ρσ_desugar_kwargs({style: "font-weight: bold; font-size: " + get_font_size("title")})])), ρσ_interpolate_kwargs.call(E, E.div, [(is_html_msg) ? html_container : msg].concat([ρσ_desugar_kwargs({style: "padding-top: 1em; margin-top: 1em; border-top: 1px solid currentColor"})])), ρσ_interpolate_kwargs.call(E, E.div, [show_details, ρσ_interpolate_kwargs.call(E, E.div, [details_container].concat([ρσ_desugar_kwargs({style: "display:none; white-space:pre-wrap; font-size: smaller; margin-top: 1em; border-top: solid 1px currentColor; padding-top: 1em"})]))].concat([ρσ_desugar_kwargs({style: "display: " + ((details) ? "block" : "none")})]))].concat([ρσ_desugar_kwargs({style: "max-width:40em; text-align: left"})])));
         };
         if (!create_simple_dialog_markup.__argnames__) Object.defineProperties(create_simple_dialog_markup, {
-            __argnames__ : {value: ["title", "msg", "details", "icon", "prefix", "parent"]},
+            __argnames__ : {value: ["title", "msg", "details", "icon", "prefix", "icon_color", "parent"]},
             __module__ : {value: "modals"}
         });
 
@@ -10387,17 +10395,21 @@ return this.__repr__();
             var icon = ( 3 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[3];
             var prefix = ( 4 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[4];
             var on_close = (arguments[5] === undefined || ( 5 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_simple_dialog.__defaults__.on_close : arguments[5];
+            var icon_color = (arguments[6] === undefined || ( 6 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_simple_dialog.__defaults__.icon_color : arguments[6];
             var ρσ_kwargs_obj = arguments[arguments.length-1];
             if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
             if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "on_close")){
                 on_close = ρσ_kwargs_obj.on_close;
             }
-            ρσ_interpolate_kwargs.call(this, show_modal, [create_simple_dialog_markup.bind(null, title, msg, details, icon, prefix)].concat([ρσ_desugar_kwargs({on_close: on_close})]));
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "icon_color")){
+                icon_color = ρσ_kwargs_obj.icon_color;
+            }
+            ρσ_interpolate_kwargs.call(this, show_modal, [create_simple_dialog_markup.bind(null, title, msg, details, icon, prefix, icon_color)].concat([ρσ_desugar_kwargs({on_close: on_close})]));
         };
         if (!create_simple_dialog.__defaults__) Object.defineProperties(create_simple_dialog, {
-            __defaults__ : {value: {on_close:null}},
+            __defaults__ : {value: {on_close:null, icon_color:"red"}},
             __handles_kwarg_interpolation__ : {value: true},
-            __argnames__ : {value: ["title", "msg", "details", "icon", "prefix", "on_close"]},
+            __argnames__ : {value: ["title", "msg", "details", "icon", "prefix", "on_close", "icon_color"]},
             __module__ : {value: "modals"}
         });
 
@@ -10766,6 +10778,28 @@ return this.__repr__();
             __module__ : {value: "modals"}
         });
 
+        function info_dialog() {
+            var title = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+            var msg = ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[1];
+            var details = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? info_dialog.__defaults__.details : arguments[2];
+            var on_close = (arguments[3] === undefined || ( 3 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? info_dialog.__defaults__.on_close : arguments[3];
+            var ρσ_kwargs_obj = arguments[arguments.length-1];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "details")){
+                details = ρσ_kwargs_obj.details;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "on_close")){
+                on_close = ρσ_kwargs_obj.on_close;
+            }
+            ρσ_interpolate_kwargs.call(this, create_simple_dialog, [title, msg, details, "check", "", on_close].concat([ρσ_desugar_kwargs({icon_color: "green"})]));
+        };
+        if (!info_dialog.__defaults__) Object.defineProperties(info_dialog, {
+            __defaults__ : {value: {details:null, on_close:null}},
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["title", "msg", "details", "on_close"]},
+            __module__ : {value: "modals"}
+        });
+
         function progress_dialog() {
             var msg = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
             var on_close = (arguments[1] === undefined || ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? progress_dialog.__defaults__.on_close : arguments[1];
@@ -10879,6 +10913,7 @@ return this.__repr__();
         ρσ_modules.modals.close_all_modals = close_all_modals;
         ρσ_modules.modals.error_dialog = error_dialog;
         ρσ_modules.modals.warning_dialog = warning_dialog;
+        ρσ_modules.modals.info_dialog = info_dialog;
         ρσ_modules.modals.progress_dialog = progress_dialog;
         ρσ_modules.modals.ajax_progress_dialog = ajax_progress_dialog;
         ρσ_modules.modals.ajax_send_progress_dialog = ajax_send_progress_dialog;
@@ -11053,6 +11088,9 @@ return this.__repr__();
     (function(){
         var __name__ = "book_list.router";
         var mode_handlers, default_mode_handler, read_book_mode;
+        var absolute_path = ρσ_modules.ajax.absolute_path;
+        var encode_query = ρσ_modules.ajax.encode_query;
+
         var E = ρσ_modules.elementmaker.E;
 
         var _ = ρσ_modules.gettext.gettext;
@@ -11190,6 +11228,30 @@ return this.__repr__();
             __module__ : {value: "book_list.router"}
         });
 
+        function open_book_url(book_id, fmt, extra_query) {
+            var lid, ans, q;
+            lid = current_library_id();
+            ans = absolute_path("");
+            q = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["book_id"] = book_id;
+                ρσ_d["fmt"] = fmt;
+                ρσ_d["mode"] = read_book_mode;
+                return ρσ_d;
+            }).call(this);
+            if (lid) {
+                q.library_id = lid;
+            }
+            if (extra_query) {
+                Object.assign(q, extra_query);
+            }
+            return ans + encode_query(q, "#");
+        };
+        if (!open_book_url.__argnames__) Object.defineProperties(open_book_url, {
+            __argnames__ : {value: ["book_id", "fmt", "extra_query"]},
+            __module__ : {value: "book_list.router"}
+        });
+
         function push_state() {
             var query = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
             var replace = (arguments[1] === undefined || ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? push_state.__defaults__.replace : arguments[1];
@@ -11310,6 +11372,7 @@ return this.__repr__();
         ρσ_modules["book_list.router"].apply_mode = apply_mode;
         ρσ_modules["book_list.router"].apply_url = apply_url;
         ρσ_modules["book_list.router"].open_book = open_book;
+        ρσ_modules["book_list.router"].open_book_url = open_book_url;
         ρσ_modules["book_list.router"].push_state = push_state;
         ρσ_modules["book_list.router"].on_pop_state = on_pop_state;
         ρσ_modules["book_list.router"].back = back;
@@ -26645,7 +26708,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "6.9.0";
+        CALIBRE_VERSION = "6.10.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -32912,7 +32975,7 @@ return this.__repr__();
 
         function render_tag_browser() {
             var container, node;
-            container = document.getElementById(state.container_id).lastChild.lastChild;
+            container = component(document.getElementById(state.container_id), "tag_browser");
             clear(container);
             ρσ_interpolate_kwargs.call(this, set_css, [container].concat([ρσ_desugar_kwargs({padding: "1ex 1em", display: "flex", flex_wrap: "wrap", margin_left: "-0.5rem"})]));
             try {
@@ -33042,6 +33105,7 @@ return this.__repr__();
             search_bar = ρσ_interpolate_kwargs.call(this, create_search_bar, [execute_search_interactive, "search-books"].concat([ρσ_desugar_kwargs({tooltip: _("Search for books"), placeholder: _("Enter the search query"), button: search_button})]));
             ρσ_interpolate_kwargs.call(this, set_css, [search_bar].concat([ρσ_desugar_kwargs({flex_grow: "10", margin_right: "0.5em"})]));
             search_container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [search_bar, search_button].concat([ρσ_desugar_kwargs({style: "display: flex; width: 100%;"})])));
+            search_container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.a, [svgicon("fts"), " ", _("Search the full text of books instead")].concat([ρσ_desugar_kwargs({class_: "blue-link", href: "javascript: void(0)", onclick: show_panel.bind(null, "fts")})]))].concat([ρσ_desugar_kwargs({style: "text-align: left; padding-top: 1ex"})])));
             search_container.appendChild(ρσ_interpolate_kwargs.call(E, E.ul, [ρσ_desugar_kwargs({class_: "search-items", data_component: "search_expression"})]));
             loading_panel = component(container, "loading");
             loading_panel.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [create_spinner(), " " + _("Fetching data for the Tag browser, please wait") + "…"].concat([ρσ_desugar_kwargs({style: "margin-left:auto; margin-right:auto; font-size: 1.5rem; font-weight; bold; text-align:center; margin-top:30vh"})])));
@@ -43458,6 +43522,9 @@ return this.__repr__();
                     ρσ_d["result"] = result;
                     return ρσ_d;
                 }).call(this));
+                if (wc.current_query.query.only_first_match) {
+                    break;
+                }
                 match_counts[(typeof q === "number" && q < 0) ? match_counts.length + q : q] += 1;
             }
         };
@@ -43468,8 +43535,11 @@ return this.__repr__();
 
         function queue_next_spine_item(spine_idx, allow_current_name) {
             var name, query;
-            spine_idx %= wc.current_book.spine.length;
             name = (ρσ_expr_temp = wc.current_book.spine)[(typeof spine_idx === "number" && spine_idx < 0) ? ρσ_expr_temp.length + spine_idx : spine_idx];
+            if (wc.current_query.query.only_first_match && wc.result_num > 0) {
+                send_search_complete();
+                return;
+            }
             if (!name || !allow_current_name && name === wc.current_query.current_name) {
                 send_search_complete();
                 return;
@@ -43743,6 +43813,27 @@ return this.__repr__();
 
         var start_worker = ρσ_modules.worker.start_worker;
 
+        function parse_error_msg(msg) {
+            var details, emsg;
+            details = msg.msg;
+            emsg = _("Unknown error");
+            if (msg.code === GET_SPINE_FAILED) {
+                emsg = _("Loading text from the book failed.");
+            } else if (msg.code === CONNECT_FAILED) {
+                emsg = _("Connecting to database storing the local copy of the book failed in the worker thread.");
+            } else if (msg.code === UNHANDLED_ERROR) {
+                emsg = _("There was an unhandled error while searching.");
+            } else if (msg.code === DB_ERROR) {
+                emsg = msg.error.msg;
+                details = msg.error.details;
+            }
+            return [emsg, details];
+        };
+        if (!parse_error_msg.__argnames__) Object.defineProperties(parse_error_msg, {
+            __argnames__ : {value: ["msg"]},
+            __module__ : {value: "read_book.search"}
+        });
+
         function get_toc_data(book) {
             var spine, spine_toc_map, name, parent_map, toc_id_map, toc;
             spine = book.manifest.spine;
@@ -43815,13 +43906,14 @@ return this.__repr__();
             this.show_wait = SearchOverlay.prototype.show_wait.bind(this);
             this.show_results = SearchOverlay.prototype.show_results.bind(this);
             this.clear_results = SearchOverlay.prototype.clear_results.bind(this);
+            this.do_initial_search = SearchOverlay.prototype.do_initial_search.bind(this);
+            this.handle_initial_search_result = SearchOverlay.prototype.handle_initial_search_result.bind(this);
             this.queue_search = SearchOverlay.prototype.queue_search.bind(this);
             this.set_original_pos = SearchOverlay.prototype.set_original_pos.bind(this);
             this.return_to_original_position = SearchOverlay.prototype.return_to_original_position.bind(this);
             this.on_worker_message = SearchOverlay.prototype.on_worker_message.bind(this);
             this.no_result_received = SearchOverlay.prototype.no_result_received.bind(this);
             this.result_received = SearchOverlay.prototype.result_received.bind(this);
-            this.make_query_programmatically = SearchOverlay.prototype.make_query_programmatically.bind(this);
             this.make_result_current = SearchOverlay.prototype.make_result_current.bind(this);
             this.search_result_discovered = SearchOverlay.prototype.search_result_discovered.bind(this);
             this.search_result_not_found = SearchOverlay.prototype.search_result_not_found.bind(this);
@@ -43939,6 +44031,7 @@ return this.__repr__();
             c.style.userSelect = "none";
             c.addEventListener("keydown", self.onkeydown);
             c.addEventListener("keyup", self.onkeyup);
+            self.result_handler = null;
             ρσ_interpolate_kwargs.call(this, create_top_bar, [c].concat([ρσ_desugar_kwargs({title: _("Search in book"), action: self.hide, icon: "close"})]));
             search_button = create_button(_("Search"), "search");
             c.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, create_search_bar, [self.run_search, "search-in-book"].concat([ρσ_desugar_kwargs({button: search_button})])), E.div("  "), search_button].concat([ρσ_desugar_kwargs({style: "display: flex; padding: 1rem; padding-bottom: 0.5rem; overflow: hidden"})])));
@@ -44011,6 +44104,68 @@ return this.__repr__();
         if (!SearchOverlay.prototype.clear_results.__module__) Object.defineProperties(SearchOverlay.prototype.clear_results, {
             __module__ : {value: "read_book.search"}
         });
+        SearchOverlay.prototype.do_initial_search = function do_initial_search(text, query) {
+            var self = this;
+            var q;
+            q = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["mode"] = "contains";
+                ρσ_d["case_sensitive"] = true;
+                ρσ_d["text"] = text;
+                ρσ_d["only_first_match"] = true;
+                return ρσ_d;
+            }).call(this);
+            self.request_counter += 1;
+            self.initial_search_result_counter = 0;
+            self.initial_search_human_readable_query = query;
+            self.search_in_flight.id = self.request_counter;
+            self.result_handler = self.handle_initial_search_result;
+            self.worker.postMessage((function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["type"] = "search";
+                ρσ_d["current_name"] = "";
+                ρσ_d["id"] = self.request_counter;
+                ρσ_d["query"] = q;
+                return ρσ_d;
+            }).call(this));
+        };
+        if (!SearchOverlay.prototype.do_initial_search.__argnames__) Object.defineProperties(SearchOverlay.prototype.do_initial_search, {
+            __argnames__ : {value: ["text", "query"]},
+            __module__ : {value: "read_book.search"}
+        });
+        SearchOverlay.prototype.handle_initial_search_result = function handle_initial_search_result(msg) {
+            var self = this;
+            var ρσ_unpack, emsg, details;
+            if (msg.type === "error") {
+                ρσ_unpack = parse_error_msg(msg);
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+                emsg = ρσ_unpack[0];
+                details = ρσ_unpack[1];
+                error_dialog(_("Could not search"), emsg, details);
+                self.result_handler = null;
+                self.initial_search_result_counter = 0;
+            } else if (msg.id === self.search_in_flight.id) {
+                if (msg.type === "search_complete") {
+                    self.search_in_flight.id = null;
+                    self.result_handler = null;
+                    if (self.initial_search_result_counter === 0) {
+                        self.view.hide_loading();
+                        window.alert(_("The full text search query {} was not found in the book, try a manual search.").format(self.initial_search_human_readable_query));
+                    }
+                    self.initial_search_result_counter = 0;
+                } else if (msg.type === "search_result") {
+                    self.initial_search_result_counter += 1;
+                    if (self.initial_search_result_counter === 1) {
+                        self.view.discover_search_result(msg.result);
+                        self.view.hide_loading();
+                    }
+                }
+            }
+        };
+        if (!SearchOverlay.prototype.handle_initial_search_result.__argnames__) Object.defineProperties(SearchOverlay.prototype.handle_initial_search_result, {
+            __argnames__ : {value: ["msg"]},
+            __module__ : {value: "read_book.search"}
+        });
         SearchOverlay.prototype.queue_search = function queue_search(query, book, current_name) {
             var self = this;
             self.request_counter += 1;
@@ -44052,21 +44207,16 @@ return this.__repr__();
         });
         SearchOverlay.prototype.on_worker_message = function on_worker_message(evt) {
             var self = this;
-            var msg, details, emsg;
+            var msg, ρσ_unpack, emsg, details;
             msg = evt.data;
+            if (self.result_handler) {
+                return self.result_handler(msg);
+            }
             if (msg.type === "error") {
-                details = msg.msg;
-                emsg = _("Unknown error");
-                if (msg.code === GET_SPINE_FAILED) {
-                    emsg = _("Loading text from the book failed.");
-                } else if (msg.code === CONNECT_FAILED) {
-                    emsg = _("Connecting to database storing the local copy of the book failed in the worker thread.");
-                } else if (msg.code === UNHANDLED_ERROR) {
-                    emsg = _("There was an unhandled error while searching.");
-                } else if (msg.code === DB_ERROR) {
-                    emsg = msg.error.msg;
-                    details = msg.error.details;
-                }
+                ρσ_unpack = parse_error_msg(msg);
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+                emsg = ρσ_unpack[0];
+                details = ρσ_unpack[1];
                 error_dialog(_("Could not search"), emsg, details);
             } else if (msg.id === self.search_in_flight.id) {
                 if (msg.type === "search_complete") {
@@ -44155,22 +44305,6 @@ return this.__repr__();
         };
         if (!SearchOverlay.prototype.result_received.__argnames__) Object.defineProperties(SearchOverlay.prototype.result_received, {
             __argnames__ : {value: ["result"]},
-            __module__ : {value: "read_book.search"}
-        });
-        SearchOverlay.prototype.make_query_programmatically = function make_query_programmatically(text, mode, case_sensitive) {
-            var self = this;
-            self.current_query = (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["text"] = text;
-                ρσ_d["mode"] = mode;
-                ρσ_d["case_sensitive"] = case_sensitive;
-                return ρσ_d;
-            }).call(this);
-            self.show();
-            self.run_search();
-        };
-        if (!SearchOverlay.prototype.make_query_programmatically.__argnames__) Object.defineProperties(SearchOverlay.prototype.make_query_programmatically, {
-            __argnames__ : {value: ["text", "mode", "case_sensitive"]},
             __module__ : {value: "read_book.search"}
         });
         SearchOverlay.prototype.make_result_current = function make_result_current(result_num) {
@@ -44404,6 +44538,7 @@ return this.__repr__();
         })());
         main = worker_main;
         ρσ_modules["read_book.search"].main = main;
+        ρσ_modules["read_book.search"].parse_error_msg = parse_error_msg;
         ρσ_modules["read_book.search"].get_toc_data = get_toc_data;
         ρσ_modules["read_book.search"].SearchOverlay = SearchOverlay;
     })();
@@ -46060,6 +46195,14 @@ return this.__repr__();
         });
         View.prototype.hide_loading = function hide_loading() {
             var self = this;
+            var q;
+            if (window.read_book_initial_open_search_text) {
+                q = window.read_book_initial_open_search_text;
+                delete window.read_book_initial_open_search_text;
+                self.search_overlay.do_initial_search(q.text, q.query);
+                self.show_loading_message(_("Searching for: {}").format(q.query));
+                return;
+            }
             if (self.show_loading_callback_timer !== null) {
                 clearTimeout(self.show_loading_callback_timer);
                 self.show_loading_callback_timer = null;
