@@ -37,7 +37,7 @@ from calibre.ebooks.oeb.polish.utils import (
     link_stylesheets, setup_css_parser_serialization as scs
 )
 from calibre.gui2 import (
-    add_to_recent_docs, choose_dir, choose_files, choose_save_file, error_dialog,
+    add_to_recent_docs, choose_dir, choose_files, choose_save_file, error_dialog, warning_dialog,
     info_dialog, open_url, question_dialog
 )
 from calibre.gui2.dialogs.confirm_delete import confirm
@@ -107,6 +107,7 @@ class Boss(QObject):
     def __init__(self, parent, notify=None):
         QObject.__init__(self, parent)
         self.global_undo = GlobalUndoHistory()
+        self.file_was_readonly = False
         self.container_count = 0
         self.tdir = None
         self.save_manager = SaveManager(parent, notify)
@@ -328,6 +329,11 @@ class Boss(QObject):
                 _('Tweaking is only supported for books in the %s formats.'
                   ' Convert your book to one of these formats first.') % _(' and ').join(sorted(SUPPORTED)),
                 show=True)
+
+        self.file_was_readonly = not os.access(path, os.W_OK)
+        if self.file_was_readonly:
+            warning_dialog(self.gui, _('Read-only file'), _(
+                'The file {} is read-only. Saving changes to it will either fail or cause its permissions to be reset.').format(path), show=True)
 
         for name in tuple(editors):
             self.close_editor(name)
@@ -1298,6 +1304,11 @@ class Boss(QObject):
                 c.path_to_ebook = path
                 self.global_undo.update_path_to_ebook(path)
             else:
+                return
+        if os.path.exists(c.path_to_ebook) and not os.access(c.path_to_ebook, os.W_OK):
+            if not question_dialog(self.gui, _('File is read-only'), _(
+                    'The file at {} is read-only. The editor will try to reset its permissions before saving. Proceed with saving?'
+            ).format(c.path_to_ebook), override_icon='dialog_warning.png', yes_text=_('&Save'), no_text=_('&Cancel'), yes_icon='save.png'):
                 return
         self.gui.action_save.setEnabled(False)
         tdir = self.mkdtemp(prefix='save-')

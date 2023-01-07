@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "十二月 16, 2022" "6.10.0" "calibre"
+.TH "CALIBREDB" "1" "一月 06, 2023" "6.11.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -153,7 +153,7 @@ calibre书库，必须首先在服务器上设置身份验证。这里
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-calibre 库的路径。默认是使用存储在设置中的路径。您还可以连接到 calibre 内容服务器，以便在远程库上执行操作。为此使用表单的URL：\fI\%http://hostname:port/#library_id\fP 例如，\fI\%http://localhost:8080/#mylibrary\fP。library_id是要在内容服务器上连接的库的库id。您可以使用特殊的library_id值来获得服务器上可用库id的列表。有关如何通过内容服务器设置访问的详细信息，请参阅https://manual.calibre\-ebook.com/generated/en/calibredb.html。
+calibre 书库的路径。默认是使用存储在设置中的路径。您还可以连接到 calibre 内容服务器，以便在远程书库上执行操作。为此使用表单的URL：\fI\%http://hostname:port/#library_id\fP 例如，\fI\%http://localhost:8080/#mylibrary\fP。library_id是要在内容服务器上连接的书库的书库id。您可以使用特殊的library_id值来获得服务器上可用书库id的列表。有关如何通过内容服务器设置访问的详情，请参阅https://manual.calibre\-ebook.com/generated/en/calibredb.html。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -218,12 +218,12 @@ calibredb list [选项]
 .INDENT 0.0
 .TP
 .B \-\-prefix
-所有文件路径前缀。默认为书库目录绝对路径。
+所有文件路径前缀。默认为书库文件夹绝对路径。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-search, \-s
-通过搜索请求过滤结果。对于每个搜索请求的格式，请参见用户手册中搜索相关的文档。默认为不做过滤。
+通过搜索请求筛选结果。对于每个搜索请求的格式，请参见用户手册中搜索相关的文档。默认为不做筛选。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -233,7 +233,7 @@ calibredb list [选项]
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-排序结果的字段。 可用字段：author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid 默认值：id
+The field by which to sort the results. You can specify multiple fields by separating them with commas. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Default: id
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -273,7 +273,7 @@ calibredb add [选项] file1 file2 file3 ...
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-如果找到具有相似标题和作者的图书，请自动将传入格式(文件)合并到现有图书记录中。值“Ignore”表示丢弃重复的格式。值“overwrite”表示库中的重复格式将被新添加的文件覆盖。值“new_record”表示将重复的格式放入新的图书记录中。
+如果找到具有类似标题和作者的书籍，请自动将传入格式(文件)合并到现有书籍记录中。值“Ignore”表示丢弃重复的格式。值“overwrite”表示书库中的重复格式将被新添加的文件覆盖。值“new_record”表示将重复的格式放入新的书籍记录中。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -345,7 +345,7 @@ calibredb add [选项] file1 file2 file3 ...
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-假设每个文件夹只有一本逻辑图书，并且其中的所有文件都是该图书的不同电子书格式
+假设每个文件夹只有一本逻辑书籍，并且其中的所有文件都是该书籍的不同电子书格式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -364,13 +364,13 @@ calibredb remove ids
 .UNINDENT
 .UNINDENT
 .sp
-从数据库移除指定 id 的书籍。ids 应为以逗号分隔的 id 号列表（你可以使用搜索命令来获得 id 号）。例如，23,34,57\-85（如果指定一个区间，该区间的最后一个数字不会被包括在内）。
+从数据库移除指定书号的书籍。书号应为以逗号分隔的 id 号列表（你可以使用搜索命令来获得 id 号）。例如，23,34,57\-85（如果指定一个区间，该区间的最后一个数字不会被包括在内）。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-permanent
-不要使用垃圾箱
+不要使用回收站
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -384,7 +384,7 @@ calibredb add_format [options] id ebook_file
 .UNINDENT
 .UNINDENT
 .sp
-用 ebook_file将电子书添加到由id标识的逻辑书的可用格式中。如果格式已经存在，则替换它，除非指定了不替换选项。
+用 ebook_file将电子书添加到由id标识的逻辑书籍的可用格式中。如果格式已经存在，则替换它，除非指定了不替换选项。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -404,7 +404,7 @@ calibredb remove_format [选项] id fmt
 .UNINDENT
 .UNINDENT
 .sp
-从ID识别的逻辑书中删除fmt格式。你可以通过使用搜索命令获取ID。fmt应该是形如LRF或TXT或EPUB的一个文件扩展名。如果逻辑书没有fmt可用则什么也不做。
+从ID识别的逻辑书籍中删除fmt格式。你可以通过使用搜索命令获取ID。fmt应该是形如LRF或TXT或EPUB的一个文件扩展名。如果逻辑书籍没有fmt可用则什么也不做。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .SH SHOW_METADATA
@@ -419,7 +419,7 @@ calibredb show_metadata [options] id
 .UNINDENT
 .UNINDENT
 .sp
-显示在 calibre 数据库中存储的id所标识的图书的元数据。
+显示在 calibre 数据库中存储的id所标识的书籍的元数据。
 id是来自搜索命令的id号。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
@@ -440,7 +440,7 @@ calibredb set_metadata [options] book_id [/path/to/metadata.opf]
 .UNINDENT
 .UNINDENT
 .sp
-根据OPF文件的metadata.opf设置存储在 calibre 数据库中的book_id标识图书的元数据。
+根据OPF文件的metadata.opf设置存储在 calibre 数据库中的book_id标识书籍的元数据。
 book_id是来自搜索命令的id号。您可以通过使用\-\-as\-opf切换到show_metadata命令来快速
 了解OPF格式。还可以用\-\-field选项设置各个字段的元数据。如果使用\-\-field选项则
 不需要指定OPF文件。
@@ -449,7 +449,7 @@ book_id是来自搜索命令的id号。您可以通过使用\-\-as\-opf切换到
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-设置字段。格式是field_name:value，例如：\fI\%\-\-field\fP tags:tag1,tag2。使用:option:\fI\-\-list\-fields\(ga来获取所有字段名称的列表。你可以多次指定此选项来设置多个字段。注意：对于语言，你必须使用ISO639语言代码（例如en代表英文，fr代表法语等）。对于标识符，语法是:option:\fP\-\-field\(ga identifiers:isbn:XXXX,doi:YYYYY。对于布尔(是/否)字段使用真与假或是和否。
+设置字段。格式是field_name:value，例如：\fI\%\-\-field\fP tags:tag1,tag2。使用:option:\fI\-\-list\-fields\(ga来获取所有字段名称的列表。你可以多次指定此选项来设置多个字段。注意：对于语言，你必须使用ISO639语言代码（例如en代表英文，fr代表法语等）。对于书号，语法是:option:\fP\-\-field\(ga identifiers:isbn:XXXX,doi:YYYYY。对于布尔(是/否)字段使用真与假或是和否。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -472,7 +472,7 @@ calibredb export [options] ids
 .UNINDENT
 .UNINDENT
 .sp
-导出指定 id 的书籍至文件系统。ids 为以逗号分隔的列表。
+导出指定id的书籍至文件系统。书号为以逗号分隔的列表。
 导出操作将保存书籍的所有格式，以及其封面和元数据(保存
 至一个 opf 文件)。你可以使用搜索命令来获得 id 号。
 .sp
@@ -495,7 +495,7 @@ calibredb export [options] ids
 .INDENT 0.0
 .TP
 .B \-\-dont\-update\-metadata
-一般来说，calibre 将基于 calibre 书库升级存储所存文件的元数据。这使保存到磁盘变慢一些。 选定此项将关闭此操作。
+一般来说，calibre 将基于 calibre 书库升级存储所存文件的元数据。这使保存到硬盘变慢一些。 选定此项将关闭此操作。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -525,7 +525,7 @@ calibredb export [options] ids
 .INDENT 0.0
 .TP
 .B \-\-template
-该模板用来控制保存到设备的文件的文件名和目录结构。默认是\fB\(dq\fP{author_sort}/{title}/{title} \- {authors}\fB\(dq\fP，它将把书籍保存到包含标题和作者的文件名的每个作者目录中。可用的控制项是: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+该模板用来控制保存到设备的文件的文件名和文件夹结构。默认是\fB\(dq\fP{author_sort}/{title}/{title} \- {authors}\fB\(dq\fP，它将把书籍保存到包含标题和作者的文件名的每个作者文件夹中。可用的控制项是: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -569,7 +569,7 @@ see the different options, specify the name of the output file and then the
 .INDENT 0.0
 .TP
 .B \-\-search, \-s
-为搜索查询过滤结果。搜索查询格式请参见用户手册中搜索相关内容。默认：不过滤
+为搜索查询筛选结果。搜索查询格式请参见用户手册中搜索相关内容。默认：不筛选
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -585,12 +585,12 @@ see the different options, specify the name of the output file and then the
 .INDENT 0.0
 .TP
 .B \-\-cross\-reference\-authors
-为具有多个作者的书籍在作者节中创建交叉引用。 默认值: \fB\(aq\fPFalse\fB\(aq\fP 适用于: AZW3, EPUB, MOBI输出格式
+为具有多个作者的书籍在作者部分中创建交叉引用。 默认值: \fB\(aq\fPFalse\fB\(aq\fP 适用于: AZW3, EPUB, MOBI输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-在转换过程的不同阶段分别保存输出到指定目录。如果您检查在转换过程的哪个阶段发生了错误，这非常有用。 默认: \fB\(aq\fPNone\fB\(aq\fP 适用于: AZW3, EPUB, MOBI 的输出格式
+在转换过程的不同阶段分别保存输出到指定文件夹。如果您检查在转换过程的哪个阶段发生了错误，这非常有用。 默认: \fB\(aq\fPNone\fB\(aq\fP 适用于: AZW3, EPUB, MOBI 的输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -625,7 +625,7 @@ see the different options, specify the name of the output file and then the
 .INDENT 0.0
 .TP
 .B \-\-generate\-series
-目录中包括“丛书系列”部分。 默认值： \fB\(aq\fPFalse\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
+目录中包括“丛书”部分。 默认值： \fB\(aq\fPFalse\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -684,7 +684,7 @@ calibredb saved_searches [options] (list|add|remove)
 .UNINDENT
 .UNINDENT
 .sp
-管理存储在该数据库中的保存搜索。
+管理存储在该数据库中的搜索历史。
 如果尝试添加已经存在的一个名称查询，
 则它将被替换。
 .sp
@@ -715,7 +715,7 @@ calibredb add_custom_column [options] label name datatype
 .INDENT 0.0
 .TP
 .B \-\-display
-一个自定义选项如何解释该栏目中数据的字典。这是一个JSON字符串。对于枚举列，使用 \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP 有许多选项可以进入显示变量，按列类型的选项是： composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations 找到适当组合的最好方法是在GUI中创建适当类型的自定义栏目，然后查看图书的备份OPF（确保自从添加该列以来已经创建了新的OPF）。在OPF中的新列中，你将看到JSON的“显示”。
+一个自定义选项如何解释该栏目中数据的字典。这是一个JSON字符串。对于枚举列，使用 \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP 有许多选项可以进入显示变量，按列类型的选项是： composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations 找到适当组合的最好方法是在GUI中创建适当类型的自定义栏目，然后查看书籍的备份OPF（确保自从添加该列以来已经创建了新的OPF）。在OPF中的新列中，你将看到JSON的“显示”。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -734,13 +734,13 @@ calibredb custom_columns [options]
 .UNINDENT
 .UNINDENT
 .sp
-列出可用的自定义栏目。显示列标签和ids。
+列出可用的自定义栏目。显示列标签和书号。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
-显示每栏细节。
+显示每栏详情。
 .UNINDENT
 .SH REMOVE_CUSTOM_COLUMN
 .INDENT 0.0
@@ -774,8 +774,8 @@ calibredb set_custom [options] column id value
 .UNINDENT
 .UNINDENT
 .sp
-为 id 标识的书设置自定义栏目的值。
-您可以使用搜索命令获取 id 列表。
+为 id 标识的书籍设置自定义栏目的值。
+您可以使用搜索命令获取id列表。
 您可以使用 custom_columns 命令获取自定义栏目名的列表。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
@@ -796,9 +796,9 @@ calibredb restore_database [options]
 .UNINDENT
 .UNINDENT
 .sp
-从calibre书库每个目录中OPF文件含有的元数据恢复此数据库，如果你的metadata.db文件已损坏，此方法很有用。
+从calibre书库每个文件夹中OPF文件含有的元数据恢复此数据库，如果你的metadata.db文件已损坏，此方法很有用。
 .sp
-警告：此命令会完全重新生成数据库。你会丢失所有已保存的搜索，自定义分类，插板，已保存的每本书的版本设置和自定义配方。恢复的元数据和OPF文件中的一样准确。
+警告：此命令会完全重新生成数据库。你会丢失所有搜索历史，自定义分类，处理规则，已保存的每本书的版本设置和自定义配方。恢复的元数据和OPF文件中的一样准确。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -818,7 +818,7 @@ calibredb check_library [options]
 .UNINDENT
 .UNINDENT
 .sp
-对表示库的文件系统执行一些检查。生成报告是invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
+对书库的文件系统执行一些检查。生成报告是invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -859,7 +859,7 @@ calibredb list_categories [options]
 .UNINDENT
 .sp
 在数据库中生成一个目录信息的报告。
-该信息与标签窗格中显示的信息等效。
+该信息与标签浏览器中显示的信息等效。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -899,7 +899,7 @@ calibredb backup_metadata [选项]
 .UNINDENT
 .UNINDENT
 .sp
-将存储在数据库中的元数据备份到每个图书文件夹中的
+将存储在数据库中的元数据备份到每个书籍文件夹中的
 单个OPF文件中。这通常是自动发生的，但是您可以运行
 此命令来强制重新生成OPF文件，并使用\-\-all选项。
 .sp
@@ -941,10 +941,10 @@ calibredb embed_metadata [options] book_id
 .UNINDENT
 .UNINDENT
 .sp
-从 calibre 数据库中的元数据更新存储在 calibre 库中的实际图书文件中的元数据。
+从 calibre 数据库中的元数据更新存储在 calibre 书库中的实际书籍文件中的元数据。
 通常，只有从 calibre 导出文件时才更新元数据，如果希望文件就地更新，则此命
 令很有用。请注意，不同的文件格式支持不同数量的元数据。你可以使用book_id
-的特殊值“all”来更新所有书籍中的元数据。还可以指定许多由空间分隔的书籍ID
+的特殊值“all”来更新所有书籍中的元数据。还可以指定许多由空间分隔的书籍书号
 和由连字符分隔的ID范围。例如：calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
@@ -965,7 +965,7 @@ calibredb搜索 [选项] 搜索表达式
 .UNINDENT
 .UNINDENT
 .sp
-搜索书库中指定的搜索项，返回与搜索表达式匹配的以逗号分隔的图书ID列表。输出格式对于输入格式接受ID列表的其他命令非常有用。
+搜索书库中指定的搜索项，返回与搜索表达式匹配的以逗号分隔的书籍书号列表。输出格式对于输入格式接受id列表的其他命令非常有用。
 搜索表达式可以是来自calibre强大的搜索查询语言中的任何内容，例如：calibredb 搜索author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
@@ -1003,12 +1003,12 @@ calibredb fts_index [options] enable/disable/status/reindex
 .INDENT 3.5
 可用于重新索引特定书籍或
 整个书库。要重新索引特定书籍
-请在reindex命令后将书籍ID指定为
+请在reindex命令后将书籍书号指定为
 .UNINDENT
 .UNINDENT
 .INDENT 7.0
 .TP
-.B 附加参数。如果未指定图书ID，则会重新
+.B 附加参数。如果未指定书籍书号，则会重新
 索引整个书库。
 .UNINDENT
 .UNINDENT
@@ -1022,7 +1022,7 @@ calibredb fts_index [options] enable/disable/status/reindex
 .INDENT 0.0
 .TP
 .B \-\-wait\-for\-completion
-等到所有图书都被编入索引，定期显示索引进度
+等到所有书籍都被编入索引，定期显示索引进度
 .UNINDENT
 .SH FTS_SEARCH
 .INDENT 0.0
@@ -1052,7 +1052,7 @@ calibredb fts_search [options] 搜索表达式
 .INDENT 0.0
 .TP
 .B \-\-indexing\-threshold
-允许搜索前必须索引多少库，以百分比表示。默认为90
+允许搜索前必须索引多少书库，以百分比表示。默认为90
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1072,7 +1072,7 @@ calibredb fts_search [options] 搜索表达式
 .INDENT 0.0
 .TP
 .B \-\-restrict\-to
-使用搜索表达式或ID限制搜索的书籍。例如：ids:1,2,3表示按id限制，或search:tag:foo表示限制具有标记foo的书籍。
+使用搜索表达式或id限制搜索的书籍。例如：ids:1,2,3表示按id限制，或search:tag:foo表示限制具有标记foo的书籍。
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

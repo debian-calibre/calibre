@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "十二月 16, 2022" "6.10.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "一月 06, 2023" "6.11.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -105,7 +105,7 @@ calibre\-debug\(ga传递参数时，用引号括起这些参数。例如: \(dq/s
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-将书解体到指定目录中。 用法： \-x file.epub output_dir 将图书导出为HTML文件和元数据的集合，您可以使用标准HTML编辑工具对其进行编辑。该用法适用于EPUB、AZW3、HTMLZ和DOCX文件。
+将书籍拆解到指定文件夹中。 用法： \-x file.epub output_dir 将书籍导出为HTML文件和元数据的集合，您可以使用标准HTML编辑工具对其进行编辑。该用法适用于EPUB、AZW3、HTMLZ和DOCX文件。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -135,11 +135,11 @@ calibre\-debug\(ga传递参数时，用引号括起这些参数。例如: \(dq/s
 .INDENT 0.0
 .TP
 .B \-\-implode\-book, \-i
-聚合以前炸开过的书籍。 用法：\-i output_dir file.epub 从output_dir的文件中导入该图书，该文件必须是由之前调用:option:
+聚合以前拆解过的书籍。 用法：\-i output_dir file.epub 从output_dir的文件中导入该书籍，该文件必须是由之前调用:option:
 .nf
 \(ga
 .fi
-\-\-explode\-book\(ga创建的。一定要指定与炸开时使用的文件类型相同的文件类型。
+\-\-explode\-book\(ga创建的。一定要指定与拆解时使用的文件类型相同的文件类型。
 .UNINDENT
 .INDENT 0.0
 .TP

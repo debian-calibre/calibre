@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SMTP" "1" "dezembro 16, 2022" "6.10.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "janeiro 06, 2023" "6.11.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .INDENT 0.0
@@ -103,12 +103,12 @@ Opções para usar um servidor de SMTP intermediário para enviar correio eletr�
 .INDENT 0.0
 .TP
 .B \-\-cafile
-Caminho para um ficheiro contendo certificados CA concatenados no formato PEM. Usado para verificar o certificado do servidor quando se usa TLS. Por omissão, é usado o certificado CA do sistema.
+Caminho para um ficheiro contendo certificados CA concatenados no formato PEM. Usado para verificar o certificado do servidor quando se usa TLS. Por predefinição é usado o certificado CA do sistema.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-verify\-server\-certificate
-Não efetuar a verificação do certificado do servidor quando se usa ligações com TLS. Tal costumava ser o comportamento por omissão nas versões do Calibre anteriores à 3.27. Se estiver a usar um servidor intermediário que tenha um certificado auto\-assinado ou inválido por qualquer outra razão, pode usar esta opção para obter o comportamento habitual das versões anteriores à 3.27
+Não efetuar a verificação do certificado do servidor quando se usa ligações com TLS. Tal costumava ser o comportamento por predefinição nas versões do Calibre anteriores à 3.27. Se estiver a usar um servidor intermediário que tenha um certificado auto\-assinado ou inválido por qualquer outra razão, pode usar esta opção para obter o comportamento habitual das versões anteriores à 3.27
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -123,7 +123,7 @@ Senha para retransmissão
 .INDENT 0.0
 .TP
 .B \-\-port
-Porta TCP para ligação ao servidor intermediário. Por omissão é usada a porta 465 se o método de encriptação for SSL, ou a porta 25 nos restantes casos.
+Porta TCP para ligação ao servidor intermediário. Por predefinição é usada a porta 465 se o método de encriptação for SSL, ou a porta 25 nos restantes casos.
 .UNINDENT
 .INDENT 0.0
 .TP

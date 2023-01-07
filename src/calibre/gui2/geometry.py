@@ -122,10 +122,10 @@ def _do_restore(self: QWidget, s: QScreen, geometry: QRect, saved_data: dict):
     self.setGeometry(geometry)
     if saved_data['full_screened']:
         debug('Restoring widget to full screen')
-        self.showFullScreen()
+        self.setWindowState(Qt.WindowState.WindowFullScreen)
     elif saved_data['maximized']:
         debug('Restoring widget to maximized')
-        self.showMaximized()
+        self.setWindowState(Qt.WindowState.WindowMaximized)
     return True
 
 
@@ -146,9 +146,9 @@ def _restore_to_new_screen(self: QWidget, s: QScreen, saved_data: dict) -> bool:
     sz = QSize(min(saved_geometry.width(), available_size.width()), min(saved_geometry.height(), available_size.height()))
     if not sz.isValid():
         return False
-    max_left = available_geometry.left() + (available_size.width() - sz.width())
-    max_top = available_geometry.top() + (available_size.height() - sz.height())
-    geometry = QRect(min(saved_geometry.left(), max_left), min(saved_geometry.top(), max_top), sz.width(), sz.height())
+    left = available_geometry.left() + (available_size.width() - sz.width()) // 2
+    top = available_geometry.top() + (available_size.height() - sz.height()) // 2
+    geometry = QRect(left, top, sz.width(), sz.height())
     return _do_restore(self, s, geometry, saved_data)
 
 

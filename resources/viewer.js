@@ -11191,19 +11191,7 @@ return this.__repr__();
             __module__ : {value: "book_list.router"}
         });
 
-        function open_book() {
-            var book_id = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
-            var fmt = ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[1];
-            var library_id = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? open_book.__defaults__.library_id : arguments[2];
-            var replace = (arguments[3] === undefined || ( 3 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? open_book.__defaults__.replace : arguments[3];
-            var ρσ_kwargs_obj = arguments[arguments.length-1];
-            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "library_id")){
-                library_id = ρσ_kwargs_obj.library_id;
-            }
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "replace")){
-                replace = ρσ_kwargs_obj.replace;
-            }
+        function request_full_screen_if_wanted() {
             var opt, has_touch, at_left, likely_wants_fullscreen;
             opt = get_session_data().get("fullscreen_when_opening");
             has_touch = "ontouchstart" in window;
@@ -11212,19 +11200,47 @@ return this.__repr__();
             if (opt === "auto" && likely_wants_fullscreen || opt === "always") {
                 request_full_screen();
             }
+        };
+        if (!request_full_screen_if_wanted.__module__) Object.defineProperties(request_full_screen_if_wanted, {
+            __module__ : {value: "book_list.router"}
+        });
+
+        function open_book() {
+            var book_id = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+            var fmt = ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[1];
+            var library_id = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? open_book.__defaults__.library_id : arguments[2];
+            var replace = (arguments[3] === undefined || ( 3 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? open_book.__defaults__.replace : arguments[3];
+            var extra_query = (arguments[4] === undefined || ( 4 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? open_book.__defaults__.extra_query : arguments[4];
+            var ρσ_kwargs_obj = arguments[arguments.length-1];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "library_id")){
+                library_id = ρσ_kwargs_obj.library_id;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "replace")){
+                replace = ρσ_kwargs_obj.replace;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "extra_query")){
+                extra_query = ρσ_kwargs_obj.extra_query;
+            }
+            var q;
+            request_full_screen_if_wanted();
             library_id = library_id || current_library_id();
-            ρσ_interpolate_kwargs.call(this, push_state, [(function(){
+            q = (function(){
                 var ρσ_d = Object.create(null);
                 ρσ_d["book_id"] = book_id;
                 ρσ_d["fmt"] = fmt;
                 ρσ_d["library_id"] = library_id;
                 return ρσ_d;
-            }).call(this)].concat([ρσ_desugar_kwargs({replace: replace, mode: read_book_mode})]));
+            }).call(this);
+            if (extra_query && typeof extra_query === "object") {
+                Object.assign(q, extra_query);
+            }
+            ρσ_interpolate_kwargs.call(this, push_state, [q].concat([ρσ_desugar_kwargs({replace: replace, mode: read_book_mode})]));
         };
         if (!open_book.__defaults__) Object.defineProperties(open_book, {
-            __defaults__ : {value: {library_id:null, replace:false}},
+            __defaults__ : {value: {library_id:null, replace:false, extra_query:null}},
             __handles_kwarg_interpolation__ : {value: true},
-            __argnames__ : {value: ["book_id", "fmt", "library_id", "replace"]},
+            __argnames__ : {value: ["book_id", "fmt", "library_id", "replace", "extra_query"]},
             __module__ : {value: "book_list.router"}
         });
 
@@ -11371,6 +11387,7 @@ return this.__repr__();
         ρσ_modules["book_list.router"].is_reading_book = is_reading_book;
         ρσ_modules["book_list.router"].apply_mode = apply_mode;
         ρσ_modules["book_list.router"].apply_url = apply_url;
+        ρσ_modules["book_list.router"].request_full_screen_if_wanted = request_full_screen_if_wanted;
         ρσ_modules["book_list.router"].open_book = open_book;
         ρσ_modules["book_list.router"].open_book_url = open_book_url;
         ρσ_modules["book_list.router"].push_state = push_state;
@@ -26708,7 +26725,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "6.10.0";
+        CALIBRE_VERSION = "6.11.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -34698,52 +34715,31 @@ return this.__repr__();
             });
 
             function process_identifiers(field, fm, name, val) {
-                var keys, td, url_map, ρσ_unpack, text, k, url, idval, x;
-                function ids_sorter(url_map, k) {
-                    var x;
-                    x = url_map[(typeof k === "number" && k < 0) ? url_map.length + k : k];
-                    if (!x) {
-                        return "";
-                    }
+                var td, ρσ_unpack, text, k, idval, url;
+                function ids_sorter(x) {
                     return (x[0] || "").toLowerCase();
                 };
                 if (!ids_sorter.__argnames__) Object.defineProperties(ids_sorter, {
-                    __argnames__ : {value: ["url_map", "k"]},
+                    __argnames__ : {value: ["x"]},
                     __module__ : {value: "book_list.book_details"}
                 });
 
-                if (val) {
-                    keys = Object.keys(val);
-                    if (keys.length) {
-                        td = E.td();
-                        url_map = (function() {
-                            var ρσ_Iter = ρσ_Iterable(mi.urls_from_identifiers || []), ρσ_Result = Object.create(null), text, 
-                            k, val, url;
-                            for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
-                                ρσ_unpack = ρσ_flatten(ρσ_Iter[ρσ_Index]);
-                                text = ρσ_unpack[0];
-                                k = ρσ_unpack[1];
-                                val = ρσ_unpack[2];
-                                url = ρσ_unpack[3];
-                                ρσ_Result[k] = ([text, url]);
-                            }
-                            return ρσ_Result;
-                        })();
-                        var ρσ_Iter7 = ρσ_Iterable(ρσ_interpolate_kwargs.call(this, sorted, [keys].concat([ρσ_desugar_kwargs({key: ids_sorter.bind(null, url_map)})])));
-                        for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                            k = ρσ_Iter7[ρσ_Index7];
-                            idval = val[(typeof k === "number" && k < 0) ? val.length + k : k];
-                            x = url_map[(typeof k === "number" && k < 0) ? url_map.length + k : k];
-                            if (x) {
-                                if (td.childNodes.length) {
-                                    td.appendChild(document.createTextNode(", "));
-                                }
-                                td.appendChild(ρσ_interpolate_kwargs.call(E, E.a, [x[0]].concat([ρσ_desugar_kwargs({class_: "blue-link", title: "{}:{}".format(k, idval), target: "_new", href: x[1]})])));
-                            }
-                        }
+                if (val && mi.urls_from_identifiers && mi.urls_from_identifiers.length > 0) {
+                    td = E.td();
+                    var ρσ_Iter7 = ρσ_Iterable(ρσ_interpolate_kwargs.call(this, sorted, [mi.urls_from_identifiers || []].concat([ρσ_desugar_kwargs({key: ids_sorter})])));
+                    for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                        ρσ_unpack = ρσ_flatten(ρσ_Iter7[ρσ_Index7]);
+                        text = ρσ_unpack[0];
+                        k = ρσ_unpack[1];
+                        idval = ρσ_unpack[2];
+                        url = ρσ_unpack[3];
                         if (td.childNodes.length) {
-                            table.appendChild(E.tr(E.td(name + ":"), td));
+                            td.appendChild(document.createTextNode(", "));
                         }
+                        td.appendChild(ρσ_interpolate_kwargs.call(E, E.a, [text].concat([ρσ_desugar_kwargs({class_: "blue-link", title: "{}:{}".format(k, idval), target: "_new", href: url})])));
+                    }
+                    if (td.childNodes.length) {
+                        table.appendChild(E.tr(E.td(name + ":"), td));
                     }
                 }
             };
@@ -42620,6 +42616,7 @@ return this.__repr__();
             container.style.justifyContent = "flex-end";
             container.style.alignItems = (is_flow_mode()) ? "flex-end" : "flex-start";
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: self.bar_id, style: "border: solid 1px currentColor; border-radius: 5px;display: flex; flex-direction: column; margin: 1rem;"})]));
+            container.appendChild(E.style("#" + ρσ_str.format("{}", self.bar_id) + ".speaking " + "{ opacity: 0.5 }\n\n", "#" + ρσ_str.format("{}", self.bar_id) + ".speaking:hover " + "{ opacity: 1.0 }\n\n"));
             container.addEventListener("keydown", self.on_keydown, (function(){
                 var ρσ_d = Object.create(null);
                 ρσ_d["passive"] = false;
@@ -42686,6 +42683,11 @@ return this.__repr__();
             }
             self.container.style.alignItems = (is_flow_mode()) ? "flex-end" : "flex-start";
             bar_container = self.bar;
+            if (self.state === PLAYING) {
+                bar_container.classList.add("speaking");
+            } else {
+                bar_container.classList.remove("speaking");
+            }
             clear(bar_container);
             bar_container.style.maxWidth = (self.supports_css_min_max) ? "min(40rem, 80vw)" : "40rem";
             bar_container.style.backgroundColor = get_color("window-background");

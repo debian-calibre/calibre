@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "十二月 16, 2022" "6.10.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "一月 06, 2023" "6.11.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
@@ -35,13 +35,13 @@ calibre-server \- calibre-server
 .sp
 .nf
 .ft C
-calibre\-server [选项] [库文件夹的路径...]
+calibre\-server [选项] [书库文件夹的路径...]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-启动caliber内容服务器。calibre 内容服务器通过互联网公开你的 calibre 库。你可以将库文件夹的路径指定为:command:
+启动caliber内容服务器。calibre 内容服务器通过互联网公开你的 calibre 书库。你可以将书库文件夹的路径指定为:command:
 .nf
 \(ga
 .fi
@@ -86,7 +86,7 @@ calibre\-server\(ga传递参数时，用引号括起这些参数。例如: \(dq/
 .INDENT 0.0
 .TP
 .B \-\-book\-list\-mode
-选择默认的书籍列表显示模式.      设置默认的书籍显示模式. 每一名用户都可以单独重新设置此选项. The default is to use a cover grid.
+选择默认的书籍列表显示模式.      设置默认的书籍显示模式. 每一名用户都可以单独重新设置此选项.默认使用封面网格。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -166,7 +166,7 @@ calibre\-server\(ga传递参数时，用引号括起这些参数。例如: \(dq/
 .INDENT 0.0
 .TP
 .B \-\-manage\-users
-管理允许连接到此服务器的用户数据库。您可以通过添加一个\-\-在自动模式下使用它。有关详细信息，请参阅calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help。另请参阅 \fI\%\-\-userdb\fP 选项。
+管理允许连接到此服务器的用户数据库。您可以通过添加一个\-\-在自动模式下使用它。有关详情，请参阅calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help。另请参阅 \fI\%\-\-userdb\fP 选项。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -181,7 +181,7 @@ calibre\-server\(ga传递参数时，用引号括起这些参数。例如: \(dq/
 .INDENT 0.0
 .TP
 .B \-\-max\-jobs
-最大进程数.      对于大型作业任务设置运行作业单元的进程数是必需和有用的，如准备一本书供预览、添加书籍、转换等。通常，此类进程的最大数量基于CPU核的数量。你可以通过这个设置来控制它。
+最大进程数.      对于大型任务设置运任务单元的进程数是必需和有用的，如准备一本书供预览、添加书籍、转换等。通常，此类进程的最大数量基于CPU核的数量。你可以通过这个设置来控制它。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -191,7 +191,7 @@ calibre\-server\(ga传递参数时，用引号括起这些参数。例如: \(dq/
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-items
-OPDS供稿的最大书目数.       服务器将在单个OPDS采集原料中返回的最大图书数量。
+OPDS供稿的最大书目数.       服务器将在单个OPDS请求中返回的最大书籍数量。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -206,7 +206,7 @@ OPDS供稿的最大书目数.       服务器将在单个OPDS采集原料中返�
 .INDENT 0.0
 .TP
 .B \-\-num\-per\-page
-在一页中显示的图书数量.        浏览器中单个页面显示的图书数量。
+在一页中显示的书籍数量.        浏览器中单个页面显示的书籍数量。
 .UNINDENT
 .INDENT 0.0
 .TP
