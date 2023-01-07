@@ -1051,7 +1051,7 @@ class Ui_Form(object):
         self.opt_separate_cover_flow.setText(_("Show in a &separate window (needs restart)"))
         self.label_6.setText(_("&Number of covers to show in browse mode (needs restart):"))
         self.cover_browser_title_template_button.setText(_("Template &editor"))
-        self.opt_cover_browser_title_template.setToolTip(_("<p>The template used to generate the text below the covers. Uses\n"
+        self.opt_cover_browser_title_template.setToolTip(_("<p>The template used to generate the text below the covers. This template uses\n"
 "the same syntax as save templates. Defaults to just the book title.\n"
 "Note that this setting is per-library, which means that you have to\n"
 "set it again for every different calibre library you use. Use an\n"

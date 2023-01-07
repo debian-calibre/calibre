@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "十二月 16, 2022" "6.10.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "一月 06, 2023" "6.11.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -45,7 +45,7 @@ ebook\-convert input_file output_file [options]
 .sp
 input_file 表示输入文件，output_file 表示输出文件。这两者作为命令行参数必须指定到最前面。
 .sp
-输出的电子书格式可由 output_file 的扩展名得到。同时 output_file 也可以是一种以 .EXT 为扩展名的特殊格式。在这种情况下，输出文件的名称则使用输入文件的名称。注意：文件名不能以连字号作为开头。如果 output_file 不含扩展名，那么它将被视为一个目录并将会在该目录下生成 HTML 格式的“开放式电子书(OEB)”。这些文件会被视为正常文件而被输出插件所识别。
+输出的电子书格式可由 output_file 的扩展名得到。同时 output_file 也可以是一种以 .EXT 为扩展名的特殊格式。在这种情况下，输出文件的名称则使用输入文件的名称。注意：文件名不能以连字号作为开头。如果 output_file 不含扩展名，那么它将被视为一个文件夹并将会在该文件夹下生成 HTML 格式的“开放式电子书(OEB)”。这些文件会被视为正常文件而被输出插件所识别。
 .sp
 在指定输入和输出文件后，你可以自定义特定的转换选项。根据输入和输出文件的类型不同可用的转换选项也不同。如需获取针对输入和输出文件的帮助，请在命令行中输入 \-h。
 .sp
@@ -73,7 +73,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .IP \(bu 2
 \fI\%界面外观\fP
 .IP \(bu 2
-\fI\%启发式处理\fP
+\fI\%智能处理\fP
 .IP \(bu 2
 \fI\%查找并替换\fP
 .IP \(bu 2
@@ -212,7 +212,7 @@ PTS中的基本字体大小。在生成的书籍中所有的字体尺寸将基�
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-在书中嵌入指定字体。这指定了书中使用的“基础”字体。如果输入文件自己指定了字体，就有可能覆盖这个基础字体。你可以使用过滤样式信息的选项来去除输入文件的字体。注意，字体嵌入只在一些输出格式中有用，主要是 EPUB、AZW3 和 DOCX。
+在书中嵌入指定字体。这指定了书中使用的“基础”字体。如果输入文件自己指定了字体，就有可能覆盖这个基础字体。你可以使用筛选样式信息的选项来去除输入文件的字体。注意，字体嵌入只在一些输出格式中有用，主要是 EPUB、AZW3 和 DOCX。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -297,7 +297,7 @@ pt 行高。控制两行高度距离。仅仅适用于未定义行高的元素�
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-将普通引号、破折号和省略号转换为与它们对应的正确印刷体。有关详细信息, 请参阅 \fI\%https://daringfireball.net/projects/smartypants\fP。
+将普通引号、破折号和省略号转换为与它们对应的正确印刷体。有关详情, 请参阅 \fI\%https://daringfireball.net/projects/smartypants\fP。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -307,7 +307,7 @@ pt 行高。控制两行高度距离。仅仅适用于未定义行高的元素�
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-包含转换本书中CSS样式规则的文件路径。创建这样一个文件的最简单方法是在 calibre GUI中使用向导创建规则。在“界面外观\->转换风格”的转换对话框部分访问它。 一旦创建规则，就可以使用“导出”按钮将它们保存到文件中。
+包含转换本书中CSS样式规则的文件路径。创建这样一个文件的最简单方法是在 calibre GUI中使用向导创建规则。在“界面外观\->转换样式”的转换对话框部分访问它。 一旦创建规则，就可以使用“导出”按钮将它们保存到文件中。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -319,7 +319,7 @@ pt 行高。控制两行高度距离。仅仅适用于未定义行高的元素�
 .B \-\-unsmarten\-punctuation
 转换各种形式的引号、破折号和省略号到它们的标准形式。
 .UNINDENT
-.SH 启发式处理
+.SH 智能处理
 .sp
 使用常见模式修改文档内容与结构。默认禁用。使用 \-\-enable\-heuristics 启用该功能。具体选项可以通过 \-\-disable\-* 参数禁用。
 .INDENT 0.0
@@ -421,7 +421,7 @@ pt 行高。控制两行高度距离。仅仅适用于未定义行高的元素�
 .INDENT 0.0
 .TP
 .B \-\-chapter
-XPath 表达式用于检测章节标题。默认考虑使用 <h1> 或 <h2> 标签来涵括“章节”，“书籍”，“节选”，“前言”，“结束语”，或者使用任何标签包含级别 =“章节”的“部分”做为章节标题。使用的表达式必须评估元素列表。要禁用检测章节，请使用表达式“/”。请参阅 calibre 用户手册中的 XPath 教程了解使用此功能的更多帮助。
+XPath 表达式用于检测章节标题。默认考虑使用 <h1> 或 <h2> 标签来涵括“章”，“书籍”，“节”，“前言”，“结束语”，或者使用任何标签包含级别 =“章节”的“部分”做为章节标题。使用的表达式必须评估元素列表。要禁用检测章节，请使用表达式“/”。请参阅 calibre 用户手册中的 XPath 教程了解使用此功能的更多帮助。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -600,7 +600,7 @@ XPath 表达式指定所有标签应添加在三级目录表。每个条目加�
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-在转换过程的不同阶段分别保存输出到指定目录。如果你不确定在哪个阶段出了问题，这个选项非常实用。
+在转换过程的不同阶段分别保存输出到指定文件夹。如果你不确定在哪个阶段出了问题，这个选项非常实用。
 .UNINDENT
 .INDENT 0.0
 .TP

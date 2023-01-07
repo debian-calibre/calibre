@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "dezembro 16, 2022" "6.10.0" "calibre"
+.TH "CALIBREDB" "1" "janeiro 06, 2023" "6.11.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -125,12 +125,12 @@ mostrar esta mensagem de ajuda e sair
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Caminho para a biblioteca do Calibre. Por omissão é usado o caminho armazenado nas definições. Pode também ligar\-se a um servidor de conteúdos Calibre para executar ações em bibliotecas remotas. Para tal, use um URL na forma: \fI\%http://hostname:port/#id_da_biblioteca\fP , por exemplo, \fI\%http://localhost:8080/#mylibrary\fP . id_da_biblioteca é o identificador da biblioteca à qual se pretende ligar no servidor de conteúdos. Pode usar o valor especial de id_da_bilbioteca \- para obter uma lista de identificadores de bibliotecas disponíveis no servidor. Para detalhes sobre como configurar o acesso através de um servidor de conteúdos, veja \fI\%https://manual.calibre\-ebook.com/pt/generated/pt/calibredb.html\fP\&.
+Caminho para a biblioteca do Calibre. Por predefinição é usado o caminho armazenado nas definições. Pode também ligar\-se a um servidor de conteúdos Calibre para executar ações em bibliotecas remotas. Para tal, use um URL na forma: \fI\%http://hostname:port/#id_da_biblioteca\fP , por exemplo, \fI\%http://localhost:8080/#mylibrary\fP . id_da_biblioteca é o identificador da biblioteca à qual se pretende ligar no servidor de conteúdos. Pode usar o valor especial de id_da_bilbioteca \- para obter uma lista de identificadores de bibliotecas disponíveis no servidor. Para detalhes sobre como configurar o acesso através de um servidor de conteúdos, veja \fI\%https://manual.calibre\-ebook.com/pt/generated/pt/calibredb.html\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password
-Senha para se ligar a um servidor de conteúdos Calibre. Para ler a senha da entrada padrão, use o valor especial: <stdin>. Para ler a senha de um ficheiro use: <f:/path/to/file> (isto é: <f: followed by the full path to the file and a trailing >). Os parênteses angulares acima são obrigatórios, lembre\-se de os escapar ou use aspas para a sua Shell.
+Senha para se ligar a um servidor de conteúdos Calibre. Para ler a senha a partir da entrada padrão, use o valor especial: <stdin>. Para ler a senha de um ficheiro use: <f:/path/to/file> (isto é: <f: followed by the full path to the file and a trailing >). Os parênteses angulares acima são obrigatórios, lembre\-se de os escapar ou use aspas para a sua Shell.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -205,7 +205,7 @@ A expressão utilizada para separar os campos. A predefinição é um espaço.
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-O campo pelo qual ordenar os resultados. Campos disponíveis:author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid A predefinição é: id
+The field by which to sort the results. You can specify multiple fields by separating them with commas. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Default: id
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -408,12 +408,10 @@ calibredb set_metadata [options] book_id [/path/to/metadata.opf]
 .UNINDENT
 .UNINDENT
 .sp
-Set the metadata stored in the calibre database for the book identified by
-book_id from the OPF file metadata.opf. book_id is a book id number from the
-search command. You can get a quick feel for the OPF format by using the
-\-\-as\-opf switch to the show_metadata command. You can also set the metadata of
-individual fields with the \-\-field option. If you use the \-\-field option, there
-is no need to specify an OPF file.
+Definir os metadados armazenados na base de dados Calibre para o livro identificado por book_id do ficheiro OPF metadata.opf.
+book_id é um número de identificação do comando de pesquisa. Pode ter uma ideia do formato OPF utilizando a opção \-\-as\-opf alternando para o comando show_metadata.
+Também pode definir os metadados de campos individuais com a opção \-\-field.
+Se usar a opção \-\-field, não é necessário especificar um ficheiro OPF.
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0

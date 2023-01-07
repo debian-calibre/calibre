@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "dezembro 16, 2022" "6.10.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "janeiro 06, 2023" "6.11.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
@@ -48,7 +48,7 @@ Sempre que passar argumentos para o \fBcalibre\-server\fP que contenham espaços
 .INDENT 0.0
 .TP
 .B \-\-access\-log
-Caminho para o ficheiro de registo de acessos. Este registo contém informações sobre os clientes que se ligam e fazem pedidos ao servidor. Por padrão, nenhum registo de acesso é efetuado.
+Caminho para o ficheiro de registo de acessos. Este registo contém informações sobre os clientes que se ligam e fazem pedidos ao servidor. Por predefinição, nenhum registo de acesso é efetuado.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -78,7 +78,7 @@ Banir endereços IP que apresentem erros de autenticação continuados.        B
 .INDENT 0.0
 .TP
 .B \-\-book\-list\-mode
-Escolher o modo de listagem de livros predefinido.  Define o modo de lista de livros padrão que será utilizado para novos utilizadores. Utilizadores individuais podem sobrepor\-se ao modo padrão nas suas próprias configurações. O padrão é utilizar uma grelha de capas.
+Escolher o modo de listagem de livros predefinido.  Define o modo de lista de livros predefinida que será utilizada para novos utilizadores. Utilizadores individuais podem sobrepor\-se ao modo predefinido nas suas próprias configurações. O predefinido é utilizar uma grelha de capas.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -108,7 +108,7 @@ Pré\-alocação de encaixe, por exemplo, com ativação de encaixe systemd. Por
 .INDENT 0.0
 .TP
 .B \-\-enable\-auth, \-\-disable\-auth
-Autenticação por senha para aceder ao servidor.     Por padrão, o servidor  não tem restrições, permitindo qualquer pessoa lhe possa aceder. Pode restringir o acesso a utilizadores pré\-definidos com esta opção. Por predefinição, a opção esta desativada.
+Autenticação por senha para aceder ao servidor.     Por predefinição, o servidor não tem restrições, permitindo que qualquer pessoa lhe possa aceder. Pode restringir o acesso a utilizadores predefinidos com esta opção. Por predefinição, a opção esta desativada.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -123,7 +123,7 @@ Permitir que ligações locais não autenticadas realizem alterações.  Normalm
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-Registar pedidos HTTP 404 (Não encontrado).         Por padrão, o servidor regista todos os pedidos HTTP relativos a recursos que não são encontrados. Isto pode gerar muitos registos indesejados se o seu servidor for alvo de Bots. Utilize esta opção para o desativar. Por predefinição, a opção esta ativada.
+Registar pedidos HTTP 404 (Não encontrado).         Por predefinição, o servidor regista todos os pedidos HTTP relativos a recursos que não são encontrados. Isto pode gerar muitos registos indesejados se o seu servidor for alvo de Bots. Utilize esta opção para o desativar. Por predefinição, a opção esta ativada.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -148,12 +148,12 @@ Campos de metadados personalizados a ignorar.       Lista separada por vírgulas
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-A interface sob a qual escutar ligações.    Por padrão, irá escutar em todas as interfaces IPv4 disponíveis. Pode mudar isso para, por exemplo, \fB\(aq\fP127.0.0.1\fB\(aq\fP e assim escutar apenas as ligações da máquina local, ou alterar para \fB\(aq\fP::\fB\(aq\fP e escutar todas as ligações de entrada IPv6 e IPv4.
+A interface sob a qual escutar ligações.    Por predefinição, irá escutar em todas as interfaces IPv4 disponíveis. Pode mudar isto para, por exemplo, \fB\(aq\fP127.0.0.1\fB\(aq\fP e assim escutar apenas as ligações da máquina local, ou alterar para \fB\(aq\fP::\fB\(aq\fP e escutar todas as ligações de entrada IPv6 e IPv4.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-log
-Caminho para o ficheiro de registos do servidor. Este ficheiro contém informações e erros do servidor, não contém informações de acesso. Por padrão é escrito no stdout.
+Caminho para o ficheiro de registos do servidor. Este ficheiro contém informações e erros do servidor, não contém informações de acesso. Por predefinição é escrito no stdout.
 .UNINDENT
 .INDENT 0.0
 .TP
