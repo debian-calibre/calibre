@@ -1,134 +1,45 @@
 From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
-Date: Fri, 17 Apr 2020 20:10:46 +0900
+Date: Thu, 14 Jul 2022 23:03:16 +0900
 Subject: Extend timeout limit
 
 Forwarded: not-needed
-
-Some non-x86 architecture is much slower than x86.
-Add some more time to wait test results.
 ---
- src/calibre/srv/tests/base.py |  2 +-
- src/calibre/srv/tests/http.py | 16 ++++++++--------
- src/calibre/srv/tests/loop.py |  6 +++---
- src/calibre/test_build.py     |  2 +-
- 4 files changed, 13 insertions(+), 13 deletions(-)
+ src/calibre/db/tests/filesystem.py | 2 +-
+ src/calibre/db/tests/fts_api.py    | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/src/calibre/srv/tests/base.py b/src/calibre/srv/tests/base.py
-index dd3efcf..05ba3e4 100644
---- a/src/calibre/srv/tests/base.py
-+++ b/src/calibre/srv/tests/base.py
-@@ -111,7 +111,7 @@ class TestServer(Thread):
-         self.log = self.loop.log
+diff --git a/src/calibre/db/tests/filesystem.py b/src/calibre/db/tests/filesystem.py
+index e0703c1..8f3ac5a 100644
+--- a/src/calibre/db/tests/filesystem.py
++++ b/src/calibre/db/tests/filesystem.py
+@@ -171,7 +171,7 @@ class FilesystemTest(BaseTest):
+         cache.enable_fts()
+         cache.set_fts_num_of_workers(4)
+         st = time.monotonic()
+-        while cache.fts_indexing_left > 0 and time.monotonic() - st < 15:
++        while cache.fts_indexing_left > 0 and time.monotonic() - st < 300:
+             time.sleep(0.05)
+         if cache.fts_indexing_left > 0:
+             raise ValueError('FTS indexing did not complete')
+diff --git a/src/calibre/db/tests/fts_api.py b/src/calibre/db/tests/fts_api.py
+index 38ac102..b315991 100644
+--- a/src/calibre/db/tests/fts_api.py
++++ b/src/calibre/db/tests/fts_api.py
+@@ -53,7 +53,7 @@ class FTSAPITest(BaseTest):
+         self.libraries_to_close.append(ans)
+         return ans
  
-     def setup_defaults(self, kwargs):
--        kwargs['shutdown_timeout'] = kwargs.get('shutdown_timeout', 0.1)
-+        kwargs['shutdown_timeout'] = kwargs.get('shutdown_timeout', 10)
-         kwargs['listen_on'] = kwargs.get('listen_on', 'localhost')
-         kwargs['port'] = kwargs.get('port', 0)
-         kwargs['userdb'] = kwargs.get('userdb', ':memory:')
-diff --git a/src/calibre/srv/tests/http.py b/src/calibre/srv/tests/http.py
-index 2970cfa..6eed451 100644
---- a/src/calibre/srv/tests/http.py
-+++ b/src/calibre/srv/tests/http.py
-@@ -95,7 +95,7 @@ class TestHTTP(BaseTest):
-         def handler(data):
-             return data.lang_code + data._('Unknown')
+-    def wait_for_fts_to_finish(self, fts, timeout=10):
++    def wait_for_fts_to_finish(self, fts, timeout=1000):
+         if fts.pool.initialized:
+             st = time.monotonic()
+             while fts.all_currently_dirty() and time.monotonic() - st < timeout:
+@@ -123,7 +123,7 @@ class FTSAPITest(BaseTest):
  
--        with TestServer(handler, timeout=1) as server:
-+        with TestServer(handler, timeout=100) as server:
-             conn = server.connect()
- 
-             def test(al, q):
-@@ -154,7 +154,7 @@ class TestHTTP(BaseTest):
-             conn._HTTPConnection__state = http_client._CS_REQ_SENT
-             return conn.getresponse()
- 
--        base_timeout = 0.5 if is_ci else 0.1
-+        base_timeout = 50 if is_ci else 10
- 
-         with TestServer(handler, timeout=base_timeout, max_header_line_size=100./1024, max_request_body_size=100./(1024*1024)) as server:
-             conn = server.connect()
-@@ -280,7 +280,7 @@ class TestHTTP(BaseTest):
-             conn = server.connect()
- 
-             # Test closing
--            server.loop.opts.timeout = 10  # ensure socket is not closed because of timeout
-+            server.loop.opts.timeout = 1000  # ensure socket is not closed because of timeout
-             conn.request('GET', '/close', headers={'Connection':'close'})
-             r = conn.getresponse()
-             self.ae(r.status, 200), self.ae(r.read(), b'close')
-@@ -293,8 +293,8 @@ class TestHTTP(BaseTest):
-             self.assertIsNone(conn.sock)
- 
-             # Test timeout
--            server.loop.opts.timeout = 0.1
--            conn = server.connect(timeout=1)
-+            server.loop.opts.timeout = 10
-+            conn = server.connect(timeout=100)
-             conn.request('GET', '/something')
-             r = conn.getresponse()
-             self.ae(r.status, 200), self.ae(r.read(), b'something')
-@@ -308,7 +308,7 @@ class TestHTTP(BaseTest):
-         def handler(conn):
-             return conn.generate_static_output('test', lambda : ''.join(conn.path))
-         with NamedTemporaryFile(suffix='test.epub') as f, open(P('localization/locales.zip'), 'rb') as lf, \
--                TestServer(handler, timeout=1, compress_min_size=0) as server:
-+                TestServer(handler, timeout=100, compress_min_size=0) as server:
-             fdata = (string.ascii_letters * 100).encode('ascii')
-             f.write(fdata), f.seek(0)
- 
-@@ -409,7 +409,7 @@ class TestHTTP(BaseTest):
-                 lf.seek(0)
-                 data =  lf.read()
-                 server.change_handler(lambda conn: lf)
--                conn = server.connect(timeout=1)
-+                conn = server.connect(timeout=100)
-                 conn.request('GET', '/test')
-                 r = conn.getresponse()
-                 self.ae(r.status, http_client.OK)
-@@ -418,7 +418,7 @@ class TestHTTP(BaseTest):
-                 self.ae(hashlib.sha1(data).hexdigest(), hashlib.sha1(rdata).hexdigest())
-                 self.ae(data, rdata)
-                 time_taken = monotonic() - start_time
--                self.assertLess(time_taken, 1, 'Large file transfer took too long')
-+                self.assertLess(time_taken, 100, 'Large file transfer took too long')
- 
-     # }}}
- 
-diff --git a/src/calibre/srv/tests/loop.py b/src/calibre/srv/tests/loop.py
-index 13870ce..8c1507b 100644
---- a/src/calibre/srv/tests/loop.py
-+++ b/src/calibre/srv/tests/loop.py
-@@ -80,7 +80,7 @@ class LoopTest(BaseTest):
-         self.ae(0, sum(int(w.is_alive()) for w in server.loop.pool.workers))
-         # Test shutdown with hung worker
-         block = Event()
--        with TestServer(lambda data:block.wait(), worker_count=3, shutdown_timeout=0.1, timeout=0.1) as server:
-+        with TestServer(lambda data:block.wait(), worker_count=3, shutdown_timeout=10, timeout=10) as server:
-             pool = server.loop.pool
-             self.ae(3, sum(int(w.is_alive()) for w in pool.workers))
-             conn = server.connect()
-@@ -109,8 +109,8 @@ class LoopTest(BaseTest):
-         from calibre.srv.bonjour import BonJour
-         from zeroconf import Zeroconf
-         b = BonJour(wait_for_stop=False)
--        with TestServer(lambda data:(data.path[0] + data.read()), plugins=(b,), shutdown_timeout=5) as server:
--            self.assertTrue(b.started.wait(5), 'BonJour not started')
-+        with TestServer(lambda data:(data.path[0] + data.read()), plugins=(b,), shutdown_timeout=500) as server:
-+            self.assertTrue(b.started.wait(50), 'BonJour not started')
-             self.ae(b.advertised_port, server.address[1])
-             service = b.services[0]
-             self.ae(service.type, '_calibre._tcp.local.')
-diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index db952fb..a199db5 100644
---- a/src/calibre/test_build.py
-+++ b/src/calibre/test_build.py
-@@ -368,7 +368,7 @@ class BuildTest(unittest.TestCase):
- 
-             p.titleChanged.connect(do_webengine_test)
-             p.runJavaScript(f'document.title = "test-run-{os.getpid()}";')
--            timeout = 10
-+            timeout = 1000
-             QTimer.singleShot(timeout * 1000, lambda: QApplication.instance().quit())
-             QApplication.instance().exec()
-             self.assertTrue(hasattr(callback, 'result'), f'Qt WebEngine failed to run in {timeout} seconds')
+         # check shutdown when workers have hung
+         for w in fts.pool.workers:
+-            w.code_to_exec = 'import time; time.sleep(100)'
++            w.code_to_exec = 'import time; time.sleep(1000)'
+         cache.add_format(1, 'TXTZ', self.make_txtz(b'hung worker'))
+         workers = list(fts.pool.workers)
+         cache.close()
