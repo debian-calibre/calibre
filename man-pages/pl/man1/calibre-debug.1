@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "stycznia 06, 2023" "6.11.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "lutego 03, 2023" "6.12.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -41,30 +41,30 @@ calibre\-debug [opcje]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre E\-book viewer and the calibre editor in debug mode.
+Różne interfejsy wiersza poleceń przydatne do debugowania calibre. Bez opcji,
+to polecenie uruchamia osadzony interpreter Pythona. Możesz także uruchomić main
+calibre GUI, przeglądarka e\-booków calibre i edytor calibre w trybie debugowania.
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the E\-book diff tool and so
-on.
+Zawiera również interfejsy do różnych bitów calibre, których nie ma
+dedykowane narzędzia wiersza poleceń, takie jak ustawianie podrzędnych czcionek, narzędzie do porównywania e\-booków i tak dalej
+na.
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+Możesz także użyć \fBcalibre\-debug\fP do uruchamiania samodzielnych skryptów. Aby to zrobić, użyj go w ten sposób:
 .INDENT 0.0
 .INDENT 3.5
 \fBcalibre\-debug\fP \-e myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .UNINDENT
 .UNINDENT
 .sp
-Everything after the \fB\-\-\fP is passed to the script. You can also use \fBcalibre\-debug\fP
-as a shebang in scripts, like this:
+Wszystko po \fB\-\-\fP jest przekazywane do skryptu. Możesz także użyć \fBcalibre\-debug\fP
+jako shebang w skryptach, jak to:
 .INDENT 0.0
 .INDENT 3.5
 #!/usr/bin/env \-S \fBcalibre\-debug\fP \-e \fB\-\-\fP \-\-
 .UNINDENT
 .UNINDENT
 .sp
-Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Ilekroć przekazujesz argumenty do \fBcalibre\-debug\fP, które zawierają spacje, ujmuj je w cudzysłowy. Na przykład: \(dq/some path/with spaces\(dq
 .SH [OPCJE]
 .INDENT 0.0
 .TP
@@ -74,7 +74,7 @@ Dodaj prostą wtyczkę (tj. wtyczkę, składającą się wyłącznie z pliku .py
 .INDENT 0.0
 .TP
 .B \-\-command, \-c
-Uruchom kod pythona
+Uruchom kod Pythona.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -84,7 +84,7 @@ Debuguj wykrycie urządzenia
 .INDENT 0.0
 .TP
 .B \-\-default\-programs
-(Wy)rejestruj calibre z domyślnych programów Windows \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
+(Wy)rejestruj calibre z domyślnych programów Windows. \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -94,12 +94,12 @@ Uruchom narzędzie porównywania calibre. Np: calibre\-debug \fI\%\-\-diff\fP pl
 .INDENT 0.0
 .TP
 .B \-\-edit\-book
-Uruchom Edytor książek w trybie debugowania
+Uruchom narzędzie calibre „Edytuj książkę” w trybie debugowania.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exec\-file, \-e
-Uruchom plik z kodem pythona
+Uruchom kod Pythona w pliku.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -129,7 +129,7 @@ Uruchom z konsolą debugowania i zapisywaniem logu we wskazanej ścieżce. Wył�
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
-Wyświetla ten tekst pomocy i kończy działanie
+wyświetla ten tekst pomocy i kończy działanie
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -159,12 +159,12 @@ Uruchom wtyczkę, która udostępnia interfejs wiersza poleceń. Na przykład: c
 .INDENT 0.0
 .TP
 .B \-\-run\-test, \-t
-Run the named test(s). Use the special value \fB\(dq\fPall\fB\(dq\fP to run all tests. If the test name starts with a period it is assumed to be a module name. If the test name starts with @ it is assumed to be a category name.
+Uruchom nazwane testy. Użyj specjalnej wartości „all”, aby uruchomić wszystkie testy. Jeśli nazwa testu zaczyna się od kropki, zakłada się, że jest to nazwa modułu. Jeśli nazwa testu zaczyna się od @, zakłada się, że jest to nazwa kategorii.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-run\-without\-debug
-Don\fB\(aq\fPt run with the DEBUG flag set
+Nie uruchamiaj z ustawioną flagą DEBUG
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -174,7 +174,7 @@ Powoduje zamknięcie wszystkich uruchomionych instancji calibre. Należy pamięt
 .INDENT 0.0
 .TP
 .B \-\-subset\-font, \-f
-Zredukuj określoną czcionkę. Użycie \fB\-\-\fP po tej opcji należy podać parametry przekazywane do programu redukującego czcionki
+Zredukuj określoną czcionkę. Użycie \fB\-\-\fP po tej opcji należy podać parametry przekazywane do programu redukującego czcionki.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -184,7 +184,7 @@ Testuj moduły binarne w buildzie
 .INDENT 0.0
 .TP
 .B \-\-version
-Wyświetla wersję programu i kończy działanie
+wyświetla wersję programu i kończy działanie
 .UNINDENT
 .INDENT 0.0
 .TP

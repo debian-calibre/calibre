@@ -1,13 +1,14 @@
 #!/usr/bin/env python
+# License: GPLv3 Copyright: 2009, Kovid Goyal <kovid at kovidgoyal.net>
 
 
-__license__   = 'GPL v3'
-__copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
-__docformat__ = 'restructuredtext en'
-
-import os, locale, re, io
+import io
+import locale
+import os
+import re
 from gettext import GNUTranslations, NullTranslations
 
+from calibre.utils.resources import get_path as P
 from polyglot.builtins import iteritems
 
 _available_translations = None
@@ -28,7 +29,7 @@ def available_translations():
 
 
 def get_system_locale():
-    from calibre.constants import iswindows, ismacos
+    from calibre.constants import ismacos, iswindows
     lang = None
     if iswindows:
         try:
@@ -260,25 +261,44 @@ def translator_for_lang(lang):
     return {'translator': t, 'iso639_translator': iso639, 'lcdata': lcdata}
 
 
+default_translator = NullTranslations()
+
+
+def _(x: str) -> str:
+    return default_translator.gettext(x)
+
+
+def __(x: str) -> str:
+    return x
+
+
+def ngettext(singular: str, plural: str, n: int) -> str:
+    return default_translator.ngettext(singular, plural, n)
+
+
+def pgettext(context: str, msg: str) -> str:
+    return default_translator.pgettext(context, msg)
+
+
 def set_translators():
-    global _lang_trans, lcdata
+    global _lang_trans, lcdata, default_translator
     # To test different translations invoke as
     # CALIBRE_OVERRIDE_LANG=de_DE.utf8 program
     lang = get_lang()
 
     if lang:
         q = translator_for_lang(lang)
-        t = q['translator']
+        default_translator = q['translator']
         _lang_trans = q['iso639_translator']
         if q['lcdata']:
             lcdata = q['lcdata']
     else:
-        t = NullTranslations()
+        default_translator = NullTranslations()
     try:
-        set_translators.lang = t.info().get('language')
+        set_translators.lang = default_translator.info().get('language')
     except Exception:
         pass
-    t.install(names=('ngettext',))
+    default_translator.install(names=('ngettext',))
     # Now that we have installed a translator, we have to retranslate the help
     # for the global prefs object as it was instantiated in get_lang(), before
     # the translator was installed.

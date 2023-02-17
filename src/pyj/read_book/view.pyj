@@ -116,12 +116,15 @@ def show_controls_help():
         return set_css(E.div(txt), padding='1ex 1em', text_align='center', margin='auto')
 
     left_msg = msg(_('Tap to turn back'))
-    left_width = '25vw'
+    left_width = 'min(25vw, 1in)'
     right_msg = msg(_('Tap to turn page'))
-    right_width = '75vw'
+    right_width = 'auto'
+    left_grow = 0
+    right_grow = 1
     if rtl_page_progression():
         left_msg, right_msg = right_msg, left_msg
         left_width, right_width = right_width, left_width
+        left_grow, right_grow = right_grow, left_grow
 
     # Clear it out if this is not the first time it's created.
     # Needed to correctly show it again in a different page progression direction.
@@ -139,11 +142,11 @@ def show_controls_help():
             style="display: flex; align-items: stretch; flex-grow: 10",
             E.div(
                 left_msg,
-                style=f'width: {left_width}; display:flex; align-items: center; border-right: solid 2px currentColor',
+                style=f'width: {left_width}; flex-grow: {left_grow}; display:flex; align-items: center; border-right: solid 2px currentColor',
             ),
             E.div(
                 right_msg,
-                style=f'width: {right_width}; display:flex; align-items: center',
+                style=f'width: {right_width}; display:flex; flex-grow: {right_grow}; align-items: center',
             )
         )
     ))
@@ -524,7 +527,7 @@ class View:
         elif data.name is 'toggle_read_aloud':
             self.toggle_read_aloud()
         elif data.name is 'reload_book':
-            ui_operations.reload_book()
+            self.reload_book()
         elif data.name is 'sync_book':
             self.overlay.sync_book()
         elif data.name is 'next_section':
@@ -890,17 +893,27 @@ class View:
                 'library_id': self.book.key[0], 'book_id': self.book.key[1] + '', 'close_action': 'book_list',
             }, 'book_details'))
 
+    def clear_book_resource_caches(self):
+        self.loaded_resources = {}
+        self.content_popup_overlay.loaded_resources = {}
+
+    def reload_book(self):
+        self.clear_book_resource_caches()
+        ui_operations.reload_book()
+
     def display_book(self, book, initial_position, is_redisplay):
         self.hide_overlays()
         self.iframe.focus()
         is_current_book = self.book and self.book.key == book.key
         self.book_load_started = True
-        if not is_current_book:
+        if is_current_book:
+            if not is_redisplay:
+                self.search_overlay.clear_caches(book)  # could be a reload
+        else:
             if self.book:
                 self.iframe_wrapper.reset()
                 self.content_popup_overlay.reset()
-            self.loaded_resources = {}
-            self.content_popup_overlay.loaded_resources = {}
+            self.clear_book_resource_caches()
             self.timers.start_book(book)
             self.search_overlay.clear_caches(book)
         unkey = username_key(get_interface_data().username)

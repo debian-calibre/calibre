@@ -16,6 +16,7 @@ from calibre.gui2.viewer.ui import EbookViewer, is_float
 from calibre.ptempfile import reset_base_dir
 from calibre.utils.config import JSONConfig
 from calibre.utils.ipc import viewer_socket_address
+from calibre.utils.localization import _
 
 singleinstance_name = 'calibre_viewer'
 
@@ -168,6 +169,7 @@ def run_gui(app, opts, args, internal_book_data, listener=None):
 
 def main(args=sys.argv):
     from calibre.utils.webengine import setup_fake_protocol
+
     # Ensure viewer can continue to function if GUI is closed
     os.environ.pop('CALIBRE_WORKER_TEMP_DIR', None)
     reset_base_dir()
@@ -182,7 +184,7 @@ def main(args=sys.argv):
         processed_args.append(arg)
     if internal_book_data_path:
         try:
-            with lopen(internal_book_data_path, 'rb') as f:
+            with open(internal_book_data_path, 'rb') as f:
                 internal_book_data = json.load(f)
         finally:
             try:

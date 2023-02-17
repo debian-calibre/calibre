@@ -10,21 +10,22 @@ import os
 import traceback
 from collections import OrderedDict, namedtuple
 from qt.core import (
-    QAbstractItemModel, QFont, QIcon, QMimeData, QModelIndex, QObject, Qt,
-    pyqtSignal
+    QAbstractItemModel, QFont, QIcon, QMimeData, QModelIndex, QObject, Qt, pyqtSignal,
 )
 
 from calibre.constants import config_dir
 from calibre.db.categories import Tag, category_display_order
 from calibre.ebooks.metadata import rating_to_stars
-from calibre.gui2 import config, error_dialog, file_icon_provider, gprefs, question_dialog
+from calibre.gui2 import (
+    config, error_dialog, file_icon_provider, gprefs, question_dialog,
+)
 from calibre.gui2.dialogs.confirm_delete import confirm
 from calibre.library.field_metadata import category_icon_map
 from calibre.utils.config import prefs, tweaks
 from calibre.utils.formatter import EvalFormatter
 from calibre.utils.icu import (
-    contains, lower, primary_contains, primary_strcmp, sort_key,
-    strcmp, collation_order_for_partitioning
+    collation_order_for_partitioning, contains, lower, lower as icu_lower,
+    primary_contains, primary_strcmp, sort_key, strcmp, upper as icu_upper,
 )
 from calibre.utils.serialize import json_dumps, json_loads
 from polyglot.builtins import iteritems, itervalues
@@ -1716,15 +1717,18 @@ class TagsModel(QAbstractItemModel):  # {{{
                         letters_seen = {}
                         for subnode in tag_item.children:
                             if subnode.tag.sort:
-                                letters_seen[subnode.tag.sort[0]] = True
+                                c = subnode.tag.sort[0]
+                                if c in r'\.^$[]|()':
+                                    c = f'\\{c}'
+                                letters_seen[c] = True
                         if letters_seen:
                             charclass = ''.join(letters_seen)
                             if k == 'author_sort':
-                                expr = r'%s:"~(^[%s])|(&\s*[%s])"'%(k, charclass, charclass)
+                                expr = r'%s:"""~(^[%s])|(&\s*[%s])"""'%(k, charclass, charclass)
                             elif k == 'series':
-                                expr = r'series_sort:"~^[%s]"'%(charclass)
+                                expr = r'series_sort:"""~^[%s]"""'%(charclass)
                             else:
-                                expr = r'%s:"~^[%s]"'%(k, charclass)
+                                expr = r'%s:"""~^[%s]"""'%(k, charclass)
                         else:
                             expr = r'%s:false'%(k)
                         if node_searches[tag_item.tag.state] == 'true':

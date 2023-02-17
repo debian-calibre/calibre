@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "януари 06, 2023" "6.11.0" "calibre"
+.TH "CALIBREDB" "1" "февруари 03, 2023" "6.12.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -224,22 +224,22 @@ calibredb списък [options]
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-The field by which to sort the results. You can specify multiple fields by separating them with commas. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Default: id
+Полето, по което да сортирате резултатите. Можете да посочите няколко полета, като ги разделите със запетаи. Налични полета: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid По подразб.: id
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+Шаблонът, който да се изпълнява, ако \fB\(dq\fPtemplate\fB\(dq\fP е в списъка с полета. По подразбиране: Няма
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template_file, \-t
-Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+Път до файл, съдържащ шаблона за изпълнение, ако \fB\(dq\fPtemplate\fB\(dq\fP е в списъка с полета. По подразбиране: Няма
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template_heading
-Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
+Заглавка за колоната на шаблона. По подразбиране: template. Тази опция се игнорира, ако опцията \fI\%\-\-for\-machine\fP е зададена
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -428,12 +428,12 @@ calibredb set_metadata [options] book_id [/path/to/metadata.opf]
 .UNINDENT
 .UNINDENT
 .sp
-Set the metadata stored in the calibre database for the book identified by
-book_id from the OPF file metadata.opf. book_id is a book id number from the
-search command. You can get a quick feel for the OPF format by using the
-\-\-as\-opf switch to the show_metadata command. You can also set the metadata of
-individual fields with the \-\-field option. If you use the \-\-field option, there
-is no need to specify an OPF file.
+Задайте метаданните, съхранявани в базата данни на calibre за книгата, идентифицирана от
+book_id от OPF файла metadata.opf. book_id е идентификационен номер на книга от
+команда за търсене. Може бързо да усетите OPF формата, като използвате
+\-\-as\-opf преминете към командата show_metadata. Може също да зададете метаданните на
+отделни полета с опцията \-\-field. Ако използвате опцията \-\-field,
+няма нужда да указвате OPF файл.
 .sp
 Винаги, когато предавате аргументи на calibredb, които имат интервали в тях, затворете аргументите в кавички. Например: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -839,7 +839,7 @@ calibredb check_library [options]
 .INDENT 0.0
 .TP
 .B \-\-vacuum\-fts\-db
-Vacuum the full text search database. This can be very slow and memory intensive, depending on the size of the database.
+Вакуумирайте базата данни за търсене в пълен текст. Това може да е много бавно и интензивно за паметта, в зависимост от размера на базата данни.
 .UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
@@ -989,36 +989,36 @@ calibredb fts_index [options] enable/disable/status/reindex
 .UNINDENT
 .UNINDENT
 .sp
-Control the Full text search indexing process.
+Контролирайте процеса на индексиране при търсене в пълен текст.
 .INDENT 0.0
 .TP
 .B enable
-Turns on FTS indexing for this library
+Включва FTS индексирането за тази библиотека
 .TP
 .B disable
-Turns off FTS indexing for this library
+Изключва FTS индексирането за тази библиотека
 .TP
 .B status
-Shows the current indexing status
+Показва текущото състояние на индексиране
 .TP
 .B reindex
-Can be used to re\-index either particular books or
-the entire library. To re\-index particular books
-specify the book ids as additional arguments after the
-reindex command. If no book ids are specified the
-entire library is re\-indexed.
+Може да се използва за повторно индексиране на определени книги или
+цялата библиотека. За повторно индексиране на определени книги
+посочете ИД на книгите като допълнителни аргументи след
+reindex команда. Ако не са посочени идентификатори на книги,
+цялата библиотека се индексира повторно.
 .UNINDENT
 .sp
 Винаги, когато предавате аргументи на calibredb, които имат интервали в тях, затворете аргументите в кавички. Например: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-indexing\-speed
-The speed of indexing. Use fast for fast indexing using all your computers resources and slow for less resource intensive indexing. Note that the speed is reset to slow after every invocation.
+Скоростта на индексиране. Използвайте за бързо индексиране чрез всичките ви компютърни ресурси и бавно за по\-малко ресурсоемко индексиране. Забележете, че скоростта се нулира, за да се забави след всяко извикване.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-wait\-for\-completion
-Wait till all books are indexed, showing indexing progress periodically
+Изчакайте, докато всички книги бъдат индексирани, показвайки периодично напредъка на индексирането
 .UNINDENT
 .SH FTS_SEARCH
 .INDENT 0.0
@@ -1026,49 +1026,49 @@ Wait till all books are indexed, showing indexing progress periodically
 .sp
 .nf
 .ft C
-calibredb fts_search [options] search expression
+calibredb fts_search [options] израз за търсене
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Do a full text search on the entire library or a subset of it.
+Извършете пълно текстово търсене в цялата библиотека или част от нея.
 .sp
 Винаги, когато предавате аргументи на calibredb, които имат интервали в тях, затворете аргументите в кавички. Например: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-do\-not\-match\-on\-related\-words
-Only match on exact words not related words. So correction will not match correcting.
+Съвпадение само на точни думи, несвързани думи. Така че корекцията няма да съвпада с коригирането.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-include\-snippets
-Include snippets of the text surrounding each match. Note that this makes searching much slower.
+Включете фрагменти от текста около всяко съвпадение. Имайте предвид, че това прави търсенето много по\-бавно.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-indexing\-threshold
-How much of the library must be indexed before searching is allowed, as a percentage. Defaults to 90
+Колко от библиотеката трябва да е индексирана, преди търсенето да бъде разрешено, като процент. По подразбиране е 90
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-end\-marker
-The marker used to indicate the end of a matched word inside a snippet
+Маркерът, използван за обозначаване на края на съвпадаща дума във фрагмент
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-start\-marker
-The marker used to indicate the start of a matched word inside a snippet
+Маркерът, използван за обозначаване на началото на съвпадаща дума във фрагмент
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-format
-The format to output the search results in. Either \fB\(dq\fPtext\fB\(dq\fP for plain text or \fB\(dq\fPjson\fB\(dq\fP for JSON output.
+Форматът за извеждане на резултатите от търсенето. Или \fB\(dq\fPtext\fB\(dq\fP за обикновен текст или \fB\(dq\fPjson\fB\(dq\fP за JSON извеждане.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-restrict\-to
-Restrict the searched books, either using a search expression or ids. For example: ids:1,2,3 to restrict by ids or search:tag:foo to restrict to books having the tag foo.
+Ограничете търсените книги, като използвате израз за търсене или идентификатори. За пример: ids:1,2,3 за ограничаване по ИД или search:tag:foo за ограничаване до книги с етикет foo.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

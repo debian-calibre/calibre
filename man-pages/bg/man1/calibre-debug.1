@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "януари 06, 2023" "6.11.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "февруари 03, 2023" "6.12.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -41,23 +41,23 @@ calibre\-debug [options]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre E\-book viewer and the calibre editor in debug mode.
+Различни интерфейси на командния ред, полезни за дебъг в calibre. Без опции,
+тази команда стартира вграден интерпретатор на Python. Може също да стартирате основния
+calibre GUI, четеца за е\-книги на calibre и редакторът на calibre в дебъг режим.
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the E\-book diff tool and so
-on.
+Също така съдържа интерфейси към различни битове от calibre, които нямат
+специални инструменти за команден ред, като поднабор на шрифтове, инструмент за разлики на е\-книги и
+т.н.
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+Може също да използвате \fBcalibre\-debug\fP за изпълнение на самостоятелни скриптове. За това, използвайте по следния начин:
 .INDENT 0.0
 .INDENT 3.5
 \fBcalibre\-debug\fP \-e myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .UNINDENT
 .UNINDENT
 .sp
-Everything after the \fB\-\-\fP is passed to the script. You can also use \fBcalibre\-debug\fP
-as a shebang in scripts, like this:
+Всичко след \fB\-\-\fP се предава на скрипта. Може също да използвате \fBcalibre\-debug\fP
+като shebang в скриптове, като това:
 .INDENT 0.0
 .INDENT 3.5
 #!/usr/bin/env \-S \fBcalibre\-debug\fP \-e \fB\-\-\fP \-\-
@@ -109,7 +109,7 @@ as a shebang in scripts, like this:
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Export all calibre data (books/settings/plugins). Normally, you will be asked for the export folder and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export folder and libraries. The special keyword \fB\(dq\fPall\fB\(dq\fP can be used to export all libraries. Examples:    calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP  # for interactive use   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /path/to/empty/export/folder /path/to/library/folder1 /path/to/library2   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /export/folder all  # export all known libraries
+Експорт на всички calibre данни (книги/настройки/плъгини). Обикновено ще бъдете помолени за експортната папка и библиотеките за експорт. Може също да ги посочите като аргументи на командния ред, за да пропуснете въпросите. Използвайте абсолютни пътища за експортната папка и библиотеките. Специалната ключова дума \fB\(dq\fPall\fB\(dq\fP може да се използва за експортиране на всички библиотеки. Примери:    calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP  # за интерактивна употреба   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /path/to/empty/export/folder /path/to/library/folder1 /path/to/library2   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /export/folder all  # експортирайте всички известни библиотеки
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -154,17 +154,17 @@ Export all calibre data (books/settings/plugins). Normally, you will be asked fo
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-Run a plugin that provides a command line interface. For example: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
+Стартирайте плъгин, който предоставя интерфейс на командния ред. Например: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Всичко след \fB\-\-\fP ще бъде предадено на плъгина като аргументи.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-run\-test, \-t
-Run the named test(s). Use the special value \fB\(dq\fPall\fB\(dq\fP to run all tests. If the test name starts with a period it is assumed to be a module name. If the test name starts with @ it is assumed to be a category name.
+Изпълнете посочените тестове. Използвайте специалната стойност \fB\(dq\fPall\fB\(dq\fP, за да изпълните всички тестове. Ако името на теста започва с точка, предполага се, че е име на модул. Ако името на теста започва с @, предполага се, че е име на категория.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-run\-without\-debug
-Don\fB\(aq\fPt run with the DEBUG flag set
+Не стартирайте със зададен флаг DEBUG
 .UNINDENT
 .INDENT 0.0
 .TP

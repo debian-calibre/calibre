@@ -7,7 +7,7 @@ from collections import Counter, OrderedDict
 from html import escape
 from qt.core import (
     QAbstractItemView, QCheckBox, QComboBox, QFont, QHBoxLayout, QIcon, QLabel, Qt,
-    QToolButton, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget, pyqtSignal
+    QToolButton, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget, pyqtSignal,
 )
 from threading import Thread
 
@@ -19,6 +19,7 @@ from calibre.gui2.viewer.config import vprefs
 from calibre.gui2.viewer.web_view import get_data, get_manifest
 from calibre.gui2.viewer.widgets import ResultsDelegate, SearchBox
 from calibre.utils.icu import primary_collator_without_punctuation
+from calibre.utils.localization import _, ngettext
 from polyglot.builtins import iteritems
 from polyglot.functools import lru_cache
 from polyglot.queue import Queue
@@ -363,9 +364,12 @@ def search_in_name(name, search_query, ctx_size=75):
 
     else:
         spans = []
-        miter = lambda: spans
+
+        def miter():
+            return spans
         if raw:
-            a = lambda s, l: spans.append((s, s + l))
+            def a(s, l):
+                return spans.append((s, s + l))
             primary_collator_without_punctuation().find_all(search_query.text, raw, a, search_query.mode == 'word')
 
     for (start, end) in miter():

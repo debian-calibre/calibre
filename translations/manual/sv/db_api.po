@@ -4,7 +4,7 @@
 # 
 # Translators:
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2020
-# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2022
+# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2023
 # Jonatan Nyberg <jonatan@autistici.org>, 2018-2021
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017-2018
 # Merarom <merarom@yahoo.es>, 2014-2017
@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-10 14:55+0000\n"
+"POT-Creation-Date: 2023-02-02 05:59+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
-"Last-Translator: Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2022\n"
+"Last-Translator: Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2023\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -89,7 +89,7 @@ msgstr "När ett format läggs till i en bok, med argument: (bok_id, format)"
 msgid ""
 "When formats are removed from a book, with arguments: (mapping of book id to"
 " set of formats removed from the book)"
-msgstr ""
+msgstr "När format tas bort från en bok, med argument: (mappning av bok-id till uppsättning format borttagna från boken)"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.indexing_progress_changed:1
@@ -109,7 +109,7 @@ msgid ""
 "When items such as tags or authors are renamed in some or all books. "
 "Arguments: (field_name, affected book ids, map of old item id to new item "
 "id)"
-msgstr ""
+msgstr "När objekt som taggar eller författare byter namn i vissa eller alla böcker. Argument: (fältnamn, påverkade bok-id:er, mappning av gammalt post-id till nytt post-id)"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.metadata_changed:1
@@ -387,10 +387,10 @@ msgstr "``default_value`` används inte för title, title_sort, authors, author_
 msgid ""
 "The returned value for is_multiple fields are always tuples, even when no "
 "values are found (in other words, default_value is ignored). The exception "
-"is identifiers for which the returned value is always a dict. The returned "
-"tuples are always in link order, that is, the order in which they were "
-"created."
-msgstr "Det återgivna värdet för is_multiple fält är alltid tupler, även om inga värden finns (med andra ord, default_value ignoreras). Undantaget är identifierare som det återgav värdet alltid är en 'dict'. De återgivna tuplerna är alltid i länkordning, det vill säga i vilken ordning de skapades."
+"is identifiers for which the returned value is always a dictionary. The "
+"returned tuples are always in link order, that is, the order in which they "
+"were created."
+msgstr "Det återgivna värdet för is_multiple fält är alltid tupler, även om inga värden finns (med andra ord, default_value ignoreras). Undantaget är identifierare som det återgav värdet alltid är en ordbok. De återgivna tuplerna är alltid i länkordning, det vill säga i vilken ordning de skapades."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_ids_for:1
@@ -412,7 +412,7 @@ msgstr "Hittar böcker som har en övermängd av författarna i mi och samma tit
 msgid ""
 "Return the e-book format as a bytestring or `None` if the format doesn't "
 "exist, or we don't have permission to write to the e-book file."
-msgstr "Returnera e-bokformat som en bytestring eller `None` om formatet inte finns, eller om vi inte har behörighet att skriva till e-bokfilen."
+msgstr "Returnera e-bokformat som en bytesträng eller `None` om formatet inte finns, eller om vi inte har behörighet att skriva till e-bokfilen."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:4
@@ -450,7 +450,7 @@ msgid ""
 "Currently used only in calibredb list, the viewer, edit book, compare_format"
 " to original format, open with, bulk metadata edit and the catalogs (via "
 "get_data_as_dict())."
-msgstr "Används för närvarande endast i calibredb-listan, visaren, redigera bok, compare_format till originalformat, öppna med, redigera metadata i grupp och katalogerna (via get_data_as_dict ())."
+msgstr "Används för närvarande endast i calibredb-listan, visaren, redigera bok, compare_format till originalformat, öppna med, redigera metadata i grupp och katalogerna (via get_data_as_dict())."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_abspath:9
@@ -514,7 +514,7 @@ msgstr "Hämta data för namn. Som standard returneras data för alla book_ids, 
 msgid ""
 "Return a mapping of id numbers to values for the specified field. The field "
 "must be a many-one or many-many field, otherwise a ValueError is raised."
-msgstr "Returnera en översik av id nummer till värden för specifika fält. Fältet måste vara en många-en eller många-många fält, annars skapas ett ValueError."
+msgstr "Returnera en mappning av id-nummer till värden för det angivna fältet. Fältet måste vara ett många-en- eller många-många-fält, annars uppstår ett ValueError."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_ids_for_custom_book_data:1
@@ -523,6 +523,10 @@ msgstr "Returnera en uppsättning bok-id för vilket namn har data."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_id:1
+msgid ""
+"Return the item id for item_name (case-insensitive) or None if not found"
+msgstr "Returnera post-id för item_name (skiftlägeskänsligt) eller None om den inte hittas"
+
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_ids:1
 msgid "Return the item id for item_name (case-insensitive)"
@@ -561,7 +565,7 @@ msgstr "Det serieliknande fältet (standard är den inbyggda seriekolumnen)"
 #: calibre.db.cache.Cache.get_next_series_num_for:5
 msgid ""
 "If True, returns a mapping of book_id to current series_index value instead."
-msgstr "Om True, returneras en översikt av book_id till aktuellt serie_index-värde istället."
+msgstr "Om True, returneras en mappning av book_id till aktuellt serie_index-värde istället."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_proxy_metadata:1
@@ -577,7 +581,7 @@ msgstr "Liksom: meth:`get_metadata` förutom att den returnerar ett ProxyMetadat
 msgid ""
 "Return a mapping of id to usage count for all values of the specified field,"
 " which must be a many-one or many-many field."
-msgstr "Returnera en översikt av id till räkningsanvändning för alla värden på det angivna fältet, som måste vara en många-en eller många-många fält."
+msgstr "Returnera en mappning av id till användningsantal för alla värden i det angivna fältet, som måste vara ett många-en- eller många-många-fält."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_book:1
@@ -628,7 +632,7 @@ msgstr "Returnera värdet för det specifika förvalet eller värdet angivet som
 msgid ""
 "Return the OPF metadata backup for the book as a bytestring or None if no "
 "such backup exists."
-msgstr "Returnera OPF-metadata-säkerhetskopian för boken som en bytestring eller None om ingen sådan säkerhetskopia finns."
+msgstr "Returnera OPF-metadata-säkerhetskopian för boken som en bytesträng eller None om ingen sådan säkerhetskopia finns."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_books:1
@@ -646,7 +650,7 @@ msgstr "Ta bort de angivna formaten från de angivna böckerna."
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:3
 msgid "A mapping of book_id to a list of formats to be removed from the book."
-msgstr "En översikt av book_id till en lista med format som ska tas bort från boken."
+msgstr "En mappning av book_id till en lista med format som ska tas bort från boken."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:4
@@ -762,7 +766,7 @@ msgid ""
 "Set the cover for this book. The data can be either a QImage, QPixmap, file "
 "object or bytestring. It can also be None, in which case any existing cover "
 "is removed."
-msgstr "Ställ in omslaget för denna bok. Data kan antingen vara en QImage, QPixmap, filobjekt eller bytestring. Det kan också vara None, i vilket fall eventuellt befintligt omslag tas bort."
+msgstr "Ställ in omslaget för denna bok. Data kan antingen vara en QImage, QPixmap, filobjekt eller bytesträng. Det kan också vara None, i vilket fall eventuellt befintligt omslag tas bort."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:1
@@ -774,7 +778,7 @@ msgstr "Ställ in värdena för fältet som anges av ``namn``. Returnerar uppsä
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:3
 msgid "Mapping of book_ids to values that should be applied."
-msgstr "Översikt av book_ids till värden som bör tillämpas."
+msgstr "Mappning av book_ids till värden som bör tillämpas."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:4
@@ -816,6 +820,15 @@ msgid ""
 msgstr "Ställ in den angivna inställningen till det angivna värdet. Se också :meth:`pref`."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.split_if_is_multiple_composite:1
+msgid ""
+"If f is a composite column lookup key and the column is is_multiple then "
+"split v into unique non-empty values. The comparison is case sensitive. "
+"Order is not preserved. Return a list() for compatibility with proxy "
+"metadata field getters, for example tags."
+msgstr "Om f är en sammansatt kolumnsökningsnyckel och kolumnen är is_multiple, dela v i unika icke-tomma värden. Jämförelsen är skiftlägeskänslig. Ordningen är inte bevarad. Returnera en list() för kompatibilitet med proxymetadatafältgetters, till exempel taggar."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:1
 msgid ""
 "Return the ids of all books having the tag ``tag`` that are older than the "
@@ -849,4 +862,4 @@ msgid ""
 "optional and is useful for a performance boost, in contexts where a "
 "ProxyMetadata object for the books already exists. It should be a mapping of"
 " book_ids to their corresponding ProxyMetadata objects."
-msgstr "Returnera användarkategorier för de angivna böckerna. proxy_metadata_map är valfritt och är användbar för en prestandaökning, i sammanhang där ett ProxyMetadata-objekt för böckerna redan finns. Det bör vara en korsreferens av book_ids till deras motsvarande ProxyMetadata-objekt."
+msgstr "Returnera användarkategorierna för de angivna böckerna. proxy_metadata_map är valfritt och är användbart för en prestandahöjning, i sammanhang där ett ProxyMetadata-objekt för böckerna redan finns. Det bör vara en mappning av book_ids till deras motsvarande ProxyMetadata-objekt."

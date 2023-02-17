@@ -231,7 +231,8 @@ def capitalize(x):
 try:
     swapcase = _icu.swap_case
 except AttributeError:  # For people running from source
-    swapcase = lambda x:x.swapcase()
+    def swapcase(x):
+        return x.swapcase()
 
 find = make_two_arg_func(collator, 'find')
 primary_find = make_two_arg_func(primary_collator, 'find')
@@ -286,7 +287,7 @@ def partition_by_first_letter(items, reverse=False, key=lambda x:x):
     ans = OrderedDict()
     last_c, last_ordnum = ' ', 0
     for item in items:
-        c = icu_upper(key(item) or ' ')
+        c = upper(key(item) or ' ')
         ordnum, ordlen = collation_order(c)
         if last_ordnum != ordnum:
             last_c = c[0:1]

@@ -5,7 +5,7 @@
 # Translators:
 # Anders Jonsson <transifex@norsjovallen.se>, 2022
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2020
-# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2022
+# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2023
 # Jonatan Nyberg <jonatan@autistici.org>, 2018-2021
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017-2018
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017
@@ -14,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-05 02:12+0000\n"
+"POT-Creation-Date: 2023-02-02 05:59+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
-"Last-Translator: Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2022\n"
+"Last-Translator: Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2023\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -200,7 +200,7 @@ msgid ""
 "ToC in your e-books. Metadata ToCs will give the people reading your e-books"
 " a much superior navigation experience (except on the Kindle, where they are"
 " essentially the same as a content ToC)."
-msgstr "Slutligen uppmanar jag dig att dumpa innehållet innehållsförteckningen och bara har en metadatainnehållsförteckningen i dina e-böcker. Metadatainnehållsförteckningen kommer att ge människor som läser dina e-böcker en mycket överlägsen navigeringserfarenhet (utom på Kindle, där de är i princip samma som en innehållsförteckningen)."
+msgstr "Slutligen uppmuntrar jag dig att avstå från innehållsförteckningen och bara ha en metadatainformation i dina e-böcker. Metadatainnehållsförteckningen kommer att ge människor som läser dina e-böcker en mycket överlägsen navigeringsupplevelse (förutom på Kindle, där de är i huvudsak samma som en innehållsförteckningen)."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:71
 msgid ""
@@ -230,7 +230,7 @@ msgid ""
 "button to create your e-book. You can use the option in the Table of "
 "Contents section in the conversion dialog to control how the Table of "
 "Contents is generated."
-msgstr "Sedan är det bara lägga till den här HTML filen till grafiska gränssnittet och använd knappen :guilabel:`Konvertera` för att skapa din e-bok. Du kan använda alternativet i innehållsförteckningsavsnittet i dialogrutan för att anpassa konverteringen hur innehållsförteckningen skapas."
+msgstr "Lägg sedan till den här HTML-filen i det grafiska gränssnittet och använd knappen :guilabel:`Konvertera` för att skapa din e-bok. Du kan använda alternativet i innehållsförteckningsavsnittet i konverteringsdialogrutan för att anpassa hur innehållsförteckningen genereras."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:101
 msgid ""
@@ -1738,7 +1738,7 @@ msgstr "då är problemet troligen en skadad teckensnittscache. Du kan rensa cac
 #: ../../__w/calibre/calibre/manual/faq.rst:932
 msgid ""
 "I get only a black or white screen when running the calibre E-book viewer?"
-msgstr ""
+msgstr "Jag får bara en svart eller vit skärm när jag kör calibres e-bokvisare?"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:934
 msgid ""
@@ -1748,7 +1748,7 @@ msgid ""
 "hardware acceleration in Qt WebEngine by setting the environment variable "
 "``QTWEBENGINE_CHROMIUM_FLAGS`` to the value ``--disable-gpu``. See "
 ":ref:`customize_env_vars` for how to change environment variables."
-msgstr ""
+msgstr "Detta kommer att bero på en inkompatibilitet mellan Qt WebEngine, som visaren använder för att ta bort och GPU-drivrutinerna på ditt system. Försök först att uppgradera GPU-drivrutinerna. Om det inte hjälper kan du försöka stänga av hårdvaruacceleration i Qt WebEngine genom att ställa in miljövariabeln ``QTWEBENGINE_CHROMIUM_FLAGS`` till värdet ``--disable-gpu``. Se :ref:`customize_env_vars` för hur man ändrar miljövariabler."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:943
 msgid "I downloaded the installer, but it is not working?"
@@ -2109,7 +2109,7 @@ msgid ""
 "against these libraries. If you get an ImportError about some Qt modules, "
 "you are likely missing some X libraries. Typical candidates are: ``libxcb-"
 "xinerama0``, ``libegl1``, ``libopengl0``."
-msgstr ""
+msgstr "calibre behöver GLIBC >= 2.31 och libstdc++ >= 6.0.28. Om du har en äldre server behöver du antingen kompilera dessa från källkod, eller använd calibre 3.48 som kräver GLIBC >= 2.17 eller 2.85.1 som kräver GLIBC >= 2.13 eller calibre 1.48 som endast kräver GLIBC >= 2.10. Dessutom, även om kommandoradsverktygen för calibre inte behöver ha en körande X-server, kräver vissa av dem att X-serverbiblioteken är installerade på ditt system. Detta beror på Qt, som används för bildbehandlingsuppgifter, och länkar mot dessa bibliotek. Om du får ett importfel om några Qt-moduler, är det sannolikt att du saknar vissa X-bibliotek. Typiska kandidater är: ``libxcb-xinerama0``, ``libegl1``, ``libopengl0``."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1090
 msgid "You can run the calibre server via the command::"
@@ -2123,7 +2123,7 @@ msgstr "Du kan hämtar nyheter och konvertera dem till en e-bok med kommandot::"
 msgid ""
 "If you want to generate MOBI, use :file:`outputfile.mobi` instead and use "
 "``--output-profile kindle``."
-msgstr ""
+msgstr "Om du vill skapa MOBI, använd istället :file:`outputfile.mobi` och använd ``--output-profile kindle``."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1100
 msgid "You can email downloaded news with the command::"

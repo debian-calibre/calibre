@@ -15,8 +15,8 @@ from calibre.constants import iswindows
 from calibre.ebooks import BOOK_EXTENSIONS
 from calibre.ebooks.metadata import MetaInformation, normalize_isbn
 from calibre.gui2 import (
-    choose_dir, choose_files, choose_files_and_remember_all_files, error_dialog,
-    gprefs, info_dialog, question_dialog, warning_dialog
+    choose_dir, choose_files, choose_files_and_remember_all_files, error_dialog, gprefs,
+    info_dialog, question_dialog, warning_dialog,
 )
 from calibre.gui2.actions import InterfaceAction
 from calibre.gui2.dialogs.add_empty_book import AddEmptyBookDialog
@@ -26,6 +26,7 @@ from calibre.ptempfile import PersistentTemporaryFile
 from calibre.utils.config_base import tweaks
 from calibre.utils.filenames import ascii_filename, make_long_path_useable
 from calibre.utils.icu import sort_key
+from calibre.utils.localization import ngettext
 from polyglot.builtins import iteritems, string_or_bytes
 
 
@@ -127,7 +128,7 @@ class AddAction(InterfaceAction):
                     _('Are you sure you want to set the same'
                     ' cover for all %d books?')%len(ids)):
                 return
-            with lopen(images[0], 'rb') as f:
+            with open(images[0], 'rb') as f:
                 cdata = f.read()
             self.gui.current_db.new_api.set_cover({book_id: cdata for book_id in ids})
             self.gui.refresh_cover_browser()
@@ -370,14 +371,26 @@ class AddAction(InterfaceAction):
         existing_isbns.pop('', None)
         ok = []
         duplicates = []
+        checker_maps = {}
         for book in books:
-            q = normalize_isbn(book['isbn'])
-            if q and q in existing_isbns:
-                duplicates.append((book, existing_isbns[q]))
+            if 'isbn' in book:
+                q = normalize_isbn(book['isbn'])
+                if q and q in existing_isbns:
+                    duplicates.append((book, existing_isbns[q]))
+                else:
+                    ok.append(book)
             else:
-                ok.append(book)
+                key = book['']
+                if key not in checker_maps:
+                    checker_maps[key] = {ids.get(key, ''): book_id for book_id, ids in book_id_identifiers.items()}
+                    checker_maps[key].pop('', None)
+                q = book[key]
+                if q in checker_maps[key]:
+                    duplicates.append((book, checker_maps[key][q]))
+                else:
+                    ok.append(book)
         if duplicates:
-            det_msg = '\n'.join(f'{book["isbn"]}: {db.field_for("title", book_id)}' for book, book_id in duplicates)
+            det_msg = '\n'.join(f'{book[book[""]]}: {db.field_for("title", book_id)}' for book, book_id in duplicates)
             if question_dialog(self.gui, _('Duplicates found'), _(
                 'Books with some of the specified ISBNs already exist in the calibre library.'
                 ' Click "Show details" for the full list. Do you want to add them anyway?'), det_msg=det_msg
@@ -415,7 +428,10 @@ class AddAction(InterfaceAction):
                 return
 
             mi = MetaInformation(None)
-            mi.isbn = x['isbn']
+            if x[''] == 'isbn':
+                mi.isbn = x['isbn']
+            else:
+                mi.set_identifiers({x['']:x[x['']]})
             if self.isbn_add_tags:
                 mi.tags = list(self.isbn_add_tags)
             fmts = [] if x['path'] is None else [x['path']]

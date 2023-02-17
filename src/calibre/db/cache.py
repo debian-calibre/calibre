@@ -24,7 +24,7 @@ from time import monotonic, sleep, time
 from calibre import as_unicode, detect_ncpus, isbytestring
 from calibre.constants import iswindows, preferred_encoding
 from calibre.customize.ui import (
-    run_plugins_on_import, run_plugins_on_postadd, run_plugins_on_postimport
+    run_plugins_on_import, run_plugins_on_postadd, run_plugins_on_postimport,
 )
 from calibre.db import SPOOL_SIZE, _get_next_series_num_for_list
 from calibre.db.annotations import merge_annotations
@@ -34,7 +34,7 @@ from calibre.db.fields import IDENTITY, InvalidLinkTable, create_field
 from calibre.db.lazy import FormatMetadata, FormatsList, ProxyMetadata
 from calibre.db.listeners import EventDispatcher, EventType
 from calibre.db.locking import (
-    DowngradeLockError, LockingError, SafeReadLock, create_locks, try_lock
+    DowngradeLockError, LockingError, SafeReadLock, create_locks, try_lock,
 )
 from calibre.db.search import Search
 from calibre.db.tables import VirtualTable
@@ -47,7 +47,7 @@ from calibre.ebooks.metadata.opf2 import metadata_to_opf
 from calibre.ptempfile import PersistentTemporaryFile, SpooledTemporaryFile, base_dir
 from calibre.utils.config import prefs, tweaks
 from calibre.utils.date import UNDEFINED_DATE, now as nowf, utcnow
-from calibre.utils.icu import sort_key
+from calibre.utils.icu import lower as icu_lower, sort_key
 from calibre.utils.localization import canonicalize_lang
 from polyglot.builtins import cmp, iteritems, itervalues, string_or_bytes
 
@@ -681,7 +681,7 @@ class Cache:
 
         The returned value for is_multiple fields are always tuples, even when
         no values are found (in other words, default_value is ignored). The
-        exception is identifiers for which the returned value is always a dict.
+        exception is identifiers for which the returned value is always a dictionary.
         The returned tuples are always in link order, that is, the order in
         which they were created.
         '''
@@ -1687,7 +1687,7 @@ class Cache:
         try:
             cdata = mi.cover_data[1]
             if cdata is None and isinstance(mi.cover, string_or_bytes) and mi.cover and os.access(mi.cover, os.R_OK):
-                with lopen(mi.cover, 'rb') as f:
+                with open(mi.cover, 'rb') as f:
                     cdata = f.read() or None
             if cdata is not None:
                 self._set_cover({book_id: cdata})
@@ -1787,7 +1787,7 @@ class Cache:
             # message in the GUI during the processing.
             npath = run_import_plugins(stream_or_path, fmt)
             fmt = os.path.splitext(npath)[-1].lower().replace('.', '').upper()
-            stream_or_path = lopen(npath, 'rb')
+            stream_or_path = open(npath, 'rb')
             needs_close = True
             fmt = check_ebook_format(stream_or_path, fmt)
 
@@ -1807,10 +1807,10 @@ class Cache:
             if hasattr(stream_or_path, 'read'):
                 stream = stream_or_path
             else:
-                stream = lopen(stream_or_path, 'rb')
+                stream = open(stream_or_path, 'rb')
                 needs_close = True
             try:
-                stream = stream_or_path if hasattr(stream_or_path, 'read') else lopen(stream_or_path, 'rb')
+                stream = stream_or_path if hasattr(stream_or_path, 'read') else open(stream_or_path, 'rb')
                 size, fname = self._do_add_format(book_id, fmt, stream, name)
             finally:
                 if needs_close:
@@ -2002,17 +2002,17 @@ class Cache:
         as per the simple duplicate detection heuristic used by :meth:`has_book`.
         '''
         duplicates, ids = [], []
-        fmt_map = {}
         for mi, format_map in books:
             book_id = self.create_book_entry(mi, add_duplicates=add_duplicates, apply_import_tags=apply_import_tags, preserve_uuid=preserve_uuid)
             if book_id is None:
                 duplicates.append((mi, format_map))
             else:
+                fmt_map = {}
                 ids.append(book_id)
-                for fmt, stream_or_path in iteritems(format_map):
+                for fmt, stream_or_path in format_map.items():
                     if self.add_format(book_id, fmt, stream_or_path, dbapi=dbapi, run_hooks=run_hooks):
                         fmt_map[fmt.lower()] = getattr(stream_or_path, 'name', stream_or_path) or '<stream>'
-            run_plugins_on_postadd(dbapi or self, book_id, fmt_map)
+                run_plugins_on_postadd(dbapi or self, book_id, fmt_map)
         return ids, duplicates
 
     @write_api
@@ -2651,7 +2651,13 @@ class Cache:
             fmts = field.table.book_col_map.get(book_id, ())
             if not fmts:
                 continue
-            mi = self.get_metadata(book_id, get_cover=True, cover_as_data=True)
+            mi = self._get_metadata(book_id)
+            buf = BytesIO()
+            if not self._copy_cover_to(book_id, buf):
+                return
+            cdata = buf.getvalue()
+            if cdata:
+                mi.cover_data = ('jpeg', cdata)
             try:
                 path = self._field_for('path', book_id).replace('/', os.sep)
             except:
@@ -2711,7 +2717,7 @@ class Cache:
         pt.close()
         self.backend.backup_database(pt.name)
         dbkey = key_prefix + ':::' + 'metadata.db'
-        with lopen(pt.name, 'rb') as f:
+        with open(pt.name, 'rb') as f:
             exporter.add_file(f, dbkey)
         os.remove(pt.name)
         poff = 1
@@ -2723,7 +2729,7 @@ class Cache:
             pt.close()
             self.backend.backup_fts_database(pt.name)
             ftsdbkey = key_prefix + ':::' + 'full-text-search.db'
-            with lopen(pt.name, 'rb') as f:
+            with open(pt.name, 'rb') as f:
                 exporter.add_file(f, ftsdbkey)
             os.remove(pt.name)
 

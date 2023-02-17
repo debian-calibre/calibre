@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SMTP" "1" "stycznia 06, 2023" "6.11.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "lutego 03, 2023" "6.12.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .INDENT 0.0
@@ -48,7 +48,7 @@ Jeśli treść nie jest podana, jest ona odczytywana z STDIN.
 to jest adresem e\-mailowym odbiorcy wiadomości, zaś from \- adresem nadawcy.
 Jeśli kompletna wiadomość jest odczytywana z STDIN adresy nadawcy i odbiorcy są używane jedynie do negocjacji w protokole SMTP, nagłówki wiadomości nie są modyfikowane.
 .sp
-Whenever you pass arguments to \fBcalibre\-smtp\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Ilekroć przekazujesz argumenty do \fBcalibre\-smtp\fP, które zawierają spacje, ujmuj je w cudzysłowy. Na przykład: \(dq/some path/with spaces\(dq
 .SH [OPCJE]
 .INDENT 0.0
 .TP
@@ -58,7 +58,7 @@ Oddziel i dostarcz wiadomość w tle. Jeśli użyjesz tej opcji, powinieneś uż
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
-Wyświetla ten tekst pomocy i kończy działanie
+wyświetla ten tekst pomocy i kończy działanie
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -83,7 +83,7 @@ Podaj więcej danych
 .INDENT 0.0
 .TP
 .B \-\-version
-Wyświetla wersję programu i kończy działanie
+wyświetla wersję programu i kończy działanie
 .UNINDENT
 .SS COMPOSE MAIL
 .sp
@@ -109,12 +109,12 @@ Opcje, aby korzystać z serwera SMTP do wysyłania poczty. calibre będzie prób
 .INDENT 0.0
 .TP
 .B \-\-dont\-verify\-server\-certificate
-Nie weryfikuj certyfikatu serwera podczas łączenia za pomocą TLS. To było domyślne zachowanie w wersjach kalibre starszych niż 3.27. Jeśli używasz przekaźnika z samopodpisanym lub w inny sposób nieważnym certyfikatem, możesz użyć tej opcji, aby przywrócić zachowanie wcześniejsze niż 3.27
+Nie weryfikuj certyfikatu serwera podczas łączenia za pomocą TLS. To było domyślne zachowanie w wersjach calibre starszych niż 3.27. Jeśli używasz przekaźnika z samopodpisanym lub w inny sposób nieważnym certyfikatem, możesz użyć tej opcji, aby przywrócić zachowanie wcześniejsze niż 3.27
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-encryption\-method, \-e
-Metoda szyfrowania używana przy połączeniu z serwerem pocztowym. Do wyboru są: TLS, SSL lub NONE. Domyślną jest TLS. UWAGA: wybranie NONE jest bardzo niebezpieczne.
+Metoda szyfrowania używana przy połączeniu z serwerem pocztowym. Do wyboru są: TLS, SSL lub NONE. Domyślną jest TLS. UWAGA: wybranie NONE jest bardzo niebezpieczne
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -129,7 +129,7 @@ Port do połączenia z serwerem pocztowym. Domyślnie jest to 465 jeśli używan
 .INDENT 0.0
 .TP
 .B \-\-relay, \-r
-Serwer SMTP, używany do wysyłania poczty
+Serwer SMTP, używany do wysyłania poczty.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -12,14 +12,14 @@ from qt.core import (
     QApplication, QCheckBox, QComboBox, QDialog, QDialogButtonBox, QDoubleSpinBox,
     QFormLayout, QFrame, QHBoxLayout, QIcon, QLabel, QLayout, QLineEdit, QListWidget,
     QPlainTextEdit, QPushButton, QScrollArea, QSize, QSizePolicy, QSpinBox, Qt,
-    QTabWidget, QTimer, QToolButton, QUrl, QVBoxLayout, QWidget, pyqtSignal, sip
+    QTabWidget, QTimer, QToolButton, QUrl, QVBoxLayout, QWidget, pyqtSignal, sip,
 )
 
 from calibre import as_unicode
 from calibre.constants import isportable, iswindows
 from calibre.gui2 import (
-    choose_files, choose_save_file, config, error_dialog, gprefs, info_dialog,
-    open_url, warning_dialog
+    choose_files, choose_save_file, config, error_dialog, gprefs, info_dialog, open_url,
+    warning_dialog,
 )
 from calibre.gui2.preferences import AbortCommit, ConfigWidgetBase, test_widget
 from calibre.gui2.widgets import HistoryLineEdit
@@ -29,9 +29,10 @@ from calibre.srv.library_broker import load_gui_libraries
 from calibre.srv.loop import parse_trusted_ips
 from calibre.srv.opts import change_settings, options, server_config
 from calibre.srv.users import (
-    UserManager, create_user_data, validate_password, validate_username
+    UserManager, create_user_data, validate_password, validate_username,
 )
 from calibre.utils.icu import primary_sort_key
+from calibre.utils.localization import ngettext
 from calibre.utils.shared_file import share_open
 from polyglot.builtins import as_bytes
 
@@ -940,7 +941,7 @@ class CustomList(QWidget):  # {{{
         paths = choose_files(self, 'custom-list-template', _('Choose template file'),
             filters=[(_('Template files'), ['json'])], all_files=False, select_only_single_file=True)
         if paths:
-            with lopen(paths[0], 'rb') as f:
+            with open(paths[0], 'rb') as f:
                 raw = f.read()
             self.current_template = self.deserialize(raw)
 
@@ -950,7 +951,7 @@ class CustomList(QWidget):  # {{{
             filters=[(_('Template files'), ['json'])], initial_filename='custom-list-template.json')
         if path:
             raw = self.serialize(self.current_template)
-            with lopen(path, 'wb') as f:
+            with open(path, 'wb') as f:
                 f.write(as_bytes(raw))
 
     def thumbnail_state_changed(self):
@@ -1003,7 +1004,7 @@ class CustomList(QWidget):  # {{{
                     raise
         else:
             raw = self.serialize(template)
-            with lopen(custom_list_template.path, 'wb') as f:
+            with open(custom_list_template.path, 'wb') as f:
                 f.write(as_bytes(raw))
         return True
 
@@ -1165,7 +1166,7 @@ class SearchTheInternet(QWidget):
                 return False
         cu = self.current_urls
         if cu:
-            with lopen(search_the_net_urls.path, 'wb') as f:
+            with open(search_the_net_urls.path, 'wb') as f:
                 f.write(self.serialized_urls.encode('utf-8'))
         else:
             try:
@@ -1180,14 +1181,14 @@ class SearchTheInternet(QWidget):
             self, 'search-net-urls', _('Choose URLs file'),
             filters=[(_('URL files'), ['json'])], initial_filename='search-urls.json')
         if path:
-            with lopen(path, 'wb') as f:
+            with open(path, 'wb') as f:
                 f.write(self.serialized_urls.encode('utf-8'))
 
     def import_urls(self):
         paths = choose_files(self, 'search-net-urls', _('Choose URLs file'),
             filters=[(_('URL files'), ['json'])], all_files=False, select_only_single_file=True)
         if paths:
-            with lopen(paths[0], 'rb') as f:
+            with open(paths[0], 'rb') as f:
                 items = json.loads(f.read())
                 [self.append_item(x) for x in items]
                 self.changed_signal.emit()

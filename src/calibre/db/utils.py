@@ -4,16 +4,21 @@
 __license__ = 'GPL v3'
 __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 
-import os, errno, sys, re
-from locale import localeconv
+import errno
+import os
+import re
+import sys
 from collections import OrderedDict, namedtuple
-from polyglot.builtins import iteritems, itervalues, string_or_bytes
+from locale import localeconv
 from threading import Lock
 
 from calibre import as_unicode, prints
-from calibre.constants import cache_dir, get_windows_number_formats, iswindows, preferred_encoding
-
+from calibre.constants import (
+    cache_dir, get_windows_number_formats, iswindows, preferred_encoding,
+)
+from calibre.utils.icu import lower as icu_lower
 from calibre.utils.localization import canonicalize_lang
+from polyglot.builtins import iteritems, itervalues, string_or_bytes
 
 
 def force_to_bool(val):
@@ -227,7 +232,7 @@ class ThumbnailCache:
         if hasattr(self, 'items'):
             try:
                 data = '\n'.join(group_id + ' ' + str(book_id) for (group_id, book_id) in self.items)
-                with lopen(os.path.join(self.location, 'order'), 'wb') as f:
+                with open(os.path.join(self.location, 'order'), 'wb') as f:
                     f.write(data.encode('utf-8'))
             except OSError as err:
                 self.log('Failed to save thumbnail cache order:', as_unicode(err))
@@ -235,7 +240,7 @@ class ThumbnailCache:
     def _read_order(self):
         order = {}
         try:
-            with lopen(os.path.join(self.location, 'order'), 'rb') as f:
+            with open(os.path.join(self.location, 'order'), 'rb') as f:
                 for line in f.read().decode('utf-8').splitlines():
                     parts = line.split(' ', 1)
                     if len(parts) == 2:
@@ -408,7 +413,8 @@ def atof(string):
 
 def type_safe_sort_key_function(keyfunc=None):
     if keyfunc is None:
-        keyfunc = lambda x: x
+        def keyfunc(x):
+            return x
     sentinel = object()
     first_value = sentinel
 

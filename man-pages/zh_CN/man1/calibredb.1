@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "一月 06, 2023" "6.11.0" "calibre"
+.TH "CALIBREDB" "1" "二月 03, 2023" "6.12.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -233,7 +233,7 @@ calibredb list [选项]
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-The field by which to sort the results. You can specify multiple fields by separating them with commas. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Default: id
+用于对结果进行排序的字段。您可以用逗号分隔多个字段。 可用字段：author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid 默认值： id
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -273,7 +273,7 @@ calibredb add [选项] file1 file2 file3 ...
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-如果找到具有类似标题和作者的书籍，请自动将传入格式(文件)合并到现有书籍记录中。值“Ignore”表示丢弃重复的格式。值“overwrite”表示书库中的重复格式将被新添加的文件覆盖。值“new_record”表示将重复的格式放入新的书籍记录中。
+如果找到具有类似书名和作者的书籍，请自动将传入格式(文件)合并到现有书籍记录中。值“Ignore”表示丢弃重复的格式。值“overwrite”表示书库中的重复格式将被新添加的文件覆盖。值“new_record”表示将重复的格式放入新的书籍记录中。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -297,7 +297,7 @@ calibredb add [选项] file1 file2 file3 ...
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-为这本书设置书号，例如 \-I asin:XXX \-I isbn:YYY
+设置书籍标识符，例如 \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -327,7 +327,7 @@ calibredb add [选项] file1 file2 file3 ...
 .INDENT 0.0
 .TP
 .B \-\-title, \-t
-设置已添加书籍的标题
+设置已添加书籍的书名
 .UNINDENT
 .SS 正在从文件夹中添加
 .sp
@@ -364,7 +364,7 @@ calibredb remove ids
 .UNINDENT
 .UNINDENT
 .sp
-从数据库移除指定书号的书籍。书号应为以逗号分隔的 id 号列表（你可以使用搜索命令来获得 id 号）。例如，23,34,57\-85（如果指定一个区间，该区间的最后一个数字不会被包括在内）。
+从数据库移除指定id的书籍。id为以逗号分隔的 id 号列表（你可以使用搜索命令来获得 id 号）。例如，23,34,57\-85（如果指定一个区间，该区间的最后一个数字不会被包括在内）。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -449,7 +449,7 @@ book_id是来自搜索命令的id号。您可以通过使用\-\-as\-opf切换到
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-设置字段。格式是field_name:value，例如：\fI\%\-\-field\fP tags:tag1,tag2。使用:option:\fI\-\-list\-fields\(ga来获取所有字段名称的列表。你可以多次指定此选项来设置多个字段。注意：对于语言，你必须使用ISO639语言代码（例如en代表英文，fr代表法语等）。对于书号，语法是:option:\fP\-\-field\(ga identifiers:isbn:XXXX,doi:YYYYY。对于布尔(是/否)字段使用真与假或是和否。
+设置字段。格式是field_name:value，例如：\fI\%\-\-field\fP tags:tag1,tag2。使用:option:\fI\-\-list\-fields\(ga来获取所有字段名称的列表。你可以多次指定此选项来设置多个字段。注意：对于语言，你必须使用ISO639语言代码（例如en代表英文，fr代表法语等）。对于书籍标识符，语法是:option:\fP\-\-field\(ga identifiers:isbn:XXXX,doi:YYYYY。对于布尔(是/否)字段使用真与假或是和否。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -472,7 +472,7 @@ calibredb export [options] ids
 .UNINDENT
 .UNINDENT
 .sp
-导出指定id的书籍至文件系统。书号为以逗号分隔的列表。
+导出指定id的书籍至文件系统。id为以逗号分隔的列表。
 导出操作将保存书籍的所有格式，以及其封面和元数据(保存
 至一个 opf 文件)。你可以使用搜索命令来获得 id 号。
 .sp
@@ -645,7 +645,7 @@ see the different options, specify the name of the output file and then the
 .INDENT 0.0
 .TP
 .B \-\-merge\-comments\-rule
-#<custom field>:[before|after]:[True|False] 指定:  <custom field> 包含与注释合并的注释的自定义字段  [before|after] 关于注释的注释放置位置  [True|False] \- 在注意和注释之间插入水平规则 默认值: \fB\(aq\fP::\fB\(aq\fP 适用于: AZW3, EPUB, MOBI 输出格式
+#<custom field>:[before|after]:[True|False] 设置:  <custom field> 自定义字段包含与书籍简介合并的内容批注  [before|after] 书籍简介相关的内容批注的位置  [True|False] \- 在内容批注和书籍简介之间插入水平规则 默认值: \fB\(aq\fP::\fB\(aq\fP 适用于: AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -734,7 +734,7 @@ calibredb custom_columns [options]
 .UNINDENT
 .UNINDENT
 .sp
-列出可用的自定义栏目。显示列标签和书号。
+列出可用的自定义栏目。显示栏目标签和id。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -944,7 +944,7 @@ calibredb embed_metadata [options] book_id
 从 calibre 数据库中的元数据更新存储在 calibre 书库中的实际书籍文件中的元数据。
 通常，只有从 calibre 导出文件时才更新元数据，如果希望文件就地更新，则此命
 令很有用。请注意，不同的文件格式支持不同数量的元数据。你可以使用book_id
-的特殊值“all”来更新所有书籍中的元数据。还可以指定许多由空间分隔的书籍书号
+的特殊值“all”来更新所有书籍中的元数据。还可以指定许多由空间分隔的书籍id
 和由连字符分隔的ID范围。例如：calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
@@ -965,7 +965,7 @@ calibredb搜索 [选项] 搜索表达式
 .UNINDENT
 .UNINDENT
 .sp
-搜索书库中指定的搜索项，返回与搜索表达式匹配的以逗号分隔的书籍书号列表。输出格式对于输入格式接受id列表的其他命令非常有用。
+搜索书库中指定的搜索项，返回与搜索表达式匹配的以逗号分隔的书籍id列表。输出格式对于输入格式接受id列表的其他命令非常有用。
 搜索表达式可以是来自calibre强大的搜索查询语言中的任何内容，例如：calibredb 搜索author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
@@ -986,7 +986,7 @@ calibredb fts_index [options] enable/disable/status/reindex
 .UNINDENT
 .UNINDENT
 .sp
-控制全文搜索索引进程。
+控制全文检索索引进程。
 .INDENT 0.0
 .TP
 .B enable
@@ -1003,12 +1003,12 @@ calibredb fts_index [options] enable/disable/status/reindex
 .INDENT 3.5
 可用于重新索引特定书籍或
 整个书库。要重新索引特定书籍
-请在reindex命令后将书籍书号指定为
+请在reindex命令后将书籍id指定为
 .UNINDENT
 .UNINDENT
 .INDENT 7.0
 .TP
-.B 附加参数。如果未指定书籍书号，则会重新
+.B 附加参数。如果未指定书籍id，则会重新
 索引整个书库。
 .UNINDENT
 .UNINDENT

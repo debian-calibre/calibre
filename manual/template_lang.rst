@@ -610,6 +610,7 @@ In `GPM` the functions described in `Single Function Mode` all require an additi
 * ``strlen(value)`` -- Returns the length of the string ``value``.
 * ``substr(str, start, end)`` -- returns the ``start``'th through the ``end``'th characters of ``str``. The first character in ``str`` is the zero'th character. If ``end`` is negative, then it indicates that many characters counting from the right. If ``end`` is zero, then it indicates the last character. For example, ``substr('12345', 1, 0)`` returns ``'2345'``, and ``substr('12345', 1, -1)`` returns ``'234'``.
 * ``subtract(x, y)`` -- returns ``x - y``. Throws an exception if either ``x`` or ``y`` are not numbers. This function can usually be replaced by the ``-`` operator.
+* ``switch_if([test_expression, value_expression,]+ else_expression)`` -- for each ``test_expression, value_expression`` pair, checks if ``test_expression`` is True (non-empty) and if so returns the result of ``value_expression``. If no ``test_expression`` is True then the result of ``else_expression` is returned. You can have as many ``test_expression, value_expression`` pairs as you want.
 * ``today()`` -- return a date+time string for today (now). This value is designed for use in `format_date` or `days_between`, but can be manipulated like any other string. The date is in `ISO <https://en.wikipedia.org/wiki/ISO_8601>`_ date/time format.
 * ``template(x)`` -- evaluates ``x`` as a template. The evaluation is done in its own context, meaning that variables are not shared between the caller and the template evaluation.
 * ``to_hex(val)`` -- returns the string ``val`` encoded in hex. This is useful when constructing calibre URLs.
@@ -736,9 +737,9 @@ A developer can choose to pass additional information to the template processor,
 
 **Developer: how to pass additional information**
 
-The additional information is a Python dictionary containing pairs ``variable_name: variable_value`` where the values must be strings. The template can access the dict, creating template local variables named ``variable_name`` containing the value ``variable_value``. The user cannot change the name so it is best to use names that won't collide with other template local variables, for example by prefixing the name with an underscore.
+The additional information is a Python dictionary containing pairs ``variable_name: variable_value`` where the values must be strings. The template can access the dictionary, creating template local variables named ``variable_name`` containing the value ``variable_value``. The user cannot change the name so it is best to use names that won't collide with other template local variables, for example by prefixing the name with an underscore.
 
-This dict is passed to the template processor (the ``formatter``) using the named parameter ``global_vars=your_dict``. The full method signature is::
+This dictionary is passed to the template processor (the ``formatter``) using the named parameter ``global_vars=your_dict``. The full method signature is::
 
     def safe_format(self, fmt, kwargs, error_value, book,
                     column_name=None, template_cache=None,
@@ -748,17 +749,17 @@ This dict is passed to the template processor (the ``formatter``) using the name
 
 **Template writer: how to access the additional information**
 
-You access the additional information (the ``globals`` dict) in a template using the template function::
+You access the additional information (the ``globals`` dictionary) in a template using the template function::
 
   globals(id[=expression] [, id[=expression]]*)
 
 where ``id`` is any legal variable name. This function checks whether the additional information provided by the developer contains the name. If it does then the function assigns the provided value to a template local variable with that name. If the name is not in the additional information and if an ``expression`` is provided, the ``expression`` is evaluated and the result is assigned to the local variable. If neither a value nor an expression is provided, the function assigns the empty string (``''``) to the local variable.
 
-A template can set a value in the ``globals`` dict using the template function::
+A template can set a value in the ``globals`` dictionary using the template function::
 
   set_globals(id[=expression] [, id[=expression]]*)
 
-This function sets the ``globals`` dict key:value pair ``id:value`` where ``value`` is the value of the template local variable ``id``. If that local variable doesn't exist then ``value`` is set to the result of evaluating ``expression``.
+This function sets the ``globals`` dictionary key:value pair ``id:value`` where ``value`` is the value of the template local variable ``id``. If that local variable doesn't exist then ``value`` is set to the result of evaluating ``expression``.
 
 Notes on the difference between modes
 -----------------------------------------

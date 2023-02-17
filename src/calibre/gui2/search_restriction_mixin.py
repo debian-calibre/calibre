@@ -5,18 +5,17 @@ __license__ = 'GPL v3'
 __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 
 from functools import partial
-from gettext import pgettext
 from qt.core import (
     QAbstractItemView, QAction, QComboBox, QDialog, QDialogButtonBox, QFrame,
     QGridLayout, QIcon, QLabel, QLineEdit, QListView, QMenu, QRadioButton, QSize,
-    QStringListModel, Qt, QTextBrowser, QVBoxLayout, QSortFilterProxyModel
+    QSortFilterProxyModel, QStringListModel, Qt, QTextBrowser, QVBoxLayout,
 )
 
 from calibre.gui2 import error_dialog, gprefs, question_dialog
 from calibre.gui2.dialogs.confirm_delete import confirm
 from calibre.gui2.widgets import ComboBoxWithHelp
 from calibre.utils.icu import sort_key
-from calibre.utils.localization import localize_user_manual_link
+from calibre.utils.localization import localize_user_manual_link, ngettext, pgettext
 from calibre.utils.search_query_parser import ParseException
 
 
@@ -454,23 +453,23 @@ class SearchRestrictionMixin:
             db.data.set_base_restriction_name('')
         elif library == '*':
             if not self.search.current_text:
-                error_dialog(self, _('No search'),
-                     _('There is no current search to use'), show=True)
-                return
+                # Clear the temporary VL if the search box is empty
+                db.data.set_base_restriction('')
+                db.data.set_base_restriction_name('')
+            else:
+                txt = _build_full_search_string(self)
+                try:
+                    db.data.search_getting_ids('', txt, use_virtual_library=False)
+                except ParseException as e:
+                    error_dialog(self, _('Invalid search'),
+                                 _('The search in the search box is not valid'),
+                                 det_msg=e.msg, show=True)
+                    return
 
-            txt = _build_full_search_string(self)
-            try:
-                db.data.search_getting_ids('', txt, use_virtual_library=False)
-            except ParseException as e:
-                error_dialog(self, _('Invalid search'),
-                             _('The search in the search box is not valid'),
-                             det_msg=e.msg, show=True)
-                return
-
-            self.search_based_vl = txt
-            db.data.set_base_restriction(txt)
-            self.search_based_vl_name = self._trim_restriction_name('*' + txt)
-            db.data.set_base_restriction_name(self.search_based_vl_name)
+                self.search_based_vl = txt
+                db.data.set_base_restriction(txt)
+                self.search_based_vl_name = self._trim_restriction_name('*' + txt)
+                db.data.set_base_restriction_name(self.search_based_vl_name)
         elif library == self.search_based_vl_name:
             db.data.set_base_restriction(self.search_based_vl)
             db.data.set_base_restriction_name(self.search_based_vl_name)

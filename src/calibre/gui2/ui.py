@@ -20,19 +20,19 @@ from collections import OrderedDict, deque
 from io import BytesIO
 from qt.core import (
     QAction, QApplication, QDialog, QFont, QIcon, QMenu, QSystemTrayIcon, Qt, QTimer,
-    QUrl, pyqtSignal
+    QUrl, pyqtSignal,
 )
 
 from calibre import detect_ncpus, force_unicode, prints
 from calibre.constants import (
-    DEBUG, __appname__, config_dir, filesystem_encoding, ismacos, iswindows
+    DEBUG, __appname__, config_dir, filesystem_encoding, ismacos, iswindows,
 )
 from calibre.customize import PluginInstallationType
 from calibre.customize.ui import available_store_plugins, interface_actions
 from calibre.db.legacy import LibraryDatabase
 from calibre.gui2 import (
     Dispatcher, GetMetadata, config, error_dialog, gprefs, info_dialog,
-    max_available_height, open_url, question_dialog, warning_dialog
+    max_available_height, open_url, question_dialog, warning_dialog,
 )
 from calibre.gui2.auto_add import AutoAdder
 from calibre.gui2.changes import handle_changes
@@ -59,6 +59,7 @@ from calibre.library import current_library_name
 from calibre.srv.library_broker import GuiLibraryBroker, db_matches
 from calibre.utils.config import dynamic, prefs
 from calibre.utils.ipc.pool import Pool
+from calibre.utils.resources import get_image_path as I, get_path as P
 from polyglot.builtins import string_or_bytes
 from polyglot.queue import Empty, Queue
 
@@ -77,12 +78,12 @@ def add_quick_start_guide(library_view, refresh_cover_browser=None):
     gprefs['quick_start_guide_added'] = True
     imgbuf = BytesIO(calibre_cover2(_('Quick Start Guide'), ''))
     try:
-        with lopen(P('quick_start/%s.epub' % l), 'rb') as src:
+        with open(P('quick_start/%s.epub' % l), 'rb') as src:
             buf = BytesIO(src.read())
     except OSError as err:
         if err.errno != errno.ENOENT:
             raise
-        with lopen(P('quick_start/eng.epub'), 'rb') as src:
+        with open(P('quick_start/eng.epub'), 'rb') as src:
             buf = BytesIO(src.read())
     safe_replace(buf, 'images/cover.jpg', imgbuf)
     buf.seek(0)
@@ -625,7 +626,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         self.tags_view.recount()
 
     def handle_cli_args(self, args):
-        from urllib.parse import unquote, urlparse, parse_qs
+        from urllib.parse import parse_qs, unquote, urlparse
         if isinstance(args, string_or_bytes):
             args = [args]
         files, urls = [], []
@@ -674,6 +675,16 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                 return bytes.fromhex(x[6:]).decode('utf-8')
             return x
 
+        def get_virtual_library(query):
+            vl = None
+            if query.get('encoded_virtual_library'):
+                vl = bytes.fromhex(query.get('encoded_virtual_library')[0]).decode('utf-8')
+            elif query.get('virtual_library'):
+                vl = query.get('virtual_library')[0]
+            if vl == '-':
+                vl = None
+            return vl
+
         if action == 'switch-library':
             library_id = decode_library_id(posixpath.basename(path))
             library_path = self.library_broker.path_for_library_id(library_id)
@@ -693,8 +704,12 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
             library_path = self.library_broker.path_for_library_id(library_id)
             if library_path is None:
                 return
+            vl = get_virtual_library(query)
 
             def doit():
+                # To maintain compatibility, don't change the VL if it isn't specified.
+                if vl is not None and vl != '_':
+                    self.apply_virtual_library(vl)
                 rows = self.library_view.select_rows((book_id,))
                 db = self.current_db
                 if not rows and (db.data.get_base_restriction_name() or db.data.get_search_restriction_name()):
@@ -742,13 +757,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                 if sq:
                     sq = sq[0]
             sq = sq or ''
-            vl = None
-            if query.get('encoded_virtual_library'):
-                vl = bytes.fromhex(query.get('encoded_virtual_library')[0]).decode('utf-8')
-            elif query.get('virtual_library'):
-                vl = query.get('virtual_library')[0]
-            if vl == '-':
-                vl = None
+            vl = get_virtual_library(query)
 
             def doit():
                 if vl != '_':
@@ -870,7 +879,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                             )
                     if repair:
                         from calibre.gui2.dialogs.restore_library import (
-                            repair_library_at
+                            repair_library_at,
                         )
                         if repair_library_at(newloc, parent=self):
                             db = LibraryDatabase(newloc, default_prefs=default_prefs)
