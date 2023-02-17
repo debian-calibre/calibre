@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "stycznia 06, 2023" "6.11.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "lutego 03, 2023" "6.12.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -52,7 +52,7 @@ Po określeniu pliku wejściowego i wyjściowego możesz dostosować konwersję,
 Pełna dokumentacja systemu konwersji zobacz
 \fI\%Konwersja książek\fP
 .sp
-Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Ilekroć przekazujesz argumenty do \fBebook\-convert\fP, które zawierają spacje, ujmuj je w cudzysłowy. Na przykład: \(dq/some path/with spaces\(dq
 .sp
 Opcje i domyślne wartości są różne w zależności od formatu wejściowego i wyjściowego,
 zawsze więc należy je sprawdzić:
@@ -87,12 +87,12 @@ od formatu wejścia i wyjścia.
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
-Wyświetla ten tekst pomocy i kończy działanie
+wyświetla ten tekst pomocy i kończy działanie
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-input\-profile
-Określ profil wejścia. Profil wejścia dyktuje systemowi konwersji jak interpretować różne informacje w dokumencie wejściowym. Na przykład długości zależne od rozdzielczości (tj. długość w pikselach). Do wyboru jest:  cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+Określ profil wejścia. Profil wejścia dyktuje systemowi konwersji jak interpretować różne informacje w dokumencie wejściowym. Na przykład długości zależne od rozdzielczości (tj. długość w pikselach). Do wyboru jest: cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -102,12 +102,12 @@ Lista wbudowanych źródeł. Korzystając ze źródła możesz utworzyć e\-book
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Określ profil wyjściowy. Profil wyjściowy informuje system konwersji, jak zoptymalizować stworzony dokument dla wybranego urządzenia (poprzez np. zmianę rozmiaru obrazów na pasujący do ekranu urządzenia). W niektórych przypadkach profil wyjściowy może posłużyć do optymalizacji dla szczególnego urządzenia, ale jest to rzadko wymagane. Do wyboru są: cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, generic_eink, generic_eink_hd, generic_eink_large, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+Określ profil wyjściowy. Profil wyjściowy informuje system konwersji, jak zoptymalizować stworzony dokument dla wybranego urządzenia (poprzez np. zmianę rozmiaru obrazów na pasujący do ekranu urządzenia). W niektórych przypadkach profil wyjściowy może posłużyć do optymalizacji dla szczególnego urządzenia, ale jest to rzadko wymagane. Do wyboru są:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, generic_eink, generic_eink_hd, generic_eink_large, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-version
-Wyświetla wersję programu i kończy działanie
+wyświetla wersję programu i kończy działanie
 .UNINDENT
 .SH OPCJE PLIKU ŹRÓDŁOWEGO
 .sp
@@ -186,7 +186,7 @@ Opcje umożliwiające kontrolę nad wyglądem pliku wyjściowego
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliteruj znaki Unicode do reprezentacji ASCII. Używaj ostrożnie, ponieważ spowoduje to zamianę znaków Unicode na ASCII. Na przykład zamieni „Pelé” na „Pele”. Należy również pamiętać, że w przypadkach, gdy istnieje wiele reprezentacji znaku (znaki wspólne na przykład w języku chińskim i japońskim), zostanie użyta reprezentacja oparta na bieżącym języku interfejsu kalibru.
+Transliteruj znaki Unicode do reprezentacji ASCII. Używaj ostrożnie, ponieważ spowoduje to zamianę znaków Unicode na ASCII. Na przykład zamieni „Pelé” na „Pele”. Należy również pamiętać, że w przypadkach, gdy istnieje wiele reprezentacji znaku (znaki wspólne na przykład w języku chińskim i japońskim), zostanie użyta reprezentacja oparta na bieżącym języku interfejsu calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -226,7 +226,7 @@ Domyślnie calibre używa skróconych form właściwości CSS, takich jak margin
 .INDENT 0.0
 .TP
 .B \-\-filter\-css
-Oddzielana przecinkami lista właściwości CSS, które będą usunięte ze wszystkich arkuszy stylów. Jest to użyteczne jeśli jakieś formatowanie koliduje z ustawieniami na czytniku. Przykładem może być font\-family, color, margin\-left, margin\-right.
+Oddzielana przecinkami lista właściwości CSS, które będą usunięte ze wszystkich arkuszy stylów. Jest to użyteczne jeśli jakieś formatowanie koliduje z ustawieniami na czytniku. Przykładem może być font\-family, color, margin\-left, margin\-right
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -311,7 +311,7 @@ Zredukuj osadzone czcionki. Każda osadzona czcionka zostanie zredukowana tak, a
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Ścieżka do pliku zawierającego reguły przekształcania kodu HTML w tej książce. Najłatwiejszym sposobem utworzenia takiego pliku jest skorzystanie z kreatora tworzenia reguł w GUI kalibru. Uzyskaj do niego dostęp w sekcji „Wygląd i styl\->Przekształć kod HTML” w oknie dialogowym konwersji. Po utworzeniu reguł możesz użyć przycisku „Eksportuj”, aby zapisać je do pliku.
+Ścieżka do pliku zawierającego reguły przekształcania kodu HTML w tej książce. Najłatwiejszym sposobem utworzenia takiego pliku jest skorzystanie z kreatora tworzenia reguł w GUI calibre. Uzyskaj do niego dostęp w sekcji „Wygląd i styl\->Przekształć kod HTML” w oknie dialogowym konwersji. Po utworzeniu reguł możesz użyć przycisku „Eksportuj”, aby zapisać je do pliku.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -424,7 +424,7 @@ Kontrola autodetekcji struktury dokumentu.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB\(dq\fPchapter\fB\(dq\fP, \fB\(dq\fPbook\fB\(dq\fP, \fB\(dq\fPsection\fB\(dq\fP, \fB\(dq\fPprologue\fB\(dq\fP, \fB\(dq\fPepilogue\fB\(dq\fP or \fB\(dq\fPpart\fB\(dq\fP as chapter titles as well as any tags that have class=\fB\(dq\fPchapter\fB\(dq\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB\(dq\fP/\fB\(dq\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+Wyrażenie XPath do wykrywania tytułów rozdziałów. Domyślnie znaczniki <h1> lub <h2> zawierające słowa „rozdział”, „książka”, „sekcja”, „prolog”, „epilog” lub „część” są traktowane jako tytuły rozdziałów, jak również wszelkie znaczniki, które mają klasa = „rozdział”. Użyte wyrażenie musi być oceniane jako lista elementów. Aby wyłączyć wykrywanie rozdziałów, użyj wyrażenia „/”. Więcej informacji na temat korzystania z tej funkcji można znaleźć w samouczku XPath w podręczniku użytkownika calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -459,7 +459,7 @@ Usuń pierwszy obrazek ze źródłowej książki. Opcja przydaje się jeśli ksi
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-Wyrażenie XPath wykrywające miejsce w tekście, od którego należy zacząć czytanie. Niektóre programy do czytania ebooków (szczególnie Kindle) używają tej lokacji jako miejsca, w którym otwierają książkę. Więcej informacji można znaleźć w sekcji XPath Tutorial, w podręczniku calibre.
+Wyrażenie XPath do wykrywania lokalizacji w dokumencie, w której należy rozpocząć czytanie. Niektóre programy do czytania e\-booków (przede wszystkim Kindle) używają tej lokalizacji jako miejsca otwierania książki. Więcej informacji na temat korzystania z tej funkcji można znaleźć w samouczku XPath w podręczniku użytkownika calibre.
 .UNINDENT
 .SH SPIS TREŚCI
 .sp

@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "一月 06, 2023" "6.11.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "二月 03, 2023" "6.12.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -93,7 +93,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-input\-profile
-设置输入配置文件。此配置文件让程序了解如何解析输入文件并进行转换。例如页面分辨率(i.e. 以像素为单位)。可选项有： cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+设置输入配置文件。此配置文件让程序了解如何解析输入文档并进行转换。例如页面分辨率(i.e. 以像素为单位)。可选项有： cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -134,12 +134,12 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-epub\-inline\-toc
-插入的一个内嵌内容的表格会作为图书主内容的一部分出现。
+插入的一个内嵌目录，会作为书籍内容。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-epub\-toc\-at\-end
-在书籍的末尾插入内嵌目录，而不是书开头。
+在书籍的末尾插入内嵌目录，而不是书籍开头。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -179,7 +179,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-toc\-title
-生成的行内目录标题。
+生成的内嵌到书籍的目录的标题。
 .UNINDENT
 .SH 界面外观
 .sp
@@ -207,12 +207,12 @@ PTS中的基本字体大小。在生成的书籍中所有的字体尺寸将基�
 .INDENT 0.0
 .TP
 .B \-\-embed\-all\-fonts
-嵌入输入文档中引用到但未嵌入的字体。软件会在你的系统中查找这些字体，找到了就嵌入。字体嵌入只有当你的目的格式支持才有用，例如 EPUB、AZW3、DOCX 和 PDF。请保证你拥有在文档中嵌入字体的合适授权。
+嵌入输入文档中引用到但未嵌入的字体。软件会在你的系统中查找这些字体，找到了就嵌入。字体嵌入只有当你的目标格式支持才有用，例如 EPUB、AZW3、DOCX 和 PDF。请保证你拥有在文档中嵌入字体的合适授权。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-在书中嵌入指定字体。这指定了书中使用的“基础”字体。如果输入文件自己指定了字体，就有可能覆盖这个基础字体。你可以使用筛选样式信息的选项来去除输入文件的字体。注意，字体嵌入只在一些输出格式中有用，主要是 EPUB、AZW3 和 DOCX。
+在书籍中嵌入指定字体。这指定了书籍中使用的“基础”字体。如果输入文件自己指定了字体，就有可能覆盖这个基础字体。你可以使用筛选样式信息的选项来删除输入文档的字体。注意，字体嵌入只在一些输出格式中有用，主要是 EPUB、AZW3 和 DOCX。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -227,7 +227,7 @@ CSS 样式表或原始 CSS 文件路径。该 CSS 样式表将会被添加到源
 .INDENT 0.0
 .TP
 .B \-\-filter\-css
-以逗号分隔的 CSS 属性列表，将移除所有 CSS 样式规则。这是非常有用的，如果存在的一些样式信息，防止覆盖你的的设备上的样式信息。例如：字体系列，颜色，左边距，右边距
+以逗号分隔的 CSS 属性列表，将删除所有 CSS 样式规则。这是非常有用的，如果存在的一些样式信息，防止覆盖你的的设备上的样式信息。例如：字体系列，颜色，左边距，右边距
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -287,12 +287,12 @@ pt 行高。控制两行高度距离。仅仅适用于未定义行高的元素�
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing
-移除段落之间的空行. 同时设置段落缩进为1.5em. 如果源文件不使用段落标记 (<p>或者<div>标签)程序将不执行段落空行移除.
+删除段落之间的空行. 同时设置段落缩进为1.5em. 如果源文件不使用段落标记 (<p>或者<div>标签)程序将不执行段落空行移除.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing\-indent\-size
-当 calibre 删除段落之间空行时，它会自动设置一个段落缩进，以确保轻松区分段落。此选项控制缩进的宽度(单位 em)。如果你将此值设置为负数，则使用输入文件中自身定义的缩进，换句话说就是 calibre 不进行缩进处理。
+当 calibre 删除段落之间空行时，它会自动设置一个段落缩进，以确保轻松区分段落。此选项控制缩进的宽度(单位 em)。如果你将此值设置为负数，则使用输入文档中自身定义的缩进，换句话说就是 calibre 不进行缩进处理。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -330,7 +330,7 @@ pt 行高。控制两行高度距离。仅仅适用于未定义行高的元素�
 .INDENT 0.0
 .TP
 .B \-\-disable\-delete\-blank\-paragraphs
-移除文档中每个段落间的空白段落。
+删除文档中每个段落间的空白段落。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -431,7 +431,7 @@ XPath 表达式用于检测章节标题。默认考虑使用 <h1> 或 <h2> 标�
 .INDENT 0.0
 .TP
 .B \-\-disable\-remove\-fake\-margins
-有些文档通过在每一页上指定左右页边距来指定页面边框大小。 calibre 会尝试检测并移除这些页边距。有时候 calibre 会错误的移除不应该移除的页边距，在这种情况下，你可以禁用这项功能。
+有些文档通过在每一页上指定左右页边距来指定页面边框大小。 calibre 会尝试检测并删除这些页边距。有时候 calibre 会错误的移除不应该移除的页边距，在这种情况下，你可以禁用这项功能。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -451,7 +451,7 @@ XPath表达式。在指定的元素之前插入分页符。禁止使用表达式
 .INDENT 0.0
 .TP
 .B \-\-remove\-first\-image
-移除输入电子书的第一个图像。这是有用的如果输入文档有一个封面图像，但没有确定为封面图像。在这种情况下，如果你在 calibre 设置了封面，如果你不指定此选项，输出文件将最终有两个封面图片。
+删除输入电子书的第一个图像。这是有用的如果输入文档有一个封面图像，但没有确定为封面图像。在这种情况下，如果你在 calibre 设置了封面，如果你不指定此选项，输出文件将最终有两个封面图片。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -494,7 +494,7 @@ XPath 表达式指定所有标签应添加在三级目录表。每个条目加�
 .INDENT 0.0
 .TP
 .B \-\-toc\-filter
-从目录中移除匹配该证则表达式的链接项, 它们的子项也会被同时移除M.
+从目录中移除匹配该正则表达式的链接项, 它们的子项也会被同时删除.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -587,12 +587,12 @@ XPath 表达式指定所有标签应添加在三级目录表。每个条目加�
 .INDENT 0.0
 .TP
 .B \-\-title
-设置标题。
+设置书名。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-title\-sort
-用作排序的书籍标题序列数字。
+用来排序的书名版本。
 .UNINDENT
 .SH 调试
 .sp

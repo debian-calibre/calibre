@@ -6,16 +6,16 @@
 # Translators:
 # Kovid Goyal <kovid@kovidgoyal.net>, 2020
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2020
-# Jonatan Nyberg <jonatan@autistici.org>, 2022
+# Jonatan Nyberg <jonatan@autistici.org>, 2023
 # 
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 6.0.0\n"
+"Project-Id-Version: calibre 6.11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-15 02:16+0000\n"
+"POT-Creation-Date: 2023-02-02 05:59+0000\n"
 "PO-Revision-Date: 2020-11-12 05:43+0000\n"
-"Last-Translator: Jonatan Nyberg <jonatan@autistici.org>, 2022\n"
+"Last-Translator: Jonatan Nyberg <jonatan@autistici.org>, 2023\n"
 "Language-Team: Swedish (https://www.transifex.com/calibre/teams/19337/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,8 +67,8 @@ msgstr "Byt till ett specifikt bibliotek"
 
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:28
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:47
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:63
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:77
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:75
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:89
 msgid "The URL syntax is::"
 msgstr "Webbadressyntaxen är::"
 
@@ -120,11 +120,37 @@ msgstr ""
 " högerklicka på: :guilabel:`bokdetalj`panelen och välja :guilabel:`Kopiera "
 "länk till bok`."
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:61
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:59
+msgid ""
+"If a Virtual library is selected, calibre will use it when showing the book."
+" If the book isn't found in that virtual library then the virtual library is"
+" cleared."
+msgstr ""
+"Om ett virtuellt bibliotek väljs kommer calibre att använda det när boken "
+"visas. Om boken inte finns i det virtuella biblioteket rensas det virtuella "
+"biblioteket."
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:62
+msgid ""
+"If you want to switch to a particular Virtual library when showing the book,"
+" use::"
+msgstr ""
+"Om du vill byta till ett visst virtuellt bibliotek när du visar boken, "
+"använd::"
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:68
+msgid ""
+"replacing spaces in the Virtual library name by ``%20``. If the book isn't "
+"in that virtual library then it is ignored."
+msgstr ""
+"ersätter mellanslag i det virtuella bibliotekets namn med ``%20``. Om boken "
+"inte finns i det virtuella biblioteket ignoreras den."
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:73
 msgid "Open a specific book in the E-book viewer at a specific position"
 msgstr "Öppna en specifik bok i e-bokvisaren på en specifik position"
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:67
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:79
 msgid ""
 "Here, ``book_format`` is the format of the book, for example, ``EPUB`` or "
 "``MOBI`` and the ``location`` is an optional location inside the book. The "
@@ -138,11 +164,11 @@ msgstr ""
 "visningskontrollerna :guilabel:`Gå till->Plats` och där kommer en sådan länk"
 " att ges som du kan kopiera/klistra in någon annanstans."
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:75
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:87
 msgid "Searching for books"
 msgstr "Söker efter böcker"
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:82
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:94
 msgid ""
 "Here query is any valid :ref:`search expression <search_interface>`. If the "
 "search expression is complicated, :ref:`encode it as a hex string "
@@ -154,7 +180,7 @@ msgstr ""
 " och använd istället ``eq``. Att utesluta förfrågan kommer att göra att den "
 "aktuella sökningen rensas."
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:87
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:99
 msgid ""
 "By default, if a Virtual library is selected, calibre will clear it before "
 "doing the search to ensure all books are found. If you want to preserve the "
@@ -164,15 +190,15 @@ msgstr ""
 "du gör sökningen för att säkerställa att alla böcker hittas. Om du vill "
 "bevara det virtuella biblioteket, använd::"
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:93
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:105
 msgid "If you want to switch to a particular Virtual library, use::"
 msgstr "Om du vill växla till ett särskilt virtuellt bibliotek, använd::"
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:99
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:111
 msgid "replacing spaces in the Virtual library name by ``%20``."
 msgstr "ersätta blanksteg i det virtuella biblioteksnamnet med ``%20``."
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:101
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:113
 msgid ""
 "If you perform a search in calibre and want to generate a link for it you "
 "can do so by right clicking the search bar and choosing :guilabel:`Copy "
@@ -182,11 +208,11 @@ msgstr ""
 "det genom att högerklicka på sökfältet och välja :guilabel:`Kopiera sökning "
 "som webbadress`."
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:109
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:121
 msgid "Hex encoding of URL parameters"
 msgstr "Hexkodning av webbadressparametrar"
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:111
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:123
 msgid ""
 "Hex encoding of URL parameters is done by first encoding the parameter as "
 "UTF-8 bytes, and then replacing each byte by two hexadecimal characters "

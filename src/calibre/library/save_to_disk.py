@@ -5,19 +5,21 @@ __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import os, traceback, re, errno
+import errno
+import os
+import re
+import traceback
 
-from calibre.constants import DEBUG
+from calibre import prints, sanitize_file_name, strftime
+from calibre.constants import DEBUG, preferred_encoding
 from calibre.db.errors import NoSuchFormat
-from calibre.utils.config import Config, StringConfig, tweaks
-from calibre.utils.formatter import TemplateFormatter
-from calibre.utils.filenames import shorten_components_to, ascii_filename
-from calibre.constants import preferred_encoding
-from calibre.ebooks.metadata import fmt_sidx
-from calibre.ebooks.metadata import title_sort
-from calibre.utils.date import as_local_time
-from calibre import strftime, prints, sanitize_file_name
 from calibre.db.lazy import FormatsList
+from calibre.ebooks.metadata import fmt_sidx, title_sort
+from calibre.utils.config import Config, StringConfig, tweaks
+from calibre.utils.date import as_local_time
+from calibre.utils.filenames import ascii_filename, shorten_components_to
+from calibre.utils.formatter import TemplateFormatter
+from calibre.utils.localization import _
 
 plugboard_any_device_value = 'any device'
 plugboard_any_format_value = 'any format'
@@ -341,13 +343,13 @@ def do_save_book_to_disk(db, book_id, mi, plugboards,
             cdata = db.cover(book_id)
             if cdata:
                 cpath = base_path + '.jpg'
-                with lopen(cpath, 'wb') as f:
+                with open(cpath, 'wb') as f:
                     f.write(cdata)
                 mi.cover = base_name+'.jpg'
         if opts.write_opf:
             from calibre.ebooks.metadata.opf2 import metadata_to_opf
             opf = metadata_to_opf(mi)
-            with lopen(base_path+'.opf', 'wb') as f:
+            with open(base_path+'.opf', 'wb') as f:
                 f.write(opf)
     finally:
         mi.cover, mi.pubdate, mi.timestamp = originals
@@ -363,7 +365,7 @@ def do_save_book_to_disk(db, book_id, mi, plugboards,
         except NoSuchFormat:
             continue
         if opts.update_metadata:
-            with lopen(fmt_path, 'r+b') as stream:
+            with open(fmt_path, 'r+b') as stream:
                 update_metadata(mi, fmt, stream, plugboards, cdata)
 
     return not formats_written, book_id, mi.title
@@ -423,7 +425,7 @@ def read_serialized_metadata(data):
     mi.cover, mi.cover_data = None, (None, None)
     cdata = None
     if 'cover' in data:
-        with lopen(data['cover'], 'rb') as f:
+        with open(data['cover'], 'rb') as f:
             cdata = f.read()
     return mi, cdata
 
@@ -441,7 +443,7 @@ def update_serialized_metadata(book, common_data=None):
 
         for fmt, fmtpath in zip(fmts, book['fmts']):
             try:
-                with lopen(fmtpath, 'r+b') as stream:
+                with open(fmtpath, 'r+b') as stream:
                     update_metadata(mi, fmt, stream, (), cdata, error_report=report_error, plugboard_cache=plugboard_cache)
             except Exception:
                 report_error(fmt, traceback.format_exc())

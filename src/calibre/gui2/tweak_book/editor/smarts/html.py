@@ -85,7 +85,8 @@ def find_closest_containing_tag(block, offset, max_tags=sys.maxsize):
     ''' Find the closest containing tag. To find it, we search for the first
     opening tag that does not have a matching closing tag before the specified
     position. Search through at most max_tags. '''
-    prev_tag_boundary = lambda b, o: next_tag_boundary(b, o, forward=False)
+    def prev_tag_boundary(b, o):
+        return next_tag_boundary(b, o, forward=False)
 
     block, boundary = prev_tag_boundary(block, offset)
     if block is None:
@@ -875,7 +876,7 @@ class Smarts(NullSmarts):
 if __name__ == '__main__':  # {{{
     from calibre.gui2.tweak_book.editor.widget import launch_editor
     if sys.argv[-1].endswith('.html'):
-        raw = lopen(sys.argv[-1], 'rb').read().decode('utf-8')
+        raw = open(sys.argv[-1], 'rb').read().decode('utf-8')
     else:
         raw = '''\
 <!DOCTYPE html>

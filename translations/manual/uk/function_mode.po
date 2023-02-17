@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Yuri Chornoivan <yurchor@ukr.net>, 2016-2017,2020-2021
+# Yuri Chornoivan <yurchor@ukr.net>, 2016-2017,2020-2021,2023
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-07 03:23+0000\n"
-"PO-Revision-Date: 2021-10-03 06:36+0000\n"
-"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"POT-Creation-Date: 2023-02-02 05:59+0000\n"
+"PO-Revision-Date: 2014-11-21 02:54+0000\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2016-2017,2020-2021,2023\n"
 "Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,7 +47,7 @@ msgid ""
 "more complex tasks."
 msgstr "Методики використання функціонального режиму та синтаксис буде описано у форматі прикладів, які продемонструють вам, як створити функції, які виконуватимуть усе більш складні завдання."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rstNone
+#: ../../__w/calibre/calibre/manual/function_mode.rst-1
 msgid "The Function mode"
 msgstr "Режим функцій"
 
@@ -95,10 +95,11 @@ msgid ""
 "arguments shown above. For the moment, we won't worry about all the "
 "different arguments to ``replace()`` function. Just focus on the ``match`` "
 "argument. It represents a match when running a search and replace. Its full "
-"documentation in available `here <https://docs.python.org/library/re.html"
-"#match-objects>`_. ``match.group()`` simply returns all the matched text and"
-" all we do is replace hyphens in that text with em-dashes, first replacing "
-"double hyphens and then single hyphens."
+"documentation in available `here "
+"<https://docs.python.org/library/re.html#match-objects>`_. ``match.group()``"
+" simply returns all the matched text and all we do is replace hyphens in "
+"that text with em-dashes, first replacing double hyphens and then single "
+"hyphens."
 msgstr "Кожна нетипова функція пошуку з заміною повинна мати неповторну назву і складатися з функції python із назвою replace, яка приймає усі аргументи, вказані вище. Для початку, пропустимо усі різні аргументи функції ``replace()``. Зосередимо нашу увагу на аргументі ``match``. Він представляє відповідник рядка пошуку під час пошуку з заміною. Повну документацію щодо нього можна знайти `тут <https://docs.python.org/library/re.html#match-objects>`_. ``match.group()`` просто повертає увесь відповідний текст, і усе, що нам лишається зробити, це замінити дефіси у цьому тексті на тире. Спочатку замінюємо подвійні дефіси, а потім одинарні."
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:65
@@ -211,8 +212,8 @@ msgid ""
 "The function above is heavily commented, so it should be easy to follow. The"
 " key new feature is the use of another useful extra argument to the "
 "``replace()`` function, the ``data`` object. The ``data`` object is a Python"
-" *dict* that persists between all successive invocations of ``replace()`` "
-"during a single :guilabel:`Replace All` operation."
+" *dictionary* that persists between all successive invocations of "
+"``replace()`` during a single :guilabel:`Replace All` operation."
 msgstr "Наведений вище код функції містить багато коментарів, тому його доволі просто зрозуміти. Ключовою новою можливістю є використання ще одного додаткового аргументу функції ``replace()``, а саме, об’єкта ``data``. Об’єкт ``data`` є *словником* Python, який зберігається протягом усіх послідовних викликів ``replace()`` під час виконання однієї дії :guilabel:`Замінити всі`."
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:213
@@ -317,9 +318,9 @@ msgstr "Аргумент «data»"
 
 #: ../../__w/calibre/calibre/manual/function_mode.rst:281
 msgid ""
-"This a simple Python ``dict``. When you run :guilabel:`Replace all`, every "
-"successive match will cause ``replace()`` to be called with the same "
-"``dict`` as data. You can thus use it to store arbitrary data between "
+"This a simple Python ``dictionary``. When you run :guilabel:`Replace all`, "
+"every successive match will cause ``replace()`` to be called with the same "
+"``dictionary`` as data. You can thus use it to store arbitrary data between "
 "invocations of ``replace()`` during a :guilabel:`Replace all` operation."
 msgstr "Це простий ``словник`` Python. Після натискання кнопки :guilabel:`Замінити всі` кожен наступний відповідник спричинятиме виклик ``replace()`` із тим самим ``словником`` як даними. Таким чином, ви можете скористатися ним для збереження довільних даних між викликами ``replace()`` під час виконання дії :guilabel:`Замінити всі`."
 

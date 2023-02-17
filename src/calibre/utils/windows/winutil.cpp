@@ -8,7 +8,7 @@
 #include "common.h"
 #include <processthreadsapi.h>
 #include <wininet.h>
-#include <Lmcons.h>
+#include <lmcons.h>
 #include <combaseapi.h>
 #include <locale.h>
 #include <shlobj.h>
@@ -222,6 +222,7 @@ static PyMethodDef Handle_methods[] = {
 class DeleteFileProgressSink : public IFileOperationProgressSink {  // {{{
  public:
   DeleteFileProgressSink() : m_cRef(0) {}
+  virtual ~DeleteFileProgressSink() = default;
 
  private:
   ULONG STDMETHODCALLTYPE AddRef(void) { InterlockedIncrement(&m_cRef); return m_cRef; }
@@ -273,17 +274,6 @@ class DeleteFileProgressSink : public IFileOperationProgressSink {  // {{{
   ULONG m_cRef;
 }; // }}}
 
-class scoped_com_initializer {  // {{{
-	public:
-		scoped_com_initializer() : m_succeded(false) { if (SUCCEEDED(CoInitialize(NULL))) m_succeded = true; }
-		~scoped_com_initializer() { CoUninitialize(); }
-		bool succeeded() { return m_succeded; }
-	private:
-		bool m_succeded;
-		scoped_com_initializer( const scoped_com_initializer & ) ;
-		scoped_com_initializer & operator=( const scoped_com_initializer & ) ;
-}; // }}}
-
 static PyObject*
 get_computer_name(PyObject *self, PyObject *args) {
     COMPUTER_NAME_FORMAT fmt = ComputerNameDnsFullyQualified;
@@ -322,7 +312,7 @@ known_folder_path(PyObject *self, PyObject *args) {
 	DWORD flags = KF_FLAG_DEFAULT;
 	if (!PyArg_ParseTuple(args, "O!|k", &PyGUIDType, &id, &flags)) return NULL;
 	com_wchar_raii path;
-	HRESULT hr = SHGetKnownFolderPath(id->guid, flags, NULL, path.unsafe_address());
+	SHGetKnownFolderPath(id->guid, flags, NULL, path.unsafe_address());
 	return PyUnicode_FromWideChar(path.ptr(), -1);
 }
 
@@ -484,7 +474,7 @@ static PyObject*
 winutil_get_file_size(PyObject *self, PyObject *args) {
 	HANDLE handle;
     if (!PyArg_ParseTuple(args, "O&", convert_handle, &handle)) return NULL;
-    LARGE_INTEGER ans = {0};
+    LARGE_INTEGER ans = {{0}};
     if (!GetFileSizeEx(handle, &ans)) return set_error_from_handle(args);
     return PyLong_FromLongLong(ans.QuadPart);
 }
@@ -493,9 +483,9 @@ static PyObject*
 winutil_set_file_pointer(PyObject *self, PyObject *args) {
     unsigned long move_method = FILE_BEGIN;
 	HANDLE handle;
-    LARGE_INTEGER pos = {0};
+    LARGE_INTEGER pos = {{0}};
     if (!PyArg_ParseTuple(args, "O&L|k", convert_handle, &handle, &pos.QuadPart, &move_method)) return NULL;
-    LARGE_INTEGER ans = {0};
+    LARGE_INTEGER ans = {{0}};
     if (!SetFilePointerEx(handle, pos, &ans, move_method)) return set_error_from_handle(args);
     return PyLong_FromLongLong(ans.QuadPart);
 }
@@ -837,10 +827,10 @@ set_handle_information(PyObject *self, PyObject *args) {
 
 static PyObject *
 get_long_path_name(PyObject *self, PyObject *args) {
-    wchar_raii path;
+    wchar_raii path, buf;
     if (!PyArg_ParseTuple(args, "O&", py_to_wchar_no_none, &path)) return NULL;
     DWORD current_size = 4096;
-    wchar_raii buf((wchar_t*)PyMem_Malloc(current_size * sizeof(wchar_t)));
+    buf.attach((wchar_t*)PyMem_Malloc(current_size * sizeof(wchar_t)));
     if (!buf) return PyErr_NoMemory();
     DWORD needed_size;
     Py_BEGIN_ALLOW_THREADS
@@ -1030,7 +1020,6 @@ EnumResProc(HMODULE handle, LPWSTR type, LPWSTR name, ResourceData *data) {
 static const wchar_t*
 get_resource_id_for_index(HMODULE handle, const int index, LPCWSTR type = RT_GROUP_ICON) {
 	ResourceData data = {index, NULL};
-	int count = index;
 	EnumResourceNamesW(handle, type, reinterpret_cast<ENUMRESNAMEPROC>(EnumResProc), reinterpret_cast<LONG_PTR>(&data));
 	return data.resource_id;
 }
@@ -1517,7 +1506,7 @@ static PyModuleDef_Slot slots[] = { {Py_mod_exec, (void*)exec_module}, {0, NULL}
 
 static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT};
 
-CALIBRE_MODINIT_FUNC PyInit_winutil(void) {
+PyMODINIT_FUNC PyInit_winutil(void) {
     module_def.m_name     = "winutil";
     module_def.m_doc      = winutil_doc;
     module_def.m_methods  = winutil_methods;

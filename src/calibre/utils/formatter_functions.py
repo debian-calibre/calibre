@@ -11,21 +11,24 @@ __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import inspect, re, traceback, numbers
+import inspect
+import numbers
+import re
+import traceback
 from contextlib import suppress
 from datetime import datetime, timedelta
 from enum import Enum, auto
 from functools import partial
-from math import trunc, floor, ceil, modf
+from math import ceil, floor, modf, trunc
 
-from calibre import human_readable, prints, prepare_string_for_xml
+from calibre import human_readable, prepare_string_for_xml, prints
 from calibre.constants import DEBUG
 from calibre.ebooks.metadata import title_sort
 from calibre.utils.config import tweaks
+from calibre.utils.date import UNDEFINED_DATE, format_date, now, parse_date
+from calibre.utils.icu import capitalize, lower as icu_lower, sort_key, strcmp
+from calibre.utils.localization import _, calibre_langcode_to_name, canonicalize_lang
 from calibre.utils.titlecase import titlecase
-from calibre.utils.icu import capitalize, strcmp, sort_key
-from calibre.utils.date import parse_date, format_date, now, UNDEFINED_DATE
-from calibre.utils.localization import calibre_langcode_to_name, canonicalize_lang
 from polyglot.builtins import iteritems, itervalues
 
 
@@ -663,6 +666,30 @@ class BuiltinSwitch(BuiltinFormatterFunction):
             if i + 1 >= len(args):
                 return args[i]
             if re.search(args[i], val, flags=re.I):
+                return args[i+1]
+            i += 2
+
+
+class BuiltinSwitchIf(BuiltinFormatterFunction):
+    name = 'switch_if'
+    arg_count = -1
+    category = 'Iterating over values'
+    __doc__ = doc = _('switch_if([test_expression, value_expression,]+ else_expression) -- '
+        'for each "test_expression, value_expression" pair, checks if test_expression '
+        'is True (non-empty) and if so returns the result of value_expression. '
+        'If no test_expression is True then the result of else_expression is returned. '
+        'You can have as many "test_expression, value_expression" pairs as you want.')
+
+    def evaluate(self, formatter, kwargs, mi, locals, *args):
+        if (len(args) % 2) != 1:
+            raise ValueError(_('switch_if requires an odd number of arguments'))
+        # We shouldn't get here because the function is inlined. However, someone
+        # might call it directly.
+        i = 0
+        while i < len(args):
+            if i + 1 >= len(args):
+                return args[i]
+            if args[i]:
                 return args[i+1]
             i += 2
 
@@ -2384,7 +2411,7 @@ _formatter_builtins = [
     BuiltinSetGlobals(), BuiltinShorten(), BuiltinStrcat(), BuiltinStrcatMax(),
     BuiltinStrcmp(), BuiltinStrcmpcase(), BuiltinStrInList(), BuiltinStrlen(), BuiltinSubitems(),
     BuiltinSublist(),BuiltinSubstr(), BuiltinSubtract(), BuiltinSwapAroundArticles(),
-    BuiltinSwapAroundComma(), BuiltinSwitch(),
+    BuiltinSwapAroundComma(), BuiltinSwitch(), BuiltinSwitchIf(),
     BuiltinTemplate(), BuiltinTest(), BuiltinTitlecase(), BuiltinToday(),
     BuiltinToHex(), BuiltinTransliterate(), BuiltinUppercase(), BuiltinUrlsFromIdentifiers(),
     BuiltinUserCategories(), BuiltinVirtualLibraries(), BuiltinAnnotationCount()

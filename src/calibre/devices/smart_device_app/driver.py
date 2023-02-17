@@ -232,7 +232,6 @@ class SMART_DEVICE_APP(DeviceConfig, DevicePlugin):
     # Some network protocol constants
     BASE_PACKET_LEN             = 4096
     PROTOCOL_VERSION            = 1
-    MAX_CLIENT_COMM_TIMEOUT     = 300.0  # Wait at most N seconds for an answer
     MAX_UNSUCCESSFUL_CONNECTS   = 5
 
     SEND_NOOP_EVERY_NTH_PROBE   = 5
@@ -575,9 +574,7 @@ class SMART_DEVICE_APP(DeviceConfig, DevicePlugin):
 
     def _read_binary_from_net(self, length):
         try:
-            self.device_socket.settimeout(self.MAX_CLIENT_COMM_TIMEOUT)
             v = self.device_socket.recv(length)
-            self.device_socket.settimeout(None)
             return v
         except:
             self._close_device_socket()
@@ -615,12 +612,10 @@ class SMART_DEVICE_APP(DeviceConfig, DevicePlugin):
         total_len = len(s)
         while sent_len < total_len:
             try:
-                sock.settimeout(self.MAX_CLIENT_COMM_TIMEOUT)
                 if sent_len == 0:
                     amt_sent = sock.send(s)
                 else:
                     amt_sent = sock.send(s[sent_len:])
-                sock.settimeout(None)
                 if amt_sent <= 0:
                     raise OSError('Bad write on socket')
                 sent_len += amt_sent
@@ -703,7 +698,7 @@ class SMART_DEVICE_APP(DeviceConfig, DevicePlugin):
     def _put_file(self, infile, lpath, book_metadata, this_book, total_books):
         close_ = False
         if not hasattr(infile, 'read'):
-            infile, close_ = lopen(infile, 'rb'), True
+            infile, close_ = open(infile, 'rb'), True
         infile.seek(0, os.SEEK_END)
         length = infile.tell()
         book_metadata.size = length
@@ -816,7 +811,7 @@ class SMART_DEVICE_APP(DeviceConfig, DevicePlugin):
         try:
             count = 0
             if os.path.exists(cache_file_name):
-                with lopen(cache_file_name, mode='rb') as fd:
+                with open(cache_file_name, mode='rb') as fd:
                     while True:
                         rec_len = fd.readline()
                         if len(rec_len) != 8:
@@ -853,7 +848,7 @@ class SMART_DEVICE_APP(DeviceConfig, DevicePlugin):
             count = 0
             prefix = os.path.join(cache_dir(),
                         'wireless_device_' + self.device_uuid + '_metadata_cache')
-            with lopen(prefix + '.tmp', mode='wb') as fd:
+            with open(prefix + '.tmp', mode='wb') as fd:
                 for key,book in iteritems(self.device_book_cache):
                     if (now_ - book['last_used']).days > self.PURGE_CACHE_ENTRIES_DAYS:
                         purged += 1
@@ -956,7 +951,7 @@ class SMART_DEVICE_APP(DeviceConfig, DevicePlugin):
         from calibre.customize.ui import quick_metadata
         from calibre.ebooks.metadata.meta import get_metadata
         ext = temp_file_name.rpartition('.')[-1].lower()
-        with lopen(temp_file_name, 'rb') as stream:
+        with open(temp_file_name, 'rb') as stream:
             with quick_metadata:
                 return get_metadata(stream, stream_type=ext,
                         force_read_metadata=True,

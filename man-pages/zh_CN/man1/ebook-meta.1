@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-META" "1" "一月 06, 2023" "6.11.0" "calibre"
+.TH "EBOOK-META" "1" "二月 03, 2023" "6.12.0" "calibre"
 .SH NAME
 ebook-meta \- ebook-meta
 .INDENT 0.0
@@ -110,7 +110,7 @@ ebook\-meta\(ga传递参数时，用引号括起这些参数。例如: \(dq/some
 .INDENT 0.0
 .TP
 .B \-\-identifier
-设置书籍的书号，可以多次指定。 例如：\fB\(dq\fP\fI\%\-\-identifier\fP uri：\fI\%https://acme.com\fP \fI\%\-\-identifier\fP isbn:12345\fB\(dq\fP；要删除书号，请不要指定任何值，如：\fB\(dq\fP\fI\%\-\-identifier\fP isbn: \fB\(dq\fP。请注意，对于EPUB文件，不能删除标记为包标识符的标识。
+设置书籍标识符，可以多次指定。 例如：\fB\(dq\fP\fI\%\-\-identifier\fP uri：\fI\%https://acme.com\fP \fI\%\-\-identifier\fP isbn:12345\fB\(dq\fP；要删除书籍标识符，请不要指定任何值，如：\fB\(dq\fP\fI\%\-\-identifier\fP isbn: \fB\(dq\fP。请注意，对于EPUB文件，不能删除设置为包标识符的标识。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -155,12 +155,12 @@ ebook\-meta\(ga传递参数时，用引号括起这些参数。例如: \(dq/some
 .INDENT 0.0
 .TP
 .B \-\-title, \-t
-设置标题。
+设置书名。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-title\-sort
-用以进行标题排序的版本值. 如果该参数未指定, 同时标题字段为非空, 该关键字符串将由标题字段自动生成..
+用以进行书名排序的版本值. 如果该参数未指定, 同时标题字段为非空, 该关键字符串将由标题字段自动生成..
 .UNINDENT
 .INDENT 0.0
 .TP

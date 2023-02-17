@@ -20,7 +20,7 @@ from functools import partial
 
 from calibre import as_unicode, force_unicode, isbytestring, prints
 from calibre.constants import (
-    filesystem_encoding, iswindows, plugins, preferred_encoding
+    filesystem_encoding, iswindows, plugins, preferred_encoding,
 )
 from calibre.db import SPOOL_SIZE, FTSQueryError
 from calibre.db.annotations import annot_db_data, unicode_normalize
@@ -29,7 +29,7 @@ from calibre.db.errors import NoSuchFormat
 from calibre.db.schema_upgrades import SchemaUpgrade
 from calibre.db.tables import (
     AuthorsTable, CompositeTable, FormatsTable, IdentifiersTable, ManyToManyTable,
-    ManyToOneTable, OneToOneTable, PathTable, RatingTable, SizeTable, UUIDTable
+    ManyToOneTable, OneToOneTable, PathTable, RatingTable, SizeTable, UUIDTable,
 )
 from calibre.ebooks.metadata import author_to_author_sort, title_sort
 from calibre.library.field_metadata import FieldMetadata
@@ -40,15 +40,16 @@ from calibre.utils.date import EPOCH, parse_date, utcfromtimestamp, utcnow
 from calibre.utils.filenames import (
     WindowsAtomicFolderMove, ascii_filename, atomic_rename, copyfile_using_links,
     copytree_using_links, hardlink_file, is_case_sensitive, is_fat_filesystem,
-    remove_dir_if_empty, samefile
+    remove_dir_if_empty, samefile,
 )
 from calibre.utils.formatter_functions import (
-    compile_user_template_functions, formatter_functions,
-    load_user_template_functions, unload_user_template_functions
+    compile_user_template_functions, formatter_functions, load_user_template_functions,
+    unload_user_template_functions,
 )
-from calibre.utils.icu import sort_key
+from calibre.utils.icu import lower as icu_lower, sort_key
+from calibre.utils.resources import get_path as P
 from polyglot.builtins import (
-    cmp, iteritems, itervalues, native_string_type, reraise, string_or_bytes
+    cmp, iteritems, itervalues, native_string_type, reraise, string_or_bytes,
 )
 
 # }}}
@@ -1262,7 +1263,8 @@ class DB:
         import codecs
         from apsw import Shell
         if callback is None:
-            callback = lambda x: x
+            def callback(x):
+                return x
         uv = int(self.user_version)
 
         with TemporaryFile(suffix='.sql') as fname:
@@ -1272,7 +1274,7 @@ class DB:
                     shell = Shell(db=self.conn, stdout=buf)
                     shell.process_command('.dump')
             else:
-                with lopen(fname, 'wb') as buf:
+                with open(fname, 'wb') as buf:
                     buf.write(sql if isinstance(sql, bytes) else sql.encode('utf-8'))
 
             with TemporaryFile(suffix='_tmpdb.db', dir=os.path.dirname(self.dbpath)) as tmpdb:
@@ -1466,7 +1468,7 @@ class DB:
         path = self.format_abspath(book_id, fmt, fname, path)
         if path is None:
             return missing_value
-        with lopen(path, 'r+b') as f:
+        with open(path, 'r+b') as f:
             return func(f)
 
     def format_hash(self, book_id, fmt, fname, path):
@@ -1474,7 +1476,7 @@ class DB:
         if path is None:
             raise NoSuchFormat('Record %d has no fmt: %s'%(book_id, fmt))
         sha = hashlib.sha256()
-        with lopen(path, 'rb') as f:
+        with open(path, 'rb') as f:
             while True:
                 raw = f.read(SPOOL_SIZE)
                 sha.update(raw)
@@ -1537,11 +1539,11 @@ class DB:
         else:
             if os.access(path, os.R_OK):
                 try:
-                    f = lopen(path, 'rb')
+                    f = open(path, 'rb')
                 except OSError:
                     time.sleep(0.2)
                     try:
-                        f = lopen(path, 'rb')
+                        f = open(path, 'rb')
                     except OSError as e:
                         # Ensure the path that caused this error is reported
                         raise Exception(f'Failed to open {path!r} with error: {e}')
@@ -1563,7 +1565,7 @@ class DB:
                                 return True
                             except:
                                 pass
-                        with lopen(dest, 'wb') as d:
+                        with open(dest, 'wb') as d:
                             shutil.copyfileobj(f, d)
                         return True
         return False
@@ -1577,17 +1579,18 @@ class DB:
         if abs(timestamp - stat.st_mtime) < 0.1:
             return True, None, None
         try:
-            f = lopen(path, 'rb')
+            f = open(path, 'rb')
         except OSError:
             time.sleep(0.2)
-        f = lopen(path, 'rb')
+        f = open(path, 'rb')
         with f:
             return True, f.read(), stat.st_mtime
 
     def compress_covers(self, path_map, jpeg_quality, progress_callback):
         cpath_map = {}
         if not progress_callback:
-            progress_callback = lambda book_id, old_sz, new_sz: None
+            def progress_callback(book_id, old_sz, new_sz):
+                return None
         for book_id, path in path_map.items():
             path = os.path.abspath(os.path.join(self.library_path, path, 'cover.jpg'))
             try:
@@ -1618,7 +1621,7 @@ class DB:
                     os.remove(path)
         else:
             if no_processing:
-                with lopen(path, 'wb') as f:
+                with open(path, 'wb') as f:
                     f.write(data)
             else:
                 from calibre.utils.img import save_cover_data_to
@@ -1649,7 +1652,7 @@ class DB:
                     windows_atomic_move.copy_path_to(path, dest)
         else:
             if hasattr(dest, 'write'):
-                with lopen(path, 'rb') as f:
+                with open(path, 'rb') as f:
                     if report_file_size is not None:
                         f.seek(0, os.SEEK_END)
                         report_file_size(f.tell())
@@ -1672,7 +1675,7 @@ class DB:
                             return True
                         except:
                             pass
-                    with lopen(path, 'rb') as f, lopen(dest, 'wb') as d:
+                    with open(path, 'rb') as f, open(dest, 'wb') as d:
                         shutil.copyfileobj(f, d)
         return True
 
@@ -1718,7 +1721,7 @@ class DB:
                         traceback.print_exc()
 
         if (not getattr(stream, 'name', False) or not samefile(dest, stream.name)):
-            with lopen(dest, 'wb') as f:
+            with open(dest, 'wb') as f:
                 shutil.copyfileobj(stream, f)
                 size = f.tell()
             if mtime is not None:
@@ -1820,7 +1823,7 @@ class DB:
     def write_backup(self, path, raw):
         path = os.path.abspath(os.path.join(self.library_path, path, 'metadata.opf'))
         try:
-            with lopen(path, 'wb') as f:
+            with open(path, 'wb') as f:
                 f.write(raw)
         except OSError:
             exc_info = sys.exc_info()
@@ -1833,12 +1836,12 @@ class DB:
                 raise
             finally:
                 del exc_info
-            with lopen(path, 'wb') as f:
+            with open(path, 'wb') as f:
                 f.write(raw)
 
     def read_backup(self, path):
         path = os.path.abspath(os.path.join(self.library_path, path, 'metadata.opf'))
-        with lopen(path, 'rb') as f:
+        with open(path, 'rb') as f:
             return f.read()
 
     def remove_books(self, path_map, permanent=False):

@@ -23,10 +23,16 @@ class LiveMint(BasicNewsRecipe):
     masthead_url = 'https://images.livemint.com/static/livemint-logo-v1.svg'
 
     remove_empty_feeds =  True
+    resolve_internal_links = True
+
+    def get_cover_url(self):
+        soup = self.index_to_soup(
+            'https://www.magzter.com/IN/HT-Digital-Streams-Ltd./Mint-Mumbai/Newspaper/'
+        )
+        for citem in soup.findAll('meta', content=lambda s: s and s.endswith('view/3.jpg')):
+            return citem['content']
 
     if is_saturday:
-
-        cover_url = 'https://epsfs.hindustantimes.com/MINT/2022/04/16/Delhi/Delhi/5_01/bf867ea1_01_mr.jpg'
 
         keep_only_tags = [
             dict(name='h1'),
@@ -54,24 +60,25 @@ class LiveMint(BasicNewsRecipe):
                 img['src'] = img['data-img']
             return soup
     else:
-        # some wsj articles wont load
+
         extra_css = '''
+            img {display:block; margin:0 auto;}
             #img-cap {font-size:small; text-align:center;}
             #auth-info {font-size:small; text-align:center;}
             .highlights {font-style:italic;}
-            .summary{font-style:italic; color:#404040;}
+            .summary{font-style:italic; color:#202020;}
+            .author-widget{font-size:small; font-style:italic; color:#404040; text-align:center;}
+            em, blockquote {color:#202020;}
         '''
-        cover_url = 'https://epsfs.hindustantimes.com/MINT/2022/04/05/Delhi/Delhi/5_01/1ec7ad14_01_mr.jpg'
 
         keep_only_tags = [
-            dict(name='h1'),
-            dict(name='figure', attrs={'data-vars-mediatype':'image'}),
-            classes('articleInfo FirstEle summary highlights paywall'),
+            dict(name='article'),
+            classes('contentSec')
         ]
         remove_tags = [
             classes(
                 'trendingSimilarHeight moreNews mobAppDownload label msgError msgOk taboolaHeight'
-                ' socialHolder imgbig disclamerText disqus-comment-count'
+                ' socialHolder imgbig disclamerText disqus-comment-count openinApp2 lastAdSlot'
             )
         ]
 

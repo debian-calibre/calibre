@@ -5,7 +5,7 @@ from functools import lru_cache
 import sys, locale, codecs, os, collections, collections.abc
 
 __appname__   = 'calibre'
-numeric_version = (6, 11, 0)
+numeric_version = (6, 12, 0)
 __version__   = '.'.join(map(str, numeric_version))
 git_version   = None
 __author__    = "Kovid Goyal <kovid@kovidgoyal.net>"
@@ -269,7 +269,7 @@ class ExtensionsImporter:
             'uchardet',
         )
         if iswindows:
-            extra = ('winutil', 'wpd', 'winfonts', 'winsapi')
+            extra = ('winutil', 'wpd', 'winfonts', 'winsapi', 'winspeech')
         elif ismacos:
             extra = ('usbobserver', 'cocoa', 'libusb', 'libmtp')
         elif isfreebsd or ishaiku or islinux:

@@ -11,6 +11,7 @@ from lxml import etree
 from calibre.constants import config_dir
 from calibre.utils.xml_parse import safe_xml_fromstring
 from calibre.utils.zipfile import ZipFile
+from calibre.utils.resources import get_path as P
 from polyglot.builtins import iteritems
 
 NS_MAP = {
@@ -19,7 +20,11 @@ NS_MAP = {
     'manifest': 'http://openoffice.org/2001/manifest',
 }
 
-XPath = lambda x: etree.XPath(x, namespaces=NS_MAP)
+
+def XPath(x):
+    return etree.XPath(x, namespaces=NS_MAP)
+
+
 BUILTIN_LOCALES = {'en-US', 'en-GB', 'es-ES'}
 
 

@@ -27,8 +27,9 @@ from calibre.srv.utils import get_library_data, get_use_roman
 from calibre.utils.config import prefs, tweaks
 from calibre.utils.icu import numeric_sort_key, sort_key
 from calibre.utils.localization import (
-    get_lang, lang_code_for_user_manual, lang_map_for_ui, localize_website_link,
+    _, get_lang, lang_code_for_user_manual, lang_map_for_ui, localize_website_link,
 )
+from calibre.utils.resources import get_path as P
 from calibre.utils.search_query_parser import ParseException
 from calibre.utils.serialize import json_dumps
 from polyglot.builtins import iteritems, itervalues
@@ -46,7 +47,7 @@ def index(ctx, rd):
         if not p.path.endswith(b'/'):
             p = p._replace(path=p.path + b'/')
             raise HTTPRedirect(urlunparse(p).decode('utf-8'))
-    ans_file = lopen(P('content-server/index-generated.html'), 'rb')
+    ans_file = open(P('content-server/index-generated.html'), 'rb')
     if not in_develop_mode:
         return ans_file
     return ans_file.read().replace(b'__IN_DEVELOP_MODE__', b'1')

@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "stycznia 06, 2023" "6.11.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "lutego 03, 2023" "6.12.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
@@ -35,18 +35,18 @@ calibre-server \- calibre-server
 .sp
 .nf
 .ft C
-calibre\-server [options] [path to library folder...]
+calibre\-server [opcje] [ścieżka do folderu biblioteki...]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Start the calibre Content server. The calibre Content server exposes your
-calibre libraries over the internet. You can specify the path to the library
-folders as arguments to \fBcalibre\-server\fP\&. If you do not specify any paths, all the
-libraries that the main calibre program knows about will be used.
+Uruchom serwer treści calibre. Serwer zawartości calibre ujawnia Twoje
+Biblioteki calibre przez Internet. Możesz określić ścieżkę do biblioteki
+foldery jako argumenty do \fBcalibre\-server\fP\&. Jeśli nie określisz żadnych ścieżek, wszystkie
+zostaną użyte biblioteki, o których wie główny program calibre.
 .sp
-Whenever you pass arguments to \fBcalibre\-server\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Ilekroć przekazujesz argumenty do \fBcalibre\-server\fP, które zawierają spacje, ujmuj je w cudzysłowy. Na przykład: \(dq/some path/with spaces\(dq
 .SH [OPCJE]
 .INDENT 0.0
 .TP
@@ -101,7 +101,7 @@ Uruchom proces w tle jako daemon (tylko Linux).
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-Ogranicz wyświetlane pól zdefiniowanych przez użytkownika.  Rozdzielana przecinkami lista pól metadanych zdefiniowanych przez użytkownika, które będą wyświetlane przez serwer treści w widokach /opds i /mobile. Jeśli określisz tę opcję, żadne pola, których nie ma na tej liście, nie będą wyświetlane. Na przykład: my_rating,my_tags
+Ogranicz wyświetlane pól zdefiniowanych przez użytkownika.  Oddzielone przecinkami lista zdefiniowanych przez użytkownika pól metadanych, które będą wyświetlane przez serwer zawartości w widokach /opds i /mobile. Jeśli określisz tę opcję, żadne pola, których nie ma na tej liście, nie będą wyświetlane. Na przykład: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -121,7 +121,7 @@ Powrót do automatycznie wykrywanego interfejsu.     Jeśli z jakiegoś powodu s
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Zezwalaj nieuwierzytelnionym połączeniom lokalnym na wprowadzanie zmian.    Zwykle, jeśli nie włączysz uwierzytelniania, serwer działa w trybie tylko do odczytu, aby anonimowi użytkownicy nie mogli wprowadzać zmian w bibliotekach calibre. Ta opcja umożliwia każdemu łączącemu się z tego samego komputera, na którym działa serwer, wprowadzanie zmian. Jest to przydatne, jeśli chcesz uruchomić serwer bez uwierzytelniania, ale nadal używać programu calibredb do wprowadzania zmian w bibliotekach kalibru. Pamiętaj, że włączenie tej opcji oznacza, że każdy program uruchomiony na komputerze może wprowadzać zmiany w bibliotekach calibre. Domyślnie ta opcja jest wyłączona.
+Zezwalaj nieuwierzytelnionym połączeniom lokalnym na wprowadzanie zmian.    Zwykle, jeśli nie włączysz uwierzytelniania, serwer działa w trybie tylko do odczytu, aby anonimowi użytkownicy nie mogli wprowadzać zmian w bibliotekach calibre. Ta opcja umożliwia każdemu łączącemu się z tego samego komputera, na którym działa serwer, wprowadzanie zmian. Jest to przydatne, jeśli chcesz uruchomić serwer bez uwierzytelniania, ale nadal używać programu calibredb do wprowadzania zmian w bibliotekach calibre. Pamiętaj, że włączenie tej opcji oznacza, że każdy program uruchomiony na komputerze może wprowadzać zmiany w bibliotekach calibre. Domyślnie ta opcja jest wyłączona.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -141,7 +141,7 @@ Przesyłanie plików bez kopiowania w celu zwiększenia wydajności.    Spowoduj
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
-Wyświetla ten tekst pomocy i kończy działanie
+wyświetla ten tekst pomocy i kończy działanie
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -216,7 +216,7 @@ Port, na którym będziemy nasłuchiwać połączeń.
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-Ścieżka do pliku JSON zawierającego adresy URL funkcji „Szukaj w internecie”. Najłatwiejszym sposobem utworzenia takiego pliku jest przejście do Preferencje\-> Udostępnianie przez sieć\-> Przeszukaj internet w kalibrze, utwórz adresy URL i wyeksportuj je.
+Ścieżka do pliku JSON zawierającego adresy URL funkcji „Szukaj w internecie”. Najłatwiejszym sposobem utworzenia takiego pliku jest przejście do Preferencje\-> Udostępnianie przez sieć\-> Przeszukaj internet w calibre, utwórz adresy URL i wyeksportuj je.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -241,7 +241,7 @@ Czas (w sekundach), po którym bezczynne połączenie zostanie zamknięte.
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-Zezwalaj na nieuwierzytelnione połączenia z określonych adresów IP, aby wprowadzać zmiany.  Zwykle, jeśli nie włączysz uwierzytelniania, serwer działa w trybie tylko do odczytu, aby anonimowi użytkownicy nie mogli wprowadzać zmian w bibliotekach kalibru. Ta opcja umożliwia każdemu łączącemu się z określonych adresów IP wprowadzanie zmian. Musi to być lista adresów lub specyfikacji sieci oddzielonych przecinkami. Jest to przydatne, jeśli chcesz uruchomić serwer bez uwierzytelniania, ale nadal używać programu calibredb do wprowadzania zmian w bibliotekach calibre. Zwróć uwagę, że włączenie tej opcji oznacza, że każdy łączący się z określonych adresów IP może wprowadzać zmiany w bibliotekach calibre.
+Zezwalaj na nieuwierzytelnione połączenia z określonych adresów IP, aby wprowadzać zmiany.  Zwykle, jeśli nie włączysz uwierzytelniania, serwer działa w trybie tylko do odczytu, aby anonimowi użytkownicy nie mogli wprowadzać zmian w bibliotekach calibre. Ta opcja umożliwia każdemu łączącemu się z określonych adresów IP wprowadzanie zmian. Musi to być lista adresów lub specyfikacji sieci oddzielonych przecinkami. Jest to przydatne, jeśli chcesz uruchomić serwer bez uwierzytelniania, ale nadal używać programu calibredb do wprowadzania zmian w bibliotekach calibre. Zwróć uwagę, że włączenie tej opcji oznacza, że każdy łączący się z określonych adresów IP może wprowadzać zmiany w bibliotekach calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -256,7 +256,7 @@ Prefiks poprzedzający wszystkie adresy URL.         Przydatne, jeśli chcesz ur
 .INDENT 0.0
 .TP
 .B \-\-version
-Wyświetla wersję programu i kończy działanie
+wyświetla wersję programu i kończy działanie
 .UNINDENT
 .INDENT 0.0
 .TP

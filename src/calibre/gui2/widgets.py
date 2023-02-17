@@ -3,26 +3,29 @@ __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
 '''
 Miscellaneous widgets used in the GUI
 '''
-import re, os
+import os
+import re
+from qt.core import (
+    QAction, QApplication, QClipboard, QColor, QComboBox, QCompleter, QCursor, QEvent,
+    QFont, QGraphicsScene, QGraphicsView, QIcon, QKeySequence, QLabel, QLineEdit,
+    QListWidget, QListWidgetItem, QMenu, QPageSize, QPainter, QPalette, QPen, QPixmap,
+    QPrinter, QRect, QSize, QSplitter, QSplitterHandle, QStringListModel,
+    QSyntaxHighlighter, Qt, QTextCharFormat, QTimer, QToolButton, QWidget, pyqtSignal,
+)
 
-from qt.core import (QIcon, QFont, QLabel, QListWidget, QAction, QEvent,
-        QListWidgetItem, QTextCharFormat, QApplication, QSyntaxHighlighter,
-        QCursor, QColor, QWidget, QPixmap, QSplitterHandle, QToolButton,
-        Qt, pyqtSignal, QSize, QSplitter, QPainter, QPageSize, QPrinter,
-        QLineEdit, QComboBox, QPen, QGraphicsScene, QMenu, QStringListModel, QKeySequence,
-        QCompleter, QTimer, QRect, QGraphicsView, QPalette, QClipboard)
-
-from calibre.constants import iswindows, ismacos
-from calibre.gui2 import (error_dialog, pixmap_to_data, gprefs,
-        warning_dialog)
-from calibre.gui2.filename_pattern_ui import Ui_Form
-from calibre import fit_image, strftime, force_unicode
+from calibre import fit_image, force_unicode, strftime
+from calibre.constants import ismacos, iswindows
 from calibre.ebooks import BOOK_EXTENSIONS
-from calibre.utils.config import prefs, XMLConfig
+from calibre.gui2 import error_dialog, gprefs, pixmap_to_data, warning_dialog
+from calibre.gui2.dnd import (
+    DownloadDialog, dnd_get_files, dnd_get_image, dnd_get_local_image_and_pixmap,
+    dnd_has_extension, dnd_has_image, image_extensions,
+)
+from calibre.gui2.filename_pattern_ui import Ui_Form
 from calibre.gui2.progress_indicator import ProgressIndicator as _ProgressIndicator
-from calibre.gui2.dnd import (dnd_has_image, dnd_get_image, dnd_get_files,
-    image_extensions, dnd_has_extension, dnd_get_local_image_and_pixmap, DownloadDialog)
-from calibre.utils.localization import localize_user_manual_link
+from calibre.startup import connect_lambda
+from calibre.utils.config import XMLConfig, prefs
+from calibre.utils.localization import _, localize_user_manual_link
 from polyglot.builtins import native_string_type
 
 history = XMLConfig('history')
@@ -254,7 +257,7 @@ class ImageDropMixin:  # {{{
                 d.start_download()
                 if d.err is None:
                     pmap = QPixmap()
-                    with lopen(d.fpath, 'rb') as f:
+                    with open(d.fpath, 'rb') as f:
                         data = f.read()
                     pmap.loadFromData(data)
                     if not pmap.isNull():
@@ -540,6 +543,35 @@ class EnLineEdit(LineEditECM, QLineEdit):  # {{{
             ev.accept()
         return QLineEdit.event(self, ev)
 
+# }}}
+
+
+# LineEditIndicators {{{
+
+def setup_status_actions(self: QLineEdit):
+    self.status_actions = (
+        self.addAction(QIcon.ic('ok.png'), QLineEdit.ActionPosition.TrailingPosition),
+        self.addAction(QIcon.ic('dialog_error.png'), QLineEdit.ActionPosition.TrailingPosition))
+    self.status_actions[0].setVisible(False)
+    self.status_actions[1].setVisible(False)
+
+def update_status_actions(self: QLineEdit, ok, tooltip: str = ''):
+    self.status_actions[0].setVisible(bool(ok))
+    self.status_actions[1].setVisible(not ok)
+    if ok:
+        self.status_actions[0].setToolTip(tooltip)
+    elif ok is None:
+        self.status_actions[1].setVisible(False)
+    else:
+        self.status_actions[1].setToolTip(tooltip)
+
+class LineEditIndicators:
+
+    def setup_status_actions(self):
+        setup_status_actions(self)
+
+    def update_status_actions(self, ok, tooltip=''):
+        update_status_actions(self, ok, tooltip)
 # }}}
 
 
