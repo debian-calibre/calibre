@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "fevereiro 03, 2023" "6.12.0" "calibre"
+.TH "CALIBREDB" "1" "fevereiro 17, 2023" "6.13.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -222,22 +222,22 @@ O Caractere usado para separar os campos. O padrão é um espaço.
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-The field by which to sort the results. You can specify multiple fields by separating them with commas. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Default: id
+O campo pelo qual ordenar os resultados. Você pode especificar múltiplos campos separando\-os por vírgulas. Campos disponíveis: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Padrão: id
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+O modelo a ser executado se \fB\(dq\fPtemplate\fB\(dq\fP estiver na lista de campos. Padrão: Nenhum
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template_file, \-t
-Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+Caminho para um arquivo contendo o modelo a ser executado se \fB\(dq\fPtemplate\fB\(dq\fP estiver na lista de campos. Padrão: Nenhum
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template_heading
-Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
+Cabeçalho para a coluna do modelo. Padrão: template. Esta opção é ignorada se a opção \fI\%\-\-for\-machine\fP estiver definida
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -419,18 +419,18 @@ Imprimir metadados num formulário OPF (XML)
 .sp
 .nf
 .ft C
-calibredb set_metadata [options] book_id [/path/to/metadata.opf]
+calibredb set_metadata [opções] book_id [/caminho/para/metadata.opf]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Set the metadata stored in the calibre database for the book identified by
-book_id from the OPF file metadata.opf. book_id is a book id number from the
-search command. You can get a quick feel for the OPF format by using the
-\-\-as\-opf switch to the show_metadata command. You can also set the metadata of
-individual fields with the \-\-field option. If you use the \-\-field option, there
-is no need to specify an OPF file.
+Define os metadados armazenados na base de dados do calibre para o livro identificado por
+book_id a partir do arquivo OPF metadata.opf. book_id é um número de identificação do
+comando de pesquisa. Você pode ter uma ideia do formato OPF utilizando a
+opção \-\-as\-opf para o comando show_metadata. Também pode definir os metadados de
+campos individuais com a opção \-\-field.  Se usar a opção \-\-field, não é
+necessário especificar um arquivo OPF.
 .sp
 Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0

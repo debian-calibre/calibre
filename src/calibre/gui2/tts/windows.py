@@ -32,6 +32,13 @@ def split_into_chunks(marked_text, chunk_size):
         yield chunk
 
 
+def chunk_has_text(chunk):
+    for x in chunk:
+        if isinstance(x, str) and x:
+            return True
+    return False
+
+
 class Client:
 
     mark_template = ''
@@ -73,38 +80,49 @@ class Client:
         self.dispatch_on_main_thread(partial(self.handle_event, msg))
 
     def speak_current_chunk(self):
-        self.backend.speak(self.current_chunks[self.current_chunk_idx], is_cued=True)
+        chunk = self.current_chunks[self.current_chunk_idx]
+        if chunk_has_text(chunk):
+            self.backend.speak(chunk, is_cued=True)
+        else:
+            self.handle_end_event()
+
+    def handle_end_event(self):
+        if self.current_chunk_idx >= len(self.current_chunks) - 1:
+            self.clear_chunks()
+            self.callback_ignoring_errors(Event(EventType.end))
+        else:
+            self.current_chunk_idx += 1
+            self.speak_current_chunk()
 
     def handle_event(self, x):
-        if isinstance(x, MarkReached) and self.current_chunks:
-            self.last_mark = x.id
-            self.callback_ignoring_errors(Event(EventType.mark, x.id))
-        elif isinstance(x, MediaStateChanged) and self.current_chunks:
-            if x.state is MediaState.ended:
-                if self.current_chunk_idx >= len(self.current_chunks) - 1:
+        if isinstance(x, MarkReached):
+            if self.current_chunks:
+                self.last_mark = x.id
+                self.callback_ignoring_errors(Event(EventType.mark, x.id))
+        elif isinstance(x, MediaStateChanged):
+            if self.current_chunks:
+                if x.state is MediaState.ended:
+                    self.handle_end_event()
+                elif x.state is MediaState.failed:
                     self.clear_chunks()
-                    self.callback_ignoring_errors(Event(EventType.end))
-                else:
-                    self.current_chunk_idx += 1
-                    self.speak_current_chunk()
-            elif x.state is MediaState.failed:
-                self.clear_chunks()
-                self.callback_ignoring_errors(Event(EventType.cancel))
-                e = x.as_exception()
-                e.display_to_user = True
-                raise e
-            elif x.state is MediaState.opened:
-                self.callback_ignoring_errors(Event(EventType.resume if self.next_start_is_resume else EventType.begin))
-                self.next_start_is_resume = False
+                    self.callback_ignoring_errors(Event(EventType.cancel))
+                    e = x.as_exception()
+                    e.display_to_user = True
+                    raise e
+                elif x.state is MediaState.opened:
+                    self.callback_ignoring_errors(Event(EventType.resume if self.next_start_is_resume else EventType.begin))
+                    self.next_start_is_resume = False
         elif isinstance(x, Error):
             raise x.as_exception(check_for_no_audio_devices=True)
         else:
             raise KeyError(f'Unknown event type: {x}')
 
     def speak_simple_text(self, text):
-        self.current_callback = None
+        self.backend.pause()
         self.clear_chunks()
-        self.backend.speak(text)
+        self.current_callback = None
+        if text:
+            self.backend.speak(text)
 
     def speak_marked_text(self, text, callback):
         self.backend.pause()

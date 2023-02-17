@@ -6,7 +6,7 @@
 # Darío Hereñú, 2014-2015
 # David Martínez <jokerdm@gmail.com>, 2015
 # david ruiz <daruc20@gmail.com>, 2015
-# Jellby <jellby@yahoo.com>, 2014-2018,2020-2022
+# Jellby <jellby@yahoo.com>, 2014-2018,2020-2023
 # Jose Antonio Mireles <jantoniomjr.91@gmail.com>, 2015
 # Qualified Projects <drako.cjs@gmail.com>, 2015
 # Walter Paterno <walter.paterno@gmail.com>, 2020-2021
@@ -14,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-02 05:59+0000\n"
+"POT-Creation-Date: 2023-02-15 03:30+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
-"Last-Translator: Jellby <jellby@yahoo.com>, 2014-2018,2020-2022\n"
+"Last-Translator: Jellby <jellby@yahoo.com>, 2014-2018,2020-2023\n"
 "Language-Team: Spanish (http://www.transifex.com/calibre/calibre/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1870,7 +1870,7 @@ msgid ""
 "``value_expression``. If no ``test_expression`` is True then the result of "
 "``else_expression` is returned. You can have as many ``test_expression, "
 "value_expression`` pairs as you want."
-msgstr ""
+msgstr "``switch_if([expresión_de prueba, expresión_de_valor,]+ otra_expresión)`` -- para cada par ``expresión_de_prueba, expresión_de_valor``, comprueba si ``expresión_de_prueba`` es True (no vacía) y, de ser así, devuelve el resultado de ``expresión_de_valor``. Si ninguna ``expresión_de_prueba`` es True, se devuelve el resultado de ``otra_expresión``. Puede haber tantos pares ``expresión_de_prueba, expresión_de_valor`` como se desee."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:614
 msgid ""
@@ -2160,14 +2160,14 @@ msgid ""
 "change the name so it is best to use names that won't collide with other "
 "template local variables, for example by prefixing the name with an "
 "underscore."
-msgstr ""
+msgstr "La información adicional es un diccionario Python que contiene pares ``nombre_de_variable: valor de variable`` donde los valores deberían ser textos. La plantilla puede acceder al diccionario, creando variables locales con nombre ``nombre_de_variable`` y valor ``valor de variable``. El usuario no puede cambiar el nombre, así que lo mejor es usar nombres que no entren en conflicto con otras variables locales, por ejemplo añadiendo un guión bajo al principio del nombre."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:742
 msgid ""
 "This dictionary is passed to the template processor (the ``formatter``) "
 "using the named parameter ``global_vars=your_dict``. The full method "
 "signature is::"
-msgstr ""
+msgstr "El diccionario se pasa al procesador de plantillas (el ``formatter``) usando el argumento ``global_vars=diccionario``. La forma completa del método es::"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:750
 msgid "**Template writer: how to access the additional information**"
@@ -2177,7 +2177,7 @@ msgstr "**Creador de plantillas: cómo acceder a la información adicional**"
 msgid ""
 "You access the additional information (the ``globals`` dictionary) in a "
 "template using the template function::"
-msgstr ""
+msgstr "Puede acceder a la información adicional (el diccionario ``globals``) en una plantilla usando la función de plantilla::"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:756
 msgid ""
@@ -2195,7 +2195,7 @@ msgstr "donde ``id`` es cualquier nombre de variable permitido. Esta función co
 msgid ""
 "A template can set a value in the ``globals`` dictionary using the template "
 "function::"
-msgstr ""
+msgstr "Una plantilla puede establecer un valor en el diccionario ``globals`` usando la función de plantilla::"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:762
 msgid ""
@@ -2203,7 +2203,7 @@ msgid ""
 "where ``value`` is the value of the template local variable ``id``. If that "
 "local variable doesn't exist then ``value`` is set to the result of "
 "evaluating ``expression``."
-msgstr ""
+msgstr "Esta función asigna la pareja ``id:valor`` del diccionario ``globals``, donde ``valor`` es el valor de la variable local de la plantilla ``id``. Si la variable no existe, ``valor`` se toma como el resultado de evaluar ``expresión``."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:765
 msgid "Notes on the difference between modes"
