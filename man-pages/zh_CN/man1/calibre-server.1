@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "二月 03, 2023" "6.12.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "二月 17, 2023" "6.13.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
@@ -45,7 +45,7 @@ calibre\-server [选项] [书库文件夹的路径...]
 .nf
 \(ga
 .fi
-calibre\-server\(ga的参数。如果未指定任何路径，calibre 主程序所知道的所有部件都将被使用。
+calibre\-server\(ga的参数。如果未指定任何路径，calibre 主程序所知道的所有书库都将被使用。
 .sp
 每当向具有它们自己空间的:command:
 .nf
@@ -66,37 +66,37 @@ calibre\-server\(ga传递参数时，用引号括起这些参数。例如: \(dq/
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-选择认证方式.     设置服务器使用的HTTP身份验证模式。如果将服务器放在SSL代理后面，则设置为\fB\(dq\fPbasic\fB\(dq\fP，否则将其设为 \fB\(dq\fPauto\fB\(dq\fP，如果SSL被配置它将使用\fB\(dq\fPbasic\fB\(dq\fP，否则它将使用\fB\(dq\fPdigest\fB\(dq\fP。
+选择认证方式.     设置服务器使用的HTTP身份验证模式。如果将服务器放在SSL代理后面，则设置为\fB\(dq\fPbasic\fB\(dq\fP，否则将其设为 \fB\(dq\fPauto\fB\(dq\fP。如果配置了SSL，将使用\fB\(dq\fPbasic\fB\(dq\fP，否则使用\fB\(dq\fPdigest\fB\(dq\fP。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-auto\-reload
-当源代码更改时自动重新加载服务器。有利于开发。还应该为关闭超时指定一个小值。
+当源代码更改时自动重新加载服务器。有利于开发。应该为关闭超时指定一个较小的值。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-after
-禁止登录失败次数.   禁止IP地址后的登录失败次数
+触发封禁的登录失败次数.        达到该登录失败次数后IP地址将被封禁
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-禁止登录失败的IP地址重复次数.    临时禁止在指定的分钟数上重复登录失败的IP地址的访问。有助于防止猜测密码的尝试。如果设置为零则不禁止。
+封禁反复登录失败的IP地址.      临时禁止在指定的分钟数内反复登录失败的IP地址的访问。有助于防止猜测密码。如果设置为零则不禁止。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-book\-list\-mode
-选择默认的书籍列表显示模式.      设置默认的书籍显示模式. 每一名用户都可以单独重新设置此选项.默认使用封面网格。
+选择默认的书籍列表显示模式.      设置用于新用户的默认书籍列表模式. 每一名用户都可以单独重新设置此选项.默认使用封面网格。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-compress\-min\-size
-响应使用数据压缩的最小尺寸(字节).
+响应使用数据压缩的最小大小(字节).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-custom\-list\-template
-包含自定义图书列表模式的JSON模板文件的路径。创建这种模板文件的最简单方法是在caliber中转到首选项\->通过网络分享\->书籍列表模板，创建模板并导出它。
+包含自定义图书列表模式的JSON模板文件的路径。创建这种模板文件的最简单方法是在caliber中前往首选项\->通过网络分享\->书籍列表模板，创建模板并导出它。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -106,7 +106,7 @@ calibre\-server\(ga传递参数时，用引号括起这些参数。例如: \(dq/
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-限制显示的用户定义字段.        逗号分隔的用户定义元数据字段的列表，将由内容服务器在 /opds 和 /mobile 视图中显示。如果指定此选项，则不会显示任何在此列表中的字段。例如: my_rating,my_tags
+限制为仅显示用户自定义字段.      逗号分隔的用户自定义元数据字段的列表，将由内容服务器在 /opds 和 /mobile 视图中显示。如果指定此选项，仅显示此列表中包含的字段。例如: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -116,32 +116,32 @@ calibre\-server\(ga传递参数时，用引号括起这些参数。例如: \(dq/
 .INDENT 0.0
 .TP
 .B \-\-enable\-auth, \-\-disable\-auth
-访问服务器的基于密码的身份验证.    通常，服务器是不受限制的，允许任何人访问它。你可以使用此选项限制对预定义用户的访问。 默认情况下, 此选项是禁用的。
+访问服务器时要求基于密码的身份验证.  通常，服务器是不受限制的，允许任何人访问它。你可以使用此选项限制对预定义用户的访问。 默认情况下, 此选项是禁用的。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-返回到自动检测界面.  如果由于某种原因，服务器无法绑定到listen_on选项中指定的接口，那么它将尝试检测连接到外部世界的接口并绑定到该接口。 默认情况下, 此选项是启用的。
+返回到自动检测界面.  如果由于某种原因，服务器无法绑定到listen_on选项中指定的接口，那么它将尝试检测连接到外界的接口并绑定到该接口。 默认情况下, 此选项是启用的。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-允许未经身份验证的本地连接进行更改.  通常，如果你不打开身份验证，则服务器以只读模式运行，从而不允许匿名用户更改你的 calibre 库。此选项允许任何人从服务器上运行的同一台计算机连接来进行更改。如果你想在没有身份验证的情况下运行服务器，但是仍然使用 calibredb对你的 calibre 库进行更改，那么这选项是非常有用。请注意，打开这个选项后意味着在计算机上运行的任何程序都可以对你的 calibre 库进行更改。 默认情况下, 此选项是禁用的。
+允许未经身份验证的本地连接更改书库.  通常，如果你不打开身份验证，则服务器以只读模式运行，从而不允许匿名用户更改你的 calibre 书库。此选项允许任何人从服务器所在的计算机来更改书库。如果你想在没有身份验证的情况下运行服务器，但是仍然使用 calibredb对你的 calibre 书库进行更改，那么这选项是非常有用。请注意，打开这个选项后意味着在服务器所在的计算机上运行的任何程序都可以对你的 calibre 书库进行更改。 默认情况下, 此选项是禁用的。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-记录HTTP 404(未找到)的请求.         通常，服务器记录所有未找到的资源的HTTP请求。这可能产生大量的日志垃圾，如果你的服务器是蠕虫攻击的目标。请使用此选项关闭它。 默认情况下, 此选项是启用的。
+记录HTTP 404(未找到)的请求.         通常，服务器会记录所有未找到资源的HTTP请求。如果你的服务器被恶意程序攻击，则会产生大量的垃圾日志。使用此选项可将其关闭。 默认情况下, 此选项是启用的。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
-通过BonJour供稿广告OPDS.  通过BonJour服务宣传OPDS提要，这样基于OPDS的阅读应用程序就可以自动检测和连接到服务器。 默认情况下, 此选项是启用的。
+通过BonJour广播OPDS源.   通过BonJour广播OPDS源，这样基于OPDS的阅读应用程序就可以自动检测和连接到服务器。 默认情况下, 此选项是启用的。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-零复制文件传输以提高性能.       当通过网络发送文件时这将在内核传输中使用零拷贝，从而提高性能。然而，它可能导致损坏的文件传输在一些崩溃的文件系统上。如果你经历了损坏的文件传输，关掉它。 默认情况下, 此选项是启用的。
+传输时不复制文件以提高性能.      当通过网络发送文件时，将在内核传输中使用零复制，从而提高性能。 但是，它可能会导致在某些损坏的文件系统上的文件传输异常。如果遇到文件传输异常，请将其关闭。 默认情况下, 此选项是启用的。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -151,12 +151,12 @@ calibre\-server\(ga传递参数时，用引号括起这些参数。例如: \(dq/
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-忽略用户定义的元数据字段.       逗号分隔用户定义元数据字段的列表，该内容字段将不能显示在内容服务器的 /opds 和 /mobile 的视图中。例如: my_rating,my_tags
+忽略用户自定义的元数据字段.      逗号分隔用户自定义的元数据字段的列表，相应的字段将不显示在内容服务器的 /opds 和 /mobile 的视图中。例如: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-侦听连接的界面.    默认情况下侦听所有可用的IPv4接口。例如，您可以将其更改为“127.0.0.1”以仅侦听来自本地计算机的连接，或更改为“：：”以侦听所有传入的IPv6和IPv4连接。
+侦听连接的端口.    默认情况下侦听所有可用的IPv4端口。例如，您可以将其更改为“127.0.0.1”以仅侦听来自本地计算机的连接，或更改为“：：”以侦听所有传入的IPv6和IPv4连接。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -166,37 +166,37 @@ calibre\-server\(ga传递参数时，用引号括起这些参数。例如: \(dq/
 .INDENT 0.0
 .TP
 .B \-\-manage\-users
-管理允许连接到此服务器的用户数据库。您可以通过添加一个\-\-在自动模式下使用它。有关详情，请参阅calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help。另请参阅 \fI\%\-\-userdb\fP 选项。
+管理允许连接到此服务器的用户的数据库。您可以通过添加一个\-\-以在自动模式下使用它。有关详情，请参阅calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help。另请参阅 \fI\%\-\-userdb\fP 选项。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-header\-line\-size
-单个 HTTP 标头的最大尺寸（KB）.
+单个 HTTP 消息头的最大大小（KB）.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-作业单元进程的最大时间.        允许作业单元进程运行的最大时间量(分钟)。设为零则无限制。
+进程的最大时间.    允许进程运行的最大时间量(分钟)。设为零则无限制。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-jobs
-最大进程数.      对于大型任务设置运任务单元的进程数是必需和有用的，如准备一本书供预览、添加书籍、转换等。通常，此类进程的最大数量基于CPU核的数量。你可以通过这个设置来控制它。
+最大进程数.      任务进程按需启动，用于大型任务，如准备书籍以供查看、添加书籍、转换等。通常，此类进程的最大数量取决于CPU内核的数量。您可以通过此设置控制它。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-log\-size
-日志文件最大大小（MB）.       由服务器生成的日志文件的最大容量。当日志变得大于这个容量时，它将自动旋转。设置为零时禁用日志旋转。
+日志文件最大大小（MB）.       由服务器生成的日志文件的最大容量。当日志变得大于这个容量时，它将被自动覆盖。设置为零时禁用日志覆盖。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-items
-OPDS供稿的最大书目数.       服务器将在单个OPDS请求中返回的最大书籍数量。
+OPDS源的最大书籍数.        服务器将在单个OPDS请求中返回的最大书籍数量。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-ungrouped\-items
-在OPDS源中未分组项目的最大项目数.         当有超过这个设定数量的项目时将以如作者/标签的首字母对类别进行分组。设置为零以禁用。
+OPDS源中未分组项目的最大数量.   当有超过这个设定数量的结果时将以如作者/标签的首字母对返回的结果进行分组。设置为零以禁用分组。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -211,7 +211,7 @@ OPDS供稿的最大书目数.       服务器将在单个OPDS请求中返回的�
 .INDENT 0.0
 .TP
 .B \-\-pidfile
-写入进行 PID 到指定的文件
+写入进程 PID 到指定的文件
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -221,12 +221,12 @@ OPDS供稿的最大书目数.       服务器将在单个OPDS请求中返回的�
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-包含“搜索Internet”功能的URL的JSON文件的路径。创建这样的文件最简单的方法是进入首选项\->网络共享\->在Calibre中搜索互联网，创建URL并将其导出。
+包含“搜索Internet”功能的URL的JSON文件的路径。创建这样的文件最简单的方法是进入首选项\->网络共享\->在网络中搜索，创建URL并将其导出。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-timeout
-等待干净关机的总时间(秒).
+等待完全关闭的总时间(秒).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -236,22 +236,22 @@ SSL证书文件的路径.
 .INDENT 0.0
 .TP
 .B \-\-ssl\-keyfile
-到SSL私钥文件的路径.
+SSL私钥文件的路径.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout
-空闲连接关闭后的时间(秒).
+空闲连接关闭的等待时间(秒).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-允许来自特定IP地址的未经身份验证的连接进行更改.   通常，如果您不打开身份验证，服务器将以只读模式运行，从而不允许匿名用户更改您的Calibre库。此选项允许从指定IP地址连接的任何人进行更改。必须是逗号分隔的地址或网络规范列表。如果您希望在不进行身份验证的情况下运行服务器，但仍使用Calibredb对您的Calibre库进行更改，则此功能非常有用。请注意，启用此选项意味着从指定IP地址连接的任何人都可以更改您的Calibre库。
+允许来自特定IP的未经身份验证的连接修改书库.     通常，如果您不打开身份验证，服务器将以只读模式运行，从而不允许匿名用户更改您的Calibre书库。此选项允许从指定IP连接的任何人修改书库。必须是逗号分隔的网络地址或网络规范的列表。 如果您希望在不进行身份验证的情况下运行服务器，但仍使用Calibredb对您的Calibre书库进行更改，则此功能非常有用。请注意，启用此选项意味着从指定IP连接的任何人都可以更改您的Calibre库。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-url\-prefix
-预置所有URL的一个前缀.       如果希望在逆向代理后面运行此服务器，则非常有用。例如使用, /calibre 作为URL前缀。
+所有URL的预置前缀.         如果希望在反向代理后面运行此服务器，则非常有用。例如，使用 /calibre 作为URL前缀。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -260,7 +260,7 @@ SSL证书文件的路径.
 .nf
 \(ga
 .fi
-\-\-manage\-users\(ga创建它。您可以阅读以下更多关于管理用户的信息：\fI\%https://manual.calibre\-ebook.com/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
+\-\-manage\-users\(ga创建它。您可以阅读以下关于管理用户的信息：\fI\%https://manual.calibre\-ebook.com/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -270,7 +270,7 @@ SSL证书文件的路径.
 .INDENT 0.0
 .TP
 .B \-\-worker\-count
-用于处理请求的作业单元线程数.
+用于处理请求的任务线程数.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

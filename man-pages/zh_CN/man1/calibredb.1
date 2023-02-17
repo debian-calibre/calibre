@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "二月 03, 2023" "6.12.0" "calibre"
+.TH "CALIBREDB" "1" "二月 17, 2023" "6.13.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -331,16 +331,16 @@ calibredb add [选项] file1 file2 file3 ...
 .UNINDENT
 .SS 正在从文件夹中添加
 .sp
-用于控制从文件夹添加书籍的选项。默认情况下，只能添加那些受支持的电子书格式类型的文件。
+用于控制从文件夹添加书籍的选项。默认情况下，只能添加那些受支持的电子书格式的文件。
 .INDENT 0.0
 .TP
 .B \-\-add
-文件名(glob)模式，在扫描文件夹中的文件时将添加与此模式匹配的文件，即使这些文件不是已知的电子书文件类型。可以为多个模式多次指定。
+文件名(规则为模糊匹配即glob)规则，在扫描文件夹中的文件时将添加与此规则匹配的文件，即使这些文件不是已知的电子书文件格式。可以为多个规则多次指定。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-文件名模式 (glob) ，在扫描文件夹中的文件时，与此模式匹配的文件将被忽略。可以为多个模式多次指定。例如：*.pdf将忽略所有PDF文件
+文件名规则 (规则为模糊匹配即glob) ，在扫描文件夹中的文件时，与此规则匹配的文件将被忽略。可以为多个规则多次指定。例如：*.pdf将忽略所有PDF文件
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -530,7 +530,7 @@ calibredb export [options] ids
 .INDENT 0.0
 .TP
 .B \-\-timefmt
-显示日期的格式。%d \- 天, %b \- 月, %m \- 月数, %Y \- 年。默认是: %b, %Y
+显示日期的格式。%d \- 天, %b \- 月, %m \- 月份数字, %Y \- 年。默认是: %b, %Y
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -715,7 +715,7 @@ calibredb add_custom_column [options] label name datatype
 .INDENT 0.0
 .TP
 .B \-\-display
-一个自定义选项如何解释该栏目中数据的字典。这是一个JSON字符串。对于枚举列，使用 \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP 有许多选项可以进入显示变量，按列类型的选项是： composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations 找到适当组合的最好方法是在GUI中创建适当类型的自定义栏目，然后查看书籍的备份OPF（确保自从添加该列以来已经创建了新的OPF）。在OPF中的新列中，你将看到JSON的“显示”。
+一个自定义选项如何解释该栏目中数据的字典。这是一个JSON字符串。对于枚举栏目，使用 \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP 有许多选项可以进入显示变量，按栏目类型的选项是： composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations 找到适当组合的最好方法是在GUI中创建适当类型的自定义栏目，然后查看书籍的备份OPF（确保自从添加该栏目以来已经创建了新的OPF）。在OPF中的新栏目中，你将看到JSON的“显示”。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -754,7 +754,7 @@ calibredb remove_custom_column [options] label
 .UNINDENT
 .UNINDENT
 .sp
-用标签删除的自定义栏目标识。可以使用custom_columns command命令查看可用栏目
+用标签删除的自定义栏目标识。可以使用custom_columns command命令查看可用栏目。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -1042,7 +1042,7 @@ calibredb fts_search [options] 搜索表达式
 .INDENT 0.0
 .TP
 .B \-\-do\-not\-match\-on\-related\-words
-只匹配精确的单词而不是相关的单词。因此，更正将与矫正不匹配。
+只匹配精确的字词而不是相关的字词。因此，更正将与矫正不匹配。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1072,7 +1072,7 @@ calibredb fts_search [options] 搜索表达式
 .INDENT 0.0
 .TP
 .B \-\-restrict\-to
-使用搜索表达式或id限制搜索的书籍。例如：ids:1,2,3表示按id限制，或search:tag:foo表示限制具有标记foo的书籍。
+使用搜索表达式或id限制搜索的书籍。例如：ids:1,2,3表示按id限制，或search:tag:foo表示限制具有标签foo的书籍。
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal
