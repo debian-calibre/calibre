@@ -9,10 +9,10 @@ dict.get() returns None if the key is not in dict.
  2 files changed, 10 insertions(+), 2 deletions(-)
 
 diff --git a/src/calibre/gui2/actions/device.py b/src/calibre/gui2/actions/device.py
-index a5bba39..5286d51 100644
+index 0f22394..625ba49 100644
 --- a/src/calibre/gui2/actions/device.py
 +++ b/src/calibre/gui2/actions/device.py
-@@ -26,7 +26,11 @@ def local_url_for_content_server():
+@@ -27,7 +27,11 @@ def local_url_for_content_server():
      from calibre.srv.opts import server_config
      opts = server_config()
      interface = opts.listen_on or '0.0.0.0'
@@ -26,10 +26,10 @@ index a5bba39..5286d51 100644
      if is_ipv6_addr(interface):
          interface = f'[{interface}]'
 diff --git a/src/calibre/gui2/preferences/server.py b/src/calibre/gui2/preferences/server.py
-index 2a3fab5..78eb5e2 100644
+index ef9f130..98a3b78 100644
 --- a/src/calibre/gui2/preferences/server.py
 +++ b/src/calibre/gui2/preferences/server.py
-@@ -1309,7 +1309,11 @@ class ConfigWidget(ConfigWidgetBase):
+@@ -1310,7 +1310,11 @@ class ConfigWidget(ConfigWidgetBase):
          prefix = self.advanced_tab.get('url_prefix') or ''
          protocol = 'https' if self.advanced_tab.has_ssl else 'http'
          lo = self.advanced_tab.get('listen_on') or '0.0.0.0'

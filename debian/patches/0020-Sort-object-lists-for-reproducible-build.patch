@@ -9,30 +9,30 @@ Forwarded: not-needed
  2 files changed, 13 insertions(+), 13 deletions(-)
 
 diff --git a/setup/build.py b/setup/build.py
-index d5ca830..d511c55 100644
+index 2b1154e..a3e49f3 100644
 --- a/setup/build.py
 +++ b/setup/build.py
-@@ -422,8 +422,8 @@ class Build(Command):
-         compiler = self.env.cxx if ext.needs_cxx else self.env.cc
-         linker = self.env.linker if iswindows else compiler
-         dest = self.dest(ext)
--        elib = self.lib_dirs_to_ldflags(ext.lib_dirs)
--        xlib = self.libraries_to_ldflags(ext.libraries)
-+        elib = self.lib_dirs_to_ldflags(sorted(ext.lib_dirs))
-+        xlib = self.libraries_to_ldflags(sorted(ext.libraries))
-         cmd = [linker]
-         if iswindows:
-             pre_ld_flags = []
-@@ -433,7 +433,7 @@ class Build(Command):
-             cmd += pre_ld_flags + self.env.ldflags + ext.ldflags + elib + xlib + \
-                 ['/EXPORT:' + init_symbol_name(ext.name)] + objects + ext.extra_objs + ['/OUT:'+dest]
-         else:
--            cmd += objects + ext.extra_objs + ['-o', dest] + self.env.ldflags + ext.ldflags + elib + xlib
-+            cmd += sorted(objects) + ext.extra_objs + ['-o', dest] + self.env.ldflags + ext.ldflags + elib + xlib
-         lddb.append({'arguments': cmd, 'directory': os.getcwd(), 'output': os.path.relpath(dest, os.getcwd())})
+@@ -566,8 +566,8 @@ class Build(Command):
+             compiler = env.cxx if ext.needs_cxx else env.cc
+             linker = env.linker or compiler
+             cmd = [linker]
+-            elib = env.lib_dirs_to_ldflags(ext.lib_dirs)
+-            xlib = env.libraries_to_ldflags(ext.libraries)
++            elib = env.lib_dirs_to_ldflags(sorted(ext.lib_dirs))
++            xlib = env.libraries_to_ldflags(sorted(ext.libraries))
+             if iswindows or env is self.windows_cross_env:
+                 pre_ld_flags = []
+                 if ext.uses_icu:
+@@ -576,7 +576,7 @@ class Build(Command):
+                 cmd += pre_ld_flags + env.ldflags + ext.ldflags + elib + xlib + \
+                     ['/EXPORT:' + init_symbol_name(ext.name)] + objects + ext.extra_objs + ['/OUT:'+dest]
+             else:
+-                cmd += objects + ext.extra_objs + ['-o', dest] + env.ldflags + ext.ldflags + elib + xlib
++                cmd += sorted(objects) + ext.extra_objs + ['-o', dest] + env.ldflags + ext.ldflags + elib + xlib
+             return LinkCommand(cmd, objects, dest)
  
-         if self.newer(dest, objects+ext.extra_objs):
-@@ -529,7 +529,7 @@ sip-include-dirs = ["/usr/lib/python3/dist-packages/PyQt6/bindings"]
+         env = self.env_for_compilation_db(ext)
+@@ -679,7 +679,7 @@ sip-include-dirs = ["/usr/lib/python3/dist-packages/PyQt6/bindings"]
  
  [tool.sip.bindings.{ext.name}]
  headers = {ext.headers}
@@ -42,10 +42,10 @@ index d5ca830..d511c55 100644
  include-dirs = {ext.inc_dirs}
  qmake-QT = {ext.qt_modules}
 diff --git a/src/calibre/linux.py b/src/calibre/linux.py
-index 7c31a58..dd39e59 100644
+index 265532b..b7b7915 100644
 --- a/src/calibre/linux.py
 +++ b/src/calibre/linux.py
-@@ -282,7 +282,7 @@ class ZshCompleter:  # {{{
+@@ -286,7 +286,7 @@ class ZshCompleter:  # {{{
                  if opt.dest in {'extract_to', 'debug_pipeline', 'to_dir', 'outbox', 'with_library', 'library_path'}:
                      arg += "'_path_files -/'"
                  elif opt.choices:
@@ -54,10 +54,10 @@ index 7c31a58..dd39e59 100644
                  elif set(file_map).intersection(set(opt._long_opts)):
                      k = set(file_map).intersection(set(opt._long_opts))
                      exts = file_map[tuple(k)[0]]
-@@ -327,10 +327,10 @@ class ZshCompleter:  # {{{
-         from calibre.customize.ui import available_output_formats
-         from calibre.ebooks.conversion.cli import create_option_parser, group_titles
+@@ -331,10 +331,10 @@ class ZshCompleter:  # {{{
+         from calibre.ebooks.conversion.plumber import supported_input_formats
          from calibre.utils.logging import DevNull
+         from calibre.web.feeds.recipes.collection import get_builtin_recipe_titles
 -        input_fmts = set(supported_input_formats())
 -        output_fmts = set(available_output_formats())
 -        iexts = {x.upper() for x in input_fmts}.union(input_fmts)
@@ -69,7 +69,7 @@ index 7c31a58..dd39e59 100644
          w = polyglot_write(f)
          # Arg 1
          w('\n_ebc_input_args() {')
-@@ -465,7 +465,7 @@ _ebook_edit() {{
+@@ -469,7 +469,7 @@ _ebook_edit() {{
  
      return 1
  }}
@@ -77,8 +77,8 @@ index 7c31a58..dd39e59 100644
 +'''.format(opt_lines, '|'.join(sorted(tweakable_fmts))) + '\n\n')
  
      def do_calibredb(self, f):
-         from calibre.db.cli.main import COMMANDS, option_parser_for
-@@ -496,7 +496,7 @@ _ebook_edit() {{
+         from calibre.customize.ui import available_catalog_formats
+@@ -500,7 +500,7 @@ _ebook_edit() {{
                  exts = ['opf']
              exts = set(exts).union(x.upper() for x in exts)
              pats = ('*.%s'%x for x in exts)
@@ -87,7 +87,7 @@ index 7c31a58..dd39e59 100644
              if command in {'add', 'add_format'}:
                  extra = ("'*:filename:_files' ",)
              opts = '\\\n        '.join(tuple(self.get_options(
-@@ -912,7 +912,7 @@ class PostInstall:
+@@ -918,7 +918,7 @@ class PostInstall:
          mimetypes.discard('application/octet-stream')
  
          def write_mimetypes(f, extra=''):
@@ -96,7 +96,7 @@ index 7c31a58..dd39e59 100644
              if extra:
                  line += extra + ';'
              f.write(line.encode('utf-8') + b'\n')
-@@ -927,7 +927,7 @@ class PostInstall:
+@@ -933,7 +933,7 @@ class PostInstall:
          with open('calibre-ebook-edit.desktop', 'wb') as f:
              f.write(ETWEAK.encode('utf-8'))
              mt = {guess_type('a.' + x.lower())[0] for x in (SUPPORTED|IMPORTABLE)} - {None, 'application/octet-stream'}

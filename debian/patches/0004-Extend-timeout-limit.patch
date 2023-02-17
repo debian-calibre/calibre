@@ -14,10 +14,10 @@ Add some more time to wait test results.
  4 files changed, 13 insertions(+), 13 deletions(-)
 
 diff --git a/src/calibre/srv/tests/base.py b/src/calibre/srv/tests/base.py
-index dd3efcf..05ba3e4 100644
+index cf2ce9c..b077747 100644
 --- a/src/calibre/srv/tests/base.py
 +++ b/src/calibre/srv/tests/base.py
-@@ -111,7 +111,7 @@ class TestServer(Thread):
+@@ -118,7 +118,7 @@ class TestServer(Thread):
          self.log = self.loop.log
  
      def setup_defaults(self, kwargs):
@@ -27,10 +27,10 @@ index dd3efcf..05ba3e4 100644
          kwargs['port'] = kwargs.get('port', 0)
          kwargs['userdb'] = kwargs.get('userdb', ':memory:')
 diff --git a/src/calibre/srv/tests/http.py b/src/calibre/srv/tests/http.py
-index 2970cfa..6eed451 100644
+index 5f217d5..0e39f9f 100644
 --- a/src/calibre/srv/tests/http.py
 +++ b/src/calibre/srv/tests/http.py
-@@ -95,7 +95,7 @@ class TestHTTP(BaseTest):
+@@ -100,7 +100,7 @@ class TestHTTP(BaseTest):
          def handler(data):
              return data.lang_code + data._('Unknown')
  
@@ -39,7 +39,7 @@ index 2970cfa..6eed451 100644
              conn = server.connect()
  
              def test(al, q):
-@@ -154,7 +154,7 @@ class TestHTTP(BaseTest):
+@@ -159,7 +159,7 @@ class TestHTTP(BaseTest):
              conn._HTTPConnection__state = http_client._CS_REQ_SENT
              return conn.getresponse()
  
@@ -48,7 +48,7 @@ index 2970cfa..6eed451 100644
  
          with TestServer(handler, timeout=base_timeout, max_header_line_size=100./1024, max_request_body_size=100./(1024*1024)) as server:
              conn = server.connect()
-@@ -280,7 +280,7 @@ class TestHTTP(BaseTest):
+@@ -285,7 +285,7 @@ class TestHTTP(BaseTest):
              conn = server.connect()
  
              # Test closing
@@ -57,7 +57,7 @@ index 2970cfa..6eed451 100644
              conn.request('GET', '/close', headers={'Connection':'close'})
              r = conn.getresponse()
              self.ae(r.status, 200), self.ae(r.read(), b'close')
-@@ -293,8 +293,8 @@ class TestHTTP(BaseTest):
+@@ -298,8 +298,8 @@ class TestHTTP(BaseTest):
              self.assertIsNone(conn.sock)
  
              # Test timeout
@@ -68,7 +68,7 @@ index 2970cfa..6eed451 100644
              conn.request('GET', '/something')
              r = conn.getresponse()
              self.ae(r.status, 200), self.ae(r.read(), b'something')
-@@ -308,7 +308,7 @@ class TestHTTP(BaseTest):
+@@ -313,7 +313,7 @@ class TestHTTP(BaseTest):
          def handler(conn):
              return conn.generate_static_output('test', lambda : ''.join(conn.path))
          with NamedTemporaryFile(suffix='test.epub') as f, open(P('localization/locales.zip'), 'rb') as lf, \
@@ -77,7 +77,7 @@ index 2970cfa..6eed451 100644
              fdata = (string.ascii_letters * 100).encode('ascii')
              f.write(fdata), f.seek(0)
  
-@@ -409,7 +409,7 @@ class TestHTTP(BaseTest):
+@@ -414,7 +414,7 @@ class TestHTTP(BaseTest):
                  lf.seek(0)
                  data =  lf.read()
                  server.change_handler(lambda conn: lf)
@@ -86,7 +86,7 @@ index 2970cfa..6eed451 100644
                  conn.request('GET', '/test')
                  r = conn.getresponse()
                  self.ae(r.status, http_client.OK)
-@@ -418,7 +418,7 @@ class TestHTTP(BaseTest):
+@@ -423,7 +423,7 @@ class TestHTTP(BaseTest):
                  self.ae(hashlib.sha1(data).hexdigest(), hashlib.sha1(rdata).hexdigest())
                  self.ae(data, rdata)
                  time_taken = monotonic() - start_time
@@ -120,10 +120,10 @@ index 13870ce..8c1507b 100644
              service = b.services[0]
              self.ae(service.type, '_calibre._tcp.local.')
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index db952fb..a199db5 100644
+index c30a544..e8853fa 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
-@@ -368,7 +368,7 @@ class BuildTest(unittest.TestCase):
+@@ -370,7 +370,7 @@ class BuildTest(unittest.TestCase):
  
              p.titleChanged.connect(do_webengine_test)
              p.runJavaScript(f'document.title = "test-run-{os.getpid()}";')

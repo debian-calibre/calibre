@@ -10,10 +10,10 @@ This patch adds "15 characters service name limit" as side-effect.
  1 file changed, 2 insertions(+), 134 deletions(-)
 
 diff --git a/src/calibre/devices/smart_device_app/driver.py b/src/calibre/devices/smart_device_app/driver.py
-index 91fba1a..0d71ba3 100644
+index 87608f3..e4e9336 100644
 --- a/src/calibre/devices/smart_device_app/driver.py
 +++ b/src/calibre/devices/smart_device_app/driver.py
-@@ -2043,138 +2043,6 @@ class SMART_DEVICE_APP(DeviceConfig, DevicePlugin):
+@@ -2038,138 +2038,6 @@ class SMART_DEVICE_APP(DeviceConfig, DevicePlugin):
      def is_running(self):
          return getattr(self, 'listen_socket', None) is not None
  
@@ -152,7 +152,7 @@ index 91fba1a..0d71ba3 100644
  def monkeypatch_zeroconf():
      # Hack to work around the newly-enforced 15 character service name limit.
      # "monkeypatch" zeroconf with a function without the check
-@@ -2182,5 +2050,5 @@ def monkeypatch_zeroconf():
+@@ -2177,5 +2045,5 @@ def monkeypatch_zeroconf():
          from zeroconf._utils.name import service_type_name
          service_type_name.__kwdefaults__['strict'] = False
      except ImportError:
