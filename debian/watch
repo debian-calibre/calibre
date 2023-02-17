@@ -6,8 +6,6 @@
 version=4
 
 opts="pgpmode=next, \
-      dversionmangle=s!\+dfsg!!, \
-      oversionmangle=s!(.+)!$1+dfsg!, \
       downloadurlmangle=s!/kovidgoyal/@PACKAGE@/releases/tag/v(\d+\.\d+\.\d+)!/kovidgoyal/@PACKAGE@/releases/download/v$1/@PACKAGE@-$1.tar.xz!, \
       filenamemangle=s!v(\d+\.\d+\.\d+)!@PACKAGE@-$1.tar.xz!" \
   https://github.com/kovidgoyal/@PACKAGE@/releases \
