@@ -46,6 +46,8 @@ override_dh_auto_build:
 	@echo 'blhc: ignore-line-regexp: .+ -dM -E -o moc_predefs\.h /usr/lib/[^/]+/qt6/mkspecs/features/data/dummy\.cpp'
 	@echo 'blhc: ignore-line-regexp: /usr/lib/qt6/libexec/moc .+\.cpp'
 	[ -d build ] || $(SETUP) build
+	$(SETUP) iso639
+	$(SETUP) iso3166
 
 # Invoke "calibre_auto_test" target with automatic "HOME" and "XDG_*" variables.
 override_dh_auto_test:
