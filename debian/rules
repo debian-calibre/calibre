@@ -36,9 +36,6 @@ endif
 DEB_DH_GENCONTROL_ARGS = -- -Vpyqt:Version=$(shell dpkg-query -f'$${Version}' -W python3-pyqt6)
 
 override_dh_auto_configure:
-#	# use mathjax source package
-	$(SETUP) mathjax --mathjax-url="file://$(CURDIR)/debian/resources-src/mathjax/3.1.4.tar.gz"
-	$(SETUP) liberation_fonts --system-liberation_fonts --path-to-liberation_fonts=/usr/share/fonts/truetype/liberation2
 
 override_dh_auto_build:
 #	# Add false-positive info for blhc(1) check
@@ -46,7 +43,11 @@ override_dh_auto_build:
 	@echo 'blhc: ignore-line-regexp: .+ -dM -E -o moc_predefs\.h /usr/lib/[^/]+/qt6/mkspecs/features/data/dummy\.cpp'
 	@echo 'blhc: ignore-line-regexp: /usr/lib/qt6/libexec/moc .+\.cpp'
 	[ -d build ] || $(SETUP) build
-	$(SETUP) resources --hyphenation-url="file://$(CURDIR)/debian/resources-src/hyphenation/master.tar.gz"
+#	# use mathjax source package
+	$(SETUP) resources \
+		--mathjax-url="file://$(CURDIR)/debian/resources-src/mathjax/3.1.4.tar.gz" \
+		--system-liberation_fonts --path-to-liberation_fonts=/usr/share/fonts/truetype/liberation2 \
+		--hyphenation-url="file://$(CURDIR)/debian/resources-src/hyphenation/master.tar.gz"
 
 # Invoke "calibre_auto_test" target with automatic "HOME" and "XDG_*" variables.
 override_dh_auto_test:
