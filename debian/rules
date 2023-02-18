@@ -45,6 +45,7 @@ override_dh_auto_build:
 	[ -d build ] || $(SETUP) build
 	$(SETUP) iso639
 	$(SETUP) iso3166
+	$(SETUP) manual
 #	# use mathjax source package
 	$(SETUP) resources \
 		--mathjax-url="file://$(CURDIR)/debian/resources-src/mathjax/3.1.4.tar.gz" \
