@@ -45,6 +45,7 @@ override_dh_auto_build:
 	[ -d build ] || $(SETUP) build
 	$(SETUP) translations
 	$(SETUP) iso639
+	$(SETUP) iso3166
 	$(SETUP) manual
 #	# use mathjax source package
 	$(SETUP) resources \
