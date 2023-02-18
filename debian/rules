@@ -44,6 +44,7 @@ override_dh_auto_build:
 	@echo 'blhc: ignore-line-regexp: /usr/lib/qt6/libexec/moc .+\.cpp'
 	[ -d build ] || $(SETUP) build
 	$(SETUP) translations
+	$(SETUP) iso639
 	$(SETUP) manual
 #	# use mathjax source package
 	$(SETUP) resources \
