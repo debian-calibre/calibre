@@ -37,7 +37,7 @@ DEB_DH_GENCONTROL_ARGS = -- -Vpyqt:Version=$(shell dpkg-query -f'$${Version}' -W
 
 override_dh_auto_configure:
 #	# use mathjax source package
-	$(SETUP) mathjax --mathjax-url="file://$(CURDIR)/debian/mathjax/3.1.4.tar.gz"
+	$(SETUP) mathjax --mathjax-url="file://$(CURDIR)/debian/resources-src/mathjax/3.1.4.tar.gz"
 	$(SETUP) liberation_fonts --system-liberation_fonts --path-to-liberation_fonts=/usr/share/fonts/truetype/liberation2
 
 override_dh_auto_build:
