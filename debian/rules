@@ -49,6 +49,8 @@ override_dh_auto_build:
 	$(SETUP) kakasi
 	$(SETUP) manual
 	$(SETUP) recent_uas
+#	# use Debian specific CA certs
+	ln -sf /etc/ssl/certs/ca-certificates.crt resources/mozilla-ca-certs.pem
 #	# use mathjax source package
 	$(SETUP) resources \
 		--mathjax-url="file://$(CURDIR)/debian/resources-src/mathjax/3.1.4.tar.gz" \
