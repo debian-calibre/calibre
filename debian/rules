@@ -97,15 +97,8 @@ override_dh_installman:
 	debian/install-manpages.sh
 
 override_dh_auto_clean:
-	[ ! -d build ] || $(SETUP) build -c
-	$(SETUP) resources --clean
+	$(SETUP) bootstrap --clean
 	rm -f resources/mozilla-ca-certs.pem
-	$(SETUP) recent_uas --clean
-	$(SETUP) manual --clean
-	$(SETUP) kakasi --clean
-	$(SETUP) iso3166 --clean
-	$(SETUP) iso639 --clean
-	$(SETUP) translations --clean
 	py3clean setup src
 
 override_dh_gencontrol:
