@@ -42,17 +42,10 @@ override_dh_auto_build:
 	@echo 'blhc: ignore-line-regexp: \tCompiling form /.+\.ui'
 	@echo 'blhc: ignore-line-regexp: .+ -dM -E -o moc_predefs\.h /usr/lib/[^/]+/qt6/mkspecs/features/data/dummy\.cpp'
 	@echo 'blhc: ignore-line-regexp: /usr/lib/qt6/libexec/moc .+\.cpp'
-	[ -d build ] || $(SETUP) build
-	$(SETUP) translations
-	$(SETUP) iso639
-	$(SETUP) iso3166
-	$(SETUP) kakasi
-	$(SETUP) manual
-	$(SETUP) recent_uas
 #	# use Debian specific CA certs
 	ln -sf /etc/ssl/certs/ca-certificates.crt resources/mozilla-ca-certs.pem
 #	# use mathjax source package
-	$(SETUP) resources \
+	$(SETUP) bootstrap \
 		--mathjax-url="file://$(CURDIR)/debian/resources-src/mathjax/3.1.4.tar.gz" \
 		--system-liberation_fonts --path-to-liberation_fonts=/usr/share/fonts/truetype/liberation2 \
 		--hyphenation-url="file://$(CURDIR)/debian/resources-src/hyphenation/master.tar.gz"
