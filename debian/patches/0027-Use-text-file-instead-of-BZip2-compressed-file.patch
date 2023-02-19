@@ -1,0 +1,25 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Mon, 20 Feb 2023 02:27:39 +0900
+Subject: Use text file instead of BZip2 compressed file
+
+---
+ setup/browser_data.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/setup/browser_data.py b/setup/browser_data.py
+index 25aa488..df9835d 100644
+--- a/setup/browser_data.py
++++ b/setup/browser_data.py
+@@ -24,10 +24,10 @@ def filter_ans(ans):
+ 
+ def common_user_agents():
+     print('Getting recent UAs...')
+-    p = Path.cwd() / "debian" / "resources-src" / "recent_uas" / "common_user_agents.bz2"
++    p = Path.cwd() / "debian" / "resources-src" / "recent_uas" / "common_user_agents"
+     raw = download_from_calibre_server(p.as_uri())
+     ans = {}
+-    for line in bz2.decompress(raw).decode('utf-8').splitlines():
++    for line in raw.decode('utf-8').splitlines():
+         count, ua = line.partition(':')[::2]
+         count = int(count.strip())
+         ua = ua.strip()
