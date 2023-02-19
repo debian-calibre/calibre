@@ -1,0 +1,21 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Sun, 19 Feb 2023 23:19:33 +0900
+Subject: Don't download translation files from GitHub
+
+---
+ setup/install.py | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/setup/install.py b/setup/install.py
+index b21f11b..cab0131 100644
+--- a/setup/install.py
++++ b/setup/install.py
+@@ -364,6 +364,8 @@ class Bootstrap(Command):
+             help='Do not download all history for the translations. Speeds up first time download but subsequent downloads will be slower.')
+ 
+     def pre_sub_commands(self, opts):
++        return
++
+         tdir = self.j(self.d(self.SRC), 'translations')
+         clone_cmd = [
+             'git', 'clone', f'https://github.com/{self.TRANSLATIONS_REPO}.git', 'translations']
