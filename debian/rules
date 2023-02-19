@@ -44,6 +44,8 @@ override_dh_auto_build:
 	@echo 'blhc: ignore-line-regexp: /usr/lib/qt6/libexec/moc .+\.cpp'
 #	# use Debian specific CA certs
 	ln -sf /etc/ssl/certs/ca-certificates.crt resources/mozilla-ca-certs.pem
+#	# extract translation resource
+	tar -zxvf debian/resources-src/calibre-translations/master.tar.gz --strip-components=1 --directory=translations
 #	# use mathjax source package
 	$(SETUP) bootstrap \
 		--mathjax-url="file://$(CURDIR)/debian/resources-src/mathjax/3.1.4.tar.gz" \
