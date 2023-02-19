@@ -7,10 +7,12 @@
 
 set -eux
 
+# Use exact commit ID instead of branch name ("master") for reproducible build
+git_master=bcf7f049315dee2001cc2f7c7eabfbcb0b8ef21a
+
 output_dir=./debian/resources-src/hyphenation/
 
-# Use exact commit ID instead of branch name ("master") for reproducible build
-git_master=$(git ls-remote --exit-code https://github.com/LibreOffice/dictionaries.git refs/heads/master | cut --fields=1)
+mkdir -p "${output_dir}"
 
 curl --fail --location --remote-name --output-dir "${output_dir}" "https://github.com/LibreOffice/dictionaries/archive/${git_master}.tar.gz"
 
