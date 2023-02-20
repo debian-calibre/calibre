@@ -12,9 +12,11 @@ git_master=bcf7f049315dee2001cc2f7c7eabfbcb0b8ef21a
 
 output_dir=./debian/resources-src/hyphenation/
 
-mkdir -p "${output_dir}"
-
 curl --fail --location --remote-name --output-dir "${output_dir}" "https://github.com/LibreOffice/dictionaries/archive/${git_master}.tar.gz"
 
+cd "${output_dir}"
+
+sha256sum -c sha256sum
+
 # Link to stable name for build script
-ln -sf "${git_master}.tar.gz" "${output_dir}/master.tar.gz"
+ln -sf "${git_master}.tar.gz" master.tar.gz
