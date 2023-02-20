@@ -26,8 +26,24 @@ calibre (6.13.0-1~exp1) UNRELEASED; urgency=medium
   * Use Debian specific CA certs for calibre content server
   * Add clean target job
   * Add comments
+  * Add recent User-Agent downloader for deterministic build
+  * Add recent user agent data
+  * Use downloaded static file for reproducible build
+  * Use bootstrap target
+  * Add patches.
+    Use specific commit ID files to deterministic build
+  * Add translation downloader
+  * Extract translation resource
+  * No more needs to build manuals
+  * Update clean target
+  * Drop big blob files from source tree.
+    These big blob files are update often, and this harms Git repository.
+    Download them in build time.
+  * Prefer text files instead of binary file
+  * Extract BZip2 file
+  * Use text file instead of BZip2 compressed file
 
- -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sun, 19 Feb 2023 05:52:33 +0900
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Mon, 20 Feb 2023 21:28:44 +0900
 
 calibre (6.11.0+dfsg-2) unstable; urgency=medium
 
