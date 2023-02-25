@@ -1,0 +1,290 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# 
+# Translators:
+# 石丸健太郎, 2022
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-08-10 17:06+0000\n"
+"PO-Revision-Date: 2014-06-17 08:37+0000\n"
+"Last-Translator: 石丸健太郎, 2022\n"
+"Language-Team: Japanese (http://www.transifex.com/calibre/calibre/language/ja/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:6
+msgid "Customizing calibre"
+msgstr "calibreをカスタマイズ"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:8
+msgid ""
+"calibre has a highly modular design. Various parts of it can be customized."
+"  Here, you will learn:"
+msgstr "calibre は高度にモジュラーな設計となっています。パーツのいろいろな部分がカスタマイズ可能です。詳しくはこちら:"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:10
+msgid ""
+"how to use environment variables and *tweaks* to customize calibre's "
+"behavior,"
+msgstr "calibre の振る舞いをカスタマイズするために環境変数と *Tweaks* を使用する方法"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:11
+msgid ""
+"how to specify your own static resources like icons and templates to "
+"override the defaults"
+msgstr "アイコンやテンプレートなど独自の静的リソースでデフォルトを上書きする方法"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:12
+msgid "how to use *plugins* to add functionality to calibre."
+msgstr "calibre に機能追加するために *プラグイン* を使用する方法"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:13
+msgid "how to share icon themes and plugins with other calibre users."
+msgstr "他の calibre ユーザとアイコンテーマとプラグインを共有する方法"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:14
+msgid ""
+"to see how to create *recipes* to add new sources of online content to "
+"calibre visit the Section :ref:`news`."
+msgstr "*レシピ* の作成方法と calibre への新しいオンラインコンテンツのソースの追加方法については、:ref:`news` セクションを参照してください。"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:17
+msgid ""
+"Note that although icon themes and plugins are indexed and downloadable via "
+"calibre's builtin updater, they are not part of calibre, and their canonical"
+" locations for support and source code are on the `Mobileread forums "
+"<https://www.mobileread.com/forums/forumdisplay.php?f=166>`__ in their "
+"support threads."
+msgstr "アイコンテーマやプラグインは目録が作成されていて calibre 内蔵のアップデータからダウンロード可能ですが、calibre の一部ではありません。サポートが受けられる正しい場所およびソースコードは `Mobileread forums <https://www.mobileread.com/forums/forumdisplay.php?f=166>` のサポートスレッドです。"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:36
+msgid "Environment variables"
+msgstr "環境変数"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:38
+msgid ""
+"``CALIBRE_CONFIG_DIRECTORY`` - sets the folder where configuration files are"
+" stored/read."
+msgstr "``CALIBRE_CONFIG_DIRECTORY`` - 設定ファイルを保存/読み込みするフォルダを設定"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:39
+msgid "``CALIBRE_TEMP_DIR`` - sets the temporary folder used by calibre"
+msgstr "``CALIBRE_TEMP_DIR`` - calibre が使用する一時フォルダを設定"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:40
+msgid ""
+"``CALIBRE_CACHE_DIRECTORY`` - sets the folder calibre uses to cache "
+"persistent data between sessions"
+msgstr "``CALIBRE_CACHE_DIRECTORY`` - calibre がデータをキャッシュするために使用するフォルダを設定"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:41
+msgid ""
+"``CALIBRE_OVERRIDE_DATABASE_PATH`` - allows you to specify the full path to "
+"metadata.db. Using this variable you can have metadata.db be in a location "
+"other than the library folder. Useful if your library folder is on a "
+"networked drive that does not support file locking."
+msgstr "``CALIBRE_OVERRIDE_DATABASE_PATH`` - metadata.db へのフルパスを指定可。この変数によって metadata.db をライブラリフォルダ以外の場所に置くことができるようになります。ライブラリフォルダがネットワーク上に置かれていてファイルの排他制御機能をサポートしていない場合に有用です。"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:42
+msgid ""
+"``CALIBRE_DEVELOP_FROM`` - used to run from a calibre development "
+"environment. See :ref:`develop`."
+msgstr "``CALIBRE_DEVELOP_FROM`` - calibre の開発環境から実行するために使用。 :ref:`develop` を参照。"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:43
+msgid ""
+"``CALIBRE_OVERRIDE_LANG`` - used to force the language used by the interface"
+" (ISO 639 language code)"
+msgstr "``CALIBRE_OVERRIDE_LANG`` - インタフェースで使用する言語を矯正 (ISO 639 言語コード)"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:44
+msgid ""
+"``CALIBRE_TEST_TRANSLATION`` - used to test a translation .po file (should "
+"be the path to the .po file)"
+msgstr "``CALIBRE_TEST_TRANSLATION`` - 翻訳 .po ファイルをテストするのに使用 (.po ファイルへのパス)"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:45
+msgid ""
+"``CALIBRE_NO_NATIVE_FILEDIALOGS`` - causes calibre to not use native file "
+"dialogs for selecting files/folders."
+msgstr "``CALIBRE_NO_NATIVE_FILEDIALOGS`` - ファイル/フォルダの選択時に calibre にネイティブのファイルダイアログを使用させない"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:46
+msgid ""
+"``CALIBRE_NO_NATIVE_MENUBAR`` - causes calibre to not create a native "
+"(global) menu on Ubuntu Unity and similar Linux desktop environments. The "
+"menu is instead placed inside the window, as is traditional."
+msgstr "``CALIBRE_NO_NATIVE_MENUBAR`` - Ubuntu Uniti や類似の linux デスクトップ環境において calibre にネイティブ (グローバル) メニューを作成させない。メニューは従来どおりウィンドウの内側に配置されます。"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:47
+msgid ""
+"``CALIBRE_USE_SYSTEM_THEME`` - by default, on Linux, calibre uses its own "
+"builtin Qt style. This is to avoid crashes and hangs caused by "
+"incompatibilities between the version of Qt calibre is built against and the"
+" system Qt. The downside is that calibre may not follow the system look and "
+"feel. If you set this environment variable on Linux, it will cause calibre "
+"to use the system theme -- beware of crashes and hangs."
+msgstr "``CALIBRE_USE_SYSTEM_THEME`` - Linux ではデフォルトで calibre はビルトインの Qt スタイルを使用します。この設定は calibre がビルドされた Qt のバージョンとシステムの Qt のバージョンの非互換性によって引き起こされるクラッシュを回避するためのものです。ただしシステムの外観と操作感に calibre が従うとは限りません。Linux 上でこの環境変数を使用する場合、calibre はシステムのテーマを使用するようになります。クラッシュやフリーズに注意してください。"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:53
+msgid ""
+"``CALIBRE_SHOW_DEPRECATION_WARNINGS`` - causes calibre to print deprecation "
+"warnings to stdout. Useful for calibre developers."
+msgstr "``CALIBRE_SHOW_DEPRECATION_WARNINGS`` - calibre に非推奨の警告を標準出力に表示させる。calibre の開発者に役立ちます。"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:54
+msgid ""
+"``CALIBRE_NO_DEFAULT_PROGRAMS`` - prevent calibre from automatically "
+"registering the filetypes it is capable of handling with Windows."
+msgstr "``CALIBRE_NO_DEFAULT_PROGRAMS`` - Windows が扱えるファイルタイプを calibre に自動的に登録させない"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:55
+msgid ""
+"``QT_QPA_PLATFORM`` - On Linux set this to ``wayland`` to force calibre to "
+"use Wayland and ``xcb`` to force use of X11."
+msgstr "``QT_QPA_PLATFORM`` - Linux では、これを ``wayland`` に設定してキャリバーに強制的に Wayland を使用させ、``xcb`` に設定して X11 を強制的に使用させます。"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:56
+msgid "``SYSFS_PATH`` - Use if sysfs is mounted somewhere other than /sys"
+msgstr "``SYSFS_PATH`` - sysfs が /sys 以外の場所にマウントされている場合に使用します。"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:57
+msgid ""
+"``http_proxy``, ``https_proxy`` - used on Linux to specify an HTTP(S) proxy"
+msgstr "``http_proxy``, ``https_proxy`` - Linux 上で HTTP(S) のプロキシを指定するために使用"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:59
+msgid ""
+"See `How to set environment variables in Windows "
+"<https://www.computerhope.com/issues/ch000549.htm>`_. If you are on macOS "
+"you can set environment variables by creating the "
+":file:`~/Library/Preferences/calibre/macos-env.txt` and putting the "
+"environment variables one per line in it, for example::"
+msgstr "`How to set environment variables in Windows <https://www.computerhope.com/issues/ch000549.htm>`_ を参照してください。macOS を使用している場合には :file:`~/Library/Preferences/calibre/macos-env.txt` を作成して環境変数を設定することができます。環境変数は 1 行に 1 つずつ記述します。使用例::"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:69
+msgid "Tweaks"
+msgstr "Tweaks"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:71
+msgid ""
+"Tweaks are small changes that you can specify to control various aspects of "
+"calibre's behavior. You can change them by going to "
+"Preferences->Advanced->Tweaks. The default values for the tweaks are "
+"reproduced below"
+msgstr "Tweak は、calibre のいろいろな動作を細かく制御するための変更です。設定 -> 高度な設定 -> Tweaks から設定ができます。Tweak のデフォルト値を以下に示します"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:78
+msgid "Overriding icons, templates, et cetera"
+msgstr "アイコンやテンプレートなどを上書き"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:81
+msgid ""
+"calibre has direct support for icon themes, there are several icon themes "
+"available for calibre, that you can use by going to "
+":guilabel:`Preferences->Interface->Look & Feel->Change icon theme`. It is "
+"preferable to use icon themes over overriding individual icons."
+msgstr "calibre はアイコンテーマを直接サポートしており、calibre で利用可能なさまざまなアイコンテーマがあります。アイコンテーマは :guilabel:`環境設定 -> 外観 -> 主要インタフェース -> アイコンテーマ` で変更できます。アイコンテーマは下に説明する静的リソースの上書きと同じメカニズムを使用しています。"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:86
+msgid ""
+"calibre allows you to override the static resources, like icons, JavaScript "
+"and templates for the metadata jacket, catalogs, etc. with customized "
+"versions that you like.  All static resources are stored in the resources "
+"sub-folder of the calibre install location. On Windows, this is usually "
+":file:`C:\\\\Program Files\\\\Calibre2\\\\app\\\\resources`. On macOS, "
+":file:`/Applications/calibre.app/Contents/Resources/resources/`. On Linux, "
+"if you are using the binary installer from the calibre website it will be "
+":file:`/opt/calibre/resources`. These paths can change depending on where "
+"you choose to install calibre."
+msgstr "calibre では静的リソースを好きなようにカスタマイズしたバージョンで上書きすることができます。静的リソースとはたとえばアイコン、JavaScript、書誌の表紙用テンプレート、カタログなどのことです。 すべての静的リソースは、calibre をインストールした場所のサブフォルダに保存されます。Windows では、これは通常 :file:`C:\\\\Program Files\\\\Calibre2\\\\app\\\\resources` です。macOS では、:file:`/Applications/calibre.app/Contents/Resources/resources/` です。Linux では、calibre の Web サイトからバイナリインストーラを使用している場合には、:file:`/opt/calibre/resources` になります。これらのパスは、calibre をどこにインストールしたかによって変わる可能性があります。"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:95
+msgid ""
+"You should not change the files in this resources folder, as your changes "
+"will get overwritten the next time you update calibre. Instead, go to "
+":guilabel:`Preferences->Advanced->Miscellaneous` and click :guilabel:`Open "
+"calibre configuration folder`. In this configuration folder, create a sub-"
+"folder called resources and place the files you want to override in it. "
+"Place the files in the appropriate sub folders, for example place images in "
+":file:`resources/images`, etc. calibre will automatically use your custom "
+"file in preference to the built-in one the next time it is started."
+msgstr "このリソースフォルダ内のファイルは変更しないでください。変更しても、calibre をアップデートすると変更内容が上書きされてしまいます。変更したい場合は、:guilabel:`環境設定 > 高度な設定 > その他` に移動し、:guilabel:`calibre の設定フォルダを開く` をクリックします。この設定用フォルダに resources という名前のサブフォルダを作成し、上書きしたいファイルをそのフォルダに配置します。ファイルは適切なサブフォルダに配置してください (たとえば画像は :file:`resources/images` に配置します)。次回の起動時から自動的に calibre は、組み込みのファイルではなくカスタムファイルを使用するようになります。"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:104
+msgid ""
+"For example, if you wanted to change the icon for the :guilabel:`Remove "
+"books` action, you would first look in the built-in resources folder and see"
+" that the relevant file is :file:`resources/images/remove_books.png`. "
+"Assuming you have an alternate icon in PNG format called "
+":file:`my_remove_books.png` you would save it in the configuration folder as"
+" :file:`resources/images/remove_books.png`. All the icons used by the "
+"calibre user interface are in :file:`resources/images` and its sub-folders. "
+"Placing an override file here will have even higher priority than a custom "
+"icon theme."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/customize.rst:114
+msgid "Creating your own icon theme for calibre"
+msgstr "calibre 用に独自のアイコンテーマを作成"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:116
+msgid ""
+"If you have created a beautiful set of icons and wish to share them with "
+"other calibre users via calibre's builtin icon theme support, you can easily"
+" package up your icons into a theme. To do so, go to "
+":guilabel:`Preferences->Miscellaneous->Create icon theme`, select the folder"
+" where you have put your icons. Then fill up the theme metadata and click "
+"OK. This will result in a ZIP file containing the theme icons. You can "
+"upload that to the calibre forum at `Mobileread "
+"<https://www.mobileread.com/forums/forumdisplay.php?f=166>`__ and then I "
+"will make your theme available via calibre's builtin icon theme system. By "
+"default, the icon theme you just created will also be installed as the "
+"current theme in calibre. If you are testing your theme, remember to remove "
+"the images from the :file:`resources/images` folder so that the icons from "
+"the theme are used."
+msgstr "美しいアイコン セットを作成し、calibre のビルトイン アイコン テーマ サポートを介して他の caliber ユーザーと共有したい場合は、アイコンをテーマに簡単にパッケージ化できます。これを行うには、 :guilabel:`Preferences-Miscellaneous-Create icon theme` に移動し、アイコンを配置したフォルダーを選択します。次に、テーマのメタデータを入力し、[OK] をクリックします。これにより、テーマ アイコンを含む ZIP ファイルが作成されます。それを `Mobileread https://www.mobileread.com/forums/forumdisplay.php?f=166`__ のキャリバー フォーラムにアップロードしてください。その後、キャリバーの組み込みのアイコン テーマ システムを介してあなたのテーマを利用できるようにします。デフォルトでは、作成したばかりのアイコン テーマは、calibre の現在のテーマとしてもインストールされます。テーマをテストしている場合は、テーマのアイコンが使用されるように、 :file:`resources/images` フォルダから画像を削除することを忘れないでください。"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:130
+msgid ""
+"As of calibre 6, you can have custom icons for light and dark mode. Simply "
+"create two versions of the icon and name the files with the suffix ``-for-"
+"dark-theme`` and ``-for-light-theme``. For example, ``modified-for-dark-"
+"theme.png`` and ``modified-for-light-theme.png``. Then calibre will "
+"automatically use the appropriate icon based on the current theme."
+msgstr "Calibre 6以降、ライトモードとダークモードのカスタムアイコンを使用できます.アイコンの 2 つのバージョンを作成し、拡張子 ``-for-dark-theme`` と ``-for-light-theme`` をファイルに付けます。たとえば、 ``modified-for-dark-theme.png`` と ``modified-for-light-theme.png`` です。その後、caliber は現在のテーマに基づいて適切なアイコンを自動的に使用します。"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:137
+msgid "Customizing calibre with plugins"
+msgstr "calibre をプラグインでカスタマイズ"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:139
+msgid ""
+"calibre has a very modular design. Almost all functionality in calibre comes"
+" in the form of plugins. Plugins are used for conversion, for downloading "
+"news (though these are called recipes), for various components of the user "
+"interface, to connect to different devices, to process files when adding "
+"them to calibre and so on. You can get a complete list of all the built-in "
+"plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
+msgstr "calibre の設計は非常にモジュラーです。ほとんどすべての calibre の機能がプラグインという形で提供されます。プラグインは変換、ニュースのダウンロード (ただしこれはレシピと呼ばれます)、ユーザインタフェースのさまざまな部品、いろいろなデバイスへの接続、calibre にファイルを追加する際の処理など、多岐にわたって使用されます。ビルトインのプラグインは、:guilabel:`環境設定 -> 高度な設定 -> プラグイン` ですべてを確認できます。"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:146
+msgid ""
+"You can write your own plugins to customize and extend the behavior of "
+"calibre. The plugin architecture in calibre is very simple, see the tutorial"
+" :ref:`pluginstutorial`."
+msgstr "独自のプラグインを作成して、calibre の動作をカスタマイズしたり拡張することができます。calibre のプラグインアーキテクチャは非常に簡単です。チュートリアルを参照してください :ref:`pluginstutorial`。"
+
+#: ../../__w/calibre/calibre/manual/customize.rst:150
+msgid ""
+"Once you have written a plugin, you can upload that to the calibre plugins "
+"forum at `Mobileread "
+"<https://www.mobileread.com/forums/forumdisplay.php?f=237>`__ and it will be"
+" made available via calibre's builtin plugin updater."
+msgstr "プラグインを書いたら、 `Mobileread <https://www.mobileread.com/forums/forumdisplay.php?f=237>`__ にある calibre のプラグインフォーラムにアップロードできます。そうすることで、calibre のビルトインのプラグインアップデータから利用できるようになります。"

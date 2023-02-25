@@ -1,0 +1,2443 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# 
+# Translators:
+# Zoriana Zaiats, 2014
+# Yuri Chornoivan <yurchor@ukr.net>, 2014,2016-2022
+# Zoriana Zaiats, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-09-27 07:23+0000\n"
+"PO-Revision-Date: 2014-06-17 08:37+0000\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2014,2016-2022\n"
+"Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: uk\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:4
+msgid "The Graphical User Interface"
+msgstr "Графічний інтерфейс користувача"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:6
+msgid ""
+"The Graphical User Interface *(GUI)* provides access to all library "
+"management and e-book format conversion features. The basic workflow for "
+"using calibre is to first add books to the library from your hard disk. "
+"calibre will automatically try to read metadata from the books and add them "
+"to its internal database. Once they are in the database, you can perform "
+"various :ref:`actions` on them that include conversion from one format to "
+"another, transfer to the reading device, viewing on your computer, and "
+"editing metadata. The latter includes modifying the cover, description, and "
+"tags among other details. Note that calibre creates copies of the files you "
+"add to it. Your original files are left untouched."
+msgstr "Графічний інтерфейс користувача надає доступ до усіх можливостей із керування бібліотекою та перетворення даних електронних книг у різні формати. Типовим початковим прийомом користування calibre є додавання книг з вашої бібліотеки на диску до вбудованої бази даних програми. Після збирання даних ви зможете виконувати над книгами різноманітні :ref:`actions`, зокрема перетворення даних з одного формата на інший, перенесення книг на пристрій для читання, перегляд книг на вашому комп’ютері та редагування метаданих. Останнє включає зокрема внесення змін до зображення обкладинки, опису та міток. Зауважте, що calibre створює копії доданих вами до бази даних файлів. Початкові файли залишаються незмінними."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:16
+msgid "The interface is divided into various sections:"
+msgstr "Інтерфейс поділений на декілька секцій:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:25
+msgid "Actions"
+msgstr "Дії"
+
+#: ../../__w/calibre/calibre/manual/gui.rst-1
+msgid "The Actions Toolbar"
+msgstr "Панель інструментів дій"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:31
+msgid ""
+"The actions toolbar provides convenient shortcuts to commonly used actions. "
+"If you right-click the buttons, you can perform variations on the default "
+"action. Please note that the actions toolbar will look slightly different "
+"depending on whether you have an e-book reader attached to your computer."
+msgstr "На панелі інструментів програми розташовано зручні кнопки дій, за допомогою яких ви зможете отримувати доступ до типових функціональних можливостей програми. Якщо ви наведете вказівник на стрілочку праворуч від такої кнопки і клацнете лівою кнопкою миші, програма відкриє список варіантів, які є альтернативними до типової дії. Будь ласка, зауважте, що панель інструментів може виглядати у вашій системі трохи інакше — усе залежить від того, чи з’єднано з вашим комп’ютером пристрій для читання електронних книг."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:41
+#: ../../__w/calibre/calibre/manual/gui.rst:818
+msgid "Add books"
+msgstr "Додати книги"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:42
+msgid "adbi"
+msgstr "adbi"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:45
+msgid ""
+"|adbi| The :guilabel:`Add books` action has seven variations accessed by "
+"doing a right-click on the button."
+msgstr "|adbi| У дії :guilabel:`Додати книги` є сім варіантів, доступ до яких можна отримати за допомогою клацання кнопкою миші праворуч від відповідної кнопки."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:48
+msgid ""
+"**Add books from a single folder**: Opens a file chooser dialog and allows "
+"you to specify which books in a folder should be added. This action is "
+"*context sensitive*, i.e. it depends on which :ref:`catalog <catalogs>` you "
+"have selected. If you have selected the :guilabel:`Library`, books will be "
+"added to the library. If you have selected the e-book reader device, the "
+"books will be uploaded to the device, and so on."
+msgstr "**Додати книги з однієї теки**: відкриває діалогове вікно вибору файлів, за допомогою якого ви можете вказати, які книги з теки слід додати. Ця дія *залежна від контексту*, тобто, вона залежить від того, які :ref:`каталог <catalogs>` було вибрано. Якщо ви вибрали каталог :guilabel:`Бібліотека`, книги буде додано до бібліотеки. Якщо вами будевибрано пристрій для читання електронних книг, книги буде вивантажено на пристрій, тощо."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:50
+msgid ""
+"**Add books from folders and sub-folders**: Allows you to choose a folder. "
+"The folder and all its sub-folders are scanned recursively, and any e-books "
+"found are added to the library. You can choose whether to have calibre add "
+"all files present in a single folder to a single book record or multiple "
+"book records. calibre assumes that each folder contains a single book. All "
+"e-book files in a folder are assumed to be the same book in different "
+"formats. This action is the inverse of the :ref:`Save to disk "
+"<save_to_disk_multiple>` action, i.e. you can :guilabel:`Save to disk`, "
+"delete the books and re-add them in single book per folder mode, with no "
+"lost information except for the date (this assumes you have not changed any "
+"of the setting for the Save to disk action)."
+msgstr "**Додати книги з тек і підтек**: надає вам змогу вибрати теку. Програма виконає пошук у теці і усіх її підтеках і додасть усі знайдені книги до бібліотеки. Ви можете вказати програмі, слід додавати усі файли в окремій теці до одного запису книги чи до записів декількох книг. calibre вважатиме, що у кожній теці міститься лише одна книга. Усі файли у теці вважатимуться файлами тієї самої книги у різних форматах. Ця діє є оберненою щодо :ref:`Зберегти на диск <save_to_disk_multiple>`, тобто ви можете виконати :guilabel:`Зберегти на диск`, вилучити книги і повторно додати їх у режимі однієї книги на теку без втрати метаданих, окрім дати додавання (якщо ви нічого не змінювали у параметрах дії «Зберегти на диск»)."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:52
+msgid ""
+"**Add multiple books from archive (ZIP/RAR)**: Allows you to add multiple "
+"e-books that are stored inside the selected ZIP or RAR files. It is a "
+"convenient shortcut that avoids having to first unzip the archive and then "
+"add the books via one of the above two options."
+msgstr "**Додати декілька книг з архіву (ZIP або RAR)**: надає вам змогу додати декілька електронних книг, які зберігаються у вказаних файлах ZIP або RAR. Це зручна кнопка, за допомогою якої можна уникнути початкового розпаковування архіву і додавання книг за допомогою одного із описаних вище варіантів дій."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:54
+msgid ""
+"**Add empty book (Book Entry with no formats)**: Allows you to create a "
+"blank book record. This can be used to then manually fill out the "
+"information about a book that you may not have yet in your collection."
+msgstr "**Додати порожню книгу (без будь-яких форматів)**: надає вам змогу створити порожній запис книги. Ним згодом можна скористатися для заповнення відомостей щодо книги, якої ще немає у вашій збірці."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:56
+msgid ""
+"**Add from ISBN**: Allows you to add one or more books by entering their "
+"ISBNs."
+msgstr "**Додати з ISBN**: надає змогу додати одну або декілька книг за допомогою введення їхніх кодів ISBN."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:58
+msgid ""
+"**Add files to selected book records**: Allows you to add or update the "
+"files associated with an existing book in your library."
+msgstr "**Додати файли до вибраних записів книг**: надає вам змогу додати або оновити файли, пов’язані із наявною у вашій бібліотеці книгою."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:60
+msgid ""
+"**Add an empty file to selected book records**: Allows you to add an empty "
+"file of the specified format to the selected book records."
+msgstr "**Додати порожній файл до позначених записів книг**: надає вам змогу додати порожній файл у вказаному форматі до позначених записів книг."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:62
+msgid ""
+"The :guilabel:`Add books` action can read metadata from a wide variety of "
+"e-book formats. In addition, it tries to guess metadata from the filename. "
+"See the :ref:`config_filename_metadata` section, to learn how to configure "
+"this."
+msgstr "Інструмент :guilabel:`Додати книги` може читати метадані у широкому спектрі форматів електронних книг. Крім того, він намагається вгадати метадані на основі назви файла. Див. розділ :ref:`config_filename_metadata`, щоб дізнатися більше про налаштовування цієї можливості."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:65
+msgid ""
+"To add an additional format for an existing book you can do any of three "
+"things:"
+msgstr "Щоб додати формат для наявної книги ви можете скористатися одним із трьох способів:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:67
+msgid ""
+"Drag and drop the file onto the Book details panel on the right side of the "
+"main window"
+msgstr "Перетягнути і скинути позначку файла на панель параметрів книги, розташовану у правій частині головного вікна програми."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:69
+msgid ""
+"Right click the :guilabel:`Add books` button and choose :guilabel:`Add files"
+" to selected books`."
+msgstr "Натиснути стрілку, праворуч від кнопки :guilabel:`Додати книги` і вибрати пункт :guilabel:`Додати файли до вибраних записів книг`."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:71
+msgid ""
+"Click the :guilabel:`Add books` button in the top right area of the "
+":guilabel:`Edit metadata` dialog, accessed by the "
+":ref:`edit_meta_information` action."
+msgstr "Натиснути червону кнопку :guilabel:`Додати книги` у правій частині діалогового вікна :guilabel:`Редагувати метадані`. Це діалогове вікно можна відкрити за допомогою пункту :ref:`edit_meta_information`."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:76
+msgid "Edit metadata"
+msgstr "Редагувати метадані"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:77
+msgid "emii"
+msgstr "emii"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:80
+msgid ""
+"|emii| The :guilabel:`Edit metadata` action has four variations which can be"
+" accessed by doing a right-click on the button."
+msgstr "|emii| У дії :guilabel:`Редагувати метадані` передбачено чотири варіанти, доступ до яких можна отримати натисканням стрілки, розташованої праворуч від кнопки."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:82
+msgid ""
+"**Edit metadata individually**: Allows you to edit the metadata of books "
+"one-by-one with the option of fetching metadata, including covers, from the "
+"Internet. It also allows you to add or remove particular e-book formats from"
+" a book."
+msgstr "**Редагувати метадані індивідуально**: надає вам змогу редагувати метадані книг окремо із можливістю отримання метаданих, зокрема зображень обкладинок, з інтернету. Ця дія також надає змогу додавати або вилучати певні формати електронних книг до запису книги."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:83
+msgid ""
+"**Edit metadata in bulk**: Allows you to edit common metadata fields for "
+"large numbers of books simultaneously. It operates on all the books you have"
+" selected in the :ref:`Library view <search_sort>`."
+msgstr "**Редагувати метадані разом**: надає змогу редагувати типові поля метаданих пакетно. Працює для усіх книг, якщо було позначено на :ref:`панелі бібліотеки <search_sort>`."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:84
+msgid ""
+"**Download metadata and covers**: Downloads metadata and covers (if "
+"available) for the books that are selected in the book list."
+msgstr "**Завантажити метадані і обкладинки**: отримує метадані і зображення обкладинок (якщо такі вдасться знайти) для книг, які ви позначили у списку."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:85
+msgid ""
+"**Merge book records**: Gives you the capability of merging the metadata and"
+" formats of two or more book records. You can choose to either delete or "
+"keep the records that were not clicked first."
+msgstr "**Злити записи книг**: надає вам змогу об’єднувати метадані та формати двох або декількох записів книг. Ви зможете вибрати, чи слід залишати записи, які не було спочатку позначено."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:87
+msgid "For more details, see :ref:`metadata`."
+msgstr "Щоб дізнатися більше, див. :ref:`metadata`."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:92
+msgid "Convert books"
+msgstr "Перетворити книги"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:93
+msgid "cei"
+msgstr "cei"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:96
+msgid ""
+"|cei| E-books can be converted from a number of formats into whatever format"
+" your e-book reader prefers. Many e-books available for purchase will be "
+"protected by :doc:`Digital Rights Management <drm>` *(DRM)* technology. "
+"calibre will not convert these e-books. It is easy to remove the DRM from "
+"many formats, but as this may be illegal, you will have to find tools to "
+"liberate your books yourself and then use calibre to convert them."
+msgstr "|cei| Дані електронних книг можна перетворити з поточного формату на формат, який є придатним для читання на вашому пристрої. Багато придбаних вами книжок може бути захищено засобами технології :doc:`Digital Rights Management <drm>` *(DRM)*. calibre не виконуватиме перетворення таких книг. Для багатьох форматів усування DRM є доволі простою справою, але, оскільки це протизаконно, вам доведеться самостійно знайти засоби, які позбавлять вас від непотрібної залежності, а потім вже скористатися calibre для перетворення."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:101
+msgid ""
+"For most people, conversion should be a simple one-click affair. If you want"
+" to learn more about the conversion process, see :ref:`conversion`."
+msgstr "Здебільшого, перетворення виконується у одне клацання кнопкою. Якщо ви хочете дізнатися більше про процедуру перетворення, ознайомтеся із розділом :ref:`conversion`."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:103
+msgid ""
+"The :guilabel:`Convert books` action has three variations, accessed by doing"
+" a right-click on the button."
+msgstr "У дії :guilabel:`Перетворити книги` є три варіанти, доступ до яких можна отримати за допомогою клацання кнопкою миші праворуч від відповідної кнопки."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:105
+msgid ""
+"**Convert individually**: Allows you to specify conversion options to "
+"customize the conversion of each selected e-book."
+msgstr "**Індивідуальне перетворення**: надає вам змогу вказати параметри перетворення для кожної позначеної книги окремо."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:107
+msgid ""
+"**Bulk convert**: Allows you to specify options only once to convert a "
+"number of e-books in bulk."
+msgstr "**Загальне перетворення**: надає вам змогу вказати параметри для пакетного перетворення усіх позначених книг одночасно."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:109
+msgid ""
+"**Create a catalog of the books in your calibre library**: Allows you to "
+"generate a complete listing of the books in your library, including all "
+"metadata, in several formats such as XML, CSV, BiBTeX, EPUB and MOBI. The "
+"catalog will contain all the books currently showing in the library view. "
+"This allows you to use the search features to limit the books to be "
+"catalogued. In addition, if you select multiple books using the mouse, only "
+"those books will be added to the catalog. If you generate the catalog in an "
+"e-book format such as EPUB, MOBI or AZW3, the next time you connect your "
+"e-book reader the catalog will be automatically sent to the device. For more"
+" information on how catalogs work, read the :ref:`catalog_tut`."
+msgstr "**Створити каталог книг у вашій бібліотеці calibre**: надає вам змогу створити повний список книг у вашій бібліотеці, включно з усіма метаданими у декількох форматах, зокрема XML, CSV, BiBTeX, EPUB і MOBI. У створеному каталозі будуть міститися усі книги, які показано на панелі бібліотеки. Це надасть вам змогу скористатися можливостями пошуку для обмеження переліку книг, які буде каталогізовано. Крім того, якщо ви позначите декілька пунктів книг за допомогою вказівника миші, до каталогу буде додано лише позначені книги. Якщо ви створите каталог у форматі електронної книги, зокрема EPUB, MOBI або AZW3, під час наступного з’єднання з вашим пристроєм для читання електронних книг каталог буде автоматично надіслано на пристрій. Щоб дізнатися більше про те, як працюють каталоги, ознайомтеся із розділом :ref:`catalog_tut`."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:119
+#: ../../__w/calibre/calibre/manual/gui.rst:848
+msgid "View"
+msgstr "Перегляд"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:120
+msgid "vi"
+msgstr "vi"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:123
+msgid ""
+"|vi| The :guilabel:`View` action displays the book in an e-book viewer "
+"program. calibre has a built-in viewer for many e-book formats. For other "
+"formats it uses the default operating system application. You can configure "
+"which formats should open with the internal viewer via "
+":guilabel:`Preferences->Interface->Behavior`. If a book has more than one "
+"format, you can view a particular format by doing a right-click on the "
+"button."
+msgstr "|vi| За допомогою кнопки :guilabel:`Перегляд` ви можете відкрити книгу у програмі для перегляду електронних книг. У calibre передбачено вбудовану програму для перегляду електронних книг у багатьох форматах. Для інших форматів буде використано типову для таких форматів програму з операційної системи. Ви можете налаштувати формати, які відкриватимуться за допомогою вбудованого засобу перегляду за допомогою пункту :guilabel:`Налаштування -> Інтерфейс -> Поведінка`. Якщо дані книги зберігаються у декількох форматах, ви зможете вибрати формат натисканням кнопки зі стрілочкою, розташованої праворуч від основної кнопки."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:134
+#: ../../__w/calibre/calibre/manual/gui.rst:824
+msgid "Send to device"
+msgstr "Надіслати до пристрою"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:135
+msgid "stdi"
+msgstr "stdi"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:138
+msgid ""
+"|stdi| The :guilabel:`Send to device` action has eight variations, accessed "
+"by doing a right-click on the button."
+msgstr "|stdi| У дії :guilabel:`Надіслати до пристрою` передбачено вісім варіантів, доступ до яких можна отримати за допомогою клацання кнопкою миші праворуч від відповідної кнопки."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:140
+msgid ""
+"**Send to main memory**: The selected books are transferred to the main "
+"memory of the e-book reader."
+msgstr "**Надіслати в основну пам’ять**: позначені книги буде перенесено до основної пам’яті пристрою для читання електронних книг."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:141
+msgid ""
+"**Send to card (A)**: The selected books are transferred to the storage card"
+" (A) on the e-book reader."
+msgstr "**Надіслати на картку пам'яті А**: позначені книги буде перенесено на картку зберігання даних A на пристрої для читання електронних книг."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:142
+msgid ""
+"**Send to card (B)**: The selected books are transferred to the storage card"
+" (B) on the e-book reader."
+msgstr "**Надіслати на картку пам'яті B**: позначені книги буде перенесено на картку зберігання даних B на пристрої для читання електронних книг."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:143
+msgid ""
+"**Send specific format to**: The selected books are transferred to the "
+"selected storage location on the device, in the format that you specify."
+msgstr "**Надіслати певний формат на**: позначені книги буде перенесено до вказаного місця на пристрої у вказаному вами форматі."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:144
+msgid "**Eject device**: Detaches the device from calibre."
+msgstr "**Від’єднати пристрій**: від’єднує пристрій від calibre."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:145
+msgid ""
+"**Set default send to device action**: Allows you to specify which of the "
+"options, 1 through 5 above or 7 below, will be the default action when you "
+"click the main button."
+msgstr "**Встановити типову дію у відповідь на надсилання на пристрій**: надає вам змогу вказати, який з варіантів, від 1 до 5 вище або 7 нижче, буде типово використано, коли ви натиснете основну кнопку."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:146
+msgid ""
+"**Send and delete from library**: The selected books are transferred to the "
+"selected storage location on the device and then **deleted** from the "
+"Library."
+msgstr "**Надіслати і вилучити з бібліотеки**: позначені книги буде перенесено у вказане місце на пристрої для читання, а потім **вилучено** з бібліотеки."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:147
+msgid ""
+"**Fetch Annotations (experimental)**: Transfers annotations you may have "
+"made on an e-book on your device to the comments metadata of the book in the"
+" calibre library."
+msgstr "**Отримати анотації (експериментальне)**: перенести анотації, які ви могли створити для електронної книги на вашому пристрої, для коментування метаданих книги у бібліотеці calibre."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:149
+msgid ""
+"You can control the file name and folder structure of files sent to the "
+"device by setting up a template in "
+":guilabel:`Preferences->Import/export->Sending books to devices`. Also see "
+":ref:`templatelangcalibre`."
+msgstr "Ви можете керувати назвами файлів та структурою тек, які буде надіслано на пристрій налаштовуванням шаблона на сторінці :guilabel:`Налаштування -> Імпорт/Експорт -> Надсилання книг на пристрої`. Див. також :ref:`templatelangcalibre`."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:155
+msgid "Fetch news"
+msgstr "Отримати новини"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:156
+msgid "fni"
+msgstr "fni"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:159
+msgid ""
+"|fni| The :guilabel:`Fetch news` action downloads news from various websites"
+" and converts it into an e-book that can be read on your e-book reader. "
+"Normally, the newly created e-book is added to your e-book library, but if "
+"an e-book reader is connected at the time the download finishes, the news is"
+" also uploaded to the reader automatically."
+msgstr "|fni| За допомогою кнопки :guilabel:`Отримати новини` можна отримувати новини із різноманітних сайтів і перетворювати їх на електронну книгу, яку можна буде читати на пристрої для читання електронних книг. Зазвичай, новостворену книгу буде додано до вашої бібліотеки електронних книг, але якщо на час завершення отримання даних новин з комп’ютером з’єднано пристрій для читання, новини буде автоматично вивантажено на пристрій."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:161
+msgid ""
+"The :guilabel:`Fetch news` action uses simple recipes (10-15 lines of code) "
+"for each news site. To learn how to create recipes for your own news "
+"sources, see :ref:`news`."
+msgstr "Засіб :guilabel:`Отримати новини` використовує прості рецепти (10-15 рядків коду) для кожного сайта новин. Щоб дізнатися більше про створення власних рецептів, ознайомтеся із розділом :ref:`news`."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:163
+msgid ""
+"The :guilabel:`Fetch news` action has three variations, accessed by doing a "
+"right-click on the button."
+msgstr "У дії :guilabel:`Отримати новини` є три варіанти, доступ до яких можна отримати за допомогою клацання кнопкою миші праворуч від відповідної кнопки."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:165
+msgid ""
+"**Schedule news download**: Allows you to schedule the download of your "
+"selected news sources from a list of hundreds available.  Scheduling can be "
+"set individually for each news source you select and the scheduling is "
+"flexible allowing you to select specific days of the week or a frequency of "
+"days between downloads."
+msgstr "**Запланувати отримання новин**: надає вам змогу запланувати отримання даних із визначених вами джерел новин, які можна вибрати з сотень доступних варіантів. Планування може бути виконано окремо для кожного вибраного вами джерела новин. Ви можете вибрати певні дні тижня або інтервал у днях між сеансами отримання новин."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:166
+msgid ""
+"**Add a custom news source**: Allows you to create a simple recipe for "
+"downloading news from a custom news site that you wish to access.  Creating "
+"the recipe can be as simple as specifying an RSS news feed URL, or you can "
+"be more prescriptive by creating Python-based code for the task. For more "
+"information, see :ref:`news`."
+msgstr "**Додати власне джерело новин**: надає вам змогу створити простий рецепт для отримання новин із нетипового сайта, до якого ви хочете мати доступ. Для створення рецепта достатньо вказати адресу подачі новин RSS або, якщо хочеться кращого результату, написати код мовою Python. Докладніший опис можна знайти у розділі :ref:`news`."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:167
+msgid ""
+"**Download all scheduled news sources**: Causes calibre to immediately begin"
+" downloading all news sources that you have scheduled."
+msgstr "**Отримати дані з усіх запланованих джерел новин**: наказує calibre негайно розпочати отримання даних з усіх джерел новин, для яких було заплановано отримання даних."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:173
+msgid "Library"
+msgstr "Бібліотека"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:174
+msgid "lii"
+msgstr "lii"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:177
+msgid ""
+"|lii| The :guilabel:`Library` action allows you to create, switch between, "
+"rename or remove a Library.  calibre allows you to create as many libraries "
+"as you wish. You could, for instance, create a fiction library, a non-"
+"fiction library, a foreign language library, a project library, or any "
+"structure that suits your needs. Libraries are the highest organizational "
+"structure within calibre. Each library has its own set of books, tags, "
+"categories and base storage location."
+msgstr "|lii| За допомогою кнопки дії :guilabel:`Бібліотека` ви зможете створювати бібліотеки, перемикатися між бібліотеками, перейменовувати і вилучати бібліотеки. calibre надає вам змогу створювати будь-яку бажану кількість бібліотек. Ви, наприклад, можете створити бібліотеку фантастики, бібліотеку художньої літератури, бібліотеку книг іноземними мовами, бібліотеку певного проекту або будь-яку іншу бібліотеку, яка відповідає вашим потребам. Бібліотеки перебувають на вищому організаційному рівні у структурі даних calibre. У кожної бібліотеки є власний набір книг, міток, категорій та власне місце для зберігання даних."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:179
+msgid ""
+"**Switch/create library...**: Allows you to; a) connect to a pre-existing "
+"calibre library at another location, b) create an empty library at a new "
+"location or, c) move the current library to a newly specified location."
+msgstr "**Перемкнути/Створити бібліотеку…**: надає вам змогу: а) з’єднатися із попередньо створеною бібліотекою calibre з іншим розташуванням, б) створити порожню бібліотеку у новому місці або в) пересунути поточну бібліотеку у нове місце."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:180
+msgid ""
+"**Quick switch**: Allows you to switch between libraries that have been "
+"registered or created within calibre."
+msgstr "**Швидке перемикання**: надає вам змогу перемикатися між бібліотеками, які було зареєстровано або створено у межах calibre."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:181
+msgid "**Rename library**: Allows you to rename a Library."
+msgstr "**Перейменувати бібліотеку**: надає вам змогу перейменувати бібліотеку."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:182
+msgid "**Pick a random book**: Chooses a random book in the library for you"
+msgstr "**Вибрати випадкову книгу з бібліотеки**: програма вибере для вас випадкову книгу з бібліотеки"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:183
+msgid "**Remove library**: Allows you to unregister a library from calibre."
+msgstr "**Вилучити бібліотеку**: надає вам змогу скасувати реєстрацію бібліотеки у calibre."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:184
+msgid ""
+"**Export/import all calibre data**: Allows you to either export calibre data"
+" for migration to a new computer or import previously exported data."
+msgstr "**Експортувати/Імпортувати усі дані calibre**: надає вам змогу експортувати дані calibre для перенесення на інший комп'ютер або імпортувати раніше експортовані дані."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:185
+msgid ""
+"**<library name>**: Actions 7, 8 etc... give you immediate switch access "
+"between multiple libraries that you have created or attached to. This list "
+"contains only the 5 most frequently used libraries. For the complete list, "
+"use the Quick Switch menu."
+msgstr "**<назва бібліотеки>**: дії 7, 8 тощо... нададуть вам змогу негайно перемикатися між декількома створеними вами або з’єднаними вами бібліотеками. У цьому списку міститимуться пункти для 5 найчастіше використовуваними бібліотеками. Для перемикання на інші бібліотеки використовуйте меню «Швидке перемикання»."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:186
+msgid ""
+"**Library maintenance**: Allows you to check the current library for data "
+"consistency issues and restore the current library's database from backups."
+msgstr "**Обслуговування бібліотеки**: надає вам змогу наказати програмі виконати пошук проблем із відповідністю даних та відновлення поточної бази даних бібліотеки з резервної копії."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:188
+msgid ""
+"Metadata about your e-books, e.g. title, author, and tags, is stored in a "
+"single file in your calibre library folder called metadata.db. If this file "
+"gets corrupted (a very rare event), you can lose the metadata. Fortunately, "
+"calibre automatically backs up the metadata for every individual book in the"
+" book's folder as an OPF file. By using the Restore database action under "
+"Library Maintenance described above, you can have calibre rebuild the "
+"metadata.db file from the individual OPF files for you."
+msgstr "Метадані щодо ваших книг, зокрема назв книг, авторів та міток, зберігаються у окремому файлів у теці вашої бібліотеки calibre. Цей файл має назву metadata.db. Якщо дані у цьому файлів буде пошкоджено (рідкісне явище), ви втратите ці метадані. На щастя, calibre автоматично створює резервні копії метаданих для окремих книг у теці книги у форматі файла OPF. Якщо ви скористаєтеся пунктом «Відновити базу даних» з меню «Обслуговування бібліотеки», описаного вище, ви зможете наказати calibre повторно зібрати файл metadata.db на основі даних з окремих файлів OPF."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:190
+msgid ""
+"You can copy or move books between different libraries (once you have more "
+"than one library setup) by right clicking on the book and selecting the "
+"action :guilabel:`Copy to library`."
+msgstr "Ви можете копіювати або пересувати книги між різними бібліотеками (якщо вами налаштовано декілька бібліотек): просто наведіть вказівник миші на пункт книги у бібліотеці, клацніть правою кнопкою миші і виберіть у контекстному меню пункт :guilabel:`Копіювати до бібліотеки`."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:195
+msgid "Device"
+msgstr "Пристрій"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:196
+msgid "dvi"
+msgstr "dvi"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:199
+msgid ""
+"|dvi| The :guilabel:`Device` action allows you to view the books in the main"
+" memory or storage cards of your device, or to eject the device (detach it "
+"from calibre). This icon shows up automatically on the main calibre toolbar "
+"when you connect a supported device. You can click on it to see the books on"
+" your device. You can also drag and drop books from your calibre library "
+"onto the icon to transfer them to your device. Conversely, you can drag and "
+"drop books from your device onto the library icon on the toolbar to transfer"
+" books from your device to the calibre library."
+msgstr "|dvi| За допомогою кнопки :guilabel:`Пристрій` ви зможете переглянути книги у основній пам’яті та на картках пам’яті вашого пристрою для читання електронних книг або від’єднати пристрій (розірвати його зв’язок із calibre). Відповідну кнопку буде показано на основній панелі інструментів calibre одразу після з’єднання підтримуваного програмою пристрою з комп’ютером. Ви можете натиснути кнопку, щоб переглянути список книг на вашому пристрої. Ви також можете перетягувати пункти з книг з вашої бібліотеки calibre на піктограму і скидати їх, щоб перенести книги на ваш пристрій. І навпаки, ви можете перетягувати книги з пристрою і скидати їх на піктограму бібліотеки на панелі інструментів, щоб перенести книги з вашого пристрою до бібліотеки calibre."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:206
+#: ../../__w/calibre/calibre/manual/gui.rst:844
+msgid "Save to disk"
+msgstr "Зберегти на диск"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:207
+msgid "svdi"
+msgstr "svdi"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:210
+msgid ""
+"|svdi| The :guilabel:`Save to disk` action has five variations, accessed by "
+"doing a right-click on the button."
+msgstr "|svdi| У дії :guilabel:`Зберегти на диск` передбачено п’ять варіантів, доступ до яких можна отримати натисканням стрілочки, розташованої праворуч від основної кнопки."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:214
+msgid ""
+"**Save to disk**: Saves the selected books to disk organized in folders. The"
+" folder structure looks like::"
+msgstr "**Зберегти на диск**: зберігає позначені книги на диск з упорядковуванням за теками. Структура тек є такою::"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:220
+msgid ""
+"You can control the file name and folder structure of files saved to disk by"
+" setting up a template in :guilabel:`Preferences->Import/export->Saving "
+"books to disk`. Also see :ref:`templatelangcalibre`."
+msgstr "Ви можете керувати назвами файлів та структурою каталогів при збереженні на диск, налаштувавши шаблон на сторінці :guilabel:`Налаштування->Імпортування/Експортування->Запис книг на диск`. Див. також розділ :ref:`templatelangcalibre`."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:225
+msgid ""
+"**Save to disk in a single folder**: Saves the selected books to disk in a "
+"single folder."
+msgstr "**Зберегти на диск до однієї теки**: зберегти позначені книги на диску в одній теці."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:227
+msgid ""
+"For 1. and 2., all available formats, as well as metadata, are stored to "
+"disk for each selected book. Metadata is stored in an OPF file. Saved books "
+"can be re-imported to the library without any loss of information by using "
+"the :ref:`Add books <add_books>` action."
+msgstr "Для першого і другого пунктів на диску буде збережено усі доступні формати, а також метадані книг для кожної позначеної книги. Метадані зберігатимуться у одному файлі OPF. Збережені таким чином книги можна повторно імпортувати до бібліотеки без втрати даних за допомогою кнопки :ref:`Додати книги <add_books>`."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:229
+msgid ""
+"**Save only *<your preferred>* format to disk**: Saves the selected books to"
+" disk in the folder structure as shown in (1.) but only in your preferred "
+"e-book format. You can set your preferred format in "
+":guilabel:`Preferences->Interface->Behaviour->Preferred output format`"
+msgstr "**Зберегти на диск у форматі *<формат>***: зберегти позначені книги на диск у структуру тек, показану у пункті 1, але лише у вказаному форматі електронної книги. Вказати бажаний формат можна за допомогою пункту :guilabel:`Налаштування -> Інтерфейс -> Поведінка -> Бажаний формат виведення даних`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:231
+msgid ""
+"**Save only *<your preferred>* format to disk in a single folder**: Saves "
+"the selected books to disk in a single folder but only in your preferred "
+"e-book format. You can set your preferred format in "
+":guilabel:`Preferences->Interface->Behaviour->Preferred output format`"
+msgstr "**Зберегти на диск у форматі *<формат>* до єдиної теки**: зберегти позначені книги на диск до єдиної теки, але лише у бажаному форматі електронної книги. Вказати бажаний формат можна за допомогою пункту :guilabel:`Налаштування -> Інтерфейс -> Поведінка -> Бажаний формат виведення даних`."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:233
+msgid ""
+"**Save single format to disk...**: Saves the selected books to disk in the "
+"folder structure as shown in (1.) but only in the format you select from the"
+" popup list."
+msgstr "**Зберегти на диск у єдиному форматі…**: зберегти позначені книги на диск із структурою тек, показаною у першому пункті, але лише у одному форматі, який можна вибрати зі спадного списку."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:238
+msgid "Connect/share"
+msgstr "З’єднатись/Роздати"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:239
+msgid "csi"
+msgstr "csi"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:242
+msgid ""
+"|csi| The :guilabel:`Connect/share` action allows you to manually connect to"
+" a device or folder on your computer. It also allows you to set up your "
+"calibre library for access via a web browser or email."
+msgstr "|csi| За допомогою кнопки :guilabel:`З’єднатись/Роздати` ви можете вручну встановити з’єднання із пристроєм чи текою на вашому комп’ютері. Також можна налаштувати вашу бібліотеку calibre для доступу за допомогою програми для перегляду інтернету або електронної пошти."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:244
+msgid ""
+"The :guilabel:`Connect/share` action has four variations, accessed by doing "
+"a right-click on the button."
+msgstr "У дії :guilabel:`З’єднатись/Роздати` є чотири варіанти, доступ до яких можна отримати за допомогою клацання кнопкою миші праворуч від відповідної кнопки."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:246
+msgid ""
+"**Connect to folder**: Allows you to connect to any folder on your computer "
+"as though it were a device and use all the facilities calibre has for "
+"devices with that folder. Useful if your device cannot be supported by "
+"calibre but is available as a USB disk."
+msgstr "**З’єднатися з текою**: надає вам змогу встановити з’єднання із будь-якою текою на вашому комп’ютері так, наче це додатковий пристрій, і скористатися передбаченими для пристроїв можливостями для цієї теки. Корисно, якщо підтримку вашого пристрою засобами calibre не передбачено, але пристрій доступний як диск USB."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:248
+msgid ""
+"**Start Content server**: Starts calibre's built-in web server.  When "
+"started, your calibre library will be accessible via a web browser from the "
+"Internet (if you choose). You can configure how the web server is accessed "
+"by setting preferences at :guilabel:`Preferences->Sharing->Sharing over the "
+"net`"
+msgstr "**Запустити сервер даних**: запустити вбудований сервер даних calibre. Після запуску доступ до вашої бібліотеки calibre можна буде здійснювати за допомогою програми для перегляду інтернету (якщо ви цього захочете). Спосіб доступу до сервера можна налаштувати за допомогою сторінки :guilabel:`Налаштування -> Спільний доступ-> Обмін мережею`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:250
+msgid ""
+"**Setup email based sharing of books**: Allows sharing of books and news "
+"feeds by email.  After setting up email addresses for this option, calibre "
+"will send news updates and book updates to the entered email addresses. You "
+"can configure how calibre sends email by setting preferences at "
+":guilabel:`Preferences->Sharing->Sharing books by email`. Once you have set "
+"up one or more email addresses, this menu entry will be replaced by menu "
+"entries to send books to the configured email addresses."
+msgstr "**Налаштувати спільний доступ на основі електронної пошти**: надає змогу поширювати книги і подачі новин за допомогою електронної пошти. Після налаштовування адрес електронної пошти для цієї можливості calibre надсилатиме новини та нові книги на вказані адреси електронної пошти. Налаштувати спосіб надсилання електронної пошти calibre можна за допомогою сторінки :guilabel:`Налаштування -> Спільний доступ -> Обмін книгами електронною поштою`. Після налаштовування одної або декількох адрес цей пункт меню буде замінено пунктами надсилання книг на налаштовані адреси."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:255
+msgid "Remove books"
+msgstr "Вилучити книжки"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:256
+msgid "rbi"
+msgstr "rbi"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:259
+msgid ""
+"|rbi| The :guilabel:`Remove books` action **deletes books permanently**, so "
+"use it with care. It is *context sensitive*, i.e. it depends on which "
+":ref:`catalog <catalogs>` you have selected. If you have selected the "
+":guilabel:`Library`, books will be removed from the library. If you have "
+"selected the e-book reader device, books will be removed from the device. To"
+" remove only a particular format for a given book use the "
+":ref:`edit_meta_information` action.  Remove books also has five variations "
+"which can be accessed by doing a right-click on the button."
+msgstr "|rbi| Використання пункту дії :guilabel:`Вилучити книги` призводить до **остаточного вилучення книг**, отже ним слід користуватися обачно. Пункт є *залежним від контексту*, тобто залежить від вибраного вами :ref:`каталогу <catalogs>`. Якщо було вибрано :guilabel:`Бібліотеку`, книги буде вилучено з бібліотеки. Якщо було вибрано пристрій для читання електронних книг, книги буде вилучено з пристрою. Щоб вилучити лише дані у певному форматі для вказаної книги, скористайтеся дією :ref:`edit_meta_information`. У пункту дії вилучення книг також є п’ять варіантів, доступ до яких можна отримати натисканням стрілки, розташованої праворуч від основної кнопки."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:261
+msgid ""
+"**Remove selected books**: Allows you to **permanently** remove all books "
+"that are selected in the book list."
+msgstr "**Вилучити вибрані книжки**: надає вам змогу **остаточно** вилучити усі книги, які позначено у списку книг."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:263
+msgid ""
+"**Remove files of a specific format from selected books...**: Allows you to "
+"**permanently** remove e-book files of a specified format from books that "
+"are selected in the book list."
+msgstr "**Вилучити файли визначеного формату із вибраних книг…**: надає вам змогу **остаточно** вилучити файли електронних книг для усіх книг, які позначено у списку книг."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:265
+msgid ""
+"**Remove all formats from selected books, except...**: Allows you to "
+"**permanently** remove e-book files of any format except a specified format "
+"from books that are selected in the book list."
+msgstr "**Вилучити всі формати із вибраних книг, крім…**: надає вам змогу **остаточно** вилучити файли електронних книг в усіх форматах, окрім вказаного, для усіх книг, які позначено у списку книг."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:267
+msgid ""
+"**Remove all formats from selected books**: Allows you to **permanently** "
+"remove all e-book files from books that are selected in the book list. Only "
+"the metadata will remain."
+msgstr "**Вилучити в формати з вибраних книг**: надає вам змогу **остаточно** вилучити усі файли електронних книг, які позначено у списку книг. У базі даних залишаться лише метадані."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:269
+msgid ""
+"**Remove covers from selected books**: Allows you to **permanently** remove "
+"cover image files from books that are selected in the book list."
+msgstr "**Вилучити обкладинки з вибраних книжок**: надає вам змогу **остаточно** вилучити файли зображень обкладинок з книг, які позначено у списку книг."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:271
+msgid ""
+"**Remove matching books from device**: Allows you to remove e-book files "
+"from a connected device that match the books that are selected in the book "
+"list."
+msgstr "**Вилучити відповідні книги з пристрою**: надає вам змогу вилучити зі з’єднаного пристрою усі книги, які збігаються із книгами, які позначено у списку книг."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:274
+msgid ""
+"Note that when you use :guilabel:`Remove books` to delete books from your "
+"calibre library, the book record is permanently deleted, but the files are "
+"placed into the :guilabel:`Recycle Bin/Trash`. This allows you to recover "
+"the files if you change your mind."
+msgstr "Зауважте, що якщо ви скористаєтеся для вилучення книг з вашої бібліотеки calibre пунктом :guilabel:`Вилучити книги`, запис книги буде остаточно вилучено, але вилучені файли буде пересунуто до теки :guilabel:`Recycle Bin/Trash`:guilabel:`Смітник`. Таким чином, ви зможете відновити ці файли, якщо передумаєте."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:279
+msgid "Preferences"
+msgstr "Налаштування"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:280
+msgid "cbi"
+msgstr "cbi"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:283
+msgid ""
+"|cbi| The :guilabel:`Preferences` action allows you to change the way "
+"various aspects of calibre work. It has four variations, accessed by doing a"
+" right-click on the button."
+msgstr "|cbi| Дія :guilabel:`Налаштування` надає вам змогу змінити різноманітні аспекти роботи calibre. Для неї передбачено чотири варіанти, доступ до яких можна отримати натисканням стрілки, розташованої праворуч від кнопки."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:285
+msgid ""
+"**Preferences**: Allows you to change the way various aspects of calibre "
+"work. Clicking the button also performs this action."
+msgstr "**Налаштування**: надає вам змогу змінити різноманітні аспекти роботи calibre. Натискання основної кнопки призведе до виконання тієї самої дії."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:286
+msgid ""
+"**Run Welcome wizard**: Allows you to start the :guilabel:`Welcome wizard` "
+"which appeared the first time you started calibre."
+msgstr "**Запустити майстер налаштувань**: надає вам змогу запустити засіб початкового налаштовування програми, який ви могли бачити під час першого запуску calibre."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:287
+msgid ""
+"**Get plugins to enhance calibre**: Opens a new window that shows plugins "
+"for calibre. These plugins are developed by third parties to extend "
+"calibre's functionality."
+msgstr "**Отримати додатки для покращення calibre**: відкриває вікно, у якому буде показано список додатків до calibre. Ці додатки розроблено сторонніми розробниками для розширення можливостей calibre."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:288
+msgid ""
+"**Restart in debug mode**: Allows you to enable a debugging mode that can "
+"assist the calibre developers in solving problems you encounter with the "
+"program. For most users this should remain disabled unless instructed by a "
+"developer to enable it."
+msgstr "**Перезавантажити в режимі зневаджування**: надає вам змогу увімкнути режим діагностики, який може допомогти розробникам calibre усунути проблеми, з якими ви зіткнулися під час роботи з програмою. Не варто вмикати цей режим просто так, якщо вас про це не попросив розробник програми."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:293
+msgid "Catalogs"
+msgstr "Каталоги"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:297
+msgid ""
+"A *catalog* is a collection of books. calibre can manage two types of "
+"different catalogs:"
+msgstr "*Каталог* — це збірка книг. calibre може керувати двома типами різних каталогів:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:299
+msgid ""
+"**Library**: This is a collection of books stored in your calibre library on"
+" your computer."
+msgstr "**Бібліотека**: це збірка книг, що зберігається у бібліотеці calibre на вашому комп’ютері."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:301
+msgid ""
+"**Device**:  This is a collection of books stored in your e-book reader. It "
+"will be available when you connect the reader to your computer."
+msgstr "**Пристрій**: це збірка книг, що зберігається на вашому пристрої для читання електронних книг. Цим типом каталогу можна буде скористатися, якщо ви з’єднаєте пристрій для читання електронних книг з вашим комп’ютером."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:303
+msgid ""
+"Many operations, such as adding books, deleting, viewing, etc., are context "
+"sensitive. So, for example, if you click the :guilabel:`View` button when "
+"you have the **Device** catalog selected, calibre will open the files on the"
+" device to view. If you have the **Library** catalog selected, files in your"
+" calibre library will be opened instead."
+msgstr "Багато дій, зокрема додавання, вилучення, перегляд книг, є залежними від контексту. Отже, наприклад, якщо ви натиснете кнопку :guilabel:`Перегляд`, коли вибрано каталог **Пристрій**, calibre відкриє для перегляду файли на пристрої. Якщо ж вибрано каталог **Бібліотека**, програма відкриє файли у вашій бібліотеці calibre."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:308
+msgid "Search & sort"
+msgstr "Пошук і упорядковування"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:312
+msgid ""
+"The Search & Sort section allows you to perform several powerful actions on "
+"your book collections."
+msgstr "Панель пошуку і упорядковування є дуже потужним засобом роботи з вашими збірками."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:314
+msgid ""
+"You can sort them by title, author, date, rating, etc. by clicking on the "
+"column titles. You can also sub-sort, i.e. sort on multiple columns. For "
+"example, if you click on the title column and then the author column, the "
+"book will be sorted by author and then all the entries for the same author "
+"will be sorted by title."
+msgstr "Ви можете упорядковувати збірки за назвами книг, авторами, датами, оцінками тощо. Достатньо лише натиснути відповідний заголовок стовпчика. Також можливе допоміжне упорядковування, тобто упорядковування за декількома стовпчиками даних. Наприклад, якщо ви натиснете стовпчик назви книги, а потім стовпчик авторів, книги буде спочатку упорядковано за авторами, а потім усі записи, які належать одному автору, буде упорядковано за назвою."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:316
+msgid ""
+"You can search for a particular book or set of books using the Search bar. "
+"More on that below."
+msgstr "Ви можете шукати певну книгу або набір книг за допомогою смужки пошуку. Докладніше про це нижче."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:318
+msgid ""
+"You can quickly and conveniently edit metadata by selecting the entry you "
+"want changed in the list and pressing the :kbd:`E` key."
+msgstr "Редагувати метадані просто і зручно: достатньо позначити запис, який ви хочете змінити у списку, і натиснути клавішу :kbd:`E`."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:320
+msgid ""
+"You can perform :ref:`actions` on sets of books. To select multiple books "
+"you can either:"
+msgstr "Ви можете виконувати :ref:`actions` над наборами книг. Щоб позначити декілька книг у списку, ви можете скористатися одним з таких варіантів дій:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:322
+msgid ""
+"Keep the :kbd:`Ctrl` key pressed and click on the books you want selected."
+msgstr "Натиснути і утримувати клавішу :kbd:`Ctrl`, одночасно наводячи вказівник миші на бажані пункти і клацаючи лівою кнопкою миші."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:324
+msgid ""
+"Keep the :kbd:`Shift` key pressed and click on the starting and ending book "
+"of a range of books you want selected."
+msgstr "Натиснути і утримувати клавішу :kbd:`Shift`, навести вказівник на початок діапазону книг, які ви хочете позначити, клацнути лівою кнопкою миші, далі, навести вказівник на кінець діапазону і знову клацнути лівою кнопкою миші."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:326
+msgid ""
+"You can configure which fields you want displayed by using the "
+":ref:`configuration` dialog."
+msgstr "Налаштувати поля, які має бути показано у списку, можна за допомогою діалогового вікна :ref:`configuration`."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:331
+msgid "The search interface"
+msgstr "Інтерфейс пошуку"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:332
+msgid ""
+"You can search all book metadata by entering search terms in the Search bar."
+" For example::"
+msgstr "Ви можете виконувати пошук за усіма метаданими: достатньо лише ввести критерії пошуку у поле смужки пошуку. Приклад::"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:336
+msgid ""
+"This will match all books in your library that have ``Asimov`` and "
+"``Foundation`` in their metadata and are available in the LRF format. Some "
+"more examples::"
+msgstr "У відповідь буде показано усі книги бібліотеки, у метаданих яких є слова ``Asimov`` і ``Foundation`` і які зберігаються у форматі LRF. Ще декілька прикладів::"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:345
+msgid "*Search kinds*"
+msgstr "*Типи пошуку*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:347
+msgid ""
+"There are four search kinds: `contains`, `equality`, `regular expression` "
+"(see `regular expressions "
+"<https://en.wikipedia.org/wiki/Regular_expression>`_), and `character "
+"variant`. You choose the search kind with a prefix character."
+msgstr "Передбачено чотири типи пошуку: `містить`, `рівність`, `формальний вираз` (див. `формальні вирази <https://en.wikipedia.org/wiki/Regular_expression>`_), та `варіант символів`. Вибрати тип пошуку можна за допомогою символу-префікса."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:349
+msgid "*'Contains' searches*"
+msgstr "*Пошуки «містить»*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:351
+msgid ""
+"Searches with no prefix character are `contains` and are by default case "
+"insensitive. An item matches if the search string appears anywhere in the "
+"indicated metadata. You can make `contains` searches case sensitive by "
+"checking the option `Case sensitive searching` in :guilabel:`Preferences / "
+"Searching`. If the search option `Unaccented characters match accented "
+"characters and punctuation is ignored` is checked then a character will "
+"match all its variants (e.g., `e` matches `é`, `è`, `ê`, and `ë`) and all "
+"punctuation and whitespace are ignored. For example, if the `Unaccented "
+"characters match ...` option is checked then given the two book titles:"
+msgstr "Критерії пошуку без символу-префікса є пошуками «містить». Типово, регістр символів у них не береться до уваги. Відповідність встановлюється, якщо критерій пошуку зустрічається будь-де у вказаних метаданих. Ви можете наказати програмі враховувати регістр символів у пошуках «містить» за допомогою позначення пункту `Пошук із врахуванням регістру` на сторінці :guilabel:`Налаштування / Пошук`. Якщо позначено пункт `Символи без акцентів відповідають символами з &акцентами, а пунктуацію слід ігнорувати`, відповідність встановлюватиметься з усіма варіантами символів (наприклад, `e` вважатиметься відповідним для `é`, `è`, `ê` і `ë`), а усі символи пунктуації і пробіли буде проігноровано. Наприклад, якщо позначено пункт `Символи без акцентів відповідають символами з акцентами, а пунктуацію слід ігнорувати` і вказано такі дві назви книг:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:353
+#: ../../__w/calibre/calibre/manual/gui.rst:403
+msgid "Big, Bothéred, and Bad"
+msgstr "Big, Bothéred, and Bad"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:354
+#: ../../__w/calibre/calibre/manual/gui.rst:404
+msgid "Big Bummer"
+msgstr "Big Bummer"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:356
+msgid "then these searches find:"
+msgstr "за цими критеріями пошуку буде знайдено:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:358
+msgid "``title:\"er\"`` matches both ('e' matches both 'é' and 'e')."
+msgstr "``title:\"er\"`` — обидві книги («e» — те саме, що і «é» з «e»)."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:359
+msgid "``title:\"g \"`` matches both because spaces are ignored."
+msgstr "``title:\"g \"`` — обидві книги, оскільки пробіли не буде враховано."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:360
+msgid "``title:\"g,\"`` matches both because the comma is ignored."
+msgstr "``title:\"g,\"`` — обидві книги, оскільки кому не буде враховано."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:361
+msgid ""
+"``title:\"gb\"`` matches both because ', ' is ignored in book 1 and spaces "
+"are ignored in book 2."
+msgstr "``title:\"gb\"`` — обидві книги, оскільки не буде враховано «, » у книзі 1 і пробіли у книзі 2."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:362
+msgid "``title:\"g b\"`` matches both because comma and space are ignored."
+msgstr "``title:\"g b\"`` — обидві книги оскільки кому і пробіл не буде враховано."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:363
+msgid "``title:\"db\"`` matches #1 because the space in 'and Bad' is ignored."
+msgstr "``title:\"db\"`` — першу книгу, оскільки пробіл у «and Bad» не буде враховано."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:364
+msgid ""
+"``title:\",\"`` matches both (it actually matches all books) because commas "
+"are ignored."
+msgstr "``title:\",\"`` — обидві книги (насправді, усі книги), оскільки коми не буде враховано."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:366
+msgid ""
+"If the `Unaccented characters match ...` option is not checked then "
+"character variants, punctuation, and spacing are all significant."
+msgstr "Якщо пункт «Символи без акцентів відповідають символами з акцентами, а пунктуацію слід ігнорувати» не буде позначено, буде взято до уваги усі варіанти символів, пунктуацію і пробіли."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:368
+msgid ""
+"You can set only one of the search options `Case sensitive searching` and "
+"`Unaccented characters match accented characters and punctuation is "
+"ignored`."
+msgstr "Ви можете вибрати лише один варіант пошуку — «Пошук із врахуванням регістру» або «Символи без акцентів відповідають символами з &акцентами, а пунктуацію слід ігнорувати»."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:370
+msgid "*'Equality' searches*"
+msgstr "*Пошуки «рівність»*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:372
+msgid ""
+"Equality searches are indicated by prefixing the search string with an "
+"equals sign (=). For example, the query ``tag:\"=science\"`` will match "
+"`science`, but not `science fiction` or `hard science`. Character variants "
+"are significant: `é` doesn't match `e`."
+msgstr "Критерії пошуку «рівність» позначають префіксом у формі знаку рівності у рядку пошуку (=). Наприклад, запит ``tag:\"=наукова\"`` відповідає `наукова`, але не `наукова фантастика` або `серйозна наукова`. Варіанти символів також буде взято до уваги: «é» — не те саме, що «e»."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:375
+msgid ""
+"Two variants of equality searches are used for hierarchical items (e.g., "
+"A.B.C): hierarchical prefix searches and hierarchical component searches. "
+"The first, indicated by a single period after the equals (``=.``) matches "
+"the initial parts of a hierarchical item. The second, indicated by two "
+"periods after the the equals (``=..``) matches an internal name in the "
+"hierarchical item. Examples, using the tag ``History.Military.WWII`` as the "
+"value:"
+msgstr "Для ієрархічних записів (наприклад, A.B.C) передбачено два варіанти пошуку «рівність»: пошуки за ієрархічним префіксом і пошуки за ієрархічними компонентами. Перший варіант позначається одинарною крапкою після знаку рівності (``=.``) і встановлює відповідність за початковими частинами ієрархічного запису. Другий варіант позначається двома крапками після знаку рівності (``=..``) і встановлює відповідність внутрішній назві у ієрархічному записі. Приклади з використанням мітки ``History.Military.WWII`` як значення:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:377
+msgid "``tags:\"=.History\"`` : True. ``History`` is a prefix of the tag."
+msgstr "``tags:\"=.History\"`` : істина. ``History`` є префіксом мітки."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:378
+msgid ""
+"``tags:\"=.History.Military\"`` : True. ``History.Military`` is a prefix of "
+"the tag."
+msgstr "``tags:\"=.History.Military\"`` : істина. ``History.Military`` є префіксом мітки."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:379
+msgid ""
+"``tags:\"=.History.Military.WWII\"`` : True. ``History.Military.WWII`` is a "
+"prefix of the tag, albeit an improper one."
+msgstr "``tags:\"=.History.Military.WWII\"`` : істина. ``History.Military.WWII`` є префіксом мітки, хоча і неналежним."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:380
+msgid "``tags:\"=.Military\"`` : False. ``Military`` is not a prefix of the tag."
+msgstr "``tags:\"=.Military\"`` : хибність. ``Military`` не є префіксом мітки."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:381
+msgid "``tags:\"=.WWII\"`` : False. ``WWII`` is not a prefix of the tag."
+msgstr "``tags:\"=.WWII\"`` : хибність. ``WWII`` не є префіксом мітки."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:382
+msgid ""
+"``tags:\"=..History\"`` : True. The hierarchy contains the value "
+"``History``."
+msgstr "``tags:\"=..History\"`` : істина. Ієрархія містить значення ``History``."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:383
+msgid ""
+"``tags:\"=..Military\"`` : True. The hierarchy contains the value "
+"``Military``."
+msgstr "``tags:\"=..Military\"`` : істина. Ієрархія містить значення ``Military``."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:384
+msgid "``tags:\"=..WWII\"`` : True. The hierarchy contains the value ``WWII``."
+msgstr "``tags:\"=..WWII\"`` : істина. Ієрархія містить значення ``WWII``."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:385
+msgid ""
+"``tags:\"=..Military.WWII\"`` : False. The ``..`` search looks for single "
+"values."
+msgstr "``tags:\"=..Military.WWII\"`` : хибність. При пошуку ``..`` програма шукає одинарні значення."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:387
+msgid "*'Regular expression' searches*"
+msgstr "*Пошуки за формальним виразом*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:389
+msgid ""
+"Regular expression searches are indicated by prefixing the search string "
+"with a tilde (~). Any `Python-compatible regular expression "
+"<https://docs.python.org/library/re.html>`__ can be used. Backslashes used "
+"to escape special characters in regular expressions must be doubled because "
+"single backslashes will be removed during query parsing. For example, to "
+"match a literal parenthesis you must enter ``\\\\(`` or alternatively use "
+"`super-quotes` (see below). Regular expression searches are 'contains' "
+"searches unless the expression is anchored. Character variants are "
+"significant: ``~e`` doesn't match ``é``."
+msgstr "Запити щодо пошуку за формальним виразом позначаються додаванням на початку рядку пошуку тильди (~). Можна використовувати будь-які `сумісні з Python формальні вирази <https://docs.python.org/library/re.html>`_. Зауважте, що слід дублювати символи зворотної похилої риски, які використовуються для екранування символів у формальних виразах, оскільки одинарні похилі риски буде вилучено під час обробки запиту. Наприклад, якщо ви хочете знайти символ круглої дужки, вам слід вказати у виразі «\\\\(» або скористайтеся «суперлапками» (див. нижче). Пошук за формальними виразами виконуватиметься так, щоб результати «містили» вказаний вираз, якщо у формальному виразі не визначено прив’язок до кінця або початку слова. Варіанти символів вважаються різними: ``~e`` не є відповідником ``é``."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:391
+msgid "*'Character variant' searches*"
+msgstr "*Пошуки за «варіантом символів»*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:393
+msgid ""
+"Character variant searches are indicated by prefixing the search string with"
+" a caret (^). This search is similar to the `contains` search (above) except"
+" that:"
+msgstr "Пошуки за варіантом символів позначаються префіксом каре (^) у рядку пошуку. Цей варіант пошуку подібний до пошуку «містить» (див. вище), окрім таких особливостей:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:395
+msgid "letter case is always ignored."
+msgstr "регістр символів ніколи не братиметься до уваги."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:396
+msgid "character variants always match each other."
+msgstr "варіанти символів завжди вважатимуться одним символом."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:397
+msgid "punctuation and whitespace are always significant."
+msgstr "пунктуація і пробіли завжди братимуться до уваги."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:399
+msgid ""
+"The search options :guilabel:`Unaccented characters match accented "
+"characters and punctuation is ignored` and :guilabel:`Case sensitive "
+"searching` are ignored. They have no effect on this search's behavior."
+msgstr "Пункти коригування пошуків :guilabel:`Символи без акцентів відповідають символами з акцентами, а пунктуацію слід ігнорувати` і :guilabel:`Пошук із врахуванням регістру` буде проігноровано. Вони не впливатимуть на роботу цього варіанта пошуків."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:401
+msgid ""
+"The following compares this search to a contains search assuming the "
+":guilabel:`Unaccented characters match...` option is checked (see above) "
+"given the same two book titles:"
+msgstr "Нижче наведено порівняння цього типу пошуків із пошуком «містить», якщо позначено пункт :guilabel:`Символи без акцентів відповідають символами з акцентами, а пунктуацію слід ігнорувати` (див. вище) і використано ті самі дві назви книг:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:406
+msgid "then these character variant searches find:"
+msgstr "тоді такі пошуки із варіантами символів призведуть до вказаних результатів:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:408
+msgid "``title:\"^er\"`` matches both ('e' matches both 'é' and 'e')"
+msgstr "``title:\"^er\"`` — обидві книги («e» — те саме, що і «é» з «e»)"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:409
+msgid "``title:\"^g\"`` matches both"
+msgstr "``title:\"^g\"`` — обидві книги"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:410
+msgid "``title:\"^g \"`` matches #2 because the space is significant"
+msgstr "``title:\"^g \"`` — книга 2, оскільки пробіли мають значення"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:411
+msgid "``title:\"^g,\"`` matches #1 because the comma is significant"
+msgstr "``title:\"^g,\"`` — книга 1, оскільки кома має значення"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:412
+msgid "``title:\"^gb\"`` matches nothing because space and comma are significant"
+msgstr "``title:\"^gb\"`` — нічого, оскільки пробіл і кома мають значення"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:413
+msgid "``title:\"^g b\"`` matches #2 because the comma is significant"
+msgstr "``title:\"^g b\"`` — книга 2, оскільки кома має значення"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:414
+msgid "``title:\"^db\"`` matches nothing"
+msgstr "``title:\"^db\"`` — нічого"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:415
+msgid ""
+"``title:\"^,\"`` matches #1 (instead of all books) because the comma is "
+"significant"
+msgstr "``title:\"^,\"`` — книга (а не усі книги), оскільки кома має значення"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:417
+msgid "*Search Expression Syntax*"
+msgstr "*Синтаксис виразу для пошуку*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:419
+msgid ""
+"A `search expression` is a sequence of `search terms` optionally separated "
+"by the operators ``and`` and ``or``. If two search terms occur without a "
+"separating operator, ``and`` is assumed. The ``and`` operator has priority "
+"over the ``or`` operator; for example the expression ``a or b and c`` is the"
+" same as ``a or (b and c)``. You can use parenthesis to change the priority;"
+" for example ``(a or b) and c`` to make the ``or`` evaluate before the "
+"``and``. You can use the operator ``not`` to negate (invert) the result of "
+"evaluating a search expression. Examples:"
+msgstr "`Вираз для пошуку` є послідовністю `термінів для пошуку`, які може бути відокремлено операторами ``and`` та ``or``. Якщо два терміни для пошуку вказано без оператора-роздільника, буде використано оператор ``and``. Оператор ``and`` має вищий пріоритет за оператор ``or``; наприклад, вираз ``a or b and c`` є тим самим, що ``a or (b and c)``. Ви можете скористатися дужками для зміни пріоритетності; наприклад, ``(a or b) and c``, щоб ``or`` було використано до ``and``. Ви можете скористатися оператором ``not`` для заперечення (інверсії) результату обчислення виразу для пошуку. Приклади:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:421
+msgid "``not tag:foo`` finds all books that don't contain the tag ``foo``"
+msgstr "``not tag:щось`` знайде усі книги, у записах яких не міститься мітки ``щось``"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:422
+msgid ""
+"``not (author:Asimov or author:Weber)`` finds all books not written by "
+"either Asimov or Weber."
+msgstr "``not (author:Азімов or author:Вебер)`` шукає усі книги, які не написано ні Азімовим, ні Вебером."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:424
+msgid ""
+"The above examples show examples of `search terms`. A basic `search term` is"
+" a sequence of characters not including spaces, quotes (``\"``), backslashes"
+" (``\\``), or parentheses (``( )``). It can be optionally preceded by a "
+"column name specifier: the `lookup name` of a column followed by a colon "
+"(``:``), for example ``author:Asimov``. If a search term must contain a "
+"space then the entire term must be enclosed in quotes, as in ``title:\"The "
+"Ring\"``. If the search term must contain quotes then they must be `escaped`"
+" with backslashes. For example, to search for a series named `The \"Ball\" "
+"and The \"Chain\"`, use::"
+msgstr "Вище наведено приклади `термінів для пошуку`. Базовим `терміном для пошуку` є послідовність символів, у якій немає пробілів, символів лапок (``\"``), символів зворотної похилої риски (``\\``) або дужок (``( )``). Перед ним може бути вказано специфікатор назви стовпчика: після `назви пошуку` стовпчика має бути вказано двокрапку (``:``), наприклад, ``author:Азімов``. Якщо у терміні для пошуку має бути пробіл, увесь термін для пошуку слід взяти у лапки, наприклад, ``title:\"The Ring\"``. Якщо у терміні для пошуку мають бути лапки, їх слід `екранувати` символами зворотної похилої риски. Наприклад, щоб знайти цикл із назвою `The \"Ball\" and The \"Chain\"`, скористайтеся таким виразом::"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:428
+msgid ""
+"If you need an actual backslash, something that happens frequently in "
+"`regular expression` searches, use two of them (``\\\\``)."
+msgstr "Якщо вам потрібен сам символ зворотної похилої риски, як це часто трапляється у пошуках із `формальними виразами`, скористайтеся подвоєнням (``\\\\``)."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:430
+msgid ""
+"It is sometimes hard to get all the escapes right so the result is what you "
+"want, especially in `regular expression` and `template` searches. In these "
+"cases use the `super-quote`: ``\"\"\"sequence of characters\"\"\"``. Super-"
+"quoted characters are used unchanged: no escape processing is done."
+msgstr "Іноді виконати правильне екранування для отримання бажаного результату досить важко, особливо у пошуках із `формальними виразами` і `шаблонами`. У таких випадках скористайтеся  `суперлапками`: ``\"\"\"послідовність символів\"\"\"``. Символи у суперлапках використовуються без змін: їхня обробка не відбуватиметься."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:432
+msgid "*More information*"
+msgstr "*Додаткові відомості*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:434
+msgid ""
+"To search for a string that begins with an equals, tilde, or caret; prefix "
+"the string with a backslash."
+msgstr "Щоб виконати пошук рядка, який починається із символу рівності, тильди або каре; додайте до рядка префікс у формі символу зворотної похилої риски."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:436
+msgid ""
+"Enclose search strings with quotes (\") if the string contains parenthesis "
+"or spaces. For example, to find books with the tag ``Science Fiction`` you "
+"must search for ``tag:\"=science fiction\"``. If you search for "
+"``tag:=science fiction`` you will find all books with the tag ``science`` "
+"and the word ``fiction`` in any metadata."
+msgstr "Якщо рядок пошуку містить дужки або пробіли, його слід взяти у лапки (\"). Наприклад, щоб знайти записи з міткою «наукова фантастика», вам слід ввести «tag:\"=science fiction\"». Якщо ви введете критерій пошуку «tag:=science fiction», буде знайдено усі книги з міткою «наукова» і словом «фантастика» у метаданих."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:438
+msgid ""
+"You can build advanced search queries easily using the :guilabel:`Advanced "
+"search dialog` accessed by clicking the button |sbi| on the left of the "
+"search box."
+msgstr "Ви можете будувати складні запити щодо пошуку за допомогою :guilabel:`діалогового вікна розширеного пошуку`, доступ до якого можна отримати натисканням кнопки |sbi| ліворуч від поля пошуку."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:562
+msgid "sbi"
+msgstr "sbi"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:441
+msgid ""
+"Available fields for searching are: ``tag, title, author, publisher, series,"
+" series_index, rating, cover, comments, format, identifiers, date, pubdate, "
+"search, size, vl`` and custom columns. If a device is plugged in, the "
+"``ondevice`` field becomes available, when searching the calibre library "
+"view. To find the search name (actually called the `lookup name`) for a "
+"custom column, hover your mouse over the column header in the library view."
+msgstr "Доступними для пошуку є такі поля: ``tag, title, author, publisher, series, series_index, rating, cover, comments, format, identifiers, date, pubdate, search, size, vl``, а також нетипові стовпчики. Якщо з комп’ютером з’єднано пристрій для читання електронних книг, буде доступним поле ``ondevice``, якщо пошук відбувається на панелі бібліотеки calibre. Для визначення назви поля пошуку для нетипового стовпчика, наведіть вказівник миші на заголовок стовпчика і почекайте, доки програма покаже контекстну панель із назвою."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:443
+msgid "*Dates*"
+msgstr "*Дати*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:445
+msgid "The syntax for searching for dates is::"
+msgstr "Синтаксис запиту щодо пошуку за датою::"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:451
+msgid ""
+"If the date is ambiguous then the current locale is used for date "
+"comparison. For example, in an mm/dd/yyyy locale 2/1/2009 is interpreted as "
+"1 Feb 2009. In a dd/mm/yyyy locale it is interpreted as 2 Jan 2009.  Some "
+"special date strings are available. The string ``today`` translates to "
+"today's date, whatever it is. The strings ``yesterday`` and ``thismonth`` "
+"(or the translated equivalent in the current language) also work. In "
+"addition, the string ``daysago`` (also translated) can be used to compare to"
+" a date some number of days ago. For example::"
+msgstr "Якщо дата є неоднозначною, для порівняння дат використовуватимуться поточні дані локалі. Наприклад, у локалі з датою у форматі mm/dd/yyyy дата 2/1/2009 відповідає 1 лютого 2009 року. У локалі dd/mm/yyyy той самий запис відповідатиме 2 січня 2009 року. Передбачено також декілька спеціальних рядків для дат. Рядок ``today`` відповідає поточній даті, якою б вона не була. Також можна скористатися рядками ``yesterday`` і ``thismonth`` (або перекладеними еквівалентами відповідною мовою, «вчора» і «цьогомісяця», відповідно). Крім того, можна скористатися рядком ``daysago`` («днівтому») для порівняння з поточною датою. Приклад::"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:461
+msgid ""
+"To avoid potential problems with translated strings when using a non-English"
+" version of calibre, the strings ``_today``, ``_yesterday``, ``_thismonth``,"
+" and ``_daysago`` are always available. They are not translated."
+msgstr "Щоб уникнути потенційних проблем із перекладами рядків, якщо використовується неанглійська версія calibre, рядки ``_today``, ``_yesterday``, ``_thismonth``, and ``_daysago`` доступні у будь-якому перекладі. Вони просто не перекладаються."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:463
+msgid "*Searching dates and numeric values with relational comparisons*"
+msgstr "*Пошук дат і числових значень з умовами порівняння*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:465
+msgid ""
+"Dates and numeric fields support the relational operators ``=`` (equals), "
+"``>`` (greater than), ``>=`` (greater than or equal to), ``<`` (less than), "
+"``<=`` (less than or equal to), and ``!=`` (not equal to). Rating fields are"
+" considered to be numeric. For example, the search ``rating:>=3`` will find "
+"all books rated 3 or higher."
+msgstr "У полях дат і числових полях можна використовувати оператори порівняння ``=`` (дорівнює), ``>`` (більше), ``>=`` (більше або дорівнює), ``<`` (менше), ``<=`` (менше або дорівнює) та ``!=`` (не дорівнює). Поля оцінок вважаються числовими. Наприклад, якщо вказано рядок пошуку ``rating:>=3``, буде показано усі книги з оцінкою 3 і більше."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:470
+msgid ""
+"You can search for books that have a format of a certain size like this:"
+msgstr "Ви можете шукати книги, які мають певний розмір у якомусь із форматів, ось так:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:472
+msgid "``size:>1.1M`` will find books with a format larger than 1.1MB"
+msgstr "``size:>1.1M`` — буде знайдено книги, файл у певному форматі яких має розмір, що перевищує 1,1 МБ"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:473
+msgid ""
+"``size:<=1K``  will find books with a format smaller than or equal to 1KB"
+msgstr "``size:<=1K`` — буде знайдено книги, які у якомусь форматі мають розмір, який менший або рівний 1 кБ"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:475
+msgid ""
+"You can search for the number of items in multiple-valued fields such as "
+"tags using the character ``#`` then using the same syntax as numeric fields."
+" For example, to find all books with more than 4 tags use ``tags:#>4``. To "
+"find all books with exactly 10 tags use ``tags:#=10``."
+msgstr "Можна шукати за кількістю записів у багатозначних полях, зокрема міток. Запити щодо таких пошуків мають починатися з символу ``#``. Далі слід використовувати ті самі синтаксичні конструкції, що і у числових полях. Наприклад, щоб знайти усі книги, у яких понад 4 мітки, скористайтеся запитом ``tags:#>4``. Щоб знайти усі книги, у яких точно 10 міток, введіть запит ``tags:#=10``."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:477
+msgid "*Series indices*"
+msgstr "*Номери у циклі*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:479
+msgid ""
+"Series indices are searchable. For the standard series, the search name is "
+"``series_index``. For custom series columns, use the column search name "
+"followed by _index. For example, to search the indices for a custom series "
+"column named ``#my_series``, you would use the search name "
+"``#my_series_index``. Series indices are numbers, so you can use the "
+"relational operators described above."
+msgstr "Можна виконувати пошук за індексом у циклу. Для стандартних серій книг слід використовувати назву «series_index». Для нетипових стовпчиків циклу використовуйте назву стовпчика із додаванням рядка _index. Наприклад, щоб знайти книгу за індексом у нетиповому стовпчику циклу із назвою ``#my_series``, слід скористатися назвою для пошуку ``#my_series_index``. Індекси у циклі є числами, тому для них можна використовувати оператори відношень, які описано вище."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:484
+msgid "*Saved searches*"
+msgstr "*Збережені результати пошуків*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:486
+msgid ""
+"The special field ``search`` is used for :ref:`saved searches "
+"<saved_searches>`. If you save a search with the name \"My spouse's books\" "
+"you can enter ``search:\"My spouse's books\"`` in the Search bar to reuse "
+"the saved search. More about saving searches below."
+msgstr "Спеціальне поле ``search`` використовується для :ref:`збережених пошуків <saved_searches>`. Отже, якщо ви зберегли пошук із назвою «Книги моєї дружини», ви можете ввести ``search:\"Книги моєї дружини\"`` у поле для пошуку і скористатися вже отриманими результатами. Докладніше про це у розділі щодо збереження результатів пошуку, наведеному нижче."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:490
+msgid "*Virtual libraries*"
+msgstr "*Віртуальні бібліотеки*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:492
+msgid ""
+"The special field ``vl`` is used to search for books in a virtual library. "
+"For example, ``vl:Read`` will find all the books in the *Read* virtual "
+"library. The search ``vl:Read and vl:\"Science Fiction\"`` will find all the"
+" books that are in both the *Read* and *Science Fiction* virtual libraries. "
+"The value following ``vl:`` must be the name of a virtual library. If the "
+"virtual library name contains spaces then surround it with quotes."
+msgstr "Спеціальне поле ``vl`` використовується для пошуку у віртуальній бібліотеці. Наприклад, за критерієм «vl:Прочитане» буде знайдено усі книги у віртуальній бібліотеці «Прочитане». За критерієм пошуку «vl:Прочитане and vl:\"Наукова фантастика\"» буде знайдено усі книги, які належать одночасно до віртуальних бібліотек «Прочитане» і «Наукова фантастика». Значення після «vl:» має бути назвою віртуальної бібліотеки. Якщо у назві віртуальної бібліотеки є пробіли, слід взяти її у лапки."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:498
+msgid "*Whether a field has a value*"
+msgstr "*Чи має поле значення*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:500
+msgid ""
+"You can search for the absence or presence of a value for a field using "
+"\"true\" and \"false\". For example:"
+msgstr "Ви можете шукати книги, які не містять або містять у певному полі значення, за допомогою «true» і «false». Приклад:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:502
+msgid "``cover:false`` finds all books without a cover"
+msgstr "``cover:false`` — знайде усі книги без зображення обкладинки"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:503
+msgid "``series:true`` finds all books that are in a series"
+msgstr "``series:true`` — знайде усі книги, які є частинами циклів"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:504
+msgid "``series:false`` finds all books that are not in a series"
+msgstr "``series:false`` — знайде усі книги, які не є частинами циклів"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:505
+msgid "``comments:false`` finds all books with an empty comment"
+msgstr "``comments:false`` — знайде усі книги, які мають порожній коментар"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:506
+msgid "``formats:false`` finds all books with no book files (empty records)"
+msgstr "``formats:false`` — знайде усі книги, які не мають файлів (порожні записи)"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:508
+msgid "*Yes/no custom columns*"
+msgstr "*Нетипові стовпчики «Так/Ні»*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:510
+msgid ""
+"Searching Yes/no custom columns for ``false``, ``empty``, or ``blank`` will "
+"find all books with undefined values in the column. Searching for ``true`` "
+"will find all books that do not have undefined values in the column. "
+"Searching for ``yes`` or ``checked`` will find all books with ``Yes`` in the"
+" column. Searching for ``no`` or ``unchecked`` will find all books with "
+"``No`` in the column. Note that the words ``yes``, ``no``, ``blank``, "
+"``empty``, ``checked`` and ``unchecked`` are translated; you can use either "
+"the current language's equivalent word or the English word. The words "
+"``true`` and ``false`` and the special values ``_yes``, ``_no``, and "
+"``_empty`` are not translated."
+msgstr "Дані можна шукати і у нетипових стовпчиках із булевими значеннями («так» або «ні»). Якщо ви шукатимете ``false`` або ``порожньо``, буде знайдено усі книги із невизначеними значеннями у стовпчику. Якщо шукати ``true``, буде знайдено усі книги, у яких значення у стовпчику визначено. Якщо шукати ``так`` або ``позначено``, буде знайдено усі книги із ``Так`` у відповідному стовпчику. Пошук ``ні`` або ``не_позначено`` надасть змогу знайти усі книги з ``Ні`` у стовпчику. Зауважте, що слова ``yes``, ``no``, ``blank``, ``empty``, ``checked`` та ``unchecked`` може бути перекладено. Ви можете скористатися або перекладом цих слів, або англійським еквівалентом. Слова ``true`` і ``false``, а також особливі значення ``_yes``, ``_no`` та ``_empty`` не перекладаються."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:515
+msgid "*Identifiers*"
+msgstr "*Ідентифікатори*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:517
+msgid ""
+"Identifiers (e.g., ISBN, DOI, LCCN, etc.) use an extended syntax. An "
+"identifier has the form ``type:value``, as in ``isbn:123456789``. The "
+"extended syntax permits you to specify independently the type and value to "
+"search for. Both the type and the value parts of the query can use any of "
+"the :ref:`search kinds <search_kinds>`. Examples:"
+msgstr "Для ідентифікаторів (наприклад ISBN, DOI, LCCN тощо) також використовують розширений синтаксис. По-перше, зауважте, що ідентифікатор має форму ``тип:значення``, наприклад ``isbn:123456789``. Розширений синтаксис надає вам змогу вказати незалежно тип і значення, які ви шукаєте. Як для типу, так і для значення у запиті можна використовувати будь-які :ref:`типи пошуку <search_kinds>`. Приклади:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:519
+msgid "``identifiers:true`` will find books with any identifier."
+msgstr "``identifiers:true`` — знайти крити з будь-яким ідентифікатором."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:520
+msgid "``identifiers:false`` will find books with no identifier."
+msgstr "``identifiers:false`` — знайти книги без ідентифікатора."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:521
+msgid ""
+"``identifiers:123`` will search for books with any type having a value "
+"containing `123`."
+msgstr "``identifiers:123`` — знайти книги з ідентифікатором будь-якого типу, який має значення, що містить рядок «123»."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:522
+msgid ""
+"``identifiers:=123456789`` will search for books with any type having a "
+"value equal to `123456789`."
+msgstr "``identifiers:=123456789`` — знайти книги з ідентифікатором будь-якого типу рівним «123456789»."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:523
+msgid ""
+"``identifiers:=isbn:`` and ``identifiers:isbn:true`` will find books with a "
+"type equal to ISBN having any value"
+msgstr "``identifiers:=isbn:`` і ``identifiers:isbn:true`` — знайти книги, у яких тип ISBN має будь-яке значення."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:524
+msgid ""
+"``identifiers:=isbn:false`` will find books with no type equal to ISBN."
+msgstr "``identifiers:=isbn:false`` — знайти усіх книги без типу рівного ISBN."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:525
+msgid ""
+"``identifiers:=isbn:123`` will find books with a type equal to ISBN having a"
+" value containing `123`."
+msgstr "``identifiers:=isbn:123`` — знайти книги, у яких тип ISBN має значення, що містить рядок «123»."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:526
+msgid ""
+"``identifiers:=isbn:=123456789`` will find books with a type equal to ISBN "
+"having a value equal to `123456789`."
+msgstr "``identifiers:=isbn:=123456789`` — знайти книги, у яких тип ISBN має значення рівне «123456789»."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:527
+msgid ""
+"``identifiers:i:1`` will find books with a type containing an `i` having a "
+"value containing a `1`."
+msgstr "``identifiers:i:1`` — знайти книги, у яких тип, назва якого містить літеру «i», має значення, яке містить символ «1»."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:529
+msgid "*Categories visible in the Tag browser*"
+msgstr "*Категорії, які є видимими на панелі навігації мітками*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:531
+msgid ""
+"The search ``in_tag_browser:true`` finds all books that are in categories "
+"(tags, authors, etc.) currently shown in the :guilabel:`Tag browser`. This "
+"is useful if you set the two preferences :guilabel:`Preferences->Look & "
+"feel->Tag browser->Hide empty categories` and :guilabel:`Find shows all "
+"items that match`. With those two preferences set, doing a :guilabel:`Find` "
+"in the :guilabel:`Tag browser` shows only categories containing items "
+"matched by the :guilabel:`Find`. Then, the search ``in_tag_browser:true`` "
+"additionally finds books with these categories / items. You can easily run "
+"this search by pressing the key :kbd:`Ctrl+Alt+Shift+F` or clicking the "
+"configure button in the :guilabel:`Tag browser` and choosing the "
+":guilabel:`Show only books that have visible categories` entry."
+msgstr "Пошук ``in_tag_browser:true`` призведе до виявлення усіх книг, які належать до категорій (міток, авторів тощо), які показано на панелі :guilabel:`Навігатор мітками`. Це корисно, якщо вами налаштовано дві речі: :guilabel:`Налаштування->Вигляд та поведінка->Навігатор мітками->Приховати порожні категорі` та :guilabel:`Пошука показує усі відповідні записи`. Якщо налаштовано дві ці речі натискання пункту :guilabel:`Знайти` на панелі :guilabel:`Навігатор мітками` покаже лише категорії, що містять записи, що відповідають пошуку :guilabel:`Знайти`. Далі, пошук ``in_tag_browser:true`` додатково знайде книги у цих категоріях / записах. Ви можете без проблем запускати цей пошук натисканням комбінації клавіш :kbd:`Ctrl+Alt+Shift+F` або кнопки налаштовування на панелі :guilabel:`Навігатор мітками` і вибором пункту :guilabel:`Показати лише книги, які належать до видимих категорій`."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:543
+msgid "*Search using templates*"
+msgstr "*Пошук за допомогою шаблонів*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:545
+msgid ""
+"You can search using a template in :ref:`templatelangcalibre` instead of a "
+"metadata field. To do so you enter a template, a search type, and the value "
+"to search for. The syntax is::"
+msgstr "Ви можете шукати за допомогою шаблона у :ref:`templatelangcalibre`, замість поля метаданих. Для цього слід вказати шаблон, тип пошуку та значення, яке слід знайти. Синтаксис::"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:549
+msgid ""
+"The ``template`` is any valid calibre template language template. The "
+"``search type`` must be one of ``t`` (text search), ``d`` (date search), "
+"``n`` (numeric search), or ``b`` (set/not set (boolean)). The ``value`` is "
+"whatever you want, and can use the :ref:`search kinds <search_kinds>` "
+"described above for the various search types. You must quote the entire "
+"search string if there are spaces anywhere in it."
+msgstr "``Шаблоном`` є будь-який коректний шаблон мови шаблонів calibre. ``Типом пошуку`` має бути ``t`` (текстовий пошук), ``d`` (пошук за датою), ``n`` (числовий пошук) або ``b`` (пошук «встановлено/не встановлено» (булевий)). ``Значенням`` може бути будь-що. Для створення різних :ref:`типів пошуку <search_kinds>' можна використовувати спеціальні оператори, які описано вище. Якщо у рядку пошуку містяться пробіли, його слід взяти у лапки."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:551
+msgid "Examples:"
+msgstr "Приклади:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:553
+msgid ""
+"``template:\"program: connected_device_name('main')#@#:t:kindle\"`` -- is "
+"true when the ``kindle`` device is connected."
+msgstr "``template:\"program: connected_device_name('main')#@#:t:kindle\"`` приймає значення «true», якщо з комп'ютером з'єднано пристрій ``kindle``"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:554
+msgid ""
+"``template:\"program: select(formats_sizes(), 'EPUB')#@#:n:>1000000\"`` -- "
+"finds books with EPUB files larger than 1 MB."
+msgstr "``template:\"program: select(formats_sizes(), 'EPUB')#@#:n:>1000000\"`` — знайти книги у файлах EPUB, розмір яких перевищує 1 МБ."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:555
+msgid ""
+"``template:\"program: select(formats_modtimes('iso'), "
+"'EPUB')#@#:d:>10daysago\"`` -- finds books with EPUB files newer than 10 "
+"days ago."
+msgstr "``template:\"program: select(formats_modtimes('iso'), 'EPUB')#@#:d:>10daysago\"`` — знайти книги у файлах EPUB, часова позначка яких є не старішою за 10 днів від поточної дати"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:556
+msgid ""
+"``template:\"\"\"program: book_count('tags:^\"' & $series & '\"', 0) != "
+"0#@#:n:1\"\"\"`` -- finds all books containing the series name in the tags. "
+"This example uses super-quoting because the template uses both single quotes"
+" (``'``) and double quotes (``\"``) when constructing the search expression."
+msgstr "``template:\"\"\"program: book_count('tags:^\"' & $series & '\"', 0) != 0#@#:n:1\"\"\"`` — знайти усі книги, що містять назву циклу у мітках. У цьому прикладі використано суперлапки, оскільки у шаблоні використано одразу одинарні лапки (``'``) і подвійні лапки (``\"``) при побудові виразу для пошуку."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:558
+msgid ""
+"You can build template search queries easily using the :guilabel:`Advanced "
+"search dialog` accessed by clicking the button |sbi|. You can test templates"
+" on specific books using the calibre :guilabel:`Template tester`, which can "
+"be added to the toolbars or menus via :guilabel:`Preferences->Toolbars & "
+"menus`. It can also be assigned a keyboard shortcut via "
+":guilabel:`Preferences->Shortcuts`."
+msgstr "Будувати шаблони пошуку можна за допомогою :guilabel:`Діалогового вікна розширеного пошуку`, відкрити яке можна за допомогою натискання кнопки |sbi|. Перевірити шаблон на певних книгах можна за допомогою :guilabel:`Засобу тестування шаблонів`calibre. Відповідний пункт можна додати на панель інструментів або до меню за допомогою сторінки :guilabel:`Налаштування->Панелі і меню`. Також можна пов'язати із цією дією клавіатурне скорочення за допомогою сторінки :guilabel:`Налаштування->Скорочення`."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:560
+msgid "*Advanced search dialog*"
+msgstr "*Вікно складного пошуку*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:568
+msgid ":guilabel:`Advanced search dialog`"
+msgstr ":guilabel:`Діалогове вікно розширеного пошуку`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:573
+msgid "Saving searches"
+msgstr "Збереження результатів пошуку"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:575
+msgid ""
+"calibre allows you to save a frequently used search under a special name and"
+" then reuse that search with a single click. To do this, create your search "
+"either by typing it in the Search bar or using the Tag browser. Then type "
+"the name you would like to give to the search in the Saved Searches box next"
+" to the Search bar. Click the plus icon next to the saved searches box to "
+"save the search."
+msgstr "calibre надає вам змогу зберігати часто використовувати пошуки під спеціальними назвами, а потім використовувати їх за допомогою одного клацання кнопкою миші. Створити свій пошук можна введенням критерію пошуку на панелі пошуку або вибором відповідного пункту на панелі перегляду міток. Далі, вам слід ввести назву, яку ви хочете дати пошуку, у поле збережених пошуків, розташоване поряд із смужкою пошуку. Потім слід натиснути кнопку з піктограмою «плюс», розташовану поряд із полем для назви збереженого пошуку, щоб зберегти пошук із вказаною назвою."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:577
+msgid ""
+"Now you can access your saved search in the Tag browser under "
+":guilabel:`Saved searches`. A single click will allow you to reuse any "
+"arbitrarily complex search easily, without needing to re-create it."
+msgstr "Після цього, доступ до збереженого пошуку можна буде здійснювати за допомогою панелі перегляду міток, а саме розділу :guilabel:`Збережені пошуки`. Будь-яким, як завгодно складним пошуком, можна буде скористатися дуже просто: нічого не треба буде створювати, достатньо буде один раз клацнути кнопкою миші."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:580
+msgid "Searching the full text of all books"
+msgstr "Повнотекстовий пошук в усіх книгах"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:582
+msgid "ftsb"
+msgstr "ftsb"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:585
+msgid ""
+"|ftsb| calibre can *optionally* index the full text of books in the library "
+"to allow for instant searching of words inside any book. To use this "
+"functionality click the :guilabel:`FT` button at the left edge of the search"
+" bar."
+msgstr "|ftsb| calibre може, *якщо ви захочете*, індексувати текст усіх книг у бібліотеці для уможливлення миттєвого пошуку слів у будь-якій книзі. Щоб увімкнути цю функціональну можливість, натисніть кнопку :guilabel:`FT` на лівому краю панелі пошуку."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:589
+msgid ""
+"Then, enable indexing for the current library. Once indexing is complete you"
+" can search all the text in the full library. When you add new books to the "
+"library, they will be automatically indexed in the background. This search "
+"allows you to quickly find all books that contain a word or combination of "
+"words. You can even search for words that occur near other words, as shown "
+"in the examples in the search popup window. Note that this search tool will "
+"find only one occurrence of the search query in a particular book, not list "
+"every occurrence, for that it is best to search inside the book using the "
+"calibre :guilabel:`E-book viewer`."
+msgstr "Далі, увімкніть індексування для поточної бібліотеки. Щойно індексування буде завершено, ви зможете виконувати повнотекстовий пошук в усій бібліотеці. Після додавання до бібліотеки книг програма буде автоматично індексувати їхній вміст у фоновому режимі. За допомогою цього режиму пошуку ви зможете швидко знайти книгу, яка містить певне слово або певну комбінацію слів. Ви навіть зможете шукати слова, які розташовано поруч із іншими словами, як це показано у прикладах у контекстному вікні пошуку. Зауважте, що цей інструмент пошуку знайде лише одне входження пошукового критерію у певній книзі, а не покаже список усіх входжень. Щоб знайти щось у певній книзі, варто скористатися пошуком у :guilabel:`Засобі перегляду книг` calibre."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:598
+msgid ""
+"You can re-index an individual book by right clicking on the :guilabel:`Book"
+" details panel` in calibre and choosing :guilabel:`Re-index this book for "
+"full text searching`."
+msgstr "Ви можете наказати програмі виконати повторне індексування окремої книги, клацнувши правою кнопкою на :guilabel:`панелі подробиць щодо книги` у вікні calibre і вибравши :guilabel:`Повторно індексувати цю книгу для повнотекстового пошуку`."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:603
+msgid "Virtual libraries"
+msgstr "Віртуальні бібліотеки"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:605
+msgid ""
+"A :guilabel:`Virtual library` is a way to pretend that your calibre library "
+"has only a few books instead of its full collection. This is an excellent "
+"way to partition your large collection of books into smaller, manageable "
+"chunks. To learn how to create and use Virtual libraries, see the tutorial: "
+":ref:`virtual_libraries`."
+msgstr ":guilabel:`Віртуальна бібліотека` — це спосіб «обманути» calibre, повідомивши програмі, що у вашій бібліотеці усього декілька книг, а не уся збірка. Це чудовий спосіб поділити вашу велику збірку книжок на менші, зручніші для роботи фрагменти. Щоб дізнатися більше про те, як створювати віртуальні бібліотеки, і як ними користуватися, ознайомтеся із відповідними настановами: :ref:`virtual_libraries`."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:612
+msgid "Temporarily marking books"
+msgstr "Тимчасове позначення книг"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:614
+msgid ""
+"You can temporarily mark arbitrary sets of books. Marked books will have a "
+"pin on them and can be found with the search ``marked:true``. To mark a book"
+" press :kbd:`Ctrl+m` or go to :guilabel:`Preferences->Toolbars & menus` and "
+"add the :guilabel:`Mark books` button to the main toolbar."
+msgstr "Ви можете тимчасово позначати довільні набори книг. Для позначених книг буде показано шпильку. Знайти їх можна буде за критерієм ``marked:true``. Щоб позначити книгу, натисніть комбінацію клавіш :kbd:`Ctrl+M` або скористайтеся сторінкою :guilabel:`Налаштування->Панелі інструментів і меню` і додайте кнопку :guilabel:`Позначити книги` на головну панель інструментів."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:616
+msgid ""
+"You can mark books with a specific text label by right clicking the "
+":guilabel:`Mark books` button and choosing :guilabel:`Mark books with text "
+"label`. Books marked with text labels can later be found using the search "
+"``marked:\"=the-text-you-entered\"``."
+msgstr "Ви можете позначити книги певною текстовою міткою: клацніть правою кнопкою миші на кнопці :guilabel:`Позначити книги` і виберіть варіант :guilabel:`Позначити книги текстовою міткою`. Знайти книги, які позначено текстовою міткою, можна за допомогою критерію ``marked:\"=введений-вами-текст\"``."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:621
+msgid "Guessing metadata from file names"
+msgstr "Визначення метаданих з назв файлів"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:623
+msgid ""
+"Normally, calibre reads metadata from inside the book file. However, it can "
+"be configured to read metadata from the file name instead, via "
+":guilabel:`Preferences->Import/export->Adding books->Read metadata from file"
+" contents`."
+msgstr "Зазвичай, calibre читає метадані з самого файла книги. Втім, програму можна налаштувати так, щоб вона читала метадані з назви файла. Для цього скористайтеся пунктом :guilabel:`Налаштування -> Імпортування/Експортування -> Додавання книг -> Читати метадані з даних файлів`."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:627
+msgid ""
+"You can also control how metadata is read from the filename using regular "
+"expressions (see :doc:`regexp`). In the :guilabel:`Adding books` section of "
+"the configuration dialog, you can specify a regular expression that calibre "
+"will use to try and guess metadata from the names of e-book files that you "
+"add to the library. The default regular expression is::"
+msgstr "Ви також можете керувати тим, як метадані читатимуться з назви файла, за допомогою формальних виразів (див. розділ :doc:`regexp`). У розділі :guilabel:`Додавання книг` діалогового вікна налаштовування програми ви можете вказати формальний вираз, яким користуватиметься calibre для виявлення і обробки метаданих у назвах файлів електронних книг, які ви додаєте до бібліотеки. Типовим формальним виразом є такий::"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:635
+msgid ""
+"that is, it assumes that all characters up to the first ``-`` are the title "
+"of the book and subsequent characters are the author of the book. For "
+"example, the filename::"
+msgstr "тобто, програма припускає, що усі символи до першого символу ``-`` є назвою книги, а усі наступні символи — ім’я її автора. Наприклад, якщо файл має таку назву::"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:641
+msgid ""
+"will be interpreted to have the title: Foundation and Earth and author: "
+"Isaac Asimov"
+msgstr "програма вважатиме, що книга називається «Foundation and Earth», а її автором є Isaac Asimov"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:644
+msgid ""
+"If the filename does not contain the hyphen, the above regular expression "
+"will fail."
+msgstr "Якщо у назві файла не міститься дефіса, вказаний вище формальний вираз не спрацює."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:650
+msgid "Book details"
+msgstr "Подробиці щодо книги"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:654
+msgid ""
+"The Book details display shows the cover and all the metadata for the "
+"currently selected book. It can be hidden via the :guilabel:`Layout` button "
+"in the lower right corner of the main calibre window. The author names shown"
+" in the Book details panel are click-able, they will by default take you to "
+"the Wikipedia page for the author.  This can be customized by right clicking"
+" on the author name and selecting Manage this author."
+msgstr "На панелі подробиць щодо книги буде показано зображення обкладинки та усі метадані поточної позначеної книги. Панель можна приховати натисканням кнопки, розташованої у нижньому правому куті основного вікна calibre. Пункт імен авторів, який показано на панелі подробиць щодо книги, можна натискати. У відповідь буде типово відкрито сторінку Вікіпедії, присвячену авторові. Дію у відповідь на натискання можна змінити. Для цього достатньо навести вказівник на пункт автора, клацнути правою кнопкою миші і вибрати у контекстному меню пункт «Керувати»."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:661
+msgid ""
+"Similarly, if you download metadata for the book, the Book details panel "
+"will automatically show you links pointing to the web pages for the book on "
+"Amazon, WorldCat, etc. from where the metadata was downloaded."
+msgstr "Так само, якщо ви отримували метадані щодо книги, на панелі подробиць щодо книги буде автоматично показано посилання на сторінку книги у системах Amazon, WorldCat тощо, звідки було отримано метадані."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:665
+msgid ""
+"You can right click on individual e-book formats in the Book details panel "
+"to delete them, compare them to their original versions, save them to disk, "
+"open them with an external program, etc."
+msgstr "Ви можете навести вказівник на запис окремого формату електронної книги на панелі подробиць щодо книги, клацнути правою кнопкою миші і вибрати у контекстному меню пункт вилучення, порівняння з початковими версіями, збереження на диск, відкриття у зовнішніх програмах тощо."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:669
+msgid ""
+"You can change the cover of the book by simply drag and dropping an image "
+"onto the Book details panel. If you wish to edit the cover image in an "
+"external program, simply right click on it and choose :guilabel:`Open with`."
+msgstr "Ви можете змінити зображення обкладинки книги простим перетягуванням нового зображення і скиданням його на зображення, показане на панелі подробиць щодо книги. Якщо вам потрібно виконати редагування зображення обкладинки у зовнішній програмі, просто наведіть на нього вказівник миші, клацніть правою кнопкою миші і виберіть у контекстному меню пункт :guilabel:`Відкрити за допомогою`."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:673
+msgid ""
+"You can also add e-book files to the current book by drag and dropping the "
+"files onto the Book details panel."
+msgstr "Ви також можете додати файли електронних книг до поточного запису книги простим перетягуванням їх на панель подробиць щодо книги з наступним скиданням."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:676
+msgid ""
+"Double clicking the Book details panel will open it up in a separate popup "
+"window."
+msgstr "Подвійне клацання на панелі подробиць щодо книги відкриє окреме контекстне вікно подробиць."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:679
+msgid ""
+"Finally, you can customize exactly what information is displayed in the Book"
+" details panel via :guilabel:`Preferences->Interface->Look & feel->Book "
+"details`."
+msgstr "Нарешті, ви можете налаштувати вміст панелі подробиць щодо книги за допомогою сторінки :guilabel:`Налаштування -> Інтерфейс -> Зовнішній вигляд -> Подробиці щодо книги`."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:689
+msgid "Tag browser"
+msgstr "Переглядач міток"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:693
+msgid ""
+"The Tag browser allows you to easily browse your collection by "
+"Author/Tags/Series/etc. If you click on any item in the Tag browser, for "
+"example the author name Isaac Asimov, then the list of books to the right is"
+" restricted to showing books by that author. You can click on category names"
+" as well. For example, clicking on \"Series\" will show you all books in any"
+" series."
+msgstr "За допомогою панелі перегляду міток ви можете без проблем здійснювати навігацію вашої збірки за автором, мітками, циклами тощо. Якщо ви натиснете будь-який з пунктів на панелі перегляду міток, наприклад ім’я автора «Isaac Asimov», у списку книг праворуч буде показано лише книги цього автора. Також можна натискати пункти назв категорій. Наприклад, якщо ви натиснете пункт категорії «Цикл», у списку залишаться лише книги, які належать до циклів."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:695
+msgid ""
+"The first click on an item will restrict the list of books to those that "
+"contain or match the item. Continuing the above example, clicking on Isaac "
+"Asimov will show books by that author. Clicking again on the item will "
+"change what is shown, depending on whether the item has children (see sub-"
+"categories and hierarchical items below). Continuing the Isaac Asimov "
+"example, clicking again on Isaac Asimov will restrict the list of books to "
+"those not by Isaac Asimov. A third click will remove the restriction, "
+"showing all books. If you hold down the :kbd:`Ctrl` or :kbd:`Shift` keys and"
+" click on multiple items, then restrictions based on multiple items are "
+"created. For example you could hold :kbd:`Ctrl` and click on the tags "
+"History and Europe for finding books on European history. The Tag browser "
+"works by constructing search expressions that are automatically entered into"
+" the Search bar. Looking at what the Tag browser generates is a good way to "
+"learn how to construct basic search expressions."
+msgstr "Перше клацання на пункті залишить у списку книг лише ті, які містять пункт або відповідають пунктові. Продовжуючи попередній приклад, натискання пункту «Isaac Asimov» призведе до показу книг, автором яких є Айзек Азімов. Повторне натискання пункту змінить список залежно від того, чи є у пункту дочірні записи (див. підкатегорії та ієрархічні записи нижче). У нашому прикладі з Айзеком Азімовим, повторне натискання пункту «Isaac Asimov» залишить у списку лише книги, автором яких не є Айзек Азімов. Після третього натискання пункту обмеження буде знято, і програма покаже у списку усі книги. Якщо ви натиснете і утримуватимете натиснутою клавішу :kbd:`Ctrl` або :kbd:`Shift`, а потім натиснете декілька пунктів, буде створено обмеження на основі позначених таким чином пунктів. Наприклад, ви можете натиснути :kbd:`Ctrl`, а потім натиснути пункти «Історія» і «Європа», щоб знайти усі книги з історії Європи. Панеллю перегляду міток можна скористатися для побудови форматних виразів, які автоматично вводитимуться до рядка пошуку. Спостереження за виразами у рядку пошуку може допомогти вам вивчити мову побудови базових виразів для пошуку у збірці."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:697
+msgid ""
+"Items in the Tag browser have their icons partially colored. The amount of "
+"color depends on the average rating of the books in that category. So for "
+"example if the books by Isaac Asimov have an average of four stars, the icon"
+" for Isaac Asimov in the Tag browser will be 4/5th colored. You can hover "
+"your mouse over the icon to see the average rating."
+msgstr "Програма розфарбовує піктограми пунктів на панелі перегляду міток. Рівень розфарбовування залежить від середньої оцінки книг у відповідній категорії. Отже, наприклад, якщо книги Айзека Азімова мають середню оцінку у чотири зірки, піктограму пункту «Isaac Asimov» на панелі перегляду міток буде розфарбовано на 4/5. Ви можете навести вказівник на піктограму пункту і затримати його там, щоб побачити середню оцінку."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:699
+msgid ""
+"The outer-level items in the :guilabel:`Tag browser`, such as Authors and "
+"Series, are called categories. You can create your own categories, called "
+":guilabel:`User categories`, which are useful for organizing items. For "
+"example, you can use the :guilabel:`User categories editor` (click the "
+":guilabel:`Configure` button at the lower-left of the :guilabel:`Tag "
+"browser` and choose :guilabel:`Manage authors, tags, etc->User categories`) "
+"to create a User category called ``Favorite Authors``, then put the items "
+"for your favorites into the category. User categories can have sub-"
+"categories. For example, the User category ``Favorites.Authors`` is a sub-"
+"category of ``Favorites``. You might also have ``Favorites.Series``, in "
+"which case there will be two sub-categories under ``Favorites``. Sub-"
+"categories can be created by right-clicking on a User category, choosing "
+":guilabel:`Add sub-category to...`, and entering the sub-category name; or "
+"by using the :guilabel:`User categories editor` by entering names like the "
+"Favorites example above."
+msgstr "Пункти зовнішнього рівня на панелі перегляду міток, зокрема пункти «Автори» та «Цикл», називаються категоріями. Ви можете створювати власні категорії, які називаються категоріями користувача, для упорядковування записів. Наприклад, ви можете скористатися редактором категорій користувача (натисніть кнопку :guilabel:`Налаштувати` у нижній лівій частині панелі :guilabel:`Навігація мітками` і виберіть :guilabel:`Керування записами авторів, мітками тощо -> Категорії користувача`) для створення категорії «Улюблені автори», а потім заповнити цю категорію пунктами ваших улюблених книг. У категорій користувача можуть бути підкатегорії. Наприклад, категорія користувача «Улюблені.Автори» є підкатегорією категорії «Улюблені». Також може бути створено підкатегорію «Улюблені.Цикли», таким чином утворивши дві підкатегорії у категорії «Улюблені». Підкатегорії можна створити клацанням правою кнопкою миші на пункті категорії користувача з наступним вибором у контекстному меню пункту :guilabel::`Додати підкатегорію до…` і введенням назви підкатегорії. Також можна скористатися редактором категорій користувача, вводячи назви підкатегорій у форматі, який ми використали у наведеному вище прикладі для категорії «Улюблені»."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:705
+msgid ""
+"You can search User categories in the same way as built-in categories, by "
+"clicking on them. There are four different searches cycled through by "
+"clicking:"
+msgstr "Ви можете шукати за визначеними вами категоріями у той самий спосіб, що і за вбудованими категоріями. Достатньо просто натиснути у списку відповідний пункт. Передбачено чотири різних варіанти пошуку, якими можна циклічно переходити клацанням:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:702
+msgid ""
+"\"everything matching an item in the category\" indicated by a single green "
+"plus sign."
+msgstr "«усе, що відповідає пункту у категорії», позначається одним зеленим значком «плюс»."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:703
+msgid ""
+"\"everything matching an item in the category or its sub-categories\" "
+"indicated by two green plus signs."
+msgstr "«усе, що відповідає пункту у категорії і усіх її підкатегоріях», позначається двома зеленими значками «плюс»."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:704
+msgid ""
+"\"everything not matching an item in the category\" shown by a single red "
+"minus sign."
+msgstr "«усе, що не відповідає пункту у категорії», позначається одним червоним значком «мінус»."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:705
+msgid ""
+"\"everything not matching an item in the category or its sub-categories\" "
+"shown by two red minus signs."
+msgstr "«усе, що не відповідає пункту у категорії і усіх її підкатегоріях», позначається двома червоними значками «мінус»."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:707
+msgid ""
+"It is also possible to create hierarchies inside some of the text categories"
+" such as tags, series, and custom columns. These hierarchies show with the "
+"small triangle, permitting the sub-items to be hidden. To use hierarchies of"
+" items in a category, you must first go to "
+":guilabel:`Preferences->Interface->Look & feel` and enter the category "
+"name(s) into the \"Categories with hierarchical items\" field. Once this is "
+"done, items in that category that contain periods will be shown using the "
+"small triangle. For example, assume you create a custom column called "
+"\"Genre\" and indicate that it contains hierarchical items. Once done, items"
+" such as Mystery.Thriller and Mystery.English will display as Mystery with "
+"the small triangle next to it. Clicking on the triangle will show Thriller "
+"and English as sub-items. See :ref:`Managing subgroups of books, for example"
+" \"genre\" <subgroups-tutorial>` for more information."
+msgstr "Також можна створювати ієрархії у деяких з текстових категорій, зокрема у категоріях міток, циклів та нетипових стовпчиків. До пунктів таких ієрархій додаватиметься невеличке зображення трикутничка, яке можна буде натиснути для згортання або розгортання списку пунктів у категорії. Щоб скористатися ієрархіями пунктів у категоріях, вам слід спочатку відкрити сторінку :guilabel:`Налаштування -> Інтерфейс -> Зовнішній вигляд` і ввести назви категорій до списку «Категорії з ієрархічними пунктами». Після цього, пункти у відповідній категорії, у назвах яких міститимуться крапки, буде показано із зображенням невеличкого трикутничка. Наприклад, припустімо, що ви створили нетиповий стовпчик із назвою «Жанр» і вказали, що у ньому міститимуться ієрархічні пункти. Після цього пункти «Загадки.Трилер» і «Загадки.Англійська» буде показано у форматі списку підпунктів пункту «Загадки» із невеличким зображенням трикутничка. Натискання трикутничка призведе до показу підпунктів «Трилер» і «Англійська». Щоб дізнатися більше ознайомтеся з розділом :ref:`Керування підгрупами книг на прикладі підгрупи «жанр» <subgroups-tutorial>`."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:709
+msgid ""
+"Hierarchical items (items with children) use the same four 'click-on' "
+"searches as User categories. Items that do not have children use two of the "
+"searches: \"everything matching\" and \"everything not matching\"."
+msgstr "Для ієрархічних пунктів (пунктів з дочірніми елементами) використовуються такі самі чотири режими пошуку, що і для визначених вами категорій. Для пунктів, у яких немає дочірніх пунктів, використовується два режими пошуку: «усе, що відповідає» і «усе, що не відповідає»."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:711
+msgid ""
+"You can drag and drop items in the Tag browser onto User categories to add "
+"them to that category. If the source is a User category, holding the "
+":kbd:`Shift` key while dragging will move the item to the new category. You "
+"can also drag and drop books from the book list onto items in the Tag "
+"browser; dropping a book on an item causes that item to be automatically "
+"applied to the dropped books. For example, dragging a book onto Isaac Asimov"
+" will set the author of that book to Isaac Asimov. Dropping it onto the tag "
+"History will add the tag History to the book's tags."
+msgstr "Для додавання пунктів до категорій достатньо перетягнути відповідний пункт на категорію користувача на панелі перегляду міток. Якщо джерелом є категорія користувача, утримування натиснутою клавіші :kbd:`Shift` під час перетягування призведе до пересування пункту до нової категорії. Ви також можете перетягувати і скидати пункти книг зі списку книг на пункти на панелі перегляду міток. Скидання пункту книги на пункт категорії означатиме, що книгу буде автоматично приписано до відповідної категорії. Наприклад, перетягування книги на пункт «Isaac Asimov» встановить для властивості автора книги значення «Isaac Asimov». Скидання пункту книги на мітку «Історія», додасть до міток книги мітку «Історія»."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:713
+msgid ""
+"You can easily find any item in the Tag browser by clicking the search "
+"button at the lower-right corner. In addition, you can right click on any "
+"item and choose one of several operations. Some examples are to hide it, "
+"rename it, or open a \"Manage x\" dialog that allows you to manage items of "
+"that kind. For example, the :guilabel:`Manage authors` dialog allows you to "
+"rename authors and control how their names are sorted."
+msgstr "Знайти щось на панелі перегляду міток дуже просто: натисніть кнопку пошуку у правому нижньому куті панелі. Крім того, ви можете навести вказівник миші на будь-який з пунктів у списку, клацнути правою кнопкою миші і отримати доступ до декількох типових дій. Прикладами таких дій є приховування пункту, перейменування пункту або відкриття діалогового вікна «Керування x», за допомогою якого ви зможете керувати пунктами відповідного типу. Наприклад, за допомогою діалогового вікна «Керування пунктами «Автори»» можна перейменовувати записи авторів та керувати упорядковуванням імен авторів у списку."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:715
+msgid ""
+"You can control how items are sorted in the Tag browser via the "
+":guilabel:`Configure` button at the lower-left of the Tag browser. You can "
+"choose to sort by name, average rating or popularity (popularity is the "
+"number of books with an item in your library; for example, the popularity of"
+" Isaac Asimov is the number of books in your library by Isaac Asimov)."
+msgstr "Керувати способом упорядковування записів у списку панелі перегляду міток можна за допомогою кнопки :guilabel:`Налаштувати`, розташованої у нижній лівій частині панелі навігації мітками. Ви можете вибрати упорядкування за назвою, середньою оцінкою або популярністю (популярність — це кількість книг із відповідною міткою у вашій бібліотеці; наприклад, популярністю мітки «Isaac Asimov» є кількість книг у вашій бібліотеці, автором яких є Айзек Азімов)."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:722
+msgid "Cover grid"
+msgstr "Таблиця обкладинок"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:727
+msgid ""
+"You can have calibre display a grid of book covers instead of a list of "
+"books, if you prefer to browse your collection by covers instead. The "
+":guilabel:`Cover grid` is activated by clicking the :guilabel:`Layout` "
+"button in the bottom right corner of the main calibre window. You can "
+"customize the cover sizes and the background of the :guilabel:`Cover grid` "
+"via :guilabel:`Preferences->Interface->Look & feel->Cover grid`. You can "
+"even have calibre display any specified field under the covers, such as "
+"title or authors or rating or a custom column of your own devising."
+msgstr "Ви можете наказати calibre показати таблицю обкладинок книг замість списку книг, якщо надаєте перевагу перегляду обкладинок книг вашої збірки. Режим :guilabel:`Таблиця обкладинок` можна задіяти натисканням кнопки :guilabel:`Компонування` у нижньому правому куті основного вікна calibre. Налаштувати розміри зображень обкладинок та тло таблиці можна за допомогою сторінки :guilabel:`Налаштування -> Інтерфейс -> Зовнішній вигляд -> Таблиця обкладинок`. Ви можете навіть налаштувати усе так, щоб під обкладинкою було показано вміст певного поля, зокрема назви книги, імен авторів, оцінки або типового поля."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:737
+msgid "Cover browser"
+msgstr "Переглядач обкладинок"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:742
+msgid ""
+"In addition to the :guilabel:`Cover grid` described above, you can also have"
+" calibre display covers in the single row. This is activated via the "
+":guilabel:`Layout` button in the lower right corner of the main window. In "
+":guilabel:`Preferences->Interface->Look & feel->Cover browser` you can "
+"change the number of covers displayed, and even have the :guilabel:`Cover "
+"browser` display itself in a separate popup window."
+msgstr "Окрім таблиці обкладинок, описаної вище, ви можете наказати calibre показати зображення обкладинок у один рядок. Задіяти такий показ можна за допомогою кнопки :guilabel:`Компонування`, розташованої у правому нижньому куті основного вікна програми. За допомогою сторінки :guilabel:`Налаштування -> Інтерфейс -> Зовнішній вигляд` ви можете змінити кількість показаних обкладинок або наказати переглядачеві обкладинок показувати дані у окремому контекстному вікні."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:749
+msgid "Quickview"
+msgstr "Швидкий перегляд"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:751
+msgid ""
+"Sometimes you want to select a book and quickly get a list of books with the"
+" same value in some category (authors, tags, publisher, series, etc.) as the"
+" currently selected book, but without changing the current view of the "
+"library. You can do this with Quickview. Quickview opens either a second "
+"window or a panel in the book list showing the list of books matching the "
+"value of interest. For example, assume you want to see a list of all the "
+"books with the one or more of the authors of the currently-selected book. "
+"Click in the author cell you are interested in and press the 'Q' key or "
+"click the :guilabel:`Quickview` icon in the :guilabel:`Layout` section of "
+"the calibre window. A window or panel will open with all the authors for "
+"that book on the left, and all the books by the selected author on the "
+"right."
+msgstr "Іноді виникає потреба у швидкому отриманні списку книг із тим самим значенням у тій самій категорії (автори, мітки, видавець, цикл тощо), що і поточна книга, але без зміни поточного режиму перегляду бібліотеки. Зробити це можна за допомогою швидкого перегляду. Засіб швидкого перегляду відкриває друге вікно програми або панель у списку книг, де показує список книг, які відповідають певним характеристикам. Нехай, наприклад, ви хочете переглянути список усіх книг, авторами яких є один або декілька авторів позначеної книги. Клацніть на комірці потрібного вам автора і натисніть клавішу Q або піктограму :guilabel:`Швидкий перегляд` у розділі :guilabel:`Компонування` вікна calibre. У відповідь буде відкрито вікно або панель із усіма авторами книги ліворуч і усіма книгами позначеного автора праворуч."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:758
+msgid "Some example Quickview usages: quickly seeing what other books:"
+msgstr "Декілька прикладів використання швидкого перегляду. Швидко знайти інші книги, які"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:754
+msgid "have some tag(s) applied to the currently selected book,"
+msgstr "мають певні мітки, які застосовуються до поточної позначеної книги,"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:755
+msgid "are in the same series as the current book"
+msgstr "належать до тієї самого циклу, що і поточна позначена книга,"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:756
+msgid "have the same values in a custom column as the current book"
+msgstr "мають ті самі значення у нетиповому стовпчику, що і поточна книга,"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:757
+msgid "are written by one of the same authors of the current book"
+msgstr "написано одним із авторів поточної книги,"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:758
+msgid "share values in a custom column"
+msgstr "мають спільні значення у нетиповому стовпчику"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:760
+msgid "There are two choices for where the Quickview information appears:"
+msgstr "Існує два варіанти показу даних швидкого перегляду:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:762
+msgid ""
+"It can open \"undocked\": on top of the calibre window and will stay open "
+"until you explicitly close it."
+msgstr "Може бути відкрито «окрема» вікно, вікно над вікном calibre, яке лишатиметься відкритим, доки ви явним чином його не закриєте."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:763
+msgid ""
+"It can open \"docked\": as a panel in the book list section of the calibre "
+"main window."
+msgstr "Може бути відкрито панель у розділі списку книг головного вікна calibre."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:765
+msgid ""
+"You can move the window from docked to undocked as desired using the "
+"\"Dock/Undock\" button."
+msgstr "Ви можете перемикати режим роботи засобу за допомого кнопки «Пришвартувати/Відшвартувати»."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:767
+msgid ""
+"The Quickview panel can be left open permanently, in which case it follows "
+"movements on the book list. For example, if you click in the calibre library"
+" view on a category column (tags, series, publisher, authors, etc.) for a "
+"book, the Quickview window contents will change to show you in the left-hand"
+" side panel the values in that category for the selected book (e.g., the "
+"tags for that book). The first item in that list will be selected, and "
+"Quickview will show you on the right-hand side panel all the books in your "
+"library that use that value. Click on an different value in the left-hand "
+"panel to see the books with that different value."
+msgstr "Панель швидкого перегляду можна не закривати, вона автоматично стежитиме за змінами у списку книг. Наприклад, якщо на панелі бібліотеки calibre ви натиснете стовпчик категорії (мітки, циклу, видавця, автора тощо) певної книги, вміст вікна швидкого перегляду буде автоматично змінено так, щоб на панелі ліворуч було показано записи у відповідній категорії для поточної книги (наприклад мітки цієї книги). У списку буде позначено перший пункт, а на правій панелі вікна швидкого перегляду буде показано список усіх книг у вашій бібліотеці, де використовується це значення. Якщо ви натиснете якийсь інший пункт на лівій панелі вікна швидкого перегляду, список на правій панелі буде змінено відповідним чином."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:769
+msgid ""
+"Double-click on a book in the Quickview window to select that book in the "
+"library view. This will also change the items display in the QuickView "
+"window (the left-hand panel) to show the items in the newly-selected book."
+msgstr "Подвійне клацання на пункті книги у вікні швидкого перегляду призведе до позначення пункту книги на панелі перегляду бібліотеки. Також це призведе до зміни показу пунктів у вікні швидкого перегляду (на лівій панелі) так, щоб у вікні було показано дані для щойно позначеної книги."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:771
+msgid ""
+":kbd:`Shift-` or :kbd:`Ctrl-` double-click on a book in the Quickview window"
+" to open the edit metadata dialog on that book in the calibre window. The "
+"edited book will be Quickview'ed when you close the edit metadata dialog."
+msgstr "Подвійне клацання на пункті книги у вікні швидкого перегляду з одночасним натисканням клавіші :kbd:`Shift` (або :kbd:`Ctrl`) призведе до відкриття діалогового вікна редагування метаданих відповідної книги у calibre. Для редагованої книги буде відкрито панель швидкого перегляду, коли ви закриєте діалогове вікно редагування метаданих."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:773
+msgid ""
+"You can see if a column can be Quickview'ed by hovering your mouse over the "
+"column heading and looking at the tooltip for that heading. You can also "
+"know by right-clicking on the column heading to see of the \"Quickview\" "
+"option is shown in the menu, in which case choosing that Quickview option is"
+" equivalent to pressing 'Q' in the current cell."
+msgstr "Дізнатися про те, чи можна використовувати стовпчик для швидкого перегляду, можна навівши вказівник миші на заголовок стовпчика. Дані буде показано на панелі контекстної підказки. Також можна пошукати пункт «Швидкий перегляд» у контекстному меню заголовка стовпчика. Вибір цього пункту еквівалентний до натискання клавіші «Q» після позначення відповідної комірки."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:775
+msgid "Options (in :guilabel:`Preferences->Look & feel->Quickview`):"
+msgstr "Параметри (на сторінці :guilabel:`Налаштування->Вигляд і поведінка->Швидкий перегляд`):"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:777
+msgid ""
+"Respect (or not) the current Virtual library. If checked then Quickview "
+"shows only books in the current Virtual library. Default: respect Virtual "
+"libraries"
+msgstr "Брати (чи не брати) до уваги поточну віртуальну бібліотеку. Якщо позначено, на панелі швидкого перегляду буде показано лише книги із поточної віртуальної бібліотеки. Типове значення: брати до уваги віртуальні бібліотеки"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:778
+msgid ""
+"Change the Quickview window contents when the column is changed on the book "
+"list using the cursor keys. Default: don't follow changes made with cursor "
+"keys"
+msgstr "Змінювати вміст вікна швидкого перегляду, якщо у списку книг за допомогою клавіш зі стрілками змінено стовпчик. Типове значення: не змінювати вміст у відповідь на натискання клавіш зі стрілками"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:779
+msgid ""
+"Change the column being \"quickview'ed\" when a cell in the Quickview window"
+" is double-clicked. Otherwise the book is changed but the column being "
+"examined is not. Default: change the column"
+msgstr "Змінювати стовпчик швидкого перегляду у відповідь на подвійне клацання на комірці у вікні швидкого перегляду. Якщо параметр не задіяно, книга змінюватиметься, але стовпчик лишатиметься тим самим. Типове значення: змінювати стовпчик"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:780
+msgid ""
+"Change the column being \"quickview'ed\" to the current column when the "
+"return key is pressed in the Quickview panel. Otherwise the book is changed "
+"but the column being examined is not. Default: change the column"
+msgstr "Змінювати стовпчик швидкого перегляду на поточний стовпчик, якщо на панелі швидкого перегляду натиснуто клавішу Enter. Якщо параметр не задіяно, книга змінюватиметься, але стовпчик лишатиметься тим самим. Типове значення: змінювати стовпчик"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:781
+msgid "Choose which columns are shown in the Quickview window/panel."
+msgstr "Вибрати, які стовпчики буде показано у вікні або на панелі швидкого перегляду."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:790
+msgid "Jobs"
+msgstr "Завдання"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:794
+msgid ""
+"The Jobs panel shows the number of currently running jobs. Jobs are tasks "
+"that run in a separate process. They include converting e-books and talking "
+"to your reader device. You can click on the jobs panel to access the list of"
+" jobs. Once a job has completed you can see a detailed log from that job by "
+"double-clicking it in the list. This is useful to debug jobs that may not "
+"have completed successfully."
+msgstr "На панелі завдань буде показано дані щодо кількості поточних запущених завдань. Завдання — це задачі, які програма виконує у межах окремого процесу. До завдань належать перетворення книг та обмін даними з вашим пристроєм для читання електронних книг. Для отримання доступу до списку завдань достатньо клацнути лівою кнопкою миші на панелі завдань. Щойно виконання завдання буде завершено, ви зможете переглянути докладний звіт щодо виконання у відповідь на подвійне клацання лівою кнопкою миші на пункті у списку завдань. Це корисно для діагностики проблем у виконанні завдань."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:801
+msgid "Keyboard shortcuts"
+msgstr "Клавіатурні скорочення"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:803
+msgid ""
+"calibre has several keyboard shortcuts to save you time and mouse movement. "
+"These shortcuts are active in the book list view (when you're not editing "
+"the details of a particular book), and most of them affect the title you "
+"have selected. The calibre E-book viewer has its own shortcuts which can be "
+"customised by clicking the :guilabel:`Preferences` button in the viewer."
+msgstr "У calibre передбачено декілька клавіатурних скорочень, які допоможуть вам пришвидшити роботу з програмою у уникнути рухів рукою у напрямку миші. Ці клавіатурні скорочення діють на панелі списку книг (якщо ви не редагуєте властивості певної книги). Більшість з них стосуються позначеного запису книги. У засобі перегляду книг calibre передбачено власний набір клавіатурних скорочень, який можна налаштувати натиснувши кнопку :guilabel:`Налаштування` у вікні засобу перегляду електронних книг."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:807
+msgid ""
+"Note: The calibre keyboard shortcuts do not require a modifier key (Command,"
+" Option, Control, etc.), unless specifically noted. You only need to press "
+"the letter key, e.g. E to edit."
+msgstr "Зауваження: у клавіатурних скороченнях calibre не використовуються клавіші-модифікатори (Command, Option, Control тощо), якщо це не вказано додатково. Вам достатньо натиснути клавішу із літерою, наприклад «E» для редагування."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:809
+msgid "Keyboard shortcuts for the main calibre program"
+msgstr "Клавіатурні скорочення основної програми calibre"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:813
+msgid "Keyboard shortcut"
+msgstr "Клавіатурні скорочення"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:814
+msgid "Action"
+msgstr "Дія"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:815
+msgid ":kbd:`F2 (Enter for macOS)`"
+msgstr ":kbd:`F2 (Enter у macOS)`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:816
+msgid "Edit the metadata of the currently selected field in the book list."
+msgstr "Редагувати метадані поточного позначеного поля у списку книг."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:817
+msgid ":kbd:`A`"
+msgstr ":kbd:`A`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:819
+msgid ":kbd:`Shift+A`"
+msgstr ":kbd:`Shift+A`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:820
+msgid "Add formats to the selected books"
+msgstr "Додати формати позначених книг"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:821
+msgid ":kbd:`C`"
+msgstr ":kbd:`C`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:822
+msgid "Convert selected books"
+msgstr "Перетворити позначені книги"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:823
+msgid ":kbd:`D`"
+msgstr ":kbd:`D`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:825
+msgid ":kbd:`Del`"
+msgstr ":kbd:`Del`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:826
+msgid "Remove selected books"
+msgstr "Вилучити вибрані книжки"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:827
+msgid ":kbd:`E`"
+msgstr ":kbd:`E`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:828
+msgid "Edit metadata of selected books"
+msgstr "Редагувати метадані позначених книг"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:829
+msgid ":kbd:`G`"
+msgstr ":kbd:`G`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:830
+msgid "Get books"
+msgstr "Отримати книги"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:831
+msgid ":kbd:`I`"
+msgstr ":kbd:`I`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:832
+msgid "Show Book details"
+msgstr "Показати подробиці щодо книги"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:833
+msgid ":kbd:`K`"
+msgstr ":kbd:`K`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:834
+msgid "Edit Table of Contents"
+msgstr "Редагування змісту"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:835
+msgid ":kbd:`M`"
+msgstr ":kbd:`M`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:836
+msgid "Merge selected records"
+msgstr "Об’єднати позначені записи"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:837
+msgid ":kbd:`Alt+M`"
+msgstr ":kbd:`Alt+M`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:838
+msgid "Merge selected records, keeping originals"
+msgstr "Об’єднати позначені записи із збереженням оригіналів"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:839
+msgid ":kbd:`O`"
+msgstr ":kbd:`O`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:840
+msgid "Open containing folder"
+msgstr "Відкрити теку, яка містить дані"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:841
+msgid ":kbd:`P`"
+msgstr ":kbd:`P`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:842
+msgid "Polish books"
+msgstr "Покращення книг"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:843
+msgid ":kbd:`S`"
+msgstr ":kbd:`S`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:845
+msgid ":kbd:`T`"
+msgstr ":kbd:`T`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:846
+msgid "Edit book"
+msgstr "Редагувати книгу"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:847
+msgid ":kbd:`V`"
+msgstr ":kbd:`V`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:849
+msgid ":kbd:`Shift+V`"
+msgstr ":kbd:`Shift+V`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:850
+msgid "View last read book"
+msgstr "Переглянути останню прочитану книгу"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:851
+msgid ":kbd:`Alt+V/Cmd+V for macOS`"
+msgstr ":kbd:`Alt+V/Cmd+V у macOS`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:852
+msgid "View specific format"
+msgstr "Переглянути в вибраному форматі"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:853
+msgid ":kbd:`Alt+Shift+J`"
+msgstr ":kbd:`Alt+Shift+J`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:854
+msgid "Toggle jobs list"
+msgstr "Увімкнути або вимкнути показ списку завдань"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:855
+msgid ":kbd:`Alt+Shift+B`"
+msgstr ":kbd:`Alt+Shift+B`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:856
+msgid "Toggle Cover browser"
+msgstr "Увімкнути або вимкнути показ панелі навігації обкладинками"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:857
+msgid ":kbd:`Alt+Shift+D`"
+msgstr ":kbd:`Alt+Shift+D`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:858
+msgid "Toggle Book details panel"
+msgstr "Увімкнути або вимкнути показ панелі параметрів книги"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:859
+msgid ":kbd:`Alt+Shift+T`"
+msgstr ":kbd:`Alt+Shift+T`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:860
+msgid "Toggle Tag browser"
+msgstr "Увімкнути або вимкнути показ панелі навігації мітками"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:861
+msgid ":kbd:`Alt+Shift+G`"
+msgstr ":kbd:`Alt+Shift+G`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:862
+msgid "Toggle Cover grid"
+msgstr "Увімкнути або вимкнути показ таблиці обкладинок"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:863
+msgid ":kbd:`Alt+A`"
+msgstr ":kbd:`Alt+A`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:864
+msgid "Show books by the same author as the current book"
+msgstr "Показати книги, автором яких є автор поточної книги"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:865
+msgid ":kbd:`Alt+T`"
+msgstr ":kbd:`Alt+T`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:866
+msgid "Show books with the same tags as current book"
+msgstr "Показати книги із тими самими мітками, що і поточна книга"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:867
+msgid ":kbd:`Alt+P`"
+msgstr ":kbd:`Alt+P`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:868
+msgid "Show books by the same publisher as current book"
+msgstr "Показати книги того самого видавця, що і поточна книга"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:869
+msgid ":kbd:`Alt+Shift+S`"
+msgstr ":kbd:`Alt+Shift+S`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:870
+msgid "Show books in the same series as current book"
+msgstr "Показати книги з того самого циклу, що і поточна книга"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:871
+msgid ":kbd:`/, Ctrl+F`"
+msgstr ":kbd:`/, Ctrl+F`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:872
+msgid "Focus the Search bar"
+msgstr "Перевести фокус на панель пошуку"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:873
+msgid ":kbd:`Shift+Ctrl+F`"
+msgstr ":kbd:`Shift+Ctrl+F`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:874
+msgid "Open the Advanced search dialog"
+msgstr "Відкрити діалогове вікно складного пошуку"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:875
+msgid ":kbd:`Shift+Alt+F`"
+msgstr ":kbd:`Shift+Alt+F`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:876
+msgid "Toggle the Search bar"
+msgstr "Увімкнути або вимкнути панель пошуку"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:877
+msgid ":kbd:`Esc`"
+msgstr ":kbd:`Esc`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:878
+msgid "Clear the current search"
+msgstr "Спорожнити поточний пошук"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:879
+msgid ":kbd:`Shift+Esc`"
+msgstr ":kbd:`Shift+Esc`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:880
+msgid "Focus the book list"
+msgstr "Фокусувати список книг"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:881
+msgid ":kbd:`Ctrl+Esc`"
+msgstr ":kbd:`Ctrl+Esc`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:882
+msgid "Clear the Virtual library"
+msgstr "Спорожнити віртуальну бібліотеку"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:883
+msgid ":kbd:`Alt+Esc`"
+msgstr ":kbd:`Alt+Esc`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:884
+msgid "Clear the additional restriction"
+msgstr "Вилучити додаткове обмеження"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:885
+msgid ":kbd:`Ctrl+*`"
+msgstr ":kbd:`Ctrl+*`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:886
+msgid "Create a temporary Virtual library based on the current search"
+msgstr "Створити тимчасову віртуальну бібліотеку на основі поточних результатів пошуку"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:887
+msgid ":kbd:`Ctrl+Right`"
+msgstr ":kbd:`Ctrl+→`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:888
+msgid "Select the next Virtual library tab"
+msgstr "Вибрати вкладку наступної віртуальної бібліотеки"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:889
+msgid ":kbd:`Ctrl+Left`"
+msgstr ":kbd:`Ctrl+←`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:890
+msgid "Select the previous Virtual library tab"
+msgstr "Вибрати вкладку попередньої віртуальної бібліотеки"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:891
+msgid ":kbd:`N or F3`"
+msgstr ":kbd:`N або F3`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:892
+msgid ""
+"Find the next book that matches the current search (only works if search "
+"highlighting is turned on in search preferences)"
+msgstr "Знайти наступну книгу, яка відповідає поточним критеріям пошуку (працюватиме, лише якщо у параметрах пошуку увімкнено підсвічування результатів)"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:893
+msgid ":kbd:`Shift+N or Shift+F3`"
+msgstr ":kbd:`Shift+N або Shift+F3`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:894
+msgid ""
+"Find the previous book that matches the current search (only works if search"
+" highlighting is turned on in search preferences)"
+msgstr "Знайти попередню книгу, яка відповідає поточним критеріям пошуку (працюватиме, лише якщо у параметрах пошуку увімкнено підсвічування результатів)"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:895
+msgid ":kbd:`Ctrl+D`"
+msgstr ":kbd:`Ctrl+D`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:896
+msgid "Download metadata and covers"
+msgstr "Отримати метадані та зображення обкладинок"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:897
+msgid ":kbd:`Ctrl+R`"
+msgstr ":kbd:`Ctrl+R`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:898
+msgid "Restart calibre"
+msgstr "Перезапустити Сalibre"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:899
+msgid ":kbd:`Ctrl+Shift+R`"
+msgstr ":kbd:`Ctrl+Shift+R`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:900
+msgid "Restart calibre in debug mode"
+msgstr "Перезапустити calibre у діагностичному режимі"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:901
+msgid ":kbd:`Shift+Ctrl+E`"
+msgstr ":kbd:`Shift+Ctrl+E`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:902
+msgid "Add empty books to calibre"
+msgstr "Додати порожні книги до збірки calibre"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:903
+msgid ":kbd:`Ctrl+M`"
+msgstr ":kbd:`Ctrl+M`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:904
+msgid "Toggle mark/unmarked status on selected books"
+msgstr "Перемкнути стан позначено/не позначено для позначених книг"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:905
+msgid ":kbd:`Ctrl+/` or :kbd:`Ctrl+Alt+F`"
+msgstr ":kbd:`Ctrl+/` або :kbd:`Ctrl+Alt+F`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:906
+msgid "Open the popup to search the full text of all books in the library"
+msgstr "Відкрити контексту панель пошуку для повнотекстового пошуку в усіх книгах бібліотеки"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:907
+msgid ":kbd:`Q`"
+msgstr ":kbd:`Q`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:908
+msgid ""
+"Open the Quick View popup for viewing books in related series/tags/etc."
+msgstr "Відкрити контекстну панель швидкого перегляду для перегляду книг у пов’язаних циклах, мітках тощо."
+
+#: ../../__w/calibre/calibre/manual/gui.rst:909
+msgid ":kbd:`Shift+Q`"
+msgstr ":kbd:`Shift+Q`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:910
+msgid "Focus the opened Quick View panel"
+msgstr "Перевести фокус на відкриту панель швидкого перегляду"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:911
+msgid ":kbd:`Shift+S`"
+msgstr ":kbd:`Shift+S`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:912
+msgid "Perform a search in the Quick View panel"
+msgstr "Виконати пошук на панелі швидкого перегляду"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:913
+msgid ":kbd:`F5`"
+msgstr ":kbd:`F5`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:914
+msgid "Re-apply the current sort"
+msgstr "Повторно застосувати поточний порядок"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:915
+msgid ":kbd:`Ctrl+Q`"
+msgstr ":kbd:`Ctrl+Q`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:916
+msgid "Quit calibre"
+msgstr "Вийти з calibre"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:917
+msgid ":kbd:`X`"
+msgstr ":kbd:`X`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:918
+msgid "Toggle auto scroll of the book list"
+msgstr "Увімкнути або вимкнути автоматичне гортання у списку книг"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:919
+msgid ":kbd:`Ctrl+Alt+Shift+F`"
+msgstr ":kbd:`Ctrl+Alt+Shift+F`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:920
+msgid ""
+"Restrict the displayed books to only those books that are in a category "
+"currently displayed in the :guilabel:`Tag browser`"
+msgstr "Обмежити показані книги тими, які належать до категорії, яку показано на панелі :guilabel:`Навігатор мітками`"

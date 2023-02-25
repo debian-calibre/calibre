@@ -1,0 +1,189 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Riyadh Talal <a.shamil77@yahoo.com>, 2021
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre 5.8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-01-06 13:34+0000\n"
+"PO-Revision-Date: 2020-11-12 05:43+0000\n"
+"Last-Translator: Riyadh Talal <a.shamil77@yahoo.com>, 2021\n"
+"Language-Team: Arabic (https://www.transifex.com/calibre/teams/19337/ar/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:2
+msgid "The calibre:// URL scheme"
+msgstr "ترسيمة calibre:// URL"
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:4
+msgid ""
+"calibre registers itself as the handler program for calibre:// URLs. So you "
+"can use these to perform actions like opening books, searching for books, "
+"etc from other programs/documents or via the command line. For example, "
+"running the following at the command line::"
+msgstr ""
+"كاليبر يسجل نفسه كبرنامج متولٍّ للروابط calibre:// URL. لذا يمكنك استخدامها "
+"لتأدية إجراءات مثل فتح كتب والبحث عن كتب وغير ذلك من برامج/مستندات أخرى أو "
+"عبر سطر الأوامر. مثلا، تشغيل التالي في سطر الأوامر:"
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:11
+msgid ""
+"Will open calibre with the library named ``Some Library``. Library names are"
+" the folder name of the library folder with spaces replaced by underscores. "
+"The special value ``_`` means the current library. The various types of URLs"
+" are documented below."
+msgstr ""
+"سيفتح كاليبر مع المكتبة المسماة ``Some Library``. أسماء المكتبات هي اسم "
+"المجلد لمجلد المكتبة مع استبدال الفراغات بشارحات سفلية. القيمة الخاصة ``_`` "
+"تعني المكتبة الحالية. مختلف أنواع الروابط URL موثّقة تالياً."
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:16
+msgid ""
+"You can even place these links inside HTML files or Word documents or "
+"similar and the operating system will automatically run calibre to perform "
+"the specified action."
+msgstr ""
+"يمكنك حتى أن تضع هذه الروابط داخل ملفات HTML أو مستندات وورد أو ماشابهها "
+"وسيشغّل النظام التشغيلي كاليبر تلقائيا لتأدية الإجراء المعيّن."
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:26
+msgid "Switch to a specific library"
+msgstr "التبديل إلى مكتبة معيّنة"
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:28
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:47
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:63
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:77
+msgid "The URL syntax is::"
+msgstr "قواعد الرابط URL هي:"
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:32
+msgid ""
+"Library names are the folder name of the library with spaces replaced by "
+"underscores. The special value ``_`` means the current library. You can also"
+" use :ref:`hex encoding <hex_encoding>` for the library names, useful if the"
+" library names have special characters that would otherwise require URL "
+"encoding. Hex encoded library names look like::"
+msgstr ""
+"أسماء المكتبات هي اسم المجلد للمكتبة مع استبدال الفراغات بشارحات سفلية. "
+"القيمة الخاصة ``_`` تعني المكتبة الحالية. يمكنك أيضاً استخدام تشفير "
+"‎:ref:`hex <hex_encoding>` لأسماء المكتبات، وهذا مفيد إذا كان في أسماء "
+"المكتبات رموز خاصة كانت لتتطلب تشفير الرابط. أسماء المكتبات المشفرة Hex ستة "
+"عشريا تبدو هكذا:"
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:40
+msgid ""
+"Where the part after the ``_hex_-`` prefix is the library name encoded as "
+"UTF-8 and every byte represented by two hexadecimal characters."
+msgstr ""
+"حيث أن الجزء الذي بعد البادئة ‎`‎`_hex‎_‎-‎`‎`‎ هو اسم المكتبة مشفراً "
+"بالتشفير الموحد UTF-8 وكل بايت ممثَّل برمزين من التشفير الستة عشري."
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:45
+msgid "Show a specific book in calibre"
+msgstr "أظهر كتاباً معيّناً في كاليبر"
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:51
+msgid ""
+"This will show the book with ``book_id`` (a number) in calibre. The ids for "
+"books can be seen in the calibre interface by hovering over the "
+":guilabel:`Click to open` link in the :guilabel:`Book details` panel, it is "
+"the number in brackets at the end of the path to the book folder."
+msgstr ""
+"هذا سيُظهر الكتاب مع المعرّف ``book_id`` (رقم) في كاليبر. يمكن رؤية معرّفات "
+"الكتب في واجهة كاليبر بالتحويم فوق رابط ‎:‎guilabel‎:‎`انقر لتفتح‎`‎ في لوحة"
+" :‎guilabel‎:`تفاصيل الكتاب‎`‎، انه الرقم بين الأقواس عند نهاية المسار "
+"المؤدي إلى مجلد الكتاب."
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:56
+msgid ""
+"You can copy a link to the current book displayed in calibre by right "
+"clicking the :guilabel:`Book details` panel and choosing :guilabel:`Copy "
+"link to book`."
+msgstr ""
+"يمكنك نسخ رابط الى الكتاب الحالي المعروض في كاليبر بالنقر يمينا على لوحة "
+":‎guilabel‎:`تفاصيل الكتاب‎`‎ واختيار :‎guilabel‎:`نسخ الرابط إلى الكتاب‎`‎."
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:61
+msgid "Open a specific book in the E-book viewer at a specific position"
+msgstr "فتح كتاب معيَّن في متصفح الكتب عند موضع معيَّن"
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:67
+msgid ""
+"Here, ``book_format`` is the format of the book, for example, ``EPUB`` or "
+"``MOBI`` and the ``location`` is an optional location inside the book. The "
+"easiest way to get these links is to open a book in the viewer, then in the "
+"viewer controls select :guilabel:`Go to->Location` and there such a link "
+"will be given that you can copy/paste elsewhere."
+msgstr ""
+"هنا، ``book_format`` هي صيغة الكتاب، مثلا ``EPUB`` أو ``MOBI`` و الموضع "
+"``location`` هو موضع اختياري داخل الكتاب. أسهل طريقة للحصول على هذه الروابط "
+"هي فتح كتاب في المعاين، ثم في متحكمات المعاين تحديد ‎:‎guilabel:‎`ذهاب "
+"إلى->موضع‎`‎ وهناك سيُعطى الرابط الذي يمكنك نسخه/لصقه في مكان آخر."
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:75
+msgid "Searching for books"
+msgstr "يجري البحث عن الكتب"
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:82
+msgid ""
+"Here query is any valid :ref:`search expression <search_interface>`. If the "
+"search expression is complicated, :ref:`encode it as a hex string "
+"<hex_encoding>` and use ``eq`` instead. Leaving out the query will cause the"
+" current search to be cleared."
+msgstr ""
+"هنا الاستعلام هو أي تعبير  صحيح ‎:ref:`search <search_interface>`. إذا كان "
+"تعبير البحث معقدا، فشفّره ‎:ref:`encode كمقطع ستة عشري <hex_encoding>` "
+"واستخدم ``eq`` بدلا عن ذلك. ترك الاستعلام سيتسبب في تفريغ البحث الحالي."
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:87
+msgid ""
+"By default, if a Virtual library is selected, calibre will clear it before "
+"doing the search to ensure all books are found. If you want to preserve the "
+"Virtual library, use::"
+msgstr ""
+"مبدئيا، إذا حُدّدت مكتبة افتراضية، فإنّ كاليبر سيفرغها قبل أداء البحث ليضمن "
+"إيجاد كل الكتب. إذا أردت الإبقاء على المكتبة الافتراضية، استخدم:"
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:93
+msgid "If you want to switch to a particular Virtual library, use::"
+msgstr "إذا أردت التبديل إلى مكتبة افتراضية بعينها، استخدم:"
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:99
+msgid "replacing spaces in the Virtual library name by ``%20``."
+msgstr "مستبدلا الفراغات في إسم المكتبة الافتراضية بـ ‎``%20``‎."
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:101
+msgid ""
+"If you perform a search in calibre and want to generate a link for it you "
+"can do so by right clicking the search bar and choosing :guilabel:`Copy "
+"search as URL`."
+msgstr ""
+"إذا قمت ببحث في كاليبر وتريد توليد رابط له فيمكنك فعل ذلك بالنقر يمينا على "
+"شريط البحث واختيار ‎:‎guilabel:‎`نسخ البحث كرابط‎`‎."
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:109
+msgid "Hex encoding of URL parameters"
+msgstr "محددات التشفير الستة عشري للرابط"
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:111
+msgid ""
+"Hex encoding of URL parameters is done by first encoding the parameter as "
+"UTF-8 bytes, and then replacing each byte by two hexadecimal characters "
+"representing the byte. For example, the string ``abc`` is the bytes ``0x61 "
+"0x62 and 0x63`` in UTF-8, so the encoded version is the string: ``616263``."
+msgstr ""
+"محددات التشفير الستة عشري للرابط تُعمَل بتشفير المحدِّد أولاً كبايتات تشفير "
+"موحد UTF-8، وثم استبدال كل بايت برمزي التشفير الستة عشري التي تمثّل البايت. "
+"مثلا، المقطع ``abc`` هو البايتات ``0x61 و 0x62 و 0x63`` بالتشفير الموحد "
+"UTF-8، لذا فالنسخة المشفَّرة هي المقطع: ``616263``."

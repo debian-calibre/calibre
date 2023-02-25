@@ -1,0 +1,792 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Ptit Prince <leporello1791@gmail.com>, 2020
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre 4.99.13\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-09-02 05:23+0000\n"
+"PO-Revision-Date: 2017-12-15 03:02+0000\n"
+"Last-Translator: Ptit Prince <leporello1791@gmail.com>, 2020\n"
+"Language-Team: French (https://www.transifex.com/calibre/teams/19337/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:2
+msgid "Quick reference for regexp syntax"
+msgstr "Mémento pour la syntaxe regexp"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:4
+msgid ""
+"This checklist summarizes the most commonly used/hard to remember parts of "
+"the regexp engine available in most parts of calibre."
+msgstr ""
+"Cet aide-mémoire résume les parties du moteur regexp les plus couramment "
+"utilisées/difficilement mémorisables disponibles dans la plupart des parties"
+" de calibre."
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:10
+msgid "Contents"
+msgstr "Contenu"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:13
+msgid "Character classes"
+msgstr "Les classes de caractères"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:15
+msgid ""
+"Character classes are useful to represent different groups of characters, "
+"succinctly."
+msgstr ""
+"Les classes de caractères sont utiles pour représenter différents groupes de"
+" caractères,  succinctement."
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:18
+msgid "Examples:"
+msgstr "Exemples : "
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:21
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:52
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:253
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:283
+msgid "**Representation**"
+msgstr "**Représentation**"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:21
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:52
+msgid "**Class**"
+msgstr "**Classe**"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:24
+msgid "``[a-z]``"
+msgstr "``[a-z]``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:24
+msgid ""
+"Lowercase letters. Does not include characters with accent mark and "
+"ligatures"
+msgstr ""
+"Lettres minuscules. Ne comprend pas les caractères accentués et les "
+"ligatures"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:27
+msgid "``[a-z0-9]``"
+msgstr "``[a-z0-9]``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:27
+msgid "Lowercase letters from a to z or numbers from 0 to 9"
+msgstr "Lettres minuscules de a à z ou chiffres de 0 à 9"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:30
+msgid "``[A-Za-z-]``"
+msgstr "``[A-Za-z-]``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:30
+msgid ""
+"Uppercase or lowercase letters, or a dash. To include the dash in a class, "
+"you must put it at the beginning or at the end so as not to confuse it with "
+"the hyphen that specifies a range of characters"
+msgstr ""
+"Lettre majuscule ou minuscule, ou un tiret. Pour inclure le tiret dans une "
+"classe, il faut le mettre au début ou à la fin pour ne pas le confondre avec"
+" le tiret qui spécifie une plage de caractères"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:33
+msgid "``[^0-9]``"
+msgstr "``[^0-9]``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:33
+msgid ""
+"Any character except a digit. The caret (^) placed at the beginning of the "
+"class excludes the characters of the class (complemented class)"
+msgstr ""
+"Tout caractère sauf un chiffre. Le circonflexe (^) placé en début de classe "
+"exclut les caractères de la classe (classe complémentée)"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:36
+msgid "``[[a-z]--[aeiouy]]``"
+msgstr "``[[a-z]--[aeiouy]]``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:36
+msgid ""
+"The lowercase consonants. A class can be included in a class. The characters"
+" ``--`` exclude what follows them"
+msgstr ""
+"Les consonnes minuscules. Une classe peut être incluse dans une classe. Les "
+"caractères ``--`` excluent ce qui les suit"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:39
+msgid "``[\\w--[\\d_]]``"
+msgstr "``[\\w--[\\d_]]``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:39
+msgid ""
+"All letters (including foreign accented characters). Abbreviated classes can"
+" be used inside a class"
+msgstr ""
+"Toutes les lettres (y compris les caractères accentués étrangers). Les "
+"classes abrégées peuvent être utilisées à l’intérieur d’une classe"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:44
+msgid "Example::"
+msgstr "Exemple::"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:49
+msgid "Shorthand character classes"
+msgstr "Les classes de caractères abrégées"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:55
+msgid "``\\d``"
+msgstr "``\\d``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:55
+msgid "A digit (same as ``[0-9]``)"
+msgstr "Un chiffre (identique à [0-9])"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:58
+msgid "``\\D``"
+msgstr "``\\D``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:58
+msgid "Any non-numeric character (same as ``[^0-9]``)"
+msgstr "Tout caractère non numérique (identique à [^0-9])"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:61
+msgid "``\\w``"
+msgstr "``\\w``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:61
+msgid ""
+"An alphanumeric character (``[a-zA-Z0-9]``) including characters with accent"
+" mark and ligatures"
+msgstr ""
+"Un caractère alphanumérique plus le souligné (``[a-zA-Z0-9_]``) y compris "
+"les caractères accentués et les ligatures"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:64
+msgid "``\\W``"
+msgstr "``\\W``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:64
+msgid "Any “non-word” character"
+msgstr "Tout caractère « non-word »"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:67
+msgid "``\\s``"
+msgstr "``\\s``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:67
+msgid "Space, non-breaking space, tab, return line"
+msgstr "Espace, espace insécable, tabulation, retour ligne"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:70
+msgid "``\\S``"
+msgstr "``\\S``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:70
+msgid "Any “non-whitespace” character"
+msgstr "Tout caractère « non-whitespace »"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:73
+msgid "``.``"
+msgstr "``.``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:73
+msgid ""
+"Any character except newline. Use the “dot all” checkbox or the ``(?s)`` "
+"regexp modifier to include the newline character."
+msgstr ""
+"N’importe quel caractère sauf le retour ligne. Il faut cocher la case \"dot "
+"all\" ou utiliser la regexp ``(?s)`` pour inclure le caractère de retour de "
+"ligne"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:78
+msgid "The quantifiers"
+msgstr "Les quantificateurs"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:81
+msgid "**Quantifier**"
+msgstr "**Quantificateur**"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:81
+msgid "**Number of occurrences of the expression preceding the quantifier**"
+msgstr "**Nombre occurrences de l'expression précédant le quantificateur**"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:84
+msgid "``?``"
+msgstr "``?``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:84
+msgid "0 or 1 occurrence of the expression. Same as ``{0,1}``"
+msgstr "0 ou 1 occurrence de l'expression. Identique à ``{0,1}``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:87
+msgid "``+``"
+msgstr "``+``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:87
+msgid "1 or more occurrences of the expression. Same as ``{1,}``"
+msgstr "1 ou plusieurs occurrences de l'expression. Identique à ``{1,}``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:90
+msgid "``*``"
+msgstr "``*``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:90
+msgid "0, 1 or more occurrences of the expression. Same as ``{0,}``"
+msgstr "0, 1 ou plusieurs occurrences de l'expression. Identique à ``{0,}``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:93
+msgid "``{n}``"
+msgstr "``{n}``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:93
+msgid "Exactly n occurrences of the expression"
+msgstr "Exactement n occurrences de l'expression"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:96
+msgid "``{min,max}``"
+msgstr "``{min,max}``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:96
+msgid "Number of occurrences between the minimum and maximum values included"
+msgstr ""
+"Nombre d’occurrences compris entre les valeurs minimales et maximales "
+"incluses"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:99
+msgid "``{min,}``"
+msgstr "``{min,}``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:99
+msgid ""
+"Number of occurrences between the minimum value included and the infinite"
+msgstr ""
+"Nombre d’occurrences compris entre la valeur minimale incluse et l'infini"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:102
+msgid "``{,max}``"
+msgstr "``{,max}``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:102
+msgid "Number of occurrences between 0 and the maximum value included"
+msgstr "Nombre d’occurrences compris entre 0 et la valeur maximale incluse"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:109
+msgid "Greed"
+msgstr "La gourmandise"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:111
+msgid ""
+"By default, with quantifiers, the regular expression engine is greedy: it "
+"extends the selection as much as possible. This often causes surprises, at "
+"first. ``?`` follows a quantifier to make it lazy. Avoid putting two in the "
+"same expression, the result can be unpredictable."
+msgstr ""
+"Par défaut, avec les quantificateurs, le moteur d’expressions rationnelles "
+"est gourmand (greedy) : il étend la sélection autant que possible. Cela "
+"réserve des surprises, au début. ``?`` suit un quantificateur pour le rendre"
+" non gourmand (lazy). Éviter d’en mettre deux dans la même expression, le "
+"résultat peut être imprévisible."
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:116
+msgid ""
+"Beware of nesting quantifiers, for example, the pattern ``(a*)*``, as it "
+"exponentially increases processing time."
+msgstr ""
+"Attention à l’imbrication des quantificateurs, comme, par exemple, le motif "
+"``(a*)*`` : il augmente de façon exponentielle les traitements."
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:120
+msgid "Alternation"
+msgstr "L’alternative"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:122
+msgid ""
+"The ``|`` character in a regular expression is a logical ``OR``. It means "
+"that either the preceding or the following expression can match."
+msgstr ""
+"Le caractère ``|`` dans une expression régulière est un ``OR`` logique. Cela"
+" signifie que soit l'expression précédente soit l'expression suivante peut "
+"correspondre."
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:126
+msgid "Exclusion"
+msgstr "L'exclusion"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:128
+msgid "Method 1"
+msgstr "Méthode 1"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:130
+msgid "``pattern_to_exclude(*SKIP)(*FAIL)|pattern_to_select``"
+msgstr "``motif_à_exclure(*SKIP)(*FAIL)|motif_à_sélectionner``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:132
+msgid "Example:"
+msgstr "Exemple : "
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:134
+msgid "``\"Blabla\"(*SKIP)(*FAIL)|Blabla``"
+msgstr "``\"Blabla\"(*SKIP)(*FAIL)|Blabla``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:136
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:144
+msgid ""
+"selects Blabla, in the strings Blabla or \"Blabla or Blabla\", but not in "
+"\"Blabla\"."
+msgstr ""
+"sélectionne Blabla, dans les chaînes Blabla ou \"Blabla ou Blabla\", mais "
+"pas dans \"Blabla\"."
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:138
+msgid "Method 2"
+msgstr "Méthode 2"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:140
+msgid "``pattern_to_exclude\\K|(pattern_to_select)``"
+msgstr "``motif_à_exclure\\K|(motif_à_sélectionner)``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:142
+msgid "``\"Blabla\"\\K|(Blabla)``"
+msgstr "``\"Blabla\"\\K|(Blabla)``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:147
+msgid "Anchors"
+msgstr "Les ancres"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:149
+msgid ""
+"An anchor is a way to match a logical location in a string, rather than a "
+"character. The most useful anchors for text processing are:"
+msgstr ""
+"Une ancre est un moyen de faire correspondre une position logique dans une "
+"chaîne, plutôt qu'un caractère. Les ancres les plus utiles pour le "
+"traitement de texte sont : "
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:155
+msgid "``\\b``"
+msgstr "``\\b``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:153
+msgid ""
+"Designates a word boundary, i.e. a transition from space to non-space "
+"character. For example, you can use ``\\bsurd`` to match ``the surd`` but "
+"not ``absurd``."
+msgstr ""
+"Désigne une limite de mot, càd une transition depuis un espace à caractère "
+"non-espace. Par exemple, vous pouvez utiliser ``\\bsurd`` pour correspondre "
+"à ``the surd`` mais pas ``absurd``."
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:159
+msgid "``^``"
+msgstr "``^``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:158
+msgid "Matches the start of a line (in multi-line mode, which is the default)"
+msgstr ""
+"Correspond au début d'une ligne (en mode multi lignes, qui est le mode par "
+"défaut)"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:162
+msgid "``$``"
+msgstr "``$``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:162
+msgid "Matches the end of a line (in multi-line mode, which is the default)"
+msgstr ""
+"Correspond à la fin d'une ligne (en mode multi lignes, qui est le mode par "
+"défaut)"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:169
+msgid "``\\K``"
+msgstr "``\\K``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:165
+msgid ""
+"Resets the start position of the selection to its position in the pattern. "
+"Some regexp engines (but not calibre) do not allow lookbehind of variable "
+"length, especially with quantifiers. When you can use ``\\K`` with these "
+"engines, it also allows you to get rid of this limit by writing the "
+"equivalent of a positive lookbehind of variable length."
+msgstr ""
+"Réinitialise l’endroit de début de la sélection à sa position dans le motif."
+" Certains moteurs de regexp (mais pas celui de calibre) n'autorisent pas les"
+" assertions arrière de longueur variable, et notamment avec des "
+"quantificateurs. Lorsque l'on peut utiliser \\K avec ces moteurs-là, il "
+"permet aussi de s’affranchir de cette limite en écrivant l'équivalent d'une "
+"assertions arrière positive de longueur variable."
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:172
+msgid "Groups"
+msgstr "Groupes"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:177
+msgid "``(expression)``"
+msgstr "``(expression)``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:175
+msgid ""
+"Capturing group, which stores the selection and can be recalled later in the"
+" *search* or *replace* patterns with ``\\n``, where ``n`` is the sequence "
+"number of the capturing group (starting at 1 in reading order)"
+msgstr ""
+"Groupe de capture, qui mémorise la sélection et qui peut être rappelée par "
+"la suite dans les motifs \"rechercher\" ou \"remplacer\" par \\n, où ``n`` "
+"est le numéro d’ordre du groupe de capture (en commençant à 1 dans l'ordre "
+"de lecture)"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:180
+msgid "``(?:expression)``"
+msgstr "``(?:expression)``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:180
+msgid "Group that does not capture the selection"
+msgstr "Groupe qui ne mémorise pas la sélection"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:186
+msgid "``(?>expression)``"
+msgstr "``(?>expression)``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:183
+msgid ""
+"Atomic Group: As soon as the expression is satisfied, the regexp engine "
+"passes, and if the rest of the pattern fails, it will not backtrack to try "
+"other combinations with the expression. Atomic groups do not capture."
+msgstr ""
+"Groupe atomique : dès que l’expression est satisfaite, le moteur de regexp "
+"passe à la suite, et si le reste du motif échoue, il ne fera pas marche "
+"arrière pour essayer d’autres combinaisons avec l’expression. Les groupes "
+"atomiques ne capturent pas."
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:190
+msgid "``(?|expression)``"
+msgstr "``(?|expression)``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:189
+msgid ""
+"Branch reset group: the branches of the alternations included in the "
+"expression share the same group numbers"
+msgstr ""
+"Groupe de réinitialisation de branche : les branches des alternatives "
+"inclues dans l’expression partagent les mêmes numéros de groupe"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:196
+msgid "``(?<name>expression)``"
+msgstr "``(?<name>expression)``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:193
+msgid ""
+"Group named “name”. The selection can be recalled later in the *search* "
+"pattern by ``(?P=name)`` and in the *replace* by ``\\g<name>``. Two "
+"different groups can use the same name."
+msgstr ""
+"Groupe nommé \"name\". La sélection peut être rappelée par la suite dans le "
+"motif *rechercher* par ``(?P=name)`` et dans le *remplacer* par "
+"``\\g<name>``. Deux groupes différents peuvent utiliser le même nom."
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:199
+msgid "Lookarounds"
+msgstr "Les assertiions"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:202
+msgid "**Lookaround**"
+msgstr "**Assertion**"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:202
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:253
+msgid "**Meaning**"
+msgstr "**Signification**"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:205
+msgid "``?=``"
+msgstr "``?=``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:205
+msgid "Positive lookahead (to be placed after the selection)"
+msgstr "Assertion avant positive (à placer après la sélection)"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:208
+msgid "``?!``"
+msgstr "``?!``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:208
+msgid "Negative lookahead (to be placed after the selection)"
+msgstr "Assertion avant négative (à placer après la sélection)"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:211
+msgid "``?<=``"
+msgstr "``?<=``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:211
+msgid "Positive lookbehind (to be placed before the selection)"
+msgstr "Assertion arrière positive (à placer avant la sélection)"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:214
+msgid "``?<!``"
+msgstr "``?<!``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:214
+msgid "Negative lookbehind (to be placed before the selection)"
+msgstr "Assertion arrière négative (à placer avant la sélection)"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:218
+msgid ""
+"Lookaheads and lookbehinds do not consume characters, they are zero length "
+"and do not capture. They are atomic groups: as soon as the assertion is "
+"satisfied, the regexp engine passes, and if the rest of the pattern fails, "
+"it will not backtrack inside the lookaround to try other combinations."
+msgstr ""
+"Les assertions avant et arrière ne consomment pas de caractère, elles sont "
+"de longueur nulle et ne capturent pas. Ce sont des groupes atomiques : dès "
+"que l’assertion est satisfaite, le moteur de regexp passe à la suite, et si "
+"le reste du motif échoue, il ne fera pas marche arrière à l'intérieur de "
+"l’assertion pour essayer d’autres combinaisons."
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:223
+msgid ""
+"When looking for multiple matches in a string, at the starting position of "
+"each match attempt, a lookbehind can inspect the characters before the "
+"current position. Therefore, on the string 123, the pattern ``(?<=\\d)\\d`` "
+"(a digit preceded by a digit) should, in theory, select 2 and 3. On the "
+"other hand, ``\\d\\K\\d`` can only select 2, because the starting position "
+"after the first selection is immediately before 3, and there are not enough "
+"digits for a second match. Similarly, ``\\d(\\d)`` only captures 2. In "
+"calibre's regexp engine practice, the positive lookbehind behaves in the "
+"same way, and selects only 2, contrary to theory."
+msgstr ""
+"Lorsque l’on cherche plusieurs correspondances dans une chaîne, à la "
+"position de départ de chaque tentative de correspondance, une assertion "
+"arrière peut inspecter les caractères situés avant la position actuelle. Par"
+" conséquent, sur la chaîne 123, le motif ``(?<=\\d)\\d`` (un chiffre précédé"
+" d'un chiffre) devrait, en théorie, sélectionner 2 et 3. En revanche, "
+"``\\d\\K\\d`` ne peut sélectionner que 2, car la position de départ après la"
+" première sélection est immédiatement avant 3, et il n'y a plus assez de "
+"chiffres pour une seconde correspondance. De même, ``\\d(\\d)`` ne capture "
+"que 2. Dans la pratique du moteur de regexp de calibre, l’assertion arrière "
+"positive se comporte de la même façon, et ne sélectionne que 2, "
+"contrairement à ce que prévoit la théorie."
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:233
+msgid ""
+"Groups can be placed inside lookarounds, but capture is rarely useful. "
+"Nevertheless, if it is useful, it will be necessary to be very careful in "
+"the use of a quantifier in a lookbehind: the greed associated with the "
+"absence of backtracking can give a surprising capture. For this reason, use "
+"``\\K`` rather than a positive lookbehind when you have a quantifier (or "
+"worse, several) in a capturing group of the positive lookbehind."
+msgstr ""
+"On peut placer des groupes à l’intérieur des assertions, mais la capture est"
+" rarement utile. Néanmoins, si elle est utile, il faudra être très prudent "
+"dans l’utilisation d’un quantificateur dans une assertion arrière : la "
+"gourmandise associée à l’absence de marche arrière peut donner une capture "
+"surprenante. Pour cette raison, utilisez ``\\K`` plutôt qu’une assertion "
+"arrière positive quand vous avez un quantificateur (ou pire, plusieurs) dans"
+" un groupe capturant de l’assertion arrière positive."
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:240
+msgid "Example of negative lookahead:"
+msgstr "Exemple d’assertion avant négative :"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:242
+msgid "``(?![^<>{}]*[>}])``"
+msgstr "``(?![^<>{}]*[>}])``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:244
+msgid ""
+"Placed at the end of the pattern prevents to select within a tag or a style "
+"embedded in the file."
+msgstr ""
+"Placée à la fin du motif, cette assertion empêche de sélectionner à "
+"l’intérieur d’une balise ou d’un style embarqué dans le fichier."
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:246
+msgid ""
+"Whenever possible, it is always better to \"anchor\" the lookarounds, to "
+"reduce the number of steps necessary to obtain the result."
+msgstr ""
+"Lorsque c’est possible, il est toujours préférable d’\"ancrer\" les "
+"assertions, pour diminuer le nombre d’étapes nécessaires à l’obtention du "
+"résultat."
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:250
+msgid "Recursion"
+msgstr "La récursion"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:256
+msgid "``(?R)``"
+msgstr "``(?R)``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:256
+msgid "Recursion of the entire pattern"
+msgstr "Récursion du motif entier"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:259
+msgid "``(?1)``"
+msgstr "``(?1)``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:259
+msgid ""
+"Recursion of the only pattern of the numbered capturing group, here group 1"
+msgstr ""
+"Récursion du seul motif du groupe de capture numéroté, ici le groupe 1"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:263
+msgid ""
+"Recursion is calling oneself. This is useful for balanced queries, such as "
+"quoted strings, which can contain embedded quoted strings. Thus, if during "
+"the processing of a string between double quotation marks, we encounter the "
+"beginning of a new string between double quotation marks, well we know how "
+"to do, and we call ourselves. Then we have a pattern like::"
+msgstr ""
+"La récursion consiste à s’appeler soi-même. C’est utile pour des recherches "
+"balancées, par exemple des chaînes entre apostrophes, qui peuvent contenir "
+"des chaînes entre apostrophes enchâssées. Ainsi, si au cours du traitement "
+"d’une chaîne entre apostrophes, on rencontre le début d’une nouvelle chaîne "
+"entre apostrophes, et bien on sait faire, et on s’appelle soi-même. On a "
+"alors un motif comme :"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:271
+msgid ""
+"To select a string between double quotation marks without stopping on an "
+"embedded string::"
+msgstr ""
+"Pour sélectionner une chaîne entre apostrophes sans s’arrêter aux chaînes "
+"enchâssées::"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:275
+msgid ""
+"This template can also be used to modify pairs of tags that can be embedded,"
+" such as ``<div>`` tags."
+msgstr ""
+"C’est également ce modèle qu’il faut suivre pour modifier les paires de "
+"balises qui peuvent s’enchâsser, telles que les balises ``<div>``."
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:280
+msgid "Special characters"
+msgstr "Les caractères spéciaux"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:283
+msgid "**Character**"
+msgstr "**Caractère**"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:286
+msgid "``\\t``"
+msgstr "``\\t``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:286
+msgid "tabulation"
+msgstr "tabulation"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:289
+msgid "``\\n``"
+msgstr "``\\n``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:289
+msgid "line break"
+msgstr "saut de ligne"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:292
+msgid "``\\x20``"
+msgstr "``\\x20``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:292
+msgid "(breakable) space"
+msgstr "espace (sécable)"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:295
+msgid "``\\xa0``"
+msgstr "``\\xa0``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:295
+msgid "no-break space"
+msgstr "espace insécable"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:300
+msgid "Meta-characters"
+msgstr "Les métacaractères"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:302
+msgid ""
+"Meta-characters are those that have a special meaning for the regexp engine."
+" Of these, twelve must be preceded by an escape character, the backslash "
+"(``\\``), to lose their special meaning and become a regular character "
+"again::"
+msgstr ""
+"Les métacaractères sont ceux qui ont une signification spéciale pour le "
+"moteur regexp. Parmi ceux-ci, douze doivent être précédés d’un caractère "
+"d’échappement, l’antislash (``\\``), pour perdre leur signification spéciale"
+" et redevenir un simple caractère::"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:308
+msgid ""
+"Seven other meta-characters do not need to be preceded by a backslash (but "
+"can be without any other consequence)::"
+msgstr ""
+"Sept autres métacaractères n’ont pas besoin d’être précédés de l’antislash "
+"(mais peuvent l’être sans autre conséquence)::"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:314
+msgid ""
+"Special characters lose their status if they are used inside a class "
+"(between brackets ``[]``). The closing bracket and the dash have a special "
+"status in a class. Outside the class, the dash is a simple literal, the "
+"closing bracket remains a meta-character."
+msgstr ""
+"Les caractères spéciaux perdent leur statut s'ils sont utilisés à "
+"l'intérieur d'une classe (entre les crochets ``[]``). Le crochet fermant et "
+"le tiret ont un statut spécial dans une classe. En dehors de la classe, le "
+"tiret est un simple littéral, le crochet reste un métacaractère."
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:319
+msgid ""
+"The slash (/) and the number sign (or hash character) (#) are not meta-"
+"characters, they don’t need to be escaped."
+msgstr ""
+"Le slash (/) et le croisillon (#) [carré au Québec] ne sont pas des "
+"métacaractères, a fortiori ils n’ont pas besoin d’être échappés."
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:322
+msgid ""
+"In some tools, like regex101.com with the Python engine, double quotes have "
+"the special status of separator, and must be escaped, or the options "
+"changed. This is not the case in the editor of calibre."
+msgstr ""
+"Dans certains outils, comme regex101.com, avec le moteur Python, les doubles"
+" quotes ont le statut spécial de séparateur, et doivent être échappés. Ce "
+"n’est pas le cas dans l’éditeur de calibre."
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:327
+msgid "Modes"
+msgstr "Modes"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:330
+msgid "``(?s)``"
+msgstr "``(?s)``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:330
+msgid "Causes the dot (``.``) to match newline characters as well"
+msgstr ""
+"Amène le point (``.``) à correspondre également à des caractères de nouvelle"
+" ligne"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:333
+msgid "``(?m)``"
+msgstr "``(?m)``"
+
+#: ../../home/runner/work/calibre/calibre/manual/regexp_quick_reference.rst:333
+msgid ""
+"Makes the ``^`` and ``$`` anchors match the start and end of lines instead "
+"of the start and end of the entire string."
+msgstr ""
+"Rend les ancres ``^`` et ``$`` à correspondre au début et à la fin de la "
+"ligne plutôt que le début et la fin de la chaîne entière."

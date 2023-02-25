@@ -1,0 +1,2413 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# 
+# Translators:
+# dcato <dcato@yahoo.co.jp>, 2016
+# dcato <dcato@yahoo.co.jp>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-28 02:42+0000\n"
+"PO-Revision-Date: 2014-06-17 08:37+0000\n"
+"Last-Translator: dcato <dcato@yahoo.co.jp>, 2016\n"
+"Language-Team: Japanese (http://www.transifex.com/calibre/calibre/language/ja/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:4
+msgid "The Graphical User Interface"
+msgstr "グラフィカルユーザインタフェース"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:6
+msgid ""
+"The Graphical User Interface *(GUI)* provides access to all library "
+"management and e-book format conversion features. The basic workflow for "
+"using calibre is to first add books to the library from your hard disk. "
+"calibre will automatically try to read metadata from the books and add them "
+"to its internal database. Once they are in the database, you can perform "
+"various :ref:`actions` on them that include conversion from one format to "
+"another, transfer to the reading device, viewing on your computer, and "
+"editing metadata. The latter includes modifying the cover, description, and "
+"tags among other details. Note that calibre creates copies of the files you "
+"add to it. Your original files are left untouched."
+msgstr "グラフィカルユーザインタフェース *(GUI)* は、すべてのライブラリ管理および電子書籍形式の変換機能へのアクセスを提供します。calibre を使用するための基本的なワークフローは、最初にハードディスクからライブラリに本を追加することです。 calibre は自動的に本から書誌情報を読み取り、内部データベースに追加します。データベースに登録された後は、それに対してさまざまな :ref:`動作` を実行できるようになります。たとえばある形式から別の形式への変換、読み取りデバイスへの転送、コンピュータ上での表示、書誌情報の編集などです。書誌の編集には、表紙、説明、タグの変更が含まれます。 ただし calibre は、追加したファイルのコピーを作成します。元のファイルは変更されません。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:16
+msgid "The interface is divided into various sections:"
+msgstr "インタフェースは、いくつかの章に分割されています:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:25
+msgid "Actions"
+msgstr "アクション"
+
+#: ../../__w/calibre/calibre/manual/gui.rst-1
+msgid "The Actions Toolbar"
+msgstr "アクションツールバー"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:31
+msgid ""
+"The actions toolbar provides convenient shortcuts to commonly used actions. "
+"If you right-click the buttons, you can perform variations on the default "
+"action. Please note that the actions toolbar will look slightly different "
+"depending on whether you have an e-book reader attached to your computer."
+msgstr "アクションツールバーは、よく使われているアクションへの便利なショートカットを提供します。ボタンを右クリックすると、デフォルトのアクションのバリエーションを実行できます。ただしコンピュータに電子書籍リーダーが接続されているかどうかによって、アクションツールバーの外観すこし異なります。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:41
+#: ../../__w/calibre/calibre/manual/gui.rst:804
+msgid "Add books"
+msgstr "本を追加"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:42
+msgid "adbi"
+msgstr "adbi"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:45
+msgid ""
+"|adbi| The :guilabel:`Add books` action has seven variations accessed by "
+"doing a right-click on the button."
+msgstr "|adbi| :guilabel:`本を追加` アクションには、右ボタンをクリックして実行できる 7 種類のものがあります。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:48
+msgid ""
+"**Add books from a single folder**: Opens a file chooser dialog and allows "
+"you to specify which books in a folder should be added. This action is "
+"*context sensitive*, i.e. it depends on which :ref:`catalog <catalogs>` you "
+"have selected. If you have selected the :guilabel:`Library`, books will be "
+"added to the library. If you have selected the e-book reader device, the "
+"books will be uploaded to the device, and so on."
+msgstr "**単一のフォルダから本を追加**: ファイル選択ダイアログが開かれ、フォルダ内のどの本を追加するかを指定できます。このアクションは *状況依存* です。つまり選択した :ref:`カタログ <catalogs>` によって動作が変わります。たとえば :guilabel:`ライブラリ` を選択した場合、選択した本はそのライブラリに追加されます。電子書籍リーダデバイスを選択した場合は、本がデバイスにアップロードされる、といった具合です。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:50
+msgid ""
+"**Add books from folders and sub-folders**: Allows you to choose a folder. "
+"The folder and all its sub-folders are scanned recursively, and any e-books "
+"found are added to the library. You can choose whether to have calibre add "
+"all files present in a single folder to a single book record or multiple "
+"book records. calibre assumes that each folder contains a single book. All "
+"e-book files in a folder are assumed to be the same book in different "
+"formats. This action is the inverse of the :ref:`Save to disk "
+"<save_to_disk_multiple>` action, i.e. you can :guilabel:`Save to disk`, "
+"delete the books and re-add them in single book per folder mode, with no "
+"lost information except for the date (this assumes you have not changed any "
+"of the setting for the Save to disk action)."
+msgstr "**フォルダとサブフォルダから本を追加**: フォルダを選択できます。選択したフォルダとそのすべてのサブフォルダが再帰的にスキャンされ、見つかった電子書籍がライブラリに追加されます。 calibreに、単一のフォルダに存在するすべてのファイルを単一の本レコードとして追加するか、複数の本レコードとして追加するかを選択できます。calibre は、各フォルダがそれぞれ 1 冊の本だと想定しています。フォルダ内のすべての電子書籍ファイルは、異なる形式の同じ本と見なされます。このアクションは :ref:`ディスクに保存 <save_to_disk_multiple>` アクションと逆の働きをします。つまり :guilabel:`ディスクに保存` し、本を削除して、フォルダごとに 1 冊の本モードで再追加しても、日付以外の情報は何も失われません(ただしディスクに保存アクションの設定を何も変更していないことが前提です)。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:52
+msgid ""
+"**Add multiple books from archive (ZIP/RAR)**: Allows you to add multiple "
+"e-books that are stored inside the selected ZIP or RAR files. It is a "
+"convenient shortcut that avoids having to first unzip the archive and then "
+"add the books via one of the above two options."
+msgstr "アーカイブ (ZIP/RAR) から複数の本を追加: 選択した ZIP または RAR ファイル内に保存されている複数の電子書籍を追加できます。これは便利なショートカットで、上記 2 種類のオプションのいずれかを使用して本を追加する前にアーカイブを解凍する手間が省けます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:54
+msgid ""
+"**Add empty book (Book Entry with no formats)**: Allows you to create a "
+"blank book record. This can be used to then manually fill out the "
+"information about a book that you may not have yet in your collection."
+msgstr "**空の本を追加 (形式のない本)**: 空白の本レコードを作成できます。これを使用すれば、まだ本がコレクションに含まれていなくても手動で情報を入力できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:56
+msgid ""
+"**Add from ISBN**: Allows you to add one or more books by entering their "
+"ISBNs."
+msgstr "ISBN から追加: ISBNを入力して、1 冊以上の本を追加できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:58
+msgid ""
+"**Add files to selected book records**: Allows you to add or update the "
+"files associated with an existing book in your library."
+msgstr "選択した本にファイルを追加: ライブラリ内の既存の本に関連付けられているファイルを追加または更新できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:60
+msgid ""
+"**Add an empty file to selected book records**: Allows you to add an empty "
+"file of the specified format to the selected book records."
+msgstr "選択した本に空のファイルを追加: 指定した形式の空のファイルを選択した本レコードに追加できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:62
+msgid ""
+"The :guilabel:`Add books` action can read metadata from a wide variety of "
+"e-book formats. In addition, it tries to guess metadata from the filename. "
+"See the :ref:`config_filename_metadata` section, to learn how to configure "
+"this."
+msgstr ":guilabel:`本を追加` アクションでは、さまざまな電子書籍形式から書誌情報を読み取ることができます。さらに、ファイル名から書誌情報を推測しようとします。この機能の設定方法については、:ref:`config_filename_metadata` の章を参照してください。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:65
+msgid ""
+"To add an additional format for an existing book you can do any of three "
+"things:"
+msgstr "既存の本に形式を追加するには、次の 3 つの方法があります:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:67
+msgid ""
+"Drag and drop the file onto the Book details panel on the right side of the "
+"main window"
+msgstr "メインウィンドウの右側にある本の詳細パネルにファイルをドラッグ&ドロップ"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:69
+msgid ""
+"Right click the :guilabel:`Add books` button and choose :guilabel:`Add files"
+" to selected books`."
+msgstr ":guilabel:`本を追加` ボタンを右クリックして :guilabel:`選択した本にファイルを追加` を選択"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:71
+msgid ""
+"Click the :guilabel:`Add books` button in the top right area of the "
+":guilabel:`Edit metadata` dialog, accessed by the "
+":ref:`edit_meta_information` action."
+msgstr ":ref:`edit_meta_information` からアクセスできる :guilabel:`書誌を編集` ダイアログの右上にある :guilabel:`本を追加` ボタンをクリック"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:76
+msgid "Edit metadata"
+msgstr "書誌を編集"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:77
+msgid "emii"
+msgstr "emii"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:80
+msgid ""
+"|emii| The :guilabel:`Edit metadata` action has four variations which can be"
+" accessed by doing a right-click on the button."
+msgstr "|emii| :guilabel:`書誌を編集` アクションには、右クリックして実行できる 4 種類のものがあります。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:82
+msgid ""
+"**Edit metadata individually**: Allows you to edit the metadata of books "
+"one-by-one with the option of fetching metadata, including covers, from the "
+"Internet. It also allows you to add or remove particular e-book formats from"
+" a book."
+msgstr "**書誌を個別に編集**: 本の書誌を1つずつ編集できます。オプションで、インターネットから表紙を含む書誌を取得できます。また、特定の電子書籍形式を本に追加したり削除したりできます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:83
+msgid ""
+"**Edit metadata in bulk**: Allows you to edit common metadata fields for "
+"large numbers of books simultaneously. It operates on all the books you have"
+" selected in the :ref:`Library view <search_sort>`."
+msgstr "**書誌を一括編集**: 多数の本に共通な書誌フィールドを同時に編集できます。:ref:`ライブラリビュー <search_sort>` で選択した本すべてに対して操作を実行します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:84
+msgid ""
+"**Download metadata and covers**: Downloads metadata and covers (if "
+"available) for the books that are selected in the book list."
+msgstr "**書誌と表紙をダウンロード**: 本のリストから選択した本の書誌と表紙 (あれば) をダウンロードします。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:85
+msgid ""
+"**Merge book records**: Gives you the capability of merging the metadata and"
+" formats of two or more book records. You can choose to either delete or "
+"keep the records that were not clicked first."
+msgstr "**本レコードをマージ**: 複数の本レコードの書誌と形式をマージできます。後でクリックしたレコードを削除するか、保持するかを選択できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:87
+msgid "For more details, see :ref:`metadata`."
+msgstr "詳しくは :ref:`metadata` を参照してください。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:92
+msgid "Convert books"
+msgstr "本を変換"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:93
+msgid "cei"
+msgstr "cei"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:96
+msgid ""
+"|cei| E-books can be converted from a number of formats into whatever format"
+" your e-book reader prefers. Many e-books available for purchase will be "
+"protected by :doc:`Digital Rights Management <drm>` *(DRM)* technology. "
+"calibre will not convert these e-books. It is easy to remove the DRM from "
+"many formats, but as this may be illegal, you will have to find tools to "
+"liberate your books yourself and then use calibre to convert them."
+msgstr "|cei| 電子書籍は、さまざまな形式から電子書籍リーダに適した形式に変換できます。購入可能な電子書籍の多くは、 :doc:`デジタル著作権管理 <drm>` *(DRM)* 技術によって保護されています。 calibre がこのような電子書籍を変換することはありません。多くの形式からDRMを削除するのは簡単ですが、これは違法である可能性があります。本を解放できるツールを自分で見つけてから、calibreを使用して変換する必要があります。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:101
+msgid ""
+"For most people, conversion should be a simple one-click affair. If you want"
+" to learn more about the conversion process, see :ref:`conversion`."
+msgstr "ほとんどの人にとって変換は、ワンクリックするだけの簡単なお仕事です。変換処理について詳しくは :ref:`conversion` を参照してください。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:103
+msgid ""
+"The :guilabel:`Convert books` action has three variations, accessed by doing"
+" a right-click on the button."
+msgstr ":guilabel:`本を変換` アクションには、右ボタンをクリックして実行できる 3 種類のものがあります。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:105
+msgid ""
+"**Convert individually**: Allows you to specify conversion options to "
+"customize the conversion of each selected e-book."
+msgstr "**個別に変換**: 変換オプションを指定して、選択した本の変換をそれぞれカスタマイズできます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:107
+msgid ""
+"**Bulk convert**: Allows you to specify options only once to convert a "
+"number of e-books in bulk."
+msgstr "**一括変換**: オプションを 1 回指定するだけで、多数の電子書籍を一括変換できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:109
+msgid ""
+"**Create a catalog of the books in your calibre library**: Allows you to "
+"generate a complete listing of the books in your library, including all "
+"metadata, in several formats such as XML, CSV, BiBTeX, EPUB and MOBI. The "
+"catalog will contain all the books currently showing in the library view. "
+"This allows you to use the search features to limit the books to be "
+"catalogued. In addition, if you select multiple books using the mouse, only "
+"those books will be added to the catalog. If you generate the catalog in an "
+"e-book format such as EPUB, MOBI or AZW3, the next time you connect your "
+"e-book reader the catalog will be automatically sent to the device. For more"
+" information on how catalogs work, read the :ref:`catalog_tut`."
+msgstr "calibre ライブラリの本からカタログを作成: すべての書誌を含む、ライブラリ内の本の完全なリストを生成し、XML、CSV、BiBTeX、EPUB、MOBIなどのいくつかの形式で作成できます。このカタログに含まれるのは、作成時にライブラリビューに表示されているすべての本です。したがって検索機能を使用することにより、カタログ化する本を絞り込むことも可能です。さらにマウスで複数の本を選択した場合には、選択した本だけがカタログに追加されます。 EPUB、MOBI、AZW3などの電子書籍形式でカタログを生成すると、次に電子書籍リーダを接続したときに、カタログがデバイスに自動的に送信されます。カタログの動作について詳しくは、:ref:`catalog_tut` を参照してください。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:119
+#: ../../__w/calibre/calibre/manual/gui.rst:834
+msgid "View"
+msgstr "表示"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:120
+msgid "vi"
+msgstr "vi"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:123
+msgid ""
+"|vi| The :guilabel:`View` action displays the book in an e-book viewer "
+"program. calibre has a built-in viewer for many e-book formats. For other "
+"formats it uses the default operating system application. You can configure "
+"which formats should open with the internal viewer via "
+":guilabel:`Preferences->Interface->Behavior`. If a book has more than one "
+"format, you can view a particular format by doing a right-click on the "
+"button."
+msgstr "|vi| :guilabel:`表示` アクションは、本を電子書籍ビューアプログラム内に表示します。calibre には多くの電子書籍形式に対応したビルトインのビューアが備わっています。他の形式には、OS のデフォルトアプリケーションを使用します。どの形式に対して内部ビューアを使用するかは、:guilabel:`環境設定->インタフェース->動作` で設定できます。書籍に複数の形式がある場合、特定の形式を表示するにはボタンを右クリックします。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:134
+#: ../../__w/calibre/calibre/manual/gui.rst:810
+msgid "Send to device"
+msgstr "デバイスに送信"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:135
+msgid "stdi"
+msgstr "stdi"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:138
+msgid ""
+"|stdi| The :guilabel:`Send to device` action has eight variations, accessed "
+"by doing a right-click on the button."
+msgstr "|stdi| :guilabel:`デバイスに送信` アクションには、右ボタンをクリックして実行できる 8 種類のものがあります。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:140
+msgid ""
+"**Send to main memory**: The selected books are transferred to the main "
+"memory of the e-book reader."
+msgstr "**メインメモリに送信**: 選択した本を電子書籍リーダのメインメモリに送信します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:141
+msgid ""
+"**Send to card (A)**: The selected books are transferred to the storage card"
+" (A) on the e-book reader."
+msgstr "**カード (A) に送信**: 選択した本を電子書籍リーダのストレージカード (A) に送信します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:142
+msgid ""
+"**Send to card (B)**: The selected books are transferred to the storage card"
+" (B) on the e-book reader."
+msgstr "**カード (B) に送信**: 選択した本を電子書籍リーダのストレージカード (B) に送信します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:143
+msgid ""
+"**Send specific format to**: The selected books are transferred to the "
+"selected storage location on the device, in the format that you specify."
+msgstr "**特定の形式を送信**: 選択した本を指定した形式で、デバイス上の選択したストレージに送信します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:144
+msgid "**Eject device**: Detaches the device from calibre."
+msgstr "**デバイスを取り出す**: デバイスを calibre から取り外します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:145
+msgid ""
+"**Set default send to device action**: Allows you to specify which of the "
+"options, 1 through 5 above or 7 below, will be the default action when you "
+"click the main button."
+msgstr "**デフォルトのデバイス送信を設定**: メインボタンをクリックしたときにどのオプションをデフォルトとするかを指定できます。選択肢は上記の 1 から 5 までと下記の 7 です。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:146
+msgid ""
+"**Send and delete from library**: The selected books are transferred to the "
+"selected storage location on the device and then **deleted** from the "
+"Library."
+msgstr "**送信してライブラリから削除: 選択した本をデバイスの選択したストレージに転送し、ライブラリから **削除** します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:147
+msgid ""
+"**Fetch Annotations (experimental)**: Transfers annotations you may have "
+"made on an e-book on your device to the comments metadata of the book in the"
+" calibre library."
+msgstr "**注釈を取得 (実験的)**: デバイス上で作成した注釈を、calibre ライブラリの本のコメント書誌として転送します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:149
+msgid ""
+"You can control the file name and folder structure of files sent to the "
+"device by setting up a template in "
+":guilabel:`Preferences->Import/export->Sending books to devices`. Also see "
+":ref:`templatelangcalibre`."
+msgstr "デバイスに送信したファイルの名前とフォルダ構造を制御するには、:guilabel:`環境設定->インポート/エクスポート->デバイスへの送信` でテンプレートを設定します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:155
+msgid "Fetch news"
+msgstr "ニュースを取得"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:156
+msgid "fni"
+msgstr "fni"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:159
+msgid ""
+"|fni| The :guilabel:`Fetch news` action downloads news from various websites"
+" and converts it into an e-book that can be read on your e-book reader. "
+"Normally, the newly created e-book is added to your e-book library, but if "
+"an e-book reader is connected at the time the download finishes, the news is"
+" also uploaded to the reader automatically."
+msgstr "|fni| :guilabel:`ニュースを取得` アクションは、さまざまな Web サイトからニュースをダウンロードし、電子書籍リーダで読めるよう電子書籍に変換します。通常、新しく作成した電子書籍は電子書籍ライブラリに追加されますが、ダウンロードの終了時に電子書籍リーダが接続されている場合は、自動的にニュースもリーダにアップロードされます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:161
+msgid ""
+"The :guilabel:`Fetch news` action uses simple recipes (10-15 lines of code) "
+"for each news site. To learn how to create recipes for your own news "
+"sources, see :ref:`news`."
+msgstr ":guilabel:`ニュースを取得` アクションは、それぞれのニュースサイトに対して簡単なレシピ (コードにして 10 〜 15 行) を使用します。自分のニュースソース用のレシピの作り方については、:ref:`news` を参照してください。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:163
+msgid ""
+"The :guilabel:`Fetch news` action has three variations, accessed by doing a "
+"right-click on the button."
+msgstr ":guilabel:`ニュースを取得` アクションには、右ボタンをクリックして実行できる 3 種類のものがあります。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:165
+msgid ""
+"**Schedule news download**: Allows you to schedule the download of your "
+"selected news sources from a list of hundreds available.  Scheduling can be "
+"set individually for each news source you select and the scheduling is "
+"flexible allowing you to select specific days of the week or a frequency of "
+"days between downloads."
+msgstr "**ニュースの取得スケジュール**: 数百もの利用可能なリストの中からニュースソースを選択し、ダウンロードを予約することが可能です。予約は選択したニュースソースごとに設定できます。予約は柔軟性が高く、指定した曜日にダウンロードしたり、何日おきにダウンロードするかを指定したりできます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:166
+msgid ""
+"**Add a custom news source**: Allows you to create a simple recipe for "
+"downloading news from a custom news site that you wish to access.  Creating "
+"the recipe can be as simple as specifying an RSS news feed URL, or you can "
+"be more prescriptive by creating Python-based code for the task. For more "
+"information, see :ref:`news`."
+msgstr "**カスタムニュースソースを追加**: アクセスしたいカスタムニュースサイトからニュースをダウンロードするために、簡単なレシピを作成できます。RSSニュースフィードの URL を指定するだけで簡単にレシピを作成することもできますし、Python ベースのコードを作成して細かく指定することもできます。詳しくは :ref:`news` を参照してください。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:167
+msgid ""
+"**Download all scheduled news sources**: Causes calibre to immediately begin"
+" downloading all news sources that you have scheduled."
+msgstr "**スケジュールしたすべてのニュースソースをダウンロード**: スケジュールを設定したすべてのニュースソースを calibre に即座にダウンロードさせます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:173
+msgid "Library"
+msgstr "ライブラリ"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:174
+msgid "lii"
+msgstr "lii"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:177
+msgid ""
+"|lii| The :guilabel:`Library` action allows you to create, switch between, "
+"rename or remove a Library.  calibre allows you to create as many libraries "
+"as you wish. You could, for instance, create a fiction library, a non-"
+"fiction library, a foreign language library, a project library, or any "
+"structure that suits your needs. Libraries are the highest organizational "
+"structure within calibre. Each library has its own set of books, tags, "
+"categories and base storage location."
+msgstr "|lii| :guilabel:`ライブラリ` アクションを使用すると、ライブラリを作成したり、切り替えたり、名前を変更したり、削除したりできます。 calibre ではいくつでも必要なだけライブラリを作成できます。たとえばフィクションライブラリ、ノンフィクションライブラリ、外国語ライブラリ、プロジェクトライブラリなど、必要性に応じて任意の構造を作成できます。ライブラリは calibre の中で最も系統立てて作られた構造物です。本、タグ、カテゴリ、およびストレージ場所はライブラリごとに別々です。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:179
+msgid ""
+"**Switch/create library...**: Allows you to; a) connect to a pre-existing "
+"calibre library at another location, b) create an empty library at a new "
+"location or, c) move the current library to a newly specified location."
+msgstr "**ライブラリを切替え/作成**: 次のことが可能です。 a) 別の場所にある既存の calibre ライブラリに接続する、b) 新しい場所に空のライブラリを作成する、c) 現在のライブラリを新しく指定した場所に移動する。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:180
+msgid ""
+"**Quick switch**: Allows you to switch between libraries that have been "
+"registered or created within calibre."
+msgstr "**クイック切替え**: calibre 内で登録されたか作成されたライブラリの間を切り替えることができます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:181
+msgid "**Rename library**: Allows you to rename a Library."
+msgstr "**ライブラリ名を変更**: ライブラリの名前を変更できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:182
+msgid "**Pick a random book**: Chooses a random book in the library for you"
+msgstr "**ランダムに本を選択**: ライブラリ内の本をランダムに選択できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:183
+msgid "**Remove library**: Allows you to unregister a library from calibre."
+msgstr "**ライブラリを削除**: calibre からライブラリを登録解除できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:184
+msgid ""
+"**Export/import all calibre data**: Allows you to either export calibre data"
+" for migration to a new computer or import previously exported data."
+msgstr "**すべての calibre データをエクスポート/インポート**: 新しいコンピュータに移動するために calibre のデータをエクスポートしたり、以前エクスポートされたデータをインポートすることができます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:185
+msgid ""
+"**<library name>**: Actions 7, 8 etc... give you immediate switch access "
+"between multiple libraries that you have created or attached to. This list "
+"contains only the 5 most frequently used libraries. For the complete list, "
+"use the Quick Switch menu."
+msgstr "**<ライブラリ名>**: アクション 7、8 などは、作成または接続した複数のライブラリ間で、アクセスをすぐに切り替えます。このリストには、よく使われるライブラリが最大 5 個まで登録されます。すべてのリストを見るには、クイック切替えメニューを使用してください。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:186
+msgid ""
+"**Library maintenance**: Allows you to check the current library for data "
+"consistency issues and restore the current library's database from backups."
+msgstr "**ライブラリを保守**: 現在のライブラリにデータの整合性の問題がないか確認し、バックアップから現在のライブラリのデータベースを復元できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:188
+msgid ""
+"Metadata about your e-books, e.g. title, author, and tags, is stored in a "
+"single file in your calibre library folder called metadata.db. If this file "
+"gets corrupted (a very rare event), you can lose the metadata. Fortunately, "
+"calibre automatically backs up the metadata for every individual book in the"
+" book's folder as an OPF file. By using the Restore database action under "
+"Library Maintenance described above, you can have calibre rebuild the "
+"metadata.db file from the individual OPF files for you."
+msgstr "電子書籍の書誌、たとえばタイトルや、著者や、タグなどは、calibre ライブラリフォルダ内に置かれている metadata.db という名前のファイルに保存されています。このファイルが破損すると (滅多にありません) 書誌が失われる可能性があります。しかし幸いにして calibre は、本ごとに書誌を自動的にバックアップし、それぞれの本のフォルダ内に OPF ファイルとして保存します。上で説明したように、ライブラリの保守の下にあるデータベースの復元アクションを使用すれば、calibre は個々の OPF ファイルから metadata.db ファイルを再構築してくれます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:190
+msgid ""
+"You can copy or move books between different libraries (once you have more "
+"than one library setup) by right clicking on the book and selecting the "
+"action :guilabel:`Copy to library`."
+msgstr "本を別のライブラリとの間で (2 個以上のライブラリを構築したら) コピーしたり移動することもできます。本の上で右クリックして :guilabel:`ライブラリにコピー` を選択してください。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:195
+msgid "Device"
+msgstr "デバイス"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:196
+msgid "dvi"
+msgstr "dvi"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:199
+msgid ""
+"|dvi| The :guilabel:`Device` action allows you to view the books in the main"
+" memory or storage cards of your device, or to eject the device (detach it "
+"from calibre). This icon shows up automatically on the main calibre toolbar "
+"when you connect a supported device. You can click on it to see the books on"
+" your device. You can also drag and drop books from your calibre library "
+"onto the icon to transfer them to your device. Conversely, you can drag and "
+"drop books from your device onto the library icon on the toolbar to transfer"
+" books from your device to the calibre library."
+msgstr "|dvi| :guilabel:`デバイス` アクションを使用すると、デバイスのメインメモリやストレージカード内にある本を表示したり、デバイスを取り出したり (calibre から取り外したり) することができます。このアイコンは、サポートされているデバイスを接続すると、メインの calibre ツールバーに自動的に表示されます。アイコンをクリックすれば、デバイス上の本が表示されます。本をライブラリからアイコンにドラッグ&ドロップすると、デバイスに転送されます。逆に、本をデバイスからツールバーのライブラリアイコンにドラッグ&ドロップすれば、デバイスから calibre ライブラリに本を転送することができます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:206
+#: ../../__w/calibre/calibre/manual/gui.rst:830
+msgid "Save to disk"
+msgstr "ディスクに保存"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:207
+msgid "svdi"
+msgstr "svdi"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:210
+msgid ""
+"|svdi| The :guilabel:`Save to disk` action has five variations, accessed by "
+"doing a right-click on the button."
+msgstr "|svdi| :guilabel:`Save to disk` アクションには、右ボタンをクリックして実行できる 5 種類のものがあります。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:214
+msgid ""
+"**Save to disk**: Saves the selected books to disk organized in folders. The"
+" folder structure looks like::"
+msgstr "**ディスクに保存**: 選択した本をフォルダに整理されたディスクに保存します。フォルダ構造は次のようになります::"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:220
+msgid ""
+"You can control the file name and folder structure of files saved to disk by"
+" setting up a template in :guilabel:`Preferences->Import/export->Saving "
+"books to disk`. Also see :ref:`templatelangcalibre`."
+msgstr "ディスクに保存されるファイルのファイル名とフォルダ構造は :guilabel:`環境設定->インポート/エクスポート->ディスクに保存` でテンプレートを設定することにより制御できます。:ref:`templatelangcalibre` も参照してください。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:225
+msgid ""
+"**Save to disk in a single folder**: Saves the selected books to disk in a "
+"single folder."
+msgstr "**ディスク上のフォルダに保存**: 選択した本をディスク上の単一のフォルダに保存します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:227
+msgid ""
+"For 1. and 2., all available formats, as well as metadata, are stored to "
+"disk for each selected book. Metadata is stored in an OPF file. Saved books "
+"can be re-imported to the library without any loss of information by using "
+"the :ref:`Add books <add_books>` action."
+msgstr "1. と 2. の場合、使用可能なすべての形式と書誌を、選択した本ごとにディスク上に保存します。書誌は OPF ファイルに格納されます。保存した本は、:ref:`本を追加 <add_books>` アクションを使用すれば、情報を失うことなくライブラリに再インポート可能です。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:229
+msgid ""
+"**Save only *<your preferred>* format to disk**: Saves the selected books to"
+" disk in the folder structure as shown in (1.) but only in your preferred "
+"e-book format. You can set your preferred format in "
+":guilabel:`Preferences->Interface->Behaviour->Preferred output format`"
+msgstr "** *<優先する>* 形式のみディスクに保存**：選択した書籍を (1.) で示したフォルダ構造でディスクに保存します。ただし保存するのは優先する形式の本だけです。優先する形式は :guilabel:`環境設定->インタフェース->動作->優先する出力形式` で設定できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:231
+msgid ""
+"**Save only *<your preferred>* format to disk in a single folder**: Saves "
+"the selected books to disk in a single folder but only in your preferred "
+"e-book format. You can set your preferred format in "
+":guilabel:`Preferences->Interface->Behaviour->Preferred output format`"
+msgstr "** *<優先する>* 形式のみディスク上のフォルダに保存**：選択した書籍を (1.) で示したフォルダ構造でディスク上の単一フォルダに保存します。ただし保存するのは優先する形式の本だけです。優先する形式は :guilabel:`環境設定->インタフェース->動作->優先する出力形式` で設定できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:233
+msgid ""
+"**Save single format to disk...**: Saves the selected books to disk in the "
+"folder structure as shown in (1.) but only in the format you select from the"
+" popup list."
+msgstr "**指定形式をディスクに保存…**: 選択した書籍を (1.) で示したフォルダ構造でディスクに保存します。ただし保存するのはポップアップリストから選択した形式の本だけです。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:238
+msgid "Connect/share"
+msgstr "接続/共有"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:239
+msgid "csi"
+msgstr "csi"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:242
+msgid ""
+"|csi| The :guilabel:`Connect/share` action allows you to manually connect to"
+" a device or folder on your computer. It also allows you to set up your "
+"calibre library for access via a web browser or email."
+msgstr "|csi| :guilabel:`接続/共有` アクションを使用すると、コンピュータ上のデバイスまたはフォルダに手動で接続できます。Web ブラウザや電子メール経由でアクセスできるよう、calibre ライブラリを設定することも可能です。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:244
+msgid ""
+"The :guilabel:`Connect/share` action has four variations, accessed by doing "
+"a right-click on the button."
+msgstr ":guilabel:`接続/共有` アクションには、右ボタンをクリックして実行できる 4 種類のものがあります。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:246
+msgid ""
+"**Connect to folder**: Allows you to connect to any folder on your computer "
+"as though it were a device and use all the facilities calibre has for "
+"devices with that folder. Useful if your device cannot be supported by "
+"calibre but is available as a USB disk."
+msgstr "**フォルダに接続**: コンピュータ上の任意のフォルダにデバイスであるかのように接続し、calibre がデバイスに使えるすべての機能をそのフォルダに対して使用できます。デバイスが calibre にサポートされていないが、USB ディスクとしてなら利用可能な場合に役に立ちます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:248
+msgid ""
+"**Start Content server**: Starts calibre's built-in web server.  When "
+"started, your calibre library will be accessible via a web browser from the "
+"Internet (if you choose). You can configure how the web server is accessed "
+"by setting preferences at :guilabel:`Preferences->Sharing->Sharing over the "
+"net`"
+msgstr "**コンテンツサーバを開始**: calibre のビルトイン Web サーバを開始します。開始すると、(選択すれば) インターネットからWebブラウザを介して calibre ライブラリにアクセスできるようになります。 Web サーバへのアクセス方法は :guilabel:`環境設定->共有->ネット共有` で設定できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:250
+msgid ""
+"**Setup email based sharing of books**: Allows sharing of books and news "
+"feeds by email.  After setting up email addresses for this option, calibre "
+"will send news updates and book updates to the entered email addresses. You "
+"can configure how calibre sends email by setting preferences at "
+":guilabel:`Preferences->Sharing->Sharing books by email`. Once you have set "
+"up one or more email addresses, this menu entry will be replaced by menu "
+"entries to send books to the configured email addresses."
+msgstr "**メールでの共有を設定**: 電子メールを使った本とニュースフィードの共有ができます。このオプション用の電子メールアドレスを設定した後、calibre は入力された電子メールアドレス宛てにニュースの更新と本の更新を送信します。calibre がメール送信する方法は :guilabel:`環境設定->共有->メール共有` で設定できます。 1 つ以上の電子メールアドレスを設定すると、このメニューは、設定されたメールアドレスに書籍を送信するためのメニューに置き換わります。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:255
+msgid "Remove books"
+msgstr "本を削除"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:256
+msgid "rbi"
+msgstr "rbi"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:259
+msgid ""
+"|rbi| The :guilabel:`Remove books` action **deletes books permanently**, so "
+"use it with care. It is *context sensitive*, i.e. it depends on which "
+":ref:`catalog <catalogs>` you have selected. If you have selected the "
+":guilabel:`Library`, books will be removed from the library. If you have "
+"selected the e-book reader device, books will be removed from the device. To"
+" remove only a particular format for a given book use the "
+":ref:`edit_meta_information` action.  Remove books also has five variations "
+"which can be accessed by doing a right-click on the button."
+msgstr "|rbi| :guilabel:`本を削除` アクションは **本を完全に削除する** ため、十分に注意して使用してください。このアクションは状況依存です。つまり、選択している :ref:`カタログ <catalogs>` によって動作が変わります。:guilabel:`ライブラリ` を選択している場合、本はライブラリから削除されます。電子書籍リーダデバイスを選択している場合、本はデバイスから削除されます。指定した書籍の特定の形式のみを削除するには、:ref:`edit_meta_information` アクションを使用します。本の削除には、ボタンを右クリックして"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:261
+msgid ""
+"**Remove selected books**: Allows you to **permanently** remove all books "
+"that are selected in the book list."
+msgstr "**選択した本を削除**: 本のリスト内で選択した本を **完全に** 削除できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:263
+msgid ""
+"**Remove files of a specific format from selected books...**: Allows you to "
+"**permanently** remove e-book files of a specified format from books that "
+"are selected in the book list."
+msgstr "**選択した本から指定した形式のファイルを削除**: 本のリスト内で選択した本の指定した形式の電子書籍を **完全に** 削除できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:265
+msgid ""
+"**Remove all formats from selected books, except...**: Allows you to "
+"**permanently** remove e-book files of any format except a specified format "
+"from books that are selected in the book list."
+msgstr "**選択した本のすべての形式を (一部除外して) 削除...**: 本のリスト内で選択した本から、指定した形式を除いてすべての電子書籍ファイルを **完全に** 削除できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:267
+msgid ""
+"**Remove all formats from selected books**: Allows you to **permanently** "
+"remove all e-book files from books that are selected in the book list. Only "
+"the metadata will remain."
+msgstr "**選択した本のすべての形式を削除**: 本のリスト内で選択した本から、すべての電子書籍ファイルを **完全に** 削除できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:269
+msgid ""
+"**Remove covers from selected books**: Allows you to **permanently** remove "
+"cover image files from books that are selected in the book list."
+msgstr "**選択した本から表紙を削除**: 本リスト内で選択した本から表紙画像ファイルを **完全に** 削除できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:271
+msgid ""
+"**Remove matching books from device**: Allows you to remove e-book files "
+"from a connected device that match the books that are selected in the book "
+"list."
+msgstr "**デバイスから一致する本を削除**: 本のリスト内で選択した本と一致する電子書籍を、接続中のデバイスから削除できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:274
+msgid ""
+"Note that when you use :guilabel:`Remove books` to delete books from your "
+"calibre library, the book record is permanently deleted, but the files are "
+"placed into the :guilabel:`Recycle Bin/Trash`. This allows you to recover "
+"the files if you change your mind."
+msgstr ":guilabel:`本を削除` を使用して calibre ライブラリから本を削除すると、本のレコードは完全に削除されますが、ファイルは:guilabel:`ごみ箱` に入れられます。このため気が変わったときには、ファイルを取り戻すことが可能です。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:279
+msgid "Preferences"
+msgstr "環境設定"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:280
+msgid "cbi"
+msgstr "cbi"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:283
+msgid ""
+"|cbi| The :guilabel:`Preferences` action allows you to change the way "
+"various aspects of calibre work. It has four variations, accessed by doing a"
+" right-click on the button."
+msgstr "|cbi| :guilabel:`環境設定` アクションを使用すると、calibre のさまざまな側面での動作方法を変更可能です。このアクションには、右ボタンをクリックして実行できる 4 種類のものがあります。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:285
+msgid ""
+"**Preferences**: Allows you to change the way various aspects of calibre "
+"work. Clicking the button also performs this action."
+msgstr "**環境設定**: calibre の動作をさまざまな側面から変更できます。ボタンをクリックしてもこのアクションを実行します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:286
+msgid ""
+"**Run Welcome wizard**: Allows you to start the :guilabel:`Welcome wizard` "
+"which appeared the first time you started calibre."
+msgstr "**ウェルカムウィザードを開始**: calibre が初めて開始されたときに現れる :guilabel:`ウェルカムウィザード` を開始できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:287
+msgid ""
+"**Get plugins to enhance calibre**: Opens a new window that shows plugins "
+"for calibre. These plugins are developed by third parties to extend "
+"calibre's functionality."
+msgstr "**calibreを拡張するプラグイン取得**: calibre のプラグインを表示する新しいウィンドウを開きます。プラグインは calibre の機能を拡張するためにサードパーティによって開発されています。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:288
+msgid ""
+"**Restart in debug mode**: Allows you to enable a debugging mode that can "
+"assist the calibre developers in solving problems you encounter with the "
+"program. For most users this should remain disabled unless instructed by a "
+"developer to enable it."
+msgstr "**デバッグモードで再起動**: デバッグモードを有効にして、プログラムで発生した問題を解決するにあたり calibre の開発者を支援できます。ほとんどのユーザーにとっては開発者から有効にするよう指示されない限り、無効しておくべきものです。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:293
+msgid "Catalogs"
+msgstr "カタログ"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:297
+msgid ""
+"A *catalog* is a collection of books. calibre can manage two types of "
+"different catalogs:"
+msgstr "*カタログ* とは本のコレクションのことです。calibre は 2 種類のカタログを扱うことができます:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:299
+msgid ""
+"**Library**: This is a collection of books stored in your calibre library on"
+" your computer."
+msgstr "**ライブラリ**: コンピュータ上の calibre ライブラリに格納されている、本のコレクション。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:301
+msgid ""
+"**Device**:  This is a collection of books stored in your e-book reader. It "
+"will be available when you connect the reader to your computer."
+msgstr "**デバイス**: 電子書籍リーダに格納されている本のコレクション。リーダをコンピュータに接続すると利用できるようになります。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:303
+msgid ""
+"Many operations, such as adding books, deleting, viewing, etc., are context "
+"sensitive. So, for example, if you click the :guilabel:`View` button when "
+"you have the **Device** catalog selected, calibre will open the files on the"
+" device to view. If you have the **Library** catalog selected, files in your"
+" calibre library will be opened instead."
+msgstr "操作の多くは、たとえば本の追加、削除、表示などは、状況依存です。したがって、たとえば、 **デバイスの** カタログを選択しているときに :guilabel:`表示` ボタンをクリックすると、calibre はそのデバイス上のファイルを開いて表示します。 **ライブラリの** カタログを選択している場合は、代わりに calibre ライブラリ内のファイルが開かれます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:308
+msgid "Search & sort"
+msgstr "検索と並べ替え"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:312
+msgid ""
+"The Search & Sort section allows you to perform several powerful actions on "
+"your book collections."
+msgstr "検索と並べ替えのセクションでは、本のコレクションに対していくつか強力なアクションを実行できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:314
+msgid ""
+"You can sort them by title, author, date, rating, etc. by clicking on the "
+"column titles. You can also sub-sort, i.e. sort on multiple columns. For "
+"example, if you click on the title column and then the author column, the "
+"book will be sorted by author and then all the entries for the same author "
+"will be sorted by title."
+msgstr "列のタイトルをクリックすると、タイトル、著者、日付、評価などで並べ替えることができます。サブソート、つまり複数の列を使って並べ替えることもできます。たとえば、タイトル列をクリックしてから著者列をクリックすると、本は著者名順に並べ替えられ、同じ著者のすべてのエントリがタイトル順に並べ替えられます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:316
+msgid ""
+"You can search for a particular book or set of books using the Search bar. "
+"More on that below."
+msgstr "検索バーを使用して、特定の本または本のセットを検索できます。詳細については後述します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:318
+msgid ""
+"You can quickly and conveniently edit metadata by selecting the entry you "
+"want changed in the list and pressing the :kbd:`E` key."
+msgstr "変更したいものをリスト上で選択して :kbd:`E` キーを押すと、書誌をすばやく簡単に編集できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:320
+msgid ""
+"You can perform :ref:`actions` on sets of books. To select multiple books "
+"you can either:"
+msgstr "本のセットに対して:ref:`アクション`を実行できます。複数の本を選択するには、次のいずれかのようにします:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:322
+msgid ""
+"Keep the :kbd:`Ctrl` key pressed and click on the books you want selected."
+msgstr "kbd:`Ctrl` キーを押したまま選択した本をクリックします。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:324
+msgid ""
+"Keep the :kbd:`Shift` key pressed and click on the starting and ending book "
+"of a range of books you want selected."
+msgstr ":kbd:`Shift` キーを押したまま、選択したい範囲の最初の本と最後の本をクリックします。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:326
+msgid ""
+"You can configure which fields you want displayed by using the "
+":ref:`configuration` dialog."
+msgstr ":ref:`設定` ダイアログを使って表示したい列を設定できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:331
+msgid "The search interface"
+msgstr "検索インタフェース"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:332
+msgid ""
+"You can search all book metadata by entering search terms in the Search bar."
+" For example::"
+msgstr "検索バーに検索語を入力すると、すべての書誌を検索できます。例えば::"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:336
+msgid ""
+"This will match all books in your library that have ``Asimov`` and "
+"``Foundation`` in their metadata and are available in the LRF format. Some "
+"more examples::"
+msgstr "これは書誌に``Asimov`` and ``Foundation`` があり、LRF形式で利用できるライブラリ内のすべての本とマッチします。その他の例:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:345
+msgid "*Search kinds*"
+msgstr "*検索の種類*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:347
+msgid ""
+"There are four search kinds: `contains`, `equality`, `regular expression` "
+"(see `regular expressions "
+"<https://en.wikipedia.org/wiki/Regular_expression>`_), and `character "
+"variant`. You choose the search kind with a prefix character."
+msgstr "検索には 4 種類があります: `部分一致`、`完全一致`、`正規表現` (`正規表現 <https://en.wikipedia.org/wiki/Regular_expression>`_を参照)、および `異形文字` です。検索の種類はプレフィックス文字で選択します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:349
+msgid "*'Contains' searches*"
+msgstr "*部分一致検索*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:351
+msgid ""
+"Searches with no prefix character are `contains` and are by default case "
+"insensitive. An item matches if the search string appears anywhere in the "
+"indicated metadata. You can make `contains` searches case sensitive by "
+"checking the option `Case sensitive searching` in :guilabel:`Preferences / "
+"Searching`. If the search option `Unaccented characters match accented "
+"characters and punctuation is ignored` is checked then a character will "
+"match all its variants (e.g., `e` matches `é`, `è`, `ê`, and `ë`) and all "
+"punctuation and whitespace are ignored. For example, if the `Unaccented "
+"characters match ...` option is checked then given the two book titles:"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:353
+#: ../../__w/calibre/calibre/manual/gui.rst:403
+msgid "Big, Bothéred, and Bad"
+msgstr "Big, Bothéred, and Bad"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:354
+#: ../../__w/calibre/calibre/manual/gui.rst:404
+msgid "Big Bummer"
+msgstr "Big Bummer"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:356
+msgid "then these searches find:"
+msgstr "検索は次のようになります:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:358
+msgid "``title:\"er\"`` matches both ('e' matches both 'é' and 'e')."
+msgstr "``title:\"er\"`` は両方にマッチします ('e' は 'é' と 'e' の両方にマッチ)。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:359
+msgid "``title:\"g \"`` matches both because spaces are ignored."
+msgstr "``title:\"g \"`` は空白を無視するので両方にマッチします。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:360
+msgid "``title:\"g,\"`` matches both because the comma is ignored."
+msgstr "``title:\"g,\"`` はカンマを無視するので両方にマッチします。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:361
+msgid ""
+"``title:\"gb\"`` matches both because ', ' is ignored in book 1 and spaces "
+"are ignored in book 2."
+msgstr "``title:\"gb\"`` は 1 番目の本で ', ' を無視し、2 番目の本で空白を無視するため両方にマッチします。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:362
+msgid "``title:\"g b\"`` matches both because comma and space are ignored."
+msgstr "``title:\"g b\"`` はカンマと空白を無視するので両方にマッチします。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:363
+msgid "``title:\"db\"`` matches #1 because the space in 'and Bad' is ignored."
+msgstr "``title:\"db\"`` は 'and Bad' にある空白を無視するため 1 番目にマッチします。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:364
+msgid ""
+"``title:\",\"`` matches both (it actually matches all books) because commas "
+"are ignored."
+msgstr "``title:\",\"`` はカンマを無視するので両方にマッチ (実際にはすべての本にマッチ) します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:366
+msgid ""
+"If the `Unaccented characters match ...` option is not checked then "
+"character variants, punctuation, and spacing are all significant."
+msgstr "`アクセントのない文字を...` オプションにチェックされていない場合、異形文字、句読点、および空白はすべて比較対象となります。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:368
+msgid ""
+"You can set only one of the search options `Case sensitive searching` and "
+"`Unaccented characters match accented characters and punctuation is "
+"ignored`."
+msgstr "検索オプションには `大文字と小文字を区別` と `アクセントのない文字をアクセントつきの文字に一致するとみなし、句読点を無視` のどちらか一方しか指定できません。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:370
+msgid "*'Equality' searches*"
+msgstr "*完全一致検索*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:372
+msgid ""
+"Equality searches are indicated by prefixing the search string with an "
+"equals sign (=). For example, the query ``tag:\"=science\"`` will match "
+"`science`, but not `science fiction` or `hard science`. Character variants "
+"are significant: `é` doesn't match `e`."
+msgstr "等式検索は、検索文字列の前に等号 (=) を付けることで示されます。たとえば、クエリ ``tag:\"=science\"`` は \"science\" とはマッチしますが、\"science fiction\" や \"hard science\" とはマッチしません。文字の異形は識別します: ``~e`` は ``é`` とはマッチしません。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:375
+msgid ""
+"Two variants of equality searches are used for hierarchical items (e.g., "
+"A.B.C): hierarchical prefix searches and hierarchical component searches. "
+"The first, indicated by a single period after the equals (``=.``) matches "
+"the initial parts of a hierarchical item. The second, indicated by two "
+"periods after the the equals (``=..``) matches an internal name in the "
+"hierarchical item. Examples, using the tag ``History.Military.WWII`` as the "
+"value:"
+msgstr "階層項目 (例: A.B.C) には、2 種類の完全一致検索が用いられます。階層プレフィックス検索と、階層コンポーネント検索です。1 つ目は、等号の後ろに 1 個のピリオドをつけて表し (``=.``)、改装項目の最初部分にマッチします。2 つ目は、等号の後ろに 2 個のピリオドをつけて表し (``=..``)、階層項目の内側の名前にマッチします。例: タグの `` History.Military.WWII`` を値として使用すると:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:377
+msgid "``tags:\"=.History\"`` : True. ``History`` is a prefix of the tag."
+msgstr "``tags:\"=.History\"`` : Trueです。``History`` はタグのプレフィックスです。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:378
+msgid ""
+"``tags:\"=.History.Military\"`` : True. ``History.Military`` is a prefix of "
+"the tag."
+msgstr "``tags:\"=.History.Military\"`` : True です。``History.Military``はタグのプレフィックスです。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:379
+msgid ""
+"``tags:\"=.History.Military.WWII\"`` : True. ``History.Military.WWII`` is a "
+"prefix of the tag, albeit an improper one."
+msgstr "``tags:\"=.History.Military.WWII\"`` : True です。``History.Military.WWII`` は不適切ではありますが、タグのプレフィックスです。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:380
+msgid "``tags:\"=.Military\"`` : False. ``Military`` is not a prefix of the tag."
+msgstr "``tags:\"=.Military\"`` : Falseです。``Military`` はタグのプレフィックスではありません。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:381
+msgid "``tags:\"=.WWII\"`` : False. ``WWII`` is not a prefix of the tag."
+msgstr "``tags:\"=.WWII\"`` : Falseです。``WWII`` はタグのプレフィックスではありません。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:382
+msgid ""
+"``tags:\"=..History\"`` : True. The hierarchy contains the value "
+"``History``."
+msgstr "``tags:\"=..History\"`` : True です。階層には ``History`` の値が含まれています。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:383
+msgid ""
+"``tags:\"=..Military\"`` : True. The hierarchy contains the value "
+"``Military``."
+msgstr "``tags:\"=..Military\"`` : True です。階層には ``Military`` の値が含まれています。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:384
+msgid "``tags:\"=..WWII\"`` : True. The hierarchy contains the value ``WWII``."
+msgstr "``tags:\"=..WWII\"`` : Trueです。 階層には ``WWII`` の値が含まれています。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:385
+msgid ""
+"``tags:\"=..Military.WWII\"`` : False. The ``..`` search looks for single "
+"values."
+msgstr "``tags:\"=..Military.WWII\"`` : False です。``..`` 検索は 1 つの値しか見ません。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:387
+msgid "*'Regular expression' searches*"
+msgstr "*正規表現検索*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:389
+msgid ""
+"Regular expression searches are indicated by prefixing the search string "
+"with a tilde (~). Any `Python-compatible regular expression "
+"<https://docs.python.org/library/re.html>`__ can be used. Backslashes used "
+"to escape special characters in regular expressions must be doubled because "
+"single backslashes will be removed during query parsing. For example, to "
+"match a literal parenthesis you must enter ``\\\\(`` or alternatively use "
+"`super quotes` (see below). Regular expression searches are 'contains' "
+"searches unless the expression is anchored. Character variants are "
+"significant: ``~e`` doesn't match ``é``."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:391
+msgid "*'Character variant' searches*"
+msgstr "*異形文字検索*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:393
+msgid ""
+"Character variant searches are indicated by prefixing the search string with"
+" a caret (^). This search is similar to the `contains` search (above) except"
+" that:"
+msgstr "異形文字検索は、検索文字列の前にキャレット (^) を付けることで示されます。この検索は、次の点を除いて (上述した) 部分一致検索と似ています:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:395
+msgid "letter case is always ignored."
+msgstr "大文字/小文字は常に無視されます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:396
+msgid "character variants always match each other."
+msgstr "異形文字は互いにマッチします。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:397
+msgid "punctuation and whitespace are always significant."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:399
+msgid ""
+"The search options :guilabel:`Unaccented characters match accented "
+"characters and punctuation is ignored` and :guilabel:`Case sensitive "
+"searching` are ignored. They have no effect on this search's behavior."
+msgstr "検索オプション :guilabel:`アクセントのない文字をアクセントつきの文字に一致するとみなし、句読点を無視` および :guilabel:`大文字と小文字を区別` は無視されます。この検索の動作には影響しません。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:401
+msgid ""
+"The following compares this search to a contains search assuming the "
+":guilabel:`Unaccented characters match...` option is checked (see above) "
+"given the same two book titles:"
+msgstr "この検索を、:guilabel:`アクセントのない文字を...` オプション (上記を参照) がチェックされていると仮定して部分一致検索と比較してみましょう。上と同じ次の 2 つの本が与えられたとします:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:406
+msgid "then these character variant searches find:"
+msgstr "異形文字検索は次のようになります:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:408
+msgid "``title:\"^er\"`` matches both ('e' matches both 'é' and 'e')"
+msgstr "``title:\"^er\"`` は両方にマッチします ('e' は 'é' および 'e' の両方にマッチ)"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:409
+msgid "``title:\"^g\"`` matches both"
+msgstr "``title:\"^g\"`` は両方にマッチします"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:410
+msgid "``title:\"^g \"`` matches #2 because the space is significant"
+msgstr "``title:\"^g \"`` は空白を識別するため 2 番目にマッチします。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:411
+msgid "``title:\"^g,\"`` matches #1 because the comma is significant"
+msgstr "``title:\"^g,\"`` はカンマを識別するため 1 番目にマッチします"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:412
+msgid "``title:\"^gb\"`` matches nothing because space and comma are significant"
+msgstr "``title:\"^gb\"`` は空白とカンマを識別するためマッチするものがありません"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:413
+msgid "``title:\"^g b\"`` matches #2 because the comma is significant"
+msgstr "``title:\"^g b\"`` はカンマを識別するため 2 番目にマッチします"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:414
+msgid "``title:\"^db\"`` matches nothing"
+msgstr "``title:\"^db\"`` にマッチするものはありません"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:415
+msgid ""
+"``title:\"^,\"`` matches #1 (instead of all books) because the comma is "
+"significant"
+msgstr "``title:\"^,\"`` はカンマを識別するので 1 番目の本に (すべての本の代わりに) マッチします"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:417
+msgid "*Search Expression Syntax*"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:419
+msgid ""
+"A `search expression` is a sequence of `search terms` optionally separated "
+"by the operators ``and`` and ``or``. If two search terms occur without a "
+"separating operator, ``and`` is assumed. The ``and`` operator has priority "
+"over the ``or`` operator; for example the expression ``a or b and c`` is the"
+" same as ``a or (b and c)``. You can use parenthesis to change the priority;"
+" for example ``(a or b) and c`` to make the ``or`` evaluate before the "
+"``and``. You can use the operator ``not`` to negate (invert) the result of "
+"evaluating a search expression. Examples:"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:421
+msgid "``not tag:foo`` finds all books that don't contain the tag ``foo``"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:422
+msgid ""
+"``not (author:Asimov or author:Weber)`` finds all books not written by "
+"either Asimov or Weber."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:424
+msgid ""
+"The above examples show examples of `search terms`. A basic `search term` is"
+" a sequence of characters not including spaces, quotes (``\"``), backslashes"
+" (``\\``), or parentheses (``( )``). It can be optionally preceded by a "
+"column name specifier: the `lookup name` of a column followed by a colon "
+"(``:``), for example ``author:Asimov``. If a search term must contain a "
+"space then the entire term must be enclosed in quotes, as in ``title:\"The "
+"Ring\"``. If the search term must contain quotes then they must be `escaped`"
+" with backslashes. For example, to search for a series named `The \"Ball\" "
+"and The \"Chain\"`, use::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:428
+msgid ""
+"If you need an actual backslash, something that happens frequently in "
+"`regular expression` searches, use two of them (``\\\\``)."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:430
+msgid ""
+"It is sometimes hard to get all the escapes right so the result is what you "
+"want, especially in `regular expression` and `template` searches. In these "
+"cases use the `super-quote`: ``\"\"\"sequence of characters\"\"\"``. Super-"
+"quoted characters are used unchanged: no escape processing is done."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:432
+msgid "*More information*"
+msgstr "*その他の情報*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:434
+msgid ""
+"To search for a string that begins with an equals, tilde, or caret; prefix "
+"the string with a backslash."
+msgstr "先頭に等号、チルダ、または挿入記号がついた文字列を検索したい場合には、前にバックスラッシュをつけてください。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:436
+msgid ""
+"Enclose search strings with quotes (\") if the string contains parenthesis "
+"or spaces. For example, to find books with the tag ``Science Fiction`` you "
+"must search for ``tag:\"=science fiction\"``. If you search for "
+"``tag:=science fiction`` you will find all books with the tag ``science`` "
+"and the word ``fiction`` in any metadata."
+msgstr "文字列にカッコまたはスペースが含まれている場合は、検索文字列を引用符 (\") で囲みます。たとえば ``Science Fiction`` というタグを検索したい場合には ``tag:\"=science fiction\"`` と検索する必要があります。``tag:=science fiction`` を検索すると ``science`` というタグを持ち、書誌に ``fiction`` が含まれているすべての本が見つかります。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:438
+msgid ""
+"You can build advanced search queries easily using the :guilabel:`Advanced "
+"search dialog` accessed by clicking the button |sbi| on the left of the "
+"search box."
+msgstr "検索ボックスの左側にある :guilabel:`高度な検索ダイアログ` ボタン |sbi| を使用すると、高度な検索クエリを簡単に作成できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:548
+msgid "sbi"
+msgstr "sbi"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:441
+msgid ""
+"Available fields for searching are: ``tag, title, author, publisher, series,"
+" series_index, rating, cover, comments, format, identifiers, date, pubdate, "
+"search, size, vl`` and custom columns. If a device is plugged in, the "
+"``ondevice`` field becomes available, when searching the calibre library "
+"view. To find the search name (actually called the `lookup name`) for a "
+"custom column, hover your mouse over the column header in the library view."
+msgstr "検索に使用できるフィールドは ``tag, title, author, publisher, series, series_index, rating, cover, comments, format, identifiers, date, pubdate, search, size, vl`` およびカスタム列です。デバイスが接続されていると、calibre ライブラリビューの検索時に ``ondevice`` フィールドが利用可能になります。カスタム列の検索名 (正式には `ルックアップ名` と呼ばれます) を見つけるには、ライブラリビューの中にある列の見出し部分の上にマウスを合わせます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:443
+msgid "*Dates*"
+msgstr "*日付*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:445
+msgid "The syntax for searching for dates is::"
+msgstr "日付を検索する構文は次のとおりです::"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:451
+msgid ""
+"If the date is ambiguous then the current locale is used for date "
+"comparison. For example, in an mm/dd/yyyy locale 2/1/2009 is interpreted as "
+"1 Feb 2009. In a dd/mm/yyyy locale it is interpreted as 2 Jan 2009.  Some "
+"special date strings are available. The string ``today`` translates to "
+"today's date, whatever it is. The strings ``yesterday`` and ``thismonth`` "
+"(or the translated equivalent in the current language) also work. In "
+"addition, the string ``daysago`` (also translated) can be used to compare to"
+" a date some number of days ago. For example::"
+msgstr "日付があいまいな場合は、現在のロケールが日付の比較に使用されます。たとえばロケールが mm/dd/yyyyのとき、2/1/2009 は2009 年 2 月 1 日と解釈されます。ロケールが dd/mm/yyyy ならば 2009 年 1 月 2 日と解釈されます。一部の特殊な日付文字列が使用可能です。文字列 ``today`` は、今日の日付に変換されます。文字列 ``yesterday`` および ``thismonth`` (または現在の言語で翻訳された同等の文字列) も機能します。さらに文字列 ``daysago`` を使用して、数日前の日付と比較することができます。例えば:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:461
+msgid ""
+"To avoid potential problems with translated strings when using a non-English"
+" version of calibre, the strings ``_today``, ``_yesterday``, ``_thismonth``,"
+" and ``_daysago`` are always available. They are not translated."
+msgstr "非英語版の calibre を使用する場合に文字列が翻訳されてしまうという潜在的な問題を回避するために、文字列 ``_today``, ``_yesterday``, ``_thismonth``, および ``_daysago`` は常に使用可能です。これが翻訳されることはありません。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:463
+msgid "*Searching dates and numeric values with relational comparisons*"
+msgstr "*日付と数値を比較演算子を用いて検索*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:465
+msgid ""
+"Dates and numeric fields support the relational operators ``=`` (equals), "
+"``>`` (greater than), ``>=`` (greater than or equal to), ``<`` (less than), "
+"``<=`` (less than or equal to), and ``!=`` (not equal to). Rating fields are"
+" considered to be numeric. For example, the search ``rating:>=3`` will find "
+"all books rated 3 or higher."
+msgstr "日付と数値フィールドは、関係演算子 ``=`` (等号), ``>`` (大なり), ``>=`` (以上), ``<`` (小なり), ``<=`` (以下), および ``!=`` (不等号) をサポートします。評価フィールドは数値と見なされます。たとえば ``rating:>=3`` と検索すると、評価が 3 以上のすべての本が検索されます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:470
+msgid ""
+"You can search for books that have a format of a certain size like this:"
+msgstr "特定のサイズの形式の本を検索するには、次のようにします:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:472
+msgid "``size:>1.1M`` will find books with a format larger than 1.1MB"
+msgstr "``size:>1.1M`` は 1.1 MB を超える形式の本を探します"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:473
+msgid ""
+"``size:<=1K``  will find books with a format smaller than or equal to 1KB"
+msgstr "``size:<=1K`` はサイズが 1KB 以下の形式の本を探します"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:475
+msgid ""
+"You can search for the number of items in multiple-valued fields such as "
+"tags using the character ``#`` then using the same syntax as numeric fields."
+" For example, to find all books with more than 4 tags use ``tags:#>4``. To "
+"find all books with exactly 10 tags use ``tags:#=10``."
+msgstr "タグのような複数値フィールドで項目数を検索できます。この検索は文字 ``#`` で始め、続いて数値フィールドと同じ構文を使用します。たとえばタグが 4 個を超える本を検索するには、``tags:#>4`` を使用します。正確に 10 個のタグが付いた本を検索するには、``tags:#=10`` を使用します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:477
+msgid "*Series indices*"
+msgstr "*シリーズインデックス*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:479
+msgid ""
+"Series indices are searchable. For the standard series, the search name is "
+"``series_index``. For custom series columns, use the column search name "
+"followed by _index. For example, to search the indices for a custom series "
+"column named ``#my_series``, you would use the search name "
+"``#my_series_index``. Series indices are numbers, so you can use the "
+"relational operators described above."
+msgstr "シリーズインデックスは検索可能です。標準的なシリーズの場合、検索名は ``series_index`` です。カスタムシリーズ列では、列検索名の後に _index をつけます。たとえば、``#my_series`` という名前のカスタムシリーズ列のインデックスを検索するには、検索名 ``#my_series_index`` を使用します。シリーズ列インデックスは数値ですから、上述した関係演算子を使用できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:484
+msgid "*Saved searches*"
+msgstr "*保存済み検索*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:486
+msgid ""
+"The special field ``search`` is used for :ref:`saved searches "
+"<saved_searches>`. If you save a search with the name \"My spouse's books\" "
+"you can enter ``search:\"My spouse's books\"`` in the Search bar to reuse "
+"the saved search. More about saving searches below."
+msgstr "特殊なフィールド ``search`` は :ref:`保存済み検索 <saved_searches>` で使用されます。\"私の配偶者の本\" という名前で検索を保存した場合には、検索バーに ``search:\"私の配偶者の本\"`` と入力して、保存した検索を再利用できます。検索の保存について詳しくは、下に説明します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:490
+msgid "*Virtual libraries*"
+msgstr "*仮想ライブラリ*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:492
+msgid ""
+"The special field ``vl`` is used to search for books in a virtual library. "
+"For example, ``vl:Read`` will find all the books in the *Read* virtual "
+"library. The search ``vl:Read and vl:\"Science Fiction\"`` will find all the"
+" books that are in both the *Read* and *Science Fiction* virtual libraries. "
+"The value following ``vl:`` must be the name of a virtual library. If the "
+"virtual library name contains spaces then surround it with quotes."
+msgstr "特殊なフィールド ``vl`` は、仮想ライブラリ内の本を検索するために使用されます。たとえば ``vl:Read`` は、*Read* 仮想ライブラリ内のすべての本を検索します。 ``vl:Read and vl:\"Science Fiction\"`` と検索すると、*Read*ライブラリと *Science Fiction* ライブラリの両方にある本が見つかります。 ``vl:`` に続く値には、仮想ライブラリの名前を指定します。仮想ライブラリ名にスペースが含まれている場合は、引用符で囲んでください。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:498
+msgid "*Whether a field has a value*"
+msgstr "*フィールドに値があるか*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:500
+msgid ""
+"You can search for the absence or presence of a value for a field using "
+"\"true\" and \"false\". For example:"
+msgstr "フィールドの値の有無は、特殊な値 \"true\" および \"false\" を使用して検索できます。例えば:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:502
+msgid "``cover:false`` finds all books without a cover"
+msgstr "``cover:false`` は表紙のない本を探します"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:503
+msgid "``series:true`` finds all books that are in a series"
+msgstr "``series:true`` シリーズになっている本を探します"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:504
+msgid "``series:false`` finds all books that are not in a series"
+msgstr "``series:false`` シリーズでない本を探します"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:505
+msgid "``comments:false`` finds all books with an empty comment"
+msgstr "``comments:false`` finds all books with an empty comment"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:506
+msgid "``formats:false`` finds all books with no book files (empty records)"
+msgstr "``formats:false`` は本のファイルのない本を探します (空のレコード)"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:508
+msgid "*Yes/no custom columns*"
+msgstr "*Yes/no カスタム列*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:510
+msgid ""
+"Searching Yes/no custom columns for ``false``, ``empty``, or ``blank`` will "
+"find all books with undefined values in the column. Searching for ``true`` "
+"will find all books that do not have undefined values in the column. "
+"Searching for ``yes`` or ``checked`` will find all books with ``Yes`` in the"
+" column. Searching for ``no`` or ``unchecked`` will find all books with "
+"``No`` in the column. Note that the words ``yes``, ``no``, ``blank``, "
+"``empty``, ``checked`` and ``unchecked`` are translated; you can use either "
+"the current language's equivalent word or the English word. The words "
+"``true`` and ``false`` and the special values ``_yes``, ``_no``, and "
+"``_empty`` are not translated."
+msgstr "Yes/no カスタム列で ``false``, ``empty``, または ``blank`` を検索すると、その列に未定義の値を持つすべての本が見つかります。 ``true`` を検索すると、列に未定義の値がないすべての本が見つかります。``yes`` または ``checked`` を検索すると、列に ``Yes`` が含まれる本が検索されます。 ``no`` または ``unchecked`` を検索すると、列に ``No`` が含まれる本が検索されます。ただし ``yes``, ``no``, ``blank``, ``empty``, ``checked`` および ``unchecked`` という単語は翻訳されます。現在の言語の同等の単語、または英単語のいずれかを使用できます。単語 ``true`` と ``false``、および特殊な値 ``_yes``, ``_no``, および ``_empty`` は翻訳されません。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:515
+msgid "*Identifiers*"
+msgstr "*ID*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:517
+msgid ""
+"Identifiers (e.g., ISBN, DOI, LCCN, etc.) use an extended syntax. An "
+"identifier has the form ``type:value``, as in ``isbn:123456789``. The "
+"extended syntax permits you to specify independently the type and value to "
+"search for. Both the type and the value parts of the query can use any of "
+"the :ref:`search kinds <search_kinds>`. Examples:"
+msgstr "識別子 (例: ISBN, DOI, LCCN) は拡張構文を使用します。識別子は ``isbn:123456789`` のように、``type:value`` の形式であることに注意してください。拡張構文を使用すると、検索するタイプと値を個別に指定できます。クエリのタイプ部分と値部分の両方で、:ref:`search kinds <search_kinds>` を使用できます。例:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:519
+msgid "``identifiers:true`` will find books with any identifier."
+msgstr "``identifiers:true`` は任意の識別子を持つ本を探します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:520
+msgid "``identifiers:false`` will find books with no identifier."
+msgstr "``identifiers:false`` は識別子のない本を探します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:521
+msgid ""
+"``identifiers:123`` will search for books with any type having a value "
+"containing `123`."
+msgstr "``identifiers:123`` は `123` を含む値を持つ任意のタイプの本を探します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:522
+msgid ""
+"``identifiers:=123456789`` will search for books with any type having a "
+"value equal to `123456789`."
+msgstr "``identifiers:=123456789`` は任意のタイプで、値が `123456789` の本を探します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:523
+msgid ""
+"``identifiers:=isbn:`` and ``identifiers:isbn:true`` will find books with a "
+"type equal to ISBN having any value"
+msgstr "``identifiers:=isbn:`` および ``identifiers:isbn:true`` はタイプが ISBN で何か値が設定されている本を探します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:524
+msgid ""
+"``identifiers:=isbn:false`` will find books with no type equal to ISBN."
+msgstr "``identifiers:=isbn:false`` はタイプが ISBN ではない本を探します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:525
+msgid ""
+"``identifiers:=isbn:123`` will find books with a type equal to ISBN having a"
+" value containing `123`."
+msgstr "``identifiers:=isbn:123`` はタイプが ISBN で値が `123` の本を探します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:526
+msgid ""
+"``identifiers:=isbn:=123456789`` will find books with a type equal to ISBN "
+"having a value equal to `123456789`."
+msgstr "``identifiers:=isbn:=123456789`` はタイプが ISBN で値が `123456789` の本を探します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:527
+msgid ""
+"``identifiers:i:1`` will find books with a type containing an `i` having a "
+"value containing a `1`."
+msgstr "``identifiers:i:1`` タイプに `i` が含まれていて、値に `1` が含まれている本を探します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:529
+msgid "*Search using templates*"
+msgstr "*テンプレートを使った検索*"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:531
+msgid ""
+"You can search using a template in :ref:`templatelangcalibre` instead of a "
+"metadata field. To do so you enter a template, a search type, and the value "
+"to search for. The syntax is::"
+msgstr "書誌フィールドの代わりに、:ref:`templatelangcalibre` のテンプレートを使って検索することができます。それには、テンプレート、検索タイプ、および検索する値を入力します。構文は次のようになります::"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:535
+msgid ""
+"The ``template`` is any valid calibre template language template. The "
+"``search type`` must be one of ``t`` (text search), ``d`` (date search), "
+"``n`` (numeric search), or ``b`` (set/not set (boolean)). The ``value`` is "
+"whatever you want, and can use the :ref:`search kinds <search_kinds>` "
+"described above for the various search types. You must quote the entire "
+"search string if there are spaces anywhere in it."
+msgstr "``template`` は、calibre のテンプレート言語で作られた何らかの有効なテンプレートです。``search type`` は ``t`` (テキスト検索)、``d`` (日付検索)、``n`` (数値検索)、または ``b`` (設定/未設定 (ブーリアン)) のいずれかを指定します。``value`` には何か検索したいものを指定します。さまざまな検索タイプに対して、上述した :ref:`検索の種類 <search_kinds>` を使用できます。検索文字列内にスペースが含まれている場合は、検索文字列全体を引用符で囲む必要があります。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:537
+msgid "Examples:"
+msgstr "例:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:539
+msgid ""
+"``template:\"program: connected_device_name('main')#@#:t:kindle\"`` -- is "
+"true when the ``kindle`` device is connected."
+msgstr "``template:\"program: connected_device_name('main')#@#:t:kindle\"`` -- ``kindle`` デバイスが接続されていれば true になります。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:540
+msgid ""
+"``template:\"program: select(formats_sizes(), 'EPUB')#@#:n:>1000000\"`` -- "
+"finds books with EPUB files larger than 1 MB."
+msgstr "``template:\"program: select(formats_sizes(), 'EPUB')#@#:n:>1000000\"`` -- 1MB を超える EPUB ファイルの本を探します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:541
+msgid ""
+"``template:\"program: select(formats_modtimes('iso'), "
+"'EPUB')#@#:d:>10daysago\"`` -- finds books with EPUB files newer than 10 "
+"days ago."
+msgstr "``template:\"program: select(formats_modtimes('iso'), 'EPUB')#@#:d:>10daysago\"`` -- 10 日前よりも新しい EPUB ファイルの本を探します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:542
+msgid ""
+"``template:\"\"\"program: book_count('tags:^\"' & $series & '\"', 0) != "
+"0#@#:n:1\"\"\"`` -- finds all books containing the series name in the tags. "
+"This example uses super-quoting because the template uses both single quotes"
+" (``'``) and double quotes (``\"``) when constructing the search expression."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:544
+msgid ""
+"You can build template search queries easily using the :guilabel:`Advanced "
+"search dialog` accessed by clicking the button |sbi|. You can test templates"
+" on specific books using the calibre :guilabel:`Template tester`, which can "
+"be added to the toolbars or menus via :guilabel:`Preferences->Toolbars & "
+"menus`. It can also be assigned a keyboard shortcut via "
+":guilabel:`Preferences->Shortcuts`."
+msgstr "テンプレート検索クエリは |sbi| ボタンをクリックして :guilabel:`高度な検索ダイアログ` を使って簡単に作成できます。calibre :guilabel:`テンプレートテスター` を使えば特定の本に対してテンプレートをテストできます。これは :guilabel:`環境設定->ツールバー&メニュー` を使ってツールバーやメニューに簡単に追加可能です。:guilabel:`環境設定->ショートカット` からショートカットに割り当てることも可能です。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:546
+msgid "*Advanced search dialog*"
+msgstr "高度な検索ダイアログを開く"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:554
+msgid ":guilabel:`Advanced search dialog`"
+msgstr ":guilabel:`高度な検索ダイアログ`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:559
+msgid "Saving searches"
+msgstr "検索の保存"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:561
+msgid ""
+"calibre allows you to save a frequently used search under a special name and"
+" then reuse that search with a single click. To do this, create your search "
+"either by typing it in the Search bar or using the Tag browser. Then type "
+"the name you would like to give to the search in the Saved Searches box next"
+" to the Search bar. Click the plus icon next to the saved searches box to "
+"save the search."
+msgstr "caliber では、頻繁に使用する検索に特別な名前をつけて保存すると、その検索を 1 回クリックするだけで再利用できます。これを行うにはまず、検索バーに入力するか、タグブラウザを使用するかして検索を作成します。次に、検索バーの横にある保存済み検索ボックスに、その検索に付ける名前を入力します。そして保存済み検索ボックスの横にあるプラスアイコンをクリックし、検索を保存します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:563
+msgid ""
+"Now you can access your saved search in the Tag browser under "
+":guilabel:`Saved searches`. A single click will allow you to reuse any "
+"arbitrarily complex search easily, without needing to re-create it."
+msgstr "これで、タグブラウザの :guilabel:`保存済み検索` から保存済み検索が利用できるようになります。クリック 1 回で、任意の複雑な検索を簡単に再利用できます。もう一度作る必要がなくなるのです。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:566
+msgid "Searching the full text of all books"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:568
+msgid "ftsb"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:571
+msgid ""
+"|ftsb| calibre can *optionally* index the full text of books in the library "
+"to allow for instant searching of words inside any book. To use this "
+"functionality click the :guilabel:`FT` button at the left edge of the search"
+" bar."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:575
+msgid ""
+"Then, enable indexing for the current library. Once indexing is complete you"
+" can search all the text in the full library. When you add new books to the "
+"library, they will be automatically indexed in the background. This search "
+"allows you to quickly find all books that contain a word or combination of "
+"words. You can even search for words that occur near other words, as shown "
+"in the examples in the search popup window. Note that this search tool will "
+"find only one occurrence of the search query in a particular book, not list "
+"every occurrence, for that it is best to search inside the book using the "
+"calibre :guilabel:`E-book viewer`."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:584
+msgid ""
+"You can re-index an individual book by right clicking on the :guilabel:`Book"
+" details panel` in calibre and choosing :guilabel:`Re-index this book for "
+"full text searching`."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:589
+msgid "Virtual libraries"
+msgstr "仮想ライブラリ"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:591
+msgid ""
+"A :guilabel:`Virtual library` is a way to pretend that your calibre library "
+"has only a few books instead of its full collection. This is an excellent "
+"way to partition your large collection of books into smaller, manageable "
+"chunks. To learn how to create and use Virtual libraries, see the tutorial: "
+":ref:`virtual_libraries`."
+msgstr ":guilabel:`仮想ライブラリ` は、calibre のライブラリがコレクション全体の代わりに、ほんの数冊しか本を持っていないふりをする方法です。これは、大量の本のコレクションを小さくて管理しやすいまとまりに分割するための優れた方法です。仮想ライブラリを作成して使用する方法については、チュートリアル :ref:`virtual_libraries` を参照してください。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:598
+msgid "Temporarily marking books"
+msgstr "一時的に本をマーク"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:600
+msgid ""
+"You can temporarily mark arbitrary sets of books. Marked books will have a "
+"pin on them and can be found with the search ``marked:true``. To mark a book"
+" press :kbd:`Ctrl+m` or go to :guilabel:`Preferences->Toolbars & menus` and "
+"add the :guilabel:`Mark books` button to the main toolbar."
+msgstr "任意の本のセットに一時的にマークを付けることができます。マークされた本にはピンが付き、``marked:true`` で検索できます。これを行うには、:kbd:`Ctrl+m` を押すか、 :guilabel:`環境設定->ツールバー&メニュー` に移動して、:guilabel:`本をマーク` ボタンをメインツールバーに追加します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:602
+msgid ""
+"You can mark books with a specific text label by right clicking the "
+":guilabel:`Mark books` button and choosing :guilabel:`Mark books with text "
+"label`. Books marked with text labels can later be found using the search "
+"``marked:\"=the-text-you-entered\"``."
+msgstr ":guilabel:`本をマーク` を右クリックして :guilabel:`ラベル付きで本をマーク` を選択して、数種類のマークを作成することもできます。入力したテキストラベルは ``marked:\"=入力したテキストラベル\"`` とすると後で検索できます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:607
+msgid "Guessing metadata from file names"
+msgstr "ファイル名から書誌を推測"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:609
+msgid ""
+"Normally, calibre reads metadata from inside the book file. However, it can "
+"be configured to read metadata from the file name instead, via "
+":guilabel:`Preferences->Import/export->Adding books->Read metadata from file"
+" contents`."
+msgstr "通常、calibre は本のファイル内から書誌を読み取ります。が、代わりにファイル名から書誌を読み取るようにも設定できます。これは :guilabel:`環境設定->インポート/エクスポート->本の束->書誌をファイル内容から読み込む` で設定します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:613
+msgid ""
+"You can also control how metadata is read from the filename using regular "
+"expressions (see :doc:`regexp`). In the :guilabel:`Adding books` section of "
+"the configuration dialog, you can specify a regular expression that calibre "
+"will use to try and guess metadata from the names of e-book files that you "
+"add to the library. The default regular expression is::"
+msgstr "ファイル名から書誌を読み取る方法を、正規表現 (:doc:`regexp` を参照) を使用して制御することもできます。環境設定ダイアログの :guilabel:`本の` セクションで、ライブラリに追加する電子書籍ファイルの名前から書誌を推測するために calibre が使用する正規表現を指定できます。デフォルトの正規表現は次のとおりでです::"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:621
+msgid ""
+"that is, it assumes that all characters up to the first ``-`` are the title "
+"of the book and subsequent characters are the author of the book. For "
+"example, the filename::"
+msgstr "つまり、最初の ``-`` までのすべての文字が本のタイトルであり、後続の文字が本の著者であることを前提としています。たとえば、ファイル名が次のとき::"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:627
+msgid ""
+"will be interpreted to have the title: Foundation and Earth and author: "
+"Isaac Asimov"
+msgstr "上のファイル名は、タイトル: Foundation and Earth 著者: Isaac Asimov と解釈されます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:630
+msgid ""
+"If the filename does not contain the hyphen, the above regular expression "
+"will fail."
+msgstr "ファイル名にハイフンが含まれていないと、上の正規表現はうまくいきません。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:636
+msgid "Book details"
+msgstr "本の詳細"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:640
+msgid ""
+"The Book details display shows the cover and all the metadata for the "
+"currently selected book. It can be hidden via the :guilabel:`Layout` button "
+"in the lower right corner of the main calibre window. The author names shown"
+" in the Book details panel are click-able, they will by default take you to "
+"the Wikipedia page for the author.  This can be customized by right clicking"
+" on the author name and selecting Manage this author."
+msgstr "本の詳細画面には、現在選択されている本の表紙とすべての書誌が表示されます。本の詳細は非表示にすることもできます。それにはメインの calibre ウィンドウの右下端にある :guilabel:`レイアウト` ボタンを使用します。 本の詳細パネルに表示される著者名はクリック可能です。デフォルトでは、著者のWikipediaページに移動します。これは、著者名を右クリックしてこの著者の管理を選択することでカスタマイズできます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:647
+msgid ""
+"Similarly, if you download metadata for the book, the Book details panel "
+"will automatically show you links pointing to the web pages for the book on "
+"Amazon, WorldCat, etc. from where the metadata was downloaded."
+msgstr "同様に本の書誌をダウンロードすると、本の詳細パネルに自動的にリンクが表示され、リンク先は Amazon、WorldCat などの本の書誌のダウンロード元となります。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:651
+msgid ""
+"You can right click on individual e-book formats in the Book details panel "
+"to delete them, compare them to their original versions, save them to disk, "
+"open them with an external program, etc."
+msgstr "本の詳細パネルで電子書籍の形式を右クリックすると、削除したり、元のバージョンと比較したり、ディスクに保存したり、外部プログラムで開いたりすることができます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:655
+msgid ""
+"You can change the cover of the book by simply drag and dropping an image "
+"onto the Book details panel. If you wish to edit the cover image in an "
+"external program, simply right click on it and choose :guilabel:`Open with`."
+msgstr "本の表紙は、本の詳細パネルに画像をドラッグ&ドロップするだけで変更できます。外部プログラムで表紙画像を編集する場合は、表紙画像を右クリックして :guilabel:`アプリケーションを選択して開く` を選択します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:659
+msgid ""
+"You can also add e-book files to the current book by drag and dropping the "
+"files onto the Book details panel."
+msgstr "ファイルをブックの詳細パネルにドラッグ＆ドロップして、現在の本に電子書籍ファイルを追加することもできます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:662
+msgid ""
+"Double clicking the Book details panel will open it up in a separate popup "
+"window."
+msgstr "本の詳細パネルの上でダブルクリックすると、別のポップアップウィンドウで開きます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:665
+msgid ""
+"Finally, you can customize exactly what information is displayed in the Book"
+" details panel via :guilabel:`Preferences->Interface->Look & feel->Book "
+"details`."
+msgstr "最後に、本の詳細パネルに表示する情報は :guilabel:`環境設定->インタフェース->外観->本の詳細` でカスタマイズできます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:675
+msgid "Tag browser"
+msgstr "タグブラウザ"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:679
+msgid ""
+"The Tag browser allows you to easily browse your collection by "
+"Author/Tags/Series/etc. If you click on any item in the Tag browser, for "
+"example the author name Isaac Asimov, then the list of books to the right is"
+" restricted to showing books by that author. You can click on category names"
+" as well. For example, clicking on \"Series\" will show you all books in any"
+" series."
+msgstr "タグブラウザを使えば、著者/タグ/シリーズ別にコレクションを簡単に閲覧できます。タグブラウザで著者名、たとえば Isaac Asimov をクリックすると、右側の本のリストにはその著者の本だけが表示されます。カテゴリ名をクリックしても同様です。たとえばシリーズをクリックすれば、そのシリーズの本がすべて表示されます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:681
+msgid ""
+"The first click on an item will restrict the list of books to those that "
+"contain or match the item. Continuing the above example, clicking on Isaac "
+"Asimov will show books by that author. Clicking again on the item will "
+"change what is shown, depending on whether the item has children (see sub-"
+"categories and hierarchical items below). Continuing the Isaac Asimov "
+"example, clicking again on Isaac Asimov will restrict the list of books to "
+"those not by Isaac Asimov. A third click will remove the restriction, "
+"showing all books. If you hold down the :kbd:`Ctrl` or :kbd:`Shift` keys and"
+" click on multiple items, then restrictions based on multiple items are "
+"created. For example you could hold :kbd:`Ctrl` and click on the tags "
+"History and Europe for finding books on European history. The Tag browser "
+"works by constructing search expressions that are automatically entered into"
+" the Search bar. Looking at what the Tag browser generates is a good way to "
+"learn how to construct basic search expressions."
+msgstr "項目をクリックすると 1 回目のときには、本のリストにその項目を含むか一致するだけが表示されます。上に挙げた例にならえば Isaac Asimovをクリックすると、その著者の本が表示されます。項目をもう一度クリックしたときには、その項目に子があるか次第で表示される内容が変わります (後述のサブカテゴリと階層項目を参照)。 Isaac Asimov の例でいくと、 Isaac Asimov をもう一度クリックすると、本のリストに Isaac Asimov 以外のものだけが表示されます。3 回目のクリックで条件が解除され、再びすべての書籍が表示されます。 :kbd:`Ctrl` または :kbd:`Shift` キーを押しながら複数の項目をクリックすると、選択した項目に基づいて表示が制限されます。たとえば、:kbd:`Ctrl` キーを押しながら「歴史」と「ヨーロッパ」のタグをクリックすると、ヨーロッパの歴史に関する本を探すことができます。タグブラウザは、自動的に検索バーに検索式を生成しながら機能します。タグブラウザがどのようなものを生成するのか調べてみると、基本的な検索式の作り方がよく学べるでしょう。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:683
+msgid ""
+"Items in the Tag browser have their icons partially colored. The amount of "
+"color depends on the average rating of the books in that category. So for "
+"example if the books by Isaac Asimov have an average of four stars, the icon"
+" for Isaac Asimov in the Tag browser will be 4/5th colored. You can hover "
+"your mouse over the icon to see the average rating."
+msgstr "タグブラウザに表示される項目のアイコンは、部分的に色付けされています。色の量は、そのカテゴリの本の平均評価によって変わります。したがって、たとえば Isaac Asimov の本の評価が平均して星 4 の場合、タグブラウザで Isaac Asimov のアイコンは 4/5 の部分が色付けされます。平均評価の値は、アイコンの上にマウスを置くと表示されます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:685
+msgid ""
+"The outer-level items in the :guilabel:`Tag browser`, such as Authors and "
+"Series, are called categories. You can create your own categories, called "
+":guilabel:`User categories`, which are useful for organizing items. For "
+"example, you can use the :guilabel:`User categories editor` (click the "
+":guilabel:`Configure` button at the lower-left of the :guilabel:`Tag "
+"browser` and choose :guilabel:`Manage authors, tags, etc->User categories`) "
+"to create a User category called ``Favorite Authors``, then put the items "
+"for your favorites into the category. User categories can have sub-"
+"categories. For example, the User category ``Favorites.Authors`` is a sub-"
+"category of ``Favorites``. You might also have ``Favorites.Series``, in "
+"which case there will be two sub-categories under ``Favorites``. Sub-"
+"categories can be created by right-clicking on a User category, choosing "
+":guilabel:`Add sub-category to...`, and entering the sub-category name; or "
+"by using the :guilabel:`User categories editor` by entering names like the "
+"Favorites example above."
+msgstr ":guilabel:`タグブラウザ` にある外側の階層の項目、たとえば著者やシリーズなどは、カテゴリと呼ばれます。自分でカテゴリを作成することも可能です。自分で作成したものは、:guilabel:`ユーザカテゴリ` と呼ばれます。これは項目を整理するのに役に立ちます。たとえば、:guilabel:`ユーザカテゴリエディタ` (:guilabel:`タグブラウザ` の左下にある :guilabel:`設定` ボタンをクリックし、:guilabel:`著者、タグ等を管理->ユーザカテゴリ` を選択) を使用して、``お気に入りの著者`` というユーザーカテゴリを作成し、お気に入りをそのカテゴリに入れておくことができます。ユーザカテゴリにはサブカテゴリを作れます。たとえば、ユーザーカテゴリ ``お気に入り.著者` は、``お気に入り`` のサブカテゴリです。また ``お気に入り.シリーズ`` もあるかもしれません。その場合には ``お気に入り`` の下に 2 つのサブカテゴリが存在することになります。サブカテゴリを作成するにはユーザカテゴリを右クリックし、:guilabel:`...にサブカテゴリを追加`を選択して、サブカテゴリ名を入力します。または上述したお気に入りの例と同様にに名前を入力して、:guilabel:`ユーザカテゴリエディタ` を使用します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:691
+msgid ""
+"You can search User categories in the same way as built-in categories, by "
+"clicking on them. There are four different searches cycled through by "
+"clicking:"
+msgstr "ユーザカテゴリはビルトインカテゴリと同様に、クリックして検索ができます。クリックすると 4 種類の検索が繰り返されます:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:688
+msgid ""
+"\"everything matching an item in the category\" indicated by a single green "
+"plus sign."
+msgstr "緑色のプラス記号 1 個で示される「カテゴリ内で項目にマッチするすべて」"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:689
+msgid ""
+"\"everything matching an item in the category or its sub-categories\" "
+"indicated by two green plus signs."
+msgstr "緑色のプラス記号 2 個で示される「カテゴリ内またはサブカテゴリ内で項目にマッチするすべて」"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:690
+msgid ""
+"\"everything not matching an item in the category\" shown by a single red "
+"minus sign."
+msgstr "赤いマイナス記号 1 個で示される「カテゴリ内で項目にマッチしないものすべて」"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:691
+msgid ""
+"\"everything not matching an item in the category or its sub-categories\" "
+"shown by two red minus signs."
+msgstr "赤いマイナス記号 2 個で示される「カテゴリとそのサブカテゴリ内で項目にマッチしないものすべて」"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:693
+msgid ""
+"It is also possible to create hierarchies inside some of the text categories"
+" such as tags, series, and custom columns. These hierarchies show with the "
+"small triangle, permitting the sub-items to be hidden. To use hierarchies of"
+" items in a category, you must first go to "
+":guilabel:`Preferences->Interface->Look & feel` and enter the category "
+"name(s) into the \"Categories with hierarchical items\" field. Once this is "
+"done, items in that category that contain periods will be shown using the "
+"small triangle. For example, assume you create a custom column called "
+"\"Genre\" and indicate that it contains hierarchical items. Once done, items"
+" such as Mystery.Thriller and Mystery.English will display as Mystery with "
+"the small triangle next to it. Clicking on the triangle will show Thriller "
+"and English as sub-items. See :ref:`Managing subgroups of books, for example"
+" \"genre\" <subgroups-tutorial>` for more information."
+msgstr "また、タグ、シリーズ、カスタム列などの一部のテキストカテゴリ内に階層を作ることも可能です。このような階層は小さな三角形で表示され、下の階層を隠しておくことができます。カテゴリ内で項目の階層を利用するには、:guilabel:`環境設定->インタフェース->外観` で \"階層化するカテゴリ項目\" フィールドにカテゴリ名を入力しておく必要があります。これが完了すると、ピリオドが含まれているカテゴリの項目が、小さな三角形を使って表示されるようになります。たとえば「ジャンル」というカスタム列を作成し、階層カテゴリに指定したとします。それが完了すると、「推理小説.スリラー」や「推理小説.英語」などの項目が、横に小さな三角形が付いた推理小説として表示されます。三角形をクリックすると、サブ項目としてスリラーと英語が表示されます。詳しくは :ref:`本のサブグループ、たとえば \"ジャンル\" の管理 <subgroups-tutorial>` を参照してください。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:695
+msgid ""
+"Hierarchical items (items with children) use the same four 'click-on' "
+"searches as User categories. Items that do not have children use two of the "
+"searches: \"everything matching\" and \"everything not matching\"."
+msgstr "階層項目 (子を持つ項目) は、ユーザカテゴリと同様に 4 種類の「クリックオン」検索を使用します。子供がいない項目は「マッチするものすべて」と「マッチしないものすべて」の 2 種類の検索を使用します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:697
+msgid ""
+"You can drag and drop items in the Tag browser onto User categories to add "
+"them to that category. If the source is a User category, holding the "
+":kbd:`Shift` key while dragging will move the item to the new category. You "
+"can also drag and drop books from the book list onto items in the Tag "
+"browser; dropping a book on an item causes that item to be automatically "
+"applied to the dropped books. For example, dragging a book onto Isaac Asimov"
+" will set the author of that book to Isaac Asimov. Dropping it onto the tag "
+"History will add the tag History to the book's tags."
+msgstr "タグブラウザにある項目をユーザカテゴリにドラッグ&ドロップすると、そのカテゴリに追加することができます。元の場所がユーザカテゴリであれば、:kbd:`Shift` キーを押しながらドラッグすると、その項目は新しいカテゴリに移動します。本の一覧からタグブラウザの項目に本をドラッグ&ドロップすることもできます。項目に本をドロップすると、その項目がドロップされた本に自動的に適用されます。たとえば、ある本を Isaac Asimov にドラッグすると、その本の著者が Isaac Asimov に設定されます。「歴史」タグにドロップすると「歴史」が本のタグに追加されます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:699
+msgid ""
+"You can easily find any item in the Tag browser by clicking the search "
+"button at the lower-right corner. In addition, you can right click on any "
+"item and choose one of several operations. Some examples are to hide it, "
+"rename it, or open a \"Manage x\" dialog that allows you to manage items of "
+"that kind. For example, the :guilabel:`Manage authors` dialog allows you to "
+"rename authors and control how their names are sorted."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:701
+msgid ""
+"You can control how items are sorted in the Tag browser via the "
+":guilabel:`Configure` button at the lower-left of the Tag browser. You can "
+"choose to sort by name, average rating or popularity (popularity is the "
+"number of books with an item in your library; for example, the popularity of"
+" Isaac Asimov is the number of books in your library by Isaac Asimov)."
+msgstr "タグブラウザの左下にある :guilabel:`設定` ボタンを使用すると、タグブラウザでの項目を並び順を制御できます。名前、平均評価、または冊数の順で表示することが可能です (冊数は、ライブラリ内にあるその項目を含む本の数です。たとえば、Isaac Asimovの冊数は、著者が Isaac Asimov となっているライブラリ内の本の数です)。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:708
+msgid "Cover grid"
+msgstr "表紙グリッド"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:713
+msgid ""
+"You can have calibre display a grid of book covers instead of a list of "
+"books, if you prefer to browse your collection by covers instead. The "
+":guilabel:`Cover grid` is activated by clicking the :guilabel:`Layout` "
+"button in the bottom right corner of the main calibre window. You can "
+"customize the cover sizes and the background of the :guilabel:`Cover grid` "
+"via :guilabel:`Preferences->Interface->Look & feel->Cover grid`. You can "
+"even have calibre display any specified field under the covers, such as "
+"title or authors or rating or a custom column of your own devising."
+msgstr "本のコレクションを表紙で見たい場合は、本の一覧の代わりに本の表紙を calibre にグリッド表示させることができます。メインの calibre ウィンドウ右下端にある :guilabel:`レイアウト` ボタンをクリックすると、表紙グリッドが有効になります。表紙サイズと背景は  :guilabel:`環境設定->インタフェース->外観->表紙グリッド` でカスタマイズできます。フィールドを指定して calibre にタイトル、作者、評価、カスタム列などを表紙の下部に表示させることも可能です。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:723
+msgid "Cover browser"
+msgstr "表紙ブラウザ"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:728
+msgid ""
+"In addition to the :guilabel:`Cover grid` described above, you can also have"
+" calibre display covers in the single row. This is activated via the "
+":guilabel:`Layout` button in the lower right corner of the main window. In "
+":guilabel:`Preferences->Interface->Look & feel->Cover browser` you can "
+"change the number of covers displayed, and even have the :guilabel:`Cover "
+"browser` display itself in a separate popup window."
+msgstr "上述した :guilabel:`表紙グリッド` に加えて、表紙を一列に並べて calibre に表示させることもできます。これを有効にするには、メインウィンドウの右下端にある :guilabel:`レイアウト` ボタンを使用します。:guilabel:`環境設定->インタフェース->外観->表紙ブラウザ` で、表示する表紙の数を変更できます。表紙ブラウザ自体を別のポップアップウィンドウに表示することも可能です。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:735
+msgid "Quickview"
+msgstr "クイックビュー"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:737
+msgid ""
+"Sometimes you want to select a book and quickly get a list of books with the"
+" same value in some category (authors, tags, publisher, series, etc.) as the"
+" currently selected book, but without changing the current view of the "
+"library. You can do this with Quickview. Quickview opens either a second "
+"window or a panel in the book list showing the list of books matching the "
+"value of interest. For example, assume you want to see a list of all the "
+"books with the one or more of the authors of the currently-selected book. "
+"Click in the author cell you are interested in and press the 'Q' key or "
+"click the :guilabel:`Quickview` icon in the :guilabel:`Layout` section of "
+"the calibre window. A window or panel will open with all the authors for "
+"that book on the left, and all the books by the selected author on the "
+"right."
+msgstr "ライブラリの現在のビューを変更することなく、選択した本とカテゴリ (著者、タグ、出版社、シリーズなど) が同じ本を手早く一覧にしたい場合があります。クイックビューを使えば、それが可能です。クイックビューは、本の一覧を表示する 2 つ目のウィンドウまたはパネルを開き、興味のある値に一致する本の一覧を表示します。たとえば、現在選択している本と著者が同じ本をすべて一覧で表示したいとします。表示したい著者セルをクリックして 'Q' キーを押すか、calibre ウィンドウのレイアウトセクションにある :guilabel:`クイックビュウー` アイコンをクリックします。そうするとウィンドウまたはパネルが開き、左側にその本のすべての著者が表示され、右側には選択した著者によるすべての本が表示されます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:744
+msgid "Some example Quickview usages: quickly seeing what other books:"
+msgstr "クイックビューの利用例: 次のような本を手早く一覧にできます:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:740
+msgid "have some tag(s) applied to the currently selected book,"
+msgstr "現在選択中の本と同じタグを持つ本"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:741
+msgid "are in the same series as the current book"
+msgstr "現在の本と同じシリーズの本"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:742
+msgid "have the same values in a custom column as the current book"
+msgstr "現在の本とカスタム列の値が同じ本"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:743
+msgid "are written by one of the same authors of the current book"
+msgstr "現在の本の著者のひとりによって書かれた本"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:744
+msgid "share values in a custom column"
+msgstr "カスタム列の値を共有する本"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:746
+msgid "There are two choices for where the Quickview information appears:"
+msgstr "クイックビューの情報を表示する場所には、次の 2 つの選択肢があります:"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:748
+msgid ""
+"It can open \"undocked\": on top of the calibre window and will stay open "
+"until you explicitly close it."
+msgstr "\"分離\" で開く: calibre ウィンドウの上に開き、明示的に閉じるまで開いたままになります。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:749
+msgid ""
+"It can open \"docked\": as a panel in the book list section of the calibre "
+"main window."
+msgstr "\"結合\" で開く: calibre のメインウィンドウの下にパネルで表示します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:751
+msgid ""
+"You can move the window from docked to undocked as desired using the "
+"\"Dock/Undock\" button."
+msgstr "\"結合/分離\" ボタンを使用すれば、ウィンドウを結合したり分離したりできます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:753
+msgid ""
+"The Quickview panel can be left open permanently, in which case it follows "
+"movements on the book list. For example, if you click in the calibre library"
+" view on a category column (tags, series, publisher, authors, etc.) for a "
+"book, the Quickview window contents will change to show you in the left-hand"
+" side panel the values in that category for the selected book (e.g., the "
+"tags for that book). The first item in that list will be selected, and "
+"Quickview will show you on the right-hand side panel all the books in your "
+"library that use that value. Click on an different value in the left-hand "
+"panel to see the books with that different value."
+msgstr "クイックビューパネルは、開いたままにすることが可能です。その場合には、本の一覧の動きに従います。たとえば calibre のライブラリビューで、ある本のカテゴリ列 (タグ、シリーズ、出版社、著者など) をクリックすると、クイックビューの左側のパネルに選択した本のそのカテゴリの値 (例: その本のタグ) が一覧表示されます。一覧の一番上の値が選択されて、クイックビューの右側のパネルにはその値を使用している本が一覧表示されます。左側のパネルで別の値を選択すると、その値に一致する本が表示されます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:755
+msgid ""
+"Double-click on a book in the Quickview window to select that book in the "
+"library view. This will also change the items display in the QuickView "
+"window (the left-hand panel) to show the items in the newly-selected book."
+msgstr "クイックビューウィンドウ上で本をダブルクリックすると、ライブラリビューでその本を選択します。それにより新しく選択された本に合わせて、クイックビューウィンドウの (左側のパネル) に表示されるものも変化します。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:757
+msgid ""
+":kbd:`Shift-` or :kbd:`Ctrl-` double-click on a book in the Quickview window"
+" to open the edit metadata dialog on that book in the calibre window. The "
+"edited book will be Quickview'ed when you close the edit metadata dialog."
+msgstr "クイックウィンドウにある本の上で :kbd:`Shift` または :kbd:`Ctrl` キーを押しながらダブルクリックすると、メインの calibre ウィンドウ上でその本の書誌編集ダイアログを開きます。書誌の編集ダイアログを閉じると、編集された本のクイックビューが表示されます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:759
+msgid ""
+"You can see if a column can be Quickview'ed by hovering your mouse over the "
+"column heading and looking at the tooltip for that heading. You can also "
+"know by right-clicking on the column heading to see of the \"Quickview\" "
+"option is shown in the menu, in which case choosing that Quickview option is"
+" equivalent to pressing 'Q' in the current cell."
+msgstr "列見出しの上にマウスを置いてその見出しのツールチップを確認すると、その列をクイックビューできるかどうかがわかります。列見出しを右クリックしたときに「クイックビュー」オプションがメニューに表示されるかどうかでもわかります。ここでクイックビューオプションを選択すると、現在のセルで 'Q' を押すのと同じ動きをします。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:761
+msgid "Options (in :guilabel:`Preferences->Look & feel->Quickview`):"
+msgstr "オプション (:guilabel:`環境設定->外観->クイックビュー`):"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:763
+msgid ""
+"Respect (or not) the current Virtual library. If checked then Quickview "
+"shows only books in the current Virtual library. Default: respect Virtual "
+"libraries"
+msgstr "仮想ライブラリを適用する (またはしない)。チェックすると、クイックビューは現在の仮想ライブラリ内の本のみを表示します。デフォルト: 仮想ライブラリを適用"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:764
+msgid ""
+"Change the Quickview window contents when the column is changed on the book "
+"list using the cursor keys. Default: don't follow changes made with cursor "
+"keys"
+msgstr "カーソルキーを使って本の一覧上で列が変更されたとき、クイックビューの内容を変更。デフォルト: カーソルキーで行われた変更には従わない"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:765
+msgid ""
+"Change the column being \"quickview'ed\" when a cell in the Quickview window"
+" is double-clicked. Otherwise the book is changed but the column being "
+"examined is not. Default: change the column"
+msgstr "クイックビューウィンドウのセルがダブルクリックされたときに、クイックビューする列を変更。変更しない場合は、本は変更しますが、クイックビューの対象とする列は変更しません。デフォルト: 列を変更"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:766
+msgid ""
+"Change the column being \"quickview'ed\" to the current column when the "
+"return key is pressed in the Quickview panel. Otherwise the book is changed "
+"but the column being examined is not. Default: change the column"
+msgstr "クイックビューパネルでリターンキーが押されたとき、クイックビューする列を現在の列に変更。変更しない場合は、クイックビューの対象とする列は変更しません。デフォルト: 列を変更"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:767
+msgid "Choose which columns are shown in the Quickview window/panel."
+msgstr "クイックビューウィンドウ/パネルに表示する列を選択。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:776
+msgid "Jobs"
+msgstr "ジョブ"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:780
+msgid ""
+"The Jobs panel shows the number of currently running jobs. Jobs are tasks "
+"that run in a separate process. They include converting e-books and talking "
+"to your reader device. You can click on the jobs panel to access the list of"
+" jobs. Once a job has completed you can see a detailed log from that job by "
+"double-clicking it in the list. This is useful to debug jobs that may not "
+"have completed successfully."
+msgstr "ジョブパネルには、現在実行中のジョブの数が表示されます。ジョブとは、別のプロセスとして実行されるタスクのことです。これには、電子書籍の変換やリーダデバイスとの対話が含まれます。ジョブパネルをクリックすると、ジョブの一覧を表示できます。ジョブが完了すると、一覧でそのジョブをダブルクリックして詳しいログを表示できるようになります。これは、正常に完了しなかった可能性のあるジョブのデバッグに役立ちます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:787
+msgid "Keyboard shortcuts"
+msgstr "キーボード ショートカット"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:789
+msgid ""
+"calibre has several keyboard shortcuts to save you time and mouse movement. "
+"These shortcuts are active in the book list view (when you're not editing "
+"the details of a particular book), and most of them affect the title you "
+"have selected. The calibre E-book viewer has its own shortcuts which can be "
+"customised by clicking the :guilabel:`Preferences` button in the viewer."
+msgstr "calibre には、時間とマウスの動きを節約するためにキーボードショートカット用意されています。こうしたショートカットは本の一覧ビューで有効になり (特定のブックの詳細を編集していない場合)、ほとんどのショートカットは選択したタイトルに影響します。 calibre 電子書籍ビューアには独自のショートカットがあり、ビューアの :guilabel:`環境設定` ボタンをクリックしてカスタマイズできます。"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:793
+msgid ""
+"Note: The calibre keyboard shortcuts do not require a modifier key (Command,"
+" Option, Control, etc.), unless specifically noted. You only need to press "
+"the letter key, e.g. E to edit."
+msgstr "注意: calibre のキーボードショートカットは、特に記されていない限り修飾キー (コマンドキー、オプションキー、コントロールキーなど) を必要としません。文字キーを押すだけです。例: E を押して編集"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:795
+msgid "Keyboard shortcuts for the main calibre program"
+msgstr "メインの calibre プログラムのキーボードショートカット"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:799
+msgid "Keyboard shortcut"
+msgstr "キイーボードショートカット"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:800
+msgid "Action"
+msgstr "アクション"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:801
+msgid ":kbd:`F2 (Enter for macOS)`"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:802
+msgid "Edit the metadata of the currently selected field in the book list."
+msgstr "本の一覧で選択中のフィールドの書誌を編集"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:803
+msgid ":kbd:`A`"
+msgstr ":kbd:`A`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:805
+msgid ":kbd:`Shift+A`"
+msgstr ":kbd:`Shift+A`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:806
+msgid "Add formats to the selected books"
+msgstr "選択した本に形式を追加"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:807
+msgid ":kbd:`C`"
+msgstr ":kbd:`C`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:808
+msgid "Convert selected books"
+msgstr "選択した本を変換"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:809
+msgid ":kbd:`D`"
+msgstr ":kbd:`D`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:811
+msgid ":kbd:`Del`"
+msgstr ":kbd:`Del`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:812
+msgid "Remove selected books"
+msgstr "選択した本を削除"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:813
+msgid ":kbd:`E`"
+msgstr ":kbd:`E`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:814
+msgid "Edit metadata of selected books"
+msgstr "選択した本の書誌を編集"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:815
+msgid ":kbd:`G`"
+msgstr ":kbd:`G`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:816
+msgid "Get books"
+msgstr "本を入手"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:817
+msgid ":kbd:`I`"
+msgstr ":kbd:`I`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:818
+msgid "Show Book details"
+msgstr "本の詳細を表示"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:819
+msgid ":kbd:`K`"
+msgstr ":kbd:`K`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:820
+msgid "Edit Table of Contents"
+msgstr "目次の編集"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:821
+msgid ":kbd:`M`"
+msgstr ":kbd:`M`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:822
+msgid "Merge selected records"
+msgstr "選択したレコードをマージ"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:823
+msgid ":kbd:`Alt+M`"
+msgstr ":kbd:`Alt+M`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:824
+msgid "Merge selected records, keeping originals"
+msgstr "選択したレコードをマージし、元のレコードを保持"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:825
+msgid ":kbd:`O`"
+msgstr ":kbd:`O`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:826
+msgid "Open containing folder"
+msgstr "本のあるフォルダを開く"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:827
+msgid ":kbd:`P`"
+msgstr ":kbd:`P`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:828
+msgid "Polish books"
+msgstr "本の最適化"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:829
+msgid ":kbd:`S`"
+msgstr ":kbd:`S`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:831
+msgid ":kbd:`T`"
+msgstr ":kbd:`T`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:832
+msgid "Edit book"
+msgstr "書籍編集"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:833
+msgid ":kbd:`V`"
+msgstr ":kbd:`V`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:835
+msgid ":kbd:`Shift+V`"
+msgstr ":kbd:`Shift+V`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:836
+msgid "View last read book"
+msgstr "最後に読んだ本を表示"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:837
+msgid ":kbd:`Alt+V/Cmd+V for macOS`"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:838
+msgid "View specific format"
+msgstr "指定した形式で表示"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:839
+msgid ":kbd:`Alt+Shift+J`"
+msgstr ":kbd:`Alt+Shift+J`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:840
+msgid "Toggle jobs list"
+msgstr "ジョブの一覧を表示/非表示"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:841
+msgid ":kbd:`Alt+Shift+B`"
+msgstr ":kbd:`Alt+Shift+B`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:842
+msgid "Toggle Cover browser"
+msgstr "表紙ブラウザを表示/"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:843
+msgid ":kbd:`Alt+Shift+D`"
+msgstr ":kbd:`Alt+Shift+D`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:844
+msgid "Toggle Book details panel"
+msgstr "本の詳細パネルを表示/非表示"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:845
+msgid ":kbd:`Alt+Shift+T`"
+msgstr ":kbd:`Alt+Shift+T`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:846
+msgid "Toggle Tag browser"
+msgstr "タグブラウザを表示/非表示"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:847
+msgid ":kbd:`Alt+Shift+G`"
+msgstr ":kbd:`Alt+Shift+G`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:848
+msgid "Toggle Cover grid"
+msgstr "表紙グリッドを表示/非表示"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:849
+msgid ":kbd:`Alt+A`"
+msgstr ":kbd:`Alt+A`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:850
+msgid "Show books by the same author as the current book"
+msgstr "現在の本と同じ著者の本を表示"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:851
+msgid ":kbd:`Alt+T`"
+msgstr ":kbd:`Alt+T`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:852
+msgid "Show books with the same tags as current book"
+msgstr "現在の本と同じタグの本を表示"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:853
+msgid ":kbd:`Alt+P`"
+msgstr ":kbd:`Alt+P`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:854
+msgid "Show books by the same publisher as current book"
+msgstr "現在の本と同じ出版社の本を表示"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:855
+msgid ":kbd:`Alt+Shift+S`"
+msgstr ":kbd:`Alt+Shift+S`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:856
+msgid "Show books in the same series as current book"
+msgstr "現在の本と同じシリーズの本を表示"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:857
+msgid ":kbd:`/, Ctrl+F`"
+msgstr ":kbd:`/, Ctrl+F`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:858
+msgid "Focus the Search bar"
+msgstr "検索バーにフォーカス移動"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:859
+msgid ":kbd:`Shift+Ctrl+F`"
+msgstr ":kbd:`Shift+Ctrl+F`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:860
+msgid "Open the Advanced search dialog"
+msgstr "高度な検索ダイアログを開く"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:861
+msgid ":kbd:`Shift+Alt+F`"
+msgstr ":kbd:`Shift+Alt+F`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:862
+msgid "Toggle the Search bar"
+msgstr "検索バーを表示/非表示"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:863
+msgid ":kbd:`Esc`"
+msgstr ":kbd:`Esc`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:864
+msgid "Clear the current search"
+msgstr "現在の検索を消去"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:865
+msgid ":kbd:`Shift+Esc`"
+msgstr ":kbd:`Shift+Esc`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:866
+msgid "Focus the book list"
+msgstr "本リストをフォーカス"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:867
+msgid ":kbd:`Ctrl+Esc`"
+msgstr ":kbd:`Ctrl+Esc`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:868
+msgid "Clear the Virtual library"
+msgstr "仮想ライブラリを消去"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:869
+msgid ":kbd:`Alt+Esc`"
+msgstr ":kbd:`Alt+Esc`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:870
+msgid "Clear the additional restriction"
+msgstr "追加制限を消去"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:871
+msgid ":kbd:`Ctrl+*`"
+msgstr ":kbd:`Ctrl+*`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:872
+msgid "Create a temporary Virtual library based on the current search"
+msgstr "現在の検索に基づいて一時的な仮想ライブラリを作成"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:873
+msgid ":kbd:`Ctrl+Right`"
+msgstr ":kbd:`Ctrl+右矢印`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:874
+msgid "Select the next Virtual library tab"
+msgstr "次の仮想ライブラリタブを選択"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:875
+msgid ":kbd:`Ctrl+Left`"
+msgstr ":kbd:`Ctrl+左矢印`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:876
+msgid "Select the previous Virtual library tab"
+msgstr "前の仮想ライブラリタブを選択"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:877
+msgid ":kbd:`N or F3`"
+msgstr ":kbd:`N または F3`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:878
+msgid ""
+"Find the next book that matches the current search (only works if search "
+"highlighting is turned on in search preferences)"
+msgstr "現在の検索にマッチする次の本を探す (検索設定で検索ハイライトが有効のときのみ機能)"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:879
+msgid ":kbd:`Shift+N or Shift+F3`"
+msgstr ":kbd:`Shift+N または Shift+F3`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:880
+msgid ""
+"Find the previous book that matches the current search (only works if search"
+" highlighting is turned on in search preferences)"
+msgstr "現在の検索にマッチする前の本を探す (検索設定で検索ハイライトが有効のときのみ機能)"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:881
+msgid ":kbd:`Ctrl+D`"
+msgstr ":kbd:`Ctrl+D`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:882
+msgid "Download metadata and covers"
+msgstr "書誌と表紙をダウンロード"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:883
+msgid ":kbd:`Ctrl+R`"
+msgstr ":kbd:`Ctrl+R`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:884
+msgid "Restart calibre"
+msgstr "calibre を再起動"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:885
+msgid ":kbd:`Ctrl+Shift+R`"
+msgstr ":kbd:`Ctrl+Shift+R`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:886
+msgid "Restart calibre in debug mode"
+msgstr "calibre をデバッグモードで再起動"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:887
+msgid ":kbd:`Shift+Ctrl+E`"
+msgstr ":kbd:`Shift+Ctrl+E`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:888
+msgid "Add empty books to calibre"
+msgstr "calibre に空の本を追加"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:889
+msgid ":kbd:`Ctrl+M`"
+msgstr ":kbd:`Ctrl+M`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:890
+msgid "Toggle mark/unmarked status on selected books"
+msgstr "選択した本をマーク/マーク解除"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:891
+msgid ":kbd:`Ctrl+/` or :kbd:`Ctrl+Alt+F`"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:892
+msgid "Open the popup to search the full text of all books in the library"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/gui.rst:893
+msgid ":kbd:`Q`"
+msgstr ":kbd:`Q`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:894
+msgid ""
+"Open the Quick View popup for viewing books in related series/tags/etc."
+msgstr "関連したシリーズ/タグなどの本を表示するクイックビューポップアップを開く"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:895
+msgid ":kbd:`Shift+Q`"
+msgstr ":kbd:`Shift+Q`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:896
+msgid "Focus the opened Quick View panel"
+msgstr "開いているクイックビューパネルにフォーカス移動"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:897
+msgid ":kbd:`Shift+S`"
+msgstr ":kbd:`Shift+S`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:898
+msgid "Perform a search in the Quick View panel"
+msgstr "クイックビューパネルで検索を実行"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:899
+msgid ":kbd:`F5`"
+msgstr ":kbd:`F5`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:900
+msgid "Re-apply the current sort"
+msgstr "現在の並べ替えを再適用する"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:901
+msgid ":kbd:`Ctrl+Q`"
+msgstr ":kbd:`Ctrl+Q`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:902
+msgid "Quit calibre"
+msgstr "calibre を終了"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:903
+msgid ":kbd:`X`"
+msgstr ":kbd:`X`"
+
+#: ../../__w/calibre/calibre/manual/gui.rst:904
+msgid "Toggle auto scroll of the book list"
+msgstr "本の一覧の自動スクロールを有効/無効"

@@ -1,0 +1,1130 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# 
+# Translators:
+# Yuri Chornoivan <yurchor@ukr.net>, 2014-2015,2017,2019-2021
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-12-02 15:47+0000\n"
+"PO-Revision-Date: 2021-11-23 15:56+0000\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: uk\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+
+#: ../../__w/calibre/calibre/manual/polish.rst:4
+msgid "API documentation for the e-book editing tools"
+msgstr "Документація з програмного інтерфейсу засобів редагування електронних книг"
+
+#: ../../__w/calibre/calibre/manual/polish.rst:6
+msgid ""
+"The e-book editing tools consist of a "
+":class:`calibre.ebooks.oeb.polish.container.Container` object that "
+"represents a book as a collection of HTML + resource files, and various "
+"tools that can be used to perform operations on the container. All the tools"
+" are in the form of module level functions in the various "
+"``calibre.ebooks.oeb.polish.*`` modules."
+msgstr "Засоби редагування електронних книг складаються з об’єкта :class:`calibre.ebooks.oeb.polish.container.Container`, які представляють книгу як збірку HTML + файли ресурсів, і різноманітних засобів, якими можна скористатися для виконання операцій над контейнером. Усі засоби представляються у формі функцій рівня модуля у різноманітних модулях ``calibre.ebooks.oeb.polish.*``."
+
+#: ../../__w/calibre/calibre/manual/polish.rst:15
+msgid "You obtain a container object for a book at a path like this::"
+msgstr "Ви отримуєте об’єкт-контейнер книги зі шляхом, подібним до такого::"
+
+#: ../../__w/calibre/calibre/manual/polish.rst:20
+msgid ""
+"If you are writing a plugin for the E-book editor, you get the current "
+"container for the book being edited like this::"
+msgstr "Якщо ви створюєте додаток до редактора електронних книг, ви отримуєте контейнер для книги, яка редагується, подібний до такого::"
+
+#: ../../__w/calibre/calibre/manual/polish.rst:30
+msgid "The Container object"
+msgstr "Об’єкт контейнера"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container:1
+msgid ""
+"A container represents an open e-book as a folder full of files and an OPF "
+"file. There are two important concepts:"
+msgstr "Контейнер складається з відкритої електронної книги, як теки з файлами, і одного файла OPF. Передбачено два важливих поняття:"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container:4
+msgid ""
+"The root folder. This is the base of the e-book. All the e-books files are "
+"inside this folder or in its sub-folders."
+msgstr "Коренева тека. Це основа електронної книги. Усі файли електронної книги зберігаються у цій теці і її підтеках."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container:7
+msgid ""
+"Names: These are paths to the books' files relative to the root folder. They"
+" always contain POSIX separators and are unquoted. They can be thought of as"
+" canonical identifiers for files in the book. Most methods on the container "
+"object work with names. Names are always in the NFC Unicode normal form."
+msgstr "Назви: це шляхи до файлів книги відносно кореневої теки. У них завжди містяться роздільники POSIX і не міститься лапок. Їх можна вважати канонічними ідентифікаторами файлів у книзі. Більшість методів для об’єктів-контейнерів працюють з назвами. Назви завжди записуються у нормальній формі NFC Unicode."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container:13
+msgid ""
+"Clones: the container object supports efficient on-disk cloning, which is "
+"used to implement checkpoints in the e-book editor. In order to make this "
+"work, you should never access files on the filesystem directly. Instead, use"
+" :meth:`raw_data` or :meth:`open` to read/write to component files in the "
+"book."
+msgstr "Клони: для об’єкти-контейнерів передбачено підтримку ефективного клонування на диску. Таке клонування використовується для реалізації контрольних точок у редакторі електронних книг. Для того, щоб це спрацювало, вам ніколи не слід отримувати доступ до файлів у файловій системі безпосередньо. Замість цього, використовуйте :meth:`raw_data` або :meth:`open` для читання або запису файлів-компонентів електронної книги."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container:18
+msgid ""
+"When converting between hrefs and names use the methods provided by this "
+"class, they assume all hrefs are quoted."
+msgstr "Для перетворення між гіперпосиланнями і назвами використовуйте методи з цього класу, усі гіперпосилання у цих методах вважаються вказаними у лапках."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.abspath_to_name:1
+msgid "Convert an absolute path to a canonical name relative to :attr:`root`"
+msgstr "Перетворити абсолютний шлях на канонічну назву відносно :attr:`root`"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.abspath_to_name:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.commit:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.raw_data:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: of calibre.ebooks.oeb.polish.replace.replace_links:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: of calibre.ebooks.oeb.polish.replace.rename_files:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: of calibre.ebooks.oeb.polish.split.split:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: of calibre.ebooks.oeb.polish.split.multisplit:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: of calibre.ebooks.oeb.polish.split.merge:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: of calibre.ebooks.oeb.polish.cover.set_cover:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: of calibre.ebooks.oeb.polish.cover.mark_as_titlepage:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
+#: calibre.ebooks.oeb.polish.css.remove_unused_css:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
+#: calibre.ebooks.oeb.polish.css.filter_css:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring of
+#: calibre.ebooks.oeb.polish.toc.create_inline_toc:0
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
+#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:0
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
+#: calibre.gui2.tweak_book.boss.Boss.apply_container_update_to_gui:0
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
+#: calibre.gui2.tweak_book.boss.Boss.edit_file:0
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
+#: calibre.gui2.tweak_book.boss.Boss.open_book:0
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
+#: calibre.gui2.tweak_book.boss.Boss.show_current_diff:0
+msgid "Parameters"
+msgstr "Параметри"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.abspath_to_name:3
+msgid ""
+"The base folder. By default the root for this container object is used."
+msgstr "Базова тека. Типово, коренева тека об’єкта-контейнера."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.add_file:1
+msgid ""
+"Add a file to this container. Entries for the file are automatically created"
+" in the OPF manifest and spine (if the file is a text document)"
+msgstr "Додати файл до цього контейнера. Записи для файла автоматично створюються у маніфесті OPF і вмісті (якщо файл є текстовим документом)"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.add_name_to_manifest:1
+msgid ""
+"Add an entry to the manifest for a file with the specified name. Returns the"
+" manifest id."
+msgstr "Додати запис щодо файла з вказаною назвою до маніфесту. Повертає ідентифікатор маніфесту."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.add_properties:1
+msgid "Add the specified properties to the manifest item identified by name."
+msgstr "Додати вказані властивості до запису маніфесту, вказаного за назвою."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.apply_unique_properties:1
+msgid ""
+"Ensure that the specified properties are set on only the manifest item "
+"identified by name. You can pass None as the name to remove the property "
+"from all items."
+msgstr "Переконайтеся, що вказані властивості встановлено лише для запису маніфесту, ідентифікованого за назвою. Ви можете передати None як назву для вилучення властивості з усіх записів."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.ebooks.oeb.polish.container.Container.book_type:1
+msgid "The type of book (epub for EPUB files and azw3 for AZW3 files)"
+msgstr "Тип книги (epub для файлів EPUB і azw3 для файлів AZW3)"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.commit:1
+msgid ""
+"Commit all dirtied parsed objects to the filesystem and write out the e-book"
+" file at outpath."
+msgstr "Зберегти усі змінені оброблені об’єкти до файлової системи і записати файл електронної книги до outpath."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.commit:3
+msgid ""
+"The path to write the saved e-book file to. If None, the path of the "
+"original book file is used."
+msgstr "Каталог, до якого слід записати збережений файл електронної книги. Якщо має значення None, буде використано каталог, у якому зберігалася початкова книга."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.commit:4
+msgid ""
+"If True the parsed representations of committed items are kept in the cache."
+msgstr "Якщо має значення True, оброблене представлення збережених записів зберігатиметься у кеші."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.commit_item:1
+msgid ""
+"Commit a parsed object to disk (it is serialized and written to the "
+"underlying file). If ``keep_parsed`` is True the parsed representation is "
+"retained in the cache. See also: :meth:`parsed`"
+msgstr "Зберегти оброблений об’єкт на диск (його буде перетворено на послідовну форму і записано до підлеглого файла). Якщо ``keep_parsed`` має значення True, оброблене представлення буде збережено у кеші. Див. також :meth:`parsed`"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.dirty:1
+msgid ""
+"Mark the parsed object corresponding to name as dirty. See also: "
+":meth:`parsed`."
+msgstr "Позначити оброблюваний об’єкт, що відповідає назві, як недооброблений. Див. також: :meth:`parsed`."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.exists:1
+msgid ""
+"True iff a file/folder corresponding to the canonical name exists. Note that"
+" this function suffers from the limitations of the underlying OS filesystem,"
+" in particular case (in)sensitivity. So on a case insensitive filesystem "
+"this will return True even if the case of name is different from the case of"
+" the underlying filesystem file. See also :meth:`has_name`"
+msgstr "Має значення True тоді і лише тоді, коли файл або тека, що відповідає канонічній назві, існує. Зауважте, що дію цієї функції обмежено можливостями файлової системи відповідної операційної системи, зокрема тим, чи розрізняються у цій файловій системі назви за регістром символів. Отже, якщо у файловій системі не розрізняється регістр символів, функція поверне True, навіть якщо назва відрізняється за регістром символів від назви файла у файловій системі. Див. також :meth:`has_name`"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.filesize:1
+msgid ""
+"Return the size in bytes of the file represented by the specified canonical "
+"name. Automatically handles dirtied parsed objects. See also: :meth:`parsed`"
+msgstr "Повернути розмір у байтах для файла, вказаного канонічною назвою. Автоматично обробляє позначені під час обробки необроблені об’єкти. Див. також: :meth:`parsed`"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.generate_item:1
+msgid ""
+"Add an item to the manifest with href derived from the given name. Ensures "
+"uniqueness of href and id automatically. Returns generated item."
+msgstr "Додати запис до маніфесту із гіперпосиланням, яке отримано з вказаної назви. Автоматично забезпечує унікальність гіперпосилання і ідентифікатора. Повертає створений запис."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of
+#: calibre.ebooks.oeb.polish.container.Container.get_file_path_for_processing:1
+msgid ""
+"Similar to open() except that it returns a file path, instead of an open "
+"file object."
+msgstr "Подібний до open(), але повертає шлях до файла, а не відкритий об’єкт файла."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.guide_type_map:1
+msgid "Mapping of guide type to canonical name"
+msgstr "Прив’язка напрямного типу до канонічної назви"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.has_name:1
+msgid ""
+"Return True iff a file with the same canonical name as that specified "
+"exists. Unlike :meth:`exists` this method is always case-sensitive."
+msgstr "Повертає True, якщо і лише якщо існує файл із такою самою назвою, яка вказана. На відміну від :meth:`exists`, цей метод завжди враховує регістр символів."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.href_to_name:1
+msgid ""
+"Convert an href (relative to base) to a name. base must be a name or None, "
+"in which case self.root is used."
+msgstr "Перетворює гіперпосилання (відносно base) на назву. base має бути назвою або None (у цьому випадку буде використано self.root)."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.insert_into_xml:1
+msgid ""
+"Insert item into parent (or append if index is None), fixing indentation. "
+"Only works with self closing items."
+msgstr "Вставити запис до батьківського запису (або дописати запис, якщо index дорівнює None), виправити відступи. Працює лише із самозакривними записами."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.ebooks.oeb.polish.container.Container.is_dir:1
+msgid "If this container represents an unzipped book (a directory)"
+msgstr "Якщо цей контейнер відповідає розпакованій книзі (каталогу)"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.iterlinks:1
+msgid ""
+"Iterate over all links in name. If get_line_numbers is True the yields "
+"results of the form (link, line_number, offset). Where line_number is the "
+"line_number at which the link occurs and offset is the number of characters "
+"from the start of the line. Note that offset could actually encompass "
+"several lines if not zero."
+msgstr "Ітеративно обробити усі посилання у `name`. Якщо `get_line_numbers` має значення True, видає результати у формі (посилання, номер_рядка, відступ), де номер_рядка є номером рядка, у якому виявлено посилання, а відступ є кількістю символів від початку цього рядка до посилання. Зауважте, що відступ може включати декілька порожніх рядків, якщо є ненульовим."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.make_name_unique:1
+msgid ""
+"Ensure that `name` does not already exist in this book. If it does, return a"
+" modified version that does not exist."
+msgstr "Забезпечує те, що запис `name` ще не існує у цій книзі. Якщо такий запис існує, повертає змінену версію запису, якої ще не існує."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.manifest_has_name:1
+msgid "Return True if the manifest has an entry corresponding to name"
+msgstr "Повертає True, якщо у маніфесті є запис, що відповідає назві"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.manifest_id_map:1
+msgid "Mapping of manifest id to canonical names"
+msgstr "Прив’язка ідентифікаторів маніфесту до канонічних назв"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.manifest_items_of_type:1
+msgid ""
+"The names of all manifest items whose media-type matches predicate. "
+"`predicate` can be a set, a list, a string or a function taking a single "
+"argument, which will be called with the media-type."
+msgstr "Назви усіх записів маніфесту, чий тип даних відповідає predicate. Значенням `predicate` може бути множина, список, рядок або функція, яка приймає один аргумент — назву типу даних."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of
+#: calibre.ebooks.oeb.polish.container.Container.manifest_items_with_property:1
+msgid "All manifest items that have the specified property"
+msgstr "Усі записи маніфесту, які мають вказану властивість"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.manifest_type_map:1
+msgid ""
+"Mapping of manifest media-type to list of canonical names of that media-type"
+msgstr "Прив’язка media-type маніфесту до списку канонічних назв цього media-type"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.mi:1
+msgid ""
+"The metadata of this book as a Metadata object. Note that this object is "
+"constructed on the fly every time this property is requested, so use it "
+"sparingly."
+msgstr "Метадані цієї книги у формі об’єкта Metadata. Зауважте, що цей об’єкт будується «на льоту» кожного разу, коли надсилається запит щодо цієї властивості, тому не варто зловживати її використанням."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.name_to_abspath:1
+msgid "Convert a canonical name to an absolute OS dependent path"
+msgstr "Перетворити канонічну назву на абсолютний шлях у форматі операційної системи"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.name_to_href:1
+msgid ""
+"Convert a name to a href relative to base, which must be a name or None in "
+"which case self.root is used as the base"
+msgstr "Перетворює назву на гіперпосилання відносно base, яким має бути назвою або None (якщо основною є self.root)"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of
+#: calibre.ebooks.oeb.polish.container.Container.names_that_must_not_be_changed:1
+msgid ""
+"Set of names that must never be renamed. Depends on the e-book file format."
+msgstr "Набір назв, які заборонено перейменовувати. Залежить від формату файла електронної книги."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of
+#: calibre.ebooks.oeb.polish.container.Container.names_that_must_not_be_removed:1
+msgid ""
+"Set of names that must never be deleted from the container. Depends on the "
+"e-book file format."
+msgstr "Набір назв, які заборонено вилучати з контейнера. Залежить від формату файла електронної книги."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of
+#: calibre.ebooks.oeb.polish.container.Container.names_that_need_not_be_manifested:1
+msgid ""
+"Set of names that are allowed to be missing from the manifest. Depends on "
+"the e-book file format."
+msgstr "Набір назв, які можна не згадувати у маніфесті. Залежить від формату файла електронної книги."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.open:1
+msgid ""
+"Open the file pointed to by name for direct read/write. Note that this will "
+"commit the file if it is dirtied and remove it from the parse cache. You "
+"must finish with this file before accessing the parsed version of it again, "
+"or bad things will happen."
+msgstr "Відкрити файл, вказаний за назвою для безпосереднього читання або запису. Зауважте, що у процесі виконання файл буде записано, якщо його було змінено, і вилучено із кешу обробки. Слід завершувати роботу з файлом, перш ніж отримувати доступ до його обробленої версії знову, інакше можуть статися прикрі помилки."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.opf:1
+msgid "The parsed OPF file"
+msgstr "Оброблений файл OPF"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.opf_get_or_create:1
+msgid ""
+"Convenience method to either return the first XML element with the specified"
+" name or create it under the opf:package element and then return it, if it "
+"does not already exist."
+msgstr "Зручний метод для або повернення першого елемента XML із вказаною назвою, або створення його у елементі opf:package з наступним його поверненням, якщо елемента ще не існувало."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.opf_version:1
+msgid "The version set on the OPF's <package> element"
+msgstr "Версія, встановлена на елементі <package> OPF"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.opf_version_parsed:1
+msgid "The version set on the OPF's <package> element as a tuple of integers"
+msgstr "Версія, встановлена на елементі <package> OPF, у форматі кортежу цілих чисел"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.opf_xpath:1
+msgid ""
+"Convenience method to evaluate an XPath expression on the OPF file, has the "
+"opf: and dc: namespace prefixes pre-defined."
+msgstr "Зручний метод для застосування виразу XPath до файла OPF, містить попередньо визначення префікси просторів назв «opf:» та «dc:»."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.parsed:1
+msgid ""
+"Return a parsed representation of the file specified by name. For HTML and "
+"XML files an lxml tree is returned. For CSS files a css_parser stylesheet is"
+" returned. Note that parsed objects are cached for performance. If you make "
+"any changes to the parsed object, you must call :meth:`dirty` so that the "
+"container knows to update the cache. See also :meth:`replace`."
+msgstr "Повертає оброблене представлення файла, який вказано за назвою (`name`). Для файлів HTML і XML буде повернуто дерево lxml. Для файлів CSS буде повернуто таблицю стилів css_parser. Зауважте, що оброблені об’єкти кешуються для підвищення швидкодії. Якщо ви вносите будь-які зміни до обробленого об’єкта, вам слід викликати :meth:`dirty`, щоб повідомити контейнеру, що слід оновити кеш. Див. також :meth:`replace`."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.raw_data:1
+msgid "Return the raw data corresponding to the file specified by name"
+msgstr "Повертає необроблені дані, що відповідають файлу, вказаному за назвою"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.raw_data:3
+msgid ""
+"If True and the file has a text based MIME type, decode it and return a "
+"unicode object instead of raw bytes."
+msgstr "Якщо має значення True і файл належить до текстового типу MIME, декодувати його і повернути об’єкт unicode замість необробленого набору байтів."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.raw_data:4
+msgid ""
+"If True the returned unicode object is normalized to the NFC normal form as "
+"is required for the EPUB and AZW3 file formats."
+msgstr "Якщо True, повернутий об’єкт unicode нормалізується до нормальної форми NFC, як це вимагається форматами файлів EPUB і AZW3."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.relpath:1
+msgid ""
+"Convert an absolute path (with os separators) to a path relative to base "
+"(defaults to self.root). The relative path is *not* a name. Use "
+":meth:`abspath_to_name` for that."
+msgstr "Перетворити абсолютний шлях (із роздільниками операційної системи) на шлях відносно параметра base (типове значення — self.root). Відносний шлях *не є* назвою. Для отримання назви скористайтеся :meth:`abspath_to_name`."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.remove_from_spine:1
+msgid ""
+"Remove the specified items (by canonical name) from the spine. If "
+"``remove_if_no_longer_in_spine`` is True, the items are also deleted from "
+"the book, not just from the spine."
+msgstr "Вилучити вказані записи (за канонічними назвами) із вмісту. Якщо ``remove_if_no_longer_in_spine`` має значення True, записи також буде вилучено із книги, не лише із її вмісту."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.remove_from_xml:1
+msgid ""
+"Removes item from parent, fixing indentation (works only with self closing "
+"items)"
+msgstr "Вилучає запис з батьківського запису, виправляє відступи (працює лише із самозакривними записами)"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.remove_item:1
+msgid ""
+"Remove the item identified by name from this container. This removes all "
+"references to the item in the OPF manifest, guide and spine as well as from "
+"any internal caches."
+msgstr "Вилучити запис, вказаний за назвою, з цього контейнера. Вилучає усі посилання на запис у маніфесті OPF, покажчику та вмісті, а також з усіх кешів внутрішнього використання."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.rename:1
+msgid ""
+"Renames a file from current_name to new_name. It automatically rebases all "
+"links inside the file if the folder the file is in changes. Note however, "
+"that links are not updated in the other files that could reference this "
+"file. This is for performance, such updates should be done once, in bulk."
+msgstr "Перейменовує файл з current_name на new_name. Автоматично оновлює усі посилання у файлі, якщо змінюється тека, у якій зберігається файл. Зауважте, що посилання у інших файлах, які можуть посилатися на цей, не оновлюються. Так зроблено з міркувань підвищення швидкодії, оскільки оновлення в усіх файлах варто виконувати один раз у пакетному режимі."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.replace:1
+msgid ""
+"Replace the parsed object corresponding to name with obj, which must be a "
+"similar object, i.e. an lxml tree for HTML/XML or a css_parser stylesheet "
+"for a CSS file."
+msgstr "Замінити оброблений об’єкт, що відповідає параметру «name», об’єктом «obj», який має бути подібним об’єктом, тобто деревом lxml для HTML/XML або таблицею стилів css_parser для файлів CSS."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.replace_links:1
+msgid ""
+"Replace all links in name using replace_func, which must be a callable that "
+"accepts a URL and returns the replaced URL. It must also have a 'replaced' "
+"attribute that is set to True if any actual replacement is done. Convenient "
+"ways of creating such callables are using the :class:`LinkReplacer` and "
+":class:`LinkRebaser` classes."
+msgstr "Замінити усі посилання у `name` за допомогою функції `replace_func`, яка має приймати адресу і повертати замінену адресу. Вона також повинна мати атрибут `replaced`, який встановлюється у значення True, якщо було виконано хоч одну заміну. Зручним способом створення таких функцій є використання класів :class:`LinkReplacer` та :class:`LinkRebaser`."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.serialize_item:1
+msgid ""
+"Convert a parsed object (identified by canonical name) into a bytestring. "
+"See :meth:`parsed`."
+msgstr "Перетворює оброблений об’єкт (ідентифікований за канонічною назвою) на рядок байтів. Див. :meth:`parsed`."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.set_spine:1
+msgid ""
+"Set the spine to be spine_items where spine_items is an iterable of the form"
+" (name, linear). Will raise an error if one of the names is not present in "
+"the manifest."
+msgstr "Встановити для вмісту значення «spine_items», де «spine_items» є ітерованою множиною у форматі (назва, лінійність). Видасть повідомлення про помилку, якщо однієї або декількох назв не буде у маніфесті."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.spine_items:1
+msgid ""
+"An iterator yielding the path for every item in the books' spine. See also: "
+":attr:`spine_iter` and :attr:`spine_items`."
+msgstr "Ітератор, який дає шлях для кожного запису у вмісті книги. Див. також :attr:`spine_iter` і :attr:`spine_items`."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.spine_iter:1
+msgid ""
+"An iterator that yields item, name is_linear for every item in the books' "
+"spine. item is the lxml element, name is the canonical file name and "
+"is_linear is True if the item is linear. See also: :attr:`spine_names` and "
+":attr:`spine_items`."
+msgstr "Ітератор, який видає (запис, назву, is_linear) для усіх записів у вмісті книги. `запис` є елементом lxml, `назва` є канонічною назвою файла, а is_linear має значення True, якщо запис є лінійним. Див. також :attr:`spine_names` та :attr:`spine_items`."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.spine_names:1
+msgid ""
+"An iterator yielding name and is_linear for every item in the books' spine. "
+"See also: :attr:`spine_iter` and :attr:`spine_items`."
+msgstr "Ітератор, який дає назву і is_linear для кожного запису у вмісті книги. Див. також :attr:`spine_iter` і :attr:`spine_items`."
+
+#: ../../__w/calibre/calibre/manual/polish.rst:36
+msgid "Managing component files in a container"
+msgstr "Керування файлами компонентів у контейнері"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: of calibre.ebooks.oeb.polish.replace.replace_links:1
+msgid ""
+"Replace links to files in the container. Will iterate over all files in the "
+"container and change the specified links in them."
+msgstr "Замінює посилання на файли у контейнері. Виконує ітеративну обробку усіх файлів у контейнері і змінює у них вказані посилання."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: of calibre.ebooks.oeb.polish.replace.replace_links:3
+msgid ""
+"A mapping of old canonical name to new canonical name. For example: "
+":code:`{'images/old.png': 'images/new.png'}`"
+msgstr "Прив’язка старої канонічної назви до нової канонічної назви. Приклад: :code:`{'images/old.png': 'images/new.png'}`"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: of calibre.ebooks.oeb.polish.replace.replace_links:4
+msgid ""
+"A callable that takes two arguments ``(name, anchor)`` and returns a new "
+"anchor. This is useful if you need to change the anchors in HTML files. By "
+"default, it does nothing."
+msgstr "Функція, яка приймає два аргументи, ``(назва, прив’язка)``, і повертає нову прив’язку. Корисно, якщо вам потрібно змінити прив’язки у файлах HTML. Типово не виконує ніяких дій."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: of calibre.ebooks.oeb.polish.replace.replace_links:7
+msgid "If False, links are not replaced in the OPF file."
+msgstr "Якщо False, посилання у файлі OPF не замінюються."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: of calibre.ebooks.oeb.polish.replace.rename_files:1
+msgid ""
+"Rename files in the container, automatically updating all links to them."
+msgstr "Перейменовує файли у контейнері, автоматично оновлюючи усі посилання у них."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: of calibre.ebooks.oeb.polish.replace.rename_files:3
+msgid ""
+"A mapping of old canonical name to new canonical name, for example: "
+":code:`{'text/chapter1.html': 'chapter1.html'}`."
+msgstr "Прив’язка старої канонічної назви до нової канонічної назви. Приклад: :code:`{'text/chapter1.html': 'chapter1.html'}`."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: of calibre.ebooks.oeb.polish.replace.get_recommended_folders:1
+msgid ""
+"Return the folders that are recommended for the given filenames. The "
+"recommendation is based on where the majority of files of the same type are "
+"located in the container. If no files of a particular type are present, the "
+"recommended folder is assumed to be the folder containing the OPF file."
+msgstr "Повертає теки, які рекомендовано використовувати для вказаних назв файлів. Рекомендація засновується на тому, де зберігається більшість файлів такого типу у контейнері. Якщо файлів певного типу немає, рекомендованою буде тека, у якій зберігається файл OPF."
+
+#: ../../__w/calibre/calibre/manual/polish.rst:47
+msgid "Pretty printing and auto fixing parse errors"
+msgstr "Структурований друк і автовиправлення помилок обробки"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
+#: of calibre.ebooks.oeb.polish.pretty.fix_html:1
+msgid ""
+"Fix any parsing errors in the HTML represented as a string in raw. Fixing is"
+" done using the HTML5 parsing algorithm."
+msgstr "Виправити усі помилки обробки у HTML, який представлено як рядок у параметрі «raw». Виправлення виконується на основі алгоритму обробки HTML5."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
+#: of calibre.ebooks.oeb.polish.pretty.fix_all_html:1
+msgid ""
+"Fix any parsing errors in all HTML files in the container. Fixing is done "
+"using the HTML5 parsing algorithm."
+msgstr "Виправити усі помилки обробки в усіх файлах HTML у контейнері «container». Виправлення виконується на основі алгоритму обробки HTML5."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
+#: of calibre.ebooks.oeb.polish.pretty.pretty_html:1
+msgid "Pretty print the HTML represented as a string in raw"
+msgstr "Структурований друк HTML, представленого як рядок у raw"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
+#: of calibre.ebooks.oeb.polish.pretty.pretty_css:1
+msgid "Pretty print the CSS represented as a string in raw"
+msgstr "Структурований друк CSS, представленого як рядок у raw"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
+#: of calibre.ebooks.oeb.polish.pretty.pretty_xml:1
+msgid ""
+"Pretty print the XML represented as a string in raw. If ``name`` is the name"
+" of the OPF, extra OPF-specific prettying is performed."
+msgstr "Структурований друк XMLS, представленого як рядок у «raw». Якщо ``name`` є назвою OPF, буде виконано додаткову обробку друкованих даних, специфічну для OPF."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
+#: of calibre.ebooks.oeb.polish.pretty.pretty_all:1
+msgid "Pretty print all HTML/CSS/XML files in the container"
+msgstr "Структурований друк усіх файлів HTML/CSS/XML у контейнері"
+
+#: ../../__w/calibre/calibre/manual/polish.rst:65
+msgid "Managing book jackets"
+msgstr "Керування обгортками книг"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/jacket.pydocstring
+#: of calibre.ebooks.oeb.polish.jacket.remove_jacket:1
+msgid ""
+"Remove an existing jacket, if any. Returns False if no existing jacket was "
+"found."
+msgstr "Вилучити наявну обгортку, якщо така існує. Повертає False, якщо обгортку не знайдено."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/jacket.pydocstring
+#: of calibre.ebooks.oeb.polish.jacket.add_or_replace_jacket:1
+msgid ""
+"Either create a new jacket from the book's metadata or replace an existing "
+"jacket. Returns True if an existing jacket was replaced."
+msgstr "Або створити нову обгортку на основі метаданих книги або замінити наявну обгортку. Повертає True, якщо було замінено наявну обгортку."
+
+#: ../../__w/calibre/calibre/manual/polish.rst:74
+msgid "Splitting and merging of files"
+msgstr "Поділ і об’єднання файлів"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: of calibre.ebooks.oeb.polish.split.split:1
+msgid ""
+"Split the file specified by name at the position specified by loc_or_xpath. "
+"Splitting automatically migrates all links and references to the affected "
+"files."
+msgstr "Розділити файл, вказаний за допомогою параметра `name`, на позиції, вказаній за допомогою loc_or_xpath. Під час поділу програма автоматично змінить усі посилання на файли і прив’язки до них у інших файлах."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: of calibre.ebooks.oeb.polish.split.split:5
+msgid ""
+"Should be an XPath expression such as //h:div[@id=\"split_here\"]. Can also "
+"be a *loc* which is used internally to implement splitting in the preview "
+"panel."
+msgstr "Має бути виразом XPath, наприклад //h:div[@id=\"split_here\"]. Також може бути *loc* для внутрішнього використання для реалізації поділу на панелі попереднього перегляду."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: of calibre.ebooks.oeb.polish.split.split:8
+msgid ""
+"If True the split occurs before the identified element otherwise after it."
+msgstr "Якщо True, поділ відбувається до ідентифікованого елемента, якщо ні, після нього."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: of calibre.ebooks.oeb.polish.split.split:9
+msgid "Used internally"
+msgstr "Для внутрішнього використання"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: of calibre.ebooks.oeb.polish.split.multisplit:1
+msgid ""
+"Split the specified file at multiple locations (all tags that match the "
+"specified XPath expression). See also: :func:`split`. Splitting "
+"automatically migrates all links and references to the affected files."
+msgstr "Поділити вказаний файл у декількох місцях (усіх теґах, які відповідають вказаному виразу XPath). Див. також :func:`split`. Під час поділу усі посилання та прив’язки буде перенесено до розділених файлів."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: of calibre.ebooks.oeb.polish.split.multisplit:5
+msgid ""
+"If True the splits occur before the identified element otherwise after it."
+msgstr "Якщо True, поділ відбувається до ідентифікованого елемента, якщо ні, після нього."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: of calibre.ebooks.oeb.polish.split.merge:1
+msgid ""
+"Merge the specified files into a single file, automatically migrating all "
+"links and references to the affected files. The file must all either be HTML"
+" or CSS files."
+msgstr "Об’єднати вказані файли у єдиний файл, автоматично перенести усі посилання та прив’язки у відповідних файлах. Усі файли мають бути або файлами HTML, або файлами CSS."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: of calibre.ebooks.oeb.polish.split.merge:4
+msgid "Must be either ``'text'`` for HTML files or ``'styles'`` for CSS files"
+msgstr "Має бути або ``'text'`` для файлів HTML, або ``'styles'`` для файлів CSS"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: of calibre.ebooks.oeb.polish.split.merge:5
+msgid "The list of files to be merged"
+msgstr "Список файлів, які слід об’єднати"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: of calibre.ebooks.oeb.polish.split.merge:6
+msgid ""
+"Which of the merged files is the *master* file, that is, the file that will "
+"remain after merging."
+msgstr "Визначає, який з об’єднаних файлів буде *основним*, тобто те, який з файлів залишиться після об’єднання."
+
+#: ../../__w/calibre/calibre/manual/polish.rst:85
+msgid "Managing covers"
+msgstr "Керування обкладинками"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: of calibre.ebooks.oeb.polish.cover.set_cover:1
+msgid "Set the cover of the book to the image pointed to by cover_path."
+msgstr "Встановити для обкладинки книги зображення, на яке вказує cover_path."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: of calibre.ebooks.oeb.polish.cover.set_cover:3
+msgid ""
+"Either the absolute path to an image file or the canonical name of an image "
+"in the book. When using an image in the book, you must also set options, see"
+" below."
+msgstr "Або абсолютний шлях до файла зображення, або канонічна назва зображення у файлі книги. Якщо використовується файл з книги, вам слід також встановити певні параметри, див. нижче."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: of calibre.ebooks.oeb.polish.cover.set_cover:6
+msgid ""
+"An optional callable that takes a single argument. It will be called with "
+"information about the tasks being processed."
+msgstr "Необов’язкова функція для виклику, яка приймає один аргумент. Її буде викликано із даними щодо завдань, які виконуються."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: of calibre.ebooks.oeb.polish.cover.set_cover:8
+msgid ""
+"None or a dictionary that controls how the cover is set. The dictionary can "
+"have entries: **keep_aspect**: True or False  (Preserve aspect ratio of "
+"covers in EPUB) **no_svg**: True or False  (Use an SVG cover wrapper in the "
+"EPUB titlepage) **existing**: True or False  (``cover_path`` refers to an "
+"existing image in the book)"
+msgstr "None або словник, який керує тим, як встановлюється зображення обкладинки. Словник може мати такі записи: **keep_aspect**: True або False (чи слід зберігати співвідношення розмірів зображення обкладинки у EPUB) **no_svg**: True або False (чи слід використовувати обгортку зображення обкладинки SVG на титульній сторінці EPUB) **existing**: True або False  (чи вказує ``cover_path`` на наявне зображення у книзі)"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: of calibre.ebooks.oeb.polish.cover.mark_as_cover:1
+msgid "Mark the specified image as the cover image."
+msgstr "Позначити вказане зображення як зображення обкладинки."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: of calibre.ebooks.oeb.polish.cover.mark_as_titlepage:1
+msgid "Mark the specified HTML file as the titlepage of the EPUB."
+msgstr "Позначити вказаний файл HTML як файл титульної сторінки EPUB."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: of calibre.ebooks.oeb.polish.cover.mark_as_titlepage:3
+msgid "If True the HTML file is moved to the start of the spine"
+msgstr "Якщо True, файл HTML пересувається на початок комплекту"
+
+#: ../../__w/calibre/calibre/manual/polish.rst:96
+msgid "Working with CSS"
+msgstr "Робота з CSS"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/fonts.pydocstring
+#: of calibre.ebooks.oeb.polish.fonts.change_font:1
+msgid ""
+"Change a font family from old_name to new_name. Changes all occurrences of "
+"the font family in stylesheets, style tags and style attributes. If the "
+"old_name refers to an embedded font, it is removed. You can set new_name to "
+"None to remove the font family instead of changing it."
+msgstr "Змінити гарнітуру шрифту з old_name на new_name. Змінює усі записи гарнітури шрифту у таблицях стилів, теґах стилів та атрибутах стилів. Якщо шрифт old_name є вбудованим, його буде вилучено. Ви можете вказати для new_name назву None, щоб вилучити гарнітуру шрифтів, а не замінювати її."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
+#: calibre.ebooks.oeb.polish.css.remove_unused_css:1
+msgid ""
+"Remove all unused CSS rules from the book. An unused CSS rule is one that "
+"does not match any actual content."
+msgstr "Вилучає усі невикористані у книзі правила CSS. Невикористаним вважається правило CSS, яке не стосується жодного фрагмента даних у книзі."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
+#: calibre.ebooks.oeb.polish.css.remove_unused_css:3
+msgid ""
+"An optional callable that takes a single argument. It is called with "
+"information about the operations being performed."
+msgstr "Необов’язкова функція для виклику, яка приймає один аргумент. Її буде викликано із даними щодо дій, які виконуються."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
+#: calibre.ebooks.oeb.polish.css.remove_unused_css:4
+msgid ""
+"If True, class attributes in the HTML that do not match any CSS rules are "
+"also removed."
+msgstr "Якщо має значення True, атрибути класу у HTML, які не відповідають жодному з правил CSS, також буде вилучено."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
+#: calibre.ebooks.oeb.polish.css.remove_unused_css:5
+msgid "If True, rules with identical selectors are merged."
+msgstr "Якщо True, правила із ідентичними селекторами об’єднуються."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
+#: calibre.ebooks.oeb.polish.css.remove_unused_css:6
+msgid "If True, rules with identical properties are merged."
+msgstr "Якщо True, правила із тотожними властивостями буде об'єднано."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
+#: calibre.ebooks.oeb.polish.css.remove_unused_css:7
+msgid ""
+"If True, stylesheets that are not referenced by any content are removed"
+msgstr "Якщо True, таблиці стилів, які не використано у даних, буде вилучено"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
+#: calibre.ebooks.oeb.polish.css.filter_css:1
+msgid "Remove the specified CSS properties from all CSS rules in the book."
+msgstr "Вилучити вказані властивості CSS з усіх правил CSS."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
+#: calibre.ebooks.oeb.polish.css.filter_css:3
+msgid ""
+"Set of properties to remove. For example: :code:`{'font-family', 'color'}`."
+msgstr "Встановити властивості для вилучення. Приклад: :code:`{'font-family', 'color'}`."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
+#: calibre.ebooks.oeb.polish.css.filter_css:4
+msgid ""
+"The files from which to remove the properties. Defaults to all HTML and CSS "
+"files in the book."
+msgstr "Файли, з яких слід вилучити властивості. Типово, усі файли HTML і CSS у книзі."
+
+#: ../../__w/calibre/calibre/manual/polish.rst:108
+msgid "Working with the Table of Contents"
+msgstr "Робота зі змістом"
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring of
+#: calibre.ebooks.oeb.polish.toc.from_xpaths:1
+msgid ""
+"Generate a Table of Contents from a list of XPath expressions. Each "
+"expression in the list corresponds to a level of the generate ToC. For "
+"example: :code:`['//h:h1', '//h:h2', '//h:h3']` will generate a three level "
+"Table of Contents from the ``<h1>``, ``<h2>`` and ``<h3>`` tags."
+msgstr "Створює таблицю змісту на основі списку виразів XPath. Кожен вираз у списку відповідає рівню створення записів змісту. Приклад: за списком :code:`['//h:h1', '//h:h2', '//h:h3']` бдуе створено трирівневу таблицю змісту на основі вмісту теґів ``<h1>``, ``<h2>`` і ``<h3>``."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring of
+#: calibre.ebooks.oeb.polish.toc.from_links:1
+msgid "Generate a Table of Contents from links in the book."
+msgstr "Створити зміст на основі посилань у книзі."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring of
+#: calibre.ebooks.oeb.polish.toc.from_files:1
+msgid "Generate a Table of Contents from files in the book."
+msgstr "Створити зміст на основі файлів книги."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring of
+#: calibre.ebooks.oeb.polish.toc.create_inline_toc:1
+msgid ""
+"Create an inline (HTML) Table of Contents from an existing NCX Table of "
+"Contents."
+msgstr "Створює вбудовану таблицю змісту (у форматі HTML) на основі наявної таблиці змісту NCX."
+
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring of
+#: calibre.ebooks.oeb.polish.toc.create_inline_toc:3
+msgid "The title for this table of contents."
+msgstr "Заголовок цієї таблиці змісту."
+
+#: ../../__w/calibre/calibre/manual/polish.rst:122
+msgid "Edit book tool"
+msgstr "Засіб редагування книг"
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
+#: calibre.gui2.tweak_book.plugin.Tool:1
+msgid "Bases: :py:class:`object`"
+msgstr "Основа: :py:class:`object`"
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
+#: calibre.gui2.tweak_book.plugin.Tool:1
+msgid ""
+"The base class for individual tools in an Edit Book plugin. Useful members "
+"include:"
+msgstr "Базовий клас для окремих інструментів у додатку редагування книг. Серед його корисних учасників:"
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
+#: calibre.gui2.tweak_book.plugin.Tool:3
+msgid ""
+"``self.plugin``: A reference to the :class:`calibre.customize.Plugin` object"
+" to which this tool belongs."
+msgstr "``self.plugin``: посилання на об’єкт :class:`calibre.customize.Plugin`, до якого належить цей інструмент."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
+#: calibre.gui2.tweak_book.plugin.Tool:4
+msgid "self. :attr:`boss`"
+msgstr "self. :attr:`boss`"
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
+#: calibre.gui2.tweak_book.plugin.Tool:5
+msgid "self. :attr:`gui`"
+msgstr "self. :attr:`gui`"
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
+#: calibre.gui2.tweak_book.plugin.Tool:7
+msgid "Methods that must be overridden in sub classes:"
+msgstr "Методи, які слід перевизначити у підкласах:"
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
+#: calibre.gui2.tweak_book.plugin.Tool:9
+msgid ":meth:`create_action`"
+msgstr ":meth:`create_action`"
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
+#: calibre.gui2.tweak_book.plugin.Tool:10
+msgid ":meth:`register_shortcut`"
+msgstr ":meth:`register_shortcut`"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.gui2.tweak_book.plugin.Tool.name:1
+msgid "Set this to a unique name it will be used as a key"
+msgstr "Встановіть унікальне значення, яке буде використано як ключ"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.gui2.tweak_book.plugin.Tool.allowed_in_toolbar:1
+msgid "If True the user can choose to place this tool in the plugins toolbar"
+msgstr "Якщо має значення True, користувач зможе вибирати місце для цього інструмента на панелі інструментів додатків."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.gui2.tweak_book.plugin.Tool.allowed_in_menu:1
+msgid "If True the user can choose to place this tool in the plugins menu"
+msgstr "Якщо має значення True, користувач зможе вибирати місце для пункту цього інструмента у меню додатків."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.gui2.tweak_book.plugin.Tool.toolbar_button_popup_mode:1
+msgid ""
+"The popup mode for the menu (if any) of the toolbar button. Possible values "
+"are 'delayed', 'instant', 'button'"
+msgstr "Режим контекстного меню для меню (якщо таке передбачено) кнопки панелі інструментів. Можливі значення: 'delayed', 'instant', 'button'."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
+#: calibre.gui2.tweak_book.plugin.Tool.boss:1
+msgid ""
+"The :class:`calibre.gui2.tweak_book.boss.Boss` object. Used to control the "
+"user interface."
+msgstr "Об’єкт :class:`calibre.gui2.tweak_book.boss.Boss`. Використовується для керування інтерфейсом користувача."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
+#: calibre.gui2.tweak_book.plugin.Tool.gui:1
+msgid "The main window of the user interface"
+msgstr "Головне вікно інтерфейсу користувача"
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
+#: calibre.gui2.tweak_book.plugin.Tool.current_container:1
+msgid ""
+"Return the current :class:`calibre.ebooks.oeb.polish.container.Container` "
+"object that represents the book being edited."
+msgstr "Повертає поточний об’єкт :class:`calibre.ebooks.oeb.polish.container.Container`, який відповідає книзі, яка редагується."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
+#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:1
+msgid ""
+"Register a keyboard shortcut that will trigger the specified ``qaction``. "
+"This keyboard shortcut will become automatically customizable by the user in"
+" the Keyboard shortcuts section of the editor preferences."
+msgstr "Реєструє комбінацію клавіш, яка запускатиме вказану дію ``qaction``. Цю комбінацію клавіш автоматично буде додано до таблиці комбінацій клавіш у розділі «Клавіатурні скорочення» налаштувань редактора із можливістю внесення змін користувачем."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
+#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:4
+msgid ""
+"A QAction object, it will be triggered when the configured key combination "
+"is pressed by the user."
+msgstr "Об’єкт QAction, його буде викликано, якщо користувач натисне налаштовану комбінацію клавіш."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
+#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:6
+msgid ""
+"A unique name for this shortcut/action. It will be used internally, it must "
+"not be shared by any other actions in this plugin."
+msgstr "Унікальна назва цього клавіатурного скорочення або дії. Буде використано на внутрішньому рівні, назва не повинна збігатися із назвою будь-якої іншої дії у цьому додатку."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
+#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:9
+msgid ""
+"A list of the default keyboard shortcuts. If not specified no default "
+"shortcuts will be set. If the shortcuts specified here conflict with either "
+"builtin shortcuts or shortcuts from user configuration/other plugins, they "
+"will be ignored. In that case, users will have to configure the shortcuts "
+"manually via Preferences. For example: ``default_keys=('Ctrl+J', 'F9')``."
+msgstr "Список типових комбінацій клавіш. Якщо не вказано, типових комбінацій клавіш не визначатиметься. Якщо вказані комбінації клавіш конфліктуватимуть із вбудованими комбінаціями клавіш або комбінаціями клавіш, які налаштовано користувачем або іншими додатками, ці комбінації клавіш буде проігноровано. Конфліктні комбінації користувач повинен налаштувати власноруч за допомогою вікна «Налаштування». Приклад: ``default_keys=('Ctrl+J', 'F9')``."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
+#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:15
+msgid ""
+"An optional short description of this action. If not specified the text from"
+" the QAction will be used."
+msgstr "Необов’язковий короткий опис цієї дії. Якщо не вказано, буде використано текст для QAction."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
+#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:17
+msgid ""
+"An optional longer description of this action, it will be used in the "
+"preferences entry for this shortcut."
+msgstr "Необов’язковий розширений опис цієї дії, буде використано як запис для цього клавіатурного скорочення у списку налаштування скорочень."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
+#: calibre.gui2.tweak_book.plugin.Tool.create_action:1
+msgid ""
+"Create a QAction that will be added to either the plugins toolbar or the "
+"plugins menu depending on ``for_toolbar``. For example::"
+msgstr "Створює QAction, яку буде додано або на панель інструментів додатків, або до меню додатків, залежно від ``for_toolbar``. Приклад::"
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
+#: calibre.gui2.tweak_book.plugin.Tool.create_action:19
+msgid "Method :meth:`register_shortcut`."
+msgstr "Метод :meth:`register_shortcut`."
+
+#: ../../__w/calibre/calibre/manual/polish.rst:131
+msgid "Controlling the editor's user interface"
+msgstr "Керування інтерфейсом користувача редактора"
+
+#: ../../__w/calibre/calibre/manual/polish.rst:133
+msgid ""
+"The e-book editor's user interface is controlled by a single global *Boss* "
+"object. This has many useful methods that can be used in plugin code to "
+"perform common tasks."
+msgstr "Інтерфейс користувача редактора електронних книг керується єдиним загальним об’єктом. Цей об’єкт має багато корисних методів, яким можна скористатися у коді додатка для виконання типових завдань."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
+#: calibre.gui2.tweak_book.boss.Boss.add_savepoint:1
+msgid "Create a restore checkpoint with the name specified as ``msg``"
+msgstr "Створює контрольну точку відновлення із назвою, яку вказано параметром ``msg``."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
+#: calibre.gui2.tweak_book.boss.Boss.apply_container_update_to_gui:1
+msgid ""
+"Update all the components of the user interface to reflect the latest data "
+"in the current book container."
+msgstr "Оновлює усі компоненти інтерфейсу користувача так, щоб вони відповідали найсвіжішим даним у поточному контейнері книги."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
+#: calibre.gui2.tweak_book.boss.Boss.apply_container_update_to_gui:3
+msgid ""
+"If True, the book will be marked as modified, so the user will be prompted "
+"to save it when quitting."
+msgstr "Якщо має значення True, книгу буде позначено як змінену, щоб програма попросила користувача зберегти внесені зміни, коли завершуватиме роботу."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
+#: calibre.gui2.tweak_book.boss.Boss.close_editor:1
+msgid "Close the editor that is editing the file specified by ``name``"
+msgstr "Закрити вікно редактора, у якому відбувається редагування файла, вказаного параметром ``name``."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
+#: calibre.gui2.tweak_book.boss.Boss.commit_all_editors_to_container:1
+msgid ""
+"Commit any changes that the user has made to files open in editors to the "
+"container. You should call this method before performing any actions on the "
+"current container"
+msgstr "Записати усі зміни, які внесено користувачем до файлів, які відкрито у вікнах редактора, до контейнера. Вам слід викликати цей метод до виконання будь-яких дій над поточним контейнером."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
+#: calibre.gui2.tweak_book.boss.Boss.currently_editing:1
+msgid ""
+"Return the name of the file being edited currently or None if no file is "
+"being edited"
+msgstr "Повертає назву файла, який зараз редагують, або None, якщо користувач не редагує жодного файла."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
+#: calibre.gui2.tweak_book.boss.Boss.edit_file:1
+msgid "Open the file specified by name in an editor"
+msgstr "Відкрити файл, який вказано параметром ``name``, у редакторі."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
+#: calibre.gui2.tweak_book.boss.Boss.edit_file:3
+msgid ""
+"The media type of the file, for example, ``'text/html'``. If not specified "
+"it is guessed from the file extension."
+msgstr "Тип вмісту файла, наприклад ``'text/html'``. Якщо не вказано, тип буде визначено за суфіксом назви файла."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
+#: calibre.gui2.tweak_book.boss.Boss.edit_file:4
+msgid "A template to initialize the opened editor with"
+msgstr "Шаблон яким слід ініціалізувати відкритий редактор"
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
+#: calibre.gui2.tweak_book.boss.Boss.open_book:1
+msgid ""
+"Open the e-book at ``path`` for editing. Will show an error if the e-book is"
+" not in a supported format or the current book has unsaved changes."
+msgstr "Відкрити електронну книгу за шляхом ``path`` для редагування. Покаже повідомлення про помилку, якщо дані книги зберігаються у непідтримуваному форматі або до поточної книги було внесено зміни, які згодом не було збережено."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
+#: calibre.gui2.tweak_book.boss.Boss.open_book:3
+msgid ""
+"The name of a file inside the newly opened book to start editing. Can also "
+"be a list of names."
+msgstr "Назва файла у щойно відкритій для редагування книзі. Може також бути списком назв."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
+#: calibre.gui2.tweak_book.boss.Boss.rewind_savepoint:1
+msgid ""
+"Undo the previous creation of a restore checkpoint, useful if you create a "
+"checkpoint, then abort the operation with no changes"
+msgstr "Скасувати попереднє створення контрольної точки відновлення. Корисно, якщо ви створюєте контрольну точку, а потім перериваєте дію без внесення змін до файлів."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
+#: calibre.gui2.tweak_book.boss.Boss.save_book:1
+msgid "Save the book. Saving is performed in the background"
+msgstr "Зберегти книгу. Зберігання виконується у фоновому режимі."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
+#: calibre.gui2.tweak_book.boss.Boss.set_modified:1
+msgid "Mark the book as having been modified"
+msgstr "Позначити книгу як таку, яку було змінено"
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
+#: calibre.gui2.tweak_book.boss.Boss.show_current_diff:1
+msgid "Show the changes to the book from its last checkpointed state"
+msgstr "Показує зміни у книзі з часу створення останньої контрольної точки книги."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
+#: calibre.gui2.tweak_book.boss.Boss.show_current_diff:3
+msgid ""
+"If True the diff dialog will have a button to allow the user to revert all "
+"changes"
+msgstr "Якщо має значення True, діалогове вікно різниці міститиме кнопку, яка надаватиме змогу користувачеві скасувати усі внесені зміни."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
+#: calibre.gui2.tweak_book.boss.Boss.show_current_diff:4
+msgid ""
+"A container object to compare the current container to. If None, the "
+"previously checkpointed container is used"
+msgstr "Об’єкт-контейнер для порівняння з поточним контейнером. Якщо має значення None, буде використано контейнер з попередньої контрольної точки."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
+#: calibre.gui2.tweak_book.boss.Boss.show_editor:1
+msgid "Show the editor that is editing the file specified by ``name``"
+msgstr "Показати вікно редактора, у якому відбувається редагування файла, вказаного параметром ``name``."
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
+#: calibre.gui2.tweak_book.boss.Boss.sync_preview_to_editor:1
+msgid ""
+"Sync the position of the preview panel to the current cursor position in the"
+" current editor"
+msgstr "Синхронізувати позицію на панелі попереднього перегляду зі поточною позицією у вікні редактора."

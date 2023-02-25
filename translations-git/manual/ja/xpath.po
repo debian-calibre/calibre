@@ -1,0 +1,166 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# 
+# Translators:
+# Asakura, 2015
+# Asakura, 2015
+# toshi oota <ppp15479@gmail.com>, 2021
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-06-17 02:39+0000\n"
+"PO-Revision-Date: 2014-06-17 08:35+0000\n"
+"Last-Translator: toshi oota <ppp15479@gmail.com>, 2021\n"
+"Language-Team: Japanese (http://www.transifex.com/calibre/calibre/language/ja/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../__w/calibre/calibre/manual/xpath.rst:4
+msgid "XPath tutorial"
+msgstr "XPath のチュートリアル"
+
+#: ../../__w/calibre/calibre/manual/xpath.rst:6
+msgid ""
+"In this tutorial, you will be given a gentle introduction to `XPath "
+"<https://en.wikipedia.org/wiki/XPath>`_, a query language that can be used "
+"to select arbitrary parts of `HTML <https://en.wikipedia.org/wiki/HTML>`_ "
+"documents in calibre. XPath is a widely used standard, and googling it will "
+"yield a ton of information. This tutorial, however, focuses on using XPath "
+"for e-book related tasks like finding chapter headings in an unstructured "
+"HTML document."
+msgstr "このチュートリアルでは、 calibre の `HTML <https://en.wikipedia.org/wiki/HTML>`_ ドキュメントの中から任意の部分を選択するために利用できる `XPath <https://en.wikipedia.org/wiki/XPath>`_というクエリ言語に関して軽く紹介します。XPath は広く使用されているる標準で、Google などで検索すると山ほどの情報が出てきます。しかしこのチュートリアルでは、構造化されていない HTML ドキュメントの中から章見出しを探す方法のような、電子書籍に関した特化した XPath の利用法に焦点を当てています。"
+
+#: ../../__w/calibre/calibre/manual/xpath.rst:16
+msgid "Contents"
+msgstr "目次"
+
+#: ../../__w/calibre/calibre/manual/xpath.rst:19
+msgid "Selecting by tag name"
+msgstr "タグ名で選択"
+
+#: ../../__w/calibre/calibre/manual/xpath.rst:21
+msgid ""
+"The simplest form of selection is to select tags by name. For example, "
+"suppose you want to select all the ``<h2>`` tags in a document. The XPath "
+"query for this is simply::"
+msgstr "選択の一番簡単な方法はタグを名前で選択することです。たとえば、ドキュメント内のすべての ``<h2>`` を選択したいとしましょう。そのための XPath は次のようにすればよいのです::"
+
+#: ../../__w/calibre/calibre/manual/xpath.rst:27
+msgid ""
+"The prefix `//` means *search at any level of the document*. Now suppose you"
+" want to search for ``<span>`` tags that are inside ``<a>`` tags. That can "
+"be achieved with::"
+msgstr "プリフィックス `//` は *ドキュメント内の任意のレベルの検索* を意味します。``<a>`` タグの中にある ``<span>`` タグを検索したいとしましょう。これを実現するには、次のようにします::"
+
+#: ../../__w/calibre/calibre/manual/xpath.rst:33
+msgid ""
+"If you want to search for tags at a particular level in the document, change"
+" the prefix::"
+msgstr "ドキュメント内のある特定のレベルのタグを検索したい場合には、プリフィックスを変更します::"
+
+#: ../../__w/calibre/calibre/manual/xpath.rst:39
+msgid ""
+"This will match only ``<p>A very short e-book to demonstrate the use of "
+"XPath.</p>`` in the :ref:`sample_ebook` but not any of the other ``<p>`` "
+"tags. The ``h:`` prefix in the above examples is needed to match XHTML tags."
+" This is because internally, calibre represents all content as XHTML. In "
+"XHTML tags have a *namespace*, and ``h:`` is the namespace prefix for HTML "
+"tags."
+msgstr "これは :ref:`sample_ebook` の中にある ``<p>XPath の使用を実演してみせるための非常に短い電子書籍です。</p>`` にのみマッチして、他の ``<p>`` タグ内のものにはマッチしません。上記の例では XHTML タグにマッチさせるために ``h:`` プリフィックスが必要です。なぜなら calibre は内部的にはすべてのコンテンツを XHTML で表現しているためです。XHTML においてタグには *名前空間が* 存在し、``h:`` が HTML タグの名前空間プレフィックスです。"
+
+#: ../../__w/calibre/calibre/manual/xpath.rst:45
+msgid ""
+"Now suppose you want to select both ``<h1>`` and ``<h2>`` tags. To do that, "
+"we need a XPath construct called *predicate*. A :dfn:`predicate` is simply a"
+" test that is used to select tags. Tests can be arbitrarily powerful and as "
+"this tutorial progresses, you will see more powerful examples. A predicate "
+"is created by enclosing the test expression in square brackets::"
+msgstr "では ``<h1>`` タグと ``<h2>`` タグの両方を選択したいとしましょう。これをするには *述語* と呼ばれる XPath の構造体が必要になります。:dfn:`述語` とはタグの選択に使用される単なるテストです。テストは自ずと強力であり、チュートリアルを進めるにつれて、より強力な使用例を目にするでしょう。述語はテストの式を角カッコで囲むことで作成します::"
+
+#: ../../__w/calibre/calibre/manual/xpath.rst:53
+msgid ""
+"There are several new features in this XPath expression. The first is the "
+"use of the wildcard ``*``. It means *match any tag*. Now look at the test "
+"expression ``name()='h1' or name()='h2'``. :term:`name()` is an example of a"
+" *built-in function*. It simply evaluates to the name of the tag. So by "
+"using it, we can select tags whose names are either `h1` or `h2`. Note that "
+"the :term:`name()` function ignores namespaces so that there is no need for "
+"the ``h:`` prefix. XPath has several useful built-in functions. A few more "
+"will be introduced in this tutorial."
+msgstr "この XPath 式にはいくつかの新しい機能があります。ひとつはワイルドカード ``*`` の使用です。これは *すべてのタグにマッチ* することを意味します。では、テスト式 ``name()='h1' or name()='h2'`` を見てみましょう。:term:`name()` は *ビルトイン関数* の例です。これは単にタグの名前を評価します。したがってこれを使用することで、名前が `h1` または `h2` であるタグを選択できます。:term:`name()` は名前空間を無視するため、``h:`` プリフィックスは必要ありません。XPath にはいくつもの便利なビルトイン関数があります。このチュートリアルの中で、さらにいくつか紹介します。"
+
+#: ../../__w/calibre/calibre/manual/xpath.rst:62
+msgid "Selecting by attributes"
+msgstr "属性で選択"
+
+#: ../../__w/calibre/calibre/manual/xpath.rst:64
+msgid ""
+"To select tags based on their attributes, the use of predicates is "
+"required::"
+msgstr "属性に基づいてタグを選択するには、述語を使用する必要があります::"
+
+#: ../../__w/calibre/calibre/manual/xpath.rst:70
+msgid ""
+"Here, the ``@`` operator refers to the attributes of the tag. You can use "
+"some of the `XPath built-in functions`_ to perform more sophisticated "
+"matching on attribute values."
+msgstr "ここでは `@`` 演算子がタグの属性を参照します。`XPath ビルトイン関数`_を使用すれば、属性値に対してさらに高度な比較を行うことができます。"
+
+#: ../../__w/calibre/calibre/manual/xpath.rst:76
+msgid "Selecting by tag content"
+msgstr "タグの内容で選択"
+
+#: ../../__w/calibre/calibre/manual/xpath.rst:78
+msgid ""
+"Using XPath, you can even select tags based on the text they contain. The "
+"best way to do this is to use the power of *regular expressions* via the "
+"built-in function :term:`re:test()`::"
+msgstr "XPath を使えば、タグに含まれているテキストに基づいてタグを選択することもできます。これを行うのに一番よいのは、ビルトイン関数 :term:`re:test()` を通じて正規表現の力を利用することです::"
+
+#: ../../__w/calibre/calibre/manual/xpath.rst:84
+msgid ""
+"Here the ``.`` operator refers to the contents of the tag, just as the ``@``"
+" operator referred to its attributes."
+msgstr "ここでは ``@`` 演算子が属性を参照するのと同様に、``.`` 演算子がタグの内容を参照します。"
+
+#: ../../__w/calibre/calibre/manual/xpath.rst:90
+msgid "Sample e-book"
+msgstr "サンプル電子書籍"
+
+#: ../../__w/calibre/calibre/manual/xpath.rst:96
+msgid "XPath built-in functions"
+msgstr "XPath ビルトイン関数"
+
+#: ../../__w/calibre/calibre/manual/xpath.rst:99
+msgid "name()"
+msgstr "name()"
+
+#: ../../__w/calibre/calibre/manual/xpath.rst:101
+msgid "The name of the current tag."
+msgstr "現在のタグの名前"
+
+#: ../../__w/calibre/calibre/manual/xpath.rst:102
+msgid "contains()"
+msgstr "contains()"
+
+#: ../../__w/calibre/calibre/manual/xpath.rst:104
+msgid "``contains(s1, s2)`` returns `true` if s1 contains s2."
+msgstr "``contains(s1, s2)`` は s1 に s2 が含まれているときに `true` を返します。"
+
+#: ../../__w/calibre/calibre/manual/xpath.rst:105
+msgid "re:test()"
+msgstr "re:test()"
+
+#: ../../__w/calibre/calibre/manual/xpath.rst:107
+msgid ""
+"``re:test(src, pattern, flags)`` returns `true` if the string `src` matches "
+"the regular expression `pattern`. A particularly useful flag is ``i``, it "
+"makes matching case insensitive. A good primer on the syntax for regular "
+"expressions can be found at `regexp syntax "
+"<https://docs.python.org/library/re.html>`_"
+msgstr "``re:test(src, pattern, flags)`` は 文字列 `src` が正規表現 `pattern` にマッチしたとき `true` を返します。特に便利はフラグは ``i`` で、大文字と小文字を区別せずに比較するようになります。正規表現の構文に関しては、 `regexp syntax <https://docs.python.org/library/re.html>`_ がよい入門書となります。"

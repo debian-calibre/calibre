@@ -1,0 +1,522 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# 
+# Translators:
+# toshi oota <ppp15479@gmail.com>, 2021
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-06-17 02:39+0000\n"
+"PO-Revision-Date: 2014-06-17 08:36+0000\n"
+"Last-Translator: toshi oota <ppp15479@gmail.com>, 2021\n"
+"Language-Team: Japanese (http://www.transifex.com/calibre/calibre/language/ja/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../__w/calibre/calibre/manual/server.rst:2
+msgid "The calibre Content server"
+msgstr "calibre コンテンツサーバー"
+
+#: ../../__w/calibre/calibre/manual/server.rst:4
+msgid ""
+"The calibre :guilabel:`Content server` allows you to access your calibre "
+"libraries and read books directly in a browser on your favorite mobile phone"
+" or tablet device. As a result, you do not need to install any dedicated "
+"book reading/management apps on your phone. Just use the browser. The server"
+" downloads and stores the book you are reading in an off-line cache so that "
+"you can read it even when there is no internet connection."
+msgstr "calibre の :guilabel:`コンテンツサーバ` を使うと、お好きなスマートフォンやタブレット上のブラウザで直接 calibre ライブラリにアクセスして本を読むことができるようになります。その結果、スマホ上に専用の読書/書籍管理アプリをインストールする必要がなくなります。ただブラウザを使用するだけでよいのです。サーバは本をダウンロードして、インターネットに接続されていないときでも本を読めるよう、読んでいる本をオフラインキャッシュに格納します。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:13
+msgid "Contents"
+msgstr "目次"
+
+#: ../../__w/calibre/calibre/manual/server.rst:15
+msgid ""
+"To start the server, click the :guilabel:`Connect/share` button and choose "
+":guilabel:`Start Content server`. You might get a message from your "
+"computer's firewall or anti-virus program asking if it is OK to allow access"
+" to ``calibre.exe``. Click the ``Allow`` or ``OK`` button.  Then open a "
+"browser (preferably Chrome or Firefox) in your computer and type in the "
+"following address:"
+msgstr "サーバを開始するには、:guilabel:`接続/共有` ボタンをクリックして :guilabel:`コンテンツサーバを開始` を選択します。コンピュータのファイアウォールやウィルス対策プログラムから ``calibre.exe`` へのアクセスを許可してよいかと尋ねるメッセージが表示されることがあります。``許可`` または ``OK`` をクリックしてください。そしてブラウザ (できれば Chrome または Firefox) を開き、次のアドレスを入力します:"
+
+#: ../../__w/calibre/calibre/manual/server.rst:22
+msgid "http://127.0.0.1:8080"
+msgstr "http://127.0.0.1:8080"
+
+#: ../../__w/calibre/calibre/manual/server.rst:24
+msgid ""
+"This will open a page in the browser showing you your calibre libraries, "
+"click on any one and browse the books in it. Click on a book, and it will "
+"show you all the metadata about the book, along with buttons to "
+":guilabel:`Read book` and :guilabel:`Download book`. Click the "
+":guilabel:`Read book` button to start reading the book."
+msgstr "こうするとブラウザ上に calibre ライブラリを表示するページが開かれるので、どれかひとつをクリックして本の中を閲覧します。本の上でクリックすると、その本の書誌情報をすべてと、:guilabel:`本を読む` と :guilabel:`本をダウンロード` ボタンを表示します。読書を始めるには :guilabel:`本を読む` ボタンをクリックしてください。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:30
+msgid ""
+"The address used above ``http://127.0.0.1:8080`` will only work on the "
+"computer that is running calibre. To access the server from other "
+"computers/phones/tablets/etc. you will need to do a little more work, as "
+"described in the next section."
+msgstr "上で使用したアドレス ``http://127.0.0.1:8080`` は calibre を実行しているコンピュータ上でのみ機能します。別のコンピュータ/スマートフォン/タブレットなどからサーバにアクセスするためには、次の章で説明するように、もう少し作業を行う必要があります。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:37
+msgid "Accessing the Content server from other devices"
+msgstr "別のデバイスからコンテンツサーバにアクセス"
+
+#: ../../__w/calibre/calibre/manual/server.rst:39
+msgid ""
+"There are two types of remote device access that you will typically need. "
+"The first, simpler kind is from within your home network. If you are running"
+" calibre on a computer on your home network and you have also connected your"
+" other devices to the same home network, then you should be easily able to "
+"access the server on those devices."
+msgstr "一般的に必要となるリモートデバイスのアクセスには 2 つのタイプがあります。より単純な種類である 1 番目は、ホームネットワーク内からのものです。calibre をホームネットワーク上で実行していて、別のデバイスを同じホームネットワーク上に接続している場合、そのデバイスから calibre へは簡単にアクセスできるはずです。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:46
+msgid "Accessing the server from devices on your home network"
+msgstr "ホームネットワーク上のデバイスからサーバにアクセス"
+
+#: ../../__w/calibre/calibre/manual/server.rst:48
+msgid ""
+"After starting the server in calibre as described above, click the "
+":guilabel:`Connect/share` button again. Instead of the :guilabel:`Start "
+"Content server` action, you should see a :guilabel:`Stop Content server` "
+"action instead. To the right of this action will be listed an IP address and"
+" port number. These look like a bunch of numbers separated by periods. For "
+"example::"
+msgstr "上で説明したように calibre のサーバを開始した後、もう一度 :guilabel:`接続/共有` ボタンをクリックします。:guilabel:`コンテンツサーバを開始` の代わりに、:guilabel:`コンテンツサーバを終了` が表示されるはずです。この項目の右側には IP アドレスとポート番号が記されています。これはピリオドで区切った一連の数字のように見えます。たとえば次のようになります::"
+
+#: ../../__w/calibre/calibre/manual/server.rst:57
+msgid ""
+"These numbers tell you what address to use to connect to the server in your "
+"devices. Following the example above, the address becomes::"
+msgstr "この数字はデバイスからサーバにアクセスするのに使用するアドレスを示しています。上の例に従うと、アドレスは次のようになります::"
+
+#: ../../__w/calibre/calibre/manual/server.rst:62
+msgid ""
+"The first part of the address is always ``http://`` the next part is the IP "
+"address, which is the numbers before the comma and finally we have the port "
+"number which must be added to the IP address with a colon (``:``). If you "
+"are lucky, that should be all you need and you will be looking at the "
+"calibre libraries on your device. If not, read on."
+msgstr "アドレスの最初の部分は常に ``http://`` です。次の部分は IP アドレスで、カンマの前にある数字です。最後に IP アドレスにコロン (``:``) をつけた後ろにポート番号をがあります。運がよければ必要なものはこれですべてで、calibre ライブラリをデバイス上で確認できるでしょう。そうでない場合には、先を読み進めてください。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:70
+msgid "Trouble-shooting the home network connection"
+msgstr "ホームネットワーク接続のトラブルシュート"
+
+#: ../../__w/calibre/calibre/manual/server.rst:72
+msgid ""
+"If you are unable to access the server from your device, try the following "
+"steps:"
+msgstr "デバイスからサーバにアクセスできない場合は、次の手順を試してください:"
+
+#: ../../__w/calibre/calibre/manual/server.rst:75
+msgid ""
+"Check that the server is running by opening the address "
+"``http://127.0.0.1:8080`` in a browser running on the same computer as the "
+"server."
+msgstr "サーバと同じコンピュータ上でブラウザからアドレス ``http://127.0.0.1:8080`` を開き、サーバが実行されているかを確認"
+
+#: ../../__w/calibre/calibre/manual/server.rst:79
+msgid ""
+"Check that your firewall/anti-virus is allowing connections to your computer"
+" on the port ``8080`` and to the calibre program. The easiest way to "
+"eliminate the firewall/anti-virus as the source of problems is to "
+"temporarily turn them both off and then try connecting. You should first "
+"disconnect from the internet, before turning off the firewall, to keep your "
+"computer safe."
+msgstr "ファイアウォール/ウィルス対策がコンピュータ上のポート ``8080`` および calibre プラグラムへのアクセスを許可しているかを確認。問題の原因となっているファイアウォール/ウィルス対策を排除する最も簡単な方法は、一時的に両方とも無効にしてから接続を試すことです。コンピュータの安全のため、ファイアウォールを無効にするときにはインターネットから切断しておきましょう。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:86
+msgid ""
+"Check that your device and computer are on the same network. This means they"
+" should both be connected to the same wireless router. In particular neither"
+" should be using a cellular or ISP provided direct-WiFi connection."
+msgstr "デバイスとコンピュータが同じネットワーク上にあることを確認。つまり両方とも同じ無線ルータに接続されていることを意味します。特に、携帯電話会社または ISP の提供する無線接続はどちらも利用してはいけません。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:90
+msgid ""
+"If you have non-standard networking setup, it might be that the IP address "
+"shown on the :guilabel:`Connect/share` menu is incorrect. In such a case you"
+" will have to figure out what the correct IP address to use is, yourself. "
+"Unfortunately, given the infinite diversity of network configurations "
+"possible, it is not possible to give you a roadmap for doing so."
+msgstr "標準的でないネットワーク設定を使用している場合、:guilabel:`接続/共有` に正しくない IP アドレスが表示されることがあります。そのような場合には、正しい IP アドレスを自分で探し出さなくてはなりません。残念なことに、ネットワーク設定には無限の多様性があることを考えると、そのための手順を示すことができません。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:97
+msgid ""
+"If you have setup a username and password, first try it without that to see "
+"if it is causing issues. Some e-ink devices have browsers that do not handle"
+" authentication. You can sometimes workaround this by including the username"
+" and password in the URL, for example: "
+"``http://username:password@192.168.1.2:8080``."
+msgstr "ユーザ名とパスワードを設定してある場合、最初にそれを使わず試して、問題が発生しないか確認してください。一部の e-ink デバイスでは、ブラウザが認証を扱えません。このようなとき、ユーザ名とパスワードを URL に含めると回避できることがあります。例えば ``http://username:password@192.168.1.2:8080`` のように指定します。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:103
+msgid ""
+"If you are stuck, you can always ask for help in the `calibre user forums`_."
+msgstr "行き詰まってしまったら、いつでも `calibre user forums`_で助けを求めることができます。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:107
+msgid "Accessing the server from anywhere on the internet"
+msgstr "インターネット上のどこかからサーバにアクセス"
+
+#: ../../__w/calibre/calibre/manual/server.rst:111
+msgid ""
+"Before doing this you should turn on username/password protection in the "
+"server, otherwise anyone in the world will be able to access your books. Go "
+"to :guilabel:`Preferences->Sharing->Sharing over the net` and enable the "
+"option to :guilabel:`Require username and password to access the content "
+"server`."
+msgstr "これを行う前に、サーバでユーザ名/パスワード保護を有効にする必要があります。そうしないと世界中の誰でも本にアクセスできてしまいます。:guilabel:`環境設定->共有->ネット共有` へ行き、:guilabel:`コンテンツサーバへのアクセスにユーザ名とパスワードを要求` オプションを有効にしてください。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:117
+msgid ""
+"While the particular details on setting up internet access vary depending on"
+" the network configuration and type of computer you are using, the basic "
+"schema is as follows."
+msgstr "インターネットアクセスの設定に関する具体的な詳細はネットワーク設定やコンピュータのタイプによって異なりますが、基本的な概要は次のとおりです。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:121
+msgid ""
+"Find out the external IP address of the computer you are going to run the "
+"server on. You can do that by visiting the site `What is my IP address "
+"<https://www.whatismyip.com/>`_ in a browser running on the computer."
+msgstr "サーバを実行しようとしているコンピュータの外部 IP アドレスを調べます。それには、そのコンピュータ上のブラウザで `What is my IP address <https://www.whatismyip.com/>`_ にアクセスします。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:125
+msgid ""
+"If the computer is behind a router, enable port forwarding on the router to "
+"forward the port ``8080`` (or whatever port you choose to run the calibre "
+"Content server on) to the computer."
+msgstr "コンピュータがルータの内側にあるなら、ルータ上でポートフォワードを有効にしてポート ``8080`` (または calibre コンテンツサーバを実行するポートとして選択したもの) をコンピュータにフォワードします。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:129
+msgid ""
+"Make sure the calibre server is allowed through any firewalls/anti-virus "
+"programs on your computer."
+msgstr "コンピュータ上でファイアウォール/ウィルス対策プログラムの通過を許可するよう、よく確認してください。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:132
+msgid ""
+"Now you should be able to access the server on any internet-connected device"
+" using the IP address you found in the first step. For example, if the IP "
+"address you found was ``123.123.123.123`` and the port you are using for the"
+" calibre server is ``8080``, the address to use on your device becomes: "
+"``http://123.123.123.123:8080``."
+msgstr "これで、インターネット接続したデバイスが、最初のステップで調べた IP アドレスを使ってサーバに接続できるようになるはずです。たとえば調べた IP アドレスが ``123.123.123.123`` で、calibre サーバに使用するポートが ``8080`` のとき、デバイスで使用するアドレスは ``http://123.123.123.123:8080`` となります。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:138
+msgid ""
+"Optionally, use a service like `no-ip <https://www.noip.com/free>`_ to setup"
+" an easy to remember address to use instead of the IP address you found in "
+"the first step."
+msgstr "必要に応じて `no-ip <https://www.noip.com/free>`_ などのサービスを利用して、最初のステップで調べた IP アドレスを使用する代わりに、覚えやすいアドレスを設定するとよいでしょう。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:143
+msgid ""
+"For maximum security, you should also enable HTTPS on the Content server. "
+"You can either do so directly in the server by providing the path to the "
+"HTTPS certificate to use in the advanced configuration options for the "
+"server, or you can setup a reverse proxy as described below, to use an "
+"existing HTTPS setup."
+msgstr "最大限のセキュリティを確保するには、コンテンツサーバ上で HTTPS を有効にする必要があります。それには、サーバの上級者用の設定で HTTPS 証明書へのパスを指定してサーバで直接行うか、既存の HTTPS 設定を利用して下に説明するようにリバースプロキシを設定することができます。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:151
+msgid "The server interface"
+msgstr "サーバのインタフェース"
+
+#: ../../__w/calibre/calibre/manual/server.rst:153
+msgid ""
+"The server interface is a simplified version of the main calibre interface, "
+"optimised for use with touch screens. The home screen shows you books you "
+"are currently reading as well as allowing to choose a calibre library you "
+"want to browse. The server in calibre gives you access to all your "
+"libraries, not just a single one, as before."
+msgstr "サーバインタフェースはメインの calibre インタフェースを簡略化したもので、タッチスクリーンでの利用に最適化されています。ホーム画面には現在読んでいる本が表示され、また閲覧する calibre ライブラリを選択できるようになっています。calibre のサーバはひとつだけでなく、前と同じようにすべてのライブラリへのアクセスが可能です。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:160
+msgid "The book list"
+msgstr "本のリスト"
+
+#: ../../__w/calibre/calibre/manual/server.rst:162
+msgid ""
+"The server book list is a simple grid of covers. Tap on a cover to see the "
+"detailed metadata for a book, or to read the book. If you prefer a more "
+"detailed list, you can change the default view by clicking the three "
+"vertical dots in the top right corner."
+msgstr "サーバの本のリストは、単純に表紙をグリッド表示します。表紙をタップすれば本の詳しい書誌情報を表示したり、本を読んだりできます。さらに詳細なリストが必要な場合には、右上に置かれた縦に点が 3 個並んだものをクリックすればデフォルトのビューを変更できます。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:167
+msgid ""
+"Sorting and searching of the book list should be familiar to calibre users. "
+"They can be accessed by clicking their icons in the top right area. They "
+"both work exactly the same as in the main calibre program. The search page "
+"even allows you to construct search queries by clicking on "
+"authors/tags/etc., just as you can using the Tag browser in the main "
+"program."
+msgstr "本の並べ替えや検索は、calibre ユーザにはお馴染みのはずです。それには右上のアイコンをクリックするとアクセスできます。どちらもメインの calibre プログラムと同様に動作します。検索ページでは著者/タグなどをクリックして検索クエリを構築することもできます。メインプログラムでタグブラウザを利用するのとまったく一緒です。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:173
+msgid ""
+"A much loved feature of the main program, :guilabel:`Virtual libraries` is "
+"present in the server interface as well. Click the three vertical dots in "
+"the top right corner to choose a Virtual library."
+msgstr "メインプログラムの非常に愛されている機能である :guilabel:`仮想ライブラリ` はサーバインタフェース上にも存在します。右上にある縦の 3 つの点をクリックして仮想ライブラリを選択してください。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:178
+msgid "The book reader"
+msgstr "書籍リーダ"
+
+#: ../../__w/calibre/calibre/manual/server.rst:180
+msgid ""
+"You can read any book in your calibre library by simply tapping on it and "
+"then tapping the :guilabel:`Read book` button. The books reader is very "
+"simple to operate. You can both tap and swipe to turn pages. Swiping up/down"
+" skips between chapters. Tapping the top quarter of the screen gets you the "
+"detailed controls and viewer preferences."
+msgstr "calibre ライブラリの本はどれでもその上でタップして :guilabel:`本を読む` ボタンをクリックするだけで読めます。書籍リーダの操作はとても簡単です。タップとスワイプの両方でページをめくれます。上下にスワイプすると章から章へスキップします。上から 1/4 のあたりをタップすると詳細なコントロールとビューアの設定が表示されます。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:186
+msgid ""
+"If you leave the Content server running, you can even open the same book on "
+"multiple devices and it will remember your last read position. If it does "
+"not you can force a sync by tapping in the top quarter and choosing "
+":guilabel:`Sync`."
+msgstr "コンテンツサーバを実行しておくと、複数のデバイスで同じ本を開くことができ、最後に読んだ場所は記憶されます。記憶されていない場合には上部をタップして :guilabel:`同期` を選択し、強制的に同期させることができます。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:192
+msgid "Browser support"
+msgstr "ブラウザのサポート"
+
+#: ../../__w/calibre/calibre/manual/server.rst:194
+msgid ""
+"The new calibre server makes lots of use of advanced HTML 5 and CSS 3 "
+"features. As such it requires an up-to-date browser to use. It has been "
+"tested on Android Chrome and iOS Safari as well as Chrome and Firefox on the"
+" desktop."
+msgstr "新しい calibre サーバでは HTML 5 や CSS 3 の高度な機能をたくさん利用しています。このため、利用するには最新のブラウザが必要です。これは Android Chrome, iOS Safari およびデスクトップ版の Chrome と Firefox でテストされています。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:198
+msgid ""
+"The server is careful to use functionality that has either been already "
+"standardised or is on the standards track. As such if it does not currently "
+"work with your favorite browser, it probably will once that browser has "
+"caught up."
+msgstr "このサーバは、すでに標準化済みの機能または標準化されつつある機能を慎重に使用しています。したがってもしお気に入りのブラウザでうまく表示できなかったとしても、ブラウザが追いつけば表示できるようになるでしょう。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:203
+msgid ""
+"If you are using a particularly old or limited browser or you don't like to "
+"run JavaScript, you can use the *mobile* view, by simply adding ``/mobile`` "
+"to the server address."
+msgstr "非常に古いブラウザや制限のあるブラウザを使用しているか、JavaScript を実行したくない場合には、サーバのアドレスに `/mobile`` を追加して *モバイル* 端末用のビューを利用することができます。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:208
+msgid ""
+"On iOS, Apple allows only a single browser engine, so Firefox, Chrome and "
+"Safari are all actually the same browser under the hood. The new server "
+"interface requires iOS 10.3.2 or newer. On Android, the server has been "
+"tested with Chrome version 58 and newer."
+msgstr "iOS では、Apple は単一のブラウザエンジンのみを許可しているため、Firefox, Chrome, Safari はいずれも中身は同じブラウザです。新しいサーバインタフェースには、iOS 10.3.2 以降が必要です。Android では、サーバはバージョン 58 以降の Chrome でテストされています。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:214
+msgid "Enabling offline support"
+msgstr "オフラインサポートの有効化"
+
+#: ../../__w/calibre/calibre/manual/server.rst:216
+msgid ""
+"Browser makers have been trying to force people to use SSL by disabling "
+"advanced features in their browsers for plain HTTP connections. One such "
+"casualty is offline support. So you may need to enable HTTPS on the server "
+"to get offline support working. In addition, in Firefox on Android, you will"
+" need to type ``about:config`` and search for ``browser.tabs.useCache`` and "
+"toggle it to ``true``."
+msgstr "ブラウザメーカは SSL の使用を強制する目的で、HTTP での接続ではブラウザの高度な機能を使えなくしてきました。そうして犠牲となったもののひとつが、オフラインサポートです。そのためオフラインサポートを機能させるには、サーバ上で HTTPS を有効にしなくてはならない場合があります。さらに Android の Firefox では ``about:config`` と入力して ``browser.tabs.useCache`` を検索し、``true`` に切り替える必要があります。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:224
+msgid "Managing user accounts from the command-line only"
+msgstr "ユーザアカウントの管理をコマンドラインでのみ行う"
+
+#: ../../__w/calibre/calibre/manual/server.rst:226
+msgid ""
+"The calibre program has a nice section in :guilabel:`Preferences` to allow "
+"you to manage user accounts for the server. However, if you want to run the "
+"standalone server and cannot run the main calibre program on the same "
+"computer/user account, you can also manage users using just the command-"
+"line."
+msgstr "calibre プログラムでは :guilabel:`環境設定` のセクションで、サーバのユーザアカウントを管理できます。しかし、スタンドアロンサーバを実行していて、メインの calibre プログラムを同じコンピュータ/ユーザアカウントで実行でいない場合には、ユーザをコマンドラインだけを使って管理することも可能です。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:231
+msgid ""
+"You can manage user accounts using the ``--manage-users`` option to the "
+"standalone ``calibre-server`` program. Suppose you want to store the user "
+"database in the folder ``/srv/calibre``, then you create it by running::"
+msgstr "スタンドアロンの ``calibre-server`` プログラムのオプションに ``--manage-users`` を使ってユーザアカウントを管理できます。ユーザデータベースをフォルダ ``/srv/calibre`` の下格納したい場合、次のように作成して実行します::"
+
+#: ../../__w/calibre/calibre/manual/server.rst:238
+msgid ""
+"Just follow the prompts to create user accounts, set their permission, etc. "
+"Once you are done, you can run the server as::"
+msgstr "プロンプトの指示に従ってユーザアカウントを作成したり、権限を設定したりしてください。それが終わったら、サーバを次のように実行します::"
+
+#: ../../__w/calibre/calibre/manual/server.rst:243
+msgid "It will use the user accounts you created in the previous step."
+msgstr "これで、前の手順で作成されたユーザアカウントを使用します。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:247
+msgid "Integrating the calibre Content server into other servers"
+msgstr "calibre コンテンツサーバを他のサーバと統合"
+
+#: ../../__w/calibre/calibre/manual/server.rst:249
+msgid ""
+"Here, we will show you how to integrate the calibre Content server into "
+"another server. The most common reason for this is to make use of SSL or to "
+"serve the calibre library as part of a larger site. The basic technique is "
+"to run the calibre server and setup a reverse proxy to it from the main "
+"server."
+msgstr "ここでは、calibre コンテンツサーバを他のサーバに統合する方法を紹介します。これを行う最もよくある理由は SSL を利用したい、あるいはより大きなサイトの一部として calibre のライブラリを提供したい場合です。基本的な手法は、calibre サーバを実行し、メインサーバから calibre サーバへのリバースプロキシを設定することです。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:254
+msgid ""
+"A reverse proxy is when your normal server accepts incoming requests and "
+"passes them onto the calibre server. It then reads the response from the "
+"calibre server and forwards it to the client. This means that you can simply"
+" run the calibre server as normal without trying to integrate it closely "
+"with your main server."
+msgstr "リバースプロキシは、通常のサーバが着信要求を受け取ったときに、それを calibre に渡します。そして calibre サーバからの黄湯を読取り、クライアントに転送します。これは calibre をメインサーバと緊密に統合することなく、calibre サーバを単純に実行すればよいことを意味します。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:261
+msgid "Using a full virtual host"
+msgstr "仮想ホスト全体の利用"
+
+#: ../../__w/calibre/calibre/manual/server.rst:263
+msgid ""
+"The simplest configuration is to dedicate a full virtual host to the calibre"
+" server. In this case, run the calibre server as::"
+msgstr "最も簡単な設定は、仮想ホスト全体を calibre サーバ専用にすることです。この場合、calibre サーバを次のように実行します::"
+
+#: ../../__w/calibre/calibre/manual/server.rst:268
+msgid ""
+"Now setup the virtual host in your main server, for example, for nginx::"
+msgstr "次に、メインサーバで仮想ホストの設定をします。たとえば ngix では次のようにします::"
+
+#: ../../__w/calibre/calibre/manual/server.rst:283
+msgid "Or, for Apache::"
+msgstr "または Apache では次のようにします::"
+
+#: ../../__w/calibre/calibre/manual/server.rst:298
+msgid "Using a URL prefix"
+msgstr "URL プレフィックスを使用"
+
+#: ../../__w/calibre/calibre/manual/server.rst:300
+msgid ""
+"If you do not want to dedicate a full virtual host to calibre, you can have "
+"it use a URL prefix. Start the calibre server as::"
+msgstr "仮想ホスト全体を calibre 専用にしたくない場合には、URL プレフィックスを使うことができます。calibre のサーバを次のように開始します::"
+
+#: ../../__w/calibre/calibre/manual/server.rst:305
+msgid ""
+"The key parameter here is ``--url-prefix /calibre``. This causes the Content"
+" server to serve all URLs prefixed by ``/calibre``. To see this in action, "
+"visit ``http://localhost:8080/calibre`` in your browser. You should see the "
+"normal Content server website, but now it will run under ``/calibre``."
+msgstr "ここでの重要なパラメータは ``--url-prefix /calibre`` です。これは ``/calibre`` で始まるすべての URL をコンテンツサーバに提供します。これの動作を確認するには、ブラウザで ``http://localhost:8080/calibre`` を開いてください。通常のコンテンツサーバの Web サイトが表示されますが、ただし ``/calibre`` の下で実行されます。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:307
+msgid "With nginx, the required configuration is::"
+msgstr "ngix で必要な設定は次のとおりです::"
+
+#: ../../__w/calibre/calibre/manual/server.rst:324
+msgid ""
+"For Apache, first enable the proxy modules in Apache, by adding the "
+"following to :file:`httpd.conf`::"
+msgstr "Apache では、まず Apache でプロキシモジュールを有効にするために、:file:`httpd.conf` に次の設定を追加します::"
+
+#: ../../__w/calibre/calibre/manual/server.rst:329
+msgid ""
+"The exact technique for enabling the proxy modules will vary depending on "
+"your Apache installation. Once you have the proxy modules enabled, add the "
+"following rules to :file:`httpd.conf` (or if you are using virtual hosts to "
+"the conf file for the virtual host in question)::"
+msgstr "プロキシモジュールを有効にする具体的な手順は Apache のインストールによって異なります。プロキシモジュールを有効にしたら、:file:`httpd.conf` (またはすでに仮想ホストを使用している場合には、その仮想ホストの conf ファイル) に次のルールを追加します::"
+
+#: ../../__w/calibre/calibre/manual/server.rst:336
+msgid ""
+"That's all, you will now be able to access the calibre Content server under "
+"the ``/calibre`` URL in your main server. The above rules pass all requests "
+"under ``/calibre`` to the calibre server running on port 8080 and thanks to "
+"the ``--url-prefix`` option above, the calibre server handles them "
+"transparently."
+msgstr "これで、メインサーバの URL の ``/calibre`` の下で calibre のコンテンツサーバにアクセスできるようになります。上記の設定により ``/calibre`` の下のすべての要求はポート 8080 で実行している calibre サーバに渡されます。そして ``--url-prefix`` のおかげで calibre はそれを透過的に処理します。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:341
+msgid ""
+"When using a reverse proxy, you should tell the calibre Content server to "
+"only listen on localhost, by using ``--listen-on 127.0.0.1``. That way, the "
+"server will only listen for connections coming from the same computer, i.e. "
+"from the reverse proxy."
+msgstr "リバースプロキシを使用する場合には、``--listen-on 127.0.0.1`` を使用して calibre コンテンツサーバにローカルホストでのみ要求を受け付けるよう指示する必要があります。そうすれば、サーバは同じコンピュータ、すなわちリバースプロキシから来た接続要求のみを受け付けるようになります。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:348
+msgid ""
+"If you have setup SSL for your main server, you should tell the calibre "
+"server to use basic authentication instead of digest authentication, as it "
+"is faster. To do so, pass the ``--auth-mode=basic`` option to ``calibre-"
+"server``."
+msgstr "メインサーバに SSL を設定している場合、ダイジェスト認証ではなく基本認証を使用するよう calibre に指示する必要があります。その方が早いからです。それには ``calibre-server`` に ``--auth-mode=basic`` オプションを渡してやります。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:357
+msgid "Creating a service for the calibre server on a modern Linux system"
+msgstr "最新の Linux システムで calibre サーバ用のサービスを作成"
+
+#: ../../__w/calibre/calibre/manual/server.rst:359
+msgid ""
+"You can easily create a service to run calibre at boot on a modern (`systemd"
+" <https://www.freedesktop.org/wiki/Software/systemd/>`_) based Linux system."
+" Just create the file ``/etc/systemd/system/calibre-server.service`` with "
+"the contents shown below::"
+msgstr "最新の Linux ベースのシステム (`systemd <https://www.freedesktop.org/wiki/Software/systemd/>`_) ではブート時に calibre を実行するためのサービスを簡単に作成できます。``/etc/systemd/system/calibre-server.service`` を作成して次の内容を入力しておくだけです::"
+
+#: ../../__w/calibre/calibre/manual/server.rst:378
+msgid ""
+"Change ``mylinuxuser`` and ``mylinuxgroup`` to whatever user and group you "
+"want the server to run as. This should be the same user and group that own "
+"the files in the calibre library folder. Note that it is generally not a "
+"good idea to run the server as root. Also change the path to the calibre "
+"library folder to suit your system. You can add multiple libraries if "
+"needed. See the help for the ``calibre-server`` command."
+msgstr "``mylinuxuser`` と ``mylinuxgroup`` の部分はサーバ上で使用したいユーザとグループに置き換えてください。このユーザとグループは calibre ライブラリフォルダの中にあるファイルの所有者でなくてはなりません。ただしサーバを root で実行するのはお勧めできません。calibre ライブラリフォルダへのパスもシステムに合わせて変更してください。必要なら複数のライブラリを追加することができます。``calibre-server`` のヘルプを参照してください。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:385
+msgid "Now run::"
+msgstr "そして次を実行してサーバを起動します::"
+
+#: ../../__w/calibre/calibre/manual/server.rst:389
+msgid "to start the server. Check its status with::"
+msgstr "状態を次のようにして確認してください::"
+
+#: ../../__w/calibre/calibre/manual/server.rst:393
+msgid "To make it start at boot, run::"
+msgstr "ブート時に開始させるには、次を実行します::"
+
+#: ../../__w/calibre/calibre/manual/server.rst:399
+msgid ""
+"The calibre server *does not* need a running X server, but it does need the "
+"X libraries installed as some components it uses link against them."
+msgstr "calibre サーバは実行中の X サーバ を必要としませんが、一部コンポーネントが X ライブラリにリンクしているため X ライブラリをインストールしておく必要があります。"
+
+#: ../../__w/calibre/calibre/manual/server.rst:404
+msgid ""
+"The calibre server also supports systemd socket activation, so you can use "
+"that, if needed, as well."
+msgstr "calibre サーバは systemd socket アクティベーションをサポートしているため、必要に応じて利用できます。"

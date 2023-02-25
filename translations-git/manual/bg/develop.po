@@ -1,0 +1,664 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# 
+# Translators:
+# valeria todorova <kolevavaleria@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-02-17 05:40+0000\n"
+"PO-Revision-Date: 2022-02-16 05:39+0000\n"
+"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"Language-Team: Bulgarian (http://www.transifex.com/calibre/calibre/language/bg/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bg\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../../__w/calibre/calibre/manual/develop.rst:4
+msgid "Setting up a calibre development environment"
+msgstr "  Организация на развиващата среда на Колибри"
+
+#: ../../__w/calibre/calibre/manual/develop.rst:6
+msgid ""
+"calibre is completely open source, licensed under the `GNU GPL v3 "
+"<https://www.gnu.org/licenses/gpl.html>`_. This means that you are free to "
+"download and modify the program to your heart's content. In this section, "
+"you will learn how to get a calibre development environment set up on the "
+"operating system of your choice. calibre is written primarily in `Python "
+"<https://www.python.org>`_ with some C/C++ code for speed and system "
+"interfacing. Note that calibre requires at least Python 3.8."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:14
+msgid "Contents"
+msgstr "Съдържание"
+
+#: ../../__w/calibre/calibre/manual/develop.rst:17
+msgid "Design philosophy"
+msgstr " Философия на проекта"
+
+#: ../../__w/calibre/calibre/manual/develop.rst:19
+msgid ""
+"calibre has its roots in the Unix world, which means that its design is "
+"highly modular. The modules interact with each other via well defined "
+"interfaces. This makes adding new features and fixing bugs in calibre very "
+"easy, resulting in a frenetic pace of development. Because of its roots, "
+"calibre has a comprehensive command line interface for all its functions, "
+"documented in :doc:`generated/en/cli-index`."
+msgstr "Началото на Колибри е свързано с операционната система \"Юникс\", което ознава , че тя е вицоко модулна. Нейните модули  взаимодействат помежду си чрез   чрез строго определени връзки връзки. Това позволява много лесното отстраняване на  дефекти и добавяне на нови свойства,  резултат на което Колбри се развива с много  бързо темпо. Благодарение на \"Юникс\" Колибри притежава разбираем начин на управление за всички свои функции, документирани в  :doc:`generated/bg/cli-index`."
+
+#: ../../__w/calibre/calibre/manual/develop.rst:24
+msgid ""
+"The modular design of calibre is expressed via ``Plugins``. There is a "
+":ref:`tutorial <customize>` on writing calibre plugins. For example, adding "
+"support for a new device to calibre typically involves writing less than a "
+"100 lines of code in the form of a device driver plugin. You can browse the "
+"`built-in drivers "
+"<https://github.com/kovidgoyal/calibre/tree/master/src/calibre/devices>`_. "
+"Similarly, adding support for new conversion formats involves writing "
+"input/output format plugins. Another example of the modular design is the "
+":ref:`recipe system <news>` for fetching news. For more examples of plugins "
+"designed to add features to calibre, see the `Index of plugins "
+"<https://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:34
+msgid "Code layout"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:36
+msgid ""
+"All the calibre python code is in the ``calibre`` package. This package "
+"contains the following main sub-packages"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:38
+msgid ""
+"devices - All the device drivers. Just look through some of the built-in "
+"drivers to get an idea for how they work."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:40
+msgid ""
+"For details, see: ``devices.interface`` which defines the interface "
+"supported by device drivers and ``devices.usbms`` which defines a generic "
+"driver that connects to a USBMS device. All USBMS based drivers in calibre "
+"inherit from it."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:43
+msgid ""
+"e-books  - All the e-book conversion/metadata code. A good starting point is"
+" ``calibre.ebooks.conversion.cli`` which is the module powering the "
+":command:`ebook-convert` command. The conversion process is controlled via "
+"``conversion.plumber``. The format independent code is all in ``ebooks.oeb``"
+" and the format dependent code is in ``ebooks.format_name``."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:47
+msgid ""
+"Metadata reading, writing, and downloading is all in ``ebooks.metadata``"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:48
+msgid ""
+"Conversion happens in a pipeline, for the structure of the pipeline, see "
+":ref:`conversion-introduction`. The pipeline consists of an input plugin, "
+"various transforms and an output plugin. The code that constructs and drives"
+" the pipeline is in :file:`plumber.py`. The pipeline works on a "
+"representation of an e-book that is like an unzipped epub, with manifest, "
+"spine, toc, guide, html content, etc. The class that manages this "
+"representation is OEBBook in ``ebooks.oeb.base``. The various "
+"transformations that are applied to the book during conversions live in "
+":file:`oeb/transforms/*.py`. And the input and output plugins live in "
+":file:`conversion/plugins/*.py`."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:58
+msgid ""
+"E-book editing happens using a different container object. It is documented "
+"in :ref:`polish_api`."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:61
+msgid ""
+"db - The database back-end. See :ref:`db_api` for the interface to the "
+"calibre library."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:63
+msgid "Content server: ``srv`` is the calibre Content server."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:65
+msgid ""
+"gui2 - The Graphical User Interface. GUI initialization happens in "
+"``gui2.main`` and ``gui2.ui``. The e-book-viewer is in ``gui2.viewer``. The "
+"e-book editor is in ``gui2.tweak_book``."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:67
+msgid ""
+"If you want to locate the entry points for all the various calibre "
+"executables, look at the ``entry_points`` structure in `linux.py "
+"<https://github.com/kovidgoyal/calibre/blob/master/src/calibre/linux.py>`_."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:71
+msgid ""
+"If you need help understanding the code, post in the `development forum "
+"<https://www.mobileread.com/forums/forumdisplay.php?f=240>`_ and you will "
+"most likely get help from one of calibre's many developers."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:75
+msgid "Getting the code"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:77
+msgid ""
+"You can get the calibre source code in two ways, using a version control "
+"system or directly downloading a :website_base:`tarball <dist/src>`."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:80
+msgid ""
+"calibre uses `Git <https://www.git-scm.com/>`_, a distributed version "
+"control system. Git is available on all the platforms calibre supports.  "
+"After installing Git, you can get the calibre source code with the command::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:86
+msgid ""
+"On Windows you will need the complete path name, that will be something like"
+" :file:`C:\\\\Program Files\\\\Git\\\\git.exe`."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:88
+msgid ""
+"calibre is a very large project with a very long source control history, so "
+"the above can take a while (10 mins to an hour depending on your internet "
+"speed)."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:91
+msgid ""
+"If you want to get the code faster, the source code for the latest release "
+"is always available as an :website_base:`archive <dist/src>`."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:94
+msgid "To update a branch to the latest code, use the command::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:98
+msgid ""
+"You can also browse the code at `GitHub "
+"<https://github.com/kovidgoyal/calibre>`_."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:101
+msgid "Submitting your changes to be included"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:103
+msgid ""
+"If you only plan to make a few small changes, you can make your changes and "
+"create a \"merge directive\" which you can then attach to a ticket in the "
+"calibre `bug tracker <https://bugs.launchpad.net/calibre>`_. To do this, "
+"make your changes, then run::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:111
+msgid ""
+"This will create a :file:`my-changes` file in the current folder, simply "
+"attach that to a ticket on the calibre `bug tracker "
+"<https://bugs.launchpad.net/calibre>`_. Note that this will include *all* "
+"the commits you have made. If you only want to send some commits, you have "
+"to change ``origin/master`` above. To send only the last commit, use::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:119
+msgid ""
+"To send the last *n* commits, replace *1* with *n*, for example, for the "
+"last 3 commits::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:124
+msgid "Be careful to not include merges when using ``HEAD~n``."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:126
+msgid ""
+"If you plan to do a lot of development on calibre, then the best method is "
+"to create a `GitHub <https://github.com>`__ account. Below is a basic guide "
+"to setting up your own fork of calibre in a way that will allow you to "
+"submit pull requests for inclusion into the main calibre repository:"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:131
+msgid ""
+"Setup git on your machine as described in this article: `Setup Git "
+"<https://help.github.com/articles/set-up-git>`_"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:132
+msgid ""
+"Setup ssh keys for authentication to GitHub, as described here: `Generating "
+"SSH keys <https://help.github.com/articles/generating-ssh-keys>`_"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:133
+msgid ""
+"Go to https://github.com/kovidgoyal/calibre and click the :guilabel:`Fork` "
+"button."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:134
+msgid "In a Terminal do::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:139
+msgid ""
+"Replace <username> above with your GitHub username. That will get your fork "
+"checked out locally."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:140
+msgid ""
+"You can make changes and commit them whenever you like. When you are ready "
+"to have your work merged, do a::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:144
+msgid ""
+"and go to ``https://github.com/<username>/calibre`` and click the "
+":guilabel:`Pull Request` button to generate a pull request that can be "
+"merged."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:145
+msgid ""
+"You can update your local copy with code from the main repo at any time by "
+"doing::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:150
+msgid ""
+"You should also keep an eye on the calibre `development forum "
+"<https://www.mobileread.com/forums/forumdisplay.php?f=240>`_. Before making "
+"major changes, you should discuss them in the forum or contact Kovid "
+"directly (his email address is all over the source code)."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:156
+msgid "Windows development environment"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:158
+#: ../../__w/calibre/calibre/manual/develop.rst:192
+#: ../../__w/calibre/calibre/manual/develop.rst:228
+msgid ""
+"You must also get the calibre source code separately as described above."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:160
+msgid ""
+"Install calibre normally, using the Windows installer. Then open a Command "
+"Prompt and change to the previously checked out calibre code folder. For "
+"example::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:165
+#: ../../__w/calibre/calibre/manual/develop.rst:240
+msgid "calibre is the folder that contains the src and resources sub-folders."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:167
+msgid ""
+"The next step is to set the environment variable ``CALIBRE_DEVELOP_FROM`` to"
+" the absolute path of the src folder. So, following the example above, it "
+"would be ``C:\\Users\\kovid\\work\\calibre\\src``. `Here is a short guide "
+"<https://docs.python.org/using/windows.html#excursus-setting-environment-"
+"variables>`_ to setting environment variables on Windows."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:172
+msgid ""
+"Once you have set the environment variable, open a new command prompt and "
+"check that it was correctly set by using the command::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:177
+#: ../../__w/calibre/calibre/manual/develop.rst:251
+msgid ""
+"Setting this environment variable means that calibre will now load all its "
+"Python code from the specified location."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:179
+msgid ""
+"That's it! You are now ready to start hacking on the calibre code. For "
+"example, open the file :file:`src\\\\calibre\\\\__init__.py` in your "
+"favorite editor and add the line::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:184
+#: ../../__w/calibre/calibre/manual/develop.rst:258
+msgid ""
+"near the top of the file. Now run the command :command:`calibredb`. The very"
+" first line of output should be ``Hello, world!``."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:186
+msgid ""
+"You can also setup a calibre development environment inside the free "
+"Microsoft Visual Studio, if you like, following the instructions `here "
+"<https://www.mobileread.com/forums/showthread.php?t=251201>`_."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:190
+msgid "macOS development environment"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:194
+msgid ""
+"Install calibre normally using the provided .dmg. Then open a Terminal and "
+"change to the previously checked out calibre code folder, for example::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:199
+msgid ""
+"calibre is the folder that contains the src and resources sub-folders. The "
+"calibre command line tools are found inside the calibre app bundle, in "
+":file:`/Applications/calibre.app/Contents/MacOS` you should add this folder "
+"to your PATH environment variable, if you want to run the command line tools"
+" easily."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:205
+msgid ""
+"The next step is to create a bash script that will set the environment "
+"variable ``CALIBRE_DEVELOP_FROM`` to the absolute path of the src folder "
+"when running calibre in debug mode."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:207
+msgid "Create a plain text file::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:213
+msgid ""
+"Save this file as :file:`/usr/local/bin/calibre-develop`, then set its "
+"permissions so that it can be executed::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:217
+msgid "Once you have done this, run::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:221
+msgid ""
+"You should see some diagnostic information in the Terminal window as calibre"
+" starts up, and you should see an asterisk after the version number in the "
+"GUI window, indicating that you are running from source."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:226
+msgid "Linux development environment"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:230
+msgid ""
+"calibre is primarily developed on Linux. You have two choices in setting up "
+"the development environment. You can install the calibre binary as normal "
+"and use that as a runtime environment to do your development. This approach "
+"is similar to that used in Windows and macOS. Alternatively, you can install"
+" calibre from source. Instructions for setting up a development environment "
+"from source are in the INSTALL file in the source tree. Here we will address"
+" using the binary as a runtime, which is the recommended method."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:236
+msgid ""
+"Install calibre using the binary installer. Then open a terminal and change "
+"to the previously checked out calibre code folder, for example::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:242
+msgid ""
+"The next step is to set the environment variable ``CALIBRE_DEVELOP_FROM`` to"
+" the absolute path of the src folder. So, following the example above, it "
+"would be ``/home/kovid/work/calibre/src``. How to set environment variables "
+"depends on your Linux distribution and what shell you are using."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:246
+msgid ""
+"Once you have set the environment variable, open a new terminal and check "
+"that it was correctly set by using the command::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:253
+msgid ""
+"That's it! You are now ready to start hacking on the calibre code. For "
+"example, open the file :file:`src/calibre/__init__.py` in your favorite "
+"editor and add the line::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:261
+msgid ""
+"Having separate \"normal\" and \"development\" calibre installs on the same "
+"computer"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:263
+msgid ""
+"The calibre source tree is very stable and rarely breaks, but if you feel "
+"the need to run from source on a separate test library and run the released "
+"calibre version with your everyday library, you can achieve this easily "
+"using .bat files or shell scripts to launch calibre. The example below shows"
+" how to do this on Windows using .bat files (the instructions for other "
+"platforms are the same, just use a shell script instead of a .bat file)"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:268
+msgid "To launch the release version of calibre with your everyday library:"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:270
+msgid "calibre-normal.bat::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:274
+msgid "calibre-dev.bat::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:281
+msgid "Debugging tips"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:283
+msgid ""
+"Python is a dynamically typed language with excellent facilities for "
+"introspection. Kovid wrote the core calibre code without once using a "
+"debugger. There are many strategies to debug calibre code:"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:288
+msgid "Using print statements"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:290
+msgid ""
+"This is Kovid's favorite way to debug. Simply insert print statements at "
+"points of interest and run your program in the terminal. For example, you "
+"can start the GUI from the terminal as::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:295
+msgid "Similarly, you can start the E-book viewer as::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:299
+msgid "The e-book-editor can be started as::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:304
+msgid "Using an interactive Python interpreter"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:306
+msgid ""
+"You can insert the following two lines of code to start an interactive "
+"Python session at that point::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:311
+msgid ""
+"When running from the command line, this will start an interactive Python "
+"interpreter with access to all locally defined variables (variables in the "
+"local scope). The interactive prompt even has :kbd:`Tab` completion for "
+"object properties and you can use the various Python facilities for "
+"introspection, such as :func:`dir`, :func:`type`, :func:`repr`, etc."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:317
+msgid "Using the Python debugger as a remote debugger"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:319
+msgid ""
+"You can use the builtin Python debugger (pdb) as a remote debugger from the "
+"command line. First, start the remote debugger at the point in the calibre "
+"code you are interested in, like this::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:326
+msgid ""
+"Then run calibre, either as normal, or using one of the calibre-debug "
+"commands described in the previous section. Once the above point in the code"
+" is reached, calibre will freeze, waiting for the debugger to connect."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:330
+msgid ""
+"Now open a terminal or command prompt and use the following command to start"
+" the debugging session::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:335
+msgid ""
+"You can read about how to use the Python debugger in the `Python stdlib docs"
+" for the pdb module <https://docs.python.org/library/pdb.html#debugger-"
+"commands>`_."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:339
+msgid ""
+"By default, the remote debugger will try to connect on port 4444. You can "
+"change it, by passing the port parameter to both the set_trace() and the "
+"cli() functions above, like this: ``set_trace(port=1234)`` and "
+"``cli(port=1234)``."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:345
+msgid ""
+"The Python debugger cannot handle multiple threads, so you have to call "
+"set_trace once per thread, each time with a different port number."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:349
+msgid "Using the debugger in your favorite Python IDE"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:351
+msgid ""
+"It is possible to use the builtin debugger in your favorite Python IDE, if "
+"it supports remote debugging. The first step is to add the calibre src "
+"checkout to the ``PYTHONPATH`` in your IDE. In other words, the folder you "
+"set as ``CALIBRE_DEVELOP_FROM`` above, must also be in the ``PYTHONPATH`` of"
+" your IDE."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:356
+msgid ""
+"Then place the IDE's remote debugger module into the :file:`src` sub-folder "
+"of the calibre source code checkout. Add whatever code is needed to launch "
+"the remote debugger to calibre at the point of interest, for example in the "
+"main function. Then run calibre as normal. Your IDE should now be able to "
+"connect to the remote debugger running inside calibre."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:363
+msgid "Executing arbitrary scripts in the calibre Python environment"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:365
+msgid ""
+"The :command:`calibre-debug` command provides a couple of handy switches to "
+"execute your own code, with access to the calibre modules::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:370
+msgid ""
+"is great for testing a little snippet of code on the command line. It works "
+"in the same way as the -c switch to the Python interpreter::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:374
+msgid ""
+"can be used to execute your own Python script. It works in the same way as "
+"passing the script to the Python interpreter, except that the calibre "
+"environment is fully initialized, so you can use all the calibre code in "
+"your script. To use command line arguments with your script, use the form::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:379
+msgid ""
+"The ``--`` causes all subsequent arguments to be passed to your script."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:383
+msgid "Using calibre in your projects"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:385
+msgid ""
+"It is possible to directly use calibre functions/code in your Python "
+"project. Two ways exist to do this:"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:388
+msgid "Binary install of calibre"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:390
+msgid ""
+"If you have a binary install of calibre, you can use the Python interpreter "
+"bundled with calibre, like this::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:395
+msgid "Source install on Linux"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:397
+msgid ""
+"In addition to using the above technique, if you do a source install on "
+"Linux, you can also directly import calibre, as follows::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:405
+msgid ""
+"It is essential that you import the init_calibre module before any other "
+"calibre modules/packages as it sets up the interpreter to run calibre code."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/develop.rst:409
+msgid "API documentation for various parts of calibre"
+msgstr ""

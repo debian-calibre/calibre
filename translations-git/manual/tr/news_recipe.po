@@ -1,0 +1,915 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-08-10 17:06+0000\n"
+"PO-Revision-Date: 2014-06-17 08:36+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Turkish (http://www.transifex.com/calibre/calibre/language/tr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: tr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ../../__w/calibre/calibre/manual/news_recipe.rst:4
+msgid "API documentation for recipes"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news_recipe.rst:9
+msgid "The API for writing recipes is defined by the :class:`BasicNewsRecipe`"
+msgstr "Reçete yazmaya yarayan API :class:`BasicNewsRecipe` ile tanımlanmıştır"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe:1
+msgid ""
+"Base class that contains logic needed in all recipes. By overriding "
+"progressively more of the functionality in this class, you can make "
+"progressively more customized/powerful recipes. For a tutorial introduction "
+"to creating recipes, see :doc:`news`."
+msgstr "Tüm reçeteler için gerekli mantığı içeren temel sınıf. Bu sınıf içindeki fonksiyonları kademeli olarak ezerek kademeli olarak daha özelleştirilmiş/güçlü reçeteler oluşturabilirsiniz. Reçete oluşturmakla ilgili bir giriş kılavuzu için şuraya bakınız, :doc:`news`."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.abort_article:1
+msgid ""
+"Call this method inside any of the preprocess methods to abort the download "
+"for the current article. Useful to skip articles that contain inappropriate "
+"content, such as pure video articles."
+msgstr "Mevcut makalenin indirmesini durdurmak için bu yöntemi herhangi bir ön işleme yöntemi içinde çağırın. Tamamen videodan oluşan makaleler gibi uygunsuz içerik içeren makaleleri atlamak için kullanışlıdır."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.abort_recipe_processing:1
+msgid ""
+"Causes the recipe download system to abort the download of this recipe, "
+"displaying a simple feedback message to the user."
+msgstr "Reçete indirme sisteminin bu reçeteyi indirmeyi durdurmasına sebep olur, kullanıcıya basit bir ger besleme iletisi gösterilir."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.add_toc_thumbnail:1
+msgid ""
+"Call this from populate_article_metadata with the src attribute of an <img> "
+"tag from the article that is appropriate for use as the thumbnail "
+"representing the article in the Table of Contents. Whether the thumbnail is "
+"actually used is device dependent (currently only used by the Kindles). Note"
+" that the referenced image must be one that was successfully downloaded, "
+"otherwise it will be ignored."
+msgstr "Bunu populate_article_metadata'dan makaledeki <img> etiketinin İçindekiler bölümünde makaleyi temsil etmeye uygun küçük resim için src özniteliği ile çağırın. Küçük resmin gerçekten kullanılıp kullanılmayacağı aygıta bağlıdır (şimdilik sadece Kindle'larda kullanılır). Referans verilen resmin başarılı şekilde indirilmiş olmasına dikkat edin, aksi takdirde yoksayılacaktır."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.adeify_images:1
+msgid ""
+"If your recipe when converted to EPUB has problems with images when viewed "
+"in Adobe Digital Editions, call this method from within "
+":meth:`postprocess_html`."
+msgstr "Reçeteniz EPUB'a dönüştürüldüğünde ve Adobe Digital Editions ile görüntülendiğinde resimlerle ilgili sorun yaşıyorsa bu metodu :meth:`postprocess_html` içinden çağırın."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:1
+msgid ""
+"Return a set of canonical representations of ``url``.  The default "
+"implementation uses just the server hostname and path of the URL, ignoring "
+"any query parameters, fragments, etc. The canonical representations must be "
+"unique across all URLs for this news source. If they are not, then internal "
+"links may be resolved incorrectly."
+msgstr "``url``nin kuralsal temsillerinin kümesini döndür.  Varsayılan gerçekleme yalnızca sunucu makine adı ve URL yolunu kullanır, sorgu parametrelerini, parçaları, vs göz ardı eder. Kuralsal ifadeler bu haber kaynağının URL'leri arasında benzersiz olmalıdırlar. Olmazlarsa, dahili bağlantılar yanlış şekilde çözümlenebilir."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:0
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:0
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:0
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:0
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:0
+msgid "Parameters"
+msgstr "Parametreler"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:7
+msgid ""
+"Is True if the URL is coming from an internal link in an HTML file. False if"
+" the URL is the URL used to download an article."
+msgstr "URL bir HTML dosyasındandaki dahili bağlantıdan geliyorsa Doğrudur. URL makaleyi indirmek için kullanılan URL ise Yanlış."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.cleanup:1
+msgid ""
+"Called after all articles have been download. Use it to do any cleanup like "
+"logging out of subscription sites, etc."
+msgstr "Tüm makaleler indirildikten sonra çağrılır. Aboneli sitelerden çıkış yapmak gibi temizlik işlerini yapmak için kullanın."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.clone_browser:1
+msgid ""
+"Clone the browser br. Cloned browsers are used for multi-threaded downloads,"
+" since mechanize is not thread safe. The default cloning routines should "
+"capture most browser customization, but if you do something exotic in your "
+"recipe, you should override this method in your recipe and clone manually."
+msgstr "Tarayıcıyı coğalt. Çoğaltılmış tarayıcılar çok iş parçacıklı indirmeler yapmak için kullanılır, çünkü mechanize iş parçacığı güvenli değildir. Varsayılan çoğaltma rutinleri çoğu tarayıcı özelleştirmesini yakalıyor olmalıdır, ancak reçetenizde egzotik bir şeyler yaparsanız, reçetenizde bu metodu ezmeli ve elle çoğaltma yapmalısınız."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.clone_browser:7
+msgid ""
+"Cloned browser instances use the same, thread-safe CookieJar by default, "
+"unless you have customized cookie handling."
+msgstr "Çoğaltılmış tarayıcı örnekleri çerez yönetiminde özelleştirme yapmadıysanız varsayılan olarak aynı, iş parçacığı güvenli CookieJar'ı kullanır."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.default_cover:1
+msgid "Create a generic cover for recipes that don't have a cover"
+msgstr "Kapağı olmayan reçeteler için genel bir kapak oluştur"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.download:1
+msgid ""
+"Download and pre-process all articles from the feeds in this recipe. This "
+"method should be called only once on a particular Recipe instance. Calling "
+"it more than once will lead to undefined behavior. :return: Path to "
+"index.html"
+msgstr "Bu reçetedeki beslemelerden makaleleri indir ve ön işleme yap. Bu metod her Reçete örneği için yalnızca bir kere çağrılmalıdır. Birden fazla çağırmak tanımlanmayan davranışlara yol açar. :return: index.html yolu"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.extract_readable_article:1
+msgid ""
+"Extracts main article content from 'html', cleans up and returns as a "
+"(article_html, extracted_title) tuple. Based on the original readability "
+"algorithm by Arc90."
+msgstr "'html'den ana makale içeriğini aktarır, temizler ve demet (article_html, extracted_title) olarak döndürür. Arc90'ın asıl okunabilirlik algortimasına dayanır."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_article_url:1
+msgid ""
+"Override in a subclass to customize extraction of the :term:`URL` that "
+"points to the content for each article. Return the article URL. It is called"
+" with `article`, an object representing a parsed article from a feed. See "
+"`feedparser <https://pythonhosted.org/feedparser/>`_. By default it looks "
+"for the original link (for feeds syndicated via a service like FeedBurner or"
+" Pheedo) and if found, returns that or else returns `article.link "
+"<https://pythonhosted.org/feedparser/reference-entry-link.html>`_."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_browser:1
+msgid ""
+"Return a browser instance used to fetch documents from the web. By default "
+"it returns a `mechanize <https://mechanize.readthedocs.io/en/latest/>`_ "
+"browser instance that supports cookies, ignores robots.txt, handles "
+"refreshes and has a mozilla firefox user agent."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_browser:6
+msgid ""
+"If your recipe requires that you login first, override this method in your "
+"subclass. For example, the following code is used in the New York Times "
+"recipe to login for full access::"
+msgstr "Reçeteniz önce giriş yapmanızı gerektiriyorsa, alt sınıfınızda bu metodu ezin. Örneğin, New York Times reçetesinde kullanılan aşağıdaki kod tam erişim için giriş yapar::"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_cover_url:1
+msgid ""
+"Return a :term:`URL` to the cover image for this issue or `None`. By default"
+" it returns the value of the member `self.cover_url` which is normally "
+"`None`. If you want your recipe to download a cover for the e-book override "
+"this method in your subclass, or set the member variable `self.cover_url` "
+"before this method is called."
+msgstr "Bu basımın kapağına :term:`URL` ya da `None` döndür. Varsayılan olarak normalde `None` olan `self.cover_url` öğesinin değerini döndürür. Reçetenizin e-kitap için bir kapak indirmesini istiyorsanız bu metodu alt sınıfınızda ezin, veya bu metodu çağırmadan önce üye değişken `self.cover_url`yi ayarlayın."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_extra_css:1
+msgid ""
+"By default returns `self.extra_css`. Override if you want to "
+"programmatically generate the extra_css."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_feeds:1
+msgid ""
+"Return a list of :term:`RSS` feeds to fetch for this profile. Each element "
+"of the list must be a 2-element tuple of the form (title, url). If title is "
+"None or an empty string, the title from the feed is used. This method is "
+"useful if your recipe needs to do some processing to figure out the list of "
+"feeds to download. If so, override in your subclass."
+msgstr "Bu profil için getirilecek :term:`RSS` beslemeleri listesini döndürür. Listenin her elemanı (başlık, url) biçiminde 2 elemanlı demet şeklinde olmalıdır. Başlık None veya boş karakter dizisi ise, beslemedeki başlık kullanılır. Bu method reçetenizin indirilecek besleme listesini anlamak için bir miktar işlem yapması gereken durumlarda faydalıdır. Durum böyleyse, kendi alt sınıfınızda ezin."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_masthead_title:1
+msgid "Override in subclass to use something other than the recipe title"
+msgstr "Reçete başlığından başka bir şey kullanmak için alt sınıfta ezin"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_masthead_url:1
+msgid ""
+"Return a :term:`URL` to the masthead image for this issue or `None`. By "
+"default it returns the value of the member `self.masthead_url` which is "
+"normally `None`. If you want your recipe to download a masthead for the "
+"e-book override this method in your subclass, or set the member variable "
+"`self.masthead_url` before this method is called. Masthead images are used "
+"in Kindle MOBI files."
+msgstr "Bu basım için kolombir resminin :term:`URL`sini ya da `None` döndür. Varsayılan olarak normalde değeri `None` olan `self.masthead_url` üyesinin değerini döndürür. Reçetenizin e-kitap için bir kolombir indirmesini istiyorsanız bu metodu alt sınıfınızda ezin, veya bu metodu çağırmadan üye değişken `self.masthead_url`yi ayarlayın. Kolombir resimleri Kindle MOBI dosyalarında kullanılır."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:1
+msgid ""
+"If you set `articles_are_obfuscated` this method is called with every "
+"article URL. It should return the path to a file on the filesystem that "
+"contains the article HTML. That file is processed by the recursive HTML "
+"fetching engine, so it can contain links to pages/images on the web."
+msgstr "`articles_are_obfuscated` ayarlarsanız bu metod her makale URL'si ile çağrılır. Dosya sisteminde makale HTML'sini içeren bir dosyaya yol döndürmelidir. Bu dosya yinelemeli HTML motoruyla işlenir, yani web'deki sayfalara bağlantılar/resimler içerebilir."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:6
+msgid ""
+"This method is typically useful for sites that try to make it difficult to "
+"access article content automatically."
+msgstr "Bu metod makale içeriğine otomatik olarak erişmeyi zorlaştırmaya çalışan siteler için faydalı olabilir."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.image_url_processor:1
+msgid ""
+"Perform some processing on image urls (perhaps removing size restrictions "
+"for dynamically generated images, etc.) and return the precessed URL. Return"
+" None or an empty string to skip fetching the image."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:1
+msgid ""
+"Convenience method that takes an URL to the index page and returns a "
+"`BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc>`__ of"
+" it."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:5
+msgid "`url_or_raw`: Either a URL or the downloaded index page as a string"
+msgstr "`url_or_raw`: Bir URL ya da karakter dizisi olarak indirilmiş dizin sayfası"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:1
+msgid ""
+"Return True if the link should be followed or False otherwise. By default, "
+"raises NotImplementedError which causes the downloader to ignore it."
+msgstr "Bağlantı takip edilmeliyse True, aksi durumda False döndür. Ön tanımlı olarak, indiricinin yoksaymasına sebep olacak NotImplementedError yükseltir."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:5
+msgid "The URL to be followed"
+msgstr "Takip edilecek URL"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:6
+msgid "The tag from which the URL was derived"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.parse_feeds:1
+msgid ""
+"Create a list of articles from the list of feeds returned by "
+":meth:`BasicNewsRecipe.get_feeds`. Return a list of :class:`Feed` objects."
+msgstr ":meth:`BasicNewsRecipe.get_feeds` tarafından döndürülen beslemelerden makale listeleri oluşturur. :class:`Feed` nesnesi listesi döndürür."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.parse_index:1
+msgid ""
+"This method should be implemented in recipes that parse a website instead of"
+" feeds to generate a list of articles. Typical uses are for news sources "
+"that have a \"Print Edition\" webpage that lists all the articles in the "
+"current print edition. If this function is implemented, it will be used in "
+"preference to :meth:`BasicNewsRecipe.parse_feeds`."
+msgstr "Bu metod makale listeleri yerine web sayfalarını ayrıştırması gereken reçetelerde uygulanır. Kullanım alanı, yazdırma baskısındaki makaleleri bir \"Yazım Baskısı\" ile listeleyen haber kaynakları olabilir. Bu fonksiyon uygulanırsa, :meth:`BasicNewsRecipe.parse_feeds` yerine tercih edilir."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.parse_index:7
+msgid ""
+"It must return a list. Each element of the list must be a 2-element tuple of"
+" the form ``('feed title', list of articles)``."
+msgstr "Bir liste döndürmelidir. Listenin her elemanı ``('besleme başlığı', makale listesi)`` biçiminde 2 elemanlı demet olmalıdır."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.parse_index:10
+msgid "Each list of articles must contain dictionaries of the form::"
+msgstr "Her makale listesi şu biçimde sözlük içermelidir::"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.parse_index:23
+msgid ""
+"For an example, see the recipe for downloading `The Atlantic`. In addition, "
+"you can add 'author' for the author of the article."
+msgstr "Örnek olarak, `The Atlantic` indirmek için olan reçeteye göz atın. Ek olarak makalenin yazarı için 'author' ekleyebilirsiniz."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.parse_index:26
+msgid ""
+"If you want to abort processing for some reason and have calibre show the "
+"user a simple message instead of an error, call "
+":meth:`abort_recipe_processing`."
+msgstr "Herhangi sebepten işlemeyi durdurmak ve calibre'nin kullanıcıya hata yerine basit bir ileti göstermesini isterseniz, :meth:`abort_recipe_processing` metodunu çağırın."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:1
+msgid ""
+"Called when each HTML page belonging to article is downloaded. Intended to "
+"be used to get article metadata like author/summary/etc. from the parsed "
+"HTML (soup)."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:5
+msgid ""
+"A object of class :class:`calibre.web.feeds.Article`. If you change the "
+"summary, remember to also change the text_summary"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:7
+msgid "Parsed HTML belonging to this article"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:8
+msgid "True iff the parsed HTML is the first page of the article."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:1
+msgid "Run any needed post processing on the parsed downloaded e-book."
+msgstr "İndirilmiş e-kitap üstünde gerekli tüm art işlemleri çalıştır."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:3
+msgid "An OEBBook object"
+msgstr "OEBBook nesnesi"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:4
+msgid "Conversion options"
+msgstr "Dönüştürme seçenekleri"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:1
+msgid ""
+"This method is called with the source of each downloaded :term:`HTML` file, "
+"after it is parsed for links and images. It can be used to do arbitrarily "
+"powerful post-processing on the :term:`HTML`. It should return `soup` after "
+"processing it."
+msgstr "Bu metod indirilen her bir :term:`HTML` dosyası kaynağı ile, bağlantılar ve resimler için ayrıştırıldıktan sonra çağrılır. :term:`HTML` üzerinde keyfi, güçlü, işleme sonrası işlemler yapmak için kullanılabilir. İşledikten sonra `soup` döndürmelidir."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:6
+msgid ""
+"A `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`__"
+"  instance containing the downloaded :term:`HTML`."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:7
+msgid "True if this is the first page of an article."
+msgstr "Bu sayfa makalenin ilk sayfasıysa True."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.preprocess_html:1
+msgid ""
+"This method is called with the source of each downloaded :term:`HTML` file, "
+"before it is parsed for links and images. It is called after the cleanup as "
+"specified by remove_tags etc. It can be used to do arbitrarily powerful pre-"
+"processing on the :term:`HTML`. It should return `soup` after processing it."
+msgstr "Bu metod indirilen her bir :term:`HTML` dosyası kaynağı ile, bağlantılar ve resimler için ayrıştırılmadan önce çağrılır. remote_tags vs. de tanımlandığı gibi temizlik yapıldıktan sonra çağrılır. :term:`HTML` üzerinde keyfi, güçlü işleme öncesi işlemler yapmak için kullanılabilir. İşlemden sonra `soup` döndürmelidir."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.preprocess_html:7
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.skip_ad_pages:8
+msgid ""
+"`soup`: A `BeautifulSoup "
+"<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`__ instance "
+"containing the downloaded :term:`HTML`."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.preprocess_image:1
+msgid ""
+"Perform some processing on downloaded image data. This is called on the raw "
+"data before any resizing is done. Must return the processed raw data. Return"
+" None to skip the image."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:1
+msgid ""
+"This method is called with the source of each downloaded :term:`HTML` file, "
+"before it is parsed into an object tree. raw_html is a unicode string "
+"representing the raw HTML downloaded from the web. url is the URL from which"
+" the HTML was downloaded."
+msgstr "Bu metod indirilen her bir :term:`HTML` dosyası kaynağı ile, bir nesne ağacına ayrıştırılmadan önce çağrılır. raw_html web'den indirilen ham HTML'nin evrensel kodda karakter dizisi temsilidir. url HTML'nin indirildiği URL'dir."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:6
+msgid "Note that this method acts *before* preprocess_regexps."
+msgstr "Bu metodun preprocess_regexps'den *önce* hareket ettiğini unutmayın."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:8
+msgid "This method must return the processed raw_html as a unicode object."
+msgstr "Bu metod işlenmiş raw_html'yi evrensel kod nesnesi olarak döndürmelidir."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.print_version:1
+msgid ""
+"Take a `url` pointing to the webpage with article content and return the "
+":term:`URL` pointing to the print version of the article. By default does "
+"nothing. For example::"
+msgstr "Makale içeriği olan bir web sayfasını gösteren `url`yi al ve makalenin yazdırma sürümünü gösteren bir :term:`URL` döndür. Varsayılan olarak hiçbir şey yapmaz. Örneğin::"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.publication_date:1
+msgid ""
+"Use this method to set the date when this issue was published. Defaults to "
+"the moment of download. Must return a :class:`datetime.datetime` object."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.skip_ad_pages:1
+msgid ""
+"This method is called with the source of each downloaded :term:`HTML` file, "
+"before any of the cleanup attributes like remove_tags, keep_only_tags are "
+"applied. Note that preprocess_regexps will have already been applied. It is "
+"meant to allow the recipe to skip ad pages. If the soup represents an ad "
+"page, return the HTML of the real page. Otherwise return None."
+msgstr "Bu metod indirilen her :term:`HTML` dosyasının kaynağı ile, remove_tags, keep_only_tags gibi herhangi bir temizlik özniteliği uygulanmadan önce çağrılır. preprocess_regexps'in zaten uygulanmış olacağını unutmayın. Reçetenin reklam sayfalarını atlamasına olanak tanımak için düşünülmüştür. Eğer soup bir reklam sayfasını temsil ederse, gerçek sayfanın HTML'sini döndür. Aksi halde None döndür."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.sort_index_by:1
+msgid ""
+"Convenience method to sort the titles in `index` according to `weights`. "
+"`index` is sorted in place. Returns `index`."
+msgstr "`index`deki başlıkları `weights`e göre sıralamaya yarayan kolaylık sağlayıcı metod. `index` yerinde sıralanır. `index` döndürür."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.sort_index_by:4
+msgid "`index`: A list of titles."
+msgstr "`index`: Başlık listesi."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.sort_index_by:6
+msgid ""
+"`weights`: A dictionary that maps weights to titles. If any titles in index "
+"are not in weights, they are assumed to have a weight of 0."
+msgstr "`weights`: Ağırlıkları başlığa haritalayan bir sözlük. Index'deki herhangi bir başlık ağırlıklı olmazsa, 0 ağırlıklı olduğu varsayılır."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:1
+msgid ""
+"Convenience method to take a `BeautifulSoup "
+"<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag` and "
+"extract the text from it recursively, including any CDATA sections and alt "
+"tag attributes. Return a possibly empty Unicode string."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:6
+msgid ""
+"`use_alt`: If `True` try to use the alt attribute for tags that don't have "
+"any textual content"
+msgstr "`use_alt`: `True` ise metinsel içeriği olmayan etiketler için alt öznitelik kullanmaya çalış"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:9
+msgid ""
+"`tag`: `BeautifulSoup "
+"<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag`"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.articles_are_obfuscated:1
+msgid ""
+"Set to True and implement :meth:`get_obfuscated_article` to handle websites "
+"that try to make it difficult to scrape content."
+msgstr "İçerik almasını zorlaştıran web sitelerini işlemek için True olarak ayarlayın ve :meth:`get_obfuscated_article` metodunu uygulayın."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.auto_cleanup:1
+msgid ""
+"Automatically extract all the text from downloaded article pages. Uses the "
+"algorithms from the readability project. Setting this to True, means that "
+"you do not have to worry about cleaning up the downloaded HTML manually "
+"(though manual cleanup will always be superior)."
+msgstr "İndirilmiş makale sayfalarından tüm metni otomatik olarak çıkart. Okunabilirlik projesinden algoritmalar kullanır. True olarak ayarlamak, indirilmiş HTML'yi temizlemekle elle uğraşmanıza gerek olmadığı anlamına gelir (Elle temizlik daha üstündür tabi)."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.auto_cleanup_keep:1
+msgid ""
+"Specify elements that the auto cleanup algorithm should never remove. The "
+"syntax is a XPath expression. For example::"
+msgstr "Otomatik temizleme algoritmasının asla kaldırmaması gereken öğeleri belirtin. Söz dizim XPath ifadesidir. Örneğin::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.center_navbar:1
+msgid ""
+"If True the navigation bar is center aligned, otherwise it is left aligned"
+msgstr "True ise gezinti çubuğu ortada hizalanır, yoksa sola hizalanır"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images:1
+msgid ""
+"Set this to False to ignore all scaling and compression parameters and pass "
+"images through unmodified. If True and the other compression parameters are "
+"left at their default values, JPEG images will be scaled to fit in the "
+"screen dimensions set by the output profile and compressed to size at most "
+"(w * h)/16 where w x h are the scaled image dimensions."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images_auto_size:1
+msgid ""
+"The factor used when auto compressing JPEG images. If set to None, auto "
+"compression is disabled. Otherwise, the images will be reduced in size to (w"
+" * h)/compress_news_images_auto_size bytes if possible by reducing the "
+"quality level, where w x h are the image dimensions in pixels. The minimum "
+"JPEG quality will be 5/100 so it is possible this constraint will not be "
+"met.  This parameter can be overridden by the parameter "
+"compress_news_images_max_size which provides a fixed maximum size for "
+"images. Note that if you enable scale_news_images_to_device then the image "
+"will first be scaled and then its quality lowered until its size is less "
+"than (w * h)/factor where w and h are now the *scaled* image dimensions. In "
+"other words, this compression happens after scaling."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images_max_size:1
+msgid ""
+"Set JPEG quality so images do not exceed the size given (in KBytes). If set,"
+" this parameter overrides auto compression via "
+"compress_news_images_auto_size. The minimum JPEG quality will be 5/100 so it"
+" is possible this constraint will not be met."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.conversion_options:1
+msgid ""
+"Recipe specific options to control the conversion of the downloaded content "
+"into an e-book. These will override any user or plugin specified values, so "
+"only use if absolutely necessary. For example::"
+msgstr "İndirilen içeriğin e-kitaba dönüştürülmesini kontrol eden reçeteye özel seçenekler. Bunlar kullanıcı veya eklentiye özel ayarları ezecektir, bu yüzden yalnızca gerekliyse kullanın. Örneğin::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.cover_margins:1
+msgid ""
+"By default, the cover image returned by get_cover_url() will be used as the "
+"cover for the periodical.  Overriding this in your recipe instructs calibre "
+"to render the downloaded cover into a frame whose width and height are "
+"expressed as a percentage of the downloaded cover. cover_margins = (10, 15, "
+"'#ffffff') pads the cover with a white margin 10px on the left and right, "
+"15px on the top and bottom. Color names are defined `here "
+"<https://www.imagemagick.org/script/color.php>`_. Note that for some reason,"
+" white does not always work in Windows. Use #ffffff instead"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.delay:1
+msgid ""
+"Delay between consecutive downloads in seconds. The argument may be a "
+"floating point number to indicate a more precise time."
+msgstr "Saniye cinsinden ardışık indirmeler arası gecime. Daha hassas bir zaman için değişken ondalık sayı olarak yazılabilir."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.description:1
+msgid ""
+"A couple of lines that describe the content this recipe downloads. This will"
+" be used primarily in a GUI that presents a list of recipes."
+msgstr "Bu reçetenin indirdiği içeriği tanımlayan bir kaç satır. Bu daha çok reçete listesini sunan GUI'de kullanılacaktır."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.encoding:1
+msgid ""
+"Specify an override encoding for sites that have an incorrect charset "
+"specification. The most common being specifying ``latin1`` and using "
+"``cp1252``. If None, try to detect the encoding. If it is a callable, the "
+"callable is called with two arguments: The recipe object and the source to "
+"be decoded. It must return the decoded source."
+msgstr "Hatalı karakter seti tanımlamasına sahip sitelerde kullanılmak üzere bir karakter kodlaması belirleyin. En sık kullanılan ``latin1`` ve ``cp1252`` dir. None ise, kodlama tahmin edilmeye çalışılır. Eğer çağrılabilirse, iki bağımsız değişken ile çağrılır: Reçete nesnesi ve kodu çözülecek kaynak. Kodu çözülmüş kaynağı döndürmelidir."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.extra_css:1
+msgid ""
+"Specify any extra :term:`CSS` that should be added to downloaded "
+":term:`HTML` files. It will be inserted into `<style>` tags, just before the"
+" closing `</head>` tag thereby overriding all :term:`CSS` except that which "
+"is declared using the style attribute on individual :term:`HTML` tags. Note "
+"that if you want to programmatically generate the extra_css override the "
+":meth:`get_extra_css()` method instead. For example::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.feeds:1
+msgid ""
+"List of feeds to download. Can be either ``[url1, url2, ...]`` or "
+"``[('title1', url1), ('title2', url2),...]``"
+msgstr "İndirilecek besleme listesi. ``[url1, url2, ...]`` veya ``[('title1', url1), ('title2', url2),...]`` olabilir"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.filter_regexps:1
+msgid ""
+"List of regular expressions that determines which links to ignore. If empty "
+"it is ignored. Used only if is_link_wanted is not implemented. For example::"
+msgstr "Hangi bağlantıların göz ardı edileceğine karar veren düzenli ifade listesi. Boşsa göz ardı edilir. Yalnızca is_link_wanted uygulanmamışsa kullanılır. Örneğin::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.filter_regexps:7
+msgid "will remove all URLs that have `ads.doubleclick.net` in them."
+msgstr "içinde `ads.doubleclick.net` olan tüm URL'leri kaldırır."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.filter_regexps:9
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.match_regexps:9
+msgid ""
+"Only one of :attr:`BasicNewsRecipe.match_regexps` or "
+":attr:`BasicNewsRecipe.filter_regexps` should be defined."
+msgstr ":attr:`BasicNewsRecipe.match_regexps` veya :attr:`BasicNewsRecipe.filter_regexps` den yalnızca biri tanımlanmalıdır."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.handle_gzip:1
+msgid ""
+"Set to False if you dont want to use gzipped transfers. Note that some old "
+"servers flake out with gzip"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:1
+msgid ""
+"Ignore duplicates of articles that are present in more than one section. A "
+"duplicate article is an article that has the same title and/or URL. To "
+"ignore articles with the same title, set this to::"
+msgstr "Bir kısımdan fazla yerde olan makalelerin kopyalarını göz ardı et. Kopya makale, aynı başlık ve/veya URL'ye sahip makaledir. Aynı başlıktaki makaleleri göz ardı etmek için, şu şekilde ayarlayın::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:7
+msgid "To use URLs instead, set it to::"
+msgstr "URL'ler kullanmak için, şöyle ayarlayın::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:11
+msgid "To match on title or URL, set it to::"
+msgstr "Başlık veya URL eşleştirme için, şu şekilde ayarlayın::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.keep_only_tags:1
+msgid ""
+"Keep only the specified tags and their children. For the format for "
+"specifying a tag see :attr:`BasicNewsRecipe.remove_tags`. If this list is "
+"not empty, then the `<body>` tag will be emptied and re-filled with the tags"
+" that match the entries in this list. For example::"
+msgstr "Yalnızca belirtilen etiketleri ve onların alt etiketlerini sakla. Bir etiketi belirtme formatı için bakınız  :attr:`BasicNewsRecipe.remove_tags`. Bu liste boş değilse, `<body>` etiketi boşaltılır ve bu listedeki girdilerle eşleşen etiketlerle tekrar doldurulur. Örneğin::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.keep_only_tags:8
+msgid ""
+"will keep only tags that have an `id` attribute of `\"content\"` or "
+"`\"heading\"`."
+msgstr "yalnızca `\"content\"` veya `\"heading\"`in `id` özniteliği olan etiketleri tutar."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.language:1
+msgid ""
+"The language that the news is in. Must be an ISO-639 code either two or "
+"three characters long"
+msgstr "Haberlerin dili. İki veya üç karakter uzunluğunda ISO-639 kodu olmalıdır"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.masthead_url:1
+msgid ""
+"By default, calibre will use a default image for the masthead (Kindle only)."
+" Override this in your recipe to provide a url to use as a masthead."
+msgstr "Ön tanımlı olarak, calibre kolombir için varsayılan bir resim kullanacaktır (Yalnızca Kindle'da). Reçetenizde bunu ezmek için kolombir olarak kullanılacak bir url sağlayın."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.match_regexps:1
+msgid ""
+"List of regular expressions that determines which links to follow. If empty,"
+" it is ignored. Used only if is_link_wanted is not implemented. For "
+"example::"
+msgstr "Hangi bağlantıların takip edileceğini belirten düzenli ifade listesi. Boşsa, göz ardı edilir. Yalnızca is_link_wanted uygulanmamışsa kullanılır. Örneğin::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.match_regexps:7
+msgid "will match all URLs that have `page=some number` in them."
+msgstr "içinde `page=some number` olan tüm URL'lerle eşleşir."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.max_articles_per_feed:1
+msgid ""
+"Maximum number of articles to download from each feed. This is primarily "
+"useful for feeds that don't have article dates. For most feeds, you should "
+"use :attr:`BasicNewsRecipe.oldest_article`"
+msgstr "Her beslemeden indirilecek azami makale sayısı. Makale tarihleri olmayan beslemeler için özellikle faydalıdır. Çoğu besleme için :attr:`BasicNewsRecipe.oldest_article` kullanmalısınız"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.needs_subscription:1
+msgid ""
+"If True the GUI will ask the user for a username and password to use while "
+"downloading. If set to \"optional\" the use of a username and password "
+"becomes optional"
+msgstr "True is GUI indirme sırasında kullanıcı ve parola sorar. \"isteğe bağlı\" olarak ayarlanmışsa kullanıcı adı ve parola isteğe bağlıdır"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.no_stylesheets:1
+msgid ""
+"Convenient flag to disable loading of stylesheets for websites that have "
+"overly complex stylesheets unsuitable for conversion to e-book formats. If "
+"True stylesheets are not downloaded and processed"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.oldest_article:1
+msgid "Oldest article to download from this news source. In days."
+msgstr "Bu haber kaynağından indirilecek en eski makale. Gün olarak."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.preprocess_regexps:1
+msgid ""
+"List of :term:`regexp` substitution rules to run on the downloaded "
+":term:`HTML`. Each element of the list should be a two element tuple. The "
+"first element of the tuple should be a compiled regular expression and the "
+"second a callable that takes a single match object and returns a string to "
+"replace the match. For example::"
+msgstr "İndirilen :term:`HTML` üzerince çalıştırılacak :term:`regexp` yer değiştirme kuralları listesi. Listenin her elemanı iki elemanlı bir demet olmalıdır. İlk eleman derlenmiş bir düzenli ifade, ikincisi tek bir eşleşme nesnesi alan ve eşleşmeyle yer değişecek karakter dizisi döndüren bir çağrılabilir olmalıdır. Örneğin::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.preprocess_regexps:12
+msgid "will remove everything from `<!--Article ends here-->` to `</body>`."
+msgstr "`<!--Article ends here-->` ve `</body>` arasındaki herşeyi kaldırır."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.publication_type:1
+msgid ""
+"Publication type Set to newspaper, magazine or blog. If set to None, no "
+"publication type metadata will be written to the opf file."
+msgstr "Yayın biçimi gazete, magazin veya blok olarak ayarlanır. None olarak ayarlanırsa, opf dosyasına yayın biçimi metadata'sı yazılmaz."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.recipe_disabled:1
+msgid ""
+"Set to a non empty string to disable this recipe. The string will be used as"
+" the disabled message"
+msgstr "Bu reçeteyi kapatmak için boş olmayan bir karakter dizisi olarak ayarlayın. Karakter dizisi kapatma iletisi olarak kullanılacaktır"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.recursions:1
+msgid "Number of levels of links to follow on article webpages"
+msgstr "Makale web sitelerinde takip edilecek bağlantı seviyesi sayısı"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_attributes:1
+msgid "List of attributes to remove from all tags. For example::"
+msgstr "Tüm etiketlerden kaldırılacak öznitelik listesi. Örneğin::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_empty_feeds:1
+msgid ""
+"If True empty feeds are removed from the output. This option has no effect "
+"if parse_index is overridden in the sub class. It is meant only for recipes "
+"that return a list of feeds using `feeds` or :meth:`get_feeds`. It is also "
+"used if you use the ignore_duplicate_articles option."
+msgstr "True ise boş beslemeler çıktıdan kaldırılır. parse_index alt sınıfta ezilmişse bu seçeneğin hiçbir etkisi yoktur. Yalnızca `feeds` veya :meth:`get_feeds` kullanarak bir besleme listesi döndüren reçeteler içindir. Ayrıca ignore_duplicate_articles seçeneğini kullanırsanız da kullanılır."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_javascript:1
+msgid "Convenient flag to strip all JavaScript tags from the downloaded HTML"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_tags:1
+msgid ""
+"List of tags to be removed. Specified tags are removed from downloaded HTML."
+" A tag is specified as a dictionary of the form::"
+msgstr "Kaldırılacak etiket listesi. Belirtilen etiketler indirilen HTML'den çıkarılır. Bir etiket şu biçimdeki sözlük olarak tanımlanır::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_tags:9
+msgid ""
+"All keys are optional. For a full explanation of the search criteria, see "
+"`Beautiful Soup "
+"<https://www.crummy.com/software/BeautifulSoup/bs4/doc/#searching-the-"
+"tree>`__ A common example::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_tags:15
+msgid ""
+"This will remove all `<div class=\"advert\">` tags and all their children "
+"from the downloaded :term:`HTML`."
+msgstr "Bu tüm `<div class=\"advert\">` etiketlerini ve alt etiketlerini indirilen :term:`HTML`den çıkarır."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_after:1
+msgid ""
+"Remove all tags that occur after the specified tag. For the format for "
+"specifying a tag see :attr:`BasicNewsRecipe.remove_tags`. For example::"
+msgstr "Belirtilen etiketten sonra gelen tüm etiketleri kaldır. Bir etiketi belirtme biçimi için bakınız :attr:`BasicNewsRecipe.remove_tags`. Örneğin::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_after:7
+msgid "will remove all tags after the first element with `id=\"content\"`."
+msgstr "`id=\"content\"` e sahip ilk elemandan sonraki tüm etiketleri kaldırır."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_before:1
+msgid ""
+"Remove all tags that occur before the specified tag. For the format for "
+"specifying a tag see :attr:`BasicNewsRecipe.remove_tags`. For example::"
+msgstr "Belirtilen etiketten önce gelen tüm etiketleri kaldır. Bir etiketi belirtme biçimi için bakınız :attr:`BasicNewsRecipe.remove_tags`. Örneğin::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_before:7
+msgid "will remove all tags before the first element with `id=\"content\"`."
+msgstr "`id=\"content\"` e sahip ilk elemandan önceki tüm etiketleri kaldırır."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.requires_version:1
+msgid "Minimum calibre version needed to use this recipe"
+msgstr "Bu reçeteyi kullanabilmek için gerekli asgari calibre sürümü"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.resolve_internal_links:1
+msgid ""
+"If set to True then links in downloaded articles that point to other "
+"downloaded articles are changed to point to the downloaded copy of the "
+"article rather than its original web URL. If you set this to True, you might"
+" also need to implement :meth:`canonicalize_internal_url` to work with the "
+"URL scheme of your particular website."
+msgstr "Doğru olarak ayarlanmışsa indirilen makalelerdeki diğer indirilen makaleleri gösteren bağlantılar makalenin asıl web URL'si yerine indirilen kopyasını gösterecek şekilde değiştirilir. Bu seçeneği Doğru olarak ayarlarsanız, ayrıca web sitenizin URL şablonuyla çalışması için :meth:`canonicalize_internal_url` gerçekleştirmeniz de gerekebilir."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.reverse_article_order:1
+msgid "Reverse the order of articles in each feed"
+msgstr "Her beslemedeki makalelerin sırasını tersine çevir"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.scale_news_images:1
+msgid ""
+"Maximum dimensions (w,h) to scale images to. If scale_news_images_to_device "
+"is True this is set to the device screen dimensions set by the output "
+"profile unless there is no profile set, in which case it is left at whatever"
+" value it has been assigned (default None)."
+msgstr "Resimlerin ölçeklendirileceği azamı boyut (w,h). scale_news_images_to_device True ise çıktı profilinde ayarlanan aygıt ekran boyutuna ayarlanır, profilin ayarlanmadığı durumlarda hangi değer atanmışsa o bırakılır (varsayılan None)."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.scale_news_images_to_device:1
+msgid ""
+"Rescale images to fit in the device screen dimensions set by the output "
+"profile. Ignored if no output profile is set."
+msgstr "Resmi çıktı profilinde ayarlanmış aygıt ekran boyutlarına sığması için ölçeklendir. Çıktı profili ayarlanmamışsa göz ardı edilir."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.simultaneous_downloads:1
+msgid ""
+"Number of simultaneous downloads. Set to 1 if the server is picky. "
+"Automatically reduced to 1 if :attr:`BasicNewsRecipe.delay` > 0"
+msgstr "Eş zamanlı indirme sayısı. Sunucu titizse 1 olarak ayarlanır. :attr:`BasicNewsRecipe.delay` > 0 ise otomatik olarak 1'e düşürülür"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.summary_length:1
+msgid "Max number of characters in the short description"
+msgstr "Kısa tanımlamadaki azami karakter sayısı"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.template_css:1
+msgid ""
+"The CSS that is used to style the templates, i.e., the navigation bars and "
+"the Tables of Contents. Rather than overriding this variable, you should use"
+" `extra_css` in your recipe to customize look and feel."
+msgstr "Şablonları biçimlendirmek için kullanılan CSS, ör., gezinti çubukları ve İçindekiler. Bu değişkeni ezmek yerine, doku ve görünümü özelleştirmek için reçetenizde `extra_css` kullanmalısınız."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.timefmt:1
+msgid ""
+"The format string for the date shown on the first page. By default: "
+"Day_Name, Day_Number Month_Name Year"
+msgstr "İlk sayfada gösterilen tarih için biçim karakter dizisi. Varsayılanı: Gün_Adı, Gün_Numarası Ay_Adı Yıl"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.timeout:1
+msgid "Timeout for fetching files from server in seconds"
+msgstr "Sunucudan dosyaları indirirken kullanılacak saniye cinsinden zaman aşımı"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.title:1
+msgid "The title to use for the e-book"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.use_embedded_content:1
+msgid ""
+"Normally we try to guess if a feed has full articles embedded in it based on"
+" the length of the embedded content. If `None`, then the default guessing is"
+" used. If `True` then the we always assume the feeds has embedded content "
+"and if `False` we always assume the feed does not have embedded content."
+msgstr "Normalde bir beslemede tüm makalenin gömülü olup olmadığını gömülü içeriğin uzunluğuna bakarak tahmin etmeye çalışırız. `None` ise, varsayılan tahmin kullanılır. `True` ise beslemelerin gömülü içeriği olduğunu, `False` ise beslemenin gömülü içeriği olmadığını var sayarız."

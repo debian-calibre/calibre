@@ -1,0 +1,1538 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# 
+# Translators:
+# efef6ec5b435a041fce803c7f8af77d2_2341d43, 2020
+# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2022
+# Jonatan Nyberg <jonatan@autistici.org>, 2018-2021
+# efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017-2018
+# efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017
+# Merarom <merarom@yahoo.es>, 2014-2016
+# Sebastian Rasmussen <sebras@gmail.com>, 2018
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-09-15 08:35+0000\n"
+"PO-Revision-Date: 2014-06-17 08:34+0000\n"
+"Last-Translator: Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2022\n"
+"Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:4
+msgid "E-book conversion"
+msgstr "Konvertering av e-bok"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:6
+msgid ""
+"calibre has a conversion system that is designed to be very easy to use. "
+"Normally, you just add a book to calibre, click convert and calibre will try"
+" hard to generate output that is as close as possible to the input. However,"
+" calibre accepts a very large number of input formats, not all of which are "
+"as suitable as others for conversion to e-books. In the case of such input "
+"formats, or if you just want greater control over the conversion system, "
+"calibre has a lot of options to fine tune the conversion process. Note "
+"however that calibre's conversion system is not a substitute for a full "
+"blown e-book editor. To edit e-books, I recommend first converting them to "
+"EPUB or AZW3 using calibre and then using the :guilabel:`Edit book` feature "
+"to get them into perfect shape. You can then use the edited e-book as input "
+"for conversion into other formats in calibre."
+msgstr "calibre har ett konverteringssystem som är utmatningsformat för att vara mycket lätt att använda. Normalt lägger du bara till en bok till calibre, klicka på konvertera och calibre kommer att försöka skapa utmatning som är så nära inmatningen som möjligt. calibre accepterar dock ett mycket stort antal inmatningsformat, som inte alla som är lika lämpliga som andra för konvertering till e-böcker. När det gäller sådana inmatningsformat, eller om du bara vill ha större kontroll över konverteringssystemet, har calibre en hel del alternativ för att finjustera konverteringen. Observera dock att calibres konverteringssystem inte är en ersättning för en komplett e-bokredigerare. För att redigera e-böcker rekommenderar jag att du först konverterar dem till EPUB eller AZW3 med calibre och sedan använder funktionen :guilabel:`Redigera bok` för att få dem i perfekt form. Du kan sedan använda den redigerade e-boken som inmatning för konvertering till andra format i calibre."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:18
+msgid ""
+"This document will refer mainly to the conversion settings as found in the "
+"conversion dialog, pictured below. All these settings are also available via"
+" command line interface to conversion, documented at "
+":doc:`generated/en/ebook-convert`. In calibre, you can obtain help on any "
+"individual setting by holding your mouse over it, a tooltip will appear "
+"describing the setting."
+msgstr "Det här dokumentet kommer huvudsakligen att hänvisa till konverteringsinställningarna som finns i konverteringsdialogrutan, på bilden nedan. Alla dessa inställningar är även tillgängliga via kommandoradsgränssnittet för konvertering, dokumenterat i :doc:`generated/sv/ebook-convert`. I calibre kan du få hjälp med vilken enskild inställning som helst genom att hålla muspekaren över den, ett verktygstips kommer att visas som beskriver inställningen."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst-1
+msgid "E-book conversion dialog"
+msgstr "Dialogruta för konvertering av e-bok"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:31
+#: ../../__w/calibre/calibre/manual/conversion.rst:95
+msgid "Contents"
+msgstr "Innehåll"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:36
+msgid "Introduction"
+msgstr "Introduktion"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:38
+msgid "Debug icon"
+msgstr "Felsökningsikon"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:42
+msgid ""
+"The first thing to understand about the conversion system is that it is "
+"designed as a pipeline. Schematically, it looks like this:"
+msgstr "Det första att förstå om konverteringssystemet är att det är utformat som en process. Schematiskt ser det ut så här:"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst-1
+msgid "The conversion pipeline"
+msgstr "Konverteringsprocessen"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:49
+msgid ""
+"The input format is first converted to XHTML by the appropriate *Input "
+"plugin*. This HTML is then *transformed*. In the last step, the processed "
+"XHTML is converted to the specified output format by the appropriate *Output"
+" plugin*. The results of the conversion can vary greatly, based on the input"
+" format. Some formats convert much better than others. A list of the best "
+"source formats for conversion is available :ref:`here <best-source-"
+"formats>`."
+msgstr "Inmatningsformatet konverteras först till XHTML med lämplig *inmatningsinsticksmodul*. Denna HTML *omvandlas* I det sista steget konverteras den bearbetade XHTML-en till det angivna utmatningsformatet med lämplig *utmatningsinsticksmodul*. Resultaten av konverteringen kan variera kraftigt, beroende på inmatningsformatet. Vissa format konverteras mycket bättre än andra. En lista med de bästa källformaten för konvertering finns :ref:`här <best-source-formats>`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:56
+msgid ""
+"The transforms that act on the XHTML output are where all the work happens. "
+"There are various transforms, for example, to insert book metadata as a page"
+" at the start of the book, to detect chapter headings and automatically "
+"create a Table of Contents, to proportionally adjust font sizes, et cetera. "
+"It is important to remember that all the transforms act on the XHTML output "
+"by the *Input plugin*, not on the input file itself. So, for example, if you"
+" ask calibre to convert an RTF file to EPUB, it will first be converted to "
+"XHTML internally, the various transforms will be applied to the XHTML and "
+"then the *Output plugin* will create the EPUB file, automatically generating"
+" all metadata, Table of Contents, et cetera."
+msgstr "Omvandlingarna som verkar på XHTML-utmatningen är där allt arbete sker. Det finns olika omvandlingar, till exempel för att infoga bokens metadata som en sida i början av boken, för att upptäcka kapitelrubriker och automatiskt skapa en innehållsförteckning, för att proportionellt justera teckensnittsstorlekar, och så vidare. Det är viktigt att minnas att alla omvandlingar verkar på XHTML-utmatning av *inmatningsinsticksmodulen*, inte på själva inmatningsfilen. Så, till exempel, om du ber calibre att konvertera en RTF-fil till EPUB, kommer den först att konverteras till XHTML internt, de olika omvandlingarna kommer att tillämpas på XHTML och sedan kommer *itmatningsinsticksmodulen* att skapa EPUB-filen, vilket automatiskt skapar alla metadata, innehållsförteckning, och så vidare."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:65
+msgid ""
+"You can see this process in action by using the debug option |dbgi|. Just "
+"specify the path to a folder for the debug output. During conversion, "
+"calibre will place the XHTML generated by the various stages of the "
+"conversion pipeline in different sub-folders. The four sub-folders are:"
+msgstr "Du kan se den här processen i aktion genom att använda felsökningsalternativet |dbgi|. Ange bara sökvägen till en mapp för felsökningsutmatning. Under konverteringen kommer calibre att placera XHTML som skapas av de olika stegen i konverteringsprocessen i olika undermappar. De fyra undermapparna är:"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:70
+msgid "Stages of the conversion pipeline"
+msgstr "Stadier av konverteringsprocessen"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:73
+msgid "Folder"
+msgstr "Mapp"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:73
+msgid "Description"
+msgstr "Beskrivning"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:75
+msgid "input"
+msgstr "inmatning"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:75
+msgid ""
+"This contains the HTML output by the Input plugin. Use this to debug the "
+"Input plugin."
+msgstr "Den innehåller HTML-utmatning från inmatningsinsticksmodulen. Använd detta för att felsöka inmatningsinsticksmodulen."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:76
+msgid "parsed"
+msgstr "analyserad"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:76
+msgid ""
+"The result of pre-processing and converting to XHTML the output from the "
+"Input plugin. Use to debug structure detection."
+msgstr "Resultatet av förbehandling och konvertering till XHTML-utmatning från inmatningsinsticksmodulen. Används för att felsöka strukturdetektering."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:77
+msgid "structure"
+msgstr "struktur"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:77
+msgid ""
+"Post structure detection, but before CSS flattening and font size "
+"conversion. Use to debug font size conversion and CSS transforms."
+msgstr "Efterstrukturell detektering, men innan CSS-utplattning och teckensnittsstorlekskonvertering. Används för att felsöka teckensnittsstorlekskonvertering och CSS-omvandlingar."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:78
+msgid "processed"
+msgstr "bearbetad"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:78
+msgid ""
+"Just before the e-book is passed to the Output plugin. Use to debug the "
+"Output plugin."
+msgstr "Precis innan e-boken passerar till Utmatningsinsticksmodulen. Används för att felsöka Utmatningsinsticksmodulen."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:81
+msgid ""
+"If you want to edit the input document a little before having calibre "
+"convert it, the best thing to do is edit the files in the :file:`input` sub-"
+"folder, then zip it up, and use the ZIP file as the input format for "
+"subsequent conversions. To do this use the :guilabel:`Edit meta information`"
+" dialog to add the ZIP file as a format for the book and then, in the top "
+"left corner of the conversion dialog, select ZIP as the input format."
+msgstr "Om du vill redigera inmatningsdokumentet lite innan calibre konverterar det, är det bästa att göra redigera filerna i :file:`inmatning` undermapp och sedan packa upp och använda ZIP-filen som inmatningsformat för efterföljande konverteringar. För att göra detta använder :guilabel:`Edit meta information` dialogrutan för att lägga ZIP-filen som ett format för boken och sedan, i det övre vänstra hörnet i konverteringsdialogrutan väljer ZIP som inmatningsformat."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:87
+msgid ""
+"This document will deal mainly with the various transforms that operate on "
+"the intermediate XHTML and how to control them. At the end are some tips "
+"specific to each input/output format."
+msgstr "Det här dokumentet kommer huvudsakligen att behandla de olika omvandlingarna som fungerar på mellanliggande XHTML och hur man anpassar dem. I slutet finns några tips som är specifika för varje in-/utmatningsformat."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:91
+msgid "Look & feel"
+msgstr "Utseende & känsla"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:97
+msgid ""
+"This group of options controls various aspects of the look and feel of the "
+"converted e-book."
+msgstr "Denna grupp av alternativ anpassar olika aspekter av utseendet och känslan av den konverterade e-boken."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:102
+msgid "Fonts"
+msgstr "Teckensnitt"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:104
+msgid ""
+"One of the nicest features of the e-reading experience is the ability to "
+"easily adjust font sizes to suit individual needs and lighting conditions. "
+"calibre has sophisticated algorithms to ensure that all the books it outputs"
+" have a consistent font sizes, no matter what font sizes are specified in "
+"the input document."
+msgstr "En av de trevligaste inslagen i e-läsupplevelse är möjligheten att enkelt justera teckensnittsstorlek för att passa individuella behov och ljusförhållanden. calibre har sofistikerade algoritmer för att säkerställa att alla böcker det avger har konsistenta teckensnittsstorlekar, oavsett vilken teckensnittsstorlekar anges i inmatningsdokumentet."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:109
+msgid ""
+"The base font size of a document is the most common font size in that "
+"document, i.e., the size of the bulk of text in that document. When you "
+"specify a :guilabel:`Base font size`, calibre automatically rescales all "
+"font sizes in the document proportionately, so that the most common font "
+"size becomes the specified base font size and other font sizes are rescaled "
+"appropriately. By choosing a larger base font size, you can make the fonts "
+"in the document larger and vice versa. When you set the base font size, for "
+"best results, you should also set the font size key."
+msgstr "Grundteckensnittsstorleken för ett dokument är den vanligaste teckensnittsstorleken i det dokumentet, d.v.s. storleken på den största delen av texten i dokumentet. När du anger en :guilabel:`Grundteckensnittsstorlek`, skalar calibre automatiskt om alla teckensnittsstorlekar i dokumentet proportionellt, så att den vanligaste teckensnittsstorleken blir den angivna grundteckensnittsstorleken och andra teckensnittsstorlekar skalas på lämpligt sätt. Genom att välja en större grundteckensnittsstorlek kan du göra teckensnitten i dokumentet större och vice versa. När du ställer in grundteckensnittsstorleken, för bästa resultat, bör du också ställa in teckensnittsstorleksnyckeln."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:117
+msgid ""
+"Normally, calibre will automatically choose a base font size appropriate to "
+"the output profile you have chosen (see :ref:`page-setup`). However, you can"
+" override this here in case the default is not suitable for you."
+msgstr "Normalt väljer calibre automatiskt en grundteckensnittsstorlek som är lämplig för utmatningsprofilen du har valt (se :ref:`page-setup`). Du kan dock åsidosätta detta här om standardvärdet inte är lämplig för dig."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:121
+msgid ""
+"The :guilabel:`Font size key` option lets you control how non-base font "
+"sizes are rescaled. The font rescaling algorithm works using a font size "
+"key, which is simply a comma-separated list of font sizes. The font size key"
+" tells calibre how many \"steps\" bigger or smaller a given font size should"
+" be compared to the base font size. The idea is that there should be a "
+"limited number of font sizes in a document. For example, one size for the "
+"body text, a couple of sizes for different levels of headings and a couple "
+"of sizes for super/sub scripts and footnotes. The font size key allows "
+"calibre to compartmentalize the font sizes in the input documents into "
+"separate \"bins\" corresponding to the different logical font sizes."
+msgstr "Med alternativet :guilabel:`Teckensnittsstorleksnyckel` kan du anpassa hur icke-grundteckensnittsstorlekar skalas om. Teckensnittets omskalningsalgoritm fungerar med hjälp av en teckensnittsstorleksnyckel, vilket helt enkelt är en kommaseparerad lista över teckensnittsstorlekar. Teckensnittsstorleksnyckel anger för calibre hur många \"steg\" större eller mindre en given teckensnittsstorlek bör jämföras med grundteckensnittsstorleken. Tanken är att det ska finnas ett begränsat antal teckensnittsstorlekar i ett dokument. Till exempel en storlek för huvudtext, ett par storlekar för olika nivåer av rubriker och ett par storlekar för upphöjd/nersänkt  teckensnitt och fotnoter. Teckensnittsstorleksnyckeln tillåter calibre att dela upp de teckensnittsstorlekar i inmatningsdokumenten i separata \"fack\" som motsvarar de olika logiska teckensnittsstorlekarna."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:130
+msgid ""
+"Let's illustrate with an example. Suppose the source document we are "
+"converting was produced by someone with excellent eyesight and has a base "
+"font size of 8pt. That means the bulk of the text in the document is sized "
+"at 8pts, while headings are somewhat larger (say 10 and 12pt) and footnotes "
+"somewhat smaller at 6pt. Now if we use the following settings::"
+msgstr "Låt oss illustrera med ett exempel. Antag att källdokumentet vi konverterar producerades av någon med utmärkt syn och har en grundteckensnittsstorlek på 8 punkter. Det innebär att huvuddelen av texten i dokumentet är dimensionerad för 8 punkter medan rubriker är något större (säg 10 och 12 punkter) och fotnoter något mindre på 6 punkter. Nu om vi använder följande inställningar::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:139
+msgid ""
+"The output document will have a base font size of 12pt, headings of 14 and "
+"16pt and footnotes of 8pt. Now suppose we want to make the largest heading "
+"size stand out more and make the footnotes a little larger as well. To "
+"achieve this, the font key should be changed to::"
+msgstr "Utmatningsdokumentet kommer att ha en grundteckensnittsstorlek på 12 punkter, rubrikerna 14 och 16 punkter och fotnoter 8 punkter. Anta nu att vi vill göra att den största rubrikstorleken sticker ut mer och göra fotnoter lite större också. För att uppnå detta bör teckensnittsnyckeln ändras till::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:145
+msgid ""
+"The largest headings will now become 18pt, while the footnotes will become "
+"9pt. You can play with these settings to try and figure out what would be "
+"optimum for you by using the font rescaling wizard, which can be accessed by"
+" clicking the little button next to the :guilabel:`Font size key` setting."
+msgstr "De största rubrikerna blir nu 18 punkter, medan sidnoter blir 9 punkter. Du kan spela med dessa inställningar för att försöka lista ut vad som skulle vara optimalt för dig med hjälp av tecken omskalningsguiden som kan nås genom att klicka på den lilla knappen bredvid :guilabel:`Teckensnittsstorleksnyckel`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:150
+msgid ""
+"All the font size rescaling in the conversion can also be disabled here, if "
+"you would like to preserve the font sizes in the input document."
+msgstr "Alla omskalningar av teckensnittsstorleken i konverteringen kan även stängas av här, om du vill bevara teckensnittsstorlekar i inmatningsdokumentet."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:153
+msgid ""
+"A related setting is :guilabel:`Line height`. Line height controls the "
+"vertical height of lines. By default, (a line height of 0), no manipulation "
+"of line heights is performed. If you specify a non-default value, line "
+"heights will be set in all locations that don't specify their own line "
+"heights. However, this is something of a blunt weapon and should be used "
+"sparingly. If you want to adjust the line heights for some section of the "
+"input, it's better to use the :ref:`Extra CSS <extra-css>`."
+msgstr "En relaterad inställning är :guilabel:`Radavstånd`. Radavstånd styr den vertikala höjden på raderna. Som standard utför (ett radavstånd av 0) ingen manipulation av radavstånd. Om du anger ett icke-standardvärde, kommer radavstånd ställas in på alla platser som inte anger sina egna radavstånd. Det här är dock något av ett trubbigt vapen och bör användas sparsamt. Om du vill justera radavstånd för vissa avsnitt av inmatning, är det bättre att använda :ref:`Extra CSS <extra-css>`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:160
+msgid ""
+"In this section you can also tell calibre to embed any referenced fonts into"
+" the book. This will allow the fonts to work on reader devices even if they "
+"are not available on the device."
+msgstr "I det här avsnittet kan du också berätta för calibre att bädda in några refererade teckensnitt i boken. Detta gör det möjligt för teckensnitten att fungera på läsarenheter, även om de inte är tillgängliga på enheten."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:165
+msgid "Text"
+msgstr "Text"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:167
+msgid ""
+"Text can be either justified or not. Justified text has extra spaces between"
+" words to give a smooth right margin. Some people prefer justified text, "
+"others do not. Normally, calibre will preserve the justification in the "
+"original document. If you want to override it you can use the "
+":guilabel:`Text justification` option in this section."
+msgstr "Text kan antingen justeras eller inte. Justerad text har extra blanksteg mellan ord för att ge en jämn högermarginal. Vissa människor föredrar justerad text, andra gör det inte. Normalt kommer calibre bevara justeringen i originaldokuemtet. Om du vill åsidosätta det kan du använda alternativet :guilabel:`Textjustering` i det här avsnittet."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:173
+msgid ""
+"You can also tell calibre to :guilabel:`Smarten punctuation` which will "
+"replace plain quotes, dashes and ellipses with their typographically correct"
+" alternatives. Note that this algorithm is not perfect so it is worth "
+"reviewing the results. The reverse, namely, :guilabel:`Unsmarted "
+"punctuation` is also available."
+msgstr "Du kan också be calibre att :guilabel:`Förbättra skiljeteckenhantering` vilket kommer att ersätta vanliga citattecken, bindestreck och ellipser med deras typografiskt korrekta alternativ. Observera att den här algoritmen inte är perfekt så det är värt att granska resultaten. Det omvända, :guilabel:`Avförbättra skiljeteckenhantering`, är också tillänglig."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:178
+msgid ""
+"Finally, there is :guilabel:`Input character encoding`.  Older documents "
+"sometimes don't specify their character encoding. When converted, this can "
+"result in non-English characters or special characters like smart quotes "
+"being corrupted.  calibre tries to auto-detect the character encoding of the"
+" source document, but it does not always succeed. You can force it to assume"
+" a particular character encoding by using this setting.  `cp1252` is a "
+"common encoding for documents produced using Windows software. You should "
+"also read :ref:`char-encoding-faq` for more on encoding issues."
+msgstr "Slutligen finns det :guilabel:`Inmatningsteckenkodning`. Äldre dokument anger ibland inte deras teckenkodning. Vid konvertering kan detta leda till att icke-engelska tecken eller specialtecken som typografiska citattecken skadas. calibre försöker att automatiskt upptäcka källdokumentets teckenkodning, men det lyckas inte alltid. Du kan tvinga den att anta en viss teckenkodning med den här inställningen. `cp1252` är en vanlig kodning för dokument som produceras med Windows-programvara. Du bör också läsa :ref:`char-encoding-faq` för mer om kodningsfrågor."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:188
+msgid "Layout"
+msgstr "Layout"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:190
+msgid ""
+"Normally, paragraphs in XHTML are rendered with a blank line between them "
+"and no leading text indent. calibre has a couple of options to control this."
+" :guilabel:`Remove spacing between paragraphs` forcefully ensure that all "
+"paragraphs have no inter paragraph spacing. It also sets the text indent to "
+"1.5em (can be changed) to mark the start of every paragraph. "
+":guilabel:`Insert blank line` does the opposite, guaranteeing that there is "
+"exactly one blank line between each pair of paragraphs. Both these options "
+"are very comprehensive, removing spacing, or inserting it for *all* "
+"paragraphs (technically <p> and <div> tags). This is so that you can just "
+"set the option and be sure that it performs as advertised, irrespective of "
+"how messy the input file is. The one exception is when the input file uses "
+"hard line breaks to implement inter-paragraph spacing."
+msgstr "Normalt återges stycken i XHTML med en blnakrad mellan dem och inget inledande textindrag. calibre har ett par alternativ för att anpassa detta. :guilabel:`Ta bort avstånd mellan stycken` ser till att alla stycken inte har något avstånd mellan stycken. Den ställer också in textindraget till 1.5em (kan ändras) för att markera början på varje stycke. :guilabel:`Infoga tom rad` gör det motsatta och garanterar att det finns exakt en tom rad mellan varje par av stycken. Båda dessa alternativ är mycket omfattande, tar bort avstånd eller infogar det för *alla* stycken (tekniska <p>- och <div>-taggar). Detta är så att du bara kan ställa in alternativet och vara säker på att den fungerar som utlovat, oavsett hur rörig inmatningsfilen är. Det enda undantaget är när inmatningsfilen använder hårda radbrytningar för att implementera avstånd mellan stycken."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:201
+msgid ""
+"If you want to remove the spacing between all paragraphs, except a select "
+"few, don't use these options. Instead add the following CSS code to "
+":ref:`Extra CSS <extra-css>`::"
+msgstr "Om du vill ta bort avstånd mellan alla stycken, förutom några få utvalda, använd inte dessa alternativ. Lägg istället till följande CSS-kod i :ref:`Extra CSS <extra-css>`::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:207
+msgid ""
+"Then, in your source document, mark the paragraphs that need spacing with "
+"`class=\"spacious\"`. If your input document is not in HTML, use the Debug "
+"option, described in the Introduction to get HTML (use the :file:`input` "
+"sub-folder)."
+msgstr "Markera sedan styckena i ditt källdokument som behöver avstånd med `class=\"spacious\"`. Om ditt inmatningsdokument inte är i HTML, använd alternativet Felsökning, som beskrivs i inledningen för att hämta HTML (använd undermappen :file:`input`)."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:211
+msgid ""
+"Another useful options is :guilabel:`Linearize tables`.  Some badly designed"
+" documents use tables to control the layout of text on the page.  When "
+"converted these documents often have text that runs off the page and other "
+"artifacts. This option will extract the content from the tables and present "
+"it in a linear fashion.  Note that this option linearizes *all* tables, so "
+"only use it if you are sure the input document does not use tables for "
+"legitimate purposes, like presenting tabular information."
+msgstr "Ett annat användbart alternativ är :guilabel:`Konvertera data i tabeller till linjära data`.  Vissa dåligt utformade dokument använder tabeller för att anpassa utformningen för texten på sidan.  Vid konvertering har dessa dokument ofta text som går utanför sidan och andra artefakter. Detta alternativ extraherar innehållet från tabellerna och presenterar det linjärt. Observera att det här alternativet linjäriserar *alla* tabeller, så använd det bara om du är säker på att inmatningsdokumentet inte använder tabeller för legitima ändamål, som att presentera tabellinformation."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:220
+msgid "Styling"
+msgstr "Formgivning"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:224
+msgid ""
+"The :guilabel:`Extra CSS` option allows you to specify arbitrary CSS that "
+"will be applied to all HTML files in the input. This CSS is applied with "
+"very high priority and so should override most CSS present in the **input "
+"document** itself. You can use this setting to fine tune the "
+"presentation/layout of your document. For example, if you want all "
+"paragraphs of class `endnote` to be right aligned, just add::"
+msgstr "Alternativet :guilabel:`Extra CSS` låter dig ange godtycklig CSS som kommer att tillämpas på alla HTML-filer i inmatningen. Denna CSS appliceras med mycket hög prioritet och bör åsidosätta de flesta CSS närvarande i själva **inmatningsdokumentet**. Du kan använda denna inställning för att finjustera presentation/utformningen av ditt dokument. Till exempel om du vill att alla stycken i klassen  `slutnotering`  att vara högerställda, lägg bara till::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:233
+msgid "or if you want to change the indentation of all paragraphs::"
+msgstr "eller om du vill ändra indraget för alla stycken::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:237
+msgid ""
+":guilabel:`Extra CSS` is a very powerful option, but you do need an "
+"understanding of how CSS works to use it to its full potential. You can use "
+"the debug pipeline option described above to see what CSS is present in your"
+" input document."
+msgstr ":guilabel:`Extra CSS` är ett mycket kraftfullt alternativ, men du behöver en förståelse för hur CSS fungerar för att använda den till sin fulla potential. Du kan använda alternativet felsök processalternativet som beskrivs ovan för att se vad CSS finns i ditt inmatningsdokument."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:241
+msgid ""
+"A simpler option is to use :guilabel:`Filter style information`. This allows"
+" you to remove all CSS properties of the specified types from the document. "
+"For example, you can use it to remove all colors or fonts."
+msgstr "Ett enklare alternativ är att använda :guilabel:`Filtrera formatinformation`. Det här låter dig ta bort alla CSS-egenskaper för de angivna typerna från dokumentet. Du kan till exempel använda den för att ta bort alla färger eller teckensnitt."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:246
+msgid "Transform styles"
+msgstr "Omvandla format"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:248
+msgid ""
+"This is the most powerful styling related facility. You can use it to define"
+" rules that change styles based on various conditions. For example you can "
+"use it to change all green colors to blue, or remove all bold styling from "
+"the text or color all headings a certain color, etc."
+msgstr "Detta är den mest kraftfulla formatrelaterade bekvämligheten. Du kan använda den för att definiera regler som ändrar format baserat på olika villkor. Till exempel kan du använda den för att ändra alla gröna färger till blåa, eller ta bort alla feta stilar från text eller färga alla rubriker en viss färg, m.m."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:254
+msgid "Transform HTML"
+msgstr "Omvandla HTML"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:256
+msgid ""
+"Similar to transform styles, but allows you to make changes to the HTML "
+"content of the book. You can replace one tag with another, add classes or "
+"other attributes to tags based on their content, etc."
+msgstr "Liknar att omvandla format, men låter dig göra ändringar i HTML-innehållet i boken. Du kan ersätta en tagg med en annan, lägga till klasser eller andra attribut till taggar baserat på deras innehåll, o.s.v."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:265
+msgid "Page setup"
+msgstr "Sidinställning"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:267
+msgid ""
+"The :guilabel:`Page setup` options are for controlling screen layout, like "
+"margins and screen sizes. There are options to setup page margins, which "
+"will be used by the output plugin, if the selected output format supports "
+"page margins. In addition, you should choose an Input profile and an output "
+"profile. Both sets of profiles basically deal with how to interpret "
+"measurements in the input/output documents, screen sizes and default font "
+"rescaling keys."
+msgstr "Alternativen för :guilabel:`sidinställningar` är till för att anpassa skärmutformning, som marginaler och skärmstorlekar. Det finns alternativ till sidmarginalsinställningar, som kommer att användas av utmatning insticksmodulen, om det valda utmatningsformatet stödjer sidmarginaler. Dessutom bör du välja en inmatningsprofil och en utskriftsprofil. Båda uppsättningarna av profiler i princip behandlar hur man ska tolka mått i dokumentets inmatning/utmatning, skärmstorlekar och standardteckensnitts omskalningsnycklar."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:274
+msgid ""
+"If you know that the file you are converting was intended to be used on a "
+"particular device/software platform, choose the corresponding input profile,"
+" otherwise just choose the default input profile. If you know the files you "
+"are producing are meant for a particular device type, choose the "
+"corresponding output profile. Otherwise, choose one of the Generic output "
+"profiles. If you are converting to MOBI or AZW3 then you will almost always "
+"want to choose one of the Kindle output profiles. Otherwise, your best bet "
+"for modern E-book reading devices is to choose the :guilabel:`Generic e-ink "
+"HD` output profile."
+msgstr "Om du vet att filen du konverterar var avsedd att användas på en viss enhet/mjukvaruplattform väljer du motsvarande inmatningsprofil, annars väljer du bara standardinmatningsprofilen. Om du vet att filerna du producerar är avsedda för en viss enhetstyp väljer du motsvarande utmatningsprofil. Annars väljer du en av de generiska utmatningsprofilerna. Om du konverterar till MOBI eller AZW3 vill du nästan alltid välja en av Kindle-utmatningsprofilerna. Annars är det bästa alternativet för moderna e-bokläsenheterna att välja utmatningsprofilen :guilabel:`Generisk e-bläck HD`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:283
+msgid ""
+"The output profile also controls the screen size. This will cause, for "
+"example, images to be auto-resized to be fit to the screen in some output "
+"formats. So choose a profile of a device that has a screen size similar to "
+"your device."
+msgstr "Utmatningsprofilen styr även skärmstorleken. Detta kommer att orsaka, till exempel bilder som automatiskt storleksändras vara tjänliga till skärmen i vissa utmatningsformat. Så välj en profil av en enhet som har en skärmstorlek som liknar din enhet."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:291
+msgid "Heuristic processing"
+msgstr "Heuristisk bearbetning"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:293
+msgid ""
+"Heuristic processing provides a variety of functions which can be used to "
+"try and detect and correct common problems in poorly formatted input "
+"documents.  Use these functions if your input document suffers from poor "
+"formatting. Because these functions rely on common patterns, be aware that "
+"in some cases an option may lead to worse results, so use with care.  As an "
+"example, several of these options will remove all non-breaking-space "
+"entities, or may include false positive matches relating to the function."
+msgstr "Heuristisk bearbetning erbjuder en mängd olika funktioner som kan användas för att försöka upptäcka och åtgärda vanliga problem i dåligt formaterade inmatningsdokument. Använd dessa funktioner om ditt inmatningsdokument lider av dålig formatering. Eftersom dessa funktioner är beroende av gemensamma mönster, var medveten om att ett alternativ i vissa fall kan leda till sämre resultat, så använd med försiktighet. Som ett exempel, kommer flera av dessa alternativ ta bort alla icke-blankstegsbrytande enheter, eller kan innefatta falska positiva resultat avseende funktionen."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:301
+msgid ":guilabel:`Enable heuristic processing`"
+msgstr ":guilabel:`Aktivera heuristisk bearbetning`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:300
+msgid ""
+"This option activates calibre's :guilabel:`Heuristic processing` stage of "
+"the conversion pipeline. This must be enabled in order for various sub-"
+"functions to be applied"
+msgstr "Det här alternativet aktiverar calibres :guilabel:`heuristiska bearbetnings`steg för konverteringsprocessen. Det här måste vara aktiverat för att olika underfunktioner ska kunna tillämpas"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:307
+msgid ":guilabel:`Unwrap lines`"
+msgstr ":guilabel:`Radbrytningar`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:304
+msgid ""
+"Enabling this option will cause calibre to attempt to detect and correct "
+"hard line breaks that exist within a document using punctuation clues and "
+"line length. calibre will first attempt to detect whether hard line breaks "
+"exist, if they do not appear to exist calibre will not attempt to unwrap "
+"lines. The line-unwrap factor can be reduced if you want to 'force' calibre "
+"to unwrap lines."
+msgstr "Aktivering av det här alternativet gör att calibre försöker upptäcka och korrigera hårda radbrytningar som finns i ett dokument med ledtrådar som skiljetecken och radlängd. calibre försöker först att upptäcka om hårda radbrytningar finns, om de inte verkar finnas kommer calibre inte att försöka att bryta rader. Radbrytningsfaktorn kan minskas om man vill \"tvinga\" calibre att bryta rader."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:313
+msgid ":guilabel:`Line-unwrap factor`"
+msgstr ":guilabel:`Faktor för radbrytningar`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:310
+msgid ""
+"This option controls the algorithm calibre uses to remove hard line breaks. "
+"For example, if the value of this option is 0.4, that means calibre will "
+"remove hard line breaks from the end of lines whose lengths are less than "
+"the length of 40% of all lines in the document. If your document only has a "
+"few line breaks which need correction, then this value should be reduced to "
+"somewhere between 0.1 and 0.2."
+msgstr "Det här alternativet styr algoritmen calibre använder för att ta bort hårda radbrytningar. Till exempel, om värdet av det här alternativet är 0,4, innebär det att calibre tar bort hårda radbrytningar från slutet av rader vars längd är mindre än längden på 40% av alla rader i dokumentet. Om ditt dokument bara har några radbrytningar som behöver korrigering, bör detta värde bör minskas till någonstans mellan 0,1 och 0,2."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:328
+msgid ""
+":guilabel:`Detect and markup unformatted chapter headings and sub headings`"
+msgstr ":guilabel:`Identifiera och markera oformaterade kapitelrubriker och underrubriker`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:316
+msgid ""
+"If your document does not have chapter headings and titles formatted "
+"differently from the rest of the text, calibre can use this option to "
+"attempt to detect them and surround them with heading tags. <h2> tags are "
+"used for chapter headings; <h3> tags are used for any titles that are "
+"detected."
+msgstr "Om ditt dokument inte har kapitelrubriker och titlar formaterade annorlunda än resten av texten kan calibre använda det här alternativet för att försöka upptäcka dem och omge dem med rubriktaggar. <h2>taggar används för kapitelrubriker; <h3>taggar används för några titlar som upptäcks."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:320
+msgid ""
+"This function will not create a TOC, but in many cases it will cause "
+"calibre's default chapter detection settings to correctly detect chapters "
+"and build a TOC.  Adjust the XPath under Structure detection if a TOC is not"
+" automatically created.  If there are no other headings used in the document"
+" then setting \"//h:h2\" under Structure detection would be the easiest way "
+"to create a TOC for the document."
+msgstr "Den här funktionen skapar inte en innehållsförteckning, men i många fall kommer den att orsaka calibres standardinställningar för kapiteldetektering att korrekt detektera kapitel och bygga en innehållsförteckning. Justera XPath under Strukturdetektering om en innehållsförteckning inte skapas automatiskt. Om det inte finns några andra rubriker i dokumentet skulle det vara det enklaste sättet att skapa en innehållsförteckning för dokumentet att ställa in \"//h:h2\" under strukturdetektering."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:325
+msgid ""
+"The inserted headings are not formatted, to apply formatting use the "
+":guilabel:`Extra CSS` option under the Look and Feel conversion settings.  "
+"For example, to center heading tags, use the following::"
+msgstr "De insatta rubriker är inte formaterad, för att tillämpa formatering använd :guilabel:`Extra CSS` alternativet under konverteringsinställningar under Utseende och känsla. Till exempel för att centrera rubriktaggar, använd följande::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:333
+msgid ":guilabel:`Renumber sequences of <h1> or <h2> tags`"
+msgstr ":guilabel:`Renumber sequences of <h1> or <h2> tags`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:331
+msgid ""
+"Some publishers format chapter headings using multiple <h1> or <h2> tags "
+"sequentially. calibre's default conversion settings will cause such titles "
+"to be split into two pieces.  This option will re-number the heading tags to"
+" prevent splitting."
+msgstr "Vissa utgivare formaterar kapitelrubriker som använder flera <h1> eller <h2> taggar sekventiellt. calibres standardkonverteringsinställningar kommer orsaka att sådana titlar delas upp i två delar. Det här alternativet kommer att numrera rubriktaggarna för att undvika delning."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:344
+msgid ":guilabel:`Delete blank lines between paragraphs`"
+msgstr ":guilabel:`Ta bort tomma rader mellan stycken`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:336
+msgid ""
+"This option will cause calibre to analyze blank lines included within the "
+"document.  If every paragraph is interleaved with a blank line, then calibre"
+" will remove all those blank paragraphs.  Sequences of multiple blank lines "
+"will be considered scene breaks and retained as a single paragraph. This "
+"option differs from the :guilabel:`Remove paragraph spacing` option under "
+":guilabel:`Look and Feel` in that it actually modifies the HTML content, "
+"while the other option modifies the document styles.  This option can also "
+"remove paragraphs which were inserted using calibre's :guilabel:`Insert "
+"blank line` option."
+msgstr "Detta alternativ gör att calibre analyserar tomma rader som ingår i dokumentet. Om varje stycke är sammanflätat med en tom rad, tar calibre bort alla de tomma styckena. Sekvenser av flera tomma rader betraktas som scenbrytningar och behålls som ett enda stycke. Det här alternativet skiljer sig från alternativet :guilabel:`Ta bort avstånd mellan stycken` under :guilabel:`Utseende och känsla` genom att det faktiskt ändrar HTML-innehållet, medan det andra alternativet ändrar dokumentformaten. Det här alternativet kan också ta bort stycken som infogades med calibres alternativ :guilabel:`Infoga tom rad`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:349
+msgid ":guilabel:`Ensure scene breaks are consistently formatted`"
+msgstr ":guilabel:`Se till att scenavbrytning är konsekvent formaterade`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:347
+msgid ""
+"With this option calibre will attempt to detect common scene-break markers "
+"and ensure that they are center aligned. 'Soft' scene break markers, i.e. "
+"scene breaks only defined by extra white space, are styled to ensure that "
+"they will not be displayed in conjunction with page breaks."
+msgstr "Med det här alternativet kommer calibre att försöka upptäcka vanliga scen-brytmarkörer och se till att de är centrerad. \"Mjuka\" scenavbrytningsmarkörer, d.v.s. scenavbrytning definieras endast av extra tomrum, är utformade för att säkerställa att de inte kommer att visas i samband med sidbrytningar."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:365
+msgid ":guilabel:`Replace scene breaks`"
+msgstr ":guilabel:`Ersätta scenbrytningar`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:352
+msgid ""
+"If this option is configured then calibre will replace scene break markers "
+"it finds with the replacement text specified by the user.  Please note that "
+"some ornamental characters may not be supported across all reading devices."
+msgstr "Om det här alternativet är anpassat kommer calibre att ersätta scenbrytningsmarkörer som den hittar med den ersättningstext som användaren angett. Observera att vissa prydnadstecken kanske inte stöds på alla läsenheter."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:355
+msgid ""
+"In general you should avoid using HTML tags, calibre will discard any tags "
+"and use pre-defined markup.  <hr /> tags, i.e. horizontal rules, and <img> "
+"tags are exceptions.  Horizontal rules can optionally be specified with "
+"styles, if you choose to add your own style be sure to include the 'width' "
+"setting, otherwise the style information will be discarded.  Image tags can "
+"used, but calibre does not provide the ability to add the image during "
+"conversion, this must be done after the fact using the 'Edit book' feature."
+msgstr "I allmänhet bör du undvika att använda HTML-taggar, calibre kommer att bortse från alla taggar och använda fördefinierad markering. <hr /> taggar, d.v.s. horisontella regler och <img> taggar är undantag. Horisontella regler kan valfritt anges med format, om du väljer att lägga till ditt eget format måste du inkludera inställningen \"width\", annars kommer formatinformationen att kasseras. Bildtaggar kan användas, men calibre ger inte möjlighet att lägga till bilden under konvertering, detta måste göras efter att ha använt funktionen \"Redigera bok\"."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:362
+msgid ""
+"Example image tag (place the image within an 'Images' folder inside the EPUB"
+" after conversion):"
+msgstr "Exempel bildtagg (placera bilden i en \"Images\"-mapp inne i EPUB:n efter konvertering):"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:362
+msgid "<img style=\"width:10%\" src=\"../Images/scenebreak.png\" />"
+msgstr "<img style=\"width:10%\" src=\"../Images/scenebreak.png\" />"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:365
+msgid "Example horizontal rule with styles:"
+msgstr "Exempel horisontell linje med format:"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:365
+msgid ""
+"<hr style=\"width:20%;padding-top: 1px;border-top: 2px ridge black;border-"
+"bottom: 2px groove black;\"/>"
+msgstr "<hr style=\"width:20%;padding-top: 1px;border-top: 2px ridge black;border-bottom: 2px groove black;\"/>"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:373
+msgid ":guilabel:`Remove unnecessary hyphens`"
+msgstr ":guilabel:`Ta bort onödiga bindestreck`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:368
+msgid ""
+"calibre will analyze all hyphenated content in the document when this option"
+" is enabled.  The document itself is used as a dictionary for analysis.  "
+"This allows calibre to accurately remove hyphens for any words in the "
+"document in any language, along with made-up and obscure scientific words.  "
+"The primary drawback is words appearing only a single time in the document "
+"will not be changed.  Analysis happens in two passes, the first pass "
+"analyzes line endings.  Lines are only unwrapped if the word exists with or "
+"without a hyphen in the document.  The second pass analyzes all hyphenated "
+"words throughout the document, hyphens are removed if the word exists "
+"elsewhere in the document without a match."
+msgstr "calibre analyserar allt bindestreckinnehåll i dokumentet när detta alternativ är aktiverat. Själva dokumentet används som en ordbok för analys.  Detta gör det möjligt för calibre att noggrant ta bort bindestreck för alla ord i dokumentet på vilket språk som helst, tillsammans med påhittade och dunkla vetenskapliga ord. Den främsta nackdelen är att ord som bara visas en gång i dokumentet inte kommer att ändras. Analys sker i två pass, det första passet analyserar radslut. Rader bryts endast om ordet finns med eller utan bindestreck i dokumentet. Det andra passet analyserar alla ord med bindestreck i hela dokumentet, bindestreck tas bort om ordet finns någon annanstans i dokumentet utan matchning."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:377
+msgid ":guilabel:`Italicize common words and patterns`"
+msgstr ":guilabel:`Kursivera vanliga ord och mönster`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:376
+msgid ""
+"When enabled, calibre will look for common words and patterns that denote "
+"italics and italicize them.  Examples are common text conventions such as "
+"~word~ or phrases that should generally be italicized, e.g. latin phrases "
+"like 'etc.' or 'et cetera'."
+msgstr "När funktionen är aktiverad kommer calibre söka efter vanliga ord och mönster som betecknar kursiv och kursivera dem. Exempel är vanliga textkonventioner såsom ~ordet~ eller fraser som generellt bör vara kursiv, t.ex. latinska fraser som \"etc.\" eller \"et cetera\"."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:381
+msgid ":guilabel:`Replace entity indents with CSS indents`"
+msgstr ":guilabel:`Ersätta enhetsindrag med CSS-indrag`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:380
+msgid ""
+"Some documents use a convention of defining text indents using non-breaking "
+"space entities.  When this option is enabled calibre will attempt to detect "
+"this sort of formatting and convert them to a 3% text indent using CSS."
+msgstr "Vissa dokument använder en konvention för att definiera textindrag med icke-brytande blanksteg. När det här alternativet är aktiverat försöker calibre att upptäcka den här typen av formatering och konvertera dem till en 3% textindragning med CSS."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:386
+msgid "Search & replace"
+msgstr "Söka & ersätta"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:388
+msgid ""
+"These options are useful primarily for conversion of PDF documents or OCR "
+"conversions, though they can also be used to fix many document specific "
+"problems. As an example, some conversions can leaves behind page headers and"
+" footers in the text. These options use regular expressions to try and "
+"detect headers, footers, or other arbitrary text and remove or replace them."
+" Remember that they operate on the intermediate XHTML produced by the "
+"conversion pipeline. There is a wizard to help you customize the regular "
+"expressions for your document.  Click the magic wand beside the expression "
+"box, and click the 'Test' button after composing your search expression.  "
+"Successful matches will be highlighted in Yellow."
+msgstr "De här alternativen är användbara främst för konvertering av PDF-dokument eller OCR-konverteringar, även om de också kan användas för att åtgärda många dokumentspecifika problem. Som ett exempel kan vissa konverteringar lämna efter sidhuvuden och sidfötter i texten. De här alternativen använder reguljära uttryck för att försöka upptäcka sidhuvuden, sidfötter eller annan godtycklig text och ta bort eller ersätta dem. Kom ihåg att de är verksamma på mellanliggande XHTML som produceras av konverteringsprocessen. Det finns en guide som hjälper dig att anpassa de reguljära uttrycken för ditt dokument. Klicka på trollstaven bredvid uttrycksrutan och klicka på knappen \"Testa\" när du har skapat ditt sökuttryck. Framgångsrika träffar kommer att markeras i gult."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:396
+msgid ""
+"The search works by using a Python regular expression. All matched text is "
+"simply removed from the document or replaced using the replacement pattern. "
+"The replacement pattern is optional, if left blank then text matching the "
+"search pattern will be deleted from the document.  You can learn more about "
+"regular expressions and their syntax at :ref:`regexptutorial`."
+msgstr "Sökningen fungerar med hjälp av ett Python-reguljärt uttryck. All matchad text tas helt enkelt bort från dokumentet eller ersätt med hjälp av ersättningsmönstret. Ersättningsmönster är valfritt, om det lämnas tomt kommer text som matchar sökbegreppet kommer att tas bort från dokumentet. Du kan läsa mer om reguljära uttryck och deras syntax på :ref:`regexptutorial`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:404
+msgid "Structure detection"
+msgstr "Struktrurdetektering"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:406
+msgid ""
+"Structure detection involves calibre trying its best to detect structural "
+"elements in the input document, when they are not properly specified. For "
+"example, chapters, page breaks, headers, footers, etc. As you can imagine, "
+"this process varies widely from book to book. Fortunately, calibre has very "
+"powerful options to control this. With power comes complexity, but if once "
+"you take the time to learn the complexity, you will find it well worth the "
+"effort."
+msgstr "Strukturdetektering innebär att calibre försöker sitt bästa för att upptäcka strukturella element i inmatningsdokumentet, när de inte är korrekt angivet. Till exempel kapitel, sidbrytningar, rubriker, sidfot o.s.v. Som ni kan föreställa er, varierar denna process mycket från bok till bok. Lyckligtvis har calibre mycket kraftfulla alternativ för att hantera detta. Med makt kommer komplexitet, men om när du tar dig tid att lära sig komplexiteten, upptäcker du att det väl värt ansträngningen."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:412
+msgid "Chapters and page breaks"
+msgstr "Kapitel och sidbrytningar"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:414
+msgid ""
+"calibre has two sets of options for :guilabel:`chapter detection` and "
+":guilabel:`inserting page breaks`. This can sometimes be slightly confusing,"
+" as by default, calibre will insert page breaks before detected chapters as "
+"well as the locations detected by the page breaks option. The reason for "
+"this is that there are often location where page breaks should be inserted "
+"that are not chapter boundaries. Also, detected chapters can be optionally "
+"inserted into the auto generated Table of Contents."
+msgstr "calibre har två uppsättningar av alternativ för :guilabel:`kapiteldetektering` och :guilabel:`infoga sidbrytningar`. Detta kan ibland vara något förvirrande, eftersom calibre som standard kommer att infoga sidbrytningar innan upptäckta kapitel såväl som platser som upptäcks av alternativet sidbrytningar. Anledningen till detta är att det ofta finns plats där sidbrytningar ska infogas som inte är kapitelgränser. Dessutom kan upptäckta kapitel eventuellt infogas i den automatiskt skapade innehållsförteckningen."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:419
+msgid ""
+"calibre uses *XPath*, a powerful language to allow the user to specify "
+"chapter boundaries/page breaks. XPath can seem a little daunting to use at "
+"first, fortunately, there is a :ref:`XPath tutorial <xpath-tutorial>` in the"
+" User Manual. Remember that Structure detection operates on the intermediate"
+" XHTML produced by the conversion pipeline. Use the debug option described "
+"in the :ref:`conversion-introduction` to figure out the appropriate settings"
+" for your book. There is also a button for a XPath wizard to help with the "
+"generation of simple XPath expressions."
+msgstr "calibre använder *XPath*, ett kraftfullt språk för att göra det möjligt för användaren att specificera kapitelgränser/sidbrytningar. XPath kan verka lite skrämmande att använda till en början, lyckligtvis finns det en :ref:`XPath-handledning <xpath-tutorial>` i användarmanualen. Kom ihåg att strukturdetektering fungerar på den mellanliggande XHTML produceras av konverteringsprocessen. Använd felsökningsalternativet som beskrivs i :ref:`conversion-introduction` för att ta reda på lämpliga inställningar för din bok. Det finns också en knapp för en XPath-guide som hjälper till med skapande av enkla XPath-uttryck."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:425
+msgid ""
+"By default, calibre uses the following expression for detecting chapters::"
+msgstr "Som standard använder calibre följande uttrycker för att upptäcka kapitel::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:429
+msgid ""
+"This expression is rather complex, because it tries to handle a number of "
+"common cases simultaneously. What it means is that calibre will assume "
+"chapters start at either `<h1>` or `<h2>` tags that have any of the words "
+"`(chapter, book, section or part)` in them or that have the "
+"`class=\"chapter\"` attribute."
+msgstr "Detta uttryck är ganska komplicerat, eftersom det försöker hantera ett antal gemensamma fall samtidigt. Vad det betyder är att calibre antar att kapitel börjar på antingen `<h1>` eller `<h2>` taggar som har något av orden `(chapter, book, section eller part)` i dem eller som har `class = \"chapter\"` attribut."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:433
+msgid ""
+"A related option is :guilabel:`Chapter mark`, which allows you to control "
+"what calibre does when it detects a chapter. By default, it will insert a "
+"page break before the chapter. You can have it insert a ruled line instead "
+"of, or in addition to the page break. You can also have it do nothing."
+msgstr "Ett relaterat alternativ är :guilabel:`Kapitelmarkering`, som låter dig anpassa vad calibre gör när det upptäcker ett kapitel. Som standard kommer det att infoga en sidbrytning före kapitlet. Du kan låta den infoga en uppmätt rad istället för eller utöver sidbrytningen. Du kan också låta den göra ingenting."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:437
+msgid "The default setting for detecting page breaks is::"
+msgstr "Standardinställningen för detektering av sidbrytningar är::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:441
+msgid ""
+"which means that calibre will insert page breaks before every `<h1>` and "
+"`<h2>` tag by default."
+msgstr "vilket innebär att calibre kommer att infoga sidbrytningar före varje `<h1>` och `<h2` tagg som standard."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:445
+msgid ""
+"The default expressions may change depending on the input format you are "
+"converting."
+msgstr "Standarduttryck kan ändras beroende på inmatningsformat du konverterar."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:448
+msgid "Miscellaneous"
+msgstr "Diverse"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:450
+msgid "There are a few more options in this section."
+msgstr "Det finns några fler alternativ i det här avsnittet."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:456
+msgid ":guilabel:`Insert metadata as page at start of book`"
+msgstr ":guilabel:`Infoga metadata som en sida i början av boken`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:453
+msgid ""
+"One of the great things about calibre is that it allows you to maintain very"
+" complete metadata about all of your books, for example, a rating, tags, "
+"comments, etc. This option will create a single page with all this metadata "
+"and insert it into the converted e-book, typically just after the cover. "
+"Think of it as a way to create your own customised book jacket."
+msgstr "En av de bästa sakerna med calibre är att det tillåter dig att behålla mycket kompletta metadata om alla dina böcker, till exempel ett betyg, taggar, kommentarer o.s.v. Det här alternativet skapar en enda sida med alla dessa metadata och infogar dem i den konverterade e-boken, vanligtvis precis efter omslaget. Se det som ett sätt att skapa egna anpassade bokomslag."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:463
+msgid ":guilabel:`Remove first image`"
+msgstr ":guilabel:`Ta bort första bilden`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:459
+msgid ""
+"Sometimes, the source document you are converting includes the cover as part"
+" of the book, instead of as a separate cover. If you also specify a cover in"
+" calibre, then the converted book will have two covers. This option will "
+"simply remove the first image from the source document, thereby ensuring "
+"that the converted book has only one cover, the one specified in calibre."
+msgstr "Ibland innehåller källdokumentet du konverterar omslaget som en del av boken, istället för som ett separat omslag. Om du också ange ett omslag i calibre, den då konverterade boken kommer att ha två omslag. Det här alternativet kommer att helt enkelt ta bort den första bilden från källdokumentet, vilket säkerställer att den konverterade boken har bara ett omslag, det som anges i calibre."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:466
+msgid "Table of Contents"
+msgstr "Innehållsförteckning"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:468
+msgid ""
+"When the input document has a Table of Contents in its metadata, calibre "
+"will just use that. However, a number of older formats either do not support"
+" a metadata based Table of Contents, or individual documents do not have "
+"one. In these cases, the options in this section can help you automatically "
+"generate a Table of Contents in the converted e-book, based on the actual "
+"content in the input document."
+msgstr "När inmatningsdokumentet har en innehållsförteckning i dess metadata, kommer calibre att använda det. Men ett antal äldre format stöder antingen inte en metadata baserade innehållsförteckning, eller så har inte enskilda dokument en. I dessa fall kan alternativen i det här avsnittet hjälp dig att automatiskt skapa en innehållsförteckning i den konverterade e-boken, baserat på det faktiska innehållet i inmatningsdokumentet."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:473
+msgid ""
+"Using these options can be a little challenging to get exactly right. If you"
+" prefer creating/editing the Table of Contents by hand, convert to the EPUB "
+"or AZW3 formats and select the checkbox at the bottom of the Table of "
+"Contents section of the conversion dialog that says :guilabel:`Manually "
+"fine-tune the Table of Contents after conversion`. This will launch the ToC "
+"Editor tool after the conversion. It allows you to create entries in the "
+"Table of Contents by simply clicking the place in the book where you want "
+"the entry to point. You can also use the ToC Editor by itself, without doing"
+" a conversion. Go to :guilabel:`Preferences->Interface->Toolbars` and add "
+"the :guilabel:`ToC Editor` to the main toolbar. Then just select the book "
+"you want to edit and click the :guilabel:`ToC Editor` button."
+msgstr "Att använda dessa alternativ kan vara lite utmanande att få helt rätt. Om du föredrar att skapa/redigera innehållsförteckningen för hand, konvertera till EPUB- eller AZW3-formaten och välja kryssrutan längst ner i avsnittet innehållsförteckning i konverteringsdialogrutan som heter :guilabel:`Finjustera innehållsförteckningen manuellt efter att konverteringen är klar`. Detta kommer att starta redigeringsverktyget för innehållsförteckningar efter konverteringen. Det låter dig skapa poster i innehållsförteckningen genom att helt enkelt klicka på platsen i boken du vill att posten ska hänvisa till. Du kan också använda :guilabel:`Redigerare för innehållsförteckningar` för sig själv, utan att göra en konvertering. Gå till :guilabel:`Inställningar->Gränssnitt->Verktygsfält` och lägg till :guilabel:`Redigerare för innehållsförteckningar` i huvudverktygsfältet. Välj sedan bara boken du vill redigera och klicka på knappen :guilabel:`Redigerare för innehållsförteckningar`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:485
+msgid ""
+"The first option is :guilabel:`Force use of auto-generated Table of "
+"Contents`. By checking this option you can have calibre override any Table "
+"of Contents found in the metadata of the input document with the auto "
+"generated one."
+msgstr "Det första alternativet är :guilabel:`Tvinga användning av automatiskt skapad innehållsförteckning`. Genom att markera det här alternativet kan du få calibre att åsidosätta innehållsförteckningar som finns i metadata för inmatningsdokumentet med den automatiskt skapade."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:489
+msgid ""
+"The default way that the creation of the auto generated Table of Contents "
+"works is that, calibre will first try to add any detected chapters to the "
+"generated table of contents. You can learn how to customize the detection of"
+" chapters in the :ref:`structure-detection` section above. If you do not "
+"want to include detected chapters in the generated table of contents, check "
+"the :guilabel:`Do not add detected chapters` option."
+msgstr "Det vanliga sättet skapandet av den automatiskt skapade innehållsförteckningen fungerar är att calibre först försöker att lägga till alla upptäckta kapitel till den skapade innehållsförteckningen. Du kan lära dig hur du anpassar upptäckten av kapitel i avsnittet :ref:`structure-detection` ovan. Om du inte vill inkludera upptäckta kapitel i den skapade innehållsförteckningen, se alternativet :guilabel:`Lägg inte till upptäcka kapitel i innehållsförteckningen`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:494
+msgid ""
+"If less than the :guilabel:`Chapter threshold` number of chapters were "
+"detected, calibre will then add any hyperlinks it finds in the input "
+"document to the Table of Contents. This often works well: many input "
+"documents include a hyperlinked Table of Contents right at the start. The "
+":guilabel:`Number of links` option can be used to control this behavior. If "
+"set to zero, no links are added. If set to a number greater than zero, at "
+"most that number of links is added."
+msgstr "Om mindre kapitel än :guilabel:`Kapiteltröskel` upptäcktes kommer calibre att lägga till alla hyperlänkar som hittas i inmatningsdokumentet till innehållsförteckningen. Detta fungerar ofta bra: många inmatningsdokument inkluderar en hyperlänkad innehållsförteckning direkt i början. Alternativet :guilabel:`Antal länkar` kan användas för att anpassa detta beteende. Om värdet är noll läggs inga länkar till. Om det är inställt på ett tal som är större än noll läggs högst det antalet länkar till."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:500
+msgid ""
+"calibre will automatically filter duplicates from the generated Table of "
+"Contents. However, if there are some additional undesirable entries, you can"
+" filter them using the :guilabel:`TOC Filter` option. This is a regular "
+"expression that will match the title of entries in the generated table of "
+"contents. Whenever a match is found, it will be removed. For example, to "
+"remove all entries titles \"Next\" or \"Previous\" use::"
+msgstr "calibre kommer automatiskt att filtrera dubbletter från den skapade innehållsförteckningen. Men om det finns några ytterligare oönskade poster kan du filtrera dem med alternativet :guilabel:`Innehållsförteckningsfilter`. Detta är ett reguljärt uttryck som söker titeln på posterna i den skapade innehållsförteckningen. När en träff hittas kommer den att tas bort. Om du till exempel vill ta bort alla poster med titlarna \"Nästa\" eller \"Föregående\" använder du::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:507
+msgid ""
+"The :guilabel:`Level 1,2,3 TOC` options allow you to create a sophisticated "
+"multi-level Table of Contents. They are XPath expressions that match tags in"
+" the intermediate XHTML produced by the conversion pipeline. See the "
+":ref:`conversion-introduction` for how to get access to this XHTML. Also "
+"read the :ref:`xpath-tutorial`, to learn how to construct XPath expressions."
+" Next to each option is a button that launches a wizard to help with the "
+"creation of basic XPath expressions. The following simple example "
+"illustrates how to use these options."
+msgstr "Alternativen :guilabel:`Nivå 1,2,3 innehållsförteckning` låter dig skapa en sofistikerad innehållsförteckning på flera nivåer. De är XPath-uttryck som matchar taggar i den mellanliggande XHTML som produceras av konverteringsprocessen. Se :ref:`conversion-introduction` för hur du får tillgång till denna XHTML. Läs också :ref:`xpath-tutorial`, för att lära dig hur man konstruerar XPath-uttryck. Bredvid varje alternativ finns en knapp som startar en guide som hjälper dig att skapa grundläggande XPath-uttryck. Följande enkla exempel illustrerar hur du använder de här alternativen."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:513
+msgid ""
+"Suppose you have an input document that results in XHTML that look like "
+"this:"
+msgstr "Anta att du har en inmatningsdokument som resulterar i XHTML som ser ut så här:"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:535
+msgid "Then, we set the options as::"
+msgstr "Sedan anger vi alternativ som::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:540
+msgid ""
+"This will result in an automatically generated two level Table of Contents "
+"that looks like::"
+msgstr "Detta kommer att resultera i en automatiskt skapad innehållsförteckning på två nivåer som ser ut som::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:551
+msgid ""
+"Not all output formats support a multi level Table of Contents. You should "
+"first try with EPUB output. If that works, then try your format of choice."
+msgstr "Inte alla utmatningsformat stöder en innehållsförteckning med flera nivåer. Du bör först försöka med EPUB-utmatning. Om det fungerar, testa sedan ditt val av format."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:555
+msgid "Using images as chapter titles when converting HTML input documents"
+msgstr "Använda bilder som kapitelrubriker vid konvertering av HTML-inmatningsdokument"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:557
+msgid ""
+"Suppose you want to use an image as your chapter title, but still want "
+"calibre to be able to automatically generate a Table of Contents for you "
+"from the chapter titles. Use the following HTML markup to achieve this:"
+msgstr "Anta att du vill använda en bild som din kapitelrubrik, men ändå vill att calibre automatiskt ska kunna skapa en innehållsförteckning åt dig från kapitelrubrikerna. Använd följande HTML-markering för att uppnå detta:"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:571
+msgid ""
+"Set the :guilabel:`Level 1 TOC` setting to ``//h:h2``. Then, for chapter "
+"two, calibre will take the title from the value of the ``title`` attribute "
+"on the ``<h2>`` tag, since the tag has no text."
+msgstr "Ställ in inställningen :guilabel:`Nivå 1 innehållsförteckning` till ``//h:h2``. Då, i kapitel två, tar calibre titeln från värdet av attributet ``title`` på ``<h2>``-taggen, eftersom taggen inte har någon text."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:574
+msgid ""
+"Using tag attributes to supply the text for entries in the Table of Contents"
+msgstr "Använda taggattribut för att leverera texten för posterna i innehållsförteckningen"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:576
+msgid ""
+"If you have particularly long chapter titles and want shortened versions in "
+"the Table of Contents, you can use the title attribute to achieve this, for "
+"example:"
+msgstr "Om du har speciellt långa kapitelrubriker och vill förkortade versioner i innehållsförteckningen, kan du använda attributet titel för att uppnå detta, till exempel:"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:591
+msgid ""
+"Set the :guilabel:`Level 1 TOC` setting to ``//h:h2/@title``. Then calibre "
+"will take the title from the value of the ``title`` attribute on the "
+"``<h2>`` tags, instead of using the text inside the tag. Note the trailing "
+"``/@title`` on the XPath expression, you can use this form to tell calibre "
+"to get the text from any attribute you like."
+msgstr "Ändra :guilabel:`Nivå 1 TOC` inställning till ``//h:h2/@titel``. Då tar calibre titeln från värdet på ``titel`` attribut på ``<h2>`` taggar, istället för att använda texten i taggen. Observera den avslutande ``/@titel`` på XPath-uttryck kan du använda det här formuläret för att berätta calibre för att få text från alla attribut du vill."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:598
+msgid "How options are set/saved for conversion"
+msgstr "Hur alternativ ställs in/sparas för konvertering"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:600
+msgid ""
+"There are two places where conversion options can be set in calibre. The "
+"first is in Preferences->Conversion. These settings are the defaults for the"
+" conversion options. Whenever you try to convert a new book, the settings "
+"set here will be used by default."
+msgstr "Det finns två platser där konverteringsalternativ kan ställas in i calibre. Den första är i Inställningar->Konvertering. Dessa inställningar är standardinställningar för konverteringsalternativen. När du försöker konvertera en ny bok kommer inställningarna som finns här användas som standard."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:605
+msgid ""
+"You can also change settings in the conversion dialog for each book "
+"conversion. When you convert a book, calibre remembers the settings you used"
+" for that book, so that if you convert it again, the saved settings for the "
+"individual book will take precedence over the defaults set in "
+":guilabel:`Preferences`. You can restore the individual settings to defaults"
+" by using the :guilabel:`Restore defaults` button in the individual book "
+"conversion dialog. You can remove the saved settings for a group of books by"
+" selecting all the books and then clicking the :guilabel:`Edit metadata` "
+"button to bring up the bulk metadata edit dialog, near the bottom of the "
+"dialog is an option to remove stored conversion settings."
+msgstr "Du kan också ändra inställningar i konverteringsdialogrutan för varje bokkonvertering. När du konverterar en bok kommer calibre att komma ihåg inställningarna som du använde för den bok, så att om du konverterar den igen, kommer de sparade inställningarna för den enskilde boken att ha företräde framför standardinställningarna som anges i :guilabel:`Inställningar`. Du kan återställa de enskilda inställningarna till standardvärdena genom att använda knappen :guilabel:`Återställ till standardvärden` i enskilda bokkonverteringsdialogrutan. Du kan ta bort de sparade inställningarna för en grupp av böcker genom att välja alla böcker och sedan klicka på knappen :guilabel:`Redigera metadata` för att ta fram redigeringsdialogrutan för att massändra metadata, nära botten av dialogrutan är ett alternativ att ta bort lagrade konverteringsinställningar."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:616
+msgid ""
+"When you bulk convert a set of books, settings are taken in the following "
+"order (last one wins):"
+msgstr "När du masskonverterar en uppsättning böcker, tas inställningarna i följande ordning (sista vinner):"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:618
+msgid "From the defaults set in Preferences->Conversion"
+msgstr "Från standardvärdena som i Inställningar->Konvertering"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:620
+msgid ""
+"From the saved conversion settings for each book being converted (if any). "
+"This can be turned off by the option in the top left corner of the Bulk "
+"conversion dialog."
+msgstr "Från de sparade konverteringsinställningarna för varje bok som konverteras (om någon). Detta kan stängas av alternativ i det övre vänstra hörnet av dialogrutan Masskonvertering."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:624
+msgid "From the settings set in the Bulk conversion dialog"
+msgstr "Från inställningarna i masskonverteringsdialogrutan"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:626
+msgid ""
+"Note that the final settings for each book in a Bulk conversion will be "
+"saved and re-used if the book is converted again. Since the highest priority"
+" in Bulk Conversion is given to the settings in the Bulk conversion dialog, "
+"these will override any book specific settings. So you should only bulk "
+"convert books together that need similar settings. The exceptions are "
+"metadata and input format specific settings. Since the Bulk conversion "
+"dialog does not have settings for these two categories, they will be taken "
+"from book specific settings (if any) or the defaults."
+msgstr "Observera att de slutliga inställningar för varje bok i en masskonvertering kommer att sparas och återanvändas om boken konverteras igen. Eftersom högsta prioritet av masskonvertering ges till inställningarna av dialogrutan Masskonvertering kommer dessa åsidosätta bokens specifika inställningar. Så du ska bara masskonvertera böcker tillsammans som behöver liknande inställningar. Undantaget är metadata och specifika inställningar för inmatningsformat. Eftersom dialogrutan Masskonvertering inte har inställningar för dessa två kategorier, kommer de att tas från boken specifika inställningar (om någon) eller standardvärdena."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:637
+msgid ""
+"You can see the actual settings used during any conversion by clicking the "
+"rotating icon in the lower right corner and then double clicking the "
+"individual conversion job. This will bring up a conversion log that will "
+"contain the actual settings used, near the top."
+msgstr "Du kan se de verkliga inställningar som används under någon konvertering genom att klicka på roterande ikon i det nedre högra hörnet och sedan dubbelklicka på individuella konverteringsjobbet. Då visas en konverteringslogg som ska innehålla de verkliga inställningar som används, nära toppen."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:642
+msgid "Format specific tips"
+msgstr "Formatspecifika tips"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:644
+msgid ""
+"Here you will find tips specific to the conversion of particular formats. "
+"Options specific to particular format, whether input or output are available"
+" in the conversion dialog under their own section, for example `TXT input` "
+"or `EPUB output`."
+msgstr "Här hittar du tips som är specifika för konvertering av vissa format. Alternativ specifika för visst format, oavsett inmatning eller utmatning finns i dialogrutan konvertering under eget avsnitt, till exempel `TXT-inmatning` eller `EPUB-utmatning`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:649
+msgid "Convert Microsoft Word documents"
+msgstr "Konvertera Microsoft Word-dokument"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:651
+msgid ""
+"calibre can automatically convert ``.docx`` files created by Microsoft Word "
+"2007 and newer. Just add the file to calibre and click convert."
+msgstr "calibre kan automatiskt konvertera ``.docx``-filer som skapats av Microsoft Word 2007 och nyare. Lägg bara till filen i calibre och klicka på konvertera."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:655
+msgid ""
+"There is a :download_file:`demo .docx file <demos/demo.docx>` that "
+"demonstrates the capabilities of the calibre conversion engine. Just "
+"download it and convert it to EPUB or AZW3 to see what calibre can do."
+msgstr "Det finns en :download_file:`demo .docx-fil <demos/demo.docx>` som demonstrerar förmågorna hos calibres konverteringsmotor. Bara hämta den och konvertera den till EPUB eller AZW3 för att se vad calibre kan göra."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:659
+msgid ""
+"calibre will automatically generate a Table of Contents based on headings if"
+" you mark your headings with the ``Heading 1``, ``Heading 2``, etc. styles "
+"in Microsoft Word. Open the output e-book in the calibre E-book viewer and "
+"click the :guilabel:`Table of Contents` button to view the generated Table "
+"of Contents."
+msgstr "calibre kommer att automatiskt skapa en innehållsförteckning som baseras på rubriker om du markerar dina rubriker med formaten ``Heading 1``, `​`Heading 2`` o.s.v. i Microsoft Word. Öppna utmatnings-e-boken i calibres e-bokvisare och klicka på knappen :guilabel:`Innehållsförteckning` för att visa den skapade innehållsförteckningen."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:665
+msgid "Older .doc files"
+msgstr "Äldre .doc-filer"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:667
+msgid ""
+"For older .doc files, you can save the document as HTML with Microsoft Word "
+"and then convert the resulting HTML file with calibre. When saving as HTML, "
+"be sure to use the \"Save as Web Page, Filtered\" option as this will "
+"produce clean HTML that will convert well. Note that Word produces really "
+"messy HTML, converting it can take a long time, so be patient. If you have a"
+" newer version of Word available, you can directly save it as .docx as well."
+msgstr "För äldre .doc-filer kan du spara dokumentet som HTML med Microsoft Word och sedan konvertera den resulterande HTML-filen med calibre. När du sparar som HTML, se till att använda alternativet \"Spara som webbplats, filtrerad\" eftersom detta kommer att producera ren HTML som kommer att konverteras bra. Observera att Word producerar en riktigt rörig HTML, att konvertera den kan ta lång tid, så ha tålamod. Om du har en nyare version av Word tillgänglig kan du också spara den direkt som .docx."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:674
+msgid ""
+"Another alternative is to use the free LibreOffice. Open your .doc file in "
+"LibreOffice and save it as .docx, which can be directly converted in "
+"calibre."
+msgstr "Ett annat alternativ är att använda gratis LibreOffice. Öppna din .doc-fil i LibreOffice och spara den som .docx, som direkt kan konverteras i calibre."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:678
+msgid "Convert TXT documents"
+msgstr "Konvertera TXT-dokument"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:680
+msgid ""
+"TXT documents have no well defined way to specify formatting like bold, "
+"italics, etc, or document structure like paragraphs, headings, sections and "
+"so on, but there are a variety of conventions commonly used.  By default "
+"calibre attempts automatic detection of the correct formatting and markup "
+"based on those conventions."
+msgstr "TXT-dokument har inget väl definierat sätt att specificera formatering som fetstil, kursiv, o.s.v, eller dokumentstruktur som stycken, rubriker, avsnitt och så vidare, men det finns en mängd konventioner som vanligtvis används. Som standard försöker calibre automatisk upptäcka korrekt formatering och markering baserat på dessa konventioner."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:685
+msgid ""
+"TXT input supports a number of options to differentiate how paragraphs are "
+"detected."
+msgstr "TXT-inmatning stöder ett antal alternativ för att differentiera hur stycken upptäcks."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:689
+msgid ":guilabel:`Paragraph style: Auto`"
+msgstr ":guilabel:`Styckeformat: automatisk`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:688
+msgid ""
+"Analyzes the text file and attempts to automatically determine how "
+"paragraphs are defined.  This option will generally work fine, if you "
+"achieve undesirable results try one of the manual options."
+msgstr "Analyserar textfilen och försök att automatiskt avgöra hur styckena är definierade. Detta val kommer i allmänhet fungerar bra, om du uppnår oönskade resultat testa ett av de manuella alternativen."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:697
+msgid ":guilabel:`Paragraph style: Block`"
+msgstr ":guilabel:`Styckeformat: blockera`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:692
+msgid "Assumes one or more blank lines are a paragraph boundary::"
+msgstr "Förutsätter en eller flera tomma rader är en styckesgräns::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:704
+msgid ":guilabel:`Paragraph style: Single`"
+msgstr ":guilabel:`Styckeformat: ensamstående`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:700
+msgid "Assumes that every line is a paragraph::"
+msgstr "Förutsätter att varje rad är ett stycke::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:715
+msgid ":guilabel:`Paragraph style: Print`"
+msgstr ":guilabel:`Styckeformat: skriv ut`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:707
+msgid ""
+"Assumes that every paragraph starts with an indent (either a tab or 2+ "
+"spaces). Paragraphs end when the next line that starts with an indent is "
+"reached::"
+msgstr "Förutsätter att varje stycke börjar med en indragning (antingen en tabulering eller 2+ blanksteg). Styckena avslutas när nästa rad som börjar med en indragning nås::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:719
+msgid ":guilabel:`Paragraph style: Unformatted`"
+msgstr ":guilabel:`Styckeformat: oformaterad`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:718
+msgid ""
+"Assumes that the document has no formatting, but does use hard line breaks."
+"  Punctuation and median line length are used to attempt to re-create "
+"paragraphs."
+msgstr "Förutsätter att dokumentet inte har någon formatering, men använder hårda radbrytningar. Skiljetecken och medianradslängd används för att försöka återskapa stycken."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:723
+msgid ":guilabel:`Formatting style: Auto`"
+msgstr ":guilabel:`Formateringsformat: automatisk`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:722
+msgid ""
+"Attempts to detect the type of formatting markup being used.  If no markup "
+"is used then heuristic formatting will be applied."
+msgstr "Försöker hitta den typ av formateringsmarkering som används. Om ingen markering används kommer heuristisk formatering att tillämpas."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:727
+msgid ":guilabel:`Formatting style: Heuristic`"
+msgstr ":guilabel:`Formateringsformat: heuristisk`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:726
+msgid ""
+"Analyzes the document for common chapter headings, scene breaks, and "
+"italicized words and applies the appropriate HTML markup during conversion."
+msgstr "Analyserar dokumentet för vanliga kapitelrubriker, scenbrytningar och kursiverade ord och tillämpar lämplig HTML-markering under konvertering."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:734
+msgid ":guilabel:`Formatting style: Markdown`"
+msgstr ":guilabel:`Formateringsformat: Markdown`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:730
+msgid ""
+"calibre also supports running TXT input though a transformation preprocessor"
+" known as Markdown. Markdown allows for basic formatting to be added to TXT "
+"documents, such as bold, italics, section headings, tables, lists, a Table "
+"of Contents, etc. Marking chapter headings with a leading # and setting the "
+"chapter XPath detection expression to \"//h:h1\" is the easiest way to have "
+"a proper table of contents generated from a TXT document. You can learn more"
+" about the Markdown syntax at `daringfireball "
+"<https://daringfireball.net/projects/markdown/syntax>`_."
+msgstr "calibre stöder också körning av TXT-inmatning genom en omvandlingsförbehandlare känd som Markdown. Markdown gör att grundläggande formatering kan läggas till i TXT-dokument, såsom fetstil, kursiv stil, avsnittsrubriker, tabeller, listor, en innehållsförteckning o.s.v. Markera kapitelrubriker med en ledande # och ställ in XPath-kapiteldetekteringsuttrycket till \"//h:h1\" är det enklaste sättet att skapa en korrekt innehållsförteckning från ett TXT-dokument. Du kan läsa mer om Markdown-syntaxen på `daringfireball <https://daringfireball.net/projects/markdown/syntax>`_."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:737
+msgid ":guilabel:`Formatting style: None`"
+msgstr ":guilabel:`Formateringsformat: ingen`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:737
+msgid ""
+"Applies no special formatting to the text, the document is converted to HTML"
+" with no other changes."
+msgstr "Använder ingen speciell formatering av texten, dokumentet konverteras till HTML utan några ändringar."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:742
+msgid "Convert PDF documents"
+msgstr "Konvertera PDF-dokument"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:744
+msgid ""
+"PDF documents are one of the worst formats to convert from. They are a fixed"
+" page size and text placement format. Meaning, it is very difficult to "
+"determine where one paragraph ends and another begins. calibre will try to "
+"unwrap paragraphs using a configurable, :guilabel:`Line un-wrapping factor`."
+" This is a scale used to determine the length at which a line should be "
+"unwrapped. Valid values are a decimal between 0 and 1. The default is 0.45, "
+"just under the median line length. Lower this value to include more text in "
+"the unwrapping. Increase to include less. You can adjust this value in the "
+"conversion settings under :guilabel:`PDF Input`."
+msgstr "PDF-dokument är en av de värsta format att konvertera från. De är ett fast sidstorleks- och textplaceringsformat. Det betyder att det är mycket svårt att avgöra var ett stycke slutar och ett annat börjar. calibre kommer att försöka dela upp stycken med en anpassningsbar :guilabel:`Radbrytningsfaktor`. Detta är en skala som används för att bestämma längden för var en rad ska radbrytas. Giltiga värden är ett decimaltal mellan 0 och 1. Standard är 0,45, precis under medianradslängden. Sänk detta värde för att inkludera mer text i radbrytningen. Öka för att inkludera mindre. Du kan justera detta värde i konverteringsinställningarna under :guilabel:`PDF-inmatning`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:751
+msgid ""
+"Also, they often have headers and footers as part of the document that will "
+"become included with the text. Use the :guilabel:`Search and replace` panel "
+"to remove headers and footers to mitigate this issue. If the headers and "
+"footers are not removed from the text it can throw off the paragraph "
+"unwrapping. To learn how to use the header and footer removal options, read "
+":ref:`regexptutorial`."
+msgstr "Dessutom har de ofta sidhuvuden och sidfötter som en del av dokumentet som kommer att bli inkluderat med texten. Använd panelen :guilabel:`Sök och ersätt` för att ta bort sidhuvuden och sidfötter för att mildra problemet. Om sidhuvuden och sidfötterna inte tas bort från texten kan kasta bort avsnittsuppdelning. För att lära dig hur du tar bort alternativ för sidhuvud och sidfot, läs :ref:`regexptutorial`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:756
+msgid "Some limitations of PDF input are:"
+msgstr "Vissa begränsningar på PDF-inmatning är:"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:758
+msgid "Complex, multi-column, and image based documents are not supported."
+msgstr "Komplexa, flerkolumn- och bildbaserade dokument stöds inte."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:759
+msgid ""
+"Extraction of vector images and tables from within the document is also not "
+"supported."
+msgstr "Extrahering av vektorbilder och tabeller från inuti dokumentet stöds inte heller."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:760
+msgid ""
+"Some PDFs use special glyphs to represent ll or ff or fi, etc. Conversion of"
+" these may or may not work depending on just how they are represented "
+"internally in the PDF."
+msgstr "Vissa PDF-filer använder speciella glyfer för att representera ll eller ff eller fi o.s.v. Konvertering av dessa kanske eller kanske inte fungerar beroende på hur de representeras internt i PDF:n."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:761
+msgid "Links and Tables of Contents are not supported"
+msgstr "Länkar och innehållsförteckning stöds inte"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:762
+msgid ""
+"PDFs that use embedded non-Unicode fonts to represent non-English characters"
+" will result in garbled output for those characters"
+msgstr "PDF-filer med inbäddade icke-Unicode-teckensnitt för att representera icke-engelska tecken kommer att resultera i förvrängt utmatning för dessa tecken"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:763
+msgid ""
+"Some PDFs are made up of photographs of the page with OCRed text behind "
+"them. In such cases calibre uses the OCRed text, which can be very different"
+" from what you see when you view the PDF file"
+msgstr "Vissa PDF-filer är uppbyggda av fotografier av sidan med OCR-text bakom dem. I sådana fall använder calibre OCR-texten, vilket kan vara mycket annorlunda från vad du ser när du visar PDF-filen"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:764
+msgid ""
+"PDFs that are used to display complex text, like right to left languages and"
+" math typesetting will not convert correctly"
+msgstr "PDF-filer som används för att visa komplex text, som höger till vänster språk och matematisk typsättning kommer inte att konverteras korrekt"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:766
+msgid ""
+"To re-iterate **PDF is a really, really bad** format to use as input. If you"
+" absolutely must use PDF, then be prepared for an output ranging anywhere "
+"from decent to unusable, depending on the input PDF."
+msgstr "För att återiterera är **PDF ett riktigt, riktigt dålig** format att använda som inmatning. Om du absolut måste använda PDF, var beredd på en utmatning som sträcker sig allt från anständig till oanvändbar, beroende på den inmatade PDF-filen."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:770
+msgid "Comic book collections"
+msgstr "Serietidningssamlingar"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:772
+msgid ""
+"A comic book collection is a .cbc file. A .cbc file is a ZIP file that "
+"contains other CBZ/CBR files. In addition the .cbc file must contain a "
+"simple text file called comics.txt, encoded in UTF-8. The comics.txt file "
+"must contain a list of the comics files inside the .cbc file, in the form "
+"filename:title, as shown below::"
+msgstr "En serietidningssamling är en .cbc-fil. En .cbc-fil är en ZIP-fil som innehåller andra CBZ-/CBR-filer. Dessutom måste .cbc-filen innehålla en enkel textfil som heter comics.txt, kodade i UTF-8. comics.txt-filen måste innehålla en förteckning över de comics-filerna inuti .cbc-filen i formen filename:title, enligt nedan::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:780
+msgid "The .cbc file will then contain::"
+msgstr ".cbc-filen kommer då innehålla::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:787
+msgid ""
+"calibre will automatically convert this .cbc file into a e-book with a Table"
+" of Contents pointing to each entry in comics.txt."
+msgstr "calibre kommer automatiskt konvertera denna .cbc-fil till en e-bok med en innehållsförteckning som hänvisar till varje uppslagsord i serietidning.txt."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:791
+msgid "EPUB advanced formatting demo"
+msgstr "Demonstration av avancerad EPUB-formatering"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:793
+msgid ""
+"Various advanced formatting for EPUB files is demonstrated in this "
+":download_file:`demo file <demos/demo.epub>`. The file was created from hand"
+" coded HTML using calibre and is meant to be used as a template for your own"
+" EPUB creation efforts."
+msgstr "Olika avancerad formatering för EPUB-filer demonstreras i den här :download_file:`demofilen <demos/demo.epub>`. Filen skapades från handkodad HTML med calibre och är tänkt att användas som en mall för dina egna EPUB skapande insatser."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:796
+msgid ""
+"The source HTML it was created from is available :download_file:`demo.zip "
+"<demos/demo.zip>`. The settings used to create the EPUB from the ZIP file "
+"are::"
+msgstr "HTML-källan som den skapades från är tillgänglig :download_file:`demo.zip <demos/demo.zip>`. Inställningarna som används för att skapa EPUB:n från ZIP-filen är::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:801
+msgid ""
+"Note that because this file explores the potential of EPUB, most of the "
+"advanced formatting is not going to work on readers less capable than "
+"calibre's built-in EPUB viewer."
+msgstr "Observera att eftersom den här filen utforskar potentialen i EPUB, kommer inte de flesta av de avancerade formatering att fungera på läsenheter mindre kapabla än calibres inbyggda EPUB-visare."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:805
+msgid "Convert ODT documents"
+msgstr "Konvertera ODT-dokument"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:807
+msgid ""
+"calibre can directly convert ODT (OpenDocument Text) files. You should use "
+"styles to format your document and minimize the use of direct formatting. "
+"When inserting images into your document you need to anchor them to the "
+"paragraph, images anchored to a page will all end up in the front of the "
+"conversion."
+msgstr "calibre kan direkt konvertera ODT (Opendocument Text)-filer. Du bör använda format för att formatera ditt dokument och minimera användningen av direkt formatering. När bilder infogas i ditt dokument måste du förankra dem till stycke, förankrade bilder till en sida kommer alla hamna på framsidan av konverteringen."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:810
+msgid ""
+"To enable automatic detection of chapters, you need to mark them with the "
+"built-in styles called :guilabel:`Heading 1`, :guilabel:`Heading 2`, ..., "
+":guilabel:`Heading 6` (:guilabel:`Heading 1` equates to the HTML tag "
+"``<h1>``, :guilabel:`Heading 2` to ``<h2>``, etc). When you convert in "
+"calibre you can enter which style you used into the :guilabel:`Detect "
+"chapters at` box. Example:"
+msgstr "För att möjliggöra automatisk identifiering av kapitel måste du markera dem med de inbyggda formaten som heter :guilabel:`Rubrik 1`, :guilabel:`Rubrik 2`, ..., :guilabel:`Rubrik 16` (:guilabel:`Rubrik 1` motsvarar HTML-taggen ``<h1>``, :guilabel:`Rubrik 2` till ``<h2>`` o.s.v.). När du konverterar i calibre kan du ange vilket format du använde i :guilabel:`Identifiera kapitel i` rutan. Exempel:"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:816
+msgid ""
+"If you mark Chapters with style :guilabel:`Heading 2`, you have to set the "
+"'Detect chapters at' box to ``//h:h2``"
+msgstr "Om du markerar kapitel med formatet :guilabel:`Rubrik 2` måste du ställa in rutan \"Upptäck kapitel i\" till ``//h:h2``"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:817
+msgid ""
+"For a nested TOC with Sections marked with :guilabel:`Heading 2` and the "
+"Chapters marked with :guilabel:`Heading 3` you need to enter "
+"``//h:h2|//h:h3``. On the Convert - TOC page set the :guilabel:`Level 1 TOC`"
+" box to ``//h:h2`` and the :guilabel:`Level 2 TOC` box to ``//h:h3``."
+msgstr "För en kapslad innehållsförteckning med avsnitt markerad med :guilabel:`Rubrik 2` och de kapitel som är markerade med :guilabel:`Rubrik 3` måste du ange ``//h:h2|//h:h3``. I konvertera - innehållsförteckningssidan ställ in rutan :guilabel:`Nivå 1 Innehållsförteckning` till ``//h:h2`` och rutan :guilabel:`nivå 2 innehållsförteckning` till ``//h:h3``."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:819
+msgid ""
+"Well-known document properties (Title, Keywords, Description, Creator) are "
+"recognized and calibre will use the first image (not to small, and with good"
+" aspect-ratio) as the cover image."
+msgstr "Välkända dokumentegenskaper (titel, sökord, beskrivning, skapare) känns igen och calibre kommer att använda den första bilden (inte för liten, och med goda proportioner) som omslagsbild."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:821
+msgid ""
+"There is also an advanced property conversion mode, which is activated by "
+"setting the custom property ``opf.metadata`` ('Yes or No' type) to Yes in "
+"your ODT document (File->Properties->Custom Properties). If this property is"
+" detected by calibre, the following custom properties are recognized "
+"(``opf.authors`` overrides document creator)::"
+msgstr "Det finns också ett avancerat egenskapskonverteringsläge, som aktiveras genom att ställa in den anpassade egenskapen ``opf.metadata`` (av \"Ja eller Nej\" typ) till Ja i ditt ODT-dokument (Arkiv->Egenskaper->Anpassa egenskaper). Om den här egenskapen upptäcks av calibre känns följande anpassade egenskaper igen (``opf.authors`` åsidosätter dokumentets skapare)::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:834
+msgid ""
+"In addition to this, you can specify the picture to use as the cover by "
+"naming it ``opf.cover`` (right click, Picture->Options->Name) in the ODT. If"
+" no picture with this name is found, the 'smart' method is used.  As the "
+"cover detection might result in double covers in certain output formats, the"
+" process will remove the paragraph (only if the only content is the cover!) "
+"from the document. But this works only with the named picture!"
+msgstr "Utöver detta kan du ange vilken bild som ska användas som omslaget genom att namnge den ``opf.cover`` (högerklicka, Bild-> Alternativ-> Namn) i ODT. Om ingen bild med detta namn hittas, används den \"smarta\" metoden. Eftersom omslagsupptäckt kan leda till dubbla omslag i vissa utmatningsformat, kommer processen att ta bort stycken (endast om det enda innehållet är omslaget!) från dokumentet. Men detta fungerar bara med namngiven bild!"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:841
+msgid ""
+"To disable cover detection you can set the custom property ``opf.nocover`` "
+"('Yes or No' type) to Yes in advanced mode."
+msgstr "För att inaktivera omslagsupptäckt kan du ställa in den anpassade egenskapen ``opf.nocover`` ('Ja eller Nej'-typ) till Ja i avancerat läge."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:844
+msgid "Converting to PDF"
+msgstr "Konvertera till PDF"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:846
+msgid ""
+"The first, most important, setting to decide on when converting to PDF is "
+"the page size. By default, calibre uses a page size of \"U.S. Letter\". You "
+"can change this to another standard page size or a completely custom size in"
+" the :guilabel:`PDF Output` section of the conversion dialog. If you are "
+"generating a PDF to be used on a specific device, you can turn on the option"
+" to use the page size from the :guilabel:`output profile` instead. So if "
+"your output profile is set to Kindle, calibre will create a PDF with page "
+"size suitable for viewing on the small Kindle screen."
+msgstr "Den första, viktigaste inställningen att bestämma när man konverterar till PDF är sidstorleken. Som standard använder calibre en sidstorlek för \"U.S. Letter\". Du kan ändra detta till en annan standard sidstorlek eller en helt anpassad storlek i avsnittet :guilabel:`PDF-utmatning` sektionen i konverteringsdialogrutan. Om du skapar en PDF som ska användas på en viss enhet kan du slå på alternativet för att använda sidstorleken från :guilabel:`utmatningsprofilen` istället. Så om din utskriftsprofil är inställd på Kindle, kommer calibre att skapa en PDF med sidstorlek som är lämplig för visning på den lilla Kindle-skärmen."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:856
+msgid "Headers and Footers"
+msgstr "Sidhuvuden och sidfötter"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:857
+msgid ""
+"You can insert arbitrary headers and footers on each page of the PDF by "
+"specifying header and footer templates. Templates are just snippets of HTML "
+"code that get rendered in the header and footer locations. For example, to "
+"display page numbers centered at the bottom of every page, in green, use the"
+" following footer template::"
+msgstr "Du kan infoga godtyckliga sidhuvud och sidfot på varje sida i PDF-filen genom att ange sidhuvuds- och sidfotsmallar. Mallar är bara kodavsnitt av HTML-kod som blir återgivna i sidhuvuds- och sidfotsplatser. Till exempel för att visa sidnummer centrerade längst ner på varje sida, i grönt, använd följande sidfotsmall::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:865
+msgid ""
+"calibre will automatically replace :code:`_PAGENUM_` with the current page "
+"number. You can even put different content on even and odd pages, for "
+"example the following header template will show the title on odd pages and "
+"the author on even pages::"
+msgstr "calibre ersätter automatiskt :code:`_PAGENUM_` med det aktuella sidnumret. Du kan även sätta olika innehåll på jämna och udda sidor, till exempel följande rubrikmall visar titeln på udda sidor och författaren på jämna sidor::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:874
+msgid ""
+"calibre will automatically replace :code:`_TITLE_` and :code:`_AUTHOR_` with"
+" the title and author of the document being converted. Setting "
+":code:`justify-content` to :code:`flex-end` will cause the text to be right "
+"aligned."
+msgstr "calibre kommer automatiskt ersätta :code:`_TITLE_` och :code:`_AUTHOR_` med titeln och författaren till dokumentet konverteras. Inställningen :code:`justify-content` till :code:`flex-end` kommer att leda till att texten är rätt justerad."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:879
+msgid ""
+"You can also display text at the left and right edges and change the font "
+"size, as demonstrated with this header template::"
+msgstr "Du kan också visa text på vänster- och högerkant och ändra teckensnittsstorleken, vilket framgår av den här sidhuvudmallen::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:887
+msgid ""
+"This will display the title at the left and the author at the right, in a "
+"font size smaller than the main text."
+msgstr "Detta kommer att visa titeln till vänster och författare till höger, i en teckensnittsstorlek som är mindre än huvudtexten."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:890
+msgid "You can also use the current section in templates, as shown below::"
+msgstr "Du kan också använda det aktuella avsnittet i mallar, enligt nedan::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:894
+msgid ""
+":code:`_SECTION_` is replaced by whatever the name of the current section "
+"is. These names are taken from the metadata Table of Contents in the "
+"document (the PDF Outline). If the document has no table of contents then it"
+" will be replaced by empty text. If a single PDF page has multiple sections,"
+" the first section on the page will be used. Similarly, there is a variable "
+"named :code:`_TOP_LEVEL_SECTION_` that can be used to get the name of the "
+"current top-level section."
+msgstr ":code:`_SECTION_` Ersätts med oavsett vad namnet på det aktuella avsnittet är. Dessa namn är tagna från metadata Innehåll i dokumentet (PDF Outline). Om dokumentet inte har någon innehållsförteckning då det kommer att ersättas av tom text. Om en enda PDF-sida har flera avsnitt, kommer det första avsnittet på sidan användas. Likaså finns det en variabel med namnet :code:`_TOP_LEVEL_SECTION_` som kan användas för att ge namnet på det nuvarande toppnivåavsnittet."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:901
+msgid ""
+"You can even use JavaScript inside the header and footer templates, for "
+"example, the following template will cause page numbers to start at 4 "
+"instead of 1::"
+msgstr "Du kan till och med använda JavaScript i sidhuvud- och sidfotsmallarna, till exempel kommer följande mall att leda till att sidnummer börjar vid 4 istället för 1::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:911
+msgid ""
+"In addition there are some more variables you can use in the headers and "
+"footers, documented below:"
+msgstr "Dessutom finns det några fler variabler du kan använda i sidhuvud och sidfot, dokumenterade nedan:"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:914
+msgid ""
+"``_TOTAL_PAGES_`` - total number of pages in the PDF file, useful for "
+"implementing a progress counter, for example."
+msgstr "``_TOTAL_PAGES_`` - totalt antal sidor i PDF-filen, till exempel användbar för att implementera en framstegsräknare."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:916
+msgid ""
+"``_TOP_LEVEL_SECTION_PAGES_`` - total number of pages in the current top "
+"level section"
+msgstr "``_TOP_LEVEL_SECTION_PAGES_`` - totalt antal sidor i det aktuella toppnivåavsnittet"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:918
+msgid ""
+"``_TOP_LEVEL_SECTION_PAGENUM_`` - the page number of the current page within"
+" the current top level section"
+msgstr "``_TOP_LEVEL_SECTION_PAGENUM_`` - sidnumret för den aktuella sidan inom det aktuella toppnivåavsnittet"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:921
+msgid ""
+"When adding headers and footers make sure you set the page top and bottom "
+"margins to large enough values, under the :guilabel:`PDF Output` section of "
+"the conversion dialog."
+msgstr "När du lägger till sidhuvud och sidfot, se till att du ställer in sidans övre och nedre marginaler till tillräckligt stora värden under avsnittet :guilabel:`PDF-utmatningsformat` i konverteringsdialogrutan."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:926
+msgid "Printable Table of Contents"
+msgstr "Utskrivbar innehållsförteckning"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:928
+msgid ""
+"You can also insert a printable Table of Contents at the end of the PDF that"
+" lists the page numbers for every section. This is very useful if you intend"
+" to print out the PDF to paper. If you wish to use the PDF on an electronic "
+"device, then the PDF Outline provides this functionality and is generated by"
+" default."
+msgstr "Du kan också infoga en utskrift/tryckbar innehållsförteckning i slutet av PDF som listar sidnummer för varje avsnitt. Detta är mycket användbart om du tänker skriva ut PDF till papper. Om du vill använda PDF på en elektronisk produkt, ger PDF Outline denna funktionalitet och är skapad som standard."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:933
+msgid ""
+"You can customize the look of the generated Table of contents by using the "
+"Extra CSS conversion setting under the Look & feel part of the conversion "
+"dialog. The default CSS used is listed below, simply copy it and make "
+"whatever changes you like."
+msgstr "Du kan anpassa utseendet på den skapade innehållsförteckningen genom att använda extra CSS-konverteringsinställningen under Utseende & känsla-delen i konverteringsdialogrutan. Standard CSS som används är listade nedan, helt enkelt kopiera den och gör de ändringar du vill."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:953
+msgid "Custom page margins for individual HTML files"
+msgstr "Anpassade sidmarginaler för enskilda HTML-filer"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:955
+msgid ""
+"If you are converting an EPUB or AZW3 file with multiple individual HTML "
+"files inside it and you want to change the page margins for a particular "
+"HTML file you can add the following style block to the HTML file using the "
+"calibre E-book editor:"
+msgstr "Om du konverterar en EPUB- eller AZW3-fil med flera enskilda HTML-filer inuti den och du vill ändra sidmarginalerna för en viss HTML-fil kan du lägga till följande formatblock i HTML-filen med calibre e-bokredigeraren:"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:972
+msgid ""
+"Then, in the PDF output section of the conversion dialog, turn on the option"
+" to :guilabel:`Use page margins from the document being converted`. Now all "
+"pages generated from this HTML file will have ``10pt`` margins."
+msgstr "Aktivera sedan alternativet :guilabel:`Använd sidmarginaler från dokumentet som konverteras` i PDF-utmatningsavsnittet av konverteringsdialogrutan. Nu kommer alla sidor som skapas från denna HTML-fil att ha ``10pt`` marginaler."

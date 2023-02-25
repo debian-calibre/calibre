@@ -1,0 +1,960 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-10-17 08:20+0530\n"
+"PO-Revision-Date: 2014-10-17 02:53+0000\n"
+"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"Language-Team: Slovenian (Slovenia) (http://www.transifex.com/projects/p/calibre/language/sl_SI/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sl_SI\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+
+# babaa17c85a645e4b40d74e16859fc2a
+#: ../../home/kovid/work/calibre/manual/news_recipe.rst:4
+msgid "API Documentation for recipes"
+msgstr ""
+
+# 4b3ab395d5ae438596b23d1bc0086ccb
+#: ../../home/kovid/work/calibre/manual/news_recipe.rst:9
+msgid "The API for writing recipes is defined by the :class:`BasicNewsRecipe`"
+msgstr ""
+
+# 1d13414cc688418fb7413b1c72e030dc
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe:1
+msgid ""
+"Base class that contains logic needed in all recipes. By overriding "
+"progressively more of the functionality in this class, you can make "
+"progressively more customized/powerful recipes. For a tutorial introduction "
+"to creating recipes, see :doc:`news`."
+msgstr ""
+
+# 72f3e057545441e69356219b8c144bce
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.abort_recipe_processing:1
+msgid ""
+"Causes the recipe download system to abort the download of this recipe, "
+"displaying a simple feedback message to the user."
+msgstr ""
+
+# 3e639d476610406a87bdc4154dd78972
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.add_toc_thumbnail:1
+msgid ""
+"Call this from populate_article_metadata with the src attribute of an <img> "
+"tag from the article that is appropriate for use as the thumbnail "
+"representing the article in the Table of Contents. Whether the thumbnail is "
+"actually used is device dependent (currently only used by the Kindles). Note"
+" that the referenced image must be one that was successfully downloaded, "
+"otherwise it will be ignored."
+msgstr ""
+
+# ca3f040f15bb47279adf188585ad8252
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.adeify_images:1
+msgid ""
+"If your recipe when converted to EPUB has problems with images when viewed "
+"in Adobe Digital Editions, call this method from within "
+":meth:`postprocess_html`."
+msgstr ""
+
+# 91bd9e766cfd4543b165596ebdcffbbb
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.cleanup:1
+msgid ""
+"Called after all articles have been download. Use it to do any cleanup like "
+"logging out of subscription sites, etc."
+msgstr ""
+
+# 90237ca07bdf4ce6893b25e7b4768d17
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.clone_browser:1
+msgid ""
+"Clone the browser br. Cloned browsers are used for multi-threaded downloads,"
+" since mechanize is not thread safe. The default cloning routines should "
+"capture most browser customization, but if you do something exotic in your "
+"recipe, you should override this method in your recipe and clone manually."
+msgstr ""
+
+# 68fd54402fe346a9bff5de3b9b067bbd
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.clone_browser:7
+msgid ""
+"Cloned browser instances use the same, thread-safe CookieJar by default, "
+"unless you have customized cookie handling."
+msgstr ""
+
+# 4644e9ecccc644309c6e1c971c12d9b4
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.default_cover:1
+msgid "Create a generic cover for recipes that dont have a cover"
+msgstr ""
+
+# d9d35131c7784e17ab3ffb9d2a8c000f
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.download:1
+msgid ""
+"Download and pre-process all articles from the feeds in this recipe. This "
+"method should be called only once on a particular Recipe instance. Calling "
+"it more than once will lead to undefined behavior. :return: Path to "
+"index.html"
+msgstr ""
+
+# ac6358da7268472c8cf52c02c510d105
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.extract_readable_article:1
+msgid ""
+"Extracts main article content from 'html', cleans up and returns as a "
+"(article_html, extracted_title) tuple. Based on the original readability "
+"algorithm by Arc90."
+msgstr ""
+
+# 82c669827f18464daed60caf5f3ecef9
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_article_url:1
+msgid ""
+"Override in a subclass to customize extraction of the :term:`URL` that "
+"points to the content for each article. Return the article URL. It is called"
+" with `article`, an object representing a parsed article from a feed. See "
+"`feedparser <http://packages.python.org/feedparser/>`_. By default it looks "
+"for the original link (for feeds syndicated via a service like feedburner or"
+" pheedo) and if found, returns that or else returns `article.link "
+"<http://packages.python.org/feedparser/reference-entry-link.html>`_."
+msgstr ""
+
+# 7f2498b6cfa242ad865775f9a5abf379
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_browser:1
+msgid ""
+"Return a browser instance used to fetch documents from the web. By default "
+"it returns a `mechanize <http://wwwsearch.sourceforge.net/mechanize/>`_ "
+"browser instance that supports cookies, ignores robots.txt, handles "
+"refreshes and has a mozilla firefox user agent."
+msgstr ""
+
+# e71144dcf6064701b09734dec9507779
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_browser:6
+msgid ""
+"If your recipe requires that you login first, override this method in your "
+"subclass. For example, the following code is used in the New York Times "
+"recipe to login for full access::"
+msgstr ""
+
+# 859b25ca2aa2459d915a68f50d4b20fc
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_cover_url:1
+msgid ""
+"Return a :term:`URL` to the cover image for this issue or `None`. By default"
+" it returns the value of the member `self.cover_url` which is normally "
+"`None`. If you want your recipe to download a cover for the e-book override "
+"this method in your subclass, or set the member variable `self.cover_url` "
+"before this method is called."
+msgstr ""
+
+# 3fd74bdaebe247ab9051f1167b9109ea
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_feeds:1
+msgid ""
+"Return a list of :term:`RSS` feeds to fetch for this profile. Each element "
+"of the list must be a 2-element tuple of the form (title, url). If title is "
+"None or an empty string, the title from the feed is used. This method is "
+"useful if your recipe needs to do some processing to figure out the list of "
+"feeds to download. If so, override in your subclass."
+msgstr ""
+
+# d2f4ca3bc1d941ba8989e7013191066a
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_masthead_title:1
+msgid "Override in subclass to use something other than the recipe title"
+msgstr ""
+
+# d722978fd6d24a7d8a7b2bd86be8e227
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_masthead_url:1
+msgid ""
+"Return a :term:`URL` to the masthead image for this issue or `None`. By "
+"default it returns the value of the member `self.masthead_url` which is "
+"normally `None`. If you want your recipe to download a masthead for the "
+"e-book override this method in your subclass, or set the member variable "
+"`self.masthead_url` before this method is called. Masthead images are used "
+"in Kindle MOBI files."
+msgstr ""
+
+# 9039f9ec87c945b99556981aa2e456ee
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:1
+msgid ""
+"If you set `articles_are_obfuscated` this method is called with every "
+"article URL. It should return the path to a file on the filesystem that "
+"contains the article HTML. That file is processed by the recursive HTML "
+"fetching engine, so it can contain links to pages/images on the web."
+msgstr ""
+
+# 2ed29c479a714ab38a745faaf7e367db
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:6
+msgid ""
+"This method is typically useful for sites that try to make it difficult to "
+"access article content automatically."
+msgstr ""
+
+# 2d48fe2a1a2b4e4eb47681d54fc3cd54
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.image_url_processor:1
+msgid ""
+"Perform some processing on image urls (perhaps removing size restrictions "
+"for dynamically generated images, etc.) and return the precessed URL."
+msgstr ""
+
+# a021df03137b41e78a9b95a1c0e8a42c
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:1
+msgid ""
+"Convenience method that takes an URL to the index page and returns a "
+"`BeautifulSoup "
+"<http://www.crummy.com/software/BeautifulSoup/documentation.html>`_ of it."
+msgstr ""
+
+# ba2b577e28a340bc90143dbbb2973c6e
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:5
+msgid "`url_or_raw`: Either a URL or the downloaded index page as a string"
+msgstr ""
+
+# 19aace5b241c46008aaae4d0e6af03c1
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:1
+msgid ""
+"Return True if the link should be followed or False otherwise. By default, "
+"raises NotImplementedError which causes the downloader to ignore it."
+msgstr ""
+
+# a228b67690434ba8b9954f792e53118e
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:5
+msgid "The URL to be followed"
+msgstr ""
+
+# 30c40ad2ba7444e384abaabac0bc0df0
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:6
+msgid "The Tag from which the URL was derived"
+msgstr ""
+
+# 73bf56d8a8914a3b8048d6b82ee01f53
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.javascript_login:1
+msgid ""
+"This method is used to login to a website that uses javascript for its login"
+" form. After the login is complete, the cookies returned from the website "
+"are copied to a normal (non-javascript) browser and the download proceeds "
+"using those cookies."
+msgstr ""
+
+# ada15843bc2f41d3880781ddea02227c
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.javascript_login:6
+msgid "An example implementation::"
+msgstr ""
+
+# 66d0454efb864b2792e4729015d92fd4
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.javascript_login:15
+msgid "Note that you can also select forms with CSS2 selectors, like this::"
+msgstr ""
+
+# 90ed13bf459a4f46b19942647a911985
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.parse_feeds:1
+msgid ""
+"Create a list of articles from the list of feeds returned by "
+":meth:`BasicNewsRecipe.get_feeds`. Return a list of :class:`Feed` objects."
+msgstr ""
+
+# 7514aaa1cf6d42f6bbb496f0da4548f5
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.parse_index:1
+msgid ""
+"This method should be implemented in recipes that parse a website instead of"
+" feeds to generate a list of articles. Typical uses are for news sources "
+"that have a \"Print Edition\" webpage that lists all the articles in the "
+"current print edition. If this function is implemented, it will be used in "
+"preference to :meth:`BasicNewsRecipe.parse_feeds`."
+msgstr ""
+
+# 8b4e381c09294e2d9e5d8d9d3447772f
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.parse_index:7
+msgid ""
+"It must return a list. Each element of the list must be a 2-element tuple of"
+" the form ``('feed title', list of articles)``."
+msgstr ""
+
+# 8081c955076440ba8d6c19ee9da2ba43
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.parse_index:10
+msgid "Each list of articles must contain dictionaries of the form::"
+msgstr ""
+
+# 11b5530acf664a2189e09b77e701d869
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.parse_index:23
+msgid ""
+"For an example, see the recipe for downloading `The Atlantic`. In addition, "
+"you can add 'author' for the author of the article."
+msgstr ""
+
+# 031bdda5f1154f20a4252d7458ba4705
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.parse_index:26
+msgid ""
+"If you want to abort processing for some reason and have calibre show the "
+"user a simple message instead of an error, call "
+":meth:`abort_recipe_processing`."
+msgstr ""
+
+# 5f36e7bfd9554bcdb10d352c5d22ad61
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:1
+msgid ""
+"Called when each HTML page belonging to article is downloaded. Intended to "
+"be used to get article metadata like author/summary/etc. from the parsed "
+"HTML (soup). :param article: A object of class "
+":class:`calibre.web.feeds.Article`. If you change the summary, remember to "
+"also change the text_summary :param soup: Parsed HTML belonging to this "
+"article :param first: True iff the parsed HTML is the first page of the "
+"article."
+msgstr ""
+
+# f43d2f817e6d4914850a544759f25f7f
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:1
+msgid "Run any needed post processing on the parsed downloaded e-book."
+msgstr ""
+
+# 192b1200f32740448fc443940ed6597e
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:3
+msgid "An OEBBook object"
+msgstr ""
+
+# 8f88ef696914458e8c04efb93b3d94b7
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:4
+msgid "Conversion options"
+msgstr ""
+
+# 4cfb4a41d91843838414afcc725eb37b
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:1
+msgid ""
+"This method is called with the source of each downloaded :term:`HTML` file, "
+"after it is parsed for links and images. It can be used to do arbitrarily "
+"powerful post-processing on the :term:`HTML`. It should return `soup` after "
+"processing it."
+msgstr ""
+
+# 5332d01a4a9242b68dbd14d1335369c2
+# c0d2141af4294687a73acd9ccff609a8
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:6
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:6
+msgid ""
+"A `BeautifulSoup "
+"<http://www.crummy.com/software/BeautifulSoup/documentation.html>`_  "
+"instance containing the downloaded :term:`HTML`."
+msgstr ""
+
+# 6c98022ffab945cea8714d37a80f004d
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:7
+msgid "True if this is the first page of an article."
+msgstr ""
+
+# b366a342578e42189fdd15248fd7b050
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.preprocess_html:1
+msgid ""
+"This method is called with the source of each downloaded :term:`HTML` file, "
+"before it is parsed for links and images. It is called after the cleanup as "
+"specified by remove_tags etc. It can be used to do arbitrarily powerful pre-"
+"processing on the :term:`HTML`. It should return `soup` after processing it."
+msgstr ""
+
+# d1fea26ec7a54e0ca40094958e2ff2ac
+# 40dd39330aa24e848155e0a6c1e88077
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.preprocess_html:7
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.skip_ad_pages:8
+msgid ""
+"`soup`: A `BeautifulSoup "
+"<http://www.crummy.com/software/BeautifulSoup/documentation.html>`_ instance"
+" containing the downloaded :term:`HTML`."
+msgstr ""
+
+# 949aaae5821747a294057f5949a2e4c7
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:1
+msgid ""
+"This method is called with the source of each downloaded :term:`HTML` file, "
+"before it is parsed into an object tree. raw_html is a unicode string "
+"representing the raw HTML downloaded from the web. url is the URL from which"
+" the HTML was downloaded."
+msgstr ""
+
+# 21818b08a36948c2935a1a1e190839cd
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:6
+msgid "Note that this method acts *before* preprocess_regexps."
+msgstr ""
+
+# d360a89e180445619e5850410ef47cab
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:8
+msgid "This method must return the processed raw_html as a unicode object."
+msgstr ""
+
+# 113ec1cabb42411698ea36554f800a77
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.print_version:1
+msgid ""
+"Take a `url` pointing to the webpage with article content and return the "
+":term:`URL` pointing to the print version of the article. By default does "
+"nothing. For example::"
+msgstr ""
+
+# bc3c538efa5b47b596e65e2a953c3621
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.skip_ad_pages:1
+msgid ""
+"This method is called with the source of each downloaded :term:`HTML` file, "
+"before any of the cleanup attributes like remove_tags, keep_only_tags are "
+"applied. Note that preprocess_regexps will have already been applied. It is "
+"meant to allow the recipe to skip ad pages. If the soup represents an ad "
+"page, return the HTML of the real page. Otherwise return None."
+msgstr ""
+
+# 145af3307ce24889ad43ae215e921151
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.sort_index_by:1
+msgid ""
+"Convenience method to sort the titles in `index` according to `weights`. "
+"`index` is sorted in place. Returns `index`."
+msgstr ""
+
+# 7acd047e92f34e829cf234b5ba1fd468
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.sort_index_by:4
+msgid "`index`: A list of titles."
+msgstr ""
+
+# 0fec9d982ae843d9956d918056ef1bef
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.sort_index_by:6
+msgid ""
+"`weights`: A dictionary that maps weights to titles. If any titles in index "
+"are not in weights, they are assumed to have a weight of 0."
+msgstr ""
+
+# 3edbb2c89d7048a3840bfe606f059367
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:1
+msgid ""
+"Convenience method to take a `BeautifulSoup "
+"<http://www.crummy.com/software/BeautifulSoup/documentation.html>`_ `Tag` "
+"and extract the text from it recursively, including any CDATA sections and "
+"alt tag attributes. Return a possibly empty unicode string."
+msgstr ""
+
+# f5b049b008a144f68f7ca3db3d329766
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:6
+msgid ""
+"`use_alt`: If `True` try to use the alt attribute for tags that don't have "
+"any textual content"
+msgstr ""
+
+# 8229cbc48bc04e92934a7bde704bbb12
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:9
+msgid ""
+"`tag`: `BeautifulSoup "
+"<http://www.crummy.com/software/BeautifulSoup/documentation.html>`_ `Tag`"
+msgstr ""
+
+# 9ba7d130265c4039918801d066a5135b
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.articles_are_obfuscated:1
+msgid ""
+"Set to True and implement :meth:`get_obfuscated_article` to handle websites "
+"that try to make it difficult to scrape content."
+msgstr ""
+
+# 586e89c028f8443da9afeca045548f2f
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.auto_cleanup:1
+msgid ""
+"Automatically extract all the text from downloaded article pages. Uses the "
+"algorithms from the readability project. Setting this to True, means that "
+"you do not have to worry about cleaning up the downloaded HTML manually "
+"(though manual cleanup will always be superior)."
+msgstr ""
+
+# e3dd5113ad7c415dbe65c60377a27023
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.auto_cleanup_keep:1
+msgid ""
+"Specify elements that the auto cleanup algorithm should never remove The "
+"syntax is a XPath expression. For example::"
+msgstr ""
+
+# c6561c790eaa423982ab584f957d556e
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.center_navbar:1
+msgid ""
+"If True the navigation bar is center aligned, otherwise it is left aligned"
+msgstr ""
+
+# a10504d02ee6431c880d5a49355fab59
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images:1
+msgid ""
+"Set this to False to ignore all scaling and compression parameters and pass "
+"images through unmodified. If True and the other compression parameters are "
+"left at their default values, jpeg images will be scaled to fit in the "
+"screen dimensions set by the output profile and compressed to size at most "
+"(w * h)/16 where w x h are the scaled image dimensions."
+msgstr ""
+
+# 0b62a17469bf4bf2a22ff9a075d948c0
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images_auto_size:1
+msgid ""
+"The factor used when auto compressing jpeg images. If set to None, auto "
+"compression is disabled. Otherwise, the images will be reduced in size to (w"
+" * h)/compress_news_images_auto_size bytes if possible by reducing the "
+"quality level, where w x h are the image dimensions in pixels. The minimum "
+"jpeg quality will be 5/100 so it is possible this constraint will not be "
+"met.  This parameter can be overridden by the parameter "
+"compress_news_images_max_size which provides a fixed maximum size for "
+"images. Note that if you enable scale_news_images_to_device then the image "
+"will first be scaled and then its quality lowered until its size is less "
+"than (w * h)/factor where w and h are now the *scaled* image dimensions. In "
+"other words, this compression happens after scaling."
+msgstr ""
+
+# 8943b4aa261c42679132aa7a4015c09f
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images_max_size:1
+msgid ""
+"Set jpeg quality so images do not exceed the size given (in KBytes). If set,"
+" this parameter overrides auto compression via "
+"compress_news_images_auto_size. The minimum jpeg quality will be 5/100 so it"
+" is possible this constraint will not be met."
+msgstr ""
+
+# 1de9a5111f5649708114bb278a1295e8
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.conversion_options:1
+msgid ""
+"Recipe specific options to control the conversion of the downloaded content "
+"into an e-book. These will override any user or plugin specified values, so "
+"only use if absolutely necessary. For example::"
+msgstr ""
+
+# 166d39cec3a34d638fa2050a2bd88395
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.cover_margins:1
+msgid ""
+"By default, the cover image returned by get_cover_url() will be used as the "
+"cover for the periodical.  Overriding this in your recipe instructs calibre "
+"to render the downloaded cover into a frame whose width and height are "
+"expressed as a percentage of the downloaded cover. cover_margins = (10, 15, "
+"'#ffffff') pads the cover with a white margin 10px on the left and right, "
+"15px on the top and bottom. Color names defined at "
+"http://www.imagemagick.org/script/color.php Note that for some reason, white"
+" does not always work on windows. Use #ffffff instead"
+msgstr ""
+
+# bc3cb519e5c449bc8dc54392b5e0942c
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.delay:1
+msgid ""
+"Delay between consecutive downloads in seconds. The argument may be a "
+"floating point number to indicate a more precise time."
+msgstr ""
+
+# 6b07a0f5edb344189bdf58327f7eb0f5
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.description:1
+msgid ""
+"A couple of lines that describe the content this recipe downloads. This will"
+" be used primarily in a GUI that presents a list of recipes."
+msgstr ""
+
+# 8067f9d65d31496db7d209049dbfcd69
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.encoding:1
+msgid ""
+"Specify an override encoding for sites that have an incorrect charset "
+"specification. The most common being specifying ``latin1`` and using "
+"``cp1252``. If None, try to detect the encoding. If it is a callable, the "
+"callable is called with two arguments: The recipe object and the source to "
+"be decoded. It must return the decoded source."
+msgstr ""
+
+# e0d7a13ce64f4645978a65d006e2c3f5
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.extra_css:1
+msgid ""
+"Specify any extra :term:`CSS` that should be added to downloaded "
+":term:`HTML` files It will be inserted into `<style>` tags, just before the "
+"closing `</head>` tag thereby overriding all :term:`CSS` except that which "
+"is declared using the style attribute on individual :term:`HTML` tags. For "
+"example::"
+msgstr ""
+
+# 19237d52cdfd4952ba9dcff2ca5a2f7a
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.feeds:1
+msgid ""
+"List of feeds to download Can be either ``[url1, url2, ...]`` or "
+"``[('title1', url1), ('title2', url2),...]``"
+msgstr ""
+
+# 7c994f6a9df44d9da5939c0311e727fd
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.filter_regexps:1
+msgid ""
+"List of regular expressions that determines which links to ignore If empty "
+"it is ignored. Used only if is_link_wanted is not implemented. For example::"
+msgstr ""
+
+# e006976291be41be85c596ce582be0eb
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.filter_regexps:7
+msgid "will remove all URLs that have `ads.doubleclick.net` in them."
+msgstr ""
+
+# f672a3d1124544cb8c3e7c1a228862fd
+# d059b2ab68294f3986fe5b748011903b
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.filter_regexps:9
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.match_regexps:9
+msgid ""
+"Only one of :attr:`BasicNewsRecipe.match_regexps` or "
+":attr:`BasicNewsRecipe.filter_regexps` should be defined."
+msgstr ""
+
+# c0e4910fbff0430d9939dd0089dd421c
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:1
+msgid ""
+"Ignore duplicates of articles that are present in more than one section. A "
+"duplicate article is an article that has the same title and/or URL. To "
+"ignore articles with the same title, set this to: ignore_duplicate_articles "
+"= {'title'} To use URLs instead, set it to: ignore_duplicate_articles = "
+"{'url'} To match on title or URL, set it to: ignore_duplicate_articles = "
+"{'title', 'url'}"
+msgstr ""
+
+# 0c139492bd994db18ba93a940f9fea5f
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.keep_only_tags:1
+msgid ""
+"Keep only the specified tags and their children. For the format for "
+"specifying a tag see :attr:`BasicNewsRecipe.remove_tags`. If this list is "
+"not empty, then the `<body>` tag will be emptied and re-filled with the tags"
+" that match the entries in this list. For example::"
+msgstr ""
+
+# c81de64e1d8a467ca9d338f889e0d02c
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.keep_only_tags:8
+msgid ""
+"will keep only tags that have an `id` attribute of `\"content\"` or "
+"`\"heading\"`."
+msgstr ""
+
+# d5a08d957440432db0dc74a9b38a7b54
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.language:1
+msgid ""
+"The language that the news is in. Must be an ISO-639 code either two or "
+"three characters long"
+msgstr ""
+
+# ec2a5e266b5344fb89ebf659fcb960b8
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.masthead_url:1
+msgid ""
+"By default, calibre will use a default image for the masthead (Kindle only)."
+" Override this in your recipe to provide a url to use as a masthead."
+msgstr ""
+
+# 56102bcc599d46bf9e285f074ca33b85
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.match_regexps:1
+msgid ""
+"List of regular expressions that determines which links to follow If empty, "
+"it is ignored. Used only if is_link_wanted is not implemented. For example::"
+msgstr ""
+
+# 0aa39dd53b4a48c28838934b178bebca
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.match_regexps:7
+msgid "will match all URLs that have `page=some number` in them."
+msgstr ""
+
+# f7ac9c927b664ec995960d4c3e87668b
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.max_articles_per_feed:1
+msgid ""
+"Maximum number of articles to download from each feed. This is primarily "
+"useful for feeds that don't have article dates. For most feeds, you should "
+"use :attr:`BasicNewsRecipe.oldest_article`"
+msgstr ""
+
+# 8b4464e7e9ae460bad70b1ee9cedaf44
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.needs_subscription:1
+msgid ""
+"If True the GUI will ask the user for a username and password to use while "
+"downloading If set to \"optional\" the use of a username and password "
+"becomes optional"
+msgstr ""
+
+# 6d0a4c5a7c9a433fbbde9daa52295b11
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.no_stylesheets:1
+msgid ""
+"Convenient flag to disable loading of stylesheets for websites that have "
+"overly complex stylesheets unsuitable for conversion to ebooks formats If "
+"True stylesheets are not downloaded and processed"
+msgstr ""
+
+# 872b8cc6ee9741db811b03d1bc31ec0f
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.oldest_article:1
+msgid "Oldest article to download from this news source. In days."
+msgstr ""
+
+# 5d21b07511664610991fc11fae04a928
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.preprocess_regexps:1
+msgid ""
+"List of :term:`regexp` substitution rules to run on the downloaded "
+":term:`HTML`. Each element of the list should be a two element tuple. The "
+"first element of the tuple should be a compiled regular expression and the "
+"second a callable that takes a single match object and returns a string to "
+"replace the match. For example::"
+msgstr ""
+
+# 4f38ff7f987b45e29f9c4dcb77683f9e
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.preprocess_regexps:12
+msgid "will remove everythong from `<!--Article ends here-->` to `</body>`."
+msgstr ""
+
+# 49d86adf6f014eafae24e59e234aa3c5
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.publication_type:1
+msgid ""
+"Publication type Set to newspaper, magazine or blog. If set to None, no "
+"publication type metadata will be written to the opf file."
+msgstr ""
+
+# 3bea9f6b342244d8881b09640db513cd
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.recipe_disabled:1
+msgid ""
+"Set to a non empty string to disable this recipe The string will be used as "
+"the disabled message"
+msgstr ""
+
+# 5ae401673cad4c31aa3160179043bcbf
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.recursions:1
+msgid "Number of levels of links to follow on article webpages"
+msgstr ""
+
+# e1bbd5ec48164365960334fd9f257807
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_attributes:1
+msgid "List of attributes to remove from all tags For example::"
+msgstr ""
+
+# 714aa81f90ea4b1187912189a3bd6e01
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_empty_feeds:1
+msgid ""
+"If True empty feeds are removed from the output. This option has no effect "
+"if parse_index is overridden in the sub class. It is meant only for recipes "
+"that return a list of feeds using `feeds` or :meth:`get_feeds`. It is also "
+"used if you use the ignore_duplicate_articles option."
+msgstr ""
+
+# 3ca8d522119c44dfab7e4c59a633189f
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_javascript:1
+msgid "Convenient flag to strip all javascript tags from the downloaded HTML"
+msgstr ""
+
+# 94eb4b01af2a43348922fa15e7f0d6ae
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_tags:1
+msgid ""
+"List of tags to be removed. Specified tags are removed from downloaded HTML."
+" A tag is specified as a dictionary of the form::"
+msgstr ""
+
+# 09e563d2912541eb98917a7545995f41
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_tags:9
+msgid ""
+"All keys are optional. For a full explanation of the search criteria, see "
+"`Beautiful Soup "
+"<http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html#Searching%20the%20Parse%20Tree>`_"
+" A common example::"
+msgstr ""
+
+# 999e041330c549fe853a998ee3a3fb1d
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_tags:15
+msgid ""
+"This will remove all `<div class=\"advert\">` tags and all their children "
+"from the downloaded :term:`HTML`."
+msgstr ""
+
+# 36c45f3040e948218dca9f630f615fd4
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_after:1
+msgid ""
+"Remove all tags that occur after the specified tag. For the format for "
+"specifying a tag see :attr:`BasicNewsRecipe.remove_tags`. For example::"
+msgstr ""
+
+# 5423fa03b0504f3c8c5834e0d8285fd6
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_after:7
+msgid "will remove all tags after the first element with `id=\"content\"`."
+msgstr ""
+
+# 4e21cac7244048898c0c1536ee6cc9ae
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_before:1
+msgid ""
+"Remove all tags that occur before the specified tag. For the format for "
+"specifying a tag see :attr:`BasicNewsRecipe.remove_tags`. For example::"
+msgstr ""
+
+# 7d1c2692393643c58cc2b8cd9e1fa12f
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_before:7
+msgid "will remove all tags before the first element with `id=\"content\"`."
+msgstr ""
+
+# e6b45f2fbf384a49b52411e3cff50517
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.requires_version:1
+msgid "Minimum calibre version needed to use this recipe"
+msgstr ""
+
+# 10f1f7a4ca324eb5ae360853ab88e2fa
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.reverse_article_order:1
+msgid "Reverse the order of articles in each feed"
+msgstr ""
+
+# 7f35991ed2d04f6ba2ceab8392876776
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.scale_news_images:1
+msgid ""
+"Maximum dimensions (w,h) to scale images to. If scale_news_images_to_device "
+"is True this is set to the device screen dimensions set by the output "
+"profile unless there is no profile set, in which case it is left at whatever"
+" value it has been assigned (default None)."
+msgstr ""
+
+# 72eb3ca9312a4a02ab8285b1dbada704
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.scale_news_images_to_device:1
+msgid ""
+"Rescale images to fit in the device screen dimensions set by the output "
+"profile. Ignored if no output profile is set."
+msgstr ""
+
+# 33ade171011842aaaf800a0f8ba8aef7
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.simultaneous_downloads:1
+msgid ""
+"Number of simultaneous downloads. Set to 1 if the server is picky. "
+"Automatically reduced to 1 if :attr:`BasicNewsRecipe.delay` > 0"
+msgstr ""
+
+# 96614fee7b154a379f5e80101b68398f
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.summary_length:1
+msgid "Max number of characters in the short description"
+msgstr ""
+
+# fa7d74c6ca8a42d6a2c8675d86acce29
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.template_css:1
+msgid ""
+"The CSS that is used to style the templates, i.e., the navigation bars and "
+"the Tables of Contents. Rather than overriding this variable, you should use"
+" `extra_css` in your recipe to customize look and feel."
+msgstr ""
+
+# 8f7e580892f34c42bdf7e1faf52c9fce
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.timefmt:1
+msgid ""
+"The format string for the date shown on the first page. By default: "
+"Day_Name, Day_Number Month_Name Year"
+msgstr ""
+
+# ea56b52413704d30bf34951725b62c74
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.timeout:1
+msgid "Timeout for fetching files from server in seconds"
+msgstr ""
+
+# d5f6ddf49fae4fc3b9da5f24925f7720
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.title:1
+msgid "The title to use for the ebook"
+msgstr ""
+
+# fb8f00f89f9c486288c8cc0d325f42c4
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.use_embedded_content:1
+msgid ""
+"Normally we try to guess if a feed has full articles embedded in it based on"
+" the length of the embedded content. If `None`, then the default guessing is"
+" used. If `True` then the we always assume the feeds has embedded content "
+"and if `False` we always assume the feed does not have embedded content."
+msgstr ""
+
+# 856681a3bef54555a784729aa4d6cac8
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.use_javascript_to_login:1
+msgid ""
+"If you set this True, then calibre will use javascript to login to the "
+"website. This is needed for some websites that require the use of javascript"
+" to login. If you set this to True you must implement the "
+":meth:`javascript_login` method, to do the actual logging in."
+msgstr ""

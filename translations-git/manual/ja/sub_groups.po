@@ -1,0 +1,269 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-06-17 02:39+0000\n"
+"PO-Revision-Date: 2014-06-17 08:37+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Japanese (http://www.transifex.com/calibre/calibre/language/ja/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:4
+msgid "Managing subgroups of books, for example \"genre\""
+msgstr "本のサブグループの管理、たとえば「ジャンル」"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:6
+msgid ""
+"Some people wish to organize the books in their library into subgroups, "
+"similar to subfolders. The most commonly provided reason is to create genre "
+"hierarchies, but there are many others. One user asked for a way to organize"
+" textbooks by subject and course number. Another wanted to keep track of "
+"gifts by subject and recipient. This tutorial will use the genre example for"
+" the rest of this post."
+msgstr "一部のユーザは、ライブラリの本をサブフォルダに似ているサブグループに整理したいと考えています。一番よくある理由はジャンルに階層を設けたいというものですが、他にもいろいろあります。あるユーザは教科書を科目とコース番号で整理する方法を求めました。別のユーザはテーマと受取人で贈り物を追跡したいと考えました。このチュートリアルではジャンルを例として説明します。"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:8
+msgid ""
+"Before going on, please note that we are not talking about folders on the "
+"hard disk. Subgroups are not file folders. Books will not be copied "
+"anywhere. calibre's library file structure is not affected. Instead, we are "
+"presenting a way to organize and display subgroups of books within a calibre"
+" library."
+msgstr "先に進む前に、これはハードディスク上のフォルダについての話ではないことに注意してください。サブグループはファイルのフォルダではありません。本はどこにもコピーされることはありません。calibre ライブラリのファイル構成には影響がありません。代わりに、calibre ライブラリの中で本のサブグループを整理して表示する方法を紹介します。"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:14
+msgid "sgtree"
+msgstr "sgtree"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:18
+msgid "The commonly-provided requirements for subgroups such as genres are:"
+msgstr "ジャンルのようなサブグループに対してよくある要求事項には、次のものがあります:"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:20
+msgid ""
+"A subgroup (e.g., a genre) must contain (point to) books, not categories of "
+"books. This is what distinguishes subgroups from calibre user categories."
+msgstr "サブグループ (ここでは例としてジャンル) にはカテゴリではなく本を含める必要があります。これがサブグループがカテゴリと異なる点です。"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:21
+msgid ""
+"A book can be in multiple subgroups (genres). This distinguishes subgroups "
+"from physical file folders."
+msgstr "本は複数のサブグループ (ジャンル) に分類できます。これがサブグループが物理的なファイルフォルダと異なる点です。"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:22
+msgid ""
+"Subgroups (genres) must form a hierarchy; subgroups can contain subgroups."
+msgstr "サブグループ (ジャンル) は階層を形成しなくてはなりません。サブグループにはサブグループを含めることができます。"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:24
+msgid ""
+"Tags give you the first two. If you tag a book with the genre then you can "
+"use the Tag browser (or search) to find the books with that genre, giving "
+"you the first. Many books can have the same tag(s), giving you the second. "
+"The problem is that tags don't satisfy the third requirement. They don't "
+"provide a hierarchy."
+msgstr "タグを使えば最初の二つはかなえられます。ジャンルごとにタグをつければタグブラウザ (または検索) でそのジャンルの本を見つけられます。これが 1 点目。同じタグを何冊でも本につけることは可能です。これが 2 点目。問題は、タグでは 3 番目の要求事項を満たせないということです。階層を提供していないのです。"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:26
+msgid ""
+"|sgtree| The calibre hierarchy feature gives you the third -- the ability to"
+" see the genres in a 'tree' and the ability to easily search for books in "
+"genre or sub-genre. For example, assume that your genre structure is similar"
+" to the following::"
+msgstr "|sgtree| calibre の階層機能が 3 番目を提供します。ジャンルをツリー構造で見ることができて、そのジャンルまたはサブジャンルにある本を簡単に検索できます。たとえばジャンルの構造が次のようになっているとしましょう::"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:45
+msgid ""
+"By using the hierarchy feature, you can see these genres in the Tag browser "
+"in tree form, as shown in the screen image. In this example the outermost "
+"level (Genre) is a custom column that contains the genres. Genres containing"
+" sub-genres appear with a small triangle next to them. Clicking on that "
+"triangle will open the item and show the sub-genres, as you can see with "
+"History and Science Fiction."
+msgstr "階層機能を使えば、これらのジャンルを画像が示すようにタグブラウザでツリー状に表示できます。この例では一番外側の階層 (ジャンル) は、ジャンルを含むカスタム列です。サブジャンルを含むジャンルは、隣に小さな三角が表示されます。三角をクリックすると項目が開かれてサブジャンルを表示し、ご覧のように \"History\" と \"Science Fiction\" が表示されます。"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:47
+msgid ""
+"Clicking on a genre can search for all books with that genre or children of "
+"that genre. For example, clicking on Science Fiction can give all three of "
+"the child genres, Alternate History, Military, and Space Opera. Clicking on "
+"Alternate History will give books in that genre, ignoring those in Military "
+"and Space Opera. Of course, a book can have multiple genres. If a book has "
+"both Space Opera and Military genres, then you will see that book if you "
+"click on either genre. Searching is discussed in more detail below."
+msgstr "ジャンル名の上でクリックするとそのジャンルおよびその子ジャンルに含まれる本をすべて検索します。たとえば Sicence Fiction の上でクリックすると、その 3 つの子ジャンルである Alternate History, Military, および Space Opera が表示されます。Alternate History の上でクリックすると、そのジャンルに含まれる本だけを検索し、Military と Space Opera は無視します。もちろん本には複数のジャンルを割り当てることが可能です。もしもある本が Space Opera かつ Military genres であるなら、どちらのジャンルをクリックしてもその本は表示されます。検索については下でさらに詳しく説明します。"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:49
+msgid ""
+"Another thing you can see from the image is that the genre Military appears "
+"twice, once under History and once under Science Fiction. Because the genres"
+" are in a hierarchy, these are two separate genres. A book can be in one, "
+"the other, or (doubtfully in this case) both. For example, the books in "
+"Winston Churchill's \"The Second World War\" could be in "
+"\"History.Military\". David Weber's Honor Harrington books could be in "
+"\"Science Fiction.Military\", and for that matter also in \"Science "
+"Fiction.Space Opera.\""
+msgstr "この画像からわかるもうひとつのことは、Military ジャンルは 2 つあるということです。ひとつは History の下に、もうひとつは Science Fiction にあります。ジャンルは階層構造になっていますから、これらは 2 つの別々のジャンルです。ある本が片方の中にあったり、もう一方の中にあったり、両方にあったり (と言ってもこの場合では、ありえそうもありませんが) します。たとえば  Winston Churchill の \"The Second World War\" は \"History.Military\" に分類されるでしょう。David Weber の Honor Harrington シリーズは \"Science Fiction.Military\" に分類されるでしょうし、さらに言えば \"Science Fiction.Space Opera\" にも分類されるでしょう。"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:51
+msgid ""
+"Once a genre exists, that is at least one book has that genre, you can "
+"easily apply it to other books by dragging the books from the library view "
+"onto the genre you want the books to have. You can also apply genres in the "
+"metadata editors; more on this below."
+msgstr "ジャンルが存在する場合、つまり少なくとも 1 冊の本がそのジャンルに含まれている場合には、ライブラリビューから本をドラッグ&ドロップすることで簡単に他の本にそのジャンルを適用できます。詳しくは下に説明します。"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:54
+msgid "Setup"
+msgstr "セットアップ"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:56
+msgid ""
+"By now, your question might be \"How was all of this setup?\" There are "
+"three steps: 1) create the custom column, 2) tell calibre that the new "
+"column is to be treated as a hierarchy, and 3) add genres."
+msgstr "ここまでくれば、「設定はどうすればいいの？」と疑問に思うことでしょう。それには 3 つのステップがあります: 1) カスタム列を作成、2) calibre にその新しい列を階層として扱うよう指示、そして 3) ジャンルを追加。"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:58
+msgid ""
+"You create the custom column in the usual way, using Preferences -> Add your"
+" own columns. This example uses \"#genre\" as the lookup name and \"Genre\" "
+"as the column heading. The column type is \"Comma-separated text, like tags,"
+" shown in the Tag browser.\""
+msgstr "設定 -> 表示列の追加 を使用し、通常の方法でカスタム列を作成します。たとえば \"#genre\" を検索名、\"Genre\" を列見出しとします。列タイプは \"タグのようにカンマ区切りでタグブラウザに表示されるテキスト\" です。"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:63
+msgid ""
+"Then after restarting calibre, you must tell calibre that the column is to "
+"be treated as a hierarchy. Go to :guilabel:`Preferences -> Look & feel -> "
+"Tag browser` and enter the lookup name \"#genre\" into the \"Categories with"
+" hierarchical items\" box. Press :guilabel:`Apply`, and you are done with "
+"setting up."
+msgstr "次に、calibre を再起動した後、calibre にその列を階層として扱うよう指示します。:guilabel:`環境設定 -> 外観 -> タグブラウザ` へ行き、検索名 \"#genre\" を \"階層化するカテゴリ\" に入力します。:guilabel:`適用` を押せば設定完了です。"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:68
+msgid ""
+"At the point there are no genres in the column. We are left with the last "
+"step: how to apply a genre to a book. A genre does not exist in calibre "
+"until it appears on at least one book. To learn how to apply a genre for the"
+" first time, we must go into some detail about what a genre looks like in "
+"the metadata for a book."
+msgstr "この時点で列にジャンルはありません。まだ最後のステップが残っています。本にジャンルを適用する方法です。ジャンルは、そこに最低 1 冊の本がないと calibre 上には存在しません。最初にジャンルを適用する方法を学ぶために、本の書誌の中でジャンルがどのように見えるかといった詳細について説明する必要があります。"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:70
+msgid ""
+"A hierarchy of 'things' is built by creating an item consisting of phrases "
+"separated by periods. Continuing the genre example, these items would "
+"\"History.Military\", \"Mysteries.Vampire\", \"Science Fiction.Space "
+"Opera\", etc. Thus to create a new genre, you pick a book that should have "
+"that genre, edit its metadata, and enter the new genre into the column you "
+"created. Continuing our example, if you want to assign a new genre "
+"\"Comics\" with a sub-genre \"Superheroes\" to a book, you would 'edit "
+"metadata' for that (comic) book, choose the Custom metadata tab, and then "
+"enter \"Comics.Superheroes\" as shown in the following (ignore the other "
+"custom columns):"
+msgstr "「モノ」の階層は、ピリオドで区切られたフレーズで構成された項目を作成することで構築されます。ジャンルの例で続けると、このような項目は \"History.Military\", \"Mysteries.Vampire\", \"Science Fiction.Space Opera\" などになります。したがって新しいジャンルを作成するには、そのジャンルに入れたい本を選び、書誌を編集し、作成した列に新しいジャンルを入力します。この例で言えば、新しいジャンル \"Comics\" とその下にサブジャンル \"Superheroes\" を本に割り当てたいとき、その (コミック) 本の \"書誌を編集\" し、カスタム書誌タブを選択して、以下に示されるように (その他のカスタム列は無視してください) \"Comics.Superheroes\" と入力します。"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:75
+msgid "After doing the above, you see in the Tag browser:"
+msgstr "上記の操作を行ったあと、タグブラウザにはこのように表示されます:"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:80
+msgid ""
+"From here on, to apply this new genre to a book (a comic book, presumably), "
+"you can either drag the book onto the genre, or add it to the book using "
+"edit metadata in exactly the same way as done above."
+msgstr "これ以降、この新しいジャンルを本 (おそらくコミック本) に適用するにはその本をジャンルにドラッグ&ドロップするか、\"書誌を編集\" を使って上記とまったく同じ方法で本に追加することができます。"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:84
+msgid ""
+"Hierarchical display only works if the Tag browser is set to sort items by "
+"name. This is the default and can be checked by clicking the "
+":guilabel:`Configure` button at the bottom of the Tag browser."
+msgstr "階層表示はタグブラウザが項目を名前順に表示するよう設定されている場合にのみ機能します。これがデフォルトで、タグブラウザ下部にある :guilabel:`設定` ボタンで確認できます。"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:89
+msgid "Searching"
+msgstr "検索"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:94
+msgid ""
+"The easiest way to search for genres is using the Tag browser, clicking on "
+"the genre you wish to see. Clicking on a genre with children will show you "
+"books with that genre and all child genres. However, this might bring up a "
+"question. Just because a genre has children doesn't mean that it isn't a "
+"genre in its own right. For example, a book can have the genre \"History\" "
+"but not \"History.Military\". How do you search for books with only "
+"\"History\"?"
+msgstr "ジャンルを検索する最も簡単な方法はタグブラウザを使用して、見たいジャンルの上でクリックすることです。子を持つジャンルの上でクリックすると、そのジャンルおよびすべての子ジャンルの本を表示します。しかし、ここで疑問に思うかもしれません。ジャンルに子があるからといって、それ自体がジャンルではないという意味ではありません。たとえばある本のジャンルが \"History\" であるが \"History.Military\" といった場合です。どうすれば \"History\" の本だけを検索できるのでしょうか？"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:96
+msgid ""
+"The Tag browser search mechanism knows if an item has children. If it does, "
+"clicking on the item cycles through 5 searches instead of the normal three. "
+"The first is the normal green plus, which shows you books with that genre "
+"only (e.g., History). The second is a doubled plus (shown above), which "
+"shows you books with that genre and all sub-genres (e.g., History and "
+"History.Military). The third is the normal red minus, which shows you books "
+"without that exact genre. The fourth is a doubled minus, which shows you "
+"books without that genre or sub-genres. The fifth is back to the beginning, "
+"no mark, meaning no search."
+msgstr "タグブラウザの検索メカニズムは、あるアイテムに子があるかどうかを認識しています。子がある場合、アイテム上でクリックすると通常は 3 つのサイクルが 5 つのサイクルで変わります。1 番目は普通の緑のプラスで、これはその本のジャンルのみ (つまり History) の本を表示します。2 番目は 2 個のプラス (上に表示) で、そのジャンルとすべてのサブジャンル (つまり History および History.Military) の本を表示します。3 番目は普通の赤のマイナスで、そのジャンルのみを除外した本を表示します。4 番目は 2 個のマイナスで、そのジャンルとサブジャンルを除外した本を表示します。5 番目で最初に戻り、マークが消え、検索なしを意味します。"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:99
+msgid "Restrictions"
+msgstr "制限"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:101
+msgid ""
+"If you search for a genre then create a saved search for it, you can use the"
+" 'restrict to' box to create a Virtual library of books with that genre. "
+"This is useful if you want to do other searches within the genre or to "
+"manage/update metadata for books in the genre. Continuing our example, you "
+"can create a Saved search named 'History.Japanese' by first clicking on the "
+"genre Japanese in the Tag browser to get a search into the search field, "
+"entering History.Japanese into the saved search field, then pushing the "
+"\"Save search\" button (the green box with the white plus, on the right-hand"
+" side)."
+msgstr "あるジャンルを検索してそれから保存済み検索を作成する場合、そのジャンルの本の仮想ライブラリを作成するのに \"制限\" ボックスを利用できます。これはそのジャンル内で他の検索を行い場合や、そのジャンルの本の書誌を管理/更新したい場合に役立ちます。この例で言うと、'History.Japanese' と名前をつけた保存済み検索を作成するにはタグブラウザで Japanese ジャンルの上でクリックして検索を検索フィールドに表示させ、保存済み検索のフィールドに 'History.Japanese' と入力して、\"検索を保存\" ボタン (右側にある、白いプラスのついた緑色のボックス) を押します。"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:106
+msgid "After creating the saved search, you can use it as a restriction."
+msgstr "保存済み検索を作成したあと、それを制限として利用できます。"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:112
+msgid "Useful template functions"
+msgstr "有用なテンプレート関数"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:114
+msgid ""
+"You might want to use the genre information in a template, such as with save"
+" to disk or send to device. The question might then be \"How do I get the "
+"outermost genre name or names?\" A calibre template function, subitems, is "
+"provided to make doing this easier."
+msgstr "ジャンルの情報を、ディスクに保存したり、デバイスに送信したりといったテンプレートで使用したいこともあるかもしれません。ここで「どうすれば一番外側のジャンル名を取得できる？」と疑問に思うことでしょう。これを簡単にするために、calibre のテンプレート関数 subitems が提供されています。"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:116
+msgid ""
+"For example, assume you want to add the outermost genre level to the save-"
+"to-disk template to make genre folders, as in \"History/The Gathering Storm "
+"- Churchill, Winston\". To do this, you must extract the first level of the "
+"hierarchy and add it to the front along with a slash to indicate that it "
+"should make a folder. The template below accomplishes this::"
+msgstr "たとえば、\"History/The Gathering Storm - Churchill, Winston\" のように一番外側のジャンルの階層をジャンルフォルダを作成するのために save-to-disk テンプレートに追加したいとします。これを行うには、階層の最初のレベルを抽出し、フォルダを作成する必要があることを示すためにスラッシュをつけて先頭に追加します。下のテンプレートがこれを行います::"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:120
+msgid ""
+"See :ref:`The template language <templatelangcalibre>` for more information "
+"about templates and the :func:`subitems` function."
+msgstr "テンプレートと :func:`subitems` 関数について詳しくは :ref:`テンプレート言語 <templatelangcalibre>` を参照してください。"

@@ -1,0 +1,706 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# EbXpJ6bp <ebxpj6bp@outlook.jp>, 2018
+# 9e07209270d73636b184c60f51a5f7ab_6c2ca72, 2018
+# Yuka Kachi, 2022
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre 5.44.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-06-17 02:39+0000\n"
+"PO-Revision-Date: 2017-12-15 03:02+0000\n"
+"Last-Translator: Yuka Kachi, 2022\n"
+"Language-Team: Japanese (https://www.transifex.com/calibre/teams/19337/ja/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:2
+msgid "Quick reference for regexp syntax"
+msgstr "正規表現の構文のクイックリファレンス"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:4
+msgid ""
+"This checklist summarizes the most commonly used/hard to remember parts of "
+"the regexp engine available in most parts of calibre."
+msgstr ""
+"このチェックリストには、calibre のほとんどのパーツで利用可能な正規表現エンジンのうち、最も一般的に利用される/覚えにくいものをまとめてあります。"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:10
+msgid "Contents"
+msgstr "目次"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:13
+msgid "Character classes"
+msgstr "文字クラス"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:15
+msgid ""
+"Character classes are useful to represent different groups of characters, "
+"succinctly."
+msgstr "文字クラスは異なる文字グループを簡潔に表現するのに役立ちます。"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:18
+msgid "Examples:"
+msgstr "例:"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:21
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:52
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:253
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:283
+msgid "**Representation**"
+msgstr "**表現**"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:21
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:52
+msgid "**Class**"
+msgstr "**クラス**"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:24
+msgid "``[a-z]``"
+msgstr "``[a-z]``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:24
+msgid ""
+"Lowercase letters. Does not include characters with accent mark and "
+"ligatures"
+msgstr "小文字。アクセント記号や合字を含むことはできません"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:27
+msgid "``[a-z0-9]``"
+msgstr "``[a-z0-9]``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:27
+msgid "Lowercase letters from a to z or numbers from 0 to 9"
+msgstr "小文字の英字 a から z もしくは数字 0 から 9"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:30
+msgid "``[A-Za-z-]``"
+msgstr "``[A-Za-z-]``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:30
+msgid ""
+"Uppercase or lowercase letters, or a dash. To include the dash in a class, "
+"you must put it at the beginning or at the end so as not to confuse it with "
+"the hyphen that specifies a range of characters"
+msgstr ""
+"大文字、小文字、ダッシュ。クラスにダッシュを含めるには、文字の範囲を指定するハイフンと混合させないように、先頭または後尾でダッシュを入れる必要があります。"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:33
+msgid "``[^0-9]``"
+msgstr "``[^0-9]``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:33
+msgid ""
+"Any character except a digit. The caret (^) placed at the beginning of the "
+"class excludes the characters of the class (complemented class)"
+msgstr "10進数字を除いた任意の文字。クラスの先頭に (^) を置くと、そのクラス (補完クラス) の文字を除外します"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:36
+msgid "``[[a-z]--[aeiouy]]``"
+msgstr "``[[a-z]--[aeiouy]]``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:36
+msgid ""
+"The lowercase consonants. A class can be included in a class. The characters"
+" ``--`` exclude what follows them"
+msgstr "小文字の子音。クラスはクラスに含めることが可能です。``--`` は、それに続くものを除外します"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:39
+msgid "``[\\w--[\\d_]]``"
+msgstr "``[\\w--[\\d_]]``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:39
+msgid ""
+"All letters (including foreign accented characters). Abbreviated classes can"
+" be used inside a class"
+msgstr "すべての文字 (外国のアクセント文字を含む)。クラス内で文字クラスの略記法を使用できます。"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:44
+msgid "Example::"
+msgstr "例::"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:49
+msgid "Shorthand character classes"
+msgstr "文字クラスの略記法"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:55
+msgid "``\\d``"
+msgstr "``\\d``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:55
+msgid "A digit (same as ``[0-9]``)"
+msgstr "10 進数字 (``[0-9]` と同等)"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:58
+msgid "``\\D``"
+msgstr "``\\D``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:58
+msgid "Any non-numeric character (same as ``[^0-9]``)"
+msgstr "非 10 進数字 (``[^0-9]`` と同等)"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:61
+msgid "``\\w``"
+msgstr "``\\w``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:61
+msgid ""
+"An alphanumeric character (``[a-zA-Z0-9]``) including characters with accent"
+" mark and ligatures"
+msgstr "単語構成文字 (``[a-zA-Z0-9]``) アクセント記号や合字を含む"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:64
+msgid "``\\W``"
+msgstr "``\\W``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:64
+msgid "Any “non-word” character"
+msgstr "非単語構成文字"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:67
+msgid "``\\s``"
+msgstr "``\\s``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:67
+msgid "Space, non-breaking space, tab, return line"
+msgstr "スペース、ノンブレーキングスペース、タブ、改行などの空白文字"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:70
+msgid "``\\S``"
+msgstr "``\\S``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:70
+msgid "Any “non-whitespace” character"
+msgstr "非空白文字"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:73
+msgid "``.``"
+msgstr "``.``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:73
+msgid ""
+"Any character except newline. Use the “dot all” checkbox or the ``(?s)`` "
+"regexp modifier to include the newline character."
+msgstr ""
+"改行を除いた任意の文字。改行文字を含めるには「すべてドット」のチェックボックスを使用するか、正規表現修飾子 ``(?s)`` を使用してください。"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:78
+msgid "The quantifiers"
+msgstr "量指定子"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:81
+msgid "**Quantifier**"
+msgstr "**量指定子**"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:81
+msgid "**Number of occurrences of the expression preceding the quantifier**"
+msgstr "**量指定子の前に置かれる式の出現回数**"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:84
+msgid "``?``"
+msgstr "``?``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:84
+msgid "0 or 1 occurrence of the expression. Same as ``{0,1}``"
+msgstr "expression の 0 回または 1 回の出現。``{0,1}`` と同等"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:87
+msgid "``+``"
+msgstr "``+``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:87
+msgid "1 or more occurrences of the expression. Same as ``{1,}``"
+msgstr "expression の 1 回以上の出現。``{1,}`` と同等"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:90
+msgid "``*``"
+msgstr "``*``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:90
+msgid "0, 1 or more occurrences of the expression. Same as ``{0,}``"
+msgstr "expression の 0 回以上の出現。``{0,}`` と同等"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:93
+msgid "``{n}``"
+msgstr "``{n}``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:93
+msgid "Exactly n occurrences of the expression"
+msgstr "expression のちょうど n 回の出現"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:96
+msgid "``{min,max}``"
+msgstr "``{min,max}``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:96
+msgid "Number of occurrences between the minimum and maximum values included"
+msgstr "出現の回数が min 以上 max 以下"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:99
+msgid "``{min,}``"
+msgstr "``{min,}``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:99
+msgid ""
+"Number of occurrences between the minimum value included and the infinite"
+msgstr "出現の回数が min 以上"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:102
+msgid "``{,max}``"
+msgstr "``{,max}``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:102
+msgid "Number of occurrences between 0 and the maximum value included"
+msgstr "出現の回数が 0 以上 max 以下"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:109
+msgid "Greed"
+msgstr "貪欲"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:111
+msgid ""
+"By default, with quantifiers, the regular expression engine is greedy: it "
+"extends the selection as much as possible. This often causes surprises, at "
+"first. ``?`` follows a quantifier to make it lazy. Avoid putting two in the "
+"same expression, the result can be unpredictable."
+msgstr ""
+"デフォルトでは、量指定子を使用したときに、正規表現エンジンは貪欲です。つまり選択範囲を可能な限り広げます。最初のうちは、しばしばびっくりするような結果になります。量指定子の後ろに"
+" ``?`` をつけると、怠惰になります。同じ式の中に 2 つを同時に入れることは避けてください。予測できない結果となる可能性があります。"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:116
+msgid ""
+"Beware of nesting quantifiers, for example, the pattern ``(a*)*``, as it "
+"exponentially increases processing time."
+msgstr ""
+"量指定子を入れ子にしないよう気を付けてください。たとえばパターン ``(a*)*`` のような使い方をすると、処理時間が指数関数的に増加してしまいます。"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:120
+msgid "Alternation"
+msgstr "選択子"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:122
+msgid ""
+"The ``|`` character in a regular expression is a logical ``OR``. It means "
+"that either the preceding or the following expression can match."
+msgstr "正規表現の中の ``|`` 文字は、論理 ``OR`` です。これは前の式または後ろの式のいずれかがマッチすればよいという意味になります。"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:126
+msgid "Exclusion"
+msgstr "除外"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:128
+msgid "Method 1"
+msgstr "方法 1"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:130
+msgid "``pattern_to_exclude(*SKIP)(*FAIL)|pattern_to_select``"
+msgstr "``pattern_to_exclude(*SKIP)(*FAIL)|pattern_to_select``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:132
+msgid "Example:"
+msgstr "例:"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:134
+msgid "``\"Blabla\"(*SKIP)(*FAIL)|Blabla``"
+msgstr "``\"Blabla\"(*SKIP)(*FAIL)|Blabla``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:136
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:144
+msgid ""
+"selects Blabla, in the strings Blabla or \"Blabla or Blabla\", but not in "
+"\"Blabla\"."
+msgstr ""
+"これは Blabla または \"Blabla or Blabla\" の文字列中の Blabla を選択しますが、\"Blabla\" "
+"では選択しません。"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:138
+msgid "Method 2"
+msgstr "方法 2"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:140
+msgid "``pattern_to_exclude\\K|(pattern_to_select)``"
+msgstr "``pattern_to_exclude\\K|(pattern_to_select)``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:142
+msgid "``\"Blabla\"\\K|(Blabla)``"
+msgstr "``\"Blabla\"\\K|(Blabla)``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:147
+msgid "Anchors"
+msgstr "アンカー"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:149
+msgid ""
+"An anchor is a way to match a logical location in a string, rather than a "
+"character. The most useful anchors for text processing are:"
+msgstr "アンカーは、文字ではなく、文字列の論理的な位置にマッチさせる方法です。テキスト処理に最も役立つアンカーは次のものです:"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:155
+msgid "``\\b``"
+msgstr "``\\b``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:153
+msgid ""
+"Designates a word boundary, i.e. a transition from space to non-space "
+"character. For example, you can use ``\\bsurd`` to match ``the surd`` but "
+"not ``absurd``."
+msgstr ""
+"単語の区切り、すなわち空白から非空白への遷移。たとえば ``\\bsurd`` は ``the surd`` にマッチしますが ``absurd`` "
+"にはマッチしません。"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:159
+msgid "``^``"
+msgstr "``^``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:158
+msgid "Matches the start of a line (in multi-line mode, which is the default)"
+msgstr "行の先頭にマッチ (複数行モードの場合。デフォルトは複数行モード)"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:162
+msgid "``$``"
+msgstr "``$``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:162
+msgid "Matches the end of a line (in multi-line mode, which is the default)"
+msgstr "行の末尾にマッチ (複数行モードの場合。デフォルトは複数行モード)"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:169
+msgid "``\\K``"
+msgstr "``\\K``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:165
+msgid ""
+"Resets the start position of the selection to its position in the pattern. "
+"Some regexp engines (but not calibre) do not allow lookbehind of variable "
+"length, especially with quantifiers. When you can use ``\\K`` with these "
+"engines, it also allows you to get rid of this limit by writing the "
+"equivalent of a positive lookbehind of variable length."
+msgstr ""
+"選択範囲の開始位置をパターン内のその位置にリセットします。一部の正規表現エンジンでは (ただし calibre は違います) "
+"特に量指定子を指定した場合に、可変長の後読みが許されていません。このようなエンジンで ``\\K`` "
+"が利用できる場合には、可変長の肯定後読みと同等のものを書くことによってこの制限を取り除けます。"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:172
+msgid "Groups"
+msgstr "グループ"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:177
+msgid "``(expression)``"
+msgstr "``(expression)``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:175
+msgid ""
+"Capturing group, which stores the selection and can be recalled later in the"
+" *search* or *replace* patterns with ``\\n``, where ``n`` is the sequence "
+"number of the capturing group (starting at 1 in reading order)"
+msgstr ""
+"グループをキャプチャします。グループには選択範囲が格納され、後で *検索* や *置換* のパターンとして ``\\n`` で参照できます。n "
+"はキャプチャしたグループの連番 (1 から順に読込み順) です"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:180
+msgid "``(?:expression)``"
+msgstr "``(?:expression)``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:180
+msgid "Group that does not capture the selection"
+msgstr "選択範囲をキャプチャしないグループ化"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:186
+msgid "``(?>expression)``"
+msgstr "``(?>expression)``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:183
+msgid ""
+"Atomic Group: As soon as the expression is satisfied, the regexp engine "
+"passes, and if the rest of the pattern fails, it will not backtrack to try "
+"other combinations with the expression. Atomic groups do not capture."
+msgstr ""
+"アトミックグループ: expression が満足したら即座に正規表現エンジンが処理を抜け、もし残りのパターンが失敗した場合には、その "
+"expression の他の組み合わせを試すためのバックトラッキングを行いません。"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:190
+msgid "``(?|expression)``"
+msgstr "``(?|expression)``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:189
+msgid ""
+"Branch reset group: the branches of the alternations included in the "
+"expression share the same group numbers"
+msgstr "ブランチリセットグループ: expression に含まれる代替のブランチが同じグループ番号を共有します"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:196
+msgid "``(?<name>expression)``"
+msgstr "``(?<name>expression)``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:193
+msgid ""
+"Group named “name”. The selection can be recalled later in the *search* "
+"pattern by ``(?P=name)`` and in the *replace* by ``\\g<name>``. Two "
+"different groups can use the same name."
+msgstr ""
+"“name” という名前のグループ。選択範囲は後で *検索* パターンからは ``(?P=name)`` として、 *置換* では "
+"``\\g<name>`` として呼び出すことができます。2 つの別のグループが同じ名前を使用できます。"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:199
+msgid "Lookarounds"
+msgstr "前後読み"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:202
+msgid "**Lookaround**"
+msgstr "**前後読み**"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:202
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:253
+msgid "**Meaning**"
+msgstr "**意味**"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:205
+msgid "``?=``"
+msgstr "``?=``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:205
+msgid "Positive lookahead (to be placed after the selection)"
+msgstr "肯定先読み (選択部分の前の位置)"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:208
+msgid "``?!``"
+msgstr "``?!``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:208
+msgid "Negative lookahead (to be placed after the selection)"
+msgstr "否定先読み (選択部分の後ろの位置)"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:211
+msgid "``?<=``"
+msgstr "``?<=``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:211
+msgid "Positive lookbehind (to be placed before the selection)"
+msgstr "肯定後読み (選択部分の後ろの位置)"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:214
+msgid "``?<!``"
+msgstr "``?<!``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:214
+msgid "Negative lookbehind (to be placed before the selection)"
+msgstr "否定後読み (選択部分の前の位置)"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:218
+msgid ""
+"Lookaheads and lookbehinds do not consume characters, they are zero length "
+"and do not capture. They are atomic groups: as soon as the assertion is "
+"satisfied, the regexp engine passes, and if the rest of the pattern fails, "
+"it will not backtrack inside the lookaround to try other combinations."
+msgstr ""
+"先読みと後読みは文字を消費せず、長さゼロでキャプチャされません。どちらもアトミックグループです。条件が満たされると即座に正規表現エンジンは処理を抜け、もし残りのパターンが失敗した場合には、その他の組み合わせを試すためのバックトラッキングを行いません。"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:223
+msgid ""
+"When looking for multiple matches in a string, at the starting position of "
+"each match attempt, a lookbehind can inspect the characters before the "
+"current position. Therefore, on the string 123, the pattern ``(?<=\\d)\\d`` "
+"(a digit preceded by a digit) should, in theory, select 2 and 3. On the "
+"other hand, ``\\d\\K\\d`` can only select 2, because the starting position "
+"after the first selection is immediately before 3, and there are not enough "
+"digits for a second match. Similarly, ``\\d(\\d)`` only captures 2. In "
+"calibre's regexp engine practice, the positive lookbehind behaves in the "
+"same way, and selects only 2, contrary to theory."
+msgstr ""
+"文字列の中で複数のマッチを検索するとき、それぞれのマッチを試行する最初の位置で、後読みは現在の位置の前にある文字を検査できます。したがって 123 "
+"という文字列で、``(?<=\\d)\\d`` というパターン (前に数字がついている数字) は、理論的には 2 と 3 "
+"を選択するはずです。一方、``\\d\\K\\d`` は 2 しか選択できません。なぜなら最初の選択の後の開始位置は 3 の直前であり、2 "
+"番目のマッチに十分な長さの数字がないためです。同様に、``\\d(\\d)`` は 2 しかキャプチャしません。calibre "
+"の正規表現エンジンのやり方では、肯定後読みも同じように動作し、理論に反して 2 しか選択しません。"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:233
+msgid ""
+"Groups can be placed inside lookarounds, but capture is rarely useful. "
+"Nevertheless, if it is useful, it will be necessary to be very careful in "
+"the use of a quantifier in a lookbehind: the greed associated with the "
+"absence of backtracking can give a surprising capture. For this reason, use "
+"``\\K`` rather than a positive lookbehind when you have a quantifier (or "
+"worse, several) in a capturing group of the positive lookbehind."
+msgstr ""
+"前後読みの内側にグループを配置することも可能ですが、キャプチャが役に立つことは滅多にありません。それでももし有用である場合には、後読みの中での量指定子の使用にはとても慎重になるべきです。バックトラックがないことに関連付けられた貪欲さは、びっくりするようなキャプチャをもたらすことがあります。このような理由から、肯定後読みのキャプチャグループの中に量指定子がある場合には、肯定後読みではなく"
+" ``\\K`` を使用してください。"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:240
+msgid "Example of negative lookahead:"
+msgstr "否定先読みの例:"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:242
+msgid "``(?![^<>{}]*[>}])``"
+msgstr "``(?![^<>{}]*[>}])``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:244
+msgid ""
+"Placed at the end of the pattern prevents to select within a tag or a style "
+"embedded in the file."
+msgstr "パターンの最後に配置すると、ファイルに埋めこまれたタグやスタイルの中で選択できなくなります。"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:246
+msgid ""
+"Whenever possible, it is always better to \"anchor\" the lookarounds, to "
+"reduce the number of steps necessary to obtain the result."
+msgstr "可能な限り、結果を得るのに必要なステップ数を減らすために、後読みを「アンカー」する方がよいでしょう。"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:250
+msgid "Recursion"
+msgstr "再帰"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:256
+msgid "``(?R)``"
+msgstr "``(?R)``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:256
+msgid "Recursion of the entire pattern"
+msgstr "パターン全体の再帰"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:259
+msgid "``(?1)``"
+msgstr "``(?1)``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:259
+msgid ""
+"Recursion of the only pattern of the numbered capturing group, here group 1"
+msgstr "番号で指定されたキャプチャグループのパターンのみの再帰。ここではグループ 1"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:263
+msgid ""
+"Recursion is calling oneself. This is useful for balanced queries, such as "
+"quoted strings, which can contain embedded quoted strings. Thus, if during "
+"the processing of a string between double quotation marks, we encounter the "
+"beginning of a new string between double quotation marks, well we know how "
+"to do, and we call ourselves. Then we have a pattern like::"
+msgstr ""
+"再帰とは自分自身を呼び出すことです。これは均衡のあるクエリで役に立ちます。たとえば引用符で囲まれた文字列を埋めこむことのできる引用符つきの文字列などです。このように、二重引用符に囲まれた文字列の処理中に、二重引用符で囲まれた新しい文字列に当たってしまったとき、どうすればよいかもうお分かりでしょうが、自分自身を呼び出すのです。そうするとこのようなパターンになります::"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:271
+msgid ""
+"To select a string between double quotation marks without stopping on an "
+"embedded string::"
+msgstr "二重引用符で囲まれた文字列を、その中に埋めこまれた文字列で止まらずに選択するには、次のようにします::"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:275
+msgid ""
+"This template can also be used to modify pairs of tags that can be embedded,"
+" such as ``<div>`` tags."
+msgstr "このテンプレートは、入れ子にできる一組みのタグ、たとえば `<div>`` タグの変更にも使用できます。"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:280
+msgid "Special characters"
+msgstr "特殊文字"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:283
+msgid "**Character**"
+msgstr "**文字**"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:286
+msgid "``\\t``"
+msgstr "``\\t``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:286
+msgid "tabulation"
+msgstr "タブ文字"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:289
+msgid "``\\n``"
+msgstr "``\\n``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:289
+msgid "line break"
+msgstr "改行"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:292
+msgid "``\\x20``"
+msgstr "``\\x20``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:292
+msgid "(breakable) space"
+msgstr "(改行可能な) 空白文字"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:295
+msgid "``\\xa0``"
+msgstr "``\\xa0``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:295
+msgid "no-break space"
+msgstr "ノーブレークスペース"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:300
+msgid "Meta-characters"
+msgstr "メタ文字"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:302
+msgid ""
+"Meta-characters are those that have a special meaning for the regexp engine."
+" Of these, twelve must be preceded by an escape character, the backslash "
+"(``\\``), to lose their special meaning and become a regular character "
+"again::"
+msgstr ""
+"メタ文字は、正規表現エンジンにとって特別な意味を持つ文字です。このうち次の 12 "
+"個の文字は、特殊文字として使用せずに通常の文字として扱うためには前にエスケープ文字、すなわちバックスラッシュ (``\\``) をつける必要があります。"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:308
+msgid ""
+"Seven other meta-characters do not need to be preceded by a backslash (but "
+"can be without any other consequence)::"
+msgstr "残りの 7 個の特殊文字はバックスラッシュを前に付ける必要はありません (ただし、つけないと結果が変わる可能性があります)"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:314
+msgid ""
+"Special characters lose their status if they are used inside a class "
+"(between brackets ``[]``). The closing bracket and the dash have a special "
+"status in a class. Outside the class, the dash is a simple literal, the "
+"closing bracket remains a meta-character."
+msgstr ""
+"特殊文字はクラス内 (角カッコ ``[]`` の内側) "
+"では特殊文字ではなくなります。閉じカッコとダッシュはクラス内で特殊文字となります。クラスの外側では、ダッシュは単なる文字となりますが、閉じカッコはメタ文字のままです。"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:319
+msgid ""
+"The slash (/) and the number sign (or hash character) (#) are not meta-"
+"characters, they don’t need to be escaped."
+msgstr "スラッシュ (/) および 番号記号 (またはハッシュ文字) (#) はメタ文字ではないため、エスケープする必要はありません。"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:322
+msgid ""
+"In some tools, like regex101.com with the Python engine, double quotes have "
+"the special status of separator, and must be escaped, or the options "
+"changed. This is not the case in the editor of calibre."
+msgstr ""
+"Python エンジンを搭載した regex101.com "
+"のような一部のツールでは、二重引用符は特別な意味を持つ区切り文字のため、エスケープするかオプションを変更する必要があります。calibre "
+"のエディタでは、その必要はありません。"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:327
+msgid "Modes"
+msgstr "モード"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:330
+msgid "``(?s)``"
+msgstr "``(?s)``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:330
+msgid "Causes the dot (``.``) to match newline characters as well"
+msgstr "ドット (``.``) に改行文字もマッチさせます"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:333
+msgid "``(?m)``"
+msgstr "``(?m)``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:333
+msgid ""
+"Makes the ``^`` and ``$`` anchors match the start and end of lines instead "
+"of the start and end of the entire string."
+msgstr "``^`` および ``$`` アンカーを文字列全体の先頭と末尾ではなく、行の先頭と末尾にマッチさせます。"
