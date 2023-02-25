@@ -1,0 +1,1101 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-10-17 08:20+0530\n"
+"PO-Revision-Date: 2014-10-17 02:53+0000\n"
+"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"Language-Team: Slovenian (Slovenia) (http://www.transifex.com/projects/p/calibre/language/sl_SI/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sl_SI\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+
+# de8d95fc16214bea85261f8bf48f6d60
+#: ../../home/kovid/work/calibre/manual/edit.rst:4
+msgid "Editing E-books"
+msgstr ""
+
+# 4dd81bb1de6847ed8a39b9f37857ccae
+#: ../../home/kovid/work/calibre/manual/edit.rst:6
+msgid ""
+"calibre has an integrated e-book editor that can be used to edit books in "
+"the EPUB and AZW3 (Kindle) formats. The editor shows you the HTML and CSS "
+"that is used internally inside the book files, with a live preview that "
+"updates as you make changes. It also contains various automated tools to "
+"perform common cleanup and fixing tasks."
+msgstr ""
+
+# fb5842ef781144c3b1bb389f71fd60f7
+#: ../../home/kovid/work/calibre/manual/edit.rst:12
+msgid ""
+"You can use this editor by right clicking on any book in calibre and "
+"selecting :guilabel:`Edit book`."
+msgstr ""
+
+# 3cffaf92b33541888a7f0f8fde953144
+#: ../../home/kovid/work/calibre/manual/edit.rst:0
+msgid "Contents"
+msgstr ""
+
+# d2b789899e944074975222fa914927f5
+#: ../../home/kovid/work/calibre/manual/edit.rst:26
+msgid "Basic workflow"
+msgstr ""
+
+# 9c0a94308a014521a5bc2579b9f15d41
+#: ../../home/kovid/work/calibre/manual/edit.rst:29
+msgid ""
+"A video tour of the calibre editor is available `here <http://calibre-"
+"ebook.com/demo#tutorials>`_."
+msgstr ""
+
+# d9e12a4e884a41ecaecc8c380dcce774
+#: ../../home/kovid/work/calibre/manual/edit.rst:32
+msgid ""
+"When you first open a book with the Edit book tool, you will be presented "
+"with a list of files on the left. These are the individual HTML files, "
+"stylesheets, images, etc. that make up the content of the book. Simply "
+"double click on a file to start editing it. Note that if you want to do "
+"anything more sophisticated than making a few small tweaks, you will need to"
+" know `HTML Tutorial <http://html.net/tutorials/html/>`_ and `CSS Tutorial "
+"<http://html.net/tutorials/css/>`_."
+msgstr ""
+
+# 624c083f047649fb858cc133ad5931ba
+#: ../../home/kovid/work/calibre/manual/edit.rst:40
+msgid ""
+"As you make changes to the HTML or CSS in the editor, the changes will be "
+"previewed, live, in the preview panel to the right. When you are happy with "
+"how the changes you have made look, click the Save button or use "
+":guilabel:`File->Save` to save your changes into the ebook."
+msgstr ""
+
+# 030ef95589d14c449b2f2622dc001955
+#: ../../home/kovid/work/calibre/manual/edit.rst:45
+msgid ""
+"One useful feature is :guilabel:`Checkpoints`. Before you embark on some "
+"ambitious set of edits, you can create a checkpoint. The checkpoint will "
+"preserve the current state of your book, then if in the future you decide "
+"you dont like the changes you have made to you can go back to the state when"
+" you created the checkpoint. To create a checkpoint, use "
+":guilabel:`Edit->Create checkpoint`. Checkpoints will also be automatically "
+"created for you whenever you run any automated tool like global search and "
+"replace. The checkpointing functionality is in addition to the normal "
+"Undo/redo mechanism when editing individual files. Checkpoints are useful "
+"for when changes are spread over multiple files in the book."
+msgstr ""
+
+# acc6b4fa52f04f90be97f01b47ef9f5f
+#: ../../home/kovid/work/calibre/manual/edit.rst:56
+msgid ""
+"That is the basic work flow for editing books -- Open a file, make changes, "
+"preview and save. The rest of this manual will discuss the various tools and"
+" features present to allow you to perform specific tasks efficiently."
+msgstr ""
+
+# 5af690cbce7048d796b9111eabbccf15
+#: ../../home/kovid/work/calibre/manual/edit.rst:61
+msgid "The Files Browser"
+msgstr ""
+
+# 2840019baf484319a482fec25cd10477
+#: ../../home/kovid/work/calibre/manual/edit.rst:67
+msgid ""
+"The :guilabel:`Files Browser` gives you an overview of the various files "
+"inside the book you are editing. The files are arranged by category, with "
+"text (HTML) files at the top, followed by stylesheet (CSS) files, images and"
+" so on. Simply double click on a file to start editing it. Editing is "
+"supported for HTML, CSS and image files. The order of text files is the same"
+" order that they would be displayed in, if you were reading the book. All "
+"other files are arranged alphabetically."
+msgstr ""
+
+# e976a4b830e443de8cfd2fca1a7e5de9
+#: ../../home/kovid/work/calibre/manual/edit.rst:75
+msgid ""
+"By hovering your mouse over an entry, you can see its size, and also, at the"
+" bottom of the screen, the full path to the file inside the book. Note that "
+"files inside ebooks are compressed, so the size of the final book is not the"
+" sum of the individual file sizes."
+msgstr ""
+
+# 48ed56725cb74662a68c8a1bb99835c3
+#: ../../home/kovid/work/calibre/manual/edit.rst:80
+msgid ""
+"Many files have special meaning, in the book. These will typically have an "
+"icon next to their names, indicating the special meaning. For example, in "
+"the picture to the left, you can see that the files "
+":guilabel:`cover_image.jpg` and :guilabel:`titlepage.xhtml` have the icon of"
+" a cover next to them, this indicates they are the book cover image and "
+"titlepage. Similarly, the :guilabel:`content.opf` file has a metadata icon "
+"next to it, indicating the book metadata is present in it and the the "
+":guilabel:`toc.ncx` file has a T icon next to it, indicating it is the Table"
+" of Contents."
+msgstr ""
+
+# 5fccb9d440a5406aaf6f99bc7d928cbc
+#: ../../home/kovid/work/calibre/manual/edit.rst:89
+msgid ""
+"You can perform many actions on individual files, by right clicking them."
+msgstr ""
+
+# 74a27e4e93954a7eb88024829e0ec487
+#: ../../home/kovid/work/calibre/manual/edit.rst:92
+msgid "Renaming files"
+msgstr ""
+
+# 5002036356c249318d88b189d78fa17d
+#: ../../home/kovid/work/calibre/manual/edit.rst:94
+msgid ""
+"You can rename an individual file by right clicking it and selecting "
+":guilabel:`Rename`. Renaming a file automatically updates all links and "
+"references to it throughout the book. So all you have to do is provide the "
+"new name, calibre will take care of the rest."
+msgstr ""
+
+# 533340c1f6d04ba88d0fea7c9d081e84
+#: ../../home/kovid/work/calibre/manual/edit.rst:99
+msgid ""
+"You can also bulk rename many files at once. This is useful if you want the "
+"files to have some simple name pattern. For example you might want to rename"
+" all the HTML files to have names Chapter-1.html, Chapter-2.html and so on. "
+"Select the files you want bulk renamed by holding down the Shift or Ctrl key"
+" and clicking the files. Then right click and select :guilabel:`Bulk "
+"rename`. Enter a prefix and what number you would like the automatic "
+"numbering to start at, click OK and you are done."
+msgstr ""
+
+# a55c6b63e68c4158a5435fccfb8071c3
+#: ../../home/kovid/work/calibre/manual/edit.rst:108
+msgid "Merging files"
+msgstr ""
+
+# 38644ac1c8c64b3d9ebd7bbe1326b999
+#: ../../home/kovid/work/calibre/manual/edit.rst:110
+msgid ""
+"Sometimes, you may want to merge two HTML files or two CSS files together. "
+"It can sometimes be useful to have everything in a single file. Be wary, "
+"though, putting a lot of content into a single file will cause performance "
+"problems when viewing the book in a typical ebook reader."
+msgstr ""
+
+# a3f05047f7d749798bd58d0539d9d568
+#: ../../home/kovid/work/calibre/manual/edit.rst:115
+msgid ""
+"To merge multiple files together, select them by holding the Ctrl key and "
+"clicking on them (make sure you only select files of one type, either all "
+"HTML files or all CSS files and so on). Then right click and select merge. "
+"That's all, calibre will merge the files, automatically taking care of "
+"migrating all links and references to the merged files. Note that merging "
+"files can sometimes cause text styling to change, since the individual files"
+" could have used different stylesheets."
+msgstr ""
+
+# 334db511809e40c9961545f56201088e
+#: ../../home/kovid/work/calibre/manual/edit.rst:124
+msgid "Changing text file order"
+msgstr ""
+
+# 3acf7c4fa2cc46e9838bd0b416d72111
+#: ../../home/kovid/work/calibre/manual/edit.rst:126
+msgid ""
+"You can re-arrange the order in which text (HTML) files are opened when "
+"reading the book by simply dragging and dropping them in the Files browser. "
+"For the technically inclined, this is called re-ordering the book spine. "
+"Note that you have to drop the items *between* other items, not on top of "
+"them, this can be a little fiddly until you get used to it."
+msgstr ""
+
+# 3ca144ba79fa472eacf572359ab42a16
+#: ../../home/kovid/work/calibre/manual/edit.rst:133
+msgid "Marking the cover"
+msgstr ""
+
+# 3ed07e6919f14779a1dde34b30eafdd5
+#: ../../home/kovid/work/calibre/manual/edit.rst:135
+msgid ""
+"E-books typically have a cover image. This image is indicated in the Files "
+"Browser by the icon of a brown book next to the image name. If you want to "
+"designate some other image as the cover, you can do so by right clicking on "
+"the file and choosing :guilabel:`Mark as cover`."
+msgstr ""
+
+# 8caf72989fbf45068e975dbef53cda31
+#: ../../home/kovid/work/calibre/manual/edit.rst:140
+msgid ""
+"In addition, EPUB files has the concept of a *titlepage*. A title page is a "
+"HTML file that acts as the title page/cover for the book. You can mark an "
+"HTML file as the titlepage when editing EPUBs by right-clicking. Be careful "
+"that the file you mark contains only the cover information. If it contains "
+"other content, such as the first chapter, then that content will be lost if "
+"the user ever converts the EPUB file in calibre to another format. This is "
+"because when converting, calibre assumes that the marked title page contains"
+" only the cover and no other content."
+msgstr ""
+
+# e087f939d4d9416fb43e0cc021a813e7
+#: ../../home/kovid/work/calibre/manual/edit.rst:150
+msgid "Deleting files"
+msgstr ""
+
+# 12c1beea7c6246c5acde451da841a4f1
+#: ../../home/kovid/work/calibre/manual/edit.rst:152
+msgid ""
+"You can delete files by either right clicking on them or by selecting them "
+"and pressing the Delete key. Deleting a file removes all references to the "
+"file from the OPF file, saving you that chore. However, references in other "
+"places are not removed, you can use the Check Book tool to easily find and "
+"remove/replace them."
+msgstr ""
+
+# 9db4147e03824808b78a60765a59b278
+#: ../../home/kovid/work/calibre/manual/edit.rst:159
+msgid "Export of files"
+msgstr ""
+
+# a3e00bca11024d539ad07829940e03b8
+#: ../../home/kovid/work/calibre/manual/edit.rst:161
+msgid ""
+"You can export a file from inside the book to somewhere else on your "
+"computer. This is useful if you want to work on the file in isolation, with "
+"specialised tools. To do this, simply right click on the file and choose "
+":guilabel:`Export`."
+msgstr ""
+
+# dca20c46db724e5c96ddd62eb6836257
+#: ../../home/kovid/work/calibre/manual/edit.rst:166
+msgid ""
+"Once you are done working on the exported file, you can re-import it into "
+"the book, by right clicking on the file again and choosing "
+":guilabel:`Replace with file...` which will allow you to replace the file in"
+" the book with the previously exported file."
+msgstr ""
+
+# b433ef732a004031bb58202dd310483a
+#: ../../home/kovid/work/calibre/manual/edit.rst:172
+msgid "Adding new images/fonts/etc. or creating new blank files"
+msgstr ""
+
+# 826275ba14cb4bffb35fc13a7ba88684
+#: ../../home/kovid/work/calibre/manual/edit.rst:174
+msgid ""
+"You can add a new image, font, stylesheet, etc. from your computer into the "
+"book by clicking :guilabel:`File->New file`. This lets you either import a "
+"file by clicking the :guilabel:`Import resource file` button or create a new"
+" blank html file or stylesheet by simply entering the file name into the box"
+" for the new file."
+msgstr ""
+
+# a49bedcdbe5e4c6283bf6ceccc0c7b75
+#: ../../home/kovid/work/calibre/manual/edit.rst:179
+msgid ""
+"You can also import multiple files into the book at once using File->Import "
+"files into book."
+msgstr ""
+
+# ec708ba50977489e8bbe6026a1958412
+#: ../../home/kovid/work/calibre/manual/edit.rst:183
+msgid "Replacing files"
+msgstr ""
+
+# 7ede68f1953e4a3383be3e682c90a0f4
+#: ../../home/kovid/work/calibre/manual/edit.rst:185
+msgid ""
+"You can easily replace existing files in the book, by right clicking on the "
+"file and choosing replace. This will automatically update all links and "
+"references, in case the replacement file has a different name than the file "
+"being replaced."
+msgstr ""
+
+# ec673864f82647539aaf8d0054bc013c
+#: ../../home/kovid/work/calibre/manual/edit.rst:191
+msgid "Linking stylesheets to HTML files efficiently"
+msgstr ""
+
+# 8770349b0e964e39875f20a46f2377aa
+#: ../../home/kovid/work/calibre/manual/edit.rst:193
+msgid ""
+"As a convenience, you can select multiple HTML files in the Files Browser, "
+"right click and choose Link stylesheets to have calibre automatically insert"
+" the <link> tags for those stylesheets into all the selected HTML files."
+msgstr ""
+
+# 2a1572fb65ed43a7aa2a56b6ccdad0d8
+#: ../../home/kovid/work/calibre/manual/edit.rst:203
+msgid "Search & Replace"
+msgstr ""
+
+# 5eb62ad5a62b4307b92e78e981765cc7
+#: ../../home/kovid/work/calibre/manual/edit.rst:205
+msgid ""
+"Edit Book has a very powerful search and replace interface that allows you "
+"to search and replace text in the current file, across all files and even in"
+" a marked region of the current file. You can search using a normal search "
+"or using regular expressions. To learn how to use regular expressions for "
+"advanced searching, see :ref:`regexptutorial`."
+msgstr ""
+
+# fc3378a588fe4c189967a004f8fc5c60
+#: ../../home/kovid/work/calibre/manual/edit.rst:215
+msgid ""
+"Start the search and replace via the :guilabel:`Search->Find/replace` menu "
+"entry (you must be editing an HTML or CSS file)."
+msgstr ""
+
+# c9e7490d3e234841ad5e4386a6b529d3
+#: ../../home/kovid/work/calibre/manual/edit.rst:218
+msgid ""
+"Type the text you want to find into the Find box and its replacement into "
+"the Replace box. You can the click the appropriate buttons to Find the next "
+"match, replace the current match and replace all matches."
+msgstr ""
+
+# 582dcca490004fb1949071e8ecd2e90b
+#: ../../home/kovid/work/calibre/manual/edit.rst:222
+msgid ""
+"Using the drop downs at the bottom of the box, you can have the search "
+"operate over the current file, all text files, all style files or all files."
+" You can also choose the search mode to be a normal (string) search or a "
+"regular expression search."
+msgstr ""
+
+# 5d9012b07af645619f92957a4a2c9506
+#: ../../home/kovid/work/calibre/manual/edit.rst:227
+msgid ""
+"You can count all the matches for a search expression via "
+":guilabel:`Search->Count all`. The count will run over whatever "
+"files/regions you have selected in the dropdown box."
+msgstr ""
+
+# 0f7b8e923292416db1822d3bc9896b04
+#: ../../home/kovid/work/calibre/manual/edit.rst:231
+msgid ""
+"You can also go to a specific line in the currently open editor via "
+":guilabel:`Search->Go to line`."
+msgstr ""
+
+# 4f8b34521f994481a32372d8662dff5f
+#: ../../home/kovid/work/calibre/manual/edit.rst:235
+msgid ""
+"Remember, to harness the full power of search and replace, you will need to "
+"use regular expressions. See :ref:`regexptutorial`."
+msgstr ""
+
+# 3b839d7be3684a12acc63c3bc1a044f5
+#: ../../home/kovid/work/calibre/manual/edit.rst:239
+msgid "Saved searches"
+msgstr ""
+
+# c909f661e283465f85afecb53f8955cc
+#: ../../home/kovid/work/calibre/manual/edit.rst:241
+msgid ""
+"You can save frequently used search/replace expressions and reuse them "
+"multiple times. To save a search simply right click in the Find box and "
+"select :guilabel:`Save current search`."
+msgstr ""
+
+# 35a2457b42834f5fbdca129d363eec50
+#: ../../home/kovid/work/calibre/manual/edit.rst:244
+msgid ""
+"You can bring up the dialog of saved searches via :guilabel:`Search->Saved "
+"Searches`. This will present you with a list of search and replace "
+"expressions that you can apply. You can even select multiple entries in the "
+"list by holding down the Ctrl Key while clicking so as to run multiple "
+"search and replace expressions in a single operation."
+msgstr ""
+
+# c560ad05c1f246f6840c70dae0c1f741
+#: ../../home/kovid/work/calibre/manual/edit.rst:251
+msgid "Automated tools"
+msgstr ""
+
+# 82d6ae1daa454d4391639c3306566bcd
+#: ../../home/kovid/work/calibre/manual/edit.rst:253
+msgid ""
+"Edit book has various tools to help with common tasks. These are accessed "
+"via the :guilabel:`Tools` menu."
+msgstr ""
+
+# ac2da5cd4f0b49328611e01427824b02
+#: ../../home/kovid/work/calibre/manual/edit.rst:257
+msgid "Edit the Table of Contents"
+msgstr ""
+
+# 02c29d24904c4ea6a80a22bb6207e976
+#: ../../home/kovid/work/calibre/manual/edit.rst:259
+msgid ""
+"There is a dedicated tool to ease editing of the Table of Contents. Launch "
+"it with :guilabel:`Tools->Table of Contents->Edit Table of Contents`."
+msgstr ""
+
+# 85b4c8d179cd416f88ac77f75f89bd98
+#: ../../home/kovid/work/calibre/manual/edit.rst:266
+msgid ""
+"The Edit Table of Contents tool shows you the current Table of Contents (if "
+"any) on the left. Simply double click on any entry to change its text. You "
+"can also re-arrange entries by drag and drop or by using the buttons to the "
+"right."
+msgstr ""
+
+# 0db54de2582c487290c78f27b3eadc40
+#: ../../home/kovid/work/calibre/manual/edit.rst:270
+msgid ""
+"For books that do not have a pre-existing Table of Contents, the tool gives "
+"you various options to auto-generate a Table of Contents from the text. You "
+"can generate from the headings in the document, from links, from individual "
+"files and so on."
+msgstr ""
+
+# 1d5267df10d649a0bca0d357f418ebd2
+#: ../../home/kovid/work/calibre/manual/edit.rst:275
+msgid ""
+"You can edit individual entries by clicking on them and then clicking the "
+":guilabel:`Change the location this entry points to` button. This will open "
+"up a mini-preview of the book, simply move the mouse cursor over the book "
+"view panel, and click where you want the entry to point to. A thick green "
+"line will show you the location. Click OK once you are happy with the "
+"location."
+msgstr ""
+
+# c02cc8d1bb3b4d309aaee4bed014d196
+#: ../../home/kovid/work/calibre/manual/edit.rst:286
+msgid "Check Book"
+msgstr ""
+
+# 96fd00f8d2cd469993af9d6226f2ec20
+#: ../../home/kovid/work/calibre/manual/edit.rst:288
+msgid ""
+"The :guilabel:`Check Book` tool searches your book for problems that could "
+"prevent it working as intended on actual reader devices. Activate it via "
+":guilabel:`Tools->Check Book`."
+msgstr ""
+
+# 8fce57c8ef534649a790e4abc7c6c593
+#: ../../home/kovid/work/calibre/manual/edit.rst:296
+msgid ""
+"Any problems found are reported in a nice, easy to use list. Clicking any "
+"entry in the list shows you some help about that error as well as giving you"
+" the option to auto-fix that error, if the error can be fixed automatically."
+" You can also double click the error to open the location of the error in an"
+" editor, so you can fix it yourself."
+msgstr ""
+
+# c27b577155a64efab4a42ab10a908e70
+#: ../../home/kovid/work/calibre/manual/edit.rst:303
+msgid "Some of the checks performed are:"
+msgstr ""
+
+# b594259ff4844b83b8ed403124105dc5
+#: ../../home/kovid/work/calibre/manual/edit.rst:305
+msgid ""
+"Malformed HTML markup. Any HTML markup that does not parse as well-formed "
+"XML is reported. Correcting it will ensure that your markup works as "
+"intended in all contexts. calibre can also auto-fix these errors, but auto-"
+"fixing can sometimes have unexpected effects, so use with care. As always, a"
+" checkpoint is created before auto-fixing so you can easily revert all "
+"changes. Auto-fixing works by parsing the markup using the HTML 5 algorithm,"
+" which is highly fault tolerant and then converting to well formed XML."
+msgstr ""
+
+# 5ad66fb59b3f4875af9676828e87fcfc
+#: ../../home/kovid/work/calibre/manual/edit.rst:314
+msgid ""
+"Malformed or unknown CSS styles. Any CSS that is not valid or that has "
+"properties not defined in the CSS 2.1 standard (plus a few from CSS 3) are "
+"reported. CSS is checked in all stylesheets, inline style attributes and "
+"<style> tags in HTML files."
+msgstr ""
+
+# e8ece4726035434fa10547b34e026c36
+#: ../../home/kovid/work/calibre/manual/edit.rst:319
+msgid ""
+"Broken links. Links that point to files inside the book that are missing are"
+" reported."
+msgstr ""
+
+# c0308d40a3284554b5010b7f8c434753
+#: ../../home/kovid/work/calibre/manual/edit.rst:322
+msgid ""
+"Unreferenced files. Files in the book that are not referenced by any other "
+"file or are not in the spine are reported."
+msgstr ""
+
+# e15e6516a7324811b017c464408ef3d9
+#: ../../home/kovid/work/calibre/manual/edit.rst:325
+msgid ""
+"Various common problems in OPF files such as duplicate spine or manifest "
+"items, broken idrefs or meta cover tags, missing required sections and so "
+"on."
+msgstr ""
+
+# 30dc9ed6b6ad4280bc27d29bdfacfcfb
+#: ../../home/kovid/work/calibre/manual/edit.rst:329
+msgid ""
+"Various compatibility checks for known problems that can cause the book to "
+"malfunction on reader devices."
+msgstr ""
+
+# e3fd84a3f0584c70ba0adec1d6e3c65f
+#: ../../home/kovid/work/calibre/manual/edit.rst:333
+msgid "Add a cover"
+msgstr ""
+
+# eecee627855c46bdabbc2deeb645f839
+#: ../../home/kovid/work/calibre/manual/edit.rst:335
+msgid ""
+"You can easily add a cover to the book via :guilabel:`Tools->Add cover`. "
+"This allows you to either choose an existing image in the book as the cover "
+"or import a new image into the book and make it the cover. When editing EPUB"
+" files, the HTML wrapper for the cover is automatically generated. If an "
+"existing cover in the book is found, it is replaced. The tool also "
+"automatically takes care of correctly marking the cover files as covers in "
+"the OPF."
+msgstr ""
+
+# e9616da788e249b0baeb0eeb1c05138d
+#: ../../home/kovid/work/calibre/manual/edit.rst:344
+msgid "Embedding referenced fonts"
+msgstr ""
+
+# 5edea567535a4f379d35773a57ae2222
+#: ../../home/kovid/work/calibre/manual/edit.rst:346
+msgid ""
+"Accessed via :guilabel:`Tools->Embed reference fonts`, this tool finds all "
+"fonts referenced in the book and if they are not already embedded, searches "
+"your computer for them and embeds them into the book, if found. Please make "
+"sure that you have the necessary copyrights for embedding commercially "
+"licensed fonts, before doing this."
+msgstr ""
+
+# be6f6df94e614e89a24ee14ae6878552
+#: ../../home/kovid/work/calibre/manual/edit.rst:353
+msgid "Subsetting embedded fonts"
+msgstr ""
+
+# d0ba9a38b2014ecd8b8ddf1b3e36b241
+#: ../../home/kovid/work/calibre/manual/edit.rst:355
+msgid ""
+"Accessed via :guilabel:`Tools->Subset embedded fonts`, this tool reduces all"
+" the fonts in the book to only contain glyphs for the text actually present "
+"in the book. This commonly reduces the size of the font files by ~ 50%. "
+"However, be aware that once the fonts are subset, if you add new text whose "
+"characters are not previously present in the subset font, the font will not "
+"work for the new text. So do this only as the last step in your workflow."
+msgstr ""
+
+# 72276fd23bdd4705b6eb75ea12014dc7
+#: ../../home/kovid/work/calibre/manual/edit.rst:363
+msgid "Smartening punctuation"
+msgstr ""
+
+# f202406f957a4cb3852e50abab54f810
+#: ../../home/kovid/work/calibre/manual/edit.rst:365
+msgid ""
+"Convert plain text dashes, ellipsis, quotes, multiple hyphens, etc. into "
+"their typographically correct equivalents. Note that the algorithm can "
+"sometimes generate incorrect results, especially when single quotes at the "
+"start of contractions are involved. Accessed via :guilabel:`Tools->Smarten "
+"punctuation`."
+msgstr ""
+
+# b348745733cb4948857210ddceb707fd
+#: ../../home/kovid/work/calibre/manual/edit.rst:372
+msgid "Removing unused CSS rules"
+msgstr ""
+
+# efacdfaf9c3e45c28d453cfab2d2e2ec
+#: ../../home/kovid/work/calibre/manual/edit.rst:374
+msgid ""
+"Remove all unused CSS rules from stylesheets and <style> tags. Some books "
+"created from production templates can have a large number of extra CSS rules"
+" that dont match any actual content. These extra rules can slow down readers"
+" that need to process them all. Accessed via :guilabel:`Tools->Remove unused"
+" CSS`."
+msgstr ""
+
+# 1f8213cf8480458f91548020e5d859ea
+#: ../../home/kovid/work/calibre/manual/edit.rst:381
+msgid "Fix HTML"
+msgstr ""
+
+# f82c919d44cb4414aaddf34b26004b85
+#: ../../home/kovid/work/calibre/manual/edit.rst:383
+msgid ""
+"This tool simply converts HTML that cannot be parsed as XML into well-formed"
+" XML. It is very common in ebooks to have non-well-formed XML, so this tool "
+"simply automates the process of fixing such HTML. The tool works by parsing "
+"the HTML using the HTML 5 algorithm (the algorithm used in all modern "
+"browsers) and then converting the result into XML. Be aware that auto-fixing"
+" can sometimes have counter-intuitive results. If you prefer, you can use "
+"the Check Book tool discussed above to find and manually correct problems in"
+" the HTML. Accessed via :guilabel:`Tools->Fix HTML`."
+msgstr ""
+
+# 20cef0e8d7be4f8b80090ebdbf7d42b2
+#: ../../home/kovid/work/calibre/manual/edit.rst:393
+msgid "Beautifying files"
+msgstr ""
+
+# 6caaa63dc2e54fbd82a083317007fdcb
+#: ../../home/kovid/work/calibre/manual/edit.rst:395
+msgid ""
+"This tool is used to auto-format all HTML and CSS files so that they \"look "
+"pretty\". The code is auto-indented so that it lines up nicely, blank lines "
+"are inserted where appropriate and so on. Note that beautifying also auto-"
+"fixes broken HTML/CSS. Therefore, if you dont want any auto-fixing to be "
+"performed, first use the Check Book tool to correct all problems and only "
+"then run beautify.  Accessed via :guilabel:`Tools->Beautify all files`."
+msgstr ""
+
+# 05c91e2e05504894b96bd3cb7625ef96
+#: ../../home/kovid/work/calibre/manual/edit.rst:403
+msgid ""
+"In HTML any text can have significant whitespace, via the CSS white-space "
+"directive. Therefore, beautification could potentially change the rendering "
+"of the HTML. To avoid this as far as possible, the beautify algorithm only "
+"beautifies block level tags that contain other block level tags. So, for "
+"example, text inside a <p> tag will not have its whitespace changed. But a "
+"<body> tag that contains only other <p> and <div> tags will be beautified.  "
+"This can sometimes mean that a particular file will not be affected by "
+"beautify as it has no suitable block level tags. In such cases you can try "
+"different beautification tools, that are less careful, for example: `HTML "
+"Tidy <http://infohound.net/tidy/>`_."
+msgstr ""
+
+# 1039ea086ca541dd894aa0b6b0e027bd
+#: ../../home/kovid/work/calibre/manual/edit.rst:416
+msgid "Insert inline Table of Contents"
+msgstr ""
+
+# 3fe59fb7ad674d8384ae3f522849791c
+#: ../../home/kovid/work/calibre/manual/edit.rst:418
+msgid ""
+"Normally in ebooks, the Table of Contents is separate from the main text and"
+" is typically accessed via a special Table of Contents button/menu in the "
+"ebook reading device. You can also have calibre automatically generate an "
+"*inline* Table of Contents that becomes part of the text of the book. It is "
+"generated based on the currently defined Table of Contents."
+msgstr ""
+
+# ffaa0ce2896a4872938c73598061d71b
+#: ../../home/kovid/work/calibre/manual/edit.rst:424
+msgid ""
+"If you use this tool multiple times, each invocation will cause the "
+"previously created inline Table of Contents to be replaced. The tool can be "
+"accessed via :guilabel:`Tools->Table of Contents->Insert inline Table of "
+"Contents`."
+msgstr ""
+
+# bab1d3fc03eb4131a546e6507ca00bbe
+#: ../../home/kovid/work/calibre/manual/edit.rst:429
+msgid "Set Semantics"
+msgstr ""
+
+# ff4988129a884601a6a4e4011a1ce8da
+#: ../../home/kovid/work/calibre/manual/edit.rst:431
+msgid ""
+"This tool is used to set *semantics* in EPUB files. Semantics are simply, "
+"links in the OPF file that identify certain locations in the book as having "
+"special meaning. You can use them to identify the foreword, dedication, "
+"cover, table of contents, etc. Simply choose the type of semantic "
+"information you want to specify and then select the location in the book the"
+" link should point to. This tool can be accessed via :guilabel:`Tools->Set "
+"semantics`."
+msgstr ""
+
+# 35f4c0eed2c34f1bbba650cec077bf65
+#: ../../home/kovid/work/calibre/manual/edit.rst:439
+msgid "Filter style information"
+msgstr ""
+
+# fc585cdbe5c6459583500f201a505f44
+#: ../../home/kovid/work/calibre/manual/edit.rst:441
+msgid ""
+"This tool can be used to easily remove specified CSS style properties from "
+"the entire book. You can tell it what properties you want removed, for "
+"example, ``color, background-color, line-height`` and it will remove them "
+"from everywhere they occur --- stylesheets, ``<style>`` tags and inline "
+"``style`` attributes. After removing the style information, a summary of all"
+" the changes made is displayed so you can see exactly what was changed. The "
+"tool can be accessed via :guilabel:`Tools->Filter style information`."
+msgstr ""
+
+# 31bbebc9f2884b228f7639a8ff26ee21
+#: ../../home/kovid/work/calibre/manual/edit.rst:452
+msgid "Checkpoints"
+msgstr ""
+
+# ced0df1b1ca84a6faa988d350c33c4ea
+#: ../../home/kovid/work/calibre/manual/edit.rst:454
+msgid ""
+":guilabel:`Checkpoints` are a way to mark the current state of the book as "
+"\"special\". You can then go on to do whatever changes you want to the book "
+"and if you dont like the results, return to the checkpointed state. "
+"Checkpoints are automatically created every time you run any of the "
+"automated tools described in the previous section."
+msgstr ""
+
+# 8d488414a8264391948962455a903a27
+#: ../../home/kovid/work/calibre/manual/edit.rst:460
+msgid ""
+"You can create a checkpoint via :guilabel:`Edit->Create checkpoint`. And go "
+"back to a previous checkpoint with :guilabel:`Edit->Revert to ...`"
+msgstr ""
+
+# eb91e4af86414dc6a245e9f731b7a471
+#: ../../home/kovid/work/calibre/manual/edit.rst:463
+msgid ""
+"The checkpointing functionality is in addition to the normal Undo/redo "
+"mechanism when editing individual files. Checkpoints are particularly useful"
+" for when changes are spread over multiple files in the book or when you "
+"wish to be able to revert a large group of related changes as a whole."
+msgstr ""
+
+# ce01673dc60d4399ac5396de5617f554
+#: ../../home/kovid/work/calibre/manual/edit.rst:468
+msgid ""
+"You can see a list of available checkpoints via "
+":guilabel:`View->Checkpoints`. You can compare the current state of the book"
+" to a specified checkpoint using the :ref:`diff` tool -- by selecting the "
+"checkpoint of interest and clicking the :guilabel:`Compare` button. The "
+":guilabel:`Revert to` button restores the book to the selected checkpoint, "
+"undoing all changes since that checkpoint was created."
+msgstr ""
+
+# a8993b3520b64cf08b8d3e13b0449d34
+#: ../../home/kovid/work/calibre/manual/edit.rst:476
+msgid "The Live Preview panel"
+msgstr ""
+
+# aa1365a05e2d422abdba4cdbf43c13e9
+#: ../../home/kovid/work/calibre/manual/edit.rst:482
+msgid ""
+"The :guilabel:`File Preview` gives you an overview of the various files "
+"inside The live preview panel shows you the changes you are making live "
+"(with a second or two of delay). As you edit HTML or CSS files, the preview "
+"panel is updated automatically to reflect your changes. As you move the "
+"cursor around in the editor, the preview panel will track its location, "
+"showing you the corresponding location in the book. Clicking in the preview "
+"panel, will cause the cursor in the editor to be positioned over the element"
+" you clicked. If you click a link pointing to another file in the book, that"
+" file will be opened in the edit and the preview panel, automatically."
+msgstr ""
+
+# f7057e7c519f4bdfb89c36f55350ee53
+#: ../../home/kovid/work/calibre/manual/edit.rst:492
+msgid ""
+"You can turn off the automatic syncing of position and live preview of "
+"changes -- by buttons under the preview panel. The live update of the "
+"preview panel only happens when you are not actively typing in the editor, "
+"so as not to be distracting or slow you down, waiting for the preview to "
+"render."
+msgstr ""
+
+# f819c656eaab4f7d80625223949adbcf
+#: ../../home/kovid/work/calibre/manual/edit.rst:497
+msgid ""
+"The preview panel shows you how the text will look when viewed. However, the"
+" preview panel is not a substitute for actually testing your book an actual "
+"reader device. It is both more, and less capable than an actual reader. It "
+"will tolerate errors and sloppy markup much better than most reader devices."
+" It will also not show you page margins, page breaks and embedded fonts that"
+" use font name aliasing. Use the preview panel while you are working on the "
+"book, but once you are done, review it in an actual reader device or "
+"software emulator."
+msgstr ""
+
+# 871f3af34ab84245b611c19f2a807220
+#: ../../home/kovid/work/calibre/manual/edit.rst:506
+msgid ""
+"The preview panel does not support embedded fonts if the name of the font "
+"inside the font file does not match the name in the CSS @font-face rule. You"
+" can use the Check Book tool to quickly find and fix any such problem fonts."
+msgstr ""
+
+# 3a5ffd800f5f4b7e857123b7c9327e6a
+#: ../../home/kovid/work/calibre/manual/edit.rst:512
+msgid "Splitting HTML files"
+msgstr ""
+
+# 87fbff0facbe4465a2784554856f62af
+#: ../../home/kovid/work/calibre/manual/edit.rst:516
+msgid ""
+"One, perhaps non-obvious, use of the preview panel is to split long HTML "
+"files. While viewing the file you want to split, click the :guilabel:`split "
+"mode` button under the preview panel |spmb|. Then simply move your mouse to "
+"the place where you want to split the file and click. A thick green line "
+"will show you exactly where the split will happen as you move your mouse. "
+"Once you have found the location you want, simply click and the split will "
+"be performed."
+msgstr ""
+
+# 490d4e6d2db041e9aac2143dafb9ca99
+#: ../../home/kovid/work/calibre/manual/edit.rst:523
+msgid ""
+"Splitting the file will automatically update all links and references that "
+"pointed into the bottom half of the file and will open the newly split file "
+"in an editor."
+msgstr ""
+
+# 8bc5a1c116c944908bf138f3e5966725
+#: ../../home/kovid/work/calibre/manual/edit.rst:527
+msgid ""
+"You can also split a single HTML file at multiple locations automatically, "
+"by right clicking inside the file in the editor and choosing "
+":guilabel:`Split at multiple locations`. This will allow you to easily split"
+" a large file at all heading tags or all tags having a certain class and so "
+"on."
+msgstr ""
+
+# 66e482a48f724738b4fb4f31b01143c7
+#: ../../home/kovid/work/calibre/manual/edit.rst:537
+msgid "The Live CSS panel"
+msgstr ""
+
+# 40964a242c394d978b14bf9cf7eb17b6
+#: ../../home/kovid/work/calibre/manual/edit.rst:544
+msgid ""
+"The :guilabel:`Live CSS` panel shows you all the style rules that apply to "
+"the tag you are currently editing. The name of tag, along with its line "
+"number in the editor are displayed, followed by a list of matching style "
+"rules."
+msgstr ""
+
+# af0c488aca514f17be0e8369f88d181c
+#: ../../home/kovid/work/calibre/manual/edit.rst:548
+msgid ""
+"It is a great way to quickly see which style rules apply to any tag. The "
+"view also has clickable links (in blue), which take you directly to the "
+"location where the style was defined, in case you wish to make any changes "
+"to the style rules. Style rules that apply directly to the tag, as well as "
+"rules that are inherited from parent tags are shown."
+msgstr ""
+
+# ab4c5bfd898c4b73b743d0ca8e4d2473
+#: ../../home/kovid/work/calibre/manual/edit.rst:554
+msgid ""
+"The panel also shows you what the finally calculated styles for the tag are."
+" Properties in the list that are superseded by higher priority rules are "
+"shown with a line through them."
+msgstr ""
+
+# 80a1dcfc3a864786848a2753abebf68c
+#: ../../home/kovid/work/calibre/manual/edit.rst:558
+msgid "You can enable the Live CSS panel via :guilabel:`View->Live CSS`."
+msgstr ""
+
+# 15b47ca9ea24452a8abe5100cb732102
+#: ../../home/kovid/work/calibre/manual/edit.rst:565
+msgid "Miscellaneous Tools"
+msgstr ""
+
+# 9d6f2a17e85540be9d2f1bd4c7537aa0
+#: ../../home/kovid/work/calibre/manual/edit.rst:567
+msgid "There are a few more tools that can be useful while you edit the book."
+msgstr ""
+
+# 30160fe3adfe4bcc8bbf8f484f2cdabf
+#: ../../home/kovid/work/calibre/manual/edit.rst:570
+msgid "The Table of Contents View"
+msgstr ""
+
+# 67d21f00285441448e676f5175105ec7
+#: ../../home/kovid/work/calibre/manual/edit.rst:572
+msgid ""
+"The Table of Contents view shows you the current table of contents in the "
+"book. Double clicking on any entry opens the place that entry points to in "
+"an editor. You can right click to edit the Table of Contents, refresh the "
+"view or expand/collapse all items. Access this view via "
+":guilabel:`Views->Table of Contents`."
+msgstr ""
+
+# 0e3f884ac0d74d49b0abe5c56da10485
+#: ../../home/kovid/work/calibre/manual/edit.rst:579
+msgid "Checking the spelling of words in the book"
+msgstr ""
+
+# 1253785c128549dbbde461be1a579472
+#: ../../home/kovid/work/calibre/manual/edit.rst:581
+msgid "You can run a spelling checker via :guilabel:`Tools->Check spelling`."
+msgstr ""
+
+# 55edbb2af0c8472aab43572d3c5b12a7
+#: ../../home/kovid/work/calibre/manual/edit.rst:588
+msgid ""
+"Words are shown with the number of times they occur in the book and the "
+"language the word belongs to. Language information is taken from the books "
+"metadata and from ``lang`` attributes in the HTML files. This allows the "
+"spell checker to work well even with books that contain text in multiple "
+"languages. For example, in the following HTML extract, the word color will "
+"be checked using American English and the word colour using British "
+"English::"
+msgstr ""
+
+# 95e3e978a7064fef8285e37c5b2cc03e
+#: ../../home/kovid/work/calibre/manual/edit.rst:598
+msgid ""
+"You can double click a word to highlight the next occurrence of that word in"
+" the editor. This is useful if you wish to manually edit the word, or see "
+"what context it is in."
+msgstr ""
+
+# 50c49a5d985d47549c7ad77287796ac8
+#: ../../home/kovid/work/calibre/manual/edit.rst:602
+msgid ""
+"To change a word, simply double click one of the suggested alternative "
+"spellings on the right, or type in your own corrected spelling and click the"
+" :guilabel:`Change selected word to` button. This will replace all "
+"occurrences of the word in the book. You can also right click on a word in "
+"the main word list to change the word conveniently from the right click "
+"menu."
+msgstr ""
+
+# 70279a7f03e845fd9ff39a898dc320c8
+#: ../../home/kovid/work/calibre/manual/edit.rst:608
+msgid ""
+"You can have the spelling checker ignore a word for the current session by "
+"clicking the :guilabel:`Ignore` button. You can also add a word to the user "
+"dictionary by clicking the :guilabel:`Add to dictionary` button. The "
+"spelling checker supports multiple user dictionaries, so you can select the "
+"dictionary you want the word added to."
+msgstr ""
+
+# e3c01989f37142b0a854c91da3ca8c92
+#: ../../home/kovid/work/calibre/manual/edit.rst:614
+msgid ""
+"You can also have the spelling checker display all the words in your book, "
+"not just the incorrectly spelled ones. This is useful to see what words are "
+"most common in your book and to run a simple search and replace on "
+"individual words."
+msgstr ""
+
+# 922d21ff487149f692b0ab53b51ccfe5
+#: ../../home/kovid/work/calibre/manual/edit.rst:619
+msgid ""
+"If you make any changes to the book by editing files while the spell check "
+"tool is open, you should click the :guilabel:`Refresh` button in the spell "
+"check tool. If you do not do this and continue to use the spell check tool, "
+"you could lose the changes you have made in the editor."
+msgstr ""
+
+# c3b796f982e346fb874b47cfd68c2cf7
+#: ../../home/kovid/work/calibre/manual/edit.rst:625
+msgid "Adding new dictionaries"
+msgstr ""
+
+# 1592f96343e241f483890e05160a5963
+#: ../../home/kovid/work/calibre/manual/edit.rst:627
+msgid ""
+"The spelling checker comes with builtin dictionaries for the English and "
+"Spanish languages. You can install your own dictionaries via "
+":guilabel:`Preferences->Editor->Manage spelling dictionaries`. The spell "
+"checker can use dictionaries from the OpenOffice program (in the .oxt "
+"format). You can download these dictionaries from `The OpenOffice Extensions"
+" repository <http://extensions.openoffice.org/>`_."
+msgstr ""
+
+# 6d321948eea84cd4bde38d1298410763
+#: ../../home/kovid/work/calibre/manual/edit.rst:636
+msgid "Inserting special characters"
+msgstr ""
+
+# b1f3eee2425d493a93b841a168937182
+#: ../../home/kovid/work/calibre/manual/edit.rst:638
+msgid ""
+"You can insert characters that are difficult to type by using the "
+":guilabel:`Edit->Insert special character` tool. This shows you all unicode "
+"characters, simply click on the character you want to type. If you hold Ctrl"
+" while clicking, the window will close itself after inserting the selected "
+"character. This tool can be used to insert special characters into the main "
+"text or into any other area of the user interface, such as the Search and "
+"replace tool."
+msgstr ""
+
+# 34b08a010a2f43b4a6eb693ed050c315
+#: ../../home/kovid/work/calibre/manual/edit.rst:646
+msgid ""
+"Because there are a lot of characters, you can define your own "
+":guilabel:`Favorite` characters, that will be shown first. Simply right "
+"click on a character to mark it as favorite. You can also right click on a "
+"character in favorites to remove it from favorites. Finally, you can re-"
+"arrange the order of characters in favorites by clicking the :guilabel:`Re-"
+"arrange favorties` button and then drag and dropping the characters in "
+"favorites around."
+msgstr ""
+
+# 84848c79569c4e3786c16b61fd68a16d
+#: ../../home/kovid/work/calibre/manual/edit.rst:653
+msgid ""
+"You can also directly type in special characters using the keyboard. To do "
+"this, you type the unicode code for the character (in hexadecimal) and then "
+"press the :guilabel:`Alt+X` key which will convert the previously typed code"
+" into the corresponding character. For example, to type ÿ you would type ff "
+"and then Alt+X. To type a non-breaking space you would use a0 and then "
+":guilabel:`Alt+X`, to type the horizontal ellipsis you would use 2026 and "
+":guilabel:`Alt+X` and so on."
+msgstr ""
+
+# 60aae76915ea4231814be1cbed49fe77
+#: ../../home/kovid/work/calibre/manual/edit.rst:661
+msgid ""
+"Finally, you can type in special characters by using HTML named entities. "
+"For example, typing &nbsp; will be replaced by a non breaking space when you"
+" type the semi-colon. The replacement happens only when typing the semi-"
+"colon."
+msgstr ""
+
+# c3c9fc9da21f45a1995a487db0504ea7
+#: ../../home/kovid/work/calibre/manual/edit.rst:666
+msgid "The code inspector view"
+msgstr ""
+
+# aebc8ac719354bf4900fb06ebc0b360b
+#: ../../home/kovid/work/calibre/manual/edit.rst:668
+msgid ""
+"This view shows you the HTML coding and CSS that applies to the current "
+"element of interest. You open it by right clicking a location in the preview"
+" panel and choosing :guilabel:`Inspect`. It allows you to see the HTML "
+"coding for that element and more importantly, the CSS styles that apply to "
+"it. You can even dynamically edit the styles and see what effect your "
+"changes have instantly. Note that editing the styles does not actually make "
+"changes to the book contents, it only allows for quick experimentation. The "
+"ability to live edit inside the Inspector is under development."
+msgstr ""
+
+# 5c39b2b40e7b480d9970741aafd64127
+#: ../../home/kovid/work/calibre/manual/edit.rst:678
+msgid "Arrange files into folders by type"
+msgstr ""
+
+# 85b902a70f6a42cc89275b107da1c8bb
+#: ../../home/kovid/work/calibre/manual/edit.rst:680
+msgid ""
+"Often when editing EPUB files that you get from somewhere, you will find "
+"that the files inside the EPUB are arranged haphazardly, in different sub-"
+"folders. This tool allows you to automatically move all files into sub-"
+"folders based on their types. Access it via :guilabel:`Tools->Arrange into "
+"folders`. Note that this tool only changes how the files are arranged inside"
+" the EPUB, it does not change how they are displayed in the Files Browser."
+msgstr ""
+
+# e18c3aa5de3449e693a059230753f52e
+#: ../../home/kovid/work/calibre/manual/edit.rst:688
+msgid "Importing files in other e-book formats as EPUB"
+msgstr ""
+
+# 8ea8a515951a4f54b5c2d5c7b3de7b50
+#: ../../home/kovid/work/calibre/manual/edit.rst:690
+msgid ""
+"The editor includes the ability to import files in some other e-book formats"
+" directly as a new EPUB, without going through a full conversion. This is "
+"particularly useful to directly create EPUB files from your own hand-edited "
+"HTML files. You can do this via :guilabel:`File->Import an HTML or DOCX file"
+" as a new book`."
+msgstr ""

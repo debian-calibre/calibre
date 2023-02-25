@@ -1,0 +1,272 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# 
+# Translators:
+# delphina .2009 <delphina.2009@yahoo.gr>, 2016
+# Georgios Savopulos <gsavopul@gmail.com>, 2018-2020
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-12-01 12:56+0000\n"
+"PO-Revision-Date: 2021-11-14 03:27+0000\n"
+"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"Language-Team: Greek (http://www.transifex.com/calibre/calibre/language/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:4
+msgid "Managing subgroups of books, for example \"genre\""
+msgstr "Διαχείριση υποομάδων βιβλίων, για παράδειγμα \"είδος\""
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:6
+msgid ""
+"Some people wish to organize the books in their library into subgroups, "
+"similar to subfolders. The most commonly provided reason is to create genre "
+"hierarchies, but there are many others. One user asked for a way to organize"
+" textbooks by subject and course number. Another wanted to keep track of "
+"gifts by subject and recipient. This tutorial will use the genre example for"
+" the rest of this post."
+msgstr "Κάποιοι αναγνώστες επιθυμούν τη οργάνωση των βιβλίων της βιβλιοθήκης τους σε υποομάδες, παρόμοιες με υποφακέλους. Ένας από τους κυριότερους λόγους είναι ότι θέλουν να δημιουργήσουν ιεραρχίες ανά είδος, αλλά και για άλλους λόγους. Για παράδειγμα ένας χρήστης ζήτησε έναν τρόπο για να οργανώσει τα σχολικά βιβλία ανά θέμα και ανά αρίθμηση σειράς μαθημάτων. Ένας άλλος ήθελε να αρχειοθετεί τα δώρα ανά θέμα και ανά παραλήπτη. Αυτό το βοήθημα θα χρησιμοποιήσει το παράδειγμα του «είδους» για το υπόλοιπο αυτής της ανάρτησης."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:8
+msgid ""
+"Before going on, please note that we are not talking about folders on the "
+"hard disk. Subgroups are not file folders. Books will not be copied "
+"anywhere. calibre's library file structure is not affected. Instead, we are "
+"presenting a way to organize and display subgroups of books within a calibre"
+" library."
+msgstr "Πριν συνεχίσουμε, παρακαλώ σημειώστε πως δεν μιλάμε για φακέλους στο σκληρό δίσκο. Οι υποομάδες δεν είναι φάκελοι. Τα βιβλία δεν θα αντιγραφούν πουθενά. Η δομή της βιβλιοθήκης του calibre δεν επηρεάζεται. Αντιθέτως, παρουσιάζουμε ένα τρόπο οργάνωσης και προβολής υποομάδων βιβλίων εντός μιας βιβλιοθήκης του calibre."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:14
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:14
+msgid "sgtree"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:18
+msgid "The commonly-provided requirements for subgroups such as genres are:"
+msgstr "Οι πιο συχνές απαιτήσεις για την δημιουργία υποομάδων, όπως «είδη» είναι οι εξής:"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:20
+msgid ""
+"A subgroup (e.g., a genre) must contain (point to) books, not categories of "
+"books. This is what distinguishes subgroups from calibre user categories."
+msgstr "Μια υποομάδα (π.χ. ένα είδος) πρέπει να περιέχει (να δείχνει σε) βιβλία, όχι κατηγορίες βιβλίων. Αυτό είναι που διαφοροποιεί τις υποομάδες από τις κατηγορίες χρήστη του calibre."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:21
+msgid ""
+"A book can be in multiple subgroups (genres). This distinguishes subgroups "
+"from physical file folders."
+msgstr "Ένα βιβλίο μπορεί να περιέχεται σε πολλές υποομάδες (είδη), Αυτό διαφοροποιεί τις υποομάδες από τους φακέλους."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:22
+msgid ""
+"Subgroups (genres) must form a hierarchy; subgroups can contain subgroups."
+msgstr "Οι υποομάδες (είδη) πρέπει να έχουν ιεραρχία καθώς μπορούν να περιέχουν άλλες υποομάδες."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:24
+msgid ""
+"Tags give you the first two. If you tag a book with the genre then you can "
+"use the Tag browser (or search) to find the books with that genre, giving "
+"you the first. Many books can have the same tag(s), giving you the second. "
+"The problem is that tags don't satisfy the third requirement. They don't "
+"provide a hierarchy."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:26
+msgid ""
+"|sgtree| The calibre hierarchy feature gives you the third -- the ability to"
+" see the genres in a 'tree' and the ability to easily search for books in "
+"genre or sub-genre. For example, assume that your genre structure is similar"
+" to the following::"
+msgstr "|sgtree| Το χαρακτηριστικό ιεραρχίας του calibre επιτυγχάνει το τρίτο -- την ικανότητα να βλέπετε τα είδη σε ένα 'δένδρο', καθώς και να αναζητείτε με ευκολία βιβλία κάποιου είδους ή υποείδους. Για παράδειγμα, υποθέστε ότι η δομή των ειδών που έχετε είναι παρόμοια με την ακόλουθη::"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:45
+msgid ""
+"By using the hierarchy feature, you can see these genres in the Tag browser "
+"in tree form, as shown in the screen image. In this example the outermost "
+"level (Genre) is a custom column that contains the genres. Genres containing"
+" sub-genres appear with a small triangle next to them. Clicking on that "
+"triangle will open the item and show the sub-genres, as you can see with "
+"History and Science Fiction."
+msgstr "Χρησιμοποιώντας το χαρακτηριστικό ιεραρχίας, μπορείτε να δείτε αυτά τα είδη στον Περιηγητή ετικετών ως δένδρα, όπως παρουσιάζεται στην εικόνα με το στιγμιότυπο της οθόνης. Στο παράδειγμα αυτό, το εξωτερικό επίπεδο (Genre) είναι μια εξατομικευμένη στήλη που περιέχει τα είδη. Είδη που περιέχουν υποείδη εμφανίζονται με ένα μικρό τρίγωνο δίπλα τους. Αν πατήσετε το δεξί πλήκτρο του ποντικιού σας πάνω στο τρίγωνο αυτό, το στοιχείο θα ανοίξει, εμφανίζοντας τα υποείδη, όπως γίνεται με τα στοιχεία History και Science Fiction."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:47
+msgid ""
+"Clicking on a genre can search for all books with that genre or children of "
+"that genre. For example, clicking on Science Fiction can give all three of "
+"the child genres, Alternate History, Military, and Space Opera. Clicking on "
+"Alternate History will give books in that genre, ignoring those in Military "
+"and Space Opera. Of course, a book can have multiple genres. If a book has "
+"both Space Opera and Military genres, then you will see that book if you "
+"click on either genre. Searching is discussed in more detail below."
+msgstr "Η επιλογή ενός είδους μπορεί να αναζητήσει όλα τα βιβλία με το είδος αυτό, ή με υποείδη του. Για παράδειγμα, επιλογή του Science Fiction μπορεί να δώσει και τα τρία υποείδη του, Alternate History, Military, και Space Opera. Επιλέγοντας το Alternate History θα πάρετε βιβλία του είδους αυτού, αγνοώντας εκείνα με Military και Space Opera. Φυσικά, ένα βιβλίο μπορεί να έχει πολλαπλά είδη. Αν ένα βιβλίο έχει ταυτόχρονα τα είδη Space Opera και Military, τότε θα δείτε το βιβλίο αυτό επιλέγοντας οποιοδήποτε από τα δύο αυτά είδη. Η αναζήτηση συζητείται σε μεγαλύτερο βάθος παρακάτω."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:49
+msgid ""
+"Another thing you can see from the image is that the genre Military appears "
+"twice, once under History and once under Science Fiction. Because the genres"
+" are in a hierarchy, these are two separate genres. A book can be in one, "
+"the other, or (doubtfully in this case) both. For example, the books in "
+"Winston Churchill's \"The Second World War\" could be in "
+"\"History.Military\". David Weber's Honor Harrington books could be in "
+"\"Science Fiction.Military\", and for that matter also in \"Science "
+"Fiction.Space Opera.\""
+msgstr "Ένα ακόμα πράγμα που μπορείτε να δείτε από την εικόνα είναι ότι το είδος Military εμφανίζεται δύο φορές, ως υποείδος του History και ως υποείδος του Science Fiction. Επειδή τα είδη έχουν ιεραρχία, αυτά τα δύο είναι διαφορετικά είδη. Ένα βιβλίο μπορεί να ανήκει στο πρώτο, στο δεύτερο, ή (κάπως απίθανο στην περίπτωση αυτή) και στα δύο είδη. Για παράδειγμα, τα βιβλία του  Winston Churchill \"The Second World War\" μπορούν να είναι στο είδος \"History.Military\". Τα βιβλία του David Weber Honor Harrington μπορεί να είναι στο είδος \"Science Fiction.Military\", όπως επίσης και στο \"Science Fiction.Space Opera.\""
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:51
+msgid ""
+"Once a genre exists, that is at least one book has that genre, you can "
+"easily apply it to other books by dragging the books from the library view "
+"onto the genre you want the books to have. You can also apply genres in the "
+"metadata editors; more on this below."
+msgstr "Από τη στιγμή που υπάρχει ένα είδος, δηλαδή τουλάχιστον ένα βιβλίο ανήκει στο είδος αυτό, μπορείτε να το εφαρμόσετε εύκολα σε άλλα βιβλία σύροντάς τα από την προβολή της βιβλιοθήκης στο είδος που θέλετε να έχουν. Μπορείτε επίσης να εφαρμόσετε τα είδη στους επεξεργαστές μεταδεδομένων; περισσότερα γι' αυτό παρακάτω."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:54
+msgid "Setup"
+msgstr "Ρυθμίσεις"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:56
+msgid ""
+"By now, your question might be \"How was all of this setup?\" There are "
+"three steps: 1) create the custom column, 2) tell calibre that the new "
+"column is to be treated as a hierarchy, and 3) add genres."
+msgstr "Μέχρι εδώ, η ερώτησή σας ίσως είναι \"Πως ρυθμίστηκε όλο αυτό;\" Υπάρχουν τρία βήματα: 1) δημιουργείτε την εξατομικευμένη στήλη, 2) ενημερώνετε το calibre ότι η νέα στήλη θα μεταχειρίζεται ως ιεραρχία, και 3) προσθέτετε είδη."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:58
+msgid ""
+"You create the custom column in the usual way, using Preferences -> Add your"
+" own columns. This example uses \"#genre\" as the lookup name and \"Genre\" "
+"as the column heading. The column type is \"Comma-separated text, like tags,"
+" shown in the Tag browser.\""
+msgstr "Δημιουργείτε την εξατομικευμένη στήλη με το σύνηθη τρόπο, χρησιμοποιώντας το Προτιμήσεις -> Πρόσθεσε δικές σου στήλες. Το παράδειγμα αυτό χρησιμοποιεί το \"#genre\" ως ονομασία ευρετηρίου, και το \"Genre\" ως επικεφαλίδα της στήλης. Ο τύπος της στήλης είναι \"Κείμενο διαχωριζόμενο από κόμματα, όπως οι ετικέτες, που προβάλλεται στον περιηγητή Ετικετών.\""
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:63
+msgid ""
+"Then after restarting calibre, you must tell calibre that the column is to "
+"be treated as a hierarchy. Go to :guilabel:`Preferences -> Look & feel -> "
+"Tag browser` and enter the lookup name \"#genre\" into the \"Categories with"
+" hierarchical items\" box. Press :guilabel:`Apply`, and you are done with "
+"setting up."
+msgstr "Ακολούθως, αφού επανεκκινήσετε το calibre, πρέπει να του πείτε ότι η στήλη θα συμπεριφέρεται ως ιεραρχία. Πηγαίνετε στο :guilabel:`Προτιμήσεις -> Όψη & Αίσθηση -> Περιηγητής ετικετών` και εισάγετε την ονομασία ευρετηρίου \"#genre\" στο κουτί \"Κατηγορίες με στοιχεία σε ιεραρχία\". Πατήστε :guilabel:`Εφαρμογή`, και τελειώσατε με τη ρύθμιση."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:68
+msgid ""
+"At the point there are no genres in the column. We are left with the last "
+"step: how to apply a genre to a book. A genre does not exist in calibre "
+"until it appears on at least one book. To learn how to apply a genre for the"
+" first time, we must go into some detail about what a genre looks like in "
+"the metadata for a book."
+msgstr "Στο σημείο αυτό, δεν υπάρχουν είδη στη στήλη. Μας απομένει το τελευταίο βήμα: πως να εφαρμόσουμε ένα είδος σε κάποιο βιβλίο. Το είδος δεν υπάρχει στο calibre μέχρι να εμφανιστεί σε τουλάχιστον ένα βιβλίο. Για να μάθετε πως να εφαρμόζετε ένα είδος για πρώτη φορά, είναι αναγκαίο να καλύψουμε με κάποια λεπτομέρεια το πως εμφανίζεται το είδος στα μεταδεδομένα ενός βιβλίου."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:70
+msgid ""
+"A hierarchy of 'things' is built by creating an item consisting of phrases "
+"separated by periods. Continuing the genre example, these items would "
+"\"History.Military\", \"Mysteries.Vampire\", \"Science Fiction.Space "
+"Opera\", etc. Thus to create a new genre, you pick a book that should have "
+"that genre, edit its metadata, and enter the new genre into the column you "
+"created. Continuing our example, if you want to assign a new genre "
+"\"Comics\" with a sub-genre \"Superheroes\" to a book, you would 'edit "
+"metadata' for that (comic) book, choose the Custom metadata tab, and then "
+"enter \"Comics.Superheroes\" as shown in the following (ignore the other "
+"custom columns):"
+msgstr "Μια ιεραρχία 'πραγμάτων' κατασκευάζεται δημιουργώντας ένα στοιχείο που αποτελείται από φράσεις που διαχωρίζονται από τελείες. Συνεχίζοντας το παράδειγμα του είδους, τα παρακάτω στοιχεία το πετυχαίνουν: \"History.Military\", \"Mysteries.Vampire\", \"Science Fiction.Space Opera\", κτλ. Έτσι, για να δημιουργήσετε ένα νέο είδος, επιλέγετε ένα βιβλίο που πρέπει να έχει το είδος αυτό, επεξεργάζεστε τα μεταδεδομένα του, και εισάγετε το νέο είδος στη στήλη που δημιουργήσατε. Συνεχίζοντας με το παράδειγμά μας, αν θέλετε να αποδώσετε ένα νέο είδος \"Comics\" με ένα υποείδος \"Superheroes\" σε ένα βιβλίο, θα επιλέγατε 'επεξεργασία μεταδεδομένων' για αυτό το βιβλίο (comic), θα πηγαίνατε στην καρτέλα Εξατομικευμένα μεταδεδομένα, και μετά θα εισάγατε \"Comics.Superheroes\" όπως φαίνεται παρακάτω (αγνοείστε τις άλλες εξατομικευμένες στήλες):"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:75
+msgid "After doing the above, you see in the Tag browser:"
+msgstr "Αφού κάνετε τα παραπάνω, βλέπετε στον περιηγητή ετικετών:"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:80
+msgid ""
+"From here on, to apply this new genre to a book (a comic book, presumably), "
+"you can either drag the book onto the genre, or add it to the book using "
+"edit metadata in exactly the same way as done above."
+msgstr "Από δω και πέρα, για να εφαρμόσετε αυτό το νέο είδος σε ένα βιβλίο (ένα βιβλίο κόμικ, πιθανότατα), μπορείτε είτε να σύρετε το βιβλίο πάνω στο είδος, είτε να το προσθέσετε στο βιβλίο χρησιμοποιώντας το Επεξεργασία μεταδεδομένων, με ακριβώς τον ίδιο τρόπο που παρουσιάστηκε παραπάνω."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:84
+msgid ""
+"Hierarchical display only works if the Tag browser is set to sort items by "
+"name. This is the default and can be checked by clicking the "
+":guilabel:`Configure` button at the bottom of the Tag browser."
+msgstr "Η παρουσίαση ιεραρχιών λειτουργεί μόνο αν ο Περιηγητής ετικετών ρυθμίστηκε να ταξινομεί αντικείμενα με βάση το όνομά τους. Αυτό είναι προεπιλεγμένο, και μπορείτε να το ελέγξετε πατώντας το κουμπί :guilabel:`Παραμετροποίηση` στο κάτω μέρος του Περιηγητή ετικετών."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:89
+msgid "Searching"
+msgstr "Αναζήτηση"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:94
+msgid ""
+"The easiest way to search for genres is using the Tag browser, clicking on "
+"the genre you wish to see. Clicking on a genre with children will show you "
+"books with that genre and all child genres. However, this might bring up a "
+"question. Just because a genre has children doesn't mean that it isn't a "
+"genre in its own right. For example, a book can have the genre \"History\" "
+"but not \"History.Military\". How do you search for books with only "
+"\"History\"?"
+msgstr "Ο ευκολότερος τρόπος να κάνετε αναζήτηση για είδη είναι με χρήση του Περιηγητή ετικετών, επιλέγοντας το είδος που θέλετε να δείτε. Επιλέγοντας ένα είδος με υποείδη θα σας δείξει βιβλία με το είδος αυτό καθώς και με όλα τα υποείδη του. Αυτό ωστόσο, ίσως προκαλέσει μια απορία. Απλά και μόνο επειδή ένα είδος έχει υποείδη δεν σημαίνει ότι δεν είναι ένα είδος από μόνο του. Για παράδειγμα, ένα βιβλίο μπορεί να έχει το είδος \"History\" αλλά όχι το \"History.Military\". Πως λοιπόν αναζητείς βιβλία που έχουν μόνο \"History\";"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:96
+msgid ""
+"The Tag browser search mechanism knows if an item has children. If it does, "
+"clicking on the item cycles through 5 searches instead of the normal three. "
+"The first is the normal green plus, which shows you books with that genre "
+"only (e.g., History). The second is a doubled plus (shown above), which "
+"shows you books with that genre and all sub-genres (e.g., History and "
+"History.Military). The third is the normal red minus, which shows you books "
+"without that exact genre. The fourth is a doubled minus, which shows you "
+"books without that genre or sub-genres. The fifth is back to the beginning, "
+"no mark, meaning no search."
+msgstr "Ο μηχανισμός αναζήτησης του Περιηγητή ετικετών γνωρίζει αν κάποιο στοιχείο έχει υποείδη. Αν έχει, πατώντας διαδοχικά το στοιχείο μετακινείστε κυκλικά ανάμεσα σε 5 επιλογές αναζήτησης αντί των συνηθισμένων τριών. Η πρώτη έχει το συνηθισμένο πράσινο συν, και σας δείχνει αποκλειστικά βιβλία του είδους αυτού (π.χ., History). Η δεύτερη έχει ένα διπλό συν (όπως φαίνεται παραπάνω), και σας δείχνει βιβλία με το είδος αυτό και όλα τα υποείδη του (π.χ., History και History.Military). Η τρίτη έχει το συνηθισμένο κόκκινο πλην, και σας δείχνει όσα βιβλία δεν έχουν το είδος αυτό. Η τέταρτη έχει ένα διπλό πλην, και σας δείχνει όσα βιβλία δεν έχουν το είδος ή κάποιο από τα υποείδη του. Η πέμπτη επιστρέφει στην αρχή, δεν έχει σύμβολο, και σημαίνει ότι δεν γίνεται αναζήτηση."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:99
+msgid "Restrictions"
+msgstr "Περιορισμοί"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:101
+msgid ""
+"If you search for a genre then create a saved search for it, you can use the"
+" 'restrict to' box to create a Virtual library of books with that genre. "
+"This is useful if you want to do other searches within the genre or to "
+"manage/update metadata for books in the genre. Continuing our example, you "
+"can create a Saved search named 'History.Japanese' by first clicking on the "
+"genre Japanese in the Tag browser to get a search into the search field, "
+"entering History.Japanese into the saved search field, then pushing the "
+"\"Save search\" button (the green box with the white plus, on the right-hand"
+" side)."
+msgstr "Αν κάνετε αναζήτηση για ένα είδος και μετά δημιουργήσετε μια αποθηκευμένη αναζήτηση γι' αυτό, μπορείτε να χρησιμοποιήσετε το κουτί 'Επιπρόσθετος περιορισμός' για να δημιουργήσετε μια Εικονική βιβλιοθήκη με βιβλία αυτού του είδους. Αυτό είναι χρήσιμο αν θέλετε να κάνετε άλλες αναζητήσεις εντός του είδους ή να διαχειριστείτε/ενημερώσετε μεταδεδομένα βιβλίων του είδους αυτού. Συνεχίζοντας με το παράδειγμά μας, μπορείτε να δημιουργήσετε μια Αποθηκευμένη αναζήτηση με το όνομα 'History.Japanese' επιλέγοντας πρώτα το είδος Japanese στον Περιηγητή ετικετών για να εισάγετε μια αναζήτηση στο πεδίο των αναζητήσεων, εισάγοντας History.Japanese στο πεδίο αποθηκευμένης αναζήτησης, και μετά πατώντας το κουμπί \"Αποθήκευση αναζήτησης\" (το πράσινο κουτί με το λευκό συν, στη δεξιά πλευρά)."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:106
+msgid "After creating the saved search, you can use it as a restriction."
+msgstr "Αφού δημιουργήσετε την αποθηκευμένη αναζήτηση, μπορείτε να την χρησιμοποιήσετε σαν ένα περιορισμό."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:112
+msgid "Useful template functions"
+msgstr "Χρήσιμες συναρτήσεις προτύπων "
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:114
+msgid ""
+"You might want to use the genre information in a template, such as with save"
+" to disk or send to device. The question might then be \"How do I get the "
+"outermost genre name or names?\" A calibre template function, subitems, is "
+"provided to make doing this easier."
+msgstr "Ίσως επιθυμείτε να χρησιμοποιήσετε τις πληροφορίες είδους σε ένα πρότυπο, όπως στο αποθήκευση στο δίσκο ή στο αποστολή στη συσκευή. Το ερώτημα τότε ίσως είναι \"Πως βρίσκει κανείς το όνομα ή τα ονόματα των εξώτερων ειδών;\" Μια συνάρτηση προτύπων του calibre, η subitems, αποδίδεται για να το κάνει αυτό ευκολότερο."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:116
+msgid ""
+"For example, assume you want to add the outermost genre level to the save-"
+"to-disk template to make genre folders, as in \"History/The Gathering Storm "
+"- Churchill, Winston\". To do this, you must extract the first level of the "
+"hierarchy and add it to the front along with a slash to indicate that it "
+"should make a folder. The template below accomplishes this::"
+msgstr "Για παράδειγμα, ας υποτεθεί ότι θέλετε να προσθέσετε το εξώτατο επίπεδο είδους στο πρότυπο αποθήκευση στο δίσκο, για να δημιουργήσετε φακέλους είδους, όπως τον \"History/The Gathering Storm - Churchill, Winston\". Για να το πετύχετε αυτό, πρέπει να πάρετε το πρώτο επίπεδο της ιεραρχίας και να το προσθέσετε στην αρχή, μαζί με ένα / για να υποδείξετε ότι πρέπει να δημιουργηθεί φάκελος. Το παρακάτω υπόδειγμα δείχνει πως πραγματοποιείται::"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:120
+msgid ""
+"See :ref:`The template language <templatelangcalibre>` for more information "
+"about templates and the :func:`subitems` function."
+msgstr "Δείτε :ref:`Η γλώσσα προτύπων <templatelangcalibre>` για περισσότερες πληροφορίες σχετικά με τα πρότυπα και τη λειτουργία :func:`subitems`."

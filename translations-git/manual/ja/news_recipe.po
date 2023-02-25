@@ -1,0 +1,916 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# 
+# Translators:
+# Yuka Kachi, 2022
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-11-01 03:06+0000\n"
+"PO-Revision-Date: 2014-06-17 08:36+0000\n"
+"Last-Translator: Yuka Kachi, 2022\n"
+"Language-Team: Japanese (http://www.transifex.com/calibre/calibre/language/ja/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../__w/calibre/calibre/manual/news_recipe.rst:4
+msgid "API documentation for recipes"
+msgstr "レシピの API 説明書"
+
+#: ../../__w/calibre/calibre/manual/news_recipe.rst:9
+msgid "The API for writing recipes is defined by the :class:`BasicNewsRecipe`"
+msgstr ":class:`BasicNewsRecipe` で定義されるレシピを書くための API です"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe:1
+msgid ""
+"Base class that contains logic needed in all recipes. By overriding "
+"progressively more of the functionality in this class, you can make "
+"progressively more customized/powerful recipes. For a tutorial introduction "
+"to creating recipes, see :doc:`news`."
+msgstr "すべてのレシピに必要なロジックを含む基底クラス。このクラスの機能を段階的にオーバーライドすることで、段階的にカスタマイズされた強力なレシピを作成できます。レシピ作成の入門チュートリアルについては、:doc:`news` を参照してください。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.abort_article:1
+msgid ""
+"Call this method inside any of the preprocess methods to abort the download "
+"for the current article. Useful to skip articles that contain inappropriate "
+"content, such as pure video articles."
+msgstr "現在の記事のダウンロードを中止するには、いずれかの前処理メソッド内でこのメソッドを呼び出します。純粋なビデオ記事のような、不適切なコンテンツを含む記事をスキップするのに便利です。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.abort_recipe_processing:1
+msgid ""
+"Causes the recipe download system to abort the download of this recipe, "
+"displaying a simple feedback message to the user."
+msgstr "レシピダウンロードシステムにこのレシピのダウンロードを中止させ、ユーザに簡単なフィードバックメッセージを表示します。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.add_toc_thumbnail:1
+msgid ""
+"Call this from populate_article_metadata with the src attribute of an <img> "
+"tag from the article that is appropriate for use as the thumbnail "
+"representing the article in the Table of Contents. Whether the thumbnail is "
+"actually used is device dependent (currently only used by the Kindles). Note"
+" that the referenced image must be one that was successfully downloaded, "
+"otherwise it will be ignored."
+msgstr "populate_article_metadata から <img> タグの src 属性とともに呼び出します。この画像は目次の中でその記事を表すサムネイルとして使用するのに適した、記事の中の画像です。サムネイルが実際に使用されるかどうかは、デバイスによって異なります (現在はKindleでのみ使用されます)。参照される画像は、必ず正常にダウンロードされた画像にしてください。そうでない場合には、無視されます。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.adeify_images:1
+msgid ""
+"If your recipe when converted to EPUB has problems with images when viewed "
+"in Adobe Digital Editions, call this method from within "
+":meth:`postprocess_html`."
+msgstr "EPUBに変換したレシピで、Adobe Digital Editionsで表示したときに画像に問題がある場合は、:meth:`postprocess_html` 内からこのメソッドを呼び出します。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:1
+msgid ""
+"Return a set of canonical representations of ``url``.  The default "
+"implementation uses just the server hostname and path of the URL, ignoring "
+"any query parameters, fragments, etc. The canonical representations must be "
+"unique across all URLs for this news source. If they are not, then internal "
+"links may be resolved incorrectly."
+msgstr "``url`` の正準表現のセットを返します。デフォルトの実装では、サーバのホスト名とURLのパスのみが使用され、クエリパラメータ、フラグメントなどは無視されます。正準表現は、このニュースソースのすべての URL で一意である必要があります。そうでない場合は、内部リンクが正しく解決されない可能性があります。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:0
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:0
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:0
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:0
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:0
+msgid "Parameters"
+msgstr "パラメータ"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:7
+msgid ""
+"Is True if the URL is coming from an internal link in an HTML file. False if"
+" the URL is the URL used to download an article."
+msgstr "URL が HTML ファイルの内部リンクからのものである場合に True です。 URL が記事のダウンロードに使用される URL の場合は False。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.cleanup:1
+msgid ""
+"Called after all articles have been download. Use it to do any cleanup like "
+"logging out of subscription sites, etc."
+msgstr "すべての記事がダウンロードされた後に呼び出されます。サブスクリプションサイトからのログアウトなどのクリーンアップを行うために使用します。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.clone_browser:1
+msgid ""
+"Clone the browser br. Cloned browsers are used for multi-threaded downloads,"
+" since mechanize is not thread safe. The default cloning routines should "
+"capture most browser customization, but if you do something exotic in your "
+"recipe, you should override this method in your recipe and clone manually."
+msgstr "ブラウザ br のクローンを作成します。 mechanizeはスレッドセーフではないため、クローンブラウザはマルチスレッドダウンロードに使用されます。デフォルトのクローン作成手順は、ほとんどのブラウザのカスタマイズをキャプチャするはずですが、レシピで何か変わったことを行う場合には、レシピでこのメソッドをオーバーライドして、手動でクローンを作成する必要があります。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.clone_browser:7
+msgid ""
+"Cloned browser instances use the same, thread-safe CookieJar by default, "
+"unless you have customized cookie handling."
+msgstr "クローンブラウザインスタンスは、Cookieの処理をカスタマイズしていない限り、デフォルトで同じスレッドセーフな CookieJar を使用します。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.default_cover:1
+msgid "Create a generic cover for recipes that don't have a cover"
+msgstr "表紙のないレシピ用に汎用的な表紙を作成します"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.download:1
+msgid ""
+"Download and pre-process all articles from the feeds in this recipe. This "
+"method should be called only once on a particular Recipe instance. Calling "
+"it more than once will lead to undefined behavior. :return: Path to "
+"index.html"
+msgstr "このレシピのフィードからすべての記事をダウンロードして前処理します。このメソッドは、特定の Recipe インスタンスで 1 回だけ呼び出す必要があります。これを複数回呼び出すと、予期しない動作が発生します。返り値: index.html へのパス"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.extract_readable_article:1
+msgid ""
+"Extracts main article content from 'html', cleans up and returns as a "
+"(article_html, extracted_title) tuple. Based on the original readability "
+"algorithm by Arc90."
+msgstr "'html' からメインの記事コンテンツを抽出し、クリーンアップして (article_html, extracted_title) タプルとして返します。 Arc90によるoriginal readability アルゴリズムに基づいています。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_article_url:1
+msgid ""
+"Override in a subclass to customize extraction of the :term:`URL` that "
+"points to the content for each article. Return the article URL. It is called"
+" with `article`, an object representing a parsed article from a feed. See "
+"`feedparser <https://pythonhosted.org/feedparser/>`_. By default it looks "
+"for the original link (for feeds syndicated via a service like FeedBurner or"
+" Pheedo) and if found, returns that or else returns `article.link "
+"<https://pythonhosted.org/feedparser/reference-entry-link.html>`_."
+msgstr "サブクラスでオーバーライドして、各記事のコンテンツを指す URL の抽出をカスタマイズします。記事の URL を返します。これは、フィードから解析された記事を表すオブジェクトである `article` とともに呼び出されます。`feedparser <https://pythonhosted.org/feedparser/>`_を参照してください。デフォルトでは元のリンク (FeedBurner や Pheedo などのサービスを介して配信されたフィードの場合) を検索し、見つかった場合はそれを返し、そうでなければ `article.link <https://pythonhosted.org/feedparser/reference-entry-link.html>`_を返します。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_browser:1
+msgid ""
+"Return a browser instance used to fetch documents from the web. By default "
+"it returns a `mechanize <https://mechanize.readthedocs.io/en/latest/>`_ "
+"browser instance that supports cookies, ignores robots.txt, handles "
+"refreshes and has a mozilla firefox user agent."
+msgstr "Webからドキュメントをフェッチするために使用されるブラウザインスタンスを返します。デフォルトでは、Cookieをサポートし、robots.txtを無視し、更新を処理し、mozilla firefoxユーザエージェントを持つ `mechanize <https://mechanize.readthedocs.io/en/latest/>`_ブラウザインスタンスを返します。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_browser:6
+msgid ""
+"If your recipe requires that you login first, override this method in your "
+"subclass. For example, the following code is used in the New York Times "
+"recipe to login for full access::"
+msgstr "レシピで最初にログインする必要がある場合は、サブクラスでこのメソッドをオーバーライドします。たとえば、New York Times のレシピでは、フルアクセスのためのログイン用に次のコードが使用されています::"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_cover_url:1
+msgid ""
+"Return a :term:`URL` to the cover image for this issue or `None`. By default"
+" it returns the value of the member `self.cover_url` which is normally "
+"`None`. If you want your recipe to download a cover for the e-book override "
+"this method in your subclass, or set the member variable `self.cover_url` "
+"before this method is called."
+msgstr "この問題の表紙画像へのURL、または `None` を返します。デフォルトではメンバー `self.cover_url` の値を返し、これは通常 `None` です。レシピで電子書籍の表紙をダウンロードしたい場合は、サブクラスでこのメソッドをオーバーライドするか、このメソッドが呼び出される前にメンバ変数 `self.cover_url` を設定します。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_extra_css:1
+msgid ""
+"By default returns `self.extra_css`. Override if you want to "
+"programmatically generate the extra_css."
+msgstr "デフォルトでは、`self.extra_css` を返します。プログラムで extra_css を生成したい場合は、オーバーライドします。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_feeds:1
+msgid ""
+"Return a list of :term:`RSS` feeds to fetch for this profile. Each element "
+"of the list must be a 2-element tuple of the form (title, url). If title is "
+"None or an empty string, the title from the feed is used. This method is "
+"useful if your recipe needs to do some processing to figure out the list of "
+"feeds to download. If so, override in your subclass."
+msgstr "このプロファイル用にフェッチする :term:`RSS` フィードのリストを返します。リストの各要素は、フォーム (title, url) の2要素のタプルである必要があります。 title が None または空の文字列の場合、フィードのタイトルが使用されます。このメソッドは、ダウンロードするフィードのリストを把握するためにレシピで何らかの処理を行う必要がある場合に役立ちます。その場合は、サブクラスでオーバーライドします。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_masthead_title:1
+msgid "Override in subclass to use something other than the recipe title"
+msgstr "レシピタイトル以外のものを使用するには、サブクラスでオーバーライドします"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_masthead_url:1
+msgid ""
+"Return a :term:`URL` to the masthead image for this issue or `None`. By "
+"default it returns the value of the member `self.masthead_url` which is "
+"normally `None`. If you want your recipe to download a masthead for the "
+"e-book override this method in your subclass, or set the member variable "
+"`self.masthead_url` before this method is called. Masthead images are used "
+"in Kindle MOBI files."
+msgstr "この問題のマストヘッド画像への URL 、または `None` を返します。デフォルトではメンバー `self.cover_url` の値を返し、これは通常 `None` です。レシピで電子書籍のマストヘッドをダウンロードしたい場合は、サブクラスでこのメソッドをオーバーライドするか、このメソッドが呼び出される前にメンバ変数 `self.cover_url` を設定します。マストヘッド画像はKindleMOBIファイルで使用されます。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:1
+msgid ""
+"If you set `articles_are_obfuscated` this method is called with every "
+"article URL. It should return the path to a file on the filesystem that "
+"contains the article HTML. That file is processed by the recursive HTML "
+"fetching engine, so it can contain links to pages/images on the web."
+msgstr "`articles_are_obfuscated` を設定すると、このメソッドはすべての記事の URL で呼び出されます。記事の HTML を含むファイルシステム上のファイルへのパスを返すはずです。そのファイルは再帰的な HTML フェッチエンジンによって処理されるため、Web 上のページ/画像へのリンクを含めることができます。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:6
+msgid ""
+"This method is typically useful for sites that try to make it difficult to "
+"access article content automatically."
+msgstr "この方法は通常、記事のコンテンツに自動的にアクセスすることを困難にしようとするサイトに役立ちます。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.image_url_processor:1
+msgid ""
+"Perform some processing on image urls (perhaps removing size restrictions "
+"for dynamically generated images, etc.) and return the precessed URL. Return"
+" None or an empty string to skip fetching the image."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:1
+msgid ""
+"Convenience method that takes an URL to the index page and returns a "
+"`BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc>`__ of"
+" it."
+msgstr "インデックスページへの URL を取得し、その `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc>`__ を返す便利なメソッド。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:5
+msgid "`url_or_raw`: Either a URL or the downloaded index page as a string"
+msgstr "`url_or_raw`: URL または文字列としてダウンロードされたインデックスページ"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:1
+msgid ""
+"Return True if the link should be followed or False otherwise. By default, "
+"raises NotImplementedError which causes the downloader to ignore it."
+msgstr "リンクをたどる必要があれば True を返し、そうでなければ False を返します。デフォルトでは NotImplementedError が発生し、ダウンローダはそれを無視します。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:5
+msgid "The URL to be followed"
+msgstr "フォローする URL"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:6
+msgid "The tag from which the URL was derived"
+msgstr "URL の派生元のタグ"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.parse_feeds:1
+msgid ""
+"Create a list of articles from the list of feeds returned by "
+":meth:`BasicNewsRecipe.get_feeds`. Return a list of :class:`Feed` objects."
+msgstr ":meth:`BasicNewsRecipe.get_feeds` によって返されるフィードのリストから記事のリストを作成します。 :class:`Feed` オブジェクトのリストを返します。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.parse_index:1
+msgid ""
+"This method should be implemented in recipes that parse a website instead of"
+" feeds to generate a list of articles. Typical uses are for news sources "
+"that have a \"Print Edition\" webpage that lists all the articles in the "
+"current print edition. If this function is implemented, it will be used in "
+"preference to :meth:`BasicNewsRecipe.parse_feeds`."
+msgstr "このメソッドは、フィードの代わりにWebサイトを解析して記事のリストを生成するレシピに実装する必要があります。典型的な用途は、現在の印刷版のすべての記事を一覧表示する \"印刷版\" の Web ページがあるニュースソースです。この関数を実装すると :meth:`BasicNewsRecipe.parse_feeds` よりも優先して使用されます。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.parse_index:7
+msgid ""
+"It must return a list. Each element of the list must be a 2-element tuple of"
+" the form ``('feed title', list of articles)``."
+msgstr "リストを返す必要があります。リストの各要素は、``('feed title', list of articles)`` の形式の 2 要素のタプルでなくてはなりません。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.parse_index:10
+msgid "Each list of articles must contain dictionaries of the form::"
+msgstr "記事の各リストには、次の形式の辞書が含まれている必要があります::"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.parse_index:23
+msgid ""
+"For an example, see the recipe for downloading `The Atlantic`. In addition, "
+"you can add 'author' for the author of the article."
+msgstr "例については、`The Atlantic` をダウンロードするためのレシピを参照してください。さらに、記事の著者に 'author' を追加できます。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.parse_index:26
+msgid ""
+"If you want to abort processing for some reason and have calibre show the "
+"user a simple message instead of an error, call "
+":meth:`abort_recipe_processing`."
+msgstr "何らかの理由で処理を中止し、calibre にエラーではなく単純なメッセージをユーザに表示させたい場合は、:meth:`abort_recipe_processing` を呼び出します。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:1
+msgid ""
+"Called when each HTML page belonging to article is downloaded. Intended to "
+"be used to get article metadata like author/summary/etc. from the parsed "
+"HTML (soup)."
+msgstr "記事に属する各 HTML ページがダウンロードされるときに呼び出されます。解析された HTML (soup) から著者/要約のような記事の書誌を取得するための使用が想定されています。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:5
+msgid ""
+"A object of class :class:`calibre.web.feeds.Article`. If you change the "
+"summary, remember to also change the text_summary"
+msgstr "クラス :class:`calibre.web.feeds.Article` のオブジェクト。要約を変更するときには、必ず text_summaryも変更してください"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:7
+msgid "Parsed HTML belonging to this article"
+msgstr "この記事に属する解析された HTML"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:8
+msgid "True iff the parsed HTML is the first page of the article."
+msgstr "解析された HTML が記事の最初のページであれば True です。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:1
+msgid "Run any needed post processing on the parsed downloaded e-book."
+msgstr "解析されたダウンロード済みの電子書籍で必要な後処理を実行します。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:3
+msgid "An OEBBook object"
+msgstr "OEBBook オブジェクト"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:4
+msgid "Conversion options"
+msgstr "変換オプション"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:1
+msgid ""
+"This method is called with the source of each downloaded :term:`HTML` file, "
+"after it is parsed for links and images. It can be used to do arbitrarily "
+"powerful post-processing on the :term:`HTML`. It should return `soup` after "
+"processing it."
+msgstr "このメソッドは、リンクと画像が解析された後、ダウンロードされた各 :term:`HTML` ファイルのソースで呼び出されます。:term:`HTML` 上で任意に強力な後処理を行うために使用できます。処理後に `soup` を返します。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:6
+msgid ""
+"A `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`__"
+"  instance containing the downloaded :term:`HTML`."
+msgstr "ダウンロードした :term:`HTML` を含む `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`__ インスタンス"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:7
+msgid "True if this is the first page of an article."
+msgstr "これが記事の最初のページなら True。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.preprocess_html:1
+msgid ""
+"This method is called with the source of each downloaded :term:`HTML` file, "
+"before it is parsed for links and images. It is called after the cleanup as "
+"specified by remove_tags etc. It can be used to do arbitrarily powerful pre-"
+"processing on the :term:`HTML`. It should return `soup` after processing it."
+msgstr "このメソッドは、リンクや画像を解析する前に、ダウンロードした各 :term:`HTML` ファイルのソースで呼び出されます。 remove_tags などで指定されたクリーンアップの後に呼び出されます。:term:`HTML` で任意の強力な前処理を行うために使用できます。処理後に `soup` を返します。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.preprocess_html:7
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.skip_ad_pages:8
+msgid ""
+"`soup`: A `BeautifulSoup "
+"<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`__ instance "
+"containing the downloaded :term:`HTML`."
+msgstr "`soup`: ダウンロードされた :term:`HTML` を含む `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`__ インスタンス"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.preprocess_image:1
+msgid ""
+"Perform some processing on downloaded image data. This is called on the raw "
+"data before any resizing is done. Must return the processed raw data. Return"
+" None to skip the image."
+msgstr "ダウンロードした画像データに対して何らかの処理を行います。これは、サイズ変更が行われる前に生データで呼び出されます。処理された生データを返す必要があります。画像をスキップするためには None を返します。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:1
+msgid ""
+"This method is called with the source of each downloaded :term:`HTML` file, "
+"before it is parsed into an object tree. raw_html is a unicode string "
+"representing the raw HTML downloaded from the web. url is the URL from which"
+" the HTML was downloaded."
+msgstr "このメソッドは、オブジェクトツリーに解析される前に、ダウンロードされた各 :term:`HTML` ファイルのソースで呼び出されます。 raw_html は、Web からダウンロードされた生の HTML を表すUnicode文字列です。 url は、HTML のダウンロード元の URL です。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:6
+msgid "Note that this method acts *before* preprocess_regexps."
+msgstr "このメソッドは preprocess_regexps の*前*に機能します。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:8
+msgid "This method must return the processed raw_html as a unicode object."
+msgstr "このメソッドは、処理された raw_html を unicode オブジェクトとして返す必要があります。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.print_version:1
+msgid ""
+"Take a `url` pointing to the webpage with article content and return the "
+":term:`URL` pointing to the print version of the article. By default does "
+"nothing. For example::"
+msgstr "記事のコンテンツを含むWebページを指す `url` を取得し、記事の印刷バージョンを指す :term:`URL` を返します。デフォルトでは何もしません。例::"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.publication_date:1
+msgid ""
+"Use this method to set the date when this issue was published. Defaults to "
+"the moment of download. Must return a :class:`datetime.datetime` object."
+msgstr "この問題が発行された日付を設定するために使用します。デフォルトはダウンロードの時間です。 :class:`datetime.datetime` オブジェクトを返す必要があります。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.skip_ad_pages:1
+msgid ""
+"This method is called with the source of each downloaded :term:`HTML` file, "
+"before any of the cleanup attributes like remove_tags, keep_only_tags are "
+"applied. Note that preprocess_regexps will have already been applied. It is "
+"meant to allow the recipe to skip ad pages. If the soup represents an ad "
+"page, return the HTML of the real page. Otherwise return None."
+msgstr "このメソッドは remove_tags、keep_only_tags などのクリーンアップ属性が適用される前に、ダウンロードされた各 :term:`HTML` ファイルのソースで呼び出されます。ただし preprocess_regexps は適用済みです。これは、レシピが広告ページをスキップできるようにすることを目的としています。soup が広告ページを表していれば、実際のページの HTML を返し、そうでなければ None を返します。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.sort_index_by:1
+msgid ""
+"Convenience method to sort the titles in `index` according to `weights`. "
+"`index` is sorted in place. Returns `index`."
+msgstr "`index` 内のタイトルを` weights` に従って並べ替える便利なメソッド。`index` はその場で並べ替えられます。`index` を返します。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.sort_index_by:4
+msgid "`index`: A list of titles."
+msgstr "`index`: タイトルのリスト。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.sort_index_by:6
+msgid ""
+"`weights`: A dictionary that maps weights to titles. If any titles in index "
+"are not in weights, they are assumed to have a weight of 0."
+msgstr "`weights`: 重みをタイトルにマップする辞書。インデックス内のタイトルに重みがない場合、重みは 0 と見なされます。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:1
+msgid ""
+"Convenience method to take a `BeautifulSoup "
+"<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag` and "
+"extract the text from it recursively, including any CDATA sections and alt "
+"tag attributes. Return a possibly empty Unicode string."
+msgstr "`BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_の :code:`Tag` を取得し、CDATA セクションと alt タグ属性を含むテキストを再帰的に抽出する便利なメソッドです。空の可能性のあるUnicode文字列を返します。"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:6
+msgid ""
+"`use_alt`: If `True` try to use the alt attribute for tags that don't have "
+"any textual content"
+msgstr "`use_alt`: Trueのとき、テキストコンテンツを含まないタグに alt 属性を使用してみてください"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:9
+msgid ""
+"`tag`: `BeautifulSoup "
+"<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag`"
+msgstr "`tag`: `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag`"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.articles_are_obfuscated:1
+msgid ""
+"Set to True and implement :meth:`get_obfuscated_article` to handle websites "
+"that try to make it difficult to scrape content."
+msgstr "True に設定すると、:meth:`get_obfuscated_article` を実装して、コンテンツのスクレイプを困難にしようとする Web サイトを処理します。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.auto_cleanup:1
+msgid ""
+"Automatically extract all the text from downloaded article pages. Uses the "
+"algorithms from the readability project. Setting this to True, means that "
+"you do not have to worry about cleaning up the downloaded HTML manually "
+"(though manual cleanup will always be superior)."
+msgstr "ダウンロードした記事ページからすべてのテキストを自動的に抽出します。readability プロジェクトのアルゴリズムを使用します。これを True に設定すると、ダウンロードした HTML を手動でクリーンアップする必要がなくなります (ただし、手動クリーンアップの方が常に優れています)。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.auto_cleanup_keep:1
+msgid ""
+"Specify elements that the auto cleanup algorithm should never remove. The "
+"syntax is a XPath expression. For example::"
+msgstr "自動クリーンアップアルゴリズムで削除してはならない要素を指定します。構文は XPath 式です。例::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.center_navbar:1
+msgid ""
+"If True the navigation bar is center aligned, otherwise it is left aligned"
+msgstr "Trueのとき、ナビゲーションバーは中央揃えに、それ以外の場合は左揃えになります。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images:1
+msgid ""
+"Set this to False to ignore all scaling and compression parameters and pass "
+"images through unmodified. If True and the other compression parameters are "
+"left at their default values, JPEG images will be scaled to fit in the "
+"screen dimensions set by the output profile and compressed to size at most "
+"(w * h)/16 where w x h are the scaled image dimensions."
+msgstr "これを False に設定すると、すべてのサイズ調整および圧縮パラメータが無視され、画像が変更されずに渡されます。True に設定し、その他の圧縮パラメータをデフォルト値のままにすると、JPEG 画像は、出力プロファイルで設定された画面のサイズに合わせて拡大縮小され、最大 (w * h)/16 のサイズに圧縮されます。ここで w と x と h は拡大縮小された画像のサイズです。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images_auto_size:1
+msgid ""
+"The factor used when auto compressing JPEG images. If set to None, auto "
+"compression is disabled. Otherwise, the images will be reduced in size to (w"
+" * h)/compress_news_images_auto_size bytes if possible by reducing the "
+"quality level, where w x h are the image dimensions in pixels. The minimum "
+"JPEG quality will be 5/100 so it is possible this constraint will not be "
+"met.  This parameter can be overridden by the parameter "
+"compress_news_images_max_size which provides a fixed maximum size for "
+"images. Note that if you enable scale_news_images_to_device then the image "
+"will first be scaled and then its quality lowered until its size is less "
+"than (w * h)/factor where w and h are now the *scaled* image dimensions. In "
+"other words, this compression happens after scaling."
+msgstr "JPEG 画像を自動圧縮するときに使用される係数。 None に設定すると、自動圧縮は無効になります。それ以外のとき、画像のサイズは、可能であれば品質レベルを下げることによって (w * h)/compress_news_images_auto_size バイトに縮小されます。ここで w と x と h はピクセル単位の画像の寸法です。最小 JPEG 品質は 5/100 になるため、この制約が満たされない可能性があります。このパラメータは、画像の最大サイズを固定するパラメータ compress_news_images_max_size でオーバーライドできます。 scale_news_images_to_device を有効にすると、画像は最初に拡大縮小され、次にサイズが (w * h)/factor 未満になるまで品質が低下します。ここで w と h は拡大縮小された画像のサイズになります。つまり、この圧縮はスケーリング後に行われます。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images_max_size:1
+msgid ""
+"Set JPEG quality so images do not exceed the size given (in KBytes). If set,"
+" this parameter overrides auto compression via "
+"compress_news_images_auto_size. The minimum JPEG quality will be 5/100 so it"
+" is possible this constraint will not be met."
+msgstr "画像が指定されたサイズ (KB単位) を超えないようにJ PEG 品質を設定します。設定されると、このパラメーターは compress_news_images_auto_sizeに よる自動圧縮をオーバーライドします。最小 JPEG 品質は 5/100 になるため、この制約が満たされない可能性があります。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.conversion_options:1
+msgid ""
+"Recipe specific options to control the conversion of the downloaded content "
+"into an e-book. These will override any user or plugin specified values, so "
+"only use if absolutely necessary. For example::"
+msgstr "ダウンロードしたコンテンツの電子書籍への変換を制御するためのレシピ固有のオプション。これらはユーザまたはプラグインで指定された値を上書きするため、絶対に必要な場合にのみ使用してください。例::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.cover_margins:1
+msgid ""
+"By default, the cover image returned by get_cover_url() will be used as the "
+"cover for the periodical.  Overriding this in your recipe instructs calibre "
+"to render the downloaded cover into a frame whose width and height are "
+"expressed as a percentage of the downloaded cover. cover_margins = (10, 15, "
+"'#ffffff') pads the cover with a white margin 10px on the left and right, "
+"15px on the top and bottom. Color names are defined `here "
+"<https://www.imagemagick.org/script/color.php>`_. Note that for some reason,"
+" white does not always work in Windows. Use #ffffff instead"
+msgstr "デフォルトでは、get_cover_url() によって返される表紙画像が定期刊行物の表紙として使用されます。レシピでこれをオーバーライドすると、ダウンロードした表紙をフレームにレンダリングするように calibre に指示します。フレームの幅と高さは、ダウンロードした表紙のパーセンテージとして表されます。 cover_margins = (10, 15, '#ffffff') は、左右に 10px、上下に 15px の白い余白でカバーを埋めます。色名は `こちら <https://www.imagemagick.org/script/color.php>`_ で定義されています。ただし何らかの理由により Windows では white が常に機能するとは限りません。代わりに #ffffff を使用してください"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.delay:1
+msgid ""
+"Delay between consecutive downloads in seconds. The argument may be a "
+"floating point number to indicate a more precise time."
+msgstr "連続するダウンロード間の遅延 (秒単位)。引数は、より正確な時間を示せるよう浮動小数点数にすることができます。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.description:1
+msgid ""
+"A couple of lines that describe the content this recipe downloads. This will"
+" be used primarily in a GUI that presents a list of recipes."
+msgstr "このレシピがダウンロードするコンテンツの 2、3 行の説明。これは主に、レシピのリストを表示する GUI で使用されます。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.encoding:1
+msgid ""
+"Specify an override encoding for sites that have an incorrect charset "
+"specification. The most common being specifying ``latin1`` and using "
+"``cp1252``. If None, try to detect the encoding. If it is a callable, the "
+"callable is called with two arguments: The recipe object and the source to "
+"be decoded. It must return the decoded source."
+msgstr "文字セットの指定が正しくないサイト用にオーバーライドエンコーディングを指定します。最も一般的なのは ``latin1`` を指定して ``cp1252`` を使用することです。None のときには、エンコーディングを検出してみてください。呼び出し可能であれば、それは 2 つの引数、レシピオブジェクトとデコードされるソースで呼び出されます。デコードされたソースを返す必要があります。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.extra_css:1
+msgid ""
+"Specify any extra :term:`CSS` that should be added to downloaded "
+":term:`HTML` files. It will be inserted into `<style>` tags, just before the"
+" closing `</head>` tag thereby overriding all :term:`CSS` except that which "
+"is declared using the style attribute on individual :term:`HTML` tags. Note "
+"that if you want to programmatically generate the extra_css override the "
+":meth:`get_extra_css()` method instead. For example::"
+msgstr "ダウンロードした :term:`HTML` ファイルに追加する必要がある追加の :term:`CSS` を指定します。終了タグ </head> の直前の <style> タグに挿入されるため、個々の HTML タグの style 属性を使用して宣言されているものを除くすべての CSS がオーバーライドされます。ただしプログラムでextra_cssを生成する場合は、代わりに :meth:`get_extra_css()` メソッドをオーバーライドします。例::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.feeds:1
+msgid ""
+"List of feeds to download. Can be either ``[url1, url2, ...]`` or "
+"``[('title1', url1), ('title2', url2),...]``"
+msgstr "ダウンロードするフィードのリスト。 ``[url1, url2, ...]`` または ``[('title1', url1), ('title2', url2),...]`` のいずれかになります。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.filter_regexps:1
+msgid ""
+"List of regular expressions that determines which links to ignore. If empty "
+"it is ignored. Used only if is_link_wanted is not implemented. For example::"
+msgstr "無視するリンクを決定する正規表現のリスト。空の場合は無視されます。 is_link_wanted が実装されていない場合にのみ使用されます。例::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.filter_regexps:7
+msgid "will remove all URLs that have `ads.doubleclick.net` in them."
+msgstr "上記は `ads.doubleclick.net` が含まれているすべてのURLを削除します。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.filter_regexps:9
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.match_regexps:9
+msgid ""
+"Only one of :attr:`BasicNewsRecipe.match_regexps` or "
+":attr:`BasicNewsRecipe.filter_regexps` should be defined."
+msgstr ":attr:`BasicNewsRecipe.match_regexps` または :attr:`BasicNewsRecipe.filter_regexps` のいずれか1つのみを定義する必要があります。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.handle_gzip:1
+msgid ""
+"Set to False if you do not want to use gzipped transfers. Note that some old"
+" servers flake out with gzip"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:1
+msgid ""
+"Ignore duplicates of articles that are present in more than one section. A "
+"duplicate article is an article that has the same title and/or URL. To "
+"ignore articles with the same title, set this to::"
+msgstr "複数のセクションに存在する記事の重複はを無視します。重複する記事とは、同じタイトルや URL を持つ記事です。同じタイトルの記事を無視するには、次のように設定します::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:7
+msgid "To use URLs instead, set it to::"
+msgstr "代わりに URL を使用するには、次のように設定します::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:11
+msgid "To match on title or URL, set it to::"
+msgstr "タイトルまたは URL をマッチさせるには、次のように設定します::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.keep_only_tags:1
+msgid ""
+"Keep only the specified tags and their children. For the format for "
+"specifying a tag see :attr:`BasicNewsRecipe.remove_tags`. If this list is "
+"not empty, then the `<body>` tag will be emptied and re-filled with the tags"
+" that match the entries in this list. For example::"
+msgstr "指定されたタグとその子のみを保持します。タグを指定するための形式については、:attr:`BasicNewsRecipe.remove_tags` を参照してください。このリストが空でない場合、<body> タグは空になり、このリストのエントリに一致するタグで埋め直されます。例::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.keep_only_tags:8
+msgid ""
+"will keep only tags that have an `id` attribute of `\"content\"` or "
+"`\"heading\"`."
+msgstr "上記は `\"content\"` または `\"heading\"` の `id` 属性を持つタグのみを保持します。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.language:1
+msgid ""
+"The language that the news is in. Must be an ISO-639 code either two or "
+"three characters long"
+msgstr "ニュースの言語。2 文字または 3 文字の長さの ISO-639 コードである必要があります"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.masthead_url:1
+msgid ""
+"By default, calibre will use a default image for the masthead (Kindle only)."
+" Override this in your recipe to provide a url to use as a masthead."
+msgstr "デフォルトでは、calibreはマストヘッドのデフォルト画像を使用します (Kindleのみ)。レシピでこれをオーバーライドして、マストヘッドとして使用する URL を提供します。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.match_regexps:1
+msgid ""
+"List of regular expressions that determines which links to follow. If empty,"
+" it is ignored. Used only if is_link_wanted is not implemented. For "
+"example::"
+msgstr "フォローするリンクを決定する正規表現のリスト。空の場合、無視されます。 is_link_wanted が実装されていない場合にのみ使用されます。例::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.match_regexps:7
+msgid "will match all URLs that have `page=some number` in them."
+msgstr "上記は `page=some number` を含むすべての URL に一致します。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.max_articles_per_feed:1
+msgid ""
+"Maximum number of articles to download from each feed. This is primarily "
+"useful for feeds that don't have article dates. For most feeds, you should "
+"use :attr:`BasicNewsRecipe.oldest_article`"
+msgstr "各フィードからダウンロードする記事の最大数。これは主に、記事の日付がないフィードに役立ちます。ほとんどのフィードでは、:attr:`BasicNewsRecipe.oldest_article` を使用する必要があります"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.needs_subscription:1
+msgid ""
+"If True the GUI will ask the user for a username and password to use while "
+"downloading. If set to \"optional\" the use of a username and password "
+"becomes optional"
+msgstr "Trueのとき、ダウンロード中に使用するユーザ名とパスワードを GUI がユーザに要求します。 \"オプション\" に設定すると、ユーザ名とパスワードの使用はオプションになります"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.no_stylesheets:1
+msgid ""
+"Convenient flag to disable loading of stylesheets for websites that have "
+"overly complex stylesheets unsuitable for conversion to e-book formats. If "
+"True stylesheets are not downloaded and processed"
+msgstr "電子書籍形式への変換に適さない過度に複雑なスタイルシートを持つ Web サイトのスタイルシートの読み込みを無効にするための便利なフラグ。 True なら、スタイルシートをダウンロードして処理しません。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.oldest_article:1
+msgid "Oldest article to download from this news source. In days."
+msgstr "このニュースソースからダウンロードする最も古い記事。数日で指定します。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.preprocess_regexps:1
+msgid ""
+"List of :term:`regexp` substitution rules to run on the downloaded "
+":term:`HTML`. Each element of the list should be a two element tuple. The "
+"first element of the tuple should be a compiled regular expression and the "
+"second a callable that takes a single match object and returns a string to "
+"replace the match. For example::"
+msgstr "ダウンロードした HTML で実行する :term:`regexp` 置換ルールのリスト。リストの各要素は、2 要素のタプルである必要があります。タプルの最初の要素はコンパイルされた正規表現であり、2 番目の要素は単一の一致オブジェクトを受け取り、マッチを置き換える文字列を返す呼び出し可能オブジェクトである必要があります。例::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.preprocess_regexps:12
+msgid "will remove everything from `<!--Article ends here-->` to `</body>`."
+msgstr "`<!--Article ends here-->` から `</body>` まですべてを削除します。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.publication_type:1
+msgid ""
+"Publication type Set to newspaper, magazine or blog. If set to None, no "
+"publication type metadata will be written to the opf file."
+msgstr "新聞、雑誌、ブログに設定する出版物のタイプです。 None にすると、出版物タイプの書誌は opf ファイルに書き込まれません。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.recipe_disabled:1
+msgid ""
+"Set to a non empty string to disable this recipe. The string will be used as"
+" the disabled message"
+msgstr "空でない文字列を設定すると、このレシピを無効にします。文字列は無効のメッセージとして使用されます"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.recursions:1
+msgid "Number of levels of links to follow on article webpages"
+msgstr "記事のウェブページでたどるリンクレベルの数"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_attributes:1
+msgid "List of attributes to remove from all tags. For example::"
+msgstr "すべてのタグから削除する属性のリスト。例::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_empty_feeds:1
+msgid ""
+"If True empty feeds are removed from the output. This option has no effect "
+"if parse_index is overridden in the sub class. It is meant only for recipes "
+"that return a list of feeds using `feeds` or :meth:`get_feeds`. It is also "
+"used if you use the ignore_duplicate_articles option."
+msgstr "True のとき、空のフィードを出力から削除します。サブクラスで parse_index がオーバーライドされていると、このオプションは効果がありません。`feeds` または :meth:`get_feeds`を使用してフィードのリストを返すレシピのみを対象としています。また ignore_duplicate_articles オプションを使用する場合にも使用されます。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_javascript:1
+msgid "Convenient flag to strip all JavaScript tags from the downloaded HTML"
+msgstr "ダウンロードした HTML からすべての JavaScript タグを削除するための便利なフラグ"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_tags:1
+msgid ""
+"List of tags to be removed. Specified tags are removed from downloaded HTML."
+" A tag is specified as a dictionary of the form::"
+msgstr "削除するタグのリスト。指定したタグはダウンロードした HTML から削除されます。タグは、次の形式の辞書として指定されます::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_tags:9
+msgid ""
+"All keys are optional. For a full explanation of the search criteria, see "
+"`Beautiful Soup "
+"<https://www.crummy.com/software/BeautifulSoup/bs4/doc/#searching-the-"
+"tree>`__ A common example::"
+msgstr "すべてのキーはオプションです。検索条件の詳しい説明については `Beautiful Soup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/#searching-the-tree>`__ を参照してください。よくある例::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_tags:15
+msgid ""
+"This will remove all `<div class=\"advert\">` tags and all their children "
+"from the downloaded :term:`HTML`."
+msgstr "これは、ダウンロードした :term:`HTML` からすべての `<div class=\"advert\">` タグとそのすべての子を削除します。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_after:1
+msgid ""
+"Remove all tags that occur after the specified tag. For the format for "
+"specifying a tag see :attr:`BasicNewsRecipe.remove_tags`. For example::"
+msgstr "指定したタグの後にあるすべてのタグを削除します。タグを指定するための形式については、:attr:`BasicNewsRecipe.remove_tags` を参照してください。例::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_after:7
+msgid "will remove all tags after the first element with `id=\"content\"`."
+msgstr "`id=\"content\"` の最初の要素の後のすべてのタグを削除します。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_before:1
+msgid ""
+"Remove all tags that occur before the specified tag. For the format for "
+"specifying a tag see :attr:`BasicNewsRecipe.remove_tags`. For example::"
+msgstr "指定されたタグの前にあるすべてのタグを削除します。タグを指定するための形式については attr:`BasicNewsRecipe.remove_tags` を参照してください。例::"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_before:7
+msgid "will remove all tags before the first element with `id=\"content\"`."
+msgstr "`id=\"content\"` の最初の要素の前のすべてのタグを削除します。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.requires_version:1
+msgid "Minimum calibre version needed to use this recipe"
+msgstr "このレシピを使用するために必要な calibre の最低のバージョン"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.resolve_internal_links:1
+msgid ""
+"If set to True then links in downloaded articles that point to other "
+"downloaded articles are changed to point to the downloaded copy of the "
+"article rather than its original web URL. If you set this to True, you might"
+" also need to implement :meth:`canonicalize_internal_url` to work with the "
+"URL scheme of your particular website."
+msgstr "True に設定すると、ダウンロードした記事が指している別のダウンロードした記事へのリンクが、元のWeb URLではなく、記事のダウンロードしたコピーを指すように変更されます。これを True に設定すると、特定の Web サイトの URL スキームを操作するために :meth:`canonicalize_internal_url` を実装する必要がある場合もあります。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.reverse_article_order:1
+msgid "Reverse the order of articles in each feed"
+msgstr "各フィードの記事の順序を逆にします"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.scale_news_images:1
+msgid ""
+"Maximum dimensions (w,h) to scale images to. If scale_news_images_to_device "
+"is True this is set to the device screen dimensions set by the output "
+"profile unless there is no profile set, in which case it is left at whatever"
+" value it has been assigned (default None)."
+msgstr "画像を拡大縮小する最大サイズ (w,h)。 scale_news_images_to_device が Trueのとき、プロファイルが設定されていない限り、出力プロファイルによって設定されたデバイス画面のサイズに設定されます。プロファイルが設定されていない場合は、割り当てられている値のままになります (デフォルトはNone)。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.scale_news_images_to_device:1
+msgid ""
+"Rescale images to fit in the device screen dimensions set by the output "
+"profile. Ignored if no output profile is set."
+msgstr "出力プロファイルで設定されたデバイス画面のサイズに合うように画像のサイズ調整をやり直します。出力プロファイルが設定されていない場合は無視されます。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.simultaneous_downloads:1
+msgid ""
+"Number of simultaneous downloads. Set to 1 if the server is picky. "
+"Automatically reduced to 1 if :attr:`BasicNewsRecipe.delay` > 0"
+msgstr "同時ダウンロードの数。気難しいサーバには 1 を設定します。:attr:`BasicNewsRecipe.delay` > 0 の場合、自動的に 1 に減少します"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.summary_length:1
+msgid "Max number of characters in the short description"
+msgstr "短い説明の最大文字数"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.template_css:1
+msgid ""
+"The CSS that is used to style the templates, i.e., the navigation bars and "
+"the Tables of Contents. Rather than overriding this variable, you should use"
+" `extra_css` in your recipe to customize look and feel."
+msgstr "テンプレートのスタイル設定に使用されるCSS、つまりナビゲーションバーと目次。この変数をオーバーライドするのではなく、レシピで `extra_css` を使用して見た目をカスタマイズする必要があります。"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.timefmt:1
+msgid ""
+"The format string for the date shown on the first page. By default: "
+"Day_Name, Day_Number Month_Name Year"
+msgstr "最初のページに表示される日付の形式文字列。デフォルト：Day_Name, Day_Number Month_Name Year"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.timeout:1
+msgid "Timeout for fetching files from server in seconds"
+msgstr "サーバーからファイルをフェッチするためのタイムアウト (秒単位)"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.title:1
+msgid "The title to use for the e-book"
+msgstr "電子書籍に使用するタイトル"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.use_embedded_content:1
+msgid ""
+"Normally we try to guess if a feed has full articles embedded in it based on"
+" the length of the embedded content. If `None`, then the default guessing is"
+" used. If `True` then the we always assume the feeds has embedded content "
+"and if `False` we always assume the feed does not have embedded content."
+msgstr "通常、埋め込まれたコンテンツの長さに基づいて、フィードに完全な記事が埋め込まれているかどうかを推測しようとします。 `None` であれば、デフォルトの推測が使用されます。 `True` ならば、フィードには常にコンテンツが埋め込まれていると見なされ、`False` ならば、フィードにはコンテンツが埋め込まれていないと常に見なされます。"

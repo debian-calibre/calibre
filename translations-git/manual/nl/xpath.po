@@ -1,0 +1,169 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# 
+# Translators:
+# Alex, 2016
+# Herman L.M. van der Vaart <vaarttuig@gmail.com>, 2020
+# M. de Boer <de.boer.melle@gmail.com>, 2018
+# Meteor0id, 2019
+# Volluta <volluta@tutanota.com>, 2016
+# W.P.M.E. Hofland <wpme.hofland@gmail.com>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-09-02 05:23+0000\n"
+"PO-Revision-Date: 2020-08-20 15:25+0000\n"
+"Last-Translator: Herman L.M. van der Vaart <vaarttuig@gmail.com>\n"
+"Language-Team: Dutch (http://www.transifex.com/calibre/calibre/language/nl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:4
+msgid "XPath tutorial"
+msgstr "XPath handleiding"
+
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:6
+msgid ""
+"In this tutorial, you will be given a gentle introduction to `XPath "
+"<https://en.wikipedia.org/wiki/XPath>`_, a query language that can be used "
+"to select arbitrary parts of `HTML <https://en.wikipedia.org/wiki/HTML>`_ "
+"documents in calibre. XPath is a widely used standard, and googling it will "
+"yield a ton of information. This tutorial, however, focuses on using XPath "
+"for e-book related tasks like finding chapter headings in an unstructured "
+"HTML document."
+msgstr "In deze zelfstudie krijgt u een voorzichtige inleiding tot `XPath <https://en.wikipedia.org/wiki/XPath>` _, een querytaal die kan worden gebruikt om willekeurige delen van `HTML <https://en.wikipedia.org/wiki/HTML>`_documenten in Calibre. XPath is een veel gebruikte standaard, en googelen levert een hoop informatie op. Deze zelfstudie richt zich echter op het gebruik van XPath voor aan e-boeken gerelateerde taken, zoals het vinden van hoofdstukken in een ongestructureerd HTML-document."
+
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:16
+msgid "Contents"
+msgstr "Inhoud"
+
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:19
+msgid "Selecting by tag name"
+msgstr "Selecteren op naam van label"
+
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:21
+msgid ""
+"The simplest form of selection is to select tags by name. For example, "
+"suppose you want to select all the ``<h2>`` tags in a document. The XPath "
+"query for this is simply::"
+msgstr "De eenvoudigste vorm van selectie is om labels op naam te selecteren. Bijvoorbeeld, stel dat u wilt alle ``<h2>``-labels in een document wilt selecteren. De XPath query voor dit is::"
+
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:27
+msgid ""
+"The prefix `//` means *search at any level of the document*. Now suppose you"
+" want to search for ``<span>`` tags that are inside ``<a>`` tags. That can "
+"be achieved with::"
+msgstr "Het voorvoegsel `//` betekent *zoeken op elk niveau van het document*. Stel nu dat u wilt zoeken naar ``<span>`` -labels die zich binnen de ``<a>``labels bevinden. Dat kan worden bereikt met::"
+
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:33
+msgid ""
+"If you want to search for tags at a particular level in the document, change"
+" the prefix::"
+msgstr "Als u naar labels wilt zoeken in een bepaald gebied van het document, verander dan de prefix::"
+
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:39
+msgid ""
+"This will match only ``<p>A very short e-book to demonstrate the use of "
+"XPath.</p>`` in the :ref:`sample_ebook` but not any of the other ``<p>`` "
+"tags. The ``h:`` prefix in the above examples is needed to match XHTML tags."
+" This is because internally, calibre represents all content as XHTML. In "
+"XHTML tags have a *namespace*, and ``h:`` is the namespace prefix for HTML "
+"tags."
+msgstr "Dit komt overeen met ``<p>een zeer kort e-book om het gebruik van XPath.</p>`` in de :ref:`voorbeeld_ebook` aan te tonen, maar niet een van de andere ``<p>``-labels. Het ``h:`` voorvoegsel in de bovenstaande voorbeelden is nodig om overeen te komen met XHTML-labels. Dit komt omdat intern, Calibre alle inhoud als XHTML vertegenwoordigt. In XHTML-labels hebben een *naamruimte*, en ``h:`` is de naamruimte prefix voor HTML-labels."
+
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:45
+msgid ""
+"Now suppose you want to select both ``<h1>`` and ``<h2>`` tags. To do that, "
+"we need a XPath construct called *predicate*. A :dfn:`predicate` is simply a"
+" test that is used to select tags. Tests can be arbitrarily powerful and as "
+"this tutorial progresses, you will see more powerful examples. A predicate "
+"is created by enclosing the test expression in square brackets::"
+msgstr "Stel nu dat u zowel de tags ``<h1> '' als ``<h2> '' wilt selecteren. Om dat te doen, hebben we een XPath-constructie nodig genaamd * predicaat *. Een :dfn: `predicaat` is gewoon een test die wordt gebruikt om tags te selecteren. Tests kunnen willekeurig krachtig zijn en naarmate deze zelfstudie vordert, zult u krachtigere voorbeelden zien. Een predicaat wordt gemaakt door de testuitdrukking tussen vierkante haken te plaatsen::"
+
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:53
+msgid ""
+"There are several new features in this XPath expression. The first is the "
+"use of the wildcard ``*``. It means *match any tag*. Now look at the test "
+"expression ``name()='h1' or name()='h2'``. :term:`name()` is an example of a"
+" *built-in function*. It simply evaluates to the name of the tag. So by "
+"using it, we can select tags whose names are either `h1` or `h2`. Note that "
+"the :term:`name()` function ignores namespaces so that there is no need for "
+"the ``h:`` prefix. XPath has several useful built-in functions. A few more "
+"will be introduced in this tutorial."
+msgstr "Er zijn verschillende nieuwe functies in deze XPath-expressie. De eerste is het gebruik van het jokerteken `` * ``. Het betekent * komt overeen met elke tag *. Kijk nu naar de testuitdrukking `` name ()='h1' of name ()='h2' ''. : term: `name()` is een voorbeeld van een * ingebouwde functie *. Het evalueert eenvoudigweg de naam van de tag. Dus door het te gebruiken, kunnen we tags selecteren waarvan de namen `h1` of` h2` zijn. Merk op dat de functie :term:`name ()` naamruimten negeert, zodat het voorvoegsel `` h: `` niet nodig is. XPath heeft verschillende handige ingebouwde functies. Een paar meer zullen in deze zelfstudie worden geïntroduceerd."
+
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:62
+msgid "Selecting by attributes"
+msgstr "Selecteren op eigenschap"
+
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:64
+msgid ""
+"To select tags based on their attributes, the use of predicates is "
+"required::"
+msgstr "Om tags te selecteren op basis van hun attributen, is het gebruik van predicaten vereist::"
+
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:70
+msgid ""
+"Here, the ``@`` operator refers to the attributes of the tag. You can use "
+"some of the `XPath built-in functions`_ to perform more sophisticated "
+"matching on attribute values."
+msgstr "Hier verwijst de operator ``@'' naar de kenmerken van de tag. U kunt enkele van de in 'XPath ingebouwde functies' _ gebruiken om meer geavanceerdere vergelijkingen uit te voeren op kenmerkwaarden."
+
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:76
+msgid "Selecting by tag content"
+msgstr "Selecteren op label inhoud"
+
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:78
+msgid ""
+"Using XPath, you can even select tags based on the text they contain. The "
+"best way to do this is to use the power of *regular expressions* via the "
+"built-in function :term:`re:test()`::"
+msgstr "Met XPath kunt u zelfs tags selecteren op basis van de tekst die ze bevatten. De beste manier om dit te doen is om de kracht van * reguliere expressies * te gebruiken via de ingebouwde functie :term:`re:test()`::"
+
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:84
+msgid ""
+"Here the ``.`` operator refers to the contents of the tag, just as the ``@``"
+" operator referred to its attributes."
+msgstr "Hier verwijst de operator ``.`` naar de inhoud van de tag, net zoals de operator ``@'' verwijst naar de kenmerken."
+
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:90
+msgid "Sample e-book"
+msgstr "Voorbeeld e-boek"
+
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:96
+msgid "XPath built-in functions"
+msgstr "XPath ingebouwde functies"
+
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:99
+msgid "name()"
+msgstr "naam()"
+
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:101
+msgid "The name of the current tag."
+msgstr "De naam van het huidige label."
+
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:102
+msgid "contains()"
+msgstr "bevat()"
+
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:104
+msgid "``contains(s1, s2)`` returns `true` if s1 contains s2."
+msgstr "``contains(s1, s2)`` returns `true` if s1 contains s2."
+
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:105
+msgid "re:test()"
+msgstr "re:test()"
+
+#: ../../home/runner/work/calibre/calibre/manual/xpath.rst:107
+msgid ""
+"``re:test(src, pattern, flags)`` returns `true` if the string `src` matches "
+"the regular expression `pattern`. A particularly useful flag is ``i``, it "
+"makes matching case insensitive. A good primer on the syntax for regular "
+"expressions can be found at `regexp syntax "
+"<https://docs.python.org/library/re.html>`_"
+msgstr "``re:test (src, patroon, vlaggen)`` geeft `waar` terug als de string `src` overeenkomt met de reguliere expressie `patroon`. Een bijzonder handige vlag is ``i``, het maakt vergelijken hoofdletter ongevoelig. Een goede inleiding over de syntaxis voor reguliere expressies is te vinden op `regexp syntax <https://docs.python.org/library/re.html>` _"

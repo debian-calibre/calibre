@@ -1,0 +1,273 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# 
+# Translators:
+# Zoriana Zaiats, 2014
+# Yuri Chornoivan <yurchor@ukr.net>, 2016-2018,2020-2021
+# Zoriana Zaiats, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-12-01 12:56+0000\n"
+"PO-Revision-Date: 2021-11-14 04:58+0000\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: uk\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:4
+msgid "Managing subgroups of books, for example \"genre\""
+msgstr "Керування підгрупами книжок, наприклад, \"жанр\""
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:6
+msgid ""
+"Some people wish to organize the books in their library into subgroups, "
+"similar to subfolders. The most commonly provided reason is to create genre "
+"hierarchies, but there are many others. One user asked for a way to organize"
+" textbooks by subject and course number. Another wanted to keep track of "
+"gifts by subject and recipient. This tutorial will use the genre example for"
+" the rest of this post."
+msgstr "Іноді виникає потреба в упорядковуванні книг у бібліотеці за підгрупами, подібними до підтек. Найпоширенішою причиною цього є створення ієрархій жанрів, але можуть бути і інші причини. Комусь потрібен спосіб упорядкувати конспекти за темами і номерами курсів. Комусь хочеться стежити за подарунками за темою та отримувачем. У цьому розділі ми наведемо приклад поділу за жанрами."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:8
+msgid ""
+"Before going on, please note that we are not talking about folders on the "
+"hard disk. Subgroups are not file folders. Books will not be copied "
+"anywhere. calibre's library file structure is not affected. Instead, we are "
+"presenting a way to organize and display subgroups of books within a calibre"
+" library."
+msgstr "Перш ніж продовжувати опис, варто зауважити, що ми не говоримо про теки на диску. Підгрупи не є теками з файлами. Книги нікуди не копіюватимуться. Структуру файлів бібліотеки calibre не буде змінено. Замість цього, ми наведемо спосіб упорядковування і показу підгруп книг у бібліотеці calibre."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:14
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:14
+msgid "sgtree"
+msgstr "sgtree"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:18
+msgid "The commonly-provided requirements for subgroups such as genres are:"
+msgstr "Загальними вимогами до підгруп, зокрема жанрів є такими:"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:20
+msgid ""
+"A subgroup (e.g., a genre) must contain (point to) books, not categories of "
+"books. This is what distinguishes subgroups from calibre user categories."
+msgstr "Підгрупа (наприклад жанр) має містити (вказувати на) книги, а не категорії книг. Це відрізняє підгрупи від категорій користувачів calibre."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:21
+msgid ""
+"A book can be in multiple subgroups (genres). This distinguishes subgroups "
+"from physical file folders."
+msgstr "Книга може перебувати у декількох підгрупах (жанрах). Це відрізняє підгрупи від фізичних тек файлів."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:22
+msgid ""
+"Subgroups (genres) must form a hierarchy; subgroups can contain subgroups."
+msgstr "Підгрупи (жанри) мають складати ієрархію; підгрупи можуть містити інші підгрупи."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:24
+msgid ""
+"Tags give you the first two. If you tag a book with the genre then you can "
+"use the Tag browser (or search) to find the books with that genre, giving "
+"you the first. Many books can have the same tag(s), giving you the second. "
+"The problem is that tags don't satisfy the third requirement. They don't "
+"provide a hierarchy."
+msgstr "Мітки можуть дати вам перші два пункти. Якщо ви позначите міткою жанру книгу, ви зможете скористатися панеллю перегляду міток (або пошуком) для отримання списку книг відповідного жанру, тобто задовольнити вимоги першого пункту. Багато книг можуть мати однакові мітки, і це дає нам другий пункт. Проблема полягає у тому, що мітки не можуть задовольнити третій пункт. У них не передбачено ієрархічної структури."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:26
+msgid ""
+"|sgtree| The calibre hierarchy feature gives you the third -- the ability to"
+" see the genres in a 'tree' and the ability to easily search for books in "
+"genre or sub-genre. For example, assume that your genre structure is similar"
+" to the following::"
+msgstr "|sgtree| Можливість створення ієрархій у calibre дасть вам третє — можливість бачити жанри у форматі «дерева» і можливість простого пошуку книг у жанрі або піджанрі. Наприклад, припустімо, що у вас така структура жанрів::"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:45
+msgid ""
+"By using the hierarchy feature, you can see these genres in the Tag browser "
+"in tree form, as shown in the screen image. In this example the outermost "
+"level (Genre) is a custom column that contains the genres. Genres containing"
+" sub-genres appear with a small triangle next to them. Clicking on that "
+"triangle will open the item and show the sub-genres, as you can see with "
+"History and Science Fiction."
+msgstr "За допомогою ієрархічної структури ви зможете переглядати ці жанри на панелі перегляду міток у формі дерева, як це показано на знімку вікна. У нашому прикладі зовнішній рівень (Жанр) є нетиповим стовпчиком, що містить дані щодо жанру. У жанрах містяться піджанри, пункти яких позначено невеличким трикутничком. Натискання цього трикутничка призведе до відкриття списку з пунктами піджанрів, як це можна бачити для жанрів «History» та «Science Fiction»."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:47
+msgid ""
+"Clicking on a genre can search for all books with that genre or children of "
+"that genre. For example, clicking on Science Fiction can give all three of "
+"the child genres, Alternate History, Military, and Space Opera. Clicking on "
+"Alternate History will give books in that genre, ignoring those in Military "
+"and Space Opera. Of course, a book can have multiple genres. If a book has "
+"both Space Opera and Military genres, then you will see that book if you "
+"click on either genre. Searching is discussed in more detail below."
+msgstr "Натисканням пункту жанру ви можете розпочати пошук усіх книг відповідного жанру або дочірніх записів цього жанру. Наприклад, натискання пункту «Science Fiction» відкриє усі три дочірні пункти жанрів, «Alternate History», «Military» та «Space Opera». Натискання пункту «Alternate History» відкриє список тих книг цього жанру, які не належать до жанрів «Military» або «Space Opera». Звичайно ж, книга може належати до декількох жанрів. Якщо книга належить одразу до жанрів «Space Opera» та «Military», ви побачите пункт цієї книги у списках обох піджанрів. Обговорення можливості пошуку книг наведено нижче."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:49
+msgid ""
+"Another thing you can see from the image is that the genre Military appears "
+"twice, once under History and once under Science Fiction. Because the genres"
+" are in a hierarchy, these are two separate genres. A book can be in one, "
+"the other, or (doubtfully in this case) both. For example, the books in "
+"Winston Churchill's \"The Second World War\" could be in "
+"\"History.Military\". David Weber's Honor Harrington books could be in "
+"\"Science Fiction.Military\", and for that matter also in \"Science "
+"Fiction.Space Opera.\""
+msgstr "Іншою річчю, яку ви можете зауважити з зображення, є те, що жанр «Military» показано у списку двічі: одного разу під жанром «History» і ще таз під жанром «Science Fiction». Оскільки жанри перебувають у ієрархії, це два окремих жанри. Книга може належати до одного жанру, до іншого жанру або до обох жанрів (у цьому випадку сумнівно). Наприклад, книга Вінстона Черчілля «Друга світова війна» може бути належати до жанру «History.Military». Книги Девіда Вебера з циклу про Гонор Гаррінґтон можуть належати до жанру «Science Fiction.Military» і, у цьому випадку, до жанру «Science Fiction.Space Opera»."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:51
+msgid ""
+"Once a genre exists, that is at least one book has that genre, you can "
+"easily apply it to other books by dragging the books from the library view "
+"onto the genre you want the books to have. You can also apply genres in the "
+"metadata editors; more on this below."
+msgstr "Щойно буде створено запис жанру, до якого належатиме принаймні одна книга, ви зможете дуже просто застосувати цей жанр до інших книг: достатньо перетягнути позначки цих книг із панелі бібліотеки на пункт жанру, до якого належать відповідні книги. Ви також можете прив’язувати книги до жанрів у редакторі метаданих. Докладніше про це нижче."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:54
+msgid "Setup"
+msgstr "Налаштовування"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:56
+msgid ""
+"By now, your question might be \"How was all of this setup?\" There are "
+"three steps: 1) create the custom column, 2) tell calibre that the new "
+"column is to be treated as a hierarchy, and 3) add genres."
+msgstr "Тепер, у вас може виникнути питання: «Як же усе це налаштувати?» У три кроки: 1) створити нетиповий стовпчик, 2) повідомити calibre, що новий стовпчик слід вважати ієрархією і 3) додати жанри."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:58
+msgid ""
+"You create the custom column in the usual way, using Preferences -> Add your"
+" own columns. This example uses \"#genre\" as the lookup name and \"Genre\" "
+"as the column heading. The column type is \"Comma-separated text, like tags,"
+" shown in the Tag browser.\""
+msgstr "Створити нетиповий стовпчик можна у звичний спосіб, за допомогою пункту :guilabel:`Налаштування -> Додати власний стовпчик`. У нашому прикладі використано «#genre» як назву пошуку і «Genre» як заголовок стовпчика. Типом стовпчика вибрано «Текст, відокремлений комами, зокрема мітки, який буде показано на панелі перегляду міток»."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:63
+msgid ""
+"Then after restarting calibre, you must tell calibre that the column is to "
+"be treated as a hierarchy. Go to :guilabel:`Preferences -> Look & feel -> "
+"Tag browser` and enter the lookup name \"#genre\" into the \"Categories with"
+" hierarchical items\" box. Press :guilabel:`Apply`, and you are done with "
+"setting up."
+msgstr "Далі, після перезапуску calibre вам слід повідомити calibre, що стовпчик слід вважати ієрархією. Відкрийте сторінку :guilabel:`Налаштування -> Зовнішній вигляд -> Переглядач міток` і введіть назву пошуку \"#genre\" до поля «Категорії з ієрархічними пунктами». Натисніть кнопку :guilabel:`Застосувати` для завершення налаштовування."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:68
+msgid ""
+"At the point there are no genres in the column. We are left with the last "
+"step: how to apply a genre to a book. A genre does not exist in calibre "
+"until it appears on at least one book. To learn how to apply a genre for the"
+" first time, we must go into some detail about what a genre looks like in "
+"the metadata for a book."
+msgstr "Зараз у стовпчику немає жодного жанру. Нам залишився один крок: слід застосувати жанр до книги. Жанру не існує у списку calibre, доки до нього не належатиме хоч одна книга. Щоб навчитися застосовувати жанр вперше, нам слід познайомитися з тим, як жанр виглядає у метаданих книги."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:70
+msgid ""
+"A hierarchy of 'things' is built by creating an item consisting of phrases "
+"separated by periods. Continuing the genre example, these items would "
+"\"History.Military\", \"Mysteries.Vampire\", \"Science Fiction.Space "
+"Opera\", etc. Thus to create a new genre, you pick a book that should have "
+"that genre, edit its metadata, and enter the new genre into the column you "
+"created. Continuing our example, if you want to assign a new genre "
+"\"Comics\" with a sub-genre \"Superheroes\" to a book, you would 'edit "
+"metadata' for that (comic) book, choose the Custom metadata tab, and then "
+"enter \"Comics.Superheroes\" as shown in the following (ignore the other "
+"custom columns):"
+msgstr "Ієрархія «речей» будується створенням запису, що складається з фраз, відокремлених крапками. Продовжуючи приклад із жанрами, цими записами могли б бути «History.Military», «Mysteries.Vampire», «Science Fiction.Space Opera» тощо. Отже, щоб створити запис жанру, ви вибираєте книгу, яка має належати до цього жанру, редагуєте метадані і вводите назву нового жанру до створеного вами стовпчика. У продовження нашого прикладу, якщо ви хочете пов’язати новий жанр «Comics» із піджанром «Superheroes» із книгою, вам слід натиснути кнопку :guilabel:`Редагувати метадані` для цієї книги (коміксу), вибрати вкладку :guilabel:`Нетипові метадані`, а потім ввести «Comics.Superheroes», як це показано нижче (інші нетипові стовпчики слід проігнорувати):"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:75
+msgid "After doing the above, you see in the Tag browser:"
+msgstr "Після виконання вказаних вище дій ви побачите таке на панелі перегляду міток:"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:80
+msgid ""
+"From here on, to apply this new genre to a book (a comic book, presumably), "
+"you can either drag the book onto the genre, or add it to the book using "
+"edit metadata in exactly the same way as done above."
+msgstr "Після цього, щоб застосувати цей новий жанр до книги (наприклад, коміксу), ви можете або перетягнути позначку книги на пункт жанру, або додати жанр до книги за допомогою редагування метаданих у той самий спосіб, як це було зроблено вище."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:84
+msgid ""
+"Hierarchical display only works if the Tag browser is set to sort items by "
+"name. This is the default and can be checked by clicking the "
+":guilabel:`Configure` button at the bottom of the Tag browser."
+msgstr "Ієрархічний перегляд працює, лише якщо на панелі навігації мітками встановлено режим упорядковування записів за назвою. Цей режим є типовим, його можна встановити натисканням кнопки :guilabel:`Налаштувати` у нижній частині панелі навігації мітками."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:89
+msgid "Searching"
+msgstr "Пошук"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:94
+msgid ""
+"The easiest way to search for genres is using the Tag browser, clicking on "
+"the genre you wish to see. Clicking on a genre with children will show you "
+"books with that genre and all child genres. However, this might bring up a "
+"question. Just because a genre has children doesn't mean that it isn't a "
+"genre in its own right. For example, a book can have the genre \"History\" "
+"but not \"History.Military\". How do you search for books with only "
+"\"History\"?"
+msgstr "Найпростішим способом пошуку за жанрами є використання панелі перегляду міток: достатньо просто натиснути пункт жанру, книги з якого ви хочете переглянути. Натискання пункту з дочірніми жанрами призведе до показу книг, що належать до жанру і усіх його піджанрів. Втім, це може призвести до певних питань. Лише через те, що запис жанру має дочірні записи, запис жанру не є сам жанром. Наприклад, книга може належати до жанру «History», але не належати до жанру «History.Military». Як же знайти книги, які належать лише до жанру «History»?"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:96
+msgid ""
+"The Tag browser search mechanism knows if an item has children. If it does, "
+"clicking on the item cycles through 5 searches instead of the normal three. "
+"The first is the normal green plus, which shows you books with that genre "
+"only (e.g., History). The second is a doubled plus (shown above), which "
+"shows you books with that genre and all sub-genres (e.g., History and "
+"History.Military). The third is the normal red minus, which shows you books "
+"without that exact genre. The fourth is a doubled minus, which shows you "
+"books without that genre or sub-genres. The fifth is back to the beginning, "
+"no mark, meaning no search."
+msgstr "Механізм пошуку на панелі перегляду міток може визначати, чи є у запису дочірні записи. Якщо такі записи є, натисканням відповідного пункту виконується 5 пошуків, замість звичних 3. Першим є звичайний пошук за зеленим «плюсом», який знайде книги, які належать лише до жанру, пункт якого натиснуто (наприклад, до жанру «History»). Другим є подвійний «плюс» (показано вище), який знайде книги, які належать до жанру і усіх його піджанрів (наприклад, до жанру «History» і піджанру «History.Military»). Третім є звичайний червоний «мінус», який знайде усі книги поза жанрами. Четвертим є подвійний «мінус», який знайде книги поза жанрами і піджанрами. П’ятим є повернення до початку, без позначки, без пошуку."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:99
+msgid "Restrictions"
+msgstr "Обмеження"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:101
+msgid ""
+"If you search for a genre then create a saved search for it, you can use the"
+" 'restrict to' box to create a Virtual library of books with that genre. "
+"This is useful if you want to do other searches within the genre or to "
+"manage/update metadata for books in the genre. Continuing our example, you "
+"can create a Saved search named 'History.Japanese' by first clicking on the "
+"genre Japanese in the Tag browser to get a search into the search field, "
+"entering History.Japanese into the saved search field, then pushing the "
+"\"Save search\" button (the green box with the white plus, on the right-hand"
+" side)."
+msgstr "Якщо ви шукаєте книги за жанром, а потім створюєте збережений пошук для результатів, ви можете скористатися полем «обмежити до», щоб створити віртуальну бібліотеку для відповідного жанру. Це корисно, якщо ви плануєте виконувати інші пошуки у межах жанру або хочете змінити або оновити метадані книг, що належать до певного жанру. Продовжуючи наш приклад, ви можете створити збережений пошук із назвою «History.Japanese», спочатку натиснувши пункт жанру «Japanese» на панелі перегляду міток, щоб перенести пошук до поля пошуку, потім ввівши «History.Japanese» до поля збереженого пошуку і натиснувши кнопку «Зберегти пошук» (зелене поле із білим «плюсом», яке розташовано праворуч)."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:106
+msgid "After creating the saved search, you can use it as a restriction."
+msgstr "Після створення збереженого пошуку ви можете використовувати його як обмеження."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:112
+msgid "Useful template functions"
+msgstr "Корисні шаблонні функції"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:114
+msgid ""
+"You might want to use the genre information in a template, such as with save"
+" to disk or send to device. The question might then be \"How do I get the "
+"outermost genre name or names?\" A calibre template function, subitems, is "
+"provided to make doing this easier."
+msgstr "У вас може виникнути бажання скористатися даними щодо жанру у шаблоні, зокрема шаблоні збереження на диск або шаблоні надсилання на пристрій. Тоді може виникнути питання: «Як отримати назву або назви жанрів найвищого рівня?». Для полегшення цього завдання передбачено шаблонну функцію calibre, subitems."
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:116
+msgid ""
+"For example, assume you want to add the outermost genre level to the save-"
+"to-disk template to make genre folders, as in \"History/The Gathering Storm "
+"- Churchill, Winston\". To do this, you must extract the first level of the "
+"hierarchy and add it to the front along with a slash to indicate that it "
+"should make a folder. The template below accomplishes this::"
+msgstr "Наприклад, припустімо, що ви хочете додати найзовнішніший рівень жанрів до шаблону save-to-disk, щоб створити теки жанрів у такому форматі: «History/The Gathering Storm - Churchill, Winston». Для цього вам доведеться видобути перший рівень з ієрархії і додати його на початку разом із похилою рискою, яка позначатиме потребу у створенні теки. Наведений нижче шаблон впорається з цим завданням::"
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:120
+msgid ""
+"See :ref:`The template language <templatelangcalibre>` for more information "
+"about templates and the :func:`subitems` function."
+msgstr "Див. :ref:`Мова шаблонів <templatelangcalibre>`, щоб дізнатися більше про шаблони та функцію :func:`subitems`."

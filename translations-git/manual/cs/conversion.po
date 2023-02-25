@@ -1,0 +1,1534 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# 
+# Translators:
+# Tomas Michalek <tomas.michalek.st@vsb.cz>, 2015
+# Trottel <trottel09@gmail.com>, 2014-2022
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-02-17 05:40+0000\n"
+"PO-Revision-Date: 2022-02-09 07:14+0000\n"
+"Last-Translator: Trottel <trottel09@gmail.com>\n"
+"Language-Team: Czech (http://www.transifex.com/calibre/calibre/language/cs/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:4
+msgid "E-book conversion"
+msgstr "Převod e-knihy"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:6
+msgid ""
+"calibre has a conversion system that is designed to be very easy to use. "
+"Normally, you just add a book to calibre, click convert and calibre will try"
+" hard to generate output that is as close as possible to the input. However,"
+" calibre accepts a very large number of input formats, not all of which are "
+"as suitable as others for conversion to e-books. In the case of such input "
+"formats, or if you just want greater control over the conversion system, "
+"calibre has a lot of options to fine tune the conversion process. Note "
+"however that calibre's conversion system is not a substitute for a full "
+"blown e-book editor. To edit e-books, I recommend first converting them to "
+"EPUB or AZW3 using calibre and then using the :guilabel:`Edit book` feature "
+"to get them into perfect shape. You can then use the edited e-book as input "
+"for conversion into other formats in calibre."
+msgstr "Calibre má systém převodu, který je navržen tak, aby se velmi snadno používal. Obyčejně stačí přidat knihu do Calibre, kliknout na převod a Calibre se pokusí vygenerovat výstup, který je co nejpodobnější vstupu. Calibre však přijímá velké množství vstupních formátů, z nichž ne všechny jsou stejně vhodné jako jiné pro převod na e-knihy. V případě takových vstupních formátů, nebo pokud pouze chcete větší kontrolu nad systémem převodu, Calibre má mnoho voleb pro jemné ladění procesu převodu. Pamatujte však, že systému převodu Calibre není náhradou za plnohodnotný editor e-knih. Pro úpravu e-knih je doporučuji nejdříve pomocí Calibre převést do formátu EPUB nebo AZW3, a pak použít funkci :guilabel:`Upravit knihu`, abyste je dostali do dokonalé podoby. Pak můžete použít upravenou e-knihu jako vstup pro převod do jiných formátů v Calibre."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:18
+msgid ""
+"This document will refer mainly to the conversion settings as found in the "
+"conversion dialog, pictured below. All these settings are also available via"
+" command line interface to conversion, documented at "
+":doc:`generated/en/ebook-convert`. In calibre, you can obtain help on any "
+"individual setting by holding your mouse over it, a tooltip will appear "
+"describing the setting."
+msgstr "Tento dokument bude odkazovat hlavně na nastavení převodu, které naleznete v dialogovém okně převodu, jak je zobrazeno níže. Všechna tato nastavení jsou také dostupná prostřednictvím rozhraní příkazového řádku pro převod zdokumentovaného v :doc:`generated/cs/ebook-convert`. V Calibre můžete získat nápovědu k jakémukoliv individuálnímu nastavení podržením myši nad ním, objeví se popisek tlačítka popisující nastavení."
+
+#: ../../__w/calibre/calibre/manual/conversion.rstNone
+msgid "E-book conversion dialog"
+msgstr "Dialogové okno převodu e-knihy"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:31
+#: ../../__w/calibre/calibre/manual/conversion.rst:95
+msgid "Contents"
+msgstr "Obsah"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:36
+msgid "Introduction"
+msgstr "Úvod"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:38
+#: ../../__w/calibre/calibre/manual/conversion.rst:38
+msgid "Debug icon"
+msgstr "Ikona ladění"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:42
+msgid ""
+"The first thing to understand about the conversion system is that it is "
+"designed as a pipeline. Schematically, it looks like this:"
+msgstr "První věc, kterou musíte pochopit o systému převodu, je to, že je navržen jako řetězec. Schematicky to vypadá takto:"
+
+#: ../../__w/calibre/calibre/manual/conversion.rstNone
+msgid "The conversion pipeline"
+msgstr "Převodní řetězec"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:49
+msgid ""
+"The input format is first converted to XHTML by the appropriate *Input "
+"plugin*. This HTML is then *transformed*. In the last step, the processed "
+"XHTML is converted to the specified output format by the appropriate *Output"
+" plugin*. The results of the conversion can vary greatly, based on the input"
+" format. Some formats convert much better than others. A list of the best "
+"source formats for conversion is available :ref:`here <best-source-"
+"formats>`."
+msgstr "Vstupní formát se nejdříve převede na XHTML vhodným *vstupním modulem*. Toto HTML se pak *transformuje*. V posledním kroku se zpracované XHTML převede na zadaný výstupní formát vhodným *výstupním modulem*. Výsledky převodu se mohou značně lišit v závislosti na vstupním formátu. Některé formáty se převádějí mnohem lépe než ostatní. Seznam nejlepších zdrojových formátů pro převod je dostupný :ref:`zde <best-source-formats>`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:56
+msgid ""
+"The transforms that act on the XHTML output are where all the work happens. "
+"There are various transforms, for example, to insert book metadata as a page"
+" at the start of the book, to detect chapter headings and automatically "
+"create a Table of Contents, to proportionally adjust font sizes, et cetera. "
+"It is important to remember that all the transforms act on the XHTML output "
+"by the *Input plugin*, not on the input file itself. So, for example, if you"
+" ask calibre to convert an RTF file to EPUB, it will first be converted to "
+"XHTML internally, the various transforms will be applied to the XHTML and "
+"then the *Output plugin* will create the EPUB file, automatically generating"
+" all metadata, Table of Contents, et cetera."
+msgstr "Transformace, které se provádějí na výstupu XHTML, je místo, kde se odehrává veškerá práce. Existují různé transformace, například pro vložení metadat knihy jako stránky na začátek knihy, pro rozpoznání nadpisů kapitol a automatického vytvoření obsahu, pro proporcionální změnu velikosti písma a tak dále. Je důležité si zapamatovat, že všechny transformace se provádějí na výstupním XHTML pomocí *vstupního modulu*, ne na samotném vstupním souboru. Takže například když požádáte Calibre, aby převedlo soubor RTF na EPUB, tak bude nejdříve vnitřně převeden na XHTML, na toto XHTML budou použity různé transformace, a pak *výstupní modul* vytvoří soubor EPUB, automaticky vygeneruje všechna metadata, obsah a tak dále."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:65
+msgid ""
+"You can see this process in action by using the debug option |dbgi|. Just "
+"specify the path to a folder for the debug output. During conversion, "
+"calibre will place the XHTML generated by the various stages of the "
+"conversion pipeline in different sub-folders. The four sub-folders are:"
+msgstr "Tento proces můžete vidět v akci použitím volby ladění |dbgi|. Stačí zadat cestu ke složce pro výstup ladění. Během převodu Calibre umístí XHTML generované různými fázemi převodního řetězce do různých podsložek. Čtyři podsložky jsou:"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:70
+msgid "Stages of the conversion pipeline"
+msgstr "Fáze převodního řetězce"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:73
+msgid "Folder"
+msgstr "Složka"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:73
+msgid "Description"
+msgstr "Popis"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:75
+msgid "input"
+msgstr "vstup"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:75
+msgid ""
+"This contains the HTML output by the Input plugin. Use this to debug the "
+"Input plugin."
+msgstr "Obsahuje výstup HTML ze vstupního modulu. Použijte pro ladění vstupního modulu."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:76
+msgid "parsed"
+msgstr "analyzováno"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:76
+msgid ""
+"The result of pre-processing and converting to XHTML the output from the "
+"Input plugin. Use to debug structure detection."
+msgstr "Výsledek předzpracování a převodu na XHTML výstupu ze vstupního modulu. Použijte pro ladění rozpoznávání struktury."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:77
+msgid "structure"
+msgstr "struktura"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:77
+msgid ""
+"Post structure detection, but before CSS flattening and font size "
+"conversion. Use to debug font size conversion and CSS transforms."
+msgstr "Po rozpoznání struktury, ale před vyhlazením CSS a převodem velikosti písma. Použijte pro ladění převodu velikosti písma a transformace CSS."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:78
+msgid "processed"
+msgstr "zpracováno"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:78
+msgid ""
+"Just before the e-book is passed to the Output plugin. Use to debug the "
+"Output plugin."
+msgstr "Těsně před tím, než je e-kniha předána výstupnímu modulu. Použijte pro ladění výstupního modulu."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:81
+msgid ""
+"If you want to edit the input document a little before having calibre "
+"convert it, the best thing to do is edit the files in the :file:`input` sub-"
+"folder, then zip it up, and use the ZIP file as the input format for "
+"subsequent conversions. To do this use the :guilabel:`Edit meta information`"
+" dialog to add the ZIP file as a format for the book and then, in the top "
+"left corner of the conversion dialog, select ZIP as the input format."
+msgstr "Pokud chcete trochu upravit vstupní dokument před tím, než ho necháte Calibre převést, to nejlepší, co můžete udělat, je upravit soubory v podsložce :file:`vstup`, pak je zazipovat a použít soubor ZIP jako vstupní formát pro následující převody. Abyste to udělali, použijte dialogové okno :guilabel:`Upravit metadata` pro přidání souboru ZIP jako formátu pro knihu, a pak v levém horním rohu dialogového okna převodu vyberte ZIP jako vstupní formát."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:87
+msgid ""
+"This document will deal mainly with the various transforms that operate on "
+"the intermediate XHTML and how to control them. At the end are some tips "
+"specific to each input/output format."
+msgstr "Tento dokument se bude zabývat hlavně různými transformacemi, které pracují na polotovaru XHTML, a jak je ovládat. Na konci je několik konkrétních tipů pro každý vstupní nebo výstupní formát."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:91
+msgid "Look & feel"
+msgstr "Vzhled a chování"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:97
+msgid ""
+"This group of options controls various aspects of the look and feel of the "
+"converted e-book."
+msgstr "Tato skupina voleb určuje různé aspekty vzhledu a chování převedené e-knihy."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:102
+msgid "Fonts"
+msgstr "Písma"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:104
+msgid ""
+"One of the nicest features of the e-reading experience is the ability to "
+"easily adjust font sizes to suit individual needs and lighting conditions. "
+"calibre has sophisticated algorithms to ensure that all the books it outputs"
+" have a consistent font sizes, no matter what font sizes are specified in "
+"the input document."
+msgstr "Jedna z nejhezčích funkcí při čtení e-knih je schopnost snadno upravit velikost písma, aby vyhovovalo jednotlivým potřebám a světelným podmínkám. Calibre má propracované algoritmy, aby zajistilo, že všechny produkované knihy mají jednotné velikosti písma, bez ohledu na to, jaké velikosti písma jsou zadány ve vstupním dokumentu."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:109
+msgid ""
+"The base font size of a document is the most common font size in that "
+"document, i.e., the size of the bulk of text in that document. When you "
+"specify a :guilabel:`Base font size`, calibre automatically rescales all "
+"font sizes in the document proportionately, so that the most common font "
+"size becomes the specified base font size and other font sizes are rescaled "
+"appropriately. By choosing a larger base font size, you can make the fonts "
+"in the document larger and vice versa. When you set the base font size, for "
+"best results, you should also set the font size key."
+msgstr "Základní velikost písma dokumentu je nejběžnější velikost písma v tomto dokumentu, t. j. velikost větší části textu v tomto dokumentu. Když zadáte :guilabel:`Základní velikost písma`, Calibre automaticky přiměřeně změní měřítko všech velikostí písma v dokumentu, takže nejběžnější velikost písma se stane zadanou základní velikostí písma a ostatním velikostem písma bude přiměřeně upraveno měřítko. Výběrem větší základní velikosti písma můžete písma v dokumentu zvětšit a naopak. Když nastavíte základní velikost písma, měli byste pro dosažení nejlepších výsledků také nastavit klíč velikosti písma."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:117
+msgid ""
+"Normally, calibre will automatically choose a base font size appropriate to "
+"the output profile you have chosen (see :ref:`page-setup`). However, you can"
+" override this here in case the default is not suitable for you."
+msgstr "Obyčejně Calibre automaticky zvolí základní velikost písma vhodnou pro výstupní profil, který jste zvolili (viz :ref:`page-setup`). Toto však zde můžete přepsat, pokud pro vás výchozí nastavení není vhodné."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:121
+msgid ""
+"The :guilabel:`Font size key` option lets you control how non-base font "
+"sizes are rescaled. The font rescaling algorithm works using a font size "
+"key, which is simply a comma-separated list of font sizes. The font size key"
+" tells calibre how many \"steps\" bigger or smaller a given font size should"
+" be compared to the base font size. The idea is that there should be a "
+"limited number of font sizes in a document. For example, one size for the "
+"body text, a couple of sizes for different levels of headings and a couple "
+"of sizes for super/sub scripts and footnotes. The font size key allows "
+"calibre to compartmentalize the font sizes in the input documents into "
+"separate \"bins\" corresponding to the different logical font sizes."
+msgstr "Volba :guilabel:`Klíč velikosti písma` vám umožňuje určit, jak se mění nezákladní velikosti písma. Algoritmus změny velikosti písma funguje pomocí klíče velikosti písma, což je jednoduše čárkami oddělený seznam velikostí písma. Klíč velikost písma říká Calibre, o kolik \"kroků\" větší nebo menší by měla daná velikost písma být v porovnání s základní velikostí písma. Předpokládá se, že by v dokumentu měl být omezený počet velikostí písma. Například jedna velikost pro základní text, několik velikostí pro různé úrovně nadpisů a několik velikostí pro horní nebo dolní indexy a poznámky pod čarou. Klíč velikosti písma umožňuje Calibre rozčlenit velikosti písma ve vstupních dokumentech do samostatných \"košů\" odpovídajících různým logickým velikostem písem."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:130
+msgid ""
+"Let's illustrate with an example. Suppose the source document we are "
+"converting was produced by someone with excellent eyesight and has a base "
+"font size of 8pt. That means the bulk of the text in the document is sized "
+"at 8pts, while headings are somewhat larger (say 10 and 12pt) and footnotes "
+"somewhat smaller at 6pt. Now if we use the following settings::"
+msgstr "Vysvětleme si to na příkladu. Předpokládejme, že zdrojový dokument, který převádíme, byl vytvořen někým s vynikajícím zrakem a má základní velikost písma 8pt. To znamená, že větší část textu v dokumentu má velikost 8pt, zatímco nadpisy jsou o něco větší (řekněme 10 a 12pt) a poznámky pod čarou o něco menší 6pt. Takže pokud použijeme následující nastavení::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:139
+msgid ""
+"The output document will have a base font size of 12pt, headings of 14 and "
+"16pt and footnotes of 8pt. Now suppose we want to make the largest heading "
+"size stand out more and make the footnotes a little larger as well. To "
+"achieve this, the font key should be changed to::"
+msgstr "výstupní dokument bude mít základní velikost písma 12pt, nadpisy 14 a 16pt a poznámky pod čarou 8pt. Nyní předpokládejme, že chceme, aby největší velikost nadpisu více vyčnívala a také aby poznámky pod čarou byly trochu větší. Abychom toho dosáhli, klíč písma by měl být změněn na::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:145
+msgid ""
+"The largest headings will now become 18pt, while the footnotes will become "
+"9pt. You can play with these settings to try and figure out what would be "
+"optimum for you by using the font rescaling wizard, which can be accessed by"
+" clicking the little button next to the :guilabel:`Font size key` setting."
+msgstr "Největší nadpisy budou mít nyní 18pt, zatímco poznámky pod čarou budou mít 9pt. Můžete si hrát s tímto nastavením, abyste se pokusili zjistit, co by pro vás bylo nejlepší pomocí průvodce změny měřítka písma, který můžete otevřít kliknutím na malé tlačítko vedle nastavení :guilabel:`Klíč velikosti písma`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:150
+msgid ""
+"All the font size rescaling in the conversion can also be disabled here, if "
+"you would like to preserve the font sizes in the input document."
+msgstr "Může tu být také zakázána veškerá změna velikosti písma v převodu, pokud chcete zachovat velikost písma ve vstupním dokumentu."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:153
+msgid ""
+"A related setting is :guilabel:`Line height`. Line height controls the "
+"vertical height of lines. By default, (a line height of 0), no manipulation "
+"of line heights is performed. If you specify a non-default value, line "
+"heights will be set in all locations that don't specify their own line "
+"heights. However, this is something of a blunt weapon and should be used "
+"sparingly. If you want to adjust the line heights for some section of the "
+"input, it's better to use the :ref:`Extra CSS <extra-css>`."
+msgstr "Související nastavení je :guilabel:`Výška řádku`. Výška řádku určuje svislou výšku řádků. Ve výchozím nastavení (výška řádku 0) se neprovádí žádná manipulace s výškami řádků. Pokud zadáte nevýchozí hodnotu, budou výšky řádků nastaveny na všech místech, které nemají určenu vlastní výšky řádků. Toto je však taková tupá zbraň a mělo by to být používáno šetrně. Pokud chcete upravit výšky řádků pro nějaký oddíl vstupu, je lepší použít :ref:`Dodatečné CSS`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:160
+msgid ""
+"In this section you can also tell calibre to embed any referenced fonts into"
+" the book. This will allow the fonts to work on reader devices even if they "
+"are not available on the device."
+msgstr "V tomto oddíle můžete také říct Calibre, aby do knihy vložilo jakákoliv odkazovaná písma. To umožní, aby písma na čtecích zařízeních fungovala, i když nejsou v zařízení dostupná."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:165
+msgid "Text"
+msgstr "Text"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:167
+msgid ""
+"Text can be either justified or not. Justified text has extra spaces between"
+" words to give a smooth right margin. Some people prefer justified text, "
+"others do not. Normally, calibre will preserve the justification in the "
+"original document. If you want to override it you can use the "
+":guilabel:`Text justification` option in this section."
+msgstr "Text může být buď zarovnaný, nebo ne. Zarovnaný text má dodatečné mezery mezi slovy, aby měl hladký pravý okraj. Někteří lidé upřednostňují zarovnaný text, jiní ne. Calibre obyčejně zachová zarovnání v původním dokumentu. Pokud ho chcete přepsat, můžete v tomto oddíle použít volbu :guilabel:`Zarovnání textu`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:173
+msgid ""
+"You can also tell calibre to :guilabel:`Smarten punctuation` which will "
+"replace plain quotes, dashes and ellipses with their typographically correct"
+" alternatives. Note that this algorithm is not perfect so it is worth "
+"reviewing the results. The reverse, namely, :guilabel:`Unsmarted "
+"punctuation` is also available."
+msgstr "Můžete také říct Calibre, aby :guilabel:`Vylepšilo interpunkci`, což nahradí prosté uvozovky, pomlčky a výpustky jejich typograficky správnými alternativami. Pamatujte, že tento algoritmus není dokonalý, takže stojí za to přezkoumat výsledky. Naopak je také dostupná :guilabel:`Nevylepšená interpunkce`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:178
+msgid ""
+"Finally, there is :guilabel:`Input character encoding`.  Older documents "
+"sometimes don't specify their character encoding. When converted, this can "
+"result in non-English characters or special characters like smart quotes "
+"being corrupted.  calibre tries to auto-detect the character encoding of the"
+" source document, but it does not always succeed. You can force it to assume"
+" a particular character encoding by using this setting.  `cp1252` is a "
+"common encoding for documents produced using Windows software. You should "
+"also read :ref:`char-encoding-faq` for more on encoding issues."
+msgstr "Nakonec je zde :guilabel:`Vstupní kódování znaků`. Starší dokumenty někdy nezadávají své kódování znaků. Při převodu to může vést k neanglické znakům nebo speciálním znakům, jako je poškození chytrých uvozovek. Calibre zkouší automaticky rozpoznat kódování znaků zdrojového dokumentu, ale není vždy úspěšné. Pomocí tohoto nastavení můžete vynutit předpokládání konkrétního kódování znaků. `cp1252` je běžné kódování pro dokumenty vytvořené pomocí softwaru Windows. Měli byste si také přečíst :ref:`char-encoding-faq` pro více informací o problematice kódování."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:188
+msgid "Layout"
+msgstr "Rozložení"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:190
+msgid ""
+"Normally, paragraphs in XHTML are rendered with a blank line between them "
+"and no leading text indent. calibre has a couple of options to control this."
+" :guilabel:`Remove spacing between paragraphs` forcefully ensure that all "
+"paragraphs have no inter paragraph spacing. It also sets the text indent to "
+"1.5em (can be changed) to mark the start of every paragraph. "
+":guilabel:`Insert blank line` does the opposite, guaranteeing that there is "
+"exactly one blank line between each pair of paragraphs. Both these options "
+"are very comprehensive, removing spacing, or inserting it for *all* "
+"paragraphs (technically <p> and <div> tags). This is so that you can just "
+"set the option and be sure that it performs as advertised, irrespective of "
+"how messy the input file is. The one exception is when the input file uses "
+"hard line breaks to implement inter-paragraph spacing."
+msgstr "Obyčejně jsou odstavce v XHTML vykresleny s prázdným řádkem mezi nimi a bez úvodního odsazení textu. Calibre má pár voleb, jak toto určit. :guilabel:`Odebrat mezery mezi odstavci` vynutí zajištění, aby všechny odstavce neměly žádné vnitřní mezery mezi odstavci. Nastaví také odsazení textu na 1,5em (může být změněno) pro označení začátku každého odstavce. :guilabel:`Vložit prázdný řádek` dělá opak, což zaručuje, že je právě jeden prázdný řádek mezi každou dvojicí odstavců. Obě tyto volby jsou velice ucelené, odebírají mezery nebo je vkládají pro *všechny* odstavce (technicky vzato značky <p> a <div>). Je to proto, abyste mohli jen nastavit volbu a být si jistí, že se to provede tak, jak bylo ohlášeno bez ohledu na to, jak je neuspořádaný vstupní soubor. Jedinou výjimkou je případ, kdy vstupní soubor používá pevné konce řádků pro doplnění mezer mezi odstavce."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:201
+msgid ""
+"If you want to remove the spacing between all paragraphs, except a select "
+"few, don't use these options. Instead add the following CSS code to "
+":ref:`Extra CSS <extra-css>`::"
+msgstr "Pokud chcete odebrat mezery mezi všemi odstavci kromě pár vybraných, nepoužívejte tyto volby. Místo toho přidejte následující kód CSS do :ref:`Dodatečné CSS`::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:207
+msgid ""
+"Then, in your source document, mark the paragraphs that need spacing with "
+"`class=\"spacious\"`. If your input document is not in HTML, use the Debug "
+"option, described in the Introduction to get HTML (use the :file:`input` "
+"sub-folder)."
+msgstr "Pak ve zdrojovém dokumentu označte odstavce, které potřebují mezery `class=\"spacious\"`. Pokud váš vstupní dokument není v HTML, použijte volbu ladění popsanou v Úvodu, abyste získali HTML (použijte podsložku :file:`input`)."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:211
+msgid ""
+"Another useful options is :guilabel:`Linearize tables`.  Some badly designed"
+" documents use tables to control the layout of text on the page.  When "
+"converted these documents often have text that runs off the page and other "
+"artifacts. This option will extract the content from the tables and present "
+"it in a linear fashion.  Note that this option linearizes *all* tables, so "
+"only use it if you are sure the input document does not use tables for "
+"legitimate purposes, like presenting tabular information."
+msgstr "Další užitečnou volbou je :guilabel:`Převést tabulky na řádky`. Některé chybně navržené dokumenty používají tabulky pro ovládání rozložení textu na stránce. Při převodu mají tyto dokumenty často text, který vybíhá mimo stránku a jiné artefakty. Tato volba extrahuje obsah z tabulek a zobrazí ho v lineárním tvaru. Pamatujte, že tato volba převede na řádky *všechny* tabulky, takže ji používejte, pouze pokud jste si jisti, že vstupní dokument nepoužívá tabulky pro oprávněné účely, jako je zobrazení tabulkových informací."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:220
+msgid "Styling"
+msgstr "Stylování"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:224
+msgid ""
+"The :guilabel:`Extra CSS` option allows you to specify arbitrary CSS that "
+"will be applied to all HTML files in the input. This CSS is applied with "
+"very high priority and so should override most CSS present in the **input "
+"document** itself. You can use this setting to fine tune the "
+"presentation/layout of your document. For example, if you want all "
+"paragraphs of class `endnote` to be right aligned, just add::"
+msgstr "Volba :guilabel:`Dodatečné CSS` vám umožňuje zadat libovolné CSS, které bude použito na všechny soubory HTML na vstupu. Toto CSS je použito s velice vysokou prioritou, a proto by mělo přepsat většinu CSS přítomného v samotném **vstupním dokumentu**. Toto nastavení můžete použít pro jemné ladění prezentace nebo rozložení dokumentu. Například pokud chcete, aby všechny odstavce třídy `endnote` byly zarovnány vpravo, stačí přidat::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:233
+msgid "or if you want to change the indentation of all paragraphs::"
+msgstr "nebo pokud chcete změnit odsazení všech odstavců::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:237
+msgid ""
+":guilabel:`Extra CSS` is a very powerful option, but you do need an "
+"understanding of how CSS works to use it to its full potential. You can use "
+"the debug pipeline option described above to see what CSS is present in your"
+" input document."
+msgstr ":guilabel:`Dodatečné CSS` je velice výkonná volba, ale potřebujete pochopit, jak CSS funguje, pro použití jejího plného potenciálu. Můžete použít volbu ladění řetězce popsanou výše, abyste viděli, jaké CSS je přítomné ve vstupním dokumentu."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:241
+msgid ""
+"A simpler option is to use :guilabel:`Filter style information`. This allows"
+" you to remove all CSS properties of the specified types from the document. "
+"For example, you can use it to remove all colors or fonts."
+msgstr "Jednodušší volbou je použít :guilabel:`Filtrovat informace o stylu`. To vám umožňuje odebrat všechny vlastnosti CSS zadaných typů z dokumentu. Můžete to například použít k odebrání všech barev nebo písem."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:246
+msgid "Transform styles"
+msgstr "Převod stylů"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:248
+msgid ""
+"This is the most powerful styling related facility. You can use it to define"
+" rules that change styles based on various conditions. For example you can "
+"use it to change all green colors to blue, or remove all bold styling from "
+"the text or color all headings a certain color, etc."
+msgstr "Toto je nejvýkonnější vybavení související se stylováním. Můžete ho použít k definování pravidel, které mění styly na základě různých podmínek. Můžete ho například použít ke změně všech zelených barev na modré nebo k odebrání všech tučných stylů z textu nebo obarvení všech záhlaví určitou barvou apod."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:254
+msgid "Transform HTML"
+msgstr "Převod HTML"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:256
+msgid ""
+"Similar to transform styles, but allows you to make changes to the HTML "
+"content of the book. You can replace one tag with another, add classes or "
+"other attributes to tags based on their content, etc."
+msgstr "Podobné převodu stylů, ale umožňuje provádět změny v obsahu knihy ve formátu HTML. Můžete nahradit jednu značku jinou, přidat značkám třídy nebo jiné atributy na základě jejich obsahu atd."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:265
+msgid "Page setup"
+msgstr "Nastavení stránky"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:267
+msgid ""
+"The :guilabel:`Page setup` options are for controlling screen layout, like "
+"margins and screen sizes. There are options to setup page margins, which "
+"will be used by the output plugin, if the selected output format supports "
+"page margins. In addition, you should choose an Input profile and an output "
+"profile. Both sets of profiles basically deal with how to interpret "
+"measurements in the input/output documents, screen sizes and default font "
+"rescaling keys."
+msgstr "Volby :guilabel:`Nastavení stránky` jsou pro ovládání rozložení obrazovky, jako jsou okraje a velikosti obrazovky. Existují volby pro nastavení okrajů stránky, které budou použity Výstupním modulem, pokud vybraný Výstupní formát podporuje okraje stránky. Kromě toho byste měli vybrat Vstupní profil a Výstupní profil. Obě sady profilů se v podstatě zabývají tím, jak interpretovat rozměry ve vstupních a výstupních dokumentech, velikosti obrazovky a klíče úpravy měřítka výchozího písma."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:274
+msgid ""
+"If you know that the file you are converting was intended to be used on a "
+"particular device/software platform, choose the corresponding input profile,"
+" otherwise just choose the default input profile. If you know the files you "
+"are producing are meant for a particular device type, choose the "
+"corresponding output profile. Otherwise, choose one of the Generic output "
+"profiles. If you are converting to MOBI or AZW3 then you will almost always "
+"want to choose one of the Kindle output profiles. Otherwise, your best bet "
+"for modern E-book reading devices is to choose the :guilabel:`Generic e-ink "
+"HD` output profile."
+msgstr "Pokud víte, že soubor, který převádíte, byl zamýšlen k použití na konkrétním zařízení nebo softwarové platformě, zvolte odpovídající vstupní profil, jinak prostě zvolte výchozí vstupní profil. Pokud víte, že soubory, které vytváříte, jsou určeny pro konkrétní typ zařízení, zvolte odpovídající výstupní profil. Pokud víte, že soubory, které vytváříte, jsou určeny pro konkrétní typ zařízení, zvolte odpovídající výstupní profil. V opačném případě zvolte jeden z obecných výstupních profilů. Pokud převádíte na MOBI nebo AZW3, budete téměř vždy chtít zvolit jeden z výstupních profilů Kindle. V opačném případě je nejlepším řešením pro moderní zařízení pro čtení e-knih zvolit výstupní profil :guilabel:`Obecné HD zařízení e-ink`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:283
+msgid ""
+"The output profile also controls the screen size. This will cause, for "
+"example, images to be auto-resized to be fit to the screen in some output "
+"formats. So choose a profile of a device that has a screen size similar to "
+"your device."
+msgstr "Výstupní profil také určuje velikost obrazovky. To například způsobí, že v některých výstupních formátech bude u obrázků automaticky změněna velikost, aby se přizpůsobily obrazovce. Takže zvolte profil zařízení, které má podobnou velikost obrazovky vašemu zařízení."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:291
+msgid "Heuristic processing"
+msgstr "Heuristické zpracování"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:293
+msgid ""
+"Heuristic processing provides a variety of functions which can be used to "
+"try and detect and correct common problems in poorly formatted input "
+"documents.  Use these functions if your input document suffers from poor "
+"formatting. Because these functions rely on common patterns, be aware that "
+"in some cases an option may lead to worse results, so use with care.  As an "
+"example, several of these options will remove all non-breaking-space "
+"entities, or may include false positive matches relating to the function."
+msgstr "Heuristické zpracování poskytuje celou řadu funkcí, které mohou být použity pro pokus o rozpoznání a opravu běžných problémů ve špatně formátovaných vstupních dokumentech. Použijte tyto funkce, pokud váš vstupní dokument trpí špatným formátování Protože tyto funkce spoléhají na běžné vzory, uvědomte si, že v některých případech může volba vést k horším výsledkům, tak to používejte opatrně. Například několik z těchto voleb odebere všechny entity pevných mezer, nebo mohou zahrnovat falešně pozitivní shody souvisejících s funkcí."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:301
+msgid ":guilabel:`Enable heuristic processing`"
+msgstr ":guilabel:`Povolit heuristické zpracování`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:300
+msgid ""
+"This option activates calibre's :guilabel:`Heuristic processing` stage of "
+"the conversion pipeline. This must be enabled in order for various sub-"
+"functions to be applied"
+msgstr "Tato volba aktivuje fázi :guilabel:`Heuristického zpracování` převodního řetězce Calibre. Musí to být povoleno, aby byly použity různé dílčí funkce."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:307
+msgid ":guilabel:`Unwrap lines`"
+msgstr ":guilabel:`Zrušit zalomení řádků`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:304
+msgid ""
+"Enabling this option will cause calibre to attempt to detect and correct "
+"hard line breaks that exist within a document using punctuation clues and "
+"line length. calibre will first attempt to detect whether hard line breaks "
+"exist, if they do not appear to exist calibre will not attempt to unwrap "
+"lines. The line-unwrap factor can be reduced if you want to 'force' calibre "
+"to unwrap lines."
+msgstr "Povolení této volby způsobí, že se Calibre pokusí rozpoznat a opravit tvrdé pevné konce řádků existujících v dokumentu pomocí interpunkčních vodítek a délky řádku. Calibre se nejdříve pokusí rozpoznat, zda pevné konce řádků existují, pokud se zdá, že neexistují, Calibre se nepokusí zrušit zalomení řádků. Koeficient zrušení zalomení řádku může být zmenšen, pokud chcete 'vynutit', aby Calibre zrušilo zalomení řádků."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:313
+msgid ":guilabel:`Line-unwrap factor`"
+msgstr ":guilabel:`Koeficient zrušení zalomení řádku`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:310
+msgid ""
+"This option controls the algorithm calibre uses to remove hard line breaks. "
+"For example, if the value of this option is 0.4, that means calibre will "
+"remove hard line breaks from the end of lines whose lengths are less than "
+"the length of 40% of all lines in the document. If your document only has a "
+"few line breaks which need correction, then this value should be reduced to "
+"somewhere between 0.1 and 0.2."
+msgstr "Tato volba určuje algoritmus, který Calibre používá k odebrání pevných konců řádků. Například pokud je hodnota této volby 0,4, znamená to, že Calibre odebere pevné konce řádků z konců řádků, jejichž délky jsou menší než délka 40 % všech řádků v dokumentu. Pokud má váš dokument pouze několik konců řádků, které potřebují opravu, pak by tato hodnota měla být snížena někam mezi 0,1 a 0,2."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:328
+msgid ""
+":guilabel:`Detect and markup unformatted chapter headings and sub headings`"
+msgstr ":guilabel:`Rozpoznat a označit neformátované nadpisy a podnadpisy kapitol`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:316
+msgid ""
+"If your document does not have chapter headings and titles formatted "
+"differently from the rest of the text, calibre can use this option to "
+"attempt to detect them and surround them with heading tags. <h2> tags are "
+"used for chapter headings; <h3> tags are used for any titles that are "
+"detected."
+msgstr "Pokud váš dokument neobsahuje nadpisy kapitol a názvy formátované odlišně od zbytku textu, Calibre může použít tuto volbu, aby se je pokusilo rozpoznat a obklopit je značkami nadpisů. Značky <h2> se používají pro nadpisy kapitol; značky <h3> se používají pro jakékoliv rozpoznané názvy."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:320
+msgid ""
+"This function will not create a TOC, but in many cases it will cause "
+"calibre's default chapter detection settings to correctly detect chapters "
+"and build a TOC.  Adjust the XPath under Structure detection if a TOC is not"
+" automatically created.  If there are no other headings used in the document"
+" then setting \"//h:h2\" under Structure detection would be the easiest way "
+"to create a TOC for the document."
+msgstr "Tato funkce nevytvoří obsah, ale v mnoha případech způsobí, že výchozí nastavení rozpoznání kapitol Calibre správně rozpozná kapitoly a sestaví obsah. Upravte XPath v Rozpoznávání struktury, pokud není obsah automaticky vytvořen. Pokud v dokumentu nejsou použity žádné další nadpisy, pak nastavení \"//h:h2\" v Rozpoznávání struktury bude nejsnadnější způsob, jak vytvořit obsah pro dokument."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:325
+msgid ""
+"The inserted headings are not formatted, to apply formatting use the "
+":guilabel:`Extra CSS` option under the Look and Feel conversion settings.  "
+"For example, to center heading tags, use the following::"
+msgstr "Tyto vložené nadpisy nejsou naformátovány, pro použití formátování použijte volbu Dodatečné CSS pod Vzhledem a chováním v nastavení převodu. Například pro značky zarovnání nadpisů na střed použijte následující::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:333
+msgid ":guilabel:`Renumber sequences of <h1> or <h2> tags`"
+msgstr ":guilabel:`Přečíslovat sekvence značek <h1> nebo <h2>`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:331
+msgid ""
+"Some publishers format chapter headings using multiple <h1> or <h2> tags "
+"sequentially. calibre's default conversion settings will cause such titles "
+"to be split into two pieces.  This option will re-number the heading tags to"
+" prevent splitting."
+msgstr "Někteří vydavatelé formátují nadpisy kapitol pomocí více značek <h1> nebo <h2> postupně. Výchozí nastavení převodu Calibre způsobí, že takové nadpisy budou rozděleny na dvě části. Tato volba přečísluje značky nadpisů, aby se zabránilo rozdělení."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:344
+msgid ":guilabel:`Delete blank lines between paragraphs`"
+msgstr ":guilabel:`Odstranit prázdné řádky mezi odstavci`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:336
+msgid ""
+"This option will cause calibre to analyze blank lines included within the "
+"document.  If every paragraph is interleaved with a blank line, then calibre"
+" will remove all those blank paragraphs.  Sequences of multiple blank lines "
+"will be considered scene breaks and retained as a single paragraph. This "
+"option differs from the :guilabel:`Remove paragraph spacing` option under "
+":guilabel:`Look and Feel` in that it actually modifies the HTML content, "
+"while the other option modifies the document styles.  This option can also "
+"remove paragraphs which were inserted using calibre's :guilabel:`Insert "
+"blank line` option."
+msgstr "Tato volba způsobí, že Calibre analyzuje prázdné řádky obsažené v dokumentu. Pokud je každý odstavec proložený prázdným řádkem, pak Calibre odebere všechny tyto prázdné odstavce. Sekvence více prázdných řádků budou považovány za přerušení příběhu a budou zachovány jako jeden odstavec. Tato volba se liší od volby :guilabel:`Odebrat mezery mezi odstavci` pod :guilabel:`Vzhled a chování` v tom, že skutečně mění obsah HTML, zatímco druhá volba mění styly dokumentu. Tato volba může také odebrat odstavce, které byly vloženy pomocí volby Calibre :guilabel:`Vložit prázdný řádek`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:349
+msgid ":guilabel:`Ensure scene breaks are consistently formatted`"
+msgstr ":guilabel:`Zajistit konzistentní formátování přerušení příběhu`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:347
+msgid ""
+"With this option calibre will attempt to detect common scene-break markers "
+"and ensure that they are center aligned. 'Soft' scene break markers, i.e. "
+"scene breaks only defined by extra white space, are styled to ensure that "
+"they will not be displayed in conjunction with page breaks."
+msgstr "Pomocí této volby se Calibre pokusí rozpoznat běžné značky přerušení příběhu a zajistit, aby byly zarovnané na střed. Značkám 'měkkého' přerušení příběhu, tj. přerušení příběhu definované pouze dodatečnými prázdnými znaky, jsou změněny styly, aby se zajistilo, že nebudou zobrazeny ve spojení s konci stránek."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:365
+msgid ":guilabel:`Replace scene breaks`"
+msgstr ":guilabel:`Nahradit přerušení příběhu`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:352
+msgid ""
+"If this option is configured then calibre will replace scene break markers "
+"it finds with the replacement text specified by the user.  Please note that "
+"some ornamental characters may not be supported across all reading devices."
+msgstr "Pokud je tato volba konfigurována, pak Calibre nahradí značky přerušení příběhu, které najde, nahrazovacím textem zadaným uživatelem. Pamatujte, prosím, že některé ozdobné znaky nemusí být podporovány na všech čtecích zařízení."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:355
+msgid ""
+"In general you should avoid using HTML tags, calibre will discard any tags "
+"and use pre-defined markup.  <hr /> tags, i.e. horizontal rules, and <img> "
+"tags are exceptions.  Horizontal rules can optionally be specified with "
+"styles, if you choose to add your own style be sure to include the 'width' "
+"setting, otherwise the style information will be discarded.  Image tags can "
+"used, but calibre does not provide the ability to add the image during "
+"conversion, this must be done after the fact using the 'Edit book' feature."
+msgstr "Obecně byste se měli vyhnout používání značek HTML, Calibre zahodí jakékoliv značky a použije předem definované značení. Značky <hr />, tj. vodorovné čáry, a značky <img> jsou výjimky. Vodorovné čáry mohou být volitelně zadány styly, pokud se rozhodnete přidat vlastní styl, nezapomeňte zahrnout nastavení šířky 'width', jinak bude informace stylu zahozena. Můžete použít značky obrázků, ale Calibre neposkytuje možnost přidat obrázek během převodu, to musí být provedeno po faktickém použití funkce 'Upravit knihu'."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:362
+msgid ""
+"Example image tag (place the image within an 'Images' folder inside the EPUB"
+" after conversion):"
+msgstr "Příklad značky obrázku (po převodu umístí obrázek do složky 'Images' uvnitř souboru EPUB):"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:362
+msgid "<img style=\"width:10%\" src=\"../Images/scenebreak.png\" />"
+msgstr "<img style=\"width:10%\" src=\"../Images/scenebreak.png\" />"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:365
+msgid "Example horizontal rule with styles:"
+msgstr "Příklad vodorovné čáry se styly:"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:365
+msgid ""
+"<hr style=\"width:20%;padding-top: 1px;border-top: 2px ridge black;border-"
+"bottom: 2px groove black;\"/>"
+msgstr "<hr style=\"width:20%;padding-top: 1px;border-top: 2px ridge black;border-bottom: 2px groove black;\"/>"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:373
+msgid ":guilabel:`Remove unnecessary hyphens`"
+msgstr ":guilabel:`Odebrat nadbytečné spojovníky`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:368
+msgid ""
+"calibre will analyze all hyphenated content in the document when this option"
+" is enabled.  The document itself is used as a dictionary for analysis.  "
+"This allows calibre to accurately remove hyphens for any words in the "
+"document in any language, along with made-up and obscure scientific words.  "
+"The primary drawback is words appearing only a single time in the document "
+"will not be changed.  Analysis happens in two passes, the first pass "
+"analyzes line endings.  Lines are only unwrapped if the word exists with or "
+"without a hyphen in the document.  The second pass analyzes all hyphenated "
+"words throughout the document, hyphens are removed if the word exists "
+"elsewhere in the document without a match."
+msgstr "Calibre analyzuje veškerý obsah rozdělený spojovníky v dokumentu, když je tato volba povolena. Samotný dokument je použit jako slovník pro analýzu. To umožňuje Calibre přesně odebrat spojovníky pro jakákoliv slova v dokumentu v jakémkoliv jazyce, společně s vymyšlenými a neznámými vědeckými slovy. Primární nevýhodou je, že slova objevující se v dokumentu pouze jednou nebudou změněna. Analýza probíhá ve dvou průchodech, první průchod analyzuje konce řádků. Řádkům je zrušeno zalomení, pouze pokud v dokumentu slovo existuje s nebo bez spojovníku. Druhý průchod analyzuje všechna slova rozdělená spojovníky v celém dokumentu, spojovníky jsou odebrány, pokud slovo existuje někde jinde v dokumentu bez shody."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:377
+msgid ":guilabel:`Italicize common words and patterns`"
+msgstr ":guilabel:`Převést na kurzívu obecná slova a vzory`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:376
+msgid ""
+"When enabled, calibre will look for common words and patterns that denote "
+"italics and italicize them.  Examples are common text conventions such as "
+"~word~ or phrases that should generally be italicized, e.g. latin phrases "
+"like 'etc.' or 'et cetera'."
+msgstr "Pokud je povoleno, bude Calibre hledat obecná slova a vzory, které označují kurzívu a převede je na kurzívu. Příkladem jsou obecné textové zásady, jako je ~slovo~, nebo fráze, které by obecně měly být kurzívou, např. latinské fráze, jako jsou 'etc.' nebo 'et cetera'."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:381
+msgid ":guilabel:`Replace entity indents with CSS indents`"
+msgstr ":guilabel:`Nahradit odsazení entitami pomocí odsazeními CSS`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:380
+msgid ""
+"Some documents use a convention of defining text indents using non-breaking "
+"space entities.  When this option is enabled calibre will attempt to detect "
+"this sort of formatting and convert them to a 3% text indent using CSS."
+msgstr "Některé dokumenty používají zásadu definování odsazení textu pomocí entit pevných mezer. Když je tato volba povolena, Calibre se pokusí rozpoznat tento druh formátování a převést je na 3% odsazení textu pomocí CSS."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:386
+msgid "Search & replace"
+msgstr "Hledat a nahradit"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:388
+msgid ""
+"These options are useful primarily for conversion of PDF documents or OCR "
+"conversions, though they can also be used to fix many document specific "
+"problems. As an example, some conversions can leaves behind page headers and"
+" footers in the text. These options use regular expressions to try and "
+"detect headers, footers, or other arbitrary text and remove or replace them."
+" Remember that they operate on the intermediate XHTML produced by the "
+"conversion pipeline. There is a wizard to help you customize the regular "
+"expressions for your document.  Click the magic wand beside the expression "
+"box, and click the 'Test' button after composing your search expression.  "
+"Successful matches will be highlighted in Yellow."
+msgstr "Tyto volby jsou užitečné především pro převody dokumentů PDF nebo převody OCR, i když mohou být také použity pro opravu mnoha konkrétních problémů dokumentů. Například některé převody mohou zanechat záhlaví a zápatí stránek v textu. Tyto volby používají regulární výrazy, aby se pokusily rozpoznat záhlaví, zápatí nebo jiný libovolný text a odebrat ho nebo nahradit. Nezapomeňte, že pracují s polotovarem XHTML vytvořeným převodním řetězcem. K dispozici je průvodce, aby vám pomohl přizpůsobit regulární výrazy pro váš dokument. Klikněte na kouzelnou hůlku vedle pole výrazu a klikněte na tlačítko 'Tesovat' po sestavení vyhledávacího výrazu. Úspěšné shody budou zvýrazněny žlutě."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:396
+msgid ""
+"The search works by using a Python regular expression. All matched text is "
+"simply removed from the document or replaced using the replacement pattern. "
+"The replacement pattern is optional, if left blank then text matching the "
+"search pattern will be deleted from the document.  You can learn more about "
+"regular expressions and their syntax at :ref:`regexptutorial`."
+msgstr "Vyhledávání funguje pomocí regulárního výrazu Pythonu. Všechny odpovídající texty jsou jednoduše odebrány z dokumentu nebo nahrazeny pomocí vzoru nahrazení. Vzor nahrazení je nepovinný, pokud zůstane prázdný, pak text odpovídající hledanému vzoru bude z dokumentu odstraněn. Další informace o regulárních výrazech a jejich syntaxi můžete zjistit v :ref:`regexptutorial`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:404
+msgid "Structure detection"
+msgstr "Rozpoznávání struktury"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:406
+msgid ""
+"Structure detection involves calibre trying its best to detect structural "
+"elements in the input document, when they are not properly specified. For "
+"example, chapters, page breaks, headers, footers, etc. As you can imagine, "
+"this process varies widely from book to book. Fortunately, calibre has very "
+"powerful options to control this. With power comes complexity, but if once "
+"you take the time to learn the complexity, you will find it well worth the "
+"effort."
+msgstr "Rozpoznávání struktury zahrnuje to, že se Calibre pokouší co nejlépe rozpoznat strukturální prvky ve vstupním dokumentu, pokud nejsou správně zadány. Například kapitoly, konce stránek, záhlaví, zápatí atd. Jak si dokážete představit, tento proces se velice liší knihu od knihy. Naštěstí má Calibre velice mocné možnosti, aby toto určilo. S mocí přichází složitost, ale pokud si jednou uděláte čas na to naučit se to složité, zjistíte, že to stálo za námahu."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:412
+msgid "Chapters and page breaks"
+msgstr "Konce kapitol a stránek"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:414
+msgid ""
+"calibre has two sets of options for :guilabel:`chapter detection` and "
+":guilabel:`inserting page breaks`. This can sometimes be slightly confusing,"
+" as by default, calibre will insert page breaks before detected chapters as "
+"well as the locations detected by the page breaks option. The reason for "
+"this is that there are often location where page breaks should be inserted "
+"that are not chapter boundaries. Also, detected chapters can be optionally "
+"inserted into the auto generated Table of Contents."
+msgstr "Calibre má dvě sady možností pro :guilabel:`rozpoznávání kapitol` a :guilabel:`vkládání konců stránek`. To může být někdy trochu matoucí, protože ve výchozím nastavení Calibre vloží konce stránek před rozpoznané kapitoly, stejně jako před místa rozpoznaná možností konců stránek. Důvodem pro to je to, že často existují místa, kam by měly být vloženy konce stránek, která nejsou hranicemi kapitoly. Rozpoznané kapitoly mohou být také volitelně vloženy do automaticky generovaného obsahu."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:419
+msgid ""
+"calibre uses *XPath*, a powerful language to allow the user to specify "
+"chapter boundaries/page breaks. XPath can seem a little daunting to use at "
+"first, fortunately, there is a :ref:`XPath tutorial <xpath-tutorial>` in the"
+" User Manual. Remember that Structure detection operates on the intermediate"
+" XHTML produced by the conversion pipeline. Use the debug option described "
+"in the :ref:`conversion-introduction` to figure out the appropriate settings"
+" for your book. There is also a button for a XPath wizard to help with the "
+"generation of simple XPath expressions."
+msgstr "Calibre používá *XPath*, výkonný jazyk, který umožňuje uživateli zadat  hranice kapitol nebo konce stránek. XPath se může zdát nejdříve trochu skličující pro používání, naštěstí je zde :ref:`kurz XPath <xpath-tutorial>` v uživatelské příručce. Nezapomeňte, že Rozpoznávání struktury pracuje na polotovaru XHTML vytvořeného převodním řetězcem. Použijte možnost ladění popsanou v :ref:`conversion-introduction`, abyste určili vhodné nastavení pro svou knihu. Je zde také tlačítko pro Průvodce XPath, aby pomohl s generováním jednoduchých výrazů XPath."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:425
+msgid ""
+"By default, calibre uses the following expression for detecting chapters::"
+msgstr "Ve výchozím nastavení používá Calibre následující výraz pro rozpoznávání kapitol::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:429
+msgid ""
+"This expression is rather complex, because it tries to handle a number of "
+"common cases simultaneously. What it means is that calibre will assume "
+"chapters start at either `<h1>` or `<h2>` tags that have any of the words "
+"`(chapter, book, section or part)` in them or that have the "
+"`class=\"chapter\"` attribute."
+msgstr "Tento výraz je poměrně složitý, protože se snaží zpracovat velký počet běžných případů souběžně. To znamená, že Calibre bude předpokládat, že kapitoly začínají buď značkou `<h1>` nebo `<h2>`, které obsahují kterékoliv z těchto slov `(kapitola, kniha, oddíl nebo část)`, nebo které mají atribut `class=\"kapitola\"`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:433
+msgid ""
+"A related option is :guilabel:`Chapter mark`, which allows you to control "
+"what calibre does when it detects a chapter. By default, it will insert a "
+"page break before the chapter. You can have it insert a ruled line instead "
+"of, or in addition to the page break. You can also have it do nothing."
+msgstr "Související možností je :guilabel:`Označení kapitol`, který vám umožní určit, co Calibre udělá, když rozpozná kapitolu. Ve výchozím nastavení vloží konec stránky před kapitolu. Můžete ho nechat vložit linku namísto nebo navíc ke konci stránky. Můžete ho také nechat nedělat nic."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:437
+msgid "The default setting for detecting page breaks is::"
+msgstr "Výchozí nastavení pro rozpoznávání konců stránek je::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:441
+msgid ""
+"which means that calibre will insert page breaks before every `<h1>` and "
+"`<h2>` tag by default."
+msgstr "což znamená, že Calibre ve výchozím nastavení vloží konce stránek před každou značku `<h1>` a `<h2>`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:445
+msgid ""
+"The default expressions may change depending on the input format you are "
+"converting."
+msgstr "Výchozí výrazy se mohou měnit v závislosti na vstupním formátu, který převádíte."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:448
+msgid "Miscellaneous"
+msgstr "Různé"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:450
+msgid "There are a few more options in this section."
+msgstr "V tomto oddílu je několik dalších voleb."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:456
+msgid ":guilabel:`Insert metadata as page at start of book`"
+msgstr ":guilabel:`Vložit metadata jako stránku na začátek knihy`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:453
+msgid ""
+"One of the great things about calibre is that it allows you to maintain very"
+" complete metadata about all of your books, for example, a rating, tags, "
+"comments, etc. This option will create a single page with all this metadata "
+"and insert it into the converted e-book, typically just after the cover. "
+"Think of it as a way to create your own customised book jacket."
+msgstr "Jednou ze skvělých věcí na Calibre je to, že vám umožňuje udržovat velice kompletní metadata o všech vašich knihách, například hodnocení, štítky, komentáře atd. Tato možnost vytvoří jednoduchou stránku se všemi těmito metadaty a vloží ji do převedené e-knihy, obvykle hned za obálku. Berte to jako způsob, jak si vytvořit svůj vlastní přizpůsobený přebal knihy."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:463
+msgid ":guilabel:`Remove first image`"
+msgstr ":guilabel:`Odebrat první obrázek`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:459
+msgid ""
+"Sometimes, the source document you are converting includes the cover as part"
+" of the book, instead of as a separate cover. If you also specify a cover in"
+" calibre, then the converted book will have two covers. This option will "
+"simply remove the first image from the source document, thereby ensuring "
+"that the converted book has only one cover, the one specified in calibre."
+msgstr "Někdy zdrojový dokument, který převádíte, obsahuje obálku jako součást knihy namísto samostatné obálky. Pokud jste také zadali obálku v Calibre, pak bude mít převedená kniha dvě obálky. Tato možnost jednoduše odebere první obrázek ze zdrojového dokumentu, čímž zajistí, že převedená kniha má pouze jednu obálku, tu zadanou v Calibre."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:466
+msgid "Table of Contents"
+msgstr "Obsah"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:468
+msgid ""
+"When the input document has a Table of Contents in its metadata, calibre "
+"will just use that. However, a number of older formats either do not support"
+" a metadata based Table of Contents, or individual documents do not have "
+"one. In these cases, the options in this section can help you automatically "
+"generate a Table of Contents in the converted e-book, based on the actual "
+"content in the input document."
+msgstr "Když má vstupní dokument ve svých metadatech obsah, Calibre ho prostě použije. Nicméně velké množství starších formátů buď nepodporuje obsah založený na metadatech nebo ho jednotlivé dokumenty nemají. V těchto případech vám volby v tomto oddílu mohou pomoct automaticky vygenerovat obsah v převáděné e-knize založený na skutečném obsahu ve vstupním dokumentu."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:473
+msgid ""
+"Using these options can be a little challenging to get exactly right. If you"
+" prefer creating/editing the Table of Contents by hand, convert to the EPUB "
+"or AZW3 formats and select the checkbox at the bottom of the Table of "
+"Contents section of the conversion dialog that says :guilabel:`Manually "
+"fine-tune the Table of Contents after conversion`. This will launch the ToC "
+"Editor tool after the conversion. It allows you to create entries in the "
+"Table of Contents by simply clicking the place in the book where you want "
+"the entry to point. You can also use the ToC Editor by itself, without doing"
+" a conversion. Go to :guilabel:`Preferences->Interface->Toolbars` and add "
+"the :guilabel:`ToC Editor` to the main toolbar. Then just select the book "
+"you want to edit and click the :guilabel:`ToC Editor` button."
+msgstr "Používání těchto voleb může být trochu složitější, abyste získali přesně to pravé. Pokud upřednostňujete vytváření nebo úpravu obsahu ručně, převeďte na formáty EPUB nebo AZW3 a vyberte zaškrtávací políčko v dolní oddílu Obsah v dialogovém okně převodu, která říká: :guilabel:`Ručně jemně ladit obsah po dokončení převodu`. Tímto se po převodu spustí nástroj Upravit obsah. Umožní vám vytvářet položky v obsahu jednoduše kliknutím na místo v knize, kam chcete, aby položka ukazovala. Můžete také použít samotný nástroj Upravit obsah, aniž byste prováděli převod. Přejděte na :guilabel:`Předvolby->Rozhraní->Panely nástrojů` a přidejte :guilabel:`Upravit obsah` na hlavní panel nástrojů. Pak stačí vybrat knihu, kterou chcete upravit, a kliknout na tlačítko :guilabel:`Upravit obsah`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:485
+msgid ""
+"The first option is :guilabel:`Force use of auto-generated Table of "
+"Contents`. By checking this option you can have calibre override any Table "
+"of Contents found in the metadata of the input document with the auto "
+"generated one."
+msgstr "První volba je :guilabel:`Vynutit použití automaticky generovaného obsahu`. Zaškrtnutím této volby můžete nechat Calibre přepsat jakýkoliv nalezený obsah v metadatech vstupního dokumentu automaticky vygenerovaným."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:489
+msgid ""
+"The default way that the creation of the auto generated Table of Contents "
+"works is that, calibre will first try to add any detected chapters to the "
+"generated table of contents. You can learn how to customize the detection of"
+" chapters in the :ref:`structure-detection` section above. If you do not "
+"want to include detected chapters in the generated table of contents, check "
+"the :guilabel:`Do not add detected chapters` option."
+msgstr "Výchozí způsob, jakým vytvoření automaticky vygenerovaného obsahu funguje, je ten, že Calibre nejdříve zkusí přidat všechny rozpoznané kapitoly do vygenerovaného obsahu. Jak přizpůsobit rozpoznávání kapitol můžete zjistit ve výše uvedeném oddílu :ref:`structure-detection`. Pokud nechcete zahrnout rozpoznané kapitoly do vygenerovaného obsahu, zaškrtněte volbu :guilabel:`Nepřidávat rozpoznané kapitoly do obsahu`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:494
+msgid ""
+"If less than the :guilabel:`Chapter threshold` number of chapters were "
+"detected, calibre will then add any hyperlinks it finds in the input "
+"document to the Table of Contents. This often works well: many input "
+"documents include a hyperlinked Table of Contents right at the start. The "
+":guilabel:`Number of links` option can be used to control this behavior. If "
+"set to zero, no links are added. If set to a number greater than zero, at "
+"most that number of links is added."
+msgstr "Pokud bylo rozpoznáno méně kapitol, než je hodnota :guilabel:`Mezní hodnota kapitol`, Calibre pak přidá do obsahu všechny hypertextové odkazy, které najde ve vstupním dokumentu. Toto často funguje dobře na mnoha vstupních dokumentech, které obsahují hypertextové odkazy obsahu hned na začátku. Volba :guilabel:`Počet odkazů` může být použita k ovládání tohoto chování. Pokud je nastavena na nulu, nejsou přidány žádné odkazy. Pokud je nastavena na číslo větší než nula, je přidán nanejvýše tento počet odkazů."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:500
+msgid ""
+"calibre will automatically filter duplicates from the generated Table of "
+"Contents. However, if there are some additional undesirable entries, you can"
+" filter them using the :guilabel:`TOC Filter` option. This is a regular "
+"expression that will match the title of entries in the generated table of "
+"contents. Whenever a match is found, it will be removed. For example, to "
+"remove all entries titles \"Next\" or \"Previous\" use::"
+msgstr "Calibre automaticky vyfiltruje duplicity z generovaného obsahu. Pokud však jsou zde nějaké další nežádoucí položky, můžete je vyfiltrovat pomocí volby :guilabel:`Filtr obsahu`. To je regulární výraz, který porovná názvy položek ve vygenerovaném obsahu. Kdykoliv je nalezena shoda, bude odebrána. Například pro odebrání všech názvů položek \"Další\" nebo \"Předchozí\" použijte::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:507
+msgid ""
+"The :guilabel:`Level 1,2,3 TOC` options allow you to create a sophisticated "
+"multi-level Table of Contents. They are XPath expressions that match tags in"
+" the intermediate XHTML produced by the conversion pipeline. See the "
+":ref:`conversion-introduction` for how to get access to this XHTML. Also "
+"read the :ref:`xpath-tutorial`, to learn how to construct XPath expressions."
+" Next to each option is a button that launches a wizard to help with the "
+"creation of basic XPath expressions. The following simple example "
+"illustrates how to use these options."
+msgstr "Volby :guilabel:`Obsah 1., 2. a 3. úrovně` vám umožní vytvořit propracovaný víceúrovňový obsah. Jsou to výrazy XPath, které porovnají značky v polotovaru XHTML vytvořeného převodním řetězcem. Podívejte se na :ref:`conversion-introduction`, jak získat přístup k tomuto XHTML. Přečtěte si také :ref:`xpath-tutorial`, abyste zjistili, jak vytvářet výrazy XPath. Vedle každé volby je tlačítko, které spustí průvodce, který vám pomůže s vytvořením základních výrazů XPath. Následující jednoduchý příklad vysvětluje, jak používat tyto volby."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:513
+msgid ""
+"Suppose you have an input document that results in XHTML that look like "
+"this:"
+msgstr "Předpokládejte, že máte vstupní dokument, jehož výstupem je XHTML, které vypadá takto:"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:535
+msgid "Then, we set the options as::"
+msgstr "Potom, nastavíme možnosti jako::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:540
+msgid ""
+"This will result in an automatically generated two level Table of Contents "
+"that looks like::"
+msgstr "Toto bude mít za výsledek automaticky generovaný dvouúrovňový obsah, který vypadá jako::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:551
+msgid ""
+"Not all output formats support a multi level Table of Contents. You should "
+"first try with EPUB output. If that works, then try your format of choice."
+msgstr "Ne všechny formáty podporují víceúrovňové obsahy. Nejdříve byste to měli zkusit s výstupem EPUB. Pokud to funguje, zkuste formát vlastního výběru."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:555
+msgid "Using images as chapter titles when converting HTML input documents"
+msgstr "Požití obrázku jako názvu kapitol pří konverzi HTML vstupních dokumentů"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:557
+msgid ""
+"Suppose you want to use an image as your chapter title, but still want "
+"calibre to be able to automatically generate a Table of Contents for you "
+"from the chapter titles. Use the following HTML markup to achieve this:"
+msgstr "Předpokládejme, že chcete použít obrázek jako název kapitoly, ale stále chcete, aby Calibre bylo pro vás schopno automaticky generovat obsah z názvů kapitol. Použijte následující značení HTML, abyste toho dosáhli:"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:571
+msgid ""
+"Set the :guilabel:`Level 1 TOC` setting to ``//h:h2``. Then, for chapter "
+"two, calibre will take the title from the value of the ``title`` attribute "
+"on the ``<h2>`` tag, since the tag has no text."
+msgstr "Nastavte :guilabel:`Obsah 1. úrovně` na ``//h:h2``. Pak pro druhou kapitolu Calibre vezme název z hodnoty atributu ``title`` značky ``<h2>``, protože značka nemá žádný text."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:574
+msgid ""
+"Using tag attributes to supply the text for entries in the Table of Contents"
+msgstr "Používání atributů značek pro dodání textu pro položky v obsahu"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:576
+msgid ""
+"If you have particularly long chapter titles and want shortened versions in "
+"the Table of Contents, you can use the title attribute to achieve this, for "
+"example:"
+msgstr "Pokud máte obzvlášť dlouhé názvy kapitol a chcete mít v obsahu zkrácené verze, můžete použít atribut názvu, abyste toho dosáhli, například:"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:591
+msgid ""
+"Set the :guilabel:`Level 1 TOC` setting to ``//h:h2/@title``. Then calibre "
+"will take the title from the value of the ``title`` attribute on the "
+"``<h2>`` tags, instead of using the text inside the tag. Note the trailing "
+"``/@title`` on the XPath expression, you can use this form to tell calibre "
+"to get the text from any attribute you like."
+msgstr "Nastavte :guilabel:`Obsah 1. úrovně` na ``//h:h2/@title``. Pak Calibre vezme názvy z hodnot atributů ``title`` značek ``<h2>``, namísto použití textu uvnitř značky. Pamatujte na koncové ``/@title`` ve výrazu XPath, tento formulář můžete použít, abyste řekli Calibre, aby získalo text z jakéhokoliv atributu chcete."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:598
+msgid "How options are set/saved for conversion"
+msgstr "Jak jsou nastaveny nebo uloženy volby pro převod"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:600
+msgid ""
+"There are two places where conversion options can be set in calibre. The "
+"first is in Preferences->Conversion. These settings are the defaults for the"
+" conversion options. Whenever you try to convert a new book, the settings "
+"set here will be used by default."
+msgstr "V Calibre jsou dvě místa, kde mohou být nastaveny volby převodu. První je v Nastavení->Převod. Tato nastavení jsou výchozí pro volby převodu. Kdykoliv se pokusíte převést novou knihu, zde zadaná nastavení budou použita jako výchozí."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:605
+msgid ""
+"You can also change settings in the conversion dialog for each book "
+"conversion. When you convert a book, calibre remembers the settings you used"
+" for that book, so that if you convert it again, the saved settings for the "
+"individual book will take precedence over the defaults set in "
+":guilabel:`Preferences`. You can restore the individual settings to defaults"
+" by using the :guilabel:`Restore defaults` button in the individual book "
+"conversion dialog. You can remove the saved settings for a group of books by"
+" selecting all the books and then clicking the :guilabel:`Edit metadata` "
+"button to bring up the bulk metadata edit dialog, near the bottom of the "
+"dialog is an option to remove stored conversion settings."
+msgstr "Můžete také změnit nastavení v dialogovém okně převodu pro převod každé knihy. Když převádíte nějakou knihu, Calibre si pamatuje nastavení použité pro tuto knihu, takže pokud ji převedete znovu, bude mít přednost uložené nastavení pro jednotlivou knihu před výchozími hodnotami nastavenými v předvolbách. Jednotlivé nastavení můžete obnovit na výchozí hodnoty pomocí tlačítka :guilabel:`Obnovit výchozí nastavení` v dialogovém okně převodu jednotlivé knihy. Uložené nastavení pro skupinu knih můžete odebrat výběrem všech knih a klepnutím na tlačítko :guilabel:`Upravit metadata`, které vyvolá dialogové okno hromadné úpravy metadat, v blízkosti spodní části dialogového okna je volba odebrat uložené nastavení převodu."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:616
+msgid ""
+"When you bulk convert a set of books, settings are taken in the following "
+"order (last one wins):"
+msgstr "Když hromadně převádíte sadu knih, nastavení jsou brána v následujícím pořadí (poslední vyhrává):"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:618
+msgid "From the defaults set in Preferences->Conversion"
+msgstr "Z výchozího nastavení v Předvolby->Převod"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:620
+msgid ""
+"From the saved conversion settings for each book being converted (if any). "
+"This can be turned off by the option in the top left corner of the Bulk "
+"conversion dialog."
+msgstr "Z uloženého nastavení převodu pro každou převáděnou knihu (pokud existuje). Toto lze vypnout pomocí volby v levém horním rohu dialogového okna Hromadný převod."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:624
+msgid "From the settings set in the Bulk conversion dialog"
+msgstr "Z nastavení v dialogovém okně Hromadný převod"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:626
+msgid ""
+"Note that the final settings for each book in a Bulk conversion will be "
+"saved and re-used if the book is converted again. Since the highest priority"
+" in Bulk Conversion is given to the settings in the Bulk conversion dialog, "
+"these will override any book specific settings. So you should only bulk "
+"convert books together that need similar settings. The exceptions are "
+"metadata and input format specific settings. Since the Bulk conversion "
+"dialog does not have settings for these two categories, they will be taken "
+"from book specific settings (if any) or the defaults."
+msgstr "Pamatujte, že konečné nastavení pro každou knihu v Hromadném převodu bude uloženo a znovu použito, pokud je kniha znovu převáděna. Vzhledem k tomu, že nejvyšší priorita v Hromadném převodu je dána nastavením v dialogovém okně Hromadný převod, budou mít přednost před všemi konkrétními nastaveními knihy. Takže byste měli společně hromadně převádět pouze knihy, které potřebují podobná nastavení. Výjimkou jsou metadata a konkrétní nastavení  formátu vstupu. Vzhledem k tomu, že dialogové okno Hromadný převod nemá nastavení pro tyto dvě kategorie, budou převzaty z konkrétního nastavení knihy (pokud existuje), nebo z výchozího nastavení."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:637
+msgid ""
+"You can see the actual settings used during any conversion by clicking the "
+"rotating icon in the lower right corner and then double clicking the "
+"individual conversion job. This will bring up a conversion log that will "
+"contain the actual settings used, near the top."
+msgstr "Aktuální nastavení použité během jakéhokoliv převodu můžete zobrazit kliknutím na otáčející se ikonu v pravém dolním rohu a pak poklepáním na jednotlivou úlohu převodu. To zobrazí protokol převodu, který bude obsahovat aktuálně použitá nastavení na začátku."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:642
+msgid "Format specific tips"
+msgstr "Tipy pro konkrétní formáty"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:644
+msgid ""
+"Here you will find tips specific to the conversion of particular formats. "
+"Options specific to particular format, whether input or output are available"
+" in the conversion dialog under their own section, for example `TXT input` "
+"or `EPUB output`."
+msgstr "Zde najdete konkrétní tipy pro převod určitých formátů. Konkrétní volby pro určitý formát, zda je vstup nebo výstup dostupný v dialogovém okně převodu pod vlastním oddílem, například `Vstup TXT` nebo `Výstup EPUB`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:649
+msgid "Convert Microsoft Word documents"
+msgstr "Převod dokumentů Microsoft Word"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:651
+msgid ""
+"calibre can automatically convert ``.docx`` files created by Microsoft Word "
+"2007 and newer. Just add the file to calibre and click convert."
+msgstr "Calibre umí automaticky převést soubory ``.docx`` vytvořené v Microsoft Word 2007 a novějším. Stačí přidat soubor do Calibre a kliknout na tlačítko Převést."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:655
+msgid ""
+"There is a :download_file:`demo .docx file <demos/demo.docx>` that "
+"demonstrates the capabilities of the calibre conversion engine. Just "
+"download it and convert it to EPUB or AZW3 to see what calibre can do."
+msgstr "Zde je :download_file:`ukázkový soubor .docx <demos/demo.docx>`, který ukazuje schopnosti převodního modulu Calibre. Stačí ho stáhnout a převést do formátu EPUB nebo AZW3, abyste viděli, co Calibre umí."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:659
+msgid ""
+"calibre will automatically generate a Table of Contents based on headings if"
+" you mark your headings with the ``Heading 1``, ``Heading 2``, etc. styles "
+"in Microsoft Word. Open the output e-book in the calibre E-book viewer and "
+"click the :guilabel:`Table of Contents` button to view the generated Table "
+"of Contents."
+msgstr "Calibre automaticky vygeneruje Obsah na základě nadpisů, pokud označíte nadpisy ve Wordu pomocí stylů ``Nadpis 1``, ``Nadpis 2`` atd. Otevřete výstupní e-knihu v prohlížeči Calibre a klikněte na tlačítko :guilabel:`Obsah` pro zobrazení vygenerovaného obsahu."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:665
+msgid "Older .doc files"
+msgstr "Starší soubory .doc"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:667
+msgid ""
+"For older .doc files, you can save the document as HTML with Microsoft Word "
+"and then convert the resulting HTML file with calibre. When saving as HTML, "
+"be sure to use the \"Save as Web Page, Filtered\" option as this will "
+"produce clean HTML that will convert well. Note that Word produces really "
+"messy HTML, converting it can take a long time, so be patient. If you have a"
+" newer version of Word available, you can directly save it as .docx as well."
+msgstr "U starších souborů .doc můžete v Microsoft Word uložit dokument jako HTML a pak převést výsledný soubor HTML pomocí Calibre. Při ukládání jako HTML je nutné použít volbu „Uložit jako webovou stránku, zjednodušený formát“, protože to vytvoří čisté HTML, které se bude dobře převádět. Pamatujte, že Word vytváří opravdu chaotické HTML, jehož převod může trvat dlouho, takže buďte trpěliví. Pokud máte k dispozici novější verzi Wordu, můžete ho také přímo uložit jako .docx."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:674
+msgid ""
+"Another alternative is to use the free LibreOffice. Open your .doc file in "
+"LibreOffice and save it as .docx, which can be directly converted in "
+"calibre."
+msgstr "Jinou alternativou je využít bezplatné LibreOffice. Otevřete v LibreOffice svůj soubor .doc a uložte ho jako .docx, který může být přímo převeden v Calibre."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:678
+msgid "Convert TXT documents"
+msgstr "Převod dokumentů TXT"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:680
+msgid ""
+"TXT documents have no well defined way to specify formatting like bold, "
+"italics, etc, or document structure like paragraphs, headings, sections and "
+"so on, but there are a variety of conventions commonly used.  By default "
+"calibre attempts automatic detection of the correct formatting and markup "
+"based on those conventions."
+msgstr "Dokumenty TXT nemají dobře definovaný způsob, jak zadávat formátování, jako je tučné, kurzíva atd, nebo strukturu dokumentu, jako jsou odstavce, nadpisy, oddíly a tak dále, ale existuje celá řada běžně používaných zásad. Ve výchozím nastavení se Calibre pokusí o automatické rozpoznání správného formátování a značení na základě těchto zásad."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:685
+msgid ""
+"TXT input supports a number of options to differentiate how paragraphs are "
+"detected."
+msgstr "Vstup TXT podporuje celou řadu voleb k odlišení, jak jsou rozpoznány odstavce."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:689
+msgid ":guilabel:`Paragraph style: Auto`"
+msgstr ":guilabel:`Styl odstavců: Automaticky`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:688
+msgid ""
+"Analyzes the text file and attempts to automatically determine how "
+"paragraphs are defined.  This option will generally work fine, if you "
+"achieve undesirable results try one of the manual options."
+msgstr "Analyzuje textový soubor a pokusí se automaticky určit, jak jsou definovány odstavce. Tato volba bude obvykle fungovat dobře, pokud dosáhnete nežádoucí výsledky, zkuste jednu z ručních voleb."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:697
+msgid ":guilabel:`Paragraph style: Block`"
+msgstr ":guilabel:`Styl odstavců: Blok`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:692
+msgid "Assumes one or more blank lines are a paragraph boundary::"
+msgstr "Předpokládá, že jeden nebo více prázdných řádků jsou hranice odstavce::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:704
+msgid ":guilabel:`Paragraph style: Single`"
+msgstr ":guilabel:`Styl odstavců: Jednoduchý`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:700
+msgid "Assumes that every line is a paragraph::"
+msgstr "Předpokládá, že každý řádek je odstavec::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:715
+msgid ":guilabel:`Paragraph style: Print`"
+msgstr ":guilabel:`Styl odstavců: Tisk`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:707
+msgid ""
+"Assumes that every paragraph starts with an indent (either a tab or 2+ "
+"spaces). Paragraphs end when the next line that starts with an indent is "
+"reached::"
+msgstr "Předpokládá, že každý odstavec začíná odsazením (buď tabulátor nebo 2 a více mezer). Odstavec končí, když je dosaženo dalšího řádku, který začíná odsazením::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:719
+msgid ":guilabel:`Paragraph style: Unformatted`"
+msgstr ":guilabel:`Styl odstavců: Neformátovaný`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:718
+msgid ""
+"Assumes that the document has no formatting, but does use hard line breaks."
+"  Punctuation and median line length are used to attempt to re-create "
+"paragraphs."
+msgstr "Předpokládá, že dokument nemá žádné formátování, ale používá pevné konce řádků. Pro pokus o znovu vytvoření odstavců je použita interpunkce a střední délka řádku."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:723
+msgid ":guilabel:`Formatting style: Auto`"
+msgstr ":guilabel:`Styl formátování: Automaticky`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:722
+msgid ""
+"Attempts to detect the type of formatting markup being used.  If no markup "
+"is used then heuristic formatting will be applied."
+msgstr "Pokusí se rozpoznat použitý typ značek formátování. Pokud nejsou požity žádné značky, bude použito heuristické formátování."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:727
+msgid ":guilabel:`Formatting style: Heuristic`"
+msgstr ":guilabel:`Styl formátování: Heuristiké`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:726
+msgid ""
+"Analyzes the document for common chapter headings, scene breaks, and "
+"italicized words and applies the appropriate HTML markup during conversion."
+msgstr "Analyzuje v dokumentu běžné nadpisy kapitol, přerušení příběhu a slova kurzívou a použije příslušné značky HTML během převodu."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:734
+msgid ":guilabel:`Formatting style: Markdown`"
+msgstr ":guilabel:`Styl formátování: Značkování`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:730
+msgid ""
+"calibre also supports running TXT input though a transformation preprocessor"
+" known as Markdown. Markdown allows for basic formatting to be added to TXT "
+"documents, such as bold, italics, section headings, tables, lists, a Table "
+"of Contents, etc. Marking chapter headings with a leading # and setting the "
+"chapter XPath detection expression to \"//h:h1\" is the easiest way to have "
+"a proper table of contents generated from a TXT document. You can learn more"
+" about the Markdown syntax at `daringfireball "
+"<https://daringfireball.net/projects/markdown/syntax>`_."
+msgstr "Calibre také podporuje průběh vstupu TXT transformačním předzpracováním známým jako Značkování. Značkování umožňuje přidání základního formátování do dokumentů TXT, jako je tučné, kurzíva, nadpisy oddílů, tabulky, seznamy, obsahy, atd. Označení nadpisů kapitol úvodním znakem # a nastavení výrazu XPath pro rozpoznání kapitol na \"//h:h1\" je nejjednodušší způsob, jak získat řádný obsah vygenerovaný z dokumentu TXT. Více o Syntaxi značkování se můžete dozvědět na `daringfireball <https://daringfireball.net/projects/markdown/syntax>`_."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:737
+msgid ":guilabel:`Formatting style: None`"
+msgstr ":guilabel:`Styl formátování: Žádný`"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:737
+msgid ""
+"Applies no special formatting to the text, the document is converted to HTML"
+" with no other changes."
+msgstr "Nepoužije na text žádné zvláštní formátování, dokument je převeden na HTML bez žádných dalších změn."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:742
+msgid "Convert PDF documents"
+msgstr "Převod dokumentů PDF"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:744
+msgid ""
+"PDF documents are one of the worst formats to convert from. They are a fixed"
+" page size and text placement format. Meaning, it is very difficult to "
+"determine where one paragraph ends and another begins. calibre will try to "
+"unwrap paragraphs using a configurable, :guilabel:`Line un-wrapping factor`."
+" This is a scale used to determine the length at which a line should be "
+"unwrapped. Valid values are a decimal between 0 and 1. The default is 0.45, "
+"just under the median line length. Lower this value to include more text in "
+"the unwrapping. Increase to include less. You can adjust this value in the "
+"conversion settings under :guilabel:`PDF Input`."
+msgstr "Dokumenty PDF jsou jedním z nejhorších formátů, ze kterého převádět. Mají pevný formát velikosti stránky a umístění textu. To znamená, že je velice obtížné určit, kde končí jeden odstavec a začíná další. Calibre se pokusí zrušit zalomení odstavců pomocí konfigurovatelného :guilabel:`Koeficientu nezalamování řádků`. Je to měřítko použité k určení délky, při které by měl být řádek nezalomený. Platné hodnoty jsou desetinná čísla mezi 0 a 1. Výchozí hodnota je 0,45, těsně pod střední délkou řádku. Snižte tuto hodnotu pro zahrnutí více textu do nezalamování. Zvyšte pro zahrnutí méně. Tuto hodnotu můžete upravit v nastavení převodu pod :guilabel:`Vstup PDF`."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:751
+msgid ""
+"Also, they often have headers and footers as part of the document that will "
+"become included with the text. Use the :guilabel:`Search and replace` panel "
+"to remove headers and footers to mitigate this issue. If the headers and "
+"footers are not removed from the text it can throw off the paragraph "
+"unwrapping. To learn how to use the header and footer removal options, read "
+":ref:`regexptutorial`."
+msgstr "Často také mají záhlaví a zápatí jako součást dokumentu, které se zahrnou do textu. Použijte panel :guilabel:`Najít a nahradit` pro odebrání záhlaví a zápatí ke zmírnění tohoto problému. Pokud záhlaví a zápatí nejsou odebrány z textu, mohou rozhodit zrušení zalamování odstavců. Abyste se naučili, jak používat volbu odebírání záhlaví a zápatí, přečtěte si :ref:`regexptutorial``."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:756
+msgid "Some limitations of PDF input are:"
+msgstr "Některá omezení vstupu PDF jsou:"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:758
+msgid "Complex, multi-column, and image based documents are not supported."
+msgstr "Nejsou podporovány dokumenty, které jsou složité, vícesloupcové a založené na obrázcích."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:759
+msgid ""
+"Extraction of vector images and tables from within the document is also not "
+"supported."
+msgstr "Také není podporována extrakce vektorových obrázků a tabulek zevnitř dokumentu."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:760
+msgid ""
+"Some PDFs use special glyphs to represent ll or ff or fi, etc. Conversion of"
+" these may or may not work depending on just how they are represented "
+"internally in the PDF."
+msgstr "Některá PDF používají speciální glyfy zastupující ll, ff nebo fi, atd. Jejich převod může nebo nemusí fungovat v závislosti na tom, jak jsou zastoupeny vnitřně v PDF."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:761
+msgid "Links and Tables of Contents are not supported"
+msgstr "Nejsou podporovány odkazy a obsahy."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:762
+msgid ""
+"PDFs that use embedded non-Unicode fonts to represent non-English characters"
+" will result in garbled output for those characters"
+msgstr "PDF, která používají vložená písma nepodporující kód Unicode pro zastupování neanglických znaků, způsobí zkomolený výstup pro tyto znaky."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:763
+msgid ""
+"Some PDFs are made up of photographs of the page with OCRed text behind "
+"them. In such cases calibre uses the OCRed text, which can be very different"
+" from what you see when you view the PDF file"
+msgstr "Některá PDF jsou tvořena fotografiemi stránky s opticky rozpoznaným textem (OCR) za nimi. V takových případech Calibre použije opticky rozpoznaný text, což může být velice odlišné od toho, co vidíte, když si prohlížíte soubor PDF."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:764
+msgid ""
+"PDFs that are used to display complex text, like right to left languages and"
+" math typesetting will not convert correctly"
+msgstr "PDF, která jsou použita pro zobrazení složitého textu, jako jsou jazyky zprava doleva a matematické vzorce, nebudou správně převedena."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:766
+msgid ""
+"To re-iterate **PDF is a really, really bad** format to use as input. If you"
+" absolutely must use PDF, then be prepared for an output ranging anywhere "
+"from decent to unusable, depending on the input PDF."
+msgstr "Znovu opakujeme, že **PDF je opravdu, ale opravdu špatný** formát pro použití jako vstupu. Pokud musíte naprosto nutně použít PDF, pak buďte připraveni na výstup kdekoliv v rozmezí od slušného po nepoužitelný, v závislosti na vstupním PDF."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:770
+msgid "Comic book collections"
+msgstr "Sbírky komiksů"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:772
+msgid ""
+"A comic book collection is a .cbc file. A .cbc file is a ZIP file that "
+"contains other CBZ/CBR files. In addition the .cbc file must contain a "
+"simple text file called comics.txt, encoded in UTF-8. The comics.txt file "
+"must contain a list of the comics files inside the .cbc file, in the form "
+"filename:title, as shown below::"
+msgstr "Sbírka komiksů je soubor .cbc. Soubor .cbc je soubor ZIP, který obsahuje jiné soubory CBZ nebo CBR. Soubor .cbc musí navíc obsahovat jednoduchý textový soubor nazvaný comics.txt kódovaný v UTF-8. Soubor comics.txt musí obsahovat seznam souborů komiksů uvnitř souboru .cbc v podobě názevsouboru:název, jak je zobrazeno níže::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:780
+msgid "The .cbc file will then contain::"
+msgstr "Soubor .cbc pak bude obsahovat::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:787
+msgid ""
+"calibre will automatically convert this .cbc file into a e-book with a Table"
+" of Contents pointing to each entry in comics.txt."
+msgstr "Calibre automaticky převede tento soubor .cbc na e-knihu s obsahem ukazujícím na každou položku v comics.txt."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:791
+msgid "EPUB advanced formatting demo"
+msgstr "Ukázka rozšířeného formátování EPUB"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:793
+msgid ""
+"Various advanced formatting for EPUB files is demonstrated in this "
+":download_file:`demo file <demos/demo.epub>`. The file was created from hand"
+" coded HTML using calibre and is meant to be used as a template for your own"
+" EPUB creation efforts."
+msgstr "V tomto :download_file:`ukázkovém souboru <demos/demo.epub>` je znázorněno různé rozšířené formátování pro soubory EPUB. Soubor byl vytvořen z ručně kódovaného HTML pomocí Calibre a je určen pro použití jako šablony pro vaše vlastní úsilí o vytváření EPUB."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:796
+msgid ""
+"The source HTML it was created from is available :download_file:`demo.zip "
+"<demos/demo.zip>`. The settings used to create the EPUB from the ZIP file "
+"are::"
+msgstr "Zdrojové HTML, ze kterého byl vytvořen, je dostupné v :download_file:`demo.zip <demos/demo.zip>`. Nastavení použitá pro vytvoření EPUB ze souboru ZIP jsou::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:801
+msgid ""
+"Note that because this file explores the potential of EPUB, most of the "
+"advanced formatting is not going to work on readers less capable than "
+"calibre's built-in EPUB viewer."
+msgstr "Pamatujte, že protože tento soubor prozkoumává potenciál EPUB, většina rozšířeného formátování nebude fungovat ve čtečkách méně schopných, než je vestavěný prohlížeč EPUB Calibre."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:805
+msgid "Convert ODT documents"
+msgstr "Převod dokumentů ODT"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:807
+msgid ""
+"calibre can directly convert ODT (OpenDocument Text) files. You should use "
+"styles to format your document and minimize the use of direct formatting. "
+"When inserting images into your document you need to anchor them to the "
+"paragraph, images anchored to a page will all end up in the front of the "
+"conversion."
+msgstr "Calibre umí přímo převést soubory ODT (OpenDocument Text). Pro formátování dokumentu byste měli používat styly a minimalizovat použití přímého formátování. Při vkládání obrázků do dokumentu je musíte ukotvit k odstavci, obrázky ukotvené ke stránce skončí všechny na začátku převodu."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:810
+msgid ""
+"To enable automatic detection of chapters, you need to mark them with the "
+"built-in styles called :guilabel:`Heading 1`, :guilabel:`Heading 2`, ..., "
+":guilabel:`Heading 6` (:guilabel:`Heading 1` equates to the HTML tag "
+"``<h1>``, :guilabel:`Heading 2` to ``<h2>``, etc). When you convert in "
+"calibre you can enter which style you used into the :guilabel:`Detect "
+"chapters at` box. Example:"
+msgstr "Pro povolení automatického rozpoznání kapitol je musíte označit vestavěnými styly nazvanými :guilabel:`Nadpis 1`, :guilabel:`Nadpis 2`, ..., :guilabel:`Nadpis 6` (:guilabel:`Nadpis 1` se rovná značce HTML ``<h1>``, :guilabel:`Nadpis 2` se rovná ``<h2>`` atd.). Při převodu v Calibre můžete zadat, který styl jste použili, do pole :guilabel:`Rozpoznat kapitoly v`. Příklad:"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:816
+msgid ""
+"If you mark Chapters with style :guilabel:`Heading 2`, you have to set the "
+"'Detect chapters at' box to ``//h:h2``"
+msgstr "Pokud označíte kapitoly stylem :guilabel:`Nadpis 2`, musíte nastavit pole 'Rozpoznat kapitoly v' na ``//h:h2``"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:817
+msgid ""
+"For a nested TOC with Sections marked with :guilabel:`Heading 2` and the "
+"Chapters marked with :guilabel:`Heading 3` you need to enter "
+"``//h:h2|//h:h3``. On the Convert - TOC page set the :guilabel:`Level 1 TOC`"
+" box to ``//h:h2`` and the :guilabel:`Level 2 TOC` box to ``//h:h3``."
+msgstr "Pro vnořený obsah s oddíly označenými :guilabel:`Nadpis 2` a kapitolami označenými :guilabel:`'Nadpis 3` musíte zadat ``//h:h2|//h:h3``. Na stránce Převod - Obsah nastavte pole :guilabel:`Obsah 1. úrovně` na ``//h:h2`` a pole :guilabel:`Obsah 2. úrovně` na ``//h:h3``."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:819
+msgid ""
+"Well-known document properties (Title, Keywords, Description, Creator) are "
+"recognized and calibre will use the first image (not to small, and with good"
+" aspect-ratio) as the cover image."
+msgstr "Jsou rozpoznány dobře známé vlastnosti dokumentu (název, klíčová slova, popis, autor) a Calibre použije první obrázek (ne příliš malý a s dobrým poměrem stran) jako obráek obálky."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:821
+msgid ""
+"There is also an advanced property conversion mode, which is activated by "
+"setting the custom property ``opf.metadata`` ('Yes or No' type) to Yes in "
+"your ODT document (File->Properties->Custom Properties). If this property is"
+" detected by calibre, the following custom properties are recognized "
+"(``opf.authors`` overrides document creator)::"
+msgstr "K dispozici je také převodní režim rozšířených vlastností, který je aktivován nastavením vlastní vlastnosti ``opf.metadata`` (typ 'Ano nebo ne') na Ano ve vašem dokumentu ODT (Soubor->Vlastnosti->Vlastní vlastnosti). Pokud Calibre tuto vlastnost rozpozná, jsou rozpoznány následující vlastní vlastnosti (``opf.authors`` přepíše autora dokumentu)::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:834
+msgid ""
+"In addition to this, you can specify the picture to use as the cover by "
+"naming it ``opf.cover`` (right click, Picture->Options->Name) in the ODT. If"
+" no picture with this name is found, the 'smart' method is used.  As the "
+"cover detection might result in double covers in certain output formats, the"
+" process will remove the paragraph (only if the only content is the cover!) "
+"from the document. But this works only with the named picture!"
+msgstr "Kromě toho můžete zadat obrázek, který se použije jako obálka, jeho pojmenováním ``opf.cover`` (klikněte pravým tlačítkem myši, Obrázek->Volby->Název) v ODT. Pokud není nalezen žádný obrázek s tímto názvem, použije se 'chytrá' metoda. Protože rozpoznávání obálky může u určitých výstupních formátů vést ke dvěma obálkám, zpracování odebere odstavec (pouze pokud jediný obsah je obálka!) z dokumentu. Ale funguje to pouze s pojmenovaným obrázkem!"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:841
+msgid ""
+"To disable cover detection you can set the custom property ``opf.nocover`` "
+"('Yes or No' type) to Yes in advanced mode."
+msgstr "Pro zakázání rozpoznávání obálky můžete v rozšířeném režimu nastavit vlastní vlastnost ``opf.nocover`` (typ 'Ano nebo Ne') na Ano."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:844
+msgid "Converting to PDF"
+msgstr "Převádění do PDF"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:846
+msgid ""
+"The first, most important, setting to decide on when converting to PDF is "
+"the page size. By default, calibre uses a page size of \"U.S. Letter\". You "
+"can change this to another standard page size or a completely custom size in"
+" the :guilabel:`PDF Output` section of the conversion dialog. If you are "
+"generating a PDF to be used on a specific device, you can turn on the option"
+" to use the page size from the :guilabel:`output profile` instead. So if "
+"your output profile is set to Kindle, calibre will create a PDF with page "
+"size suitable for viewing on the small Kindle screen."
+msgstr "První, nejdůležitější nastavení, o kterém musíte rozhodnout při převodu na PDF, je velikost stránky. Ve výchozím nastavení Calibre používá velikost stránky „US Letter“. Toto můžete změnit na jinou standardní velikost stránky nebo zcela vlastní velikost v oddílu :guilabel:`Výstup PDF` dialogového okna převodu. Pokud generujete PDF, které má být použito na konkrétním zařízení, můžete namísto toho zapnout volbu použít velikost stránky z :guilabel:`výstupního profilu` . Takže pokud je váš výstupní profil nastaven na Kindle, Calibre vytvoří PDF s velikostí stránky vhodné pro zobrazení na malé obrazovce Kindle."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:856
+msgid "Headers and Footers"
+msgstr "Záhlaví a zápatí"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:857
+msgid ""
+"You can insert arbitrary headers and footers on each page of the PDF by "
+"specifying header and footer templates. Templates are just snippets of HTML "
+"code that get rendered in the header and footer locations. For example, to "
+"display page numbers centered at the bottom of every page, in green, use the"
+" following footer template::"
+msgstr "Zadáním šablony záhlaví a zápatí můžete vložit libovolná záhlaví a zápatí na každou stránku PDF. Šablony jsou prosté fragmenty kódu HTML, které se vykreslí v místech záhlaví a zápatí. Například pro zobrazení čísel stránek uprostřed dolní části každé stránky zeleně, použijte následující šablonu zápatí::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:865
+msgid ""
+"calibre will automatically replace :code:`_PAGENUM_` with the current page "
+"number. You can even put different content on even and odd pages, for "
+"example the following header template will show the title on odd pages and "
+"the author on even pages::"
+msgstr "Calibre automaticky nahradí :code:`_PAGENUM_` aktuálním číslem stránky. Dokonce můžete dát různý obsah na sudé a liché stránky, například následující šablona záhlaví zobrazí název na lichých stránkách a autora na sudých stránkách::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:874
+msgid ""
+"calibre will automatically replace :code:`_TITLE_` and :code:`_AUTHOR_` with"
+" the title and author of the document being converted. Setting "
+":code:`justify-content` to :code:`flex-end` will cause the text to be right "
+"aligned."
+msgstr "Calibre automaticky nahradí :code:`_TITLE_` a :code:`_AUTHOR_` názvem a autorem převáděného dokumentu. Nastavení :code:`justify-content` na :code:`flex-end` způsobí, že text bude zarovnán vpravo."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:879
+msgid ""
+"You can also display text at the left and right edges and change the font "
+"size, as demonstrated with this header template::"
+msgstr "Můžete také zobrazit text na levých a pravých okrajích a měnit velikost písma, jak je zobrazeno na příkladu s touto šablonou záhlaví::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:887
+msgid ""
+"This will display the title at the left and the author at the right, in a "
+"font size smaller than the main text."
+msgstr "Toto zobrazí název vlevo a autora vpravo s velikostí písma menší než hlavní text."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:890
+msgid "You can also use the current section in templates, as shown below::"
+msgstr "V šablonách můžete také použít aktuální oddíl, jak je zobrazeno níže::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:894
+msgid ""
+":code:`_SECTION_` is replaced by whatever the name of the current section "
+"is. These names are taken from the metadata Table of Contents in the "
+"document (the PDF Outline). If the document has no table of contents then it"
+" will be replaced by empty text. If a single PDF page has multiple sections,"
+" the first section on the page will be used. Similarly, there is a variable "
+"named :code:`_TOP_LEVEL_SECTION_` that can be used to get the name of the "
+"current top-level section."
+msgstr ":code:`_SECTION_` je nahrazeno bez ohledu na to, jaký je název aktuálního oddílu. Tyto názvy jsou převzaty z metadat obsahu v dokumentu (osnovy PDF). Pokud dokument nemá žádný obsah, pak bude nahrazeno prázdným textem. Pokud jedna stránka PDF má několik oddílů, bude použit první oddíl na stránce. Podobně je zde proměnná :code:`_TOP_LEVEL_SECTION_`, která může být použita pro získání názvu aktuálního oddílu nejvyšší úrovně."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:901
+msgid ""
+"You can even use JavaScript inside the header and footer templates, for "
+"example, the following template will cause page numbers to start at 4 "
+"instead of 1::"
+msgstr "Uvnitř šablon záhlaví a zápatí dokonce můžete použít JavaScript, například následující šablona způsobí, že čísla stránek začnou od 4 namísto od 1::"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:911
+msgid ""
+"In addition there are some more variables you can use in the headers and "
+"footers, documented below:"
+msgstr "Níže jsou zdokumentovány některé další proměnné. které můžete použít v záhlavích a zápatích:"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:914
+msgid ""
+"``_TOTAL_PAGES_`` - total number of pages in the PDF file, useful for "
+"implementing a progress counter, for example."
+msgstr "``_TOTAL_PAGES_`` - celkový počet stránek v souboru PDF, užitečné například pro implementaci počítadla průběhu."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:916
+msgid ""
+"``_TOP_LEVEL_SECTION_PAGES_`` - total number of pages in the current top "
+"level section"
+msgstr "``_TOP_LEVEL_SECTION_PAGES_`` - celkový počet stránek v aktuálním oddílu nejvyšší úrovně"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:918
+msgid ""
+"``_TOP_LEVEL_SECTION_PAGENUM_`` - the page number of the current page within"
+" the current top level section"
+msgstr "``_TOP_LEVEL_SECTION_PAGENUM_`` - číslo stránky aktuální stránky v aktuálním oddílu nejvyšší úrovně"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:921
+msgid ""
+"When adding headers and footers make sure you set the page top and bottom "
+"margins to large enough values, under the :guilabel:`PDF Output` section of "
+"the conversion dialog."
+msgstr "Při přidávání záhlaví a zápatí se ujistěte, že jste v oddíle :guilabel:`Výstup PDF` v dialogovém okně převodu nastavili horní a dolní okraje stránky na dostatečně velké hodnoty."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:926
+msgid "Printable Table of Contents"
+msgstr "Tisknutelný obsah"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:928
+msgid ""
+"You can also insert a printable Table of Contents at the end of the PDF that"
+" lists the page numbers for every section. This is very useful if you intend"
+" to print out the PDF to paper. If you wish to use the PDF on an electronic "
+"device, then the PDF Outline provides this functionality and is generated by"
+" default."
+msgstr "Na konec PDF můžete také vložit tisknutelný obsah, který vypíše čísla stránek pro každý oddíl. To je velmi užitečné, pokud zamýšlíte vytisknout PDF na papír. Pokud si přejete použít PDF na elektronickém zařízení, pak Osnova PDF poskytuje tuto funkci a je generována ve výchozím nastavení."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:933
+msgid ""
+"You can customize the look of the generated Table of contents by using the "
+"Extra CSS conversion setting under the Look & feel part of the conversion "
+"dialog. The default CSS used is listed below, simply copy it and make "
+"whatever changes you like."
+msgstr "Vzhled generovaného obsahu můžete přizpůsobit pomocí nastavení Dodatečné CSS pod částí Vzhled a chování dialogového okna převodu. CSS použité ve výchozím nastavení je uvedeno níže, jednoduše ho zkopírujte proveďte v něm libovolné změny."
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:953
+msgid "Custom page margins for individual HTML files"
+msgstr "Vlastní okraje stránky pro jednotlivé soubory HTML"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:955
+msgid ""
+"If you are converting an EPUB or AZW3 file with multiple individual HTML "
+"files inside it and you want to change the page margins for a particular "
+"HTML file you can add the following style block to the HTML file using the "
+"calibre E-book editor:"
+msgstr "Pokud převádíte soubor EPUB nebo AZW3 s více jednotlivými soubory HTML uvnitř a chcete změnit okraje stránek pro konkrétní soubor HTML, můžete pomocí Editoru e-knih Calibre přidat do souboru HTML následující blok stylu:"
+
+#: ../../__w/calibre/calibre/manual/conversion.rst:972
+msgid ""
+"Then, in the PDF output section of the conversion dialog, turn on the option"
+" to :guilabel:`Use page margins from the document being converted`. Now all "
+"pages generated from this HTML file will have ``10pt`` margins."
+msgstr "Pak v oddílu výstupu PDF v dialogovém okně převodu zapněte volbu na :guilabel:`Použít okraje stránek z převáděného &dokumentu`. Nyní budou mít všechny stránky generované z tohoto souboru HTML okraje ``10pt``."

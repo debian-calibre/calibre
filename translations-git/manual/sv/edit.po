@@ -1,0 +1,1296 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# 
+# Translators:
+# efef6ec5b435a041fce803c7f8af77d2_2341d43, 2020
+# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2023
+# Jonatan Nyberg <jonatan@autistici.org>, 2018-2021
+# efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017-2018
+# efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017
+# Kristoffer Grundström <lovaren@gmail.com>, 2016
+# Merarom <merarom@yahoo.es>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-02-02 05:59+0000\n"
+"PO-Revision-Date: 2016-02-29 11:58+0000\n"
+"Last-Translator: Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2023\n"
+"Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:4
+msgid "Editing e-books"
+msgstr "Redigera e-böcker"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:6
+msgid ""
+"calibre has an integrated e-book editor that can be used to edit books in "
+"the EPUB and AZW3 (Kindle) formats. The editor shows you the HTML and CSS "
+"that is used internally inside the book files, with a live preview that "
+"updates as you make changes. It also contains various automated tools to "
+"perform common cleanup and fixing tasks."
+msgstr "calibre har en integrerad e-bokredigerare som kan användas för redigera böcker i EPUB- och AZW3 (Kindle)-format. Redigeraren visar dig HTML och CSS som används internt i bokfilerna, med en realtidsförhandsvisning som uppdateras allt eftersom du gör ändringar. Den innehåller också olika automatiserade verktyg för att utföra vanliga sanerings- och justeringsuppgifter."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:12
+msgid ""
+"You can use this editor by right clicking on any book in calibre and "
+"selecting :guilabel:`Edit book`."
+msgstr "Du kan använda denna redigerare genom att högerklicka på valfri bok i calibre och välja :guilabel:`Redigera bok`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst-1
+msgid "The Edit book tool"
+msgstr "Verktyget Redigera bok"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:23
+msgid "Contents"
+msgstr "Innehåll"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:26
+msgid "Basic workflow"
+msgstr "Grundläggande arbetsflöde"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:29
+msgid ""
+"A video tour of the calibre E-book editor is available :website:`here "
+"<demo#tutorials>`."
+msgstr "En videoklippsrundtur i calibre e-bokredigeraren finns :website:`här <demo#tutorials>`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:31
+msgid ""
+"When you first open a book with the Edit book tool, you will be presented "
+"with a list of files on the left. These are the individual HTML files, "
+"stylesheets, images, etc. that make up the content of the book. Simply "
+"double click on a file to start editing it. Note that if you want to do "
+"anything more sophisticated than making a few small tweaks, you will need to"
+" know `HTML Tutorial <http://html.net/tutorials/html/>`_ and `CSS Tutorial "
+"<http://html.net/tutorials/css/>`_."
+msgstr "När du först öppnar en bok med verktyget Redigera bok kommer få se en list med filer till vänster. Det här är enskilda HTML-filer, formatmallar, bilder o.s.v. som tillsammans utgör innehållet av boken. Dubbelklicka helt enkelt på en fil för att börja redigera den. Observera att om du vill göra något mer sofistikerat än små justeringar, behöver du känna till `HTML-handledningen <http://html.net/tutorials/html/>`_ och `CSS-handledningen <http://html.net/tutorials/css/>`_."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:39
+msgid ""
+"As you make changes to the HTML or CSS in the editor, the changes will be "
+"previewed, live, in the preview panel to the right. When you are happy with "
+"how the changes you have made look, click the :guilabel:`Save` button or use"
+" :guilabel:`File->Save` to save your changes into the e-book."
+msgstr "Allt eftersom du gör ändringar i HTML eller CSS i redigeraren kommer ändringarna att förhandsvisas i realtid i förhandsvisningspanelen till höger. När du är nöjd med hur ändringarna du har gjort ser ut, klicka på knappen :guilabel:`Spara` eller använd :guilabel:`Arkiv->Spara` för att spara dina ändringar i e-boken."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:44
+msgid ""
+"One useful feature is :guilabel:`Checkpoints`. Before you embark on some "
+"ambitious set of edits, you can create a checkpoint. The checkpoint will "
+"preserve the current state of your book, then if in the future you decide "
+"you don't like the changes you have made to you can go back to the state "
+"when you created the checkpoint. To create a checkpoint, use "
+":guilabel:`Edit->Create checkpoint`. Checkpoints will also be automatically "
+"created for you whenever you run any automated tool like global search and "
+"replace. The checkpointing functionality is in addition to the normal "
+"undo/redo mechanism when editing individual files. Checkpoints are needed "
+"for when changes are spread over multiple files in the book."
+msgstr "En användbar funktion är :guilabel:`Kontrollpunkter`. Innan du börjar en ambitiös uppsättning redigeringar kan du skapa en kontrollpunkt. Kontrollpunkten kommer att bevara det aktuella tillståndet för din bok, så om du i framtiden bestämmer du inte gillar de ändringar du har gjort kan gå tillbaka till tillståndet när du skapade kontrollpunkten. För att skapa en kontrollpunkt, använd :guilabel:`Redigera->Skapa kontrollpunkt`. Kontrollpunkter skapas automatiskt för dig när du kör något automatiserat verktyg som global sökning och ersättning. Den kontrollpunktsfunktionaliteten är utöver det normala ångra/göra om-mekanismen vid redigering av enskilda filer. Kontrollpunkter behövs när ändringar är spridda över flera filer i boken."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:55
+msgid ""
+"That is the basic work flow for editing books -- Open a file, make changes, "
+"preview and save. The rest of this manual will discuss the various tools and"
+" features present to allow you to perform specific tasks efficiently."
+msgstr "Det är det grundläggande arbetsflödet för att redigera böcker -- Öppna en fil, gör ändringar, förhandsgranska och spara. Resten av den här manualen kommer att diskutera de olika verktygen och funktionerna som finns för att du ska kunna utföra specifika uppgifter effektivt."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:60
+msgid "The File browser"
+msgstr "Filhanteraren"
+
+#: ../../__w/calibre/calibre/manual/edit.rst-1
+msgid "The File browser showing files in the book"
+msgstr "Filhanteraren som visar filer i boken"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:66
+msgid ""
+"The :guilabel:`File browser` gives you an overview of the various files "
+"inside the book you are editing. The files are arranged by category, with "
+"text (HTML) files at the top, followed by stylesheet (CSS) files, images and"
+" so on. Simply double click on a file to start editing it. Editing is "
+"supported for HTML, CSS and image files. The order of text files is the same"
+" order that they would be displayed in, if you were reading the book. All "
+"other files are arranged alphabetically."
+msgstr ":guilabel:`Filhanteraren` ger dig en översikt över de olika filerna inne i boken som du redigerar. Filerna är ordnade efter kategori, med textfiler (HTML) överst, följt av formatmallsfiler (CSS), bilder och så vidare. Dubbelklicka helt enkelt på en fil för att börja redigera den. Redigering stöds för HTML-, CSS- och bildfiler. Ordningen på textfiler är samma ordning som de skulle visas i om du läser boken. Alla andra filer är ordnade i alfabetisk ordning."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:74
+msgid ""
+"By hovering your mouse over an entry, you can see its size, and also, at the"
+" bottom of the screen, the full path to the file inside the book. Note that "
+"files inside e-books are compressed, so the size of the final book is not "
+"the sum of the individual file sizes."
+msgstr "Genom att dra din mus över en post, kan du se dess storlek, men också, längst ner på skärmen, den fullständiga sökvägen till filen inne i boken. Observera att filer i e-böcker är komprimerade, så storleken på den sista boken är inte summan av de enskilda filstorlekar."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:79
+msgid ""
+"Many files have special meaning, in the book. These will typically have an "
+"icon next to their names, indicating the special meaning. For example, in "
+"the picture to the left, you can see that the files "
+":guilabel:`cover_image.jpg` and :guilabel:`titlepage.xhtml` have the icon of"
+" a cover next to them, this indicates they are the book cover image and "
+"titlepage. Similarly, the :guilabel:`content.opf` file has a metadata icon "
+"next to it, indicating the book metadata is present in it and the "
+":guilabel:`toc.ncx` file has a T icon next to it, indicating it is the Table"
+" of Contents."
+msgstr "Många filer har speciell betydelse, i boken. Dessa har normalt en ikon bredvid deras namn, med angivande av speciell betydelse. Till exempel på bilden till vänster, kan du se att filerna  :guilabel:`cover_image.jpg` och :guilabel:`titlepage.xhtml` som har ikonen av ett omslag bredvid dem, indikerar detta att de är bokomslagsbilden och titelsida. På liknande sätt har :guilabel:`content.opf``-filen en metadata ikon bredvid sig, vilket indikerar att bokens metadata finns i den och :guilabel:`toc.ncx`-filen har en T ikon bredvid sig, vilket indikerar att det är innehållsförteckningen."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:88
+msgid ""
+"You can perform many actions on individual files, by right clicking them."
+msgstr "Du kan utföra många åtgärder på enskilda filer genom att högerklicka på dem."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:91
+msgid "Renaming files"
+msgstr "Byta namn på filer"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:93
+msgid ""
+"You can rename an individual file by right clicking it and selecting "
+":guilabel:`Rename`. Renaming a file automatically updates all links and "
+"references to it throughout the book. So all you have to do is provide the "
+"new name, calibre will take care of the rest."
+msgstr "Du kan byta namn på en enskild fil genom att högerklicka på den och välja :guilabel:`Byt namn`. Namnbytningen av en fil uppdaterar automatiskt alla länkar och referenser till den i hela boken. Så allt du behöver göra är att ge det nya namnet, calibre kommer att ta hand om resten."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:98
+msgid ""
+"You can also bulk rename many files at once. This is useful if you want the "
+"files to have some simple name pattern. For example you might want to rename"
+" all the HTML files to have names Chapter-1.html, Chapter-2.html and so on. "
+"Select the files you want bulk renamed by holding down the :kbd:`Shift` or "
+":kbd:`Ctrl` key and clicking the files. Then right click and select "
+":guilabel:`Bulk rename`. Enter a prefix and what number you would like the "
+"automatic numbering to start at, click OK and you are done. The bulk rename "
+"dialog also lets you rename files by the order they appear in the book "
+"instead of the order you selected them in, useful, for instance to rename "
+"all images by the order they appear."
+msgstr "Du kan också byta namn på många filer samtidigt. Detta är användbart om du vill att filerna ska ha ett enkelt namnmönster. Till exempel kanske du vill byta namn på alla HTML-filer för att ha namn Kapitel-1.html, Kapitel-2.html och så vidare. Välj filerna du vill byta namn på genom att hålla ner :kbd:`Skift`- eller :kbd:`Ctrl`-tangenten och klicka på filerna. Högerklicka sedan och välj :guilabel:`Massändring av namn`. Ange ett prefix och vilket nummer du vill att den automatiska numreringen ska börja på, klicka på OK så är du klar. I dialogrutan flernamnbyte kan du också byta namn på filer efter den ordning de visas i boken istället för den ordning du valde dem i, användbart, till exempel för att byta namn på alla bilder efter den ordning de visas."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:109
+msgid ""
+"Finally, you can bulk change the file extension for all selected files. "
+"Select multiple files, as above, and right click and choose "
+":guilabel:`Change the file extension for the selected files`."
+msgstr "Slutligen, du kan massändra filändelsen för alla markerade filer. Markera flera filer, som ovan, och högerklicka och välj :guilabel:`Ändra filändelsen för den valda files`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:114
+msgid "Merging files"
+msgstr "Slå samman filer"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:116
+msgid ""
+"Sometimes, you may want to merge two HTML files or two CSS files together. "
+"It can sometimes be useful to have everything in a single file. Be wary, "
+"though, putting a lot of content into a single file will cause performance "
+"problems when viewing the book in a typical e-book reader."
+msgstr "Ibland kanske du vill slå samman två HTML-filer eller två CSS-filer tillsammans. Det kan ibland vara bra att ha allt i en enda fil. Var försiktig dock, att sätta en hel del innehåll i en enda fil orsakar prestandaproblem när du tittar på boken i en typisk e-bokläsare."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:121
+msgid ""
+"To merge multiple files together, select them by holding the :kbd:`Ctrl` key"
+" and clicking on them (make sure you only select files of one type, either "
+"all HTML files or all CSS files and so on). Then right click and select "
+"merge. That's all, calibre will merge the files, automatically taking care "
+"of migrating all links and references to the merged files. Note that merging"
+" files can sometimes cause text styling to change, since the individual "
+"files could have used different stylesheets."
+msgstr "För att slå samman flera filer, välj dem genom att hålla ned :kbd:`Ctrl`-tangenten och klicka på dem (se till att du bara välja filer av en typ, antingen alla HTML-filer eller alla CSS-filer och så vidare). Högerklicka sedan och välj slå samman. Det är allt, calibre kommer att slå samman filerna, ta hand om att migrera alla länkar och referenser automatiskt till de sammanslagna filerna. Observera att sammanslagning av filer ibland kan göra att textformateringen ändras, eftersom de enskilda filerna kunde ha använt olika formatmallar."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:129
+msgid ""
+"You can also select text files and then drag and drop the text files onto "
+"another text file to merge the dropped text files into the target text file."
+msgstr "Du kan också välja textfiler och sedan dra och släppa textfilerna till en annan textfil för att slå samman de släppta textfilerna till måltextfilen."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:133
+msgid "Changing text file order"
+msgstr "Ändra textfilordning"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:135
+msgid ""
+"You can re-arrange the order in which text (HTML) files are opened when "
+"reading the book by simply dragging and dropping them in the :guilabel:`File"
+" browser` or clicking on the file to move and then pressing the "
+":kbd:`Ctrl+Shift` modifiers with the :kbd:`Up`, :kbd:`Down`, :kbd:`Home` or "
+":kbd:`End` keys. For the technically inclined, this is called re-ordering "
+"the book spine."
+msgstr "Du kan ändra ordningen i vilka textfiler (HTML) öppnas när du läser boken genom att helt enkelt dra och släppa dem i filhanteraren eller klicka på filen för att flytta och sedan trycka på :kbd:`Ctrl+Shift`-modifierarna med tangenterna :kbd:`Up`, :kbd:`Down`, :kbd:`Home` eller :kbd:`End`. För den tekniskt benägna kallas detta att ordna om bokryggen."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:141
+msgid ""
+"Note that you have to drop the items *between* other items, not on top of "
+"them, this can be a little fiddly until you get used to it. Dropping on top "
+"of another file will cause the files to be merged."
+msgstr "Observera att du måste släppa posterna *mellan* andra poster, inte ovanpå dem, detta kan vara lite krångligt tills du vänjer dig vid det. Om du släpper ovanpå en annan fil kommer filerna att slås samman."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:146
+msgid "Marking the cover"
+msgstr "Markera omslaget"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:148
+msgid ""
+"E-books typically have a cover image. This image is indicated in the "
+":guilabel:`File browser` by the icon of a brown book next to the image name."
+" If you want to designate some other image as the cover, you can do so by "
+"right clicking on the file and choosing :guilabel:`Mark as cover`."
+msgstr "E-böcker har normalt en omslagsbild. Bilden visas i :guilabel:`Filbläddraren` med ikonen av en brun bok bredvid bildnamnet. Om du vill ange en annan bild som omslag, kan du göra det genom att högerklicka på filen och välja :guilabel:`Välj som omslag`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:153
+msgid ""
+"In addition, EPUB files has the concept of a *titlepage*. A title page is a "
+"HTML file that acts as the title page/cover for the book. You can mark an "
+"HTML file as the titlepage when editing EPUBs by right-clicking. Be careful "
+"that the file you mark contains only the cover information. If it contains "
+"other content, such as the first chapter, then that content will be lost if "
+"the user ever converts the EPUB file in calibre to another format. This is "
+"because when converting, calibre assumes that the marked title page contains"
+" only the cover and no other content."
+msgstr "Dessutom har EPUB-filer konceptet av en *titelsida*. En titelsida är en HTML-fil som fungerar som titelsida/omslag för boken. Du kan markera en HTML-fil som titelsida när du redigerar EPUB:er genom att högerklicka. Var noga med att filen du markerar endast innehåller omslagsinformationen. Om den innehåller annat innehåll, till exempel det första kapitlet, kommer det innehållet att gå förlorat om användaren någonsin konverterar EPUB-filen i calibre till ett annat format. Detta beror på att calibre vid konvertering antar att den markerade titelsidan endast innehåller omslaget och inget annat innehåll."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:163
+msgid "Deleting files"
+msgstr "Ta bort filer"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:165
+msgid ""
+"You can delete files by either right clicking on them or by selecting them "
+"and pressing the Delete key. Deleting a file removes all references to the "
+"file from the OPF file, saving you that chore. However, references in other "
+"places are not removed, you can use the Check Book tool to easily find and "
+"remove/replace them."
+msgstr "Du kan ta bort filer genom att antingen högerklicka på dem eller genom att välja dem och trycka på Delete tangenten. Ta bort en fil tar bort alla hänvisningar till filen från OPF-filen, sparar dig detta grovgöra. Men referenser på andra platser tas inte bort, du kan använda \"Kontrollera bok\" verktyg för att enkelt hitta och ta bort/ersätta dem."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:172
+msgid "Exporting files"
+msgstr "Exportera filer"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:174
+msgid ""
+"You can export a file from inside the book to somewhere else on your "
+"computer. This is useful if you want to work on the file in isolation, with "
+"specialised tools. To do this, simply right click on the file and choose "
+":guilabel:`Export`."
+msgstr "Du kan exportera en fil från boken till någon annanstans på din dator. Detta är användbart om du vill arbeta på filen i sig, med specialverktyg. För att göra detta, helt enkelt högerklicka på filen och välj :guilabel:`Exportera`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:179
+msgid ""
+"Once you are done working on the exported file, you can re-import it into "
+"the book, by right clicking on the file again and choosing "
+":guilabel:`Replace with file...` which will allow you to replace the file in"
+" the book with the previously exported file."
+msgstr "När du är klar arbetar på den exporterade filen kan du importera den i boken, genom att högerklicka på filen igen och välja :guilabel:`Ersätt med fil...` vilket gör att du kan ersätta filen i boken med den tidigare exporterad fil."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:184
+msgid ""
+"You can also copy files between multiple editor instances. Select the files "
+"you want to copy in the :guilabel:`File browser`, then right click and "
+"choose, :guilabel:`Copy selected files to another editor instance`. Then, in"
+" the other editor instance, right click in the :guilabel:`File browser` and "
+"choose :guilabel:`Paste file from other editor instance`."
+msgstr "Du kan också kopiera filer mellan flera redigeringsinstanser. Välj de filer du vill kopiera i :guilabel:`filhanteraren`, högerklicka och välj, :guilabel:`Kopiera valda filer till en annan redigeringsinstans`. Sedan, i den andra redigeringsinstansen, högerklicka i :guilabel:`filhanteraren` och välj :guilabel:`Klistra in filen från annan redigeringsinstans`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:191
+msgid "Adding new images/fonts/etc. or creating new blank files"
+msgstr "Lägga till nya bilder/teckensnitt/o.s.v. eller skapa nya tomma filer"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:193
+msgid ""
+"You can add a new image, font, stylesheet, etc. from your computer into the "
+"book by clicking :guilabel:`File->New file`. This lets you either import a "
+"file by clicking the :guilabel:`Import resource file` button or create a new"
+" blank HTML file or stylesheet by simply entering the file name into the box"
+" for the new file."
+msgstr "Du kan lägga till en ny bild, teckensnitt, formatmall o.s.v. från din dator in i boken genom att klicka på :guilabel:`Arkiv->Ny fil`. Det gör att du antingen importera en fil genom att klicka på knappen :guilabel:`Importera resursfil` eller skapa en ny tom HTML-fil eller formatmall genom att helt enkelt skriva in filnamnet i rutan för den nya filen."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:198
+msgid ""
+"You can also import multiple files into the book at once using File->Import "
+"files into book."
+msgstr "Du kan även importera flera filer till boken på en gång genom att använda Arkiv->Importera filer till bok."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:202
+msgid "Replacing files"
+msgstr "Ersätta filer"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:204
+msgid ""
+"You can easily replace existing files in the book, by right clicking on the "
+"file and choosing replace. This will automatically update all links and "
+"references, in case the replacement file has a different name than the file "
+"being replaced."
+msgstr "Du kan enkelt ersätta befintliga filer i boken, genom att högerklicka på filen och välja ersätta. Detta kommer automatiskt att uppdatera alla länkar och referenser, om ersättningsfilen har ett annat namn än filen som ersätts."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:210
+msgid "Linking stylesheets to HTML files efficiently"
+msgstr "Länka formatmallar till HTML-filer effektivt"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:212
+msgid ""
+"As a convenience, you can select multiple HTML files in the File browser, "
+"right click and choose Link stylesheets to have calibre automatically insert"
+" the <link> tags for those stylesheets into all the selected HTML files."
+msgstr "Som en bekvämlighet kan du välja flera HTML-filer i filhanteraren, högerklicka och välj Länka formatmallar för att ha calibre automatiskt infoga <link> taggar för dessa formatmallar i alla markerade HTML-filer."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:222
+msgid "Search & replace"
+msgstr "Söka & ersätta"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:224
+msgid ""
+"Edit book has a very powerful search and replace interface that allows you "
+"to search and replace text in the current file, across all files and even in"
+" a marked region of the current file. You can search using a normal search "
+"or using regular expressions. To learn how to use regular expressions for "
+"advanced searching, see :ref:`regexptutorial`."
+msgstr "Redigera bok har en mycket kraftfull sök- och ersättsgränssnitt som låter dig söka och ersätta text i den aktuella filen, över alla filer och till och med i ett markerat område av den aktuella filen. Du kan söka med hjälp av en normal sökning eller använda reguljära uttryck. För att lära dig att använda reguljära uttryck för avancerad sökning, se :ref:`regexptutorial`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:234
+msgid ""
+"Start the search and replace via the :guilabel:`Search->Find/replace` menu "
+"entry (you must be editing an HTML or CSS file)."
+msgstr "Starta sök och ersätt via menyposten :guilabel:`Sök->Sök/ersätt` (du måste redigera en HTML- eller CSS-fil)."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:237
+msgid ""
+"Type the text you want to find into the Find box and its replacement into "
+"the Replace box. You can the click the appropriate buttons to Find the next "
+"match, replace the current match and replace all matches."
+msgstr "Fyll i texten du vill söka efter i rutan Sök och dess ersättning i rutan Ersätt. Du kan klicka på lämpliga knappar för att hitta nästa träff, ersätt den aktuella träffen och ersätt alla träffar."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:241
+msgid ""
+"Using the drop downs at the bottom of the box, you can have the search "
+"operate over the current file, all text files, all style files or all files."
+" You can also choose the search mode to be a normal (string) search or a "
+"regular expression search."
+msgstr "Använda rullgardinsmenyer i botten av lådan, kan du söka arbeta över den aktuella filen, alla textfiler, alla formatfiler eller alla filer. Du kan också välja sökläget för att vara en normal (sträng) sökning eller ett reguljärt uttryckssökning."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:246
+msgid ""
+"You can count all the matches for a search expression via "
+":guilabel:`Search->Count all`. The count will run over whatever "
+"files/regions you have selected in the dropdown box."
+msgstr "Du kan räkna alla träffar för ett sökuttryck via :guilabel:`Sök->Räkna alla`. Räkningen kommer att köra över vilka filer/regioner som du har valt i rullgardinsmenyn."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:250
+msgid ""
+"You can also go to a specific line in the currently open editor via "
+":guilabel:`Search->Go to line`."
+msgstr "Du kan också gå till en specifik rad i den öppna redigeraren via :guilabel:`Sök->Gå till rad`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:254
+msgid ""
+"Remember, to harness the full power of search and replace, you will need to "
+"use regular expressions. See :ref:`regexptutorial`."
+msgstr "Kom ihåg att du måste använda reguljära uttryck för att utnyttja fulla kraften i sök och ersätt. Se :ref:`regexptutorial`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:258
+msgid "Saved searches"
+msgstr "Sparade sökningar"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:260
+msgid ""
+"You can save frequently used search/replace expressions (including function "
+"mode expressions) and reuse them multiple times.  To save a search simply "
+"right click in the Find box and select :guilabel:`Save current search`."
+msgstr "Du kan spara ofta använda sök-/ersättuttryck (inklusive funktionslägesuttryck) och återanvända dem flera gånger. Om du vill spara en sökning högerklicka helt enkelt i rutan :guilabel:`Spara aktuell sökning`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:264
+msgid ""
+"You can bring up the saved searches via :guilabel:`Search->Saved searches`. "
+"This will present you with a list of search and replace expressions that you"
+" can apply. You can even select multiple entries in the list by holding down"
+" the :kbd:`Ctrl` key while clicking so as to run multiple search and replace"
+" expressions in a single operation."
+msgstr "Du kan ta fram de sparade sökningarna via :guilabel:`Sök->Sparade sökningar`. Det här kommer att visa dig en lista med sök- och ersättuttryck som du kan använda. Du kan till och med välja flera poster i listan genom att hålla ner :kbd:`Ctrl`-tangenten medan du klickar för att köra flera sök- och ersättuttryck i en enda operation."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:271
+msgid "Function mode"
+msgstr "Funktionsläge"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:273
+msgid ""
+"Function mode allows you to write arbitrarily powerful Python functions that"
+" are run on every Find/replace. You can do pretty much any text manipulation"
+" you like in function mode. For more information, see :doc:`function_mode`."
+msgstr "Med funktionsläget kan du skriva godtyckliga och starka Python-funktioner som körs på varje Hitta/ersätt. Du kan göra i stort sett alla texthantering du vill i funktionsläge. För mer information se :doc:`function_mode`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:278
+msgid "Search ignoring HTML tags"
+msgstr "Sök ignorerar HTML-taggar"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:280
+msgid ""
+"There is also a dedicated tool for searching for text, ignoring any HTML "
+"tags in between. For example, if the book has the HTML ``Empahisis on a "
+"<i>word</i>.`` you can search for ``on a word`` and it will be found even "
+"though there is an ``<i>`` tag in the middle. Use this tool via the "
+":guilabel:`Search->Search ignoring HTML markup` menu item."
+msgstr "Det finns också en dedikerat verktyg för att söka efter text och ignorera alla HTML-taggar däremellan. Till exempel om boken har HTML ``Empahisis på ett <i>ord</i>.`` Kan du söka efter ``på ett ord`` och det kommer att hittas även om det finns en ``<i>``-tagg i mitten. Använd detta verktyg via menyalternativet :guilabel:`Sök->Sök och ignorera HTML-markering`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:287
+msgid "Automated tools"
+msgstr "Automatiserade verktyg"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:289
+msgid ""
+"Edit book has various tools to help with common tasks. These are accessed "
+"via the :guilabel:`Tools` menu."
+msgstr "Redigera bok har olika verktyg för att hjälpa till med vanliga uppgifter. Dessa nås via menyn :guilabel:`Verktyg`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:293
+msgid "Editing the Table of Contents"
+msgstr "Redigera innehållsförteckningen"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:295
+msgid ""
+"There is a dedicated tool to ease editing of the Table of Contents. Launch "
+"it with :guilabel:`Tools->Table of Contents->Edit Table of Contents`."
+msgstr "Det finns en dedikerat verktyg för att underlätta redigering av innehållsförteckningen. Starta det med :guilabel:`Verktyg->Innehållsförteckning->Redigera innehållsförteckning`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst-1
+msgid "The Edit Table of Contents tool"
+msgstr "Verktyget Redigera innehållsförteckning"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:302
+msgid ""
+"The Edit Table of Contents tool shows you the current Table of Contents (if "
+"any) on the left. Simply double click on any entry to change its text. You "
+"can also re-arrange entries by drag and drop or by using the buttons to the "
+"right."
+msgstr "Verktyget Redigera innehållsförteckning visar den aktuella innehållsförteckningen (om någon) till vänster. Helt enkelt dubbelklicka på en post för att ändra texten. Du kan också ordna om poster genom att dra och släppa eller genom att använda knapparna till höger."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:306
+msgid ""
+"For books that do not have a pre-existing Table of Contents, the tool gives "
+"you various options to auto-generate a Table of Contents from the text. You "
+"can generate from the headings in the document, from links, from individual "
+"files and so on."
+msgstr "För böcker som inte har en befintlig innehållsförteckning, ger verktyget dig olika alternativ för att automatiskt skapa en innehållsförteckning från texten. Du kan skapa från rubrikerna i dokumentet, från länkar, från enskilda filer och så vidare."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:311
+msgid ""
+"You can edit individual entries by clicking on them and then clicking the "
+":guilabel:`Change the location this entry points to` button. This will open "
+"up a mini-preview of the book, simply move the mouse cursor over the book "
+"view panel, and click where you want the entry to point to. A thick green "
+"line will show you the location. Click OK once you are happy with the "
+"location."
+msgstr "Du kan redigera enskilda poster genom att klicka på dem och sedan klicka på knappen :guilabel:`Ändra platsen denna startpunkt hänvisar till`. Detta öppnar en miniförhandsvisning av boken, flytta helt enkelt muspekaren över bokvypanelen och klicka där du vill att posten ska hänvisa till. En tjock grön linje visar dig platsen. Klicka på OK när du är nöjd med platsen."
+
+#: ../../__w/calibre/calibre/manual/edit.rst-1
+msgid ""
+"The Edit Table of Contents tool, how to change the location an entry points "
+"to"
+msgstr "Verktyget Redigera innehållsförteckning, hur du ändrar platsen som en post hänvisar till"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:322
+msgid "Checking the book"
+msgstr "Kontrollera boken"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:324
+msgid ""
+"The :guilabel:`Check book` tool searches your book for problems that could "
+"prevent it working as intended on actual reader devices. Activate it via "
+":guilabel:`Tools->Check book`."
+msgstr "Verktyget :guilabel:`Kontrollera bok` söker igenom din bok efter problem som kan förhindra det fungerar som avsett på faktiska läsaranordningar. Aktivera det via :guilabel:`Verktyg->Kontrollera bok`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst-1
+msgid "The Check book tool"
+msgstr "Verktyget Kontrollera bok"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:332
+msgid ""
+"Any problems found are reported in a nice, easy to use list. Clicking any "
+"entry in the list shows you some help about that error as well as giving you"
+" the option to auto-fix that error, if the error can be fixed automatically."
+" You can also double click the error to open the location of the error in an"
+" editor, so you can fix it yourself."
+msgstr "Eventuella problem som finns redovisas i en trevlig, lätt att använda listan. Genom att klicka på en post i listan visas lite hjälp om felet samt ger dig möjlighet att automatiskt åtgärda detta fel, om felet kan åtgärdas automatiskt. Du kan också dubbelklicka på felet för att öppna platsen för fel i en redigerare, så du kan åtgärda det själv."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:339
+msgid "Some of the checks performed are:"
+msgstr "Några av de kontroller som utförts är:"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:341
+msgid ""
+"Malformed HTML markup. Any HTML markup that does not parse as well-formed "
+"XML is reported. Correcting it will ensure that your markup works as "
+"intended in all contexts. calibre can also auto-fix these errors, but auto-"
+"fixing can sometimes have unexpected effects, so use with care. As always, a"
+" checkpoint is created before auto-fixing so you can easily revert all "
+"changes. Auto-fixing works by parsing the markup using the HTML5 algorithm, "
+"which is highly fault tolerant and then converting to well formed XML."
+msgstr "Felaktig HTML-markering. Alla HTML-markeringar som inte analyseras som välformade XML rapporteras. Att korrigera det kommer att säkerställa att din markering fungerar som avsett i alla sammanhang. calibre kan också rätta dessa fel automatiskt, men automatisk rättning kan ibland ha oväntade effekter, så använd försiktigt. Som alltid skapas en kontrollpunkt före automatisk rättning så att du enkelt kan återställa alla ändringar. Automatisk rättning fungerar genom att analysera markeringen med HTML5-algoritmen, som är mycket feltolerant och sedan konverteras till välformade XML."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:350
+msgid ""
+"Malformed or unknown CSS styles. Any CSS that is not valid or that has "
+"properties not defined in the CSS 2.1 standard (plus a few from CSS 3) are "
+"reported. CSS is checked in all stylesheets, inline style attributes and "
+"<style> tags in HTML files."
+msgstr "Felaktiga eller okända CSS-format. Alla CSS som inte är giltig eller som har egenskaper som inte är definierade i standarden CSS 2.1 (plus några från CSS 3) rapporteras. CSS kontrolleras i alla formatmallar, indragsformatattribut på raden och <style> taggar i HTML-filer."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:355
+msgid ""
+"Broken links. Links that point to files inside the book that are missing are"
+" reported."
+msgstr "Trasiga länkar. Länkar som hänvisar till filer inuti boken som saknas är rapporterade."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:358
+msgid ""
+"Unreferenced files. Files in the book that are not referenced by any other "
+"file or are not in the spine are reported."
+msgstr "Orefererade filer. Filer i boken som inte refereras av någon annan fil eller som inte finns i bokryggraden rapporteras."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:361
+msgid ""
+"Various common problems in OPF files such as duplicate spine or manifest "
+"items, broken idrefs or meta cover tags, missing required sections and so "
+"on."
+msgstr "Olika vanliga problem i OPF-filer såsom dubbletter av bokryggar eller manifestposter, trasiga idrefs eller metaomslagstaggar, saknade nödvändiga avsnitt och så vidare."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:365
+msgid ""
+"Various compatibility checks for known problems that can cause the book to "
+"malfunction on reader devices."
+msgstr "Olika kompatibilitetskontroller för kända problem som kan göra att boken inte fungerar på läsenheter."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:369
+msgid "Adding a cover"
+msgstr "Lägga till ett omslag"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:371
+msgid ""
+"You can easily add a cover to the book via :guilabel:`Tools->Add cover`. "
+"This allows you to either choose an existing image in the book as the cover "
+"or import a new image into the book and make it the cover. When editing EPUB"
+" files, the HTML wrapper for the cover is automatically generated. If an "
+"existing cover in the book is found, it is replaced. The tool also "
+"automatically takes care of correctly marking the cover files as covers in "
+"the OPF."
+msgstr "Du kan enkelt lägga till ett omslag till boken via :guilabel:`Verktyg->Lägg till omslag`. Detta gör att du antingen kan välja en befintlig bild i boken som omslag eller importera en ny bild in i boken och göra den till omslag. När du redigerar EPUB-filer är HTML-höljet för omslaget automatiskt skapat. Om ett befintligt omslag i boken hittas, ersätts det. Verktyget tar också automatiskt hand om korrekt markering av omslagsfilerna som omslag i OPF."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:380
+msgid "Embedding referenced fonts"
+msgstr "Bädda in refererade teckensnitt"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:382
+msgid ""
+"Accessed via :guilabel:`Tools->Embed reference fonts`, this tool finds all "
+"fonts referenced in the book and if they are not already embedded, searches "
+"your computer for them and embeds them into the book, if found. Please make "
+"sure that you have the necessary copyrights for embedding commercially "
+"licensed fonts, before doing this."
+msgstr "Nås via :guilabel:`Verktyg->Bädda in refererade teckensnitt`, det här verktyget hittar alla teckensnitt som det refereras till i boken och om de inte redan är inbäddade, söker din dator efter dem och bäddar in dem i boken, om de hittas. Se till att du har nödvändiga upphovsrättar för att bädda in kommersiellt licensierade teckensnitt innan du gör detta."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:389
+msgid "Subsetting embedded fonts"
+msgstr "Underuppsätta inbäddade teckensnitt"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:391
+msgid ""
+"Accessed via :guilabel:`Tools->Subset embedded fonts`, this tool reduces all"
+" the fonts in the book to only contain glyphs for the text actually present "
+"in the book. This commonly reduces the size of the font files by ~ 50%. "
+"However, be aware that once the fonts are subset, if you add new text whose "
+"characters are not previously present in the subset font, the font will not "
+"work for the new text. So do this only as the last step in your workflow."
+msgstr "Nås via :guilabel:`Verktyg->Använd delmängd av inbäddade teckensnitt`, reducerar detta verktyg alla teckensnitt i boken att bara innehålla tecken för texten som faktiskt finns i boken. Detta minskar ofta storleken på teckensnittsfiler med ~ 50%. Dock var medveten om att när teckensnitten är en delmängd, om du lägger till ny text vars tecken är inte tidigare förekommer i den undergrupp teckensnitt, kommer teckensnittet inte att fungera för den nya texten. Så gör det bara som detta som sista steget i ditt arbetsflöde."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:399
+msgid "Smartening punctuation"
+msgstr "Förbättra skiljeteckenhantering"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:401
+msgid ""
+"Convert plain text dashes, ellipsis, quotes, multiple hyphens, etc. into "
+"their typographically correct equivalents. Note that the algorithm can "
+"sometimes generate incorrect results, especially when single quotes at the "
+"start of contractions are involved. Accessed via :guilabel:`Tools->Smarten "
+"punctuation`."
+msgstr "Konvertera bindestreck, ellipser, citattecken, flera bindestreck o.s.v. till deras typografiskt korrekta motsvarigheter. Observera att algoritmen ibland kan skapa felaktiga resultat, särskilt när enkla citattecken i början av sammandragningar är inblandade. Nås via :guilabel:`Verktyg->Förbättra skiljeteckenhantering`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:408
+msgid "Transforming CSS properties"
+msgstr "Omvandla CSS-egenskaper"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:410
+msgid ""
+"Create rules to transform the styling of the book. For example, create a "
+"rule to convert all red text to green or to double the font size of all text"
+" in the book or make text of a certain font family italic, etc."
+msgstr "Skapa regler för att omvandla den grafiska utformningen av boken. Till exempel skapa en regel för att konvertera alla röd text till grön eller att fördubbla teckensnittsstorleken för all text i boken eller göra texten av en viss teckensnittsfamilj kursiv o.s.v."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:414
+msgid ""
+"Creating the rules is simple, the rules follow a natural language format, "
+"that looks like:"
+msgstr "Att skapa regler är enkelt, reglerna följer en naturlig språkformat, som ser ut så här:"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:417
+msgid "If the property *color* is *red* *change* it to *green*"
+msgstr "Om egenskapen *färg* är *röd* *ändra* den till *grön*"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:418
+msgid "If the property *font-size* is *any value* *multiply* the value by *2*"
+msgstr "Om egenskapen *teckensnittsstorlek* är *godtyckligt värde* *multiplicera* värdet med *2*"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:420
+msgid "Accessed via :guilabel:`Tools->Transform styles`."
+msgstr "Tillgängligt via :guilabel:`Verktyg->Omvandla format`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:423
+msgid "Removing unused CSS rules"
+msgstr "Ta bort oanvända CSS-regler"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:425
+msgid ""
+"Remove all unused CSS rules from stylesheets and <style> tags. Some books "
+"created from production templates can have a large number of extra CSS rules"
+" that don't match any actual content. These extra rules can slow down "
+"readers that need to process them all. Accessed via :guilabel:`Tools->Remove"
+" unused CSS`."
+msgstr "Ta bort alla oanvända CSS-regler från formatmallar och <style> taggar. Några böcker som skapas från produktionsmallar kan ha ett stort antal extra CSS-regler som inte matchar något materiellt innehåll. Dessa extra regler kan bromsa läsenheter som behöver bearbeta dem alla. Nås via :guilabel:`Verktyg->Ta bort oanvända CSS`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:432
+msgid "Fixing HTML"
+msgstr "Justera HTML"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:434
+msgid ""
+"This tool simply converts HTML that cannot be parsed as XML into well-formed"
+" XML. It is very common in e-books to have non-well-formed XML, so this tool"
+" simply automates the process of fixing such HTML. The tool works by parsing"
+" the HTML using the HTML5 algorithm (the algorithm used in all modern "
+"browsers) and then converting the result into XML. Be aware that auto-fixing"
+" can sometimes have counter-intuitive results. If you prefer, you can use "
+"the Check Book tool discussed above to find and manually correct problems in"
+" the HTML. Accessed via :guilabel:`Tools->Fix HTML`."
+msgstr "Detta verktyg konverterar HTML som inte kan analyseras som XML till välformad XML. Det är mycket vanligt i böcker för att ha icke-välformad XML, så detta verktyg automatiserar helt enkelt processen med att fastställa en sådan HTML. Verktyget fungerar genom att analysera HTML med hjälp av HTML5-algoritmen (den algoritm som används i alla moderna webbläsare) och sedan konvertera resultatet till XML. Var medveten om att auto-rättning ibland kan ha kontraintuitivt resultat. Om du vill kan du använda verktyget Kontrollera bok som diskuteras ovan för att hitta och manuellt korrigera problem i HTML. Nås via :guilabel:`Verktyg->Reparera HTML`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:444
+msgid "Beautifying files"
+msgstr "Försköna filer"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:446
+msgid ""
+"This tool is used to auto-format all HTML and CSS files so that they \"look "
+"pretty\". The code is auto-indented so that it lines up nicely, blank lines "
+"are inserted where appropriate and so on. Note that beautifying also auto-"
+"fixes broken HTML/CSS. Therefore, if you don't want any auto-fixing to be "
+"performed, first use the Check Book tool to correct all problems and only "
+"then run beautify.  Accessed via :guilabel:`Tools->Beautify all files`."
+msgstr "Det här verktyget används för att automatiskt formatera alla HTML- och CSS-filer så att de \"ser fina ut\". Koden är automatiskt indragen så raderna ser fina ut, tomma rader infogas vid behov och så vidare. Observera att försköna också automatiskt reparerar trasiga HTML/CSS. Om du inte vill att någon automatisk korrigering ska utföras, använd först Verktyget Kontrollera bok för att rätta till alla problem och kör sedan försköna. Åtkomst via :guilabel:`Verktyg->Försköna alla filer`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:454
+msgid ""
+"In HTML any text can have significant whitespace, via the CSS white-space "
+"directive. Therefore, beautification could potentially change the rendering "
+"of the HTML. To avoid this as far as possible, the beautify algorithm only "
+"beautifies block level tags that contain other block level tags. So, for "
+"example, text inside a <p> tag will not have its whitespace changed. But a "
+"<body> tag that contains only other <p> and <div> tags will be beautified.  "
+"This can sometimes mean that a particular file will not be affected by "
+"beautify as it has no suitable block level tags. In such cases you can try "
+"different beautification tools, that are less careful, for example: `HTML "
+"Tidy <https://infohound.net/tidy/>`_."
+msgstr "I HTML kan valfri text med betydande mängd whitespace, via CSS-white-space-direktivet. Därför kan försköning potentiellt ändra återgivningen av HTML. För att undvika detta så långt det är möjligt förskönar försköningsalgoritmen bara blocknivåtaggar som innehåller andra blocknivåtaggar. Så till exempel kommer texten i en <p>-tagg inte att ha dess whitespace ändrade. Men en <body>-tagg som bara innehåller andra <p>- och <div>-taggar kommer att förskönas. Detta kan ibland innebära att en viss fil inte kommer att påverkas av försköningen eftersom den inte har några lämpliga blocknivåtaggar. I sådana fall kan du testa olika försköningsverktyg som är mindre försiktiga, till exempel: `HTML Tidy <https://infohound.net/tidy/>`_."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:467
+msgid "Inserting an inline Table of Contents"
+msgstr "Infoga en indragsinnehållsförteckning"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:469
+msgid ""
+"Normally in e-books, the Table of Contents is separate from the main text "
+"and is typically accessed via a special Table of Contents button/menu in the"
+" e-book reading device. You can also have calibre automatically generate an "
+"*inline* Table of Contents that becomes part of the text of the book. It is "
+"generated based on the currently defined Table of Contents."
+msgstr "Normalt i e-böcker, är innehållsförteckningen åtskild från huvudtexten och nås vanligtvis via en speciell innehållsförteckningsknapp/meny i e-bokens läsenhet. Du kan också få calibre att automatiskt skapa en *indrags*innehållsförteckning som blir en del av bokens text. Den skapas baserat på den för närvarande definierade innehållsförteckningen."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:475
+msgid ""
+"If you use this tool multiple times, each invocation will cause the "
+"previously created inline Table of Contents to be replaced. The tool can be "
+"accessed via :guilabel:`Tools->Table of Contents->Insert inline Table of "
+"Contents`."
+msgstr "Om du använder det här verktyget flera gånger kommer varje anrop orsaka den tidigare skapade indragsinnehållsförteckningen att ersättas. Verktyget kan nås via :guilabel:`Verktyg->Innehållsförteckning->Infoga en indragsinnehållsförteckning`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:480
+msgid "Setting Semantics"
+msgstr "Ställa in semantik"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:482
+msgid ""
+"This tool is used to set *semantics* in EPUB files. Semantics are simply, "
+"links in the OPF file that identify certain locations in the book as having "
+"special meaning. You can use them to identify the foreword, dedication, "
+"cover, table of contents, etc. Simply choose the type of semantic "
+"information you want to specify and then select the location in the book the"
+" link should point to. This tool can be accessed via :guilabel:`Tools->Set "
+"semantics`."
+msgstr "Detta verktyg används för att ställa in *semantik* i EPUB-filer. Semantik är helt enkelt länkar i OPF-filen som identifierar vissa platser i boken som har speciell betydelse. Du kan använda dem för att identifiera förordet, engagemanget, omslaget, innehållsförteckningen o.s.v. Välj helt enkelt vilken typ av semantisk information som du vill ange och välj sedan platsen i boken som länken ska hänvisa till på. Detta verktyg kan nås via :guilabel:`Verktyg->Ställ in semantik`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:490
+msgid "Filtering style information"
+msgstr "Filtrera formatinformation"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:492
+msgid ""
+"This tool can be used to easily remove specified CSS style properties from "
+"the entire book. You can tell it what properties you want removed, for "
+"example, ``color, background-color, line-height`` and it will remove them "
+"from everywhere they occur --- stylesheets, ``<style>`` tags and inline "
+"``style`` attributes. After removing the style information, a summary of all"
+" the changes made is displayed so you can see exactly what was changed. The "
+"tool can be accessed via :guilabel:`Tools->Filter style information`."
+msgstr "Detta verktyg kan användas för att enkelt ta bort specificerade CSS-formatmallar från hela boken. Du kan tala om vilka egenskaper du vill ha bort, till exempel ``color, background-color, line-height`` och det kommer att ta bort dem överallt de inträffar --- formatmallar, ``<style>`` taggar och indragsformatattribut. Efter borttag av formatformationen, en sammanfattning av alla de ändringar som gjorts visas så att du kan se exakt vad som ändrats. Verktyget kan nås via :guilabel:`Verktyg->Filtrera formatinformation`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:502
+msgid "Upgrading the book's internals"
+msgstr "Uppgraderar bokens inre delar"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:504
+msgid ""
+"This tool can be used to upgrade the book's internals, if possible. For "
+"instance it will upgrade EPUB 2 books to EPUB 3 books. The tool can be "
+"accessed via :guilabel:`Upgrade book internals`."
+msgstr "Detta verktyg kan användas för att uppgradera bokens inre delar, om möjligt. Till exempel kommer det att uppgradera EPUB 2 böcker till EPUB 3 böcker. Verktyget kan nås via :guilabel:`Uppgradera bokens inre delar`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:511
+msgid "Checkpoints"
+msgstr "Kontrollpunkter"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:513
+msgid ""
+":guilabel:`Checkpoints` are a way to mark the current state of the book as "
+"\"special\". You can then go on to do whatever changes you want to the book "
+"and if you don't like the results, return to the checkpointed state. "
+"Checkpoints are automatically created every time you run any of the "
+"automated tools described in the previous section."
+msgstr ":guilabel:`Kontrollpunkter` är ett sätt att markera det aktuella tillståndet i boken som \"speciellt\". Du kan sedan gå vidare till att göra de ändringar du vill på boken och om du inte gillar resultatet, återgå till kontrollpunktstillståndet. Kontrollpunkter skapas automatiskt varje gång du kör någon av de automatiserade verktyg som beskrivs i föregående avsnitt."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:519
+msgid ""
+"You can create a checkpoint via :guilabel:`Edit->Create checkpoint`. And go "
+"back to a previous checkpoint with :guilabel:`Edit->Revert to ...`"
+msgstr "Du kan skapa en kontrollpunkt via :guilabel:`Redigera->Skapa kontrollpunkt`. Och gå tillbaka till en tidigare kontrollpunkt med :guilabel:`Redigera->Återställ till ...`"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:522
+msgid ""
+"The check pointing functionality is in addition to the normal Undo/redo "
+"mechanism when editing individual files. Checkpoints are needed for when "
+"changes are spread over multiple files in the book or when you wish to be "
+"able to revert a large group of related changes as a whole."
+msgstr "Kontrollpunktsfunktionen är utöver den normala ångra/gör om-mekanismen vid redigering av enskilda filer. Kontrollpunkter behövs när ändringar är spridda över flera filer i boken eller när du vill kunna återställa en stor grupp relaterade ändringar som helhet."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:527
+msgid ""
+"You can see a list of available checkpoints via "
+":guilabel:`View->Checkpoints`. You can compare the current state of the book"
+" to a specified checkpoint using the :ref:`diff` tool -- by selecting the "
+"checkpoint of interest and clicking the :guilabel:`Compare` button. The "
+":guilabel:`Revert to` button restores the book to the selected checkpoint, "
+"undoing all changes since that checkpoint was created."
+msgstr "Du kan se en lista med tillgängliga kontrollpunkter via :guilabel:`Visa->Kontrollpunkter`. Du kan jämföra det aktuella tillståndet i boken till en angiven kontrollpunkt med verktyget :ref:`diff` -- genom att välja kontrollpunkt av intresse och klicka på knappen :guilabel:`Jämför`. Knappen :guilabel:`Återgå till` återställer boken till den valda kontrollpunkten, ångra alla ändringar efter den kontrollpunkten skapades."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:535
+msgid "The Live preview panel"
+msgstr "Panelen för realtidsförhandsvisning"
+
+#: ../../__w/calibre/calibre/manual/edit.rst-1
+msgid "The Live preview panel showing a rendering of the current file"
+msgstr "Realtidsförhandsvisningspanelen visar en återgivning av den aktuella filen"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:541
+msgid ""
+"The :guilabel:`File preview` gives you an overview of the various files "
+"inside The live preview panel shows you the changes you are making live "
+"(with a second or two of delay). As you edit HTML or CSS files, the preview "
+"panel is updated automatically to reflect your changes. As you move the "
+"cursor around in the editor, the preview panel will track its location, "
+"showing you the corresponding location in the book. Clicking in the preview "
+"panel, will cause the cursor in the editor to be positioned over the element"
+" you clicked. If you click a link pointing to another file in the book, that"
+" file will be opened in the edit and the preview panel, automatically."
+msgstr ":guilabel:`Förhandsvisa fil` ger dig en direkt överblick över de olika filerna inuti realtidsförhandsvisningspanelen som visar dig ändringarna du gör i realtid (med försening av en eller två sekunder). När du redigerar HTML- eller CSS-filer uppdateras förhandsvisningspanelen automatiskt för att återspegla dina ändringar. När du flyttar runt markören i redigeraren kommer förhandsvisningspanelen spåra dess plats och visar motsvarande plats i boken. Genom att klicka i förhandsvisningspanelen gör att markören i redigeraren placeras över element du klickade på. Om du klickar på en länk som hänvisar till en annan fil i boken öppnas den filen automatiskt i redigerings- och förhandsvisningspanelen."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:551
+msgid ""
+"You can turn off the automatic syncing of position and live preview of "
+"changes -- by buttons under the preview panel. The live update of the "
+"preview panel only happens when you are not actively typing in the editor, "
+"so as not to be distracting or slow you down, waiting for the preview to "
+"render."
+msgstr "Du kan stänga av den automatiska synkroniseringen av position och realtidsförhandsvisning av ändringar -- med knapparna under förhandsvisningspanelen. Realtidsuppdateringen av förhandsvisningspanelen sker bara när du inte aktivt skriver i redigeraren, för att inte distrahera eller sakta ner dig i väntan på att förhandsvisningen ska återges."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:556
+msgid ""
+"The preview panel shows you how the text will look when viewed. However, the"
+" preview panel is not a substitute for actually testing your book an actual "
+"reader device. It is both more, and less capable than an actual reader. It "
+"will tolerate errors and sloppy markup much better than most reader devices."
+" It will also not show you page margins, page breaks and embedded fonts that"
+" use font name aliasing. Use the preview panel while you are working on the "
+"book, but once you are done, review it in an actual reader device or "
+"software emulator."
+msgstr "Förhandsvisningspanelen visar hur texten kommer att se ut när de visas. Dock är förhandsvisningspanelen inte en ersättning för att faktiskt testa din bok på en verklig läsenhet. Det är både mer och mindre kapabelt än en verklig läsenhet. Det tolererar fel och slarvig markering mycket bättre än de flesta läsenheter. Det visar inte heller sidmarginaler, sidbrytningar och inbäddade teckensnitt som använder alias för teckensnittsnamn. Använd förhandsvisningspanelen medan du arbetar med boken, men när du är klar, granska den i en verklig läsenhet eller programvaruemulator."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:565
+msgid ""
+"The preview panel does not support embedded fonts if the name of the font "
+"inside the font file does not match the name in the CSS @font-face rule. You"
+" can use the Check Book tool to quickly find and fix any such problem fonts."
+msgstr "Förhandsvisningspanelen stöder inte inbäddade teckensnitt om namnet på teckensnittet inne i teckensnittsfilen inte matchar namnet i \"CSS @font-face\"-regeln. Du kan använda verktyget Kontrollera bok för att snabbt hitta och åtgärda eventuella problemteckensnitt."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:571
+msgid "Splitting HTML files"
+msgstr "Dela upp HTML-filer"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:573
+msgid "spmb"
+msgstr "spmb"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:575
+msgid ""
+"One, perhaps non-obvious, use of the preview panel is to split long HTML "
+"files. While viewing the file you want to split, click the :guilabel:`Split "
+"mode` button under the preview panel |spmb|. Then simply move your mouse to "
+"the place where you want to split the file and click. A thick green line "
+"will show you exactly where the split will happen as you move your mouse. "
+"Once you have found the location you want, simply click and the split will "
+"be performed."
+msgstr "Ett, kanske icke självklar, användning av förhandsvisningspanelen är att dela upp långa HTML-filer. Medan du tittar på filen som du vill dela klickar du på knappen :guilabel:`Delat läge` under förhandsvisningspanelen |spmb|. Flytta sedan helt enkelt din mus till den plats där du vill dela filen och klicka. En tjock grön linje kommer att visa dig exakt var delningen kommer att ske när du flyttar din mus. När du har hittat den plats du önskar klickar du helt enkelt och delning kommer att utföras."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:582
+msgid ""
+"Splitting the file will automatically update all links and references that "
+"pointed into the bottom half of the file and will open the newly split file "
+"in an editor."
+msgstr "Om du delar upp filen uppdateras automatiskt alla länkar och referenser som hänvisade in i den nedre halvan av filen och öppnar den nyligen delade filen i en redigerare."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:586
+msgid ""
+"You can also split a single HTML file at multiple locations automatically, "
+"by right clicking inside the file in the editor and choosing "
+":guilabel:`Split at multiple locations`. This will allow you to easily split"
+" a large file at all heading tags or all tags having a certain class and so "
+"on."
+msgstr "Du kan också dela upp en enda HTML-fil på flera platser automatiskt, genom att högerklicka inne i filen i redigeraren och välja  :guilabel:`Dela upp på flera ställen`. Detta gör att du enkelt delar upp en stor fil på alla rubriktaggar eller alla taggar som har en viss klass och så vidare."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:596
+msgid "The Live CSS panel"
+msgstr "CSS-realtidspanelen"
+
+#: ../../__w/calibre/calibre/manual/edit.rst-1
+msgid "The Live CSS panel showing the styles for the current element"
+msgstr "CSS-realtidspanelen som visar formaten för det aktuella elementet"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:603
+msgid ""
+"The :guilabel:`Live CSS` panel shows you all the style rules that apply to "
+"the tag you are currently editing. The name of tag, along with its line "
+"number in the editor are displayed, followed by a list of matching style "
+"rules."
+msgstr ":guilabel:`CSS-realtids`-panelen visar alla formatregler som gäller för taggen du för närvarande redigerar. Namnet på taggen, tillsammans med dess radnummer i redigeraren visas, följt av en lista med matchande formatregler."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:607
+msgid ""
+"It is a great way to quickly see which style rules apply to any tag. The "
+"view also has clickable links (in blue), which take you directly to the "
+"location where the style was defined, in case you wish to make any changes "
+"to the style rules. Style rules that apply directly to the tag, as well as "
+"rules that are inherited from parent tags are shown."
+msgstr "Det är ett bra sätt att snabbt se vilka formatregler som gäller för en tagg. Vyn har också klickbara länkar (i blått), som tar dig direkt till platsen där formatet definierades, om du vill göra några ändringar i formatregler. Formatregler som gäller direkt för taggen, samt regler som ärvs från överordnade taggar visas."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:613
+msgid ""
+"The panel also shows you what the finally calculated styles for the tag are."
+" Properties in the list that are superseded by higher priority rules are "
+"shown with a line through them."
+msgstr "Panelen visar även hur de slutligen beräknade format för taggen är. Egenskaper i listan som ersätts av högre prioriteringsregler visas med en linje genom dem."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:617
+msgid "You can enable the Live CSS panel via :guilabel:`View->Live CSS`."
+msgstr "Du kan aktivera CSS-realtidspanelen via :guilabel:`Visa->Direkt CSS`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:624
+msgid "Miscellaneous tools"
+msgstr "Diverse verktyg"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:626
+msgid "There are a few more tools that can be useful while you edit the book."
+msgstr "Det finns några fler verktyg som kan vara användbara när du redigerar boken."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:629
+msgid "The Table of Contents view"
+msgstr "Innehållsförteckningsvyn"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:631
+msgid ""
+"The Table of Contents view shows you the current table of contents in the "
+"book. Double clicking on any entry opens the place that entry points to in "
+"an editor. You can right click to edit the Table of Contents, refresh the "
+"view or expand/collapse all items. Access this view via "
+":guilabel:`View->Table of Contents`."
+msgstr "Innehållsförteckningsvyn visar aktuell innehållsförteckning i boken. Genom att dubbelklicka på en post öppnas den plats som posten hänvisar till i en redigerare. Du kan högerklicka för att redigera innehållsförteckningen, uppdatera vyn eller fäll ut/fäll in alla poster. Åtkomst till denna vy via :guilabel:`Visa->Innehållsförteckning`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:638
+msgid "Checking the spelling of words in the book"
+msgstr "Kontrollera stavning av ord i boken"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:640
+msgid "You can run a spelling checker via :guilabel:`Tools->Check spelling`."
+msgstr "Du kan köra en stavningskontroll via :guilabel:`Verktyg->Kontrollera stavning`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst-1
+msgid "The Check spelling tool"
+msgstr "Verktyget Kontrollera stavning"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:647
+msgid ""
+"Words are shown with the number of times they occur in the book and the "
+"language the word belongs to. Language information is taken from the books "
+"metadata and from ``lang`` attributes in the HTML files. This allows the "
+"spell checker to work well even with books that contain text in multiple "
+"languages. For example, in the following HTML extract, the word color will "
+"be checked using American English and the word colour using British "
+"English::"
+msgstr "Ord visas med antalet gånger de förekommer i boken och språket ordet tillhör. Språkinformation tas från böckernas metadata och från ``lang``-attributen i HTML-filerna. Detta gör att stavningskontrollen fungerar bra även med böcker som innehåller text på flera språk. Till exempel i följande HTML-utdrag kommer ordfärgen att kontrolleras med hjälp av amerikansk engelska och ordfärgen med brittisk engelska::"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:657
+msgid ""
+"You can double click a word to highlight the next occurrence of that word in"
+" the editor. This is useful if you wish to manually edit the word, or see "
+"what context it is in."
+msgstr "Du kan dubbelklicka på ett ord för att markera nästa förekomst av det ordet i redigeraren. Detta är användbart om du vill manuellt redigera ordet eller se vilket sammanhang det är i."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:661
+msgid ""
+"To change a word, simply double click one of the suggested alternative "
+"spellings on the right, or type in your own corrected spelling and click the"
+" :guilabel:`Change selected word to` button. This will replace all "
+"occurrences of the word in the book. You can also right click on a word in "
+"the main word list to change the word conveniently from the right click "
+"menu."
+msgstr "För att ändra ett ord, helt enkelt dubbelklicka en av de föreslagna alternativa stavningar på höger eller skriv in ditt eget korrigerade stavning och klicka på knappen :guilabel:`Ändra valda ord till`. Detta kommer att ersätta alla förekomster av ordet i boken. Du kan också högerklicka på ett ord i huvud ordlistan ändra ordet lämpligen från högerklicksmenyn."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:667
+msgid ""
+"You can have the spelling checker ignore a word for the current session by "
+"clicking the :guilabel:`Ignore` button. You can also add a word to the user "
+"dictionary by clicking the :guilabel:`Add to dictionary` button. The "
+"spelling checker supports multiple user dictionaries, so you can select the "
+"dictionary you want the word added to."
+msgstr "Du kan låta stavningskontrollen ignorerar ett ord för den aktuella sessionen genom att klicka på knappen :guilabel:`Ignorera`. Du kan även lägga till ett ord i ordboken genom att klicka på :guilabel:`Lägg till i ordbok`. Stavningskontrollen har stöd för flera ordböcker, så att du kan välja den ordbok du vill att ordet läggs till."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:673
+msgid ""
+"You can also have the spelling checker display all the words in your book, "
+"not just the incorrectly spelled ones. This is useful to see what words are "
+"most common in your book and to run a simple search and replace on "
+"individual words."
+msgstr "Du kan också låta stavningskontrollen visa alla ord i din bok, inte bara de felaktigt stavade. Detta är användbart för att se vilka ord som är vanligast i din bok och för att göra en enkel sökning och ersätta enskilda ord."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:678
+msgid ""
+"If you make any changes to the book by editing files while the spell check "
+"tool is open, you should click the :guilabel:`Refresh` button in the Spell "
+"check tool. If you do not do this and continue to use the Spell check tool, "
+"you could lose the changes you have made in the editor."
+msgstr "Om du gör några ändringar i boken genom att redigera filer medan verktyget stavningskontroll är öppet, ska du klicka på knappen :guilabel:`Uppdatera` i verktyget Stavningskontroll. Om du inte gör detta och fortsätter att använda verktyget Stavningskontroll, kan du förlora de ändringar du har gjort i redigeraren."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:684
+msgid ""
+"To exclude an individual file from being spell checked when running the "
+"spell check tool, you can use the :guilabel:`Exclude files` button or add "
+"the following comment just under the opening tag in the file::"
+msgstr "För att exkludera en enskild fil från att stavningskontrolleras när du kör stavningskontrollverktyget, kan du använda knappen :guilabel:`Exkludera filer` eller lägga till följande kommentar precis under öppningstaggen i filen::"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:692
+msgid "Adding new dictionaries"
+msgstr "Lägga till nya ordböcker"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:694
+msgid ""
+"The spelling checker comes with builtin dictionaries for the English and "
+"Spanish languages. You can install your own dictionaries via "
+":guilabel:`Preferences->Editor->Manage spelling dictionaries`. The spell "
+"checker can use dictionaries from the LibreOffice program (in the .oxt "
+"format). You can download these dictionaries from `The LibreOffice "
+"Extensions repository <https://extensions.libreoffice.org/?Tags%5B%5D=50>`_."
+msgstr "Stavningskontrollen har inbyggda ordböcker för engelska och spanska. Du kan installera dina egna ordböcker via :guilabel:`Redigera->Inställningar->Redigerarinställningar->Hantera stavningsordböcker`. Stavningskontrollen kan använda ordböcker från LibreOffice-programmet (i .oxt-format). Du kan hämta dessa ordböcker från `LibreOffice-tilläggsförrådet <https://extensions.libreoffice.org/?Tags%5B%5D=50>`_."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:703
+msgid "Inserting special characters"
+msgstr "Infoga specialtecken"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:705
+msgid ""
+"You can insert characters that are difficult to type by using the "
+":guilabel:`Edit->Insert special character` tool. This shows you all Unicode "
+"characters, simply click on the character you want to type. If you hold "
+":kbd:`Ctrl` while clicking, the window will close itself after inserting the"
+" selected character. This tool can be used to insert special characters into"
+" the main text or into any other area of the user interface, such as the "
+"Search and replace tool."
+msgstr "Du kan infoga tecken som är svåra att skriva med hjälp av verktyget :guilabel:`Redigera->Infoga specialtecken`. Detta visar alla Unicode-tecken, klicka på det tecken du vill skriva. Om du håller :kbd:`Ctrl` medan du klickar stängs fönstret efter att det valda tecknet har infogats. Det här verktyget kan användas för att infoga specialtecken i huvudtexten eller i något annat område i användargränssnittet, till exempel verktyget Sök och ersätt."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:713
+msgid ""
+"Because there are a lot of characters, you can define your own "
+":guilabel:`Favorite` characters, that will be shown first. Simply right "
+"click on a character to mark it as favorite. You can also right click on a "
+"character in favorites to remove it from favorites. Finally, you can re-"
+"arrange the order of characters in favorites by clicking the :guilabel:`Re-"
+"arrange favorites` button and then drag and dropping the characters in "
+"favorites around."
+msgstr "Eftersom det finns en hel del tecken kan du definiera dina egena :guilabel:`Favorit` karaktärer, som kommer att visas först. Högerklicka på ett tecken för att markera den som favorit. Du kan också högerklicka på en karaktär i favoriter för att ta bort den från favoriter. Slutligen kan du ordna om ordningen på tecknen i favoriter genom att klicka på :guilabel:`Ordna om favoriter` knappen och sedan dra och släppa tecknen i favoriter runt omkring."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:720
+msgid ""
+"You can also directly type in special characters using the keyboard. To do "
+"this, you type the Unicode code for the character (in hexadecimal) and then "
+"press the :kbd:`Alt+X` key which will convert the previously typed code into"
+" the corresponding character. For example, to type ÿ you would type ff and "
+"then :kbd:`Alt+X`. To type a non-breaking space you would use a0 and then "
+":kbd:`Alt+X`, to type the horizontal ellipsis you would use 2026 and "
+":kbd:`Alt+X` and so on."
+msgstr "Du kan också skriva in specialtecken direkt med tangentbordet. För att göra detta skriver du Unicode-koden för tecknet (i hexadecimal) och trycker sedan på :kbd:`Alt+X` som kommer att konvertera den tidigare skrivna koden till motsvarande tecken. Om du till exempel skriver ÿ skriver du ff och sedan :kbd:`Alt+X`. För att skriva ett icke-brytande blanksteg skulle du använda a0 och sedan :kbd:`Alt+X`, för att skriva den horisontella ellipsen skulle du använda 2026 och :kbd:`Alt+X` och så vidare."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:728
+msgid ""
+"Finally, you can type in special characters by using HTML named entities. "
+"For example, typing &nbsp; will be replaced by a non breaking space when you"
+" type the semi-colon. The replacement happens only when typing the semi-"
+"colon."
+msgstr "Slutligen kan du skriva in specialtecken med hjälp av HTML-enheter. Till exempel att skriva &nbsp; kommer att ersättas av ett hårt blanksteg när du skriver semikolon. Bytet sker bara när du skriver semikolon."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:733
+msgid "The code inspector view"
+msgstr "Kodinspektörsvyn"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:735
+msgid ""
+"This view shows you the HTML coding and CSS that applies to the current "
+"element of interest. You open it by right clicking a location in the preview"
+" panel and choosing :guilabel:`Inspect`. It allows you to see the HTML "
+"coding for that element and more importantly, the CSS styles that apply to "
+"it. You can even dynamically edit the styles and see what effect your "
+"changes have instantly. Note that editing the styles does not actually make "
+"changes to the book contents, it only allows for quick experimentation. The "
+"ability to live edit inside the Inspector is under development."
+msgstr "Denna vy visar HTML-kodning och CSS som gäller för det aktuella elementet av intresse. Du öppnar den genom att högerklicka på en plats i förhandsvisningspanelen och välja :guilabel:`Granska`. Det gör att du kan se HTML-kodning för det elementet och ännu viktigare, de CSS-format som gäller för den. Du kan till och med dynamiskt redigera formaten och se vilken effekt dina ändringar har direkt. Observera att redigera formaten faktiskt inte gör ändringar i bokens innehåll, det innebär bara ett snabb experimenterande. Förmågan att redigera direkt inne i inspektören är under utveckling."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:745
+msgid "Checking external links"
+msgstr "Kontrollera externa länkar"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:747
+msgid ""
+"You can use this tool to check all links in your book that point to external"
+" websites. The tool will try to visit every externally linked website, and "
+"if the visit fails, it will report all broken links in a convenient format "
+"for you to fix."
+msgstr "Du kan använda detta verktyg för att kontrollera alla länkar i din bok som hänvisar till externa webbplatser. Verktyget kommer att försöka besöka varje externt länkad webbplats, och om besöket misslyckas, kommer det att rapportera alla trasiga länkar i ett behändigt format för dig att åtgärda."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:754
+msgid "Downloading external resources"
+msgstr "Hämta externa resurser"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:756
+msgid ""
+"You can use this tool to automatically download any images/stylesheets/etc. "
+"in the book that are not bundled with the book (i.e. they have URLs pointing"
+" to a location on the internet). The tool will find all such resources and "
+"automatically download them, add them to the book and replace all references"
+" to them to use the downloaded files."
+msgstr "Du kan använda detta verktyg för att automatiskt hämtar några bilder/formatmallar/o.s.v. i boken som inte är kombinerade med boken (d.v.s. de har webbadresser som hänvisar till en plats på internet). Verktyget kommer att hitta alla dessa resurser och automatiskt hämtar dem, lägga till dem i boken och ersätta alla hänvisningar till dem att använda de hämtade filerna."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:764
+msgid "Arranging files into folders by type"
+msgstr "Ordna filer i mappar efter typ"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:766
+msgid ""
+"Often when editing EPUB files that you get from somewhere, you will find "
+"that the files inside the EPUB are arranged haphazardly, in different sub-"
+"folders. This tool allows you to automatically move all files into sub-"
+"folders based on their types. Access it via :guilabel:`Tools->Arrange into "
+"folders`. Note that this tool only changes how the files are arranged inside"
+" the EPUB, it does not change how they are displayed in the File browser."
+msgstr "Ofta när du redigerar EPUB-filer som du får någonstans ifrån, kommer du att upptäcka att filerna inuti EPUB:n är ordnade på måfå, i olika undermappar. Det här verktyget gör det möjligt att automatiskt flytta alla filer i undermappar baserat på deras typer. Få åtkomst till det via :guilabel:`Verktyg->Ordna i mappar`. Observera att det här verktyget bara ändrar hur filerna är ordnade inne i EPUB:n, det ändrar inte hur de visas i filhanteraren."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:774
+msgid "Importing files in other e-book formats as EPUB"
+msgstr "Importera filer i andra e-bokformat som EPUB"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:776
+msgid ""
+"The editor includes the ability to import files in some other e-book formats"
+" directly as a new EPUB, without going through a full conversion. This is "
+"particularly useful to directly create EPUB files from your own hand-edited "
+"HTML files. You can do this via :guilabel:`File->Import an HTML or DOCX file"
+" as a new book`."
+msgstr "Redigeraren inkluderar möjligheten att importera filer i vissa andra e-bokformat direkt som en ny EPUB, utan att gå igenom en full konvertering. Detta är särskilt användbart för att direkt skapa EPUB-filer från dina egna handredigerade HTML-filer. Du kan göra detta via :guilabel:`Arkiv->Importera en HTML- eller DOCX-fil som en ny bok`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:789
+msgid "The Reports tool"
+msgstr "Rapportverktyget"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:791
+msgid ""
+"The editor includes a nice *Reports* tool (via :guilabel:`Tools->Reports`) "
+"that shows summaries of the files, images, links, words, characters and "
+"styles used in the book. Every line in the report is hot-linked. Double "
+"clicking a line jumps to the place in the book where that item is used or "
+"defined (as appropriate). For example, in the :guilabel:`Links` view, you "
+"can double click entries the :guilabel:`Source` column to jump to where the "
+"link is defined and entries in the :guilabel:`Target` column to jump to "
+"where the link points."
+msgstr "Redigeraren har ett trevligt *Rapport* verktyg (via :guilabel:`Verktyg->Rapporter`) som visar sammanfattningar av filer, bilder, länkar, ord, tecken och format som används i boken. Varje rad i rapporten är hyperlänkad. Dubbelklicka på en rad hoppar till platsen i boken där posten används eller definieras (i förekommande fall). I vyn :guilabel:`Länkar` kan du till exempel dubbelklicka på poster i kolumnen :guilabel:`Källa` för att hoppa till var länken är definieras och poster i kolumnen :guilabel:`Mål` för att hoppa till var länken hänvisar."
+
+#: ../../__w/calibre/calibre/manual/edit.rst-1
+msgid "The Reports tool with information and statistics about the book"
+msgstr "Rapportverktyget med information och statistik om boken"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:806
+msgid "Special features in the code editor"
+msgstr "Speciella funktioner i kodredigeraren"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:808
+msgid ""
+"The calibre HTML editor is very powerful. It has many features that make "
+"editing of HTML (and CSS) easier."
+msgstr "calibre-HTML-redigeraren är mycket kraftfull. Den har många funktioner som gör redigering av HTML (och CSS) enklare."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:812
+msgid "Syntax highlighting"
+msgstr "Syntaxmarkering"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:814
+msgid ""
+"The HTML editor has very sophisticated syntax highlighting. Features "
+"include:"
+msgstr "HTML-redigeraren har mycket sofistikerad syntaxmarkering. Funktioner inkluderar:"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:816
+msgid "The text inside bold, italic and heading tags is made bold/italic"
+msgstr "Texten inne i fet, kursiv och rubriktaggar görs fet/kursiv"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:817
+msgid ""
+"As you move your cursor through the HTML, the matching HTML tags are "
+"highlighted, and you can jump to the opening or closing tag with the "
+"keyboard shortcuts :kbd:`Ctrl+{` and :kbd:`Ctrl+}`. Similarly, you can "
+"select the contents of a tag with :kbd:`Ctrl+Alt+T` or :kbd:`Ctrl+Shift+T`."
+msgstr "När du flyttar markören genom HTML-koden markeras de matchande HTML-taggarna och du kan hoppa till den inledande eller avslutande taggen med tangentbordsgenvägarna :kbd:`Ctrl+{` och :kbd:`Ctrl+}`. På samma sätt kan du välja innehållet i en tagg med :kbd:`Ctrl+Alt+T` eller :kbd:`Ctrl+Skift+T`."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:822
+msgid "Invalid HTML is highlighted with a red underline"
+msgstr "Ogiltig HTML markeras med en röd understrykning"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:823
+msgid ""
+"Spelling errors in the text inside HTML tags and attributes such as title "
+"are highlighted. The spell checking is language aware, based on the value of"
+" the ``lang`` attribute of the current tag and the overall book language."
+msgstr "Stavfel i texten inuti HTML-taggar och attribut som titel är markerade. Stavningskontrollen är språkmedveten, baserat på värdet av ``lang``-attributet av den aktuella taggen och det övergripande bokspråket."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:826
+msgid "CSS embedded inside ``<style>`` tags is highlighted"
+msgstr "CSS inbäddade inuti ``<style>`` taggar är markerad"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:827
+msgid ""
+"Special characters that can be hard to distinguish such as non-breaking "
+"spaces, different types of hyphens, etc. are highlighted."
+msgstr "Specialtecken som kan vara svåra att skilja såsom icke-brytande blanksteg, olika typer av bindestreck o.s.v. är markerade."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:829
+msgid ""
+"Links to other files in ``<a>`` tags, ``<img>`` and ``<link>`` tags all have"
+" the filenames highlighted. If the filename they point to does not exist, "
+"the filename is marked with a red underline."
+msgstr "Länkar till andra filer i ``<a>`` taggar, ``<img>``- och ``<link>`` taggar har alla filnamnen markerade. Om filnamnet de hänvisar till finns inte, markeras filnamnet med en röd understrykning."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:834
+msgid "Context sensitive help"
+msgstr "Kontextkänslig hjälp"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:836
+msgid ""
+"You can right click on an HTML tag name or a CSS property name to get help "
+"for that tag or property."
+msgstr "Du kan högerklicka på ett HTML-taggnamn eller ett CSS-egenskapsnamn för att få hjälp för den taggen eller egenskapen."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:838
+msgid ""
+"You can also hold down the :kbd:`Ctrl` key and click on any filename inside "
+"a link tag to open that file in the editor automatically. Similarly, "
+":kbd:`Ctrl` clicking a class name will take you to the first style rule that"
+" matches the tag and class."
+msgstr "Du kan också hålla ned :kbd:`Ctrl`-tangenten och klicka på valfritt filnamn i en länktagg för att automatiskt öppna filen i redigeraren. På samma sätt :kbd:`Ctrl` genom att klicka på ett klassnamn kommer du till den första formatregeln som matchar taggen och klassen."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:842
+msgid ""
+"Right clicking a class name in an HTML file will allow you to rename the "
+"class, changing all occurrences of the class throughout the book and all its"
+" stylesheets."
+msgstr "Genom att högerklicka på ett klassnamn i en HTML-fil kan du byta namn på klassen, ändra alla förekomster av klassen genom hela boken och alla dess formatmallar."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:849
+msgid "Auto-complete"
+msgstr "Automatisk komplettering"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:851
+msgid ""
+"When editing an e-book, one of the most tedious tasks is creating links to "
+"other files inside the book, or to CSS stylesheets, or images. You have to "
+"figure out the correct filename and relative path to the file. The editor "
+"has auto-complete to make that easier."
+msgstr "När du redigerar en e-bok är en av de tråkigaste uppgifterna att skapa länkar till andra filer i boken, eller till CSS-formatmallar eller bilder. Du måste räkna ut rätt filnamn och relativ sökväg till filen. Redigeraren kompletterar automatiskt för att göra det lättare."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:856
+msgid ""
+"As you type a filename, the editor automatically pops up suggestions. Simply"
+" use the :kbd:`Tab` key to select the correct file name. The editor even "
+"offers suggestions for links pointing to an anchor inside another HTML file."
+" After you type the ``#`` character, the editor will show you a list of all "
+"anchors in the target file, with a small snippet of text to help you choose "
+"the right anchor."
+msgstr "När du skriver ett filnamn tar redigeraren automatiskt fram förslag. Använd helt enkelt :kbd:`Tab`-tangenten för att välja rätt filnamn. Redigeraren ger till och med förslag på länkar som hänvisar till ett ankare inuti en annan HTML-fil. När du har skrivit tecknet ``#`` kommer redigeraren att visa dig en lista med alla ankare i målfilen, med ett litet kodavsnitt av text som hjälper dig att välja rätt ankare."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:862
+msgid ""
+"Note that unlike most other completion systems, the editor's completion "
+"system uses subsequence matching. This means that you can type just two or "
+"three letters from anywhere in the filename to complete the filename. For "
+"example, say you want the filename ``../images/arrow1.png``, you can simply "
+"type ``ia1`` and press :kbd:`Tab` to complete the filename. When searching "
+"for matches, the completion system prioritizes letters that are at the start"
+" of a word, or immediately after a path separator. Once you get used to this"
+" system, you will find it saves you a lot of time and effort."
+msgstr "Observera att till skillnad från de flesta andra kompletteringssystem använder redigerarens kompletteringssystem delsekvensmatchning. Detta innebär att du bara kan skriva två eller tre bokstäver från var som helst i filnamnet för att fylla i filnamnet. Säg till exempel att du vill ha filnamnet ``../images/arrow1.png``, du kan helt enkelt skriva ``ia1`` och trycka :kbd:`Tab` för att fylla i filnamn. Vid sökning efter träffar prioriterar kompletteringssystemet bokstäver som finns i början av ett ord, eller omedelbart efter en sökvägsavskiljare. När du väl vant dig vid detta system kommer du att upptäcka att det sparar dig mycket tid och ansträngning."
+
+#: ../../__w/calibre/calibre/manual/edit.rst:872
+msgid "Snippets"
+msgstr "Kodavsnitt"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:874
+msgid ""
+"The calibre E-book editor supports *snippets*. A snippet is a piece of text "
+"that is either re-used often or contains a lot of redundant text. The editor"
+" allows you to insert a snippet with only a few key strokes. The snippets "
+"are very powerful, with many features, such as placeholders you can jump "
+"between, automatic mirroring of repeated text and so on. For more "
+"information, see :doc:`snippets`."
+msgstr "calibre e-bokredigeraren stöder *kodavsnitt*. Ett kodavsnitt är ett stycke text som antingen återanvänds ofta eller innehåller mycket överflödig text. Redigeraren kan du infoga ett kodavsnitt med endast ett fåtal knapptryckningar. De kodavsnitt är mycket kraftfulla, med många funktioner, som platshållare som du kan hoppa mellan, automatisk spegling av upprepad text och så vidare. För mer information se :doc:`snippets`."

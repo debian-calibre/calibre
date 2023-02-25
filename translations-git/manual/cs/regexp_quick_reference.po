@@ -1,0 +1,763 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Trottel <trottel09@gmail.com>, 2020
+# iTentalce <ondrej.hudecek@gmail.com>, 2021
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre 5.17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-20 11:33+0000\n"
+"PO-Revision-Date: 2017-12-15 03:02+0000\n"
+"Last-Translator: iTentalce <ondrej.hudecek@gmail.com>, 2021\n"
+"Language-Team: Czech (https://www.transifex.com/calibre/teams/19337/cs/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:2
+msgid "Quick reference for regexp syntax"
+msgstr "Základy vyhledávání prostřednictvím regulárních výrazů"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:4
+msgid ""
+"This checklist summarizes the most commonly used/hard to remember parts of "
+"the regexp engine available in most parts of calibre."
+msgstr ""
+"Tento kontrolní seznam shrnuje nejčastěji používané nebo těžko "
+"zapamatovatelné části modulu regulárních výrazů, které jsou k dostupné ve "
+"většině součástí Calibre."
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:10
+msgid "Contents"
+msgstr "Obsah"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:13
+msgid "Character classes"
+msgstr "Třídy znaků"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:15
+msgid ""
+"Character classes are useful to represent different groups of characters, "
+"succinctly."
+msgstr ""
+"Stručně řečeno jsou třídy znaků užitečné pro zastupování různých skupin "
+"znaků."
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:18
+msgid "Examples:"
+msgstr "Příklady:"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:21
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:52
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:253
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:283
+msgid "**Representation**"
+msgstr "**Zastoupení**"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:21
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:52
+msgid "**Class**"
+msgstr "**Třída**"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:24
+msgid "``[a-z]``"
+msgstr "``[a-z]``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:24
+msgid ""
+"Lowercase letters. Does not include characters with accent mark and "
+"ligatures"
+msgstr "Malá písmena. Nezahrnuje znaky s diakritikou a ligatury"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:27
+msgid "``[a-z0-9]``"
+msgstr "``[a-z0-9]``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:27
+msgid "Lowercase letters from a to z or numbers from 0 to 9"
+msgstr "Malá písmena od a do z nebo čísla od 0 do 9"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:30
+msgid "``[A-Za-z-]``"
+msgstr "``[A-Za-z-]``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:30
+msgid ""
+"Uppercase or lowercase letters, or a dash. To include the dash in a class, "
+"you must put it at the beginning or at the end so as not to confuse it with "
+"the hyphen that specifies a range of characters"
+msgstr ""
+"Velká nebo malá písmena nebo pomlčka. Pro zahrnutí pomlčky do třídy ji "
+"musíte umístit na začátek nebo na konec, aby se nepletla se spojovníkem, "
+"který určuje rozsah znaků."
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:33
+msgid "``[^0-9]``"
+msgstr "``[^0-9]``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:33
+msgid ""
+"Any character except a digit. The caret (^) placed at the beginning of the "
+"class excludes the characters of the class (complemented class)"
+msgstr ""
+"Libovolný znak kromě číslice. Stříška (^) umístěná na začátku třídy vylučuje"
+" znaky ze třídy (doplňková třída)"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:36
+msgid "``[[a-z]--[aeiouy]]``"
+msgstr "``[[a-z]--[aeiouy]]``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:36
+msgid ""
+"The lowercase consonants. A class can be included in a class. The characters"
+" ``--`` exclude what follows them"
+msgstr ""
+"Malá písmena souhlásek. Třída může být zahrnuta do třídy. Znaky ``--`` "
+"vylučují to, co následuje"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:39
+msgid "``[\\w--[\\d_]]``"
+msgstr "``[\\w--[\\d_]]``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:39
+msgid ""
+"All letters (including foreign accented characters). Abbreviated classes can"
+" be used inside a class"
+msgstr ""
+"Všechna písmena (včetně cizích znaků s diakritikou). Uvnitř třídy lze použít"
+" zkrácené třídy"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:44
+msgid "Example::"
+msgstr "Příklad::"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:49
+msgid "Shorthand character classes"
+msgstr "Zjednodušené třídy znaků"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:55
+msgid "``\\d``"
+msgstr "``\\d``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:55
+msgid "A digit (same as ``[0-9]``)"
+msgstr "Číslo (stejné jako ``[0-9]``)"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:58
+msgid "``\\D``"
+msgstr "``\\D``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:58
+msgid "Any non-numeric character (same as ``[^0-9]``)"
+msgstr "Libovolný nečíselný znak (stejné jako ``[^0-9]``)"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:61
+msgid "``\\w``"
+msgstr "``\\w``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:61
+msgid ""
+"An alphanumeric character (``[a-zA-Z0-9]``) including characters with accent"
+" mark and ligatures"
+msgstr ""
+"Alfanumerický znak (``[a-zA-Z0-9]``) včetně znaků s diakritikou a ligatur"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:64
+msgid "``\\W``"
+msgstr "``\\W``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:64
+msgid "Any “non-word” character"
+msgstr "Libovolný znak, který není „slovo“"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:67
+msgid "``\\s``"
+msgstr "``\\s``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:67
+msgid "Space, non-breaking space, tab, return line"
+msgstr "Mezera, pevná mezera, tabulátor, enter."
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:70
+msgid "``\\S``"
+msgstr "``\\S``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:70
+msgid "Any “non-whitespace” character"
+msgstr "Libovolný znak, který není „prázdný znak“"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:73
+msgid "``.``"
+msgstr "``.``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:73
+msgid ""
+"Any character except newline. Use the “dot all” checkbox or the ``(?s)`` "
+"regexp modifier to include the newline character."
+msgstr ""
+"Jakýkoliv znak kromě nového řádku. Použijte zaškrtávací políčko „vytečkovat "
+"vše“ nebo modifikátor regulárních výrazů ``(?s)`` pro zahrnutí nového řádku."
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:78
+msgid "The quantifiers"
+msgstr "Kvantifikátory"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:81
+msgid "**Quantifier**"
+msgstr "**Kvantifikátor**"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:81
+msgid "**Number of occurrences of the expression preceding the quantifier**"
+msgstr "**Počet výskytů výrazů předcházejících kvantifikátor**"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:84
+msgid "``?``"
+msgstr "``?``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:84
+msgid "0 or 1 occurrence of the expression. Same as ``{0,1}``"
+msgstr "0 nebo 1 výskytů výrazu. Stejné jako ``{0,1}``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:87
+msgid "``+``"
+msgstr "``+``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:87
+msgid "1 or more occurrences of the expression. Same as ``{1,}``"
+msgstr "1 nebo více výskytů výrazu. Stejné jako ``{1,}``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:90
+msgid "``*``"
+msgstr "``*``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:90
+msgid "0, 1 or more occurrences of the expression. Same as ``{0,}``"
+msgstr "0, 1 nebo více výskytů výrazu. Stejné jako ``{0,}``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:93
+msgid "``{n}``"
+msgstr "``{n}``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:93
+msgid "Exactly n occurrences of the expression"
+msgstr "Přesně n výskytů výrazu"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:96
+msgid "``{min,max}``"
+msgstr "``{min,max}``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:96
+msgid "Number of occurrences between the minimum and maximum values included"
+msgstr "Počet výskytů mezi minimální a maximální hodnotou včetně"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:99
+msgid "``{min,}``"
+msgstr "``{min,}``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:99
+msgid ""
+"Number of occurrences between the minimum value included and the infinite"
+msgstr "Počet výskytů mezi minimální hodnotou včetně a nekonečnem"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:102
+msgid "``{,max}``"
+msgstr "``{,max}``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:102
+msgid "Number of occurrences between 0 and the maximum value included"
+msgstr "Počet výskytů mezi 0 a maximální hodnotou včetně"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:109
+msgid "Greed"
+msgstr "Nenasytnost"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:111
+msgid ""
+"By default, with quantifiers, the regular expression engine is greedy: it "
+"extends the selection as much as possible. This often causes surprises, at "
+"first. ``?`` follows a quantifier to make it lazy. Avoid putting two in the "
+"same expression, the result can be unpredictable."
+msgstr ""
+"Ve výchozím nastavení je modul regulárního výrazu s kvantifikátory "
+"nenasytný: rozšiřuje výběr co nejvíce. To zpočátku často způsobuje "
+"překvapení. ``?`` následovaný kvantifikátorem je lenost. Vyhněte se dávání "
+"dvou do stejného výrazu, výsledek může být nepředvídatelný."
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:116
+msgid ""
+"Beware of nesting quantifiers, for example, the pattern ``(a*)*``, as it "
+"exponentially increases processing time."
+msgstr ""
+"Dejte si pozor na vnořené kvantifikátory, například vzor ``(a*)*``, protože "
+"exponenciálně zvyšuje dobu zpracování."
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:120
+msgid "Alternation"
+msgstr "Alternace"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:122
+msgid ""
+"The ``|`` character in a regular expression is a logical ``OR``. It means "
+"that either the preceding or the following expression can match."
+msgstr ""
+"Znak ``|`` v regulárním výrazu je logické ``OR``. To znamená, že se může "
+"shodovat buď předcházející nebo následující výraz."
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:126
+msgid "Exclusion"
+msgstr "Vyloučení"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:128
+msgid "Method 1"
+msgstr "Metoda 1"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:130
+msgid "``pattern_to_exclude(*SKIP)(*FAIL)|pattern_to_select``"
+msgstr "``vzor_k_vyloučení(*SKIP)(*FAIL)|vzor_k_vybrání``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:132
+msgid "Example:"
+msgstr "Příklad:"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:134
+msgid "``\"Blabla\"(*SKIP)(*FAIL)|Blabla``"
+msgstr "``\"Blabla\"(*SKIP)(*FAIL)|Blabla``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:136
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:144
+msgid ""
+"selects Blabla, in the strings Blabla or \"Blabla or Blabla\", but not in "
+"\"Blabla\"."
+msgstr ""
+"vybere Blabla v řetězcích Blabla nebo „Blabla nebo Blabla“, ale ne v "
+"„Blabla“."
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:138
+msgid "Method 2"
+msgstr "Metoda 2"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:140
+msgid "``pattern_to_exclude\\K|(pattern_to_select)``"
+msgstr "``vzor_k_vyloučení\\K|(vzor_k_vybrání)``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:142
+msgid "``\"Blabla\"\\K|(Blabla)``"
+msgstr "``\"Blabla\"\\K|(Blabla)``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:147
+msgid "Anchors"
+msgstr "Kotvy"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:149
+msgid ""
+"An anchor is a way to match a logical location in a string, rather than a "
+"character. The most useful anchors for text processing are:"
+msgstr ""
+"Kotva je způsob, jak porovnat logické umístění v řetězci, spíše než znaku. "
+"Nejužitečnější kotvy pro zpracování textu jsou:"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:155
+msgid "``\\b``"
+msgstr "``\\b``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:153
+msgid ""
+"Designates a word boundary, i.e. a transition from space to non-space "
+"character. For example, you can use ``\\bsurd`` to match ``the surd`` but "
+"not ``absurd``."
+msgstr ""
+"Určuje hranici slova, tj. přechod z mezery na nemezerový znak. Například "
+"můžete použít ``\\bdar``, aby odpovídal ``mám dar``, ale ne ``nezdar``."
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:159
+msgid "``^``"
+msgstr "``^``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:158
+msgid "Matches the start of a line (in multi-line mode, which is the default)"
+msgstr ""
+"Odpovídá začátku řádku (v režimu více řádků, což je výchozí nastavení)"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:162
+msgid "``$``"
+msgstr "``$``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:162
+msgid "Matches the end of a line (in multi-line mode, which is the default)"
+msgstr "Odpovídá konci řádku (v režimu více řádků, což je výchozí nastavení)"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:169
+msgid "``\\K``"
+msgstr "``\\K``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:165
+msgid ""
+"Resets the start position of the selection to its position in the pattern. "
+"Some regexp engines (but not calibre) do not allow lookbehind of variable "
+"length, especially with quantifiers. When you can use ``\\K`` with these "
+"engines, it also allows you to get rid of this limit by writing the "
+"equivalent of a positive lookbehind of variable length."
+msgstr ""
+"Obnovuje výchozí pozici výběru na pozici ve vzoru. Některé moduly "
+"regulárních výrazů (ale ne Calibre) nedovolí hledat vpřed v proměnlivé "
+"délce, obzvláště s kvantifikátory. Když můžete s těmito moduly použít "
+"``\\K``, také vám to umožní zbavit se tohoto limitu napsáním ekvivalentu "
+"pozitivního hledání vpřed v proměnlivé délce."
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:172
+msgid "Groups"
+msgstr "Skupiny"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:177
+msgid "``(expression)``"
+msgstr "``(výraz)``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:175
+msgid ""
+"Capturing group, which stores the selection and can be recalled later in the"
+" *search* or *replace* patterns with ``\\n``, where ``n`` is the sequence "
+"number of the capturing group (starting at 1 in reading order)"
+msgstr ""
+"Zachytávací skupina: Uloží výběr a může být později vyvolána ve vzorech "
+"*search* nebo *replace* pomocí ``\\n``, kde ``n`` je pořadové číslo "
+"zachytávací skupiny (počínaje od 1 v pořadí čtení)"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:180
+msgid "``(?:expression)``"
+msgstr "``(?:výraz)``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:180
+msgid "Group that does not capture the selection"
+msgstr "Skupina, která nezachytí výběr"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:186
+msgid "``(?>expression)``"
+msgstr "``(?>výraz)``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:183
+msgid ""
+"Atomic Group: As soon as the expression is satisfied, the regexp engine "
+"passes, and if the rest of the pattern fails, it will not backtrack to try "
+"other combinations with the expression. Atomic groups do not capture."
+msgstr ""
+"Atomická skupina: Jakmile je výraz splněn, modul regulárních výrazů ji "
+"předá. A pokud zbytek vzoru selže, nebude se snažit vyzkoušet jiné kombinace"
+" s výrazem. Atomické skupiny nezachycují."
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:190
+msgid "``(?|expression)``"
+msgstr "``(?|výraz)``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:189
+msgid ""
+"Branch reset group: the branches of the alternations included in the "
+"expression share the same group numbers"
+msgstr ""
+"Skupina obnovení větve: Větve alternativ zahrnutých ve výrazu sdílejí stejná"
+" čísla skupin"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:196
+msgid "``(?<name>expression)``"
+msgstr "``(?<name>výraz)``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:193
+msgid ""
+"Group named “name”. The selection can be recalled later in the *search* "
+"pattern by ``(?P=name)`` and in the *replace* by ``\\g<name>``. Two "
+"different groups can use the same name."
+msgstr ""
+"Skupina s názvem „name“: Výběr lze později vyvolat ve vzorci *search* pomocí"
+" výrazu ``(?P=name)`` a ve vzorci *replace* výrazem ``\\g``. Dvě různé "
+"skupiny mohou používat stejný název."
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:199
+msgid "Lookarounds"
+msgstr "Prohledávání"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:202
+msgid "**Lookaround**"
+msgstr "**Prohledávání**"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:202
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:253
+msgid "**Meaning**"
+msgstr "**Význam**"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:205
+msgid "``?=``"
+msgstr "``?=``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:205
+msgid "Positive lookahead (to be placed after the selection)"
+msgstr "Pozitivní hledání vpřed (bude umístěno za výběr)"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:208
+msgid "``?!``"
+msgstr "``?!``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:208
+msgid "Negative lookahead (to be placed after the selection)"
+msgstr "Negativní hledání vpřed (bude umístěno za výběr)"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:211
+msgid "``?<=``"
+msgstr "``?<=``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:211
+msgid "Positive lookbehind (to be placed before the selection)"
+msgstr "Pozitivní hledání zpět (bude umístěno před výběr)"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:214
+msgid "``?<!``"
+msgstr "``?<!``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:214
+msgid "Negative lookbehind (to be placed before the selection)"
+msgstr "Negativní hledání zpět (bude umístěno před výběr)"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:218
+msgid ""
+"Lookaheads and lookbehinds do not consume characters, they are zero length "
+"and do not capture. They are atomic groups: as soon as the assertion is "
+"satisfied, the regexp engine passes, and if the rest of the pattern fails, "
+"it will not backtrack inside the lookaround to try other combinations."
+msgstr ""
+"Hledání vpřed a zpět nespotřebovávají znaky, jsou nulové délky a "
+"nezachycují. Jsou to atomické skupiny: jakmile je tvrzení splněno, modul "
+"regulárních výrazů ho předá, a pokud zbytek vzoru selže, nebude se vracet "
+"zpět do prohledávání, aby vyzkoušel jiné kombinace."
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:223
+msgid ""
+"When looking for multiple matches in a string, at the starting position of "
+"each match attempt, a lookbehind can inspect the characters before the "
+"current position. Therefore, on the string 123, the pattern ``(?<=\\d)\\d`` "
+"(a digit preceded by a digit) should, in theory, select 2 and 3. On the "
+"other hand, ``\\d\\K\\d`` can only select 2, because the starting position "
+"after the first selection is immediately before 3, and there are not enough "
+"digits for a second match. Similarly, ``\\d(\\d)`` only captures 2. In "
+"calibre's regexp engine practice, the positive lookbehind behaves in the "
+"same way, and selects only 2, contrary to theory."
+msgstr ""
+"Při hledání více shod v řetězci, v počáteční pozici každého pokusu o shodu, "
+"může hledání zpět zkontrolovat znaky před aktuální pozicí. Proto v řetězci "
+"123 by měl vzor ``(?<=\\d)\\d`` (číslice předcházející číslici) teoreticky "
+"vybrat 2 a 3. Na druhou stranu ``\\d\\K\\d`` může vybrat pouze 2, protože "
+"počáteční pozice po prvním výběru je bezprostředně před 3 a pro druhou shodu"
+" zde není dostatek číslic. Podobně ``\\d(\\d)`` zachytí pouze 2. V modulu "
+"regulárních výrazů Calibre se pozitivní hledání zpět chová stejně a vybere "
+"pouze 2, na rozdíl od teorie."
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:233
+msgid ""
+"Groups can be placed inside lookarounds, but capture is rarely useful. "
+"Nevertheless, if it is useful, it will be necessary to be very careful in "
+"the use of a quantifier in a lookbehind: the greed associated with the "
+"absence of backtracking can give a surprising capture. For this reason, use "
+"``\\K`` rather than a positive lookbehind when you have a quantifier (or "
+"worse, several) in a capturing group of the positive lookbehind."
+msgstr ""
+"Skupiny mohou být umístěny uvnitř prohledávání, ale zachytávání je zřídka "
+"užitečné. Pokud je to přesto užitečné, bude muset být při používání "
+"kvantifikátoru v hledání zpět velmi opatrní: chamtivost spojená s absencí "
+"zpětného dozoru může poskytovat překvapující zachytávání. Z tohoto důvodu "
+"použijte spíše ``\\K`` než pozitivní hledání zpět, když máte v zachytávací "
+"skupině pozitivního hledání zpět kvantifikátor (nebo ještě hůře několik)."
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:240
+msgid "Example of negative lookahead:"
+msgstr "Příklad negativního hledání vpřed:"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:242
+msgid "``(?![^<>{}]*[>}])``"
+msgstr "``(?![^<>{}]*[>}])``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:244
+msgid ""
+"Placed at the end of the pattern prevents to select within a tag or a style "
+"embedded in the file."
+msgstr ""
+"Umístění na konci vzoru zabraňuje výběru uvnitř značky nebo stylu vloženého "
+"do souboru."
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:246
+msgid ""
+"Whenever possible, it is always better to \"anchor\" the lookarounds, to "
+"reduce the number of steps necessary to obtain the result."
+msgstr ""
+"Kdykoliv je to možné, je vždy lepší vyhledávání „ukotvit“, aby se snížil "
+"počet kroků nezbytných k dosažení výsledku."
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:250
+msgid "Recursion"
+msgstr "Rekurze"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:256
+msgid "``(?R)``"
+msgstr "``(?R)``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:256
+msgid "Recursion of the entire pattern"
+msgstr "Rekurze celého vzoru"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:259
+msgid "``(?1)``"
+msgstr "``(?1)``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:259
+msgid ""
+"Recursion of the only pattern of the numbered capturing group, here group 1"
+msgstr "Rekurze jediného vzoru číslované zachytávací skupiny, zde skupina 1"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:263
+msgid ""
+"Recursion is calling oneself. This is useful for balanced queries, such as "
+"quoted strings, which can contain embedded quoted strings. Thus, if during "
+"the processing of a string between double quotation marks, we encounter the "
+"beginning of a new string between double quotation marks, well we know how "
+"to do, and we call ourselves. Then we have a pattern like::"
+msgstr ""
+"Rekurze je vyvolání sebe sama. To je užitečné pro vyvážené dotazy, jako jsou"
+" řetězce v uvozovkách, které mohou obsahovat vložené řetězce v uvozovkách. "
+"Pokud tedy během zpracování řetězce mezi uvozovkami narazíme na začátek "
+"nového řetězce mezi uvozovkami, dobře víme, jak to udělat, a vyvoláme sebe "
+"sama. Pak máme podobný vzor::"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:271
+msgid ""
+"To select a string between double quotation marks without stopping on an "
+"embedded string::"
+msgstr "Pro výběr řetězce mezi uvozovkami bez zastavení na vloženém řetězci::"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:275
+msgid ""
+"This template can also be used to modify pairs of tags that can be embedded,"
+" such as ``<div>`` tags."
+msgstr ""
+"Tuto šablonu lze také použít ke změně párů značek, které mohou být vloženy, "
+"například značek ``<div>``."
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:280
+msgid "Special characters"
+msgstr "Speciální znaky"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:283
+msgid "**Character**"
+msgstr "**Znak**"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:286
+msgid "``\\t``"
+msgstr "``\\t``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:286
+msgid "tabulation"
+msgstr "tabulátor"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:289
+msgid "``\\n``"
+msgstr "``\\n``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:289
+msgid "line break"
+msgstr "konec řádku"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:292
+msgid "``\\x20``"
+msgstr "``\\x20``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:292
+msgid "(breakable) space"
+msgstr "(měkká) mezera"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:295
+msgid "``\\xa0``"
+msgstr "``\\xa0``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:295
+msgid "no-break space"
+msgstr "tvrdá mezera"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:300
+msgid "Meta-characters"
+msgstr "Metaznaky"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:302
+msgid ""
+"Meta-characters are those that have a special meaning for the regexp engine."
+" Of these, twelve must be preceded by an escape character, the backslash "
+"(``\\``), to lose their special meaning and become a regular character "
+"again::"
+msgstr ""
+"Metaznaky jsou ty, které mají zvláštní význam pro modul regulárních výrazů. "
+"Dvanáct z nich musí předcházet řídící znak, zpětné lomítko (``\\``), aby "
+"ztratily svůj zvláštní význam a stal se z nich opět normální znak::"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:308
+msgid ""
+"Seven other meta-characters do not need to be preceded by a backslash (but "
+"can be without any other consequence)::"
+msgstr ""
+"Sedm dalších metaznaků nemusí předcházet zpětné lomítko (ale může bez "
+"jakýchkoliv dalších důsledků)::"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:314
+msgid ""
+"Special characters lose their status if they are used inside a class "
+"(between brackets ``[]``). The closing bracket and the dash have a special "
+"status in a class. Outside the class, the dash is a simple literal, the "
+"closing bracket remains a meta-character."
+msgstr ""
+"Speciální znaky ztratí svůj status, pokud jsou použity ve třídě (mezi "
+"lomenými závorkami ``[]``). Uzavírací lomená závorka a pomlčka mají ve třídě"
+" zvláštní status. Mimo třídu je pomlčka jednoduchým literálem, uzavírací "
+"lomená závorka zůstává metaznakem."
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:319
+msgid ""
+"The slash (/) and the number sign (or hash character) (#) are not meta-"
+"characters, they don’t need to be escaped."
+msgstr ""
+"Lomítko (/) a křížek (nebo znak hash) (#) nejsou metaznaky, nemusejí mít "
+"řídící znak."
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:322
+msgid ""
+"In some tools, like regex101.com with the Python engine, double quotes have "
+"the special status of separator, and must be escaped, or the options "
+"changed. This is not the case in the editor of calibre."
+msgstr ""
+"V některých nástrojích, jako je například regex101.com s modulem Python, "
+"mají dvojité uvozovky zvláštní status oddělovače a musí mít řídící znak, "
+"nebo se možnosti změní. Toto není případ editoru Calibre."
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:327
+msgid "Modes"
+msgstr "Režimy"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:330
+msgid "``(?s)``"
+msgstr "``(?s)``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:330
+msgid "Causes the dot (``.``) to match newline characters as well"
+msgstr "Způsobí, že tečka (``.``) bude odpovídat také znakům nového řádku"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:333
+msgid "``(?m)``"
+msgstr "``(?m)``"
+
+#: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:333
+msgid ""
+"Makes the ``^`` and ``$`` anchors match the start and end of lines instead "
+"of the start and end of the entire string."
+msgstr ""
+"Učiní, že kotvy ``^`` a ``$`` budou odpovídat začátku a konci řádků namísto "
+"začátku a konce celého řetězce."

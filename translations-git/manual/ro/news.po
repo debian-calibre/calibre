@@ -1,0 +1,496 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-01-20 09:15+0000\n"
+"PO-Revision-Date: 2022-01-11 06:52+0000\n"
+"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"Language-Team: Romanian (http://www.transifex.com/calibre/calibre/language/ro/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ro\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
+
+#: ../../__w/calibre/calibre/manual/news.rst:4
+msgid "Adding your favorite news website"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:6
+msgid ""
+"calibre has a powerful, flexible and easy-to-use framework for downloading "
+"news from the Internet and converting it into an e-book. The following will "
+"show you, by means of examples, how to get news from various websites."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:8
+msgid ""
+"To gain an understanding of how to use the framework, follow the examples in"
+" the order listed below:"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:15
+msgid "Completely automatic fetching"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:17
+msgid ""
+"If your news source is simple enough, calibre may well be able to fetch it "
+"completely automatically, all you need to do is provide the URL. calibre "
+"gathers all the information needed to download a news source into a "
+":term:`recipe`. In order to tell calibre about a news source, you have to "
+"create a :term:`recipe` for it. Let's see some examples:"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:26
+msgid "The calibre blog"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:28
+msgid ""
+"The calibre blog is a blog of posts that describe many useful calibre "
+"features in a simple and accessible way for new calibre users. In order to "
+"download this blog into an e-book, we rely on the :term:`RSS` feed of the "
+"blog::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:34
+msgid ""
+"I got the RSS URL by looking under \"Subscribe to\" at the bottom of the "
+"blog page and choosing :guilabel:`Posts->Atom`. To make calibre download the"
+" feeds and convert them into an e-book, you should right click the "
+":guilabel:`Fetch news` button and then the :guilabel:`Add a custom news "
+"source` menu item and then the :guilabel:`New Recipe` button. A dialog "
+"similar to that shown below should open up."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:43
+msgid ""
+"First enter ``Calibre Blog`` into the :guilabel:`Recipe title` field. This "
+"will be the title of the e-book that will be created from the articles in "
+"the above feeds."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:45
+msgid ""
+"The next two fields (:guilabel:`Oldest article` and :guilabel:`Max. number "
+"of articles`) allow you some control over how many articles should be "
+"downloaded from each feed, and they are pretty self explanatory."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:47
+msgid ""
+"To add the feeds to the recipe, enter the feed title and the feed URL and "
+"click the :guilabel:`Add feed` button. Once you have added the feed, simply "
+"click the :guilabel:`Save` button and you're done! Close the dialog."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:51
+msgid ""
+"To test your new :term:`recipe`, click the :guilabel:`Fetch news` button and"
+" in the :guilabel:`Custom news sources` sub-menu click :guilabel:`calibre "
+"Blog`. After a couple of minutes, the newly downloaded e-book of blog posts "
+"will appear in the main library view (if you have your reader connected, it "
+"will be put onto the reader instead of into the library). Select it and hit "
+"the :guilabel:`View` button to read!"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:53
+msgid ""
+"The reason this worked so well, with so little effort is that the blog "
+"provides *full-content* :term:`RSS` feeds, i.e., the article content is "
+"embedded in the feed itself. For most news sources that provide news in this"
+" fashion, with *full-content* feeds, you don't need any more effort to "
+"convert them to e-books. Now we will look at a news source that does not "
+"provide full content feeds. In such feeds, the full article is a webpage and"
+" the feed only contains a link to the webpage with a short summary of the "
+"article."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:58
+msgid "bbc.co.uk"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:60
+msgid "Let's try the following two feeds from *The BBC*:"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:62
+msgid ""
+"News Front Page: "
+"https://newsrss.bbc.co.uk/rss/newsonline_world_edition/front_page/rss.xml"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:63
+msgid ""
+"Science/Nature: "
+"https://newsrss.bbc.co.uk/rss/newsonline_world_edition/science/nature/rss.xml"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:65
+msgid ""
+"Follow the procedure outlined in :ref:`calibre_blog` above to create a "
+"recipe for *The BBC* (using the feeds above). Looking at the downloaded "
+"e-book, we see that calibre has done a creditable job of extracting only the"
+" content you care about from each article's webpage. However, the extraction"
+" process is not perfect. Sometimes it leaves in undesirable content like "
+"menus and navigation aids or it removes content that should have been left "
+"alone, like article headings. In order, to have perfect content extraction, "
+"we will need to customize the fetch process, as described in the next "
+"section."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:68
+msgid "Customizing the fetch process"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:70
+msgid ""
+"When you want to perfect the download process, or download content from a "
+"particularly complex website, you can avail yourself of all the power and "
+"flexibility of the :term:`recipe` framework. In order to do that, in the "
+":guilabel:`Add custom news sources` dialog, simply click the "
+":guilabel:`Switch to Advanced mode` button."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:72
+msgid ""
+"The easiest and often most productive customization is to use the print "
+"version of the online articles. The print version typically has much less "
+"cruft and translates much more smoothly to an e-book. Let's try to use the "
+"print version of the articles from *The BBC*."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:75
+msgid "Using the print version of bbc.co.uk"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:77
+msgid ""
+"The first step is to look at the e-book we downloaded previously from "
+":ref:`bbc`. At the end of each article, in the e-book is a little blurb "
+"telling you where the article was downloaded from. Copy and paste that URL "
+"into a browser. Now on the article webpage look for a link that points to "
+"the \"Printable version\". Click it to see the print version of the article."
+" It looks much neater! Now compare the two URLs. For me they were:"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:80
+msgid "Article URL"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:80
+msgid "https://news.bbc.co.uk/2/hi/science/nature/7312016.stm"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:83
+msgid "Print version URL"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:83
+msgid ""
+"https://newsvote.bbc.co.uk/mpapps/pagetools/print/news.bbc.co.uk/2/hi/science/nature/7312016.stm"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:85
+msgid ""
+"So it looks like to get the print version, we need to prefix every article "
+"URL with:"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:87
+msgid "newsvote.bbc.co.uk/mpapps/pagetools/print/"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:89
+msgid ""
+"Now in the :guilabel:`Advanced mode` of the Custom news sources dialog, you "
+"should see something like (remember to select *The BBC* recipe before "
+"switching to advanced mode):"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:94
+msgid ""
+"You can see that the fields from the :guilabel:`Basic mode` have been "
+"translated to Python code in a straightforward manner. We need to add "
+"instructions to this recipe to use the print version of the articles. All "
+"that's needed is to add the following two lines:"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:101
+msgid ""
+"This is Python, so indentation is important. After you've added the lines, "
+"it should look like:"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:106
+msgid ""
+"In the above, ``def print_version(self, url)`` defines a *method* that is "
+"called by calibre for every article. ``url`` is the URL of the original "
+"article. What ``print_version`` does is take that url and replace it with "
+"the new URL that points to the print version of the article. To learn about "
+"`Python <https://www.python.org>`_ see the `tutorial "
+"<https://docs.python.org/tutorial/>`_."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:108
+msgid ""
+"Now, click the :guilabel:`Add/update recipe` button and your changes will be"
+" saved. Re-download the e-book. You should have a much improved e-book. One "
+"of the problems with the new version is that the fonts on the print version "
+"webpage are too small. This is automatically fixed when converting to an "
+"e-book, but even after the fixing process, the font size of the menus and "
+"navigation bar become too large relative to the article text. To fix this, "
+"we will do some more customization, in the next section."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:111
+msgid "Replacing article styles"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:113
+msgid ""
+"In the previous section, we saw that the font size for articles from the "
+"print version of *The BBC* was too small. In most websites, *The BBC* "
+"included, this font size is set by means of :term:`CSS` stylesheets. We can "
+"disable the fetching of such stylesheets by adding the line::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:119
+msgid "The recipe now looks like:"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:124
+msgid ""
+"The new version looks pretty good. If you're a perfectionist, you'll want to"
+" read the next section, which deals with actually modifying the downloaded "
+"content."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:127
+msgid "Slicing and dicing"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:129
+msgid ""
+"calibre contains very powerful and flexible abilities when it comes to "
+"manipulating downloaded content. To show off a couple of these, let's look "
+"at our old friend the :ref:`The BBC <bbc1>` recipe again. Looking at the "
+"source code (:term:`HTML`) of a couple of articles (print version), we see "
+"that they have a footer that contains no useful information, contained in"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:137
+msgid "This can be removed by adding::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:141
+msgid ""
+"to the recipe. Finally, lets replace some of the :term:`CSS` that we "
+"disabled earlier, with our own :term:`CSS` that is suitable for conversion "
+"to an e-book::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:145
+msgid "With these additions, our recipe has become \"production quality\"."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:147
+msgid ""
+"This :term:`recipe` explores only the tip of the iceberg when it comes to "
+"the power of calibre. To explore more of the abilities of calibre we'll "
+"examine a more complex real life example in the next section."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:150
+msgid "Real life example"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:152
+msgid ""
+"A reasonably complex real life example that exposes more of the :term:`API` "
+"of ``BasicNewsRecipe`` is the :term:`recipe` for *The New York Times*"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:238
+msgid "We see several new features in this :term:`recipe`. First, we have::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:242
+msgid ""
+"This sets the displayed time on the front page of the created e-book to be "
+"in the format, ``Day, Day_Number Month, Year``. See :attr:`timefmt "
+"<calibre.web.feeds.news.BasicNewsRecipe.timefmt>`."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:245
+msgid ""
+"Then we see a group of directives to cleanup the downloaded :term:`HTML`::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:251
+msgid ""
+"These remove everything before the first ``<h1>`` tag and everything after "
+"the first tag whose id is ``footer``. See :attr:`remove_tags "
+"<calibre.web.feeds.news.BasicNewsRecipe.remove_tags>`, "
+":attr:`remove_tags_before "
+"<calibre.web.feeds.news.BasicNewsRecipe.remove_tags_before>`, "
+":attr:`remove_tags_after "
+"<calibre.web.feeds.news.BasicNewsRecipe.remove_tags_after>`."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:253
+msgid "The next interesting feature is::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:260
+msgid ""
+"``needs_subscription = True`` tells calibre that this recipe needs a "
+"username and password in order to access the content. This causes, calibre "
+"to ask for a username and password whenever you try to use this recipe. The "
+"code in :meth:`calibre.web.feeds.news.BasicNewsRecipe.get_browser` actually "
+"does the login into the NYT website. Once logged in, calibre will use the "
+"same, logged in, browser instance to fetch all content. See `mechanize "
+"<https://mechanize.readthedocs.io/en/latest/>`_ to understand the code in "
+"``get_browser``."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:262
+msgid ""
+"The next new feature is the "
+":meth:`calibre.web.feeds.news.BasicNewsRecipe.parse_index` method. Its job "
+"is to go to https://www.nytimes.com/pages/todayspaper/index.html and fetch "
+"the list of articles that appear in *todays* paper. While more complex than "
+"simply using :term:`RSS`, the recipe creates an e-book that corresponds very"
+" closely to the days paper. ``parse_index`` makes heavy use of "
+"`BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ to"
+" parse the daily paper webpage. You can also use other, more modern parsers "
+"if you dislike BeautifulSoup. calibre comes with `lxml <https://lxml.de/>`_ "
+"and `html5lib <https://github.com/html5lib/html5lib-python>`_, which are the"
+" recommended parsers. To use them, replace the call to ``index_to_soup()`` "
+"with the following::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:283
+msgid ""
+"The final new feature is the "
+":meth:`calibre.web.feeds.news.BasicNewsRecipe.preprocess_html` method. It "
+"can be used to perform arbitrary transformations on every downloaded HTML "
+"page. Here it is used to bypass the ads that the nytimes shows you before "
+"each article."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:286
+msgid "Tips for developing new recipes"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:288
+msgid ""
+"The best way to develop new recipes is to use the command line interface. "
+"Create the recipe using your favorite Python editor and save it to a file "
+"say :file:`myrecipe.recipe`. The `.recipe` extension is required. You can "
+"download content using this recipe with the command::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:292
+msgid ""
+"The command :command:`ebook-convert` will download all the webpages and save"
+" them to the EPUB file :file:`myrecipe.epub`. The ``-vv`` option makes "
+"ebook-convert spit out a lot of information about what it is doing. The "
+":option:`ebook-convert-recipe-input --test` option makes it download only a "
+"couple of articles from at most two feeds. In addition, ebook-convert will "
+"put the downloaded HTML into the ``debug/input`` folder, where ``debug`` is "
+"the folder you specified in the :option:`ebook-convert --debug-pipeline` "
+"option."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:300
+msgid ""
+"Once the download is complete, you can look at the downloaded :term:`HTML` "
+"by opening the file :file:`debug/input/index.html` in a browser. Once you're"
+" satisfied that the download and preprocessing is happening correctly, you "
+"can generate e-books in different formats as shown below::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:307
+msgid ""
+"If you're satisfied with your recipe, and you feel there is enough demand to"
+" justify its inclusion into the set of built-in recipes, post your recipe in"
+" the `calibre recipes forum "
+"<https://www.mobileread.com/forums/forumdisplay.php?f=228>`_ to share it "
+"with other calibre users."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:310
+msgid ""
+"On macOS, the command line tools are inside the calibre bundle, for example,"
+" if you installed calibre in :file:`/Applications` the command line tools "
+"are in :file:`/Applications/calibre.app/Contents/MacOS/`."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:316
+msgid ":doc:`generated/en/ebook-convert`"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:317
+msgid "The command line interface for all e-book conversion."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:321
+msgid "Further reading"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:323
+msgid ""
+"To learn more about writing advanced recipes using some of the facilities, "
+"available in ``BasicNewsRecipe`` you should consult the following sources:"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:326
+msgid ":ref:`API documentation <news_recipe>`"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:326
+msgid ""
+"Documentation of the ``BasicNewsRecipe`` class and all its important methods"
+" and fields."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:329
+msgid ""
+"`BasicNewsRecipe "
+"<https://github.com/kovidgoyal/calibre/blob/master/src/calibre/web/feeds/news.py>`_"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:329
+msgid "The source code of ``BasicNewsRecipe``"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:332
+msgid ""
+"`Built-in recipes "
+"<https://github.com/kovidgoyal/calibre/tree/master/recipes>`_"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:332
+msgid "The source code for the built-in recipes that come with calibre"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:336
+msgid ""
+"`The calibre recipes forum "
+"<https://www.mobileread.com/forums/forumdisplay.php?f=228>`_"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:335
+msgid "Lots of knowledgeable calibre recipe writers hang out here."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news.rst:339
+msgid "API documentation"
+msgstr ""
