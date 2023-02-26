@@ -9,3 +9,8 @@ calibre binary: country-in-manual [usr/share/man/en_AU/man1/*.1.gz]
 calibre binary: country-in-manual [usr/share/man/en_CA/man1/*.1.gz]
 calibre binary: country-in-manual [usr/share/man/es_MX/man1/*.1.gz]
 calibre binary: country-in-manual [usr/share/man/fr_CA/man1/*.1.gz]
+
+# troff macro warning
+calibre binary: groff-message *: warning: macro 'TP' not defined [usr/share/man/ms/man1/*.1.gz:*]
+calibre binary: groff-message *: macro error: .TH without .TS H (recovering) [usr/share/man/ms/man1/*.1.gz:*]
+calibre binary: groff-message *: warning: macro 'SS' not defined [usr/share/man/ms/man1/*.1.gz:*]
