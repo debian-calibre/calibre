@@ -37,7 +37,10 @@ DEB_DH_GENCONTROL_ARGS = -- -Vpyqt:Version=$(shell dpkg-query -f'$${Version}' -W
 
 override_dh_auto_configure:
 
-override_dh_auto_build:
+override_dh_auto_build-arch:
+	$(SETUP) build
+
+override_dh_auto_build-indep:
 #	# Add false-positive info for blhc(1) check
 	@echo 'blhc: ignore-line-regexp: \tCompiling form /.+\.ui'
 	@echo 'blhc: ignore-line-regexp: .+ -dM -E -o moc_predefs\.h /usr/lib/[^/]+/qt6/mkspecs/features/data/dummy\.cpp'
@@ -53,11 +56,11 @@ override_dh_auto_build:
 		--path-to-hyphenation="$(CURDIR)/hyphenation-git"
 
 # Invoke "calibre_auto_test" target with automatic "HOME" and "XDG_*" variables.
-override_dh_auto_test:
-	dh_auto_test -O--buildsystem=makefile -- -f debian/calibre-builder.mak
+override_dh_auto_test-indep:
+	dh_auto_test -O--buildsystem=makefile -- -f debian/calibre-builder.mak test-indep
 
 # "test_ajax_book" fails if previous test is "test_workers" (Closes: #973458)
-calibre_auto_test:
+calibre_auto_test-indep:
 	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC $(CI_ENV) $(SETUP) test $(TEST_FLAGS) --exclude-test-name=ajax_book --exclude-test-name=workers --exclude-test-name=qt --exclude-test-name=dom_load
 	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC $(CI_ENV) $(SETUP) test --test-name=ajax_book $(TEST_FLAGS)
 	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC $(CI_ENV) $(SETUP) test --test-name=workers   $(TEST_FLAGS)
@@ -67,10 +70,10 @@ calibre_auto_test:
 execute_before_dh_install:
 	dh_buildinfo
 
-override_dh_auto_install:
-	dh_auto_install -O--buildsystem=makefile -- -f debian/calibre-builder.mak
+override_dh_auto_install-indep:
+	dh_auto_install -O--buildsystem=makefile -- -f debian/calibre-builder.mak install-indep
 
-calibre_auto_install:
+calibre_auto_install-indep:
 	mkdir -p  debian/tmp/usr/share/icons/hicolor
 	mkdir -p  debian/tmp/usr/share/applications
 	mkdir -p  debian/tmp/usr/share/mime/packages
