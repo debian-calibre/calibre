@@ -1,3 +1,14 @@
+calibre (6.13.0+repack-1) UNRELEASED; urgency=medium
+
+  * Many requied pre-build resource was dropped from upstream tarball
+    since Calibre 6.12.0. Build them by myself.
+  * Use "multiple upstream tarball" (MUT) style source code layout.
+  * QtWebEngine is frigile on armhf platform. Split build process into
+    architecture dependent and independent part to minimize QtWebEngine
+    usage.
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sun, 26 Feb 2023 17:52:28 +0900
+
 calibre (6.13.0+repack-1~exp2) experimental; urgency=medium
 
   * Split architecture dependent part to pass armhf build
@@ -11,7 +22,9 @@ calibre (6.13.0+repack-1~exp1) experimental; urgency=medium
     This reverts commit aacdebdfeefce479f267d973619190cacaa29d3d.
     This fix is not effective.
   * New upstream version 6.13.0+repack
-  * Use multiple upstream tarball style for source code layout
+  * Use multiple upstream tarball style for source code layout.
+    Some buildd was not connected to external Internet.
+    Buildd requires to build without Internet connection.
   * Remove unused files
 
  -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sun, 26 Feb 2023 09:12:43 +0900
