@@ -31,20 +31,22 @@ endif
 %:
 	dh $@ --with=python3 --buildsystem=makefile
 
-.PHONY: calibre_auto_test calibre_auto_install
+.PHONY: calibre_auto_test calibre_auto_install blhc-note
 
 DEB_DH_GENCONTROL_ARGS = -- -Vpyqt:Version=$(shell dpkg-query -f'$${Version}' -W python3-pyqt6)
 
-override_dh_auto_configure:
-
-override_dh_auto_build-arch:
-	$(SETUP) build
-
-override_dh_auto_build-indep:
+blhc-note:
 #	# Add false-positive info for blhc(1) check
 	@echo 'blhc: ignore-line-regexp: \tCompiling form /.+\.ui'
 	@echo 'blhc: ignore-line-regexp: .+ -dM -E -o moc_predefs\.h /usr/lib/[^/]+/qt6/mkspecs/features/data/dummy\.cpp'
 	@echo 'blhc: ignore-line-regexp: /usr/lib/qt6/libexec/moc .+\.cpp'
+
+override_dh_auto_configure:
+
+override_dh_auto_build-arch: blhc-note
+	$(SETUP) build
+
+override_dh_auto_build-indep: blhc-note
 #	# use Debian specific CA certs
 	ln -sf /etc/ssl/certs/ca-certificates.crt resources/mozilla-ca-certs.pem
 #
