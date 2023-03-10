@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-CUSTOMIZE" "1" "二月 17, 2023" "6.13.0" "calibre"
+.TH "CALIBRE-CUSTOMIZE" "1" "三月 10, 2023" "6.14.0" "calibre"
 .SH NAME
 calibre-customize \- calibre-customize
 .INDENT 0.0
@@ -43,16 +43,12 @@ calibre\-customize options
 .sp
 通过加载外部插件自定义 calibre。
 .sp
-每当向具有它们自己空间的:command:
-.nf
-\(ga
-.fi
-calibre\-customize\(ga传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .SH [选项]
 .INDENT 0.0
 .TP
 .B \-\-add\-plugin, \-a
-通过指定包含 ZIP 文件的路径来添加插件。
+通过指定包含插件的 ZIP 文件的路径来添加插件。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -67,12 +63,12 @@ calibre\-customize\(ga传递参数时，用引号括起这些参数。例如: \(
 .INDENT 0.0
 .TP
 .B \-\-disable\-plugin
-禁用该名称插件
+禁用该名称的插件
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-plugin
-启用该名称插件
+启用该名称的插件
 .UNINDENT
 .INDENT 0.0
 .TP

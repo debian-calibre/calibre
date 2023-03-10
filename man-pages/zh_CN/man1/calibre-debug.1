@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "二月 17, 2023" "6.13.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "三月 10, 2023" "6.14.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -41,13 +41,10 @@ calibre\-debug [选项]
 .UNINDENT
 .UNINDENT
 .sp
-多种命令行界面在排除 calibre 的故障时很有用。这个命令将无条件
-地开启内置的 python 编译器。你也可以在 debug 模式下运行主
-要的 cailbre GUI，calibre 电子书阅读器和 calibre 编辑器。
+多种命令行界面在调试calibre 时很有用。如果没有选项，此命令将启动内置的Python解释器。
+你也可以在 debug 模式下运行主要的 cailbre GUI，calibre 电子书阅读器和 calibre 编辑器。
 .sp
-它同时也包含了部分没有命令行工具的
-calibre 界面，比如字体子集，电子书区分
-工具等等。
+它同时也包含了部分没有命令行工具的 calibre 界面，比如字体子集，电子书对比工具等等。
 .sp
 你也能用 \fBcalibre\-debug\fP 来运行独立的脚本。像这样来操作：
 .INDENT 0.0
@@ -61,11 +58,7 @@ calibre 界面，比如字体子集，电子书区分
 #!/usr/bin/env \-S \fBcalibre\-debug\fP \-e \fB\-\-\fP \-\-
 .UNINDENT
 .sp
-每当向具有它们自己空间的:command:
-.nf
-\(ga
-.fi
-calibre\-debug\(ga传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .SH [选项]
 .INDENT 0.0
 .TP
@@ -149,7 +142,7 @@ calibre\-debug\(ga传递参数时，用引号括起这些参数。例如: \(dq/s
 .INDENT 0.0
 .TP
 .B \-\-inspect\-mobi, \-m
-查看指定目录的 MOBI 文件
+查看指定路径的 MOBI 文件
 .UNINDENT
 .INDENT 0.0
 .TP

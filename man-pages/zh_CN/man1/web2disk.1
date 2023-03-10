@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "WEB2DISK" "1" "二月 17, 2023" "6.13.0" "calibre"
+.TH "WEB2DISK" "1" "三月 10, 2023" "6.14.0" "calibre"
 .SH NAME
 web2disk \- web2disk
 .INDENT 0.0
@@ -41,23 +41,19 @@ web2disk URL
 .UNINDENT
 .UNINDENT
 .sp
-以https://google.com为例的URL
+URL的例子：\fI\%https://google.com\fP
 .sp
-每当向具有它们自己空间的:command:
-.nf
-\(ga
-.fi
-web2disk\(ga传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .SH [选项]
 .INDENT 0.0
 .TP
 .B \-\-base\-dir, \-d
-URL 存储的基础文件夹。默认 .
+保存URL的基础文件夹。默认 .
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-delay
-连续抓取最小间隔秒数。默认为 0 s
+连续获取的最小间隔秒数。默认为 0 s
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -67,12 +63,12 @@ URL 存储的基础文件夹。默认 .
 .INDENT 0.0
 .TP
 .B \-\-encoding
-你下载内容来源网站的字符编码。默认是试图猜测编码。
+你要下载的内容来源网站的字符编码。默认是尝试猜测编码。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-filter\-regexp
-将忽略任何匹配此正则表达式的链接。只要链接匹配正则表达式即可反复使用此选项。默认情况下不忽略任何链接地址。如果同时匹配筛选器的正则表达式和这里的表达式，则优先使用筛选器的正则表达式。
+将忽略任何匹配此正则表达式的链接。此选项可多次指定，只要链接匹配任何正则表达式，它都将被忽略。默认情况下不忽略任何链接地址。如果同时指定了过滤正则表达式和匹配正则表达式，则优先使用过滤正则表达式。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -82,12 +78,12 @@ URL 存储的基础文件夹。默认 .
 .INDENT 0.0
 .TP
 .B \-\-match\-regexp
-匹配此正则表达式的链接都会被跟进。此选项可被多次使用，此时只要任一正则表达式有匹配链接，都被跟进。默认情况，所有链接都被跟进。
+匹配此正则表达式的链接都会被追踪。此选项可多次指定，只要链接匹配任意正则表达式，都将被追踪。默认情况，所有链接都被追踪。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-files, \-n
-文件下载最大值。仅对来自于 <a href> 标签的文件有效。默认为 9223372036854775807
+要下载的文件数的最大值。仅对来自于 <a href> 标签的文件有效。默认为 9223372036854775807
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -102,7 +98,7 @@ URL 存储的基础文件夹。默认 .
 .INDENT 0.0
 .TP
 .B \-\-verbose
-显示详细输出信息。有利调试
+显示详细输出信息。有利于调试
 .UNINDENT
 .INDENT 0.0
 .TP

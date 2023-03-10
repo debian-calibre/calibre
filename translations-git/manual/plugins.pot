@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 6.13.0\n"
+"Project-Id-Version: calibre 6.14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-17 08:03+0530\n"
+"POT-Creation-Date: 2023-03-10 05:46+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -185,6 +185,8 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.py:docstring of calibre.customize.CatalogPlugin.run:0
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.py:docstring of calibre.customize.FileTypePlugin.postadd:0
+#: ../../home/kovid/work/calibre/src/calibre/customize/__init__.py:docstring of calibre.customize.FileTypePlugin.postconvert:0
+#: ../../home/kovid/work/calibre/src/calibre/customize/__init__.py:docstring of calibre.customize.FileTypePlugin.postdelete:0
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.py:docstring of calibre.customize.FileTypePlugin.postimport:0
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.py:docstring of calibre.customize.FileTypePlugin.run:0
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.py:docstring of calibre.customize.MetadataReaderPlugin.get_metadata:0
@@ -344,6 +346,14 @@ msgstr ""
 msgid "If True, this plugin is run after books are added to the database. In this case the postimport and postadd methods of the plugin are called."
 msgstr ""
 
+#: ../../home/kovid/work/calibre/manual/docstring of calibre.customize.FileTypePlugin.on_postconvert:1
+msgid "If True, this plugin is run after a book is converted. In this case the postconvert method of the plugin is called."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/docstring of calibre.customize.FileTypePlugin.on_postdelete:1
+msgid "If True, this plugin is run after a book file is deleted from the database. In this case the postdelete method of the plugin is called."
+msgstr ""
+
 #: ../../home/kovid/work/calibre/manual/docstring of calibre.customize.FileTypePlugin.on_preprocess:1
 msgid "If True, this plugin is run just before a conversion"
 msgstr ""
@@ -373,16 +383,30 @@ msgid "Called post import, i.e., after the book file has been added to the datab
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.py:docstring of calibre.customize.FileTypePlugin.postadd:8
+#: ../../home/kovid/work/calibre/src/calibre/customize/__init__.py:docstring of calibre.customize.FileTypePlugin.postconvert:5
+#: ../../home/kovid/work/calibre/src/calibre/customize/__init__.py:docstring of calibre.customize.FileTypePlugin.postdelete:6
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.py:docstring of calibre.customize.FileTypePlugin.postimport:6
 msgid "Database id of the added book."
 msgstr ""
 
+#: ../../home/kovid/work/calibre/src/calibre/customize/__init__.py:docstring of calibre.customize.FileTypePlugin.postconvert:6
+#: ../../home/kovid/work/calibre/src/calibre/customize/__init__.py:docstring of calibre.customize.FileTypePlugin.postdelete:7
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.py:docstring of calibre.customize.FileTypePlugin.postimport:7
 msgid "The file type of the book that was added."
 msgstr ""
 
+#: ../../home/kovid/work/calibre/src/calibre/customize/__init__.py:docstring of calibre.customize.FileTypePlugin.postconvert:7
+#: ../../home/kovid/work/calibre/src/calibre/customize/__init__.py:docstring of calibre.customize.FileTypePlugin.postdelete:8
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.py:docstring of calibre.customize.FileTypePlugin.postimport:8
 msgid "Library database."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/customize/__init__.py:docstring of calibre.customize.FileTypePlugin.postconvert:1
+msgid "Called post conversion, i.e., after the conversion output book file has been added to the database. Note that it is run after a conversion only, not after a book is added. It is useful for modifying the book record based on the contents of the newly added file."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/customize/__init__.py:docstring of calibre.customize.FileTypePlugin.postdelete:1
+msgid "Called post deletion, i.e., after the book file has been deleted from the database. Note that it is not run when a book record is deleted, only when one or more formats from the book are deleted. It is useful for modifying the book record based on the format of the deleted file."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.py:docstring of calibre.customize.FileTypePlugin.postadd:1

@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE" "1" "二月 17, 2023" "6.13.0" "calibre"
+.TH "CALIBRE" "1" "三月 10, 2023" "6.14.0" "calibre"
 .SH NAME
 calibre \- calibre
 .INDENT 0.0
@@ -46,24 +46,20 @@ calibre [options] [path_to_ebook or calibre url ...]
 .sp
 \fBcalibre\fP://view\-book/test_library/1842/epub
 .sp
-将从:command:
+将通过:command:
 .nf
 \(ga
 .fi
-calibre\(ga电子书阅读器中的书库“test_library”中以EPUB格式打开id为1842的书籍。
+calibre\(ga电子书阅读器以EPUB格式打开书库“test_library”中的id为1842的书籍。
 书库名称是书库的文件夹名称，空格用下划线替换。
 用户手册中对各种基于URL的操作进行了详细描述。
 .sp
-每当向具有它们自己空间的:command:
-.nf
-\(ga
-.fi
-calibre\(ga传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .SH [选项]
 .INDENT 0.0
 .TP
 .B \-\-detach
-脱离任何存在的控制台，如果有的话（仅Linux）
+断开任何存在的控制终端，如果有的话（仅Linux）
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -88,12 +84,12 @@ calibre\(ga传递参数时，用引号括起这些参数。例如: \(dq/some pat
 .INDENT 0.0
 .TP
 .B \-\-start\-in\-tray
-最小化到系统栏。
+启动后最小化到系统托盘。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-忽略，请勿使用。仅为历史原因保留
+忽略，请勿使用。仅因历史原因保留
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "二月 17, 2023" "6.13.0" "calibre"
+.TH "CALIBREDB" "1" "三月 10, 2023" "6.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -189,7 +189,7 @@ calibredb list [选项]
 .sp
 列出 calibre 数据库中可用书籍。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -213,7 +213,7 @@ calibredb list [选项]
 .INDENT 0.0
 .TP
 .B \-\-line\-width, \-w
-输出中单行宽度最大值。默认检测屏幕大小。
+输出中单行宽度最大值。默认检测屏幕分辨率。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -262,9 +262,9 @@ calibredb add [选项] file1 file2 file3 ...
 .UNINDENT
 .UNINDENT
 .sp
-添加指定文件为书籍到数据库。你可以指定目录，请查看下面目录相关选项。
+将指定文件当做书籍添加到数据库。你可以指定目录，请查看下面目录相关选项。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -273,7 +273,7 @@ calibredb add [选项] file1 file2 file3 ...
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-如果找到具有类似书名和作者的书籍，请自动将传入格式(文件)合并到现有书籍记录中。值“Ignore”表示丢弃重复的格式。值“overwrite”表示书库中的重复格式将被新添加的文件覆盖。值“new_record”表示将重复的格式放入新的书籍记录中。
+如果找到具有类似书名和作者的书籍，自动将输入格式(文件)合并到现有书籍记录中。值“Ignore”表示丢弃重复的格式。值“overwrite”表示书库中的重复格式将被新添加的文件覆盖。值“new_record”表示将重复的格式放入新的书籍记录中。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -302,12 +302,12 @@ calibredb add [选项] file1 file2 file3 ...
 .INDENT 0.0
 .TP
 .B \-\-isbn, \-i
-设置已添加书籍的 ISBN
+设置已添加书籍的ISBN
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-languages, \-l
-逗号分割的语言列表（最好使用 ISO639 语言代码，即使有些语言名称也能识别）
+逗号分割的语言列表（最好使用 ISO639 语言代码，尽管也能识别某些语言名称）
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -335,17 +335,17 @@ calibredb add [选项] file1 file2 file3 ...
 .INDENT 0.0
 .TP
 .B \-\-add
-文件名(规则为模糊匹配即glob)规则，在扫描文件夹中的文件时将添加与此规则匹配的文件，即使这些文件不是已知的电子书文件格式。可以为多个规则多次指定。
+文件名(规则为模糊匹配即glob)规则，在扫描文件夹中的文件时将添加与此规则匹配的文件，即使这些文件不是已知的电子书文件格式。可以多次指定多个规则。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-文件名规则 (规则为模糊匹配即glob) ，在扫描文件夹中的文件时，与此规则匹配的文件将被忽略。可以为多个规则多次指定。例如：*.pdf将忽略所有PDF文件
+文件名规则 (规则为模糊匹配即glob) ，在扫描文件夹中的文件时，与此规则匹配的文件将被忽略。可以多次指定多个规则。例如：*.pdf将忽略所有PDF文件
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-假设每个文件夹只有一本逻辑书籍，并且其中的所有文件都是该书籍的不同电子书格式
+假设每个文件夹只有一本逻辑书籍，并且其中的所有文件都是该书籍的不同格式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -364,9 +364,9 @@ calibredb remove ids
 .UNINDENT
 .UNINDENT
 .sp
-从数据库移除指定id的书籍。id为以逗号分隔的 id 号列表（你可以使用搜索命令来获得 id 号）。例如，23,34,57\-85（如果指定一个区间，该区间的最后一个数字不会被包括在内）。
+从数据库删除指定id的书籍。id为以逗号分隔的 id 号列表（你可以使用搜索命令来获得 id 号）。例如，23,34,57\-85（如果指定一个区间，该区间的最后一个数字不会被包括在内）。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-permanent
@@ -384,9 +384,9 @@ calibredb add_format [options] id ebook_file
 .UNINDENT
 .UNINDENT
 .sp
-用 ebook_file将电子书添加到由id标识的逻辑书籍的可用格式中。如果格式已经存在，则替换它，除非指定了不替换选项。
+将 ebook_file中的电子书添加到由id标识的书籍的可用格式中。如果格式已经存在，则替换它，除非指定了不替换选项。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -406,7 +406,7 @@ calibredb remove_format [选项] id fmt
 .sp
 从ID识别的逻辑书籍中删除fmt格式。你可以通过使用搜索命令获取ID。fmt应该是形如LRF或TXT或EPUB的一个文件扩展名。如果逻辑书籍没有fmt可用则什么也不做。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -422,7 +422,7 @@ calibredb show_metadata [options] id
 显示在 calibre 数据库中存储的id所标识的书籍的元数据。
 id是来自搜索命令的id号。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -445,7 +445,7 @@ book_id是来自搜索命令的id号。您可以通过使用\-\-as\-opf切换到
 了解OPF格式。还可以用\-\-field选项设置各个字段的元数据。如果使用\-\-field选项则
 不需要指定OPF文件。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
@@ -476,7 +476,7 @@ calibredb export [options] ids
 导出操作将保存书籍的所有格式，以及其封面和元数据(保存
 至一个 opf 文件)。你可以使用搜索命令来获得 id 号。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -485,27 +485,27 @@ calibredb export [options] ids
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-让calibre将所有非英文字符转换成英文对应字符的文件名。如果保存到不完全支持Unicode文件名的旧文件系统中，这将非常有用。 选定此项将关闭此操作。
+让calibre将文件名中的所有非英文字符转换成英文对应字符。如果保存到不完全支持Unicode文件名的旧文件系统中，这将非常有用。 选定此项将关闭此操作。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-save\-cover
-一般来说，calibre 将把封面保存为单独文件，和原始电子书文件分开保存。 选定此项将关闭此操作。
+通常，calibre将把封面保存为单独文件，和电子书文件一起生成。 选定此项将关闭此操作。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-update\-metadata
-一般来说，calibre 将基于 calibre 书库升级存储所存文件的元数据。这使保存到硬盘变慢一些。 选定此项将关闭此操作。
+通常，calibre将根据calibre书库中的信息更新保存的文件的元数据。这会使保存到硬盘变慢一些。 选定此项将关闭此操作。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-write\-opf
-一般来说，calibre 将会把元数据写入单独的 OPF 文件，和原始电子书文件分开保存。 选定此项将关闭此操作。
+通常，calibre 将会把元数据写入单独的 OPF 文件，和电子书文件一起生成。 选定此项将关闭此操作。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-formats
-每本书籍的格式列表，逗号间隔。默认保存所有可用格式。
+要保存的每本书籍的逗号分割的格式列表。默认保存所有可用格式。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -515,7 +515,7 @@ calibredb export [options] ids
 .INDENT 0.0
 .TP
 .B \-\-replace\-whitespace
-下划线替换空格。
+用下划线替换空格。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -525,7 +525,7 @@ calibredb export [options] ids
 .INDENT 0.0
 .TP
 .B \-\-template
-该模板用来控制保存到设备的文件的文件名和文件夹结构。默认是\fB\(dq\fP{author_sort}/{title}/{title} \- {authors}\fB\(dq\fP，它将把书籍保存到包含标题和作者的文件名的每个作者文件夹中。可用的控制项是: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+该模板用来控制保存到设备的文件的文件名和文件夹结构。默认是\fB\(dq\fP{author_sort}/{title}/{title} \- {authors}\fB\(dq\fP，它将把书籍保存到每个作者名命名的文件夹中，书籍文件名由书名和作者构成。可用的控制项是: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -560,27 +560,27 @@ Note that different \fBcatalog\fP formats support different sets of options. To
 see the different options, specify the name of the output file and then the
 \-\-help option.
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
-逗号分割数据库 ID 到书目的列表。 一旦声明，则忽略 \fI\%\-\-search\fP  默认值：全部
+到书目的逗号分割的数据库ID列表。 一旦声明，则忽略 \fI\%\-\-search\fP  默认值：全部
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-search, \-s
-为搜索查询筛选结果。搜索查询格式请参见用户手册中搜索相关内容。默认：不筛选
+按搜索查询筛选结果。搜索查询格式请参见用户手册中搜索相关内容。默认：不筛选
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-显示详细输出信息。有利调试
+显示详细输出信息。有利于调试
 .UNINDENT
 .SS EPUB 个选项
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title
-生成目录的标题用作元数据标题。 默认值：\fB\(aq\fPMy Books\fB\(aq\fP 适用于：AZW3，ePub，MOBI 等输出格式
+生成书目的标题，用作元数据中的书名。 默认值：\fB\(aq\fPMy Books\fB\(aq\fP 适用于：AZW3，ePub，MOBI 等输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -590,47 +590,47 @@ see the different options, specify the name of the output file and then the
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-在转换过程的不同阶段分别保存输出到指定文件夹。如果您检查在转换过程的哪个阶段发生了错误，这非常有用。 默认: \fB\(aq\fPNone\fB\(aq\fP 适用于: AZW3, EPUB, MOBI 的输出格式
+将转换过程的不同阶段分别保存输出到指定文件夹。如果您检查在转换过程的哪个阶段发生了错误，这非常有用。 默认: \fB\(aq\fPNone\fB\(aq\fP 适用于: AZW3, EPUB, MOBI 的输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclude\-genre
-描述以排除类型的标签正则表达式。 默认值： \fB\(aq\fP[.+]|^+$\fB\(aq\fP 不包括括号内的标签，例如 \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, 和 \fB\(aq\fP+\fB\(aq\fP, 默认的用于阅读书籍的标签。 适用于： AZW3, EPUB, MOBI 输出格式
+用正则表达式描述要排除的视为类型的标签。 默认值： \fB\(aq\fP[.+]|^+$\fB\(aq\fP 不包括括号内的标签，例如 \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, 和 \fB\(aq\fP+\fB\(aq\fP, 默认的用于阅读书籍的标签。 适用于： AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-指定用于从生成的目录中排除书籍的规则。 排除规则的模型是(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP标签\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) 或(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP)。 例如： ((\fB\(aq\fP存档的书籍\fB\(aq\fP,\fB\(aq\fP#状态\fB\(aq\fP,\fB\(aq\fP已存档\fB\(aq\fP),) 将在自定义栏目“状态”中排除值为“已存档”的图书。定义多个规则时，将应用所有规则。 默认: \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP 应用于AZW3, EPUB, MOBI 输出格式
+指定用于从生成的书目中排除书籍的规则。 排除规则的模型是(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP标签\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) 或(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP)。 例如： ((\fB\(aq\fP存档的书籍\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP\fB\(aq\fP,\fB\(aq\fP已存档\fB\(aq\fP),) 将在自定义栏目“status\fB\(aq\fP”中排除值为“已存档”的书籍。定义多个规则时，将应用所有规则。 默认: \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP 适用于：AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-authors
-目录中包括“作者”部分。 默认值： \fB\(aq\fPFalse\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
+书目中包括“作者”部分。 默认值： \fB\(aq\fPFalse\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-descriptions
-目录中包括“描述”部分。 默认值： \fB\(aq\fPFalse\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
+书目中包括“描述”部分。 默认值： \fB\(aq\fPFalse\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-genres
-目录中包括“类型”部分。 默认值： \fB\(aq\fPFalse\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
+书目中包括“类型”部分。 默认值： \fB\(aq\fPFalse\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-recently\-added
-目录中包括“最近添加”部分。 默认值： \fB\(aq\fPFalse\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
+书目中包括“入库日期”部分。 默认值： \fB\(aq\fPFalse\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-series
-目录中包括“丛书”部分。 默认值： \fB\(aq\fPFalse\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
+书目中包括“丛书”部分。 默认值： \fB\(aq\fPFalse\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-titles
-目录中包括“标题”部分。 默认值： \fB\(aq\fPFalse\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
+书目中包括“书名”部分。 默认值： \fB\(aq\fPFalse\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -640,37 +640,37 @@ see the different options, specify the name of the output file and then the
 .INDENT 0.0
 .TP
 .B \-\-header\-note\-source\-field
-包含要在描述标头中插入的注释文本的自定义域。 默认值: \fB\(aq\fP\fB\(aq\fP 适用于: AZW3, EPUB, MOBI输出格式
+包含要插入到描述的头部位置的批注文本的自定义字段。 默认值: \fB\(aq\fP\fB\(aq\fP 适用于: AZW3, EPUB, MOBI输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-merge\-comments\-rule
-#<custom field>:[before|after]:[True|False] 设置:  <custom field> 自定义字段包含与书籍简介合并的内容批注  [before|after] 书籍简介相关的内容批注的位置  [True|False] \- 在内容批注和书籍简介之间插入水平规则 默认值: \fB\(aq\fP::\fB\(aq\fP 适用于: AZW3, EPUB, MOBI 输出格式
+#<custom field>:[before|after]:[True|False] 设置:  <custom field> 自定义字段包含与书籍简介合并的内容批注  [before|after] 书籍简介相关的内容批注的位置  [True|False] \- 在内容批注和书籍简介之间插入水平线 默认值: \fB\(aq\fP::\fB\(aq\fP 适用于: AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-指定输出配置文件。在某些情况下，输出配置文件用于优化某些设备的书目分类。例如，\fB\(aq\fPkindle\fB\(aq\fP 或 \fB\(aq\fPkindle_dx\fB\(aq\fP 以章节和文章的方式来生成目录结构。默认：\fB\(aq\fPNone\fB\(aq\fP 适用于：AZW3、EPUB、MOBI 等输出格式
+指定\fB\(aq\fP输出配置\fB\(aq\fP。在某些情况下，输出配置用于优化某些设备的书目。例如，\fB\(aq\fPkindle\fB\(aq\fP 或 \fB\(aq\fPkindle_dx\fB\(aq\fP 生成带章节和文章的目录结构。默认：\fB\(aq\fPNone\fB\(aq\fP 适用于：AZW3、EPUB、MOBI 等输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-指定用于包括表示已读书籍，收藏清单项目和其他用户 定前缀的前缀的规则。前缀规则的模型  (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP)。 当定义了多个规则时，将使用第一个匹配规则 默认规则:\fB\(dq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(dq\fP适用于：AZW3, EPUB, MOBI 输出格式
+指定用于包含表示已读书籍，愿望清单和其他用户指定前缀的前缀的规则。前缀规则的模型  (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP)。 当定义了多个规则时，将使用第一个匹配规则 默认规则:\fB\(dq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(dq\fP适用于：AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-preset
-使用GUI目录生成器创建的命名预设。 预设指定用于构建目录的所有设置。 默认值: \fB\(aq\fPNone\fB\(aq\fP 适用于: AZW3, EPUB, MOBI 输出格式
+使用GUI书目生成器创建的命名预设。 预设指定用于构建书目的所有设置。 默认值: \fB\(aq\fPNone\fB\(aq\fP 适用于: AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-thumb\-width
-目录中书籍封面的大小提示(英寸)。 范围： 1.0 \- 2.0 默认值： \fB\(aq\fP1.0\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
+书目中书籍封面的大小提示(英寸)。 范围： 1.0 \- 2.0 默认值： \fB\(aq\fP1.0\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-use\-existing\-cover
-在生成目录时替换现有的封面。 默认值： \fB\(aq\fPFalse\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
+在生成书目时替换现有的封面。 默认值： \fB\(aq\fPFalse\fB\(aq\fP 适用于： AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .SH SAVED_SEARCHES
 .INDENT 0.0
@@ -684,7 +684,7 @@ calibredb saved_searches [options] (list|add|remove)
 .UNINDENT
 .UNINDENT
 .sp
-管理存储在该数据库中的搜索历史。
+管理存储在该数据库中的搜索记录。
 如果尝试添加已经存在的一个名称查询，
 则它将被替换。
 .sp
@@ -696,7 +696,7 @@ calibredb \fBsaved_searches\fP add search_name search_expression
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -709,18 +709,18 @@ calibredb add_custom_column [options] label name datatype
 .UNINDENT
 .UNINDENT
 .sp
-创建一个自定义的栏目，栏目名为你自定义的名称，不能包含空格或冒号。数据类型可为：bool, comments, composite, datetime, enumeration, float, int, rating, series, text
+创建一个自定义栏目，栏目名为你自定义的名称，不能包含空格或冒号。数据类型可为：bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-display
-一个自定义选项如何解释该栏目中数据的字典。这是一个JSON字符串。对于枚举栏目，使用 \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP 有许多选项可以进入显示变量，按栏目类型的选项是： composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations 找到适当组合的最好方法是在GUI中创建适当类型的自定义栏目，然后查看书籍的备份OPF（确保自从添加该栏目以来已经创建了新的OPF）。在OPF中的新栏目中，你将看到JSON的“显示”。
+用于自定义如何解释此栏目中的数据的选项的字典。这是一个JSON字符串。对于枚举栏目，使用 \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP 有许多选项可以进入显示变量，按栏目类型的选项是： composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations 找到适当组合的最好方法是在GUI中创建适当类型的自定义栏目，然后查看书籍的备份OPF（确保自从添加该栏目以来已经创建了新的OPF）。在OPF中的新栏目中，你将看到JSON的“显示”。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-is\-multiple
-此栏目存储类似数据的标签(即多个逗号分隔值)。仅当数据类型为文本时才适用。
+此栏目存储类似标签的数据(例如，多个逗号分隔的值)。仅当数据类型为文本时才适用。
 .UNINDENT
 .SH CUSTOM_COLUMNS
 .INDENT 0.0
@@ -736,7 +736,7 @@ calibredb custom_columns [options]
 .sp
 列出可用的自定义栏目。显示栏目标签和id。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -756,7 +756,7 @@ calibredb remove_custom_column [options] label
 .sp
 用标签删除的自定义栏目标识。可以使用custom_columns command命令查看可用栏目。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -778,11 +778,11 @@ calibredb set_custom [options] column id value
 您可以使用搜索命令获取id列表。
 您可以使用 custom_columns 命令获取自定义栏目名的列表。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
-如果栏目存有多个值，将指定值附加到已有值之后，而非覆盖。
+如果栏目存有多个值，将指定值添加到已有值之后，而非覆盖。
 .UNINDENT
 .SH RESTORE_DATABASE
 .INDENT 0.0
@@ -798,9 +798,9 @@ calibredb restore_database [options]
 .sp
 从calibre书库每个文件夹中OPF文件含有的元数据恢复此数据库，如果你的metadata.db文件已损坏，此方法很有用。
 .sp
-警告：此命令会完全重新生成数据库。你会丢失所有搜索历史，自定义分类，处理规则，已保存的每本书的版本设置和自定义配方。恢复的元数据和OPF文件中的一样准确。
+警告：此命令会完全重新生成数据库。你会丢失所有搜索记录，自定义分类，元数据处理规则，已保存的每本书的版本设置和自定义的新闻抓取规则。恢复的元数据和OPF文件中的一样准确。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -818,9 +818,9 @@ calibredb check_library [options]
 .UNINDENT
 .UNINDENT
 .sp
-对书库的文件系统执行一些检查。生成报告是invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
+对书库的文件系统执行一些检查。报告是invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -839,7 +839,7 @@ calibredb check_library [options]
 .INDENT 0.0
 .TP
 .B \-\-report, \-r
-逗号分隔的报表列表。 默认值: 全部
+逗号分隔的报告列表。 默认值: 全部
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -858,10 +858,10 @@ calibredb list_categories [options]
 .UNINDENT
 .UNINDENT
 .sp
-在数据库中生成一个目录信息的报告。
-该信息与标签浏览器中显示的信息等效。
+在数据库中生成一个类别信息的报告。
+该信息与分类浏览器中显示的信息相同。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
@@ -880,12 +880,12 @@ calibredb list_categories [options]
 .INDENT 0.0
 .TP
 .B \-\-item_count, \-i
-只输出类别中的项目数目，而不是类别内的每项计数
+只输出类别中的项的数目，而不是类别内的每项计数
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-width, \-w
-输出中单行宽度最大值。默认检测屏幕大小。
+输出中单行宽度最大值。默认检测屏幕分辨率。
 .UNINDENT
 .SH BACKUP_METADATA
 .INDENT 0.0
@@ -900,17 +900,17 @@ calibredb backup_metadata [选项]
 .UNINDENT
 .sp
 将存储在数据库中的元数据备份到每个书籍文件夹中的
-单个OPF文件中。这通常是自动发生的，但是您可以运行
+单个OPF文件中。这通常是自动的，但是您可以运行
 此命令来强制重新生成OPF文件，并使用\-\-all选项。
 .sp
 请注意，通常不需要这样做，因为每次元数据更改时，
 OPF文件都会自动备份。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
-通常，此命令只对过时的OPF文件书籍进行操作。这个选项可使它在所有的书籍上运行。
+通常，此命令只对OPF文件过期的书籍有效。这个选项使它在所有的书籍上运行。
 .UNINDENT
 .SH CLONE
 .INDENT 0.0
@@ -928,7 +928,7 @@ calibredb 拷贝到 path/to/new/library
 .sp
 副本书库将没有任何书籍。如果您想要创建一个完整的副本书库，包括所有的书籍，那么只需使用您的文件系统工具来复制书库文件夹。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -947,7 +947,7 @@ calibredb embed_metadata [options] book_id
 的特殊值“all”来更新所有书籍中的元数据。还可以指定许多由空间分隔的书籍id
 和由连字符分隔的ID范围。例如：calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
@@ -968,7 +968,7 @@ calibredb搜索 [选项] 搜索表达式
 搜索书库中指定的搜索项，返回与搜索表达式匹配的以逗号分隔的书籍id列表。输出格式对于输入格式接受id列表的其他命令非常有用。
 搜索表达式可以是来自calibre强大的搜索查询语言中的任何内容，例如：calibredb 搜索author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l
@@ -986,7 +986,7 @@ calibredb fts_index [options] enable/disable/status/reindex
 .UNINDENT
 .UNINDENT
 .sp
-控制全文检索索引进程。
+控制全文搜索索引进程。
 .INDENT 0.0
 .TP
 .B enable
@@ -1013,7 +1013,7 @@ calibredb fts_index [options] enable/disable/status/reindex
 .UNINDENT
 .UNINDENT
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-indexing\-speed
@@ -1038,11 +1038,11 @@ calibredb fts_search [options] 搜索表达式
 .sp
 对整个书库或其子集进行全文搜索。
 .sp
-每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-do\-not\-match\-on\-related\-words
-只匹配精确的字词而不是相关的字词。因此，更正将与矫正不匹配。
+只匹配精确的字词而不是相关的字词。因此，correction将与orrecting不匹配。
 .UNINDENT
 .INDENT 0.0
 .TP

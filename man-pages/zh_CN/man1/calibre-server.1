@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "二月 17, 2023" "6.13.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "三月 10, 2023" "6.14.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
@@ -41,22 +41,14 @@ calibre\-server [选项] [书库文件夹的路径...]
 .UNINDENT
 .UNINDENT
 .sp
-启动caliber内容服务器。calibre 内容服务器通过互联网公开你的 calibre 书库。你可以将书库文件夹的路径指定为:command:
-.nf
-\(ga
-.fi
-calibre\-server\(ga的参数。如果未指定任何路径，calibre 主程序所知道的所有书库都将被使用。
+启动caliber内容服务器。calibre 内容服务器通过互联网公开你的 calibre 书库。你可以将书库文件夹的路径指定为:command:\fIcalibre\-server\fP 参数。如果未指定任何路径，将使用calibre程序所知道的所有书库。
 .sp
-每当向具有它们自己空间的:command:
-.nf
-\(ga
-.fi
-calibre\-server\(ga传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .SH [选项]
 .INDENT 0.0
 .TP
 .B \-\-access\-log
-访问日志文件的路径。此日志包含有关连接到服务器并发出请求的客户端的信息。默认情况下，不进行访问日志记录。
+访问日志文件的路径。此日志包含有关连接到服务器并发出请求的客户端的信息。默认情况下，不记录访问日志。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -86,7 +78,7 @@ calibre\-server\(ga传递参数时，用引号括起这些参数。例如: \(dq/
 .INDENT 0.0
 .TP
 .B \-\-book\-list\-mode
-选择默认的书籍列表显示模式.      设置用于新用户的默认书籍列表模式. 每一名用户都可以单独重新设置此选项.默认使用封面网格。
+选择默认的书籍列表显示模式.      设置用于新用户的默认书籍列表模式. 每名用户都可以单独重新设置此选项.默认使用封面网格。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -96,22 +88,22 @@ calibre\-server\(ga传递参数时，用引号括起这些参数。例如: \(dq/
 .INDENT 0.0
 .TP
 .B \-\-custom\-list\-template
-包含自定义图书列表模式的JSON模板文件的路径。创建这种模板文件的最简单方法是在caliber中前往首选项\->通过网络分享\->书籍列表模板，创建模板并导出它。
+包含自定义书籍列表模式的模板的JSON文件的路径。创建这种模板文件的最简单方法是在caliber中前往\fB\(aq\fP首选项\->通过网络共享\->书籍列表模板\fB\(aq\fP，创建模板并导出它。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-daemonize
-后台进程运行为守护进程（仅Linux）。
+进程在后台运行为守护进程（仅Linux）。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-限制为仅显示用户自定义字段.      逗号分隔的用户自定义元数据字段的列表，将由内容服务器在 /opds 和 /mobile 视图中显示。如果指定此选项，仅显示此列表中包含的字段。例如: my_rating,my_tags
+用户自定义字段的显示限制.       逗号分隔的用户自定义元数据字段的列表，将由内容服务器在 /opds 和 /mobile 视图中显示。如果指定此选项，仅显示此列表中包含的字段。例如: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-allow\-socket\-preallocation, \-\-disable\-allow\-socket\-preallocation
-套接字预分配，例如，systemd套接字激活. 默认情况下, 此选项是启用的。
+端口预分配，例如，使用systemd的端口激活. 默认情况下, 此选项是启用的。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -121,7 +113,7 @@ calibre\-server\(ga传递参数时，用引号括起这些参数。例如: \(dq/
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-返回到自动检测界面.  如果由于某种原因，服务器无法绑定到listen_on选项中指定的接口，那么它将尝试检测连接到外界的接口并绑定到该接口。 默认情况下, 此选项是启用的。
+替换为自动检测到的接口.        如果由于某种原因，服务器无法绑定到listen_on选项中指定的端口，那么它将尝试检测连接到外界的端口并绑定到该端口。 默认情况下, 此选项是启用的。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -161,12 +153,12 @@ calibre\-server\(ga传递参数时，用引号括起这些参数。例如: \(dq/
 .INDENT 0.0
 .TP
 .B \-\-log
-服务器日志的日志文件路径。此日志包含服务器信息和错误，而不是访问日志。默认情况下，它被写入标准输出(stdout)。
+服务器日志的文件路径。此日志包含服务器信息和错误，而不是访问日志。默认情况下，它被写入标准输出(stdout)文件。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-manage\-users
-管理允许连接到此服务器的用户的数据库。您可以通过添加一个\-\-以在自动模式下使用它。有关详情，请参阅calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help。另请参阅 \fI\%\-\-userdb\fP 选项。
+管理允许连接到此服务器的用户的数据库。您可以通过添加一个 \fB\-\-\fP 以在自动模式下使用它。有关详情，请参阅calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help。另请参阅 \fI\%\-\-userdb\fP 选项。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -176,17 +168,17 @@ calibre\-server\(ga传递参数时，用引号括起这些参数。例如: \(dq/
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-进程的最大时间.    允许进程运行的最大时间量(分钟)。设为零则无限制。
+工作进程的最大时间.  允许工作进程运行的最大时间量(分钟)。设为零则无限制。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-jobs
-最大进程数.      任务进程按需启动，用于大型任务，如准备书籍以供查看、添加书籍、转换等。通常，此类进程的最大数量取决于CPU内核的数量。您可以通过此设置控制它。
+最大工作进程数.    工作进程按需启动，用于大型任务，如准备书籍以供阅读、添加书籍、转换等。通常，此类进程的最大数量取决于CPU内核的数量。您可以通过此设置控制它。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-log\-size
-日志文件最大大小（MB）.       由服务器生成的日志文件的最大容量。当日志变得大于这个容量时，它将被自动覆盖。设置为零时禁用日志覆盖。
+日志文件最大大小（MB）.       由服务器生成的日志文件的最大容量。当日志变得大于这个容量时，旧日志将被自动覆盖。设置为零时禁用日志覆盖。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -221,7 +213,7 @@ OPDS源中未分组项目的最大数量.   当有超过这个设定数量的结
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-包含“搜索Internet”功能的URL的JSON文件的路径。创建这样的文件最简单的方法是进入首选项\->网络共享\->在网络中搜索，创建URL并将其导出。
+包含“在网上搜索”指定的URL的JSON文件的路径。创建这样的文件最简单的方法是进入\fB\(aq\fP首选项\->通过网络共享\->在网上搜索\fB\(aq\fP，创建URL并将其导出。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -246,12 +238,12 @@ SSL私钥文件的路径.
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-允许来自特定IP的未经身份验证的连接修改书库.     通常，如果您不打开身份验证，服务器将以只读模式运行，从而不允许匿名用户更改您的Calibre书库。此选项允许从指定IP连接的任何人修改书库。必须是逗号分隔的网络地址或网络规范的列表。 如果您希望在不进行身份验证的情况下运行服务器，但仍使用Calibredb对您的Calibre书库进行更改，则此功能非常有用。请注意，启用此选项意味着从指定IP连接的任何人都可以更改您的Calibre库。
+允许来自特定IP的未经身份验证的连接更改书库.     通常，如果您不打开身份验证，服务器将以只读模式运行，从而不允许匿名用户更改您的Calibre书库。此选项允许从指定IP连接的任何人修改书库。必须是逗号分隔的网络地址或网络规范的列表。 如果您希望在不进行身份验证的情况下运行服务器，但仍使用Calibredb对您的Calibre书库进行更改，则此功能非常有用。请注意，启用此选项意味着从指定IP连接的任何人都可以更改您的Calibre库。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-url\-prefix
-所有URL的预置前缀.         如果希望在反向代理后面运行此服务器，则非常有用。例如，使用 /calibre 作为URL前缀。
+所有URL的预置前缀.         如果希望在反向代理后运行此服务器，则非常有用。例如，使用 /calibre 作为URL前缀。
 .UNINDENT
 .INDENT 0.0
 .TP
