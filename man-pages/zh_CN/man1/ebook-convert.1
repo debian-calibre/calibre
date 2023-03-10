@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "二月 17, 2023" "6.13.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "三月 10, 2023" "6.14.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -52,14 +52,10 @@ input_file 表示输入文件，output_file 表示输出文件。这两者作为
 对于转换系统的完整文档请查阅
 \fI\%电子书转换\fP
 .sp
-每当向具有它们自己空间的:command:
-.nf
-\(ga
-.fi
-ebook\-convert\(ga传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .sp
 选项以及选项的默认值都取决于输入
-和输出格式，所以你应该经常检查
+和输出格式，所以你应该经常检查:
 .sp
 ebook\-convert myfile.input_format myfile.output_format \-h
 .sp
@@ -75,7 +71,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .IP \(bu 2
 \fI\%智能处理\fP
 .IP \(bu 2
-\fI\%查找并替换\fP
+\fI\%查找替换\fP
 .IP \(bu 2
 \fI\%结构检测\fP
 .IP \(bu 2
@@ -93,17 +89,17 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-input\-profile
-设置输入配置文件。此配置文件让程序了解如何解析输入文档并进行转换。例如页面分辨率(i.e. 以像素为单位)。可选项有： cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+设置输入配置。输入配置让程序了解如何解析输入文档并进行转换。例如页面分辨率(i.e. 以像素为单位)。可选项有： cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-列出内建的订阅清单名。你可以通过如下命令创建基于内建订阅清单的电子书： ebook\-convert \fB\(dq\fPRecipe Name.recipe\fB\(dq\fP output.epub
+列出内建的规则名。你可以通过如下命令创建基于内建的规则的电子书： ebook\-convert \fB\(dq\fPRecipe Name.recipe\fB\(dq\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-设置输出配置文件。输出配置文件可以让转换系统针对指定的设备优化文档（例如通过根据设备屏幕大小缩放图片）。在某些情况下，可以用输出配置文件对特定设备优化输出，但几乎没有必要。可选项有：cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet, generic_eink_large, generic_eink, generic_eink_hd
+设置输出配置。输出配置可以让转换系统针对指定的设备优化文档（例如通过根据设备屏幕分辨率缩放图片）。在某些情况下，可以用\fB\(aq\fP输出配置\fB\(aq\fP优化对特定设备的输出，但几乎没有必要。可选项有：cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet, generic_eink_large, generic_eink, generic_eink_hd
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -124,7 +120,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
-关闭在分页符处将文件切分为多个的功能. 通常, 会在分页符处将输入文件做切分生成多个文件. 由此可以输出使用较少的资源、解析快速的电子书. 当然切分操作会增加处理时间, 如果输入文件含有较多的分页符, 请关闭此功能.
+关闭在分页符处将文件切分为多个的功能. 通常, 会在分页符处将输入文件做切分生成多个文件. 由此可以输出使用资源少、解析快的电子书. 当然切分操作会增加处理时间, 如果输入文件含有较多的分页符, 请关闭此功能.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -134,7 +130,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-epub\-inline\-toc
-插入的一个内嵌目录，会作为书籍内容。
+插入一个内嵌目录，将会作为书籍内容。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -144,12 +140,12 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-epub\-version
-要生成的EPUB文件的版本。EPUB 2 是最具广泛兼容性的，只有在必要时才使用 EPUB 3。
+生成的EPUB文件的版本。EPUB 2 是最具广泛兼容性的，只有在必要时才使用 EPUB 3。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-解压EPUB文件的内容到指定文件夹。请注意，该文件夹的内容会先被清空。
+将生成的EPUB文件的内容解压到指定文件夹。请注意，该文件夹的内容会被清空。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -159,7 +155,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-no\-default\-epub\-cover
-正常情况下，如导入的文件无封面并且你也未指定，则会生成一张带有书名、作者等信息的默认封面。此选项可以禁止此封面的生成。
+通常，如导入的文件无封面图片并且你也未指定，则会生成一张带有书名、作者等信息的默认封面。此选项可以禁止此封面的生成。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -169,7 +165,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-preserve\-cover\-aspect\-ratio
-当使用 SVG 封面时，该选项会导致封面平铺满有效的屏幕区，但仍会保持它的高宽比。这意味着可能会在图片顶部或底部产生白边，但是图片本身不会变形。不选该选项的话，图片可能会轻微变形，但不会有白边。
+当使用 SVG 封面时，该选项会使封面平铺满有效的屏幕区，但仍会保持它的高宽比。这意味着可能会在图片顶部或底部产生白边，但是图片本身不会变形。不选该选项的话，图片可能会轻微变形，但不会有白边。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -192,12 +188,12 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-base\-font\-size
-基准字体大小（以PT为单位）。在生成的书籍中所有的字体尺寸将基于这个大小重新缩放。通过选择更大的尺寸，可以使输出中的字体更大，反之亦然。默认情况下，当值为0时，根据你选择的输出配置文件选择基本字体大小。
+基准字体大小（以PT为单位）。在生成的书籍中所有的字体尺寸将基于这个大小重新缩放。通过选择更大的尺寸，可以使输出中的字体更大，反之亦然。默认情况下，当值为0时，根据你选择的\fB\(aq\fP输出配置\fB\(aq\fP确定基准字体大小。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-更改文本对齐方式。 使用值\fB\(dq\fP左对齐\fB\(dq\fP 将转换资源中所有的文本为左对齐。 (如：未对齐) 使用值\fB\(dq\fPjustify\fB\(dq\fP 将转换资源中所有的未对齐的文本为对齐。使用值\fB\(dq\fPoriginal\fB\(dq\fP(默认)则不更改源文件的对齐方式。请注意，仅部分输出格式支持对齐方式。
+更改文本对齐方式。 使用值\fB\(dq\fP左对齐\fB\(dq\fP 将转换资源中所有的文本为左对齐。 (如：未对齐) 使用值\fB\(dq\fPjustify\fB\(dq\fP 将转换资源中所有的未对齐的文本为居中对齐。使用值\fB\(dq\fPoriginal\fB\(dq\fP(默认)则不更改源文件的对齐方式。请注意，仅部分输出格式支持对齐方式。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -207,22 +203,22 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-embed\-all\-fonts
-内嵌输入文档中引用到但未内嵌的字体。软件会在你的系统中查找这些字体，找到了就内嵌。字体内嵌只有当你的目标格式支持才有用，例如 EPUB、AZW3、DOCX 和 PDF。请保证你拥有在文档中内嵌字体的合适授权。
+嵌入输入文档中引用到但未嵌入的字体。软件会在你的系统中查找这些字体，找到了就嵌入。字体嵌入只有当你的目标格式支持时才有用，例如 EPUB、AZW3、DOCX 和 PDF。请保证你拥有在文档中嵌入字体的合适授权。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-在书籍中内嵌指定的字体。这指定了书籍中使用的“基础”字体。如果输入文件指定了字体，就有可能覆盖此处的基础字体。你可以使用“样式信息过滤”的选项来删除输入文档的字体。注意，字体内嵌只在一些输出格式中有用，主要是 EPUB、AZW3 和 DOCX。
+在书籍中嵌入指定的字体。这里指定了书籍中使用的“基础”字体。如果输入文件指定了字体，就有可能覆盖此处的基础字体。你可以使用“样式信息过滤”的选项来删除输入文档中指定的字体。注意，字体内嵌只在一些输出格式中有用，主要是 EPUB、AZW3 和 DOCX。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-默认情况下，calibre 将使用各种CSS属性的简写形式，如边距、填充、边框等。此选项将使用完整书写方式（不简写）。注意，在生成EPUB文件时，由于Nook不能处理简写的CSS，所以将输出配置文件设置为Nook配置文件中的一个时，CSS总是使用完整书写。
+默认情况下，calibre 将使用各种CSS属性的简写形式，如边距 margin、填充padding、边框border等。此选项将使用完整书写方式。注意，在生成EPUB文件时，由于Nook不能处理简写的CSS，所以将\fB\(aq\fP输出配置\fB\(aq\fP设置为Nook配置中的一个时，CSS总是使用完整书写。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-extra\-css
-CSS 样式表或原始 CSS 文件路径。该 CSS 样式表将会被添加到源文件的样式规则中，它可以用于覆盖输入文件中的同样的样式。
+CSS 样式表或原始 CSS 文件路径。该 CSS 样式表将会被添加到源文件的样式规则中，它可以用于覆盖那些样式规则。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -232,7 +228,7 @@ CSS 样式表或原始 CSS 文件路径。该 CSS 样式表将会被添加到源
 .INDENT 0.0
 .TP
 .B \-\-font\-size\-mapping
-将CSS字体名称映射为以PT为单位的字体大小. 例如您可以将这里的值设为12,12,14,16,18,20,22,24. 这些设置是从xx\-small到xx\-large的对应映射, 最后的大小作为对应的字体最大尺寸的映射. 字体缩放算法使用这些大小来智能地缩放字体，默认使用输出配置文件中指定的映射关系.
+将CSS字体名称映射为以PT为单位的字体大小. 例如您可以将这里的值设为12,12,14,16,18,20,22,24. 这些设置是从xx\-small到xx\-large的对应映射, 最后的大小作为对应的字体最大尺寸的映射. 字体缩放算法使用这些大小来智能地缩放字体，默认使用\fB\(aq\fP输出配置\fB\(aq\fP中指定的映射关系.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -242,7 +238,7 @@ CSS 样式表或原始 CSS 文件路径。该 CSS 样式表将会被添加到源
 .INDENT 0.0
 .TP
 .B \-\-insert\-blank\-line\-size
-设置插入的空白行的高度（单位：em）。段落间的空行高度会是两倍于这个设置值。
+设置插入的空行的高度（单位：em）。段落间的空行高度会是两倍于这个设置值。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -257,27 +253,27 @@ CSS 样式表或原始 CSS 文件路径。该 CSS 样式表将会被添加到源
 .INDENT 0.0
 .TP
 .B \-\-linearize\-tables
-一些布局不佳的源文件使用表格来设置页面布局可能会导致输出文件中的正文超过页面范围。本选项设定程序将内容从表格中提取出并以线型布局排列输出。
+一些布局不佳的源文件使用表格来设置页面布局，可能会导致输出文件中的正文超过页面范围。本选项设定程序将内容从表格中提取出并以线型布局排列输出。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-bottom
-设定下边距，单位pts。默认为 5.0。如果设置为负值表示不使用页边距（保留使用原始文档的页边距）。提示：页面原始格式如PDF和docx有自己优先的边距设置。
+设定下边距，单位pt。默认为 5.0。如果设置为负值表示不使用页边距（保留使用原始文档的页边距）。提示：面向页面的格式如PDF和docx有自己优先的边距设置。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-left
-设定左边距，单位pts。默认为 5.0。如果设置为负值表示不使用页边距（保留使用原始文档的页边距）。提示：页面原始格式如PDF和docx有自己优先的边距设置。
+设定左边距，单位pt。默认为 5.0。如果设置为负值表示不使用页边距（保留使用原始文档的页边距）。提示：面向页面的格式如PDF和docx有自己优先的边距设置。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-right
-设置右边距，单位pts，默认为 5.0。如果设置为负值表示不使用页边距（保留使用原始文档的页边距）。提示：页面原始格式如PDF和docx有自己优先的边距设置。
+设置右边距，单位pt，默认为 5.0。如果设置为负值表示不使用页边距（保留使用原始文档的页边距）。提示：面向页面的格式如PDF和docx有自己优先的边距设置。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-top
-设定上边距，单位pts。默认为 5.0。如果设置为负值表示不使用页边距（保留使用原始文档的页边距）。提示：页面原始格式如PDF和docx有自己优先的边距设置。
+设定上边距，单位pt。默认为 5.0。如果设置为负值表示不使用页边距（保留使用原始文档的页边距）。提示：面向页面的格式如PDF和docx有自己优先的边距设置。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -287,12 +283,12 @@ CSS 样式表或原始 CSS 文件路径。该 CSS 样式表将会被添加到源
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing
-删除段落之间的空行. 同时设置段落缩进为1.5em. 如果源文件不使用段落标记 (<p>或者<div>标签)程序将不执行段落空行移除.
+删除段落之间的空行. 同时设置段落缩进为1.5em. 如果源文件不使用段落标记 (<p>或者<div>标签)程序将不删除段落空行.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing\-indent\-size
-当 calibre 删除段落之间空行时，它会自动设置一个段落缩进，以确保轻松区分段落。此选项控制缩进的宽度(单位 em)。如果你将此值设置为负数，则使用输入文档中自身定义的缩进，换句话说就是 calibre 不进行缩进处理。
+当 calibre 删除段落之间空行时，它会自动设置一个段落缩进，以确保轻松区分段落。此选项控制缩进的宽度(单位 em)。如果你将此值设置为负数，则使用输入文档中自身定义的缩进，换句话说就是 calibre 不更改缩进处理。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -302,7 +298,7 @@ CSS 样式表或原始 CSS 文件路径。该 CSS 样式表将会被添加到源
 .INDENT 0.0
 .TP
 .B \-\-subset\-embedded\-fonts
-内嵌所有字体中用到的字。每种内嵌字体缩减到只包含文档中用到的字型。这能减小字体文件的体积。在内嵌某个特别大的，包含大量未使用字的字体时有用(如中文)。
+只嵌入字体中用到的字。每种嵌入字体缩减到只包含文档中用到的字型。这能减小字体文件的体积。在嵌入特别大的，包含大量未使用字的字体时有用(如中文)。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -340,7 +336,7 @@ CSS 样式表或原始 CSS 文件路径。该 CSS 样式表将会被添加到源
 .INDENT 0.0
 .TP
 .B \-\-disable\-format\-scene\-breaks
-左对齐居中对齐的分节符。把软分节符的多个空白行替换为水平横线。
+左对齐的分节符居中对齐。把软分节符的多个空白行替换为水平横线。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -355,7 +351,7 @@ CSS 样式表或原始 CSS 文件路径。该 CSS 样式表将会被添加到源
 .INDENT 0.0
 .TP
 .B \-\-disable\-renumber\-headings
-查找顺次出现的<h1>或<h2>标签。这些标签被重新编号以防止章节标题被分割。
+查找顺次出现的<h1>或<h2>标签。这些标签被重新编号以防止章节标题被从中间拆分。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -377,18 +373,18 @@ CSS 样式表或原始 CSS 文件路径。该 CSS 样式表将会被添加到源
 .B \-\-replace\-scene\-breaks
 把分节符替换为指定的文本。在默认情况下，会使用输入文档中的文本。
 .UNINDENT
-.SH 查找并替换
+.SH 查找替换
 .sp
 以用户预定义的规则修改文档内容和结构。
 .INDENT 0.0
 .TP
 .B \-\-search\-replace
-包含搜索和替换正则表达式的文件路径。该文件必须包含正则表达式交替行后面跟着替换规则（它可以是一个空行）。正则表达式必须是Python正则表达式的语法并且文件必须是UTF\-8编码。
+包含查找替换正则表达式的文件路径。该文件必须包含正则表达式交替行后面跟着替换规则（它可以是一个空行）。正则表达式必须是Python正则表达式的语法并且文件必须是UTF\-8编码。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-sr1\-replace
-第一项搜索的替换文本。
+sr1\-search搜索到的内容的替换文本。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -398,7 +394,7 @@ CSS 样式表或原始 CSS 文件路径。该 CSS 样式表将会被添加到源
 .INDENT 0.0
 .TP
 .B \-\-sr2\-replace
-第二项搜索的替换文本。
+sr2\-search搜索到的内容的替换文本
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -408,7 +404,7 @@ CSS 样式表或原始 CSS 文件路径。该 CSS 样式表将会被添加到源
 .INDENT 0.0
 .TP
 .B \-\-sr3\-replace
-第三项搜索的替换文本。
+sr3\-search搜索到的内容的替换文本
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -421,17 +417,17 @@ CSS 样式表或原始 CSS 文件路径。该 CSS 样式表将会被添加到源
 .INDENT 0.0
 .TP
 .B \-\-chapter
-用于检测章节标题的XPath表达式。默认情况下，将包含单词“chapter”、“book”、“section”、“prolog”、“epilogue”或“part”的<h1>或<h2>标签以及任何具有class＝“chapter”的标签视为章节标题。所用表达式的必须使用上述列表中的元素。要禁用章节检测，请使用表达式“/”。有关使用此功能的更多帮助，请参阅calibre用户手册中的XPath教程。
+用于检测章节标题的XPath表达式。默认情况下，将包含单词“chapter”、“book”、“section”、“prolog”、“epilogue”或“part”的<h1>或<h2>标签以及任何具有class＝“chapter”的标签被视为章节标题。所用表达式的必须使用上述列出的元素。要禁用章节检测，请使用表达式“/”。有关使用此功能的更多帮助，请参阅calibre用户手册中的XPath教程。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-指定如何标记检测到的章节。值“pagebreak”将在章节之前插入分页符。值“rule”将在章节前插入一行。值“none”将禁用章节标记，值“both”将同时插入分页符和一行来标记章节。
+指定如何标记检测到的章节。值“pagebreak”将在章节之前插入分页符。值“rule”将在章节前插入一个空行。值“none”将禁用章节标记，值“both”将同时插入分页符和一个空行来标记章节。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-remove\-fake\-margins
-有些文档通过在每个段落上指定左右边距来指定页边距。 calibre 会尝试检测并删除这些页边距。有时候 calibre 会错误的移除不应该移除的页边距，在这种情况下，你可以禁用这项功能。
+有些文档通过在每个段落上指定左右边距来指定页边距。 calibre 会尝试检测并删除这些页边距。有时候 calibre 会错误的删除不应该删除的页边距，在这种情况下，你可以禁用这项功能。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -460,7 +456,7 @@ XPath表达式。分页符插入在指定元素之前。要禁用，请使用表
 .UNINDENT
 .SH 目录
 .sp
-设置自动生成目录。默认情况下若源文件有目录，它将被首选自动创建。
+设置自动生成目录。默认情况下若源文件有目录，它将被优先使用，而不是自动创建。
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc
@@ -469,17 +465,17 @@ XPath表达式。分页符插入在指定元素之前。要禁用，请使用表
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-XPath表达式，指定应添加到一级目录中的所有标签。如果指定了此项，则它优先于其他形式的自动检测。有关示例，请参阅calibre用户手册中的XPath教程。
+XPath表达式，指定应添加到一级目录中的所有标签。如果设置了此项，则它优先于其他形式的自动检测。有关示例，请参阅calibre用户手册中的XPath教程。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-XPath表达式，指定应添加到二级目录中的所有标签。每项都添加到前一级目录条目下。有关示例，请参阅calibre用户手册中的XPath教程。
+XPath表达式，指定应添加到二级目录中的所有标签。每项都添加到前一级目录项下。有关示例，请参阅calibre用户手册中的XPath教程。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-XPath表达式，指定应添加到三级目录中的所有标签。每个条目加入到二级目录条目下。请参阅 calibre 用户手册中 XPath 教程的例子。
+XPath表达式，指定应添加到三级目录中的所有标签。每项都将加入到二级目录项下。请参阅 calibre 用户手册中 XPath 教程的例子。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -512,12 +508,12 @@ XPath表达式，指定应添加到三级目录中的所有标签。每个条目
 .INDENT 0.0
 .TP
 .B \-\-author\-sort
-用以进行按作者排序的关键字符串。
+用来进行按作者排序的关键字符串。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-authors
-设置作者。多个作者之间请使用 & 符号分割。
+设置作者。多个作者之间请使用 & 符号分隔。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -572,7 +568,7 @@ XPath表达式，指定应添加到三级目录中的所有标签。每个条目
 .INDENT 0.0
 .TP
 .B \-\-series\-index
-设置书籍在丛书中的索引位置。
+设置丛书中的书籍索引。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -600,7 +596,7 @@ XPath表达式，指定应添加到三级目录中的所有标签。每个条目
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-在转换过程的不同阶段分别保存输出到指定文件夹。如果你不确定在哪个阶段出了问题，这个选项非常实用。
+在转换过程的不同阶段分别保存输出文件到指定文件夹。如果你不确定在哪个阶段出了问题，这个选项非常实用。
 .UNINDENT
 .INDENT 0.0
 .TP

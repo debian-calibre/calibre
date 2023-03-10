@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-02 05:59+0000\n"
+"POT-Creation-Date: 2023-03-09 03:59+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2023\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
@@ -61,7 +61,7 @@ msgstr "denna insticksmodul eller None om den är en inbyggd insticksmodul"
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:8
 msgid "``self.site_customization``: Stores a customization string entered"
-msgstr "``self.site_customization``: Lagrar en anpassad inmatad sträng"
+msgstr "``self.site_customization``: Lagrar en anpassningssträng som har angetts"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:8
@@ -288,6 +288,10 @@ msgstr "Spara inställningarna som anges av användaren med config_widget."
 #: calibre.customize.CatalogPlugin.run:0
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postadd:0
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:0
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:0
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:0
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
@@ -568,6 +572,20 @@ msgid ""
 msgstr "Om True, körs denna insticksmodul efter att böcker läggs till i databasen. I detta fall anropas metoderna postimport och postadd av insticksmodulen."
 
 #: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.FileTypePlugin.on_postconvert:1
+msgid ""
+"If True, this plugin is run after a book is converted. In this case the "
+"postconvert method of the plugin is called."
+msgstr "Om True, körs denna insticksmodul efter att en bok har konverterats. I det här fallet anropas insticksmodulens postkonverteringsmetod."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.FileTypePlugin.on_postdelete:1
+msgid ""
+"If True, this plugin is run after a book file is deleted from the database. "
+"In this case the postdelete method of the plugin is called."
+msgstr "Om True, körs denna insticksmodul efter att en bokfil har tagits bort från databasen. I det här fallet anropas insticksmodulens postborttagningsmetod."
+
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.FileTypePlugin.on_preprocess:1
 msgid "If True, this plugin is run just before a conversion"
 msgstr "Om True, körs denna insticksmodul alldeles innan en konvertering"
@@ -621,19 +639,49 @@ msgstr "Anropas efter importering, d.v.s. efter bokfilen har lagts till i databa
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postadd:8
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:5
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:6
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:6
 msgid "Database id of the added book."
 msgstr "Databas id för tillagda boken."
 
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:6
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:7
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:7
 msgid "The file type of the book that was added."
 msgstr "Filtypen för boken som lades till."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:7
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:8
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:8
 msgid "Library database."
 msgstr "Biblioteksdatabas."
+
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:1
+msgid ""
+"Called post conversion, i.e., after the conversion output book file has been"
+" added to the database. Note that it is run after a conversion only, not "
+"after a book is added. It is useful for modifying the book record based on "
+"the contents of the newly added file."
+msgstr "Anropas efter konvertering, d.v.s. efter att konverteringsutmatningsboken har lagts till i databasen. Observera att den körs endast efter en konvertering, inte efter att en bok har lagts till. Det är användbart för att ändra bokposten baserat på innehållet i den nyligen tillagda filen."
+
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:1
+msgid ""
+"Called post deletion, i.e., after the book file has been deleted from the "
+"database. Note that it is not run when a book record is deleted, only when "
+"one or more formats from the book are deleted. It is useful for modifying "
+"the book record based on the format of the deleted file."
+msgstr "Anropas postborttagning, d.v.s. efter att bokfilen har tagits bort från databasen. Observera att den inte körs när en bokpost tas bort, endast när ett eller flera format från boken tas bort. Det är användbart för att ändra bokposten baserat på formatet på den borttagna filen."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postadd:1

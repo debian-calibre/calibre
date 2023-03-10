@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "FETCH-EBOOK-METADATA" "1" "二月 17, 2023" "6.13.0" "calibre"
+.TH "FETCH-EBOOK-METADATA" "1" "三月 10, 2023" "6.14.0" "calibre"
 .SH NAME
 fetch-ebook-metadata \- fetch-ebook-metadata
 .INDENT 0.0
@@ -35,7 +35,7 @@ fetch-ebook-metadata \- fetch-ebook-metadata
 .sp
 .nf
 .ft C
-fetch\-ebook\-metadata [选项]
+fetch\-ebook\-metadata  [options]
 .ft P
 .fi
 .UNINDENT
@@ -44,16 +44,12 @@ fetch\-ebook\-metadata [选项]
 从在线资源中获得书籍元数据。你必须至少指定书名、作者、ISBN
 号其中之一。
 .sp
-每当向具有它们自己空间的:command:
-.nf
-\(ga
-.fi
-fetch\-ebook\-metadata\(ga传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .SH [选项]
 .INDENT 0.0
 .TP
 .B \-\-allowed\-plugin, \-p
-指定要使用的元数据下载插件的名称。默认情况下，将使用所有元数据插件。可以为多个插件指定多次。所有插件名称：Google, Google Images, Amazon.com, Edelweiss, Open Library, Big Book Search
+指定要使用的元数据下载插件的名称。默认情况下，将使用所有元数据插件。可以为多次指定多个插件。所有插件名称：Google, Google Images, Amazon.com, Edelweiss, Open Library, Big Book Search
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -83,7 +79,7 @@ fetch\-ebook\-metadata\(ga传递参数时，用引号括起这些参数。例如
 .INDENT 0.0
 .TP
 .B \-\-opf, \-o
-以OPF格式输出数据
+以OPF格式而非人类可读文本输出元数据。
 .UNINDENT
 .INDENT 0.0
 .TP

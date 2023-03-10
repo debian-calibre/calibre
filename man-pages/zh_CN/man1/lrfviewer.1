@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "LRFVIEWER" "1" "二月 17, 2023" "6.13.0" "calibre"
+.TH "LRFVIEWER" "1" "三月 10, 2023" "6.14.0" "calibre"
 .SH NAME
 lrfviewer \- lrfviewer
 .INDENT 0.0
@@ -35,7 +35,7 @@ lrfviewer \- lrfviewer
 .sp
 .nf
 .ft C
-lrfviewer [选项] book.lrf
+lrfviewer [options] book.lrf
 .ft P
 .fi
 .UNINDENT
@@ -43,16 +43,12 @@ lrfviewer [选项] book.lrf
 .sp
 阅读 LRF 格式的电子书 book.lrf
 .sp
-每当向具有它们自己空间的:command:
-.nf
-\(ga
-.fi
-lrfviewer\(ga传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .SH [选项]
 .INDENT 0.0
 .TP
 .B \-\-disable\-hyphenation
-关闭自动断词。应该会显著提升渲染速度。
+关闭连字符。应该会显著提升渲染速度。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -62,7 +58,7 @@ lrfviewer\(ga传递参数时，用引号括起这些参数。例如: \(dq/some p
 .INDENT 0.0
 .TP
 .B \-\-profile
-分析 LRF 渲染器的性能
+配置LRF渲染器
 .UNINDENT
 .INDENT 0.0
 .TP

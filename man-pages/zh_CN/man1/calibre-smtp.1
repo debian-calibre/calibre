@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SMTP" "1" "二月 17, 2023" "6.13.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "三月 10, 2023" "6.14.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .INDENT 0.0
@@ -35,30 +35,26 @@ calibre-smtp \- calibre-smtp
 .sp
 .nf
 .ft C
-calibre\-smtp [选项] [从到文本]
+calibre\-smtp [选项] [from to和文本]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-使用SMTP协议发送邮件。\fBcalibre\-smtp\(ga有两种操作模型。在“撰写”模式中，
+使用SMTP协议发送邮件。\fBcalibre\-smtp\fP 有两种操作模型。在“撰写”模式中，
 您可以指定“from to ”和“正文”，它们用于撰写和发送电子邮件。在筛选
-模式下，:command:\(gacalibre\-smtp\fP 从STDIN读取完整的电子邮件并发送。
-文本是电子邮件的正文。
-如果未指定文本，则会从STDIN读取完整的电子邮件。“from”是发件人的
+模式下，\fBcalibre\-smtp\fP 从STDIN读取完整的电子邮件正文在内的信息并发送。
+\(aq文本\(aq是电子邮件的正文。
+如果未指定文本，则会从STDIN读取完整的含正文的电子邮件。“from”是发件人的
 电子邮件地址，“to ”是收件人的电子邮件地址。 当从STDIN读取完整的
-电子邮件时，仅在SMTP协商中使用“从”和“到”电子邮件，则不修改邮件头。
+电子邮件内容时，仅在SMTP协商中使用“from”和“to”电子邮件，不修改邮件头。
 .sp
-每当向具有它们自己空间的:command:
-.nf
-\(ga
-.fi
-calibre\-smtp\(ga传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .SH [选项]
 .INDENT 0.0
 .TP
 .B \-\-fork, \-f
-在后台发送邮件。如果使用此选项, 还应使用 \fI\%\-\-outbox\fP 处理传递失败。
+在后台发送邮件。如果使用此选项, 还应使用 \fI\%\-\-outbox\fP 处理发送失败的邮件。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -68,12 +64,12 @@ calibre\-smtp\(ga传递参数时，用引号括起这些参数。例如: \(dq/so
 .INDENT 0.0
 .TP
 .B \-\-localhost, \-l
-本机的主机名。连接到 SMTP 服务器时使用。
+本机(localhost)的主机名。连接到SMTP服务器时使用。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-outbox, \-o
-在邮件文件夹中存储失败电子邮件的路径。
+邮件文件夹中存储发送失败的电子邮件的路径。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -96,7 +92,7 @@ calibre\-smtp\(ga传递参数时，用引号括起这些参数。例如: \(dq/so
 .INDENT 0.0
 .TP
 .B \-\-attachment, \-a
-选择邮件附件
+邮件附件
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -105,41 +101,41 @@ calibre\-smtp\(ga传递参数时，用引号括起这些参数。例如: \(dq/so
 .UNINDENT
 .SS SMTP RELAY
 .sp
-使用SMTP中继服务器发送邮件的选项。calibre 将尝试直接发送电子邮件，除非 \-\-relay 已经指定。
+使用SMTP中继服务器发送邮件的选项。calibre 将尝试直接发送电子邮件，除非指定了 \-\-relay。
 .INDENT 0.0
 .TP
 .B \-\-cafile
-一个以PEM格式连接的CA证书文件(用于在使用TLS时验证服务器证书)的路径。默认情况下，使用系统CA证书。
+一个PEM格式的CA证书文件(用于在使用TLS时验证服务器证书)的路径。默认情况下，使用系统CA证书。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-verify\-server\-certificate
-在使用TLS连接时不验证服务器证书。这是caliber 3.27版之前的默认行为。如果要使用带有自签名证书或其他无效证书的中继，则可以使用此选项恢复之前3.27版的行为
+在使用TLS连接时不验证服务器证书。这是caliber 3.27版之前的默认方式。如果要使用带有自签名证书或其他无效证书的中继，则可以使用此选项恢复到之前3.27版的方式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-encryption\-method, \-e
-连接到中继时使用的加密方式。选项有 TLS、SSL 和 NONE（无），默认是 TLS。警告：选择 NONE 十分不安全。
+连接到中继服务器时使用的加密方式。选项有 TLS、SSL 和 NONE（无），默认是 TLS。警告：选择NONE十分不安全。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password, \-p
-中继的密码
+中继服务器的密码
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-port
-中继服务器的端口。默认是 465（SSL 加密）和 25（不加密）。
+中继服务器的端口。默认是 465（SSL加密）和 25（不加密）。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-relay, \-r
-发送邮件使用的 SMTP 中继服务器
+发送邮件使用的SMTP中继服务器。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-username, \-u
-中继的用户名
+中继服务器的用户名
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

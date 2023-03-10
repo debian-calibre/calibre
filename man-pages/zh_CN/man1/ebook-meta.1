@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-META" "1" "二月 17, 2023" "6.13.0" "calibre"
+.TH "EBOOK-META" "1" "三月 10, 2023" "6.14.0" "calibre"
 .SH NAME
 ebook-meta \- ebook-meta
 .INDENT 0.0
@@ -35,7 +35,7 @@ ebook-meta \- ebook-meta
 .sp
 .nf
 .ft C
-ebook\-meta ebook_file [选项]
+ebook\-meta ebook_file [options]
 .ft P
 .fi
 .UNINDENT
@@ -48,24 +48,20 @@ ebook\-meta ebook_file [选项]
 支持写入元数据的格式：azw, azw1, azw3, azw4, docx, epub, fb2, fbz, htmlz, lrf, mobi, odt, pdb, pdf, prc, rtf, tpz, txtz
 .sp
 不同的文件格式支持不同种类的元数据。
-如果你试图在不支持的格式上设置某种元数据，
-这种元数据就会被静默忽略。
+如果你试图在某种格式上设置其不支持的元数据，
+这种元数据会被忽略。
 .sp
-每当向具有它们自己空间的:command:
-.nf
-\(ga
-.fi
-ebook\-meta\(ga传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
+每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .SH [选项]
 .INDENT 0.0
 .TP
 .B \-\-author\-sort
-用以进行作者排序的关键字符串. 如果该参数未指定, 同时作者字段为非空, 该关键字符串将由作者字段自动生成.
+用以进行作者排序的字符串. 如果该参数未指定, 同时作者字段为非空, 它将由作者字段自动生成.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
-设置作者. 请用 & 字符隔开多个作者. 作者的名称按一下顺序书写 名称 姓氏.
+设置作者. 请用 & 字符隔开多个作者. 作者的名称按\fB\(aq\fP名字 姓氏\fB\(aq\fP的顺序.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -75,7 +71,7 @@ ebook\-meta\(ga传递参数时，用引号括起这些参数。例如: \(dq/some
 .INDENT 0.0
 .TP
 .B \-\-category
-设置书籍分类.
+设置书籍类别.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -90,7 +86,7 @@ ebook\-meta\(ga传递参数时，用引号括起这些参数。例如: \(dq/some
 .INDENT 0.0
 .TP
 .B \-\-date, \-d
-设定出版日期。
+设置出版日期。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -110,12 +106,12 @@ ebook\-meta\(ga传递参数时，用引号括起这些参数。例如: \(dq/some
 .INDENT 0.0
 .TP
 .B \-\-identifier
-设置书籍标识符，可以多次指定。 例如：\fB\(dq\fP\fI\%\-\-identifier\fP uri：\fI\%https://acme.com\fP \fI\%\-\-identifier\fP isbn:12345\fB\(dq\fP；要删除书籍标识符，请不要指定任何值，如：\fB\(dq\fP\fI\%\-\-identifier\fP isbn: \fB\(dq\fP。请注意，对于EPUB文件，不能删除设置为包标识符的标识。
+设置书籍标识符，可以指定多个。 例如：\fB\(dq\fP\fI\%\-\-identifier\fP uri：\fI\%https://acme.com\fP \fI\%\-\-identifier\fP isbn:12345\fB\(dq\fP；要删除书籍标识符，请不要指定任何值，如：\fB\(dq\fP\fI\%\-\-identifier\fP isbn: \fB\(dq\fP。请注意，对于EPUB文件，不能删除设置为包标识符的标识。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-index, \-i
-设置书籍在丛书中的索引位置。
+设置丛书中的书籍索引。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -160,7 +156,7 @@ ebook\-meta\(ga传递参数时，用引号括起这些参数。例如: \(dq/some
 .INDENT 0.0
 .TP
 .B \-\-title\-sort
-用以进行书名排序的版本值. 如果该参数未指定, 同时标题字段为非空, 该关键字符串将由标题字段自动生成..
+用以进行书名排序的版本值. 如果该参数未指定, 同时书名字段为非空, 它将由书名字段自动生成.
 .UNINDENT
 .INDENT 0.0
 .TP

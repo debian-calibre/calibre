@@ -61,6 +61,14 @@ def names(path_or_stream):
         yield from names(path, only_useful=True)
 
 
+def headers(path_or_stream):
+    from unrardll import headers, is_useful
+    with StreamAsPath(path_or_stream) as path:
+        for h in headers(path):
+            if is_useful(h):
+                yield h
+
+
 def comment(path_or_stream):
     from unrardll import comment
     with StreamAsPath(path_or_stream) as path:
@@ -84,6 +92,12 @@ def extract_member(
         name, data = extract_member(path, is_match)
         if name is not None:
             return name, data
+
+
+def extract_members(path_or_stream, callback):
+    from unrardll import extract_members
+    with StreamAsPath(path_or_stream) as path:
+        extract_members(path, callback)
 
 
 def extract_first_alphabetically(stream):

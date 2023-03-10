@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-02 05:59+0000\n"
+"POT-Creation-Date: 2023-03-09 03:59+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2014,2016-2023\n"
 "Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
@@ -285,6 +285,10 @@ msgstr "Зберегти визначені користувачем за доп
 #: calibre.customize.CatalogPlugin.run:0
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postadd:0
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:0
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:0
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:0
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
@@ -565,6 +569,20 @@ msgid ""
 msgstr "Якщо True, цей додаток запускається після додавання книг до бази даних. У цьому випадку викликаються методи postimport і postadd додатка."
 
 #: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.FileTypePlugin.on_postconvert:1
+msgid ""
+"If True, this plugin is run after a book is converted. In this case the "
+"postconvert method of the plugin is called."
+msgstr "Якщо True, цей додаток буде запущено після перетворення книги. У цьому випадку буде викликано метод postconvert додатка."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.FileTypePlugin.on_postdelete:1
+msgid ""
+"If True, this plugin is run after a book file is deleted from the database. "
+"In this case the postdelete method of the plugin is called."
+msgstr "Якщо True, цей додаток буде запущено після вилучення файла книги з бази даних. У цьому випадку буде викликано метод postdelete додатка."
+
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.FileTypePlugin.on_preprocess:1
 msgid "If True, this plugin is run just before a conversion"
 msgstr "Якщо True, цей додаток запускається безпосередньо перед перетворенням."
@@ -618,19 +636,49 @@ msgstr "Викликається після імпортування, тобто
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postadd:8
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:5
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:6
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:6
 msgid "Database id of the added book."
 msgstr "ідентифікатор доданої книжки в базі даних."
 
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:6
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:7
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:7
 msgid "The file type of the book that was added."
 msgstr "Тип файла доданої книги."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:7
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:8
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:8
 msgid "Library database."
 msgstr "База даних бібліотеки."
+
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:1
+msgid ""
+"Called post conversion, i.e., after the conversion output book file has been"
+" added to the database. Note that it is run after a conversion only, not "
+"after a book is added. It is useful for modifying the book record based on "
+"the contents of the newly added file."
+msgstr "Буде викликано після перетворення, тобто після того, як перетворений файл результатів буде додано до бази даних. Зауважте, що запуск відбуватиметься лише після перетворення, а не після додавання книги. Корисно для внесення змін до запису книги на основі вмісту щойно доданого файла."
+
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:1
+msgid ""
+"Called post deletion, i.e., after the book file has been deleted from the "
+"database. Note that it is not run when a book record is deleted, only when "
+"one or more formats from the book are deleted. It is useful for modifying "
+"the book record based on the format of the deleted file."
+msgstr "Буде викликано після вилучення, тобто після того, як файл книги буде вилучено з бази даних. Зауважте, що запуск відбуватиметься не після вилучення запису книги, а лише після того, як буде вилучено один або декілька форматів книги. Корисно для внесення змін до запису книги на основі формату вилученого файла."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postadd:1
