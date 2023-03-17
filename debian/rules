@@ -106,6 +106,9 @@ override_dh_installman:
 override_dh_auto_clean:
 	$(SETUP) bootstrap --clean
 	rm -f resources/mozilla-ca-certs.pem
+	rm -rf ./translations/changelog
+	rm -rf ./translations/content-server
+	rm -rf ./translations/website
 	py3clean setup src
 
 override_dh_gencontrol:
