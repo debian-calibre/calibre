@@ -50,7 +50,9 @@ override_dh_auto_build-indep: blhc-note
 #	# use Debian specific CA certs
 	ln -sf /etc/ssl/certs/ca-certificates.crt resources/mozilla-ca-certs.pem
 #
-	cp -r ./translations-git/* ./translations/
+	cp -r ./translations-git/changelog      ./translations/
+	cp -r ./translations-git/content-server ./translations/
+	cp -r ./translations-git/website        ./translations/
 #
 	$(SETUP) bootstrap \
 		--path-to-mathjax="$(CURDIR)/mathjax-git" \
