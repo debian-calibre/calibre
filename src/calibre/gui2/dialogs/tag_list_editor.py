@@ -132,7 +132,9 @@ class EditColumnDelegate(QItemDelegate):
             else:
                 editor = EnLineEdit(parent)
             return editor
-        return None
+        editor = EnLineEdit(parent)
+        editor.setClearButtonEnabled(True)
+        return editor
 
     def destroyEditor(self, editor, index):
         self.editing_finished.emit(index.row())
@@ -142,12 +144,13 @@ class EditColumnDelegate(QItemDelegate):
 class TagListEditor(QDialog, Ui_TagListEditor):
 
     def __init__(self, window, cat_name, tag_to_match, get_book_ids, sorter,
-                 ttm_is_first_letter=False, category=None, fm=None):
+                 ttm_is_first_letter=False, category=None, fm=None, link_map=None):
         QDialog.__init__(self, window)
         Ui_TagListEditor.__init__(self)
         self.setupUi(self)
         self.verticalLayout_2.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.search_box.setMinimumContentsLength(25)
+        self.link_map = link_map
 
         # Put the category name into the title bar
         t = self.windowTitle()
@@ -171,6 +174,7 @@ class TagListEditor(QDialog, Ui_TagListEditor):
         self.to_delete = set()
         self.all_tags = {}
         self.original_names = {}
+        self.links = {}
 
         self.ordered_tags = []
         self.sorter = sorter
@@ -188,6 +192,7 @@ class TagListEditor(QDialog, Ui_TagListEditor):
         self.name_order = 0
         self.count_order = 1
         self.was_order = 1
+        self.link_order = 0
 
         self.edit_delegate = EditColumnDelegate(self.table)
         self.edit_delegate.editing_finished.connect(self.stop_editing)
@@ -209,6 +214,7 @@ class TagListEditor(QDialog, Ui_TagListEditor):
         self.buttonBox.button(QDialogButtonBox.StandardButton.Ok).setText(_('&OK'))
         self.buttonBox.button(QDialogButtonBox.StandardButton.Cancel).setText(_('&Cancel'))
         self.buttonBox.accepted.connect(self.accepted)
+        self.buttonBox.rejected.connect(self.rejected)
 
         self.search_box.initialize('tag_list_search_box_' + cat_name)
         le = self.search_box.lineEdit()
@@ -413,13 +419,15 @@ class TagListEditor(QDialog, Ui_TagListEditor):
         select_item = None
         self.table.blockSignals(True)
         self.table.clear()
-        self.table.setColumnCount(3)
+        self.table.setColumnCount(4)
         self.name_col = QTableWidgetItem(self.category_name)
         self.table.setHorizontalHeaderItem(0, self.name_col)
         self.count_col = QTableWidgetItem(_('Count'))
         self.table.setHorizontalHeaderItem(1, self.count_col)
         self.was_col = QTableWidgetItem(_('Was'))
         self.table.setHorizontalHeaderItem(2, self.was_col)
+        self.link_col = QTableWidgetItem(_('Link'))
+        self.table.setHorizontalHeaderItem(3, self.link_col)
 
         self.table.setRowCount(len(tags))
         for row,tag in enumerate(tags):
@@ -457,10 +465,22 @@ class TagListEditor(QDialog, Ui_TagListEditor):
                 item.setData(Qt.ItemDataRole.DisplayRole, tag)
             self.table.setItem(row, 2, item)
 
+            item = QTableWidgetItem()
+            if self.link_map is None:
+                item.setFlags(item.flags() & ~(Qt.ItemFlag.ItemIsSelectable|Qt.ItemFlag.ItemIsEditable))
+                item.setText(_('no links available'))
+            else:
+                item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsSelectable)
+                item.setFlags(item.flags() | Qt.ItemFlag.ItemIsEditable)
+                item.setText(self.link_map.get(tag, ''))
+            self.table.setItem(row, 3, item)
+
         if self.last_sorted_by == 'name':
             self.table.sortByColumn(0, Qt.SortOrder(self.name_order))
         elif self.last_sorted_by == 'count':
             self.table.sortByColumn(1, Qt.SortOrder(self.count_order))
+        elif self.last_sorted_by == 'link':
+            self.table.sortByColumn(3, Qt.SortOrder(self.link_order))
         else:
             self.table.sortByColumn(2, Qt.SortOrder(self.was_order))
 
@@ -530,6 +550,8 @@ class TagListEditor(QDialog, Ui_TagListEditor):
         self.table.blockSignals(False)
 
     def finish_editing(self, edited_item):
+        if edited_item.column() != 0:
+            return
         if not edited_item.text():
             error_dialog(self, _('Item is blank'), _(
                 'An item cannot be set to nothing. Delete it instead.'), show=True)
@@ -644,7 +666,7 @@ class TagListEditor(QDialog, Ui_TagListEditor):
             self.table.scrollToItem(self.table.item(row, 0))
 
     def do_sort(self, section):
-        (self.do_sort_by_name, self.do_sort_by_count, self.do_sort_by_was)[section]()
+        (self.do_sort_by_name, self.do_sort_by_count, self.do_sort_by_was, self.do_sort_by_link)[section]()
 
     def do_sort_by_name(self):
         self.name_order = 1 - self.name_order
@@ -661,5 +683,14 @@ class TagListEditor(QDialog, Ui_TagListEditor):
         self.last_sorted_by = 'count'
         self.table.sortByColumn(2, Qt.SortOrder(self.was_order))
 
+    def do_sort_by_link(self):
+        self.link_order = 1 - self.link_order
+        self.last_sorted_by = 'link'
+        self.table.sortByColumn(3, Qt.SortOrder(self.link_order))
+
     def accepted(self):
+        self.links = {self.table.item(r, 0).text():self.table.item(r, 3).text() for r in range(self.table.rowCount())}
+        self.save_geometry()
+
+    def rejected(self):
         self.save_geometry()

@@ -10,10 +10,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-02 05:59+0000\n"
+"POT-Creation-Date: 2023-04-05 12:34+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2014,2017-2018,2021-2023\n"
-"Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
+"Language-Team: Ukrainian (http://app.transifex.com/calibre/calibre/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -494,6 +494,43 @@ msgid ""
 msgstr "Повертає кортеж усіх форматів для вказаної книги. Якщо verify_formats має значення True, перевіряє наявність файлів на диску."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_link_maps_for_book:1
+msgid ""
+"Returns all links for all fields referenced by book identified by book_id"
+msgstr "Повертає усі посилання для усіх полів, на яких посилається книга, яка визначається аргументом ідентифікатор_книги"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_link_maps_for_book:3
+msgid "book_id: the book id in question."
+msgstr "ідентифікатор_книги: ідентифікатор потрібної книги."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_link_maps_for_book:7
+msgid "returns:"
+msgstr "повертає:"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_link_maps_for_book:6
+msgid ""
+"{field: {field_value, link_value}, ... for all fields that have a non-empty "
+"link value for that book"
+msgstr "{поле: {значення_поля, значення_посилання}, ... для усіх полів, які містять непорожнє значення посилання для цієї книги"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_link_maps_for_book:12
+msgid ""
+"Example: Assume author A has link X, author B has link Y, tag S has link"
+msgstr "Приклад: припустімо, автор A має посилання X, автор B має посилання Y, мітка S має посилання"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_link_maps_for_book:10
+msgid ""
+"F, and tag T has link G. IF book 1 has author A and tag T, this method "
+"returns {'authors':{'A':'X'}, 'tags':{'T', 'G'}} If book 2's author is "
+"neither A nor B and has no tags, this method returns {}"
+msgstr "F, а мітка T має посилання G. Якщо книга 1 має автора A і мітку T, цей метод поверне {'authors':{'A':'X'}, 'tags':{'T', 'G'}} Якщо автором книги 2 не є ні A, ні B, і вона не має міток, цей метод поверне {}"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_categories:1
 msgid "Used internally to implement the Tag Browser"
 msgstr "Для внутрішньої реалізації панелі перегляду міток"
@@ -535,6 +572,21 @@ msgid ""
 "Return the item name for the item specified by item_id in the specified "
 "field. See also :meth:`get_id_map`."
 msgstr "Повертає назву запису для запису, вказаного за item_id, у вказаному полі. Див. також :meth:`get_id_map`."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_link_map:1
+msgid "Return a dict of links for the supplied field."
+msgstr "Повернути словник посилань для наданого поля."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_link_map:3
+msgid "field: the lookup name of the field for which the link map is desired"
+msgstr "поле: пошукова назва поля, для якого потрібна карта посилань"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_link_map:5
+msgid "returns {field_value:link_value, ...} for non-empty links"
+msgstr "повертає {значення_поля:значення_посилання, ...} для непорожніх посилань"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_metadata:1
@@ -790,6 +842,33 @@ msgstr "Якщо має значення True, регістр символів �
 #: calibre.db.cache.Cache.set_field:8
 msgid "Used internally, you should never change it."
 msgstr "Використовується для внутрішніх потреб програми. Вам не варто змінювати цей параметр."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_link_map:1
+msgid "Sets links for item values in field"
+msgstr "Встановлює посилання для значень записів у полі"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_link_map:3
+msgid ""
+"field: the lookup name value_to_link_map: dict(field_value:link, ...). Note "
+"that these are"
+msgstr "поле: пошукова назва карти_прив'язки_значення_до_посилання: dict(значення_поля:посилання ...). Зауважте, що це"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_link_map:5
+msgid "values, not field ids."
+msgstr "значення, а не ідентифікатори полів."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_link_map:7
+msgid "returns books changed by setting the link"
+msgstr "повертає книги, які було змінено встановленням посилання"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_link_map:9
+msgid "Note: this method doesn't change values not in the value_to_link_map"
+msgstr "Зауваження: цей метод не змінює значень поза карта_прив'язки_значення_ до_посилання"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_metadata:1

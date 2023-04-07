@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "3月 16, 2023" "6.14.1" "calibre"
+.TH "CALIBREDB" "1" "4月 07, 2023" "6.15.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -104,7 +104,7 @@ details and examples.
 \fI\%catalog\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%EPUB選項\fP
+\fI\%EPUB 選項\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%saved_searches\fP
@@ -470,7 +470,7 @@ opf 檔案中）。您可以用 search 指令取得 id 編號。
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-让calibre将所有非英文字符转换成英文对应字符的文件名。如果保存到不完全支持Unicode文件名的旧文件系统中，这将非常有用。 指定這個開關會關閉這個行為。
+讓 calibre 將所有非英文字元轉換成英文對應字元的檔名。如果儲存到不完全支援 Unicode 檔名的舊檔案系統中，這將非常有用。 指定這個開關會關閉這個行為。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -561,7 +561,7 @@ see the different options, specify the name of the output file and then the
 .B \-\-verbose, \-v
 顯示詳細的輸出資訊，便於除錯。
 .UNINDENT
-.SS EPUB選項
+.SS EPUB 選項
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title
@@ -585,7 +585,7 @@ Save the output from different stages of the conversion pipeline to the specifie
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-指定用于从生成的目录中排除书籍的规则。 排除规则的模型是(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP标签\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) 或(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP)。 例如： ((\fB\(aq\fP存档的书籍\fB\(aq\fP,\fB\(aq\fP#状态\fB\(aq\fP,\fB\(aq\fP已存档\fB\(aq\fP),) 将在自定义列“状态”中排除值为“已存档”的图书。定义多个规则时，将应用所有规则。 默认: \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP 应用于AZW3, EPUB, MOBI 输出格式
+指定用於從產生的目錄中排除書籍的規則。 排除規則的模型是(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP標籤\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) 或(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP)。 例如： ((\fB\(aq\fP已封存的書籍\fB\(aq\fP,\fB\(aq\fP#狀態\fB\(aq\fP,\fB\(aq\fP已封存\fB\(aq\fP),) 將在自訂列「狀態」中排除值為「已封存」的圖書。定義多個規則時，將套用所有規則。 預設: \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP 適用於: AZW3, EPUB, MOBI 輸出格式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -630,7 +630,7 @@ Save the output from different stages of the conversion pipeline to the specifie
 .INDENT 0.0
 .TP
 .B \-\-merge\-comments\-rule
-#<custom field>:[before|after]:[True|False] 指定:  <custom field> 包含与注释合并的注释的自定义字段  [before|after] 关于注释的注释放置位置  [True|False] \- 在注意和注释之间插入水平规则 默认值: \fB\(aq\fP::\fB\(aq\fP 适用于: AZW3, EPUB, MOBI 输出格式
+#<custom field>:[before|after]:[True|False] 指定:  <custom field> 包含與註解合併的註解的自訂欄位 [before|after] 關於註解的註解放置位置 [True|False] \- 在備註和註解之間插入水平規則 預設值: \fB\(aq\fP::\fB\(aq\fP 適用於: AZW3, EPUB, MOBI 輸出格式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -640,7 +640,7 @@ Save the output from different stages of the conversion pipeline to the specifie
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-指定用于包括表示已读书籍，收藏清单项目和其他用户 定前缀的前缀的规则。前缀规则的模型  (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP)。 当定义了多个规则时，将使用第一个匹配规则 默认规则:\fB\(dq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(dq\fP适用于：AZW3, EPUB, MOBI 输出格式
+指定用於包括表示已讀書籍，收藏清單項目和其他使用者定前綴的前綴的規則。 前綴規則的模型 (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP)。 當定義了多個規則時，將使用第一個相符規則。 預設規則: \fB\(dq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(dq\fP 適用於：AZW3, EPUB, MOBI 輸出格式
 .UNINDENT
 .INDENT 0.0
 .TP

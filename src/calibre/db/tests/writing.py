@@ -354,6 +354,9 @@ class WritingTest(BaseTest):
         try:
             ae(sf('title', {1:'title1', 2:'title2', 3:'title3'}), {1,2,3})
             ae(sf('authors', {1:'author1 & author2', 2:'author1 & author2', 3:'author1 & author2'}), {1,2,3})
+            ae(sf('tags', {1:'tag1', 2:'tag1,tag2', 3:'XXX'}), {1,2,3})
+            ae(cache.set_link_map('authors', {'author1': 'link1'}), {1,2,3})
+            ae(cache.set_link_map('tags', {'XXX': 'YYY', 'tag2': 'link2'}), {2,3})
             count = 6
             while cache.dirty_queue_length() and count > 0:
                 mb.join(2)
@@ -364,11 +367,24 @@ class WritingTest(BaseTest):
         mb.join(2)
         af(mb.is_alive())
         from calibre.ebooks.metadata.opf2 import OPF
-        for book_id in (1, 2, 3):
+        book_ids = (1,2,3)
+        for book_id in book_ids:
             raw = cache.read_backup(book_id)
             opf = OPF(BytesIO(raw))
             ae(opf.title, 'title%d'%book_id)
             ae(opf.authors, ['author1', 'author2'])
+        tested_fields = 'title authors tags'.split()
+        before = {f:cache.all_field_for(f, book_ids) for f in tested_fields}
+        lbefore = tuple(cache.get_all_link_maps_for_book(i) for i in book_ids)
+        cache.close()
+        from calibre.db.restore import Restore
+        restorer = Restore(cl)
+        restorer.start()
+        restorer.join(8)
+        af(restorer.is_alive())
+        cache = self.init_cache(cl)
+        ae(before, {f:cache.all_field_for(f, book_ids) for f in tested_fields})
+        ae(lbefore, tuple(cache.get_all_link_maps_for_book(i) for i in book_ids))
     # }}}
 
     def test_set_cover(self):  # {{{
@@ -918,5 +934,63 @@ class WritingTest(BaseTest):
         ae(event_set, {2})
         ae(cache.field_for('series_index', 1), 2.0)
         ae(cache.field_for('series_index', 2), 3.5)
+
+    def test_link_maps(self):
+        cache = self.init_cache()
+
+        # Add two tags
+        cache.set_field('tags', {1:'foo'})
+        self.assertEqual(('foo',), cache.field_for('tags', 1), 'Setting tag foo failed')
+        cache.set_field('tags', {1:'foo, bar'})
+        self.assertEqual(('foo', 'bar'), cache.field_for('tags', 1), 'Adding second tag failed')
+
+        # Check adding a link
+        links = cache.get_link_map('tags')
+        self.assertDictEqual(links, {}, 'Initial tags link dict is not empty')
+        links['foo'] = 'url'
+        cache.set_link_map('tags', links)
+        links2 = cache.get_link_map('tags')
+        self.assertDictEqual(links2, links, 'tags link dict mismatch')
+
+        # Check getting links for a book and that links are correct
+        cache.set_field('publisher', {1:'random'})
+        cache.set_link_map('publisher', {'random': 'url2'})
+        links = cache.get_all_link_maps_for_book(1)
+        self.assertSetEqual({v for v in links.keys()}, {'tags', 'publisher'}, 'Wrong link keys')
+        self.assertSetEqual({v for v in links['tags'].keys()}, {'foo', }, 'Should be "foo"')
+        self.assertSetEqual({v for v in links['publisher'].keys()}, {'random', }, 'Should be "random"')
+        self.assertEqual('url', links['tags']['foo'], 'link for tag foo is wrong')
+        self.assertEqual('url2', links['publisher']['random'], 'link for publisher random is wrong')
+
+        # Check that renaming a tag keeps the link and clears the link map cache for the book
+        self.assertTrue(1 in cache.link_maps_cache, "book not in link_map_cache")
+        tag_id = cache.get_item_id('tags', 'foo')
+        cache.rename_items('tags', {tag_id: 'foobar'})
+        self.assertTrue(1 not in cache.link_maps_cache, "book still in link_map_cache")
+        links = cache.get_link_map('tags')
+        self.assertTrue('foobar' in links, "rename foo lost the link")
+        self.assertEqual(links['foobar'], 'url', "The link changed contents")
+        links = cache.get_all_link_maps_for_book(1)
+        self.assertTrue(1 in cache.link_maps_cache, "book not put back into link_map_cache")
+        self.assertDictEqual({'publisher': {'random': 'url2'}, 'tags': {'foobar': 'url'}},
+                             links, "book links incorrect after tag rename")
+
+        # Check ProxyMetadata
+        mi = cache.get_proxy_metadata(1)
+        self.assertDictEqual({'publisher': {'random': 'url2'}, 'tags': {'foobar': 'url'}},
+                             mi.link_maps, "ProxyMetadata didn't return the right link map")
+
+
+        # Now test deleting the links.
+        links = cache.get_link_map('tags')
+        to_del = {l:'' for l in links.keys()}
+        cache.set_link_map('tags', to_del)
+        self.assertEqual({}, cache.get_link_map('tags'), 'links on tags were not deleted')
+        links = cache.get_link_map('publisher')
+        to_del = {l:'' for l in links.keys()}
+        cache.set_link_map('publisher', to_del)
+        self.assertEqual({}, cache.get_link_map('publisher'), 'links on publisher were not deleted')
+        self.assertEqual({}, cache.get_all_link_maps_for_book(1), 'Not all links for book were deleted')
+
 
     # }}}

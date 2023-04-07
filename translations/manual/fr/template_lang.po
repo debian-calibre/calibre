@@ -9,15 +9,15 @@
 # Ptit Prince <leporello1791@gmail.com>, 2014
 # Ptit Prince <leporello1791@gmail.com>, 2016-2018,2020-2022
 # sengian <sengian1@gmail.com>, 2016
-# un_pogaz, 2022
+# un_pogaz, 2022-2023
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-02 05:59+0000\n"
+"POT-Creation-Date: 2023-04-05 12:34+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
-"Last-Translator: un_pogaz, 2022\n"
-"Language-Team: French (http://www.transifex.com/calibre/calibre/language/fr/)\n"
+"Last-Translator: un_pogaz, 2022-2023\n"
+"Language-Team: French (http://app.transifex.com/calibre/calibre/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1870,7 +1870,7 @@ msgid ""
 "``value_expression``. If no ``test_expression`` is True then the result of "
 "``else_expression` is returned. You can have as many ``test_expression, "
 "value_expression`` pairs as you want."
-msgstr ""
+msgstr "``switch_if([test_expression, value_expression,]+ else_expression)`` -- pour chaque paire ``test_expression, value_expression``, vérifie si ``test_expression`` est vraie (non vide) et si c'est le cas retourne le résultat de ``value_expression``. Si aucune ``expression_test`` n'est vraie, alors le résultat de ``expression_sel`` est retourné. Vous pouvez avoir autant de paires ``expression_test, expression_valeur`` que vous le souhaitez."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:614
 msgid ""
@@ -2160,14 +2160,14 @@ msgid ""
 "change the name so it is best to use names that won't collide with other "
 "template local variables, for example by prefixing the name with an "
 "underscore."
-msgstr ""
+msgstr "L'information supplémentaire est un dictionnaire Python contenant des paires ``nom_variable : valeur_variable`` où les valeurs doivent être des chaînes. Le modèle peut accéder au dictionnaire, en créant des variables locales nommées ``nom_de_variable`` contenant la valeur ``variable_valeur``. L'utilisateur ne peut pas changer le nom, il est donc préférable d'utiliser des noms qui n'entreront pas en collision avec d'autres variables locales du modèle, par exemple en préfixant le nom par un trait de soulignement."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:742
 msgid ""
 "This dictionary is passed to the template processor (the ``formatter``) "
 "using the named parameter ``global_vars=your_dict``. The full method "
 "signature is::"
-msgstr ""
+msgstr "Ce dictionnaire est passé au processeur de modèle (le ``formatter``) en utilisant le paramètre nommé ``global_vars=votre_dict``. La signature complète de la méthode est::"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:750
 msgid "**Template writer: how to access the additional information**"
@@ -2177,7 +2177,7 @@ msgstr "**Rédacteur de modèles : comment accéder aux informations complément
 msgid ""
 "You access the additional information (the ``globals`` dictionary) in a "
 "template using the template function::"
-msgstr ""
+msgstr "Vous accédez aux informations supplémentaires (le dictionnaire ``globals``) dans un modèle en utilisant la fonction de modèle::"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:756
 msgid ""
@@ -2195,7 +2195,7 @@ msgstr "où ``id`` est un nom de variable légale quelconque. Cette fonction vé
 msgid ""
 "A template can set a value in the ``globals`` dictionary using the template "
 "function::"
-msgstr ""
+msgstr "Un modèle peut définir une valeur dans le dictionnaire ``globals`` en utilisant la fonction de modèle::"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:762
 msgid ""
@@ -2203,7 +2203,7 @@ msgid ""
 "where ``value`` is the value of the template local variable ``id``. If that "
 "local variable doesn't exist then ``value`` is set to the result of "
 "evaluating ``expression``."
-msgstr ""
+msgstr "Cette fonction définit la paire clé:valeur du dictionnaire ``globals`` ``id:value`` où ``value`` est la valeur de la variable locale du modèle ``id``. Si cette variable locale n'existe pas, alors ``valeur`` est fixée au résultat de l'évaluation de ``expression``."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:765
 msgid "Notes on the difference between modes"

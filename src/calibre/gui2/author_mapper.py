@@ -34,7 +34,7 @@ class RuleEdit(RuleEditBase):
         ('not_matches', _('does not match regex pattern')),
     ))
 
-    MSG = _('Create the rule below, the rule can be used to add or ignore files')
+    MSG = _('Create the rule below, the rule can be used to add or ignore authors')
     SUBJECT = _('the author, if the author name')
     VALUE_ERROR = _('You must provide a value for the author name to match')
     REPLACE_TEXT = _('with the name:')

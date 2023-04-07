@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "de març 16, 2023" "6.14.1" "calibre"
+.TH "EBOOK-CONVERT" "1" "d’abril 07, 2023" "6.15.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -107,7 +107,7 @@ Llista els noms de les receptes integrades. Podeu crear un llibre electrònic a 
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Especifica el perfil de sortida. El perfil de sortida li diu al sistema de conversió com ha d\fB\(aq\fPoptimitzar el document creat per al dispositiu especificat (com ara amb el canvi de mida de les imatges per a la mida de pantalla del dispositiu). En alguns casos es pot utilitzar un perfil de sortida per optimitzar la sortida per a un dispositiu particular, però no sol ser necessari. Les opcions són:cybookg3, cybook_opus, default, generic_eink, generic_eink_large, generic_eink_hd, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+Especifica el perfil de sortida. El perfil de sortida li diu al sistema de conversió com ha d\fB\(aq\fPoptimitzar el document creat per al dispositiu especificat. En alguns casos es pot utilitzar un perfil de sortida per optimitzar la sortida per a un dispositiu particular, però no sol ser necessari. Les opcions són:cybookg3, cybook_opus, default, generic_eink, generic_eink_large, generic_eink_hd, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -139,6 +139,11 @@ Només es necessita aquesta opció si voleu utilitzar l\fB\(aq\fPEPUB amb FBRead
 .TP
 .B \-\-epub\-inline\-toc
 Insereix una taula del contingut en línia que apareixerà com a part del contingut principal del llibre.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-max\-image\-size
+The maximum image size (width x height). A value of none means use the screen size from the output profile. A value of profile means no maximum size is specified. For example, a value of 100x200 will cause all images to be resized so that their width is no more than 100 pixels and their height is no more than 200 pixels. Note that this only affects the size of the actual image files themselves. Any given image may be rendered at a different size depending on the styling applied to it in the document.
 .UNINDENT
 .INDENT 0.0
 .TP

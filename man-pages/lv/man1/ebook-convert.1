@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "marts 16, 2023" "6.14.1" "calibre"
+.TH "EBOOK-CONVERT" "1" "aprīlis 07, 2023" "6.15.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -107,7 +107,7 @@ Saraksts ar iebūvēto recepšu nosaukumiem. Jūs varat izveidot e\-grāmatu no 
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Norādiet izvades profilu. Izvades profils pastāsta konversijas sistēmai, kā optimizēt izveidoto dokumentu norādītajai ierīcei (piemēram, mainot attēlus ierīces ekrāna izmērā). Dažos gadījumos produkcijas profilu var izmantot, lai optimizētu izeju konkrētai ierīcei, bet tas reti ir nepieciešams. Izvēles ir šādas:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, generic_eink, generic_eink_hd, generic_eink_large, tablet, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3
+Norādiet izvades profilu. Izvades profils nodrošina pārvēršanas sistēmu ar informāciju pa to, kā jāoptimizē pārvērstais dokuments lasīšanai norādītajā ierīcē. Dažos gadījumos izvades profilu var izmantot rezultāta optimizēšanai konkrētai ierīcei, taču vairumā gadījumu tas nav nepieciešams. Iespējas ir:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, generic_eink, generic_eink_hd, generic_eink_large, tablet, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -139,6 +139,11 @@ Izslēdziet lapu pārtraukumu sadalīšanu. Parasti ievades faili tiek automāti
 .TP
 .B \-\-epub\-inline\-toc
 Ievietot iekļautu satura rādītāju, kas parādīsies kā galvenās grāmatas daļa.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-max\-image\-size
+The maximum image size (width x height). A value of none means use the screen size from the output profile. A value of profile means no maximum size is specified. For example, a value of 100x200 will cause all images to be resized so that their width is no more than 100 pixels and their height is no more than 200 pixels. Note that this only affects the size of the actual image files themselves. Any given image may be rendered at a different size depending on the styling applied to it in the document.
 .UNINDENT
 .INDENT 0.0
 .TP

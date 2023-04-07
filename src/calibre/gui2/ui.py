@@ -690,6 +690,23 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
             library_path = self.library_broker.path_for_library_id(library_id)
             if not db_matches(self.current_db, library_id, library_path):
                 self.library_moved(library_path)
+        elif action == 'book-details':
+            parts = tuple(filter(None, path.split('/')))
+            if len(parts) != 2:
+                return
+            library_id, book_id = parts
+            library_id = decode_library_id(library_id)
+            library_path = self.library_broker.path_for_library_id(library_id)
+            if library_path is None:
+                prints('Ignoring unknown library id', library_id, file=sys.stderr)
+                return
+            try:
+                book_id = int(book_id)
+            except Exception:
+                prints('Ignoring invalid book id', book_id, file=sys.stderr)
+                return
+            details = self.iactions['Show Book Details']
+            details.show_book_info(library_id=library_id, library_path=library_path, book_id=book_id)
         elif action == 'show-book':
             parts = tuple(filter(None, path.split('/')))
             if len(parts) != 2:
@@ -711,6 +728,9 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                 if vl is not None and vl != '_':
                     self.apply_virtual_library(vl)
                 rows = self.library_view.select_rows((book_id,))
+                if not rows:
+                    self.search.set_search_string('')
+                    rows = self.library_view.select_rows((book_id,))
                 db = self.current_db
                 if not rows and (db.data.get_base_restriction_name() or db.data.get_search_restriction_name()):
                     self.apply_virtual_library()

@@ -10,12 +10,12 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 6.11.0\n"
+"Project-Id-Version: calibre 6.14.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-02 05:59+0000\n"
+"POT-Creation-Date: 2023-04-05 12:34+0000\n"
 "PO-Revision-Date: 2020-11-12 05:43+0000\n"
 "Last-Translator: Trottel <trottel09@gmail.com>, 2023\n"
-"Language-Team: Czech (https://www.transifex.com/calibre/teams/19337/cs/)\n"
+"Language-Team: Czech (https://app.transifex.com/calibre/teams/19337/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -65,8 +65,9 @@ msgstr "Přepnout na konkrétní knihovnu"
 
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:28
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:47
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:75
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:89
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:77
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:91
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:122
 msgid "The URL syntax is::"
 msgstr "Syntaxe URL je::"
 
@@ -120,6 +121,12 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:59
 msgid ""
+"If a search is active and the book is not matched by the search then the "
+"search is cleared."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:61
+msgid ""
 "If a Virtual library is selected, calibre will use it when showing the book."
 " If the book isn't found in that virtual library then the virtual library is"
 " cleared."
@@ -128,7 +135,7 @@ msgstr ""
 " Pokud kniha není nalezena v této virtuální knihovně, je virtuální knihovna "
 "vymazána."
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:62
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:64
 msgid ""
 "If you want to switch to a particular Virtual library when showing the book,"
 " use::"
@@ -136,19 +143,17 @@ msgstr ""
 "Pokud chcete přepnout na určitou Virtuální knihovnu, když zobrazuje knihu, "
 "použijte::"
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:68
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:70
 msgid ""
 "replacing spaces in the Virtual library name by ``%20``. If the book isn't "
-"in that virtual library then it is ignored."
+"found in that virtual library then the virtual library is ignored."
 msgstr ""
-"nahrazení mezer v názvu virtuální knihovny znakem ``%20``. Pokud kniha není "
-"v této virtuální knihovně, je ignorována."
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:73
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:75
 msgid "Open a specific book in the E-book viewer at a specific position"
 msgstr "Otevřít konkrétní knihu v Prohlížeči e-knih na konkrétní pozici"
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:79
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:81
 msgid ""
 "Here, ``book_format`` is the format of the book, for example, ``EPUB`` or "
 "``MOBI`` and the ``location`` is an optional location inside the book. The "
@@ -162,11 +167,11 @@ msgstr ""
 "vyberte :guilabel:'Přejít na->Umístění', kde se tento odkaz pro "
 "kopírování/vložení jinam zobrazí."
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:87
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:89
 msgid "Searching for books"
 msgstr "Hledání knih"
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:94
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:96
 msgid ""
 "Here query is any valid :ref:`search expression <search_interface>`. If the "
 "search expression is complicated, :ref:`encode it as a hex string "
@@ -178,7 +183,7 @@ msgstr ""
 "hexadecimální řetězec <hex_encoding>` a namísto toho použijte ``eq``. "
 "Vynechání dotazu způsobí vymazání aktuálního vyhledávání."
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:99
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:101
 msgid ""
 "By default, if a Virtual library is selected, calibre will clear it before "
 "doing the search to ensure all books are found. If you want to preserve the "
@@ -188,15 +193,15 @@ msgstr ""
 "provedením vyhledávání vymaže, aby se zajistilo, že budou nalezeny všechny "
 "knihy. Pokud chcete zachovat Virtuální knihovnu, použijte::"
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:105
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:107
 msgid "If you want to switch to a particular Virtual library, use::"
 msgstr "Pokud chcete přepnout na určitou Virtuální knihovnu, použijte::"
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:111
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:113
 msgid "replacing spaces in the Virtual library name by ``%20``."
 msgstr "nahrazování mezer v názvu Virtuální knihovně hodnotou ``%20``."
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:113
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:115
 msgid ""
 "If you perform a search in calibre and want to generate a link for it you "
 "can do so by right clicking the search bar and choosing :guilabel:`Copy "
@@ -206,11 +211,21 @@ msgstr ""
 "můžete tak učinit kliknutím pravým tlačítkem myši na panel hledání a výběrem"
 " :guilabel:`Kopírovat hledání jako URL`."
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:121
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:120
+msgid "Open a book details window on a book in some library"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:126
+msgid ""
+"This opens a book details window on the specified book from the specified "
+"library without changing the current library or the selected book."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:133
 msgid "Hex encoding of URL parameters"
 msgstr "Hex kódování URL parametrů"
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:123
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:135
 msgid ""
 "Hex encoding of URL parameters is done by first encoding the parameter as "
 "UTF-8 bytes, and then replacing each byte by two hexadecimal characters "

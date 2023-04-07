@@ -8,16 +8,16 @@
 # Nicolas F. <fernetn@gmail.com>, 2017
 # Ptit Prince <leporello1791@gmail.com>, 2014
 # Ptit Prince <leporello1791@gmail.com>, 2016-2022
-# un_pogaz, 2022
+# un_pogaz, 2022-2023
 # Xotes <alois.glibert@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-02 05:59+0000\n"
+"POT-Creation-Date: 2023-04-05 12:34+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
-"Last-Translator: un_pogaz, 2022\n"
-"Language-Team: French (http://www.transifex.com/calibre/calibre/language/fr/)\n"
+"Last-Translator: un_pogaz, 2022-2023\n"
+"Language-Team: French (http://app.transifex.com/calibre/calibre/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -288,6 +288,10 @@ msgstr "Sauve les paramètres spécifiés par l'utilisateur avec config_widget"
 #: calibre.customize.CatalogPlugin.run:0
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postadd:0
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:0
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:0
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:0
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
@@ -568,6 +572,20 @@ msgid ""
 msgstr "Si réglé sur True, cette extension est exécutée après que des livres aient été ajoutés à la base de donnée. Dans ce cas, les méthodes postimport et postadd de l'extension sont appelées. "
 
 #: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.FileTypePlugin.on_postconvert:1
+msgid ""
+"If True, this plugin is run after a book is converted. In this case the "
+"postconvert method of the plugin is called."
+msgstr "Si True, ce plugin est exécuté après la conversion d'un livre. Dans ce cas, la méthode postconvert du plugin est appelée."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.FileTypePlugin.on_postdelete:1
+msgid ""
+"If True, this plugin is run after a book file is deleted from the database. "
+"In this case the postdelete method of the plugin is called."
+msgstr "Si True, ce plugin est exécuté après qu'un fichier de livre a été supprimé de la base de données. Dans ce cas, la méthode postdelete du plugin est appelée."
+
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.FileTypePlugin.on_preprocess:1
 msgid "If True, this plugin is run just before a conversion"
 msgstr "Si True, cette extension est exécutée juste avant une conversion"
@@ -621,19 +639,49 @@ msgstr "post import est appelée, c-à-d après que le fichier de livre ait ét�
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postadd:8
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:5
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:6
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:6
 msgid "Database id of the added book."
 msgstr "L'id du livre ajouté dans la base de donnée."
 
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:6
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:7
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:7
 msgid "The file type of the book that was added."
 msgstr "Le type de fichier du livre qui a été ajouté."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:7
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:8
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:8
 msgid "Library database."
 msgstr "Base de donnée de la bibliothèque."
+
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:1
+msgid ""
+"Called post conversion, i.e., after the conversion output book file has been"
+" added to the database. Note that it is run after a conversion only, not "
+"after a book is added. It is useful for modifying the book record based on "
+"the contents of the newly added file."
+msgstr "Appelé après la conversion, c'est-à-dire après que le fichier de sortie de la conversion a été ajouté à la base de données. Notez qu'elle n'est exécutée qu'après une conversion, et non après l'ajout d'un livre. Elle est utile pour modifier l'enregistrement du livre en fonction du contenu du fichier nouvellement ajouté."
+
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:1
+msgid ""
+"Called post deletion, i.e., after the book file has been deleted from the "
+"database. Note that it is not run when a book record is deleted, only when "
+"one or more formats from the book are deleted. It is useful for modifying "
+"the book record based on the format of the deleted file."
+msgstr "Appelé après la suppression, c'est-à-dire après que le fichier du livre a été supprimé de la base de données. Notez qu'il n'est pas exécuté lorsqu'un enregistrement de livre est supprimé, mais seulement lorsqu'un ou plusieurs formats du livre sont supprimés. Elle est utile pour modifier l'enregistrement du livre en fonction du format du fichier supprimé."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postadd:1
@@ -935,7 +983,7 @@ msgstr "Outrepassez cette méthode si vous souhaiteriez retourner de multiples u
 msgid ""
 "Return cached cover URL for the book identified by the identifiers "
 "dictionary or None if no such URL exists."
-msgstr ""
+msgstr "Renvoie l'URL de la couverture mise en cache pour le livre identifié par le dictionnaire d'identifiants ou None si cette URL n'existe pas."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.get_cached_cover_url:4

@@ -58,6 +58,7 @@ class TagBrowserMixin:  # {{{
                     partial(func, *args))
         fm = db.new_api.field_metadata
         categories = [x[0] for x in find_categories(fm) if fm.is_custom_field(x[0])]
+        categories = [c for c in categories if fm[c]['datatype'] != 'composite']
         if categories:
             if len(categories) > 5:
                 m = m.addMenu(_('Custom columns'))
@@ -109,7 +110,11 @@ class TagBrowserMixin:  # {{{
         self.library_view.model().count_changed()
 
     def user_categories_edited(self):
-        self.library_view.model().refresh()
+        current_row_id = self.library_view.current_id
+        self.library_view.model().refresh(reset=True)
+        self.library_view.model().research(reset=False)
+        self.library_view.current_id = current_row_id # the setter checks for None
+
 
     def do_restriction_error(self, e):
         error_dialog(self.tags_view, _('Invalid search restriction'),
@@ -281,7 +286,8 @@ class TagBrowserMixin:  # {{{
                           tag_to_match=tag,
                           get_book_ids=partial(self.get_book_ids, db=db, category=category),
                           sorter=key, ttm_is_first_letter=is_first_letter,
-                          fm=db.field_metadata[category])
+                          fm=db.field_metadata[category],
+                          link_map=db.new_api.get_link_map(category))
         d.exec()
         if d.result() == QDialog.DialogCode.Accepted:
             to_rename = d.to_rename  # dict of old id to new name
@@ -299,6 +305,9 @@ class TagBrowserMixin:  # {{{
 
                 db.new_api.remove_items(category, to_delete)
                 db.new_api.rename_items(category, to_rename, change_index=False)
+
+                # Must do this at the end so renames are accounted for
+                db.new_api.set_link_map(category, d.links)
 
                 # Clean up the library view
                 self.do_tag_item_renamed()

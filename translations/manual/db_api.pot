@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 6.14.1\n"
+"Project-Id-Version: calibre 6.15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-16 06:25+0530\n"
+"POT-Creation-Date: 2023-04-07 08:45+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -96,11 +96,14 @@ msgstr ""
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.cover:0
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.format:0
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.format_metadata:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_all_link_maps_for_book:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_link_map:0
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_next_series_num_for:0
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.remove_formats:0
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.rename_items:0
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.search:0
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.set_field:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.set_link_map:0
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.tags_older_than:0
 msgid "Parameters"
 msgstr ""
@@ -289,6 +292,32 @@ msgstr ""
 msgid "Return tuple of all formats for the specified book. If verify_formats is True, verifies that the files exist on disk."
 msgstr ""
 
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_all_link_maps_for_book:1
+msgid "Returns all links for all fields referenced by book identified by book_id"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_all_link_maps_for_book:7
+msgid "Example: Assume author A has link X, author B has link Y, tag S has link"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_all_link_maps_for_book:4
+msgid "F, and tag T has link G. IF book 1 has author A and tag T, this method returns {'authors':{'A':'X'}, 'tags':{'T', 'G'}} If book 2's author is neither A nor B and has no tags, this method returns {}"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_all_link_maps_for_book:9
+msgid "the book id in question."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_all_link_maps_for_book:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_link_map:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.set_link_map:0
+msgid "Returns"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_all_link_maps_for_book:11
+msgid "{field: {field_value, link_value}, ...  for all fields that have a non-empty link value for that book"
+msgstr ""
+
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_categories:1
 msgid "Used internally to implement the Tag Browser"
 msgstr ""
@@ -315,6 +344,18 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_item_name:1
 msgid "Return the item name for the item specified by item_id in the specified field. See also :meth:`get_id_map`."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_link_map:1
+msgid "Return a dict of links for the supplied field."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_link_map:3
+msgid "the lookup name of the field for which the link map is desired"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_link_map:5
+msgid "{field_value:link_value, ...} for non-empty links"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_metadata:1
@@ -463,6 +504,22 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.set_field:8
 msgid "Used internally, you should never change it."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.set_link_map:1
+msgid "Sets links for item values in field Note: this method doesn't change values not in the value_to_link_map"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.set_link_map:4
+msgid "the lookup name"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.set_link_map:5
+msgid "dict(field_value:link, ...). Note that these are values, not field ids."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.set_link_map:7
+msgid "books changed by setting the link"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.set_metadata:1
