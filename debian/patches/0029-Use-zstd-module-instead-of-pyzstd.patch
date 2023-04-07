@@ -1,0 +1,25 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 7 Apr 2023 14:58:06 +0900
+Subject: Use "zstd" module instead of "pyzstd"
+
+Forwarded: not-needed
+
+This test just checks Qt library supports Zstandard compression algorithm.
+See "src/calibre/utils/rcc/rcc.cpp" for real usage.
+---
+ src/calibre/test_build.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
+index f6c898e..90aedeb 100644
+--- a/src/calibre/test_build.py
++++ b/src/calibre/test_build.py
+@@ -101,7 +101,7 @@ class BuildTest(unittest.TestCase):
+         lzma.open
+ 
+     def test_zstd(self):
+-        from pyzstd import compress, decompress
++        from zstd import compress, decompress
+         data = os.urandom(4096)
+         cdata = compress(data)
+         self.assertEqual(data, decompress(cdata))

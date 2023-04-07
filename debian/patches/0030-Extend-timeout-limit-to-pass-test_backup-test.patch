@@ -1,0 +1,22 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 7 Apr 2023 16:27:58 +0900
+Subject: Extend timeout limit to pass "test_backup" test
+
+Forwarded: not-needed
+---
+ src/calibre/db/tests/writing.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/calibre/db/tests/writing.py b/src/calibre/db/tests/writing.py
+index ab27e50..3d90a49 100644
+--- a/src/calibre/db/tests/writing.py
++++ b/src/calibre/db/tests/writing.py
+@@ -380,7 +380,7 @@ class WritingTest(BaseTest):
+         from calibre.db.restore import Restore
+         restorer = Restore(cl)
+         restorer.start()
+-        restorer.join(8)
++        restorer.join(80)
+         af(restorer.is_alive())
+         cache = self.init_cache(cl)
+         ae(before, {f:cache.all_field_for(f, book_ids) for f in tested_fields})

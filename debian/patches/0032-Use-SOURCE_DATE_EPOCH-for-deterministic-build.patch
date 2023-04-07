@@ -1,0 +1,28 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 7 Apr 2023 17:21:57 +0900
+Subject: Use SOURCE_DATE_EPOCH for deterministic build
+
+Forwarded: not-needed
+---
+ setup/browser_data.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/setup/browser_data.py b/setup/browser_data.py
+index a1f16c1..9914259 100644
+--- a/setup/browser_data.py
++++ b/setup/browser_data.py
+@@ -95,12 +95,13 @@ def all_desktop_platforms(user_agents):
+ 
+ def get_data():
+     ua_freq_map, common = common_user_agents()
++    epoch = int(os.environ.get('SOURCE_DATE_EPOCH'))
+     ans = {
+         'chrome_versions': chrome_versions(),
+         'firefox_versions': firefox_versions(),
+         'common_user_agents': common,
+         'user_agents_popularity': ua_freq_map,
+-        'timestamp': datetime.utcnow().isoformat() + '+00:00',
++        'timestamp': datetime.utcfromtimestamp(epoch).isoformat() + '+00:00',
+     }
+     ans['desktop_platforms'] = list(sorted(all_desktop_platforms(ans['common_user_agents'])))
+     return ans
