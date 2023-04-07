@@ -1,0 +1,24 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Sat, 8 Apr 2023 00:20:31 +0900
+Subject: Remove date from description for deterministic build
+
+Forwarded: not-needed
+---
+ recipes/presse_portal.recipe | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/recipes/presse_portal.recipe b/recipes/presse_portal.recipe
+index c2e069e..fbb72f0 100644
+--- a/recipes/presse_portal.recipe
++++ b/recipes/presse_portal.recipe
+@@ -19,10 +19,6 @@ class PressePortalDE(BasicNewsRecipe):
+     simultaneous_downloads = 10
+     # description, some Reader show this in titlepage
+     description = u'Presseportal News Feed DE'
+-    # add date to description so for dayly downloads you can find them easier
+-    # ---- can be edit by user
+-    description = description + ' fetched: ' + \
+-        datetime.now().strftime("%Y-%m-%d")  # %H:%M:%S")
+     # Who published the content?
+     publisher = u'Presseportal.de'
+     # What is the content of?
