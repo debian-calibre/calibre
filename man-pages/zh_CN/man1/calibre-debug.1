@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "三月 16, 2023" "6.14.1" "calibre"
+.TH "CALIBRE-DEBUG" "1" "四月 07, 2023" "6.15.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -35,16 +35,16 @@ calibre-debug \- calibre-debug
 .sp
 .nf
 .ft C
-calibre\-debug [选项]
+calibre\-debug [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-多种命令行界面在调试calibre 时很有用。如果没有选项，此命令将启动内置的Python解释器。
+各种有助于调试calibre的命令行接口。如果没有选项，此命令将启动内置的Python解释器。
 你也可以在 debug 模式下运行主要的 cailbre GUI，calibre 电子书阅读器和 calibre 编辑器。
 .sp
-它同时也包含了部分没有命令行工具的 calibre 界面，比如字体子集，电子书对比工具等等。
+它还包含了各种没有专用命令行工具的calibre的接口，比如字体子集，电子书对比工具等等。
 .sp
 你也能用 \fBcalibre\-debug\fP 来运行独立的脚本。像这样来操作：
 .INDENT 0.0
@@ -54,7 +54,7 @@ calibre\-debug [选项]
 .UNINDENT
 .INDENT 0.0
 .TP
-.B 在 \fB\-\-\fP 后的的所有东西都被传输到了脚本里。类似这样：
+.B 在 \fB\-\-\fP 后的的所有东西都被传输到了脚本里。您也可以在脚本中使用calibre debug作为shebang。类似这样：
 #!/usr/bin/env \-S \fBcalibre\-debug\fP \-e \fB\-\-\fP \-\-
 .UNINDENT
 .sp
@@ -63,7 +63,7 @@ calibre\-debug [选项]
 .INDENT 0.0
 .TP
 .B \-\-add\-simple\-plugin
-通过指定包含插件代码的文件来添加简单插件(例如，一个python脚本)
+通过指定包含插件代码的py文件的路径，添加一个简单的插件（例如仅由.py文件组成的插件）
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -73,7 +73,7 @@ calibre\-debug [选项]
 .INDENT 0.0
 .TP
 .B \-\-debug\-device\-driver, \-d
-设备检测调试
+调试\fB\(aq\fP设备检测\fB\(aq\fP
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -118,7 +118,7 @@ calibre\-debug [选项]
 .INDENT 0.0
 .TP
 .B \-\-gui\-debug
-以调试控制台运行用户界面，日志输出到指定路径。仅适用于内部使用，用 \-g 参数运行用户界面于调试模式。
+使用调试控制台运行用户界面，日志输出到指定路径。仅适用于内部使用，使用\-g选项在调试模式下运行用户界面。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -128,7 +128,7 @@ calibre\-debug [选项]
 .INDENT 0.0
 .TP
 .B \-\-implode\-book, \-i
-聚合以前拆解过的书籍。 用法：\-i output_dir file.epub 从output_dir的文件中导入该书籍，该文件必须是由之前调用:option:
+聚合以前拆解过的书籍。 用法：\-i output_dir file.epub 从output_dir的文件中导入书籍，这些文件必须是由之前调用:option:
 .nf
 \(ga
 .fi
@@ -137,7 +137,7 @@ calibre\-debug [选项]
 .INDENT 0.0
 .TP
 .B \-\-import\-calibre\-data
-导入现有 calibre 数据
+导入先前导出的calibre数据
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -152,7 +152,7 @@ calibre\-debug [选项]
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-执行一个提供命令行界面的插件。例如： calibre\-debug \-r“插件名称”\-\- file1 \fB\-\-option1\fP 在\-\-后方的内容将被当作参数传递给插件。
+运行一个提供命令行接口的插件。例如： calibre\-debug \-r“插件名称”\-\- file1 \fB\-\-option1\fP 在\-\-后方的内容将被当作参数传递给插件。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -172,12 +172,12 @@ calibre\-debug [选项]
 .INDENT 0.0
 .TP
 .B \-\-subset\-font, \-f
-将指定的字体归为子集。在此选项后使用 \fB\-\-\fP 来传递选项到字体归类程序。
+将指定的字体子集化。在此选项后使用 \fB\-\-\fP 来传递选项到字体子集化程序。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-test\-build
-测试构建中的二进制模组
+在构建中测试二进制模组
 .UNINDENT
 .INDENT 0.0
 .TP

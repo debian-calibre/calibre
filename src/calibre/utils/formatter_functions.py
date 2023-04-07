@@ -1389,7 +1389,9 @@ class BuiltinSeriesSort(BuiltinFormatterFunction):
 
     def evaluate(self, formatter, kwargs, mi, locals):
         if mi.series:
-            return title_sort(mi.series)
+            langs = mi.languages
+            lang = langs[0] if langs else None
+            return title_sort(mi.series, lang=lang)
         return ''
 
 
@@ -2014,7 +2016,10 @@ class BuiltinAuthorLinks(BuiltinFormatterFunction):
 
     def evaluate(self, formatter, kwargs, mi, locals, val_sep, pair_sep):
         if hasattr(mi, '_proxy_metadata'):
-            link_data = mi._proxy_metadata.author_link_map
+            link_data = mi._proxy_metadata.link_maps
+            if not link_data:
+                return ''
+            link_data = link_data.get('authors')
             if not link_data:
                 return ''
             names = sorted(link_data.keys(), key=sort_key)

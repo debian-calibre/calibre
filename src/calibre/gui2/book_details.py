@@ -41,13 +41,20 @@ from polyglot.binary import from_hex_bytes
 InternetSearch = namedtuple('InternetSearch', 'author where')
 
 
-def set_html(mi, html, text_browser):
+def db_for_mi(mi):
     from calibre.gui2.ui import get_gui
-    gui = get_gui()
+    lp = getattr(mi, 'external_library_path', None)
+    if lp:
+        return get_gui().library_broker.get_library(lp), True
+    return get_gui().current_db, False
+
+
+def set_html(mi, html, text_browser):
     book_id = getattr(mi, 'id', None)
     search_paths = []
-    if gui and book_id is not None:
-        path = gui.current_db.abspath(book_id, index_is_id=True)
+    db, _ = db_for_mi(mi)
+    if db and book_id is not None:
+        path = db.abspath(book_id, index_is_id=True)
         if path:
             search_paths = [path]
     text_browser.setSearchPaths(search_paths)
@@ -203,15 +210,18 @@ def comments_pat():
     return re.compile(r'<!--.*?-->', re.DOTALL)
 
 
-def render_html(mi, vertical, widget, all_fields=False, render_data_func=None, pref_name='book_display_fields'):  # {{{
-    from calibre.gui2.ui import get_gui
+def render_html(mi, vertical, widget, all_fields=False, render_data_func=None,
+                pref_name='book_display_fields',
+                pref_value=None):  # {{{
+    db, is_external = db_for_mi(mi)
+    show_links = not is_external
     func = render_data_func or partial(render_data,
-                   vertical_fields=get_gui().current_db.prefs.get('book_details_vertical_categories') or ())
+                   vertical_fields=db.prefs.get('book_details_vertical_categories') or ())
     try:
-        table, comment_fields = func(mi, all_fields=all_fields,
+        table, comment_fields = func(mi, all_fields=all_fields, show_links=show_links,
                 use_roman_numbers=config['use_roman_numerals_for_series_number'], pref_name=pref_name)
     except TypeError:
-        table, comment_fields = func(mi, all_fields=all_fields,
+        table, comment_fields = func(mi, all_fields=all_fields, show_links=show_links,
                 use_roman_numbers=config['use_roman_numerals_for_series_number'])
 
     def color_to_string(col):
@@ -246,9 +256,8 @@ def render_html(mi, vertical, widget, all_fields=False, render_data_func=None, p
     return ans
 
 
-def get_field_list(fm, use_defaults=False, pref_name='book_display_fields'):
-    from calibre.gui2.ui import get_gui
-    db = get_gui().current_db
+def get_field_list(fm, use_defaults=False, pref_name='book_display_fields', mi=None):
+    db, _ = db_for_mi(mi)
     if use_defaults:
         src = db.prefs.defaults
     else:
@@ -266,14 +275,15 @@ def get_field_list(fm, use_defaults=False, pref_name='book_display_fields'):
 
 
 def render_data(mi, use_roman_numbers=True, all_fields=False, pref_name='book_display_fields',
-                vertical_fields=()):
-    field_list = get_field_list(getattr(mi, 'field_metadata', field_metadata), pref_name=pref_name)
+                vertical_fields=(), show_links=True):
+    field_list = get_field_list(getattr(mi, 'field_metadata', field_metadata),
+                                pref_name=pref_name, mi=mi)
     field_list = [(x, all_fields or display) for x, display in field_list]
     return mi_to_html(
         mi, field_list=field_list, use_roman_numbers=use_roman_numbers, rtl=is_rtl(),
         rating_font=rating_font(), default_author_link=default_author_link(),
         comments_heading_pos=gprefs['book_details_comments_heading_pos'], for_qt=True,
-        vertical_fields=vertical_fields
+        vertical_fields=vertical_fields, show_links=show_links
     )
 
 # }}}
@@ -441,13 +451,17 @@ def create_copy_links(menu, data=None):
     library_id = '_hex_-' + library_id.encode('utf-8').hex()
     book_id = get_gui().library_view.current_id
 
+    all_links = []
     def link(text, url):
         def doit():
             QApplication.instance().clipboard().setText(url)
+        nonlocal all_links
+        all_links.append(url)
         menu.addAction(QIcon.ic('edit-copy.png'), text, doit)
 
     menu.addSeparator()
     link(_('Link to show book in calibre'), f'calibre://show-book/{library_id}/{book_id}')
+    link(_('Link to show book details in a popup window'), f'calibre://book-details/{library_id}/{book_id}')
     if data:
         field = data.get('field')
         if data['type'] == 'author':
@@ -461,6 +475,13 @@ def create_copy_links(menu, data=None):
     for fmt in db.formats(book_id):
         fmt = fmt.upper()
         link(_('Link to view {} format of book').format(fmt.upper()), f'calibre://view-book/{library_id}/{book_id}/{fmt}')
+
+    if all_links:
+        menu.addSeparator()
+        mi = db.new_api.get_proxy_metadata(book_id)
+        all_links.insert(0, '')
+        all_links.insert(0, mi.get('title') + ' - ' + ' & '.join(mi.get('authors')))
+        link(_('Copy all the above links'), '\n'.join(all_links))
 
 
 def details_context_menu_event(view, ev, book_info, add_popup_action=False, edit_metadata=None):

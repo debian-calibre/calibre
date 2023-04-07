@@ -147,6 +147,15 @@ def adata_getter(field):
     return func
 
 
+def link_maps_getter(dbref, book_id, cache):
+    try:
+        ans = cache['link_maps']
+    except KeyError:
+        db = dbref()
+        ans = cache['link_maps'] = db.get_all_link_maps_for_book(book_id)
+    return ans
+
+
 def dt_getter(field):
     def func(dbref, book_id, cache):
         try:
@@ -300,12 +309,13 @@ getters = {
     'application_id':lambda x, book_id, y: book_id,
     'id':lambda x, book_id, y: book_id,
     'virtual_libraries':virtual_libraries_getter,
+    'link_maps': link_maps_getter,
 }
 
 for field in ('comments', 'publisher', 'identifiers', 'series', 'rating'):
     getters[field] = simple_getter(field)
 
-for field in ('author_sort_map', 'author_link_map'):
+for field in ('author_sort_map',):
     getters[field] = adata_getter(field)
 
 for field in ('timestamp', 'pubdate', 'last_modified'):

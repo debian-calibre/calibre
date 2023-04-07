@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "3월 16, 2023" "6.14.1" "calibre"
+.TH "EBOOK-CONVERT" "1" "4월 07, 2023" "6.15.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -107,7 +107,7 @@ options specific to every input and output format.
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device (such as by resizing images for the device screen size). In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, generic_eink, generic_eink_hd, generic_eink_large, tablet
+출력 프로파일을 지정하세요. 출력 프로파일은 변환 시스템에 생성된 문서를 지정된 기기에 대하여 어떻게 최적화 할 것인지에 관해 알려줍니다. 어떤 경우에는, 출력 프로파일이 특정 기기를 위한 출력물을 최적화하는데 사용될 수도 있습니다만, 이런 경우는 드뭅니다. 선택 가능한 값은 다음과 같습니다:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, generic_eink, generic_eink_hd, generic_eink_large, tablet
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -139,6 +139,11 @@ epub 출력의 처리를 제어하는 옵션입니다.
 .TP
 .B \-\-epub\-inline\-toc
 책 내용의 일부분으로 나타나게 될 인라인 목차를 삽입합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-max\-image\-size
+The maximum image size (width x height). A value of none means use the screen size from the output profile. A value of profile means no maximum size is specified. For example, a value of 100x200 will cause all images to be resized so that their width is no more than 100 pixels and their height is no more than 200 pixels. Note that this only affects the size of the actual image files themselves. Any given image may be rendered at a different size depending on the styling applied to it in the document.
 .UNINDENT
 .INDENT 0.0
 .TP

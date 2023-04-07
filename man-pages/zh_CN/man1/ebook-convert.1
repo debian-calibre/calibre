@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "三月 16, 2023" "6.14.1" "calibre"
+.TH "EBOOK-CONVERT" "1" "四月 07, 2023" "6.15.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -45,7 +45,8 @@ ebook\-convert input_file output_file [options]
 .sp
 input_file 表示输入文件，output_file 表示输出文件。这两者作为命令行参数必须指定到最前面。
 .sp
-输出的电子书格式可由 output_file 的扩展名得到。同时 output_file 也可以是一种以 .EXT 为扩展名的特殊格式。在这种情况下，输出文件的名称则使用输入文件的名称。注意：文件名不能以连字号作为开头。如果 output_file 不含扩展名，那么它将被视为一个文件夹并将会在该文件夹下生成 HTML 格式的“开放式电子书(OEB)”。这些文件会被视为正常文件而被输出插件所识别。
+输出电子书格式由output_file的文件扩展名推测。output_file也可以是特殊格式.EXT，其中EXT是输出文件扩展名。在这种情况下，输出文件的名称源自输入文件的名称。请注意，文件名不能以连字符开头。如果output_file不含扩展名，那么它将被视为一个文件夹，由HTML文件组成的“开放电子书”（OEB）将被写入该文件夹。
+这些文件会被视为正常文件而被输出插件所识别。
 .sp
 在指定输入和输出文件后，你可以自定义特定的转换选项。根据输入和输出文件格式不同可用的转换选项也不同。如需获取针对输入和输出文件的帮助，请在命令行中输入 \-h。
 .sp
@@ -71,7 +72,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .IP \(bu 2
 \fI\%智能处理\fP
 .IP \(bu 2
-\fI\%查找替换\fP
+\fI\%查找与替换\fP
 .IP \(bu 2
 \fI\%结构检测\fP
 .IP \(bu 2
@@ -99,7 +100,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-设置输出配置。输出配置可以让转换系统针对指定的设备优化文档（例如通过根据设备屏幕分辨率缩放图片）。在某些情况下，可以用\fB\(aq\fP输出配置\fB\(aq\fP优化对特定设备的输出，但几乎没有必要。可选项有：cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet, generic_eink_large, generic_eink, generic_eink_hd
+指定输出配置文件. 输出配置文件可以指示转换系统如何为特定的设备对生成的文档进行优化. 在某些情况下, 输出配置文件可以对一种特定的设备进行优化输出, 但这种情况很少使用. 请选择:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet, generic_eink_large, generic_eink, generic_eink_hd
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -108,7 +109,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .UNINDENT
 .SH 输入格式选项
 .sp
-处理输入文件 mobi 的选项设置
+处理输入 mobi 文件的选项设置
 .INDENT 0.0
 .TP
 .B \-\-input\-encoding
@@ -131,6 +132,11 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .TP
 .B \-\-epub\-inline\-toc
 插入一个内嵌目录，将会作为书籍内容。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-max\-image\-size
+The maximum image size (width x height). A value of none means use the screen size from the output profile. A value of profile means no maximum size is specified. For example, a value of 100x200 will cause all images to be resized so that their width is no more than 100 pixels and their height is no more than 200 pixels. Note that this only affects the size of the actual image files themselves. Any given image may be rendered at a different size depending on the styling applied to it in the document.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -160,7 +166,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-no\-svg\-cover
-禁用 SVG格式的图片作为书籍封面。如果你打算将 EPUB 文件用到不支持 SVG 格式的设备(如 iPhone 或 JetBook Lite)上的话，请使用该选项。不选中此选项的话，这类设备将只能将封面显示为一个空白页。
+禁用 SVG格式的图片作为书籍封面。如果你打算将 EPUB 文件用到不支持 SVG 格式的设备(如 iPhone 或 JetBook Lite)中的话，请使用该选项。不选中此选项的话，这类设备将只能将封面显示为一个空白页。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -208,7 +214,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-在书籍中嵌入指定的字体。这里指定了书籍中使用的“基础”字体。如果输入文件指定了字体，就有可能覆盖此处的基础字体。你可以使用“样式信息过滤”的选项来删除输入文档中指定的字体。注意，字体内嵌只在一些输出格式中有用，主要是 EPUB、AZW3 和 DOCX。
+在书籍中嵌入指定的字体。这里指定了书籍中使用的“基础”字体。如果输入文件指定了字体，就有可能覆盖此处的基础字体。你可以使用“过滤样式信息”的选项来删除输入文档中指定的字体。注意，字体内嵌只在一些输出格式中有用，主要是 EPUB、AZW3 和 DOCX。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -223,7 +229,7 @@ CSS 样式表或原始 CSS 文件路径。该 CSS 样式表将会被添加到源
 .INDENT 0.0
 .TP
 .B \-\-filter\-css
-将从所有CSS样式规则中删除的以逗号分隔的 CSS 属性列表。如果某些样式信息阻碍了阅读器设备上的样式设置，则此选项非常有用。例如：字体、颜色、左边距、右边距
+将从所有CSS样式规则中删除的以逗号分隔的 CSS 属性列表。如果某些样式信息阻碍了阅读器设备中的样式设置，则此选项非常有用。例如：字体、颜色、左边距、右边距
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -303,7 +309,7 @@ CSS 样式表或原始 CSS 文件路径。该 CSS 样式表将会被添加到源
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-包含转换本书中CSS样式规则的文件路径。创建这样一个文件的最简单方法是在 calibre GUI中使用向导创建规则。在“界面外观\->转换样式”的转换对话框部分访问它。 一旦创建规则，就可以使用“导出”按钮将它们保存到文件中。
+包含转换本书中CSS样式的规则的文件路径。创建这样一个文件的最简单方法是在 calibre GUI中使用向导创建规则。在“界面外观\->转换样式”的转换对话框部分访问它。 一旦创建规则，就可以使用“导出”按钮将它们保存到文件中。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -373,7 +379,7 @@ CSS 样式表或原始 CSS 文件路径。该 CSS 样式表将会被添加到源
 .B \-\-replace\-scene\-breaks
 把分节符替换为指定的文本。在默认情况下，会使用输入文档中的文本。
 .UNINDENT
-.SH 查找替换
+.SH 查找与替换
 .sp
 以用户预定义的规则修改文档内容和结构。
 .INDENT 0.0

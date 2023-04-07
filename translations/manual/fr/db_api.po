@@ -7,15 +7,15 @@
 # Ptit Prince <leporello1791@gmail.com>, 2014-2016
 # Ptit Prince <leporello1791@gmail.com>, 2014
 # Ptit Prince <leporello1791@gmail.com>, 2016-2018,2021-2022
-# un_pogaz, 2022
+# un_pogaz, 2022-2023
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-02 05:59+0000\n"
+"POT-Creation-Date: 2023-04-05 12:34+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
-"Last-Translator: un_pogaz, 2022\n"
-"Language-Team: French (http://www.transifex.com/calibre/calibre/language/fr/)\n"
+"Last-Translator: un_pogaz, 2022-2023\n"
+"Language-Team: French (http://app.transifex.com/calibre/calibre/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -389,7 +389,7 @@ msgid ""
 "is identifiers for which the returned value is always a dictionary. The "
 "returned tuples are always in link order, that is, the order in which they "
 "were created."
-msgstr ""
+msgstr "La valeur renvoyée pour les champs is_multiple est toujours un tuples, même si aucune valeur n'est trouvée (en d'autres termes, default_value est ignoré). L'exception concerne les identificateurs, pour lesquels la valeur retournée est toujours un dictionnaire. Les tuples renvoyés sont toujours dans l'ordre des liens, c'est-à-dire l'ordre dans lequel ils ont été créés."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_ids_for:1
@@ -496,6 +496,43 @@ msgid ""
 msgstr "Renvoie le tuple pour tous les formats du livre spécifié. Si verify_format est Vrai, vérifie que les fichiers existent sur le disque."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_link_maps_for_book:1
+msgid ""
+"Returns all links for all fields referenced by book identified by book_id"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_link_maps_for_book:3
+msgid "book_id: the book id in question."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_link_maps_for_book:7
+msgid "returns:"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_link_maps_for_book:6
+msgid ""
+"{field: {field_value, link_value}, ... for all fields that have a non-empty "
+"link value for that book"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_link_maps_for_book:12
+msgid ""
+"Example: Assume author A has link X, author B has link Y, tag S has link"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_link_maps_for_book:10
+msgid ""
+"F, and tag T has link G. IF book 1 has author A and tag T, this method "
+"returns {'authors':{'A':'X'}, 'tags':{'T', 'G'}} If book 2's author is "
+"neither A nor B and has no tags, this method returns {}"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_categories:1
 msgid "Used internally to implement the Tag Browser"
 msgstr "Utilisé en interne pour implémenter le Navigateur d'Etiquettes"
@@ -537,6 +574,21 @@ msgid ""
 "Return the item name for the item specified by item_id in the specified "
 "field. See also :meth:`get_id_map`."
 msgstr "Renvoie le nom d'élément pour l'élément spécifié par item_id dans le champ spécifié. Voir aussi :meth:`get_id_map`."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_link_map:1
+msgid "Return a dict of links for the supplied field."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_link_map:3
+msgid "field: the lookup name of the field for which the link map is desired"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_link_map:5
+msgid "returns {field_value:link_value, ...} for non-empty links"
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_metadata:1
@@ -794,6 +846,33 @@ msgid "Used internally, you should never change it."
 msgstr "Utilisé en interne, vous ne devriez jamais le changer."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_link_map:1
+msgid "Sets links for item values in field"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_link_map:3
+msgid ""
+"field: the lookup name value_to_link_map: dict(field_value:link, ...). Note "
+"that these are"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_link_map:5
+msgid "values, not field ids."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_link_map:7
+msgid "returns books changed by setting the link"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_link_map:9
+msgid "Note: this method doesn't change values not in the value_to_link_map"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_metadata:1
 msgid "Set metadata for the book `id` from the `Metadata` object `mi`"
 msgstr "Paramétrer les métadonnées pour le livre `id` depuis l'objet `Metadata` `mi`."
@@ -825,7 +904,7 @@ msgid ""
 "split v into unique non-empty values. The comparison is case sensitive. "
 "Order is not preserved. Return a list() for compatibility with proxy "
 "metadata field getters, for example tags."
-msgstr ""
+msgstr "Si f est une clé de recherche de colonne composite et que la colonne est is_multiple, diviser v en valeurs uniques et non vides. La comparaison est sensible à la casse. L'ordre n'est pas préservé. Retourne une list() pour des raisons de compatibilité avec les getters des champs de proxy metadata , par exemple les tags."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:1

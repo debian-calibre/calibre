@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "marzo 16, 2023" "6.14.1" "calibre"
+.TH "EBOOK-CONVERT" "1" "aprile 07, 2023" "6.15.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -99,7 +99,7 @@ Elenca i nomi delle ricette integrate. Puoi creare un e\-book da una ricetta int
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specifica il profilo di output. Il profilo di output specifica al sistema di conversione come ottimizzare il documento creato per lo specifico dispositivo (come ridimensionando le immagini per la dimensione dello schermo del dispositivo). In alcuni casi, un profilo di output può essere usato per ottimizzare l\fB\(aq\fPoutput per un particolare dispositivo, ma raramente è necessario. Le scelte sono:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+Specifica il profilo di output. Il profilo di output indica al sistema di conversione come ottimizzare il documento creato per il dispositivo indicato. In alcuni casi il profilo di output può essere usato per ottimizzare l\fB\(aq\fPoutput per un particolare dispositivo, ma ciò è necessario raramente. Le scelte sono:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -131,6 +131,11 @@ Questa opzione è necessaria solo se si intende usare l\fB\(aq\fPepub con FBRead
 .TP
 .B \-\-epub\-inline\-toc
 Inserisci un indice che apparirà come parte del contenuto principale del libro
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-max\-image\-size
+The maximum image size (width x height). A value of none means use the screen size from the output profile. A value of profile means no maximum size is specified. For example, a value of 100x200 will cause all images to be resized so that their width is no more than 100 pixels and their height is no more than 200 pixels. Note that this only affects the size of the actual image files themselves. Any given image may be rendered at a different size depending on the styling applied to it in the document.
 .UNINDENT
 .INDENT 0.0
 .TP
