@@ -1,3 +1,20 @@
+calibre (6.15.0-1) UNRELEASED; urgency=medium
+
+  * New upstream version 6.15.0
+  * Update User-Agent data
+  * Rediff patches
+  * Use "zstd" instead of "pyzstd"
+    Build script checks Qt supports Zstandard through Python module.
+  * Rediff patches.
+    Add 0030-Extend-timeout-limit-to-pass-test_backup-test.patch: test
+    Add 0031-Sort-lines-for-reproducible-build.patch: deterministic build
+    Add 0029-Use-zstd-module-instead-of-pyzstd.patch: build
+    Add 0032-Use-SOURCE_DATE_EPOCH-for-deterministic-build.patch: deterministic build
+  * Remove date from description for deterministic build
+  * CA certs file is now included in upstream source
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sat, 08 Apr 2023 09:33:29 +0900
+
 calibre (6.14.1-1) unstable; urgency=medium
 
   * New upstream version 6.14.1
