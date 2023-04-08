@@ -12,11 +12,25 @@ for easy sharing".
 * Set "False" for "save_annotations_in_ebook".
 * Give "False" if askes default value of "save_annotations_in_ebook".
 ---
+ resources/viewer.js              | 2 +-
  src/calibre/gui2/viewer/main.py  | 2 +-
  src/calibre/gui2/viewer/ui.py    | 2 +-
  src/pyj/read_book/prefs/misc.pyj | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
+diff --git a/resources/viewer.js b/resources/viewer.js
+index 42c1601..cdc48b0 100644
+--- a/resources/viewer.js
++++ b/resources/viewer.js
+@@ -38080,7 +38080,7 @@ return this.__repr__();
+             ρσ_d["remember_last_read"] = true;
+             ρσ_d["show_actions_toolbar"] = false;
+             ρσ_d["show_actions_toolbar_in_fullscreen"] = false;
+-            ρσ_d["save_annotations_in_ebook"] = true;
++            ρσ_d["save_annotations_in_ebook"] = false;
+             ρσ_d["sync_annots_user"] = "";
+             ρσ_d["singleinstance"] = false;
+             ρσ_d["auto_hide_mouse"] = true;
 diff --git a/src/calibre/gui2/viewer/main.py b/src/calibre/gui2/viewer/main.py
 index 3cdd57c..04980a0 100644
 --- a/src/calibre/gui2/viewer/main.py
