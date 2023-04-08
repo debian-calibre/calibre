@@ -98,6 +98,7 @@ override_dh_installman:
 	debian/install-manpages.sh
 
 override_dh_auto_clean:
+	$(SETUP) build --clean
 	if [ -d debian/liberation.backup ] ; then \
 		$(SETUP) liberation_fonts --clean ; \
 		mv debian/liberation.backup resources/fonts/liberation ; \
