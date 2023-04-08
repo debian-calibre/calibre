@@ -47,8 +47,6 @@ override_dh_auto_build-arch: blhc-note
 	$(SETUP) build
 
 override_dh_auto_build-indep: blhc-note
-	$(SETUP) mathjax --path-to-mathjax="$(CURDIR)/mathjax-git"
-#
 #	backup original font files and use system fonts
 	if [ ! -d debian/liberation.backup ] ; then \
 		mv resources/fonts/liberation debian/liberation.backup ; \
@@ -100,7 +98,6 @@ override_dh_installman:
 	debian/install-manpages.sh
 
 override_dh_auto_clean:
-	$(SETUP) mathjax --clean
 	if [ -d debian/liberation.backup ] ; then \
 		$(SETUP) liberation_fonts --clean ; \
 		mv debian/liberation.backup resources/fonts/liberation ; \
