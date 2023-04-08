@@ -47,15 +47,8 @@ override_dh_auto_build-arch: blhc-note
 	$(SETUP) build
 
 override_dh_auto_build-indep: blhc-note
-#
-	cp -r ./translations-git/changelog      ./translations/
-	cp -r ./translations-git/content-server ./translations/
-	cp -r ./translations-git/website        ./translations/
-#
-	$(SETUP) bootstrap \
-		--path-to-mathjax="$(CURDIR)/mathjax-git" \
-		--system-liberation_fonts --path-to-liberation_fonts=/usr/share/fonts/truetype/liberation2 \
-		--path-to-hyphenation="$(CURDIR)/hyphenation-git"
+	$(SETUP) mathjax --path-to-mathjax="$(CURDIR)/mathjax-git"
+	$(SETUP) liberation_fonts --system-liberation_fonts --path-to-liberation_fonts=/usr/share/fonts/truetype/liberation2
 
 # Invoke "calibre_auto_test" target with automatic "HOME" and "XDG_*" variables.
 override_dh_auto_test-indep:
@@ -102,10 +95,8 @@ override_dh_installman:
 	debian/install-manpages.sh
 
 override_dh_auto_clean:
-	$(SETUP) bootstrap --clean
-	rm -rf ./translations/changelog
-	rm -rf ./translations/content-server
-	rm -rf ./translations/website
+	$(SETUP) mathjax --clean
+	$(SETUP) liberation_fonts --clean
 	py3clean setup src
 
 override_dh_gencontrol:
