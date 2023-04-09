@@ -43,10 +43,9 @@ blhc-note:
 
 override_dh_auto_configure:
 
-override_dh_auto_build-arch: blhc-note
+override_dh_auto_build: blhc-note
 	$(SETUP) build
-
-override_dh_auto_build-indep: blhc-note
+#
 #	backup original font files and use system fonts
 	if [ ! -d debian/liberation.backup ] ; then \
 		mv resources/fonts/liberation debian/liberation.backup ; \
@@ -54,11 +53,11 @@ override_dh_auto_build-indep: blhc-note
 	fi
 
 # Invoke "calibre_auto_test" target with automatic "HOME" and "XDG_*" variables.
-override_dh_auto_test-indep:
-	dh_auto_test -O--buildsystem=makefile -- -f debian/calibre-builder.mak test-indep
+override_dh_auto_test:
+	dh_auto_test -O--buildsystem=makefile -- -f debian/calibre-builder.mak test
 
 # "test_ajax_book" fails if previous test is "test_workers" (Closes: #973458)
-calibre_auto_test-indep:
+calibre_auto_test:
 	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC $(CI_ENV) $(SETUP) test $(TEST_FLAGS) --exclude-test-name=ajax_book --exclude-test-name=workers --exclude-test-name=qt --exclude-test-name=dom_load
 	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC $(CI_ENV) $(SETUP) test --test-name=ajax_book $(TEST_FLAGS)
 	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC $(CI_ENV) $(SETUP) test --test-name=workers   $(TEST_FLAGS)
@@ -68,10 +67,10 @@ calibre_auto_test-indep:
 execute_before_dh_install:
 	dh_buildinfo
 
-override_dh_auto_install-indep:
-	dh_auto_install -O--buildsystem=makefile -- -f debian/calibre-builder.mak install-indep
+override_dh_auto_install:
+	dh_auto_install -O--buildsystem=makefile -- -f debian/calibre-builder.mak install
 
-calibre_auto_install-indep:
+calibre_auto_install:
 	mkdir -p  debian/tmp/usr/share/icons/hicolor
 	mkdir -p  debian/tmp/usr/share/applications
 	mkdir -p  debian/tmp/usr/share/mime/packages
