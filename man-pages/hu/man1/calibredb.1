@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "április 08, 2023" "6.15.1" "calibre"
+.TH "CALIBREDB" "1" "április 21, 2023" "6.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -392,6 +392,11 @@ Hozzáadja az ebook_file fájlban található e\-könyvet az id által azonosít
 Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
+.B \-\-as\-extra\-data\-file
+Add the file as an extra data file to the book, not an ebook format
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-dont\-replace
 Ne cserélje ki a formátumot, ha már létezik
 .UNINDENT
@@ -473,17 +478,10 @@ calibredb export [options] ids
 .UNINDENT
 .UNINDENT
 .sp
-:command:
-.nf
-\(ga
-.fi
-export\(gaálja az azonosítókkal (vesszővel tagolt lista) megadott könyveket a fájlrendszerbe.
-Az :command:
-.nf
-\(ga
-.fi
-export\(gaálási művelet a könyv összes formátumát, borítóját és metaadatait menti
-(egy opf fájlba). Az azonosító számokat a keresési parancsból kaphatja meg.
+Export the books specified by ids (a comma separated list) to the filesystem.
+The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
+an OPF file). Any extra data files associated with the book are also saved.
+You can get id numbers from the search command.
 .sp
 Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -500,6 +498,11 @@ A Calibre konvertálja az összes nem angol karaktert a fájlnevek angol megfele
 .TP
 .B \-\-dont\-save\-cover
 Normál esetben a Calibre egy önálló fájlban tárolja a borítót az adott e\-könyv egyéb fájljaival mellett. Ennek megadása kikapcsolja ezt az opciót.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-save\-extra\-files
+Save any data files associated with the book when saving the book Ennek megadása kikapcsolja ezt az opciót.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "d’abril 08, 2023" "6.15.1" "calibre"
+.TH "CALIBREDB" "1" "d’abril 21, 2023" "6.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -377,6 +377,11 @@ Afegeix el llibre electrònic «fitxer_llibre» als formats disponibles per al l
 Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
+.B \-\-as\-extra\-data\-file
+Add the file as an extra data file to the book, not an ebook format
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-dont\-replace
 No reemplacis el format si ja existeix
 .UNINDENT
@@ -452,15 +457,16 @@ Mostra una llista dels noms dels camps de metadades que es poden utilitzar amb l
 .sp
 .nf
 .ft C
-calibredb export [opcions] IDs
+calibredb export [options] ids
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Exporta els llibres identificats pels IDs (una llista separada per comes) al sistema de fitxers.
-L\(aqoperació d\(aqexportació desa tots els formats del llibre, la portada i les metadades (a un
-fitxer opf). Podeu obtenir els nombres dels IDs de l\(aqordre «search».
+Export the books specified by ids (a comma separated list) to the filesystem.
+The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
+an OPF file). Any extra data files associated with the book are also saved.
+You can get id numbers from the search command.
 .sp
 Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -477,6 +483,11 @@ Have calibre convert all non English characters into English equivalents for the
 .TP
 .B \-\-dont\-save\-cover
 Normally, calibre will save the cover in a separate file along with the actual e\-book files. Si s\fB\(aq\fPespecifica aquesta opció, es desactiva aquest comportament.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-save\-extra\-files
+Save any data files associated with the book when saving the book Si s\fB\(aq\fPespecifica aquesta opció, es desactiva aquest comportament.
 .UNINDENT
 .INDENT 0.0
 .TP

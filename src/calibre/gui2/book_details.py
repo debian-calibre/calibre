@@ -391,6 +391,12 @@ def add_item_specific_entries(menu, data, book_info, copy_menu, search_menu):
             ac.data = ('authors', author, book_id)
             ac.setText(_('Remove %s from this book') % escape_for_menu(author))
             menu.addAction(ac)
+        # See if we need to add a click associated link menu line for the author
+        link_map = get_gui().current_db.new_api.get_all_link_maps_for_book(data.get('book_id', -1))
+        link = link_map.get("authors", {}).get(author)
+        if link:
+            menu.addAction(QIcon.ic('external-link'), _('Open associated link'),
+                           lambda : book_info.link_clicked.emit(link))
     elif dt in ('path', 'devpath'):
         path = data['loc']
         ac = book_info.copy_link_action
@@ -435,6 +441,12 @@ def add_item_specific_entries(menu, data, book_info, copy_menu, search_menu):
             ac.data = (field, remove_value, book_id)
             ac.setText(_('Remove %s from this book') % escape_for_menu(remove_name or data.get('original_value') or value))
             menu.addAction(ac)
+            # See if we need to add a click associated link menu line
+            link_map = get_gui().current_db.new_api.get_all_link_maps_for_book(data.get('book_id', -1))
+            link = link_map.get(field, {}).get(value)
+            if link:
+                menu.addAction(QIcon.ic('external-link'), _('Open associated link'),
+                               lambda : book_info.link_clicked.emit(link))
         else:
             v = data.get('original_value') or data.get('value')
             copy_menu.addAction(QIcon.ic('edit-copy.png'), _('The text: {}').format(v),
@@ -508,6 +520,7 @@ def details_context_menu_event(view, ev, book_info, add_popup_action=False, edit
         ac.current_url = url
         ac.setText(_('Copy link location'))
         menu.addAction(ac)
+        menu.addAction(QIcon.ic('external-link'), _('Open associated link'), lambda : book_info.link_clicked.emit(url))
     if not copy_links_added:
         create_copy_links(copy_menu)
 
@@ -528,8 +541,7 @@ def details_context_menu_event(view, ev, book_info, add_popup_action=False, edit
     menu.addSeparator()
     from calibre.gui2.ui import get_gui
     if add_popup_action:
-        ema = get_gui().iactions['Show Book Details'].menuless_qaction
-        menu.addAction(_('Open the Book details window') + '\t' + ema.shortcut().toString(QKeySequence.SequenceFormat.NativeText), book_info.show_book_info)
+        menu.addMenu(get_gui().iactions['Show Book Details'].qaction.menu())
     else:
         ema = get_gui().iactions['Edit Metadata'].menuless_qaction
         menu.addAction(_('Open the Edit metadata window') + '\t' + ema.shortcut().toString(QKeySequence.SequenceFormat.NativeText), edit_metadata)

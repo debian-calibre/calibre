@@ -5,18 +5,18 @@
 # 
 # Translators:
 # Kovid Goyal <kovid@kovidgoyal.net>, 2020
-# Paulo Pereira <pauloizidoro@gmail.com>, 2021
 # Igor Rückert, 2022
+# Paulo Pereira <pauloizidoro@gmail.com>, 2023
 # 
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 5.44.0\n"
+"Project-Id-Version: calibre 6.15.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-17 02:39+0000\n"
+"POT-Creation-Date: 2023-04-20 08:11+0000\n"
 "PO-Revision-Date: 2020-11-12 05:43+0000\n"
-"Last-Translator: Igor Rückert, 2022\n"
-"Language-Team: Portuguese (https://www.transifex.com/calibre/teams/19337/pt/)\n"
+"Last-Translator: Paulo Pereira <pauloizidoro@gmail.com>, 2023\n"
+"Language-Team: Portuguese (https://app.transifex.com/calibre/teams/19337/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -67,8 +67,9 @@ msgstr "Trocar para uma biblioteca específica"
 
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:28
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:47
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:63
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:77
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:91
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:122
 msgid "The URL syntax is::"
 msgstr "A sintaxe da URL é::"
 
@@ -114,11 +115,36 @@ msgid ""
 "link to book`."
 msgstr ""
 
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:59
+msgid ""
+"If a search is active and the book is not matched by the search then the "
+"search is cleared."
+msgstr ""
+
 #: ../../__w/calibre/calibre/manual/url_scheme.rst:61
+msgid ""
+"If a Virtual library is selected, calibre will use it when showing the book."
+" If the book isn't found in that virtual library then the virtual library is"
+" cleared."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:64
+msgid ""
+"If you want to switch to a particular Virtual library when showing the book,"
+" use::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:70
+msgid ""
+"replacing spaces in the Virtual library name by ``%20``. If the book isn't "
+"found in that virtual library then the virtual library is ignored."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:75
 msgid "Open a specific book in the E-book viewer at a specific position"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:67
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:81
 msgid ""
 "Here, ``book_format`` is the format of the book, for example, ``EPUB`` or "
 "``MOBI`` and the ``location`` is an optional location inside the book. The "
@@ -132,11 +158,11 @@ msgstr ""
 " controles do visualizador, selecione :guilabel:`Go to->Location` e lá será "
 "fornecido um link que você poderá copiar/colar em outro lugar."
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:75
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:89
 msgid "Searching for books"
 msgstr "À procura de livros"
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:82
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:96
 msgid ""
 "Here query is any valid :ref:`search expression <search_interface>`. If the "
 "search expression is complicated, :ref:`encode it as a hex string "
@@ -148,33 +174,46 @@ msgstr ""
 "<hex_encoding>` e use ``eq`` em vez disso. Deixar de fora a consulta fará "
 "com que a pesquisa atual seja apagada."
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:87
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:101
 msgid ""
 "By default, if a Virtual library is selected, calibre will clear it before "
 "doing the search to ensure all books are found. If you want to preserve the "
 "Virtual library, use::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:93
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:107
 msgid "If you want to switch to a particular Virtual library, use::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:99
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:113
 msgid "replacing spaces in the Virtual library name by ``%20``."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:101
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:115
 msgid ""
 "If you perform a search in calibre and want to generate a link for it you "
 "can do so by right clicking the search bar and choosing :guilabel:`Copy "
 "search as URL`."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:109
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:120
+msgid "Open a book details window on a book in some library"
+msgstr "Abrir uma janela de detalhes de um livro numa biblioteca"
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:126
+msgid ""
+"This opens a book details window on the specified book from the specified "
+"library without changing the current library or the selected book."
+msgstr ""
+"Isto abre uma janela de detalhes do livro sobre o livro especificado e da "
+"biblioteca especificada sem alterar a biblioteca atual ou o livro "
+"selecionado."
+
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:133
 msgid "Hex encoding of URL parameters"
 msgstr "Codificação Hex dos parâmetros da URL"
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:111
+#: ../../__w/calibre/calibre/manual/url_scheme.rst:135
 msgid ""
 "Hex encoding of URL parameters is done by first encoding the parameter as "
 "UTF-8 bytes, and then replacing each byte by two hexadecimal characters "

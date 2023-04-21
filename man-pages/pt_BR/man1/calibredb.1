@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "abril 08, 2023" "6.15.1" "calibre"
+.TH "CALIBREDB" "1" "abril 21, 2023" "6.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -374,6 +374,11 @@ Adiciona o livro em ebook_file para os formatos disponíveis de livro lógico id
 Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
+.B \-\-as\-extra\-data\-file
+Add the file as an extra data file to the book, not an ebook format
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-dont\-replace
 Não substituir o formato se ele já existir
 .UNINDENT
@@ -455,9 +460,10 @@ calibredb export [options] ids
 .UNINDENT
 .UNINDENT
 .sp
-Exportar os livros especificados pelos id (uma lista separada por vírgula) para o sistema de arquivos.
-A operação de exportação save todos os formatos do livro, suas capas e metadados(em
-um arquivo opf). Você pode pegar os números de id do comando de busca.
+Export the books specified by ids (a comma separated list) to the filesystem.
+The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
+an OPF file). Any extra data files associated with the book are also saved.
+You can get id numbers from the search command.
 .sp
 Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -474,6 +480,11 @@ Permitir que o calibre converta todos os caracteres não Ingleses para seus equi
 .TP
 .B \-\-dont\-save\-cover
 Normalmente, o calibre irá salvar a capa em um arquivo separado juntamente com os atuais arquivos do e\-book Especificar esta mudança desligará este comportamento
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-save\-extra\-files
+Save any data files associated with the book when saving the book Especificar esta mudança desligará este comportamento
 .UNINDENT
 .INDENT 0.0
 .TP

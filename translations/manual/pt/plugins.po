@@ -10,10 +10,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-17 02:39+0000\n"
+"POT-Creation-Date: 2023-04-20 08:11+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Paulo Pereira <pauloizidoro@gmail.com>, 2016-2022\n"
-"Language-Team: Portuguese (http://www.transifex.com/calibre/calibre/language/pt/)\n"
+"Language-Team: Portuguese (http://app.transifex.com/calibre/calibre/language/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -284,6 +284,10 @@ msgstr ""
 #: calibre.customize.CatalogPlugin.run:0
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postadd:0
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:0
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:0
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:0
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
@@ -564,6 +568,20 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.FileTypePlugin.on_postconvert:1
+msgid ""
+"If True, this plugin is run after a book is converted. In this case the "
+"postconvert method of the plugin is called."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.FileTypePlugin.on_postdelete:1
+msgid ""
+"If True, this plugin is run after a book file is deleted from the database. "
+"In this case the postdelete method of the plugin is called."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.FileTypePlugin.on_preprocess:1
 msgid "If True, this plugin is run just before a conversion"
 msgstr "Se Verdadeiro, este plugin é executado pouco antes de uma conversão"
@@ -617,18 +635,48 @@ msgstr ""
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postadd:8
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:5
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:6
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:6
 msgid "Database id of the added book."
 msgstr "ID da base de dados do livro adicionado."
 
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:6
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:7
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:7
 msgid "The file type of the book that was added."
 msgstr "O tipo de arquivo do livro que foi adicionado."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:7
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:8
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:8
 msgid "Library database."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:1
+msgid ""
+"Called post conversion, i.e., after the conversion output book file has been"
+" added to the database. Note that it is run after a conversion only, not "
+"after a book is added. It is useful for modifying the book record based on "
+"the contents of the newly added file."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:1
+msgid ""
+"Called post deletion, i.e., after the book file has been deleted from the "
+"database. Note that it is not run when a book record is deleted, only when "
+"one or more formats from the book are deleted. It is useful for modifying "
+"the book record based on the format of the deleted file."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
@@ -929,8 +977,8 @@ msgstr ""
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.get_cached_cover_url:1
 msgid ""
-"Return cached cover URL for the book identified by the identifiers dict or "
-"None if no such URL exists."
+"Return cached cover URL for the book identified by the identifiers "
+"dictionary or None if no such URL exists."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
@@ -2562,7 +2610,7 @@ msgstr "Se você estiver adicionando seu próprio plug-in em um arquivo ZIP, dev
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction:1
-msgid "Bases: :py:class:`~PyQt5.QtCore.QObject`"
+msgid "Bases: :py:class:`~PyQt6.QtCore.QObject`"
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
@@ -2650,11 +2698,18 @@ msgstr ""
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.gui2.actions.InterfaceAction.action_spec:1
 msgid ""
-"Of the form: (text, icon_path, tooltip, keyboard shortcut) icon, tooltip and"
-" keyboard shortcut can be None shortcut must be a string, None or tuple of "
-"shortcuts. If None, a keyboard shortcut corresponding to the action is not "
-"registered. If you pass an empty tuple, then the shortcut is registered with"
-" no default key binding."
+"Of the form: (text, icon_path, tooltip, keyboard shortcut). icon, tooltip "
+"and keyboard shortcut can be None. keyboard shortcut must be either a "
+"string, None or tuple of shortcuts. If None, a keyboard shortcut "
+"corresponding to the action is not registered. If you pass an empty tuple, "
+"then the shortcut is registered with no default key binding."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.gui2.actions.InterfaceAction.action_shortcut_name:1
+msgid ""
+"If not None, used for the name displayed to the user when customizing the "
+"keyboard shortcuts for the above action spec instead of action_spec[0]"
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
@@ -2750,8 +2805,8 @@ msgstr "O texto ou a ação."
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction.create_menu_action:11
 msgid ""
-"Either a QIcon or a file name. The file name is passed to the I() builtin, "
-"so you do not need to pass the full path to the images folder."
+"Either a QIcon or a file name. The file name is passed to the QIcon.ic() "
+"builtin, so you do not need to pass the full path to the images folder."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
@@ -3038,6 +3093,13 @@ msgid ""
 "Called once after this widget is committed. Responsible for causing the gui "
 "to reread any changed settings. Note that by default the GUI re-initializes "
 "various elements anyway, so most widgets won't need to use this method."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
+#: of calibre.gui2.preferences.ConfigWidgetInterface.initial_tab_changed:1
+msgid ""
+"Called if the initially displayed tab is changed before the widget is shown,"
+" but after it is initialized."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring

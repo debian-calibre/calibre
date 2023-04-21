@@ -38,7 +38,7 @@ def postprocess_copy(book_id, new_book_id, new_authors, db, newdb, identical_boo
         return
     if new_authors:
         author_id_map = db.get_item_ids('authors', new_authors)
-        sort_map, link_map = {}, {}
+        sort_map = {}
         for author, aid in iteritems(author_id_map):
             if aid is not None:
                 adata = db.author_data((aid,)).get(aid)
@@ -48,13 +48,8 @@ def postprocess_copy(book_id, new_book_id, new_authors, db, newdb, identical_boo
                         asv = adata.get('sort')
                         if asv:
                             sort_map[aid] = asv
-                        alv = adata.get('link')
-                        if alv:
-                            link_map[aid] = alv
         if sort_map:
             newdb.set_sort_for_authors(sort_map, update_books=False)
-        if link_map:
-            newdb.set_link_for_authors(link_map)
 
     co = db.conversion_options(book_id)
     if co is not None:
@@ -107,6 +102,12 @@ def copy_one_book(
         new_book_id = newdb.add_books(
             [(mi, format_map)], add_duplicates=True, apply_import_tags=tweaks['add_new_book_tags_when_importing_books'],
             preserve_uuid=preserve_uuid, run_hooks=False)[0][0]
+        bp = db.field_for('path', book_id)
+        if bp:
+            for (relpath, src_path, mtime) in db.backend.iter_extra_files(book_id, bp, db.fields['formats'], yield_paths=True):
+                nbp = newdb.field_for('path', book_id)
+                if nbp:
+                    newdb.backend.add_extra_file(relpath, src_path, nbp)
         postprocess_copy(book_id, new_book_id, new_authors, db, newdb, identical_books_data, duplicate_action)
         return_data['new_book_id'] = new_book_id
         return return_data

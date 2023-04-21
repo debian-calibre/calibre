@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "april 08, 2023" "6.15.1" "calibre"
+.TH "CALIBREDB" "1" "april 21, 2023" "6.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -358,7 +358,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Do not use the Recycle Bin
+Do not use the Koš za smeti
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -375,6 +375,11 @@ calibredb add_format [options] id ebook_file
 Add the e\-book in ebook_file to the available formats for the logical book identified by id. You can get id by using the search command. If the format already exists, it is replaced, unless the do not replace option is specified.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-as\-extra\-data\-file
+Add the file as an extra data file to the book, not an ebook format
+.UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -460,7 +465,8 @@ calibredb export [options] ids
 .sp
 Export the books specified by ids (a comma separated list) to the filesystem.
 The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
-an opf file). You can get id numbers from the search command.
+an OPF file). Any extra data files associated with the book are also saved.
+You can get id numbers from the search command.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -477,6 +483,11 @@ Have calibre convert all non English characters into English equivalents for the
 .TP
 .B \-\-dont\-save\-cover
 Normally, calibre will save the cover in a separate file along with the actual e\-book files. Določanje tega stikala bo izključilo to akcijo.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-save\-extra\-files
+Save any data files associated with the book when saving the book Določanje tega stikala bo izključilo to akcijo.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -10,10 +10,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-17 02:39+0000\n"
+"POT-Creation-Date: 2023-04-20 08:11+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: Paulo Pereira <pauloizidoro@gmail.com>, 2019-2021\n"
-"Language-Team: Portuguese (http://www.transifex.com/calibre/calibre/language/pt/)\n"
+"Language-Team: Portuguese (http://app.transifex.com/calibre/calibre/language/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -89,6 +89,11 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.indexing_progress_changed:1
+msgid "When the indexing progress changes"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.items_removed:1
 msgid ""
 "When items such as tags or authors are removed from some books. Arguments: "
@@ -136,6 +141,11 @@ msgid ""
 msgstr "Adicionar dado para nome onde val_map é um mapa de valores de book_ids. Se delete_first é verdadeiro, todos o dados de anteriores para o nome serão removidos"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.add_extra_files:1
+msgid "Add extra data files"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:1
 msgid ""
 "Add a format to the specified book. Return True if the format was added "
@@ -151,6 +161,10 @@ msgstr ""
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_metadata:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_link_maps_for_book:0
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_link_map:0
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:0
@@ -160,6 +174,8 @@ msgstr ""
 #: calibre.db.cache.Cache.search:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:0
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_link_map:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:0
 msgid "Parameters"
@@ -314,6 +330,11 @@ msgstr "Se verdadeiro retorna a imagem como um objeto QImage."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:10
+msgid "If True return the image as a QPixmap object"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.cover:11
 msgid "If True return the image as a path pointing to a temporary file"
 msgstr "Se verdadeiro retorna a imagem como um caminho para um arquivo temporário."
 
@@ -340,10 +361,22 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.delete_trash_entry:1
+msgid ""
+"Delete an entry from the trash. Here category is 'b' for books and 'f' for "
+"formats."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.embed_metadata:1
 msgid ""
 "Update metadata in all formats of the specified book_ids to current metadata"
 " in the database."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.expire_old_trash:1
+msgid "Expire entries from the trash that are too old"
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -374,9 +407,9 @@ msgstr ""
 msgid ""
 "The returned value for is_multiple fields are always tuples, even when no "
 "values are found (in other words, default_value is ignored). The exception "
-"is identifiers for which the returned value is always a dict. The returned "
-"tuples are always in link order, that is, the order in which they were "
-"created."
+"is identifiers for which the returned value is always a dictionary. The "
+"returned tuples are always in link order, that is, the order in which they "
+"were created."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -484,6 +517,45 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_link_maps_for_book:1
+msgid ""
+"Returns all links for all fields referenced by book identified by book_id. "
+"If book_id doesn't exist then the method returns {}."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_link_maps_for_book:4
+msgid ""
+"Example: Assume author A has link X, author B has link Y, tag S has link F, "
+"and tag T has link G. If book 1 has author A and tag T, this method returns "
+"{'authors':{'A':'X'}, 'tags':{'T', 'G'}} If book 2's author is neither A nor"
+" B and has no tags, this method returns {}"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_link_maps_for_book:9
+msgid "the book id in question."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_link_maps_for_book:0
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_link_map:0
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.remove_formats:0
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_link_map:0
+msgid "Returns"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_link_maps_for_book:11
+msgid ""
+"{field: {field_value, link_value}, ...  for all fields with a field_value "
+"having a non-empty link value for that book"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_categories:1
 msgid "Used internally to implement the Tag Browser"
 msgstr ""
@@ -510,6 +582,10 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_id:1
+msgid ""
+"Return the item id for item_name (case-insensitive) or None if not found"
+msgstr ""
+
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_ids:1
 msgid "Return the item id for item_name (case-insensitive)"
@@ -520,6 +596,21 @@ msgstr ""
 msgid ""
 "Return the item name for the item specified by item_id in the specified "
 "field. See also :meth:`get_id_map`."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_link_map:1
+msgid "Return a dict of links for the supplied field."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_link_map:3
+msgid "the lookup name of the field for which the link map is desired"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_link_map:5
+msgid "{field_value:link_value, ...} for non-empty links"
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -590,6 +681,23 @@ msgid "Initialize this cache with data from the backend."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files_matching:1
+msgid ""
+"List extra data files matching the specified pattern. Empty pattern matches "
+"all. Recursive globbing with ** is supported."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.move_book_from_trash:1
+msgid "Undelete a book from the trash directory"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.move_format_from_trash:1
+msgid "Undelete a format from the trash directory"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.multisort:1
 msgid ""
 "Return a list of sorted book ids. If ids_to_sort is None, all book ids are "
@@ -622,8 +730,8 @@ msgstr ""
 msgid ""
 "Remove the books specified by the book_ids from the database and delete "
 "their format files. If ``permanent`` is False, then the format files are "
-"placed in the recycle bin."
-msgstr "Remove os livros, especificados pelos book_ids, da base de dados e apaga os respetivos ficheiros de formatos. Se ``permanent`` for False, então os ficheiros de formatos serão colocados na Reciclagem."
+"placed in the per-library trash directory."
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:1
@@ -640,6 +748,13 @@ msgstr ""
 msgid ""
 "If True, only remove the record for the format from the db, do not delete "
 "the actual format file from the filesystem."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.remove_formats:5
+msgid ""
+"A map of book id to set of formats actually deleted from the filesystem for "
+"that book"
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -778,6 +893,29 @@ msgid "Used internally, you should never change it."
 msgstr "Usado internamente. Nunca deve ser alterado. "
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_link_map:1
+msgid ""
+"Sets links for item values in field Note: this method doesn't change values "
+"not in the value_to_link_map"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_link_map:4
+msgid "the lookup name"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_link_map:5
+msgid ""
+"dict(field_value:link, ...). Note that these are values, not field ids."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_link_map:7
+msgid "books changed by setting the link"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_metadata:1
 msgid "Set metadata for the book `id` from the `Metadata` object `mi`"
 msgstr ""
@@ -800,6 +938,15 @@ msgstr ""
 #: calibre.db.cache.Cache.set_pref:1
 msgid ""
 "Set the specified preference to the specified value. See also :meth:`pref`."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.split_if_is_multiple_composite:1
+msgid ""
+"If f is a composite column lookup key and the column is is_multiple then "
+"split v into unique non-empty values. The comparison is case sensitive. "
+"Order is not preserved. Return a list() for compatibility with proxy "
+"metadata field getters, for example tags."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
