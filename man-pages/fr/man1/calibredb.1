@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "avril 08, 2023" "6.15.1" "calibre"
+.TH "CALIBREDB" "1" "avril 21, 2023" "6.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -377,6 +377,11 @@ Ajouter le livre numérique dans ebook_file aux formats disponibles pour le livr
 Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
+.B \-\-as\-extra\-data\-file
+Ajouter le fichier en tant que fichier de données supplémentaire au livre, et non en tant que format ebook
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-dont\-replace
 Ne pas remplacer le format s\fB\(aq\fPil existe déjà
 .UNINDENT
@@ -462,8 +467,9 @@ calibredb export [options] ids
 .UNINDENT
 .sp
 Exporter les livres spécifiés par ids (une liste séparée par des virgules) vers le système de fichiers.
-L’opération d\(aq\fBexport\fP enregistre tous les formats du livre, la couverture et les métadonnées (dans
-un fichier opf). Vous pouvez obtenir les numéros id à partir de la commande search.
+L’opération d\(aq\fBexport\fP enregistre tous les formats du livre, la couverture et les métadonnées (dansn\(aqimporte quel
+un fichier OPF). Tous les fichiers de données supplémentaires associés au livre sont également enregistrés.
+Vous pouvez obtenir les numéros id à partir de la commande search.
 .sp
 Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -480,6 +486,11 @@ Faire en sorte que le calibre convertisse tous les caractères non anglais en é
 .TP
 .B \-\-dont\-save\-cover
 Normalement, calibre enregistrera la couverture dans un fichier séparé avec les fichiers du livre numérique. Spécifier cette bascule désactivera ce comportement.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-save\-extra\-files
+Enregistrez tous les fichiers de données associés au livre lors de l\fB\(aq\fPenregistrement du livre Spécifier cette bascule désactivera ce comportement.
 .UNINDENT
 .INDENT 0.0
 .TP

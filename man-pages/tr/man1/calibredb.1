@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "Nisan 08, 2023" "6.15.1" "calibre"
+.TH "CALIBREDB" "1" "Nisan 21, 2023" "6.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -323,7 +323,7 @@ Options to control the adding of books from folders. By default only files that 
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+Bilinen bir e\-kitap dosyası türünde olmasalar bile, dosyalar için klasörler taranırken bir dosya adı (glob) kalıbı, bu kalıpla eşleşen dosyalar eklenecektir. Birden çok desen için birden çok kez belirtilebilir.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -375,6 +375,11 @@ calibredb add_format [seçenekler] id e\-kitap_file
 e\-kitap_file\(aqndaki e\-kitabı kimliği ile tanımlanan mantıksal kitap için kullanılabilir biçime ekle. Arama komutunu kullanarak kimlik alabilirsiniz. Biçim zaten mevcutsa, yer değiştirme seçeneği belirtilmediği takdirde yer değiştirilir.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-as\-extra\-data\-file
+Add the file as an extra data file to the book, not an ebook format
+.UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -452,15 +457,16 @@ Ayarlanacak alan. Biçimi alan_ismi:değer şeklindedir, örneğin: \fI\%\-\-fie
 .sp
 .nf
 .ft C
-calibredb export [seçenekler] id\(aqler
+calibredb export [options] ids
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-ids ile (virgülle ayrılmış liste) belirtilen kitapları dosya sistemine çıkar.
-Dışa aktarma işlemi kitabın tüm biçimlerini, kapak ve metadatada\(aqsını
-(opf dosyasına) kaydeder. Id numaralarını arama komutuyla alabilirsiniz.
+Export the books specified by ids (a comma separated list) to the filesystem.
+The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
+an OPF file). Any extra data files associated with the book are also saved.
+You can get id numbers from the search command.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -477,6 +483,11 @@ Have calibre convert all non English characters into English equivalents for the
 .TP
 .B \-\-dont\-save\-cover
 Normally, calibre will save the cover in a separate file along with the actual e\-book files. Bu anahtar bu davranışı kapatacaktır.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-save\-extra\-files
+Save any data files associated with the book when saving the book Bu anahtar bu davranışı kapatacaktır.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -506,7 +517,7 @@ Boşlukları alt çizgi ile değiştir.
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Export all books into a single folder
+Tüm kitapları tek bir klasöre aktarın
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -521,7 +532,7 @@ Tarihlerin görüntüleneceği biçim. %d \- gün, %b \- ay, %m \- ay numarası,
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Export books to the specified folder. Default is .
+Kitapları belirtilen dizine aktarın. Varsayılan .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -838,7 +849,7 @@ Raporların virgülle ayrılmış listesi. Varsayılan: tümü
 .INDENT 0.0
 .TP
 .B \-\-vacuum\-fts\-db
-Vacuum the full text search database. This can be very slow and memory intensive, depending on the size of the database.
+Tam metin arama veri tabanını boşaltın. Bu, veri tabanının boyutuna bağlı olarak çok yavaş ve bellek açısından yoğun olabilir.
 .UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
@@ -1013,12 +1024,12 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-indexing\-speed
-The speed of indexing. Use fast for fast indexing using all your computers resources and slow for less resource intensive indexing. Note that the speed is reset to slow after every invocation.
+İndeksleme hızı. Tüm bilgisayar kaynaklarınızı kullanarak hızlı indeksleme için hızlı, daha az kaynak yoğun indeksleme için yavaş kullanın. Her çalıştırmadan sonra hızın yavaşlamak için sıfırlandığını unutmayın.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-wait\-for\-completion
-Wait till all books are indexed, showing indexing progress periodically
+Tüm kitaplar indekslenene kadar bekleyin, indeksleme ilerlemesini periyodik olarak gösterin
 .UNINDENT
 .SH FTS_SEARCH
 .INDENT 0.0

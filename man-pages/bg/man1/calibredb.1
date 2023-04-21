@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "април 08, 2023" "6.15.1" "calibre"
+.TH "CALIBREDB" "1" "април 21, 2023" "6.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -377,6 +377,11 @@ calibredb add_format [options] id ebook_file
 Винаги, когато предавате аргументи на calibredb, които имат интервали в тях, затворете аргументите в кавички. Например: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
+.B \-\-as\-extra\-data\-file
+Add the file as an extra data file to the book, not an ebook format
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-dont\-replace
 Не подменяй форматирането, ако е налично такова
 .UNINDENT
@@ -452,15 +457,16 @@ book_id от OPF файла metadata.opf. book_id е идентификацио�
 .sp
 .nf
 .ft C
-calibredb експорт [options] ids
+calibredb export [options] ids
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Експорт на книгите, посочени от идентификатори (списък, разделен със запетаи) във файловата система.
-Операцията по експорт записва всички формати на книгата, корицата и метаданните ѝ (в
-opf файл). Може да получите ID номера от командата за търсене.
+Export the books specified by ids (a comma separated list) to the filesystem.
+The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
+an OPF file). Any extra data files associated with the book are also saved.
+You can get id numbers from the search command.
 .sp
 Винаги, когато предавате аргументи на calibredb, които имат интервали в тях, затворете аргументите в кавички. Например: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -477,6 +483,11 @@ Calibre конвертира всички не английски знаци в 
 .TP
 .B \-\-dont\-save\-cover
 Обикновено, calibre ще запише корицата в отделен файл заедно с действителните файлове на е\-книги. Задаването на тази опция ще деактивира това действие.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-save\-extra\-files
+Save any data files associated with the book when saving the book Задаването на тази опция ще деактивира това действие.
 .UNINDENT
 .INDENT 0.0
 .TP

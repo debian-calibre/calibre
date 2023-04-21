@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "dubna 08, 2023" "6.15.1" "calibre"
+.TH "CALIBREDB" "1" "dubna 21, 2023" "6.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -376,6 +376,11 @@ Přidat e\-knihu v ebook_file do dostupných formátů pro logickou knihu identi
 Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
 .INDENT 0.0
 .TP
+.B \-\-as\-extra\-data\-file
+Add the file as an extra data file to the book, not an ebook format
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-dont\-replace
 Nenahrazovat formát, pokud již existuje
 .UNINDENT
@@ -457,9 +462,10 @@ calibredb export [options] ids
 .UNINDENT
 .UNINDENT
 .sp
-Exportovat knihy zadané identifikátory (čárkami oddělený seznam) do systému souborů.
-Operace exportu ukládá všechny formáty knihy, její obálku a metadata (do souboru opf).
-Identifikační čísla můžete získat z příkazu search.
+Export the books specified by ids (a comma separated list) to the filesystem.
+The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
+an OPF file). Any extra data files associated with the book are also saved.
+You can get id numbers from the search command.
 .sp
 Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
 .INDENT 0.0
@@ -476,6 +482,11 @@ Nechat Calibre převést všechny neanglické znaky na anglické ekvivalenty pro
 .TP
 .B \-\-dont\-save\-cover
 Obyčejně Calibre uloží obálku do samostatného souboru společně se skutečnými soubory e\-knih. Zadání tohoto přepínače vypne toto chování.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-save\-extra\-files
+Save any data files associated with the book when saving the book Zadání tohoto přepínače vypne toto chování.
 .UNINDENT
 .INDENT 0.0
 .TP

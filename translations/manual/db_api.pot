@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 6.15.1\n"
+"Project-Id-Version: calibre 6.16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-08 08:48+0530\n"
+"POT-Creation-Date: 2023-04-21 08:21+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -86,6 +86,10 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.add_custom_book_data:1
 msgid "Add data for name where val_map is a map of book_ids to values. If delete_first is True, all previously stored data for name will be removed."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.add_extra_files:1
+msgid "Add extra data files"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.add_format:1
@@ -216,8 +220,16 @@ msgstr ""
 msgid "Delete data for name. By default deletes all data, if you only want to delete data for some book ids, pass in a list of book ids."
 msgstr ""
 
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.delete_trash_entry:1
+msgid "Delete an entry from the trash. Here category is 'b' for books and 'f' for formats."
+msgstr ""
+
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.embed_metadata:1
 msgid "Update metadata in all formats of the specified book_ids to current metadata in the database."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.expire_old_trash:1
+msgid "Expire entries from the trash that are too old"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.fast_field_for:1
@@ -293,15 +305,11 @@ msgid "Return tuple of all formats for the specified book. If verify_formats is 
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_all_link_maps_for_book:1
-msgid "Returns all links for all fields referenced by book identified by book_id"
-msgstr ""
-
-#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_all_link_maps_for_book:7
-msgid "Example: Assume author A has link X, author B has link Y, tag S has link"
+msgid "Returns all links for all fields referenced by book identified by book_id. If book_id doesn't exist then the method returns {}."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_all_link_maps_for_book:4
-msgid "F, and tag T has link G. IF book 1 has author A and tag T, this method returns {'authors':{'A':'X'}, 'tags':{'T', 'G'}} If book 2's author is neither A nor B and has no tags, this method returns {}"
+msgid "Example: Assume author A has link X, author B has link Y, tag S has link F, and tag T has link G. If book 1 has author A and tag T, this method returns {'authors':{'A':'X'}, 'tags':{'T', 'G'}} If book 2's author is neither A nor B and has no tags, this method returns {}"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_all_link_maps_for_book:9
@@ -310,12 +318,13 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_all_link_maps_for_book:0
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_link_map:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.remove_formats:0
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.set_link_map:0
 msgid "Returns"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_all_link_maps_for_book:11
-msgid "{field: {field_value, link_value}, ...  for all fields that have a non-empty link value for that book"
+msgid "{field: {field_value, link_value}, ...  for all fields with a field_value having a non-empty link value for that book"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_categories:1
@@ -398,6 +407,18 @@ msgstr ""
 msgid "Initialize this cache with data from the backend."
 msgstr ""
 
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.list_extra_files_matching:1
+msgid "List extra data files matching the specified pattern. Empty pattern matches all. Recursive globbing with ** is supported."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.move_book_from_trash:1
+msgid "Undelete a book from the trash directory"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.move_format_from_trash:1
+msgid "Undelete a format from the trash directory"
+msgstr ""
+
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.multisort:1
 msgid "Return a list of sorted book ids. If ids_to_sort is None, all book ids are returned."
 msgstr ""
@@ -415,7 +436,7 @@ msgid "Return the OPF metadata backup for the book as a bytestring or None if no
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.remove_books:1
-msgid "Remove the books specified by the book_ids from the database and delete their format files. If ``permanent`` is False, then the format files are placed in the recycle bin."
+msgid "Remove the books specified by the book_ids from the database and delete their format files. If ``permanent`` is False, then the format files are placed in the per-library trash directory."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.remove_formats:1
@@ -428,6 +449,10 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.remove_formats:4
 msgid "If True, only remove the record for the format from the db, do not delete the actual format file from the filesystem."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.remove_formats:5
+msgid "A map of book id to set of formats actually deleted from the filesystem for that book"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.remove_items:1

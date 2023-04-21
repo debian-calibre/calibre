@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "April 08, 2023" "6.15.1" "calibre"
+.TH "CALIBREDB" "1" "April 21, 2023" "6.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -377,6 +377,11 @@ Tambah e\-buku dalam fail_ebuku kepada format tersedia untuk buku logikal yang d
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
+.B \-\-as\-extra\-data\-file
+Add the file as an extra data file to the book, not an ebook format
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-dont\-replace
 Jangan ganti format jika ia sudah wujud
 .UNINDENT
@@ -459,10 +464,10 @@ calibredb export [options] ids
 .UNINDENT
 .UNINDENT
 .sp
-Eksport buku yang dinyatakan dengan id (senarai dipisah\-tanda\-koma) ke
-sistem fail. Operasi eksport simpan semua format buku, kulit bukunya dan
-data meta (dalam fail opf). Anda boleh dapatan nombor id melalui
-perintah gelintar.
+Export the books specified by ids (a comma separated list) to the filesystem.
+The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
+an OPF file). Any extra data files associated with the book are also saved.
+You can get id numbers from the search command.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -479,6 +484,11 @@ Have calibre convert all non English characters into English equivalents for the
 .TP
 .B \-\-dont\-save\-cover
 Biasanya, calibre akan simpan kulit buku dalam fail berasingan bersama\-sama dengan fail ebuku yang sebenarnya. Menyatakan suis ini akan matikan kelakuan ini.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-save\-extra\-files
+Save any data files associated with the book when saving the book Menyatakan suis ini akan matikan kelakuan ini.
 .UNINDENT
 .INDENT 0.0
 .TP

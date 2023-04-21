@@ -33,12 +33,16 @@ class UnixFileCopier:
     def __exit__(self, *a) -> None:
         pass
 
+    def rename_all(self) -> None:
+        for src_path, dest_path in self.copy_map.items():
+            os.replace(src_path, dest_path)
+
     def copy_all(self) -> None:
         for src_path, dest_path in self.copy_map.items():
             with suppress(OSError):
                 os.link(src_path, dest_path, follow_symlinks=False)
                 shutil.copystat(src_path, dest_path, follow_symlinks=False)
-                return
+                continue
             shutil.copy2(src_path, dest_path, follow_symlinks=False)
 
     def delete_all_source_files(self) -> None:
@@ -91,7 +95,7 @@ class WindowsFileCopier:
         for path, file_id in self.path_to_fileid_map.items():
             self.fileid_to_paths_map[file_id].add(path)
         for src in self.copy_map:
-            self.path_to_handle_map = self._open_file(src)
+            self.path_to_handle_map[src] = self._open_file(src)
 
     def __exit__(self, *a) -> None:
         for h in self.path_to_handle_map.values():
@@ -102,6 +106,7 @@ class WindowsFileCopier:
             with suppress(Exception):
                 windows_hardlink(src_path, dest_path)
                 shutil.copystat(src_path, dest_path, follow_symlinks=False)
+                continue
             handle = self.path_to_handle_map[src_path]
             winutil.set_file_pointer(handle, 0, winutil.FILE_BEGIN)
             with open(dest_path, 'wb') as f:
@@ -113,6 +118,10 @@ class WindowsFileCopier:
                     f.write(raw)
             shutil.copystat(src_path, dest_path, follow_symlinks=False)
 
+    def rename_all(self) -> None:
+        for src_path, dest_path in self.copy_map.items():
+            winutil.move_file(src_path, dest_path)
+
     def delete_all_source_files(self) -> None:
         for src_path in self.copy_map:
             winutil.delete_file(make_long_path_useable(src_path))
@@ -120,6 +129,15 @@ class WindowsFileCopier:
 
 def get_copier() -> Union[UnixFileCopier | WindowsFileCopier]:
     return WindowsFileCopier() if iswindows else UnixFileCopier()
+
+
+def rename_files(src_to_dest_map: Dict[str, str]) -> None:
+    ' Rename a bunch of files. On Windows all files are locked before renaming so no other process can interfere. '
+    copier = get_copier()
+    for s, d in src_to_dest_map.items():
+        copier.register(s, d)
+    with copier:
+        copier.rename_all()
 
 
 def copy_files(src_to_dest_map: Dict[str, str], delete_source: bool = False) -> None:
@@ -140,7 +158,8 @@ def copy_tree(
 ) -> None:
     '''
     Copy all files in the tree over. On Windows locks all files before starting the copy to ensure that
-    other processes cannot interfere once the copy starts.
+    other processes cannot interfere once the copy starts. Uses hardlinks, falling back to actual file copies
+    only if hardlinking fails.
     '''
     if iswindows:
         if isinstance(src, bytes):
@@ -152,14 +171,15 @@ def copy_tree(
     os.makedirs(dest, exist_ok=True)
     if samefile(src, dest):
         raise ValueError(f'Cannot copy tree if the source and destination are the same: {src!r} == {dest!r}')
+    dest_dir = dest
 
     def raise_error(e: OSError) -> None:
         raise e
 
     def dest_from_entry(dirpath: str, x: str) -> str:
-        path = os.path.join(dirpath, d)
+        path = os.path.join(dirpath, x)
         rel = os.path.relpath(path, src)
-        return os.path.join(dest, rel)
+        return os.path.join(dest_dir, rel)
 
 
     copier = get_copier()
@@ -171,7 +191,7 @@ def copy_tree(
             shutil.copystat(make_long_path_useable(path), make_long_path_useable(dest), follow_symlinks=False)
         for f in filenames:
             path = os.path.join(dirpath, f)
-            dest = dest_from_entry(dirpath, d)
+            dest = dest_from_entry(dirpath, f)
             dest = transform_destination_filename(path, dest)
             if not iswindows:
                 s = os.stat(path, follow_symlinks=False)

@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "4月 08, 2023" "6.15.1" "calibre"
+.TH "CALIBREDB" "1" "4月 21, 2023" "6.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -376,6 +376,11 @@ calibredb add_format [options] id ebook_file
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
+.B \-\-as\-extra\-data\-file
+Add the file as an extra data file to the book, not an ebook format
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-dont\-replace
 在格式已存在時不要取代
 .UNINDENT
@@ -457,9 +462,10 @@ calibredb export [options] ids
 .UNINDENT
 .UNINDENT
 .sp
-匯出指定 id（以逗號分隔的清單）的書本到檔案系統。
-匯出的動作會儲存書籍的所有格式、封面和中繼資料（在
-opf 檔案中）。您可以用 search 指令取得 id 編號。
+Export the books specified by ids (a comma separated list) to the filesystem.
+The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
+an OPF file). Any extra data files associated with the book are also saved.
+You can get id numbers from the search command.
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -476,6 +482,11 @@ opf 檔案中）。您可以用 search 指令取得 id 編號。
 .TP
 .B \-\-dont\-save\-cover
 Normally, calibre will save the cover in a separate file along with the actual e\-book files. 指定這個開關會關閉這個行為。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-save\-extra\-files
+Save any data files associated with the book when saving the book 指定這個開關會關閉這個行為。
 .UNINDENT
 .INDENT 0.0
 .TP

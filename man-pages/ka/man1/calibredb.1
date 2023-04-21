@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "აპრილი 08, 2023" "6.15.1" "calibre"
+.TH "CALIBREDB" "1" "აპრილი 21, 2023" "6.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -377,6 +377,11 @@ Add the e\-book in ebook_file to the available formats for the logical book iden
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
+.B \-\-as\-extra\-data\-file
+Add the file as an extra data file to the book, not an ebook format
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-dont\-replace
 Do not replace the format if it already exists
 .UNINDENT
@@ -460,7 +465,8 @@ calibredb export [options] ids
 .sp
 Export the books specified by ids (a comma separated list) to the filesystem.
 The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
-an opf file). You can get id numbers from the search command.
+an OPF file). Any extra data files associated with the book are also saved.
+You can get id numbers from the search command.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -477,6 +483,11 @@ Have calibre convert all non English characters into English equivalents for the
 .TP
 .B \-\-dont\-save\-cover
 Normally, calibre will save the cover in a separate file along with the actual e\-book files. Specifying this switch will turn this behavior off.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-save\-extra\-files
+Save any data files associated with the book when saving the book Specifying this switch will turn this behavior off.
 .UNINDENT
 .INDENT 0.0
 .TP

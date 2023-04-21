@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "april 08, 2023" "6.15.1" "calibre"
+.TH "CALIBREDB" "1" "april 21, 2023" "6.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -377,6 +377,11 @@ Lägg e\-boken i ebook_file till tillgängliga format för den logiska boken som
 När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
+.B \-\-as\-extra\-data\-file
+Add the file as an extra data file to the book, not an ebook format
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-dont\-replace
 Ersätt inte formatet om det redan finns
 .UNINDENT
@@ -457,9 +462,10 @@ calibredb export [options] ids
 .UNINDENT
 .UNINDENT
 .sp
-Exportera böckerna som anges av identifierare (en kommaseparerad lista) till filsystemet.
-Exporten sparar alla format av boken, dess omslag och metadata (i
-en OPF\-fil). Du kan få id\-nummer från sökkommandot.
+Export the books specified by ids (a comma separated list) to the filesystem.
+The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
+an OPF file). Any extra data files associated with the book are also saved.
+You can get id numbers from the search command.
 .sp
 När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -476,6 +482,11 @@ Låt calibre konvertera alla icke\-engelska tecken till engelska ekvivalenter f�
 .TP
 .B \-\-dont\-save\-cover
 Normalt sparar calibre omslaget i en separat fil tillsammans med själva e\-bokfilerna. Om denna växel aktiveras, kommer detta beteende att stängas av.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-save\-extra\-files
+Save any data files associated with the book when saving the book Om denna växel aktiveras, kommer detta beteende att stängas av.
 .UNINDENT
 .INDENT 0.0
 .TP

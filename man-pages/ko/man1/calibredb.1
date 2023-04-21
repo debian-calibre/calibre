@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "4월 08, 2023" "6.15.1" "calibre"
+.TH "CALIBREDB" "1" "4월 21, 2023" "6.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -410,6 +410,11 @@ Add the e\-book in ebook_file to the available formats for the logical book iden
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
+.B \-\-as\-extra\-data\-file
+Add the file as an extra data file to the book, not an ebook format
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-dont\-replace
 이미 존재하는 형식이면 바꾸지 마세요
 .UNINDENT
@@ -447,7 +452,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
-OPF 양식(XML)에서 책 정보를 인쇄합니다
+OPF 양식(XML)에서 메타데이터를 인쇄합니다
 .UNINDENT
 .SH SET_METADATA
 .INDENT 0.0
@@ -493,7 +498,8 @@ calibredb export [options] ids
 .sp
 Export the books specified by ids (a comma separated list) to the filesystem.
 The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
-an opf file). You can get id numbers from the search command.
+an OPF file). Any extra data files associated with the book are also saved.
+You can get id numbers from the search command.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -513,13 +519,18 @@ Have calibre convert all non English characters into English equivalents for the
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-dont\-save\-extra\-files
+Save any data files associated with the book when saving the book Specifying this switch will turn this behavior off.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-dont\-update\-metadata
-캘리버가 캘리버 서재에 있는 책 정보를 가져와 저장된 파일의 책 정보를 업데이트합니다. 디스크에 저장하는 시간이 더 걸리게 됩니다. Specifying this switch will turn this behavior off.
+캘리버가 캘리버 서재에 있는 메타데이터를 가져와 저장된 파일의 메타데이터를 업데이트합니다. 디스크에 저장하는 시간이 더 걸리게 됩니다. Specifying this switch will turn this behavior off.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-write\-opf
-보통, 캘리버는 실제 전자책 파일과 함께 분리된 OPF 파일 내에 책 정보를 기록합니다. Specifying this switch will turn this behavior off.
+보통, 캘리버는 실제 전자책 파일과 함께 분리된 OPF 파일 내에 메타데이터를 기록합니다. Specifying this switch will turn this behavior off.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -603,7 +614,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title
-책 정보에서 제목으로 사용되는 생성된 범주의 제목입니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
+메타데이터에서 제목으로 사용되는 생성된 범주의 제목입니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP

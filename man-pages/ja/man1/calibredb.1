@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "4月 08, 2023" "6.15.1" "calibre"
+.TH "CALIBREDB" "1" "4月 21, 2023" "6.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -372,6 +372,11 @@ ebook_file で指定する電子書籍ファイルを、id で指定された本
 スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
+.B \-\-as\-extra\-data\-file
+Add the file as an extra data file to the book, not an ebook format
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-dont\-replace
 形式がすでに存在する場合に置換しない
 .UNINDENT
@@ -452,10 +457,10 @@ calibredb export [options] ids
 .UNINDENT
 .UNINDENT
 .sp
-指定した ID (カンマ区切りリスト) の本をファイルシステムにエクスポートします。
-エクスポート処理では、すべての形式と表紙と書誌 (OP Fファイル)を
-保存します。
-ID 番号は search コマンドで取得できます。
+Export the books specified by ids (a comma separated list) to the filesystem.
+The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
+an OPF file). Any extra data files associated with the book are also saved.
+You can get id numbers from the search command.
 .sp
 スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -472,6 +477,11 @@ IDのリストを無視してデータベースからすべての本をエクス
 .TP
 .B \-\-dont\-save\-cover
 通常、calibreは表紙を電子書籍ファイルとは別のファイルに保存します。 このスイッチ指定すると、この挙動をOFFにできます。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-save\-extra\-files
+Save any data files associated with the book when saving the book このスイッチ指定すると、この挙動をOFFにできます。
 .UNINDENT
 .INDENT 0.0
 .TP
