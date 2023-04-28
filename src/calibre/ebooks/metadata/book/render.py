@@ -5,18 +5,22 @@ __license__ = 'GPL v3'
 __copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
 
 import os
+from contextlib import suppress
 from functools import partial
 
-from calibre import prepare_string_for_xml, force_unicode
-from calibre.ebooks.metadata import fmt_sidx, rating_to_stars
-from calibre.ebooks.metadata.search_internet import name_for, url_for_author_search, url_for_book_search, qquote, DEFAULT_AUTHOR_SOURCE
-from calibre.ebooks.metadata.sources.identify import urls_from_identifiers
+from calibre import force_unicode, prepare_string_for_xml
 from calibre.constants import filesystem_encoding
+from calibre.db.constants import DATA_DIR_NAME
+from calibre.ebooks.metadata import fmt_sidx, rating_to_stars
+from calibre.ebooks.metadata.search_internet import (
+    DEFAULT_AUTHOR_SOURCE, name_for, qquote, url_for_author_search, url_for_book_search,
+)
+from calibre.ebooks.metadata.sources.identify import urls_from_identifiers
 from calibre.library.comments import comments_to_html, markdown
-from calibre.utils.icu import sort_key
+from calibre.utils.date import format_date, is_date_undefined
 from calibre.utils.formatter import EvalFormatter
-from calibre.utils.date import is_date_undefined, format_date
-from calibre.utils.localization import calibre_langcode_to_name
+from calibre.utils.icu import sort_key
+from calibre.utils.localization import calibre_langcode_to_name, ngettext
 from calibre.utils.serialize import json_dumps
 from polyglot.binary import as_hex_unicode
 
@@ -201,7 +205,6 @@ def mi_to_html(
                 path = force_unicode(mi.path, filesystem_encoding)
                 scheme = 'devpath' if isdevice else 'path'
                 loc = path if isdevice else book_id
-                pathstr = _('Click to open')
                 extra = ''
                 if isdevice:
                     durl = path
@@ -210,8 +213,25 @@ def mi_to_html(
                     extra = '<br><span style="font-size:smaller">%s</span>'%(
                             prepare_string_for_xml(durl))
                 if show_links:
+                    num_of_folders = 1
+                    if isdevice:
+                        text = _('Click to open')
+                    else:
+                        data_path = os.path.join(path, DATA_DIR_NAME)
+                        with suppress(OSError):
+                            for dirpath, dirnames, filenames in os.walk(data_path):
+                                if filenames:
+                                    num_of_folders = 2
+                                    break
+                        text = _('Book files')
+                        name = ngettext('Folder:', 'Folders:', num_of_folders)
                     link = '<a href="{}" title="{}">{}</a>{}'.format(action(scheme, book_id=book_id, loc=loc),
-                        prepare_string_for_xml(path, True), pathstr, extra)
+                        prepare_string_for_xml(path, True), text, extra)
+                    if num_of_folders > 1:
+                        link += ', <a href="{}" title="{}">{}</a>'.format(
+                            action('data-path', book_id=book_id, loc=book_id),
+                            prepare_string_for_xml(data_path, True), _('Data files'))
+
                 else:
                     link = prepare_string_for_xml(path, True)
                 ans.append((field, row % (name, link)))

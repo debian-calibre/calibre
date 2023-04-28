@@ -12,13 +12,12 @@ import hashlib
 import json
 import os
 import shutil
+import stat
 import sys
 import time
 import uuid
 from contextlib import closing, suppress
-from dataclasses import dataclass
 from functools import partial
-from typing import Sequence
 
 from calibre import as_unicode, force_unicode, isbytestring, prints
 from calibre.constants import (
@@ -26,6 +25,10 @@ from calibre.constants import (
 )
 from calibre.db import SPOOL_SIZE, FTSQueryError
 from calibre.db.annotations import annot_db_data, unicode_normalize
+from calibre.db.constants import (
+    BOOK_ID_PATH_TEMPLATE, COVER_FILE_NAME, DEFAULT_TRASH_EXPIRY_TIME_SECONDS,
+    METADATA_FILE_NAME, TRASH_DIR_NAME, TrashEntry,
+)
 from calibre.db.errors import NoSuchFormat
 from calibre.db.schema_upgrades import SchemaUpgrade
 from calibre.db.tables import (
@@ -56,24 +59,9 @@ from polyglot.builtins import (
 
 # }}}
 
-COVER_FILE_NAME = 'cover.jpg'
-METADATA_FILE_NAME = 'metadata.opf'
-DEFAULT_TRASH_EXPIRY_TIME_SECONDS = 14 * 86400
-TRASH_DIR_NAME =  '.caltrash'
-BOOK_ID_PATH_TEMPLATE = ' ({})'
 CUSTOM_DATA_TYPES = frozenset(('rating', 'text', 'comments', 'datetime',
     'int', 'float', 'bool', 'series', 'composite', 'enumeration'))
 WINDOWS_RESERVED_NAMES = frozenset('CON PRN AUX NUL COM1 COM2 COM3 COM4 COM5 COM6 COM7 COM8 COM9 LPT1 LPT2 LPT3 LPT4 LPT5 LPT6 LPT7 LPT8 LPT9'.split())
-
-
-@dataclass
-class TrashEntry:
-    book_id: int
-    title: str
-    author: str
-    cover_path: str
-    mtime: float
-    formats: Sequence[str] = ()
 
 
 class DynamicFilter:  # {{{
@@ -1885,6 +1873,9 @@ class DB:
 
         if os.path.exists(spath):
             copy_tree(os.path.abspath(spath), tpath, delete_source=True, transform_destination_filename=transform_format_filenames)
+            parent = os.path.dirname(spath)
+            with suppress(OSError):
+                os.rmdir(parent)  # remove empty parent directory
         else:
             os.makedirs(tpath)
         update_paths_in_db()
@@ -1900,11 +1891,12 @@ class DB:
 
     def iter_extra_files(self, book_id, book_path, formats_field, yield_paths=False, pattern=''):
         known_files = {COVER_FILE_NAME, METADATA_FILE_NAME}
-        for fmt in formats_field.for_book(book_id, default_value=()):
-            fname = formats_field.format_fname(book_id, fmt)
-            fpath = self.format_abspath(book_id, fmt, fname, book_path, do_file_rename=False)
-            if fpath:
-                known_files.add(os.path.basename(fpath))
+        if '/' not in pattern:
+            for fmt in formats_field.for_book(book_id, default_value=()):
+                fname = formats_field.format_fname(book_id, fmt)
+                fpath = self.format_abspath(book_id, fmt, fname, book_path, do_file_rename=False)
+                if fpath:
+                    known_files.add(os.path.basename(fpath))
         full_book_path = os.path.abspath(os.path.join(self.library_path, book_path))
         if pattern:
             from pathlib import Path
@@ -1923,9 +1915,14 @@ class DB:
                 relpath = os.path.relpath(path, full_book_path)
                 relpath = relpath.replace(os.sep, '/')
                 if relpath not in known_files:
-                    mtime = os.path.getmtime(path)
+                    try:
+                        stat_result = os.stat(path)
+                    except OSError:
+                        continue
+                    if stat.S_ISDIR(stat_result.st_mode):
+                        continue
                     if yield_paths:
-                        yield relpath, path, mtime
+                        yield relpath, path, stat_result
                     else:
                         try:
                             src = open(path, 'rb')
@@ -1934,27 +1931,40 @@ class DB:
                                 time.sleep(1)
                             src = open(path, 'rb')
                         with src:
-                            yield relpath, src, mtime
+                            yield relpath, src, stat_result
 
-    def add_extra_file(self, relpath, stream, book_path, replace=True):
-        dest = os.path.abspath(os.path.join(self.library_path, book_path, relpath))
-        if not replace and os.path.exists(dest):
-            return False
+    def add_extra_file(self, relpath, stream, book_path, replace=True, auto_rename=False):
+        bookdir = os.path.join(self.library_path, book_path)
+        dest = os.path.abspath(os.path.join(bookdir, relpath))
+        if not replace and os.path.exists(make_long_path_useable(dest)):
+            if not auto_rename:
+                return None
+            dirname, basename = os.path.split(dest)
+            num = 0
+            while True:
+                mdir = 'merge conflict'
+                if num:
+                    mdir += f' {num}'
+                candidate = os.path.join(dirname, mdir, basename)
+                if not os.path.exists(make_long_path_useable(candidate)):
+                    dest = candidate
+                    break
+                num += 1
         if isinstance(stream, str):
             try:
-                shutil.copy2(stream, dest)
+                shutil.copy2(make_long_path_useable(stream), make_long_path_useable(dest))
             except FileNotFoundError:
-                os.makedirs(os.path.dirname(dest), exist_ok=True)
-                shutil.copy2(stream, dest)
+                os.makedirs(make_long_path_useable(os.path.dirname(dest)), exist_ok=True)
+                shutil.copy2(make_long_path_useable(stream), make_long_path_useable(dest))
         else:
             try:
-                d = open(dest, 'wb')
+                d = open(make_long_path_useable(dest), 'wb')
             except FileNotFoundError:
-                os.makedirs(os.path.dirname(dest), exist_ok=True)
-                d = open(dest, 'wb')
+                os.makedirs(make_long_path_useable(os.path.dirname(dest)), exist_ok=True)
+                d = open(make_long_path_useable(dest), 'wb')
             with d:
                 shutil.copyfileobj(stream, d)
-        return True
+        return os.path.relpath(dest, bookdir).replace(os.sep, '/')
 
     def write_backup(self, path, raw):
         path = os.path.abspath(os.path.join(self.library_path, path, METADATA_FILE_NAME))
@@ -1983,6 +1993,12 @@ class DB:
     @property
     def trash_dir(self):
         return os.path.abspath(os.path.join(self.library_path, TRASH_DIR_NAME))
+
+    def clear_trash_dir(self):
+        tdir = self.trash_dir
+        if os.path.exists(tdir):
+            self.rmtree(tdir)
+            self.ensure_trash_dir()
 
     def ensure_trash_dir(self):
         tdir = self.trash_dir
@@ -2086,9 +2102,12 @@ class DB:
                 try:
                     book_id = int(x.name)
                     mtime = x.stat(follow_symlinks=False).st_mtime
+                    with open(make_long_path_useable(os.path.join(x.path, METADATA_FILE_NAME)), 'rb') as opf_stream:
+                        opf = OPF(opf_stream, basedir=x.path)
                 except Exception:
+                    import traceback
+                    traceback.print_exc()
                     continue
-                opf = OPF(os.path.join(x.path, METADATA_FILE_NAME), basedir=x.path)
                 books.append(TrashEntry(book_id, opf.title or unknown, (opf.authors or au)[0], os.path.join(x.path, COVER_FILE_NAME), mtime))
         base = os.path.join(self.trash_dir, 'f')
         um = {'title': unknown, 'authors': au}
@@ -2104,8 +2123,13 @@ class DB:
                 for f in os.scandir(x.path):
                     if f.is_file(follow_symlinks=False):
                         if f.name == 'metadata.json':
-                            with open(f.path, 'rb') as mf:
-                                metadata = json.loads(mf.read())
+                            try:
+                                with open(f.path, 'rb') as mf:
+                                    metadata = json.loads(mf.read())
+                            except Exception:
+                                import traceback
+                                traceback.print_exc()
+                                continue
                         else:
                             formats.add(f.name.upper())
                 if formats:

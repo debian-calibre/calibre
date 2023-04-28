@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "Nisan 21, 2023" "6.16.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "Nisan 27, 2023" "6.17.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
@@ -35,16 +35,16 @@ calibre-server \- calibre-server
 .sp
 .nf
 .ft C
-calibre\-server [options] [path to library folder...]
+calibre\-server [seçenekler] [kitaplık klasörü yolu...]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Start the calibre Content server. The calibre Content server exposes your
-calibre libraries over the internet. You can specify the path to the library
-folders as arguments to \fBcalibre\-server\fP\&. If you do not specify any paths, all the
-libraries that the main calibre program knows about will be used.
+Calibre İçerik sunucusunu başlatın. Calibre İçerik sunucusu,
+calibre kitaplıklarınızı internet üzerinden gösterir. Kitaplık klasörlerine
+giden yolu \fBcalibre\-server\fP argümanı olarak belirtebilirsiniz. Herhangi bir yol belirtmezseniz, ana calibre programının
+bildiği tüm kütüphaneler kullanılacaktır.
 .sp
 Whenever you pass arguments to \fBcalibre\-server\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .SH [SEÇENEKLER]
@@ -101,7 +101,7 @@ Run process in background as a daemon (Linux only).
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-Restrict displayed user\-defined fields.     Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
+Restrict displayed user\-defined fields.     /opds ve /mobile görünümlerinde İçerik sunucusu tarafından görüntülenmeyecek kullanıcı tanımlı üstveri alanlarının virgülle ayrılmış listesi. Bu seçeneği belirtirseniz, bu listede olmayan alanlar görüntülenmeyecektir. Örneğin: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -146,7 +146,7 @@ bu yardım iletisini göster ve çık
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-Ignored user\-defined metadata fields.       Comma separated list of user\-defined metadata fields that will not be displayed by the Content server in the /opds and /mobile views. For example: my_rating,my_tags
+Ignored user\-defined metadata fields.       /opds ve /mobile görünümlerinde İçerik sunucusu tarafından görüntülenmeyecek kullanıcı tanımlı üstveri alanlarının virgülle ayrılmış listesi. Örneğin: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP

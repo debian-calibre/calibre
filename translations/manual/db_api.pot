@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 6.16.0\n"
+"Project-Id-Version: calibre 6.17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-21 08:21+0530\n"
+"POT-Creation-Date: 2023-04-27 07:59+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -103,6 +103,7 @@ msgstr ""
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_all_link_maps_for_book:0
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_link_map:0
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_next_series_num_for:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.list_extra_files:0
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.remove_formats:0
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.rename_items:0
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.search:0
@@ -318,6 +319,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_all_link_maps_for_book:0
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_link_map:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.list_extra_files:0
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.remove_formats:0
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.set_link_map:0
 msgid "Returns"
@@ -407,8 +409,24 @@ msgstr ""
 msgid "Initialize this cache with data from the backend."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.list_extra_files_matching:1
-msgid "List extra data files matching the specified pattern. Empty pattern matches all. Recursive globbing with ** is supported."
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.list_extra_files:1
+msgid "Get information about extra files in the book's directory."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.list_extra_files:3
+msgid "the database book id for the book"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.list_extra_files:4
+msgid "the pattern of filenames to search for. Empty pattern matches all extra files. Patterns must use / as separator. Use the DATA_FILE_PATTERN constant to match files inside the data directory."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.list_extra_files:7
+msgid "A tuple of all extra files matching the specified pattern. Each element of the tuple is ExtraFile(relpath, file_path, stat_result). Where relpath is the relative path of the file to the book directory using / as a separator. stat_result is the result of calling os.stat() on the file."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.merge_extra_files:1
+msgid "Merge the extra files from src_ids into dest_id. Conflicting files are auto-renamed unless replace=True in which case they are replaced."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.move_book_from_trash:1

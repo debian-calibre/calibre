@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "april 21, 2023" "6.16.0" "calibre"
+.TH "CALIBREDB" "1" "april 27, 2023" "6.17.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -333,7 +333,7 @@ Ett filnamn (glob)\-mönster, filer som matchar det här mönstret ignoreras vid
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Antag att varje mapp bara har en enda logisk bok och att alla filer i den är samma e\-bok i olika format
+Antag att varje mapp endast har en enda logisk bok och att alla filer i den är olika e\-boksformat av den boken
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -378,7 +378,7 @@ När du skickar argument till calibredb som har blanksteg i dem, bifoga argument
 .INDENT 0.0
 .TP
 .B \-\-as\-extra\-data\-file
-Add the file as an extra data file to the book, not an ebook format
+Lägg till filen som en extra datafil till boken, inte som ett e\-boksformat
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -462,10 +462,10 @@ calibredb export [options] ids
 .UNINDENT
 .UNINDENT
 .sp
-Export the books specified by ids (a comma separated list) to the filesystem.
-The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
-an OPF file). Any extra data files associated with the book are also saved.
-You can get id numbers from the search command.
+Exportera böckerna som anges av identifierare (en kommaseparerad lista) till filsystemet.
+Exporten sparar alla format av boken, dess omslag och metadata (i
+en OPF\-fil). Eventuella extra datafiler som är kopplade till boken sparas också.
+Du kan få id\-nummer från sökkommandot.
 .sp
 När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -486,7 +486,7 @@ Normalt sparar calibre omslaget i en separat fil tillsammans med själva e\-bokf
 .INDENT 0.0
 .TP
 .B \-\-dont\-save\-extra\-files
-Save any data files associated with the book when saving the book Om denna växel aktiveras, kommer detta beteende att stängas av.
+Spara alla datafiler som är kopplade till boken när du sparar boken Om denna växel aktiveras, kommer detta beteende att stängas av.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -621,7 +621,7 @@ Inkludera sektioen \fB\(aq\fPNyligen tillagda\fB\(aq\fP i katalogen. Standard: \
 .INDENT 0.0
 .TP
 .B \-\-generate\-series
-Inkludera sektioen \fB\(aq\fPSerier\fB\(aq\fP i katalogen Standard: \fB\(aq\fPFalse\fB\(aq\fP  Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
+Inkludera sektioen \fB\(aq\fPSerier\fB\(aq\fP i katalogen. Standard: \fB\(aq\fPFalse\fB\(aq\fP  Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP

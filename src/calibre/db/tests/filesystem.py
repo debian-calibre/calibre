@@ -103,6 +103,11 @@ class FilesystemTest(BaseTest):
 
         # test only formats being changed
         init_cache()
+        ef = set()
+        for efx in cache.list_extra_files(1):
+            ef.add(efx.relpath)
+            self.assertTrue(os.path.exists(efx.file_path))
+        self.assertEqual(ef, {'a.side', 'subdir/a.fmt1'})
         fname = cache.fields['formats'].table.fname_map[1]['FMT1']
         cache.fields['formats'].table.fname_map[1]['FMT1'] = 'some thing else'
         cache.fields['formats'].table.fname_map[1]['FMT2'] = fname.upper()
@@ -127,7 +132,10 @@ class FilesystemTest(BaseTest):
         from calibre.ebooks.metadata.book.base import Metadata
         cache.set_metadata(1, Metadata('t1', ('a1', 'a2')))
         check_that_filesystem_and_db_entries_match(1)
-
+        # check that empty author folders are removed
+        for x in os.scandir(cache.backend.library_path):
+            if x.is_dir():
+                self.assertTrue(os.listdir(x.path))
 
     @unittest.skipUnless(iswindows, 'Windows only')
     def test_windows_atomic_move(self):
@@ -221,8 +229,8 @@ class FilesystemTest(BaseTest):
         os.mkdir(os.path.join(bookdir, 'sub'))
         with open(os.path.join(bookdir, 'sub', 'recurse'), 'w') as f:
             f.write('recurse')
-        self.assertEqual(set(cache.list_extra_files_matching(1, 'sub/**/*')), {'sub/recurse'})
-        self.assertEqual(set(cache.list_extra_files_matching(1, '')), {'exf', 'sub/recurse'})
+        self.assertEqual({ef.relpath for ef in cache.list_extra_files(1, pattern='sub/**/*')}, {'sub/recurse'})
+        self.assertEqual({ef.relpath for ef in cache.list_extra_files(1)}, {'exf', 'sub/recurse'})
         for part_size in (1 << 30, 100, 1):
             with TemporaryDirectory('export_lib') as tdir, TemporaryDirectory('import_lib') as idir:
                 exporter = Exporter(tdir, part_size=part_size)

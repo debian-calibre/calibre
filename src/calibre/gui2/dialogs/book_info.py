@@ -88,8 +88,11 @@ class Configure(Dialog):
         h.addLayout(v)
 
         self.l.addLayout(h)
-        self.l.addWidget(QLabel('<p>' + _(
-            'Note that <b>comments</b> will always be displayed at the end, regardless of the order you assign here')))
+        txt = QLabel('<p>' + _(
+            'Note: <b>comments</b>-like columns will always be displayed at '
+            'the end unless their "Heading position" is "Show heading to the side"')+'</p>')
+        txt.setWordWrap(True)
+        self.l.addWidget(txt)
 
         b = self.bb.addButton(_('Restore &defaults'), QDialogButtonBox.ButtonRole.ActionRole)
         b.clicked.connect(self.restore_defaults)
@@ -116,19 +119,21 @@ class Configure(Dialog):
 
 class Details(HTMLDisplay):
 
-    def __init__(self, book_info, parent=None, allow_context_menu=True):
+    def __init__(self, book_info, parent=None, allow_context_menu=True, is_locked=False):
         HTMLDisplay.__init__(self, parent)
         self.book_info = book_info
         self.edit_metadata = getattr(parent, 'edit_metadata', None)
         self.setDefaultStyleSheet(css())
         self.allow_context_menu = allow_context_menu
+        self.is_locked = is_locked
 
     def sizeHint(self):
         return QSize(350, 350)
 
     def contextMenuEvent(self, ev):
         if self.allow_context_menu:
-            details_context_menu_event(self, ev, self.book_info, edit_metadata=self.edit_metadata)
+            details_context_menu_event(self, ev, self.book_info,
+                           edit_metadata=None if self.is_locked else self.edit_metadata)
 
 
 class DialogNumbers(IntEnum):
@@ -164,7 +169,8 @@ class BookInfo(QDialog):
         self.splitter.addWidget(self.cover)
 
         self.details = Details(parent.book_details.book_info, self,
-                               allow_context_menu=library_path is None)
+                               allow_context_menu=library_path is None,
+                               is_locked = dialog_number == DialogNumbers.Locked)
         self.details.anchor_clicked.connect(self.on_link_clicked)
         self.link_delegate = link_delegate
         self.details.setAttribute(Qt.WidgetAttribute.WA_OpaquePaintEvent, False)
@@ -208,10 +214,11 @@ class BookInfo(QDialog):
         if library_path is not None:
             self.view = None
             db = get_gui().library_broker.get_library(library_path)
-            if not db.new_api.has_id(book_id):
+            dbn = db.new_api
+            if not dbn.has_id(book_id):
                 raise ValueError(_("Book {} doesn't exist").format(book_id))
-            mi = db.new_api.get_metadata(book_id, get_cover=False)
-            mi.cover_data = [None, db.new_api.cover(book_id, as_image=True)]
+            mi = dbn.get_metadata(book_id, get_cover=False)
+            mi.cover_data = [None, dbn.cover(book_id, as_image=True)]
             mi.path = None
             mi.format_files = dict()
             mi.formats = list()
@@ -224,7 +231,18 @@ class BookInfo(QDialog):
             if dialog_number == DialogNumbers.Slaved:
                 self.slave_connected = True
                 self.view.model().new_bookdisplay_data.connect(self.slave)
-            self.refresh(row)
+            if book_id:
+                db = get_gui().current_db
+                dbn = db.new_api
+                mi = dbn.get_metadata(book_id, get_cover=False)
+                mi.cover_data = [None, dbn.cover(book_id, as_image=True)]
+                mi.path = dbn._field_for('path', book_id)
+                mi.format_files = dbn.format_files(book_id)
+                mi.marked = db.data.get_marked(book_id)
+                mi.field_metadata = db.field_metadata
+                self.refresh(row, mi)
+            else:
+                self.refresh(row)
 
             ema = get_gui().iactions['Edit Metadata'].menuless_qaction
             a = self.ema = QAction('edit metadata', self)
@@ -338,7 +356,7 @@ class BookInfo(QDialog):
             self.cover.set_marked(self.marked)
             return
         pixmap = self.cover_pixmap
-        if self.fit_cover.isChecked():
+        if self.fit_cover.isChecked() and not pixmap.isNull():
             scaled, new_width, new_height = fit_image(pixmap.width(),
                     pixmap.height(), self.cover.size().width()-10,
                     self.cover.size().height()-10)

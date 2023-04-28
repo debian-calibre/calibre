@@ -197,7 +197,7 @@ def _builtin_field_metadata():
                            'datatype':'int',
                            'is_multiple':{},
                            'kind':'field',
-                           'name':None,
+                           'name': _('Id'),
                            'search_terms':['id'],
                            'is_custom':False,
                            'is_category':False,
@@ -395,6 +395,7 @@ class FieldMetadata:
 
     # search labels that are not db columns
     search_items = ['all', 'search', 'vl', 'template']
+    custom_field_prefix = '#'
     __calibre_serializable__ = True
 
     def __init__(self):
@@ -417,7 +418,6 @@ class FieldMetadata:
                         'date_format': tweaks['gui_pubdate_display_format']}
         self._tb_cats['last_modified']['display'] = {
                         'date_format': tweaks['gui_last_modified_display_format']}
-        self.custom_field_prefix = '#'
         self.get = self._tb_cats.get
 
     def __getitem__(self, key):

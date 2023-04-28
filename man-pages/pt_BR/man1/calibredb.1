@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "abril 21, 2023" "6.16.0" "calibre"
+.TH "CALIBREDB" "1" "abril 27, 2023" "6.17.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -375,7 +375,7 @@ Sempre que você for passar argumentos para calibredb que possuem espaços em br
 .INDENT 0.0
 .TP
 .B \-\-as\-extra\-data\-file
-Add the file as an extra data file to the book, not an ebook format
+Adicionar como um arquivo de dados extra do livro, não como um formato de e\-book
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -454,16 +454,16 @@ Listar os nomes dos campos de metadados que podem ser usados ​​com a opção
 .sp
 .nf
 .ft C
-calibredb export [options] ids
+calibredb export [opções] ids
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Export the books specified by ids (a comma separated list) to the filesystem.
-The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
-an OPF file). Any extra data files associated with the book are also saved.
-You can get id numbers from the search command.
+Exportar os livros especificados pelos ids (uma lista separada por vírgula) para o sistema de arquivos.
+A operação de exportação salva todos os formatos do livro, sua capa e metadados (em
+um arquivo OPF). Quaisquer arquivos de dados extras associados com o livro também serão salvos.
+Você pode obter os números de id através do comando de busca.
 .sp
 Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0

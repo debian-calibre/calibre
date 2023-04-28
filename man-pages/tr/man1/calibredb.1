@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "Nisan 21, 2023" "6.16.0" "calibre"
+.TH "CALIBREDB" "1" "Nisan 27, 2023" "6.17.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -41,42 +41,37 @@ calibredb komut [seçenekler] [değişkenler]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP is the command line interface to the calibre database. It has
-several sub\-commands, documented below.
-.sp
-\fBcalibredb\fP can be used to manipulate either a calibre database
-specified by path or a calibre Content server running either on
-the local machine or over the internet. You can start a calibre
-Content server using either the \fBcalibre\-server\fP
-program or in the main calibre program click Connect/share  → 
-Start Content server\&. Since \fBcalibredb\fP can make changes to your
-calibre libraries, you must setup authentication on the server first. There
-are two ways to do that:
+\fBcalibredb\fP calibre veritabanına giden komut satırı arayüzüdür. Aşağıda belgelenen
+birkaç alt komutu vardır.
 .INDENT 0.0
 .INDENT 3.5
-.INDENT 0.0
-.IP \(bu 2
-If you plan to connect only to a server running on the same computer,
-you can simply use the \fB\-\-enable\-local\-write\fP option of the
-Content server, to allow any program, including calibredb, running on
-the local computer to make changes to your calibre data. When running
-the server from the main calibre program, this option is in
-Preferences → Sharing over the net → Advanced\&.
-.IP \(bu 2
-If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
-options to \fBcalibredb\fP to give it access. You can setup
-user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
-option and using \fB\-\-manage\-users\fP to create the user accounts.
-If you are running the server from the main calibre program, use
-Preferences → Sharing over the net → Require username/password\&.
-.UNINDENT
+\fBcalibredb\fP, yola göre belirtilen calibre veritabanını
 .UNINDENT
 .UNINDENT
 .sp
-To connect to a running Content server, pass the URL of the server to the
-\fI\%\-\-with\-library\fP option, see the documentation of that option for
-details and examples.
+veya yerel makinede veya internet üzerinden. Bir calibre
+İçerik sunucusu\(ganu :command:\(gacalibre\-server
+programını kullanarak veya ana calibre programında Bağlan/paylaş  → 
+İçerik sunucusunu Başlat seçeneğine tıklayarak başlatabilirsiniz. \fBcalibredb\fP calibre kitaplıklarınızda değişiklik yapabildiğinden, önce sunucuda kimlik doğrulamayı ayarlamanız gerekir. Bunu yapmanın
+.INDENT 0.0
+.TP
+.B iki yolu vardır:
+.INDENT 7.0
+.IP \(bu 2
+Yalnızca aynı bilgisayarda çalışan bir sunucuya bağlanmayı planlıyorsan
+.UNINDENT
+.UNINDENT
+.sp
+calibredb dahil olmak üzere yerel bilgisayarda çalışan herhangi bir programın calibre verilerinizde değişiklik yapmasına izin vermek için içerik sunucusunun \fB\-\-enable\-local\-write\(aq\(aq seçeneğini kullanabilirsin. Sunucuyu ana calibre programından çalıştırırken, bu seçenek şu şekildedir:guilabel:\(gaTercihler\->Ağ üzerinden paylaşım\->Gelişmiş\(ga.
+* İnternet üzerinden erişimi etkinleştirmek istiyorsanız, kurulum yapmalısınız
+sunucudaki kullanıcı hesaplarını kullanın ve erişim vermek için :option:\(ga\-\-username\(ga ve :option:\(ga\-\-password\(ga
+seçeneklerini :command:\(gacalibredb\(ga için kullanın. Kullanıcı hesaplarını oluşturmak için \(ga\(ga\-\-enable\-auth\(ga\fP
+seçeneğini kullanarak ve \fB\-\-manage\-users\fP seçeneğini kullanarak \fBcalibre\-server\fP için kullanıcı kimlik doğrulamasını ayarlayabilirsiniz.
+sunucuyu ana calibre programından çalıştırırken,
+Tercihler → Ağ üzerinden paylaşım → Kullanıcı adı/şifre iste seçeneğini kullanın.
+.sp
+Çalışan bir İçerik sunucusuna bağlanmak için sunucunun URL\(aqsini şuraya iletin: option:\fI\-\-with\-library\fP seçeneği, ayrıntılar ve örnekler için
+o seçeneğin belgelerine bakın.
 .INDENT 0.0
 .IP \(bu 2
 \fI\%GENEL SEÇENEKLER\fP
@@ -86,7 +81,7 @@ details and examples.
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ADDING FROM FOLDERS\fP
+\fI\%KLASÖRLERDEN EKLE\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -144,17 +139,17 @@ bu yardım iletisini göster ve çık
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \fI\%http://hostname:port/#library_id\fP for example, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \fI\%https://manual.calibre\-ebook.com/tr/generated/tr/calibredb.html\fP\&.
+Calibre kitaplığının yolu. Varsayılan, ayarlarda saklanan yolu kullanmaktır. Uzak kitaplıklarda eylemler gerçekleştirmek için bir calibre İçerik sunucusuna da bağlanabilirsiniz. Bunu yapmak için şu biçimde bir URL kullanın: \fI\%http:/\fP/sunucuadı:port/#kitaplık_no örneğin, \fI\%http://localhost:8080/#mylibrary\fP\&.kitaplık_no, İçerik sunucusunda bağlanmak istediğiniz kitaplığın kitaplık kimliğidir. Sunucuda bulunan kitaplık kimliklerinin bir listesini almak için \-\fB\(aq\fPnin özel kimlik numarası değerini kullanabilirsiniz. Bir İçerik sunucusu üzerinden erişimin nasıl kurulacağıyla ilgili ayrıntılar için bakınız \fI\%https://manual.calibre\-ebook.com/tr/generated/tr/calibredb.html\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password
-Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file> (i.e. <f: followed by the full path to the file and a trailing >). The angle brackets in the above are required, remember to escape them or use quotes for your shell.
+Calibre İçerik sunucusuna bağlanmak için parola. Parolayı standart girdiden okumak için özel değeri kullanın: <stdin>. Parolayı bir dosyadan okumak için şunu kullanın: <f:/path/to/file> (ör. <f: ardından dosyanın tam yolu ve sonunda >). Yukarıdaki köşeli parantezler gereklidir, bunlardan kaçmayı unutmayın veya kabuğunuz için tırnak işaretleri kullanın.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout
-The timeout, in seconds, when connecting to a calibre library over the network. The default is two minutes.
+Ağ üzerinden bir calibre kitaplığına bağlanırken saniye cinsinden zaman aşımı. Varsayılan iki dakikadır.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -224,22 +219,22 @@ Alanları ayırmak için kullanılan karakter dizisi. Varsayılan olarak boşluk
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-The field by which to sort the results. You can specify multiple fields by separating them with commas. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Default: id
+Sonuçları sıralamak için kullanılacak alan Birden fazla alanı virgülle ayırarak belirtebilirsiniz. Kullanılabilir alanlar: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Varsayılan: id
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+Alan listesinde \fB\(dq\fPtemplate\fB\(dq\fP varsa çalıştırılacak şablon. Varsayılan: Yok
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template_file, \-t
-Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+Alan listesinde \fB\(dq\fPtemplate\fB\(dq\fP varsa çalıştırılacak şablonu içeren dosyanın yolu. Varsayılan: Yok
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template_heading
-Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
+Şablon sütununu için başlık. Varsayılan: template. \fI\%\-\-for\-machine\fP seçeneği ayarlanmışsa bu seçenek göz ardı edilir
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -247,14 +242,11 @@ Heading for the template column. Default: template. This option is ignored if th
 .sp
 .nf
 .ft C
-calibredb add [options] file1 file2 file3 ...
+%p rog add [seçenekler] dosya1 dosya2 dosya3 ... Belirtilen dosyaları veritabanına kitap olarak ekleyin. Ayrıca klasörleri de belirtebilirsiniz, klasörlerle ilgili aşağıdaki seçeneklere bakınız.
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
-.sp
-Add the specified files as books to the database. You can also specify folders, see
-the folder related options below.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -265,7 +257,7 @@ Eklenen kitap(lar)ın yazarlarını ayarla
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-If books with similar titles and authors are found, merge the incoming formats (files) automatically into existing book records. A value of \fB\(dq\fPignore\fB\(dq\fP means duplicate formats are discarded. A value of \fB\(dq\fPoverwrite\fB\(dq\fP means duplicate formats in the library are overwritten with the newly added files. A value of \fB\(dq\fPnew_record\fB\(dq\fP means duplicate formats are placed into a new book record.
+Benzer başlıklara ve yazarlara sahip kitaplar bulunursa, gelen formatları (dosyaları) otomatik olarak mevcut kitap kayıtlarıyla birleştirin. \fB\(dq\fPignore\fB\(dq\fP değeri, yinelenen biçimlerin atıldığı anlamına gelir. \fB\(dq\fPoverwrite\fB\(dq\fP değeri, yeni eklenen dosyalarla kitaplıktaki yinelenen biçimlerin üzerine yazılacağı anlamına gelir. \fB\(dq\fPnew_record\fB\(dq\fP değeri, yinelenen biçimlerin yeni bir kitap kaydına yerleştirildiği anlamına gelir.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -275,7 +267,7 @@ Eklenen kitap için kullanılacak kapağın yolu
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Add books to database even if they already exist. Comparison is done based on book titles and authors. Note that the \fI\%\-\-automerge\fP option takes precedence.
+Zaten var olsalar bile veritabanına kitap ekleyin. Karşılaştırma kitap adları ve yazarlara göre yapılmıştır. \fI\%\-\-automerge\fP seçeneğinin öncelikli olduğunu unutmayın.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -285,7 +277,7 @@ Boş bir kitap ekle (biçimi olmayan bir kitap)
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Set the identifiers for this book, e.g. \-I asin:XXX \-I isbn:YYY
+Bu kitap için tanımlayıcılar ekleyin, e.g. \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -317,9 +309,9 @@ Eklenen kitap(lar)ın etiketlerini ayarla
 .B \-\-title, \-t
 Eklenen kitapların adlarını ayarla
 .UNINDENT
-.SS ADDING FROM FOLDERS
+.SS KLASÖRLERDEN EKLE
 .sp
-Options to control the adding of books from folders. By default only files that have extensions of known e\-book file types are added.
+Klasörlerden kitap eklemeyi kontrol etme seçenekleri. Varsayılan olarak yalnızca bilinen e\-kitap dosya türlerinin uzantılarına sahip dosyalar eklenir.
 .INDENT 0.0
 .TP
 .B \-\-add
@@ -328,17 +320,17 @@ Bilinen bir e\-kitap dosyası türünde olmasalar bile, dosyalar için klasörle
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For example: *.pdf will ignore all PDF files
+Bir dosya adı (glob) kalıbı, dosyalar için klasörler taranırken bu kalıpla eşleşen dosyalar yok sayılır. Birden çok desen için birden çok kez belirtilebilir. Örneğin: *.pdf, tüm PDF dosyalarını yoksayar.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
+Her klasörün yalnızca tek bir mantıksal kitabı olduğunu ve o klasör içindeki tüm dosyaların o kitabın farklı e\-kitap biçimleri olduğunu varsay.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Process folders recursively
+Klasörleri, alt klasörleri ile birlikte işle.
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -358,7 +350,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Do not use the Recycle Bin
+Geri Dönüşüm Kutusu kullanmayın
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -378,7 +370,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-as\-extra\-data\-file
-Add the file as an extra data file to the book, not an ebook format
+Dosyayı ekstra bir veri dosyası olarak kitaba ekle, bir ekitap formatı değildir.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -427,18 +419,17 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .sp
 .nf
 .ft C
-calibredb set_metadata [options] book_id [/path/to/metadata.opf]
+calibredb set_metadata [seçenekler] kitap_kimlik_no [/yol/üstveri.opf]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Set the metadata stored in the calibre database for the book identified by
-book_id from the OPF file metadata.opf. book_id is a book id number from the
-search command. You can get a quick feel for the OPF format by using the
-\-\-as\-opf switch to the show_metadata command. You can also set the metadata of
-individual fields with the \-\-field option. If you use the \-\-field option, there
-is no need to specify an OPF file.
+OPF dosyası üstveri.opf\(aqtan kitap_kimlik_no tarafından tanımlanan kitap için calibre veritabanında saklanan üstverileri ayarlayın.
+kitap_kimlik_no, search komutundan bir kitap kimlik numarasıdır.
+show_metadata komutunda \-\-as\-opf parametresini kullanarak OPF formatı hakkında
+hızlı bir fikir edinebilirsiniz.
+Ayrıca \-\-field seçeneğiyle bireysel alanların üstverilerini de ayarlayabilirsiniz. \-\-field seçeneğini kullanırsanız, bir OPF dosyası belirtmenize gerek yoktur.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -457,16 +448,16 @@ Ayarlanacak alan. Biçimi alan_ismi:değer şeklindedir, örneğin: \fI\%\-\-fie
 .sp
 .nf
 .ft C
-calibredb export [options] ids
+calibredb export [seçenekler] kimlik numaraları
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Export the books specified by ids (a comma separated list) to the filesystem.
-The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
-an OPF file). Any extra data files associated with the book are also saved.
-You can get id numbers from the search command.
+Kimlik numaraları ile belirtilen kitapları (virgülle ayrılmış bir liste) dosya sistemine aktarın.
+Dışa aktarma işlemi kitabın tüm formatlarını, kapağını ve meta verilerini (bir
+OPF dosyasında) kaydeder. Kitapla ilişkili tüm ekstra veri dosyaları da kaydedilir.
+Kimlik numaralarını arama komutundan alabilirsiniz.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -675,23 +666,18 @@ Replace existing cover when generating the catalog. Default: \fB\(aq\fPFalse\fB\
 .sp
 .nf
 .ft C
-calibredb saved_searches [options] (list|add|remove)
+calibredb saved_searches [seçenekler] (list|add|remove)
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Manage the saved searches stored in this database.
-If you try to add a query with a name that already exists, it will be
-replaced.
+Bu veritabanında saklanan kayıtlı aramaları yönetin.
+Zaten var olan bir ada sahip bir sorgu eklemeye çalışırsanız, bu sorgu değiştirilecektir.
 .sp
-Syntax for adding:
+Ekleme için sözdizimi :calibredb \fBsaved_searches\fP add search_name search_expression
 .sp
-calibredb \fBsaved_searches\fP add search_name search_expression
-.sp
-Syntax for removing:
-.sp
-calibredb \fBsaved_searches\fP remove search_name
+Kaldırmak için sözdizimi: calibredb \fBsaved_searches\fP remove search_name
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .SH ADD_CUSTOM_COLUMN
@@ -767,16 +753,15 @@ Onaylama sorma
 .sp
 .nf
 .ft C
-calibredb set_custom [options] column id value
+calibredb set_custom [seçenekler] sütun kimlik değeri
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Set the value of a custom column for the book identified by id.
-You can get a list of ids using the search command.
-You can get a list of custom column names using the custom_columns
-command.
+Kimlik numarası tarafından tanımlanan kitap için özel bir sütunun değerini ayarlayın.
+search komutunu kullanarak kimliklerin bir listesini alabilirsiniz.
+Özel sütun adlarının bir listesiniise custom_columnskomutu ile alabilrsiniz.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -790,20 +775,20 @@ Sütun birden çok değer saklıyorsa, belirtilen değerleri üzerine yazmak yer
 .sp
 .nf
 .ft C
-calibredb restore_database [options]
+calibredb restore_database [seçenekler]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Restore this database from the metadata stored in OPF files in each
-folder of the calibre library. This is useful if your metadata.db file
-has been corrupted.
+Bu veritabanını calibre kitaplığının herklasöründeki OPF
+dosyalarında saklanan üstverilerden geri yükleyin. Bu, metadata.db dosyanız
+bozuksa kullanışlıdır.
 .sp
-WARNING: This command completely regenerates your database. You will lose
-all saved searches, user categories, plugboards, stored per\-book conversion
-settings, and custom recipes. Restored metadata will only be as accurate as
-what is found in the OPF files.
+UYARI: Bu komut, veritabanınızı tamamen yeniden oluşturur. Kaydedilmiş tüm aramaları,
+kullanıcı kategorilerini, santralleri, kitap başına kaydedilen dönüştürme ayarlarını ve özel tarifleri
+kaybedeceksiniz. Geri yüklenen üstveri, yalnızca OPF dosyalarında
+bulunanlar kadar doğru olacaktır.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -857,14 +842,14 @@ Tam metin arama veri tabanını boşaltın. Bu, veri tabanının boyutuna bağl�
 .sp
 .nf
 .ft C
-calibredb list_categories [options]
+calibredb list_categories [seçenekler]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Produce a report of the category information in the database. The
-information is the equivalent of what is shown in the Tag browser.
+Veritabanındaki kategori bilgilerinin bir raporunu oluşturur.
+Bilgi, etiket tarayıcısında gösterilene eşdeğerdir.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -898,18 +883,17 @@ Girdideki bir satırın en fazla genişliği. Varsayılanı ekranın boyutunu al
 .sp
 .nf
 .ft C
-calibredb backup_metadata [options]
+calibredb backup_metadata [seçenekler]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Backup the metadata stored in the database into individual OPF files in each
-books folder. This normally happens automatically, but you can run this
-command to force re\-generation of the OPF files, with the \-\-all option.
+Veritabanında depolanan üstverileri her bir kitap klasöründeki ayrı OPF dosyalarına yedekleyin. Bu normalde otomatik olarak gerçekleşir, ancak \-\-all
+seçeneğiyle OPF dosyalarının yeniden oluşturulmasını zorlamak için bukomutu çalıştırabilirsiniz.
 .sp
-Note that there is normally no need to do this, as the OPF files are backed up
-automatically, every time metadata is changed.
+Not: her üstveri değişikliğinde OPF dosyaları otomatik olarak yedeklendiğinden
+normalde bunu yapmanıza gerek yoktur
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -929,11 +913,11 @@ calibredb clone path/to/new/library
 .UNINDENT
 .UNINDENT
 .sp
-Create a \fBclone\fP of the current library. This creates a new, empty library that has all the
-same custom columns, Virtual libraries and other settings as the current library.
+Geçerli kitaplığın bir kopyasını oluştur. Bu, geçerli kitaplıkla aynı özel sütunlara, Sanal kitaplıklara ve diğer ayarlara sahip
+yeni, boş bir kitaplık oluşturur.
 .sp
-The cloned library will contain no books. If you want to create a full duplicate, including
-all books, then simply use your filesystem tools to copy the library folder.
+Çoğaltılan kitaplık kitap içermez. Tüm kitaplar dahil tam bir kopya oluşturmak istiyorsanız,
+kitaplık klasörünü kopyalamak için dosya sistemi aracınızı kullanınız.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .SH EMBED_METADATA
@@ -969,18 +953,15 @@ Sadece belirtilen biçimlerdeki dosyaların üstbilgilerini güncelle. Birden ç
 .sp
 .nf
 .ft C
-calibredb search [options] search expression
+calibredb search [seçenekler] arama ifadesi
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Search the library for the specified \fBsearch\fP term, returning a comma separated
-list of book ids matching the \fBsearch\fP expression. The output format is useful
-to feed into other commands that accept a list of ids as input.
+Belirtilen arama terimini kitaplıkta arayın ve arama ifadesiyle eşleşen kitap kimlik numaralarının virgülle ayrılmışlistesini döndürün. Çıktı biçimibir kimlik numarası listesini girdi olarak kabul eden diğer komutları beslemek için kullanışlıdır.
 .sp
-The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
-language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
+Arama ifadesi calibre\(aqnin güçlü arama sorgusudilindeki herhangi bir şey olabilir, örneğin: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -994,31 +975,21 @@ Azami döndürülecek sonuç sayısı. Varsayılan tüm sonuçlardır.
 .sp
 .nf
 .ft C
-calibredb fts_index [options] enable/disable/status/reindex
+calibredb fts_index [seçenekler] enable/disable/status/reindex
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Control the Full text search indexing process.
-.INDENT 0.0
-.TP
-.B enable
-Turns on FTS indexing for this library
-.TP
-.B disable
-Turns off FTS indexing for this library
-.TP
-.B status
-Shows the current indexing status
-.TP
-.B reindex
-Can be used to re\-index either particular books or
-the entire library. To re\-index particular books
-specify the book ids as additional arguments after the
-reindex command. If no book ids are specified the
-entire library is re\-indexed.
-.UNINDENT
+Tam metin arama indeksleme işlemini kontrol edin.
+.sp
+enable Bu kitaplık için FTS indekslemeyi açar
+disable Bu kitaplık için FTS dizini indekslemeyi kapatır
+status Geçerli dizin oluşturma durumunu gösterir
+reindex Belirli kitapları veya tüm kitaplığı yeniden dizinlemek için kullanılabilir.
+Belirli kitapları yeniden indekslemek için
+kitap kimliklerini reindex komutundan sonra ek argümanlar olarak belirtin.
+Hiçbir kitap kimliği belirtilmezse tüm kitaplık yeniden indekslenir.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -1037,49 +1008,49 @@ Tüm kitaplar indekslenene kadar bekleyin, indeksleme ilerlemesini periyodik ola
 .sp
 .nf
 .ft C
-calibredb fts_search [options] search expression
+calibredb fts_search [seçenekler] arama ifadesi
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Do a full text search on the entire library or a subset of it.
+Kitaplığın tamamında veya bir alt kümesinde tam metin araması yapın.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-do\-not\-match\-on\-related\-words
-Only match on exact words not related words. So correction will not match correcting.
+İlgili kelimelerle değil, yalnızca tam kelimelerle eşleştirin. Yani düzeltmek, düzeltme ile eşleşmeyecektir.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-include\-snippets
-Include snippets of the text surrounding each match. Note that this makes searching much slower.
+Her eşleşmeyi çevreleyen metnin parçacıklarını ekleyin. Not bu aramayı çok daha yavaş hale getirir.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-indexing\-threshold
-How much of the library must be indexed before searching is allowed, as a percentage. Defaults to 90
+Aramaya izin verilmeden önce, yüzde olarak kitaplığın ne kadarının dizine eklenmesi gerektiği. Varsayılanlar 90\fB\(aq\fPdır.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-end\-marker
-The marker used to indicate the end of a matched word inside a snippet
+Bu işaretçi eşleşen bir parçacığın içindeki eşleşen bir kelimenin sonunu belirtmek için kullanılır
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-start\-marker
-The marker used to indicate the start of a matched word inside a snippet
+Bu işaretçi bir parçacığın içindeki eşleşen bir kelimenin başlangıcını belirtmek için kullanılır
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-format
-The format to output the search results in. Either \fB\(dq\fPtext\fB\(dq\fP for plain text or \fB\(dq\fPjson\fB\(dq\fP for JSON output.
+Arama sonuçlarının çıktı biçimi, düz metin için \fB\(dq\fPtext\fB\(dq\fP veya JSON çıktısı için \fB\(dq\fPjson\fB\(dq\fP şeklindedir.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-restrict\-to
-Restrict the searched books, either using a search expression or ids. For example: ids:1,2,3 to restrict by ids or search:tag:foo to restrict to books having the tag foo.
+Bir arama ifadesi veya kimlik numaraları kullanarak aranan kitapları kısıtlayın. Örneğin: kimlik numaralarına göre kısıtlamak için ids:1,2,3 veya foo etiketine sahip kitaplara göre kısıtlamak için search:tag:foo.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal
