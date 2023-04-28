@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "abril 21, 2023" "6.16.0" "calibre"
+.TH "CALIBREDB" "1" "abril 27, 2023" "6.17.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -357,7 +357,7 @@ Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre c
 .INDENT 0.0
 .TP
 .B \-\-as\-extra\-data\-file
-Add the file as an extra data file to the book, not an ebook format
+Añadir el archivo como un archivo de datos adicional al libro, no como un formato de libro electrónico
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -430,16 +430,13 @@ Lista los nombres de campo de metadatos que pueden usarse con la opción \fI\%\-
 .sp
 .nf
 .ft C
-calibredb export [options] ids
+calibredb export [opciones] ID
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Export the books specified by ids (a comma separated list) to the filesystem.
-The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
-an OPF file). Any extra data files associated with the book are also saved.
-You can get id numbers from the search command.
+Exportar los libros especificados por los ID (una lista de identificadores separados por comas) al sistema de archivos. La operación de exportación guarda todos los formatos del libro, su portada y metadatos (en un archivo OPF). Se guarda también cualquier archivo de datos adicional asociado con el libro. Se pueden obtener los números ID con la orden «search».
 .sp
 Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -460,7 +457,7 @@ Normalmente, calibre guardará la portada en un archivo separado, junto con los 
 .INDENT 0.0
 .TP
 .B \-\-dont\-save\-extra\-files
-Save any data files associated with the book when saving the book Si se especifica esta opción, se desactiva este comportamiento.
+Guardar todos los archivos de datos asociados con el libro al guardar el libro Si se especifica esta opción, se desactiva este comportamiento.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-20 08:11+0000\n"
+"POT-Creation-Date: 2023-04-24 05:30+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: un_pogaz, 2022-2023\n"
 "Language-Team: French (http://app.transifex.com/calibre/calibre/language/fr/)\n"
@@ -168,6 +168,8 @@ msgstr "Ajouter un format au livre spécifié. Renvoie True si le format a été
 #: calibre.db.cache.Cache.get_link_map:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:0
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -544,6 +546,8 @@ msgstr "l'identifiant du livre en question."
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:0
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_link_map:0
@@ -613,7 +617,7 @@ msgstr "le nom du champ pour lequel la carte de liens est souhaitée"
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:5
 msgid "{field_value:link_value, ...} for non-empty links"
-msgstr "{field_value:link_value, ...} pour les liens non vides"
+msgstr "{field_value:link_value, …} pour les liens non vides"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_metadata:1
@@ -683,11 +687,38 @@ msgid "Initialize this cache with data from the backend."
 msgstr "Initialiser ce cache avec des données depuis le système principal."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.list_extra_files_matching:1
+#: calibre.db.cache.Cache.list_extra_files:1
+msgid "Get information about extra files in the book's directory."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:3
+msgid "the database book id for the book"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:4
 msgid ""
-"List extra data files matching the specified pattern. Empty pattern matches "
-"all. Recursive globbing with ** is supported."
-msgstr "Liste des fichiers de données supplémentaires correspondant au modèle spécifié. Un motif vide correspond à tous les fichiers. La globalisation récursive avec ** est prise en charge."
+"the pattern of filenames to search for. Empty pattern matches all extra "
+"files. Patterns must use / as separator. Use the DATA_FILE_PATTERN constant "
+"to match files inside the data directory."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:7
+msgid ""
+"A tuple of all extra files matching the specified pattern. Each element of "
+"the tuple is (relpath, file_path, stat_result) where relpath is the relative"
+" path of the file to the book directory using / as a separator. stat_result "
+"is the result of calling os.stat() on the file."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.merge_extra_files:1
+msgid ""
+"Merge the extra files from src_ids into dest_id. Conflicting files are auto-"
+"renamed unless replace=True in which case they are replaced."
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.move_book_from_trash:1
@@ -910,7 +941,7 @@ msgstr "le nom recherché"
 #: calibre.db.cache.Cache.set_link_map:5
 msgid ""
 "dict(field_value:link, ...). Note that these are values, not field ids."
-msgstr "dict(field_value:link, ...). Notez qu'il s'agit de valeurs et non d'identifiants de champ."
+msgstr "dict(field_value:link, …). Notez qu'il s'agit de valeurs et non d'identifiants de champ."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_link_map:7

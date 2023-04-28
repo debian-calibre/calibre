@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "Nisan 21, 2023" "6.16.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "Nisan 27, 2023" "6.17.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -41,28 +41,19 @@ calibre\-debug [seçenekler]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre E\-book viewer and the calibre editor in debug mode.
+Calibre\(aqde hata ayıklamak için kullanışlı çeşitli komut satırı arayüzleri. Parametreler olmadan
+bu komut, yerleşik bir Python yorumlayıcısını başlatır. Ayrıca
+anacalibre programını, calibre E\-kitap görüntüleyiciyi ve calibre düzenleyiciyi hata ayıklama modunda çalıştırabilirsiniz.
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the E\-book diff tool and so
-on.
+Bunun yanısıra, yazı tipi alt ayarı, e\-kitap fark aracı gibi özel komut satırı araçlarına sahip olmayan
+çeşitli calibre parçaları için arabirimler içerir.
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
-.INDENT 0.0
-.INDENT 3.5
-\fBcalibre\-debug\fP \-e myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
-.UNINDENT
-.UNINDENT
+Bağımsız komut dosyaları çalıştırmak için de \fBcalibre\-debug\fP\(aqu kullanabilirsiniz. Bunu yapmak için şu şekilde kullanın:
 .sp
-Everything after the \fB\-\-\fP is passed to the script. You can also use \fBcalibre\-debug\fP
-as a shebang in scripts, like this:
-.INDENT 0.0
-.INDENT 3.5
+\fBcalibre\-debug\fP \-e myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...\-\-\(aqden sonraki her şey betiğe aktarılır. Ayrıca \fBcalibre\-debug\fP
+komutunu betiklerde şu şekilde kullanabilirsiniz:
+.sp
 #!/usr/bin/env \-S \fBcalibre\-debug\fP \-e \fB\-\-\fP \-\-
-.UNINDENT
-.UNINDENT
 .sp
 Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .SH [SEÇENEKLER]
@@ -104,17 +95,17 @@ Dosyadaki Python kodunu çalıştır
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Explode the book into the specified folder. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
+Kitabı patlatarak belirtilen klasöre yerleştirin. Kullanım: \-x file.epub çıktı_klasörü Kitabı, standart HTML düzenleme araçlarını kullanarak düzenleyebileceğiniz bir HTML dosyaları ve üstveri koleksiyonu olarak dışa aktarır. EPUB, AZW3, HTMLZ ve DOCX dosyalarıyla çalışır.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Export all calibre data (books/settings/plugins). Normally, you will be asked for the export folder and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export folder and libraries. The special keyword \fB\(dq\fPall\fB\(dq\fP can be used to export all libraries. Examples:    calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP  # for interactive use   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /path/to/empty/export/folder /path/to/library/folder1 /path/to/library2   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /export/folder all  # export all known libraries
+Tüm calibre verilerini dışa aktarın (kitaplar/ayarlar/eklentiler). Normalde, dışa aktarma klasörü ve dışa aktarılacak kitaplıklar sorulacaktır. Soruları atlamak için bunları komut satırı argümanları olarak da belirleyebilirsiniz. Dışa aktarma klasörü ve kitaplıkları için mutlak yollar kullanın. Tüm kitaplıkları dışa aktarmak için \fB\(dq\fPall\fB\(dq\fP özel anahtar sözcüğü kullanılabilir. Örnekler:  calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP # interaktif kullanım için calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /yol/boş/çıktı/klasörü /yol/kitaplık/ klasör1 /yol/kitaplık2 calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /çıktı/klasör all # bilinen tüm kitaplıkları dışa aktar
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-fix\-multiprocessing
-For internal use
+İç kullanım için
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -134,7 +125,7 @@ bu yardım iletisini göster ve çık
 .INDENT 0.0
 .TP
 .B \-\-implode\-book, \-i
-Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the book from the files in output_dir which must have been created by a previous call to \fI\%\-\-explode\-book\fP\&. Be sure to specify the same file type as was used when exploding.
+Önceden patlamış bir kitabı içeri yerleştirin. Kullanım: \-i çıktı_dizini dosya.epub Kitabı, \fI\%\-\-explode\-book\fP komutu ile önceden oluşturulmuş olması gereken çıktı_dizini içerisindeki dosyalardan içeri aktarır. Patlatırken kullanılanla aynı dosya türünü belirttiğinizden emin olun.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -154,17 +145,21 @@ Calibre ortamını kurmak için zorunlu olan konumların çıktısını ver
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-Run a plugin that provides a command line interface. For example: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
+Komut satırı arabirimi sağlayan bir eklenti çalıştırın. Örneğin: calibre\-debug \-r \fB\(dq\fPEklenti adı\fB\(dq\fP \fB\-\-\fP dosya1 \fB\-\-se\(gaçenek1 \-\-\(ga\fP\(aq
+.nf
+\(ga\(ga
+.fi
+den sonraki her şey eklentiye argüman olarak iletilir.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-run\-test, \-t
-Run the named test(s). Use the special value \fB\(dq\fPall\fB\(dq\fP to run all tests. If the test name starts with a period it is assumed to be a module name. If the test name starts with @ it is assumed to be a category name.
+Adlandırılmış test(ler)i çalıştırın. Tüm testleri çalıştırmak için \fB\(dq\fPall\fB\(dq\fP özel değerini kullanın. Test adı bir nokta ile başlıyorsa, bir modül adı olduğu varsayılır. Test adı @ işareti ile başlıyorsa, bir kategori adı olduğu varsayılır.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-run\-without\-debug
-Don\fB\(aq\fPt run with the DEBUG flag set
+DEBUG bayrağı ayarlanmış şekilde çalıştırmayın
 .UNINDENT
 .INDENT 0.0
 .TP

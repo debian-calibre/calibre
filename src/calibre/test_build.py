@@ -158,6 +158,10 @@ class BuildTest(unittest.TestCase):
         from calibre.utils.certgen import create_key_pair
         create_key_pair()
 
+    def test_fonttools(self):
+        from fontTools.subset import main
+        main
+
     def test_msgpack(self):
         from calibre.utils.date import utcnow
         from calibre.utils.serialize import msgpack_dumps, msgpack_loads
@@ -397,12 +401,28 @@ class BuildTest(unittest.TestCase):
         except ImportError:
             from PIL import _imaging, _imagingft, _imagingmath
         _imaging, _imagingmath, _imagingft
+        from PIL import features
+        from io import StringIO
+        out = StringIO()
+        features.pilinfo(out=out, supported_formats=False)
+        out = out.getvalue()
+        for line in '''\
+        --- PIL CORE support ok
+        --- FREETYPE2 support ok
+        --- WEBP support ok
+        --- WEBP Transparency support ok
+        --- WEBPMUX support ok
+        --- WEBP Animation support ok
+        --- JPEG support ok
+        --- ZLIB (PNG/ZIP) support ok
+        '''.splitlines():
+            self.assertIn(line.strip(), out)
         i = Image.open(I('lt.png', allow_user_override=False))
         self.assertGreaterEqual(i.size, (20, 20))
         i = Image.open(P('catalog/DefaultCover.jpg', allow_user_override=False))
         self.assertGreaterEqual(i.size, (20, 20))
 
-    @unittest.skipUnless(iswindows and not is_ci, 'File dialog helper only used on windows (non-continuous-itegration)')
+    @unittest.skipUnless(iswindows and not is_ci, 'File dialog helper only used on windows (non-continuous-integration)')
     def test_file_dialog_helper(self):
         from calibre.gui2.win_file_dialogs import test
         test()
