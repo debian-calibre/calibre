@@ -15,7 +15,7 @@ from qt.core import (
 
 from calibre import fit_image, sanitize_file_name
 from calibre.constants import config_dir, iswindows
-from calibre.db.constants import DATA_DIR_NAME
+from calibre.db.constants import DATA_DIR_NAME, DATA_FILE_PATTERN
 from calibre.ebooks import BOOK_EXTENSIONS
 from calibre.ebooks.metadata.book.base import Metadata, field_metadata
 from calibre.ebooks.metadata.book.render import mi_to_html
@@ -84,22 +84,33 @@ def copy_all(text_browser):
     from html5_parser import parse
     from lxml import etree
     root = parse(html)
-    for x in ('table', 'tr', 'tbody'):
-        for tag in root.iterdescendants(x):
-            tag.tag = 'div'
-    for tag in root.iterdescendants('td'):
+    tables = tuple(root.iterdescendants('table'))
+    for tag in root.iterdescendants(('table', 'tr', 'tbody')):
+        tag.tag = 'div'
+    parent = root
+    is_vertical = getattr(text_browser, 'vertical', True)
+    if not is_vertical:
+        parent = tables[1]
+    for tag in parent.iterdescendants('td'):
+        for child in tag.iterdescendants('br'):
+            child.tag = 'span'
+            child.text = '\ue000'
         tt = etree.tostring(tag, method='text', encoding='unicode')
         tag.tag = 'span'
         for child in tuple(tag):
             tag.remove(child)
         tag.text = tt.strip()
+    if not is_vertical:
+        for tag in root.iterdescendants('td'):
+            tag.tag = 'div'
     for tag in root.iterdescendants('a'):
         tag.attrib.pop('href', None)
     from calibre.utils.html2text import html2text
     simplified_html = etree.tostring(root, encoding='unicode')
     txt = html2text(simplified_html, single_line_break=True).strip()
+    txt = txt.replace('\ue000', '\n\t')
     if iswindows:
-        txt = '\r\n'.join(txt.splitlines())
+        txt = os.linesep.join(txt.splitlines())
     # print(simplified_html)
     # print(txt)
     md.setText(txt)
@@ -487,12 +498,12 @@ def create_copy_links(menu, data=None):
     link(_('Link to show book in calibre'), f'calibre://show-book/{library_id}/{book_id}')
     link(_('Link to show book details in a popup window'), f'calibre://book-details/{library_id}/{book_id}')
     mi = db.new_api.get_proxy_metadata(book_id)
-    data_path = os.path.join(db.backend.library_path, mi.path, DATA_DIR_NAME)
-    with suppress(OSError):
-        if os.listdir(data_path):
-            if iswindows:
-                data_path = '/' + data_path.replace('\\', '/')
-            link(_("Link to open book's data files folder"), 'file://' + data_path)
+    if mi and mi.path:
+        with suppress(Exception):
+            data_files = db.new_api.list_extra_files(book_id, use_cache=True, pattern=DATA_FILE_PATTERN)
+            if data_files:
+                data_path = os.path.join(db.backend.library_path, mi.path, DATA_DIR_NAME)
+                link(_("Link to open book's data files folder"), bytes(QUrl.fromLocalFile(data_path).toEncoded()).decode('utf-8'))
     if data:
         field = data.get('field')
         if data['type'] == 'author':

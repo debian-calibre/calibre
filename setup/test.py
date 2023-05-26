@@ -10,11 +10,30 @@ from setup import Command, ismacos, is_ci
 TEST_MODULES = frozenset('srv db polish opf css docx cfi matcher icu smartypants build misc dbcli ebooks'.split())
 
 
-class Test(Command):
+class BaseTest(Command):
+
+    def run(self, opts):
+        if opts.under_sanitize and 'CALIBRE_EXECED_UNDER_SANITIZE' not in os.environ:
+            if 'libasan' not in os.environ.get('LD_PRELOAD', ''):
+                os.environ['LD_PRELOAD'] = os.path.abspath(subprocess.check_output('gcc -print-file-name=libasan.so'.split()).decode('utf-8').strip())
+            os.environ['CALIBRE_EXECED_UNDER_SANITIZE'] = '1'
+            os.environ['ASAN_OPTIONS'] = 'detect_leaks=0'
+            os.environ['PYCRYPTODOME_DISABLE_DEEPBIND'] = '1'  # https://github.com/Legrandin/pycryptodome/issues/558
+            self.info(f'Re-execing with LD_PRELOAD={os.environ["LD_PRELOAD"]}')
+            sys.stdout.flush()
+            os.execl('setup.py', *sys.argv)
+
+    def add_options(self, parser):
+        parser.add_option('--under-sanitize', default=False, action='store_true',
+                          help='Run the test suite with the sanitizer preloaded')
+
+
+class Test(BaseTest):
 
     description = 'Run the calibre test suite'
 
     def add_options(self, parser):
+        super().add_options(parser)
         parser.add_option('--test-verbosity', type=int, default=4, help='Test verbosity (0-4)')
         parser.add_option('--test-module', '--test-group', default=[], action='append', type='choice', choices=sorted(map(str, TEST_MODULES)),
                           help='The test module to run (can be specified more than once for multiple modules). Choices: %s' % ', '.join(sorted(TEST_MODULES)))
@@ -27,19 +46,13 @@ class Test(Command):
                           ' Choices: %s' % ', '.join(sorted(TEST_MODULES)))
         parser.add_option('--exclude-test-name', default=[], action='append',
                           help='The name of an individual test to be excluded from the test run. Can be specified more than once for multiple tests.')
-        parser.add_option('--under-sanitize', default=False, action='store_true',
-                          help='Run the test suite with the sanitizer preloaded')
 
     def run(self, opts):
-        if opts.under_sanitize and 'CALIBRE_EXECED_UNDER_SANITIZE' not in os.environ:
-            if 'libasan' not in os.environ.get('LD_PRELOAD', ''):
-                os.environ['LD_PRELOAD'] = os.path.abspath(subprocess.check_output('gcc -print-file-name=libasan.so'.split()).decode('utf-8').strip())
-            os.environ['CALIBRE_EXECED_UNDER_SANITIZE'] = '1'
-            os.environ['ASAN_OPTIONS'] = 'detect_leaks=0'
-            os.environ['PYCRYPTODOME_DISABLE_DEEPBIND'] = '1'  # https://github.com/Legrandin/pycryptodome/issues/558
-            self.info(f'Re-execing with LD_PRELOAD={os.environ["LD_PRELOAD"]}')
-            sys.stdout.flush()
-            os.execl('setup.py', *sys.argv)
+        super().run(opts)
+        # cgi is used by feedparser and possibly other dependencies
+        import warnings
+        warnings.filterwarnings('ignore', message="'cgi' is deprecated and slated for removal in Python 3.13")
+
         if is_ci and ismacos:
             import ctypes
             sys.libxml2_dylib = ctypes.CDLL(os.path.join(os.environ['SW'], 'lib', 'libxml2.dylib'))
@@ -57,10 +70,14 @@ class Test(Command):
         run_cli(tests, verbosity=opts.test_verbosity, buffer=not opts.test_name)
 
 
-class TestRS(Command):
+class TestRS(BaseTest):
 
     description = 'Run tests for RapydScript code'
 
+    def add_options(self, parser):
+        super().add_options(parser)
+
     def run(self, opts):
+        super().run(opts)
         from calibre.utils.rapydscript import run_rapydscript_tests
         run_rapydscript_tests()

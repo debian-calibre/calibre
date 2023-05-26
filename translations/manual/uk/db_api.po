@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 15:15+0000\n"
+"POT-Creation-Date: 2023-05-24 06:57+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2014,2017-2018,2021-2023\n"
 "Language-Team: Ukrainian (http://app.transifex.com/calibre/calibre/language/uk/)\n"
@@ -51,11 +51,6 @@ msgid ""
 "All table reading/sorting/searching/caching logic is re-implemented. This "
 "was necessary for maximum performance and flexibility."
 msgstr "SQLITE просто використовується як стійкий спосіб читання і запису metadata.db. Усю логіку читання, упорядковування, пошуку та кешування таблиць реалізовано окремо. Так зроблено для забезпечення максимальної швидкодії і гнучкості."
-
-#: ../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
-#: calibre.db.listeners.EventType:1
-msgid "An enumeration."
-msgstr "Нумерація."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.book_created:1
@@ -530,9 +525,9 @@ msgstr "Повертає усі посилання для усіх полів, �
 msgid ""
 "Example: Assume author A has link X, author B has link Y, tag S has link F, "
 "and tag T has link G. If book 1 has author A and tag T, this method returns "
-"{'authors':{'A':'X'}, 'tags':{'T', 'G'}} If book 2's author is neither A nor"
-" B and has no tags, this method returns {}"
-msgstr "Приклад: нехай запис автора A містить посилання X, а запис автора B містить посилання Y, мітка S містить посилання F, а мітка T містить посилання G. Якщо книга 1 має автора A і мітку T, цей метод поверне {'authors':{'A':'X'}, 'tags':{'T', 'G'}} Якщо автором книги 2 не є ні A, ні B, і вона не має міток, цей метод поверне {}"
+"{'authors':{'A':'X'}, 'tags':{'T', 'G'}}. If book 2's author is neither A "
+"nor B and has no tags, this method returns {}."
+msgstr "Приклад: нехай запис автора A містить посилання X, а запис автора B містить посилання Y, мітка S містить посилання F, а мітка T містить посилання G. Якщо книга 1 має автора A і мітку T, цей метод поверне {'authors':{'A':'X'}, 'tags':{'T', 'G'}}. Якщо автором книги 2 не є ні A, ні B, і вона не має міток, цей метод поверне {}."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_all_link_maps_for_book:9
@@ -604,7 +599,7 @@ msgstr "Повертає назву запису для запису, вказа
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:1
-msgid "Return a dict of links for the supplied field."
+msgid "Return a dictionary of links for the supplied field."
 msgstr "Повернути словник посилань для наданого поля."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -709,7 +704,7 @@ msgid ""
 "the tuple is ExtraFile(relpath, file_path, stat_result). Where relpath is "
 "the relative path of the file to the book directory using / as a separator. "
 "stat_result is the result of calling os.stat() on the file."
-msgstr ""
+msgstr "Кортеж усіх додаткових файлів, що відповідають вказаному взірцю. Кожен елемент кортежу з записом ExtraFile(відн_шлях, шлях_до_файла, статистика), де «відн_шлях» є відносним шляхом до каталогу книги із роздільником /. «статистика» є результатом виклику os.stat() для файла."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.merge_extra_files:1
@@ -926,8 +921,8 @@ msgstr "Використовується для внутрішніх потре�
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_link_map:1
 msgid ""
-"Sets links for item values in field Note: this method doesn't change values "
-"not in the value_to_link_map"
+"Sets links for item values in field. Note: this method doesn't change values"
+" not in the value_to_link_map"
 msgstr "Встановлює посилання для значень пунктів у полі Зауваження: цей метод не змінює значень поза карта_прив'язки_значення_ до_посилання"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of

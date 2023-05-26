@@ -26446,6 +26446,7 @@ return this.__repr__();
             this.onwheel = HandleWheel.prototype.onwheel.bind(this);
             this.add_pixel_scroll = HandleWheel.prototype.add_pixel_scroll.bind(this);
             this.do_scroll = HandleWheel.prototype.do_scroll.bind(this);
+            this.do_section_jump = HandleWheel.prototype.do_section_jump.bind(this);
         }});
         HandleWheel.prototype.__init__ = function __init__() {
             var self = this;
@@ -26469,14 +26470,20 @@ return this.__repr__();
         HandleWheel.prototype.onwheel = function onwheel(evt) {
             var self = this;
             var backward;
-            if (!evt.deltaY) {
+            if (!((evt.deltaY || evt.deltaX))) {
                 return;
             }
-            backward = evt.deltaY < 0;
-            if (evt.deltaMode === window.WheelEvent.DOM_DELTA_PIXEL) {
-                self.add_pixel_scroll(backward, Math.abs(evt.deltaY));
-            } else {
-                self.do_scroll(backward);
+            if (evt.deltaY) {
+                backward = evt.deltaY < 0;
+                if (evt.deltaMode === window.WheelEvent.DOM_DELTA_PIXEL) {
+                    self.add_pixel_scroll(backward, Math.abs(evt.deltaY));
+                } else {
+                    self.do_scroll(backward);
+                }
+            }
+            if (evt.deltaX) {
+                backward = evt.deltaX < 0;
+                self.do_section_jump(backward);
             }
         };
         if (!HandleWheel.prototype.onwheel.__argnames__) Object.defineProperties(HandleWheel.prototype.onwheel, {
@@ -26518,6 +26525,15 @@ return this.__repr__();
             }
         };
         if (!HandleWheel.prototype.do_scroll.__argnames__) Object.defineProperties(HandleWheel.prototype.do_scroll, {
+            __argnames__ : {value: ["backward"]},
+            __module__ : {value: "read_book.paged_mode"}
+        });
+        HandleWheel.prototype.do_section_jump = function do_section_jump(backward) {
+            var self = this;
+            self.reset();
+            next_spine_item(backward);
+        };
+        if (!HandleWheel.prototype.do_section_jump.__argnames__) Object.defineProperties(HandleWheel.prototype.do_section_jump, {
             __argnames__ : {value: ["backward"]},
             __module__ : {value: "read_book.paged_mode"}
         });
@@ -28719,7 +28735,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "6.17.0";
+        CALIBRE_VERSION = "6.18.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -56476,6 +56492,7 @@ return this.__repr__();
         var download_url = ρσ_modules["book_list.library_data"].download_url;
 
         var back = ρσ_modules["book_list.router"].back;
+        var home = ρσ_modules["book_list.router"].home;
         var open_book_url = ρσ_modules["book_list.router"].open_book_url;
         var push_state = ρσ_modules["book_list.router"].push_state;
 
@@ -56523,7 +56540,11 @@ return this.__repr__();
             return ρσ_anonfunc;
         })());
         function component(name) {
-            return ρσ_exists.d(document.getElementById(overall_container_id)).querySelector("[data-component=\"" + ρσ_str.format("{}", name) + "\"]");
+            var c;
+            c = document.getElementById(overall_container_id);
+            if (c) {
+                return c.querySelector("[data-component=\"" + ρσ_str.format("{}", name) + "\"]");
+            }
         };
         if (!component.__argnames__) Object.defineProperties(component, {
             __argnames__ : {value: ["name"]},
@@ -56707,7 +56728,7 @@ return this.__repr__();
             }
             clear(container);
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "fts-help-display"})]));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.a, [_("Re-index all books in this library")].concat([ρσ_desugar_kwargs({class_: "blue-link", href: "javascript:void(0)", onclick: reindex_all})]))].concat([ρσ_desugar_kwargs({style: "margin-top: 1ex"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.a, [_("Re-index all books in this library")].concat([ρσ_desugar_kwargs({class_: "blue-link", href: "javascript:void(0)", onclick: reindex_all})])), E.span("  "), ρσ_interpolate_kwargs.call(E, E.a, [_("Disable full text search")].concat([ρσ_desugar_kwargs({class_: "blue-link", href: "javascript:void(0)", onclick: disable_fts})]))].concat([ρσ_desugar_kwargs({style: "margin-top: 1ex"})])));
             container = container.firstChild;
             fts_url = "https://www.sqlite.org/fts5.html#full_text_query_syntax";
             html = (ρσ_expr_temp = _("\n<div class=\"h\">Search for single words</div>\n<p>Simply type the word:</p>\n<div class=\"bq\">awesome<br>calibre</div>\n\n<div class=\"h\">Search for phrases</div>\n<p>Enclose the phrase in quotes:</p>\n<div class=\"bq\">\"early run\"<br>\"song of love\"</div>\n\n<div class=\"h\">Boolean searches</div>\n<div class=\"bq\">(calibre AND ebook) NOT gun<br>simple NOT (\"high bar\" OR hard)</div>\n\n<div class=\"h\">Phrases near each other</div>\n<div class=\"bq\">NEAR(\"people\" \"in Asia\" \"try\")<br>NEAR(\"Kovid\" \"calibre\", 30)</div>\n<p>Here, 30 is the most words allowed between near groups. Defaults to 10 when unspecified.</p>\n\n<div style=\"margin-top: 1em\"><a href=\"{fts_url}\">Full syntax reference</a></div>\n" + "</div>"), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.format, [ρσ_desugar_kwargs({fts_url: fts_url})]));
@@ -56831,6 +56852,56 @@ return this.__repr__();
             })());
         };
         if (!reindex_all.__module__) Object.defineProperties(reindex_all, {
+            __module__ : {value: "book_list.fts"}
+        });
+
+        function disable_fts_backend() {
+            function on_response(end_type, xhr, ev) {
+                if (end_type === "abort" || !showing_search_panel()) {
+                    return;
+                }
+                if (end_type !== "load") {
+                    if (xhr.status === 403) {
+                        return error_dialog(_("Permission denied"), _("You do not have permission to disable FTS. Only logged in users with write permission are allowed to disable FTS."), xhr.error_html);
+                    }
+                    return error_dialog(_("Disabling FTS failed"), _("Disabling FTS failed. Click \"Show details\" for more information."), xhr.error_html);
+                }
+                ρσ_interpolate_kwargs.call(this, info_dialog, [_("Full text searching disabled"), _("Full text searching for this library has been disabled. In the future the entire library will have to be re-indexed when re-enabling full text searching.")].concat([ρσ_desugar_kwargs({on_close: (function() {
+                    var ρσ_anonfunc = function () {
+                        window.setTimeout(home);
+                    };
+                    if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                        __module__ : {value: "book_list.fts"}
+                    });
+                    return ρσ_anonfunc;
+                })()})]));
+            };
+            if (!on_response.__argnames__) Object.defineProperties(on_response, {
+                __argnames__ : {value: ["end_type", "xhr", "ev"]},
+                __module__ : {value: "book_list.fts"}
+            });
+
+            ρσ_interpolate_kwargs.call(this, ajax, ["fts/disable", on_response].concat([ρσ_desugar_kwargs({bypass_cache: true})])).send();
+        };
+        if (!disable_fts_backend.__module__) Object.defineProperties(disable_fts_backend, {
+            __module__ : {value: "book_list.fts"}
+        });
+
+        function disable_fts() {
+            question_dialog(_("Are you sure?"), _("Disabling full text search means that in the future the entire library will have to be re-indexed to use full text search. Are you sure you want to proceed?"), (function() {
+                var ρσ_anonfunc = function (yes) {
+                    if (yes) {
+                        disable_fts_backend();
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["yes"]},
+                    __module__ : {value: "book_list.fts"}
+                });
+                return ρσ_anonfunc;
+            })());
+        };
+        if (!disable_fts.__module__) Object.defineProperties(disable_fts, {
             __module__ : {value: "book_list.fts"}
         });
 
@@ -57143,6 +57214,8 @@ return this.__repr__();
         ρσ_modules["book_list.fts"].open_format = open_format;
         ρσ_modules["book_list.fts"].reindex_book = reindex_book;
         ρσ_modules["book_list.fts"].reindex_all = reindex_all;
+        ρσ_modules["book_list.fts"].disable_fts_backend = disable_fts_backend;
+        ρσ_modules["book_list.fts"].disable_fts = disable_fts;
         ρσ_modules["book_list.fts"].book_result_tile_clicked = book_result_tile_clicked;
         ρσ_modules["book_list.fts"].book_result_tile = book_result_tile;
         ρσ_modules["book_list.fts"].on_snippets_fetched = on_snippets_fetched;

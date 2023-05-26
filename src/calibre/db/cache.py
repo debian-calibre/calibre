@@ -2377,7 +2377,7 @@ class Cache:
     @read_api
     def get_link_map(self, for_field):
         '''
-        Return a dict of links for the supplied field.
+        Return a dictionary of links for the supplied field.
 
         :param for_field: the lookup name of the field for which the link map is desired
 
@@ -2401,8 +2401,8 @@ class Cache:
 
         Example: Assume author A has link X, author B has link Y, tag S has link
         F, and tag T has link G. If book 1 has author A and tag T,
-        this method returns {'authors':{'A':'X'}, 'tags':{'T', 'G'}}
-        If book 2's author is neither A nor B and has no tags, this method returns {}
+        this method returns {'authors':{'A':'X'}, 'tags':{'T', 'G'}}.
+        If book 2's author is neither A nor B and has no tags, this method returns {}.
 
         :param book_id: the book id in question.
 
@@ -2438,7 +2438,7 @@ class Cache:
     @write_api
     def set_link_map(self, field, value_to_link_map, only_set_if_no_existing_link=False):
         '''
-        Sets links for item values in field
+        Sets links for item values in field.
         Note: this method doesn't change values not in the value_to_link_map
 
         :param field: the lookup name

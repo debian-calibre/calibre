@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "aprīlis 27, 2023" "6.17.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "maijs 26, 2023" "6.18.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -104,7 +104,7 @@ Palaist Python kodu failā.
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Explode the book into the specified folder. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
+Ielikt grāmatu norādītajā mapē. Lietojums: \-x file.epub output_dir Eksportē grāmatu kā HTML failu un metadatu kolekciju, ko varat rediģēt, izmantojot standarta HTML rediģēšanas rīkus. Darbojas ar EPUB, AZW3, HTMLZ un DOCX failiem.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -114,7 +114,7 @@ Export all calibre data (books/settings/plugins). Normally, you will be asked fo
 .INDENT 0.0
 .TP
 .B \-\-fix\-multiprocessing
-For internal use
+Iekšējai lietošanai
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -154,17 +154,17 @@ Izvades ceļi vajadzīgi, lai iestatītu Calibre vidi
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-Run a plugin that provides a command line interface. For example: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
+Palaidiet spraudni, kas nodrošina komandrindas interfeisu. Piemēram: calibre\-debug \-r \fB\(dq\fPSpraudņa nosaukums\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP tiks nodots spraudnim kā argumenti.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-run\-test, \-t
-Run the named test(s). Use the special value \fB\(dq\fPall\fB\(dq\fP to run all tests. If the test name starts with a period it is assumed to be a module name. If the test name starts with @ it is assumed to be a category name.
+Palaidiet nosaukto(\-os) testu(\-us). Izmantojiet īpašo vērtību “all”, lai palaistu visus testus. Ja testa nosaukums sākas ar punktu, tiek pieņemts, ka tas ir moduļa nosaukums. Ja testa nosaukums sākas ar @, tiek pieņemts, ka tas ir kategorijas nosaukums.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-run\-without\-debug
-Don\fB\(aq\fPt run with the DEBUG flag set
+Nepalaidiet, ja ir iestatīta atzīme DEBUG
 .UNINDENT
 .INDENT 0.0
 .TP

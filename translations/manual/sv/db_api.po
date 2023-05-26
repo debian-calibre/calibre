@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-20 08:11+0000\n"
+"POT-Creation-Date: 2023-05-24 06:57+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: Jonatan Nyberg, 2016-2017,2021-2023\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
@@ -55,17 +55,12 @@ msgid ""
 "was necessary for maximum performance and flexibility."
 msgstr "SQLITE används helt enkelt som ett sätt att läsa och skriva från metadata.db robust. All logik för läsning/sortering/sökning/cachning av tabeller är återimplementerad. Detta var nödvändigt för maximal prestanda och flexibilitet."
 
-#: ../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
-#: calibre.db.listeners.EventType:1
-msgid "An enumeration."
-msgstr "En uppräkning."
-
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.book_created:1
 msgid ""
 "When a new book record is created in the database, with the book id as the "
 "only argument"
-msgstr "När en ny bokpost skapas i databasen, med bok-id som enda argument"
+msgstr "När en ny bokpost skapas i databasen, med bokidentitet som enda argument"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.book_edited:1
@@ -146,7 +141,7 @@ msgstr "Lägg till data för namn där val_map är en karta över book_ids till 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_extra_files:1
 msgid "Add extra data files"
-msgstr ""
+msgstr "Lägg till extra datafiler"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:1
@@ -169,6 +164,8 @@ msgstr "Lägg till ett format i den angivna boken. Returnera True om formatet ha
 #: calibre.db.cache.Cache.get_link_map:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:0
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -368,7 +365,7 @@ msgstr "Ta bort data för namn. Som standard tas alla data bort, om du endast vi
 msgid ""
 "Delete an entry from the trash. Here category is 'b' for books and 'f' for "
 "formats."
-msgstr ""
+msgstr "Ta bort en post från papperskorgen. Här är kategorin 'b' för böcker och 'f' för format."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.embed_metadata:1
@@ -380,7 +377,7 @@ msgstr "Uppdatera metadata i alla format av de angivna bok_ids till aktuell meta
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.expire_old_trash:1
 msgid "Expire entries from the trash that are too old"
-msgstr ""
+msgstr "Förfalla poster från papperskorgen som är för gamla"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.fast_field_for:1
@@ -531,19 +528,21 @@ msgstr "Returnerar alla länkar för alla fält som hänvisas till av bok som id
 msgid ""
 "Example: Assume author A has link X, author B has link Y, tag S has link F, "
 "and tag T has link G. If book 1 has author A and tag T, this method returns "
-"{'authors':{'A':'X'}, 'tags':{'T', 'G'}} If book 2's author is neither A nor"
-" B and has no tags, this method returns {}"
-msgstr ""
+"{'authors':{'A':'X'}, 'tags':{'T', 'G'}}. If book 2's author is neither A "
+"nor B and has no tags, this method returns {}."
+msgstr "Exempel: Antag att författare A har länk X, författare B har länk Y, tagg S har länk F och tagg T har länk G. Om bok 1 har författare A och tagg T, returnerar denna metod {'authors':{'A':'X'}, 'tags':{'T', 'G'}}. Om bok 2:s författare varken är A eller B och inte har några taggar, returnerar denna metod {}."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_all_link_maps_for_book:9
 msgid "the book id in question."
-msgstr ""
+msgstr "bokidentitet i fråga."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_all_link_maps_for_book:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:0
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -556,7 +555,7 @@ msgstr "Returnerar"
 msgid ""
 "{field: {field_value, link_value}, ...  for all fields with a field_value "
 "having a non-empty link value for that book"
-msgstr ""
+msgstr "{field: {field_value, link_value}, ...  för alla fält med ett field_value som har ett icke-tomt länkvärde för den boken"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_categories:1
@@ -603,13 +602,13 @@ msgstr "Returnera postnamnet för posten som anges av item_id i specificerat fä
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:1
-msgid "Return a dict of links for the supplied field."
+msgid "Return a dictionary of links for the supplied field."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:3
 msgid "the lookup name of the field for which the link map is desired"
-msgstr ""
+msgstr "uppslagsnamnet för fältet för vilket länkkartan önskas"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:5
@@ -684,21 +683,48 @@ msgid "Initialize this cache with data from the backend."
 msgstr "Initiera denna cache med data från backend."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.list_extra_files_matching:1
+#: calibre.db.cache.Cache.list_extra_files:1
+msgid "Get information about extra files in the book's directory."
+msgstr "Få information om extra filer i bokens mapp."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:3
+msgid "the database book id for the book"
+msgstr "databasens bokidentitet för boken"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:4
 msgid ""
-"List extra data files matching the specified pattern. Empty pattern matches "
-"all. Recursive globbing with ** is supported."
+"the pattern of filenames to search for. Empty pattern matches all extra "
+"files. Patterns must use / as separator. Use the DATA_FILE_PATTERN constant "
+"to match files inside the data directory."
+msgstr "mönstret av filnamn att söka efter. Tomt mönster matchar alla extra filer. Mönster måste använda / som separator. Använd konstanten DATA_FILE_PATTERN för att matcha filer i datamappen."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:7
+msgid ""
+"A tuple of all extra files matching the specified pattern. Each element of "
+"the tuple is ExtraFile(relpath, file_path, stat_result). Where relpath is "
+"the relative path of the file to the book directory using / as a separator. "
+"stat_result is the result of calling os.stat() on the file."
+msgstr "En tupel av alla extra filer som matchar det angivna mönstret. Varje element i tuplen är ExtraFile(relpath, file_path, stat_result). Där relpath är den relativa sökvägen för filen till bokkatalogen med / som avgränsare. stat_result är resultatet av att anropa os.stat() på filen."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.merge_extra_files:1
+msgid ""
+"Merge the extra files from src_ids into dest_id. Conflicting files are auto-"
+"renamed unless replace=True in which case they are replaced."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.move_book_from_trash:1
 msgid "Undelete a book from the trash directory"
-msgstr ""
+msgstr "Ångra borttagning av en bok från papperskorgen"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.move_format_from_trash:1
 msgid "Undelete a format from the trash directory"
-msgstr ""
+msgstr "Ångra borttagning av ett format från papperskorgen"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.multisort:1
@@ -898,8 +924,8 @@ msgstr "Används internt, du bör aldrig ändra det."
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_link_map:1
 msgid ""
-"Sets links for item values in field Note: this method doesn't change values "
-"not in the value_to_link_map"
+"Sets links for item values in field. Note: this method doesn't change values"
+" not in the value_to_link_map"
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -911,7 +937,7 @@ msgstr "uppslagsnamnet"
 #: calibre.db.cache.Cache.set_link_map:5
 msgid ""
 "dict(field_value:link, ...). Note that these are values, not field ids."
-msgstr ""
+msgstr "dict(field_value:link, ...). Observera att detta är värden, inte fältidentiteter."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_link_map:7

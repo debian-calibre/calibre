@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-24 05:30+0000\n"
+"POT-Creation-Date: 2023-05-24 06:57+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: un_pogaz, 2022-2023\n"
 "Language-Team: French (http://app.transifex.com/calibre/calibre/language/fr/)\n"
@@ -53,11 +53,6 @@ msgid ""
 "All table reading/sorting/searching/caching logic is re-implemented. This "
 "was necessary for maximum performance and flexibility."
 msgstr "SQLITE est simplement utilisée comme une manière robuste de lire et écrire depuis metadata.db. Toute table lecture/tri/recherche/cache est ré-implémentée. Ceci était nécessaire pour un maximum de performance et de flexibilité."
-
-#: ../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
-#: calibre.db.listeners.EventType:1
-msgid "An enumeration."
-msgstr "Une énumération."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.book_created:1
@@ -532,9 +527,9 @@ msgstr "Renvoie tous les liens pour tous les champs référencés par book_id. S
 msgid ""
 "Example: Assume author A has link X, author B has link Y, tag S has link F, "
 "and tag T has link G. If book 1 has author A and tag T, this method returns "
-"{'authors':{'A':'X'}, 'tags':{'T', 'G'}} If book 2's author is neither A nor"
-" B and has no tags, this method returns {}"
-msgstr "Exemple : Supposons que l'auteur A ait un lien X, que l'auteur B ait un lien Y, que le tag S ait un lien F, et la balise T a un lien G.  SI le livre 1 a un auteur A et une balise T, cette méthode renvoie {'authors':{'A':'X'}, 'tags':{'T', 'G'}} Si l'auteur du livre 2 n'est ni A ni B et qu'il n'a pas d'étiquette, cette méthode renvoie {}"
+"{'authors':{'A':'X'}, 'tags':{'T', 'G'}}. If book 2's author is neither A "
+"nor B and has no tags, this method returns {}."
+msgstr "Exemple : Supposons que l'auteur A ait un lien X, que l'auteur B ait un lien Y, que le tag S ait un lien F, et la balise T a un lien G. Si le livre 1 a un auteur A et une balise T, cette méthode renvoie {'authors':{'A':'X'}, 'tags':{'T', 'G'}}. Si l'auteur du livre 2 n'est ni A ni B et qu'il n'a pas d'étiquette, cette méthode renvoie {}."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_all_link_maps_for_book:9
@@ -606,8 +601,8 @@ msgstr "Renvoie le nom d'élément pour l'élément spécifié par item_id dans 
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:1
-msgid "Return a dict of links for the supplied field."
-msgstr "Renvoie un dict de liens pour le champ fourni."
+msgid "Return a dictionary of links for the supplied field."
+msgstr "Renvoie un dictionnaire de liens pour le champ fourni."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:3
@@ -689,12 +684,12 @@ msgstr "Initialiser ce cache avec des données depuis le système principal."
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.list_extra_files:1
 msgid "Get information about extra files in the book's directory."
-msgstr ""
+msgstr "Obtenir des informations sur les fichiers supplémentaires dans le répertoire du livre"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.list_extra_files:3
 msgid "the database book id for the book"
-msgstr ""
+msgstr "l'identifiant de livre dans la base de données pour ce livre"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.list_extra_files:4
@@ -702,23 +697,23 @@ msgid ""
 "the pattern of filenames to search for. Empty pattern matches all extra "
 "files. Patterns must use / as separator. Use the DATA_FILE_PATTERN constant "
 "to match files inside the data directory."
-msgstr ""
+msgstr "le modèle de noms de fichiers à rechercher. Le modèle vide correspond à tous les fichiers supplémentaires. Les modèles doivent utiliser / comme séparateur. Utilisez la constante DATA_FILE_PATTERN pour faire correspondre les fichiers à l'intérieur du répertoire de données."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.list_extra_files:7
 msgid ""
 "A tuple of all extra files matching the specified pattern. Each element of "
-"the tuple is (relpath, file_path, stat_result) where relpath is the relative"
-" path of the file to the book directory using / as a separator. stat_result "
-"is the result of calling os.stat() on the file."
-msgstr ""
+"the tuple is ExtraFile(relpath, file_path, stat_result). Where relpath is "
+"the relative path of the file to the book directory using / as a separator. "
+"stat_result is the result of calling os.stat() on the file."
+msgstr "Un n-uplet de tous les fichiers supplémentaires correspondant au modèle spécifié. Chaque élément du tuple est ExtraFile(relpath, file_path, stat_result). Où relpath est le chemin relatif du fichier vers le répertoire du livre en utilisant / comme séparateur. stat_result est le résultat de l'appel à os.stat() sur le fichier."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.merge_extra_files:1
 msgid ""
 "Merge the extra files from src_ids into dest_id. Conflicting files are auto-"
 "renamed unless replace=True in which case they are replaced."
-msgstr ""
+msgstr "Fusionnez les fichiers supplémentaires de src_ids dans dest_id. Les fichiers en conflit sont renommés automatiquement sauf si replace=True auquel cas ils sont remplacés."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.move_book_from_trash:1
@@ -928,8 +923,8 @@ msgstr "Utilisé en interne, vous ne devriez jamais le changer."
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_link_map:1
 msgid ""
-"Sets links for item values in field Note: this method doesn't change values "
-"not in the value_to_link_map"
+"Sets links for item values in field. Note: this method doesn't change values"
+" not in the value_to_link_map"
 msgstr "Définit les liens pour les valeurs des éléments dans le champ. Remarque : cette méthode ne modifie pas les valeurs qui ne figurent pas dans le value_to_link_map"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of

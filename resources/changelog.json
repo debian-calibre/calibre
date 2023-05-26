@@ -1,5 +1,99 @@
 [
     {
+        "version": "6.18.0",
+        "date": "2023-05-26",
+        "new features": [
+            {
+                "tickets": [
+                    2020603
+                ],
+                "title": "Cover download: Allowing saving alternate covers to disk or in the book's data folder by right clicking on the cover"
+            },
+            {
+                "tickets": [
+                    2020237
+                ],
+                "title": "Content server: Allow disabling full text search via the web interface"
+            },
+            {
+                "tickets": [
+                    2020233
+                ],
+                "title": "When sending books to the device confirm the overwrite if the book already exists on the device"
+            },
+            {
+                "title": "E-book viewer: Handle horizontal wheel events as section jumps in paged mode"
+            },
+            {
+                "title": "Comic Input: When grayscaling comic images use 16bit gray instead of 8bit for better fidelity",
+                "description": "When using the PNG format for images this results in larger files but with better grayscaling fidelity."
+            },
+            {
+                "title": "Add a new option in Preferences->Searching to disable keyboard searching in book list (i.e. you can turn off the behavior that pressing a key will jump to the first book whose title starts with that letter)"
+            },
+            {
+                "tickets": [
+                    2018423
+                ],
+                "title": "Manage categories dialog: Use alternating row colors and allow adjusting row height"
+            },
+            {
+                "title": "Allow assigning a keyboard shortcut in Preferences->Shortcuts to open the data folder of a book"
+            },
+            {
+                "title": "Various improvements to syntax highlighting for the Markdown long text editor"
+            }
+        ],
+        "bug fixes": [
+            {
+                "tickets": [
+                    2018025
+                ],
+                "title": "Fix a regression in 6.16 that broke restoring of the database"
+            },
+            {
+                "title": "Tag browser: Fix using F2 to edit items not allowing completion"
+            },
+            {
+                "title": "Book details: Fix formatting of text when copying all book details in narrow mode"
+            },
+            {
+                "title": "Book details: Fix copy all not respecting line breaks in fields"
+            },
+            {
+                "tickets": [
+                    2018660
+                ],
+                "title": "Fix a regression in previous release that broke scrolling when using the scroll_per_row tweak"
+            },
+            {
+                "tickets": [
+                    2018548
+                ],
+                "title": "Fix a regression in the previous release that broke the category manager dialog in some situations"
+            }
+        ],
+        "improved recipes": [
+            "NYTimes",
+            "Economist",
+            "Washington Post",
+            "Irish Independent and Irish Times",
+            "Live Mint",
+            "Psych",
+            "Hindu"
+        ],
+        "new recipes": [
+            {
+                "title": "Irish Times Free",
+                "author": "unkn0wn"
+            },
+            {
+                "title": "elEconomista.es and El Confidencial",
+                "author": "Hugo Meza"
+            }
+        ]
+    },
+    {
         "version": "6.17.0",
         "date": "2023-04-26",
         "new features": [
@@ -25,16 +119,13 @@
                 "title": "Allow displaying the id, formats and path builtin columns via Preferences->Add your own columns"
             },
             {
-                "title": "Add a tweak in Preferences->Tweaks to allow for changing the titles of builtin columns"
-            },
-            {
                 "tickets": [
                     2017232
                 ],
                 "title": "Trash bin: Add a button to clear the bin"
             },
             {
-                "title": "Metadata editor: Use a dedicated editor with preview for custom columns that store markdown formatted text"
+                "title": "Metadata editor: Use a dedicated editor with preview for custom columns that store Markdown formatted text"
             }
         ],
         "bug fixes": [
@@ -2835,7 +2926,7 @@
         "date": "2021-09-10",
         "new features": [
             {
-                "title": "When adding markdown (.md) or textile (.textile) files that contain references to images, automatically add them as txtz with the images"
+                "title": "When adding Markdown (.md) or Textile (.textile) files that contain references to images, automatically add them as TXTZ with the images"
             }
         ],
         "bug fixes": [
@@ -2873,7 +2964,7 @@
                 "title": "TXT Output: Fix a regression in calibre 5 that caused the max line length option to not work"
             },
             {
-                "title": "When auto converting added TXT files with image references to TXTZ use a full markdown parser to detect markdown images"
+                "title": "When auto converting added TXT files with image references to TXTZ use a full Markdown parser to detect Markdown images"
             }
         ],
         "improved recipes": [
@@ -3641,7 +3732,7 @@
                 "title": "E-book viewer: Add an option under Preferences->Miscellaneous to not restore open panels such as Search, Table of Contents etc on restart"
             },
             {
-                "title": "When exporting highlights as text or markdown also output top level chapter titles"
+                "title": "When exporting highlights as text or Markdown also output top level chapter titles"
             },
             {
                 "tickets": [

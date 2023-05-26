@@ -926,10 +926,10 @@ class Ui_Form(object):
         self.opt_edit_metadata_elide_labels.setText(_("&Elide labels when editing custom columns"))
         self.label_102.setText(_("Elision point:"))
         self.opt_edit_metadata_elision_point.setToolTip(_("Choose where in the label to put the..."))
-        self.opt_edit_metadata_templates_only_F2_on_booklist.setToolTip(_("<p>Check this box to disable editing the template for\n"
-"a \"Column built from other columns\" in the book list when the column is entered\n"
-"using the Tab key. The F2 (Edit) key will still open the template editor.</p>"))
-        self.opt_edit_metadata_templates_only_F2_on_booklist.setText(_("&Tab key doesn\'t edit column templates in the book list"))
+        self.opt_edit_metadata_templates_only_F2_on_booklist.setToolTip(_("<p>Check this box to allow only the F2 (Edit) key to\n"
+"open the template editor in the book list for a \"Column built from other\n"
+"columns\". Editing with mouse clicks and the Tab key will be disabled.</p>"))
+        self.opt_edit_metadata_templates_only_F2_on_booklist.setText(_("Only the &F2 (Edit) key edits column templates in the book list"))
         self.opt_edit_metadata_single_use_2_cols_for_custom_fields.setText(_("Use &two columns for custom columns in the Default layout"))
         self.label_1021.setText(_("&Bulk edit custom column label length:"))
         self.opt_edit_metadata_bulk_cc_label_length.setToolTip(_("The maximum width of a custom column label for the bulk metadata edit dialog in average characters."))
