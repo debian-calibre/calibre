@@ -1,0 +1,30 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 26 May 2023 21:46:58 +0900
+Subject: Revert "A more convenient way to build against a custom podofo 0.10"
+
+Forwarded: not-needed
+
+This reverts commit db74bfa41eb3714452e2fc46e7747b16ace87863.
+---
+ setup/build_environment.py | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/setup/build_environment.py b/setup/build_environment.py
+index 3918e04..e9d5ddf 100644
+--- a/setup/build_environment.py
++++ b/setup/build_environment.py
+@@ -207,14 +207,9 @@ else:
+     uchardet_libs = pkgconfig_libs('uchardet', '', '')
+ 
+ 
+-if 'PODOFO_PREFIX' in os.environ:
+-    os.environ['PODOFO_LIB_DIR'] = os.path.join(os.environ['PODOFO_PREFIX'], 'lib')
+-    os.environ['PODOFO_INC_DIR'] = os.path.join(os.environ['PODOFO_PREFIX'], 'include', 'podofo')
+-    os.environ['PODOFO_LIB_NAME'] = os.path.join(os.environ['PODOFO_PREFIX'], 'lib', 'libpodofo.so.1')
+ podofo_lib = os.environ.get('PODOFO_LIB_DIR', podofo_lib)
+ podofo_inc = os.environ.get('PODOFO_INC_DIR', podofo_inc)
+ podofo = os.environ.get('PODOFO_LIB_NAME', 'podofo')
+-
+ podofo_error = None if os.path.exists(os.path.join(podofo_inc, 'podofo.h')) else \
+         ('PoDoFo not found on your system. Various PDF related',
+     ' functionality will not work. Use the PODOFO_INC_DIR and',

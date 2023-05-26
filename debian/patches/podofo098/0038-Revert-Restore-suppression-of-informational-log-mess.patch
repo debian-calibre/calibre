@@ -1,0 +1,46 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 26 May 2023 21:27:57 +0900
+Subject: Revert "Restore suppression of informational log messages from
+ PoDoFo"
+
+Forwarded: not-needed
+
+This reverts commit 39d27b62457329d49ab02e43ba267b2574f2c9d6.
+---
+ src/calibre/utils/podofo/podofo.cpp | 11 -----------
+ 1 file changed, 11 deletions(-)
+
+diff --git a/src/calibre/utils/podofo/podofo.cpp b/src/calibre/utils/podofo/podofo.cpp
+index ba9216b..4be6c41 100644
+--- a/src/calibre/utils/podofo/podofo.cpp
++++ b/src/calibre/utils/podofo/podofo.cpp
+@@ -7,20 +7,11 @@
+ using namespace PoDoFo;
+ 
+ #include "global.h"
+-#include <iostream>
+ 
+ PyObject *pdf::Error = NULL;
+ 
+ static char podofo_doc[] = "Wrapper for the PoDoFo PDF library";
+ 
+-static void
+-pdf_log_message(PdfLogSeverity logSeverity, const std::string_view& msg) {
+-    if (logSeverity == PdfLogSeverity::Error || logSeverity == PdfLogSeverity::Warning) {
+-        const char *level = logSeverity == PdfLogSeverity::Error ? "ERROR" : "WARNING";
+-        std::cerr << "PoDoFo" << level << ": " << msg << std::endl;
+-    }
+-}
+-
+ static int
+ exec_module(PyObject *m) {
+     if (PyType_Ready(&pdf::PDFDocType) < 0) return -1;
+@@ -32,8 +23,6 @@ exec_module(PyObject *m) {
+ 
+     Py_INCREF(&pdf::PDFDocType);
+     PyModule_AddObject(m, "PDFDoc", (PyObject *)&pdf::PDFDocType);
+-
+-    PdfCommon::SetLogMessageCallback(pdf_log_message);
+ 	return 0;
+ }
+ 

@@ -1,0 +1,240 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 26 May 2023 21:28:35 +0900
+Subject: Revert "Fix the bytes output device"
+
+Forwarded: not-needed
+
+This reverts commit 2891687f6aee19ee3cc99696c74b4378cb2d2268.
+---
+ src/calibre/utils/podofo/__init__.py | 11 +++++------
+ src/calibre/utils/podofo/doc.cpp     | 22 +++++-----------------
+ src/calibre/utils/podofo/output.cpp  | 27 ++++++++++++++-------------
+ src/calibre/utils/podofo/utils.cpp   |  6 +-----
+ 4 files changed, 25 insertions(+), 41 deletions(-)
+
+diff --git a/src/calibre/utils/podofo/__init__.py b/src/calibre/utils/podofo/__init__.py
+index 140e012..1c31514 100644
+--- a/src/calibre/utils/podofo/__init__.py
++++ b/src/calibre/utils/podofo/__init__.py
+@@ -189,6 +189,7 @@ def test_save_to(src, dest):
+ 
+ def test_podofo():
+     import tempfile
++    from io import BytesIO
+     from calibre.ebooks.metadata.book.base import Metadata
+     from calibre.ebooks.metadata.xmp import metadata_to_xmp_packet
+     # {{{
+@@ -202,13 +203,11 @@ def test_podofo():
+     p.title = mi.title
+     p.author = mi.authors[0]
+     p.set_xmp_metadata(xmp_packet)
++    buf = BytesIO()
++    p.save_to_fileobj(buf)
++    raw = buf.getvalue()
+     with tempfile.NamedTemporaryFile(suffix='.pdf', delete=False) as f:
+-        p.save_to_fileobj(f)
+-        f.seek(0)
+-        fraw = f.read()
+-        wraw = p.write()
+-        if fraw != wraw:
+-            raise ValueError("write() and save_to_fileobj() resulted in different output")
++        f.write(raw)
+     try:
+         p = podofo.PDFDoc()
+         p.open(f.name)
+diff --git a/src/calibre/utils/podofo/doc.cpp b/src/calibre/utils/podofo/doc.cpp
+index 9272fc5..1b9eeac 100644
+--- a/src/calibre/utils/podofo/doc.cpp
++++ b/src/calibre/utils/podofo/doc.cpp
+@@ -8,7 +8,6 @@
+ #include "global.h"
+ #include <iostream>
+ #include <algorithm>
+-#include <new>
+ #include <string_view>
+ 
+ using namespace pdf;
+@@ -98,7 +97,7 @@ class BytesOutputDevice : public OutputStreamDevice {
+         pyunique_ptr bytes;
+         size_t written;
+     public:
+-        BytesOutputDevice() : bytes(), written(0) { SetAccess(DeviceAccess::Write); }
++        BytesOutputDevice() : bytes(PyBytes_FromStringAndSize(NULL, 1 * 1024 *1024)) { SetAccess(DeviceAccess::Write); }
+         size_t GetLength() const { return written; }
+         size_t GetPosition() const { return written; }
+         size_t capacity() const { return bytes ? PyBytes_GET_SIZE(bytes.get()) : 0; }
+@@ -107,30 +106,19 @@ class BytesOutputDevice : public OutputStreamDevice {
+         void writeBuffer(const char* src, size_t src_sz) {
+             if (written + src_sz > capacity()) {
+                 PyObject* old = bytes.release();
+-                static const size_t initial_capacity = 1024 * 1024;
+-                if (old) {
+-                    if (_PyBytes_Resize(&old, std::max(written + src_sz, 2 * std::max(capacity(), initial_capacity))) != 0) {
+-                        throw std::bad_alloc();
+-                    }
+-                } else {
+-                    old = PyBytes_FromStringAndSize(NULL, std::max(written + src_sz, initial_capacity));
+-                    if (!old) throw std::bad_alloc();
++                if (_PyBytes_Resize(&old, std::max(written + src_sz, 2 * capacity())) != 0) {
++                    return;
+                 }
+                 bytes.reset(old);
+             }
+             if (bytes) {
+-                memcpy(PyBytes_AS_STRING(bytes.get()) + written, src, src_sz);
++                memcpy(PyBytes_AS_STRING(bytes.get()), src, src_sz);
+                 written += src_sz;
+             }
+         }
+ 
+         void Flush() { }
+-        PyObject* Release() {
+-            auto ans = bytes.release();
+-            _PyBytes_Resize(&ans, written);
+-            written = 0;
+-            return ans;
+-        }
++        PyObject* Release() { return bytes.release(); }
+ };
+ 
+ static PyObject *
+diff --git a/src/calibre/utils/podofo/output.cpp b/src/calibre/utils/podofo/output.cpp
+index a70c8bc..492bee1 100644
+--- a/src/calibre/utils/podofo/output.cpp
++++ b/src/calibre/utils/podofo/output.cpp
+@@ -12,6 +12,8 @@ using namespace PoDoFo;
+ #define NUKE(x) { Py_XDECREF(x); x = NULL; }
+ #define PODOFO_RAISE_ERROR(code) throw ::PoDoFo::PdfError(code, __FILE__, __LINE__)
+ 
++class pyerr : public std::exception {
++};
+ 
+ class MyOutputDevice : public OutputStreamDevice {
+ 
+@@ -32,7 +34,7 @@ class MyOutputDevice : public OutputStreamDevice {
+     public:
+         MyOutputDevice(PyObject *file) : tell_func(0), seek_func(0), read_func(0), write_func(0), flush_func(0), written(0) {
+             SetAccess(DeviceAccess::Write);
+-#define GA(f, a) { if((f = PyObject_GetAttrString(file, a)) == NULL) throw std::exception(); }
++#define GA(f, a) { if((f = PyObject_GetAttrString(file, a)) == NULL) throw pyerr(); }
+             GA(tell_func, "tell");
+             GA(seek_func, "seek");
+             GA(read_func, "read");
+@@ -63,7 +65,7 @@ class MyOutputDevice : public OutputStreamDevice {
+             if( !pszFormat ) { PODOFO_RAISE_ERROR(PdfErrorCode::InvalidHandle); }
+ 
+             buf = new (std::nothrow) char[lBytes+1];
+-            if (buf == NULL) { PyErr_NoMemory(); throw std::exception(); }
++            if (buf == NULL) { PyErr_NoMemory(); throw pyerr(); }
+ 
+             // Note: PyOS_vsnprintf produces broken output on windows
+             res = vsnprintf(buf, lBytes, pszFormat, args);
+@@ -71,7 +73,7 @@ class MyOutputDevice : public OutputStreamDevice {
+             if (res < 0) {
+                 PyErr_SetString(PyExc_Exception, "Something bad happened while calling vsnprintf");
+                 delete[] buf;
+-                throw std::exception();
++                throw pyerr();
+             }
+ 
+             Write(buf, static_cast<size_t>(res));
+@@ -97,7 +99,7 @@ class MyOutputDevice : public OutputStreamDevice {
+             char *buf = NULL;
+             Py_ssize_t len = 0;
+ 
+-            if ((temp = PyLong_FromSize_t(lLen)) == NULL) throw std::exception();
++            if ((temp = PyLong_FromSize_t(lLen)) == NULL) throw pyerr();
+             ret = PyObject_CallFunctionObjArgs(read_func, temp, NULL);
+             NUKE(temp);
+             if (ret != NULL) {
+@@ -112,19 +114,19 @@ class MyOutputDevice : public OutputStreamDevice {
+             if (PyErr_Occurred() == NULL)
+                 PyErr_SetString(PyExc_Exception, "Failed to read data from python file object");
+ 
+-            throw std::exception();
++            throw pyerr();
+ 
+         }
+ 
+         void Seek(size_t offset) {
+             PyObject *ret, *temp;
+-            if ((temp = PyLong_FromSize_t(offset)) == NULL) throw std::exception();
++            if ((temp = PyLong_FromSize_t(offset)) == NULL) throw pyerr();
+             ret = PyObject_CallFunctionObjArgs(seek_func, temp, NULL);
+             NUKE(temp);
+             if (ret == NULL) {
+                 if (PyErr_Occurred() == NULL)
+                     PyErr_SetString(PyExc_Exception, "Failed to seek in python file object");
+-                throw std::exception();
++                throw pyerr();
+             }
+             Py_DECREF(ret);
+         }
+@@ -137,16 +139,16 @@ class MyOutputDevice : public OutputStreamDevice {
+             if (ret == NULL) {
+                 if (PyErr_Occurred() == NULL)
+                     PyErr_SetString(PyExc_Exception, "Failed to call tell() on python file object");
+-                throw std::exception();
++                throw pyerr();
+             }
+             if (!PyNumber_Check(ret)) {
+                 Py_DECREF(ret);
+                 PyErr_SetString(PyExc_Exception, "tell() method did not return a number");
+-                throw std::exception();
++                throw pyerr();
+             }
+             ans = PyLong_AsUnsignedLongMask(ret);
+             Py_DECREF(ret);
+-            if (PyErr_Occurred() != NULL) throw std::exception();
++            if (PyErr_Occurred() != NULL) throw pyerr();
+ 
+             return static_cast<size_t>(ans);
+         }
+@@ -157,7 +159,7 @@ class MyOutputDevice : public OutputStreamDevice {
+             PyObject *ret, *temp = NULL;
+ 
+             temp = PyBytes_FromStringAndSize(pBuffer, static_cast<Py_ssize_t>(lLen));
+-            if (temp == NULL) throw std::exception();
++            if (temp == NULL) throw pyerr();
+ 
+             ret = PyObject_CallFunctionObjArgs(write_func, temp, NULL);
+             NUKE(temp);
+@@ -165,7 +167,7 @@ class MyOutputDevice : public OutputStreamDevice {
+             if (ret == NULL) {
+                 if (PyErr_Occurred() == NULL)
+                     PyErr_SetString(PyExc_Exception, "Failed to call write() on python file object");
+-                throw std::exception();
++                throw pyerr();
+             }
+             Py_DECREF(ret);
+             update_written();
+@@ -183,7 +185,6 @@ PyObject* pdf::write_doc(PdfMemDocument *doc, PyObject *f) {
+ 
+     try {
+         doc->Save(d);
+-        d.Flush();
+     } catch(const PdfError & err) {
+         podofo_set_exception(err); return NULL;
+     } catch (...) {
+diff --git a/src/calibre/utils/podofo/utils.cpp b/src/calibre/utils/podofo/utils.cpp
+index ea11132..8db22fc 100644
+--- a/src/calibre/utils/podofo/utils.cpp
++++ b/src/calibre/utils/podofo/utils.cpp
+@@ -7,7 +7,6 @@
+ 
+ #include "global.h"
+ #include <sstream>
+-#include <stdexcept>
+ 
+ using namespace pdf;
+ 
+@@ -30,8 +29,5 @@ pdf::podofo_convert_pdfstring(const PdfString &s) {
+ 
+ const PdfString
+ pdf::podofo_convert_pystring(PyObject *val) {
+-    Py_ssize_t len;
+-    const char *data = PyUnicode_AsUTF8AndSize(val, &len);
+-    if (data == NULL) throw std::runtime_error("Failed to convert python string to UTF-8, possibly not a string object");
+-    return PdfString::FromRaw(bufferview(data, len));
++    return PdfString(reinterpret_cast<const char*>(PyUnicode_AsUTF8(val)));
+ }

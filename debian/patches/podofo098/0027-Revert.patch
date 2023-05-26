@@ -1,0 +1,23 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 26 May 2023 21:42:33 +0900
+Subject: Revert "..."
+
+Forwarded: not-needed
+
+This reverts commit 2eebd8b5612fbd65d433f3c0ac0e3415aec54caa.
+---
+ src/calibre/utils/podofo/global.h | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/src/calibre/utils/podofo/global.h b/src/calibre/utils/podofo/global.h
+index b1b1e69..87a56cb 100644
+--- a/src/calibre/utils/podofo/global.h
++++ b/src/calibre/utils/podofo/global.h
+@@ -131,7 +131,6 @@ object_as_reference(const PdfObject *o) {
+ }
+ 
+ // Needed to avoid PoDoFo clobbering the /Info and XMP metadata with its own nonsense
+-// rename to NoMetadataUdate after https://github.com/podofo/podofo/commit/96689eb6e45b71eae1577ecb2d4a796c52e9a813
+ static const PdfSaveOptions save_options = PdfSaveOptions::NoModifyDateUpdate;
+ 
+ class PdfReferenceHasher {

@@ -1,0 +1,24 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 26 May 2023 21:27:13 +0900
+Subject: Revert "Add a test for PDf version"
+
+Forwarded: not-needed
+
+This reverts commit 7969be34980e708f44a56e15bddda8fa6ef2d9e9.
+---
+ src/calibre/utils/podofo/__init__.py | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/src/calibre/utils/podofo/__init__.py b/src/calibre/utils/podofo/__init__.py
+index c57c943..aae0c9b 100644
+--- a/src/calibre/utils/podofo/__init__.py
++++ b/src/calibre/utils/podofo/__init__.py
+@@ -201,8 +201,6 @@ def test_podofo():
+     p.title = 'info title'
+     p.author = 'info author'
+     p.keywords = 'a, b'
+-    if p.version != '1.1':
+-        raise ValueError('Incorrect PDF version')
+     xmp_packet = metadata_to_xmp_packet(mi)
+     # print(p.get_xmp_metadata().decode())
+     p.set_xmp_metadata(xmp_packet)

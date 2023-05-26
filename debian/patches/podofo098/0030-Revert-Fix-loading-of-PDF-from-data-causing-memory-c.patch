@@ -1,0 +1,46 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 26 May 2023 21:26:16 +0900
+Subject: Revert "Fix loading of PDF from data causing memory corruption
+ because PoDoFo now expects the data to outlive the document"
+
+Forwarded: not-needed
+
+This reverts commit 9aa1f4add6940e78abb18fb6c6a995ccd9800c0f.
+---
+ src/calibre/utils/podofo/doc.cpp  | 3 ---
+ src/calibre/utils/podofo/global.h | 1 -
+ 2 files changed, 4 deletions(-)
+
+diff --git a/src/calibre/utils/podofo/doc.cpp b/src/calibre/utils/podofo/doc.cpp
+index 67f49b1..adf8899 100644
+--- a/src/calibre/utils/podofo/doc.cpp
++++ b/src/calibre/utils/podofo/doc.cpp
+@@ -18,7 +18,6 @@ static void
+ PDFDoc_dealloc(PDFDoc* self)
+ {
+     if (self->doc != NULL) delete self->doc;
+-    Py_CLEAR(self->load_buffer_ref);
+     Py_TYPE(self)->tp_free((PyObject*)self);
+ }
+ 
+@@ -46,8 +45,6 @@ PDFDoc_load(PDFDoc *self, PyObject *args) {
+ 
+ 	try {
+ 		self->doc->LoadFromBuffer(bufferview(buffer, size));
+-        self->load_buffer_ref = args;
+-        Py_INCREF(args);
+ 	} catch(const PdfError & err) {
+ 		podofo_set_exception(err);
+ 		return NULL;
+diff --git a/src/calibre/utils/podofo/global.h b/src/calibre/utils/podofo/global.h
+index 87a56cb..3743f76 100644
+--- a/src/calibre/utils/podofo/global.h
++++ b/src/calibre/utils/podofo/global.h
+@@ -26,7 +26,6 @@ typedef struct {
+     PyObject_HEAD
+     /* Type-specific fields go here. */
+     PdfMemDocument *doc;
+-    PyObject *load_buffer_ref;
+ 
+ } PDFDoc;
+ 

@@ -1,0 +1,37 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 26 May 2023 21:26:28 +0900
+Subject: Revert "Fix drawing of header/footer"
+
+Forwarded: not-needed
+
+This reverts commit 20e4db008e51f841ab17a9e7bc20872e1ca9585c.
+---
+ src/calibre/utils/podofo/impose.cpp | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
+
+diff --git a/src/calibre/utils/podofo/impose.cpp b/src/calibre/utils/podofo/impose.cpp
+index e695fe9..6705037 100644
+--- a/src/calibre/utils/podofo/impose.cpp
++++ b/src/calibre/utils/podofo/impose.cpp
+@@ -12,14 +12,13 @@ using namespace pdf;
+ 
+ static void
+ impose_page(PdfMemDocument *doc, unsigned int dest_page_num, unsigned int src_page_num) {
+-    auto &src_page = doc->GetPages().GetPageAt(src_page_num);
+-    auto xobj = doc->CreateXObjectForm(src_page.GetMediaBox(), "HeaderFooter");
+-    xobj->FillFromPage(src_page);
+-    auto &dest = doc->GetPages().GetPageAt(dest_page_num);
+-    PdfPainter painter;
+-    painter.SetCanvas(dest);
+-    painter.DrawXObject(*xobj, 0, 0);
+-    painter.FinishDrawing();
++    auto xobj = doc->CreateXObjectForm(Rect(), "HeaderFooter");
++    xobj->FillFromPage(doc->GetPages().GetPageAt(src_page_num));
++    auto dest = &doc->GetPages().GetPageAt(dest_page_num);
++    static unsigned counter = 0;
++    dest->GetOrCreateResources().AddResource("XObject", "Imp"s + std::to_string(++counter), xobj->GetObject());
++    auto data = "q\n1 0 0 1 0 0 cm\n/"s + xobj->GetIdentifier().GetEscapedName() + " Do\nQ\n"s;
++    dest->GetOrCreateContents().GetStreamForAppending().SetData(data);
+ }
+ 
+ static PyObject*
