@@ -24624,6 +24624,7 @@ return this.__repr__();
             this.onwheel = HandleWheel.prototype.onwheel.bind(this);
             this.add_pixel_scroll = HandleWheel.prototype.add_pixel_scroll.bind(this);
             this.do_scroll = HandleWheel.prototype.do_scroll.bind(this);
+            this.do_section_jump = HandleWheel.prototype.do_section_jump.bind(this);
         }});
         HandleWheel.prototype.__init__ = function __init__() {
             var self = this;
@@ -24647,14 +24648,20 @@ return this.__repr__();
         HandleWheel.prototype.onwheel = function onwheel(evt) {
             var self = this;
             var backward;
-            if (!evt.deltaY) {
+            if (!((evt.deltaY || evt.deltaX))) {
                 return;
             }
-            backward = evt.deltaY < 0;
-            if (evt.deltaMode === window.WheelEvent.DOM_DELTA_PIXEL) {
-                self.add_pixel_scroll(backward, Math.abs(evt.deltaY));
-            } else {
-                self.do_scroll(backward);
+            if (evt.deltaY) {
+                backward = evt.deltaY < 0;
+                if (evt.deltaMode === window.WheelEvent.DOM_DELTA_PIXEL) {
+                    self.add_pixel_scroll(backward, Math.abs(evt.deltaY));
+                } else {
+                    self.do_scroll(backward);
+                }
+            }
+            if (evt.deltaX) {
+                backward = evt.deltaX < 0;
+                self.do_section_jump(backward);
             }
         };
         if (!HandleWheel.prototype.onwheel.__argnames__) Object.defineProperties(HandleWheel.prototype.onwheel, {
@@ -24696,6 +24703,15 @@ return this.__repr__();
             }
         };
         if (!HandleWheel.prototype.do_scroll.__argnames__) Object.defineProperties(HandleWheel.prototype.do_scroll, {
+            __argnames__ : {value: ["backward"]},
+            __module__ : {value: "read_book.paged_mode"}
+        });
+        HandleWheel.prototype.do_section_jump = function do_section_jump(backward) {
+            var self = this;
+            self.reset();
+            next_spine_item(backward);
+        };
+        if (!HandleWheel.prototype.do_section_jump.__argnames__) Object.defineProperties(HandleWheel.prototype.do_section_jump, {
             __argnames__ : {value: ["backward"]},
             __module__ : {value: "read_book.paged_mode"}
         });
@@ -26897,7 +26913,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "6.17.0";
+        CALIBRE_VERSION = "6.18.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();

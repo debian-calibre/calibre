@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "Nisan 27, 2023" "6.17.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "Mayıs 26, 2023" "6.18.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -128,7 +128,7 @@ Girdi dökümanındaki dil kodlamasını belirtin. Belirtilirse, bu seçenek dö
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
-Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+Sayfa sonlarında bölmeyi kapatın. Normalde, giriş dosyaları her sayfa sonunda otomatik olarak iki dosyaya bölünür. Bu, daha hızlı ve daha az kaynakla ayrıştırılabilen bir e\-kitap çıktısı verir. Ancak, bölme yavaştır ve kaynak dosyanız çok sayıda sayfa sonu içeriyorsa, sayfa sonlarında bölmeyi kapatmalısınız.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -143,7 +143,7 @@ Ana kitap içeriğinin parçası olarak görünecek bir satır arası İçindeki
 .INDENT 0.0
 .TP
 .B \-\-epub\-max\-image\-size
-The maximum image size (width x height). A value of none means use the screen size from the output profile. A value of profile means no maximum size is specified. For example, a value of 100x200 will cause all images to be resized so that their width is no more than 100 pixels and their height is no more than 200 pixels. Note that this only affects the size of the actual image files themselves. Any given image may be rendered at a different size depending on the styling applied to it in the document.
+Maksimum görüntü boyutu (genişlik x yükseklik). none değeri, çıktı profilindeki ekran boyutunu kullanmak anlamına gelir. profile değeri, maksimum boyutun belirtilmediği anlamına gelir. Örneğin, 100x200 değeri, tüm görüntülerin yeniden boyutlandırılmasına neden olur, böylece genişlikleri 100 pikselden ve yükseklikleri 200 pikselden fazla olamaz. Bunun yalnızca gerçek görüntü dosyalarının boyutunu etkilediğini unutmayın. Herhangi bir görüntü, belgede kendisine uygulanan stile bağlı olarak farklı bir boyutta işlenebilir.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -153,12 +153,12 @@ Eklenen satır arası içindekileri kitabın başı yerine sonuna koy.
 .INDENT 0.0
 .TP
 .B \-\-epub\-version
-The version of the EPUB file to generate. EPUB 2 is the most widely compatible, only use EPUB 3 if you know you actually need it.
+Oluşturulacak EPUB dosyasının sürümü. EPUB 2 en geniş uyumlu olanıdır, EPUB 3\fB\(aq\fPü yalnızca gerçekten ihtiyacınız olduğunu biliyorsanız kullanın.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extract the contents of the generated EPUB file to the specified folder. The contents of the folder are first deleted, so be careful.
+Oluşturulan EPUB dosyasının içeriğini belirtilen klasöre çıkarın. Önce klasörün içeriği silinir, bu yüzden dikkatli olun.
 .UNINDENT
 .INDENT 0.0
 .TP

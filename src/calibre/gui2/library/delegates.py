@@ -5,16 +5,17 @@ __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import sys
+import os, sys
 
 from qt.core import (Qt, QApplication, QStyle, QIcon,  QDoubleSpinBox, QStyleOptionViewItem,
-        QSpinBox, QStyledItemDelegate, QComboBox, QTextDocument, QMenu, QKeySequence,
+        QSpinBox, QStyledItemDelegate, QComboBox, QTextDocument, QMenu, QKeySequence, QUrl,
         QAbstractTextDocumentLayout, QFont, QFontInfo, QDate, QDateTimeEdit, QDateTime, QEvent,
         QStyleOptionComboBox, QStyleOptionSpinBox, QLocale, QSize, QLineEdit, QDialog, QPalette)
 
 from calibre.ebooks.metadata import rating_to_stars, title_sort
 from calibre.gui2 import UNDEFINED_QDATETIME, rating_font, gprefs
 from calibre.constants import iswindows
+from calibre.gui2.markdown_editor import MarkdownEditDialog
 from calibre.gui2.widgets import EnLineEdit
 from calibre.gui2.widgets2 import populate_standard_spinbox_context_menu, RatingEditor, DateTimeEdit as DateTimeEditBase
 from calibre.gui2.complete2 import EditWithComplete
@@ -25,7 +26,7 @@ from calibre.utils.icu import sort_key
 from calibre.gui2.dialogs.comments_dialog import CommentsDialog, PlainTextDialog
 from calibre.gui2.dialogs.tag_editor import TagEditor
 from calibre.gui2.languages import LanguagesEdit
-
+from calibre.library.comments import markdown
 
 class UpdateEditorGeometry:
 
@@ -537,6 +538,59 @@ class CcLongTextDelegate(QStyledItemDelegate):  # {{{
         d = PlainTextDialog(parent, text, column_name=m.custom_columns[col]['name'])
         if d.exec() == QDialog.DialogCode.Accepted:
             m.setData(index, d.text, Qt.ItemDataRole.EditRole)
+        return None
+
+    def setModelData(self, editor, model, index):
+        model.setData(index, (editor.textbox.html), Qt.ItemDataRole.EditRole)
+# }}}
+
+
+class CcMarkdownDelegate(QStyledItemDelegate):  # {{{
+
+    '''
+    Delegate for markdown data.
+    '''
+
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.document = QTextDocument()
+
+    def paint(self, painter, option, index):
+        self.initStyleOption(option, index)
+        style = QApplication.style() if option.widget is None else option.widget.style()
+        option.text = markdown(option.text)
+        self.document.setHtml(option.text)
+        style.drawPrimitive(QStyle.PrimitiveElement.PE_PanelItemViewItem, option, painter, widget=option.widget)
+        rect = style.subElementRect(QStyle.SubElement.SE_ItemViewItemDecoration, option, self.parent())
+        ic = option.icon
+        if rect.isValid() and not ic.isNull():
+            sz = ic.actualSize(option.decorationSize)
+            painter.drawPixmap(rect.topLeft(), ic.pixmap(sz))
+        ctx = QAbstractTextDocumentLayout.PaintContext()
+        ctx.palette = option.palette
+        if option.state & QStyle.StateFlag.State_Selected:
+            ctx.palette.setColor(QPalette.ColorRole.Text, ctx.palette.color(QPalette.ColorRole.HighlightedText))
+        textRect = style.subElementRect(QStyle.SubElement.SE_ItemViewItemText, option, self.parent())
+        painter.save()
+        painter.translate(textRect.topLeft())
+        painter.setClipRect(textRect.translated(-textRect.topLeft()))
+        self.document.documentLayout().draw(painter, ctx)
+        painter.restore()
+
+    def createEditor(self, parent, option, index):
+        m = index.model()
+        col = m.column_map[index.column()]
+        if check_key_modifier(Qt.KeyboardModifier.ControlModifier):
+            text = ''
+        else:
+            text = m.db.data[index.row()][m.custom_columns[col]['rec_index']]
+
+        path = m.db.abspath(index.row(), index_is_id=False)
+        base_url = QUrl.fromLocalFile(os.path.join(path, 'metadata.html')) if path else None
+        d = MarkdownEditDialog(parent, text, column_name=m.custom_columns[col]['name'],
+                               base_url=base_url)
+        if d.exec() == QDialog.DialogCode.Accepted:
+            m.setData(index, (d.text), Qt.ItemDataRole.EditRole)
         return None
 
     def setModelData(self, editor, model, index):

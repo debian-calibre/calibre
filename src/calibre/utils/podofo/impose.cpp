@@ -6,24 +6,20 @@
  */
 
 #include "global.h"
+#include <string>
 
 using namespace pdf;
 
 static void
-impose_page(PdfMemDocument *doc, unsigned long dest_page_num, unsigned long src_page_num) {
-    PdfXObject *xobj = new PdfXObject(doc, src_page_num, "HeaderFooter");
-    PdfPage *dest = doc->GetPage(dest_page_num);
-    dest->AddResource(xobj->GetIdentifier(), xobj->GetObject()->Reference(), "XObject");
-    PdfStream *stream = dest->GetContents()->GetStream();
-    char *buffer = NULL; pdf_long sz;
-    stream->GetFilteredCopy(&buffer, &sz);
-    stream->BeginAppend();
-    stream->Append("q\n1 0 0 1 0 0 cm\n/");
-    stream->Append(xobj->GetIdentifier().GetName());
-    stream->Append(" Do\nQ\n");
-    stream->Append(buffer, sz);
-    stream->EndAppend();
-    podofo_free(buffer);
+impose_page(PdfMemDocument *doc, unsigned int dest_page_num, unsigned int src_page_num) {
+    auto &src_page = doc->GetPages().GetPageAt(src_page_num);
+    auto xobj = doc->CreateXObjectForm(src_page.GetMediaBox(), "HeaderFooter");
+    xobj->FillFromPage(src_page);
+    auto &dest = doc->GetPages().GetPageAt(dest_page_num);
+    PdfPainter painter;
+    painter.SetCanvas(dest);
+    painter.DrawXObject(*xobj, 0, 0);
+    painter.FinishDrawing();
 }
 
 static PyObject*
@@ -33,7 +29,8 @@ impose(PDFDoc *self, PyObject *args) {
     for (unsigned long i = 0; i < count; i++) {
         impose_page(self->doc, dest_page_num - 1 + i, src_page_num - 1 + i);
     }
-    self->doc->DeletePages(src_page_num - 1, count);
+    auto& pages = self->doc->GetPages();
+    while (count-- && src_page_num <= pages.GetCount()) pages.RemovePageAt(src_page_num - 1);
     Py_RETURN_NONE;
 }
 

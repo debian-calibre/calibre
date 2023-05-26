@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "aprīlis 27, 2023" "6.17.0" "calibre"
+.TH "CALIBREDB" "1" "maijs 26, 2023" "6.18.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -86,7 +86,7 @@ details and examples.
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ADDING FROM FOLDERS\fP
+\fI\%PIEVIENOT NO MAPĒM\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -154,7 +154,7 @@ Parole savienojumam ar calibre satura serveri. Lai nolasītu paroli no standarta
 .INDENT 0.0
 .TP
 .B \-\-timeout
-The timeout, in seconds, when connecting to a calibre library over the network. The default is two minutes.
+Pārtraukums dažu sekunžu laikā, kad tīklā tiek izveidots savienojums ar calibre bibliotēku. Noklusējums ir divas minūtes.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -247,14 +247,14 @@ Heading for the template column. Default: template. This option is ignored if th
 .sp
 .nf
 .ft C
-calibredb add [options] file1 file2 file3 ...
+calibredb pievienot [opcijas] failu1 failu2 failu3 ...
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Add the specified files as books to the database. You can also specify folders, see
-the folder related options below.
+Pievienojiet norādītos failus kā grāmatas datu bāzei. Varat arī norādīt mapes, skatiet
+tālāk norādītās ar mapi saistītās opcijas.
 .sp
 Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -265,7 +265,7 @@ Ievadiet pievienotās(\-o) grāmatas(\-u) autoru(s)
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-If books with similar titles and authors are found, merge the incoming formats (files) automatically into existing book records. A value of \fB\(dq\fPignore\fB\(dq\fP means duplicate formats are discarded. A value of \fB\(dq\fPoverwrite\fB\(dq\fP means duplicate formats in the library are overwritten with the newly added files. A value of \fB\(dq\fPnew_record\fB\(dq\fP means duplicate formats are placed into a new book record.
+Ja tiek atrastas grāmatas ar līdzīgiem nosaukumiem un autoriem, automātiski sapludiniet ienākošos formātus (failus) esošajos grāmatu ierakstos. Vērtība \fB\(dq\fPignorēt\fB\(dq\fP nozīmē, ka dublētie formāti tiek atmesti. \fB\(dq\fPPārrakstīt\fB\(dq\fP vērtība nozīmē, ka dublētie formāti bibliotēkā tiek pārrakstīti ar tikko pievienotajiem failiem. Vērtība \fB\(dq\fPnew_record\fB\(dq\fP nozīmē, ka dublēti formāti tiek ievietoti jaunā uzskaites ierakstā.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -275,7 +275,7 @@ Ceļš līdz pievienotās grāmatas vākam
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Add books to database even if they already exist. Comparison is done based on book titles and authors. Note that the \fI\%\-\-automerge\fP option takes precedence.
+Pievienojiet grāmatas datu bāzei pat tad, ja tās jau pastāv. Salīdzinājums tiek veikts, pamatojoties uz grāmatu nosaukumiem un autoriem. Ņemiet vērā, ka opcijai \fI\%\-\-automerge\fP ir prioritāte.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -285,7 +285,7 @@ Pievienot tukšu grāmatu (grāmatu bez formātiem)
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Set the identifiers for this book, e.g. \-I asin:XXX \-I isbn:YYY
+Iestatiet šīs grāmatas identifikatorus, piemēram, \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -317,28 +317,28 @@ Ievadiet pievienotās(\-o) grāmatas(\-u) birkas
 .B \-\-title, \-t
 Ievadiet pievienotās(\-o) grāmatas(\-u) nosaukumu
 .UNINDENT
-.SS ADDING FROM FOLDERS
+.SS PIEVIENOT NO MAPĒM
 .sp
-Options to control the adding of books from folders. By default only files that have extensions of known e\-book file types are added.
+Opcija, lai kontrolētu grāmatu pievienošanu no mapēm. Pēc noklusējuma tiek pievienoti tikai tie faili, kuriem ir zināmi e\-grāmatu failu tipu paplašinājumi.
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+Faila nosaukuma (glob) šablons, faili, kas atbilst šim modelim, tiks pievienoti, skenējot mapes, lai atrastu failus, pat ja tiem nav zināms e\-grāmatas faila veids. Var norādīt vairākas reizes vairākiem modeļiem.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For example: *.pdf will ignore all PDF files
+Faila nosaukuma (glob) šablons, faili, kas atbilst šim modelim, tiks ignorēti, pārbaudot mapes, lai meklētu failus. Var norādīt vairākas reizes vairākiem modeļiem. Piemēram: *.pdf ignorēs visus PDF failus
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
+Pieņemsim, ka katrā mapē ir tikai viena grāmata un visi tajā esošie faili ir dažādi šīs grāmatas e\-grāmatu formāti
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Process folders recursively
+Apstrādāt mapes rekursīvi
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -358,7 +358,7 @@ Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienoji
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Do not use the Recycle Bin
+Neizmantojiet Atkritne
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -517,7 +517,7 @@ Aizvietot atstarpes ar apakšsvītrām
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Export all books into a single folder
+Eksportējiet visas grāmatas vienā mapē
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -532,7 +532,7 @@ Datumu attēlošanas formāts. %d \- diena, %b \- mēnesis, %m \- mēneša kārt
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Export books to the specified folder. Default is .
+Eksportējiet grāmatas uz norādīto mapi. Noklusējums ir .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -854,7 +854,7 @@ Ar komatu atdalītu atskaišu saraksts. Noklusētais: visas
 .INDENT 0.0
 .TP
 .B \-\-vacuum\-fts\-db
-Vacuum the full text search database. This can be very slow and memory intensive, depending on the size of the database.
+Iztīriet pilna teksta meklēšanas datu bāzi. Tas var būt ļoti lēns un aizņem daudz atmiņas atkarībā no datu bāzes lieluma.
 .UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
@@ -862,14 +862,14 @@ Vacuum the full text search database. This can be very slow and memory intensive
 .sp
 .nf
 .ft C
-calibredb list_categories [options]
+calibredb list_categories [opcijas]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Produce a report of the category information in the database. The
-information is the equivalent of what is shown in the Tag browser.
+Izveidojiet pārskatu par kategorijas informāciju datubāzē. Šī
+informācija ir līdzvērtīga tai, kas tiek rādīta birku pārlūkā.
 .sp
 Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -1028,12 +1028,12 @@ Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienoji
 .INDENT 0.0
 .TP
 .B \-\-indexing\-speed
-The speed of indexing. Use fast for fast indexing using all your computers resources and slow for less resource intensive indexing. Note that the speed is reset to slow after every invocation.
+Indeksēšanas ātrums. Izmantojiet ātri, lai ātri indeksētu, izmantojot visus datora resursus, un lēni, lai indeksētu izmantojot mazāk resursu. Ņemiet vērā, ka ātrums tiek atiestatīts uz lēnu pēc katras izsaukšanas.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-wait\-for\-completion
-Wait till all books are indexed, showing indexing progress periodically
+Pagaidiet līdz visas grāmatas tiks indeksētas, periodiski parādot indeksēšanas gaitu
 .UNINDENT
 .SH FTS_SEARCH
 .INDENT 0.0
@@ -1041,49 +1041,49 @@ Wait till all books are indexed, showing indexing progress periodically
 .sp
 .nf
 .ft C
-calibredb fts_search [options] search expression
+% prog fts_search [opcijas] meklēšanas izteiksme
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Do a full text search on the entire library or a subset of it.
+Veiciet pilnu teksta meklēšanu visā bibliotēkā vai tās apakškopā.
 .sp
 Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-do\-not\-match\-on\-related\-words
-Only match on exact words not related words. So correction will not match correcting.
+Atbilst tikai precīziem vārdiem, kas nav saistīti. Tātad labojums nesakritīs ar labošanu.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-include\-snippets
-Include snippets of the text surrounding each match. Note that this makes searching much slower.
+Iekļaujiet katras atbilstības teksta fragmentus. Ņemiet vērā, ka tas padara meklēšanu daudz lēnāku.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-indexing\-threshold
-How much of the library must be indexed before searching is allowed, as a percentage. Defaults to 90
+Cik liela daļa bibliotēkas ir jāindeksē, pirms tiek atļauta meklēšana, procentos. Pēc noklusējuma 90
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-end\-marker
-The marker used to indicate the end of a matched word inside a snippet
+Marķieris, ko izmanto, lai norādītu atbilstošā vārda beigas fragmentā
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-start\-marker
-The marker used to indicate the start of a matched word inside a snippet
+Marķieris, ko izmanto, lai norādītu atbilstošā vārda sākumu fragmentā
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-format
-The format to output the search results in. Either \fB\(dq\fPtext\fB\(dq\fP for plain text or \fB\(dq\fPjson\fB\(dq\fP for JSON output.
+Formāts meklēšanas rezultātu izvadīšanai. Vai nu “text” vienkāršam tekstam vai “json” JSON izvadei.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-restrict\-to
-Restrict the searched books, either using a search expression or ids. For example: ids:1,2,3 to restrict by ids or search:tag:foo to restrict to books having the tag foo.
+Ierobežojiet meklētās grāmatas, izmantojot meklēšanas izteiksmi vai ID. Piemēram: ids:1,2,3, lai ierobežotu pēc ID, vai search:tag:foo, lai ierobežotu tikai grāmatas, kurām ir birka foo.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

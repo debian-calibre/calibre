@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 15:15+0000\n"
+"POT-Creation-Date: 2023-05-24 06:57+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: Jellby <jellby@yahoo.com>, 2014-2018,2020-2023\n"
 "Language-Team: Spanish (http://app.transifex.com/calibre/calibre/language/es/)\n"
@@ -52,11 +52,6 @@ msgid ""
 "All table reading/sorting/searching/caching logic is re-implemented. This "
 "was necessary for maximum performance and flexibility."
 msgstr "SQLite se usa simplemente como una manera de leer y escribir eficientemente metadata.db. Toda la lógica de lectura, clasificación, búsqueda y almacenamiento en la memoria caché de las tablas está desarrallada de nuevo. Esto fue necesario para obtener el máximo rendimiento y flexibilidad."
-
-#: ../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
-#: calibre.db.listeners.EventType:1
-msgid "An enumeration."
-msgstr "Una enumeración."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.book_created:1
@@ -531,9 +526,9 @@ msgstr "Devuelve todos los enlaces para todos los campos referenciados por el li
 msgid ""
 "Example: Assume author A has link X, author B has link Y, tag S has link F, "
 "and tag T has link G. If book 1 has author A and tag T, this method returns "
-"{'authors':{'A':'X'}, 'tags':{'T', 'G'}} If book 2's author is neither A nor"
-" B and has no tags, this method returns {}"
-msgstr "Ejemplo: Suponiendo que el autor A tiene el enlace X, el autor B tiene el enlace Y, la etiqueta S tiene el enlace F y la etiqueta T tiene el enlace G. Si el libro 1 tiene autor A y etiqueta T, este método devuelve ``{'authors':{'A':'X'}, 'tags':{'T', 'G'}}``. Si el autor del libro 2 no es ni A ni B y no tiene etiquetas, este método devuelve ``{}``"
+"{'authors':{'A':'X'}, 'tags':{'T', 'G'}}. If book 2's author is neither A "
+"nor B and has no tags, this method returns {}."
+msgstr "Ejemplo: Suponiendo que el autor A tiene el enlace X, el autor B tiene el enlace Y, la etiqueta S tiene el enlace F y la etiqueta T tiene el enlace G. Si el libro 1 tiene autor A y etiqueta T, este método devuelve ``{'authors':{'A':'X'}, 'tags':{'T', 'G'}}``. Si el autor del libro 2 no es ni A ni B y no tiene etiquetas, este método devuelve ``{}``."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_all_link_maps_for_book:9
@@ -605,8 +600,8 @@ msgstr "Devuelve el nombre del elemento para el elemento especificado por ``item
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:1
-msgid "Return a dict of links for the supplied field."
-msgstr "Devuelve un diccionario de enlaces para el campo proporcionado."
+msgid "Return a dictionary of links for the supplied field."
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:3
@@ -710,7 +705,7 @@ msgid ""
 "the tuple is ExtraFile(relpath, file_path, stat_result). Where relpath is "
 "the relative path of the file to the book directory using / as a separator. "
 "stat_result is the result of calling os.stat() on the file."
-msgstr ""
+msgstr "Una tupla con todos los archivos adicionales que coinciden con el patrón especificado. Cada elemento de la tupla es de la forma ``ExtraFile(ruta_rel, ruta_archivo, res_stat)``, donde ``ruta_rel`` es la ruta relativa al archivo respecto al directorio del libro usando ``/`` como separador. ``res_stat`` es el resultado de ejecuta ``os.stat()`` sobre el archivo."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.merge_extra_files:1
@@ -927,9 +922,9 @@ msgstr "Usado internamente, nunca debe cambiarse."
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_link_map:1
 msgid ""
-"Sets links for item values in field Note: this method doesn't change values "
-"not in the value_to_link_map"
-msgstr "Asigna enlaces para los elementos en el campo ``field``. Tenga en cuenta que este método no cambia los valores que estén presentes en ``value_to_link_map``"
+"Sets links for item values in field. Note: this method doesn't change values"
+" not in the value_to_link_map"
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_link_map:4

@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "aprile 27, 2023" "6.17.0" "calibre"
+.TH "CALIBREDB" "1" "maggio 26, 2023" "6.18.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -228,7 +228,7 @@ La stringa usata per separare i campi. Predefinita: uno spazio.
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-The field by which to sort the results. You can specify multiple fields by separating them with commas. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Default: id
+Il campo da usare per l\fB\(aq\fPordinamento dei risultati. Puoi specificare più campi usando la virgola come separatore. Campi disponibili: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Predefinito: id
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -382,7 +382,7 @@ Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessa
 .INDENT 0.0
 .TP
 .B \-\-as\-extra\-data\-file
-Add the file as an extra data file to the book, not an ebook format
+Aggiungi il file come un file di dati aggiuntivo, non come formato di e\-book
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -461,16 +461,16 @@ Elenca i nomi dei campi di metadati che possono essere utilizzati con l\fB\(aq\f
 .sp
 .nf
 .ft C
-calibredb export [options] ids
+calibredb export [opzioni] id
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Export the books specified by ids (a comma separated list) to the filesystem.
-The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
-an OPF file). Any extra data files associated with the book are also saved.
-You can get id numbers from the search command.
+Esporta i libri specificati con id (una lista separata da virgole) su disco.
+L\(aqoperazione di esportazione salva tutti i formati del libro, la copertina e i metadati
+(in un file OPF). Anche tutti i file di dati aggiuntivi associati al libro vengono salvati.
+Puoi ottenere i numeri di id con il comando search.
 .sp
 Ogni qualvolta vengono passati argomenti con degli spazi a calibredb, è necessario mettere l\(aqargomento fra virgolette. Ad esempio: \(dq/some path/with spaces\(dq
 .INDENT 0.0

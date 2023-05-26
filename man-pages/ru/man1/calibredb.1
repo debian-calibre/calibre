@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "апреля 27, 2023" "6.17.0" "calibre"
+.TH "CALIBREDB" "1" "мая 26, 2023" "6.18.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -376,7 +376,7 @@ calibredb add_format [опции] id файл_электронной_книги
 .INDENT 0.0
 .TP
 .B \-\-as\-extra\-data\-file
-Add the file as an extra data file to the book, not an ebook format
+Добавьте файл как дополнительный файл данных в книгу, а не как электронную книгу.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -461,10 +461,10 @@ calibredb export [options] ids
 .UNINDENT
 .UNINDENT
 .sp
-Export the books specified by ids (a comma separated list) to the filesystem.
-The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
-an OPF file). Any extra data files associated with the book are also saved.
-You can get id numbers from the search command.
+Экспортировать книги, указанные идентификаторами (список, разделённый запятыми), в файловую систему.
+Операция экспорта сохраняет все форматы книги, её обложку и метаданные (в
+OPF\-файл). Любые дополнительные файлы данных, связанные с книгой, также сохраняются.
+Вы можете получить номера идентификаторов с помощью команды поиска (search).
 .sp
 Когда вы передаёте аргументы с пробелами в calibredb, заключайте их в кавычки. Например: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -485,7 +485,7 @@ calibre преобразует все неанглийские символы в
 .INDENT 0.0
 .TP
 .B \-\-dont\-save\-extra\-files
-Save any data files associated with the book when saving the book Указание этого переключателя отключит данный режим.
+Сохранить все файлы данных, связанные с книгой, при сохранении книги. Указание этого переключателя отключит данный режим.
 .UNINDENT
 .INDENT 0.0
 .TP

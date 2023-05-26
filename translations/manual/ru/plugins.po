@@ -4,7 +4,7 @@
 # 
 # Translators:
 # Aleksandr Ryzhov, 2016
-# ashed <craysy@gmail.com>, 2020-2022
+# ashed <craysy@gmail.com>, 2020-2023
 # Dmitry <dmitry@shishkin.us>, 2016
 # AlexanderFilev, 2015
 # Николай Кочкин <urfiner@gmail.com>, 2015
@@ -14,10 +14,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-02 05:59+0000\n"
+"POT-Creation-Date: 2023-05-24 06:57+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
-"Last-Translator: ashed <craysy@gmail.com>, 2020-2022\n"
-"Language-Team: Russian (http://www.transifex.com/calibre/calibre/language/ru/)\n"
+"Last-Translator: ashed <craysy@gmail.com>, 2020-2023\n"
+"Language-Team: Russian (http://app.transifex.com/calibre/calibre/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -288,6 +288,10 @@ msgstr "Сохраните настройки, указанные пользов
 #: calibre.customize.CatalogPlugin.run:0
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postadd:0
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:0
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:0
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:0
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
@@ -568,6 +572,20 @@ msgid ""
 msgstr "Если True, этот плагин запускается после добавления книг в базу данных. В этом случае вызываются методы плагина postimport и postadd."
 
 #: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.FileTypePlugin.on_postconvert:1
+msgid ""
+"If True, this plugin is run after a book is converted. In this case the "
+"postconvert method of the plugin is called."
+msgstr "Если True, этот плагин запускается после конвертации книги. В этом случае вызывается postconvert метод плагина."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.customize.FileTypePlugin.on_postdelete:1
+msgid ""
+"If True, this plugin is run after a book file is deleted from the database. "
+"In this case the postdelete method of the plugin is called."
+msgstr "Если True, этот плагин запускается после удаления файла книги из базы данных. В этом случае вызывается postdelete метод плагина."
+
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.FileTypePlugin.on_preprocess:1
 msgid "If True, this plugin is run just before a conversion"
 msgstr "Если True, этот плагин запускается непосредственно перед конвертацией."
@@ -621,19 +639,49 @@ msgstr "Вызывается пост-импортом, т.е. после тог
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postadd:8
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:5
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:6
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:6
 msgid "Database id of the added book."
 msgstr "Идентификатор базы данных добавленной книги."
 
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:6
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:7
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:7
 msgid "The file type of the book that was added."
 msgstr "Тип файла добавленной книги."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:7
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:8
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:8
 msgid "Library database."
 msgstr "Библиотека базы данных."
+
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postconvert:1
+msgid ""
+"Called post conversion, i.e., after the conversion output book file has been"
+" added to the database. Note that it is run after a conversion only, not "
+"after a book is added. It is useful for modifying the book record based on "
+"the contents of the newly added file."
+msgstr "Вызывается после конвертации, т. е. после того, как файл выходной книги конвертации был добавлен в базу данных. Обратите внимание, что он запускается только после преобразования, а не после добавления книги. Это полезно для изменения записи книги на основе содержимого вновь добавленного файла."
+
+#: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.postdelete:1
+msgid ""
+"Called post deletion, i.e., after the book file has been deleted from the "
+"database. Note that it is not run when a book record is deleted, only when "
+"one or more formats from the book are deleted. It is useful for modifying "
+"the book record based on the format of the deleted file."
+msgstr "Вызывается после удаления, т. е. после того, как файл книги был удален из базы данных. Обратите внимание, что он не запускается при удалении записи книги, а только при удалении одного или нескольких форматов из книги. Это полезно для изменения записи книги на основе формата удаленного файла."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postadd:1
@@ -935,7 +983,7 @@ msgstr "Переопределите этот метод, если вы хоти
 msgid ""
 "Return cached cover URL for the book identified by the identifiers "
 "dictionary or None if no such URL exists."
-msgstr ""
+msgstr "Возвращает кешированный URL-адрес обложки для книги, идентифицированной словарем идентификаторов, или None, если такой URL-адрес не существует."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.get_cached_cover_url:4
@@ -1382,8 +1430,8 @@ msgstr "Может использоваться для изменения зна
 #: ../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring of
 #: calibre.customize.conversion.OutputFormatPlugin.specialize_css_for_output:1
 msgid ""
-"Can be used to make changes to the css during the CSS flattening process."
-msgstr "Может использоваться для внесения изменений в CSS во время уплощения CSS."
+"Can be used to make changes to the CSS during the CSS flattening process."
+msgstr "Может использоваться для внесения изменений в CSS во время процесса уплощения CSS."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring of
 #: calibre.customize.conversion.OutputFormatPlugin.specialize_css_for_output:4
@@ -2660,6 +2708,13 @@ msgid ""
 "corresponding to the action is not registered. If you pass an empty tuple, "
 "then the shortcut is registered with no default key binding."
 msgstr "Форма: (текст, путь к значку, всплывающая подсказка, сочетание клавиш) значок, всплывающая подсказка и сочетание клавиш могут иметь значение None, сочетание клавиш должно быть строкой, None или кортежем сочетаний клавиш. Если None, сочетание клавиш, соответствующее действию, не регистрируется. Если вы передаете пустой кортеж, ярлык регистрируется без привязки клавиш по умолчанию."
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.gui2.actions.InterfaceAction.action_shortcut_name:1
+msgid ""
+"If not None, used for the name displayed to the user when customizing the "
+"keyboard shortcuts for the above action spec instead of action_spec[0]"
+msgstr "Если не None, используется для имени, отображаемого пользователю при настройке сочетаний клавиш для указанной выше спецификации действия вместо action_spec[0]"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.gui2.actions.InterfaceAction.action_add_menu:1

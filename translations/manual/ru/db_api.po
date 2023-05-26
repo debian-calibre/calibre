@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-20 08:11+0000\n"
+"POT-Creation-Date: 2023-05-24 06:57+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: ashed <craysy@gmail.com>, 2020-2023\n"
 "Language-Team: Russian (http://app.transifex.com/calibre/calibre/language/ru/)\n"
@@ -52,11 +52,6 @@ msgid ""
 "All table reading/sorting/searching/caching logic is re-implemented. This "
 "was necessary for maximum performance and flexibility."
 msgstr "SQLITE используется просто как способ надежного чтения и записи из metadata.db. Переработана вся логика чтения/сортировки/поиска/кеширования таблиц. Это было необходимо для максимальной производительности и гибкости."
-
-#: ../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
-#: calibre.db.listeners.EventType:1
-msgid "An enumeration."
-msgstr "Перечисление."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.book_created:1
@@ -144,7 +139,7 @@ msgstr "Добавить данные для имени, где val_map - это
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_extra_files:1
 msgid "Add extra data files"
-msgstr ""
+msgstr "Добавить дополнительные файлы данных"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:1
@@ -167,6 +162,8 @@ msgstr "Добавить формат в указанную книгу. Верн
 #: calibre.db.cache.Cache.get_link_map:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:0
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -366,7 +363,7 @@ msgstr "Удалить данные для имени. По умолчанию �
 msgid ""
 "Delete an entry from the trash. Here category is 'b' for books and 'f' for "
 "formats."
-msgstr ""
+msgstr "Удалить запись из корзины. Здесь категория 'b' для книг и 'f' для форматов."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.embed_metadata:1
@@ -378,7 +375,7 @@ msgstr "Обновить метаданные во всех форматах у�
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.expire_old_trash:1
 msgid "Expire entries from the trash that are too old"
-msgstr ""
+msgstr "Записи из корзины слишком старые"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.fast_field_for:1
@@ -411,7 +408,7 @@ msgid ""
 "is identifiers for which the returned value is always a dictionary. The "
 "returned tuples are always in link order, that is, the order in which they "
 "were created."
-msgstr ""
+msgstr "Возвращаемое значение для полей is_multiple всегда является кортежем, даже если значения не найдены (другими словами, default_value игнорируется). Исключение составляют идентификаторы, для которых возвращаемое значение всегда dict. Возвращаемые кортежи всегда находятся в ссылочном порядке (в порядке их создания)."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_ids_for:1
@@ -522,26 +519,28 @@ msgstr "Вернуть кортеж всех форматов для указа�
 msgid ""
 "Returns all links for all fields referenced by book identified by book_id. "
 "If book_id doesn't exist then the method returns {}."
-msgstr ""
+msgstr "Возвращает все ссылки для всех полей, на которые ссылается книга, идентифицированная book_id. Если book_id не существует, метод возвращает {}."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_all_link_maps_for_book:4
 msgid ""
 "Example: Assume author A has link X, author B has link Y, tag S has link F, "
 "and tag T has link G. If book 1 has author A and tag T, this method returns "
-"{'authors':{'A':'X'}, 'tags':{'T', 'G'}} If book 2's author is neither A nor"
-" B and has no tags, this method returns {}"
-msgstr ""
+"{'authors':{'A':'X'}, 'tags':{'T', 'G'}}. If book 2's author is neither A "
+"nor B and has no tags, this method returns {}."
+msgstr "Пример. Предположим, что у автора A есть ссылка X, у автора B есть ссылка Y, у тега S есть ссылка F, а у тега T есть ссылка G. Если у книги 1 есть автор A и тег T, этот метод возвращает {'authors':{'A':'X'}, 'теги':{'T', 'G'}}. Если автор книги 2 не является ни A, ни B и не имеет тегов, этот метод возвращает {}."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_all_link_maps_for_book:9
 msgid "the book id in question."
-msgstr ""
+msgstr "book id в вопросе."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_all_link_maps_for_book:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:0
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -554,7 +553,7 @@ msgstr "Возврат"
 msgid ""
 "{field: {field_value, link_value}, ...  for all fields with a field_value "
 "having a non-empty link value for that book"
-msgstr ""
+msgstr "{field: {field_value, link_value}, ... для всех полей с field_value, имеющим непустое значение ссылки для этой книги"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_categories:1
@@ -601,18 +600,18 @@ msgstr "Вернуть имя элемента для элемента, указ
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:1
-msgid "Return a dict of links for the supplied field."
+msgid "Return a dictionary of links for the supplied field."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:3
 msgid "the lookup name of the field for which the link map is desired"
-msgstr ""
+msgstr "имя поиска поля, для которого требуется карта ссылок"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:5
 msgid "{field_value:link_value, ...} for non-empty links"
-msgstr ""
+msgstr "{field_value:link_value, ...} для непустых ссылок"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_metadata:1
@@ -682,21 +681,48 @@ msgid "Initialize this cache with data from the backend."
 msgstr "Инициализировать этот кеш данными из серверной части."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.list_extra_files_matching:1
+#: calibre.db.cache.Cache.list_extra_files:1
+msgid "Get information about extra files in the book's directory."
+msgstr "Получить информацию о дополнительных файлах в каталоге книги."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:3
+msgid "the database book id for the book"
+msgstr "идентификатор книги в базе данных для книги"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:4
 msgid ""
-"List extra data files matching the specified pattern. Empty pattern matches "
-"all. Recursive globbing with ** is supported."
-msgstr ""
+"the pattern of filenames to search for. Empty pattern matches all extra "
+"files. Patterns must use / as separator. Use the DATA_FILE_PATTERN constant "
+"to match files inside the data directory."
+msgstr "паттерн имен файлов для поиска. Пустой паттерн соответствует всем дополнительным файлам. Паттерны должны использовать / в качестве разделителя. Используйте константу DATA_FILE_PATTERN для сопоставления файлов внутри каталога данных."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:7
+msgid ""
+"A tuple of all extra files matching the specified pattern. Each element of "
+"the tuple is ExtraFile(relpath, file_path, stat_result). Where relpath is "
+"the relative path of the file to the book directory using / as a separator. "
+"stat_result is the result of calling os.stat() on the file."
+msgstr "Кортеж всех дополнительных файлов, соответствующих указанному шаблону. Каждый элемент кортежа — это ExtraFile(relpath, file_path, stat_result). Где relpath — это относительный путь файла к каталогу книги с использованием / в качестве разделителя. stat_result — это результат вызова os.stat() для файла."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.merge_extra_files:1
+msgid ""
+"Merge the extra files from src_ids into dest_id. Conflicting files are auto-"
+"renamed unless replace=True in which case they are replaced."
+msgstr "Объединить дополнительные файлы из src_ids в dest_id. Конфликтующие файлы автоматически переименовываются, если только replace=True не заменяет их."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.move_book_from_trash:1
 msgid "Undelete a book from the trash directory"
-msgstr ""
+msgstr "Восстановить книгу из каталога корзины"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.move_format_from_trash:1
 msgid "Undelete a format from the trash directory"
-msgstr ""
+msgstr "Восстановить формат из каталога корзины"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.multisort:1
@@ -732,7 +758,7 @@ msgid ""
 "Remove the books specified by the book_ids from the database and delete "
 "their format files. If ``permanent`` is False, then the format files are "
 "placed in the per-library trash directory."
-msgstr ""
+msgstr "Удалить записи книг, указанных в book_ids, из базы данных и удалить их файлы. Если для параметра ``permanent`` установлено значение False, файлы помещаются в корзину для библиотеки."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:1
@@ -756,7 +782,7 @@ msgstr "Если True, удалить только запись для форм�
 msgid ""
 "A map of book id to set of formats actually deleted from the filesystem for "
 "that book"
-msgstr ""
+msgstr "Сопоставление идентификатора книги с набором форматов, фактически удаленных из файловой системы для этой книги"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_items:1
@@ -896,25 +922,25 @@ msgstr "Используется внутри, вы никогда не долж
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_link_map:1
 msgid ""
-"Sets links for item values in field Note: this method doesn't change values "
-"not in the value_to_link_map"
+"Sets links for item values in field. Note: this method doesn't change values"
+" not in the value_to_link_map"
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_link_map:4
 msgid "the lookup name"
-msgstr ""
+msgstr "имя поиска"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_link_map:5
 msgid ""
 "dict(field_value:link, ...). Note that these are values, not field ids."
-msgstr ""
+msgstr "dict(field_value:ссылка, ...). Обратите внимание, что это значения, а не идентификаторы полей."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_link_map:7
 msgid "books changed by setting the link"
-msgstr ""
+msgstr "книги изменены путем установки ссылки"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_metadata:1
