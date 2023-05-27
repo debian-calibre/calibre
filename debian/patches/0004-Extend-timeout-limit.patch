@@ -9,9 +9,9 @@ Add some more time to wait test results.
 ---
  src/calibre/srv/tests/base.py |  2 +-
  src/calibre/srv/tests/http.py | 16 ++++++++--------
- src/calibre/srv/tests/loop.py |  6 +++---
+ src/calibre/srv/tests/loop.py |  4 ++--
  src/calibre/test_build.py     |  2 +-
- 4 files changed, 13 insertions(+), 13 deletions(-)
+ 4 files changed, 12 insertions(+), 12 deletions(-)
 
 diff --git a/src/calibre/srv/tests/base.py b/src/calibre/srv/tests/base.py
 index cf2ce9c..b077747 100644
@@ -96,18 +96,9 @@ index 5f217d5..0e39f9f 100644
      # }}}
  
 diff --git a/src/calibre/srv/tests/loop.py b/src/calibre/srv/tests/loop.py
-index 13870ce..8c1507b 100644
+index 13870ce..374ae45 100644
 --- a/src/calibre/srv/tests/loop.py
 +++ b/src/calibre/srv/tests/loop.py
-@@ -80,7 +80,7 @@ class LoopTest(BaseTest):
-         self.ae(0, sum(int(w.is_alive()) for w in server.loop.pool.workers))
-         # Test shutdown with hung worker
-         block = Event()
--        with TestServer(lambda data:block.wait(), worker_count=3, shutdown_timeout=0.1, timeout=0.1) as server:
-+        with TestServer(lambda data:block.wait(), worker_count=3, shutdown_timeout=10, timeout=10) as server:
-             pool = server.loop.pool
-             self.ae(3, sum(int(w.is_alive()) for w in pool.workers))
-             conn = server.connect()
 @@ -109,8 +109,8 @@ class LoopTest(BaseTest):
          from calibre.srv.bonjour import BonJour
          from zeroconf import Zeroconf
