@@ -71,7 +71,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2023-05-24 06:58+UTC\n"
+"POT-Creation-Date: 2023-05-29 05:22+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
 "Last-Translator: Jurrendel van Delden, 2023\n"
 "Language-Team: Dutch (http://app.transifex.com/calibre/calibre/language/nl/)\n"
@@ -208,13 +208,13 @@ msgstr "Doet helemaal niets"
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/comic_input.py:199
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/fb2_input.py:133
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/fb2_input.py:135
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_input.py:140
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_input.py:145
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_input.py:151
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_input.py:156
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/lrf_output.py:29
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/pdb_input.py:28
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/rtf_input.py:309
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/rtf_input.py:311
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:330
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:331
 #: /__w/calibre/calibre/src/calibre/ebooks/covers.py:294
 #: /__w/calibre/calibre/src/calibre/ebooks/docx/container.py:227
 #: /__w/calibre/calibre/src/calibre/ebooks/docx/to_html.py:84
@@ -392,7 +392,7 @@ msgid "Base"
 msgstr "Basis"
 
 #: /__w/calibre/calibre/src/calibre/customize/__init__.py:154
-#: /__w/calibre/calibre/src/calibre/ebooks/html/to_zip.py:86
+#: /__w/calibre/calibre/src/calibre/ebooks/html/to_zip.py:102
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:441
 msgid "Customize"
 msgstr "Aanpassen"
@@ -1400,7 +1400,7 @@ msgstr "Opgeslagen zoekopdrachten"
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/base.py:688
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:240
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1110
-#: /__w/calibre/calibre/src/calibre/gui2/library/delegates.py:774
+#: /__w/calibre/calibre/src/calibre/gui2/library/delegates.py:766
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:954
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:358
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:202
@@ -3486,7 +3486,7 @@ msgid ""
 msgstr "Wanneer een nieuw boek wordt bijgeladen, importeert de Kobo firmware details van het boek in de interne database. Zelfs als het boek een bestaand boek vervangt, verwijdert de Kobo het boek uit de database en behandelt het dan als een nieuw boek. Dit betekent dat leesstatus, bladwijzers en verzamelingen voor het boek verloren gaan. Deze optie negeert firmwaregedrag  en probeert te voorkomen dat een boek dat opnieuw werd verzonden, wordt behandeld als een nieuw boek. Als u verkiest om vervangingen te laten behandelen als nieuwe boeken, schakel deze optie uit."
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:240
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:414
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:415
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1471
 msgid "Collections"
 msgstr "Collecties"
@@ -3788,7 +3788,7 @@ msgstr "Voer een sjabloon in om de laagste schatting in te stellen voor de leest
 #: /__w/calibre/calibre/src/calibre/gui2/device_drivers/mtp_config.py:103
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog_ui.py:367
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_line_editor.py:43
-#: /__w/calibre/calibre/src/calibre/gui2/library/delegates.py:849
+#: /__w/calibre/calibre/src/calibre/gui2/library/delegates.py:841
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/save_template.py:53
 msgid "Edit template"
 msgstr "Sjabloon bewerken"
@@ -5121,6 +5121,15 @@ msgid ""
 "can result in various nasty side effects in the rest of the conversion "
 "pipeline."
 msgstr "Normaal gesproken zet deze plug-in alle bronbestanden in een standaard mappenstructuur. Gebruik deze optie alleen als u weet wat u doet: hij kan wat nare bijwerkingen hebben in de rest van de conversieketen."
+
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_input.py:69
+msgid ""
+"Normally, resources linked to by the HTML file or its children will only be "
+"allowed if they are in a sub-folder of the original HTML file. This option "
+"allows including local files from any location on your computer. This can be"
+" a security risk if you are converting untrusted HTML and expecting to "
+"distribute the result of the conversion."
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_output.py:29
 msgid "CSS file used for the output instead of the default file"
@@ -6710,23 +6719,27 @@ msgid ""
 "library."
 msgstr "Loop alle links in een HTML-bestand na en maak een ZIP-bestand aan met alle gelinkte bestanden. Telkens wanneer u een HTML-bestand aan de bibliotheek toevoegt wordt deze plug-in geactiveerd."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/html/to_zip.py:65
+#: /__w/calibre/calibre/src/calibre/ebooks/html/to_zip.py:80
 msgid ""
-"Character encoding for the input HTML files. Common choices include: cp1252,"
-" cp1251, latin1 and utf-8."
-msgstr "Tekencodering voor de invoer HTML-bestanden. Veel voorkomende keuzes bevatten: cp1252, cp1251, latin1 en utf-8."
+"Character encoding for the input HTML files. Common choices include: utf-8, "
+"cp1252, cp1251 and latin1."
+msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/html/to_zip.py:95
+#: /__w/calibre/calibre/src/calibre/ebooks/html/to_zip.py:112
 msgid "Add linked files in breadth first order"
 msgstr "Gekoppelde bestanden toevoegen in 'breadth first' volgorde"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/html/to_zip.py:96
+#: /__w/calibre/calibre/src/calibre/ebooks/html/to_zip.py:113
 msgid ""
 "Normally, when following links in HTML files calibre does it depth first, "
 "i.e. if file A links to B and  C, but B links to D, the files are added in "
 "the order A, B, D, C.  With this option, they will instead be added as A, B,"
 " C, D"
 msgstr "Normaalgesproken, als koppelingen in HTML bestanden worden gevolgd zal calibre dit in 'depth first' volgorde doen. Dat wil zeggen, als bestand A linkt naar B en C, maar B linkt naar D, zullen de bestanden worden toegevoegd in de volgorde A, B, D, C. Met deze optie zullen ze worden toegevoegd als A, B, C, D"
+
+#: /__w/calibre/calibre/src/calibre/ebooks/html/to_zip.py:117
+msgid "Allow resources outside the HTML file root folder"
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ebooks/html_transform_rules.py:18
 msgid "{} must not be empty"
@@ -7190,7 +7203,7 @@ msgstr "Bekende e-boekformaten uitpakken van archiefbestanden (ZIP/RAR). Probeer
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/base.py:688
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:240
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1110
-#: /__w/calibre/calibre/src/calibre/gui2/library/delegates.py:774
+#: /__w/calibre/calibre/src/calibre/gui2/library/delegates.py:766
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:954
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:359
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:202
@@ -7332,12 +7345,12 @@ msgstr "Klik om te openen"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:191
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:197
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:310
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:354
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:371
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:384
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:389
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:398
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:311
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:355
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:372
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:385
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:390
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:399
 #, python-brace-format
 msgid "Click to see books with {0}: {1}"
 msgstr "Klik hier om te zien welke boeken {0}: {1} bevatten"
@@ -7356,27 +7369,27 @@ msgstr[1] ""
 msgid "Data files"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:268
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:269
 msgid "Ids"
 msgstr "Id's"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:302
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:303
 msgid "Search calibre for books with the language: {}"
 msgstr "Doorzoek calibre naar boeken in de taal: {}"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:339
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:340
 #, python-format
 msgid ""
 "%(sidx)s of <a href=\"%(href)s\" title=\"%(tt)s\"><span "
 "class=\"%(cls)s\">%(series)s</span></a>"
 msgstr "%(sidx)s van <a href=\"%(href)s\" title=\"%(tt)s\"><span class=\"%(cls)s\">%(series)s</span></a>"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:343
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:344
 msgid "Click to see books in this series"
 msgstr "Klik hier voor meer boeken in deze serie"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:358
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:402
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:359
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/render.py:403
 #, python-brace-format
 msgid "Click to see books with {0}: {1} (derived from {2})"
 msgstr "Klik om boeken te zien met {0}: {1} (afgeleid van {2})"
@@ -7507,115 +7520,115 @@ msgstr "Amazon"
 msgid "Google Images"
 msgstr "Google Afbeeldingen"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1043
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1047
 msgid "Downloads metadata and covers from Amazon"
 msgstr "Download metadata en omslagen van Amazon"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1054
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1058
 msgid "US"
 msgstr "Verenigde Staten"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1055
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1059
 msgid "France"
 msgstr "Frankrijk"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1056
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1060
 msgid "Germany"
 msgstr "Duitsland"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1057
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1061
 msgid "UK"
 msgstr "Verenigd Koninkrijk"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1058
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1062
 msgid "Australia"
 msgstr "Australie"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1059
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1063
 msgid "Italy"
 msgstr "Italië"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1060
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1064
 msgid "Japan"
 msgstr "Japan"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1061
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1065
 msgid "Spain"
 msgstr "Spanje"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1062
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1066
 msgid "Brazil"
 msgstr "Brazilië"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1063
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1067
 msgid "India"
 msgstr "Indië"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1064
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1068
 msgid "Netherlands"
 msgstr "Nederland"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1065
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1069
 msgid "China"
 msgstr "China"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1066
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1070
 msgid "Canada"
 msgstr "Canada"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1067
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1071
 msgid "Sweden"
 msgstr "Zweden"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1071
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1075
 msgid "Choose server automatically"
 msgstr "Kies automatisch de server"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1072
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1076
 msgid "Amazon servers"
 msgstr "Amazon servers"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1073
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1077
 msgid "Bing search cache"
 msgstr "Bing zoekcache"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1074
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1078
 msgid "Google search cache"
 msgstr "Google zoekcache"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1075
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1079
 msgid "Wayback machine cache (slow)"
 msgstr "Terugweg machine-cache (langzaam)"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1076
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1080
 msgid "DuckDuckGo search and Google cache"
 msgstr "DuckDuckGo zoeken en Google cache"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1080
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1084
 msgid "Amazon country website to use:"
 msgstr "Amazon landen-website om te gebruiken:"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1081
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1085
 msgid ""
 "Metadata from Amazon will be fetched using this country's Amazon website."
 msgstr "Metadata van Amazon worden opgehaald met gebruik van de Amazon website van dit land."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1083
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1087
 msgid "Server to get data from:"
 msgstr "Server om gegevens op te halen:"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1085
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1089
 msgid ""
 "Amazon has started blocking attempts to download metadata from its servers. "
 "To get around this problem, calibre can fetch the Amazon data from many "
 "different places where it is cached. Choose the source you prefer."
 msgstr "Amazon is begonnen pogingen te blokkeren om metadata te downloaden van hun servers. Om dit probleem te omzeilen kan calibre de Amazon gegevens van veel verschillende plaatsen halen waar deze zijn gecached. Kies de bron die u prefereert."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1090
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1094
 msgid "Use the MOBI-ASIN for metadata search"
 msgstr "Gebruik de MOBI-ASIN voor zoeken naar metadata"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1092
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1096
 msgid ""
 "Enable this option to search for metadata with an ASIN identifier from the "
 "MOBI file at the current country website, unless any other amazon id is "
@@ -7623,18 +7636,18 @@ msgid ""
 "store, you could get incorrect results."
 msgstr "Schakel deze optie in om te zoeken naar metadata met een ASIN-ID uit het MOBI-bestand op de huidige land website, tenzij een andere amazon id beschikbaar is. Merk op dat als het MOBI bestand uit een andere Amazon landwinkel kwam, u foute resultaten kon krijgen."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1098
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1102
 msgid "Prefer the Kindle edition, when available"
 msgstr "Voorkeur voor de Kindle editie, indien beschikbaar"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1100
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1104
 msgid ""
 "When searching for a book and the search engine returns both paper and "
 "Kindle editions, always prefer the Kindle edition, instead of whatever the "
 "search engine returns at the top."
 msgstr "Als je naar een boek zoekt en de zoekmachine geeft zowel de papieren als de Kindle-editie weer, geef dan altijd de voorkeur aan de Kindle-editie in plaats van wat de zoekmachine bovenaan retourneert."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1466
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1470
 msgid "Amazon timed out. Try again later."
 msgstr "Time-out van Amazon. Probeer later opnieuw."
 
@@ -7742,7 +7755,7 @@ msgid "Any size"
 msgstr "Ieder formaat"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/google_images.py:61
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:645
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:647
 msgid "Large"
 msgstr "Groot"
 
@@ -8791,7 +8804,7 @@ msgid ""
 msgstr "<p><i>Boeken oppoetsen</i> gaat over alles wat de indruk van perfectie aan\nje zorgvuldig samengestelde E-boeken geeft.</p>\n\n<p>Oppoetsen tracht zo min mogelijk de interne code van u E-boek te veranderen.\nAnders dan bij converteren vereenvoudigt het <i>geen</i> CSS, hernoemt het geen bestanden, verandert niet\nde lettertype grootte, aanpassen van marges, enz. Elke actie veroorzaakt slechts de minimaal benodigde veranderingen om het beoogde effect te bereiken.</p>\n\n<p>Je dient dit als laatste stap in u E-boek creatieproces te gebruiken.</p>\n{0}\n<p>Merk op dat oppoetsen alleen werkt bij bestanden in het %s formaat.</p>"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:66
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:497
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:500
 #: /__w/calibre/calibre/src/calibre/gui2/actions/toc_edit.py:119
 #: /__w/calibre/calibre/src/calibre/gui2/actions/tweak_epub.py:125
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:745
@@ -9161,7 +9174,7 @@ msgstr "Alle HTML weergegeven als PDF"
 msgid "Added links to PDF content"
 msgstr "Links naar PDF-inhoud toegevoegd"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/pdf/html_writer.py:1199
+#: /__w/calibre/calibre/src/calibre/ebooks/pdf/html_writer.py:1200
 msgid "Updated metadata in PDF"
 msgstr "Bijgewerkte metadata in PDF"
 
@@ -9181,8 +9194,8 @@ msgstr "Inhoudsopgave:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/__init__.py:119
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:618
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:562
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:944
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:564
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:946
 msgid "Default icons"
 msgstr "Standaard iconen"
 
@@ -9502,7 +9515,7 @@ msgstr "Controleer het toevoegen van boeken"
 #: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:534
 #: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:606
 #: /__w/calibre/calibre/src/calibre/gui2/actions/mark_books.py:204
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:464
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:467
 #: /__w/calibre/calibre/src/calibre/gui2/actions/save_to_disk.py:83
 #: /__w/calibre/calibre/src/calibre/gui2/actions/show_template_tester.py:48
 #: /__w/calibre/calibre/src/calibre/gui2/actions/toc_edit.py:134
@@ -9530,7 +9543,7 @@ msgstr "Er zijn geen bestanden naar het klembord gekopieerd"
 #: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:214
 #: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:249
 #: /__w/calibre/calibre/src/calibre/gui2/actions/delete.py:201
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:478
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:481
 #: /__w/calibre/calibre/src/calibre/gui2/actions/toc_edit.py:122
 #: /__w/calibre/calibre/src/calibre/gui2/actions/unpack_book.py:163
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/confirm_delete.py:22
@@ -11656,130 +11669,130 @@ msgstr "Instellingen op&slaan"
 msgid "&Load settings"
 msgstr "Instellingen &laden"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:160
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:240
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:163
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:243
 msgid "No actions selected"
 msgstr "Geen taken geselecteerd"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:161
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:164
 msgid "You must select at least one action before saving"
 msgstr "U moet minimaal één taak selecteren voor het opslaan"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:163
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:166
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/multisort.py:149
 #: /__w/calibre/calibre/src/calibre/gui2/toc/main.py:83
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1245
 msgid "Choose name"
 msgstr "Kies naam"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:164
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:167
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/multisort.py:150
 #: /__w/calibre/calibre/src/calibre/gui2/toc/main.py:84
 msgid "Choose a name for these settings"
 msgstr "Kies een naam voor deze instellingen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:184
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:187
 #: /__w/calibre/calibre/src/calibre/gui2/toc/main.py:103
 msgid "Remove saved settings"
 msgstr "Verwijder opgeslagen instellingen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:225
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:228
 msgid "Must update metadata"
 msgstr "Metadate moet worden bijgewerkt"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:226
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:229
 msgid ""
 "You have selected the option to add metadata as a \"book jacket\". For this "
 "option to work, you must also select the option to update metadata in the "
 "book files. Do you want to select it?"
 msgstr "U heeft de optie geselecteerd om metadata toe te voegen als een \"boekomslag\". Om deze optie te laten werken, moet u ook de optie selecteren om metadata in de boekbestanden te updaten. Wilt u die selecteren?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:234
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:237
 msgid "Add or remove jacket?"
 msgstr "Toevoegen of verwijderen van de omslag?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:235
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:238
 msgid ""
 "You have chosen to both add and remove the metadata jacket. This will result"
 " in the final book having no jacket. Is this what you want?"
 msgstr "U hebt gekozen de metadata omslag zowel toe te voegen als te verwijderen. Dit zal ervoor zorgen dat het finale boek geen omslag zal hebben. Is dit wat u wilt?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:241
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:244
 msgid "You must select at least one action, or click Cancel."
 msgstr "U dient minimaal één taak te selecteren, of klik Annuleren."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:255
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:258
 msgid "Queueing books for polishing"
 msgstr "Boeken doorlopen voor bijschaving"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:303
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:306
 #, python-format
 msgid "Polish %s"
 msgstr "%s bijschaven"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:304
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:307
 #, python-format
 msgid "Polish book %(nums)s of %(tot)s (%(title)s)"
 msgstr "Boek %(nums)s van %(tot)s bijschaven (%(title)s)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:308
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:311
 #, python-format
 msgid "Queueing book %(nums)s of %(tot)s (%(title)s)"
 msgstr "Boek %(nums)s van %(tot)s (%(title)s) in wachtrij zetten"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:335
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:338
 msgid "Ignore remaining reports"
 msgstr "Negeer resterende rapporten"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:341
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:344
 msgid "View full &log"
 msgstr "Toon volledig &log"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:352
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:355
 msgid "Ignore remaining report"
 msgid_plural "Ignore remaining {} reports"
 msgstr[0] "Negeer het resterende rapport"
 msgstr[1] "Negeer de resterende {} rapporten"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:365
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:368
 #, python-format
 msgid "Polishing of %s"
 msgstr "Bijschaven van %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:371
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:374
 #, python-format
 msgid "The original file has been saved as %s."
 msgid_plural "The original files have been saved as %s."
 msgstr[0] "Het originele bestand is opgeslagen als %s."
 msgstr[1] "De originele bestanden zijn opgeslagen als %s."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:373
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:376
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:327
 msgid " and "
 msgstr " en "
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:376
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:379
 msgid "If you polish again, the polishing will run on the originals."
 msgstr "Als u nogmaals bijschaaft, zal het bijschaven worden uitgevoerd op de originelen."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:412
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:415
 msgid "Polish books"
 msgstr "Boeken bijschaven"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:413
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:416
 msgid "Apply the shine of perfection to your books"
 msgstr "De glans van perfectie toepassen op uw boeken"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:413
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:416
 msgid "P"
 msgstr "B"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:463
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:494
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:466
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:497
 msgid "Cannot polish"
 msgstr "Bijschaven onmogelijk"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:475
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:478
 #, python-brace-format
 msgid ""
 "One of the books you are polishing has an {0} format. Polishing will use "
@@ -11787,24 +11800,24 @@ msgid ""
 "want to proceed?"
 msgstr "Een van de boeken die u aan het opschonen bent heeft een {0}-formaat. Opschonen zal dit als bron gebruiken en alle bestaande {1}-formaten  overschrijven. Bent u zeker dat u door wilt gaan?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:479
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:482
 msgid "Ask for this confirmation again"
 msgstr "Vraag opnieuw naar deze bevestiging"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:495
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:498
 #, python-format
 msgid ""
 "Polishing is only supported for books in the %s formats. Convert to one of "
 "those formats before polishing."
 msgstr "Bijschaven wordt enkel ondersteund voor boeken in de %s formaten. Zet het boek om naar één van deze formaten voor het bijschaven."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:523
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:526
 msgid "Start polishing the book"
 msgid_plural "Start polishing of {} books"
 msgstr[0] "Begin met het bijschaven van het boek"
 msgstr[1] "Begin met het bijschaven van {} boeken"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:540
+#: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:543
 msgid " completed"
 msgstr " voltooid"
 
@@ -13712,7 +13725,7 @@ msgstr "Herstel naar standaard"
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/columns_ui.py:87
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/columns_ui.py:89
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/columns_ui.py:91
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:261
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:257
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar_ui.py:122
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar_ui.py:124
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar_ui.py:127
@@ -14355,7 +14368,7 @@ msgid "&Title for inserted ToC:"
 msgstr "&Titel voor de ingevoegde Inhoudsopgave:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/epub_output_ui.py:88
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:652
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:654
 msgid "Disabled"
 msgstr "Uitgeschakeld"
 
@@ -15410,7 +15423,7 @@ msgstr "Bewaar de lijst met uitdrukkingen om deze later makkelijk te kunnen gebr
 #: /__w/calibre/calibre/src/calibre/gui2/css_transform_rules.py:300
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/multisort.py:74
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:365
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:268
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:264
 #: /__w/calibre/calibre/src/calibre/gui2/tag_mapper.py:517
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1308
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1432
@@ -16257,9 +16270,9 @@ msgstr "Wis {}"
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1246
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:539
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:548
-#: /__w/calibre/calibre/src/calibre/gui2/library/delegates.py:617
-#: /__w/calibre/calibre/src/calibre/gui2/library/delegates.py:621
-#: /__w/calibre/calibre/src/calibre/gui2/library/delegates.py:774
+#: /__w/calibre/calibre/src/calibre/gui2/library/delegates.py:609
+#: /__w/calibre/calibre/src/calibre/gui2/library/delegates.py:613
+#: /__w/calibre/calibre/src/calibre/gui2/library/delegates.py:766
 #: /__w/calibre/calibre/src/calibre/gui2/widgets2.py:664
 msgid "Undefined"
 msgstr "Niet gedefiniëerd"
@@ -17868,43 +17881,43 @@ msgid "%(curr)s (was %(initial)s)"
 msgstr "%(curr)s (was %(initial)s)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/device_category_editor.py:87
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:598
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:596
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1363
 msgid "Item is blank"
 msgstr "Veld is leeg"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/device_category_editor.py:88
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:599
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:597
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1364
 msgid "An item cannot be set to nothing. Delete it instead."
 msgstr "Een veld mag niet leeg zijn. Verwijder het veld."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/device_category_editor.py:101
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:628
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:676
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:626
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:674
 msgid "No item selected"
 msgstr "Geen item geselecteerd"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/device_category_editor.py:102
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:629
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:677
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:627
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:675
 msgid "You must select one item from the list of available items."
 msgstr "U moet één van de items uit de lijst van beschikbare items selecteren."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/device_category_editor.py:109
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories.py:249
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories.py:266
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:714
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:712
 msgid "No items selected"
 msgstr "Geen items geselecteerd"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/device_category_editor.py:110
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:715
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:713
 msgid "You must select at least one item from the list."
 msgstr "U moet minimaal één itemu uit de lijst selecteren."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/device_category_editor.py:114
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:725
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:723
 msgid "Are you sure you want to delete the following items?"
 msgstr "Bent u zeker dat u de volgende items wilt verwijderen?"
 
@@ -17982,7 +17995,7 @@ msgid "Author sort"
 msgstr "Sorteerauteur"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:235
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:459
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:457
 msgid "Link"
 msgstr "Koppeling"
 
@@ -20730,61 +20743,61 @@ msgstr "Filter op {}"
 msgid "Search the library for {0}"
 msgstr "Doorzoek de bibliotheek op {0}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:455
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:453
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:625
 msgid "Count"
 msgstr "Aantal"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:457
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:455
 msgid "Was"
 msgstr "Was"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:478
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:476
 #, python-brace-format
 msgid "This is not one of this column's permitted values ({0})"
 msgstr "Dit is geen toegelaten waarde voor deze kolom ({0})"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:502
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:500
 msgid "no links available"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:577
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:575
 msgid "Editing..."
 msgstr "Bewerken..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:606
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:604
 msgid "Item is not a permitted value"
 msgstr "Item is geen toegelaten waarde"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:607
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:605
 #, python-brace-format
 msgid ""
 "This column has a fixed set of permitted values. The entered text must be "
 "one of ({0})."
 msgstr "Deze kolom heeft een vaste set met toegelaten waardes. De ingevoerde tekst moet een zijn van ({0})."
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:633
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:631
 msgid "Do you really want to undo your changes?"
 msgstr "Wilt u uw wijzigingen echt ongedaan maken?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:661
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:659
 msgid "Selection contains deleted items"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:662
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:660
 msgid ""
 "The selection contains deleted items. You must undelete them before editing."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:680
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:678
 msgid "Undelete items?"
 msgstr "Verwijderen item ongedaan maken?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:681
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:679
 msgid "Items must be undeleted to continue. Do you want to do this?"
 msgstr "Items moeten hersteld worden om door te gaan. Wilt u dit doen?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:700
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:698
 msgid "Are you sure you want to delete the selected links? There is no undo."
 msgstr ""
 
@@ -22956,11 +22969,11 @@ msgstr[1] "Bent u zeker dat u deze {} annotaties <b>permanent</b> wilt verwijder
 msgid "Editing is only supported for the notes associated with highlights"
 msgstr "Bewerken wordt enkel ondersteund voor de notities met accentueringen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/delegates.py:133
+#: /__w/calibre/calibre/src/calibre/gui2/library/delegates.py:138
 msgid "Set to undefined"
 msgstr "Instellen op Niet gedefiniëerd"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/delegates.py:838
+#: /__w/calibre/calibre/src/calibre/gui2/library/delegates.py:830
 msgid "Template editing disabled"
 msgstr "Sjabloonbewerking uitgeschakeld"
 
@@ -23192,15 +23205,15 @@ msgid "Center"
 msgstr "Midden"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:577
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:607
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:670
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:609
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:672
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preferences.py:321
 msgid "Left"
 msgstr "Links"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:577
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:607
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:671
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:609
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:673
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preferences.py:321
 msgid "Right"
 msgstr "Rechts"
@@ -26304,22 +26317,22 @@ msgstr "&Bewerk regel"
 msgid "Folders/path"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:563
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:945
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:565
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:947
 #, python-format
 msgid "Icon theme: <b>%s</b>"
 msgstr "Iconenthema: <b>%s</b>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:568
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:570
 msgid "Narrow"
 msgstr "Smal"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:568
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:570
 msgid "Wide"
 msgstr "Breed"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:569
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:570
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:571
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:572
 #: /__w/calibre/calibre/src/calibre/gui2/tts/linux_config.py:43
 #: /__w/calibre/calibre/src/calibre/gui2/tts/linux_config.py:93
 #: /__w/calibre/calibre/src/calibre/gui2/tts/macos_config.py:48
@@ -26330,187 +26343,187 @@ msgstr "Breed"
 msgid "System default"
 msgstr "Systeemstandaard"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:569
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:571
 msgid "calibre style"
 msgstr "calibre stijl"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:570
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:572
 msgid "Dark"
 msgstr "Donker"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:570
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:572
 msgid "Light"
 msgstr "Licht"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:602
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:604
 msgid "No subtitle"
 msgstr "Geen ondertiteling"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:607
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:609
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preferences.py:322
 #: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/widgets/widgets/qscrollbar.cpp:371
 msgid "Bottom"
 msgstr "Onderaan"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:607
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:609
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preferences.py:322
 #: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/widgets/widgets/qscrollbar.cpp:370
 msgid "Top"
 msgstr "Bovenaan"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:611
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:613
 msgid "Above text"
 msgstr "Boven de tekst"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:611
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:613
 msgid "Beside text"
 msgstr "Naast de tekst"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:611
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:649
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:613
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:651
 msgid "Never"
 msgstr "Nooit"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:644
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:646
 msgid "Off"
 msgstr "Uit"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:644
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:646
 msgid "Small"
 msgstr "Klein"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:645
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:647
 msgid "Medium"
 msgstr "Gemiddeld"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:648
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:650
 msgid "Always"
 msgstr "Altijd"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:648
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:650
 msgid "If there is enough room"
 msgstr "Als er genoeg ruimte is"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:652
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:654
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1079
 msgid "By first letter"
 msgstr "Op eerste letter"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:653
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:655
 msgid "Partitioned"
 msgstr "Opgedeeld"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:663
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:666
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:665
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:668
 msgid "Compact metadata"
 msgstr "Compacte metadata"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:663
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:666
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:665
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:668
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1199
 #: /__w/calibre/calibre/src/calibre/spell/dictionary.py:28
 msgid "Default"
 msgstr "Standaard"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:664
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:667
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:666
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:669
 msgid "All on 1 tab"
 msgstr "Alles in één tabblad"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:670
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:672
 msgid "Middle"
 msgstr "Midden"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:757
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:759
 msgid "Column &coloring"
 msgstr "Kolomkleur"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:761
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:763
 msgid "Column &icons"
 msgstr "Kolom &iconen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:781
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:783
 msgid "Change &color"
 msgstr "Kleur veranderen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:785
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:787
 msgid "Change &background image"
 msgstr "Achtergrond veranderen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:789
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:791
 msgid "Restore default &appearance"
 msgstr "Stan&daard uiterlijk herstellen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:825
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:827
 msgid "Search for books containing the current item"
 msgstr "Zoek naar boeken die het huidige item bevatten"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:826
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:828
 msgid "Search for books containing the current item or its children"
 msgstr "Zoek naar boeken die het huidige item bevatten of z'n kinderen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:827
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:829
 msgid "Search for books not containing the current item"
 msgstr "Zoek naar boeken die het huidige item niet bevatten"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:828
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:830
 msgid "Search for books not containing the current item or its children"
 msgstr "Zoek naar boeken die het huidige item of z'n kinderen niet bevatten"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:888
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:890
 msgid "Save column list to file"
 msgstr "Kolomlijst naar bestand opslaan"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:889
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:901
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:891
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:903
 msgid "Column list"
 msgstr "kolomlijst"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:895
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:897
 msgid "Export field layout"
 msgstr "Exportveld opmaak"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:896
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:898
 #, python-format
 msgid "<p>Could not write field list. Error:<br>%s"
 msgstr "<p>Kon veldenlijst niet schrijven. Fout:<br>%s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:900
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:902
 msgid "Load column list from file"
 msgstr "Kolomlijst van bestand laden"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:909
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:911
 msgid "Import layout"
 msgstr "Import opmaak"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:910
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:912
 #, python-format
 msgid "<p>Could not read field list. Error:<br>%s"
 msgstr "<p>Kon veldenlijst niet lezen. Fout:<br>%s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:966
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:968
 #, python-format
 msgid "Current aspect ratio (width/height): %.2g"
 msgstr "Huidig beeldverhouding (breedte/hoogte): %.2g"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:983
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:985
 msgid "Edit template for caption"
 msgstr "Sjabloon bewerken voor onderschriften"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:1029
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:1031
 #, python-format
 msgid "Current space used: %s"
 msgstr "Huidig plaatsgebruik: %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:1078
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:1080
 msgid "Choose background color for the Cover grid"
 msgstr "Kies achtergrondkleur voor het omslagraster"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:1085
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:1087
 msgid "Remove background image?"
 msgstr "Achtergrondafbeelding verwijderen?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:1086
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:1088
 msgid ""
 "There is currently a background image set, so the color you have chosen will"
 " not be visible. Remove the background image?"
@@ -27952,7 +27965,7 @@ msgstr "Minstens één criterium"
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:177
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:183
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:195
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:253
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:249
 msgid "Grouped search terms"
 msgstr "Gegroepeerde zoektermen"
 
@@ -28097,22 +28110,21 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:247
 msgid ""
-"<p>If enabled then pressing a key in the library view\n"
-"                  will search for the next cell in the current column where the\n"
-"                  value starts with the letter pressed. If there is no such cell\n"
-"                  then nothing happens. If the letter is a shortcut then the\n"
-"                  shortcut takes precedence.</p>"
+"<p>When enabled, pressing a key in the library view will search for the next"
+" cell in the current column where the value starts with the letter pressed. "
+"If there is no such cell then nothing happens. If the letter is a shortcut "
+"then the shortcut takes precedence.</p>"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:252
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:248
 msgid "Genera&l"
 msgstr "Algemee&n"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:254
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:250
 msgid "&Names:"
 msgstr "&Namen:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:255
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:251
 msgid ""
 "Contains the names of the currently-defined group search terms.\n"
 "Create a new name by entering it into the empty box, then\n"
@@ -28121,46 +28133,46 @@ msgid ""
 "a search term by changing the value box then pressing Save."
 msgstr "Bevat de namen van alle gedefinieerde kolomgroepen. Maak een nieuwe naam\naan door hem in het lege vak in te voeren, en klik dan op ‘Opslaan’\nHernoem door de oude naam te selecteren, deze aan te passen en ‘Opslaan’\naan te klikken. Verander de waarde van een kolomgroep door het waardeveld\nte veranderen en dan ‘Opslaan’ te klikken."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:260
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:256
 msgid "Delete the current search term"
 msgstr "Verwijder de huidige zoekterm"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:262
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:258
 msgid "&Value:"
 msgstr "&Waarde:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:263
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:259
 msgid ""
 "Enter a comma-separated list of lookup names of the columns\n"
 "to include in the grouped search term"
 msgstr "Vul een komma-gescheiden lijst in met zoekkolommen om op te nemen in de Gegroepeerde zoekterm"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:265
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:261
 msgid ""
 "Save the current search term. You can rename a search term by\n"
 "changing the name then pressing Save. You can change the value\n"
 "of a search term by changing the value box then pressing Save."
 msgstr "De huidige zoekterm opslaan. U kunt een zoekterm hernoemen \ndoor de naam te wijzigen en op ‘opslaan’ te klikken. U kunt\nde waarde van een zoekterm wijzigen door het waardeveld aan\nte passen en op ‘opslaan’ te klikken."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:269
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:265
 msgid "Make &user categories from:"
 msgstr "Maak gebr&uikerscategorie van:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:270
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:266
 msgid ""
 "Enter the names of any grouped search terms you wish\n"
 "to be shown as user categories"
 msgstr "Vul de naam van de gegroepeerde zoektermen in waarvan\nu wilt dat ze als gebruikerscategorie getoond worden"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:272
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:268
 msgid "&Grouped searches"
 msgstr "&Gegroepeerde zoektermen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:273
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:269
 msgid "What to search when searching similar books"
 msgstr "Waarnaar te zoeken bij zoeken naar vergelijkbare boeken"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:274
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:270
 msgid ""
 "<p>When you search for similar books by right clicking the\n"
 "         book and selecting \"Similar books\",\n"
@@ -28169,23 +28181,23 @@ msgid ""
 "         search multiple columns at once.</p>"
 msgstr "<p>Als u zoekt naar gelijkaardige boeken door rechtsklikken\n         op het boek en selecteren \"Gelijkaardige boeken\",\n         bouwt calibre een zoekopdracht met de kolom opzoeknamen\n         onder gespecificeerd. Door veranderen van de opzoeknaam naar\n         een gegroepeerde zoekterm kan u verschillende kolommen \n         tegelijk doorzoeken.</p>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:279
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:275
 msgid "S&imilar authors: "
 msgstr "Gel&ijkaardige auteurs: "
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:280
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:276
 msgid "Si&milar series: "
 msgstr "Gelij&kaardige series: "
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:281
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:277
 msgid "Similar &tags: "
 msgstr "Gelijkaardige &labels: "
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:282
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:278
 msgid "Simi&lar publishers: "
 msgstr "Ge&lijkaardige uitgevers: "
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:283
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:279
 msgid "&Similar books"
 msgstr "&Vergelijkbare boeken"
 
