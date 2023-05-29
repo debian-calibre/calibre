@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "May 26, 2023" "6.18.1" "calibre"
+.TH "EBOOK-CONVERT" "1" "May 29, 2023" "6.19.1" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -762,6 +762,11 @@ Do not insert a Table of Contents at the beginning of the book
 Specify the character encoding of the input document. If set this option will override any encoding declared by the document itself. Particularly useful for documents that do not declare an encoding or that have erroneous encoding declarations.
 .UNINDENT
 .SH HTML INPUT OPTIONS
+.INDENT 0.0
+.TP
+.B \-\-allow\-local\-files\-outside\-root
+Normally, resources linked to by the HTML file or its children will only be allowed if they are in a sub\-folder of the original HTML file. This option allows including local files from any location on your computer. This can be a security risk if you are converting untrusted HTML and expecting to distribute the result of the conversion.
+.UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-breadth\-first
