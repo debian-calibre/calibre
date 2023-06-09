@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2023-05-29 05:22+UTC\n"
+"POT-Creation-Date: 2023-06-08 05:40+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
 "Last-Translator: Jonatan Nyberg, 2016-2017,2021-2023\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
@@ -156,12 +156,12 @@ msgstr "Gör absolut ingenting"
 #: /__w/calibre/calibre/src/calibre/devices/prst1/driver.py:473
 #: /__w/calibre/calibre/src/calibre/devices/usbms/driver.py:558
 #: /__w/calibre/calibre/src/calibre/ebooks/chm/metadata.py:60
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/chm_input.py:191
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/chm_input.py:192
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/comic_input.py:199
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/fb2_input.py:133
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/fb2_input.py:135
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_input.py:151
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_input.py:156
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_input.py:154
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_input.py:159
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/lrf_output.py:29
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/pdb_input.py:28
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/rtf_input.py:309
@@ -5081,7 +5081,7 @@ msgid ""
 "allows including local files from any location on your computer. This can be"
 " a security risk if you are converting untrusted HTML and expecting to "
 "distribute the result of the conversion."
-msgstr ""
+msgstr "Normalt kommer resurser som länkas till av HTML-filen eller dess underordnade endast att tillåtas om de finns i en undermapp till den ursprungliga HTML-filen. Med det här alternativet kan du inkludera lokala filer från vilken plats som helst på din dator. Detta kan vara en säkerhetsrisk om du konverterar otillförlitlig HTML och förväntar dig att distribuera resultatet av konverteringen."
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_output.py:29
 msgid "CSS file used for the output instead of the default file"
@@ -6675,7 +6675,7 @@ msgstr "Följ alla lokala länkar i en HTML-fil och skapa en ZIP-fil som innehå
 msgid ""
 "Character encoding for the input HTML files. Common choices include: utf-8, "
 "cp1252, cp1251 and latin1."
-msgstr ""
+msgstr "Teckenkodning för HTML-inmatningsfilerna. Vanliga val inkluderar: utf-8, cp1252, cp1251 och latin1."
 
 #: /__w/calibre/calibre/src/calibre/ebooks/html/to_zip.py:112
 msgid "Add linked files in breadth first order"
@@ -6691,7 +6691,7 @@ msgstr "Normalt när man följer länkar i HTML-filer gör calibre det på djupe
 
 #: /__w/calibre/calibre/src/calibre/ebooks/html/to_zip.py:117
 msgid "Allow resources outside the HTML file root folder"
-msgstr ""
+msgstr "Tillåt resurser utanför HTML-filens rotmapp"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/html_transform_rules.py:18
 msgid "{} must not be empty"
@@ -9197,7 +9197,7 @@ msgstr "Format som visas med den interna visaren"
 
 #: /__w/calibre/calibre/src/calibre/gui2/__init__.py:458
 msgid "Columns to be displayed in the book list"
-msgstr "Antal kolumner som ska visas i boklistan"
+msgstr "Kolumner som ska visas i boklistan"
 
 #: /__w/calibre/calibre/src/calibre/gui2/__init__.py:459
 msgid "Automatically launch Content server on application startup"
@@ -25502,7 +25502,7 @@ msgstr "Kommaseparerad text, som taggar, visas i taggbläddraren"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:44
 msgid "Long text, like comments, not shown in the Tag browser"
-msgstr "Lång text, som kommentarer, visas inte i taggbläddraren"
+msgstr "Lång text, som kommentarer, som inte visas i taggbläddraren"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:49
 msgid "Text column for keeping series-like information"
@@ -26460,12 +26460,12 @@ msgstr "Aktuellt bildförhållande (bredd/höjd): %.2g"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:985
 msgid "Edit template for caption"
-msgstr "Redigera mall för övertext"
+msgstr "Redigera mall för bildtext"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:1031
 #, python-format
 msgid "Current space used: %s"
-msgstr "Nuvarande utrymme som används: %s"
+msgstr "Nuvarande använt utrymme: %s"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:1080
 msgid "Choose background color for the Cover grid"
@@ -26560,7 +26560,7 @@ msgid ""
 "sending to device etc. The notifications are sent via the operating system "
 "notification facility, if available. Note that on Windows, you have to "
 "enable the system tray icon for notifications to work."
-msgstr "Inaktivera popup-aviseringar när calibre slutar jobba med en sådan konvertering, skicka till en enhet o.s.v. Aviseringar skickas via operativsystemet, om det finns tillgängligt. Observera att på Windows måste du aktivera systemfältikonen för att aviseringar ska fungera."
+msgstr "Inaktivera popup-aviseringar när calibre slutför jobb såsom konvertering, skicka till enhet o.s.v. Aviseringarna skickas via operativsystemets aviseringsfunktion, om sådan finns. Observera att på Windows måste du aktivera systemfältikonen för att aviseringar ska fungera."
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:835
 msgid "Disable n&otifications on job completion"
@@ -26639,7 +26639,7 @@ msgstr "Omslags&bredd: "
 msgid ""
 "The width of displayed covers.\n"
 "A value of zero means calculate automatically."
-msgstr "Bredden för visade omslag.\nVärdet noll betyder beräkna automatiskt."
+msgstr "Bredden på visade omslag.\nVärdet noll betyder beräkna automatiskt."
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:857
 msgid "Make the covers larger, maintaining current aspect ratio."
@@ -26657,7 +26657,7 @@ msgstr "Omslags&höjd: "
 msgid ""
 "The height of displayed covers.\n"
 "A value of zero means calculate automatically."
-msgstr "Höjden för visade omslag.\nVärdet noll betyder beräkna automatiskt."
+msgstr "Höjden på visade omslag.\nVärdet noll betyder beräkna automatiskt."
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:864
 msgid "Make the covers smaller, maintaining current aspect ratio."
@@ -27201,7 +27201,7 @@ msgstr "&Bevara bildförhållande på omslag"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1065
 msgid "&Template for caption:"
-msgstr "&Mall för övertext:"
+msgstr "&Mall för bildtext:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1066
 msgid "Fie&ld for sub-title:"
@@ -28066,7 +28066,7 @@ msgid ""
 " cell in the current column where the value starts with the letter pressed. "
 "If there is no such cell then nothing happens. If the letter is a shortcut "
 "then the shortcut takes precedence.</p>"
-msgstr ""
+msgstr "<p>När den är aktiverad kommer ett tryck på en tangent i biblioteksvyn att söka efter nästa cell i den aktuella kolumnen där värdet börjar med bokstaven nedtryckt. Om det inte finns någon sådan cell så händer ingenting. Om bokstaven är en genväg har genvägen företräde.</p>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:248
 msgid "Genera&l"
@@ -35571,7 +35571,7 @@ msgid "Disabled confirmations restored"
 msgstr "Inaktiverade bekräftelser återställda"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:424
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:574
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:576
 msgid "Render process crashed"
 msgstr "Återgivningsprocessen kraschade"
 
@@ -38746,13 +38746,13 @@ msgstr "Uppslagning av boken misslyckades"
 msgid "Failed to open the book at {0}. Click \"Show details\" for more info."
 msgstr "Det gick inte att öppna boken på {0}. Klicka på \"Visa detaljer\" för mer info."
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:575
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:577
 msgid ""
 "The Qt WebEngine Render process has crashed. You should try restarting the "
 "viewer."
 msgstr "Qt WebEngine Render processen har kraschat. Du bör försöka starta om visaren."
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:691
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:693
 msgid "Choose background image"
 msgstr "Välj bakgrundsbild"
 
@@ -40970,7 +40970,7 @@ msgid ""
 "starts with numbers and is a little slower."
 msgstr "Känn igen siffror i text när du sorterar. Inställningen betyder att när du sorterar på textfält som titel kommer texten \"Bok 2\" att sorteras före texten \"Bok 100\". Observera att inställning av detta kan orsaka problem med text som börjar med siffror och är lite långsammare."
 
-#: /__w/calibre/calibre/src/calibre/utils/copy_files.py:90
+#: /__w/calibre/calibre/src/calibre/utils/copy_files.py:109
 msgid "File is open in another program"
 msgstr "Filen är öppen i ett annat program"
 
@@ -41584,8 +41584,8 @@ msgid ""
 "found_val and not_found_val are provided then if there is a match then "
 "return found_val, otherwise return not_found_val. If found_val and "
 "not_found_val are not provided then if there is a match then return the "
-"indentfier:value pair, otherwise the empty string."
-msgstr "identifier_in_list(val, id_name [, found_val, not_found_val]) -- behandla val som en lista över identifierare separerade med kommatecken. En identifierare har formatet \"id_name:value\". Parametern id_name är texten id_name att söka efter, antingen \"id_name\" eller \"id_name:regexp\". Det första fallet matchar om det finns någon identifierare som matchar det id_name. Det andra fallet matchar om id_name matchar en identifierare och regexp matchar identifierarens värde. Om found_val och not_found_val anges, om det finns en matchning, returnera found_val, annars returnera not_found_val. Om found_val och not_found_val inte tillhandahålls, om det finns en matchning, returnera indentfier:value-paret, annars den tomma strängen."
+"identifier:value pair, otherwise the empty string."
+msgstr "identifier_in_list(val, id_name [, found_val, not_found_val]) -- behandla val som en lista över identifierare separerade med kommatecken. En identifierare har formatet \"id_name:value\". Parametern id_name är texten id_name att söka efter, antingen \"id_name\" eller \"id_name:regexp\". Det första fallet matchar om det finns någon identifierare som matchar det id_name. Det andra fallet matchar om id_name matchar en identifierare och regexp matchar identifierarens värde. Om found_val och not_found_val anges, om det finns en matchning, returnera found_val, annars returnera not_found_val. Om found_val och not_found_val inte tillhandahålls, om det finns en matchning, returnera identifier:value-paret, annars den tomma strängen."
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:822
 msgid "{} requires 2 or 4 arguments"

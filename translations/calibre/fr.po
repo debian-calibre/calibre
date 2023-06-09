@@ -46,7 +46,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2023-05-29 05:22+UTC\n"
+"POT-Creation-Date: 2023-06-08 05:40+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
 "Last-Translator: un_pogaz, 2020,2022-2023\n"
 "Language-Team: French (http://app.transifex.com/calibre/calibre/language/fr/)\n"
@@ -179,12 +179,12 @@ msgstr "Ne fait absolument rien"
 #: /__w/calibre/calibre/src/calibre/devices/prst1/driver.py:473
 #: /__w/calibre/calibre/src/calibre/devices/usbms/driver.py:558
 #: /__w/calibre/calibre/src/calibre/ebooks/chm/metadata.py:60
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/chm_input.py:191
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/chm_input.py:192
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/comic_input.py:199
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/fb2_input.py:133
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/fb2_input.py:135
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_input.py:151
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_input.py:156
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_input.py:154
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_input.py:159
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/lrf_output.py:29
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/pdb_input.py:28
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/rtf_input.py:309
@@ -6698,7 +6698,7 @@ msgstr "Suivre tous les liens locaux d’un fichier HTML et créer une archive Z
 msgid ""
 "Character encoding for the input HTML files. Common choices include: utf-8, "
 "cp1252, cp1251 and latin1."
-msgstr ""
+msgstr "Encodage des caractères dans les fichiers HTML d'entrée. Les choix habituels incluent : utf-8, cp1252, cp1251 et latin1."
 
 #: /__w/calibre/calibre/src/calibre/ebooks/html/to_zip.py:112
 msgid "Add linked files in breadth first order"
@@ -6714,7 +6714,7 @@ msgstr "Normalement, lorsque l’on suit les liens des fichiers HTML, calibre le
 
 #: /__w/calibre/calibre/src/calibre/ebooks/html/to_zip.py:117
 msgid "Allow resources outside the HTML file root folder"
-msgstr ""
+msgstr "Autoriser les ressources en dehors du dossier racine du fichier HTML"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/html_transform_rules.py:18
 msgid "{} must not be empty"
@@ -35657,7 +35657,7 @@ msgid "Disabled confirmations restored"
 msgstr "Les confirmations désactivées sont restaurées"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:424
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:574
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:576
 msgid "Render process crashed"
 msgstr "Le processus de rendu s'est interrompu"
 
@@ -38838,13 +38838,13 @@ msgstr "Le chargement du livre a échoué"
 msgid "Failed to open the book at {0}. Click \"Show details\" for more info."
 msgstr "Impossible d'ouvrir le livre à la position {0}. Cliquez sur \"Afficher les détails\" pour plus d'informations."
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:575
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:577
 msgid ""
 "The Qt WebEngine Render process has crashed. You should try restarting the "
 "viewer."
 msgstr "Le processus de rendu Qt WebEngine Render s'est interrompu. Vous devriez essayer de redémarrer la visionneuse."
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:691
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:693
 msgid "Choose background image"
 msgstr "Choisir une image de fond"
 
@@ -41063,7 +41063,7 @@ msgid ""
 "starts with numbers and is a little slower."
 msgstr "Reconnaître les nombres dans le texte lors du tri. Si vous définissez cette option, lors du tri de champs de texte tels que le titre, le texte \"Livre 2\" sera trié avant le texte \"Livre 100\". Notez que cette option peut poser des problèmes avec le texte qui commence par des chiffres et est un peu plus lente."
 
-#: /__w/calibre/calibre/src/calibre/utils/copy_files.py:90
+#: /__w/calibre/calibre/src/calibre/utils/copy_files.py:109
 msgid "File is open in another program"
 msgstr "Le fichier est ouvert dans un autre programme"
 
@@ -41677,8 +41677,8 @@ msgid ""
 "found_val and not_found_val are provided then if there is a match then "
 "return found_val, otherwise return not_found_val. If found_val and "
 "not_found_val are not provided then if there is a match then return the "
-"indentfier:value pair, otherwise the empty string."
-msgstr "identifier_in_list(val, id_name [, found_val, not_found_val]) -- traite val comme une liste d'identifiants séparés par des virgules. Un identifiant a le format \"id_name:value\". Le paramètre \"id_name\" est le texte de l'identifiant à rechercher, soit \"id_name\" soit \"id_name:regexp\". Dans le premier cas, la recherche s'effectue s'il existe un identifiant correspondant à ce nom d'utilisateur. Dans le second cas, la recherche se fait si le \"id_name\" correspond à un identifiant et que l'expression rationnelle correspond à la valeur de l'identifiant. Si \"found_val\" et \"not_found_val\" sont fournis, alors s'il y a une correspondance, il retourne \"found_val\", sinon il retourne \"not_found_val\". Si \"found_val\" et \"not_found_val\" ne sont pas fournis, alors s'il y a une correspondance, alors la paire \"indentfier:value\" est retournée, sinon une chaîne vide."
+"identifier:value pair, otherwise the empty string."
+msgstr "identifier_in_list(val, id_name [, found_val, not_found_val]) -- traite val comme une liste d'identifiants séparés par des virgules. Un identifiant a le format \"id_name:value\". Le paramètre \"id_name\" est le texte de l'identifiant à rechercher, soit \"id_name\" soit \"id_name:regexp\". Dans le premier cas, la recherche s'effectue s'il existe un identifiant correspondant à ce nom d'utilisateur. Dans le second cas, la recherche se fait si le \"id_name\" correspond à un identifiant et que l'expression rationnelle correspond à la valeur de l'identifiant. Si \"found_val\" et \"not_found_val\" sont fournis, alors s'il y a une correspondance, il retourne \"found_val\", sinon il retourne \"not_found_val\". Si \"found_val\" et \"not_found_val\" ne sont pas fournis, alors s'il y a une correspondance, alors la paire \"identifier:value\" est retournée, sinon une chaîne vide."
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:822
 msgid "{} requires 2 or 4 arguments"

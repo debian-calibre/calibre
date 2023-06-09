@@ -76,6 +76,9 @@ class HTMLInput(InputFormatPlugin):
 
     }
 
+    def set_root_dir_of_input(self, basedir):
+        self.root_dir_of_input = os.path.normcase(get_long_path_name(os.path.abspath(basedir)) + os.sep)
+
     def convert(self, stream, opts, file_ext, log,
                 accelerators):
         self._is_case_sensitive = None
@@ -86,7 +89,7 @@ class HTMLInput(InputFormatPlugin):
         if hasattr(stream, 'name'):
             basedir = os.path.dirname(stream.name)
             fname = os.path.basename(stream.name)
-        self.root_dir_of_input = os.path.normcase(get_long_path_name(os.path.abspath(basedir)) + os.sep)
+        self.set_root_dir_of_input(basedir)
 
         if file_ext != 'opf':
             if opts.dont_package:
@@ -128,6 +131,7 @@ class HTMLInput(InputFormatPlugin):
         )
         from calibre.ebooks.oeb.transforms.metadata import meta_info_to_oeb_metadata
         from calibre.utils.localization import canonicalize_lang
+        self.opts = opts
         css_parser.log.setLevel(logging.WARN)
         self.OEB_STYLES = OEB_STYLES
         oeb = create_oebbook(log, None, opts, self,
@@ -265,7 +269,8 @@ class HTMLInput(InputFormatPlugin):
         q = os.path.normcase(get_long_path_name(link))
         if not q.startswith(self.root_dir_of_input):
             if not self.opts.allow_local_files_outside_root:
-                self.log.warn('Not adding {} as it is outside the document root: {}'.format(q, self.root_dir_of_input))
+                if os.path.exists(q):
+                    self.log.warn('Not adding {} as it is outside the document root: {}'.format(q, self.root_dir_of_input))
                 return None, None
         return link, frag
 

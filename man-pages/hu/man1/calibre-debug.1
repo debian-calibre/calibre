@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "május 29, 2023" "6.19.1" "calibre"
+.TH "CALIBRE-DEBUG" "1" "június 09, 2023" "6.20.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -41,23 +41,29 @@ calibre-debug \- calibre-debug
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre E\-book viewer and the calibre editor in debug mode.
+Különféle parancssori felületek, amelyek hasznosak a Calibre hibakereséséhez.
+Beállítások nélkül ez a parancs elindít egy beágyazott Python\-értelmezést.
+.INDENT 0.0
+.INDENT 3.5
+A fő Calibre grafikus felhasználói felületet, a Calibre E\-könyvnézegetőt
+.UNINDENT
+.UNINDENT
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the E\-book diff tool and so
-on.
+és a Calibre szerkesztőt is futtathatja hibakeresési módban.
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+Ezenkívül interfészeket tartalmaz különböző Calibre bitekhez, amelyek
+nem rendelkeznek dedikált parancssori eszközökkel, mint például a
+betűkészlet\-alkészlet, az E\-book diff eszköz és így tovább.
+.sp
+%p rog segítségével önálló szkripteket is futtathat. Ehhez használja a következőképpen:
 .INDENT 0.0
 .INDENT 3.5
 \fBcalibre\-debug\fP \-e myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .UNINDENT
 .UNINDENT
 .sp
-Everything after the \fB\-\-\fP is passed to the script. You can also use \fBcalibre\-debug\fP
-as a shebang in scripts, like this:
+Minden a \fB\-\-\fP után átkerül a forgatókönyvbe. A \fBcalibre\-debug\fP\-ot shebangként is
+használhatja szkriptekben, például:
 .INDENT 0.0
 .INDENT 3.5
 #!/usr/bin/env \-S \fBcalibre\-debug\fP \-e \fB\-\-\fP \-\-
@@ -109,7 +115,7 @@ A könyv kicsomagolása a megadott mappába. Használat: \-x file.epub output_di
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Export all calibre data (books/settings/plugins). Normally, you will be asked for the export folder and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export folder and libraries. The special keyword \fB\(dq\fPall\fB\(dq\fP can be used to export all libraries. Examples:    calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP  # for interactive use   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /path/to/empty/export/folder /path/to/library/folder1 /path/to/library2   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /export/folder all  # export all known libraries
+Exportálja az összes Calibre adatot (könyvek/beállítások/bővítmények). Általában meg kell adni az exportálandó mappát és az exportálandó könyvtárakat. A kérdések kihagyásához parancssori argumentumként is megadhatja őket. Használjon abszolút elérési utat az exportmappához és a könyvtárakhoz. Az \fB\(dq\fPall\fB\(dq\fP speciális kulcsszó az összes könyvtár exportálására használható. Példák:  calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP # interaktív használatra  calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /path/to/empty/export/folder /path/to/library/folder1 /path/to/library2  calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /export/folder all # exportál minden ismert könyvtárat
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -154,17 +160,17 @@ Kiírja a Calibre környezet beállításához szükséges elérési utakat
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-Run a plugin that provides a command line interface. For example: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
+Futtasson egy beépülő modult, amely parancssori felületet biztosít. Például: calibre\-debug \-r \fB\(dq\fPBővítmény neve\fB\(dq\fP \fB\-\-\fP fájl1 \fB\-\-opci\(gaó1 Minden, ami a \(ga\fP\-\-\(ga\(ga után következik, argumentumként átkerül a beépülő modulhoz.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-run\-test, \-t
-Run the named test(s). Use the special value \fB\(dq\fPall\fB\(dq\fP to run all tests. If the test name starts with a period it is assumed to be a module name. If the test name starts with @ it is assumed to be a category name.
+Futtassa le a megnevezett teszt(eke)t. Az összes teszt futtatásához használja az \fB\(dq\fPall” speciális értéket. Ha a tesztnév ponttal kezdődik, akkor azt modulnévnek kell tekinteni. Ha a tesztnév @ karakterrel kezdődik, akkor azt kategórianévnek kell tekinteni.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-run\-without\-debug
-Don\fB\(aq\fPt run with the DEBUG flag set
+Ne futtasson a meghatározott DEBUG jelzővel
 .UNINDENT
 .INDENT 0.0
 .TP
