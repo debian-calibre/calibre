@@ -44,7 +44,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2023-05-29 05:22+UTC\n"
+"POT-Creation-Date: 2023-06-08 05:40+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
 "Last-Translator: Timinoun <timinoun@freemail.hu>, 2022-2023\n"
 "Language-Team: Hungarian (http://app.transifex.com/calibre/calibre/language/hu/)\n"
@@ -177,12 +177,12 @@ msgstr "Semmit sem csinál"
 #: /__w/calibre/calibre/src/calibre/devices/prst1/driver.py:473
 #: /__w/calibre/calibre/src/calibre/devices/usbms/driver.py:558
 #: /__w/calibre/calibre/src/calibre/ebooks/chm/metadata.py:60
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/chm_input.py:191
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/chm_input.py:192
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/comic_input.py:199
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/fb2_input.py:133
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/fb2_input.py:135
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_input.py:151
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_input.py:156
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_input.py:154
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_input.py:159
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/lrf_output.py:29
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/pdb_input.py:28
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/rtf_input.py:309
@@ -692,7 +692,7 @@ msgstr "A mentett keresések menüjének megjelenítése"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1084
 msgid "Open the context menu for the column"
-msgstr ""
+msgstr "Nyissa meg az oszlop helyi menüjét"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1090
 #: /__w/calibre/calibre/src/calibre/gui2/actions/virtual_library.py:13
@@ -1167,7 +1167,7 @@ msgstr "Ez a profil az Amazon Kindle Oasis 2017  eszközhöz készült"
 
 #: /__w/calibre/calibre/src/calibre/customize/profiles.py:757
 msgid "This profile is intended for the Amazon Kindle Scribe 2022 and above"
-msgstr ""
+msgstr "Ez a profil az Amazon Kindle Scribe 2022 és újabb verzióihoz készült"
 
 #: /__w/calibre/calibre/src/calibre/customize/profiles.py:769
 msgid "This profile is intended for the Amazon Kindle Fire."
@@ -1407,7 +1407,7 @@ msgstr "{0} formátum {1}"
 #: /__w/calibre/calibre/src/calibre/db/cache.py:3182
 #, python-brace-format
 msgid "Extra file {0} for book {1}"
-msgstr ""
+msgstr "{0} extra fájl {1} könyvhöz"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:205
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:297
@@ -1773,7 +1773,7 @@ msgid ""
 "The export operation saves all formats of the book, its cover and metadata (in\n"
 "an OPF file). Any extra data files associated with the book are also saved.\n"
 "You can get id numbers from the search command.\n"
-msgstr ""
+msgstr "%prog export [opciók] azonosítók\n\nExportálja az azonosítókkal (vesszővel tagolt lista) megadott könyveket a fájlrendszerbe.\nAz exportálási művelet elmenti a könyv összes formátumát, borítóját és metaadatait (OPF fájlba). \nA könyvhöz kapcsolódó további adatfájlok is mentésre kerülnek.\nAz azonosítószámokat a keresési parancsból kaphatja meg.\n"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_export.py:69
 msgid "Export all books in database, ignoring the list of ids."
@@ -1803,7 +1803,7 @@ msgstr "Meg kell adnia néhány ID-t vagy a %s opciót"
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:31
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:45
 msgid "Full text indexing is not enabled on this library"
-msgstr ""
+msgstr "A teljes szöveges indexelés nincs engedélyezve ebben a könyvtárban"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:59
 #, python-brace-format
@@ -1824,85 +1824,85 @@ msgid ""
 "    specify the book ids as additional arguments after the\n"
 "    {reindex} command. If no book ids are specified the\n"
 "    entire library is re-indexed.\n"
-msgstr ""
+msgstr "%prog fts_index [options] {enable}/{disable}/{status}/{reindex}\n\nIrányítja a teljes szöveges keresés indexelési folyamatát.\n\n{enable}\n    Bekapcsolja az FTS-indexelést ehhez a könyvtárhoz\n{disable}\n    Kikapcsolja az FTS-indexelést ehhez a könyvtárhoz\n{status}\n    Az aktuális indexelési állapotot mutatja\n{reindex}\n    Egyes könyvek vagy a teljes könyvtár újraindexelésére használható.\n    Adott könyvek újraindexeléséhez megadja a könyvazonosítókat további\n    argumentumként a {reindex} parancs után. Ha nincs megadva\n    könyvazonosító, a teljes könyvtár újraindexelésre kerül. \n\n"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:82
 msgid ""
 "Wait till all books are indexed, showing indexing progress periodically"
-msgstr ""
+msgstr "Várja meg, amíg az összes könyvet indexeli, és időnként mutatja az indexelés előrehaladását"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:88
 msgid ""
 "The speed of indexing. Use fast for fast indexing using all your computers "
 "resources and slow for less resource intensive indexing. Note that the speed"
 " is reset to slow after every invocation."
-msgstr ""
+msgstr "Az indexelés sebessége. A gyors indexelést a számítógép összes erőforrásának felhasználásával, a lassút pedig a kevésbé erőforrásigényes indexeléshez használja. Vegye figyelembe, hogy a sebesség minden hívás után visszaáll lassúra."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:107
 msgid "{} of {} book files indexed, {}"
-msgstr ""
+msgstr "{} könyvfájl ennyiből: {} indexelve, {}"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:146
 msgid "Error: You must specify the indexing action"
-msgstr ""
+msgstr "Hiba: meg kell adnia az indexelési műveletet"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:152
 msgid "FTS Indexing is enabled"
-msgstr ""
+msgstr "FTS indexelés engedélyezve"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:153
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:161
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:188
 #, python-brace-format
 msgid "{0} of {1} books files indexed"
-msgstr ""
+msgstr "{0}  könyv ennyiből: {1} indexelve"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:155
 msgid "FTS Indexing is disabled"
-msgstr ""
+msgstr "FTS indexelés letiltva"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:160
 msgid "FTS indexing has been enabled"
-msgstr ""
+msgstr "Az FTS indexelés engedélyezve van"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:166
 msgid "Re-indexing the entire library can take a long time. Are you sure?"
-msgstr ""
+msgstr "A teljes könyvtár újraindexelése sokáig tarthat. Biztos benne?"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:169
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:194
 msgid "Type {} to proceed, anything else to abort"
-msgstr ""
+msgstr "A folytatáshoz gépelje be: {} , bármi mást a megszakításhoz"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:191
 #: /__w/calibre/calibre/src/calibre/gui2/fts/scan.py:147
 msgid ""
 "Disabling indexing will mean that all books will have to be re-checked when "
 "re-enabling indexing. Are you sure?"
-msgstr ""
+msgstr "Az indexelés letiltása azt jelenti, hogy az indexelés újbóli engedélyezésekor minden könyvet újra ellenőrizni kell. Biztos benne?"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:203
 msgid "FTS indexing has been disabled"
-msgstr ""
+msgstr "Az FTS indexelés le van tiltva"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:210
 msgid "Waiting for FTS indexing to complete, press Ctrl-C to abort..."
-msgstr ""
+msgstr "Várakozás az FTS indexelés befejezésére, a Ctrl-C megnyomásával megszakíthatja..."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:219
 msgid "All books indexed!"
-msgstr ""
+msgstr "Minden könyv indexelve!"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:14
 msgid ""
 "Full text searching is not enabled on this library. Use the calibredb "
 "fts_index enable --wait-until-complete command to enable it"
-msgstr ""
+msgstr "A teljes szöveges keresés nincs engedélyezve ebben a könyvtárban. Az engedélyezéshez használja a calibredb fts_index enable --wait-until-complete parancsot"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:19
 #, python-brace-format
 msgid "{0} files out of {1} are not yet indexed, searching is disabled"
-msgstr ""
+msgstr "{1} fájlból {0} fájl még nincs indexelve, a keresés le van tiltva"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:56
 msgid ""
@@ -1910,47 +1910,47 @@ msgid ""
 "\n"
 "Do a full text search on the entire library or a subset of it.\n"
 "\n"
-msgstr ""
+msgstr "%prog fts_search [opciók] keresési kifejezés\n\nElvégez egy teljes szöveges keresést a teljes könyvtárban vagy annak egy részhalmazában.\n\n"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:67
 msgid ""
 "Include snippets of the text surrounding each match. Note that this makes "
 "searching much slower."
-msgstr ""
+msgstr "Az egyes egyezéseket körülvevő szövegrészleteket csatolja be. Ne feledje, hogy ez sokkal lassítja a keresést."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:72
 msgid ""
 "The marker used to indicate the start of a matched word inside a snippet"
-msgstr ""
+msgstr "A jelölő a részleten belüli egyező szó kezdetének jelzésére szolgál"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:77
 msgid "The marker used to indicate the end of a matched word inside a snippet"
-msgstr ""
+msgstr "A jelölő a részleten belüli egyező szó végét jelzi"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:84
 msgid ""
 "Only match on exact words not related words. So correction will not match "
 "correcting."
-msgstr ""
+msgstr "Csak a pontos szavakra egyezik, nem kapcsolódó szavakra. Tehát a korrekció nem egyezik a javítással."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:89
 msgid ""
 "Restrict the searched books, either using a search expression or ids. For "
 "example: ids:1,2,3 to restrict by ids or search:tag:foo to restrict to books"
 " having the tag foo."
-msgstr ""
+msgstr "Korlátozza a keresett könyveket keresőkifejezés vagy azonosítók használatával. Például: ids:1,2,3 az azonosítókkal való korlátozáshoz vagy search:tag:foo a foo címkével rendelkező könyvekre való korlátozáshoz."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:94
 msgid ""
 "The format to output the search results in. Either \"text\" for plain text "
 "or \"json\" for JSON output."
-msgstr ""
+msgstr "A keresési eredmények kimeneti formátuma. Vagy \"text” az egyszerű szöveghez, vagy \"json” a JSON-kimenethez."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:99
 msgid ""
 "How much of the library must be indexed before searching is allowed, as a "
 "percentage. Defaults to 90"
-msgstr ""
+msgstr "A könyvtár mekkora részét kell indexelni a keresés engedélyezése előtt, százalékban. Alapértelmezés szerint 90"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:115
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:127
@@ -1966,7 +1966,7 @@ msgstr "Hiba: meg kell adnia egy keresési kifejezést"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:172
 msgid "You must provide a template"
-msgstr ""
+msgstr "Meg kell adnia egy sablont"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:254
 msgid ""
@@ -1989,7 +1989,7 @@ msgid ""
 "The field by which to sort the results. You can specify multiple fields by separating them with commas.\n"
 "Available fields: {0}\n"
 "Default: {1}"
-msgstr ""
+msgstr "A mező, amely alapján rendezni kell az eredményeket. Több mezőt is megadhat, ha vesszővel választja el őket.\nElérhető mezők: {0}\nAlapértelmezett: {1}"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:286
 msgid "Sort results in ascending order"
@@ -2031,20 +2031,20 @@ msgstr "Kimenet generálása JSON formátumban, amely alkalmasabb a gépi elemz�
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:337
 msgid "The template to run if \"{}\" is in the field list. Default: None"
-msgstr ""
+msgstr "A futtatandó sablon, ha \"{}\" szerepel a mezőlistában. Alapértelmezés: nincs"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:343
 msgid ""
 "Path to a file containing the template to run if \"{}\" is in the field "
 "list. Default: None"
-msgstr ""
+msgstr "A futtatandó sablont tartalmazó fájl elérési útja, ha \"{}\" szerepel a mezőlistában. Alapértelmezés: nincs"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:349
 #, python-format
 msgid ""
 "Heading for the template column. Default: %default. This option is ignored "
 "if the option {} is set"
-msgstr ""
+msgstr "Modell oszlopfejléc. Alapértelmezett érték: %default. Ezt a beállítást a rendszer figyelmen kívül hagyja, ha a {} opció be van állítva."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list_categories.py:23
 msgid ""
@@ -2282,7 +2282,7 @@ msgid ""
 "--as-opf switch to the show_metadata command. You can also set the metadata of\n"
 "individual fields with the --field option. If you use the --field option, there\n"
 "is no need to specify an OPF file.\n"
-msgstr ""
+msgstr "\n%prog set_metadata [options] book_id [/path/to/metadata.opf]\n\nElhelyezi az OPF metadata.opf fájlból a book_id által azonosított könyv\nCalibre adatbázisában tárolt metaadatokat. A book_id egy azonosítószám \na find parancsból. Gyors áttekintést kaphat az OPF formátumról a \nshow_metadata parancs --as-opf kapcsolójával. Egyedi mező metaadatokat\n is elhelyezhet a --field opcióval. Ha a --field opciót használja, akkor nem szükséges OPF fájlt megadni.\n"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_set_metadata.py:79
 #, python-brace-format
@@ -2440,7 +2440,7 @@ msgstr "Egy másik Calibre program, például {} vagy a fő Calibre program fut.
 
 #: /__w/calibre/calibre/src/calibre/db/cli/main.py:248
 msgid "Error: You must specify a command from the list above"
-msgstr ""
+msgstr "Hiba: meg kell adnia egy parancsot a fenti listából"
 
 #: /__w/calibre/calibre/src/calibre/db/fields.py:301
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/base.py:160
@@ -2473,7 +2473,7 @@ msgstr "„B” kártya"
 #: /__w/calibre/calibre/src/calibre/db/fts/pool.py:103
 #, python-brace-format
 msgid "Extracting text from the {0} file of size {1} took too long"
-msgstr ""
+msgstr "Szöveg kibontása {0} fájlból, amelynek mérete {1} túl sokáig tartott"
 
 #: /__w/calibre/calibre/src/calibre/db/lazy.py:259
 #, python-format
@@ -2516,7 +2516,7 @@ msgstr "Egyéni oszlop létrehozása "
 
 #: /__w/calibre/calibre/src/calibre/db/search.py:83
 msgid "Invalid regular expression: {!r} with error: {}"
-msgstr ""
+msgstr "Érvénytelen reguláris kifejezés: {!r} hibával: {}"
 
 #: /__w/calibre/calibre/src/calibre/db/search.py:108
 #: /__w/calibre/calibre/src/calibre/library/caches.py:341
@@ -2559,7 +2559,7 @@ msgstr "A lekérdezés nem numerikus: {0}"
 #: /__w/calibre/calibre/src/calibre/db/search.py:316
 #, python-brace-format
 msgid "Non-numeric value in column {0}: {1}"
-msgstr ""
+msgstr "Nem numerikus érték {0} oszlopban: {1}"
 
 #: /__w/calibre/calibre/src/calibre/db/search.py:329
 #: /__w/calibre/calibre/src/calibre/db/utils.py:34
@@ -2643,22 +2643,22 @@ msgstr "[] perc"
 #: /__w/calibre/calibre/src/calibre/db/utils.py:455
 #: /__w/calibre/calibre/src/calibre/db/utils.py:457
 msgid "{} seconds"
-msgstr "[] másodperc"
+msgstr "{} másodperc"
 
 #: /__w/calibre/calibre/src/calibre/db/utils.py:490
 #: /__w/calibre/calibre/src/calibre/db/utils.py:494
 #: /__w/calibre/calibre/src/calibre/db/utils.py:501
 msgid "calculating time left"
-msgstr ""
+msgstr "hátralévő idő kiszámítása"
 
 #: /__w/calibre/calibre/src/calibre/db/utils.py:492
 #: /__w/calibre/calibre/src/calibre/db/utils.py:498
 msgid "almost done"
-msgstr ""
+msgstr "majdnem kész"
 
 #: /__w/calibre/calibre/src/calibre/db/utils.py:499
 msgid "~{} left"
-msgstr ""
+msgstr "~{} maradt"
 
 #: /__w/calibre/calibre/src/calibre/debug.py:29
 #, python-brace-format
@@ -2681,7 +2681,7 @@ msgid ""
 "as a shebang in scripts, like this:\n"
 "\n"
 "    {2}\n"
-msgstr ""
+msgstr "{0}\n\nKülönféle parancssori felületek, amelyek hasznosak a Calibre hibakereséséhez. \nBeállítások nélkül ez a parancs elindít egy beágyazott Python-értelmezést.\n A fő Calibre grafikus felhasználói felületet, a Calibre E-könyvnézegetőt \nés a Calibre szerkesztőt is futtathatja hibakeresési módban.\n\nEzenkívül interfészeket tartalmaz különböző Calibre bitekhez, amelyek \nnem rendelkeznek dedikált parancssori eszközökkel, mint például a \nbetűkészlet-alkészlet, az E-book diff eszköz és így tovább.\n\n%p rog segítségével önálló szkripteket is futtathat. Ehhez használja a következőképpen:\n\n    {1}\n\nMinden a -- után átkerül a forgatókönyvbe. A calibre-debug-ot shebangként is \nhasználhatja szkriptekben, például:\n\n    {2}\n"
 
 #: /__w/calibre/calibre/src/calibre/debug.py:48
 msgid "%prog [options]"
@@ -2721,7 +2721,7 @@ msgstr "GUI futtatása hibakeresési ablakkal, a megadott elérési útvonalra t
 
 #: /__w/calibre/calibre/src/calibre/debug.py:62
 msgid "Don't run with the DEBUG flag set"
-msgstr ""
+msgstr "Ne futtasson a meghatározott DEBUG jelzővel"
 
 #: /__w/calibre/calibre/src/calibre/debug.py:64
 msgid "Run the E-book viewer in debug mode"
@@ -2766,7 +2766,7 @@ msgid ""
 "  calibre-debug --export-all-calibre-data  # for interactive use\n"
 "  calibre-debug --export-all-calibre-data /path/to/empty/export/folder /path/to/library/folder1 /path/to/library2\n"
 "  calibre-debug --export-all-calibre-data /export/folder all  # export all known libraries"
-msgstr ""
+msgstr "Exportálja az összes Calibre adatot (könyvek/beállítások/bővítmények). Általában meg kell adni az exportálandó mappát és az exportálandó könyvtárakat. A kérdések kihagyásához parancssori argumentumként is megadhatja őket. Használjon abszolút elérési utat az exportmappához és a könyvtárakhoz. Az \"all\" speciális kulcsszó az összes könyvtár exportálására használható. Példák:\n\ncalibre-debug --export-all-calibre-data # interaktív használatra \ncalibre-debug --export-all-calibre-data /path/to/empty/export/folder /path/to/library/folder1 /path/to/library2 \ncalibre-debug --export-all-calibre-data /export/folder all # exportál minden ismert könyvtárat"
 
 #: /__w/calibre/calibre/src/calibre/debug.py:98
 msgid "Import previously exported calibre data"
@@ -2788,14 +2788,14 @@ msgid ""
 "Run a plugin that provides a command line interface. For example:\n"
 "calibre-debug -r \"Plugin name\" -- file1 --option1\n"
 "Everything after the -- will be passed to the plugin as arguments."
-msgstr ""
+msgstr "Futtasson egy beépülő modult, amely parancssori felületet biztosít. Például: calibre-debug -r \"Bővítmény neve\" -- fájl1 --opció1 Minden, ami a -- után következik, argumentumként átkerül a beépülő modulhoz."
 
 #: /__w/calibre/calibre/src/calibre/debug.py:111
 msgid ""
 "Run the named test(s). Use the special value \"all\" to run all tests. If "
 "the test name starts with a period it is assumed to be a module name. If the"
 " test name starts with @ it is assumed to be a category name."
-msgstr ""
+msgstr "Futtassa le a megnevezett teszt(eke)t. Az összes teszt futtatásához használja az \"all” speciális értéket. Ha a tesztnév ponttal kezdődik, akkor azt modulnévnek kell tekinteni. Ha a tesztnév @ karakterrel kezdődik, akkor azt kategórianévnek kell tekinteni."
 
 #: /__w/calibre/calibre/src/calibre/debug.py:116
 msgid ""
@@ -3097,7 +3097,7 @@ msgstr "A következő könyvek KFX formátumúak. A KFX egy virtuális könyvfor
 
 #: /__w/calibre/calibre/src/calibre/devices/kindle/driver.py:104
 msgid "WARNING: E-book covers"
-msgstr ""
+msgstr "FIGYELMEZTETÉS: e-könyv borítók"
 
 #: /__w/calibre/calibre/src/calibre/devices/kindle/driver.py:105
 msgid ""
@@ -3107,7 +3107,7 @@ msgid ""
 " and wait for the covers to be deleted by Amazon</li><li>Reconnect the "
 "Kindle and calibre will restore the covers.</li></ol> After this the covers "
 "for those books should stay put. <a href=\"{}\">Click here</a> for details."
-msgstr ""
+msgstr "Amazon <b>letiltotta a borítók megjelenítését</b> a Kindle-re USB kábelen való küldéskor. A megoldáshoz vagy tartsa a Kindle-t 'Repülőgép módban', vagy:<ol><li>küldje el a könyveket a Kindle-be</li><li>Kapcsolja ki a Kindle-t  és várja meg, amíg az Amazon törli a borítókat, és a Calibre visszaállítja a borítókat.</li></ol> Ezt követően a könyvek borítói maradjanak a helyükön.<a href=\"{}\">Kattintson ide</a> további részletekért."
 
 #: /__w/calibre/calibre/src/calibre/devices/kindle/driver.py:242
 #, python-format
@@ -3137,7 +3137,7 @@ msgstr "<b>Hely %(dl)d &bull; %(typ)s</b><br />"
 #: /__w/calibre/calibre/src/calibre/devices/kindle/driver.py:347
 msgid ""
 "Communicate with the Kindle 2/3/4/Touch/Paperwhite/Voyage e-book reader."
-msgstr ""
+msgstr "Kommunikáció a Kindle 2/3/4/Touch/Paperwhite/Voyage e-könyv olvasóval."
 
 #: /__w/calibre/calibre/src/calibre/devices/kindle/driver.py:361
 msgid "Send page number information when sending books"
@@ -3394,7 +3394,7 @@ msgid ""
 " 2, Aura ONE, Aura Edition 2, Aura H2O Edition 2, Clara HD, Forma, Libra "
 "H2O, Elipsa, Sage, Libra 2 and Clara 2E eReaders. Based on the existing Kobo"
 " driver by %s."
-msgstr ""
+msgstr "Kommunikáció Kobo Touch, Glo, Mini, Aura HD, Aura H2O, Glo HD, Touch 2, Aura ONE, Aura Edition 2, Aura H2O Edition 2, Clara HD, Forma, Libra H2O, Elipsa, Sage, Libra 2 és Clara 2E e-olvasókkal. Létező Kobo illesztőprogram alapján: %s."
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:3921
 msgid ""
@@ -3477,7 +3477,7 @@ msgstr "Gyűjtemény oszlopok:"
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:252
 msgid "Use a column to generate collections."
-msgstr ""
+msgstr "Használjon oszlopot gyűjtemények létrehozásához."
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:256
 msgid ""
@@ -3487,18 +3487,18 @@ msgstr "A V2.0.0 firmware-től származó Kobo támogatja a könyvespolcokat. Ez
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:262
 msgid "Collections template:"
-msgstr ""
+msgstr "Gyűjtemények sablonja:"
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:263
 msgid "Use a template to generate collections."
-msgstr ""
+msgstr "Gyűjtemények létrehozásához használjon sablont."
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:268
 msgid ""
 "Enter a template to generate collections. The result of the template will be"
 " combined with the values from Collections column. The template should "
 "return a list of collection names separated by ':@:' (without quotes)."
-msgstr ""
+msgstr "Adjon meg egy sablont a gyűjtemények létrehozásához. A sablon eredményét a rendszer kombinálja a 'Gyűjtemények' oszlop értékeivel. A sablonnak vissza kell adnia a gyűjteménynevek listáját ':@:' karakterrel elválasztva (idézőjelek nélkül)."
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:275
 msgid "Create collections"
@@ -3678,7 +3678,7 @@ msgid ""
 "series name and number, publisher and published Date, ISBN and language. If "
 "a metadata plugboard exists for the device and book format, this will be "
 "used to set the metadata."
-msgstr ""
+msgstr "Ez frissíti a metaadatokat az eszköz adatbázisában, amikor az eszköz csatlakoztatva van. A frissített metaadatok megjelennek az eszközön a könyvtárban és a 'Könyv részletei' oldalon. Ez a cím, a szerzők, a megjegyzések/összefoglaló, a sorozat neve és száma, a kiadó és a megjelenés dátuma, az ISBN és a nyelv. Ha létezik metaadat-plugboard az eszköz és a könyv formátumához, akkor a rendszer ezt fogja használni a metaadatok beállításához."
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:597
 msgid "Update purchased books"
@@ -3704,57 +3704,57 @@ msgstr "Egy sablon megadása a felirat beállításához. Ha a sablon üres, a f
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:614
 msgid "Book stats"
-msgstr ""
+msgstr "Könyv statisztika"
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:615
 msgid "Update the book stats "
-msgstr ""
+msgstr "Könyv statisztika frissítése"
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:620
 msgid "Words:"
-msgstr ""
+msgstr "Szavak:"
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:621
 msgid ""
 "Enter a template to use to set the word count for the book. If the template "
 "is empty, the word count will be cleared."
-msgstr ""
+msgstr "Adjon meg egy sablont a könyv szószámának beállításához. Ha a sablon üres, a szószám törlődik."
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:627
 msgid "Pages:"
-msgstr ""
+msgstr "Oldalak:"
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:628
 msgid ""
 "Enter a template to use to set the page count for the book. If the template "
 "is empty, the page count will be cleared."
-msgstr ""
+msgstr "Adjon meg egy sablont a könyv oldalszámának beállításához. Ha a sablon üres, az oldalak száma törlődik."
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:633
 msgid "Hours to read estimates:"
-msgstr ""
+msgstr "Becsült olvasási idő:"
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:636
 msgid "Upper:"
-msgstr ""
+msgstr "Felső:"
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:637
 msgid ""
 "Enter a template to use to set the upper estimate of the time to read for "
 "the book. The estimate is in hours. If the template is empty, the time will "
 "be cleared."
-msgstr ""
+msgstr "Adjon meg egy sablont, amellyel beállíthatja a könyv olvasási idejének felső becslését. A becslés órákban értendő. Ha a sablon üres, az idő törlődik."
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:644
 msgid "Lower:"
-msgstr ""
+msgstr "Alsó:"
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:645
 msgid ""
 "Enter a template to use to set the lower estimate of the time to read for "
 "the book. The estimate is in hours. If the template is empty, the time will "
 "be cleared."
-msgstr ""
+msgstr "Adjon meg egy sablont, amellyel beállíthatja a könyv olvasási idejének alsó becslését. A becslés órákban értendő. Ha a sablon üres, az idő törlődik."
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:697
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:790
@@ -4236,7 +4236,7 @@ msgid ""
 "Use this option if you want to force the driver to listen on a particular IP"
 " address. The driver will listen only on the entered address, and this "
 "address will be the one advertised over mDNS (BonJour)."
-msgstr ""
+msgstr "Használja ezt a lehetőséget, ha arra szeretné kényszeríteni az illesztőprogramot, hogy figyeljen egy adott IP-címre. Az illesztőprogram csak a megadott címre figyel, és ez lesz az mDNS-en (BonJour) keresztül hirdetett cím."
 
 #: /__w/calibre/calibre/src/calibre/devices/smart_device_app/driver.py:322
 msgid "Replace books with same calibre ID"
@@ -5102,7 +5102,7 @@ msgid ""
 "allows including local files from any location on your computer. This can be"
 " a security risk if you are converting untrusted HTML and expecting to "
 "distribute the result of the conversion."
-msgstr ""
+msgstr "Általában a HTML-fájl vagy annak alárendelt forrásai csak akkor engedélyezettek, ha az eredeti HTML-fájl almappájában vannak. Ez az opció lehetővé teszi a helyi fájlok felvételét a számítógép bármely helyéről. Ez biztonsági kockázatot jelenthet, ha nem megbízható HTML-kódot konvertál, és az átalakítás eredményének terjesztésére számít."
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_output.py:29
 msgid "CSS file used for the output instead of the default file"
@@ -5680,7 +5680,7 @@ msgstr "Ne engedélyezze a listatípusok keverését"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:24
 msgid "Use Markdown's internal smartypants parser"
-msgstr ""
+msgstr "Használja a Markdown belső smartypants elemzőjét"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:25
 msgid "Support tables"
@@ -5736,7 +5736,7 @@ msgstr "Használjon heurisztikát a fejezetcímek, dőlt betűk stb. meghatároz
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:52
 msgid "Use the Textile markup language"
-msgstr ""
+msgstr "Használja a Textil jelölőnyelvet"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:53
 msgid "Use the Markdown markup language"
@@ -5798,7 +5798,7 @@ msgstr "Markdown formázott szöveg"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/txt_output.py:27
 msgid "Textile formatted text"
-msgstr ""
+msgstr "Textil formázott szöveg"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/txt_output.py:35
 #, python-format
@@ -5874,7 +5874,7 @@ msgid ""
 "how to optimize the created document for the specified device. In some "
 "cases, an output profile can be used to optimize the output for a particular"
 " device, but this is rarely necessary. Choices are:"
-msgstr ""
+msgstr "Adja meg a kimeneti profilt. A kimeneti profil megmondja a konvertáló rendszernek, hogyan optimalizálja a létrehozott dokumentumot a megadott eszközre. Egyes esetekben egy kimeneti profil használható egy adott eszköz kimenetének optimalizálására, de erre ritkán van szükség. A választási lehetőségek a következők:"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plumber.py:151
 msgid ""
@@ -6696,7 +6696,7 @@ msgstr "Követi a helyi fájlokra mutató linkeket, és készít egy tömöríte
 msgid ""
 "Character encoding for the input HTML files. Common choices include: utf-8, "
 "cp1252, cp1251 and latin1."
-msgstr ""
+msgstr "A bemeneti HTML-fájlok karakterkódolása. A gyakori választások a következők: utf-8, cp1252, cp1251 és latin1."
 
 #: /__w/calibre/calibre/src/calibre/ebooks/html/to_zip.py:112
 msgid "Add linked files in breadth first order"
@@ -6712,7 +6712,7 @@ msgstr "Alapesetben a Calibre a linkeket a HTML fájlokban mélységi keresésse
 
 #: /__w/calibre/calibre/src/calibre/ebooks/html/to_zip.py:117
 msgid "Allow resources outside the HTML file root folder"
-msgstr ""
+msgstr "Engedélyezze a HTML-fájl gyökérmappáján kívüli erőforrásokat"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/html_transform_rules.py:18
 msgid "{} must not be empty"
@@ -7535,7 +7535,7 @@ msgstr "Brazilia"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1067
 msgid "India"
-msgstr ""
+msgstr "India"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1068
 msgid "Netherlands"
@@ -7575,7 +7575,7 @@ msgstr "Wayback machine gyorsítótár (lassú)"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1080
 msgid "DuckDuckGo search and Google cache"
-msgstr ""
+msgstr "DuckDuckGo keresés és Google gyorsítótár"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1084
 msgid "Amazon country website to use:"
@@ -7611,14 +7611,14 @@ msgstr "Engedélyezze ezt a lehetőséget, ha ASIN-azonosítóval szeretne metaa
 
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1102
 msgid "Prefer the Kindle edition, when available"
-msgstr ""
+msgstr "Inkább a Kindle kiadást részesítse előnyben, ha elérhető"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1104
 msgid ""
 "When searching for a book and the search engine returns both paper and "
 "Kindle editions, always prefer the Kindle edition, instead of whatever the "
 "search engine returns at the top."
-msgstr ""
+msgstr "Ha könyvet keres, és a keresőmotor papíralapú és Kindle kiadást is visszaad, mindig a Kindle kiadást részesítse előnyben, ahelyett, amit a keresőmotor a tetején ad vissza."
 
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1470
 msgid "Amazon timed out. Try again later."
@@ -7877,7 +7877,7 @@ msgstr "Lásd a <a href=\"{}\">részletes leírást</a>."
 msgid ""
 "This error will be automatically fixed if you click \"Try to correct all "
 "fixable errors\" below."
-msgstr ""
+msgstr "Ez a hiba automatikusan kijavításra kerül, ha az alábbi \"Próbálja meg kijavítani az összes javítható hibát\" lehetőségre kattint."
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/check/css.py:221
 #, python-brace-format
@@ -7960,7 +7960,7 @@ msgstr "A Windows számítógépek nem engedélyezik a : karaktert a fájlnevekb
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/check/links.py:38
 msgid "This URL could not be parsed."
-msgstr ""
+msgstr "Ez az URL nem értelmezhető."
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/check/links.py:45
 #, python-brace-format
@@ -8129,7 +8129,7 @@ msgstr "A linkelt erőforrás nem létezik %s"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/check/links.py:353
 msgid "The URL {} could not be parsed"
-msgstr ""
+msgstr "{} URL nem értelmezhető"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/check/links.py:356
 #, python-format
@@ -9828,11 +9828,11 @@ msgstr "X"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/booklist_context_menu.py:11
 msgid "Book list header menu"
-msgstr ""
+msgstr "Könyvlista fejléc menü"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/booklist_context_menu.py:12
 msgid "Show the book list header context menu"
-msgstr ""
+msgstr "A könyvlista fejléc helyi menüjének megjenítése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/browse_annots.py:14
 #: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:70
@@ -10636,25 +10636,25 @@ msgstr "Nem törölhető"
 #, python-format
 msgid ""
 "The %(fmt)s format will be <b>deleted</b> from %(title)s. Are you sure?"
-msgstr ""
+msgstr "%(fmt)s formátum <b>törölve</b> lesz innen: %(title)s. Biztos benne?"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/delete.py:195
 msgid "Format not found"
-msgstr ""
+msgstr "Formátum nem található"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/delete.py:195
 msgid "The {} format is not present in the selected books."
-msgstr ""
+msgstr "{} formátum nem szerepel a kiválasztott könyvekben."
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/delete.py:198
 #, python-brace-format
 msgid "The {fmt} format will be <b>deleted</b> from {title}."
-msgstr ""
+msgstr "{fmt} formátum <b>törölve</b> lesz innen: {title}."
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/delete.py:199
 #, python-brace-format
 msgid "The {fmt} format will be <b>deleted</b> from all {num} selected books."
-msgstr ""
+msgstr "{fmt} formátum <b>törölve</b> lesz mind az {num} kiválasztott könyvből."
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/delete.py:218
 msgid "Choose formats to be deleted"
@@ -10730,8 +10730,8 @@ msgstr[1] "{} könyv törlésre került a könyvtárból."
 #: /__w/calibre/calibre/src/calibre/gui2/actions/delete.py:382
 msgid "One book format deleted."
 msgid_plural "{} book formats deleted."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Egy könyv formátum törölve"
+msgstr[1] "{} könyv formátum törölve"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/delete.py:438
 msgid ""
@@ -11351,7 +11351,7 @@ msgstr "Megjelölt könyvek megjelenítése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/mark_books.py:132
 msgid "Show marked books with text label"
-msgstr ""
+msgstr "Megjelölt könyvek megjelenítése szöveges címkével"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/mark_books.py:135
 msgid "Clear marks for selected books"
@@ -11452,7 +11452,7 @@ msgstr "Ugrás az előző kiemelt elemhez"
 #: /__w/calibre/calibre/src/calibre/gui2/actions/open.py:16
 #: /__w/calibre/calibre/src/calibre/gui2/actions/open.py:21
 msgid "Open book folder"
-msgstr ""
+msgstr "Könyvmappa megnyitása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/open.py:17
 msgid "O"
@@ -11464,7 +11464,7 @@ msgstr "A könyvet tartalmazó mappa megnyitása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/open.py:27
 msgid "Open book data folder"
-msgstr ""
+msgstr "Könyv adatmappa megnyitása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/plugin_updates.py:17
 msgid "Plugin updater"
@@ -11923,7 +11923,7 @@ msgstr "A könyvekhez nincsenek részletes információk az eszközön."
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/show_book_details.py:72
 msgid "Book not found"
-msgstr ""
+msgstr "A könyv nem található"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/show_quickview.py:22
 #: /__w/calibre/calibre/src/calibre/gui2/actions/show_quickview.py:62
@@ -12036,7 +12036,7 @@ msgstr "Rendezés"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:58
 msgid "Show the Sort by menu"
-msgstr ""
+msgstr "Rendezés menü megjelenítése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:69
 msgid "Reverse current sort"
@@ -12087,15 +12087,15 @@ msgstr "Keresés E-könyvek között"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/store.py:26
 msgid "this author"
-msgstr "Szerző"
+msgstr "szerző"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/store.py:26
 msgid "this title"
-msgstr "Cím"
+msgstr "cím"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/store.py:27
 msgid "this book"
-msgstr "Könyv"
+msgstr "könyv"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/store.py:30
 #, python-format
@@ -12513,7 +12513,7 @@ msgstr "A mappát nem lehet megnyitni"
 #: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:287
 #: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:310
 msgid "Failed to create folder"
-msgstr ""
+msgstr "Mappa létrehozása sikertelen"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:343
 msgid "This book no longer exists in your library"
@@ -12842,7 +12842,7 @@ msgstr "tartalmazza"
 
 #: /__w/calibre/calibre/src/calibre/gui2/author_mapper.py:37
 msgid "Create the rule below, the rule can be used to add or ignore authors"
-msgstr ""
+msgstr "Hozza létre az alábbi szabályt, a szabály felhasználható szerzők hozzáadására vagy figyelmen kívül hagyására"
 
 #: /__w/calibre/calibre/src/calibre/gui2/author_mapper.py:38
 msgid "the author, if the author name"
@@ -13040,7 +13040,7 @@ msgstr "Fájl elérési útja"
 
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:367
 msgid "Re-index the {} format for full text searching"
-msgstr ""
+msgstr "Indexelje újra {} formátumot a teljes szöveges kereséshez"
 
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:378
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:460
@@ -13067,7 +13067,7 @@ msgstr "%s eltávolítása a könyvből"
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:470
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:552
 msgid "Open associated link"
-msgstr ""
+msgstr "Társított link megnyitása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:419
 msgid "The location of the book"
@@ -13103,7 +13103,7 @@ msgstr "Link {} könyvformátum megtekintéséhez"
 
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:525
 msgid "Copy all the above links"
-msgstr ""
+msgstr "Összes fenti link másolása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:532
 msgid "All book details"
@@ -14000,15 +14000,15 @@ msgstr "Válasszon fájlt"
 
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:737
 msgid "&Data file"
-msgstr ""
+msgstr "Adatfájl"
 
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:739
 msgid "A relative link to a data file associated with this book"
-msgstr ""
+msgstr "Relatív hivatkozás a könyvhöz társított adatfájlra"
 
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:742
 msgid "F&older"
-msgstr ""
+msgstr "Mappa"
 
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:744
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:379
@@ -15208,7 +15208,7 @@ msgstr "Kattintson az alábbi \"Megnyitás\" gombra egy teszteléshez használha
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/regex_builder_ui.py:87
 msgid "Regex builder"
-msgstr ""
+msgstr "Regex építő"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/regex_builder_ui.py:88
 msgid "Regex:"
@@ -16259,20 +16259,20 @@ msgstr "Ma"
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:397
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1965
 msgid "Exact time: {}"
-msgstr ""
+msgstr "Pontos idő: {}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:524
 msgid "items"
-msgstr ""
+msgstr "elem"
 
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:526
 msgid "Open the {} Category editor"
-msgstr ""
+msgstr "{} kategória szerkesztő megnyitása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:528
 msgid ""
 "Open the {} editor. If Ctrl or Shift is pressed, open the {} Category editor"
-msgstr ""
+msgstr "{} szerkesztő megnyitása. Ha lenyomja a Ctrl vagy a Shift billentyűt, megnyitja a {} kategóriaszerkesztőt"
 
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:787
 #, python-brace-format
@@ -16492,24 +16492,24 @@ msgstr "Calibre újraindítása, hogy %s módosításai életbe lépjenek."
 
 #: /__w/calibre/calibre/src/calibre/gui2/device.py:1052
 msgid "Book already on device"
-msgstr ""
+msgstr "Könyv már az eszközön van"
 
 #: /__w/calibre/calibre/src/calibre/gui2/device.py:1053
 msgid ""
 "The book {} is already present on the device. Resending it might cause any "
 "annotations/bookmarks on the device for this book to be lost. Are you sure?"
-msgstr ""
+msgstr "{} könyv már megtalálható az eszközön. Ha újra elküldi, előfordulhat, hogy a könyvhöz tartozó megjegyzések/könyvjelzők elvesznek az eszközön. Biztos benne?"
 
 #: /__w/calibre/calibre/src/calibre/gui2/device.py:1062
 msgid "Some books already on device"
-msgstr ""
+msgstr "Néhány könyv már megtalálható az eszközön"
 
 #: /__w/calibre/calibre/src/calibre/gui2/device.py:1063
 msgid ""
 "Some of the selected books are already on the device. Resending them might "
 "cause any annotations/bookmarks on the device for these books to be lost. "
 "Click \"Show details\" to see the books already on the device. Are you sure?"
-msgstr ""
+msgstr "A kiválasztott könyvek egy része már megtalálható az eszközön. Ha újra elküldi őket, az eszközön lévő megjegyzések/könyvjelzők elveszhetnek. Kattintson a \"Részletek megjelenítése\" gombra az eszközön már található könyvek megtekintéséhez. Biztos benne?"
 
 #: /__w/calibre/calibre/src/calibre/gui2/device.py:1100
 msgid "Error talking to device"
@@ -16918,7 +16918,7 @@ msgid ""
 "<p>You can also specify a file that will be added with each ISBN. To do this enter the full path to the file after a <code>&gt;&gt;</code>. For example:</p>\n"
 "<p><code>9788842915232 &gt;&gt; %s</code></p><p>To use identifiers other than ISBN use key:value syntax, For example:</p>\n"
 "<p><code>amazon:B001JK9C72</code></p>"
-msgstr ""
+msgstr "<p>Írja be az ISBN-ek listáját a bal oldali mezőbe, soronként egyet. Calibre automatikusan létrehozza a bejegyzéseket a könyvekhez az ISBN alapján, és letölti a metaadatokat és a borítókat.</p>\n<p>A listában szereplő érvénytelen ISBN-eket figyelmen kívül hagyja.</p>\n<p>Megadhat egy fájlt is, amely minden ISBN-hez hozzáadódik. Ehhez írja be a fájl teljes elérési útját egy <code>&gt;&gt;</code> után. Például:</p>\n<p><code>9788842915232 &gt;&gt; %s</code></p><p>Az ISBN-től eltérő azonosítók használatához használja a kulcs:érték szintaxist, például:</p>\n<p><code>amazon:B001JK9C72</code></p>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/add_from_isbn.py:65
 msgid "&Tags to set on created book entries:"
@@ -17002,7 +17002,7 @@ msgstr "Előző [%s]"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/book_info.py:219
 msgid "Book {} doesn't exist"
-msgstr ""
+msgstr "{}. könyv nem létezik"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/book_info.py:258
 msgid "Configure this view"
@@ -17027,11 +17027,11 @@ msgstr "(aktuális könyv)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/book_info.py:407
 msgid "(from {})"
-msgstr ""
+msgstr "(innen: {})"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/book_info.py:409
 msgid "(will not change)"
-msgstr ""
+msgstr "(nem fog változni)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/catalog.py:41
 msgid "My books"
@@ -17085,21 +17085,21 @@ msgstr "Katalógus beállítások"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:44
 msgid "Check database integrity and compact it for improved performance."
-msgstr ""
+msgstr "Ellenőrizze az adatbázis integritását, és tömörítse azt a jobb teljesítmény érdekében."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:48
 msgid "Also compact the Full text search database"
-msgstr ""
+msgstr "Ezenkívül tömörítse a teljes szöveges keresési adatbázist"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:51
 msgid ""
 "This can be a very slow and memory intensive operation, depending on the "
 "size of the Full text database."
-msgstr ""
+msgstr "Ez a teljes szöveges adatbázis méretétől függően nagyon lassú és memóriaigényes művelet lehet."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:60
 msgid "Check the database file"
-msgstr ""
+msgstr "Ellenőrizze az adatbázis fájlt"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:63
 msgid "Vacuuming database to improve performance."
@@ -17115,7 +17115,7 @@ msgstr "Takarítás..."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:130
 msgid "Open folder {}"
-msgstr ""
+msgstr "{} mappa megnyitása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:151
 msgid "Check library -- Problems found"
@@ -17245,7 +17245,7 @@ msgstr "Megjegyzés: a könyvmappákon belüli mappák vagy fájlok figyelmen k�
 msgid ""
 "Enter comma-separated standard shell file name wildcards, such as "
 "synctoy*.dat. Used in library, author, and book folders"
-msgstr ""
+msgstr "Írjon be vesszővel elválasztott szabványos shell fájlnév helyettesítő karaktereket, például synctoy*.dat. Könyvtárban, szerzőben és könyvmappákban használják"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:283
 msgid "Extensions to ignore:"
@@ -17425,7 +17425,7 @@ msgstr "Új e&lérési útvonal:"
 msgid ""
 "Note that putting the calibre library on a Networked drive <a href=\"{}\">is"
 " not safe</a>."
-msgstr ""
+msgstr "Vegye figyelembe, hogy a Calibre könyvtár hálózati meghajtóra helyezése <a href=\"{}\">nem biztonságos</a>."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/choose_plugin_toolbars.py:20
 #, python-format
@@ -17460,7 +17460,7 @@ msgstr "Szöveg szerkesztése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/comments_dialog.py:85
 msgid "Press Ctrl+Enter to accept or Esc to cancel"
-msgstr ""
+msgstr "Nyomja meg a Ctrl+Enter billentyűt az elfogadáshoz vagy az Esc billentyűkombinációt a visszavonáshoz"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/confirm_delete.py:38
 msgid "&Show this warning again"
@@ -17612,7 +17612,7 @@ msgstr "A hírösszeállí&tás címe:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/custom_recipes.py:320
 msgid "day(s)"
-msgstr "nap(ok)"
+msgstr "nap"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/custom_recipes.py:321
 msgid "The oldest article to download"
@@ -18122,7 +18122,7 @@ msgstr "Jelölje be a négyzetet, ha módosítja az értéket, és átnevezi azo
 msgid ""
 "Selects the color of the text when displayed in the book list. Either all "
 "rows must have a color or no rows have a color"
-msgstr ""
+msgstr "A szöveg színének kiválasztása, amikor megjelenik a könyvlistában. Vagy minden sornak rendelkeznie kell színnel, vagy egyetlen sornak sincs színe"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/enum_values_edit.py:109
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/enum_values_edit.py:129
@@ -18181,7 +18181,7 @@ msgstr "Könyvtár mappájának kiválasztása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/exim.py:79
 msgid "Working, please wait..."
-msgstr ""
+msgstr "Dolgozik, kérem várjon..."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/exim.py:95
 msgid "Total:"
@@ -19199,7 +19199,7 @@ msgstr "Cikkek max. száma csatornánként:"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:358
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:140
 msgid " days"
-msgstr " nappal"
+msgstr " nap"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/opml.py:85
 msgid "Articles in the RSS feeds older than this will be ignored"
@@ -19615,7 +19615,7 @@ msgstr "Könyv kiválasztása a könyvtárban"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/quickview.py:345
 msgid "Open a locked Book details window for this book"
-msgstr ""
+msgstr "Nyisson meg egy zárolt \"Könyv részletei\" ablakot ehhez a könyvhöz"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/quickview.py:352
 msgid "Quickview this cell"
@@ -19674,7 +19674,7 @@ msgstr "A kiválasztott könyv jelenleg nem jelenik meg a könyvtár nézetben, 
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/quickview.py:801
 msgid "Quickview: Column cannot be selected"
-msgstr ""
+msgstr "Gyorsnézet: oszlop nem választható ki"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/quickview.py:802
 msgid ""
@@ -19922,7 +19922,7 @@ msgstr "órában"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:192
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:237
 msgid "days"
-msgstr "nappal"
+msgstr "nap"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:196
 msgid ""
@@ -20122,7 +20122,7 @@ msgstr "beállítva"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:36
 msgid "is unset"
-msgstr ""
+msgstr "nincs beállítva"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:51
 #, python-format
@@ -20163,7 +20163,7 @@ msgstr "Általános kifejezés: a kifejezés egyezik bárhol a metaadat-mezőben
 msgid ""
 "Character variant: 'contains' with accents ignored and punctuation "
 "significant"
-msgstr ""
+msgstr "Karakterváltozat: \"tartalmazza” figyelmen kívül hagyott ékezetekkel és jelentős írásjelekkel"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:88
 #: /__w/calibre/calibre/src/calibre/gui2/store/config/chooser/adv_search_builder_ui.py:221
@@ -20297,7 +20297,7 @@ msgid ""
 "contains (T), exact (=T), or regular expression matches (~T). With Date you "
 "can use today, yesterday, etc. Set/not set takes 'true' for set and 'false' "
 "for not set."
-msgstr ""
+msgstr "Használhatja a Calibre dokumentációjában leírt keresési specifikációkat. Például a szám-összehasonlításoknál használhatja az olyan relációs operátorokat, mint a '>=' stb. A szöveg-összehasonlításoknál használhatja a tartalmaz (T), pontos (=T) vagy reguláris kifejezés egyezéseket (~T). A 'Date' funkcióval használhatja a mai, tegnapi stb. értékeket. A Set/not set értéke \"igaz” a beállítva, a \"hamis” pedig a nincs beállítva."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:279
 msgid "Template &value:"
@@ -20330,11 +20330,11 @@ msgstr "Sablon szerkesztő megnyitása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:307
 msgid "&Copy the current search into the boxes"
-msgstr ""
+msgstr "Másolja be az aktuális keresést a mezőkbe"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:309
 msgid "Use this button to retrieve and edit the current search"
-msgstr ""
+msgstr "Ezzel a gombbal lekérheti és szerkesztheti az aktuális keresést"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:314
 #: /__w/calibre/calibre/src/calibre/gui2/layout.py:240
@@ -20439,7 +20439,7 @@ msgstr "Calibre IP címe:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/smartdevice_ui.py:87
 msgid "Possible IP addresses:"
-msgstr ""
+msgstr "Lehetséges IP címek:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/smartdevice_ui.py:88
 msgid "Optional &password:"
@@ -20468,19 +20468,19 @@ msgstr "&Automatikus kapcsolódás a Calibre indulásakor"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories.py:183
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories.py:197
 msgid "Lookup name: {}"
-msgstr ""
+msgstr "Keresési név: {}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories.py:188
 msgid "(Not in library)"
-msgstr ""
+msgstr "(nincs a könyvtárban)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories.py:190
 msgid "(Hidden in Tag browser)"
-msgstr ""
+msgstr "(rejtett a címkeböngészőben)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories.py:192
 msgid "(Hidden by Virtual library)"
-msgstr ""
+msgstr "(rejtett a virtuális könyvtár által)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories.py:250
 msgid "You must select items to apply"
@@ -20507,34 +20507,34 @@ msgstr "Már használatban lévő név"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories.py:289
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories.py:327
 msgid "The user category name is already used, perhaps with different case."
-msgstr ""
+msgstr "A felhasználói kategória neve már használatban van, esetleg más kis- és nagybetűkkel."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories.py:290
 #, python-brace-format
 msgid ""
 "Existing category: {existing}\n"
 "New category name: {new}"
-msgstr ""
+msgstr "Meglévő kategória: {existing}\nÚj kategórianév: {new}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories.py:295
 msgid ""
 "The hierarchical prefix of the new category is already used, perhaps with "
 "different case."
-msgstr ""
+msgstr "Az új kategória hierarchikus előtagja már használatban van, esetleg más kis- és nagybetűkkel."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories.py:297
 #, python-brace-format
 msgid ""
 "Existing prefix: {prefix}\n"
 "New category name: {new}"
-msgstr ""
+msgstr "Meglévő előtag: {prefix}\nÚj kategórianév: {new}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories.py:328
 #, python-brace-format
 msgid ""
 "Existing category: {existing}\n"
 "New category: {new}"
-msgstr ""
+msgstr "Meglévő kategória: {existing}\nÚj kategória: {new}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories.py:343
 msgid ""
@@ -20547,7 +20547,7 @@ msgstr "Egyéni kategória szerkesztő"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories_ui.py:137
 msgid "&User category name: "
-msgstr ""
+msgstr "Felhasználói kategória neve:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories_ui.py:138
 msgid "Select a category to edit"
@@ -20595,22 +20595,22 @@ msgid ""
 "<p>Only show items that are visible in current Virtual\n"
 "            library. Applied items not shown in the Virtual library will be\n"
 "            marked \"Hidden by Virtual library\".</p>"
-msgstr ""
+msgstr "<p>Csak az aktuális virtuális könyvtárban látható elemek jelenjenek meg. \n   A virtuális könyvtárban nem szereplő alkalmazott elemek a \"Rejtett \n   a virtuális könyvtár által\" jelöléssel lesznek megjelölve.</p>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories_ui.py:154
 msgid "&Only show items visible in current Virtual library"
-msgstr ""
+msgstr "Csak az aktuális virtuális könyvtárban látható elemek megjelenítése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories_ui.py:155
 msgid ""
 "<p>Don't show items that are hidden in the Tag browser.\n"
 "          Applied items not shown in the Tag browser will be marked\n"
 "          \"Hidden in Tag browser\".</p>"
-msgstr ""
+msgstr "<p>Ne jelenítsen meg a 'Címkeböngészőben' elrejtett elemeket. \n    Címkeböngészőben nem megjelenő alkalmazott elemek \n    \"Rejtett a Címkeböngészőben” jelzéssel jelennek meg.</p>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories_ui.py:158
 msgid "&Don't show items hidden in the Tag browser"
-msgstr ""
+msgstr "Ne jelenítsen meg a 'Címkeböngészőben' rejtett elemeket"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories_ui.py:159
 msgid "&Available items"
@@ -20645,11 +20645,11 @@ msgstr "Ha a kívánt elem nem szerepel az elérhető listában, itt hozzáadhat
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_editor.py:125
 msgid "No tags selected"
-msgstr ""
+msgstr "Nincsenek kiválasztva címkék"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_editor.py:125
 msgid "You must select at least one tag from the list of Available tags."
-msgstr ""
+msgstr "Legalább egy címkét ki kell választania az elérhető címkék listájából."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_editor.py:128
 msgid "Deleting tags is done immediately and there is no undo."
@@ -20732,7 +20732,7 @@ msgstr "Ez nem tartozik az oszlop engedélyezett ({0}) értékei közé"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:500
 msgid "no links available"
-msgstr ""
+msgstr "nincsenek elérhető hivatkozások"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:575
 msgid "Editing..."
@@ -20755,12 +20755,12 @@ msgstr "Valóban visszavonja a módosításokat?"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:659
 msgid "Selection contains deleted items"
-msgstr ""
+msgstr "A kijelölés törölt elemeket tartalmaz"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:660
 msgid ""
 "The selection contains deleted items. You must undelete them before editing."
-msgstr ""
+msgstr "A kijelölés törölt elemeket tartalmaz. Szerkesztés előtt vissza kell vonnia a törlésüket."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:678
 msgid "Undelete items?"
@@ -20772,7 +20772,7 @@ msgstr "A folytatáshoz vissza kell vonni az elemek törlését. Megteszi?"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:698
 msgid "Are you sure you want to delete the selected links? There is no undo."
-msgstr ""
+msgstr "Biztosan törli a kiválasztott linkeket? Nincs visszavonás."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:96
 msgid "Search for an item in the first column"
@@ -20875,7 +20875,7 @@ msgstr "Sablon értéke"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:590
 msgid "*** Breakpoints are enabled. Waiting for the 'Go' button to be pressed"
-msgstr ""
+msgstr "*** A töréspontok engedélyezve vannak. Várakozás a 'Go' gomb megnyomására"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:597
 msgid "Disable word wrap"
@@ -20887,7 +20887,7 @@ msgstr "Szótördelés engedélyezése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:604
 msgid "Add Python template definition text"
-msgstr ""
+msgstr "Python sablondefiníciós szöveg hozzáadása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:607
 msgid "Load template from the Template tester"
@@ -20919,7 +20919,7 @@ msgstr "Ikon kiválasztása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:862
 msgid "EXCEPTION:"
-msgstr ""
+msgstr "KIVÉTEL: "
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:886
 msgid "Built-in template function"
@@ -20946,19 +20946,19 @@ msgstr "Tárolt sablon"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:891
 msgid "Stored user defined Python template"
-msgstr ""
+msgstr "Felhasználó által meghatározott tárolt Python sablon"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:892
 msgid "Stored user defined GPM template"
-msgstr ""
+msgstr "Felhasználó által meghatározott tárolt GPM sablon"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:920
 msgid "Discard changes?"
-msgstr ""
+msgstr "Elveti a módosításokat?"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:921
 msgid "Do you really want to close this dialog, discarding any changes?"
-msgstr ""
+msgstr "Biztosan bezárja ezt a párbeszédpanelt, és elvet minden változtatást?"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:929
 msgid "No template provided"
@@ -21017,7 +21017,7 @@ msgstr "Általános programmód sablon"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog_ui.py:368
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:408
 msgid "Set the color of the column:"
-msgstr "Az átszínezendő &oszlop:"
+msgstr "Az átszínezendő oszlop:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog_ui.py:369
 msgid "Copy a color name to the clipboard:"
@@ -21045,7 +21045,7 @@ msgid ""
 "                to display. If you wish to display multiple icons, separate the\n"
 "                individual icon file names with a ':' (colon). They will all be\n"
 "                displayed in the column</p>"
-msgstr ""
+msgstr "<p>A sablonnak vissza kell adnia a megjelenítendő ikonfájl nevét. \n         Ha több ikont szeretne megjeleníteni, válassza el az egyes \n         ikonfájlok nevét ':'-vel (kettősponttal). Mindegyik megjelenik \n         az oszlopban</p>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog_ui.py:378
 msgid "Copy the selected icon file name to the clipboard"
@@ -21077,7 +21077,7 @@ msgstr "A sablonprogram szövege az alábbi mezőbe kerül"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog_ui.py:385
 msgid "        "
-msgstr ""
+msgstr "        "
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog_ui.py:386
 msgid "Enable &breakpoints"
@@ -21140,7 +21140,7 @@ msgid ""
 "            A Python template must begin with the word \"python:\" followed by a\n"
 "            function definition line. There is a context menu item you can use\n"
 "            to enter the first lines of a Python template.</p>"
-msgstr ""
+msgstr "<p>Ebbe a mezőbe kerül a sablonprogram szövege. \n   Az \"Általános Program mód\" sablonjának a \"program:” szóval kell kezdődnie. \n   A Python-sablonnak a \"python:” szóval kell kezdődnie, amelyet egy \n   függvénydefiníciós sor követ. Van egy helyi menüelem, amellyel \n   beírhatja a Python-sablon első sorait.</p>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog_ui.py:406
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions_ui.py:151
@@ -21442,7 +21442,7 @@ msgstr "%s formátumban."
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:641
 #, python-brace-format
 msgid "{series_index} of {series}"
-msgstr ""
+msgstr "{series_index} / {series}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/email.py:448
 msgid "About this book:"
@@ -21660,13 +21660,13 @@ msgstr "Betűtípus törlése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/dialog.py:21
 msgid "Search the text of all books in the library"
-msgstr ""
+msgstr "Keresés a könyvtárban található összes könyv szövegében"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/dialog.py:30
 msgid ""
 "The calibre library is on a FAT drive, indexing more than a few hundred "
 "books wont work."
-msgstr ""
+msgstr "A Calibre könyvtár FAT-meghajtón van, több mint néhány száz könyv indexelése nem működik."
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/dialog.py:42
 msgid ""
@@ -21677,22 +21677,22 @@ msgstr "A könyvtárban található összes könyv indexelése még nem fejeződ
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/dialog.py:55
 msgid "Library on a FAT drive"
-msgstr ""
+msgstr "Könyvtár egy FAT meghajtón"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/dialog.py:56
 msgid ""
 "The calibre library {} is on a FAT drive. These drives have a limit on the "
 "maximum file size. Therefore indexing of more than a few hundred books will "
 "fail. You should move your calibre library to an NTFS or exFAT drive."
-msgstr ""
+msgstr "{} Calibre könyvtár egy FAT-meghajtón található. Ezeknek a meghajtóknak korlátja van a maximális fájlméretre. Ezért több mint néhány száz könyv indexelése sikertelen lesz. Helyezze át a Calibre könyvtárát egy NTFS vagy exFAT meghajtóra."
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/dialog.py:84
 msgid "Indexing is almost complete"
-msgstr ""
+msgstr "Az indexelés majdnem kész"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/dialog.py:84
 msgid "Indexing is only {} done"
-msgstr ""
+msgstr "Az indexelés csak {} kész"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/scan.py:32
 msgid ""
@@ -21702,19 +21702,19 @@ msgid ""
 "quickly finish the indexing. Both your computer and calibre will be less "
 "responsive while fast indexing is active. Closing this window will "
 "automatically reset to slow indexing."
-msgstr ""
+msgstr "Általában a Calibre lassan, a háttérben indexeli a könyveket, hogy elkerülje a számítógép túlterhelését. Ehelyett beállíthatja a Calibre gyors indexelését. Ez akkor hasznos, ha egyik napról a másikra üzemben kívánja hagyni a számítógépet, hogy gyorsan befejezze az indexelést. Mind a számítógépe, mind a Calibre kevésbé fog reagálni, miközben a gyors indexelés aktív. Az ablak bezárásával automatikusan visszaáll a lassú indexelés."
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/scan.py:44
 msgid "Indexing speed:"
-msgstr ""
+msgstr "Indexelési sebesség:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/scan.py:45
 msgid "&Slow"
-msgstr ""
+msgstr "Lassú"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/scan.py:48
 msgid "&Fast"
-msgstr ""
+msgstr "Gyors"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/scan.py:55
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/check.py:37
@@ -21729,54 +21729,54 @@ msgstr "Még nincs minden könyv indexelve ebben a könyvtárban. A keresés hi�
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/scan.py:77
 msgid "All book files indexed"
-msgstr ""
+msgstr "Minden könyvfájl indexelve"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/scan.py:80
 msgid "Start &searching"
-msgstr ""
+msgstr "Keresés indítása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/scan.py:86
 msgid "almost 100%"
-msgstr ""
+msgstr "majdnem 100%"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/scan.py:87
 #, python-brace-format
 msgid "{0} of {1} book files, {2} have been indexed, {3}"
-msgstr ""
+msgstr "{0} ennyi könyvfájlból: {1} , {2} indexelve, {3}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/scan.py:90
 msgid "Start &searching even with incomplete indexing"
-msgstr ""
+msgstr "A keresés elindítása még hiányos indexelés esetén is"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/scan.py:108
 msgid "&Index books in this library to allow searching their full text"
-msgstr ""
+msgstr "Indexelje a könyvtárban található könyveket, hogy lehetővé tegye a keresést a teljes szövegükben"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/scan.py:112
 msgid ""
 "In order to search the full text of books, the text must first be "
 "<i>indexed</i>. Once enabled, indexing is done automatically, in the "
 "background, whenever new books are added to this calibre library."
-msgstr ""
+msgstr "A könyvek teljes szövegében való kereséshez a szöveget először <i>indexelni</i> kell. Ha engedélyezve van, az indexelés automatikusan megtörténik a háttérben, amikor új könyveket adnak hozzá ehhez a Calibre könyvtárhoz."
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/scan.py:172
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:651
 msgid "Re-index"
-msgstr ""
+msgstr "Újraindexelés"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/scan.py:174
 msgid "Re-index all books in this library"
-msgstr ""
+msgstr "Minden könyv indexelése ebben a könyvtárban"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/scan.py:179
 msgid ""
 "This will force calibre to re-index all the books in this library, which can"
 " take a long time. Are you sure?"
-msgstr ""
+msgstr "Ez arra kényszeríti a Calibre-t, hogy újraindexelje a könyvtárban található összes könyvet, ami hosszú ideig tarthat. Biztos ebben?"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:52
 msgid "This book was not found in the calibre library"
-msgstr ""
+msgstr "Ez a könyv nem található a Calibre könyvtárban"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:55
 msgid ""
@@ -21784,7 +21784,7 @@ msgid ""
 "search or Virtual library active, try clearing that. Or click the \"Restrict"
 " searched books\" checkbox in this window to only search currently visible "
 "books."
-msgstr ""
+msgstr "Ez a könyv jelenleg nem látható a Calibre könyvtárban. Ha aktív kereséssel vagy virtuális könyvtárral rendelkezik, próbálja meg törölni azt. Vagy kattintson a \"Keresett könyvek korlátozása\" jelölőnégyzetre ebben az ablakban, ha csak a jelenleg látható könyveket szeretné keresni."
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:111
 msgid "Unknown book"
@@ -21792,26 +21792,26 @@ msgstr "Ismeretlen könyv"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:119
 msgid "Unknown author"
-msgstr ""
+msgstr "Ismeretlen szerző"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:411
 msgid "Invalid search query"
-msgstr ""
+msgstr "Érvénytelen keresési lekérdezés"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:412
 #, python-brace-format
 msgid ""
 "The search query: {query} was not understood. See <a "
 "href=\"{fts_url}\">here</a> for details on the supported query syntax."
-msgstr ""
+msgstr "A keresési lekérdezés: {query} nem értelmezhető. A támogatott lekérdezés szintaxisának részleteiért lásd <a href=\"{fts_url}\">itt</a>."
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:431
 msgid "Jump to this book in the library"
-msgstr ""
+msgstr "Ugrás ehhez a könyvhöz a könyvtárban"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:432
 msgid "Mark this book in the library"
-msgstr ""
+msgstr "Jelölje meg ezt a könyvet a könyvtárban"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:434
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:683
@@ -21838,14 +21838,14 @@ msgstr "A keresendő szavak megadása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:493
 msgid "&Restrict searched books"
-msgstr ""
+msgstr "Keresett könyvek korlátozása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:495
 msgid ""
 "Restrict search results to only the books currently showing in the main "
 "library screen. This means that any Virtual libraries or search results are "
 "applied."
-msgstr ""
+msgstr "A keresési eredményeket csak a fő könyvtár képernyőjén jelenleg megjelenő könyvekre korlátozza. Ez azt jelenti, hogy minden virtuális könyvtár vagy keresési eredmény alkalmazásra kerül."
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:500
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:938
@@ -21864,54 +21864,54 @@ msgstr "Ezzel az opcióval a szavak keresése a kapcsolódó szavakra is kiterje
 #, python-brace-format
 msgid "One book"
 msgid_plural "{num} books"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Egy könyv"
+msgstr[1] "{num} könyv"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:578
 msgid "Scheduled for re-indexing"
-msgstr ""
+msgstr "Újraindexelésre ütemezve"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:579
 msgid ""
 "This book has been scheduled for re-indexing, which typically takes a few "
 "seconds, if no other books are being re-indexed. Once indexing is complete, "
 "you can re-run the search to see updated results."
-msgstr ""
+msgstr "Ennek a könyvnek az újraindexelése ütemezett, ami általában néhány másodpercet vesz igénybe, ha nincs más könyv újraindexelése. Az indexelés befejezése után újra futtathatja a keresést a frissített eredmények megtekintéséhez."
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:644
 msgid "Scroll to this book in the calibre library book list and select it."
-msgstr ""
+msgstr "Görgessen ehhez a könyvhöz a Calibre könyvtár könyvlistájában, és válassza ki."
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:644
 msgid "Select"
-msgstr ""
+msgstr "Kiválaszt"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:646
 msgid "Mark"
-msgstr ""
+msgstr "Megjelöl"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:647
 #, python-brace-format
 msgid ""
 "Put a pin on this book in the calibre library, for future reference. You can"
 " search for marked books using the search term: {0}"
-msgstr ""
+msgstr "Tegyen egy gombostűt erre a könyvre a Calibre könyvtárban, későbbi hivatkozás céljából. A megjelölt könyvekre a következő keresési kifejezéssel kereshet: {0}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:651
 msgid ""
 "Re-index this book. Useful if the book has been changed outside of calibre, "
 "and thus not automatically re-indexed."
-msgstr ""
+msgstr "Indexelje újra ezt a könyvet. Hasznos, ha a könyvet a Calibre-n kívül változtatták, és így nem indexelték automatikusan újra."
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:655
 msgid ""
 "This book has been deleted from the library but is still present in the full"
 " text search index. Remove it."
-msgstr ""
+msgstr "Ezt a könyvet törölték a könyvtárból, de továbbra is megtalálható a teljes szöveges keresési indexben. Távolítsd el."
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:655
 msgid "Un-index"
-msgstr ""
+msgstr "Index megszüntetése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:683
 #, python-brace-format
@@ -21919,7 +21919,7 @@ msgid ""
 "Open the book, in the {fmt} format.\n"
 "When using the calibre E-book viewer, it will attempt to scroll\n"
 "to this search result automatically."
-msgstr ""
+msgstr "Nyissa meg a könyvet {fmt} formátumban.\nA Calibre e-könyvnézegető használatakor automatikusan \nmegpróbál görgetni ehhez a keresési eredményhez."
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:716
 #, python-brace-format
@@ -21942,7 +21942,7 @@ msgid ""
 "\n"
 "<div style=\"margin-top: 1em\"><a href=\"{fts_url}\">Full syntax reference</a></div>\n"
 "</div>"
-msgstr ""
+msgstr "\n<div class=\"h\">Egyszerű szókeresés</div>\n<p>Egyszerűen írja be a szót:</p>\n<div class=\"bq\">awesome<br>calibre</div>\n\n<div class=\"h\">Kifejezések keresése</div>\n<p>Tegye idézőjelbe a kifejezést:</p>\n<div class=\"bq\">\"early run\"<br>\"song of love\"</div>\n\n<div class=\"h\">Logikai keresés</div>\n<div class=\"bq\">(calibre AND ebook) NOT gun<br>simple NOT (\"high bar\" OR hard)</div>\n\n<div class=\"h\">Kifejezések egymás közelében</div>\n<div class=\"bq\">NEAR(\"people\" \"in Asia\" \"try\")<br>NEAR(\"Kovid\" \"calibre\", 30)</div>\n<p>Itt a 30 a legtöbb megengedett szó a közeli csoportok között. Alapértelmezés szerint 10, ha nincs megadva.</p>\n\n<div style=\"margin-top: 1em\"><a href=\"{fts_url}\">Teljes szintaktikai hivatkozás</a></div>\n</div>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:832
 msgid "Abort the current search?"
@@ -22240,7 +22240,7 @@ msgstr "Csak világos téma"
 
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:792
 msgid "For dark only"
-msgstr ""
+msgstr "Csak sötét téma"
 
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:807
 msgid "Downloading, please wait..."
@@ -22263,7 +22263,7 @@ msgstr "Válasszon az elérhető {} ikontéma közül"
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:913
 msgid ""
 "Failed to download icon themes, click \"Show details\" for more information."
-msgstr ""
+msgstr "Nem sikerült letölteni az ikontémákat. További információért kattintson a \"Részletek megjelenítése\" gombra."
 
 #: /__w/calibre/calibre/src/calibre/gui2/image_popup.py:147
 msgid "Zoom &in"
@@ -22694,7 +22694,7 @@ msgstr "<p>Keresés a listában a cím, szerző stb alapján<br><br>A szóközze
 #: /__w/calibre/calibre/src/calibre/gui2/layout.py:235
 msgid ""
 "Search the full text of all books in the library, not just their metadata"
-msgstr ""
+msgstr "Keressen a könyvtárban található összes könyv teljes szövegében, nem csak a metaadataikban"
 
 #: /__w/calibre/calibre/src/calibre/gui2/layout.py:262
 msgid "Do quick search (you can also press the Enter key)"
@@ -22972,7 +22972,7 @@ msgstr "Formátumok"
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:209
 #: /__w/calibre/calibre/src/calibre/library/field_metadata.py:200
 msgid "Id"
-msgstr ""
+msgstr "ID"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:646
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1725
@@ -23016,11 +23016,11 @@ msgstr "A keresés neve: <i>{0}</i>"
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1154
 #, python-brace-format
 msgid "Marked with text \"{0}\""
-msgstr ""
+msgstr "Megjelölve \"{0}\" szöveggel"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1154
 msgid "Marked without text"
-msgstr ""
+msgstr "Megjelölve szöveg nélkül"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1159
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1855
@@ -23073,7 +23073,7 @@ msgstr "A keresési név"
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:224
 #, python-brace-format
 msgid "Adjust width of {0}"
-msgstr ""
+msgstr "{0} szélességének beállítása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:243
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:248
@@ -23112,25 +23112,25 @@ msgstr "10% kicsinyítés"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:258
 msgid "&Expand 10%"
-msgstr ""
+msgstr "Bővítés 10%-kal"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:261
 msgid "Set to mi&nimum"
-msgstr ""
+msgstr "Minimumra állítás"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:262
 msgid "Set to ma&ximum"
-msgstr ""
+msgstr "Maximumra állítás"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:265
 msgid "&Resize column to fit contents"
-msgstr ""
+msgstr "Az oszlop átméretezése a tartalomhoz"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:266
 msgid ""
 "The width will be set to the size of the widest entry or the maximum size, "
 "whichever is smaller"
-msgstr ""
+msgstr "A szélesség a legszélesebb bejegyzés méretére vagy a maximális méretre lesz beállítva, attól függően, hogy melyik a kisebb"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:273
 msgid "pixels"
@@ -23138,11 +23138,11 @@ msgstr "pixel"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:274
 msgid "This box shows the current width after using the above buttons"
-msgstr ""
+msgstr "Ez a mező az aktuális szélességet mutatja a fenti gombok használata után"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:275
 msgid "Set width &to:"
-msgstr ""
+msgstr "Szélesség beállítása erre:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:519
 msgid "Cannot hide all columns"
@@ -23215,7 +23215,7 @@ msgstr "Dőlt betűtípus"
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:596
 #, python-brace-format
 msgid "Adjust width of column {0}"
-msgstr ""
+msgstr "{0} oszlop szélességének beállítása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:601
 #, python-format
@@ -23255,15 +23255,15 @@ msgstr "Sorszámok elrejtése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:644
 msgid "Show row numbers"
-msgstr ""
+msgstr "Sorszámok megjelenítése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:650
 msgid "Toggle mark for book"
-msgstr ""
+msgstr "Könyv-jelölő váltás (jelölés/törlés)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:654
 msgid "Mark book with text label"
-msgstr ""
+msgstr "Jelölje meg a könyvet szöveges címkével"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:690
 msgid "Un-split the book list"
@@ -23275,11 +23275,11 @@ msgstr "Könyvlista felosztása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:704
 msgid "Don't allow moving columns with the mouse"
-msgstr ""
+msgstr "Ne engedje mozgatni az oszlopokat az egérrel"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:708
 msgid "Allow moving columns with the mouse"
-msgstr ""
+msgstr "Engedélyezze az oszlopok mozgatását az egérrel"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:1709
 msgid ""
@@ -23604,13 +23604,13 @@ msgstr "Cím r&endezési forma:"
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:278
 msgid ""
 " The ok icon indicates that the current title sort matches the current title"
-msgstr ""
+msgstr "Az OK ikon azt jelzi, hogy az aktuális címrendezés megegyezik az aktuális címmel"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:281
 msgid ""
 " The error icon warns that the current title sort does not match the current"
 " title. No action is required if this is what you want."
-msgstr ""
+msgstr "A hibaikon arra figyelmeztet, hogy az aktuális címrendezés nem egyezik az aktuális címmel. Nincs szükség teendőre, ha ezt szeretné."
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:369
 msgid "&Edit authors"
@@ -23640,23 +23640,23 @@ msgstr "Szerző re&ndezési forma:"
 msgid ""
 " The ok icon indicates that the current author sort matches the current "
 "author"
-msgstr ""
+msgstr "Az OK ikon azt jelzi, hogy az aktuális szerzői rendezés megegyezik az aktuális szerzővel"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:482
 msgid ""
 " The error icon indicates that the current author sort does not match the "
 "current author. No action is required if this is what you want."
-msgstr ""
+msgstr "A hibaikon azt jelzi, hogy az aktuális szerzői rendezés nem egyezik az aktuális szerzővel. Nincs szükség teendőre, ha ezt szeretné."
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:663
 msgid "Series changed"
-msgstr ""
+msgstr "A sorozat megváltozott"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:664
 msgid ""
 "You have changed the series. In order to use the category editor, you must "
 "either discard or apply these changes. Apply changes?"
-msgstr ""
+msgstr "Megváltoztatta a sorozatot. A kategóriaszerkesztő használatához el kell vetnie vagy alkalmaznia kell ezeket a módosításokat. Alkalmazza a módosításokat?"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:692
 msgid "&Number:"
@@ -23868,13 +23868,13 @@ msgstr "Kiadó törlése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1895
 msgid "Publisher changed"
-msgstr ""
+msgstr "A kiadó megváltoztatva"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1896
 msgid ""
 "You have changed the publisher. In order to use the Category editor, you "
 "must either discard or apply these changes. Apply changes?"
-msgstr ""
+msgstr "Megváltoztatta a kiadót. A 'Kategóriaszerkesztő' használatához el kell vetnie vagy alkalmaznia kell ezeket a módosításokat. Alkalmazza a módosításokat?"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1948
 msgid "Clear date"
@@ -24019,11 +24019,11 @@ msgstr[1] "Biztosan elutasítja a fennmaradó {} eredményt?"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/pdf_covers.py:50
 msgid "Rendering {} pages, please wait..."
-msgstr ""
+msgstr "{} oldal renderelése folyamatban, kérjük várjon..."
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/pdf_covers.py:50
 msgid "comic book"
-msgstr ""
+msgstr "képregény"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/pdf_covers.py:54
 msgid "Choose a cover from the list of pages below"
@@ -24044,11 +24044,11 @@ msgstr "Sikertelen a renderelés"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/pdf_covers.py:123
 msgid "Could not render this file"
-msgstr ""
+msgstr "Nem sikerült renderelni ezt a fájlt"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/pdf_covers.py:130
 msgid "This book has no pages"
-msgstr ""
+msgstr "Ennek a könyvnek nincsenek oldalai"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/pdf_covers.py:145
 #, python-format
@@ -24105,11 +24105,11 @@ msgstr "A szerző és a könyvcím megcserélése"
 msgid ""
 "Open the Authors Category editor. Use to rename authors and correct "
 "individual author's sort values"
-msgstr ""
+msgstr "Nyissa meg a 'Szerzők' kategória szerkesztőjét. Használja a szerzők átnevezésére és az egyes szerzők rendezési értékeinek javítására"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:199
 msgid "Open the Series Category editor"
-msgstr ""
+msgstr "Sorozatkategória-szerkesztő megnyitása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:228
 msgid "Clear rating"
@@ -24119,7 +24119,7 @@ msgstr "Értékelés törlése"
 msgid ""
 "Open the Tag editor. If Ctrl or Shift is pressed, open the Tags Category "
 "editor"
-msgstr ""
+msgstr "Nyissa meg a Címkeszerkesztőt. Ha lenyomja a Ctrl vagy a Shift billentyűt, megnyitja a Címkekategória szerkesztőt"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:241
 msgid "Clear all tags"
@@ -24134,11 +24134,11 @@ msgid ""
 "Paste the contents of the clipboard into the identifiers prefixed with an "
 "auto-detected prefix such as isbn: or url:. Or right click, and choose a "
 "specific prefix to use."
-msgstr ""
+msgstr "Illessze be a vágólap tartalmát az automatikusan észlelt előtaggal ellátott azonosítókba, például isbn: vagy url:. Vagy kattintson a jobb gombbal, és válassza ki a használni kívánt előtagot."
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:264
 msgid "Open the Publishers Category editor"
-msgstr ""
+msgstr "Kiadók kategóriája szerkesztő megnyitása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:275
 msgid "&Download metadata"
@@ -24337,23 +24337,23 @@ msgstr "Másold ezt a borítót a vágólapra"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:836
 msgid "Save this cover to disk"
-msgstr ""
+msgstr "Borító lemezre mentése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:838
 msgid "Save this cover in the book extra files"
-msgstr ""
+msgstr "Mentse ezt a borítót a könyv extra fájljaiba"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:864
 msgid "Save cover image"
-msgstr ""
+msgstr "Borítókép mentése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:884
 msgid "Too many covers"
-msgstr ""
+msgstr "Túl sok borító"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:885
 msgid "Could not save cover as there are too many existing covers"
-msgstr ""
+msgstr "Nem sikerült menteni a borítót, mert túl sok a meglévő borító"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:932
 #, python-format
@@ -24818,7 +24818,7 @@ msgstr "Előnyben részesített forrás formátumok sorrendje:"
 msgid ""
 "When multiple formats are present in a book being converted, this list "
 "determines which format will be used as the \"source\" for the conversion."
-msgstr ""
+msgstr "Ha egy konvertálandó könyvben több formátum is megtalálható, ez a lista határozza meg, hogy melyik formátum legyen a konvertálás \"forrása”."
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:166
 msgid "Preferred &output format:"
@@ -24885,7 +24885,7 @@ msgstr "A beépített ol&vasóprogram használata a következőkhöz:"
 msgid ""
 "File types that are unchecked in this list will be opened with the default "
 "program configured in the operating system, for that file type."
-msgstr ""
+msgstr "A listában bejelöletlen fájltípusok az operációs rendszerben az adott fájltípushoz beállított alapértelmezett programmal nyílnak meg."
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:184
 msgid "Virtual library to apply when the current &library is opened:"
@@ -25119,12 +25119,12 @@ msgstr "Borítórács embléma"
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:388
 #, python-brace-format
 msgid "Create/edit a {0} rule"
-msgstr "{0} szabály létrehozása, szerkesztése"
+msgstr "Egy {0} szabály létrehozása, szerkesztése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:393
 #, python-brace-format
 msgid "Create a {0} rule by filling in the boxes below"
-msgstr "{0} szabály létrehozása az alábbi mezők kitöltésével"
+msgstr "Egy {0} szabály létrehozása az alábbi mezők kitöltésével"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:405
 msgid "Add the emblem:"
@@ -25667,28 +25667,28 @@ msgstr "Leírás:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:346
 msgid "&Icon"
-msgstr ""
+msgstr "Ikon"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:349
 msgid "&Both"
-msgstr ""
+msgstr "Mindkettő"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:355
 msgid "Choose whether an icon, text, or both is shown in the book list"
-msgstr ""
+msgstr "Válassza ki, hogy egy ikon, szöveg vagy mindkettő megjelenjen-e a könyvlistában"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:359
 msgid "&Show:"
-msgstr ""
+msgstr "Megjelenítés:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:377
 msgid ""
 "Control the number of decimal digits you can enter when editing this column"
-msgstr ""
+msgstr "Szabályozza az oszlop szerkesztésekor megadható tizedesjegyek számát"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:380
 msgid "Decimals when &editing:"
-msgstr ""
+msgstr "Tizedesjegyek szerkesztéskor:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:384
 msgid "Default: (nothing)"
@@ -25735,7 +25735,7 @@ msgstr "Rövid szöveg, mint a cím"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:412
 msgid "Plain text formatted using Markdown"
-msgstr ""
+msgstr "Markdown segítségével formázott egyszerű szöveg"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:415
 msgid ""
@@ -26007,7 +26007,7 @@ msgstr "%s adattípushoz nem adható meg az \"is_multiple\""
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:963
 msgid "The display parameter must be a Python dictionary"
-msgstr ""
+msgstr "A megjelenítési paraméternek Python szótárnak kell lennie"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/device_debug.py:24
 msgid "Getting debug information, please wait"
@@ -26783,21 +26783,21 @@ msgstr "<p>Jelölje be a négyzetet, ha azt szeretné, hogy a kategória érték
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:888
 msgid "Categories on separate lines"
-msgstr ""
+msgstr "Kategóriák külön sorokban"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:890
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:904
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1047
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1087
 msgid "Move down. Keyboard shortcut: Ctrl-Down arrow"
-msgstr ""
+msgstr "Mozgás lefelé billentyű parancs: Ctrl-lefelé nyíl"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:891
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:905
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1046
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1086
 msgid "Move up. Keyboard shortcut: Ctrl-Up arrow"
-msgstr ""
+msgstr "Mozgás felfelé billentyű parancs: Ctrl-lefelé nyíl"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:892
 msgid ""
@@ -26971,7 +26971,7 @@ msgstr "Metaadatok szerkesztése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:941
 msgid "User categories and Saved searches cannot be moved"
-msgstr ""
+msgstr "A felhasználói kategóriák és a mentett keresések nem helyezhetők át"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:942
 msgid "Select the categories to display in the Tag browser, and their &order"
@@ -27002,7 +27002,7 @@ msgid ""
 "<p>Show counts for items in the Tag browser. Such as the number of books\n"
 "by each author, the number of authors, etc. If you turn it off, you can still\n"
 "see the counts by hovering your mouse over any item.</p>"
-msgstr ""
+msgstr "<p>Elemek számának megjelenítése a Címkeböngészőben. Például az egyes \nszerzők könyveinek száma, a szerzők száma stb. Ha kikapcsolja, továbbra is \nláthatja a számokat, ha az egeret bármely elem fölé viszi.</p>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:963
 msgid "Show &counts"
@@ -27018,18 +27018,18 @@ msgid ""
 "(a column, custom or standard) that has no items to show. For example, some\n"
 "categories might not have values when using Virtual libraries. Checking this\n"
 "box will cause these empty categories to be hidden.</p>"
-msgstr ""
+msgstr "<p>Ha be van jelölve, a Calibre automatikusan elrejti az összes olyan kategóriát \n(oszlop, egyéni vagy szabvány), amelynél nincs megjeleníthető elem. \n Előfordulhat például, hogy egyes kategóriáknak nincs értéke a virtuális \nkönyvtárak használatakor. A négyzet bejelölésével ezek az üres kategóriák \nelrejthetők.</p>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:969
 msgid "Hide empt&y categories (columns)"
-msgstr ""
+msgstr "Üres kategóriák (oszlopok) elrejtése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:970
 msgid ""
 "<p>When checked, Find in the Tag browser will show all items\n"
 "that match the search instead of the first one. If Hide empty categories is\n"
 "also checked then only categories containing a matched item will be shown.</p>"
-msgstr ""
+msgstr "<p>Ha be van jelölve, a 'Keresés' a címkeböngészőben az összes keresésnek megfelelő elemet megjeleníti az első helyett. Ha az 'Üres kategóriák elrejtése' is be van jelölve, akkor csak az egyező elemet tartalmazó kategóriák jelennek meg.</p>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:973
 msgid "Find &shows all items that match"
@@ -27055,7 +27055,7 @@ msgid ""
 "focus the Tag browser under\n"
 "<code>Preferences-&gt;Shortcuts-&gt;Tag browser-&gt;Give\n"
 "the Tag browser keyboard focus</code></p>"
-msgstr ""
+msgstr "<p style=\"text-indent: 2em; font-size:smaller\">\nHa engedélyezi ezt az opciót, akkor be kell állítania egy billentyűparancsot a Címkeböngésző fókuszálásához a <code>Beállítások-&gt;Gyorsbillentyűk-&gt;Címkeböngésző-&gt;Fókuszálás a címkeböngésző billentyűzetére</code>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:985
 msgid "Spacing between &items:"
@@ -27066,11 +27066,11 @@ msgid ""
 "<p>The spacing between consecutive items in the Tag browser.\n"
 "In units of (ex) which is the approximate height of the letter 'x' in the\n"
 "currently used font.</p>"
-msgstr ""
+msgstr "<p>Az egymást követő elemek közötti távolság a Címkeböngészőben.\nAz (ex) egységekben, amely az 'x' betű hozzávetőleges magassága a\njelenleg használt betűtípus.</p>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:989
 msgid "ex"
-msgstr ""
+msgstr "ex"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:990
 msgid "Di&splay"
@@ -27098,7 +27098,7 @@ msgid ""
 "<p>If collapsing by first letter, combine adjacent letters together if\n"
 "there are fewer items under a letter than specified here. If the partition method is\n"
 "not set to first letter, this value is ignored. Set to zero to disable.</p>"
-msgstr ""
+msgstr "<p>Ha az első betűvel összecsukja, kombinálja a szomszédos betűket, ha az itt megadottnál \nkevesebb elem van egy betű alatt. Ha a partíciós metódus nincs első betűre\n állítva, akkor ez az érték figyelmen kívül marad. A letiltáshoz állítsa nullára.</p>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1001
 msgid "Co&llapse when more items than:"
@@ -27108,7 +27108,7 @@ msgstr "Összecsukás, ha az elem több, mint:"
 msgid ""
 "<p>If a Tag browser category has more than this number of items, it is divided\n"
 "up into subcategories. If the partition method is set to disable, this value is ignored.</p>"
-msgstr ""
+msgstr "<p>Ha egy Címkeböngésző-kategória ennél több elemet tartalmaz, az\n alkategóriákra van felosztva. Ha a partíciós metódus letiltásra van állítva, \nakkor ez az érték figyelmen kívül marad.</p>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1004
 msgid ""
@@ -27118,7 +27118,7 @@ msgid ""
 "the value shown above. This option can be used to\n"
 "avoid collapsing hierarchical categories that have only\n"
 "a few top-level elements.</p>"
-msgstr ""
+msgstr "<p>Jelölje be azon kategóriák jelölőnégyzetét, amelyeket a fenti feltételek \nszerint particionálni kíván. Törölje a jelölőnégyzet bejelölését, ha nem \nszeretne egy kategóriát felosztani, még akkor sem, ha az elemek száma \nnagyobb, mint a fent látható érték. Ezzel a beállítással elkerülhető az olyan \nhierarchikus kategóriák összeomlása, amelyeknek csak néhány legfelső \nszintű eleme van.</p>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1010
 msgid "Select categories to &partition:"
@@ -27154,7 +27154,7 @@ msgid ""
 "then the tags will be displayed each on their own line.</p>\n"
 "<p>The categories 'authors', 'publisher', 'news', 'formats', and 'rating'\n"
 "cannot be hierarchical.</p>"
-msgstr ""
+msgstr "<p>Jelölje be egy elem jelölőnégyzetét, ha azt hierarchikus faként kívánja \nmegjeleníteni a Címkeböngészőben. Például, ha bejelöli a \"címkéket”, akkor\n a \"Rejtély.Angol” és \"Rejtély.Thriller” formátumú címkék angolul és Thrillerrel\n együtt megjelennek a \"Rejtély” alatt. Ha a \"címkék\" nincs bejelölve, akkor a \ncímkék mindegyike a saját sorukon jelennek meg.  </p><p> A \"szerzők”, \"kiadó”, \n\"hírek”, \"formátumok” és \"értékelés” kategóriák nem lehetnek \nhierarchikusak.</p>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1030
 msgid "Select categories with &hierarchical items:"
@@ -27166,11 +27166,11 @@ msgid ""
 "the Tag browser. The 'or its children' options are ignored when clicking on\n"
 "top-level categories, items that aren't in a hierarchical category, and items\n"
 "that don't have children.</p>"
-msgstr ""
+msgstr "<p>Állítsa be a keresések sorrendjét, amikor egy elemre kattint a \nCímkeböngészőben. A rendszer figyelmen kívül hagyja a \"vagy gyermekei” \nopciókat, ha a legfelső szintű kategóriákra, a nem hierarchikus kategóriába \ntartozó elemekre és azokra az elemekre kattint, amelyeknek nincs \nalárendelt kategóriája.</p>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1045
 msgid "Set the &order of searches when clicking on items"
-msgstr ""
+msgstr "A keresések sorrendjének beállítása, amikor az elemekre kattint"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1050
 msgid "&Hierarchy and searching"
@@ -27204,7 +27204,7 @@ msgid ""
 "Note that this setting is per-library, which means that you have to\n"
 "set it again for every different calibre library you use. Use an\n"
 "empty template for no text.</p>"
-msgstr ""
+msgstr "<p>A borítók alatti szöveg létrehozásához használt sablon. Ez a sablon \nugyanazt a szintaxist használja, mint a mentési sablonok. Alapértelmezés \nszerint csak a könyv címe. Vegye figyelembe, hogy ez a beállítás \nkönyvtáronként érvényes, ami azt jelenti, hogy minden használt különböző \nCalibre könyvtárhoz újra be kell állítania. Használjon üres sablont szöveg nélkül.</p>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:1061
 msgid "Show &reflections"
@@ -27364,11 +27364,11 @@ msgstr "Semelyiket"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/metadata_sources.py:349
 msgid "Set as default"
-msgstr ""
+msgstr "Beállítás alapértelmezettként"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/metadata_sources.py:350
 msgid "Select default"
-msgstr ""
+msgstr "Az alapértelmezett kiválasztása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/metadata_sources.py:358
 msgid "No source selected"
@@ -27487,7 +27487,7 @@ msgstr "Kevesebb &címke"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:177
 msgid "Create &rules to transform tags/authors/publishers"
-msgstr ""
+msgstr "Szabályok létrehozása címkék/szerzők/kiadók átalakításához"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:178
 msgid "Max. &number of tags to download:"
@@ -27915,7 +27915,7 @@ msgid ""
 "particular item, or to have hierarchical categories (categories that contain"
 " categories). <p>Note: values from non-category columns such as comments "
 "won't appear in automatic user categories. "
-msgstr ""
+msgstr "<b>A csoportosított keresési kifejezések</b> olyan keresési nevek, amelyek lehetővé teszik, hogy egy lekérdezés automatikusan több oszlopban is keressen.  Például, ha létrehoz egy csoportosított keresési kifejezést<code>allseries</code> érték <code>sorral, #myseries, #myseries2</code>, akkor az <code>allseries:adhoc</code> lekérdezés megtalálható az 'adhoc' kifejezés  bármelyik oszlop <code>sorozatban</code>, <code>#myseries</code>, és <code>#myseries2</code>.<p> Írja be a csoportosított keresési kifejezés nevét a legördülő listába, írja be a keresendő oszlopok listáját az értékmezőbe, majd nyomja meg a 'Mentés' gombot.. <p>Megjegyzés: A keresési kifejezések kisbetűre kényszerülnek; <code>MySearch</code> és <code>mysearch</code> ugyanaz a kifejezés. A keresési kifejezések nem lehetnek hierarchikusak. A kifejezések nevében a pontok nem megengedettek.<p>A csoportosított keresési kifejezések felhasználói kategóriaként jelenhetnek meg a Címkeböngészőben, ha hozzáadja a csoportosított keresési kifejezések neveit a \"Felhasználói kategóriák létrehozása” mezőbe. A több kifejezést vessző választja el. Ezek az \"Automatikus felhasználói kategóriák” a csoportosított keresési kifejezésben szereplő kategóriák elemeivel lesznek feltöltve. <p>Az automatikus felhasználói kategóriák lehetővé teszik, hogy megtekintse az összes kategóriaelemet, amely a csoportosított keresési kifejezésben található oszlopokban található. A fenti <code>allseries</code> példát használva, az automatikus felhasználói kategória tartalmaz minden sorozat nevet a <code>sorozatban</code>, <code>#myseries</code>, és <code>#myseries2</code>. Ez hasznos lehet az ismétlődések ellenőrzéséhez, annak megállapításához, hogy melyik oszlop tartalmaz egy adott elemet, vagy hierarchikus kategóriákat (kategóriákat tartalmazó kategóriákat) állíthat be. <p>Megjegyzés: a nem kategóriás oszlopokból származó értékek, például a megjegyzések, nem jelennek meg az automatikus felhasználói kategóriákban. "
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:85
 msgid "Enter new or select existing name"
@@ -27944,7 +27944,7 @@ msgstr "Csoportosított keresési kifejezések"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:161
 msgid "The search term name cannot be blank"
-msgstr ""
+msgstr "A keresési kifejezés neve nem lehet üres"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/search.py:164
 msgid "Invalid grouped search name"
@@ -28698,7 +28698,7 @@ msgid ""
 "        <li>general program mode: program: my_ifempty(field('tags'))</li>\n"
 "        </p>\n"
 "        "
-msgstr ""
+msgstr "\n        <p>Itt adhatja hozzá és távolíthatja el a sablonfeldolgozás során használt függvényeket.\n        A sablonfüggvény Python-ban van írva. Információkat vesz a könyvből, \n        valamilyen módon feldolgozza, majd egy karakterlánc eredményt ad vissza. \n        Az itt definiált függvények ugyanúgy használhatók a sablonokban, mint \n         beépített függvények. A függvény elnevezése: <b>evaluate</b> ,és \n         az alább látható aláírással kell rendelkeznie.\n        <p><code>evaluate(self, formatter, kwargs, mi, locals, your parameters)\n        &rarr; visszaad egy Unicode sztringet</code></p>\n        <p>Az 'evaluate' függvény paraméterei:\n        <ul>\n        <li><b>formatter</b>: az aktuális sablon kiértékeléséhez használt \n         formázó példánya. Ezzel rekurzív sablonértékelést végezhet.</li>\n        <li><b>kwargs</b>: egy metaadatok szótára. A mezőértékek ebben\n         a szótárban találhatók.\n        <li><b>mi</b>: egy <i>metaadat</i> példány. Területi információk beszerzésére szolgál.\n        Ez a paraméter bizonyos esetekben „None” lehet, például a nem könyves \n        sablonok kiértékelésekor.</li>\n        <li><b>locals</b>: az aktuális sablonprogram által hozzárendelt helyi változók.</li>\n        <li><b>your parameters</b>: meg kell adnia egy vagy több formális \n        paramétert. A számnak meg kell egyeznie az arg count mezővel, \n        kivéve, ha az arg száma -1 (változó szám vagy argumentumok), ebben \n        az esetben az utolsó argumentumnak *argsnak kell lennie. Vegye \n        figyelembe, hogy amikor egy függvényt alapsablon módban hívunk \n        meg, legalább egy argumentum mindig átadásra kerül. \n        A \"formázó\" biztosítja.</li>\n        </ul></p>\n        <p>\n        A következő példafüggvény a mező értékét ellenőrzi. Ha a mező nem \n        üres, akkor a mező értéke visszaküldésre kerül, ellenkező esetben\n        az EMPTY értéke kerül visszaadásra.\n        <pre>\n        name: my_ifempty\n        arg count: 1\n        doc: my_ifempty(val) -- val visszaküldésre kerül, ha nem üres, ellenkező \n        esetben a karakterlánc 'EMPTY'\n        program code:\n        def evaluate(self, formatter, kwargs, mi, locals, val):\n            if val:\n                return val\n            else:\n                return 'EMPTY'</pre>\n        Ez a függvény a három sablonprogram mód bármelyikében meghívható:\n        <ul>\n        <li>egyfunkciós mód: {tags:my_ifempty()}</li>\n        <li>sablon programmód: {tags:'my_ifempty($)'}</li>\n        <li>általános programmód: program: my_ifempty(field('tags'))</li>\n        </p>\n        "
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions.py:85
 #, python-brace-format
@@ -28737,7 +28737,7 @@ msgid ""
 "        See the template language tutorial for more information.</p>\n"
 "        </p>\n"
 "        "
-msgstr ""
+msgstr "\n        <p>\n        Itt lehet létrehozni, szerkeszteni (cserélni), törölni a sablonfeldolgozás \n        során használt tárolt sablonokat. Egy másik sablonban tárolt sablont \n        úgy használ, mintha sablonfüggvény lenne, például 'some_name(arg1, arg2...)'.</p>\n\n        <p>A tárolt sablonoknak általános programmódot vagy Python sablont kell használniuk\n          Mód – a \"{0}” vagy \"{1}” szöveggel kell kezdődniük. A GPM tárolt \n          sablonnak átadott argumentumokat a '{2}()' sablonfüggvénnyel kérheti \n          le, mint a '{2}(var1, var2, ...)'-ben. Az átadott argumentumokat a rendszer \n          a megnevezett változókba másolja. A Python-sablonnak átadott \n          argumentumok a „{3}” paraméter „{2}” attribútumában (egy listában) \n          találhatók. Az érvek mindig sztringek.</p>\n\n        <p>Például ez a tárolt GPM-sablon ellenőrzi, hogy vannak-e elemek az a\nlistában, '1'-t ad vissza, ha talál, és ''t, ha nem.</p>\n        <p>\n        Sablon neve: items_in_list<br>\n        Sablon tartalma:<pre>\n        program:\n            arguments(lst='No list argument given', items='');\n            r = '';\n            for l in items:\n                if str_in_list(lst, ',', l, '1', '') then\n                    r = '1';\n                    break\n                fi\n            rof;\n            r</pre>\n        Igy hívja a tárolt sablont:<pre>\n        program: items_in_list($#genre, 'comics, foo')</pre>\n        További információért tekintse meg a sablonnyelv oktatóanyagát.</p>\n        </p>\n        "
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions.py:131
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions.py:142
@@ -28768,7 +28768,7 @@ msgstr "Nem definiált függvény"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions.py:292
 msgid "Name cannot be empty"
-msgstr ""
+msgstr "Név nem lehet üres"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions.py:296
 #, python-format
@@ -28783,15 +28783,15 @@ msgstr "{} név a tárolt sablonhoz már használatban van"
 msgid ""
 "Setting argument count to to zero means that this function cannot be used in"
 " single function mode. Is this OK?"
-msgstr ""
+msgstr "Az argumentumszám nullára állítása azt jelenti, hogy ez a függvény nem használható egyfunkciós módban. Ez OK?"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions.py:314
 msgid "Save the function"
-msgstr ""
+msgstr "Funkció mentése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions.py:315
 msgid "Cancel the save"
-msgstr ""
+msgstr "Mentés törlése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions.py:324
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions.py:343
@@ -28815,12 +28815,12 @@ msgstr "Tárolt sablonok"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions.py:458
 msgid "The name {} is already used by a template function"
-msgstr ""
+msgstr "{} nevet már használja egy sablonfunkció"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions.py:463
 #, python-brace-format
 msgid "The stored template must begin with '{0}' or '{1}'"
-msgstr ""
+msgstr "A tárolt sablonnak a következővel kell kezdődnie: \"{0}” vagy \"{1}”"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions.py:471
 msgid "Exception while storing template"
@@ -28856,7 +28856,7 @@ msgstr "Tárolt sablonok"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions_ui.py:142
 msgid "Show &only user defined template functions"
-msgstr ""
+msgstr "Csak a felhasználó által meghatározott sablonfüggvények megjelenítése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions_ui.py:143
 msgid ""
@@ -28864,7 +28864,7 @@ msgid ""
 "template functions. If unchecked the box will show both system and user defined\n"
 "functions. Unchecking can be useful for copying source of a system function to create\n"
 "a new related user defined function.</p>"
-msgstr ""
+msgstr "Ha be van jelölve, a \"Funkció” négyzet csak a felhasználó által definiált \nsablonfüggvényeket jeleníti meg. Ha nincs bejelölve, a jelölőnégyzet a \nrendszer és a felhasználó által meghatározott funkciókat is megjeleníti. \nA kijelölés törlése hasznos lehet egy rendszerfüggvény forrásának \nmásolásakor egy új kapcsolódó felhasználó által definiált függvény létrehozásához."
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions_ui.py:147
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:278
@@ -28960,7 +28960,7 @@ msgstr "Opcionális második eszköztár"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar.py:249
 msgid "The buttons on the search bar"
-msgstr ""
+msgstr "A keresősáv gombjai"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar.py:250
 msgid "The menubar"
@@ -29154,45 +29154,45 @@ msgstr "Title case"
 
 #: /__w/calibre/calibre/src/calibre/gui2/publisher_mapper.py:37
 msgid "Create the rule below, the rule can be used to modify publishers"
-msgstr ""
+msgstr "Hozza létre az alábbi szabályt, a szabály segítségével módosíthatja a kiadókat"
 
 #: /__w/calibre/calibre/src/calibre/gui2/publisher_mapper.py:38
 msgid "the publisher, if the publisher name"
-msgstr ""
+msgstr "a kiadó, ha a kiadó neve"
 
 #: /__w/calibre/calibre/src/calibre/gui2/publisher_mapper.py:39
 msgid "You must provide a value for the publisher name to match"
-msgstr ""
+msgstr "Meg kell adnia egy értéket, hogy a kiadó neve megegyezzen"
 
 #: /__w/calibre/calibre/src/calibre/gui2/publisher_mapper.py:89
 #, python-brace-format
 msgid ""
 "<b>{action}</b> the publisher name, if it <i>{match_type}</i>: "
 "<b>{query}</b>"
-msgstr ""
+msgstr "<b>{action}</b> kiadó neve, ha <i>{match_type}</i>: <b>{query}</b>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/publisher_mapper.py:100
 msgid ""
 "You can specify rules to manipulate publisher names here. Click the \"Add "
 "Rule\" button below to get started. The rules will be processed in order for"
 " every publisher."
-msgstr ""
+msgstr "Itt adhat meg szabályokat a kiadónevek manipulálásához. A kezdéshez kattintson az alábbi \"Szabály hozzáadása\" gombra. A szabályokat minden kiadónak megfelelő sorrendben dolgozzuk fel."
 
 #: /__w/calibre/calibre/src/calibre/gui2/publisher_mapper.py:107
 msgid "Test publisher mapping rules"
-msgstr ""
+msgstr "A kiadó leképezési szabály tesztelése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/publisher_mapper.py:109
 msgid "Enter a publisher name to test:"
-msgstr ""
+msgstr "A kiadó nevének megadása a teszteléshez:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/publisher_mapper.py:110
 msgid "Enter publisher and click the \"Test\" button"
-msgstr ""
+msgstr "A kiadó megadása és a \"Teszt\" gomb megnyomása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/publisher_mapper.py:121
 msgid "Edit publisher mapping rules"
-msgstr ""
+msgstr "A kiadó leképezési szabály szerkesztése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/qt_file_dialogs.py:37
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:537
@@ -30019,7 +30019,7 @@ msgstr "{0} letöltése befejeződött, a könyv hozzáadva a Calibre könyvtár
 
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:227
 msgid "{} is not a saved search"
-msgstr ""
+msgstr "{} nem mentett keresés"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:229
 #: /__w/calibre/calibre/src/calibre/srv/manage_users_cli.py:355
@@ -30300,7 +30300,7 @@ msgstr "Szerzők kezelése, címkék stb."
 msgid ""
 "All of these category managers are available by right-clicking on items in "
 "the Tag browser above"
-msgstr ""
+msgstr "Ezek a kategóriakezelők mindegyike elérhető, ha a fenti 'Címkeböngészőben' jobb gombbal az elemekre kattint"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:751
 msgid "Show only books that have visible categories"
@@ -30308,7 +30308,7 @@ msgstr "Csak a látható kategóriával rendelkező könyvek megjelenítése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:755
 msgid "Filter book list"
-msgstr ""
+msgstr "Könyvlista szűrés"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:762
 msgid "'Click' found item"
@@ -30490,7 +30490,7 @@ msgstr "%s kategóriában nem szereplő könyvek"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1006
 msgid "Remove the {} format from selected books"
-msgstr ""
+msgstr "{} formátum eltávolítása a kiválasztott könyvekből"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1015
 #, python-format
@@ -30499,24 +30499,24 @@ msgstr "A(z) %s kategória elrejtése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1024
 msgid "Change {} category icon"
-msgstr ""
+msgstr "{} kategória ikon módosítása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1028
 msgid "Restore {} category default icon"
-msgstr ""
+msgstr "{} kategória alapértelmezett ikonjának visszaállítása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1033
 msgid "Change Saved searches folder icon"
-msgstr ""
+msgstr "A mentett keresések mappa ikonjának módosítása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1035
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1039
 msgid "Saved searches folder"
-msgstr ""
+msgstr "Mentett keresések mappája"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1037
 msgid "Restore Saved searches folder default icon"
-msgstr ""
+msgstr "A mentett keresések mappa alapértelmezett ikonjának visszaállítása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1047
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1052
@@ -30525,11 +30525,11 @@ msgstr "Felhasználói kategóriák karbantartása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1066
 msgid "Sub-categorize {}"
-msgstr ""
+msgstr "{} alkategória létrehozása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1070
 msgid "Don't sub-categorize {}"
-msgstr ""
+msgstr "Nincs {} alkategória létrehozása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1075
 msgid "Change sub-categorization scheme"
@@ -30953,21 +30953,21 @@ msgstr "Vissza a legfelső szintű nézethez"
 
 #: /__w/calibre/calibre/src/calibre/gui2/toc/main.py:321
 msgid "Configure ToC generation"
-msgstr ""
+msgstr "ToC generáció konfigurálása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/toc/main.py:325
 msgid "Remove &duplicated headings at the same ToC level"
-msgstr ""
+msgstr "Távolítsa el a duplikált címsorokat ugyanazon a tToC-szinten"
 
 #: /__w/calibre/calibre/src/calibre/gui2/toc/main.py:328
 msgid "Use the &title attribute for ToC text"
-msgstr ""
+msgstr "Használja a title attribútumot a ToC szöveghez"
 
 #: /__w/calibre/calibre/src/calibre/gui2/toc/main.py:331
 msgid ""
 "When a heading tag has the \"title\" attribute use its contents as the text "
 "for the ToC entry, instead of the text inside the heading tag itself."
-msgstr ""
+msgstr "Ha egy fejléc címke rendelkezik a \"title\" attribútummal, használja annak tartalmát a tartalomjegyzék-bejegyzés szövegeként, a címsor címkén belüli szöveg helyett."
 
 #: /__w/calibre/calibre/src/calibre/gui2/toc/main.py:380
 msgid "This entry points to an existing destination"
@@ -31110,12 +31110,12 @@ msgstr "A legutóbbi műveletet visszavonása"
 #: /__w/calibre/calibre/src/calibre/gui2/toc/main.py:1073
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/toc.py:71
 msgid "Loading table of contents view, please wait..."
-msgstr ""
+msgstr "Tartalomjegyzék nézet betöltése, kérjük várjon..."
 
 #: /__w/calibre/calibre/src/calibre/gui2/toc/main.py:1073
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/toc.py:71
 msgid "Loading..."
-msgstr ""
+msgstr "Betöltés..."
 
 #: /__w/calibre/calibre/src/calibre/gui2/toc/main.py:1089
 #, python-format
@@ -31224,19 +31224,19 @@ msgstr "A könyvek (lásd Részletek) már konvertálásra kerültek %s formátu
 
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:29
 msgid "less than an hour ago"
-msgstr ""
+msgstr "kevesebb mint egy órája"
 
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:30
 msgid "{} hours ago"
-msgstr ""
+msgstr "{} órával ezelőtt"
 
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:32
 msgid "{} days ago"
-msgstr ""
+msgstr "{} nappal ezelőtt"
 
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:55
 msgid "Deleted: {}"
-msgstr ""
+msgstr "Törölve: {}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:116
 msgid "Recently deleted books"
@@ -31244,61 +31244,61 @@ msgstr "Nemrég törölt könyvek"
 
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:135
 msgid "&Permanently delete after:"
-msgstr ""
+msgstr "Végleges törlés a következő után:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:141
 msgid ""
 "Deleted items are permanently deleted automatically after the specified "
 "number of days"
-msgstr ""
+msgstr "A törölt elemek a megadott számú nap elteltével automatikusan véglegesen törlődnek"
 
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:150
 msgid "&Restore selected"
-msgstr ""
+msgstr "Kijelölt visszaállítása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:153
 msgid "Permanently &delete selected"
-msgstr ""
+msgstr "A kijelölt végleges törlése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:154
 msgid ""
 "Remove the selected entries from the trash bin, thereby deleting them "
 "permanently"
-msgstr ""
+msgstr "Távolítsa el a kiválasztott bejegyzéseket a kukából, ezzel véglegesen törli őket"
 
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:164
 msgid ""
 "All books and formats will be <b>permanently deleted</b>! Are you sure?"
-msgstr ""
+msgstr "Minden könyv és formátum <b>véglegesen törlődik</b>! Biztos benne?"
 
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:172
 msgid "&Books ({})"
-msgstr ""
+msgstr "({}) könyvek"
 
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:173
 msgid "&Formats ({})"
-msgstr ""
+msgstr "({}) formátumok"
 
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:231
 msgid "restore"
-msgstr ""
+msgstr "helyreállít"
 
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:246
 msgid "delete"
-msgstr ""
+msgstr "töröl"
 
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:253
 msgid "Failed for the book {} with error:"
-msgstr ""
+msgstr "Sikertelen a {} könyvhöz hibával:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:260
 msgid "Failed to process some {}"
-msgstr ""
+msgstr "Néhány {} feldolgozása sikertelen"
 
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:261
 #, python-brace-format
 msgid "Could not {0} some {1}. Click \"Show details\" for details."
-msgstr ""
+msgstr "Nem sikerült {0} néhány {1}. Kattintson a \"Részletek megjelenítése\" gombra a részletekért."
 
 #: /__w/calibre/calibre/src/calibre/gui2/tts/linux.py:49
 #: /__w/calibre/calibre/src/calibre/gui2/tts/linux.py:52
@@ -31310,7 +31310,7 @@ msgstr "Nincs felolvasási funkció a rendszerén. Telepítsen egyet."
 msgid ""
 "Speech dispatcher on this system is not configured with any available "
 "voices. Install some voices first."
-msgstr ""
+msgstr "Ezen a rendszeren a beszéd diszpécser nincs konfigurálva elérhető hangokkal. Először telepítsen néhány hangot."
 
 #: /__w/calibre/calibre/src/calibre/gui2/tts/linux_config.py:25
 #: /__w/calibre/calibre/src/calibre/gui2/tts/macos_config.py:30
@@ -31440,13 +31440,13 @@ msgstr "A módosítás csak %s formátumú könyveknél támogatott. Először k
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:332
 msgid "Read-only file"
-msgstr ""
+msgstr "Csak olvasható fájl"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:333
 msgid ""
 "The file {} is read-only. Saving changes to it will either fail or cause its"
 " permissions to be reset."
-msgstr ""
+msgstr "{} fájl csak olvasható. A módosítások mentése meghiúsul, vagy az engedélyei visszaállnak."
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:348
 msgid "Opening book, please wait..."
@@ -31789,13 +31789,13 @@ msgstr "A szerkesztett (%s) fájl már nem létezik. Új mentési helyet kell v�
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1306
 msgid "File is read-only"
-msgstr ""
+msgstr "A fájl csak olvasható"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1307
 msgid ""
 "The file at {} is read-only. The editor will try to reset its permissions "
 "before saving. Proceed with saving?"
-msgstr ""
+msgstr "A(z) {} címen található fájl csak olvasható. A szerkesztő megpróbálja visszaállítani a jogosultságait a mentés előtt. Folytatja a mentést?"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1319
 msgid "Cannot save a copy"
@@ -32037,7 +32037,7 @@ msgstr "Kopt görög blokkban"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:67
 msgid "Cypriot syllabary"
-msgstr ""
+msgstr "Cypriot syllabary"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:68
 msgid "Cyrillic"
@@ -32045,15 +32045,15 @@ msgstr "Cirill"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:69
 msgid "Cyrillic supplement"
-msgstr ""
+msgstr "Cyrillic supplement"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:70
 msgid "Cyrillic extended A"
-msgstr ""
+msgstr "Cyrillic extended A"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:71
 msgid "Cyrillic extended B"
-msgstr ""
+msgstr "Cyrillic extended B"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:72
 msgid "Georgian"
@@ -32061,11 +32061,11 @@ msgstr "Grúz"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:73
 msgid "Georgian supplement"
-msgstr ""
+msgstr "Georgian supplement"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:74
 msgid "Glagolitic"
-msgstr ""
+msgstr "Glagolitic"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:75
 msgid "Gothic"
@@ -32077,51 +32077,51 @@ msgstr "Görög és kopt"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:77
 msgid "Greek extended"
-msgstr ""
+msgstr "Greek extended"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:78
 msgid "Latin, Basic & Latin-1 supplement"
-msgstr ""
+msgstr "Latin, Basic & Latin-1 supplement"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:79
 msgid "Latin extended A"
-msgstr ""
+msgstr "Latin extended A"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:80
 msgid "Latin extended B"
-msgstr ""
+msgstr "Latin extended B"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:81
 msgid "Latin extended C"
-msgstr ""
+msgstr "Latin extended C"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:82
 msgid "Latin extended D"
-msgstr ""
+msgstr "Latin extended D"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:83
 msgid "Latin extended additional"
-msgstr ""
+msgstr "Latin extended additional"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:84
 msgid "Latin ligatures"
-msgstr ""
+msgstr "Latin ligatures"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:85
 msgid "Fullwidth Latin letters"
-msgstr ""
+msgstr "Fullwidth Latin letters"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:86
 msgid "Linear B syllabary"
-msgstr ""
+msgstr "Linear B syllabary"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:87
 msgid "Linear B ideograms"
-msgstr ""
+msgstr "Linear B ideograms"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:88
 msgid "Ogham"
-msgstr ""
+msgstr "Ogham"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:89
 msgid "Old italic"
@@ -32129,15 +32129,15 @@ msgstr "Óitáliai"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:90
 msgid "Phaistos disc"
-msgstr ""
+msgstr "Phaistos disc"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:91
 msgid "Runic"
-msgstr ""
+msgstr "Runic"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:92
 msgid "Shavian"
-msgstr ""
+msgstr "Shavian"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:95
 msgid "Phonetic symbols"
@@ -32149,19 +32149,19 @@ msgstr "IPA kiterjesztések"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:97
 msgid "Phonetic extensions"
-msgstr ""
+msgstr "Phonetic extensions"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:98
 msgid "Phonetic extensions supplement"
-msgstr ""
+msgstr "Phonetic extensions supplement"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:99
 msgid "Modifier tone letters"
-msgstr ""
+msgstr "Módosító hangbetűl"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:100
 msgid "Spacing modifier letters"
-msgstr ""
+msgstr "Térköz módosító betűk"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:101
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:303
@@ -32191,7 +32191,7 @@ msgstr "Féljegyek kombinálása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:111
 msgid "African scripts"
-msgstr ""
+msgstr "African scripts"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:112
 msgid "Bamum"
@@ -32199,11 +32199,11 @@ msgstr "Bamum"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:113
 msgid "Bamum supplement"
-msgstr ""
+msgstr "Bamum supplement"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:114
 msgid "Egyptian hieroglyphs"
-msgstr ""
+msgstr "Egyiptomi hieroglifák"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:115
 msgid "Ethiopic"
@@ -32211,35 +32211,35 @@ msgstr "Etióp"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:116
 msgid "Ethiopic supplement"
-msgstr ""
+msgstr "Ethiopic supplement"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:117
 msgid "Ethiopic extended"
-msgstr ""
+msgstr "Ethiopic extended"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:118
 msgid "Ethiopic extended A"
-msgstr ""
+msgstr "Ethiopic extended A"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:119
 msgid "Meroitic cursive"
-msgstr ""
+msgstr "Meroitic cursive"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:120
 msgid "Meroitic hieroglyphs"
-msgstr ""
+msgstr "Meroitic hieroglyphs"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:121
 msgid "N'Ko"
-msgstr ""
+msgstr "N'Ko"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:122
 msgid "Osmanya"
-msgstr ""
+msgstr "Osmanya"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:123
 msgid "Tifinagh"
-msgstr ""
+msgstr "Tifinagh"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:124
 msgid "Vai"
@@ -32247,7 +32247,7 @@ msgstr "vai"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:127
 msgid "Middle Eastern scripts"
-msgstr ""
+msgstr "Middle Eastern scripts"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:128
 msgid "Arabic"
@@ -32255,19 +32255,19 @@ msgstr "arab"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:129
 msgid "Arabic supplement"
-msgstr ""
+msgstr "Arabic supplement"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:130
 msgid "Arabic extended A"
-msgstr ""
+msgstr "Arabic extended A"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:131
 msgid "Arabic presentation forms A"
-msgstr ""
+msgstr "Arabic presentation forms A"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:132
 msgid "Arabic presentation forms B"
-msgstr ""
+msgstr "Arabic presentation forms B"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:133
 msgid "Avestan"
@@ -32275,11 +32275,11 @@ msgstr "avesztai"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:134
 msgid "Carian"
-msgstr ""
+msgstr "Carian"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:135
 msgid "Cuneiform"
-msgstr ""
+msgstr "Cuneiform"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:136
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:266
@@ -32293,31 +32293,31 @@ msgstr "héber"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:138
 msgid "Hebrew presentation forms"
-msgstr ""
+msgstr "Hebrew presentation forms"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:139
 msgid "Imperial Aramaic"
-msgstr ""
+msgstr "Imperial Aramaic"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:140
 msgid "Inscriptional Pahlavi"
-msgstr ""
+msgstr "Inscriptional Pahlavi"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:141
 msgid "Inscriptional Parthian"
-msgstr ""
+msgstr "Inscriptional Parthian"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:142
 msgid "Lycian"
-msgstr ""
+msgstr "Lycian"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:143
 msgid "Lydian"
-msgstr ""
+msgstr "Lydian"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:144
 msgid "Mandaic"
-msgstr ""
+msgstr "Mandaic"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:145
 msgid "Old Persian"
@@ -32325,7 +32325,7 @@ msgstr "Óperzsa"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:146
 msgid "Old South Arabian"
-msgstr ""
+msgstr "Régi dél-arábiai"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:147
 msgid "Phoenician"
@@ -32333,7 +32333,7 @@ msgstr "főníciai"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:148
 msgid "Samaritan"
-msgstr ""
+msgstr "Samaritan"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:149
 msgid "Syriac"
@@ -32345,7 +32345,7 @@ msgstr "uragi"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:153
 msgid "Central Asian scripts"
-msgstr ""
+msgstr "Central Asian scripts"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:154
 msgid "Mongolian"
@@ -32357,7 +32357,7 @@ msgstr "Ótörök"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:156
 msgid "Phags-pa"
-msgstr ""
+msgstr "Phags-pa"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:157
 msgid "Tibetan"
@@ -32365,7 +32365,7 @@ msgstr "tibeti"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:160
 msgid "South Asian scripts"
-msgstr ""
+msgstr "South Asian scripts"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:161
 msgid "Bengali"
@@ -32373,19 +32373,19 @@ msgstr "bengáli"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:162
 msgid "Brahmi"
-msgstr ""
+msgstr "Brahmi"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:163
 msgid "Chakma"
-msgstr ""
+msgstr "Chakma"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:164
 msgid "Devanagari"
-msgstr ""
+msgstr "Devanagari"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:165
 msgid "Devanagari extended"
-msgstr ""
+msgstr "Devanagari extended"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:166
 msgid "Gujarati"
@@ -32393,11 +32393,11 @@ msgstr "gudzsarati"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:167
 msgid "Gurmukhi"
-msgstr ""
+msgstr "Gurmukhi"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:168
 msgid "Kaithi"
-msgstr ""
+msgstr "Kaithi"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:169
 msgid "Kannada"
@@ -32405,11 +32405,11 @@ msgstr "kannada"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:170
 msgid "Kharoshthi"
-msgstr ""
+msgstr "Kharoshthi"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:171
 msgid "Lepcha"
-msgstr ""
+msgstr "Lepcha"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:172
 msgid "Limbu"
@@ -32421,15 +32421,15 @@ msgstr "malajálam"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:174
 msgid "Meetei Mayek"
-msgstr ""
+msgstr "Meetei Mayek"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:175
 msgid "Meetei Mayek extensions"
-msgstr ""
+msgstr "Meetei Mayek extensions"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:176
 msgid "Ol Chiki"
-msgstr ""
+msgstr "Ol Chiki"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:177
 msgid "Oriya"
@@ -32437,27 +32437,27 @@ msgstr "orija"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:178
 msgid "Saurashtra"
-msgstr ""
+msgstr "Saurashtra"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:179
 msgid "Sinhala"
-msgstr ""
+msgstr "Sinhala"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:180
 msgid "Sharada"
-msgstr ""
+msgstr "Sharada"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:181
 msgid "Sora Sompeng"
-msgstr ""
+msgstr "Sora Sompeng"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:182
 msgid "Syloti Nagri"
-msgstr ""
+msgstr "Syloti Nagri"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:183
 msgid "Takri"
-msgstr ""
+msgstr "Takri"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:184
 msgid "Tamil"
@@ -32469,15 +32469,15 @@ msgstr "telugu"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:186
 msgid "Thaana"
-msgstr ""
+msgstr "Thaana"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:187
 msgid "Vedic extensions"
-msgstr ""
+msgstr "Vedic extensions"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:190
 msgid "Southeast Asian scripts"
-msgstr ""
+msgstr "Southeast Asian scripts"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:191
 msgid "Balinese"
@@ -32485,7 +32485,7 @@ msgstr "balinéz"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:192
 msgid "Batak"
-msgstr ""
+msgstr "Batak"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:193
 msgid "Buginese"
@@ -32493,7 +32493,7 @@ msgstr "buginéz"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:194
 msgid "Cham"
-msgstr ""
+msgstr "Cham"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:195
 msgid "Javanese"
@@ -32501,11 +32501,11 @@ msgstr "jávai"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:196
 msgid "Kayah Li"
-msgstr ""
+msgstr "Kayah Li"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:197
 msgid "Khmer"
-msgstr ""
+msgstr "Khmer"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:198
 msgid "Khmer symbols"
@@ -32517,19 +32517,19 @@ msgstr "lao"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:200
 msgid "Myanmar"
-msgstr ""
+msgstr "Myanmar"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:201
 msgid "Myanmar extended A"
-msgstr ""
+msgstr "Myanmar extended A"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:202
 msgid "New Tai Lue"
-msgstr ""
+msgstr "New Tai Lue"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:203
 msgid "Rejang"
-msgstr ""
+msgstr "Rejang"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:204
 msgid "Sundanese"
@@ -32537,19 +32537,19 @@ msgstr "szundanéz"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:205
 msgid "Sundanese supplement"
-msgstr ""
+msgstr "Sundanese supplement"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:206
 msgid "Tai Le"
-msgstr ""
+msgstr "Tai Le"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:207
 msgid "Tai Tham"
-msgstr ""
+msgstr "Tai Tham"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:208
 msgid "Tai Viet"
-msgstr ""
+msgstr "Tai Viet"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:209
 msgid "Thai"
@@ -32557,15 +32557,15 @@ msgstr "thai"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:212
 msgid "Philippine scripts"
-msgstr ""
+msgstr "Philippine scripts"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:213
 msgid "Buhid"
-msgstr ""
+msgstr "Buhid"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:214
 msgid "Hanunoo"
-msgstr ""
+msgstr "Hanunoo"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:215
 msgid "Tagalog"
@@ -32573,131 +32573,131 @@ msgstr "tagalog"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:216
 msgid "Tagbanwa"
-msgstr ""
+msgstr "Tagbanwa"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:219
 msgid "East Asian scripts"
-msgstr ""
+msgstr "East Asian scripts"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:220
 msgid "Bopomofo"
-msgstr ""
+msgstr "Bopomofo"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:221
 msgid "Bopomofo extended"
-msgstr ""
+msgstr "Bopomofo extended"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:222
 msgid "CJK Unified ideographs"
-msgstr ""
+msgstr "CJK Unified ideographs"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:223
 msgid "CJK Unified ideographs extension A"
-msgstr ""
+msgstr "CJK Unified ideographs extension A"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:224
 msgid "CJK Unified ideographs extension B"
-msgstr ""
+msgstr "CJK Unified ideographs extension B"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:225
 msgid "CJK Unified ideographs extension C"
-msgstr ""
+msgstr "CJK Unified ideographs extension C"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:226
 msgid "CJK Unified ideographs extension D"
-msgstr ""
+msgstr "CJK Unified ideographs extension D"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:227
 msgid "CJK compatibility ideographs"
-msgstr ""
+msgstr "CJK compatibility ideographs"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:228
 msgid "CJK compatibility ideographs supplement"
-msgstr ""
+msgstr "CJK compatibility ideographs supplement"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:229
 msgid "Kangxi radicals"
-msgstr ""
+msgstr "Kangxi radicals"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:230
 msgid "CJK radicals supplement"
-msgstr ""
+msgstr "CJK radicals supplement"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:231
 msgid "CJK strokes"
-msgstr ""
+msgstr "CJK strokes"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:232
 msgid "Ideographic description characters"
-msgstr ""
+msgstr "Ideographic description characters"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:233
 msgid "Hiragana"
-msgstr ""
+msgstr "Hiragana"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:234
 msgid "Katakana"
-msgstr ""
+msgstr "Katakana"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:235
 msgid "Katakana phonetic extensions"
-msgstr ""
+msgstr "Katakana phonetic extensions"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:236
 msgid "Kana supplement"
-msgstr ""
+msgstr "Kana supplement"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:237
 msgid "Halfwidth Katakana"
-msgstr ""
+msgstr "Halfwidth Katakana"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:238
 msgid "Kanbun"
-msgstr ""
+msgstr "Kanbun"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:239
 msgid "Hangul syllables"
-msgstr ""
+msgstr "Hangul syllables"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:240
 msgid "Hangul Jamo"
-msgstr ""
+msgstr "Hangul Jamo"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:241
 msgid "Hangul Jamo extended A"
-msgstr ""
+msgstr "Hangul Jamo extended A"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:242
 msgid "Hangul Jamo extended B"
-msgstr ""
+msgstr "Hangul Jamo extended B"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:243
 msgid "Hangul compatibility Jamo"
-msgstr ""
+msgstr "Hangul compatibility Jamo"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:244
 msgid "Halfwidth Jamo"
-msgstr ""
+msgstr "Halfwidth Jamo"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:245
 msgid "Lisu"
-msgstr ""
+msgstr "Lisu"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:246
 msgid "Miao"
-msgstr ""
+msgstr "Miao"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:247
 msgid "Yi syllables"
-msgstr ""
+msgstr "Yi syllables"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:248
 msgid "Yi radicals"
-msgstr ""
+msgstr "Yi radicals"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:251
 msgid "American scripts"
-msgstr ""
+msgstr "American scripts"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:252
 msgid "Cherokee"
@@ -32705,15 +32705,15 @@ msgstr "cserokí"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:253
 msgid "Deseret"
-msgstr ""
+msgstr "Deseret"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:254
 msgid "Unified Canadian aboriginal syllabics"
-msgstr ""
+msgstr "Unified Canadian aboriginal syllabics"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:255
 msgid "UCAS extended"
-msgstr ""
+msgstr "UCAS extended"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:258
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:358
@@ -32722,11 +32722,11 @@ msgstr "Egyéb"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:259
 msgid "Alphabetic presentation forms"
-msgstr ""
+msgstr "Alphabetic presentation forms"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:260
 msgid "Halfwidth and Fullwidth forms"
-msgstr ""
+msgstr "Halfwidth and Fullwidth forms"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:263
 msgid "Punctuation"
@@ -32734,7 +32734,7 @@ msgstr "Központozás"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:264
 msgid "General punctuation"
-msgstr ""
+msgstr "General punctuation"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:265
 msgid "ASCII punctuation"
@@ -32800,11 +32800,11 @@ msgstr "További bekarikázott alfanumerikus karakterek"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:283
 msgid "Enclosed CJK letters and months"
-msgstr ""
+msgstr "Enclosed CJK letters and months"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:284
 msgid "Enclosed ideographic supplement"
-msgstr ""
+msgstr "Enclosed ideographic supplement"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:285
 msgid "CJK compatibility"
@@ -32982,7 +32982,7 @@ msgstr "Valuta szimbólumok"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:346
 msgid "Dingbats"
-msgstr ""
+msgstr "Dingbats"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:347
 msgid "Emoticons"
@@ -33002,11 +33002,11 @@ msgstr "Yijing hexagram szimbólumok"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:352
 msgid "Yijing mono and digrams"
-msgstr ""
+msgstr "Yijing mono and digrams"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:353
 msgid "Yijing trigrams"
-msgstr ""
+msgstr "Yijing trigrams"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:354
 msgid "Tai Xuan Jing symbols"
@@ -33090,7 +33090,7 @@ msgstr "Kereséskor olyan karaktereket adnak vissza, amelyek neve megegyezik a m
 #, python-brace-format
 msgid ""
 "{character_name} (U+{char_code:04X}) in {category_name} - {subcategory_name}"
-msgstr ""
+msgstr "{character_name} (U+{char_code:04X}) itt: {category_name} - {subcategory_name}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/check.py:39
 msgid "INFO"
@@ -34660,7 +34660,7 @@ msgstr "Legyen %s a Borító oldal"
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:713
 #, python-format
 msgid "Mark %s as Table of Contents"
-msgstr ""
+msgstr "%s megjelölése tartalomjegyzékként"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:719
 msgid "&Bulk rename the selected files"
@@ -34668,7 +34668,7 @@ msgstr "A kijelölt fájlok csoportos átnevezése"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:720
 msgid "Change the file extensions for the selected files"
-msgstr ""
+msgstr "Módosítsa a kiválasztott fájlok fájlkiterjesztéseit"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:722
 msgid "&Delete the selected file"
@@ -34749,7 +34749,7 @@ msgstr "%s fájl nem törölhető."
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:983
 #, python-format
 msgid "No item with the name %s was found"
-msgstr ""
+msgstr "%s néven elem nem található"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1030
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1039
@@ -35153,23 +35153,23 @@ msgstr "Művelet riport"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:185
 msgid "Enable &lossy compression of {} images"
-msgstr ""
+msgstr "Engedélyezze {} kép veszteséges tömörítését"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:186
 msgid ""
 "This allows you to change the quality factor used for {} images.\n"
 "By lowering the quality you can greatly reduce file size, at the expense of the image looking blurred."
-msgstr ""
+msgstr "Ez lehetővé teszi a {} képhez használt minőségi tényező módosítását.\nA minőség csökkentésével nagymértékben csökkentheti a fájlméretet, a kép elmosódásának rovására."
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:197
 msgid ""
 "The image quality, 1 is high compression with low image quality, 100 is low "
 "compression with high image quality"
-msgstr ""
+msgstr "A képminőség, 1 magas tömörítés alacsony képminőség mellett, 100 alacsony tömörítés magas képminőség mellett"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:200
 msgid "Image &quality:"
-msgstr ""
+msgstr "Kép minőség:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:211
 msgid "Compress images"
@@ -35200,7 +35200,7 @@ msgstr "&Szerkesztő betűmérete:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preferences.py:180
 msgid "Create/edit &custom color schemes"
-msgstr "Saját s&zínséma létrehozása/módosítása"
+msgstr "Saját színséma létrehozása/módosítása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preferences.py:184
 msgid "&Color scheme:"
@@ -35592,7 +35592,7 @@ msgid "Disabled confirmations restored"
 msgstr "A letiltott megerősítések visszaállítva"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:424
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:574
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:576
 msgid "Render process crashed"
 msgstr "A renderelési folyamat összeomlott"
 
@@ -35705,7 +35705,7 @@ msgstr "Méret (kB)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:239
 msgid "Word count"
-msgstr ""
+msgstr "Szavak száma"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:245
 msgid "Style"
@@ -36247,7 +36247,7 @@ msgstr "Biztos benne, hogy véglegesen törli a kiválasztott mentett keresések
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1205
 #, python-brace-format
 msgid "(Case sensitive: {0} Dot all: {1})"
-msgstr ""
+msgstr "(Kis- és nagybetűk megkülönböztetése: {0} pont mind: {1})"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1207
 #, python-brace-format
@@ -36771,11 +36771,11 @@ msgstr "A hibás szavak szűrése kis/nagybetű helyesen"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1141
 msgid "Change all occurrences of this word"
-msgstr ""
+msgstr "Módosítsa a szó összes előfordulását"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1142
 msgid "Show next occurrence of this word in the book"
-msgstr ""
+msgstr "Jelenítse meg ennek a szónak a következő előfordulását a könyvben"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1172
 msgid "E&xclude files"
@@ -37787,7 +37787,7 @@ msgstr "A szemantika a könyv adott helyeivel kapcsolatos további információk
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:994
 msgid "Cannot set {} type semantics in EPUB 2 or AZW3 books"
-msgstr ""
+msgstr "Nem állítható be {} típusú szemantika az EPUB 2 vagy AZW3 könyvekben"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1038
 msgid "Flo&ats"
@@ -38027,8 +38027,8 @@ msgstr "Új verzió"
 #: /__w/calibre/calibre/src/calibre/gui2/update.py:227
 msgid "plugin update available"
 msgid_plural "plugin updates available"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "rgy bővítményfrissítés érhető el"
+msgstr[1] "bővítmény frissítések érhetők el"
 
 #: /__w/calibre/calibre/src/calibre/gui2/update.py:255
 #: /__w/calibre/calibre/src/calibre/gui2/update.py:261
@@ -38343,7 +38343,7 @@ msgid ""
 "ref:something will use Reference mode references. The form search:something "
 "will search for something after opening the book. The form regex:something "
 "will search for the regular expression something after opening the book."
-msgstr ""
+msgstr "A megadott könyv megnyitásának helye. A pozíció egy olyan hely vagy pozíció, amelyet a megtekintő vezérlőiben található Ugrás->Hely művelet segítségével érhet el. Alternatív megoldásként használhatja a toc:something űrlapot, amely az első „valami” karakterláncot tartalmazó tartalomjegyzék-bejegyzés helyén nyílik meg. A toc-href:something űrlap megfelel a toc csomópontok href (belső hivatkozási cél) értékének. Az egyezés pontos. Ha egy részkarakterláncot szeretne egyeztetni, használja a toc-href-contains:something űrlapot. A ref:something űrlap Referencia mód hivatkozásokat fog használni. A Search:something űrlap a könyv megnyitása után keres valamit. A regex:something alak a valami reguláris kifejezést keresi a könyv megnyitása után."
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/main.py:216
 msgid "Failed to start listener"
@@ -38450,7 +38450,7 @@ msgstr "Egész szavak"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/search.py:435
 msgid "Nearby words"
-msgstr ""
+msgstr "Közeli szavak"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/search.py:438
 msgid ""
@@ -38466,7 +38466,7 @@ msgid ""
 "words, for example: <i>calibre cool awesome 120</i> will search for "
 "<i>calibre</i>, <i>cool</i> and <i>awesome</i> within 120 characters of each"
 " other.<li><b>Regex</b> will interpret the text as a regular expression."
-msgstr ""
+msgstr "Keresés típusának kiválasztása: <ul><li><b>Tartalmaz</b> a beírt szöveget bárhol megkeresi. Figyelmen kívül hagyja az írásjeleket, a szóközöket és az ékezeteseket, hacsak nincs engedélyezve a kis- és nagybetűk közötti keresés.<li><b>Teljes szavak</b> a beírt szöveggel megegyező teljes szavakat keresnek. Akárcsak a „Tartalmaz” esetében, az írásjeleket és az ékezeteseket figyelmen kívül hagyja a rendszer.<li><b>Közeli szavak</b> a szövegben egymás közelében lévő teljes szavakat keresik. Például: <i>calibre cool</i> helyeket talál a szövegben, ahol a<i>calibre</i> és <i>cool</i> szavak egymástól 60 karakteren belül fordulnak elő. A karakterek számának módosításához adja hozzá a számot a szavak listájának végéhez, például: <i>calibre cool awesome 120</i> megkeresi a <i>calibre</i>, <i>cool</i> és <i>awesome</i> szavakat egymástól 120 karakteren belül.<li><b>Regex</b> a szöveget reguláris kifejezésként értelmezi."
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/search.py:462
 msgid "Go back to where you were before searching"
@@ -38646,7 +38646,7 @@ msgstr "Felolvasás beállítása"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/tts.py:64
 msgid "Error in speech subsystem"
-msgstr ""
+msgstr "Hiba a beszéd alrendszerében"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/tts.py:90
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/tts.py:97
@@ -38704,7 +38704,7 @@ msgstr "Keresés :: {} találat"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:340
 msgid "Empty search expression"
-msgstr ""
+msgstr "Üres keresési kifejezés"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:341
 msgid "Cannot search for {!r} as it contains only punctuation and spaces."
@@ -38767,13 +38767,13 @@ msgstr "Könyv betöltési hiba"
 msgid "Failed to open the book at {0}. Click \"Show details\" for more info."
 msgstr "Nem sikerült megnyitni a könyvet itt: {0}. További információért kattintson a \"Részletek megjelenítése\" gombra."
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:575
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:577
 msgid ""
 "The Qt WebEngine Render process has crashed. You should try restarting the "
 "viewer."
 msgstr "A Qt WebEngine renderelési folyamata összeomlott. Meg kell próbálnia újraindítani a megjelenítőt."
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:691
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:693
 msgid "Choose background image"
 msgstr "Háttérkép kiválasztása"
 
@@ -39300,14 +39300,14 @@ msgstr "<p>Ne felejtse el hagyni a Calibre-t, mert a szerver csak addig fut, am�
 
 #: /__w/calibre/calibre/src/calibre/gui_launch.py:90
 msgid "Required component missing"
-msgstr ""
+msgstr "Hiányzik a szükséges komponens"
 
 #: /__w/calibre/calibre/src/calibre/gui_launch.py:91
 #, python-brace-format
 msgid ""
 "This computer is missing the Windows MediaPack, which is needed for calibre."
 " Instructions for installing it are <a href=\"{0}\">available here</a>."
-msgstr ""
+msgstr "A számítógépről hiányzik a Windows MediaPack, amely szükséges a Calibre programhoz. A telepítési útmutató <a href=\"{0}\">itt található</a>."
 
 #: /__w/calibre/calibre/src/calibre/library/caches.py:543
 #, python-brace-format
@@ -40822,7 +40822,7 @@ msgstr "Itt nincs Calibre könyvtár : %s"
 
 #: /__w/calibre/calibre/src/calibre/srv/standalone.py:216
 msgid "You must specify at least one calibre library"
-msgstr "Meg kell adni legalább egy kaliber könyvtárat"
+msgstr "Meg kell adni legalább egy Calibre könyvtárat"
 
 #: /__w/calibre/calibre/src/calibre/srv/tests/ajax.py:72
 msgid "Composite Tags"
@@ -40991,9 +40991,9 @@ msgid ""
 "starts with numbers and is a little slower."
 msgstr "Szövegben lévő számok felismerése rendezéskor. Ennek beállítása azt jelenti, hogy a szövegmezők, például a cím szerinti rendezés során a \"2. könyv\" szöveg a \"100. könyv\" szöveg elé kerül. Vegye figyelembe, hogy ennek beállítása problémákat okozhat a számokkal és számokkal kezdődő szövegekkel és egy kicsit lassabb."
 
-#: /__w/calibre/calibre/src/calibre/utils/copy_files.py:90
+#: /__w/calibre/calibre/src/calibre/utils/copy_files.py:109
 msgid "File is open in another program"
-msgstr ""
+msgstr "A fájl meg van nyitva egy másik programban"
 
 #: /__w/calibre/calibre/src/calibre/utils/exim.py:209
 #: /__w/calibre/calibre/src/calibre/utils/exim.py:353
@@ -41049,51 +41049,51 @@ msgstr "\"{0}” utasítás: egy azonosító várva"
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:516
 #, python-brace-format
 msgid "{0} statement: expected '(', found '{1}'"
-msgstr ""
+msgstr "{0} utasítás: várt '(', talált '{1}'"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:534
 #, python-brace-format
 msgid "{0} statement: expected ')', found '{1}'"
-msgstr ""
+msgstr "{0} utasítás: várt ')', talált '{1}'"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:562
 #, python-brace-format
 msgid "'{0}' statement: expected a function name identifier"
-msgstr ""
+msgstr "\"{0}” utasítás: függvénynév-azonosítót várt"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:565
 #, python-brace-format
 msgid "Function name '{0}' is already defined"
-msgstr ""
+msgstr "\"{0}” függvénynév már meg van határozva"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:567
 #, python-brace-format
 msgid "'{0}' statement: expected a '('"
-msgstr ""
+msgstr "'{0}' utasítás: várt '('"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:573
 msgid "Parameters to a function must be variables or assignments"
-msgstr ""
+msgstr "A függvény paramétereinek változóknak vagy hozzárendeléseknek kell lenniük"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:583
 #, python-brace-format
 msgid "'{0}' statement: expected a ')' at end of argument list"
-msgstr ""
+msgstr "'{0}' utasítás: az argumentumlista végén egy ')' jelet vár"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:585
 #, python-brace-format
 msgid "'{0}' statement: missing ':'"
-msgstr ""
+msgstr "\"{0}\" utasítás: hiányzik \":\""
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:589
 #, python-brace-format
 msgid "'{0}' statement: missing the closing '{1}'"
-msgstr ""
+msgstr "\"{0}” utasítás: hiányzik a záró \"{1}”"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:609
 #, python-brace-format
 msgid "A stored template must begin with '{0}' or {1}"
-msgstr ""
+msgstr "Egy tárolt sablonnak a következővel kell kezdődnie: \"{0}” vagy {1}"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:722
 #, python-brace-format
@@ -41135,32 +41135,32 @@ msgstr "{0} a for cikluson kívül"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:921
 msgid "Keyword arguments are not allowed"
-msgstr ""
+msgstr "A kulcsszó argumentumok nem megengedettek"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:925
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:927
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:929
 #, python-brace-format
 msgid "Don't call {0}. Instead use {1}"
-msgstr ""
+msgstr "Ne hívja a következőt: {0}. Ehelyett használja a következőt: {1}"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:934
 #, python-brace-format
 msgid "Invalid character name '{0}'"
-msgstr ""
+msgstr "Érvénytelen karakternév \"{0}”"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:936
 msgid "Incorrect number of arguments"
-msgstr ""
+msgstr "Érvénytelen argumentumok száma"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:947
 #, python-brace-format
 msgid "Error in function {0} :: {1}"
-msgstr ""
+msgstr "Hiba a fügvényben {0} :: {1} "
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:956
 msgid "No function named {!r} exists"
-msgstr ""
+msgstr "Nem létezik {!r} nevű függvény"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:968
 #, python-brace-format
@@ -41179,12 +41179,12 @@ msgstr "'{0}' kezeltlen kivétel"
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:1082
 #, python-brace-format
 msgid "{0}: {1} must be an integer"
-msgstr ""
+msgstr "{0}: {1} értéknek egész számnak kell lennie"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:1094
 #, python-brace-format
 msgid "{0}: the range length ({1}) is larger than the limit ({2})"
-msgstr ""
+msgstr "{0}: a tartomány hossza ({1}) nagyobb, mint a korlát ({2})"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:1120
 #, python-brace-format
@@ -41210,7 +41210,7 @@ msgstr " visszaadott érték"
 #, python-brace-format
 msgid ""
 "Function {0}: argument count mismatch -- {1} given, at most {2} required"
-msgstr ""
+msgstr "{0}. függvény: az argumentumszám eltérése -- {1} adott, legfeljebb {2} szükséges"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:1252
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:1256
@@ -41261,21 +41261,21 @@ msgstr "formátum: a(z) {0} típus decimális (lebegőpontos) számot igényel, 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:1740
 #, python-brace-format
 msgid "Error in function {0} on line {1} : {2} - {3}"
-msgstr ""
+msgstr "Hiba {0} függvényben {1} sorban: {2} - {3}"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:1743
 msgid "The Python template returned a non-string value: {!r}"
-msgstr ""
+msgstr "A Python sablon egy nem karakterlánc értéket adott vissza: {!r}"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:1761
 #, python-brace-format
 msgid "Syntax error on line {0} column {1}: text {2}"
-msgstr ""
+msgstr "Szintaxis hiba itt: {0}. sor {1}. oszlop: szöveg: {2}"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:1763
 #, python-brace-format
 msgid "The {0} function is not defined in the template"
-msgstr ""
+msgstr "{0} függvény nincs megadva a sablonban"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:1835
 #, python-format
@@ -41284,7 +41284,7 @@ msgstr "%s: ismeretlen függvény"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:1881
 msgid "Formatter state restored before saved"
-msgstr ""
+msgstr "Mentés előtt visszaállították a formázás állapotát"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:2006
 #, python-brace-format
@@ -41300,13 +41300,13 @@ msgstr "{0} egy egyéni funkció neve. Módosítsa a nevet vagy győződjön meg
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:139
 msgid "The function {} can be used only in the GUI"
-msgstr ""
+msgstr "{} függvény csak a grafikus felhasználói felületen használható"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:151
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:156
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:166
 msgid "In function {}: The database has been closed"
-msgstr ""
+msgstr "{} függvényben: az adatbázis lezárva"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:173
 msgid "No documentation provided"
@@ -41324,7 +41324,7 @@ msgstr "strcmp(x, y, lt, eq, gt) -- kis- és nagybetűk közötti különbséget
 msgid ""
 "strcmpcase(x, y, lt, eq, gt) -- does a case-sensitive comparison of x and y as strings. Returns lt if x < y. Returns eq if x == y. Otherwise returns gt.\n"
 "Note: This is NOT the default behavior used by calibre, for example, in the lexical comparison operators (==, >, <, etc.). This function could cause unexpected results, preferably use strcmp() whenever possible."
-msgstr ""
+msgstr "strcmpcase(x, y, lt, eq, gt) -- kis- és nagybetűk közötti összehasonlítást végez x és y karakterláncként. lt értéket adja vissza, ha x < y. Egyenletet ad vissza, ha x == y. Ellenkező esetben visszaadja a gt.\nMegjegyzés: NEM ez a calibre által használt alapértelmezett viselkedés, például a lexikális összehasonlító operátorokban (==, >, < stb.). Ez a függvény váratlan eredményeket okozhat, lehetőleg használja az strcmp() függvényt, amikor csak lehetséges."
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:255
 msgid ""
@@ -41528,7 +41528,7 @@ msgstr "switch(val, [pattern, value,]+ else_value) -- minden \"minta, érték\" 
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:665
 msgid "switch requires an even number of arguments"
-msgstr ""
+msgstr "kapcsolóhoz páros számú argumentum szükséges"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:679
 msgid ""
@@ -41537,11 +41537,11 @@ msgid ""
 "True (non-empty) and if so returns the result of value_expression. If no "
 "test_expression is True then the result of else_expression is returned. You "
 "can have as many \"test_expression, value_expression\" pairs as you want."
-msgstr ""
+msgstr "switch_if([test_expression, value_expression,]+ else_expression) -- minden \"test_expression, value_expression\" párnál ellenőrzi, hogy a test_expression igaz-e (nem-üres) és ha igen, akkor a 'value_expression' eredményét adja vissza. Ha az egyik test_expression sem igaz, akkor az else_expression eredményét adja vissza. Annyi \"test_expression, value_expression\" párja lehet, amennyit csak akar."
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:687
 msgid "switch_if requires an odd number of arguments"
-msgstr ""
+msgstr "A switch_if páratlan számú argumentumot igényel"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:703
 msgid ""
@@ -41605,12 +41605,12 @@ msgid ""
 "found_val and not_found_val are provided then if there is a match then "
 "return found_val, otherwise return not_found_val. If found_val and "
 "not_found_val are not provided then if there is a match then return the "
-"indentfier:value pair, otherwise the empty string."
-msgstr ""
+"identifier:value pair, otherwise the empty string."
+msgstr "identifier_in_list(val, id_name [, found_val, not_found_val]) -- a val értéket vesszővel elválasztott azonosítók listájaként kell kezelni. Az azonosító formátuma \"id_name:value\". Az id_name paraméter a keresendő id_name szöveg, \"id_name\" vagy \"id_name:regexp\". Az első eset megegyezik, ha van azonosító, amely megfelel az id_name-nek. A második eset akkor egyezik, ha az id_name egyezik egy azonosítóval, a reguláris kifejezés pedig az azonosító értékével. Ha a found_val és a not_found_val meg van adva, akkor ha van egyezés, akkor adja vissza a found_val értéket, ellenkező esetben pedig a not_found_val. Ha a found_val és a not_found_val nincs megadva, akkor ha van egyezés, akkor adja vissza az identifier:value párost, ellenkező esetben az üres karakterláncot."
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:822
 msgid "{} requires 2 or 4 arguments"
-msgstr ""
+msgstr "{} 2 vagy 4 argumentumot igényel"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:840
 msgid ""
@@ -41894,13 +41894,13 @@ msgstr "not(value) -- az \"1\" karakterláncot adja vissza, ha az érték üres,
 msgid ""
 "list_join(with_separator, list1, separator1 [, list2, separator2]*) -- return a list made by joining the items in the source lists (list1, etc) using with_separator between the items in the result list. Items in each source list[123...] are separated by the associated separator[123...]. A list can contain zero values. It can be a field like publisher that is single-valued, effectively a one-item list. Duplicates are removed using a case-insensitive comparison. Items are returned in the order they appear in the source lists. If items on lists differ only in letter case then the last is used. All separators can be more than one character.\n"
 "Example:"
-msgstr ""
+msgstr "list_join(with_separator, list1, separator1 [, list2, separator2]*) -- egy listát ad vissza, amely a forráslisták (lista1 stb.) elemeinek egyesítésével készült, az eredménylista elemei között a with_separator használatával. Az egyes forráslisták[123...] elemeit a hozzá tartozó elválasztó[123...] választja el. Egy lista nulla értéket tartalmazhat. Ez lehet egy mező, például a kiadó, amely egyértékű, gyakorlatilag egy elemes lista. A duplikátumok eltávolítása a kis- és nagybetűk megkülönböztetésével történik. Az elemek a forráslistákban megjelenő sorrendben kerülnek visszaküldésre. Ha a listákon szereplő tételek csak kis- és nagybetűben térnek el egymástól, akkor az utolsót használjuk. Minden elválasztó egynél több karakterből állhat.\nPélda:"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:1513
 msgid ""
 "You can use list_join on the results of previous calls to list_join as "
 "follows:"
-msgstr ""
+msgstr "Használhatja a list_join paramétert a list_join korábbi hívások eredményeihez a következők szerint:"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:1518
 msgid ""
@@ -41908,13 +41908,13 @@ msgid ""
 "items for authors and #genre, but with the genre changed to the word 'Genre:"
 " ' followed by the first letter of the genre, i.e. the genre 'Fiction' "
 "becomes 'Genre: F'. The following will do that:"
-msgstr ""
+msgstr "Kifejezések segítségével listát hozhat létre. Tegyük fel például, hogy a szerzőknek és a #műfajnak szeretne elemeket, de a műfajt a \"Műfaj:” szóra változtatjuk, amelyet a műfaj első betűje követ, azaz a \"Fiction” műfaj\" Műfaj: F” lesz. A következők teszik ezt:"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:1529
 msgid ""
 "Invalid 'List, separator' pairs. Every list must have one associated "
 "separator"
-msgstr ""
+msgstr "Érvénytelen \"List, separator” párok. Minden listának rendelkeznie kell egy elválasztóval"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:1546
 msgid ""
@@ -41941,12 +41941,12 @@ msgid ""
 "'0,1,2,3,4'. range(-1,5) -> '-1,0,1,2,3,4'. range(1,5) -> '1,2,3,4'. "
 "range(1,5,2) -> '1,3'. range(1,5,2,5) -> '1,3'. range(1,5,2,1) -> "
 "error(limit exceeded)."
-msgstr ""
+msgstr "range(start, stop, step, limit) -- a start, stop és step paraméterek által meghatározott tartományon belüli hurkolással generált számok listáját adja vissza, maximális hosszával. Az első előállított érték a \"start”. A next_v további értékei current_v+step. A ciklus folytatódik, amíg a next_v < stop, feltételezve, hogy a lépés pozitív, egyébként míg a next_v > stop. Üres lista jön létre, ha a start sikertelen a teszten: start>=stop, ha a lépés pozitív. A korlát beállítja a lista maximális hosszát, és alapértelmezés szerint 1000. A start, step és limit paraméterek nem kötelezőek. A range() egy argumentummal történő hívása a stopot adja meg. Két argumentum határozza meg a startot és a stopot. Három argumentum határozza meg a kezdést, a leállítást és a lépést. Négy argumentum határozza meg a start, stop, step és limit. Példák: range(5) -> '0,1,2,3,4'. range(0,5) -> '0,1,2,3,4'. range(-1,5) -> '-1,0,1,2,3,4'. range(1,5) -> '1,2,3,4'. range(1,5,2) -> '1,3'. range(1,5,2,5) -> '1,3'. range(1,5,2,1) -> hiba(határ túllépve)."
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:1605
 #, python-brace-format
 msgid "{0}: length ({1}) longer than limit ({2})"
-msgstr ""
+msgstr "{0}:  ({1}) hossz meghaladja ({2}) korlát hosszát"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:1614
 msgid ""
@@ -42175,7 +42175,7 @@ msgstr "check_yes_no(field_name, is_undefined, is_false, is_true) -- ellenőrzi 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:2157
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:2389
 msgid "The column {} doesn't exist"
-msgstr ""
+msgstr "{} oszlop nem létezik"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:2164
 msgid "check_yes_no requires the field be a Yes/No custom column"
@@ -42211,7 +42211,7 @@ msgid ""
 "same position. If the corresponding parameter is not provided in the call "
 "then arguments assigns that variable the provided default value. If there is"
 " no default value then the variable is set to the empty string."
-msgstr ""
+msgstr "arguments(id[=expression] [, id[=kifejezés]]*) – Tárolt sablonban használják a hívásban átadott argumentumok lekérésére. Egyszerre deklarálja és inicializálja a helyi változókat, hatékonyan paramétereket. A változók helyzetiek; ugyanabban a pozícióban kapják a hívásban megadott paraméter értékét. Ha a megfelelő paraméter nincs megadva a hívásban, akkor az argumentumok ehhez a változóhoz rendelik a megadott alapértelmezett értéket. Ha nincs alapértelmezett érték, akkor a változó üres karakterláncra lesz állítva."
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:2246
 msgid ""
@@ -42229,7 +42229,7 @@ msgid ""
 "variables\" that can be passed into the formatter. The globals are given the"
 " name of the id passed in. The value of the id is used unless an expression "
 "is provided."
-msgstr ""
+msgstr "set_globals(id[=expression] [, id[=kifejezés]]*) -- Beállítja a \"globális változókat\", amelyek átadhatók a formázónak. A globális változók a bevitt azonosító nevét kapják. Az id értéke kerül felhasználásra, hacsak nincs megadva kifejezés."
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:2279
 msgid ""
@@ -42248,7 +42248,7 @@ msgstr "character(character_name) -- a 'character_name' által megnevezett karak
 msgid ""
 "to_hex(val) -- returns the string encoded in hex. This is useful when "
 "constructing calibre URLs."
-msgstr ""
+msgstr "to_hex(val) -- a hexadecimálisan kódolt karakterláncot adja vissza. Ez hasznos lehet Calibre URL-ek létrehozásakor."
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:2319
 msgid ""
@@ -42259,18 +42259,18 @@ msgid ""
 "number), otherwise it is sorted alphabetically by the identifier name. The "
 "URLs are generated in the same way as the built-in identifiers column when "
 "shown in Book details."
-msgstr ""
+msgstr "urls_from_identifiers(azonosítók, sort_results) -- egy vesszővel elválasztott azonosítólista, ahol az azonosító kettősponttal elválasztott értékpár (név:azonosító_érték), az azonosítókból generált HTML URL-ek vesszővel elválasztott listáját adja vissza. A lista nincs rendezve, ha a sort_results 0 (karakter vagy szám), ellenkező esetben az azonosító neve alapján ábécé sorrendben lesz rendezve. Az URL-ek ugyanúgy jönnek létre, mint a beépített azonosítók oszlop, amikor megjelenik a Könyv részleteinél."
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:2354
 msgid ""
 "book_count(query, use_vl) -- returns the count of books found by searching "
 "for query. If use_vl is 0 (zero) then virtual libraries are ignored. This "
 "function can be used only in the GUI."
-msgstr ""
+msgstr "book_count(query, use_vl) -- a lekérdezés alapján talált könyvek számát adja vissza. Ha az use_vl értéke 0 (nulla), akkor a virtuális könyvtárak figyelmen kívül maradnak. Ez a funkció csak a grafikus felhasználói felületen használható."
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:2363
 msgid "The book_count() function cannot be used in a composite column"
-msgstr ""
+msgstr "A book_count() függvény nem használható összetett oszlopban"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:2376
 msgid ""
@@ -42278,11 +42278,11 @@ msgid ""
 "contained in the column \"column\", separated by \"sep\", in the books found"
 " by searching for \"query\". If use_vl is 0 (zero) then virtual libraries "
 "are ignored. This function can be used only in the GUI."
-msgstr ""
+msgstr "book_values(column, query, sep, use_vl) -- a \"coumn\" oszlopban található értékek listáját adja vissza, a \"sep\" szóval elválasztva, a \"query\" kereséssel talált könyvekben. Ha a use_vl értéke 0 (nulla), akkor a virtuális könyvtárak figyelmen kívül maradnak. Ez a funkció csak a grafikus felhasználói felületen használható."
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:2386
 msgid "The book_values() function cannot be used in a composite column"
-msgstr ""
+msgstr "A book_values() függvény nem használható összetett oszlopban"
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:2408
 msgid ""
@@ -42291,7 +42291,7 @@ msgid ""
 "expression) is supplied then the list is filtered to files that match "
 "pattern before the files are counted. The pattern match is case insensitive."
 " This function can be used only in the GUI."
-msgstr ""
+msgstr "has_extra_files([pattern]) -- az extra fájlok számát adja vissza, ellenkező esetben a '' (az üres karakterlánc). Ha megadja a \"pattern” (reguláris kifejezés) opcionális paramétert, akkor a lista azokra a fájlokra lesz szűrve, amelyek megfelelnek a mintának, mielőtt a fájlokat megszámlálná. A mintaegyeztetésben nincs különbség a kis- és nagybetűk között. Ez a funkció csak a grafikus felhasználói felületen használható."
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:2437
 msgid ""
@@ -42300,14 +42300,14 @@ msgid ""
 "regular expression, is supplied then the list is filtered to files that "
 "match pattern. The pattern match is case insensitive. This function can be "
 "used only in the GUI."
-msgstr ""
+msgstr "extra_file_names(sep [, pattern]) -- a könyv '{}/' mappájában lévő extra fájlok szeparált listáját adja vissza. Ha megadja az opcionális \"pattern\" paramétert, egy reguláris kifejezést, akkor a lista a mintának megfelelő fájlok szerint lesz szűrve. A mintaegyeztetésben nincs különbség a kis- és nagybetűk között. Ez a funkció csak a grafikus felhasználói felületen használható."
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:2465
 msgid ""
 "extra_file_size(file_name) -- returns the size in bytes of the extra file "
 "'file_name' in the book's '{}/' folder if it exists, otherwise -1.This "
 "function can be used only in the GUI."
-msgstr ""
+msgstr "extra_file_size(file_name) -- a könyv '{}/' mappájában található 'file_name' extra fájl méretét adja vissza bájtban, ha létezik, ellenkező esetben -1. Ez a függvény csak a grafikus felhasználói felületen használható."
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:2487
 msgid ""
@@ -42317,7 +42317,7 @@ msgid ""
 "format_date()). If 'format_string' is empty, returns the modtime as the "
 "floating point number of seconds since the epoch. The epoch is OS dependent."
 " This function can be used only in the GUI."
-msgstr ""
+msgstr "extra_file_modtime(file_name, format_spec) -- a könyv '{}/' mappájában található 'file_name' extra fájl módosítási idejét adja vissza, ha létezik, egyébként -1.0. A modtime a 'format_string' szerint van formázva (lásd format_date()). Ha a 'format_string' üres, a modtime-t az epoch óta eltelt másodpercek lebegőpontos számaként adja vissza. Az 'Epoch' operációs rendszer függő. Ez a funkció csak a grafikus felhasználói felületen használható."
 
 #: /__w/calibre/calibre/src/calibre/utils/html2text.py:19
 msgid "Unnamed image"
@@ -42541,7 +42541,7 @@ msgstr "Francia (Belgium)"
 
 #: /__w/calibre/calibre/src/calibre/utils/localization.py:364
 msgid "French (Canadian)"
-msgstr ""
+msgstr "Francia (Kanada)"
 
 #: /__w/calibre/calibre/src/calibre/utils/localization.py:365
 msgid "Dutch (Netherlands)"
@@ -42737,14 +42737,14 @@ msgstr "Email küldés beállításai"
 msgid ""
 "No active audio output devices found. Connect headphones or speakers. If you"
 " are using Remote Desktop then enable Remote Audio for it."
-msgstr ""
+msgstr "Nem található aktív audiokimeneti eszköz. Csatlakoztasson fejhallgatót vagy hangszórót. Ha a 'Remote Desktopot' használja, engedélyezze a 'Remote Audio' funkciót."
 
 #: /__w/calibre/calibre/src/calibre/utils/windows/winspeech.py:120
 msgid ""
 "This computer is missing the Windows MediaPack, or the DLLs are corrupted. "
 "This is needed for Read aloud. Instructions for installing it are available "
 "at {}"
-msgstr ""
+msgstr "A számítógépről hiányzik a Windows MediaPack, vagy a DLL-ek sérültek. Ez szükséges a Hangos felolvasáshoz. A telepítési útmutató a következő címen érhető el: {}"
 
 #: /__w/calibre/calibre/src/calibre/utils/winreg/default_programs.py:28
 msgid "The main calibre program, used to manage your collection of e-books"
@@ -43213,7 +43213,7 @@ msgid ""
 "expression produces a value for series_index, or if you are reading metadata\n"
 "from books and the import plugin produces a value, then that value will\n"
 "be used irrespective of the setting of the tweak."
-msgstr ""
+msgstr "Az algoritmus, amellyel egy meglévő sorozathoz hozzáadott könyv sorozatszámot rendel hozzá.\nAz ezzel a módosítással hozzárendelt új sorozatszámok mindig egész számok, kivéve\nha egy állandó nem egész számot adunk meg.\nA lehetséges értékek:\nnext - Az első elérhető egész szám, amely nagyobb, mint a legnagyobb létező szám\nfirst_free – Az első elérhető egész szám, amely nagyobb, mint 0\nnext_free – Az első elérhető egész szám, amely nagyobb, mint a legkisebb létező szám\nlast_free – Az első elérhető egész szám, amely kisebb, mint a legnagyobb létező szám. Ha nem található szabad szám, adja vissza a legnagyobb létező + 1-et\nconst – Mindig rendelje hozzá az 1-es számot\nno_change - Ne változtassa meg a sorozatindexet\na number – Mindig ezt a számot rendelje hozzá. A szám nincs idézőjelben. Vegye figyelembe, hogy itt a 0.0 használható.\nPéldák:\nseries_index_auto_increment = 'next'\nseries_index_auto_increment = 'next_free'\nseries_index_auto_increment = 16.5\n\nÁllítsa a use_series_auto_increment_tweak_when_importing tweak beállítást \nTrue értékre, hogy a fenti értékeket használja könyvek importálásakor/hozzáadásakor. \nHa ez a beállítás False (alapértelmezett), akkor a sorozatszám 1 lesz, ha nincs \nkifejezetten beállítva az importálás során. Ha True értékre van állítva, akkor a\nsorozatindex a series_index_auto_increment beállítás szerint lesz beállítva.\nVegye figyelembe, hogy a use_series_auto_increment_tweak_when_importing tweak \ncsak akkor használatos, ha az importálás során nem ad meg értéket. \nHa az importáló reguláris kifejezés értéket állít elő a series_index számára, \nvagy ha könyvekből olvas metaadatokat, és az importáló beépülő modul \nértéket állít elő, akkor a rendszer ezt az értéket használja a módosítás \nbeállításától függetlenül."
 
 #: /__w/calibre/calibre/resources/default_tweaks.py:39
 msgid "Add separator after completing an author name"
@@ -43258,7 +43258,7 @@ msgid ""
 "author_surname_prefixes will be treated as a prefix to the surname, if they\n"
 "occur before the surname. So for example, \"John von Neumann\" would be sorted\n"
 "as \"von Neumann, John\" and not \"Neumann, John von\"."
-msgstr ""
+msgstr "A szerzőt author_sort-ba másolására használt algoritmus.\nLehetséges értékek:\ninvert: használja \"fn ln\" -> \"ln, fn\"\ncopy  : módosítás nélkül másolja a szerzőt a author_sort mappába\ncomma : használja a \"copy\"-t, ha a névben van egy \",\"\", ellenkező esetben használja az \"invert\"-et\nnocomma : \"fn ln\" -> \"ln fn\" (vessző nélkül)\nHa ez a módosítás módosul, az egyes szerzőknél tárolt author_sort\n értékeket újra kell számítani úgy, hogy a bal oldali címkék panelen \njobb gombbal kattint egy szerzőre, kiválasztja a \"Szerzők kezelése” \nlehetőséget, majd megnyomja az \"Összes szerzői rendezési érték \nújraszámítása” gombot.\n\nAz author_name_suffixes olyan szavak, amelyeket figyelmen kívül \nhagyunk, ha a szerző neve végén szerepelnek. Az utótag kis- és \nnagybetűjét figyelmen kívül hagyja, és a végpontokat automatikusan kezeli.\n\nUgyanez igaz az author_name_prefixes értékre is.\n\nAz author_name_copywords olyan szavak halmaza, amelyek, ha \nelőfordulnak a szerző nevében, azt eredményezik, hogy az automatikusan \ngenerált szerző rendezési karakterlánc megegyezik a szerző nevével. \nEz azt jelenti, hogy az \"Acme Inc.\" lesz az \"Acme Inc.\" az \"Inc., Acme\" helyett.\n\nHa az author_use_surname_prefixes engedélyezve van, akkor a szerző \nvezetéknév előtagjai szakaszban lévő összes szó vezetéknév előtagként \nlesz kezelve, ha a vezetéknév előtt fordul elő. Így például a \"John von \nNeumann\" a \"von Neumann, John\" és nem a \"Neumann, John von\" \nformátumú."
 
 #: /__w/calibre/calibre/resources/default_tweaks.py:85
 msgid "Splitting multiple author names"

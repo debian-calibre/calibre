@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "május 29, 2023" "6.19.1" "calibre"
+.TH "CALIBREDB" "1" "június 09, 2023" "6.20.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -239,22 +239,22 @@ A mezők elválasztására szolgáló karakter vagy szöveg. Alapbeállítás a 
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-The field by which to sort the results. You can specify multiple fields by separating them with commas. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Default: id
+A mező, amely alapján rendezni kell az eredményeket. Több mezőt is megadhat, ha vesszővel választja el őket. Elérhető mezők: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Alapértelmezett: id
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+A futtatandó sablon, ha \fB\(dq\fPtemplate\fB\(dq\fP szerepel a mezőlistában. Alapértelmezés: nincs
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template_file, \-t
-Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+A futtatandó sablont tartalmazó fájl elérési útja, ha \fB\(dq\fPtemplate\fB\(dq\fP szerepel a mezőlistában. Alapértelmezés: nincs
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template_heading
-Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
+Modell oszlopfejléc. Alapértelmezett érték: template. Ezt a beállítást a rendszer figyelmen kívül hagyja, ha a \fI\%\-\-for\-machine\fP opció be van állítva.
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -448,12 +448,15 @@ calibredb set_metadata [options] book_id [/path/to/metadata.opf]
 .UNINDENT
 .UNINDENT
 .sp
-Set the metadata stored in the calibre database for the book identified by
-book_id from the OPF file metadata.opf. book_id is a book id number from the
-search command. You can get a quick feel for the OPF format by using the
-\-\-as\-opf switch to the show_metadata command. You can also set the metadata of
-individual fields with the \-\-field option. If you use the \-\-field option, there
-is no need to specify an OPF file.
+Elhelyezi az OPF metadata.opf fájlból a book_id által azonosított könyv
+Calibre adatbázisában tárolt metaadatokat. A book_id egy azonosítószám
+a find parancsból. Gyors áttekintést kaphat az OPF formátumról a
+show_metadata parancs \-\-as\-opf kapcsolójával. Egyedi mező metaadatokat
+.INDENT 0.0
+.INDENT 3.5
+is elhelyezhet a \-\-field opcióval. Ha a \-\-field opciót használja, akkor nem szükséges OPF fájlt megadni.
+.UNINDENT
+.UNINDENT
 .sp
 Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -472,16 +475,20 @@ A \fI\%\-\-field\fP paraméterrel használható metaadat\-mezőnevek felsorolás
 .sp
 .nf
 .ft C
-calibredb export [options] ids
+calibredb export [opciók] azonosítók
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Export the books specified by ids (a comma separated list) to the filesystem.
-The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
-an OPF file). Any extra data files associated with the book are also saved.
-You can get id numbers from the search command.
+Exportálja az azonosítókkal (vesszővel tagolt lista) megadott könyveket a fájlrendszerbe.
+Az :command:
+.nf
+\(ga
+.fi
+export\(gaálási művelet elmenti a könyv összes formátumát, borítóját és metaadatait (OPF fájlba).
+A könyvhöz kapcsolódó további adatfájlok is mentésre kerülnek.
+Az azonosítószámokat a keresési parancsból kaphatja meg.
 .sp
 Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -1016,36 +1023,35 @@ calibredb fts_index [options] enable/disable/status/reindex
 .UNINDENT
 .UNINDENT
 .sp
-Control the Full text search indexing process.
+Irányítja a teljes szöveges keresés indexelési folyamatát.
 .INDENT 0.0
 .TP
 .B enable
-Turns on FTS indexing for this library
+Bekapcsolja az FTS\-indexelést ehhez a könyvtárhoz
 .TP
 .B disable
-Turns off FTS indexing for this library
+Kikapcsolja az FTS\-indexelést ehhez a könyvtárhoz
 .TP
 .B status
-Shows the current indexing status
+Az aktuális indexelési állapotot mutatja
 .TP
 .B reindex
-Can be used to re\-index either particular books or
-the entire library. To re\-index particular books
-specify the book ids as additional arguments after the
-reindex command. If no book ids are specified the
-entire library is re\-indexed.
+Egyes könyvek vagy a teljes könyvtár újraindexelésére használható.
+Adott könyvek újraindexeléséhez megadja a könyvazonosítókat további
+argumentumként a reindex parancs után. Ha nincs megadva
+könyvazonosító, a teljes könyvtár újraindexelésre kerül.
 .UNINDENT
 .sp
 Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-indexing\-speed
-The speed of indexing. Use fast for fast indexing using all your computers resources and slow for less resource intensive indexing. Note that the speed is reset to slow after every invocation.
+Az indexelés sebessége. A gyors indexelést a számítógép összes erőforrásának felhasználásával, a lassút pedig a kevésbé erőforrásigényes indexeléshez használja. Vegye figyelembe, hogy a sebesség minden hívás után visszaáll lassúra.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-wait\-for\-completion
-Wait till all books are indexed, showing indexing progress periodically
+Várja meg, amíg az összes könyvet indexeli, és időnként mutatja az indexelés előrehaladását
 .UNINDENT
 .SH FTS_SEARCH
 .INDENT 0.0
@@ -1053,49 +1059,49 @@ Wait till all books are indexed, showing indexing progress periodically
 .sp
 .nf
 .ft C
-calibredb fts_search [options] search expression
+calibredb fts_search [opciók] keresési kifejezés
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Do a full text search on the entire library or a subset of it.
+Elvégez egy teljes szöveges keresést a teljes könyvtárban vagy annak egy részhalmazában.
 .sp
 Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegye idézőjelek közé az argumentumokat. Például: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-do\-not\-match\-on\-related\-words
-Only match on exact words not related words. So correction will not match correcting.
+Csak a pontos szavakra egyezik, nem kapcsolódó szavakra. Tehát a korrekció nem egyezik a javítással.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-include\-snippets
-Include snippets of the text surrounding each match. Note that this makes searching much slower.
+Az egyes egyezéseket körülvevő szövegrészleteket csatolja be. Ne feledje, hogy ez sokkal lassítja a keresést.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-indexing\-threshold
-How much of the library must be indexed before searching is allowed, as a percentage. Defaults to 90
+A könyvtár mekkora részét kell indexelni a keresés engedélyezése előtt, százalékban. Alapértelmezés szerint 90
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-end\-marker
-The marker used to indicate the end of a matched word inside a snippet
+A jelölő a részleten belüli egyező szó végét jelzi
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-start\-marker
-The marker used to indicate the start of a matched word inside a snippet
+A jelölő a részleten belüli egyező szó kezdetének jelzésére szolgál
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-format
-The format to output the search results in. Either \fB\(dq\fPtext\fB\(dq\fP for plain text or \fB\(dq\fPjson\fB\(dq\fP for JSON output.
+A keresési eredmények kimeneti formátuma. Vagy \fB\(dq\fPtext” az egyszerű szöveghez, vagy \fB\(dq\fPjson” a JSON\-kimenethez.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-restrict\-to
-Restrict the searched books, either using a search expression or ids. For example: ids:1,2,3 to restrict by ids or search:tag:foo to restrict to books having the tag foo.
+Korlátozza a keresett könyveket keresőkifejezés vagy azonosítók használatával. Például: ids:1,2,3 az azonosítókkal való korlátozáshoz vagy search:tag:foo a foo címkével rendelkező könyvekre való korlátozáshoz.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal
