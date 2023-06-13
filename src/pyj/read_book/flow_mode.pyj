@@ -536,7 +536,9 @@ def start_drag_scroll(delta):
 
 def handle_gesture(gesture):
     flick_animator.stop()
-    if gesture.type is 'swipe':
+    if gesture.resolved_action is 'animated_scroll':
+        flick_animator.start(gesture)
+    elif gesture.resolved_action is 'pan':
         if gesture.points.length > 1 and not gesture.is_held:
             delta = gesture.points[-2] - gesture.points[-1]
             if Math.abs(delta) >= 1:
@@ -556,13 +558,11 @@ def handle_gesture(gesture):
                     # In horizontal modes, just move by the delta.
                     else:
                         scroll_viewport.scroll_by(delta, 0)
-        if not gesture.active and not gesture.is_held:
-            flick_animator.start(gesture)
-    elif gesture.type is 'prev-page':
+    elif gesture.resolved_action is 'prev_page' or gesture.resolved_action is 'prev_screen':
         # should flip = False - previous is previous whether RTL or LTR.
         # flipping of this command is handled higher up
         scroll_by_page(-1, False)
-    elif gesture.type is 'next-page':
+    elif gesture.resolved_action is 'next_page' or gesture.resolved_action is 'next_screen':
         # should flip = False - next is next whether RTL or LTR.
         # flipping of this command is handled higher up
         scroll_by_page(1, False)
