@@ -4918,6 +4918,8 @@ var str = ρσ_str, repr = ρσ_repr;;
     ρσ_modules["read_book.flow_mode"] = {};
     ρσ_modules["read_book.resources"] = {};
     ρσ_modules["read_book.footnotes"] = {};
+    ρσ_modules["read_book.touch"] = {};
+    ρσ_modules["read_book.gestures"] = {};
     ρσ_modules.complete = {};
     ρσ_modules["read_book.highlights"] = {};
     ρσ_modules["read_book.shortcuts"] = {};
@@ -4926,7 +4928,6 @@ var str = ρσ_str, repr = ρσ_repr;;
     ρσ_modules["read_book.paged_mode"] = {};
     ρσ_modules["read_book.referencing"] = {};
     ρσ_modules["read_book.toc"] = {};
-    ρσ_modules["read_book.touch"] = {};
     ρσ_modules.select = {};
     ρσ_modules["read_book.iframe"] = {};
     ρσ_modules["book_list.item_list"] = {};
@@ -4956,6 +4957,7 @@ var str = ρσ_str, repr = ρσ_repr;;
     ρσ_modules["read_book.prefs.scrolling"] = {};
     ρσ_modules["read_book.selection_bar"] = {};
     ρσ_modules["read_book.prefs.selection"] = {};
+    ρσ_modules["read_book.prefs.touch"] = {};
     ρσ_modules.viewer = {};
     ρσ_modules["viewer.constants"] = {};
     ρσ_modules["read_book.prefs.user_stylesheet"] = {};
@@ -9973,7 +9975,6 @@ return parser;
             ρσ_d["override_book_colors"] = "never";
             ρσ_d["paged_margin_clicks_scroll_by_screen"] = true;
             ρσ_d["paged_wheel_scrolls_by_screen"] = false;
-            ρσ_d["paged_taps_scroll_by_screen"] = false;
             ρσ_d["paged_pixel_scroll_threshold"] = 60;
             ρσ_d["read_mode"] = "paged";
             ρσ_d["scroll_auto_boundary_delay"] = 5;
@@ -9998,6 +9999,7 @@ return parser;
             ρσ_d["book_search_mode"] = "contains";
             ρσ_d["book_search_case_sensitive"] = false;
             ρσ_d["reverse_page_turn_zones"] = false;
+            ρσ_d["gesture_overrides"] = Object.create(null);
             return ρσ_d;
         }).call(this);
         is_local_setting = (function(){
@@ -19733,11 +19735,11 @@ return this.__repr__();
             opts.override_book_colors = settings.override_book_colors;
             opts.paged_wheel_scrolls_by_screen = !!settings.paged_wheel_scrolls_by_screen;
             opts.paged_pixel_scroll_threshold = settings.paged_pixel_scroll_threshold;
-            opts.paged_taps_scroll_by_screen = !!settings.paged_taps_scroll_by_screen;
             opts.scroll_auto_boundary_delay = settings.scroll_auto_boundary_delay;
             opts.scroll_stop_boundaries = !!settings.scroll_stop_boundaries;
             opts.reverse_page_turn_zones = !!settings.reverse_page_turn_zones;
             opts.user_stylesheet = settings.user_stylesheet;
+            opts.gesture_overrides = settings.gesture_overrides;
         };
         if (!update_settings.__argnames__) Object.defineProperties(update_settings, {
             __argnames__ : {value: ["settings"]},
@@ -20807,7 +20809,9 @@ return this.__repr__();
         function handle_gesture(gesture) {
             var delta;
             flick_animator.stop();
-            if (gesture.type === "swipe") {
+            if (gesture.resolved_action === "animated_scroll") {
+                flick_animator.start(gesture);
+            } else if (gesture.resolved_action === "pan") {
                 if (gesture.points.length > 1 && !gesture.is_held) {
                     delta = (ρσ_expr_temp = gesture.points)[ρσ_expr_temp.length-2] - (ρσ_expr_temp = gesture.points)[ρσ_expr_temp.length-1];
                     if (Math.abs(delta) >= 1) {
@@ -20826,12 +20830,9 @@ return this.__repr__();
                         }
                     }
                 }
-                if (!gesture.active && !gesture.is_held) {
-                    flick_animator.start(gesture);
-                }
-            } else if (gesture.type === "prev-page") {
+            } else if (gesture.resolved_action === "prev_page" || gesture.resolved_action === "prev_screen") {
                 scroll_by_page(-1, false);
-            } else if (gesture.type === "next-page") {
+            } else if (gesture.resolved_action === "next_page" || gesture.resolved_action === "next_screen") {
                 scroll_by_page(1, false);
             }
         };
@@ -22412,6 +22413,954 @@ return this.__repr__();
         ρσ_modules["read_book.footnotes"].show_footnote = show_footnote;
         ρσ_modules["read_book.footnotes"].PopupIframeBoss = PopupIframeBoss;
         ρσ_modules["read_book.footnotes"].main = main;
+    })();
+
+    (function(){
+        var __name__ = "read_book.touch";
+        var HOLD_THRESHOLD, TAP_THRESHOLD, SWIPE_THRESHOLD, TAP_LINK_THRESHOLD, PINCH_THRESHOLD, GESTURE_NAMES, GESTURE, k, gesture_id, main_touch_handler, left_margin_handler, right_margin_handler;
+        var _ = ρσ_modules.gettext.gettext;
+
+        var get_boss = ρσ_modules["read_book.globals"].get_boss;
+        var ltr_page_progression = ρσ_modules["read_book.globals"].ltr_page_progression;
+        var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
+
+        var opts = ρσ_modules["read_book.settings"].opts;
+
+        var get_unit_size_in_pixels = ρσ_modules["read_book.viewport"].get_unit_size_in_pixels;
+        var scroll_viewport = ρσ_modules["read_book.viewport"].scroll_viewport;
+
+        HOLD_THRESHOLD = 750;
+        TAP_THRESHOLD = 8;
+        SWIPE_THRESHOLD = 64;
+        TAP_LINK_THRESHOLD = 5;
+        PINCH_THRESHOLD = 20;
+        GESTURE_NAMES = (function(){
+            var ρσ_d = Object.create(null);
+            ρσ_d["back_zone_tap"] = _("Tap on back zone");
+            ρσ_d["forward_zone_tap"] = _("Tap on forward zone");
+            ρσ_d["control_zone_tap"] = _("Tap in the controls zone");
+            ρσ_d["long_tap"] = _("Long tap");
+            ρσ_d["two_finger_tap"] = _("Two finger tap");
+            ρσ_d["pinch_in"] = _("Pinch in");
+            ρσ_d["pinch_out"] = _("Pinch out");
+            ρσ_d["flick_inline_backward"] = _("Flick in writing direction, to go back");
+            ρσ_d["flick_inline_forward"] = _("Flick in writing direction, to go forward");
+            ρσ_d["flick_block_backward"] = _("Flick perpendicular to writing direction, to go forward");
+            ρσ_d["flick_block_forward"] = _("Flick perpendicular to writing direction, to go back");
+            ρσ_d["swipe_inline_backward_in_progress"] = _("Drag finger in writing direction, to go back");
+            ρσ_d["swipe_inline_forward_in_progress"] = _("Drag finger in writing direction, to go forward");
+            ρσ_d["swipe_block_backward_in_progress"] = _("Drag finger perpendicular to writing direction, to go back");
+            ρσ_d["swipe_block_forward_in_progress"] = _("Drag finger perpendicular to writing direction, to go forward");
+            ρσ_d["swipe_inline_backward_hold"] = _("Drag and hold finger in writing direction, to go back");
+            ρσ_d["swipe_inline_forward_hold"] = _("Drag and hold finger in writing direction, to go forward");
+            ρσ_d["swipe_block_backward_hold"] = _("Drag and hold finger perpendicular to writing direction, to go back");
+            ρσ_d["swipe_block_forward_hold"] = _("Drag and hold finger perpendicular to writing direction, to go forward");
+            return ρσ_d;
+        }).call(this);
+        GESTURE = (function() {
+            var ρσ_Iter = ρσ_Iterable(Object.keys(GESTURE_NAMES)), ρσ_Result = Object.create(null), k;
+            for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                k = ρσ_Iter[ρσ_Index];
+                ρσ_Result[k] = (k);
+            }
+            return ρσ_Result;
+        })();
+        GESTURE.tap = "tap";
+        GESTURE.swipe = "swipe";
+        GESTURE.pinch = "pinch";
+        gesture_id = 0;
+        function touch_id(touch) {
+            return touch.identifier + "";
+        };
+        if (!touch_id.__argnames__) Object.defineProperties(touch_id, {
+            __argnames__ : {value: ["touch"]},
+            __module__ : {value: "read_book.touch"}
+        });
+
+        function copy_touch(t) {
+            var now;
+            now = window.performance.now();
+            return (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["identifier"] = touch_id(t);
+                ρσ_d["page_x"] = [t.pageX];
+                ρσ_d["page_y"] = [t.pageY];
+                ρσ_d["viewport_x"] = [t.clientX];
+                ρσ_d["viewport_y"] = [t.clientY];
+                ρσ_d["active"] = true;
+                ρσ_d["mtimes"] = [now];
+                ρσ_d["ctime"] = now;
+                ρσ_d["is_held"] = false;
+                ρσ_d["x_velocity"] = 0;
+                ρσ_d["y_velocity"] = 0;
+                return ρσ_d;
+            }).call(this);
+        };
+        if (!copy_touch.__argnames__) Object.defineProperties(copy_touch, {
+            __argnames__ : {value: ["t"]},
+            __module__ : {value: "read_book.touch"}
+        });
+
+        function update_touch(t, touch) {
+            var now;
+            now = window.performance.now();
+            t.mtimes.push(now);
+            [t.page_x.push(touch.pageX), t.page_y.push(touch.pageY)];
+            [t.viewport_x.push(touch.clientX), t.viewport_y.push(touch.clientY)];
+        };
+        if (!update_touch.__argnames__) Object.defineProperties(update_touch, {
+            __argnames__ : {value: ["t", "touch"]},
+            __module__ : {value: "read_book.touch"}
+        });
+
+        function max_displacement(points) {
+            var ans, first, delta, p;
+            ans = 0;
+            first = points[0];
+            if (!(typeof first !== "undefined" && first !== null)) {
+                return ans;
+            }
+            var ρσ_Iter0 = ρσ_Iterable(points);
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                p = ρσ_Iter0[ρσ_Index0];
+                delta = abs(p - first);
+                if (delta > ans) {
+                    ans = delta;
+                }
+            }
+            return ans;
+        };
+        if (!max_displacement.__argnames__) Object.defineProperties(max_displacement, {
+            __argnames__ : {value: ["points"]},
+            __module__ : {value: "read_book.touch"}
+        });
+
+        function interpret_single_gesture(touch, gesture_id) {
+            var max_x_displacement, max_y_displacement, ans, delta_x, delta_y, max_disp, pts, positive;
+            max_x_displacement = max_displacement(touch.viewport_x);
+            max_y_displacement = max_displacement(touch.viewport_y);
+            ans = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["active"] = touch.active;
+                ρσ_d["is_held"] = touch.is_held;
+                ρσ_d["id"] = gesture_id;
+                ρσ_d["start_time"] = touch.ctime;
+                return ρσ_d;
+            }).call(this);
+            if (max(max_x_displacement, max_y_displacement) < TAP_THRESHOLD) {
+                ans.type = GESTURE.tap;
+                ans.viewport_x = touch.viewport_x[0];
+                ans.viewport_y = touch.viewport_y[0];
+                return ans;
+            }
+            if (touch.viewport_y.length < 2) {
+                return ans;
+            }
+            delta_x = abs((ρσ_expr_temp = touch.viewport_x)[ρσ_expr_temp.length-1] - touch.viewport_x[0]);
+            delta_y = abs((ρσ_expr_temp = touch.viewport_y)[ρσ_expr_temp.length-1] - touch.viewport_y[0]);
+            max_disp = max(delta_y, delta_x);
+            if (max_disp > SWIPE_THRESHOLD && min(delta_x, delta_y) / max_disp < .35) {
+                ans.type = GESTURE.swipe;
+                ans.axis = (delta_y > delta_x) ? "vertical" : "horizontal";
+                ans.points = pts = (ans.axis === "vertical") ? touch.viewport_y : touch.viewport_x;
+                ans.times = touch.mtimes;
+                positive = pts[pts.length-1] > pts[0];
+                if (ans.axis === "vertical") {
+                    ans.direction = (positive) ? "down" : "up";
+                    ans.velocity = touch.y_velocity;
+                } else {
+                    ans.direction = (positive) ? "right" : "left";
+                    ans.velocity = touch.x_velocity;
+                }
+                return ans;
+            }
+            return ans;
+        };
+        if (!interpret_single_gesture.__argnames__) Object.defineProperties(interpret_single_gesture, {
+            __argnames__ : {value: ["touch", "gesture_id"]},
+            __module__ : {value: "read_book.touch"}
+        });
+
+        function interpret_double_gesture(touch1, touch2, gesture_id) {
+            var ans, max_x_displacement1, max_x_displacement2, max_y_displacement1, max_y_displacement2, initial_distance, final_distance, distance;
+            ans = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["active"] = touch1.active || touch2.active;
+                ρσ_d["is_held"] = touch1.is_held || touch2.is_held;
+                ρσ_d["id"] = gesture_id;
+                return ρσ_d;
+            }).call(this);
+            max_x_displacement1 = max_displacement(touch1.viewport_x);
+            max_x_displacement2 = max_displacement(touch2.viewport_x);
+            max_y_displacement1 = max_displacement(touch1.viewport_y);
+            max_y_displacement2 = max_displacement(touch2.viewport_y);
+            if (max(max_x_displacement1, max_y_displacement1) < TAP_THRESHOLD && max(max_x_displacement2, max_y_displacement2) < TAP_THRESHOLD) {
+                ans.type = GESTURE.two_finger_tap;
+                ans.viewport_x1 = touch1.viewport_x[0];
+                ans.viewport_y1 = touch1.viewport_y[0];
+                ans.viewport_x2 = touch2.viewport_x[0];
+                ans.viewport_y2 = touch2.viewport_y[0];
+                return ans;
+            }
+            initial_distance = Math.sqrt(Math.pow((touch1.viewport_x[0] - touch2.viewport_x[0]), 2) + Math.pow((touch1.viewport_y[0] - touch2.viewport_y[0]), 2));
+            final_distance = Math.sqrt(Math.pow(((ρσ_expr_temp = touch1.viewport_x)[ρσ_expr_temp.length-1] - (ρσ_expr_temp = touch2.viewport_x)[ρσ_expr_temp.length-1]), 2) + Math.pow(((ρσ_expr_temp = touch1.viewport_y)[ρσ_expr_temp.length-1] - (ρσ_expr_temp = touch2.viewport_y)[ρσ_expr_temp.length-1]), 2));
+            distance = abs(final_distance - initial_distance);
+            if (distance > PINCH_THRESHOLD) {
+                ans.type = GESTURE.pinch;
+                ans.direction = (final_distance < initial_distance) ? "in" : "out";
+                ans.distance = distance;
+                return ans;
+            }
+            return ans;
+        };
+        if (!interpret_double_gesture.__argnames__) Object.defineProperties(interpret_double_gesture, {
+            __argnames__ : {value: ["touch1", "touch2", "gesture_id"]},
+            __module__ : {value: "read_book.touch"}
+        });
+
+        function element_from_point(x, y) {
+            return document.elementFromPoint(x, y);
+        };
+        if (!element_from_point.__argnames__) Object.defineProperties(element_from_point, {
+            __argnames__ : {value: ["x", "y"]},
+            __module__ : {value: "read_book.touch"}
+        });
+
+        function find_link(x, y) {
+            var p;
+            p = element_from_point(x, y);
+            while (p) {
+                if (p.tagName && p.tagName.toLowerCase() === "a" && p.hasAttribute("href")) {
+                    return p;
+                }
+                p = p.parentNode;
+            }
+        };
+        if (!find_link.__argnames__) Object.defineProperties(find_link, {
+            __argnames__ : {value: ["x", "y"]},
+            __module__ : {value: "read_book.touch"}
+        });
+
+        function tap_on_link(gesture) {
+            var x, y, link, delta_y, delta_x;
+            var ρσ_Iter1 = ρσ_Iterable(ρσ_list_decorate([ 0, TAP_LINK_THRESHOLD, -TAP_LINK_THRESHOLD ]));
+            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                delta_x = ρσ_Iter1[ρσ_Index1];
+                var ρσ_Iter2 = ρσ_Iterable(ρσ_list_decorate([ 0, TAP_LINK_THRESHOLD, -TAP_LINK_THRESHOLD ]));
+                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                    delta_y = ρσ_Iter2[ρσ_Index2];
+                    x = gesture.viewport_x + delta_x;
+                    y = gesture.viewport_y + delta_y;
+                    link = find_link(x, y);
+                    if (link) {
+                        link.click();
+                        return true;
+                    }
+                }
+            }
+            return false;
+        };
+        if (!tap_on_link.__argnames__) Object.defineProperties(tap_on_link, {
+            __argnames__ : {value: ["gesture"]},
+            __module__ : {value: "read_book.touch"}
+        });
+
+        function TouchHandler() {
+            if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
+            TouchHandler.prototype.__bind_methods__.call(this);
+            TouchHandler.prototype.__init__.apply(this, arguments);
+        }
+        Object.defineProperty(TouchHandler.prototype, "__bind_methods__", {value: function () {
+            this.prune_expired_touches = TouchHandler.prototype.prune_expired_touches.bind(this);
+            this.reset_handlers = TouchHandler.prototype.reset_handlers.bind(this);
+            this.start_hold_timer = TouchHandler.prototype.start_hold_timer.bind(this);
+            this.stop_hold_timer = TouchHandler.prototype.stop_hold_timer.bind(this);
+            this.check_for_hold = TouchHandler.prototype.check_for_hold.bind(this);
+            this.handle_touchstart = TouchHandler.prototype.handle_touchstart.bind(this);
+            this.handle_touchmove = TouchHandler.prototype.handle_touchmove.bind(this);
+            this.handle_touchend = TouchHandler.prototype.handle_touchend.bind(this);
+            this.handle_touchcancel = TouchHandler.prototype.handle_touchcancel.bind(this);
+            this.dispatch_gesture = TouchHandler.prototype.dispatch_gesture.bind(this);
+        }});
+        Object.defineProperties(TouchHandler.prototype,  {
+            "has_active_touches": {
+                "enumerable": true, 
+                "get": function has_active_touches() {
+                    var self = this;
+                    var t, tid;
+                    var ρσ_Iter3 = ρσ_Iterable(self.ongoing_touches);
+                    for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                        tid = ρσ_Iter3[ρσ_Index3];
+                        t = (ρσ_expr_temp = self.ongoing_touches)[(typeof tid === "number" && tid < 0) ? ρσ_expr_temp.length + tid : tid];
+                        if (t.active) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }, 
+                "set": function () { throw new AttributeError("can't set attribute") }
+            }, 
+        });
+        TouchHandler.prototype.__init__ = function __init__() {
+            var self = this;
+            self.ongoing_touches = Object.create(null);
+            self.gesture_id = null;
+            self.hold_timer = null;
+            self.handled_tap_hold = false;
+        };
+        if (!TouchHandler.prototype.__init__.__module__) Object.defineProperties(TouchHandler.prototype.__init__, {
+            __module__ : {value: "read_book.touch"}
+        });
+        TouchHandler.__argnames__ = TouchHandler.prototype.__init__.__argnames__;
+        TouchHandler.__handles_kwarg_interpolation__ = TouchHandler.prototype.__init__.__handles_kwarg_interpolation__;
+        TouchHandler.prototype.prune_expired_touches = function prune_expired_touches() {
+            var self = this;
+            var now, expired, t, tid;
+            now = window.performance.now();
+            expired = [];
+            var ρσ_Iter4 = ρσ_Iterable(self.ongoing_touches);
+            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                tid = ρσ_Iter4[ρσ_Index4];
+                t = (ρσ_expr_temp = self.ongoing_touches)[(typeof tid === "number" && tid < 0) ? ρσ_expr_temp.length + tid : tid];
+                if (t.active) {
+                    if (now - (ρσ_expr_temp = t.mtimes)[ρσ_expr_temp.length-1] > 3e3) {
+                        expired.push(touch_id(t));
+                    }
+                }
+            }
+            var ρσ_Iter5 = ρσ_Iterable(expired);
+            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                tid = ρσ_Iter5[ρσ_Index5];
+                delete self.ongoing_touches[tid];
+            }
+        };
+        if (!TouchHandler.prototype.prune_expired_touches.__module__) Object.defineProperties(TouchHandler.prototype.prune_expired_touches, {
+            __module__ : {value: "read_book.touch"}
+        });
+        TouchHandler.prototype.reset_handlers = function reset_handlers() {
+            var self = this;
+            self.stop_hold_timer();
+            self.ongoing_touches = Object.create(null);
+            self.gesture_id = null;
+            self.handled_tap_hold = false;
+        };
+        if (!TouchHandler.prototype.reset_handlers.__module__) Object.defineProperties(TouchHandler.prototype.reset_handlers, {
+            __module__ : {value: "read_book.touch"}
+        });
+        TouchHandler.prototype.start_hold_timer = function start_hold_timer() {
+            var self = this;
+            self.stop_hold_timer();
+            self.hold_timer = window.setTimeout(self.check_for_hold, 50);
+        };
+        if (!TouchHandler.prototype.start_hold_timer.__module__) Object.defineProperties(TouchHandler.prototype.start_hold_timer, {
+            __module__ : {value: "read_book.touch"}
+        });
+        TouchHandler.prototype.stop_hold_timer = function stop_hold_timer() {
+            var self = this;
+            if (self.hold_timer !== null) {
+                window.clearTimeout(self.hold_timer);
+                self.hold_timer = null;
+            }
+        };
+        if (!TouchHandler.prototype.stop_hold_timer.__module__) Object.defineProperties(TouchHandler.prototype.stop_hold_timer, {
+            __module__ : {value: "read_book.touch"}
+        });
+        TouchHandler.prototype.check_for_hold = function check_for_hold() {
+            var self = this;
+            var now, found_hold, touch, touchid;
+            if (len(self.ongoing_touches) > 0) {
+                now = window.performance.now();
+                found_hold = false;
+                var ρσ_Iter6 = ρσ_Iterable(self.ongoing_touches);
+                for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                    touchid = ρσ_Iter6[ρσ_Index6];
+                    touch = (ρσ_expr_temp = self.ongoing_touches)[(typeof touchid === "number" && touchid < 0) ? ρσ_expr_temp.length + touchid : touchid];
+                    if (touch.active && now - (ρσ_expr_temp = touch.mtimes)[ρσ_expr_temp.length-1] > HOLD_THRESHOLD) {
+                        touch.is_held = true;
+                        found_hold = true;
+                    }
+                }
+                if (found_hold) {
+                    self.dispatch_gesture();
+                }
+                self.start_hold_timer();
+            }
+        };
+        if (!TouchHandler.prototype.check_for_hold.__module__) Object.defineProperties(TouchHandler.prototype.check_for_hold, {
+            __module__ : {value: "read_book.touch"}
+        });
+        TouchHandler.prototype.handle_touchstart = function handle_touchstart(ev) {
+            var self = this;
+            var touch;
+            if (typeof ev.cancelable !== "boolean" || ev.cancelable) {
+                ev.preventDefault();
+            }
+            ev.stopPropagation();
+            self.prune_expired_touches();
+            var ρσ_Iter7 = ρσ_Iterable(ev.changedTouches);
+            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                touch = ρσ_Iter7[ρσ_Index7];
+                (ρσ_expr_temp = self.ongoing_touches)[ρσ_bound_index(touch_id(touch), ρσ_expr_temp)] = copy_touch(touch);
+                if (self.gesture_id === null) {
+                    gesture_id += 1;
+                    self.gesture_id = gesture_id;
+                    self.handled_tap_hold = false;
+                }
+            }
+            if (len(self.ongoing_touches) > 0) {
+                self.start_hold_timer();
+            }
+        };
+        if (!TouchHandler.prototype.handle_touchstart.__argnames__) Object.defineProperties(TouchHandler.prototype.handle_touchstart, {
+            __argnames__ : {value: ["ev"]},
+            __module__ : {value: "read_book.touch"}
+        });
+        TouchHandler.prototype.handle_touchmove = function handle_touchmove(ev) {
+            var self = this;
+            var t, touch;
+            if (typeof ev.cancelable !== "boolean" || ev.cancelable) {
+                ev.preventDefault();
+            }
+            ev.stopPropagation();
+            var ρσ_Iter8 = ρσ_Iterable(ev.changedTouches);
+            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
+                touch = ρσ_Iter8[ρσ_Index8];
+                t = (ρσ_expr_temp = self.ongoing_touches)[ρσ_bound_index(touch_id(touch), ρσ_expr_temp)];
+                if (t) {
+                    update_touch(t, touch);
+                    self.dispatch_gesture();
+                }
+            }
+        };
+        if (!TouchHandler.prototype.handle_touchmove.__argnames__) Object.defineProperties(TouchHandler.prototype.handle_touchmove, {
+            __argnames__ : {value: ["ev"]},
+            __module__ : {value: "read_book.touch"}
+        });
+        TouchHandler.prototype.handle_touchend = function handle_touchend(ev) {
+            var self = this;
+            var t, touch;
+            if (typeof ev.cancelable !== "boolean" || ev.cancelable) {
+                ev.preventDefault();
+            }
+            ev.stopPropagation();
+            var ρσ_Iter9 = ρσ_Iterable(ev.changedTouches);
+            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
+                touch = ρσ_Iter9[ρσ_Index9];
+                t = (ρσ_expr_temp = self.ongoing_touches)[ρσ_bound_index(touch_id(touch), ρσ_expr_temp)];
+                if (t) {
+                    t.active = false;
+                    update_touch(t, touch);
+                }
+            }
+            self.prune_expired_touches();
+            if (!self.has_active_touches) {
+                self.dispatch_gesture();
+                self.reset_handlers();
+            }
+        };
+        if (!TouchHandler.prototype.handle_touchend.__argnames__) Object.defineProperties(TouchHandler.prototype.handle_touchend, {
+            __argnames__ : {value: ["ev"]},
+            __module__ : {value: "read_book.touch"}
+        });
+        TouchHandler.prototype.handle_touchcancel = function handle_touchcancel(ev) {
+            var self = this;
+            var tid, touch;
+            if (typeof ev.cancelable !== "boolean" || ev.cancelable) {
+                ev.preventDefault();
+            }
+            ev.stopPropagation();
+            var ρσ_Iter10 = ρσ_Iterable(ev.changedTouches);
+            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
+                touch = ρσ_Iter10[ρσ_Index10];
+                tid = touch_id(touch);
+                delete self.ongoing_touches[tid];
+            }
+            self.gesture_id = null;
+            self.handled_tap_hold = false;
+        };
+        if (!TouchHandler.prototype.handle_touchcancel.__argnames__) Object.defineProperties(TouchHandler.prototype.handle_touchcancel, {
+            __argnames__ : {value: ["ev"]},
+            __module__ : {value: "read_book.touch"}
+        });
+        TouchHandler.prototype.dispatch_gesture = function dispatch_gesture() {
+            var self = this;
+            var touches, num, gesture, t;
+            touches = self.ongoing_touches;
+            num = len(touches);
+            gesture = Object.create(null);
+            if (num === 1) {
+                gesture = interpret_single_gesture(touches[ρσ_bound_index(Object.keys(touches)[0], touches)], self.gesture_id);
+            } else if (num === 2) {
+                t = Object.keys(touches);
+                gesture = interpret_double_gesture(touches[ρσ_bound_index(t[0], touches)], touches[ρσ_bound_index(t[1], touches)], self.gesture_id);
+            }
+            if (!(typeof gesture !== "undefined" && gesture !== null ? gesture : Object.create(null)).type) {
+                return;
+            }
+            self.handle_gesture(gesture);
+        };
+        if (!TouchHandler.prototype.dispatch_gesture.__module__) Object.defineProperties(TouchHandler.prototype.dispatch_gesture, {
+            __module__ : {value: "read_book.touch"}
+        });
+        TouchHandler.prototype.__repr__ = function __repr__ () {
+                        return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
+        };
+        TouchHandler.prototype.__str__ = function __str__ () {
+            return this.__repr__();
+        };
+        Object.defineProperty(TouchHandler.prototype, "__bases__", {value: []});
+        
+
+        function inch_in_pixels() {
+            var ans;
+            ans = inch_in_pixels.ans;
+            if (!ans) {
+                ans = inch_in_pixels.ans = max(2, get_unit_size_in_pixels("in"));
+            }
+            return ans;
+        };
+        if (!inch_in_pixels.__module__) Object.defineProperties(inch_in_pixels, {
+            __module__ : {value: "read_book.touch"}
+        });
+
+        function BookTouchHandler() {
+            if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
+            BookTouchHandler.prototype.__bind_methods__.call(this);
+            BookTouchHandler.prototype.__init__.apply(this, arguments);
+        }
+        ρσ_extends(BookTouchHandler, TouchHandler);
+        Object.defineProperty(BookTouchHandler.prototype, "__bind_methods__", {value: function () {
+            TouchHandler.prototype.__bind_methods__ && TouchHandler.prototype.__bind_methods__.call(this);
+            this.handle_gesture = BookTouchHandler.prototype.handle_gesture.bind(this);
+            this.__repr__ = BookTouchHandler.prototype.__repr__.bind(this);
+        }});
+        BookTouchHandler.prototype.__init__ = function __init__() {
+            var self = this;
+            var for_side_margin = (arguments[0] === undefined || ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? __init__.__defaults__.for_side_margin : arguments[0];
+            var ρσ_kwargs_obj = arguments[arguments.length-1];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "for_side_margin")){
+                for_side_margin = ρσ_kwargs_obj.for_side_margin;
+            }
+            self.for_side_margin = for_side_margin;
+            TouchHandler.prototype.__init__.call(self);
+        };
+        if (!BookTouchHandler.prototype.__init__.__defaults__) Object.defineProperties(BookTouchHandler.prototype.__init__, {
+            __defaults__ : {value: {for_side_margin:null}},
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["for_side_margin"]},
+            __module__ : {value: "read_book.touch"}
+        });
+        BookTouchHandler.__argnames__ = BookTouchHandler.prototype.__init__.__argnames__;
+        BookTouchHandler.__handles_kwarg_interpolation__ = BookTouchHandler.prototype.__init__.__handles_kwarg_interpolation__;
+        BookTouchHandler.prototype.handle_gesture = function handle_gesture(gesture) {
+            var self = this;
+            var inch, limit, backward_dir, direction, inline_dir, axis;
+            if (gesture.type === GESTURE.tap) {
+                if (gesture.is_held) {
+                    if (!self.for_side_margin && !self.handled_tap_hold && window.performance.now() - gesture.start_time >= HOLD_THRESHOLD) {
+                        self.handled_tap_hold = true;
+                        gesture.type = GESTURE.long_tap;
+                        get_boss().handle_gesture(gesture);
+                    }
+                    return;
+                }
+                if (!gesture.active) {
+                    if (self.for_side_margin || !tap_on_link(gesture)) {
+                        inch = inch_in_pixels();
+                        if (gesture.viewport_y < min(100, scroll_viewport.height() / 4)) {
+                            gesture.type = GESTURE.control_zone_tap;
+                        } else {
+                            limit = inch;
+                            if (ltr_page_progression() && !opts.reverse_page_turn_zones) {
+                                if (gesture.viewport_x < min(limit, scroll_viewport.width() / 4)) {
+                                    gesture.type = GESTURE.back_zone_tap;
+                                } else {
+                                    gesture.type = GESTURE.forward_zone_tap;
+                                }
+                            } else {
+                                if (gesture.viewport_x > max(scroll_viewport.width() - limit, scroll_viewport.width() * (3 / 4))) {
+                                    gesture.type = GESTURE.back_zone_tap;
+                                } else {
+                                    gesture.type = GESTURE.forward_zone_tap;
+                                }
+                            }
+                        }
+                    }
+                }
+            } else if (gesture.type === GESTURE.pinch) {
+                if (gesture.active) {
+                    return;
+                }
+                gesture.type = (gesture.direction === "in") ? GESTURE.pinch_in : GESTURE.pinch_out;
+            } else if (gesture.type === GESTURE.two_finger_tap) {
+                if (gesture.active) {
+                    return;
+                }
+            } else if (gesture.type === "swipe") {
+                backward_dir = (gesture.axis === "vertical") ? "down" : (ltr_page_progression()) ? "right" : "left";
+                direction = (gesture.direction === backward_dir) ? "backward" : "forward";
+                inline_dir = (scroll_viewport.vertical_writing_mode) ? "vertical" : "horizontal";
+                axis = (gesture.axis === inline_dir) ? "inline" : "block";
+                if (gesture.active) {
+                    gesture.type = GESTURE[ρσ_bound_index("swipe_" + ρσ_str.format("{}", axis) + "_" + ρσ_str.format("{}", direction) + "" + ((gesture.is_held) ? "_hold" : "_in_progress"), GESTURE)];
+                } else if (!gesture.is_held) {
+                    gesture.type = GESTURE[ρσ_bound_index("flick_" + ρσ_str.format("{}", axis) + "_" + ρσ_str.format("{}", direction) + "", GESTURE)];
+                }
+            }
+            if (self.for_side_margin) {
+                ui_operations.forward_gesture(gesture);
+            } else {
+                get_boss().handle_gesture(gesture);
+            }
+        };
+        if (!BookTouchHandler.prototype.handle_gesture.__argnames__) Object.defineProperties(BookTouchHandler.prototype.handle_gesture, {
+            __argnames__ : {value: ["gesture"]},
+            __module__ : {value: "read_book.touch"}
+        });
+        BookTouchHandler.prototype.__repr__ = function __repr__() {
+            var self = this;
+            return "BookTouchHandler:for_side_margin:" + self.for_side_margin;
+        };
+        if (!BookTouchHandler.prototype.__repr__.__module__) Object.defineProperties(BookTouchHandler.prototype.__repr__, {
+            __module__ : {value: "read_book.touch"}
+        });
+        BookTouchHandler.prototype.__str__ = function __str__ () {
+            if(TouchHandler.prototype.__str__) return TouchHandler.prototype.__str__.call(this);
+return this.__repr__();
+        };
+        Object.defineProperty(BookTouchHandler.prototype, "__bases__", {value: [TouchHandler]});
+
+        main_touch_handler = new BookTouchHandler;
+        left_margin_handler = new BookTouchHandler("left");
+        right_margin_handler = new BookTouchHandler("right");
+        function install_handlers(elem, handler, passive) {
+            var options;
+            options = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["capture"] = true;
+                ρσ_d["passive"] = !!passive;
+                return ρσ_d;
+            }).call(this);
+            elem.addEventListener("touchstart", handler.handle_touchstart, options);
+            elem.addEventListener("touchmove", handler.handle_touchmove, options);
+            elem.addEventListener("touchend", handler.handle_touchend, options);
+            elem.addEventListener("touchcancel", handler.handle_touchcancel, options);
+        };
+        if (!install_handlers.__argnames__) Object.defineProperties(install_handlers, {
+            __argnames__ : {value: ["elem", "handler", "passive"]},
+            __module__ : {value: "read_book.touch"}
+        });
+
+        function create_handlers() {
+            install_handlers(document, main_touch_handler);
+            document.body.style.touchAction = "none";
+        };
+        if (!create_handlers.__module__) Object.defineProperties(create_handlers, {
+            __module__ : {value: "read_book.touch"}
+        });
+
+        function reset_handlers() {
+            main_touch_handler.reset_handlers();
+        };
+        if (!reset_handlers.__module__) Object.defineProperties(reset_handlers, {
+            __module__ : {value: "read_book.touch"}
+        });
+
+        function set_left_margin_handler(elem) {
+            install_handlers(elem, left_margin_handler);
+        };
+        if (!set_left_margin_handler.__argnames__) Object.defineProperties(set_left_margin_handler, {
+            __argnames__ : {value: ["elem"]},
+            __module__ : {value: "read_book.touch"}
+        });
+
+        function set_right_margin_handler(elem) {
+            install_handlers(elem, right_margin_handler);
+        };
+        if (!set_right_margin_handler.__argnames__) Object.defineProperties(set_right_margin_handler, {
+            __argnames__ : {value: ["elem"]},
+            __module__ : {value: "read_book.touch"}
+        });
+
+        ρσ_modules["read_book.touch"].HOLD_THRESHOLD = HOLD_THRESHOLD;
+        ρσ_modules["read_book.touch"].TAP_THRESHOLD = TAP_THRESHOLD;
+        ρσ_modules["read_book.touch"].SWIPE_THRESHOLD = SWIPE_THRESHOLD;
+        ρσ_modules["read_book.touch"].TAP_LINK_THRESHOLD = TAP_LINK_THRESHOLD;
+        ρσ_modules["read_book.touch"].PINCH_THRESHOLD = PINCH_THRESHOLD;
+        ρσ_modules["read_book.touch"].GESTURE_NAMES = GESTURE_NAMES;
+        ρσ_modules["read_book.touch"].GESTURE = GESTURE;
+        ρσ_modules["read_book.touch"].k = k;
+        ρσ_modules["read_book.touch"].gesture_id = gesture_id;
+        ρσ_modules["read_book.touch"].main_touch_handler = main_touch_handler;
+        ρσ_modules["read_book.touch"].left_margin_handler = left_margin_handler;
+        ρσ_modules["read_book.touch"].right_margin_handler = right_margin_handler;
+        ρσ_modules["read_book.touch"].touch_id = touch_id;
+        ρσ_modules["read_book.touch"].copy_touch = copy_touch;
+        ρσ_modules["read_book.touch"].update_touch = update_touch;
+        ρσ_modules["read_book.touch"].max_displacement = max_displacement;
+        ρσ_modules["read_book.touch"].interpret_single_gesture = interpret_single_gesture;
+        ρσ_modules["read_book.touch"].interpret_double_gesture = interpret_double_gesture;
+        ρσ_modules["read_book.touch"].element_from_point = element_from_point;
+        ρσ_modules["read_book.touch"].find_link = find_link;
+        ρσ_modules["read_book.touch"].tap_on_link = tap_on_link;
+        ρσ_modules["read_book.touch"].TouchHandler = TouchHandler;
+        ρσ_modules["read_book.touch"].inch_in_pixels = inch_in_pixels;
+        ρσ_modules["read_book.touch"].BookTouchHandler = BookTouchHandler;
+        ρσ_modules["read_book.touch"].install_handlers = install_handlers;
+        ρσ_modules["read_book.touch"].create_handlers = create_handlers;
+        ρσ_modules["read_book.touch"].reset_handlers = reset_handlers;
+        ρσ_modules["read_book.touch"].set_left_margin_handler = set_left_margin_handler;
+        ρσ_modules["read_book.touch"].set_right_margin_handler = set_right_margin_handler;
+    })();
+
+    (function(){
+        var __name__ = "read_book.gestures";
+        var only_flow_swipe_mode_actions, only_tap_actions, default_actions_for_gesture, allowed_actions_for_two_fingers;
+        var GESTURE = ρσ_modules["read_book.touch"].GESTURE;
+
+        var opts = ρσ_modules["read_book.settings"].opts;
+
+        var _ = ρσ_modules.gettext.gettext;
+
+        function get_action_descriptions() {
+            if (!get_action_descriptions.ans) {
+                get_action_descriptions.ans = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["prev_page"] = (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["short"] = _("Previous page");
+                        ρσ_d["long"] = _("Scroll to the previous page, if more than one page is displayed on the screen only a single page is scrolled");
+                        return ρσ_d;
+                    }).call(this);
+                    ρσ_d["next_page"] = (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["short"] = _("Next page");
+                        ρσ_d["long"] = _("Scroll to the next page, if more than one page is displayed on the screen only a single page is scrolled");
+                        return ρσ_d;
+                    }).call(this);
+                    ρσ_d["prev_screen"] = (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["short"] = _("Previous screen");
+                        ρσ_d["long"] = _("Scroll to the previous screen, if more than one page is displayed on the screen all pages are scrolled");
+                        return ρσ_d;
+                    }).call(this);
+                    ρσ_d["next_screen"] = (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["short"] = _("Next screen");
+                        ρσ_d["long"] = _("Scroll to the next screen, if more than one page is displayed on the screen all pages are scrolled");
+                        return ρσ_d;
+                    }).call(this);
+                    ρσ_d["show_chrome"] = (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["short"] = _("Show controls");
+                        ρσ_d["long"] = _("Show the controls for the viewer including Preferences, Go to, etc.");
+                        return ρσ_d;
+                    }).call(this);
+                    ρσ_d["highlight_or_inspect"] = (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["short"] = _("Highlight or inspect");
+                        ρσ_d["long"] = _("Highlight the word under the tap point or view the image under the tap or select the highlight under the tap");
+                        return ρσ_d;
+                    }).call(this);
+                    ρσ_d["decrease_font_size"] = (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["short"] = _("Make text smaller");
+                        ρσ_d["long"] = _("Decrease the font size");
+                        return ρσ_d;
+                    }).call(this);
+                    ρσ_d["increase_font_size"] = (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["short"] = _("Make text bigger");
+                        ρσ_d["long"] = _("Increase the font size");
+                        return ρσ_d;
+                    }).call(this);
+                    ρσ_d["next_section"] = (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["short"] = _("Next chapter");
+                        ρσ_d["long"] = _("Scroll to the start of the next section or chapter in the book");
+                        return ρσ_d;
+                    }).call(this);
+                    ρσ_d["prev_section"] = (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["short"] = _("Previous chapter");
+                        ρσ_d["long"] = _("Scroll to the start of the previous section or chapter in the book");
+                        return ρσ_d;
+                    }).call(this);
+                    ρσ_d["pan"] = (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["short"] = _("Pan the contents");
+                        ρσ_d["long"] = _("Scroll the screen contents in tandem with finger movement");
+                        return ρσ_d;
+                    }).call(this);
+                    ρσ_d["animated_scroll"] = (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["short"] = _("Flick scroll");
+                        ρσ_d["long"] = _("Scroll the screen contents with momentum based on how fast you flick your finger");
+                        return ρσ_d;
+                    }).call(this);
+                    ρσ_d["none"] = (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["short"] = _("No action");
+                        ρσ_d["long"] = _("Ignore this gesture performing no action in response to it");
+                        return ρσ_d;
+                    }).call(this);
+                    return ρσ_d;
+                }).call(this);
+            }
+            return get_action_descriptions.ans;
+        };
+        if (!get_action_descriptions.__module__) Object.defineProperties(get_action_descriptions, {
+            __module__ : {value: "read_book.gestures"}
+        });
+
+        only_flow_swipe_mode_actions = (function(){
+            var ρσ_d = Object.create(null);
+            ρσ_d["pan"] = true;
+            ρσ_d["animated_scroll"] = true;
+            return ρσ_d;
+        }).call(this);
+        only_tap_actions = (function(){
+            var ρσ_d = Object.create(null);
+            ρσ_d["highlight_or_inspect"] = true;
+            return ρσ_d;
+        }).call(this);
+        default_actions_for_gesture = (function(){
+            var ρσ_d = Object.create(null);
+            ρσ_d["common"] = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d[GESTURE.back_zone_tap] = "prev_page";
+                ρσ_d[GESTURE.forward_zone_tap] = "next_page";
+                ρσ_d[GESTURE.control_zone_tap] = "show_chrome";
+                ρσ_d[GESTURE.long_tap] = "highlight_or_inspect";
+                ρσ_d[GESTURE.two_finger_tap] = "show_chrome";
+                ρσ_d[GESTURE.pinch_in] = "decrease_font_size";
+                ρσ_d[GESTURE.pinch_out] = "increase_font_size";
+                return ρσ_d;
+            }).call(this);
+            ρσ_d["flow_mode"] = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d[GESTURE.swipe_inline_backward_in_progress] = "pan";
+                ρσ_d[GESTURE.swipe_inline_forward_in_progress] = "pan";
+                ρσ_d[GESTURE.swipe_block_backward_in_progress] = "pan";
+                ρσ_d[GESTURE.swipe_block_forward_in_progress] = "pan";
+                ρσ_d[GESTURE.flick_block_forward] = "animated_scroll";
+                ρσ_d[GESTURE.flick_block_backward] = "animated_scroll";
+                ρσ_d[GESTURE.flick_inline_forward] = "animated_scroll";
+                ρσ_d[GESTURE.flick_inline_backward] = "animated_scroll";
+                return ρσ_d;
+            }).call(this);
+            ρσ_d["paged_mode"] = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d[GESTURE.flick_block_forward] = "next_section";
+                ρσ_d[GESTURE.flick_block_backward] = "prev_section";
+                ρσ_d[GESTURE.flick_inline_forward] = "next_screen";
+                ρσ_d[GESTURE.flick_inline_backward] = "prev_screen";
+                ρσ_d[GESTURE.swipe_inline_forward_hold] = "next_screen";
+                ρσ_d[GESTURE.swipe_inline_backward_hold] = "prev_screen";
+                return ρσ_d;
+            }).call(this);
+            return ρσ_d;
+        }).call(this);
+        function current_action_for_gesture_type(overrides, gesture_type, in_flow_mode) {
+            var mode, mode_overrides, common_overrides;
+            mode = (in_flow_mode) ? "flow_mode" : "paged_mode";
+            mode_overrides = overrides[(typeof mode === "number" && mode < 0) ? overrides.length + mode : mode] || Object.create(null);
+            if (mode_overrides[(typeof gesture_type === "number" && gesture_type < 0) ? mode_overrides.length + gesture_type : gesture_type]) {
+                return mode_overrides[(typeof gesture_type === "number" && gesture_type < 0) ? mode_overrides.length + gesture_type : gesture_type];
+            }
+            common_overrides = overrides.common || Object.create(null);
+            if (common_overrides[(typeof gesture_type === "number" && gesture_type < 0) ? common_overrides.length + gesture_type : gesture_type]) {
+                return common_overrides[(typeof gesture_type === "number" && gesture_type < 0) ? common_overrides.length + gesture_type : gesture_type];
+            }
+            if ((ρσ_expr_temp = default_actions_for_gesture[(typeof mode === "number" && mode < 0) ? default_actions_for_gesture.length + mode : mode])[(typeof gesture_type === "number" && gesture_type < 0) ? ρσ_expr_temp.length + gesture_type : gesture_type]) {
+                return (ρσ_expr_temp = default_actions_for_gesture[(typeof mode === "number" && mode < 0) ? default_actions_for_gesture.length + mode : mode])[(typeof gesture_type === "number" && gesture_type < 0) ? ρσ_expr_temp.length + gesture_type : gesture_type];
+            }
+            return (ρσ_expr_temp = default_actions_for_gesture.common)[(typeof gesture_type === "number" && gesture_type < 0) ? ρσ_expr_temp.length + gesture_type : gesture_type] || "none";
+        };
+        if (!current_action_for_gesture_type.__argnames__) Object.defineProperties(current_action_for_gesture_type, {
+            __argnames__ : {value: ["overrides", "gesture_type", "in_flow_mode"]},
+            __module__ : {value: "read_book.gestures"}
+        });
+
+        function action_for_gesture(gesture, in_flow_mode) {
+            return current_action_for_gesture_type(opts.gesture_overrides, gesture.type, in_flow_mode);
+        };
+        if (!action_for_gesture.__argnames__) Object.defineProperties(action_for_gesture, {
+            __argnames__ : {value: ["gesture", "in_flow_mode"]},
+            __module__ : {value: "read_book.gestures"}
+        });
+
+        function allowed_actions_for_tap() {
+            return (function() {
+                var ρσ_Iter = ρσ_Iterable(Object.keys(get_action_descriptions())), ρσ_Result = [], ac;
+                for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                    ac = ρσ_Iter[ρσ_Index];
+                    if (!only_flow_swipe_mode_actions[(typeof ac === "number" && ac < 0) ? only_flow_swipe_mode_actions.length + ac : ac]) {
+                        ρσ_Result.push(ac);
+                    }
+                }
+                ρσ_Result = ρσ_list_constructor(ρσ_Result);
+                return ρσ_Result;
+            })();
+        };
+        if (!allowed_actions_for_tap.__module__) Object.defineProperties(allowed_actions_for_tap, {
+            __module__ : {value: "read_book.gestures"}
+        });
+
+        function allowed_actions_for_paged_mode_swipe() {
+            return (function() {
+                var ρσ_Iter = ρσ_Iterable(Object.keys(get_action_descriptions())), ρσ_Result = [], ac;
+                for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                    ac = ρσ_Iter[ρσ_Index];
+                    if (!only_flow_swipe_mode_actions[(typeof ac === "number" && ac < 0) ? only_flow_swipe_mode_actions.length + ac : ac] && !only_tap_actions[(typeof ac === "number" && ac < 0) ? only_tap_actions.length + ac : ac]) {
+                        ρσ_Result.push(ac);
+                    }
+                }
+                ρσ_Result = ρσ_list_constructor(ρσ_Result);
+                return ρσ_Result;
+            })();
+        };
+        if (!allowed_actions_for_paged_mode_swipe.__module__) Object.defineProperties(allowed_actions_for_paged_mode_swipe, {
+            __module__ : {value: "read_book.gestures"}
+        });
+
+        allowed_actions_for_two_fingers = allowed_actions_for_paged_mode_swipe;
+        function allowed_actions_for_flow_mode_flick() {
+            return (function() {
+                var ρσ_Iter = ρσ_Iterable(Object.keys(get_action_descriptions())), ρσ_Result = [], ac;
+                for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                    ac = ρσ_Iter[ρσ_Index];
+                    if (!only_tap_actions[(typeof ac === "number" && ac < 0) ? only_tap_actions.length + ac : ac]) {
+                        ρσ_Result.push(ac);
+                    }
+                }
+                ρσ_Result = ρσ_list_constructor(ρσ_Result);
+                return ρσ_Result;
+            })();
+        };
+        if (!allowed_actions_for_flow_mode_flick.__module__) Object.defineProperties(allowed_actions_for_flow_mode_flick, {
+            __module__ : {value: "read_book.gestures"}
+        });
+
+        function allowed_actions_for_flow_mode_drag() {
+            return ρσ_list_decorate([ "pan", "none" ]);
+        };
+        if (!allowed_actions_for_flow_mode_drag.__module__) Object.defineProperties(allowed_actions_for_flow_mode_drag, {
+            __module__ : {value: "read_book.gestures"}
+        });
+
+        ρσ_modules["read_book.gestures"].only_flow_swipe_mode_actions = only_flow_swipe_mode_actions;
+        ρσ_modules["read_book.gestures"].only_tap_actions = only_tap_actions;
+        ρσ_modules["read_book.gestures"].default_actions_for_gesture = default_actions_for_gesture;
+        ρσ_modules["read_book.gestures"].allowed_actions_for_two_fingers = allowed_actions_for_two_fingers;
+        ρσ_modules["read_book.gestures"].get_action_descriptions = get_action_descriptions;
+        ρσ_modules["read_book.gestures"].current_action_for_gesture_type = current_action_for_gesture_type;
+        ρσ_modules["read_book.gestures"].action_for_gesture = action_for_gesture;
+        ρσ_modules["read_book.gestures"].allowed_actions_for_tap = allowed_actions_for_tap;
+        ρσ_modules["read_book.gestures"].allowed_actions_for_paged_mode_swipe = allowed_actions_for_paged_mode_swipe;
+        ρσ_modules["read_book.gestures"].allowed_actions_for_flow_mode_flick = allowed_actions_for_flow_mode_flick;
+        ρσ_modules["read_book.gestures"].allowed_actions_for_flow_mode_drag = allowed_actions_for_flow_mode_drag;
     })();
 
     (function(){
@@ -26648,20 +27597,18 @@ return this.__repr__();
         });
 
         function handle_gesture(gesture) {
-            if (gesture.type === "swipe") {
-                if (gesture.axis === "vertical") {
-                    if (!gesture.active) {
-                        (ρσ_expr_temp = get_boss(), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.send_message, ["next_section"].concat([ρσ_desugar_kwargs({forward: gesture.direction === "up"})])));
-                    }
-                } else {
-                    if (!gesture.active || gesture.is_held) {
-                        ρσ_interpolate_kwargs.call(this, scroll_by_page, [gesture.direction === "right", true].concat([ρσ_desugar_kwargs({flip_if_rtl_page_progression: true})]));
-                    }
-                }
-            } else if (gesture.type === "prev-page") {
-                ρσ_interpolate_kwargs.call(this, scroll_by_page, [true, opts.paged_taps_scroll_by_screen].concat([ρσ_desugar_kwargs({flip_if_rtl_page_progression: false})]));
-            } else if (gesture.type === "next-page") {
-                ρσ_interpolate_kwargs.call(this, scroll_by_page, [false, opts.paged_taps_scroll_by_screen].concat([ρσ_desugar_kwargs({flip_if_rtl_page_progression: false})]));
+            if (gesture.resolved_action === "next_section") {
+                (ρσ_expr_temp = get_boss(), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.send_message, ["next_section"].concat([ρσ_desugar_kwargs({forward: true})])));
+            } else if (gesture.resolved_action === "prev_section") {
+                (ρσ_expr_temp = get_boss(), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.send_message, ["next_section"].concat([ρσ_desugar_kwargs({forward: false})])));
+            } else if (gesture.resolved_action === "next_screen") {
+                scroll_by_page(false, true);
+            } else if (gesture.resolved_action === "prev_screen") {
+                scroll_by_page(true, true);
+            } else if (gesture.resolved_action === "prev_page") {
+                scroll_by_page(true, false);
+            } else if (gesture.resolved_action === "next_page") {
+                scroll_by_page(false, false);
             }
         };
         if (!handle_gesture.__argnames__) Object.defineProperties(handle_gesture, {
@@ -27553,659 +28500,6 @@ return this.__repr__();
     })();
 
     (function(){
-        var __name__ = "read_book.touch";
-        var HOLD_THRESHOLD, TAP_THRESHOLD, SWIPE_THRESHOLD, TAP_LINK_THRESHOLD, PINCH_THRESHOLD, gesture_id, main_touch_handler, left_margin_handler, right_margin_handler;
-        var get_boss = ρσ_modules["read_book.globals"].get_boss;
-        var ltr_page_progression = ρσ_modules["read_book.globals"].ltr_page_progression;
-        var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
-
-        var opts = ρσ_modules["read_book.settings"].opts;
-
-        var get_unit_size_in_pixels = ρσ_modules["read_book.viewport"].get_unit_size_in_pixels;
-        var scroll_viewport = ρσ_modules["read_book.viewport"].scroll_viewport;
-
-        HOLD_THRESHOLD = 750;
-        TAP_THRESHOLD = 8;
-        SWIPE_THRESHOLD = 64;
-        TAP_LINK_THRESHOLD = 5;
-        PINCH_THRESHOLD = 20;
-        gesture_id = 0;
-        function touch_id(touch) {
-            return touch.identifier + "";
-        };
-        if (!touch_id.__argnames__) Object.defineProperties(touch_id, {
-            __argnames__ : {value: ["touch"]},
-            __module__ : {value: "read_book.touch"}
-        });
-
-        function copy_touch(t) {
-            var now;
-            now = window.performance.now();
-            return (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["identifier"] = touch_id(t);
-                ρσ_d["page_x"] = [t.pageX];
-                ρσ_d["page_y"] = [t.pageY];
-                ρσ_d["viewport_x"] = [t.clientX];
-                ρσ_d["viewport_y"] = [t.clientY];
-                ρσ_d["active"] = true;
-                ρσ_d["mtimes"] = [now];
-                ρσ_d["ctime"] = now;
-                ρσ_d["is_held"] = false;
-                ρσ_d["x_velocity"] = 0;
-                ρσ_d["y_velocity"] = 0;
-                return ρσ_d;
-            }).call(this);
-        };
-        if (!copy_touch.__argnames__) Object.defineProperties(copy_touch, {
-            __argnames__ : {value: ["t"]},
-            __module__ : {value: "read_book.touch"}
-        });
-
-        function update_touch(t, touch) {
-            var now;
-            now = window.performance.now();
-            t.mtimes.push(now);
-            [t.page_x.push(touch.pageX), t.page_y.push(touch.pageY)];
-            [t.viewport_x.push(touch.clientX), t.viewport_y.push(touch.clientY)];
-        };
-        if (!update_touch.__argnames__) Object.defineProperties(update_touch, {
-            __argnames__ : {value: ["t", "touch"]},
-            __module__ : {value: "read_book.touch"}
-        });
-
-        function max_displacement(points) {
-            var ans, first, delta, p;
-            ans = 0;
-            first = points[0];
-            if (!(typeof first !== "undefined" && first !== null)) {
-                return ans;
-            }
-            var ρσ_Iter0 = ρσ_Iterable(points);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                p = ρσ_Iter0[ρσ_Index0];
-                delta = abs(p - first);
-                if (delta > ans) {
-                    ans = delta;
-                }
-            }
-            return ans;
-        };
-        if (!max_displacement.__argnames__) Object.defineProperties(max_displacement, {
-            __argnames__ : {value: ["points"]},
-            __module__ : {value: "read_book.touch"}
-        });
-
-        function interpret_single_gesture(touch, gesture_id) {
-            var max_x_displacement, max_y_displacement, ans, delta_x, delta_y, max_disp, pts, positive;
-            max_x_displacement = max_displacement(touch.viewport_x);
-            max_y_displacement = max_displacement(touch.viewport_y);
-            ans = (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["active"] = touch.active;
-                ρσ_d["is_held"] = touch.is_held;
-                ρσ_d["id"] = gesture_id;
-                ρσ_d["start_time"] = touch.ctime;
-                return ρσ_d;
-            }).call(this);
-            if (max(max_x_displacement, max_y_displacement) < TAP_THRESHOLD) {
-                ans.type = "tap";
-                ans.viewport_x = touch.viewport_x[0];
-                ans.viewport_y = touch.viewport_y[0];
-                return ans;
-            }
-            if (touch.viewport_y.length < 2) {
-                return ans;
-            }
-            delta_x = abs((ρσ_expr_temp = touch.viewport_x)[ρσ_expr_temp.length-1] - touch.viewport_x[0]);
-            delta_y = abs((ρσ_expr_temp = touch.viewport_y)[ρσ_expr_temp.length-1] - touch.viewport_y[0]);
-            max_disp = max(delta_y, delta_x);
-            if (max_disp > SWIPE_THRESHOLD && min(delta_x, delta_y) / max_disp < .35) {
-                ans.type = "swipe";
-                ans.axis = (delta_y > delta_x) ? "vertical" : "horizontal";
-                ans.points = pts = (ans.axis === "vertical") ? touch.viewport_y : touch.viewport_x;
-                ans.times = touch.mtimes;
-                positive = pts[pts.length-1] > pts[0];
-                if (ans.axis === "vertical") {
-                    ans.direction = (positive) ? "down" : "up";
-                    ans.velocity = touch.y_velocity;
-                } else {
-                    ans.direction = (positive) ? "right" : "left";
-                    ans.velocity = touch.x_velocity;
-                }
-                return ans;
-            }
-            return ans;
-        };
-        if (!interpret_single_gesture.__argnames__) Object.defineProperties(interpret_single_gesture, {
-            __argnames__ : {value: ["touch", "gesture_id"]},
-            __module__ : {value: "read_book.touch"}
-        });
-
-        function interpret_double_gesture(touch1, touch2, gesture_id) {
-            var ans, max_x_displacement1, max_x_displacement2, max_y_displacement1, max_y_displacement2, initial_distance, final_distance, distance;
-            ans = (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["active"] = touch1.active || touch2.active;
-                ρσ_d["is_held"] = touch1.is_held || touch2.is_held;
-                ρσ_d["id"] = gesture_id;
-                return ρσ_d;
-            }).call(this);
-            max_x_displacement1 = max_displacement(touch1.viewport_x);
-            max_x_displacement2 = max_displacement(touch2.viewport_x);
-            max_y_displacement1 = max_displacement(touch1.viewport_y);
-            max_y_displacement2 = max_displacement(touch2.viewport_y);
-            if (max(max_x_displacement1, max_y_displacement1) < TAP_THRESHOLD && max(max_x_displacement2, max_y_displacement2) < TAP_THRESHOLD) {
-                ans.type = "double-tap";
-                ans.viewport_x1 = touch1.viewport_x[0];
-                ans.viewport_y1 = touch1.viewport_y[0];
-                ans.viewport_x2 = touch2.viewport_x[0];
-                ans.viewport_y2 = touch2.viewport_y[0];
-                return ans;
-            }
-            initial_distance = Math.sqrt(Math.pow((touch1.viewport_x[0] - touch2.viewport_x[0]), 2) + Math.pow((touch1.viewport_y[0] - touch2.viewport_y[0]), 2));
-            final_distance = Math.sqrt(Math.pow(((ρσ_expr_temp = touch1.viewport_x)[ρσ_expr_temp.length-1] - (ρσ_expr_temp = touch2.viewport_x)[ρσ_expr_temp.length-1]), 2) + Math.pow(((ρσ_expr_temp = touch1.viewport_y)[ρσ_expr_temp.length-1] - (ρσ_expr_temp = touch2.viewport_y)[ρσ_expr_temp.length-1]), 2));
-            distance = abs(final_distance - initial_distance);
-            if (distance > PINCH_THRESHOLD) {
-                ans.type = "pinch";
-                ans.direction = (final_distance < initial_distance) ? "in" : "out";
-                ans.distance = distance;
-                return ans;
-            }
-            return ans;
-        };
-        if (!interpret_double_gesture.__argnames__) Object.defineProperties(interpret_double_gesture, {
-            __argnames__ : {value: ["touch1", "touch2", "gesture_id"]},
-            __module__ : {value: "read_book.touch"}
-        });
-
-        function element_from_point(x, y) {
-            return document.elementFromPoint(x, y);
-        };
-        if (!element_from_point.__argnames__) Object.defineProperties(element_from_point, {
-            __argnames__ : {value: ["x", "y"]},
-            __module__ : {value: "read_book.touch"}
-        });
-
-        function find_link(x, y) {
-            var p;
-            p = element_from_point(x, y);
-            while (p) {
-                if (p.tagName && p.tagName.toLowerCase() === "a" && p.hasAttribute("href")) {
-                    return p;
-                }
-                p = p.parentNode;
-            }
-        };
-        if (!find_link.__argnames__) Object.defineProperties(find_link, {
-            __argnames__ : {value: ["x", "y"]},
-            __module__ : {value: "read_book.touch"}
-        });
-
-        function tap_on_link(gesture) {
-            var x, y, link, delta_y, delta_x;
-            var ρσ_Iter1 = ρσ_Iterable(ρσ_list_decorate([ 0, TAP_LINK_THRESHOLD, -TAP_LINK_THRESHOLD ]));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                delta_x = ρσ_Iter1[ρσ_Index1];
-                var ρσ_Iter2 = ρσ_Iterable(ρσ_list_decorate([ 0, TAP_LINK_THRESHOLD, -TAP_LINK_THRESHOLD ]));
-                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                    delta_y = ρσ_Iter2[ρσ_Index2];
-                    x = gesture.viewport_x + delta_x;
-                    y = gesture.viewport_y + delta_y;
-                    link = find_link(x, y);
-                    if (link) {
-                        link.click();
-                        return true;
-                    }
-                }
-            }
-            return false;
-        };
-        if (!tap_on_link.__argnames__) Object.defineProperties(tap_on_link, {
-            __argnames__ : {value: ["gesture"]},
-            __module__ : {value: "read_book.touch"}
-        });
-
-        function TouchHandler() {
-            if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
-            TouchHandler.prototype.__bind_methods__.call(this);
-            TouchHandler.prototype.__init__.apply(this, arguments);
-        }
-        Object.defineProperty(TouchHandler.prototype, "__bind_methods__", {value: function () {
-            this.prune_expired_touches = TouchHandler.prototype.prune_expired_touches.bind(this);
-            this.reset_handlers = TouchHandler.prototype.reset_handlers.bind(this);
-            this.start_hold_timer = TouchHandler.prototype.start_hold_timer.bind(this);
-            this.stop_hold_timer = TouchHandler.prototype.stop_hold_timer.bind(this);
-            this.check_for_hold = TouchHandler.prototype.check_for_hold.bind(this);
-            this.handle_touchstart = TouchHandler.prototype.handle_touchstart.bind(this);
-            this.handle_touchmove = TouchHandler.prototype.handle_touchmove.bind(this);
-            this.handle_touchend = TouchHandler.prototype.handle_touchend.bind(this);
-            this.handle_touchcancel = TouchHandler.prototype.handle_touchcancel.bind(this);
-            this.dispatch_gesture = TouchHandler.prototype.dispatch_gesture.bind(this);
-        }});
-        Object.defineProperties(TouchHandler.prototype,  {
-            "has_active_touches": {
-                "enumerable": true, 
-                "get": function has_active_touches() {
-                    var self = this;
-                    var t, tid;
-                    var ρσ_Iter3 = ρσ_Iterable(self.ongoing_touches);
-                    for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                        tid = ρσ_Iter3[ρσ_Index3];
-                        t = (ρσ_expr_temp = self.ongoing_touches)[(typeof tid === "number" && tid < 0) ? ρσ_expr_temp.length + tid : tid];
-                        if (t.active) {
-                            return true;
-                        }
-                    }
-                    return false;
-                }, 
-                "set": function () { throw new AttributeError("can't set attribute") }
-            }, 
-        });
-        TouchHandler.prototype.__init__ = function __init__() {
-            var self = this;
-            self.ongoing_touches = Object.create(null);
-            self.gesture_id = null;
-            self.hold_timer = null;
-            self.handled_tap_hold = false;
-        };
-        if (!TouchHandler.prototype.__init__.__module__) Object.defineProperties(TouchHandler.prototype.__init__, {
-            __module__ : {value: "read_book.touch"}
-        });
-        TouchHandler.__argnames__ = TouchHandler.prototype.__init__.__argnames__;
-        TouchHandler.__handles_kwarg_interpolation__ = TouchHandler.prototype.__init__.__handles_kwarg_interpolation__;
-        TouchHandler.prototype.prune_expired_touches = function prune_expired_touches() {
-            var self = this;
-            var now, expired, t, tid;
-            now = window.performance.now();
-            expired = [];
-            var ρσ_Iter4 = ρσ_Iterable(self.ongoing_touches);
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                tid = ρσ_Iter4[ρσ_Index4];
-                t = (ρσ_expr_temp = self.ongoing_touches)[(typeof tid === "number" && tid < 0) ? ρσ_expr_temp.length + tid : tid];
-                if (t.active) {
-                    if (now - (ρσ_expr_temp = t.mtimes)[ρσ_expr_temp.length-1] > 3e3) {
-                        expired.push(touch_id(t));
-                    }
-                }
-            }
-            var ρσ_Iter5 = ρσ_Iterable(expired);
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                tid = ρσ_Iter5[ρσ_Index5];
-                delete self.ongoing_touches[tid];
-            }
-        };
-        if (!TouchHandler.prototype.prune_expired_touches.__module__) Object.defineProperties(TouchHandler.prototype.prune_expired_touches, {
-            __module__ : {value: "read_book.touch"}
-        });
-        TouchHandler.prototype.reset_handlers = function reset_handlers() {
-            var self = this;
-            self.stop_hold_timer();
-            self.ongoing_touches = Object.create(null);
-            self.gesture_id = null;
-            self.handled_tap_hold = false;
-        };
-        if (!TouchHandler.prototype.reset_handlers.__module__) Object.defineProperties(TouchHandler.prototype.reset_handlers, {
-            __module__ : {value: "read_book.touch"}
-        });
-        TouchHandler.prototype.start_hold_timer = function start_hold_timer() {
-            var self = this;
-            self.stop_hold_timer();
-            self.hold_timer = window.setTimeout(self.check_for_hold, 50);
-        };
-        if (!TouchHandler.prototype.start_hold_timer.__module__) Object.defineProperties(TouchHandler.prototype.start_hold_timer, {
-            __module__ : {value: "read_book.touch"}
-        });
-        TouchHandler.prototype.stop_hold_timer = function stop_hold_timer() {
-            var self = this;
-            if (self.hold_timer !== null) {
-                window.clearTimeout(self.hold_timer);
-                self.hold_timer = null;
-            }
-        };
-        if (!TouchHandler.prototype.stop_hold_timer.__module__) Object.defineProperties(TouchHandler.prototype.stop_hold_timer, {
-            __module__ : {value: "read_book.touch"}
-        });
-        TouchHandler.prototype.check_for_hold = function check_for_hold() {
-            var self = this;
-            var now, found_hold, touch, touchid;
-            if (len(self.ongoing_touches) > 0) {
-                now = window.performance.now();
-                found_hold = false;
-                var ρσ_Iter6 = ρσ_Iterable(self.ongoing_touches);
-                for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                    touchid = ρσ_Iter6[ρσ_Index6];
-                    touch = (ρσ_expr_temp = self.ongoing_touches)[(typeof touchid === "number" && touchid < 0) ? ρσ_expr_temp.length + touchid : touchid];
-                    if (touch.active && now - (ρσ_expr_temp = touch.mtimes)[ρσ_expr_temp.length-1] > HOLD_THRESHOLD) {
-                        touch.is_held = true;
-                        found_hold = true;
-                    }
-                }
-                if (found_hold) {
-                    self.dispatch_gesture();
-                }
-                self.start_hold_timer();
-            }
-        };
-        if (!TouchHandler.prototype.check_for_hold.__module__) Object.defineProperties(TouchHandler.prototype.check_for_hold, {
-            __module__ : {value: "read_book.touch"}
-        });
-        TouchHandler.prototype.handle_touchstart = function handle_touchstart(ev) {
-            var self = this;
-            var touch;
-            if (typeof ev.cancelable !== "boolean" || ev.cancelable) {
-                ev.preventDefault();
-            }
-            ev.stopPropagation();
-            self.prune_expired_touches();
-            var ρσ_Iter7 = ρσ_Iterable(ev.changedTouches);
-            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                touch = ρσ_Iter7[ρσ_Index7];
-                (ρσ_expr_temp = self.ongoing_touches)[ρσ_bound_index(touch_id(touch), ρσ_expr_temp)] = copy_touch(touch);
-                if (self.gesture_id === null) {
-                    gesture_id += 1;
-                    self.gesture_id = gesture_id;
-                    self.handled_tap_hold = false;
-                }
-            }
-            if (len(self.ongoing_touches) > 0) {
-                self.start_hold_timer();
-            }
-        };
-        if (!TouchHandler.prototype.handle_touchstart.__argnames__) Object.defineProperties(TouchHandler.prototype.handle_touchstart, {
-            __argnames__ : {value: ["ev"]},
-            __module__ : {value: "read_book.touch"}
-        });
-        TouchHandler.prototype.handle_touchmove = function handle_touchmove(ev) {
-            var self = this;
-            var t, touch;
-            if (typeof ev.cancelable !== "boolean" || ev.cancelable) {
-                ev.preventDefault();
-            }
-            ev.stopPropagation();
-            var ρσ_Iter8 = ρσ_Iterable(ev.changedTouches);
-            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                touch = ρσ_Iter8[ρσ_Index8];
-                t = (ρσ_expr_temp = self.ongoing_touches)[ρσ_bound_index(touch_id(touch), ρσ_expr_temp)];
-                if (t) {
-                    update_touch(t, touch);
-                    self.dispatch_gesture();
-                }
-            }
-        };
-        if (!TouchHandler.prototype.handle_touchmove.__argnames__) Object.defineProperties(TouchHandler.prototype.handle_touchmove, {
-            __argnames__ : {value: ["ev"]},
-            __module__ : {value: "read_book.touch"}
-        });
-        TouchHandler.prototype.handle_touchend = function handle_touchend(ev) {
-            var self = this;
-            var t, touch;
-            if (typeof ev.cancelable !== "boolean" || ev.cancelable) {
-                ev.preventDefault();
-            }
-            ev.stopPropagation();
-            var ρσ_Iter9 = ρσ_Iterable(ev.changedTouches);
-            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                touch = ρσ_Iter9[ρσ_Index9];
-                t = (ρσ_expr_temp = self.ongoing_touches)[ρσ_bound_index(touch_id(touch), ρσ_expr_temp)];
-                if (t) {
-                    t.active = false;
-                    update_touch(t, touch);
-                }
-            }
-            self.prune_expired_touches();
-            if (!self.has_active_touches) {
-                self.dispatch_gesture();
-                self.reset_handlers();
-            }
-        };
-        if (!TouchHandler.prototype.handle_touchend.__argnames__) Object.defineProperties(TouchHandler.prototype.handle_touchend, {
-            __argnames__ : {value: ["ev"]},
-            __module__ : {value: "read_book.touch"}
-        });
-        TouchHandler.prototype.handle_touchcancel = function handle_touchcancel(ev) {
-            var self = this;
-            var tid, touch;
-            if (typeof ev.cancelable !== "boolean" || ev.cancelable) {
-                ev.preventDefault();
-            }
-            ev.stopPropagation();
-            var ρσ_Iter10 = ρσ_Iterable(ev.changedTouches);
-            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                touch = ρσ_Iter10[ρσ_Index10];
-                tid = touch_id(touch);
-                delete self.ongoing_touches[tid];
-            }
-            self.gesture_id = null;
-            self.handled_tap_hold = false;
-        };
-        if (!TouchHandler.prototype.handle_touchcancel.__argnames__) Object.defineProperties(TouchHandler.prototype.handle_touchcancel, {
-            __argnames__ : {value: ["ev"]},
-            __module__ : {value: "read_book.touch"}
-        });
-        TouchHandler.prototype.dispatch_gesture = function dispatch_gesture() {
-            var self = this;
-            var touches, num, gesture, t;
-            touches = self.ongoing_touches;
-            num = len(touches);
-            gesture = Object.create(null);
-            if (num === 1) {
-                gesture = interpret_single_gesture(touches[ρσ_bound_index(Object.keys(touches)[0], touches)], self.gesture_id);
-            } else if (num === 2) {
-                t = Object.keys(touches);
-                gesture = interpret_double_gesture(touches[ρσ_bound_index(t[0], touches)], touches[ρσ_bound_index(t[1], touches)], self.gesture_id);
-            }
-            if (!(typeof gesture !== "undefined" && gesture !== null ? gesture : Object.create(null)).type) {
-                return;
-            }
-            self.handle_gesture(gesture);
-        };
-        if (!TouchHandler.prototype.dispatch_gesture.__module__) Object.defineProperties(TouchHandler.prototype.dispatch_gesture, {
-            __module__ : {value: "read_book.touch"}
-        });
-        TouchHandler.prototype.__repr__ = function __repr__ () {
-                        return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
-        };
-        TouchHandler.prototype.__str__ = function __str__ () {
-            return this.__repr__();
-        };
-        Object.defineProperty(TouchHandler.prototype, "__bases__", {value: []});
-        
-
-        function inch_in_pixels() {
-            var ans;
-            ans = inch_in_pixels.ans;
-            if (!ans) {
-                ans = inch_in_pixels.ans = max(2, get_unit_size_in_pixels("in"));
-            }
-            return ans;
-        };
-        if (!inch_in_pixels.__module__) Object.defineProperties(inch_in_pixels, {
-            __module__ : {value: "read_book.touch"}
-        });
-
-        function BookTouchHandler() {
-            if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
-            BookTouchHandler.prototype.__bind_methods__.call(this);
-            BookTouchHandler.prototype.__init__.apply(this, arguments);
-        }
-        ρσ_extends(BookTouchHandler, TouchHandler);
-        Object.defineProperty(BookTouchHandler.prototype, "__bind_methods__", {value: function () {
-            TouchHandler.prototype.__bind_methods__ && TouchHandler.prototype.__bind_methods__.call(this);
-            this.handle_gesture = BookTouchHandler.prototype.handle_gesture.bind(this);
-            this.__repr__ = BookTouchHandler.prototype.__repr__.bind(this);
-        }});
-        BookTouchHandler.prototype.__init__ = function __init__() {
-            var self = this;
-            var for_side_margin = (arguments[0] === undefined || ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? __init__.__defaults__.for_side_margin : arguments[0];
-            var ρσ_kwargs_obj = arguments[arguments.length-1];
-            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "for_side_margin")){
-                for_side_margin = ρσ_kwargs_obj.for_side_margin;
-            }
-            self.for_side_margin = for_side_margin;
-            TouchHandler.prototype.__init__.call(self);
-        };
-        if (!BookTouchHandler.prototype.__init__.__defaults__) Object.defineProperties(BookTouchHandler.prototype.__init__, {
-            __defaults__ : {value: {for_side_margin:null}},
-            __handles_kwarg_interpolation__ : {value: true},
-            __argnames__ : {value: ["for_side_margin"]},
-            __module__ : {value: "read_book.touch"}
-        });
-        BookTouchHandler.__argnames__ = BookTouchHandler.prototype.__init__.__argnames__;
-        BookTouchHandler.__handles_kwarg_interpolation__ = BookTouchHandler.prototype.__init__.__handles_kwarg_interpolation__;
-        BookTouchHandler.prototype.handle_gesture = function handle_gesture(gesture) {
-            var self = this;
-            var inch, limit;
-            gesture.from_side_margin = self.for_side_margin;
-            if (gesture.type === "tap") {
-                if (gesture.is_held) {
-                    if (!self.for_side_margin && !self.handled_tap_hold && window.performance.now() - gesture.start_time >= HOLD_THRESHOLD) {
-                        self.handled_tap_hold = true;
-                        gesture.type = "long-tap";
-                        get_boss().handle_gesture(gesture);
-                    }
-                    return;
-                }
-                if (!gesture.active) {
-                    if (self.for_side_margin || !tap_on_link(gesture)) {
-                        inch = inch_in_pixels();
-                        if (gesture.viewport_y < min(100, scroll_viewport.height() / 4)) {
-                            gesture.type = "show-chrome";
-                        } else {
-                            limit = inch;
-                            if (ltr_page_progression() && !opts.reverse_page_turn_zones) {
-                                if (gesture.viewport_x < min(limit, scroll_viewport.width() / 4)) {
-                                    gesture.type = "prev-page";
-                                } else {
-                                    gesture.type = "next-page";
-                                }
-                            } else {
-                                if (gesture.viewport_x > max(scroll_viewport.width() - limit, scroll_viewport.width() * (3 / 4))) {
-                                    gesture.type = "prev-page";
-                                } else {
-                                    gesture.type = "next-page";
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if (gesture.type === "pinch") {
-                if (gesture.active) {
-                    return;
-                }
-            }
-            if (gesture.type === "double-tap") {
-                if (gesture.active) {
-                    return;
-                }
-                gesture.type = "show-chrome";
-            }
-            if (self.for_side_margin) {
-                ui_operations.forward_gesture(gesture);
-            } else {
-                get_boss().handle_gesture(gesture);
-            }
-        };
-        if (!BookTouchHandler.prototype.handle_gesture.__argnames__) Object.defineProperties(BookTouchHandler.prototype.handle_gesture, {
-            __argnames__ : {value: ["gesture"]},
-            __module__ : {value: "read_book.touch"}
-        });
-        BookTouchHandler.prototype.__repr__ = function __repr__() {
-            var self = this;
-            return "BookTouchHandler:for_side_margin:" + self.for_side_margin;
-        };
-        if (!BookTouchHandler.prototype.__repr__.__module__) Object.defineProperties(BookTouchHandler.prototype.__repr__, {
-            __module__ : {value: "read_book.touch"}
-        });
-        BookTouchHandler.prototype.__str__ = function __str__ () {
-            if(TouchHandler.prototype.__str__) return TouchHandler.prototype.__str__.call(this);
-return this.__repr__();
-        };
-        Object.defineProperty(BookTouchHandler.prototype, "__bases__", {value: [TouchHandler]});
-
-        main_touch_handler = new BookTouchHandler;
-        left_margin_handler = new BookTouchHandler("left");
-        right_margin_handler = new BookTouchHandler("right");
-        function install_handlers(elem, handler, passive) {
-            var options;
-            options = (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["capture"] = true;
-                ρσ_d["passive"] = !!passive;
-                return ρσ_d;
-            }).call(this);
-            elem.addEventListener("touchstart", handler.handle_touchstart, options);
-            elem.addEventListener("touchmove", handler.handle_touchmove, options);
-            elem.addEventListener("touchend", handler.handle_touchend, options);
-            elem.addEventListener("touchcancel", handler.handle_touchcancel, options);
-        };
-        if (!install_handlers.__argnames__) Object.defineProperties(install_handlers, {
-            __argnames__ : {value: ["elem", "handler", "passive"]},
-            __module__ : {value: "read_book.touch"}
-        });
-
-        function create_handlers() {
-            install_handlers(document, main_touch_handler);
-            document.body.style.touchAction = "none";
-        };
-        if (!create_handlers.__module__) Object.defineProperties(create_handlers, {
-            __module__ : {value: "read_book.touch"}
-        });
-
-        function reset_handlers() {
-            main_touch_handler.reset_handlers();
-        };
-        if (!reset_handlers.__module__) Object.defineProperties(reset_handlers, {
-            __module__ : {value: "read_book.touch"}
-        });
-
-        function set_left_margin_handler(elem) {
-            install_handlers(elem, left_margin_handler);
-        };
-        if (!set_left_margin_handler.__argnames__) Object.defineProperties(set_left_margin_handler, {
-            __argnames__ : {value: ["elem"]},
-            __module__ : {value: "read_book.touch"}
-        });
-
-        function set_right_margin_handler(elem) {
-            install_handlers(elem, right_margin_handler);
-        };
-        if (!set_right_margin_handler.__argnames__) Object.defineProperties(set_right_margin_handler, {
-            __argnames__ : {value: ["elem"]},
-            __module__ : {value: "read_book.touch"}
-        });
-
-        ρσ_modules["read_book.touch"].HOLD_THRESHOLD = HOLD_THRESHOLD;
-        ρσ_modules["read_book.touch"].TAP_THRESHOLD = TAP_THRESHOLD;
-        ρσ_modules["read_book.touch"].SWIPE_THRESHOLD = SWIPE_THRESHOLD;
-        ρσ_modules["read_book.touch"].TAP_LINK_THRESHOLD = TAP_LINK_THRESHOLD;
-        ρσ_modules["read_book.touch"].PINCH_THRESHOLD = PINCH_THRESHOLD;
-        ρσ_modules["read_book.touch"].gesture_id = gesture_id;
-        ρσ_modules["read_book.touch"].main_touch_handler = main_touch_handler;
-        ρσ_modules["read_book.touch"].left_margin_handler = left_margin_handler;
-        ρσ_modules["read_book.touch"].right_margin_handler = right_margin_handler;
-        ρσ_modules["read_book.touch"].touch_id = touch_id;
-        ρσ_modules["read_book.touch"].copy_touch = copy_touch;
-        ρσ_modules["read_book.touch"].update_touch = update_touch;
-        ρσ_modules["read_book.touch"].max_displacement = max_displacement;
-        ρσ_modules["read_book.touch"].interpret_single_gesture = interpret_single_gesture;
-        ρσ_modules["read_book.touch"].interpret_double_gesture = interpret_double_gesture;
-        ρσ_modules["read_book.touch"].element_from_point = element_from_point;
-        ρσ_modules["read_book.touch"].find_link = find_link;
-        ρσ_modules["read_book.touch"].tap_on_link = tap_on_link;
-        ρσ_modules["read_book.touch"].TouchHandler = TouchHandler;
-        ρσ_modules["read_book.touch"].inch_in_pixels = inch_in_pixels;
-        ρσ_modules["read_book.touch"].BookTouchHandler = BookTouchHandler;
-        ρσ_modules["read_book.touch"].install_handlers = install_handlers;
-        ρσ_modules["read_book.touch"].create_handlers = create_handlers;
-        ρσ_modules["read_book.touch"].reset_handlers = reset_handlers;
-        ρσ_modules["read_book.touch"].set_left_margin_handler = set_left_margin_handler;
-        ρσ_modules["read_book.touch"].set_right_margin_handler = set_right_margin_handler;
-    })();
-
-    (function(){
         var __name__ = "select";
         var caret_position_from_point, safe_nodes;
         if ((typeof document !== "undefined" && document !== null ? document : Object.create(null)).caretPositionFromPoint) {
@@ -28653,6 +28947,8 @@ return this.__repr__();
 
         var is_footnote_link = ρσ_modules["read_book.footnotes"].is_footnote_link;
 
+        var action_for_gesture = ρσ_modules["read_book.gestures"].action_for_gesture;
+
         var annot_id_uuid_map = ρσ_modules["read_book.globals"].annot_id_uuid_map;
         var clear_annot_id_uuid_map = ρσ_modules["read_book.globals"].clear_annot_id_uuid_map;
         var current_book = ρσ_modules["read_book.globals"].current_book;
@@ -28735,7 +29031,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "6.20.0";
+        CALIBRE_VERSION = "6.21.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -29226,11 +29522,14 @@ return this.__repr__();
         });
         IframeBoss.prototype.handle_gesture = function handle_gesture(gesture) {
             var self = this;
-            if (gesture.type === "show-chrome") {
+            gesture.resolved_action = action_for_gesture(gesture, current_layout_mode() === "flow");
+            if (gesture.resolved_action === "show_chrome") {
                 self.send_message("show_chrome");
-            } else if (gesture.type === "pinch") {
-                ρσ_interpolate_kwargs.call(self, self.send_message, ["bump_font_size"].concat([ρσ_desugar_kwargs({increase: gesture.direction === "out"})]));
-            } else if (gesture.type === "long-tap") {
+            } else if (gesture.resolved_action === "decrease_font_size") {
+                ρσ_interpolate_kwargs.call(self, self.send_message, ["bump_font_size"].concat([ρσ_desugar_kwargs({increase: false})]));
+            } else if (gesture.resolved_action === "increase_font_size") {
+                ρσ_interpolate_kwargs.call(self, self.send_message, ["bump_font_size"].concat([ρσ_desugar_kwargs({increase: true})]));
+            } else if (gesture.resolved_action === "highlight_or_inspect") {
                 self.handle_long_tap(gesture);
             } else {
                 self._handle_gesture(gesture);
@@ -39359,7 +39658,6 @@ return this.__repr__();
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-left: 1rem"})]));
             container.lastChild.appendChild(cb("paged_wheel_scrolls_by_screen", _("Mouse wheel scrolls by screen fulls instead of pages")));
             container.lastChild.appendChild(cb("paged_margin_clicks_scroll_by_screen", _("Clicking on the margins scrolls by screen fulls instead of pages")));
-            container.lastChild.appendChild(cb("paged_taps_scroll_by_screen", _("Tapping scrolls by screen fulls instead of pages")));
             container.lastChild.appendChild(ρσ_interpolate_kwargs.call(E, E.div, ρσ_interpolate_kwargs.call(this, spinner, ["paged_pixel_scroll_threshold", " " + _("Pixel scroll threshold:")].concat([ρσ_desugar_kwargs({title: _("When using a touchpad or mouse wheel that produces scroll events in pixels, set the number of pixels before a page turn is triggered"), step: 5, min: 0, max: 1e3})])).concat([ρσ_desugar_kwargs({style: "display:grid;margin-top:1ex;align-items:center;grid-template-columns:auto min-content;grid-gap:1ex; max-width: 30em"})])));
             container.appendChild(E.hr());
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Control how smooth scrolling works in flow mode")].concat([ρσ_desugar_kwargs({style: "margin-top:1ex"})])));
@@ -41784,6 +42082,251 @@ return this.__repr__();
     })();
 
     (function(){
+        var __name__ = "read_book.prefs.touch";
+        var CONTAINER, develop;
+        var E = ρσ_modules.elementmaker.E;
+
+        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
+
+        var unique_id = ρσ_modules.dom.unique_id;
+
+        var _ = ρσ_modules.gettext.gettext;
+
+        var allowed_actions_for_flow_mode_drag = ρσ_modules["read_book.gestures"].allowed_actions_for_flow_mode_drag;
+        var allowed_actions_for_flow_mode_flick = ρσ_modules["read_book.gestures"].allowed_actions_for_flow_mode_flick;
+        var allowed_actions_for_paged_mode_swipe = ρσ_modules["read_book.gestures"].allowed_actions_for_paged_mode_swipe;
+        var allowed_actions_for_tap = ρσ_modules["read_book.gestures"].allowed_actions_for_tap;
+        var allowed_actions_for_two_fingers = ρσ_modules["read_book.gestures"].allowed_actions_for_two_fingers;
+        var current_action_for_gesture_type = ρσ_modules["read_book.gestures"].current_action_for_gesture_type;
+        var get_action_descriptions = ρσ_modules["read_book.gestures"].get_action_descriptions;
+
+        var create_button_box = ρσ_modules["read_book.prefs.utils"].create_button_box;
+
+        var GESTURE = ρσ_modules["read_book.touch"].GESTURE;
+        var GESTURE_NAMES = ρσ_modules["read_book.touch"].GESTURE_NAMES;
+
+        CONTAINER = unique_id("touch-settings");
+        function restore_defaults() {
+            apply_settings_to_ui(Object.create(null));
+        };
+        if (!restore_defaults.__module__) Object.defineProperties(restore_defaults, {
+            __module__ : {value: "read_book.prefs.touch"}
+        });
+
+        function get_container() {
+            return document.getElementById(CONTAINER);
+        };
+        if (!get_container.__module__) Object.defineProperties(get_container, {
+            __module__ : {value: "read_book.prefs.touch"}
+        });
+
+        function apply_settings_to_ui(overrides) {
+            var group_name, in_flow_mode, allowed_actions, option, gesture_type, current_action, select, group;
+            overrides = overrides || Object.create(null);
+            var ρσ_Iter0 = ρσ_Iterable(get_container().querySelectorAll("[data-group]"));
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                group = ρσ_Iter0[ρσ_Index0];
+                group_name = group.dataset.group;
+                in_flow_mode = group_name.indexOf("flow") >= 0;
+                var ρσ_Iter1 = ρσ_Iterable(group.querySelectorAll("select"));
+                for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                    select = ρσ_Iter1[ρσ_Index1];
+                    allowed_actions = [];
+                    var ρσ_Iter2 = ρσ_Iterable(select.querySelectorAll("option"));
+                    for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                        option = ρσ_Iter2[ρσ_Index2];
+                        allowed_actions.push(option.value);
+                    }
+                    gesture_type = select.name;
+                    current_action = current_action_for_gesture_type(overrides, gesture_type, in_flow_mode);
+                    if (allowed_actions.indexOf(current_action) < 0) {
+                        current_action = current_action_for_gesture_type(Object.create(null), gesture_type, in_flow_mode);
+                    }
+                    if (!current_action || allowed_actions.indexOf(current_action) < 0) {
+                        current_action = "none";
+                    }
+                    select.value = current_action;
+                }
+            }
+        };
+        if (!apply_settings_to_ui.__argnames__) Object.defineProperties(apply_settings_to_ui, {
+            __argnames__ : {value: ["overrides"]},
+            __module__ : {value: "read_book.prefs.touch"}
+        });
+
+        function get_overrides_from_ui() {
+            var ans, group_name, in_flow_mode, attr, val, defval, select, group, which;
+            ans = Object.create(null);
+            var ρσ_Iter3 = ρσ_Iterable(get_container().querySelectorAll("[data-group]"));
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                group = ρσ_Iter3[ρσ_Index3];
+                group_name = group.dataset.group;
+                in_flow_mode = group_name.indexOf("flow") >= 0;
+                if (group_name === "paged_swipe") {
+                    attr = "paged_mode";
+                } else if (group_name === "flow_swipe") {
+                    attr = "flow_mode";
+                } else {
+                    attr = "common";
+                }
+                if (!ans[(typeof attr === "number" && attr < 0) ? ans.length + attr : attr]) {
+                    ans[(typeof attr === "number" && attr < 0) ? ans.length + attr : attr] = Object.create(null);
+                }
+                var ρσ_Iter4 = ρσ_Iterable(group.querySelectorAll("select"));
+                for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                    select = ρσ_Iter4[ρσ_Index4];
+                    val = select.value;
+                    defval = current_action_for_gesture_type(Object.create(null), select.name, in_flow_mode);
+                    if (val !== defval) {
+                        (ρσ_expr_temp = ans[(typeof attr === "number" && attr < 0) ? ans.length + attr : attr])[ρσ_bound_index(select.name, ρσ_expr_temp)] = val;
+                    }
+                }
+            }
+            var ρσ_Iter5 = ρσ_Iterable(Object.keys(ans));
+            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                which = ρσ_Iter5[ρσ_Index5];
+                if (Object.keys(ans[(typeof which === "number" && which < 0) ? ans.length + which : which]).length === 0) {
+                    delete ans[which];
+                }
+            }
+            return ans;
+        };
+        if (!get_overrides_from_ui.__module__) Object.defineProperties(get_overrides_from_ui, {
+            __module__ : {value: "read_book.prefs.touch"}
+        });
+
+        function create_touch_panel(container, apply_func, cancel_func) {
+            var sd, overrides, action_descriptions, in_flow_mode, c, aat, aap, aaf;
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: CONTAINER, style: "margin: 1rem"})]));
+            container = container.lastChild;
+            sd = get_session_data();
+            overrides = sd.get("gesture_overrides");
+            action_descriptions = get_action_descriptions();
+            in_flow_mode = false;
+            function on_select_change(ev) {
+                var select, ad, span;
+                select = ev.target;
+                ad = action_descriptions[ρσ_bound_index(select.value, action_descriptions)];
+                span = select.parentNode.querySelector("span");
+                span.textContent = ad.long;
+            };
+            if (!on_select_change.__argnames__) Object.defineProperties(on_select_change, {
+                __argnames__ : {value: ["ev"]},
+                __module__ : {value: "read_book.prefs.touch"}
+            });
+
+            function make_setting(gesture_type, allowed_actions) {
+                var ans, title, sid, select, ad, action;
+                ans = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-top: 1ex"})]);
+                title = GESTURE_NAMES[(typeof gesture_type === "number" && gesture_type < 0) ? GESTURE_NAMES.length + gesture_type : gesture_type];
+                sid = unique_id(gesture_type);
+                ans.appendChild(E.h4(ρσ_interpolate_kwargs.call(E, E.label, [title].concat([ρσ_desugar_kwargs({"for": sid})]))));
+                select = ρσ_interpolate_kwargs.call(E, E.select, [ρσ_desugar_kwargs({name: gesture_type, id: sid})]);
+                var ρσ_Iter6 = ρσ_Iterable(allowed_actions);
+                for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                    action = ρσ_Iter6[ρσ_Index6];
+                    ad = action_descriptions[(typeof action === "number" && action < 0) ? action_descriptions.length + action : action];
+                    select.appendChild(ρσ_interpolate_kwargs.call(E, E.option, [ad.short].concat([ρσ_desugar_kwargs({value: action})])));
+                }
+                select.addEventListener("change", on_select_change);
+                ans.appendChild(E.div(select, " ", ρσ_interpolate_kwargs.call(E, E.span, [ρσ_desugar_kwargs({style: "font-size: smaller; font-style: italic"})])));
+                on_select_change((function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["target"] = select;
+                    return ρσ_d;
+                }).call(this));
+                return ans;
+            };
+            if (!make_setting.__argnames__) Object.defineProperties(make_setting, {
+                __argnames__ : {value: ["gesture_type", "allowed_actions"]},
+                __module__ : {value: "read_book.prefs.touch"}
+            });
+
+            container.appendChild(E.h2(_("Tapping")));
+            container.appendChild(E.div(_("There are three tap zones, depending on where on the screen you tap. When the tap is on a link, the link is followed, otherwise a configurable action based on the zone is performed.")));
+            c = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({"data-group": "tap"})]);
+            container.appendChild(c);
+            aat = allowed_actions_for_tap();
+            c.appendChild(make_setting(GESTURE.control_zone_tap, aat));
+            c.appendChild(make_setting(GESTURE.forward_zone_tap, aat));
+            c.appendChild(make_setting(GESTURE.back_zone_tap, aat));
+            c.appendChild(make_setting(GESTURE.long_tap, aat));
+            container.appendChild(E.hr());
+            container.appendChild(E.h2(_("Two finger gestures")));
+            c = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({"data-group": "two_finger"})]);
+            container.appendChild(c);
+            aat = allowed_actions_for_two_fingers();
+            c.appendChild(make_setting(GESTURE.two_finger_tap, aat));
+            c.appendChild(make_setting(GESTURE.pinch_in, aat));
+            c.appendChild(make_setting(GESTURE.pinch_out, aat));
+            container.appendChild(E.hr());
+            container.appendChild(E.h2(_("Swiping")));
+            container.appendChild(E.div(_("Swiping works differently in paged and flow mode, with different actions. For an English like language, swiping in the writing direction means swiping horizontally. For languages written vertically, it means swiping vertically. For languages written left-to-right \"going forward\" means swiping right-to-left, like turning a page with your finger.")));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.h3, [_("Swiping in paged mode")].concat([ρσ_desugar_kwargs({style: "padding-top: 1ex"})])));
+            c = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({"data-group": "paged_swipe"})]);
+            container.appendChild(c);
+            aap = allowed_actions_for_paged_mode_swipe();
+            c.appendChild(make_setting(GESTURE.flick_block_forward, aap));
+            c.appendChild(make_setting(GESTURE.flick_block_backward, aap));
+            c.appendChild(make_setting(GESTURE.flick_inline_forward, aap));
+            c.appendChild(make_setting(GESTURE.flick_inline_backward, aap));
+            c.appendChild(make_setting(GESTURE.swipe_inline_forward_hold, aap));
+            c.appendChild(make_setting(GESTURE.swipe_inline_backward_hold, aap));
+            c.appendChild(make_setting(GESTURE.swipe_block_forward_hold, aap));
+            c.appendChild(make_setting(GESTURE.swipe_block_backward_hold, aap));
+            container.appendChild(E.hr());
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.h3, [_("Swiping in flow mode")].concat([ρσ_desugar_kwargs({style: "padding-top: 1ex"})])));
+            c = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({"data-group": "flow_swipe"})]);
+            container.appendChild(c);
+            in_flow_mode = true;
+            in_flow_mode;
+            aaf = allowed_actions_for_flow_mode_flick();
+            c.appendChild(make_setting(GESTURE.flick_block_forward, aaf));
+            c.appendChild(make_setting(GESTURE.flick_block_backward, aaf));
+            c.appendChild(make_setting(GESTURE.flick_inline_forward, aaf));
+            c.appendChild(make_setting(GESTURE.flick_inline_backward, aaf));
+            aaf = allowed_actions_for_flow_mode_drag();
+            c.appendChild(make_setting(GESTURE.swipe_inline_backward_in_progress, aaf));
+            c.appendChild(make_setting(GESTURE.swipe_inline_forward_in_progress, aaf));
+            c.appendChild(make_setting(GESTURE.swipe_block_backward_in_progress, aaf));
+            c.appendChild(make_setting(GESTURE.swipe_block_forward_in_progress, aaf));
+            container.appendChild(E.hr());
+            container.appendChild(create_button_box(restore_defaults, apply_func, cancel_func));
+            apply_settings_to_ui(overrides);
+        };
+        if (!create_touch_panel.__argnames__) Object.defineProperties(create_touch_panel, {
+            __argnames__ : {value: ["container", "apply_func", "cancel_func"]},
+            __module__ : {value: "read_book.prefs.touch"}
+        });
+
+        develop = create_touch_panel;
+        function commit_touch(onchange) {
+            var sd, current_overrides, overrides, changed;
+            sd = get_session_data();
+            current_overrides = sd.get("gesture_overrides");
+            overrides = get_overrides_from_ui();
+            changed = (overrides !== current_overrides && (typeof overrides !== "object" || ρσ_not_equals(overrides, current_overrides)));
+            if (changed) {
+                sd.set("gesture_overrides", overrides);
+                onchange();
+            }
+        };
+        if (!commit_touch.__argnames__) Object.defineProperties(commit_touch, {
+            __argnames__ : {value: ["onchange"]},
+            __module__ : {value: "read_book.prefs.touch"}
+        });
+
+        ρσ_modules["read_book.prefs.touch"].CONTAINER = CONTAINER;
+        ρσ_modules["read_book.prefs.touch"].develop = develop;
+        ρσ_modules["read_book.prefs.touch"].restore_defaults = restore_defaults;
+        ρσ_modules["read_book.prefs.touch"].get_container = get_container;
+        ρσ_modules["read_book.prefs.touch"].apply_settings_to_ui = apply_settings_to_ui;
+        ρσ_modules["read_book.prefs.touch"].get_overrides_from_ui = get_overrides_from_ui;
+        ρσ_modules["read_book.prefs.touch"].create_touch_panel = create_touch_panel;
+        ρσ_modules["read_book.prefs.touch"].commit_touch = commit_touch;
+    })();
+
+    (function(){
         var __name__ = "viewer";
 
     })();
@@ -42016,6 +42559,9 @@ return this.__repr__();
         var commit_selection = ρσ_modules["read_book.prefs.selection"].commit_selection;
         var create_selection_panel = ρσ_modules["read_book.prefs.selection"].create_selection_panel;
 
+        var commit_touch = ρσ_modules["read_book.prefs.touch"].commit_touch;
+        var create_touch_panel = ρσ_modules["read_book.prefs.touch"].create_touch_panel;
+
         var commit_user_stylesheet = ρσ_modules["read_book.prefs.user_stylesheet"].commit_user_stylesheet;
         var create_user_stylesheet_panel = ρσ_modules["read_book.prefs.user_stylesheet"].create_user_stylesheet_panel;
 
@@ -42051,6 +42597,8 @@ return this.__repr__();
             this.close_scrolling = Prefs.prototype.close_scrolling.bind(this);
             this.display_selection = Prefs.prototype.display_selection.bind(this);
             this.close_selection = Prefs.prototype.close_selection.bind(this);
+            this.display_touch = Prefs.prototype.display_touch.bind(this);
+            this.close_touch = Prefs.prototype.close_touch.bind(this);
         }});
         Object.defineProperties(Prefs.prototype,  {
             "container": {
@@ -42195,6 +42743,7 @@ return this.__repr__();
             ci(_("Headers and footers"), "head_foot", _("Customize the headers and footers"));
             ci(_("Scrolling behavior"), "scrolling", _("Control how the viewer scrolls"));
             ci(_("Selection behavior"), "selection", _("Control how the viewer selects text"));
+            ci(_("Touch behavior"), "touch", _("Customize what various touchscreen gestures do"));
             ci(_("Keyboard shortcuts"), "keyboard", _("Customize the keyboard shortcuts"));
             if (runtime.is_standalone_viewer) {
                 ci(_("Fonts"), "fonts", _("Font choices"));
@@ -42339,6 +42888,21 @@ return this.__repr__();
             commit_selection(self.onchange, self.container);
         };
         if (!Prefs.prototype.close_selection.__module__) Object.defineProperties(Prefs.prototype.close_selection, {
+            __module__ : {value: "read_book.prefs.main"}
+        });
+        Prefs.prototype.display_touch = function display_touch(container) {
+            var self = this;
+            self.create_panel(container, "touch", create_touch_panel);
+        };
+        if (!Prefs.prototype.display_touch.__argnames__) Object.defineProperties(Prefs.prototype.display_touch, {
+            __argnames__ : {value: ["container"]},
+            __module__ : {value: "read_book.prefs.main"}
+        });
+        Prefs.prototype.close_touch = function close_touch() {
+            var self = this;
+            commit_touch(self.onchange, self.container);
+        };
+        if (!Prefs.prototype.close_touch.__module__) Object.defineProperties(Prefs.prototype.close_touch, {
             __module__ : {value: "read_book.prefs.main"}
         });
         Prefs.prototype.__repr__ = function __repr__ () {
@@ -48194,12 +48758,12 @@ return this.__repr__();
                 ρσ_d["cover_preserve_aspect_ratio"] = sd.get("cover_preserve_aspect_ratio");
                 ρσ_d["paged_wheel_scrolls_by_screen"] = sd.get("paged_wheel_scrolls_by_screen");
                 ρσ_d["paged_pixel_scroll_threshold"] = sd.get("paged_pixel_scroll_threshold");
-                ρσ_d["paged_taps_scroll_by_screen"] = sd.get("paged_taps_scroll_by_screen");
                 ρσ_d["lines_per_sec_auto"] = sd.get("lines_per_sec_auto");
                 ρσ_d["lines_per_sec_smooth"] = sd.get("lines_per_sec_smooth");
                 ρσ_d["scroll_auto_boundary_delay"] = sd.get("scroll_auto_boundary_delay");
                 ρσ_d["scroll_stop_boundaries"] = sd.get("scroll_stop_boundaries");
                 ρσ_d["reverse_page_turn_zones"] = sd.get("reverse_page_turn_zones");
+                ρσ_d["gesture_overrides"] = sd.get("gesture_overrides");
                 return ρσ_d;
             }).call(this);
         };
