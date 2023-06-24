@@ -49,7 +49,7 @@ override_dh_auto_build: blhc-note
 #	backup original font files and use system fonts
 	if [ ! -d debian/liberation.backup ] ; then \
 		mv resources/fonts/liberation debian/liberation.backup ; \
-		$(SETUP) liberation_fonts --system-liberation_fonts --path-to-liberation_fonts=/usr/share/fonts/truetype/liberation2 ; \
+		$(SETUP) liberation_fonts --system-liberation_fonts --path-to-liberation_fonts=/usr/share/fonts/truetype/liberation ; \
 	fi
 
 # Invoke "calibre_auto_test" target with automatic "HOME" and "XDG_*" variables.
