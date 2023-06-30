@@ -1,0 +1,37 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 30 Jun 2023 17:09:41 +0900
+Subject: Revert "Use the much faster new bulk page creation API I contributed
+ to PoDoFo"
+
+This reverts commit 5e2dd561b66765230c9d1871b356261535816b55.
+---
+ src/calibre/utils/podofo/doc.cpp | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
+
+diff --git a/src/calibre/utils/podofo/doc.cpp b/src/calibre/utils/podofo/doc.cpp
+index 18479b6..ffa2ea5 100644
+--- a/src/calibre/utils/podofo/doc.cpp
++++ b/src/calibre/utils/podofo/doc.cpp
+@@ -388,21 +388,13 @@ PDFDoc_append(PDFDoc *self, PyObject *args) {
+ 
+     PyThreadState *_save; _save = PyEval_SaveThread();
+     try {
+-        unsigned total_pages_to_append = 0;
+-        for (auto src : docs)  total_pages_to_append += src->GetPages().GetCount();
+-        unsigned base_page_index = dest->GetPages().GetCount();
+-#if PODOFO_VERSION > PODOFO_MAKE_VERSION(0, 10, 0)
+-        dest->GetPages().CreatePagesAt(base_page_index, Rect(), total_pages_to_append);
+-#else
+-        while (total_pages_to_append--) dest->GetPages().CreatePage(Rect());
+-#endif
+         for (auto src : docs) {
+             MapReferences ref_map;
+             std::vector<AppendPagesData> pages;
+             // append pages first
+             for (unsigned i = 0; i < src->GetPages().GetCount(); i++) {
+                 const auto& src_page = src->GetPages().GetPageAt(i);
+-                auto& dest_page = dest->GetPages().GetPageAt(base_page_index++);
++                auto& dest_page = dest->GetPages().CreatePage(src_page.GetRect());
+                 pages.emplace_back(src_page, dest_page);
+                 dest_page.GetObject() = src_page.GetObject();
+                 dest_page.GetDictionary().RemoveKey("Resource");

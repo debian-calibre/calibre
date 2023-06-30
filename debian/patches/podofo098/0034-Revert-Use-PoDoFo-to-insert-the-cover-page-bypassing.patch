@@ -13,7 +13,7 @@ This reverts commit 59fab1d482252dc9fc73776be099770327ff3ed5.
  3 files changed, 19 insertions(+), 9 deletions(-)
 
 diff --git a/src/calibre/ebooks/pdf/html_writer.py b/src/calibre/ebooks/pdf/html_writer.py
-index f27fc5c..8534931 100644
+index 08d203c..fe60d24 100644
 --- a/src/calibre/ebooks/pdf/html_writer.py
 +++ b/src/calibre/ebooks/pdf/html_writer.py
 @@ -10,6 +10,7 @@ import sys
@@ -48,7 +48,7 @@ index f27fc5c..8534931 100644
  from calibre.utils.resources import get_path as P
  from calibre.utils.short_uuid import uuid4
  from calibre.utils.webengine import secure_webengine, send_reply, setup_profile
-@@ -477,8 +481,15 @@ def update_metadata(pdf_doc, pdf_metadata):
+@@ -487,8 +491,15 @@ def update_metadata(pdf_doc, pdf_metadata):
  
  
  def add_cover(pdf_doc, cover_data, page_layout, opts):

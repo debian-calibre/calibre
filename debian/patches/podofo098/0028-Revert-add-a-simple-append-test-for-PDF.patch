@@ -1,0 +1,27 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 30 Jun 2023 17:07:42 +0900
+Subject: Revert "add a simple append test for PDF"
+
+This reverts commit e454b0c6d4556a874f8a50af02dcee7321d00eb5.
+---
+ src/calibre/utils/podofo/__init__.py | 7 -------
+ 1 file changed, 7 deletions(-)
+
+diff --git a/src/calibre/utils/podofo/__init__.py b/src/calibre/utils/podofo/__init__.py
+index 540a556..7356874 100644
+--- a/src/calibre/utils/podofo/__init__.py
++++ b/src/calibre/utils/podofo/__init__.py
+@@ -243,13 +243,6 @@ def test_podofo():
+         del p
+     finally:
+         os.remove(f.name)
+-    a = podofo.PDFDoc()
+-    a.load(raw)
+-    b = podofo.PDFDoc()
+-    b.load(raw)
+-    a.append(b)
+-    if a.page_count() != 2 * b.page_count():
+-        raise ValueError('Appending failed')
+ 
+ 
+ if __name__ == '__main__':
