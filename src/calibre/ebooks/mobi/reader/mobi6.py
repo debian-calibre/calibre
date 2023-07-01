@@ -788,7 +788,11 @@ class MobiReader:
             flags >>= 1
         if self.book_header.extra_flags & 1:
             off = size - num - 1
-            num += (ord(data[off:off+1]) & 0x3) + 1
+            try:
+                num += (ord(data[off:off+1]) & 0x3) + 1
+            except TypeError:
+                self.log.warn('Invalid sizeof trailing entries')
+                num += 1
         return num
 
     def warn_about_trailing_entry_corruption(self):
