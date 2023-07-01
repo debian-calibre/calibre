@@ -18747,7 +18747,39 @@ return this.__repr__();
             __module__ : {value: "range_utils"}
         });
 
-        function text_nodes_in_range(r) {
+        function is_element_visible(elem) {
+            var s;
+            s = window.getComputedStyle(elem);
+            return s.display !== "none" && s.visibility !== "hidden";
+        };
+        if (!is_element_visible.__argnames__) Object.defineProperties(is_element_visible, {
+            __argnames__ : {value: ["elem"]},
+            __module__ : {value: "range_utils"}
+        });
+
+        function is_node_visible(node) {
+            var current;
+            if (node.nodeType !== Node.ELEMENT_NODE) {
+                node = node.parentElement;
+                if (!node) {
+                    return false;
+                }
+            }
+            current = node;
+            while (current) {
+                if (!is_element_visible(current)) {
+                    return false;
+                }
+                current = current.parentElement;
+            }
+            return true;
+        };
+        if (!is_node_visible.__argnames__) Object.defineProperties(is_node_visible, {
+            __argnames__ : {value: ["node"]},
+            __module__ : {value: "range_utils"}
+        });
+
+        function select_nodes_from_range(r, predicate) {
             var parent, doc, iterator, in_range, ans, node;
             parent = r.commonAncestorContainer;
             doc = parent.ownerDocument || document;
@@ -18763,7 +18795,7 @@ return this.__repr__();
                     in_range = true;
                 }
                 if (in_range) {
-                    if (is_non_empty_text_node(node)) {
+                    if (predicate(node)) {
                         ans.push(node);
                     }
                     if (node.isSameNode(r.endContainer)) {
@@ -18772,6 +18804,43 @@ return this.__repr__();
                 }
             }
             return ans;
+        };
+        if (!select_nodes_from_range.__argnames__) Object.defineProperties(select_nodes_from_range, {
+            __argnames__ : {value: ["r", "predicate"]},
+            __module__ : {value: "range_utils"}
+        });
+
+        function select_first_node_from_range(r, predicate) {
+            var parent, doc, iterator, in_range, node;
+            parent = r.commonAncestorContainer;
+            doc = parent.ownerDocument || document;
+            iterator = doc.createNodeIterator(parent);
+            in_range = false;
+            while (true) {
+                node = iterator.nextNode();
+                if (!node) {
+                    break;
+                }
+                if (!in_range && node.isSameNode(r.startContainer)) {
+                    in_range = true;
+                }
+                if (in_range) {
+                    if (predicate(node)) {
+                        return node;
+                    }
+                    if (node.isSameNode(r.endContainer)) {
+                        break;
+                    }
+                }
+            }
+        };
+        if (!select_first_node_from_range.__argnames__) Object.defineProperties(select_first_node_from_range, {
+            __argnames__ : {value: ["r", "predicate"]},
+            __module__ : {value: "range_utils"}
+        });
+
+        function text_nodes_in_range(r) {
+            return select_nodes_from_range(r, is_non_empty_text_node);
         };
         if (!text_nodes_in_range.__argnames__) Object.defineProperties(text_nodes_in_range, {
             __argnames__ : {value: ["r"]},
@@ -19089,6 +19158,10 @@ return this.__repr__();
 
         ρσ_modules.range_utils.wrapper_counter = wrapper_counter;
         ρσ_modules.range_utils.is_non_empty_text_node = is_non_empty_text_node;
+        ρσ_modules.range_utils.is_element_visible = is_element_visible;
+        ρσ_modules.range_utils.is_node_visible = is_node_visible;
+        ρσ_modules.range_utils.select_nodes_from_range = select_nodes_from_range;
+        ρσ_modules.range_utils.select_first_node_from_range = select_first_node_from_range;
         ρσ_modules.range_utils.text_nodes_in_range = text_nodes_in_range;
         ρσ_modules.range_utils.all_annots_in_range = all_annots_in_range;
         ρσ_modules.range_utils.first_annot_in_range = first_annot_in_range;
@@ -19171,7 +19244,7 @@ return this.__repr__();
             text_node_type = Node.TEXT_NODE;
             element_node_type = Node.ELEMENT_NODE;
             function process_node(node) {
-                var nt, text, tag, style, children, i;
+                var nt, text, tag, children, i;
                 nt = node.nodeType;
                 if (nt === text_node_type) {
                     text = node.nodeValue;
@@ -19185,10 +19258,6 @@ return this.__repr__();
                     }
                     tag = node.tagName.toLowerCase();
                     if (ignored_tags[(typeof tag === "number" && tag < 0) ? ignored_tags.length + tag : tag]) {
-                        return;
-                    }
-                    style = window.getComputedStyle(node);
-                    if (style.display === "none" || style.visibility === "hidden") {
                         return;
                     }
                     children = node.childNodes;
@@ -19384,7 +19453,7 @@ return this.__repr__();
                     return false;
                 } 
             }
-            return true;
+            return bool(sel.rangeCount && sel.toString());
         };
         if (!select_find_result.__argnames__) Object.defineProperties(select_find_result, {
             __argnames__ : {value: ["match"]},
@@ -26867,7 +26936,7 @@ return this.__repr__();
             start = q.cloneRange();
             end = q.cloneRange();
             function rect_onscreen(r) {
-                if (r.right <= window.innerWidth && r.bottom <= window.innerHeight && r.left >= 0 && r.top >= 0) {
+                if (r.right <= window.innerWidth && r.bottom <= window.innerHeight && r.left >= 0 && r.top >= -1) {
                     return true;
                 }
                 return false;
@@ -27209,7 +27278,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "6.21.0";
+        CALIBRE_VERSION = "6.22.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -39413,9 +39482,9 @@ return this.__repr__();
             start_handle.id = self.start_handle_id;
             end_handle = selection_handle();
             end_handle.id = self.end_handle_id;
-            var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ start_handle, end_handle ]));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                h = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter3 = ρσ_Iterable(ρσ_list_decorate([ start_handle, end_handle ]));
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                h = ρσ_Iter3[ρσ_Index3];
                 h.addEventListener("mousedown", self.mousedown_on_handle, (function(){
                     var ρσ_d = Object.create(null);
                     ρσ_d["passive"] = false;
@@ -39462,9 +39531,9 @@ return this.__repr__();
             var handle_fill, fg, h;
             handle_fill = get_color("window-background");
             fg = self.view.current_color_scheme.foreground;
-            var ρσ_Iter1 = ρσ_Iterable(ρσ_list_decorate([ self.start_handle, self.end_handle ]));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                h = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter4 = ρσ_Iterable(ρσ_list_decorate([ self.start_handle, self.end_handle ]));
+            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                h = ρσ_Iter4[ρσ_Index4];
                 set_handle_color(h, handle_fill, fg);
             }
         };
@@ -39494,9 +39563,9 @@ return this.__repr__();
                 ρσ_d["passive"] = false;
                 return ρσ_d;
             }).call(this));
-            var ρσ_Iter2 = ρσ_Iterable(ρσ_list_decorate([ ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "height: 4ex; display: flex; align-items: center; padding: 5px; justify-content: center"})]), ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "border-top: solid 1px; margin: 0; padding: 0; display: none"})]), ρσ_interpolate_kwargs.call(E, E.div, [notes_container].concat([ρσ_desugar_kwargs({style: "display: none; padding: 5px;"})])) ]));
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                x = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter5 = ρσ_Iterable(ρσ_list_decorate([ ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "height: 4ex; display: flex; align-items: center; padding: 5px; justify-content: center"})]), ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "border-top: solid 1px; margin: 0; padding: 0; display: none"})]), ρσ_interpolate_kwargs.call(E, E.div, [notes_container].concat([ρσ_desugar_kwargs({style: "display: none; padding: 5px;"})])) ]));
+            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                x = ρσ_Iter5[ρσ_Index5];
                 bar_container.appendChild(x);
             }
             bar = bar_container.firstChild;
@@ -39527,9 +39596,9 @@ return this.__repr__();
 
             actions = all_actions();
             sd = get_session_data();
-            var ρσ_Iter3 = ρσ_Iterable(sd.get("selection_bar_actions"));
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                acname = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter6 = ρσ_Iterable(sd.get("selection_bar_actions"));
+            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                acname = ρσ_Iter6[ρσ_Index6];
                 ac = actions[(typeof acname === "number" && acname < 0) ? actions.length + acname : acname];
                 if (ac && (!ac.needs_highlight || !!annot_id)) {
                     bar.appendChild(cb(ac, self[ρσ_bound_index(ac.function_name, self)]));
@@ -39585,9 +39654,9 @@ return this.__repr__();
             self.quick_highlight_styles = actions;
             bar.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "background: currentColor; width: 1px; height: " + ρσ_str.format("{}", ICON_SIZE) + "; margin-left: " + ρσ_str.format("{}", BUTTON_MARGIN) + "; margin-right: " + ρσ_str.format("{}", BUTTON_MARGIN) + ""})]));
             dark = self.view.current_color_scheme.is_dark_theme;
-            var ρσ_Iter4 = ρσ_Iterable(enumerate(actions));
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                ρσ_unpack = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter7 = ρσ_Iterable(enumerate(actions));
+            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                ρσ_unpack = ρσ_Iter7[ρσ_Index7];
                 i = ρσ_unpack[0];
                 key = ρσ_unpack[1];
                 hs = all[(typeof key === "number" && key < 0) ? all.length + key : key];
@@ -39645,9 +39714,9 @@ return this.__repr__();
             var touch;
             [ev.stopPropagation(), ev.preventDefault()];
             if (self.state === WAITING) {
-                var ρσ_Iter5 = ρσ_Iterable(ev.changedTouches);
-                for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                    touch = ρσ_Iter5[ρσ_Index5];
+                var ρσ_Iter8 = ρσ_Iterable(ev.changedTouches);
+                for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
+                    touch = ρσ_Iter8[ρσ_Index8];
                     self.active_touch = touch.identifier;
                     self.start_handle_drag(touch, ev.currentTarget);
                     break;
@@ -39711,9 +39780,9 @@ return this.__repr__();
                     self.send_message("extend-to-paragraph");
                     return;
                 }
-                var ρσ_Iter6 = ρσ_Iterable(ρσ_list_decorate([ self.bar, self.start_handle, self.end_handle ]));
-                for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                    x = ρσ_Iter6[ρσ_Index6];
+                var ρσ_Iter9 = ρσ_Iterable(ρσ_list_decorate([ self.bar, self.start_handle, self.end_handle ]));
+                for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
+                    x = ρσ_Iter9[ρσ_Index9];
                     if (near_element(x, ev.clientX, ev.clientY)) {
                         return;
                     }
@@ -39744,9 +39813,9 @@ return this.__repr__();
                 return;
             }
             [ev.stopPropagation(), ev.preventDefault()];
-            var ρσ_Iter7 = ρσ_Iterable(ev.changedTouches);
-            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                touch = ρσ_Iter7[ρσ_Index7];
+            var ρσ_Iter10 = ρσ_Iterable(ev.changedTouches);
+            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
+                touch = ρσ_Iter10[ρσ_Index10];
                 if (touch.identifier === self.active_touch) {
                     self.move_handle(touch);
                     return;
@@ -39818,9 +39887,9 @@ return this.__repr__();
             var touch;
             if (self.state === DRAGGING) {
                 [ev.preventDefault(), ev.stopPropagation()];
-                var ρσ_Iter8 = ρσ_Iterable(ev.changedTouches);
-                for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                    touch = ρσ_Iter8[ρσ_Index8];
+                var ρσ_Iter11 = ρσ_Iterable(ev.changedTouches);
+                for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
+                    touch = ρσ_Iter11[ρσ_Index11];
                     if (touch.identifier === self.active_touch) {
                         self.active_touch = null;
                         self.end_handle_drag();
@@ -40116,9 +40185,9 @@ return this.__repr__();
             self.rtl = cs.rtl;
             self.ltr = !self.rtl;
             self.vertical = cs.vertical;
-            var ρσ_Iter9 = ρσ_Iterable(ρσ_list_decorate([ self.start_handle, self.end_handle ]));
-            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                h = ρσ_Iter9[ρσ_Index9];
+            var ρσ_Iter12 = ρσ_Iterable(ρσ_list_decorate([ self.start_handle, self.end_handle ]));
+            for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
+                h = ρσ_Iter12[ρσ_Index12];
                 if (h.vertical !== self.vertical) {
                     h.vertical = self.vertical;
                     change_icon_image(h, (h.vertical) ? "selection-handle-vertical" : "selection-handle");
@@ -40325,9 +40394,9 @@ return this.__repr__();
         SelectionBar.prototype.show_editor = function show_editor(highlight_style, notes) {
             var self = this;
             var x, container, cs;
-            var ρσ_Iter10 = ρσ_Iterable(ρσ_list_decorate([ self.bar, self.start_handle, self.end_handle ]));
-            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                x = ρσ_Iter10[ρσ_Index10];
+            var ρσ_Iter13 = ρσ_Iterable(ρσ_list_decorate([ self.bar, self.start_handle, self.end_handle ]));
+            for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
+                x = ρσ_Iter13[ρσ_Index13];
                 x.style.display = "none";
             }
             container = self.editor;

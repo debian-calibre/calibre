@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2023, Kovid Goyal <kovid at kovidgoyal.net>
 
-import errno
 import os
 import shutil
 import stat
 import time
 from collections import defaultdict
 from contextlib import suppress
-from typing import Callable, Dict, Set, Tuple, Union, List
+from typing import Callable, Dict, List, Set, Tuple, Union
 
 from calibre.constants import filesystem_encoding, iswindows
 from calibre.utils.filenames import make_long_path_useable, samefile, windows_hardlink
@@ -63,6 +62,16 @@ class UnixFileCopier:
                 os.unlink(src_path)
 
 
+def windows_lock_path_and_callback(path: str, f: Callable) -> None:
+    is_folder = os.path.isdir(path)
+    flags = winutil.FILE_FLAG_BACKUP_SEMANTICS if is_folder else winutil.FILE_FLAG_SEQUENTIAL_SCAN
+    h = winutil.create_file(make_long_path_useable(path), winutil.GENERIC_READ, 0, winutil.OPEN_EXISTING, flags)
+    try:
+        f()
+    finally:
+        h.close()
+
+
 class WindowsFileCopier:
 
     '''
@@ -112,9 +121,6 @@ class WindowsFileCopier:
                 if retry_on_sharing_violation:
                     time.sleep(WINDOWS_SLEEP_FOR_RETRY_TIME)
                     return self._open_file(path, False, is_folder)
-                err = IOError(errno.EACCES, _('File {} is open in another program').format(path))
-                err.filename = path
-                raise err from e
             raise
 
     def open_all_handles(self) -> None:
@@ -200,38 +206,23 @@ def copy_files(src_to_dest_map: Dict[str, str], delete_source: bool = False) -> 
         copier.copy_all()
 
 
-def copy_tree(
-    src: str, dest: str,
-    transform_destination_filename: Callable[[str, str], str] = lambda src_path, dest_path : dest_path,
-    delete_source: bool = False
+def identity_transform(src_path: str, dest_path: str) -> str:
+    return dest_path
+
+
+def register_folder_recursively(
+    src: str, copier: Union[UnixFileCopier, WindowsFileCopier], dest_dir: str,
+    transform_destination_filename: Callable[[str, str], str] = identity_transform,
 ) -> None:
-    '''
-    Copy all files in the tree over. On Windows locks all files before starting the copy to ensure that
-    other processes cannot interfere once the copy starts. Uses hardlinks, falling back to actual file copies
-    only if hardlinking fails.
-    '''
-    if iswindows:
-        if isinstance(src, bytes):
-            src = src.decode(filesystem_encoding)
-        if isinstance(dest, bytes):
-            dest = dest.decode(filesystem_encoding)
-
-    dest = os.path.abspath(dest)
-    os.makedirs(dest, exist_ok=True)
-    if samefile(src, dest):
-        raise ValueError(f'Cannot copy tree if the source and destination are the same: {src!r} == {dest!r}')
-    dest_dir = dest
-
-    def raise_error(e: OSError) -> None:
-        raise e
 
     def dest_from_entry(dirpath: str, x: str) -> str:
         path = os.path.join(dirpath, x)
         rel = os.path.relpath(path, src)
         return os.path.join(dest_dir, rel)
 
+    def raise_error(e: OSError) -> None:
+        raise e
 
-    copier = get_copier(delete_source)
     copier.register_folder(src)
     for (dirpath, dirnames, filenames) in os.walk(src, onerror=raise_error):
         for d in dirnames:
@@ -252,6 +243,38 @@ def copy_tree(
                     continue
             copier.register(path, dest)
 
+
+def windows_check_if_files_in_use(src_folder: str) -> None:
+    copier = get_copier()
+    register_folder_recursively(src_folder, copier, os.getcwd())
+    with copier:
+        pass
+
+
+def copy_tree(
+    src: str, dest: str,
+    transform_destination_filename: Callable[[str, str], str] = identity_transform,
+    delete_source: bool = False
+) -> None:
+    '''
+    Copy all files in the tree over. On Windows locks all files before starting the copy to ensure that
+    other processes cannot interfere once the copy starts. Uses hardlinks, falling back to actual file copies
+    only if hardlinking fails.
+    '''
+    if iswindows:
+        if isinstance(src, bytes):
+            src = src.decode(filesystem_encoding)
+        if isinstance(dest, bytes):
+            dest = dest.decode(filesystem_encoding)
+
+    dest = os.path.abspath(dest)
+    os.makedirs(dest, exist_ok=True)
+    if samefile(src, dest):
+        raise ValueError(f'Cannot copy tree if the source and destination are the same: {src!r} == {dest!r}')
+    dest_dir = dest
+
+    copier = get_copier(delete_source)
+    register_folder_recursively(src, copier, dest_dir, transform_destination_filename)
 
     with copier:
         copier.copy_all()

@@ -321,6 +321,7 @@ class Renderer(QWebEnginePage):
         url = QUrl(f'{FAKE_PROTOCOL}://{FAKE_HOST}/')
         url.setPath(path)
         self.setUrl(url)
+        self.job_started_at = monotonic()
 
 
 class RequestInterceptor(QWebEngineUrlRequestInterceptor):
@@ -393,9 +394,12 @@ class RenderManager(QObject):
 
     def convert_html_files(self, jobs, settle_time=0, wait_for_title=None, has_maths=None):
         self.has_maths = has_maths or {}
+        self.render_count = 0
+        self.total_count = len(jobs)
         while len(self.workers) < min(len(jobs), self.max_workers):
             self.create_worker()
         self.pending = list(jobs)
+        self.log(f'Rendering {len(self.pending)} HTML files')
         self.results = {}
         self.settle_time = settle_time
         self.wait_for_title = wait_for_title
@@ -436,6 +440,12 @@ class RenderManager(QObject):
 
     def work_done(self, worker, result):
         self.results[worker.result_key] = result
+        for w in self.workers:
+            if not w.working and w.job_started_at > 0:
+                time_taken = monotonic() - w.job_started_at
+                self.render_count += 1
+                self.log.debug(f'Rendered: {worker.result_key} in {time_taken:.1f} seconds ({self.render_count}/{self.total_count})')
+                w.job_started_at = 0
         if self.pending:
             self.assign_work()
         else:
@@ -1124,7 +1134,8 @@ def convert(opf_path, opts, metadata=None, output_path=None, log=default_log, co
     results = manager.convert_html_files(jobs, settle_time=1, has_maths=has_maths)
     num_pages = 0
     page_margins_map = []
-    for margin_file in margin_files:
+    all_docs = []
+    for i, margin_file in enumerate(margin_files):
         name = margin_file.name
         data = results[name]
         if not isinstance(data, bytes):
@@ -1134,11 +1145,10 @@ def convert(opf_path, opts, metadata=None, output_path=None, log=default_log, co
         doc_pages = doc.page_count()
         page_margins_map.extend(repeat(resolve_margins(margin_file.margins, page_layout), doc_pages))
         num_pages += doc_pages
+        all_docs.append(doc)
 
-        if pdf_doc is None:
-            pdf_doc = doc
-        else:
-            pdf_doc.append(doc)
+    pdf_doc = all_docs[0]
+    pdf_doc.append(*all_docs[1:])
 
     page_number_display_map = get_page_number_display_map(manager, opts, num_pages, log)
 

@@ -40,12 +40,15 @@ from calibre.library.field_metadata import FieldMetadata
 from calibre.ptempfile import PersistentTemporaryFile, TemporaryFile
 from calibre.utils import pickle_binary_string, unpickle_binary_string
 from calibre.utils.config import from_json, prefs, to_json, tweaks
-from calibre.utils.copy_files import copy_files, copy_tree, rename_files
+from calibre.utils.copy_files import (
+    copy_files, copy_tree, rename_files,
+    windows_check_if_files_in_use,
+)
 from calibre.utils.date import EPOCH, parse_date, utcfromtimestamp, utcnow
 from calibre.utils.filenames import (
-    WindowsAtomicFolderMove, ascii_filename, atomic_rename, copyfile_using_links,
-    copytree_using_links, hardlink_file, is_case_sensitive, is_fat_filesystem,
-    make_long_path_useable, remove_dir_if_empty, samefile,
+    ascii_filename, atomic_rename, copyfile_using_links, copytree_using_links,
+    hardlink_file, is_case_sensitive, is_fat_filesystem, make_long_path_useable,
+    remove_dir_if_empty, samefile,
 )
 from calibre.utils.formatter_functions import (
     compile_user_template_functions, formatter_functions, load_user_template_functions,
@@ -412,11 +415,10 @@ def rmtree_with_retry(path, sleep_time=1):
     try:
         shutil.rmtree(path)
     except OSError as e:
-        if not iswindows:
-            raise
         if e.errno == errno.ENOENT and not os.path.exists(path):
             return
-        time.sleep(sleep_time)  # In case something has temporarily locked a file
+        if iswindows:
+            time.sleep(sleep_time)  # In case something has temporarily locked a file
         shutil.rmtree(path)
 
 
@@ -1259,6 +1261,8 @@ class DB:
 
     def close(self, force=False, unload_formatter_functions=True):
         if getattr(self, '_conn', None) is not None:
+            if self.prefs['expire_old_trash_after'] == 0:
+                self.expire_old_trash(0)
             if unload_formatter_functions:
                 try:
                     unload_user_template_functions(self.library_id)
@@ -1575,12 +1579,7 @@ class DB:
                 except OSError:
                     if iswindows:
                         time.sleep(0.2)
-                    try:
-                        f = open(path, 'rb')
-                    except OSError as e:
-                        # Ensure the path that caused this error is reported
-                        raise Exception(f'Failed to open {path!r} with error: {e}')
-
+                    f = open(path, 'rb')
                 with f:
                     if hasattr(dest, 'write'):
                         if report_file_size is not None:
@@ -1717,19 +1716,14 @@ class DB:
 
     def windows_check_if_files_in_use(self, paths):
         '''
-        Raises an EACCES IOError if any of the files in the folder of book_id
+        Raises an EACCES IOError if any of the files in the specified folders
         are opened in another program on windows.
         '''
         if iswindows:
             for path in paths:
                 spath = os.path.join(self.library_path, *path.split('/'))
-                wam = None
                 if os.path.exists(spath):
-                    try:
-                        wam = WindowsAtomicFolderMove(spath)
-                    finally:
-                        if wam is not None:
-                            wam.close_handles()
+                    windows_check_if_files_in_use(spath)
 
     def add_format(self, book_id, fmt, stream, title, author, path, current_name, mtime=None):
         fmt = ('.' + fmt.lower()) if fmt else ''
@@ -2029,7 +2023,7 @@ class DB:
                     mtime = st.st_mtime
                 except OSError:
                     mtime = 0
-                if mtime + expire_age_in_seconds <= now:
+                if mtime + expire_age_in_seconds <= now or expire_age_in_seconds <= 0:
                     removals.append(x.path)
         for x in removals:
             rmtree_with_retry(x)

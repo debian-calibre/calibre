@@ -5,14 +5,14 @@
 # Translators:
 # Eduardo Lopes <eamlopes@gmail.com>, 2019,2021
 # Manuela Silva <mmsrs@sky.com>, 2016
-# Paulo Pereira <pauloizidoro@gmail.com>, 2019-2021
+# Paulo Pereira <pauloizidoro@gmail.com>, 2019-2021,2023
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-20 08:11+0000\n"
+"POT-Creation-Date: 2023-06-28 06:01+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
-"Last-Translator: Paulo Pereira <pauloizidoro@gmail.com>, 2019-2021\n"
+"Last-Translator: Paulo Pereira <pauloizidoro@gmail.com>, 2019-2021,2023\n"
 "Language-Team: Portuguese (http://app.transifex.com/calibre/calibre/language/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -50,11 +50,6 @@ msgid ""
 "SQLITE is simply used as a way to read and write from metadata.db robustly. "
 "All table reading/sorting/searching/caching logic is re-implemented. This "
 "was necessary for maximum performance and flexibility."
-msgstr ""
-
-#: ../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
-#: calibre.db.listeners.EventType:1
-msgid "An enumeration."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
@@ -167,6 +162,8 @@ msgstr ""
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:0
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_items:0
@@ -274,7 +271,7 @@ msgstr "Devolver o conjunto de livros na biblioteca virtual especificada"
 msgid ""
 "Compress the cover images for the specified books. A compression quality of "
 "100 will perform lossless compression, otherwise lossy compression."
-msgstr ""
+msgstr "Comprime as imagens de capa dos livros especificados. Uma qualidade de compressão de 100 executará uma compressão sem perdas, caso contrário, terá perdas."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.compress_covers:4
@@ -528,8 +525,8 @@ msgstr ""
 msgid ""
 "Example: Assume author A has link X, author B has link Y, tag S has link F, "
 "and tag T has link G. If book 1 has author A and tag T, this method returns "
-"{'authors':{'A':'X'}, 'tags':{'T', 'G'}} If book 2's author is neither A nor"
-" B and has no tags, this method returns {}"
+"{'authors':{'A':'X'}, 'tags':{'T', 'G'}}. If book 2's author is neither A "
+"nor B and has no tags, this method returns {}."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -541,6 +538,8 @@ msgstr ""
 #: calibre.db.cache.Cache.get_all_link_maps_for_book:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:0
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -600,7 +599,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:1
-msgid "Return a dict of links for the supplied field."
+msgid "Return a dictionary of links for the supplied field."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -681,10 +680,37 @@ msgid "Initialize this cache with data from the backend."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.list_extra_files_matching:1
+#: calibre.db.cache.Cache.list_extra_files:1
+msgid "Get information about extra files in the book's directory."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:3
+msgid "the database book id for the book"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:4
 msgid ""
-"List extra data files matching the specified pattern. Empty pattern matches "
-"all. Recursive globbing with ** is supported."
+"the pattern of filenames to search for. Empty pattern matches all extra "
+"files. Patterns must use / as separator. Use the DATA_FILE_PATTERN constant "
+"to match files inside the data directory."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:7
+msgid ""
+"A tuple of all extra files matching the specified pattern. Each element of "
+"the tuple is ExtraFile(relpath, file_path, stat_result). Where relpath is "
+"the relative path of the file to the book directory using / as a separator. "
+"stat_result is the result of calling os.stat() on the file."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.merge_extra_files:1
+msgid ""
+"Merge the extra files from src_ids into dest_id. Conflicting files are auto-"
+"renamed unless replace=True in which case they are replaced."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -895,8 +921,8 @@ msgstr "Usado internamente. Nunca deve ser alterado. "
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_link_map:1
 msgid ""
-"Sets links for item values in field Note: this method doesn't change values "
-"not in the value_to_link_map"
+"Sets links for item values in field. Note: this method doesn't change values"
+" not in the value_to_link_map"
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
