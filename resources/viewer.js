@@ -20664,7 +20664,7 @@ return this.__repr__();
 
     (function(){
         var __name__ = "read_book.touch";
-        var HOLD_THRESHOLD, TAP_THRESHOLD, SWIPE_THRESHOLD, TAP_LINK_THRESHOLD, PINCH_THRESHOLD, GESTURE_NAMES, GESTURE, k, gesture_id, main_touch_handler, left_margin_handler, right_margin_handler;
+        var HOLD_THRESHOLD, TAP_THRESHOLD, SWIPE_THRESHOLD, TAP_LINK_THRESHOLD, PINCH_THRESHOLD, GESTURE, k, gesture_id, main_touch_handler, left_margin_handler, right_margin_handler;
         var _ = ρσ_modules.gettext.gettext;
 
         var get_boss = ρσ_modules["read_book.globals"].get_boss;
@@ -20681,40 +20681,75 @@ return this.__repr__();
         SWIPE_THRESHOLD = 64;
         TAP_LINK_THRESHOLD = 5;
         PINCH_THRESHOLD = 20;
-        GESTURE_NAMES = (function(){
-            var ρσ_d = Object.create(null);
-            ρσ_d["back_zone_tap"] = _("Tap on back zone");
-            ρσ_d["forward_zone_tap"] = _("Tap on forward zone");
-            ρσ_d["control_zone_tap"] = _("Tap in the controls zone");
-            ρσ_d["long_tap"] = _("Long tap");
-            ρσ_d["two_finger_tap"] = _("Two finger tap");
-            ρσ_d["pinch_in"] = _("Pinch in");
-            ρσ_d["pinch_out"] = _("Pinch out");
-            ρσ_d["flick_inline_backward"] = _("Flick in writing direction, to go back");
-            ρσ_d["flick_inline_forward"] = _("Flick in writing direction, to go forward");
-            ρσ_d["flick_block_backward"] = _("Flick perpendicular to writing direction, to go forward");
-            ρσ_d["flick_block_forward"] = _("Flick perpendicular to writing direction, to go back");
-            ρσ_d["swipe_inline_backward_in_progress"] = _("Drag finger in writing direction, to go back");
-            ρσ_d["swipe_inline_forward_in_progress"] = _("Drag finger in writing direction, to go forward");
-            ρσ_d["swipe_block_backward_in_progress"] = _("Drag finger perpendicular to writing direction, to go back");
-            ρσ_d["swipe_block_forward_in_progress"] = _("Drag finger perpendicular to writing direction, to go forward");
-            ρσ_d["swipe_inline_backward_hold"] = _("Drag and hold finger in writing direction, to go back");
-            ρσ_d["swipe_inline_forward_hold"] = _("Drag and hold finger in writing direction, to go forward");
-            ρσ_d["swipe_block_backward_hold"] = _("Drag and hold finger perpendicular to writing direction, to go back");
-            ρσ_d["swipe_block_forward_hold"] = _("Drag and hold finger perpendicular to writing direction, to go forward");
-            return ρσ_d;
-        }).call(this);
         GESTURE = (function() {
-            var ρσ_Iter = ρσ_Iterable(Object.keys(GESTURE_NAMES)), ρσ_Result = Object.create(null), k;
+            var ρσ_Iter = ρσ_Iterable([
+    'back_zone_tap',
+    'forward_zone_tap',
+    'control_zone_tap',
+    'long_tap',
+    'two_finger_tap',
+    'pinch_in',
+    'pinch_out',
+
+    'flick_inline_backward',
+    'flick_inline_forward',
+    'flick_block_backward',
+    'flick_block_forward',
+
+    'swipe_inline_backward_in_progress',
+    'swipe_inline_forward_in_progress',
+    'swipe_block_backward_in_progress',
+    'swipe_block_forward_in_progress',
+
+    'swipe_inline_backward_hold',
+    'swipe_inline_forward_hold',
+    'swipe_block_backward_hold',
+    'swipe_block_forward_hold',
+
+    'tap',
+    'swipe',
+    'pinch',
+]), ρσ_Result = Object.create(null), k;
             for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
                 k = ρσ_Iter[ρσ_Index];
                 ρσ_Result[k] = (k);
             }
             return ρσ_Result;
         })();
-        GESTURE.tap = "tap";
-        GESTURE.swipe = "swipe";
-        GESTURE.pinch = "pinch";
+        function GESTURE_NAMES() {
+            var ans;
+            ans = GESTURE_NAMES.ans;
+            if (!ans) {
+                GESTURE_NAMES.ans = ans = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["back_zone_tap"] = _("Tap on back zone");
+                    ρσ_d["forward_zone_tap"] = _("Tap on forward zone");
+                    ρσ_d["control_zone_tap"] = _("Tap in the controls zone");
+                    ρσ_d["long_tap"] = _("Long tap");
+                    ρσ_d["two_finger_tap"] = _("Two finger tap");
+                    ρσ_d["pinch_in"] = _("Pinch in");
+                    ρσ_d["pinch_out"] = _("Pinch out");
+                    ρσ_d["flick_inline_backward"] = _("Flick in writing direction, to go back");
+                    ρσ_d["flick_inline_forward"] = _("Flick in writing direction, to go forward");
+                    ρσ_d["flick_block_backward"] = _("Flick perpendicular to writing direction, to go forward");
+                    ρσ_d["flick_block_forward"] = _("Flick perpendicular to writing direction, to go back");
+                    ρσ_d["swipe_inline_backward_in_progress"] = _("Drag finger in writing direction, to go back");
+                    ρσ_d["swipe_inline_forward_in_progress"] = _("Drag finger in writing direction, to go forward");
+                    ρσ_d["swipe_block_backward_in_progress"] = _("Drag finger perpendicular to writing direction, to go back");
+                    ρσ_d["swipe_block_forward_in_progress"] = _("Drag finger perpendicular to writing direction, to go forward");
+                    ρσ_d["swipe_inline_backward_hold"] = _("Drag and hold finger in writing direction, to go back");
+                    ρσ_d["swipe_inline_forward_hold"] = _("Drag and hold finger in writing direction, to go forward");
+                    ρσ_d["swipe_block_backward_hold"] = _("Drag and hold finger perpendicular to writing direction, to go back");
+                    ρσ_d["swipe_block_forward_hold"] = _("Drag and hold finger perpendicular to writing direction, to go forward");
+                    return ρσ_d;
+                }).call(this);
+            }
+            return ans;
+        };
+        if (!GESTURE_NAMES.__module__) Object.defineProperties(GESTURE_NAMES, {
+            __module__ : {value: "read_book.touch"}
+        });
+
         gesture_id = 0;
         function touch_id(touch) {
             return touch.identifier + "";
@@ -21335,13 +21370,13 @@ return this.__repr__();
         ρσ_modules["read_book.touch"].SWIPE_THRESHOLD = SWIPE_THRESHOLD;
         ρσ_modules["read_book.touch"].TAP_LINK_THRESHOLD = TAP_LINK_THRESHOLD;
         ρσ_modules["read_book.touch"].PINCH_THRESHOLD = PINCH_THRESHOLD;
-        ρσ_modules["read_book.touch"].GESTURE_NAMES = GESTURE_NAMES;
         ρσ_modules["read_book.touch"].GESTURE = GESTURE;
         ρσ_modules["read_book.touch"].k = k;
         ρσ_modules["read_book.touch"].gesture_id = gesture_id;
         ρσ_modules["read_book.touch"].main_touch_handler = main_touch_handler;
         ρσ_modules["read_book.touch"].left_margin_handler = left_margin_handler;
         ρσ_modules["read_book.touch"].right_margin_handler = right_margin_handler;
+        ρσ_modules["read_book.touch"].GESTURE_NAMES = GESTURE_NAMES;
         ρσ_modules["read_book.touch"].touch_id = touch_id;
         ρσ_modules["read_book.touch"].copy_touch = copy_touch;
         ρσ_modules["read_book.touch"].update_touch = update_touch;
@@ -27278,7 +27313,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "6.22.0";
+        CALIBRE_VERSION = "6.23.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -39482,9 +39517,9 @@ return this.__repr__();
             start_handle.id = self.start_handle_id;
             end_handle = selection_handle();
             end_handle.id = self.end_handle_id;
-            var ρσ_Iter3 = ρσ_Iterable(ρσ_list_decorate([ start_handle, end_handle ]));
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                h = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ start_handle, end_handle ]));
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                h = ρσ_Iter0[ρσ_Index0];
                 h.addEventListener("mousedown", self.mousedown_on_handle, (function(){
                     var ρσ_d = Object.create(null);
                     ρσ_d["passive"] = false;
@@ -39531,9 +39566,9 @@ return this.__repr__();
             var handle_fill, fg, h;
             handle_fill = get_color("window-background");
             fg = self.view.current_color_scheme.foreground;
-            var ρσ_Iter4 = ρσ_Iterable(ρσ_list_decorate([ self.start_handle, self.end_handle ]));
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                h = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter1 = ρσ_Iterable(ρσ_list_decorate([ self.start_handle, self.end_handle ]));
+            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                h = ρσ_Iter1[ρσ_Index1];
                 set_handle_color(h, handle_fill, fg);
             }
         };
@@ -39563,9 +39598,9 @@ return this.__repr__();
                 ρσ_d["passive"] = false;
                 return ρσ_d;
             }).call(this));
-            var ρσ_Iter5 = ρσ_Iterable(ρσ_list_decorate([ ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "height: 4ex; display: flex; align-items: center; padding: 5px; justify-content: center"})]), ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "border-top: solid 1px; margin: 0; padding: 0; display: none"})]), ρσ_interpolate_kwargs.call(E, E.div, [notes_container].concat([ρσ_desugar_kwargs({style: "display: none; padding: 5px;"})])) ]));
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                x = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter2 = ρσ_Iterable(ρσ_list_decorate([ ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "height: 4ex; display: flex; align-items: center; padding: 5px; justify-content: center"})]), ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "border-top: solid 1px; margin: 0; padding: 0; display: none"})]), ρσ_interpolate_kwargs.call(E, E.div, [notes_container].concat([ρσ_desugar_kwargs({style: "display: none; padding: 5px;"})])) ]));
+            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                x = ρσ_Iter2[ρσ_Index2];
                 bar_container.appendChild(x);
             }
             bar = bar_container.firstChild;
@@ -39596,9 +39631,9 @@ return this.__repr__();
 
             actions = all_actions();
             sd = get_session_data();
-            var ρσ_Iter6 = ρσ_Iterable(sd.get("selection_bar_actions"));
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                acname = ρσ_Iter6[ρσ_Index6];
+            var ρσ_Iter3 = ρσ_Iterable(sd.get("selection_bar_actions"));
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                acname = ρσ_Iter3[ρσ_Index3];
                 ac = actions[(typeof acname === "number" && acname < 0) ? actions.length + acname : acname];
                 if (ac && (!ac.needs_highlight || !!annot_id)) {
                     bar.appendChild(cb(ac, self[ρσ_bound_index(ac.function_name, self)]));
@@ -39654,9 +39689,9 @@ return this.__repr__();
             self.quick_highlight_styles = actions;
             bar.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "background: currentColor; width: 1px; height: " + ρσ_str.format("{}", ICON_SIZE) + "; margin-left: " + ρσ_str.format("{}", BUTTON_MARGIN) + "; margin-right: " + ρσ_str.format("{}", BUTTON_MARGIN) + ""})]));
             dark = self.view.current_color_scheme.is_dark_theme;
-            var ρσ_Iter7 = ρσ_Iterable(enumerate(actions));
-            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                ρσ_unpack = ρσ_Iter7[ρσ_Index7];
+            var ρσ_Iter4 = ρσ_Iterable(enumerate(actions));
+            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                ρσ_unpack = ρσ_Iter4[ρσ_Index4];
                 i = ρσ_unpack[0];
                 key = ρσ_unpack[1];
                 hs = all[(typeof key === "number" && key < 0) ? all.length + key : key];
@@ -39714,9 +39749,9 @@ return this.__repr__();
             var touch;
             [ev.stopPropagation(), ev.preventDefault()];
             if (self.state === WAITING) {
-                var ρσ_Iter8 = ρσ_Iterable(ev.changedTouches);
-                for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                    touch = ρσ_Iter8[ρσ_Index8];
+                var ρσ_Iter5 = ρσ_Iterable(ev.changedTouches);
+                for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                    touch = ρσ_Iter5[ρσ_Index5];
                     self.active_touch = touch.identifier;
                     self.start_handle_drag(touch, ev.currentTarget);
                     break;
@@ -39780,9 +39815,9 @@ return this.__repr__();
                     self.send_message("extend-to-paragraph");
                     return;
                 }
-                var ρσ_Iter9 = ρσ_Iterable(ρσ_list_decorate([ self.bar, self.start_handle, self.end_handle ]));
-                for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                    x = ρσ_Iter9[ρσ_Index9];
+                var ρσ_Iter6 = ρσ_Iterable(ρσ_list_decorate([ self.bar, self.start_handle, self.end_handle ]));
+                for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                    x = ρσ_Iter6[ρσ_Index6];
                     if (near_element(x, ev.clientX, ev.clientY)) {
                         return;
                     }
@@ -39813,9 +39848,9 @@ return this.__repr__();
                 return;
             }
             [ev.stopPropagation(), ev.preventDefault()];
-            var ρσ_Iter10 = ρσ_Iterable(ev.changedTouches);
-            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                touch = ρσ_Iter10[ρσ_Index10];
+            var ρσ_Iter7 = ρσ_Iterable(ev.changedTouches);
+            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                touch = ρσ_Iter7[ρσ_Index7];
                 if (touch.identifier === self.active_touch) {
                     self.move_handle(touch);
                     return;
@@ -39887,9 +39922,9 @@ return this.__repr__();
             var touch;
             if (self.state === DRAGGING) {
                 [ev.preventDefault(), ev.stopPropagation()];
-                var ρσ_Iter11 = ρσ_Iterable(ev.changedTouches);
-                for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
-                    touch = ρσ_Iter11[ρσ_Index11];
+                var ρσ_Iter8 = ρσ_Iterable(ev.changedTouches);
+                for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
+                    touch = ρσ_Iter8[ρσ_Index8];
                     if (touch.identifier === self.active_touch) {
                         self.active_touch = null;
                         self.end_handle_drag();
@@ -40185,9 +40220,9 @@ return this.__repr__();
             self.rtl = cs.rtl;
             self.ltr = !self.rtl;
             self.vertical = cs.vertical;
-            var ρσ_Iter12 = ρσ_Iterable(ρσ_list_decorate([ self.start_handle, self.end_handle ]));
-            for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
-                h = ρσ_Iter12[ρσ_Index12];
+            var ρσ_Iter9 = ρσ_Iterable(ρσ_list_decorate([ self.start_handle, self.end_handle ]));
+            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
+                h = ρσ_Iter9[ρσ_Index9];
                 if (h.vertical !== self.vertical) {
                     h.vertical = self.vertical;
                     change_icon_image(h, (h.vertical) ? "selection-handle-vertical" : "selection-handle");
@@ -40394,9 +40429,9 @@ return this.__repr__();
         SelectionBar.prototype.show_editor = function show_editor(highlight_style, notes) {
             var self = this;
             var x, container, cs;
-            var ρσ_Iter13 = ρσ_Iterable(ρσ_list_decorate([ self.bar, self.start_handle, self.end_handle ]));
-            for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
-                x = ρσ_Iter13[ρσ_Index13];
+            var ρσ_Iter10 = ρσ_Iterable(ρσ_list_decorate([ self.bar, self.start_handle, self.end_handle ]));
+            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
+                x = ρσ_Iter10[ρσ_Index10];
                 x.style.display = "none";
             }
             container = self.editor;
@@ -41294,7 +41329,7 @@ return this.__repr__();
             function make_setting(gesture_type, allowed_actions) {
                 var ans, title, sid, select, ad, action;
                 ans = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-top: 1ex"})]);
-                title = GESTURE_NAMES[(typeof gesture_type === "number" && gesture_type < 0) ? GESTURE_NAMES.length + gesture_type : gesture_type];
+                title = (ρσ_expr_temp = GESTURE_NAMES())[(typeof gesture_type === "number" && gesture_type < 0) ? ρσ_expr_temp.length + gesture_type : gesture_type];
                 sid = unique_id(gesture_type);
                 ans.appendChild(E.h4(ρσ_interpolate_kwargs.call(E, E.label, [title].concat([ρσ_desugar_kwargs({"for": sid})]))));
                 select = ρσ_interpolate_kwargs.call(E, E.select, [ρσ_desugar_kwargs({name: gesture_type, id: sid})]);
