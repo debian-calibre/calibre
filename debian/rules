@@ -45,6 +45,12 @@ override_dh_auto_configure:
 
 override_dh_auto_build: blhc-note
 	$(SETUP) build
+#
+#	backup original font files and use system fonts
+	if [ ! -d debian/liberation.backup ] ; then \
+		mv resources/fonts/liberation debian/liberation.backup ; \
+		$(SETUP) liberation_fonts --system-liberation_fonts --path-to-liberation_fonts=/usr/share/fonts/truetype/liberation ; \
+	fi
 
 # Invoke "calibre_auto_test" target with automatic "HOME" and "XDG_*" variables.
 override_dh_auto_test:
@@ -92,6 +98,10 @@ override_dh_installman:
 
 override_dh_auto_clean:
 	$(SETUP) build --clean
+	if [ -d debian/liberation.backup ] ; then \
+		$(SETUP) liberation_fonts --clean ; \
+		mv debian/liberation.backup resources/fonts/liberation ; \
+	fi
 	py3clean setup src
 
 override_dh_gencontrol:
