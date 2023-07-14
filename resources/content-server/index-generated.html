@@ -22486,7 +22486,7 @@ return this.__repr__();
 
     (function(){
         var __name__ = "read_book.touch";
-        var HOLD_THRESHOLD, TAP_THRESHOLD, SWIPE_THRESHOLD, TAP_LINK_THRESHOLD, PINCH_THRESHOLD, GESTURE_NAMES, GESTURE, k, gesture_id, main_touch_handler, left_margin_handler, right_margin_handler;
+        var HOLD_THRESHOLD, TAP_THRESHOLD, SWIPE_THRESHOLD, TAP_LINK_THRESHOLD, PINCH_THRESHOLD, GESTURE, k, gesture_id, main_touch_handler, left_margin_handler, right_margin_handler;
         var _ = ρσ_modules.gettext.gettext;
 
         var get_boss = ρσ_modules["read_book.globals"].get_boss;
@@ -22503,40 +22503,75 @@ return this.__repr__();
         SWIPE_THRESHOLD = 64;
         TAP_LINK_THRESHOLD = 5;
         PINCH_THRESHOLD = 20;
-        GESTURE_NAMES = (function(){
-            var ρσ_d = Object.create(null);
-            ρσ_d["back_zone_tap"] = _("Tap on back zone");
-            ρσ_d["forward_zone_tap"] = _("Tap on forward zone");
-            ρσ_d["control_zone_tap"] = _("Tap in the controls zone");
-            ρσ_d["long_tap"] = _("Long tap");
-            ρσ_d["two_finger_tap"] = _("Two finger tap");
-            ρσ_d["pinch_in"] = _("Pinch in");
-            ρσ_d["pinch_out"] = _("Pinch out");
-            ρσ_d["flick_inline_backward"] = _("Flick in writing direction, to go back");
-            ρσ_d["flick_inline_forward"] = _("Flick in writing direction, to go forward");
-            ρσ_d["flick_block_backward"] = _("Flick perpendicular to writing direction, to go forward");
-            ρσ_d["flick_block_forward"] = _("Flick perpendicular to writing direction, to go back");
-            ρσ_d["swipe_inline_backward_in_progress"] = _("Drag finger in writing direction, to go back");
-            ρσ_d["swipe_inline_forward_in_progress"] = _("Drag finger in writing direction, to go forward");
-            ρσ_d["swipe_block_backward_in_progress"] = _("Drag finger perpendicular to writing direction, to go back");
-            ρσ_d["swipe_block_forward_in_progress"] = _("Drag finger perpendicular to writing direction, to go forward");
-            ρσ_d["swipe_inline_backward_hold"] = _("Drag and hold finger in writing direction, to go back");
-            ρσ_d["swipe_inline_forward_hold"] = _("Drag and hold finger in writing direction, to go forward");
-            ρσ_d["swipe_block_backward_hold"] = _("Drag and hold finger perpendicular to writing direction, to go back");
-            ρσ_d["swipe_block_forward_hold"] = _("Drag and hold finger perpendicular to writing direction, to go forward");
-            return ρσ_d;
-        }).call(this);
         GESTURE = (function() {
-            var ρσ_Iter = ρσ_Iterable(Object.keys(GESTURE_NAMES)), ρσ_Result = Object.create(null), k;
+            var ρσ_Iter = ρσ_Iterable([
+    'back_zone_tap',
+    'forward_zone_tap',
+    'control_zone_tap',
+    'long_tap',
+    'two_finger_tap',
+    'pinch_in',
+    'pinch_out',
+
+    'flick_inline_backward',
+    'flick_inline_forward',
+    'flick_block_backward',
+    'flick_block_forward',
+
+    'swipe_inline_backward_in_progress',
+    'swipe_inline_forward_in_progress',
+    'swipe_block_backward_in_progress',
+    'swipe_block_forward_in_progress',
+
+    'swipe_inline_backward_hold',
+    'swipe_inline_forward_hold',
+    'swipe_block_backward_hold',
+    'swipe_block_forward_hold',
+
+    'tap',
+    'swipe',
+    'pinch',
+]), ρσ_Result = Object.create(null), k;
             for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
                 k = ρσ_Iter[ρσ_Index];
                 ρσ_Result[k] = (k);
             }
             return ρσ_Result;
         })();
-        GESTURE.tap = "tap";
-        GESTURE.swipe = "swipe";
-        GESTURE.pinch = "pinch";
+        function GESTURE_NAMES() {
+            var ans;
+            ans = GESTURE_NAMES.ans;
+            if (!ans) {
+                GESTURE_NAMES.ans = ans = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["back_zone_tap"] = _("Tap on back zone");
+                    ρσ_d["forward_zone_tap"] = _("Tap on forward zone");
+                    ρσ_d["control_zone_tap"] = _("Tap in the controls zone");
+                    ρσ_d["long_tap"] = _("Long tap");
+                    ρσ_d["two_finger_tap"] = _("Two finger tap");
+                    ρσ_d["pinch_in"] = _("Pinch in");
+                    ρσ_d["pinch_out"] = _("Pinch out");
+                    ρσ_d["flick_inline_backward"] = _("Flick in writing direction, to go back");
+                    ρσ_d["flick_inline_forward"] = _("Flick in writing direction, to go forward");
+                    ρσ_d["flick_block_backward"] = _("Flick perpendicular to writing direction, to go forward");
+                    ρσ_d["flick_block_forward"] = _("Flick perpendicular to writing direction, to go back");
+                    ρσ_d["swipe_inline_backward_in_progress"] = _("Drag finger in writing direction, to go back");
+                    ρσ_d["swipe_inline_forward_in_progress"] = _("Drag finger in writing direction, to go forward");
+                    ρσ_d["swipe_block_backward_in_progress"] = _("Drag finger perpendicular to writing direction, to go back");
+                    ρσ_d["swipe_block_forward_in_progress"] = _("Drag finger perpendicular to writing direction, to go forward");
+                    ρσ_d["swipe_inline_backward_hold"] = _("Drag and hold finger in writing direction, to go back");
+                    ρσ_d["swipe_inline_forward_hold"] = _("Drag and hold finger in writing direction, to go forward");
+                    ρσ_d["swipe_block_backward_hold"] = _("Drag and hold finger perpendicular to writing direction, to go back");
+                    ρσ_d["swipe_block_forward_hold"] = _("Drag and hold finger perpendicular to writing direction, to go forward");
+                    return ρσ_d;
+                }).call(this);
+            }
+            return ans;
+        };
+        if (!GESTURE_NAMES.__module__) Object.defineProperties(GESTURE_NAMES, {
+            __module__ : {value: "read_book.touch"}
+        });
+
         gesture_id = 0;
         function touch_id(touch) {
             return touch.identifier + "";
@@ -23157,13 +23192,13 @@ return this.__repr__();
         ρσ_modules["read_book.touch"].SWIPE_THRESHOLD = SWIPE_THRESHOLD;
         ρσ_modules["read_book.touch"].TAP_LINK_THRESHOLD = TAP_LINK_THRESHOLD;
         ρσ_modules["read_book.touch"].PINCH_THRESHOLD = PINCH_THRESHOLD;
-        ρσ_modules["read_book.touch"].GESTURE_NAMES = GESTURE_NAMES;
         ρσ_modules["read_book.touch"].GESTURE = GESTURE;
         ρσ_modules["read_book.touch"].k = k;
         ρσ_modules["read_book.touch"].gesture_id = gesture_id;
         ρσ_modules["read_book.touch"].main_touch_handler = main_touch_handler;
         ρσ_modules["read_book.touch"].left_margin_handler = left_margin_handler;
         ρσ_modules["read_book.touch"].right_margin_handler = right_margin_handler;
+        ρσ_modules["read_book.touch"].GESTURE_NAMES = GESTURE_NAMES;
         ρσ_modules["read_book.touch"].touch_id = touch_id;
         ρσ_modules["read_book.touch"].copy_touch = copy_touch;
         ρσ_modules["read_book.touch"].update_touch = update_touch;
@@ -29100,7 +29135,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "6.22.0";
+        CALIBRE_VERSION = "6.23.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -42287,7 +42322,7 @@ return this.__repr__();
             function make_setting(gesture_type, allowed_actions) {
                 var ans, title, sid, select, ad, action;
                 ans = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-top: 1ex"})]);
-                title = GESTURE_NAMES[(typeof gesture_type === "number" && gesture_type < 0) ? GESTURE_NAMES.length + gesture_type : gesture_type];
+                title = (ρσ_expr_temp = GESTURE_NAMES())[(typeof gesture_type === "number" && gesture_type < 0) ? ρσ_expr_temp.length + gesture_type : gesture_type];
                 sid = unique_id(gesture_type);
                 ans.appendChild(E.h4(ρσ_interpolate_kwargs.call(E, E.label, [title].concat([ρσ_desugar_kwargs({"for": sid})]))));
                 select = ρσ_interpolate_kwargs.call(E, E.select, [ρσ_desugar_kwargs({name: gesture_type, id: sid})]);
@@ -56179,6 +56214,7 @@ return this.__repr__();
                 g.appendChild(choices("paper_size", indent + _("&Paper size:"), ui_data.paper_sizes));
                 g.appendChild(lineedit("custom_size", indent + _("&Custom size:")));
                 g.appendChild(choices("unit", indent + _("Custom size unit:"), ui_data.units));
+                g.appendChild(checkbox("pdf_no_cover", _("Discard book &cover")));
                 g.appendChild(checkbox("preserve_cover_aspect_ratio", _("Preserve &aspect ratio of cover")));
                 g.appendChild(checkbox("pdf_page_numbers", _("Add page &numbers to the bottom of every page")));
                 g.appendChild(checkbox("pdf_hyphenate", _("&Break long words at the end of lines")));
@@ -57131,6 +57167,7 @@ return this.__repr__();
 
         var create_top_bar = ρσ_modules["book_list.top_bar"].create_top_bar;
 
+        var query_as_href = ρσ_modules["book_list.ui"].query_as_href;
         var set_panel_handler = ρσ_modules["book_list.ui"].set_panel_handler;
 
         var create_image = ρσ_modules["book_list.views"].create_image;
@@ -57580,6 +57617,11 @@ return this.__repr__();
                         fmc.appendChild(a);
                     }
                     parent.appendChild(E.div(_("Click one of the formats below to open the book at this search result (except PDF which will open at the start):"), fmc));
+                    parent.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.a, [_("Open the details page for this book")].concat([ρσ_desugar_kwargs({class_: "blue-link", target: "_blank", href: query_as_href((function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["book_id"] = str(bid);
+                        return ρσ_d;
+                    }).call(this), "book_details")})]))].concat([ρσ_desugar_kwargs({style: "margin-top: 1ex"})])));
                     parent.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.a, [_("Re-index this book")].concat([ρσ_desugar_kwargs({class_: "blue-link", href: "javascript: void(0)", onclick: reindex.bind(null, bid)})]))].concat([ρσ_desugar_kwargs({style: "margin-top: 1ex"})])));
                 };
                 if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
