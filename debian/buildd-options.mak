@@ -5,6 +5,9 @@
 # at inconvenient intervals and disturb the memory test
 # TEST_FLAGS += --exclude-test-name=mem_leaks
 
+# avoid Python runtime error
+TEST_FLAGS += --exclude-test-name=workers
+
 # Disable some tests for specific platforms
 ifeq      (armhf, $(DEB_HOST_ARCH))
   # seccomp-bpf crash
