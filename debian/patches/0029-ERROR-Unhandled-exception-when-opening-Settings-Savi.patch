@@ -5,25 +5,27 @@ Subject: "ERROR: Unhandled exception" when opening Settings > Saving Books to
 
 Forwarded: not-needed
 
-Click "Preferences->Import/Export->Sending books to devices" to
+Click "Preferences->Import/Export->Sending Books to disk" to
 reproduce the error.
 
-This is mostly same case of Debian bug 1032095 and 1034089.
+This is mostly same case of Debian bug 1034089 and 1032095.
+  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1034089
+  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1032095
 
 ----
-When I click on "Preferences", an error dialog is displayed, with the following content:
+calibre, version 6.13.0
+ERROR: Unhandled exception: <b>TypeError</b>:SaveTemplate.__init__() got an unexpected keyword argument 'parent'
 
-calibre 6.15  embedded-python: False
-Linux-6.2.10-1-siduction-amd64-x86_64-with-glibc2.36 Linux ('64bit', 'ELF')
-('Linux', '6.2.10-1-siduction-amd64', '#1 SMP PREEMPT_DYNAMIC siduction 6.2-10 (2023-04-06)')
-Python 3.11.2
-Interface language: en_GB
-Successfully initialized third party plugins: Count Pages (1, 11, 2) && Modify ePub (1, 7, 3) && Quality Check (1, 12, 0)
+calibre 6.13  embedded-python: False
+Linux-6.3.0-2-amd64-x86_64-with-glibc2.37 Linux ('64bit', 'ELF')
+('Linux', '6.3.0-2-amd64', '#1 SMP PREEMPT_DYNAMIC Debian 6.3.11-1 (2023-07-01)')
+Python 3.11.4
+Interface language: None
 Traceback (most recent call last):
   File "/usr/lib/calibre/calibre/gui2/preferences/main.py", line 308, in show_plugin
     self.showing_widget = plugin.create_widget(self.scroll_area)
                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/calibre/calibre/customize/__init__.py", line 709, in create_widget
+  File "/usr/lib/calibre/calibre/customize/__init__.py", line 675, in create_widget
     return widget(parent)
            ^^^^^^^^^^^^^^
   File "/usr/lib/calibre/calibre/gui2/preferences/__init__.py", line 267, in __init__
