@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 6.23.0\n"
+"Project-Id-Version: calibre 6.24.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-14 07:00+0530\n"
+"POT-Creation-Date: 2023-08-04 07:38+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -122,6 +122,18 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:6
 msgid "This method is typically useful for sites that try to make it difficult to access article content automatically."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:1
+msgid "Return the delay in seconds before downloading this URL. If you want to programmatically determine the delay for the specified URL, override this method in your subclass, returning self.delay by default for URLs you do not want to affect."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:0
+msgid "Returns"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:5
+msgid "A floating point number, the delay in seconds."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.image_url_processor:1
@@ -310,7 +322,7 @@ msgid "By default, the cover image returned by get_cover_url() will be used as t
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/docstring of calibre.web.feeds.news.BasicNewsRecipe.delay:1
-msgid "Delay between consecutive downloads in seconds. The argument may be a floating point number to indicate a more precise time."
+msgid "The default delay between consecutive downloads in seconds. The argument may be a floating point number to indicate a more precise time. See :meth:`get_url_specific_delay` to implement per URL delays."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/docstring of calibre.web.feeds.news.BasicNewsRecipe.description:1
@@ -371,7 +383,7 @@ msgid "The language that the news is in. Must be an ISO-639 code either two or t
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/docstring of calibre.web.feeds.news.BasicNewsRecipe.masthead_url:1
-msgid "By default, calibre will use a default image for the masthead (Kindle only). Override this in your recipe to provide a url to use as a masthead."
+msgid "By default, calibre will use a default image for the masthead (Kindle only). Override this in your recipe to provide a URL to use as a masthead."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/docstring of calibre.web.feeds.news.BasicNewsRecipe.match_regexps:1

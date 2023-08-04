@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-24 06:57+0000\n"
+"POT-Creation-Date: 2023-08-02 16:49+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Jonatan Nyberg, 2016-2017,2021-2023\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
@@ -875,7 +875,7 @@ msgid ""
 "Cached cover URLs can sometimes be unreliable (i.e. the download could fail "
 "or the returned image could be bogus). If that is often the case with this "
 "source, set to False"
-msgstr "Cachade omslagswebbadresser kan ibland vara opålitliga (d.v.s. hämtningen kan misslyckas eller den återgivna bilden kan vara falsk). Om så ofta är fallet med den här källan, ställ in den till False"
+msgstr "Cachade omslags-URL:er kan ibland vara opålitliga (d.v.s. hämtningen kan misslyckas eller den återgivna bilden kan vara falsk). Om så ofta är fallet med den här källan, ställ in den till False"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.ebooks.metadata.sources.base.Source.options:1
@@ -973,24 +973,24 @@ msgstr "Returnera ett mänskligt läsbart namn från det återgivna värdet för
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.get_book_urls:1
 msgid ""
-"Override this method if you would like to return multiple urls for this "
+"Override this method if you would like to return multiple URLs for this "
 "book. Return a list of 3-tuples. By default this method simply calls "
 ":func:`get_book_url`."
-msgstr "Åsidosätt den här metoden om du vill returnera flera webbadresser för den här boken. Returnera en lista med 3-tupler. Som standard anropar den här metoden helt enkelt :func:`get_book_url`."
+msgstr "Åsidosätt den här metoden om du vill returnera flera URL:er för den här boken. Returnera en lista med 3-tupler. Som standard anropar den här metoden helt enkelt :func:`get_book_url`."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.get_cached_cover_url:1
 msgid ""
 "Return cached cover URL for the book identified by the identifiers "
 "dictionary or None if no such URL exists."
-msgstr "Returnera cachade omslagsadresser för boken som identifieras av identifierarordboken eller None om det inte finns någon sådan webbadress."
+msgstr "Returnera cachade omslags-URL:er för boken som identifieras av identifierarordboken eller None om det inte finns någon sådan URL."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.get_cached_cover_url:4
 msgid ""
 "Note that this method must only return validated URLs, i.e. not URLS that "
 "could result in a generic cover image or a not found error."
-msgstr "Observera att den här metoden bara måste återvända validerade URL:er, d.v.s. inte webbadresser som kan resultera i en generisk omslagsbild eller inte hittat felet."
+msgstr "Observera att den här metoden endast får returnera validerade URL:er, d.v.s. inte URL:er som kan resultera i en generisk omslagsbild eller ett fel som inte hittades."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.id_from_url:1
@@ -998,7 +998,7 @@ msgid ""
 "Parse a URL and return a tuple of the form: (identifier_type, "
 "identifier_value). If the URL does not match the pattern for the metadata "
 "source, return None."
-msgstr "Analysera en webbadress och returnera en tupel av formen: (identifier_type, identifier_value). Om webbadressen inte matchar mönstret för metadatakällan, returnera None."
+msgstr "Analysera en URL och returnera en tupel av formen: (identifier_type, identifier_value). Om URL:en inte matchar mönstret för metadatakällan, returnera None."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify_results_keygen:1
@@ -1042,7 +1042,7 @@ msgid ""
 " cached so that a subsequent call to the get covers API with the same "
 "ISBN/special identifier does not need to get the cover URL again. Use the "
 "caching API for this."
-msgstr "Om den här metadatakällan också innehåller omslag, bör webbadressen till omslaget cachas så att ett efterföljande anrop till skaffa omslags-API:n med samma ISBN/specialidentifiering inte behöver hämta omslagsadresser igen. Använd cache-API:n för detta."
+msgstr "Om den här metadatakällan också innehåller omslag, bör URL:en till omslaget cachas så att ett efterföljande anrop till skaffa omslags-API:n med samma ISBN/specialidentifiering inte behöver hämta omslags-URL:en igen. Använd cache-API:n för detta."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:13
@@ -1122,7 +1122,7 @@ msgid ""
 "This method should use cached cover URLs for efficiency whenever possible. "
 "When cached data is not present, most plugins simply call identify and use "
 "its results."
-msgstr "Denna metod bör använda cachade omslagsadresser för effektivitet när det är möjligt. När buffrad data inte är närvarande, de flesta insticksmodul anropar helt enkelt identifiera och använda dess resultat."
+msgstr "Den här metoden bör använda cachade omslags-URL:er för effektivitet när det är möjligt. När cachade data inte finns, anropar de flesta insticksmoduler helt enkelt identifiering och använder dess resultat."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.download_cover:9
@@ -1160,7 +1160,7 @@ msgstr "Föredra resultat som har åtminstone en identifierare som är samma som
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.InternalMetadataCompareKeyGen:11
 msgid "Prefer results with a cached cover URL"
-msgstr "Föredra resultat med en cachad omslagsadresser"
+msgstr "Föredra resultat med en cachad omslags-URL"
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.InternalMetadataCompareKeyGen:12

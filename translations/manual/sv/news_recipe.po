@@ -4,18 +4,18 @@
 # 
 # Translators:
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2020
-# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2023
-# Jonatan Nyberg <jonatan@autistici.org>, 2018-2021
+# Jonatan Nyberg, 2016-2017,2021-2023
+# Jonatan Nyberg, 2018-2021
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2018
 # Merarom <merarom@yahoo.es>, 2014-2015,2017
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-02 05:59+0000\n"
+"POT-Creation-Date: 2023-08-02 16:49+0000\n"
 "PO-Revision-Date: 2014-06-17 08:36+0000\n"
-"Last-Translator: Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2023\n"
-"Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
+"Last-Translator: Jonatan Nyberg, 2016-2017,2021-2023\n"
+"Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -81,7 +81,7 @@ msgid ""
 "any query parameters, fragments, etc. The canonical representations must be "
 "unique across all URLs for this news source. If they are not, then internal "
 "links may be resolved incorrectly."
-msgstr "Returnera en uppsättning kanoniska representationer av ``url``. Standardimplementeringen använder bara serverns värdnamn och sökväg för webbadressen, utan att ignorerar eventuella frågeparametrar, fragment o.s.v. De kanoniska representationerna måste vara unika för alla webbadresser för den här nyhetskällan. Om de inte är det kan interna länkar lösas felaktigt."
+msgstr "Returnera en uppsättning kanoniska representationer av ``url``. Standardimplementeringen använder bara serverns värdnamn och sökväg för URL:en, utan att ignorerar eventuella frågeparametrar, fragment o.s.v. De kanoniska representationerna måste vara unika för alla URL:er för den här nyhetskällan. Om de inte är det kan interna länkar lösas felaktigt."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:0
@@ -101,7 +101,7 @@ msgstr "Parametrar"
 msgid ""
 "Is True if the URL is coming from an internal link in an HTML file. False if"
 " the URL is the URL used to download an article."
-msgstr "Är True om webbadressen kommer från en intern länk i en HTML-fil. False om webbadressen är webbadressen som används för att hämta en artikel."
+msgstr "Är True om URL:en kommer från en intern länk i en HTML-fil. False om URL:en är URL:en som används för att hämta en artikel."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.cleanup:1
@@ -227,7 +227,7 @@ msgid ""
 "article URL. It should return the path to a file on the filesystem that "
 "contains the article HTML. That file is processed by the recursive HTML "
 "fetching engine, so it can contain links to pages/images on the web."
-msgstr "Om du ställer in `articles_are_obfuscated` anropas denna metod med varje artikelwebbadress. Den ska returnera sökvägen till en fil i filsystemet som innehåller artikel-HTML:n. Filen bearbetas av den rekursiva HTML-hämtningsmotorn, så den kan innehålla länkar till sidor/bilder på webben."
+msgstr "Om du ställer in `articles_are_obfuscated` anropas denna metod med varje artikel-URL. Den ska returnera sökvägen till en fil i filsystemet som innehåller artikel-HTML:n. Filen bearbetas av den rekursiva HTML-hämtningsmotorn, så den kan innehålla länkar till sidor/bilder på webben."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:6
@@ -237,12 +237,31 @@ msgid ""
 msgstr "Denna metod är oftast användbart för webbplatser som försöker göra det svårt att komma åt artikelns innehåll automatiskt."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:1
+msgid ""
+"Return the delay in seconds before downloading this URL. If you want to "
+"programmatically determine the delay for the specified URL, override this "
+"method in your subclass, returning self.delay by default for URLs you do not"
+" want to affect."
+msgstr "Returnera fördröjningen i sekunder innan du hämtar den här webbadressen. Om du programmatiskt vill bestämma fördröjningen för den angivna URL:en, åsidosätt den här metoden i din underklass och returnerar self.delay som standard för URL:er som du inte vill påverka."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:0
+msgid "Returns"
+msgstr "Returnerar"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:5
+msgid "A floating point number, the delay in seconds."
+msgstr "Ett flyttalnummer, fördröjningen i sekunder."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.image_url_processor:1
 msgid ""
 "Perform some processing on image urls (perhaps removing size restrictions "
 "for dynamically generated images, etc.) and return the precessed URL. Return"
 " None or an empty string to skip fetching the image."
-msgstr "Utför en del bearbetning av bildwebbadresser (kanske ta bort storleksbegränsningar för dynamiskt genererade bilder o.s.v.) och returnera den föregående webbadressen. Returnera None eller en tom sträng för att hoppa över att hämta bilden."
+msgstr "Utför en del bearbetning av bildwebbadresser (kanske ta bort storleksbegränsningar för dynamiskt genererade bilder o.s.v.) och returnera den föregående URL:en. Returnera None eller en tom sträng för att hoppa över att hämta bilden."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:1
@@ -250,7 +269,7 @@ msgid ""
 "Convenience method that takes an URL to the index page and returns a "
 "`BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc>`__ of"
 " it."
-msgstr "Bekväm metod som använder en webbadress som indexsida och returnerar en `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc>`__ av den."
+msgstr "Bekväm metod som använder en URL som indexsida och returnerar en `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc>`__ av den."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:5
@@ -267,12 +286,12 @@ msgstr "Returnera True om länken ska följas eller False annars. Som standard h
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:5
 msgid "The URL to be followed"
-msgstr "Webbadressen som ska följas"
+msgstr "URL:en som ska följas"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:6
 msgid "The tag from which the URL was derived"
-msgstr "Taggen för vilken URL erhölls"
+msgstr "Taggen för vilken URL:en erhölls"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_feeds:1
@@ -580,9 +599,10 @@ msgstr "Som standard används omslagsbilden som returneras av get_cover_url() so
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.delay:1
 msgid ""
-"Delay between consecutive downloads in seconds. The argument may be a "
-"floating point number to indicate a more precise time."
-msgstr "Fördröjning mellan konsekutiva hämtningar i sekunder. Argumentet kan vara ett flyttal för att indikera mer exakt tid."
+"The default delay between consecutive downloads in seconds. The argument may"
+" be a floating point number to indicate a more precise time. See "
+":meth:`get_url_specific_delay` to implement per URL delays."
+msgstr "Standardfördröjningen mellan på varandra följande hämtningar i sekunder. Argumentet kan vara ett flyttal för att indikera en mer exakt tid. Se :meth:`get_url_specific_delay` för att implementera förseningar per URL."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.description:1
@@ -653,17 +673,17 @@ msgid ""
 "Ignore duplicates of articles that are present in more than one section. A "
 "duplicate article is an article that has the same title and/or URL. To "
 "ignore articles with the same title, set this to::"
-msgstr "Ignorera dubbletter av artiklar som finns i mer än ett avsnitt. En dubblettartikel är en artikel som har samma titel och/eller webbadress. Att ignorera artiklar med samma titel, ställ in detta till::"
+msgstr "Ignorera dubbletter av artiklar som finns i mer än ett avsnitt. En dubblettartikel är en artikel som har samma titel och/eller URL. Att ignorera artiklar med samma titel, ställ in detta till::"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:7
 msgid "To use URLs instead, set it to::"
-msgstr "För att använda webbadresser istället, ställ in den till::"
+msgstr "För att använda URL:er istället, ställ in den till::"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:11
 msgid "To match on title or URL, set it to::"
-msgstr "För att matcha titel eller webbadress, ställ in den till::"
+msgstr "För att matcha titel eller URL, ställ in den till::"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.keep_only_tags:1
@@ -692,8 +712,8 @@ msgstr "Språket som nyheterna är på. Måste vara en ISO-639-kod, antingen tv�
 #: calibre.web.feeds.news.BasicNewsRecipe.masthead_url:1
 msgid ""
 "By default, calibre will use a default image for the masthead (Kindle only)."
-" Override this in your recipe to provide a url to use as a masthead."
-msgstr "Som standard använder calibre en standardbild för redaktionsloggan (endast Kindle). Åsidosätt detta i ditt recept för att tillhandahålla en webbadress som du kan använda som redaktionslogga."
+" Override this in your recipe to provide a URL to use as a masthead."
+msgstr "Som standard använder calibre en standardbild för redaktionsloggan (endast Kindle). Åsidosätt detta i ditt recept för att tillhandahålla en URL som du kan använda som redaktionslogga."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.match_regexps:1
@@ -706,7 +726,7 @@ msgstr "Lista med reguljära uttryck som avgör vilka länkar att följa. Om den
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.match_regexps:7
 msgid "will match all URLs that have `page=some number` in them."
-msgstr "kommer matcha alla URLer som har `page=some number` i sig."
+msgstr "kommer matcha alla URL:er som har `page=some number` i sig."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.max_articles_per_feed:1
@@ -850,7 +870,7 @@ msgid ""
 "article rather than its original web URL. If you set this to True, you might"
 " also need to implement :meth:`canonicalize_internal_url` to work with the "
 "URL scheme of your particular website."
-msgstr "Om den är inställd till True ändras länkar i hämtade artiklar som hänvisar till andra hämtade artiklar ändras till att hänvisa till den hämtade kopian av artikeln istället än dess ursprungliga webbadress. Om du ställer in detta till True, kan du också behöva implementera  :meth:`canonicalize_internal_url` för att fungera med webbadresschemat för din specifika webbplats."
+msgstr "Om den är inställd till True ändras länkar i hämtade artiklar som hänvisar till andra hämtade artiklar ändras till att hänvisa till den hämtade kopian av artikeln istället än dess ursprungliga URL. Om du ställer in detta till True, kan du också behöva implementera  :meth:`canonicalize_internal_url` för att fungera med webbadresschemat för din specifika webbplats."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.reverse_article_order:1

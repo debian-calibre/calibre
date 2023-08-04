@@ -3,17 +3,17 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# ashed <craysy@gmail.com>, 2020-2022
+# ashed <craysy@gmail.com>, 2020-2023
 # AlexanderFilev, 2017
 # Родион Р., 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-23 14:29+0000\n"
+"POT-Creation-Date: 2023-08-02 16:49+0000\n"
 "PO-Revision-Date: 2014-06-17 08:36+0000\n"
-"Last-Translator: ashed <craysy@gmail.com>, 2020-2022\n"
-"Language-Team: Russian (http://www.transifex.com/calibre/calibre/language/ru/)\n"
+"Last-Translator: ashed <craysy@gmail.com>, 2020-2023\n"
+"Language-Team: Russian (http://app.transifex.com/calibre/calibre/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -233,6 +233,25 @@ msgid ""
 "This method is typically useful for sites that try to make it difficult to "
 "access article content automatically."
 msgstr "Этот метод обычно полезен для сайтов, которые пытаются затруднить автоматический доступ к содержимому статьи."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:1
+msgid ""
+"Return the delay in seconds before downloading this URL. If you want to "
+"programmatically determine the delay for the specified URL, override this "
+"method in your subclass, returning self.delay by default for URLs you do not"
+" want to affect."
+msgstr "Возвращает задержку в секундах перед загрузкой этого URL. Если вы хотите программно определить задержку для указанного URL-адреса, переопределите этот метод в своём подклассе, возвращая self.delay по умолчанию для URL-адресов, на которые вы не хотите влиять."
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:0
+msgid "Returns"
+msgstr "Возврат"
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:5
+msgid "A floating point number, the delay in seconds."
+msgstr "Число с плавающей запятой, задержка в секундах."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.image_url_processor:1
@@ -578,9 +597,10 @@ msgstr "По умолчанию изображение обложки, возв�
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.delay:1
 msgid ""
-"Delay between consecutive downloads in seconds. The argument may be a "
-"floating point number to indicate a more precise time."
-msgstr " Задержка между последовательными загрузками в секундах. Аргумент может быть числом с плавающей запятой, чтобы указать более точное время."
+"The default delay between consecutive downloads in seconds. The argument may"
+" be a floating point number to indicate a more precise time. See "
+":meth:`get_url_specific_delay` to implement per URL delays."
+msgstr " Задержка между последовательными загрузками в секундах. Аргумент может быть числом с плавающей запятой, чтобы указать более точное время. См. :meth:`get_url_specific_delay` чтобы реализовать задержки для каждого URL."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.description:1
@@ -690,7 +710,7 @@ msgstr "Язык новостей. Должен быть двух- или трё
 #: calibre.web.feeds.news.BasicNewsRecipe.masthead_url:1
 msgid ""
 "By default, calibre will use a default image for the masthead (Kindle only)."
-" Override this in your recipe to provide a url to use as a masthead."
+" Override this in your recipe to provide a URL to use as a masthead."
 msgstr "По умолчанию calibre будет использовать изображение по умолчанию для шапки (только Kindle). Переопределите это в своем рецепте, чтобы указать URL-адрес для использования в качестве шапки."
 
 #: ../../__w/calibre/calibre/manual/docstring of
