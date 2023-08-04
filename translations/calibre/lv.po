@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2023-06-28 06:03+UTC\n"
+"POT-Creation-Date: 2023-08-02 16:51+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
 "Last-Translator: Uģis <ugga@inbox.lv>, 2014,2016\n"
 "Language-Team: Latvian (http://app.transifex.com/calibre/calibre/language/lv/)\n"
@@ -105,7 +105,7 @@ msgstr "Nedara pilnīgi neko"
 #: /__w/calibre/calibre/src/calibre/db/__init__.py:114
 #: /__w/calibre/calibre/src/calibre/db/backend.py:1370
 #: /__w/calibre/calibre/src/calibre/db/backend.py:1395
-#: /__w/calibre/calibre/src/calibre/db/backend.py:2092
+#: /__w/calibre/calibre/src/calibre/db/backend.py:2120
 #: /__w/calibre/calibre/src/calibre/db/cache.py:350
 #: /__w/calibre/calibre/src/calibre/db/cache.py:353
 #: /__w/calibre/calibre/src/calibre/db/cache.py:363
@@ -255,8 +255,8 @@ msgstr "Nedara pilnīgi neko"
 #: /__w/calibre/calibre/src/calibre/gui2/__init__.py:794
 #: /__w/calibre/calibre/src/calibre/gui2/__init__.py:802
 #: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:345
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:737
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:972
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:747
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:982
 #: /__w/calibre/calibre/src/calibre/gui2/add.py:356
 #: /__w/calibre/calibre/src/calibre/gui2/add.py:416
 #: /__w/calibre/calibre/src/calibre/gui2/add.py:472
@@ -273,6 +273,7 @@ msgstr "Nedara pilnīgi neko"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/add_empty_book.py:147
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/authors_edit.py:175
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/custom_recipes.py:699
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:175
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1089
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:523
 #: /__w/calibre/calibre/src/calibre/gui2/email.py:423
@@ -281,10 +282,10 @@ msgstr "Nedara pilnīgi neko"
 #: /__w/calibre/calibre/src/calibre/gui2/init.py:774
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:679
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1459
-#: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1687
-#: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1690
-#: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1693
-#: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1798
+#: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1689
+#: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1692
+#: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1695
+#: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1800
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:215
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:397
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:412
@@ -325,10 +326,10 @@ msgstr "Nedara pilnīgi neko"
 #: /__w/calibre/calibre/src/calibre/srv/tests/http.py:101
 #: /__w/calibre/calibre/src/calibre/srv/tests/http.py:110
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:351
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:367
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:332
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:29
-#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:55
-#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:64
+#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:65
+#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:74
 msgid "Unknown"
 msgstr "Nezināms"
 
@@ -663,146 +664,150 @@ msgid "Show a menu of saved searches"
 msgstr "Rādīt saglabāto meklējumu izvēlni"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1084
+msgid "Show a menu of actions to change calibre's layout"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1091
 msgid "Open the context menu for the column"
 msgstr "Atvērt kolonnas konteksta izvēlni"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1090
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1097
 #: /__w/calibre/calibre/src/calibre/gui2/actions/virtual_library.py:13
 msgid "Change the current Virtual library"
 msgstr "Mainīt tekošo virtuālo bibliotēku"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1097
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1104
 msgid "Search for books from different book sellers"
 msgstr "Meklē grāmatas pie dažādiem grāmatu tirgotājiem"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1114
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1121
 msgid "Get new calibre plugins or update your existing ones"
 msgstr "Iegūst jaunus calibre spraudņus vai pielāgo esošos"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1138
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1146
 #: /__w/calibre/calibre/src/calibre/gui2/convert/look_and_feel.py:20
 msgid "Look & feel"
 msgstr "Izskats"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1140
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1153
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1165
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1177
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1190
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1148
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1161
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1173
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1185
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1198
 msgid "Interface"
 msgstr "Saskarne"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1144
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1152
 msgid "Adjust the look and feel of the calibre interface to suit your tastes"
 msgstr "Pielāgot calibre saskarnes izskatu un uzvedību pēc savas gaumes"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1151
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1159
 msgid "Behavior"
 msgstr "Uzvedība"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1157
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1165
 msgid "Change the way calibre behaves"
 msgstr "Mainīt calibre uzvedību"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1163
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1171
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:633
 msgid "Add your own columns"
 msgstr "Pievienot savas kolonnas"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1169
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1177
 msgid "Add/remove your own columns to the calibre book list"
 msgstr "Pievienot/dzēst savas calibre grāmatu saraksta slejas"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1175
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1183
 msgid "Toolbars & menus"
 msgstr "Rīkjoslas & izvēlnes"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1181
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1189
 msgid ""
 "Customize the toolbars and context menus, changing which actions are "
 "available in each"
 msgstr "Pielāgo rīkjoslas un konteksta izvēlnes, mainot tajās pieejamās darbības"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1188
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1196
 msgid "Searching"
 msgstr "Meklēšana"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1194
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1202
 msgid "Customize the way searching for books works in calibre"
 msgstr "Pielāgo calbire grāmatu meklēšanas uzvedību"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1200
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1208
 msgid "Input options"
 msgstr "Ievades opcijas"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1202
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1219
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1231
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1210
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1227
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1239
 msgid "Conversion"
 msgstr "Pārveidošana"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1206
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1214
 msgid "Set conversion options specific to each input format"
 msgstr "Mainīt pārveidošanas uzstādījumus atsevišķiem ievades formātiem"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1217
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1225
 msgid "Common options"
 msgstr "Kopējas opcijas"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1223
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1231
 msgid "Set conversion options common to all formats"
 msgstr "Uzstādīt visiem formātiem kopīgas konvertēšanas papildiespējas"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1229
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1237
 msgid "Output options"
 msgstr "Izvades opcijas"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1235
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1243
 msgid "Set conversion options specific to each output format"
 msgstr "Mainīt pārveidošanas uzstādījumus atsevišķiem izvades formātiem"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1241
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1249
 msgid "Adding books"
 msgstr "Grāmatu pievienošana"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1243
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1256
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1269
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1282
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1251
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1264
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1277
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1290
 msgid "Import/export"
 msgstr "Imports/Eksports"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1247
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1255
 msgid "Control how calibre reads metadata from files when adding books"
 msgstr "Pārvalda kā calibre lasa metadatus pievienojot grāmatas"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1254
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1262
 msgid "Saving books to disk"
 msgstr "Grāmatu saglabāšana diskā"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1260
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1268
 msgid ""
 "Control how calibre exports files from its database to disk when using Save "
 "to disk"
 msgstr "Pārvalda, kā calibre eksportē datnes no datubāzes uz disku, izmantojot \"Saglabāt diskā\" funkciju"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1267
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1275
 msgid "Sending books to devices"
 msgstr "Grāmatu sūtīšana uz ierīcēm"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1273
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1281
 msgid "Control how calibre transfers files to your e-book reader"
 msgstr "Pārvalda calibre datņu nosūtīšanu uz e-grāmatu lasītāju"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1280
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1288
 msgid "Metadata plugboards"
 msgstr "Metadatu komutācijas paneļi"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1286
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1294
 msgid "Change metadata fields before saving/sending"
 msgstr "Maina metadatu laukus pirms saglabāšanas/nosūtīšanas"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1292
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1300
 #: /__w/calibre/calibre/src/calibre/gui2/actions/show_stored_templates.py:11
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions.py:167
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions.py:275
@@ -818,98 +823,98 @@ msgstr "Maina metadatu laukus pirms saglabāšanas/nosūtīšanas"
 msgid "Template functions"
 msgstr "Sagatavju funkcijas"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1294
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1358
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1371
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1383
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1395
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1302
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1366
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1379
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1391
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1403
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:900
 msgid "Advanced"
 msgstr "Paplašināti"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1298
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1306
 msgid "Create your own template functions"
 msgstr "Ļauj izveidot savas šablona funkcijas"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1304
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1312
 msgid "Sharing books by email"
 msgstr "Koplietot grāmatas pa e-pastu"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1306
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1319
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1333
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1345
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1314
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1327
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1341
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1353
 msgid "Sharing"
 msgstr "Koplietošana"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1310
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1318
 msgid ""
 "Setup sharing of books via email. Can be used for automatic sending of "
 "downloaded news to your devices"
 msgstr "Konfigurē grāmatu sūtīšanu e-pastā. Var tikt izmantots lai automātiski nosūtītu lejupielādētās ziņas uz ierīcēm"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1317
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1325
 msgid "Sharing over the net"
 msgstr "Koplietošana tīklā"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1323
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1331
 msgid ""
 "Setup the calibre Content server which will give you access to your calibre "
 "library from anywhere, on any device, over the internet"
 msgstr "Konfigurē calibre Satura serveri, kurš ļauj, izmantojot internetu, piekļūt calibre bibliotēkai no jebkuras vietas un ierīces"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1331
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1339
 msgid "Metadata download"
 msgstr "Metadatu lejupielāde"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1337
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1345
 msgid "Control how calibre downloads e-book metadata from the net"
 msgstr "Pārvalda, kā calibre lejupielādē e-grāmatu metadatus no tīkla"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1343
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1351
 #: /__w/calibre/calibre/src/calibre/gui2/device_drivers/mtp_config.py:406
 msgid "Ignored devices"
 msgstr "Ignorētās iekārtas"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1349
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1357
 msgid ""
 "Control which devices calibre will ignore when they are connected to the "
 "computer."
 msgstr "Izvēlēties kuras ierīces calibre ignorēs, kad tās tiks pieslēgtas datoram"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1356
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1364
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:309
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.py:86
 msgid "Plugins"
 msgstr "Spraudņi"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1362
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1370
 msgid "Add/remove/customize various bits of calibre functionality"
 msgstr "Pievieno/noņem/pielāgo dažādus calibre funkcionalitātes aspektus"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1369
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1377
 msgid "Tweaks"
 msgstr "Uzlabojumi"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1375
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1383
 msgid "Fine tune how calibre behaves in various contexts"
 msgstr "Pielāgo calibre uzvedību dažādās situācijās"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1381
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1389
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:562
 msgid "Shortcuts"
 msgstr "Saīsnes"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1387
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1395
 msgid "Customize the keyboard shortcuts used by calibre"
 msgstr "Pielāgo calibre klaviatūras saīsnes"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1393
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1401
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:136
 msgid "Miscellaneous"
 msgstr "Dažādi"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1399
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1407
 msgid "Miscellaneous advanced configuration"
 msgstr "Dažādas papildus konfigurācijas iespējas"
 
@@ -1266,8 +1271,8 @@ msgstr "Katalogs"
 #: /__w/calibre/calibre/src/calibre/devices/utils.py:118
 #: /__w/calibre/calibre/src/calibre/gui2/actions/fetch_news.py:87
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:623
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1755
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1757
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1767
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1769
 #: /__w/calibre/calibre/src/calibre/library/database2.py:391
 #: /__w/calibre/calibre/src/calibre/library/database2.py:404
 #: /__w/calibre/calibre/src/calibre/library/database2.py:3424
@@ -1283,7 +1288,7 @@ msgstr "Ceļš uz bibliotēku ({0}) ir pārāk garš. Tam ir jābūt mazākam pa
 
 #: /__w/calibre/calibre/src/calibre/db/backend.py:455
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_clone.py:56
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:575
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:576
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/choose_library.py:125
 #: /__w/calibre/calibre/src/calibre/gui2/wizard/__init__.py:795
 #, python-format
@@ -1321,9 +1326,9 @@ msgstr "Saglabā datubāzi SQL"
 msgid "Restoring database from SQL"
 msgstr "Atjauno datubāzi no SQL"
 
-#: /__w/calibre/calibre/src/calibre/db/backend.py:2482
+#: /__w/calibre/calibre/src/calibre/db/backend.py:2510
 #: /__w/calibre/calibre/src/calibre/db/cache.py:2988
-#: /__w/calibre/calibre/src/calibre/db/cache.py:3187
+#: /__w/calibre/calibre/src/calibre/db/cache.py:3206
 #: /__w/calibre/calibre/src/calibre/utils/exim.py:215
 #: /__w/calibre/calibre/src/calibre/utils/exim.py:381
 msgid "Completed"
@@ -1349,7 +1354,7 @@ msgstr "Saglabātie meklējumi"
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:954
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:358
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:202
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:760
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:761
 #: /__w/calibre/calibre/src/calibre/library/database2.py:1101
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:1366
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:1421
@@ -1366,17 +1371,17 @@ msgstr "Apstrādājot virtuālo bibliotēku \"%s\", konstatēta rekursija"
 msgid "[Error in Virtual library {0}: {1}]"
 msgstr "[Kļūda virtuālajā bibliotēkā {0}: {1}]"
 
-#: /__w/calibre/calibre/src/calibre/db/cache.py:3173
+#: /__w/calibre/calibre/src/calibre/db/cache.py:3192
 #, python-format
 msgid "Cover for %s"
 msgstr "Vāks priekš %s"
 
-#: /__w/calibre/calibre/src/calibre/db/cache.py:3177
+#: /__w/calibre/calibre/src/calibre/db/cache.py:3196
 #, python-brace-format
 msgid "{0} format for {1}"
 msgstr "{0} formāts priekš {1}"
 
-#: /__w/calibre/calibre/src/calibre/db/cache.py:3182
+#: /__w/calibre/calibre/src/calibre/db/cache.py:3201
 #, python-brace-format
 msgid "Extra file {0} for book {1}"
 msgstr "Papildu fails {0} grāmatai {1}"
@@ -1614,7 +1619,7 @@ msgid ""
 msgstr "Filtrēt rezultātus pēc meklēšanas. Meklēšanas formātu, skatiet Lietotāja rokasgrāmatā, ar meklēšanu saistīto dokumentāciju.\nNoklusējums: bez filtrēšanas"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_catalog.py:89
-#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:632
+#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:634
 msgid "Show detailed output information. Useful for debugging"
 msgstr "Parādīt detalizētu izejas informāciju. Noderīga atkļūdošanai"
 
@@ -2632,7 +2637,7 @@ msgstr "gandrīz pabeigts"
 msgid "~{} left"
 msgstr "~{} palicis"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:29
+#: /__w/calibre/calibre/src/calibre/debug.py:30
 #, python-brace-format
 msgid ""
 "{0}\n"
@@ -2655,83 +2660,83 @@ msgid ""
 "    {2}\n"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/debug.py:48
+#: /__w/calibre/calibre/src/calibre/debug.py:49
 msgid "%prog [options]"
 msgstr "%prog [options]"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:49
+#: /__w/calibre/calibre/src/calibre/debug.py:50
 msgid "Run Python code."
 msgstr "Palaist Python kodu."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:50
+#: /__w/calibre/calibre/src/calibre/debug.py:51
 msgid "Run the Python code in file."
 msgstr "Palaist Python kodu failā."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:52
+#: /__w/calibre/calibre/src/calibre/debug.py:53
 msgid ""
 "Subset the specified font. Use -- after this option to pass option to the "
 "font subsetting program."
 msgstr "Iegult norādītā fonta apakškopu. Izmantojiet -- pēc šī papildiespējas, lai nodotu to tālāk apakškopu veidojošajai lietonei."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:54
+#: /__w/calibre/calibre/src/calibre/debug.py:55
 #: /__w/calibre/calibre/src/calibre/gui2/device.py:513
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/device_debug.py:27
 msgid "Debug device detection"
 msgstr "Atkļūdot iekārtu noteikšanu"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:56
+#: /__w/calibre/calibre/src/calibre/debug.py:57
 msgid ""
 "Run the GUI with debugging enabled. Debug output is printed to stdout and "
 "stderr."
 msgstr "Palaist grafisko saskarni atkļūdošanas režīmā. Atkļūdošanas informācija tiek izvadīta uz stdout ierīcēm stderr."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:59
+#: /__w/calibre/calibre/src/calibre/debug.py:60
 msgid ""
 "Run the GUI with a debug console, logging to the specified path. For "
 "internal use only, use the -g option to run the GUI in debug mode"
 msgstr "Palaist grafisko saskarni ar atkļūdošanas konsoli, rakstot atkļūdošanas žurnālu norādītajā mapē. Tikai iekšējai lietošanai; izmantojiet -g papildiespēju, lai palaistu grafisko saskarni atkļūdošanas režīmā."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:62
+#: /__w/calibre/calibre/src/calibre/debug.py:63
 msgid "Don't run with the DEBUG flag set"
 msgstr "Nepalaidiet, ja ir iestatīta atzīme DEBUG"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:64
+#: /__w/calibre/calibre/src/calibre/debug.py:65
 msgid "Run the E-book viewer in debug mode"
 msgstr "Palaist e-grāmatu lasītāju atkļūdošanas režīmā"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:66
+#: /__w/calibre/calibre/src/calibre/debug.py:67
 msgid "Output the paths necessary to setup the calibre environment"
 msgstr "Izvades ceļi vajadzīgi, lai iestatītu Calibre vidi"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:68
+#: /__w/calibre/calibre/src/calibre/debug.py:69
 msgid ""
 "Add a simple plugin (i.e. a plugin that consists of only a .py file), by "
 "specifying the path to the py file containing the plugin code."
 msgstr "Pievienot vienkāršu spraudni (tas ir spraudnis, kas sastāv tikai no .py datnes), norādot ceļu uz .py datni ar spraudņa kodu."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:73
+#: /__w/calibre/calibre/src/calibre/debug.py:74
 msgid "Inspect the MOBI file(s) at the specified path(s)"
 msgstr "Pārbaudīt MOBI datni(es) norādītajā(s) mapē(s)"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:75
+#: /__w/calibre/calibre/src/calibre/debug.py:76
 msgid "Launch the calibre \"Edit book\" tool in debug mode."
 msgstr "Palaist calibre rīku \"Rediģēt grāmatu\" atkļūdošanas režīmā."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:77
+#: /__w/calibre/calibre/src/calibre/debug.py:78
 msgid ""
 "Explode the book into the specified folder.\n"
 "Usage: -x file.epub output_dir\n"
 "Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files."
 msgstr "Ielikt grāmatu norādītajā mapē.\nLietojums: -x file.epub output_dir\nEksportē grāmatu kā HTML failu un metadatu kolekciju, ko varat rediģēt, izmantojot standarta HTML rediģēšanas rīkus. Darbojas ar EPUB, AZW3, HTMLZ un DOCX failiem."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:83
+#: /__w/calibre/calibre/src/calibre/debug.py:84
 msgid ""
 "Implode a previously exploded book.\n"
 "Usage: -i output_dir file.epub\n"
 "Imports the book from the files in output_dir which must have been created by a previous call to --explode-book. Be sure to specify the same file type as was used when exploding."
 msgstr "Izlabot iepriekš atvērto grāmatu.\nIzmanto: -i output_dir file.epub\nImportēt grāmatu no output_dir failiem, kas, iespējams, ir izveidoti, izmantojot iepriekšējo izsaukumu --explode-book. Noteikti norādiet to pašu faila tipu, kāds tika izmantots atverot."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:88
+#: /__w/calibre/calibre/src/calibre/debug.py:89
 msgid ""
 "Export all calibre data (books/settings/plugins). Normally, you will be asked for the export folder and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export folder and libraries. The special keyword \"all\" can be used to export all libraries. Examples:\n"
 "\n"
@@ -2740,54 +2745,54 @@ msgid ""
 "  calibre-debug --export-all-calibre-data /export/folder all  # export all known libraries"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/debug.py:98
+#: /__w/calibre/calibre/src/calibre/debug.py:99
 msgid "Import previously exported calibre data"
 msgstr "Impotēt iepriekš eksportētos calibre datus"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:101
+#: /__w/calibre/calibre/src/calibre/debug.py:102
 #: /__w/calibre/calibre/src/calibre/gui2/main.py:68
 msgid ""
 "Cause a running calibre instance, if any, to be shutdown. Note that if there"
 " are running jobs, they will be silently aborted, so use with care."
 msgstr "Izsauc darbojošās Calibre procesa, ja tāds pastāv, apturēšanu. Ņemiet vērā - ja notiek darbu izpilde, tie tiks pārtraukti bez paziņojuma, tādēļ lietojiet ar piesardzību."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:104
+#: /__w/calibre/calibre/src/calibre/debug.py:105
 msgid "Test binary modules in build"
 msgstr "Pārbaudīt bināros moduļus laidienā"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:107
+#: /__w/calibre/calibre/src/calibre/debug.py:108
 msgid ""
 "Run a plugin that provides a command line interface. For example:\n"
 "calibre-debug -r \"Plugin name\" -- file1 --option1\n"
 "Everything after the -- will be passed to the plugin as arguments."
 msgstr "Palaidiet spraudni, kas nodrošina komandrindas interfeisu. Piemēram:\ncalibre-debug -r \"Spraudņa nosaukums\" -- file1 --option1\nEverything after the -- tiks nodots spraudnim kā argumenti."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:111
+#: /__w/calibre/calibre/src/calibre/debug.py:112
 msgid ""
 "Run the named test(s). Use the special value \"all\" to run all tests. If "
 "the test name starts with a period it is assumed to be a module name. If the"
 " test name starts with @ it is assumed to be a category name."
 msgstr "Palaidiet nosaukto(-os) testu(-us). Izmantojiet īpašo vērtību “all”, lai palaistu visus testus. Ja testa nosaukums sākas ar punktu, tiek pieņemts, ka tas ir moduļa nosaukums. Ja testa nosaukums sākas ar @, tiek pieņemts, ka tas ir kategorijas nosaukums."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:116
+#: /__w/calibre/calibre/src/calibre/debug.py:117
 msgid ""
 "Run the calibre diff tool. For example:\n"
 "calibre-debug --diff file1 file2"
 msgstr "Palaist calibre salīdzināšanas rīku. Piemēram:\ncalibre-debug --diff file1 file2"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:119
+#: /__w/calibre/calibre/src/calibre/debug.py:120
 msgid "(Un)register calibre from Windows Default Programs."
 msgstr "(de)reģistrēt calibre no Windows noklusētajām programmām"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:121
+#: /__w/calibre/calibre/src/calibre/debug.py:122
 msgid "For internal use"
 msgstr "Iekšējai lietošanai"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:185
+#: /__w/calibre/calibre/src/calibre/debug.py:186
 msgid "Debug log"
 msgstr "Atkļūdošanas žurnāls"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:280
+#: /__w/calibre/calibre/src/calibre/debug.py:281
 #, python-format
 msgid "No plugin named %s found"
 msgstr "Spraudnis ar nosaukumu %s nav atrasts"
@@ -4855,6 +4860,7 @@ msgid ""
 msgstr "Pielāgots dokumenta izmērs. Izmantojiet formu platums x augstums, piemēram: \"123x321\", lai norādītu platumu un augstumu (pts). Tas ignorē jebkuru norādīto lapas izmēru."
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/docx_output.py:33
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/pdf_output.py:144
 msgid ""
 "Do not insert the book cover as an image at the start of the document. If "
 "you use this option, the book cover will be discarded."
@@ -5760,7 +5766,7 @@ msgstr "Iespējot Markdown sintakses paplašinājumus. Paplašinājumi ir format
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/txt_output.py:25
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:246
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:416
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:417
 msgid "Plain text"
 msgstr "Vienkāršs teksts"
 
@@ -7152,7 +7158,7 @@ msgstr "Izvilkt kopējus e-grāmatu formātus no arhīva failiem (ZIP/RAR). Mē�
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:954
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:359
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:202
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:760
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:761
 msgid "No"
 msgstr "Nē"
 
@@ -7467,115 +7473,115 @@ msgstr "Amazon"
 msgid "Google Images"
 msgstr "Google attēli"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1047
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1049
 msgid "Downloads metadata and covers from Amazon"
 msgstr "Lejupielādē metadatus un vākus no Amazon"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1058
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1060
 msgid "US"
 msgstr "ASV"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1059
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1061
 msgid "France"
 msgstr "Francija"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1060
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1062
 msgid "Germany"
 msgstr "Vācija"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1061
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1063
 msgid "UK"
 msgstr "Lielbritānija"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1062
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1064
 msgid "Australia"
 msgstr "Austrālija"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1063
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1065
 msgid "Italy"
 msgstr "Itālija"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1064
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1066
 msgid "Japan"
 msgstr "Japāna"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1065
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1067
 msgid "Spain"
 msgstr "Spānija"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1066
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1068
 msgid "Brazil"
 msgstr "Brazīlija"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1067
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1069
 msgid "India"
 msgstr "Indija"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1068
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1070
 msgid "Netherlands"
 msgstr "Nīderlande"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1069
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1071
 msgid "China"
 msgstr "Ķīna"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1070
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1072
 msgid "Canada"
 msgstr "Kanāda"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1071
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1073
 msgid "Sweden"
 msgstr "Zviedrija"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1075
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1077
 msgid "Choose server automatically"
 msgstr "Izvēlēties serveri automātiski"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1076
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1078
 msgid "Amazon servers"
 msgstr "Amazon serveri"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1077
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1079
 msgid "Bing search cache"
 msgstr "Bing meklēšanas kešatmiņa"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1078
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1080
 msgid "Google search cache"
 msgstr "Google meklēšanas kešatmiņa"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1079
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1081
 msgid "Wayback machine cache (slow)"
 msgstr "Wayback mašīnas kešatmiņa (lēni)"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1080
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1082
 msgid "DuckDuckGo search and Google cache"
 msgstr "DuckDuckGo meklēšana un Google kešatmiņa"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1084
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1086
 msgid "Amazon country website to use:"
 msgstr "Izmantot Amazon tīmekļa vietni:"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1085
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1087
 msgid ""
 "Metadata from Amazon will be fetched using this country's Amazon website."
 msgstr "Metadati tiks meklēti šīs valsts Amazon lapā."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1087
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1089
 msgid "Server to get data from:"
 msgstr "Serveris datu iegūšanai:"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1089
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1091
 msgid ""
 "Amazon has started blocking attempts to download metadata from its servers. "
 "To get around this problem, calibre can fetch the Amazon data from many "
 "different places where it is cached. Choose the source you prefer."
 msgstr "Amazon ir sākusi bloķēt mēģinājumu ielādēt metadatus no saviem serveriem. Lai apietu šo problēmu, calibre var saņemt Amazon datus no dažādām vietām, kur tie tiek ierakstīti kešatmiņā. Izvēlieties avotu, kuram jūs dodat priekšroku."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1094
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1096
 msgid "Use the MOBI-ASIN for metadata search"
 msgstr "Izmantot MOBI-ASIN metadatu meklēšanai"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1096
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1098
 msgid ""
 "Enable this option to search for metadata with an ASIN identifier from the "
 "MOBI file at the current country website, unless any other amazon id is "
@@ -7583,18 +7589,18 @@ msgid ""
 "store, you could get incorrect results."
 msgstr "Iespējot šo opciju, lai meklētu metadatus ar ASIN identifikatoru MOBI failam šīs valsts tīmekļa vietnē, ja vien nav pieejams kāds cits Amazon ID. Ņemiet vērā, ka, ja MOBI fails ir no citas Amazon valsts veikala, jūs varētu saņemt nepareizus rezultātus."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1102
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1104
 msgid "Prefer the Kindle edition, when available"
 msgstr "Dot priekšroku Kindle izdevumam, kad tas ir pieejams"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1104
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1106
 msgid ""
 "When searching for a book and the search engine returns both paper and "
 "Kindle editions, always prefer the Kindle edition, instead of whatever the "
 "search engine returns at the top."
 msgstr "Meklējot grāmatu meklētājs atgriež gan papīra, gan Kindle izdevumus, vienmēr dodiet priekšroku Kindle izdevumam, nevis tam, ko meklētājs atgriež augšpusē."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1470
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1472
 msgid "Amazon timed out. Try again later."
 msgstr "Amazon noildze. Mēģiniet vēlāk."
 
@@ -9298,9 +9304,9 @@ msgstr "KĻŪDA:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/__init__.py:625
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/confirm_merge.py:73
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:349
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:432
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:630
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:360
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:443
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:631
 msgid "Show this confirmation again"
 msgstr "Rādīt šo apstiprinājumu vēlreiz"
 
@@ -9461,19 +9467,19 @@ msgstr "Grāmatu pievienošanas vadība"
 #: /__w/calibre/calibre/src/calibre/gui2/actions/catalog.py:41
 #: /__w/calibre/calibre/src/calibre/gui2/actions/convert.py:151
 #: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:409
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:173
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:199
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:242
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:432
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:534
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:606
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:183
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:209
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:252
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:442
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:544
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:616
 #: /__w/calibre/calibre/src/calibre/gui2/actions/mark_books.py:204
 #: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:467
 #: /__w/calibre/calibre/src/calibre/gui2/actions/save_to_disk.py:83
 #: /__w/calibre/calibre/src/calibre/gui2/actions/show_template_tester.py:48
 #: /__w/calibre/calibre/src/calibre/gui2/actions/toc_edit.py:134
 #: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:389
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:375
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:386
 msgid "No books selected"
 msgstr "Nav izvēlēta neviena grāmata"
 
@@ -9587,6 +9593,7 @@ msgid "Select root folder"
 msgstr "Izvēlieties pamatmapi"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:296
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:352
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar.py:318
 msgid "Cannot add"
 msgstr "Nevar pievienot"
@@ -10066,27 +10073,33 @@ msgstr "Izvēlieties jaunu nosaukumu bibliotēkai <b>%s</b>. "
 msgid "Note that the actual library folder will be renamed."
 msgstr "Ņemiet vērā, ka tiks pārdēvēta arī pašreizējās bibliotēkas mape."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:570
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:564
+msgid ""
+"WARNING: This means that any calibre:// URLs that point to things in this "
+"library will stop working."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:571
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:731
 #: /__w/calibre/calibre/src/calibre/gui2/email.py:284
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:327
 msgid "Already exists"
 msgstr "Jau pastāv"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:571
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:572
 #, python-format
 msgid "The folder %s already exists. Delete it first."
 msgstr "Mape %s jau pastāv. Sākumā to izdzēsiet."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:574
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:636
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:575
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:637
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/choose_library.py:124
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/exim.py:306
 #: /__w/calibre/calibre/src/calibre/gui2/wizard/__init__.py:794
 msgid "Too long"
 msgstr "Par garu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:579
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:580
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:52
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:54
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1214
@@ -10097,36 +10110,36 @@ msgstr "Par garu"
 msgid "Not found"
 msgstr "Nav atrasts"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:580
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:581
 #, python-format
 msgid ""
 "Cannot rename as no library was found at %s. Try switching to this library "
 "first, then switch back and retry the renaming."
 msgstr "Nav iespējams pārdēvēt, jo %s bibliotēka netika atrasta. Mēģiniet vispirms pārslēgties uz šo bibliotēku, pēc tam - pārslēdzieties atpakaļ un atkārtojiet mēģinājumu."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:591
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:592
 msgid "Rename failed"
 msgstr "Pārsaukt neizdevās"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:592
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:593
 #, python-format
 msgid ""
 "Failed to rename the library at %s. The most common cause for this is if one"
 " of the files in the library is open in another program."
 msgstr "Nav iespējams pārdēvēt %s esošo bibliotēku. Visbiežākais cēlonis - kāda šīs bibliotēkas grāmata ir atvērta citā programmā."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:605
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:606
 msgid "Library removed"
 msgstr "Bibliotēka dzēsta"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:606
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:607
 #, python-format
 msgid ""
 "The library %s has been removed from calibre. The files remain on your "
 "computer, if you want to delete them, you will have to do so manually."
 msgstr "Bibliotēka %s ir izdzēsta no Calibre. Datnes joprojām glabājas Jūsu datorā. Ja vēlaties no tām atbrīvoties, tas Jums ir jādara pašrocīgi."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:610
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:611
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/add_from_isbn.py:41
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:88
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:193
@@ -10135,26 +10148,26 @@ msgstr "Bibliotēka %s ir izdzēsta no Calibre. Datnes joprojām glabājas Jūsu
 msgid "&OK"
 msgstr "&Labi"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:610
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:611
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:176
 #: /__w/calibre/calibre/src/calibre/gui2/toc/main.py:1045
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/toc.py:51
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:393
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:386
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:351
 msgid "&Undo"
 msgstr "A&tsaukt"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:627
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:628
 msgid "Backup metadata"
 msgstr "Veidot metadatu rezerves kopiju"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:628
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:629
 msgid ""
 "Metadata will be backed up while calibre is running, at the rate of "
 "approximately 1 book every three seconds."
 msgstr "Metadatu rezerves kopija tiks veidota Calibre darbības laikā ar aptuvenu ātrumu 1 grāmata ik 3 sekundes."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:637
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:638
 #, python-format
 msgid ""
 "Path to library too long. It must be less than %d characters. Move your "
@@ -10162,7 +10175,7 @@ msgid ""
 " calibre to the new location and try again."
 msgstr "Ceļš uz bibliotēku ir pārāk garš. Tam ir jābūt mazākam par %d rakstzīmēm. Pārvietojiet savu bibliotēku uz vietu ar īsāku ceļu, izmantojot programmu Windows Explorer, pēc tam norādiet calibre uz jauno atrašanās vietu un mēģiniet vēlreiz."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:674
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:675
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:417
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/restore_library.py:87
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/restore_library.py:92
@@ -10170,13 +10183,13 @@ msgstr "Ceļš uz bibliotēku ir pārāk garš. Tam ir jābūt mazākam par %d 
 msgid "Success"
 msgstr "Veiksmīgi"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:675
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:676
 msgid ""
 "Found no errors in your calibre library database. Do you want calibre to "
 "check if the files in your library match the information in the database?"
 msgstr "Jūsu calibre bibliotēkas datu bāzē nav atrasta neviena kļūda. Vēlaties, lai calibre pārbaudītu, vai jūsu bibliotēkas faili atbilst informācijai datu bāzē?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:680
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:681
 #: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:488
 #: /__w/calibre/calibre/src/calibre/gui2/device.py:1094
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/exim.py:133
@@ -10187,39 +10200,39 @@ msgstr "Jūsu calibre bibliotēkas datu bāzē nav atrasta neviena kļūda. Vēl
 msgid "Failed"
 msgstr "Nesekmīgi"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:681
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:682
 msgid "Database integrity check failed, click \"Show details\" for details."
 msgstr "Datu bāzes integritātes pārbaude neizdevās. Lai iegūtu vairāk, klikšķiniet uz \"Rādīt informāciju\"."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:685
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:686
 msgid "Starting library scan, this may take a while"
 msgstr "Sāk bibliotēkas pārbaudi, tas var prasīt zināmu laiku"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:691
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:692
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/check.py:113
 msgid "No problems found"
 msgstr "Problēmas nav atrastas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:692
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:693
 msgid ""
 "The files in your library match the information in the database.\n"
 "\n"
 "Choose 'Open dialog' to change settings and run the check again."
 msgstr "Jūsu bibliotēkā esošie faili atbilst informācijai datu bāzē.\n\nIzvēlieties \"Atvērt dialogu\", lai mainītu iestatījumus, un vēlreiz palaidiet pārbaudi."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:694
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:695
 msgid "Open dialog"
 msgstr "Atvērt dialogu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:695
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:696
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:428
 #: /__w/calibre/calibre/src/calibre/utils/ipc/job.py:60
 msgid "Finished"
 msgstr "Pabeigts"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:785
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:790
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:796
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:786
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:791
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:797
 #: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:536
 #: /__w/calibre/calibre/src/calibre/gui2/actions/save_to_disk.py:92
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:1708
@@ -10227,17 +10240,17 @@ msgstr "Pabeigts"
 msgid "Not allowed"
 msgstr "Nav atļauts"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:786
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:787
 msgid ""
 "You cannot change libraries while using the environment variable "
 "CALIBRE_OVERRIDE_DATABASE_PATH."
 msgstr "Jūs nevarat mainīt bibliotēkas, kamēr izmantojat mainīgo CALIBRE_OVERRIDE_DATABASE_PATH."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:791
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:792
 msgid "You cannot change libraries while jobs are running."
 msgstr "Kamēr ir aktīvi uzdevumi, bibliotēkas nevar mainīt."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:797
+#: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:798
 msgid ""
 "You cannot change libraries until all updates are accepted or rejected."
 msgstr "Bibliotēku nevar nomainīt, kamēr nav apstiprināti vai noraidīti visi atjauninājumi."
@@ -10355,7 +10368,7 @@ msgstr "Sameklēt bibliotēku"
 #: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:241
 #: /__w/calibre/calibre/src/calibre/gui2/image_popup.py:150
 #: /__w/calibre/calibre/src/calibre/gui2/widgets2.py:143
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:381
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:346
 msgid "&Copy"
 msgstr "&Kopēt"
 
@@ -10475,7 +10488,7 @@ msgid ""
 msgstr "Labākais veids, kā atsākt šo darbību, ir atkārtoti kopēt visas grāmatas ar opciju \"Pārbaudīt dublikātus, kopējot bibliotēkā\" sadaļā Iestatījumi->Importēt/eksportēt->Ieslēgt grāmatu pievienošanu."
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:483
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:999
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:1000
 msgid "Canceled"
 msgstr "Atcelts"
 
@@ -10605,6 +10618,7 @@ msgid "Restore recently deleted"
 msgstr "Atjaunot nesen izdzēsto"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/delete.py:160
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:372
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:918
 msgid "Cannot delete"
 msgstr "Nevar izdzēst"
@@ -10747,110 +10761,110 @@ msgstr[0] "Atlasītā grāmata tiks <b>neatgriezeniski izdzēsta</b> no jūsu ie
 msgstr[1] "Šīs {} atlasītās grāmatas tiks <b>neatgriezeniski izdzēstas</b> no jūsu ierīces. Vai esat pārliecināts?"
 msgstr[2] "Šīs {} atlasītās grāmatas tiks <b>neatgriezeniski izdzēstas</b> no jūsu ierīces. Vai esat pārliecināts?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:43
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:45
 msgid "Start wireless device connection"
 msgstr "Palaist saziņu ar bezvadu ierīci"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:44
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:46
 msgid "Stop wireless device connection"
 msgstr "Apturēt saziņu ar bezvadu ierīci"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:49
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:51
 msgid "Connect to folder"
 msgstr "Savienoties ar mapi"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:57
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:85
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:59
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:87
 msgid "Start Content server"
 msgstr "Palaist satura serveri"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:60
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:62
 msgid "Visit Content server in browser"
 msgstr "Apmeklēt satura serveri pārlūkprogrammā"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:79
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:81
 msgid "Start/stop Content server"
 msgstr "Palaist/apturēt satura serveri"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:92
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:94
 #, python-brace-format
 msgid "[{ip}, port {port}, {protocol}]"
 msgstr "[{ip}, ports {port}, {protocol}]"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:98
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:100
 msgid "Stop Content server"
 msgstr "Apturēt satura serveri"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:115
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:140
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:117
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:142
 msgid "Email to"
 msgstr "Sūtīt epastu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:119
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:121
 msgid "Email to and delete from library"
 msgstr "Sūtīt epastu un dzēst no bibliotēkas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:133
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:150
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:135
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:152
 msgid "(delete from library)"
 msgstr "(dzēst no bibliotēkas)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:148
 #: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:150
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:152
 #: /__w/calibre/calibre/src/calibre/gui2/email.py:229
 msgid "Select recipients"
 msgstr "Izvēlieties saņēmējus"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:156
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:158
 msgid "Email to selected recipients..."
 msgstr "e-pasts izvēlētajiem saņemējiem..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:166
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:168
 msgid "Setup email based sharing of books"
 msgstr "Konfigurējiet grāmatu koplietošanu ar e-pasta starpniecību"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:182
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:184
 msgid "D"
 msgstr "D"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:182
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:184
 msgid "Send to device"
 msgstr "Sūtīt uz ierīci"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:201
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:203
 msgid "Connect/share"
 msgstr "Savienoties/koplietot"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:202
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:204
 msgid ""
 "Share books using a web server or email. Connect to special devices, etc."
 msgstr "Koplietot grāmatas izmantojot web-serveri vai e-pastu. Pieslēgties speciālām ierīcēm, utt."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:242
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:244
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/server.py:1285
 msgid "Stopping"
 msgstr "Aptur"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:243
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:245
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/server.py:1286
 msgid "Stopping server, this could take up to a minute, please wait..."
 msgstr "Apturēt serveri, tas varētu ilgt līdz minūtei, lūdzu uzgaidiet..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:261
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:263
 msgid "Disable autostart"
 msgstr "Atslēgt automātisku palaišanu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:262
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:264
 msgid ""
 "Do you want wireless device connections to be started automatically when "
 "calibre starts?"
 msgstr "Vai vēlaties automātiski ieslēgt bezvadu ierīces savienojumus Calibre starta laikā?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:285
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:287
 msgid "Still looking for IP addresses"
 msgstr "Joprojām lūkojas pēc IP adreses"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:288
+#: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:290
 msgid "Many IP addresses. See Start/Stop dialog."
 msgstr "Vairākas IP adreses. Skatīt Palaist/Apturēt dialoglodziņu."
 
@@ -10930,60 +10944,64 @@ msgstr "Apvienot grāmatu ierakstus"
 msgid "M"
 msgstr "M"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:110
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:109
+msgid "Manage data files"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:112
 msgid "Copy URL to show book in calibre"
 msgstr "Kopēt URL, lai rādītu grāmatu calibre"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:111
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:113
 msgid ""
 "Copy URLs to show the currently selected books in calibre, to the system "
 "clipboard"
 msgstr "Kopēt URL sistēmas starpliktuvē, lai parādītu pašlaik atlasītās grāmatas calibre"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:118
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:120
 msgid "Copy URL to open book in calibre"
 msgstr "Kopēt URL, lai atvērtu grāmatu calibre"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:120
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:122
 msgid ""
 "Copy URLs to open the currently selected books in calibre, to the system "
 "clipboard"
 msgstr "Kopēt URL sistēmas starpliktuvē, lai atvērtu pašlaik atlasītās grāmatas calibre"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:172
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:175
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:182
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:185
 msgid "Cannot copy metadata"
 msgstr "Nevar kopēt metadatus"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:176
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:186
 msgid "Multiple books selected, can only copy from one book at a time."
 msgstr "Atlasītas vairākas grāmatas, vienlaikus var kopēt tikai no vienas grāmatas."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:198
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:203
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:208
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:213
 msgid "Cannot paste metadata"
 msgstr "Nevar ielīmēt metadatus"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:204
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:214
 msgid "No copied metadata available"
 msgstr "Nav pieejami kopētie metadati"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:207
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:217
 #, python-brace-format
 msgid ""
 "You are pasting metadata onto <b>multiple books</b> ({num_of_books}). Are "
 "you sure you want to do that?"
 msgstr "Jūs ielīmējat metadatus <b>vairākas grāmatas</b> ({num_of_books}). Vai tiešām vēlaties to darīt?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:241
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:251
 msgid "Cannot download metadata"
 msgstr "Nav iespējams lejupielādēt metadatus"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:260
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:270
 msgid "Failed to download metadata"
 msgstr "Neizdevās lejupielādēt metadatus"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:270
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:280
 #: /__w/calibre/calibre/src/calibre/gui2/dnd.py:98
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:912
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:521
@@ -10994,57 +11012,57 @@ msgstr "Neizdevās lejupielādēt metadatus"
 msgid "Download failed"
 msgstr "Lejupielāde neizdevās"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:271
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:281
 msgid "Failed to download metadata or cover for the selected book."
 msgid_plural "Failed to download metadata or covers for any of the {} books."
 msgstr[0] "Neizdevās lejupielādēt izvēlētās grāmatas metadatus vai vāku."
 msgstr[1] "Neizdevās lejupielādēt metadatus vai vākus nevienai no {} grāmatām."
 msgstr[2] "Neizdevās lejupielādēt metadatus vai vākus nevienai no {} grāmatām."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:275
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:285
 msgid "Metadata download completed"
 msgstr "Metadatu lejupielāde pabeigta"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:278
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:288
 msgid "Finished downloading metadata for the selected book."
 msgid_plural "Finished downloading metadata for <b>{} books</b>."
 msgstr[0] "Pabeigta metadatu lejupielāde izvēlētajai grāmatai."
 msgstr[1] "Pabeigta metadatu lejupielāde izvēlētajām<b>{} grāmatām</b>."
 msgstr[2] "Pabeigta metadatu lejupielāde izvēlētajām<b>{} grāmatām</b>."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:280
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:290
 msgid "Proceed with updating the metadata in your library?"
 msgstr "Vai turpināt atjaunināt bibliotēkas metadatus?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:287
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:297
 #, python-format
 msgid ""
 "Could not download metadata and/or covers for %d of the books. Click \"Show "
 "details\" to see which books."
 msgstr "Nevarēja lejupielādēt metadatus un/vai vākus %d grāmatām. Lai redzētu sarakstu, nospiediet \"Parādīt detaļas\""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:289
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:299
 msgid "Show the &failed books in the main book list after updating metadata"
 msgstr "Parādiet &neveiksmīgās grāmatas galvenajā grāmatu sarakstā pēc metadatu atjaunināšanas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:302
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:312
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:1031
 msgid "Download log"
 msgstr "Lejupielādes žurnāls"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:303
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:313
 msgid "Metadata download complete"
 msgstr "Metadatu lejupielāde pabeigta"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:308
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:318
 msgid "Revie&w downloaded metadata"
 msgstr "Pārska&tīt lejupielādētos metadatus"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:334
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:344
 msgid "Some books changed"
 msgstr "Dažas grāmatas ir mainītas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:335
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:345
 msgid ""
 "The metadata for some books in your library has changed since you started "
 "the download. If you proceed, some of those changes may be overwritten. "
@@ -11052,59 +11070,59 @@ msgid ""
 "proceed?"
 msgstr "Dažām grāmatām bibliotēkā lejupielādes laikā ir mainījušies metadati. Ja turpināsiet, dažas no šīm izmaiņām vat tikt pārrakstītas. Uzklikšķiniet \"Rādīt vairāk\", lai aplūkotu mainīto grāmatu sarakstu. Vai vēlaties turpināt?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:375
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:385
 msgid "Review downloaded metadata"
 msgstr "Pārlūkot lejupielādētos meadatus"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:376
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:386
 msgid "Discard downloaded metadata for this book"
 msgstr "Atmest šai grāmatai lejupielādētos metadatus"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:377
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:387
 msgid "Use the downloaded metadata for all remaining books"
 msgstr "Izmantot lejupielādētos metadatus visām pārējām grāmatām"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:378
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:388
 msgid "Discard downloaded metadata for all remaining books"
 msgstr "Atmest lejupielādētos metadatus visām pārējām grāmatām"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:379
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:389
 #, python-format
 msgid "Discard the downloaded value for: %s"
 msgstr "Atmest lejupielādēto %s vērtību"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:380
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:390
 msgid ""
 "The downloaded metadata is on the left and the original metadata is on the "
 "right. If a downloaded value is blank or unknown, the original value is "
 "used."
 msgstr "Lejupielādētie metadati parādīti pa kreisi, sākotnējie - pa labi. Ja lejupielādētā vērtība ir tukša vai nezināma, tiks izmantota sākotnējā vērtība."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:383
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:393
 msgid "&View book"
 msgstr "& Skatīt grāmatu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:431
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:533
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:441
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:543
 msgid "Cannot edit metadata"
 msgstr "Nav iespējams rediģēt metadatus"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:574
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:584
 msgid ""
 "You are about to merge very many ({}) books. Are you <b>sure</b> you want to"
 " proceed?"
 msgstr "Jūs gatavojaties apvienot ļoti daudzas ({}) grāmatas. Vai esat <b> pārliecināts, </b> vēlaties turpināt?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:605
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:608
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:615
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:618
 msgid "Cannot merge books"
 msgstr "Nav iespējams apvienot grāmatas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:609
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:619
 msgid "At least two books must be selected for merging"
 msgstr "Jāizvēlas vismaz divas grāmatas, lai varētu apvienot"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:620
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:630
 #, python-format
 msgid ""
 "Book formats and metadata from the selected books will be added to the "
@@ -11113,7 +11131,7 @@ msgid ""
 "proceed."
 msgstr "Grāmatu formāti un metadati no izraudzītajām grāmatām tiks pievienoti <b>pirmajai izvēlētai grāmatai</b> (%s).<br> Otrā un tam izvēlētās grāmatas netiks dzēstas vai mainītas.<br><br>Lūdzu, apstipriniet, ka vēlaties turpināt."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:631
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:641
 #, python-format
 msgid ""
 "Book formats from the selected books will be merged into the <b>first "
@@ -11127,7 +11145,7 @@ msgid ""
 "want to proceed?"
 msgstr "Grāmatas formāti no izvēlētajām grāmatām tiks apvienoti <b>pirmajā izvēlētajā grāmatā</b> (%s). Metadati pirmajā atlasītajā grāmatā netiks mainīti. Autoru, virsrakstu un citus metadatus ne <i>būs</i> sapludināti. <br><br>Pēc sapludināšanas otrā un pēc tam izvēlētās grāmatas, ar visiem metadatiem, tiks <b>dzēsti</b>. <br><br>Visi pirmās atlasītās grāmatas formāti tiks saglabāti, bet otrās un vēlāk atlasītajās grāmatās esošie dublējošie formāti tiks neatgriezeniski <b>dzēsti</b> no calibre bibliotēkas. <br> <br>  Jūs esat <b>pārliecināts, ka</b> vēlaties turpināt?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:647
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:657
 #, python-format
 msgid ""
 "Book formats and metadata from the selected books will be merged into the "
@@ -11138,49 +11156,49 @@ msgid ""
 "from your calibre library.<br><br>  Are you <b>sure</b> you want to proceed?"
 msgstr "Grāmatas formāti un metadati no izvēlētajām grāmatām tiks sapludināti <b>ar pirmo izvēlēto grāmatu</b> (%s). <br><br>Pēc apvienošanas otrā un vēlāk izvēlētās grāmatas tiks <b>dzēstas</b>. <br><br>Visi pirmās atlasītās grāmatas formāti tiks saglabāti, bet otrās un vēlāk atlasītajās grāmatās esošie dublējošie formāti tiks neatgriezeniski <b>dzēsti</b> no calibre bibliotēkas. <br> <br>Jūs esat <b>pārliecināts, ka</b> vēlaties turpināt?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:839
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:849
 msgid "Applying changed metadata"
 msgstr "Pielieto mainītos metadatus"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:933
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:943
 msgid "Some failures"
 msgstr "Dažas kļūmes"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:934
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:944
 msgid ""
 "Failed to apply updated metadata for some books in your library. Click "
 "\"Show details\" to see details."
 msgstr "Neizdevās pielietot atjauninātus metadatus dažām bibliotēkā esošajām grāmatām. Klikšķiniet uz \"Rādīt detaļas\", lai skatītu detalizētu informāciju."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:993
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:1011
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:1003
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:1021
 msgid "Format file missing"
 msgstr "Trūkst formatēšanas faila"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:994
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:1012
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:1004
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:1022
 #, python-format
 msgid "Cannot read cover as the %s file is missing from this book"
 msgstr "Nevar nolasīt vāku, tā kā %s fails ir pazudis no šīs grāmatas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:1021
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:1031
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1119
 msgid "Could not read metadata"
 msgstr "Neizdevās nolasīt metadatus"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:1022
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:1032
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1120
 #, python-format
 msgid "Could not read metadata from %s format"
 msgstr "Nevar nolasīt metadatus no %s formāta"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:1033
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:1043
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:463
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:473
 msgid "Could not read cover"
 msgstr "Nevar nolasīt vāku"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:1034
+#: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:1044
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:464
 #, python-format
 msgid "Could not read cover from %s format"
@@ -11285,6 +11303,28 @@ msgstr "F1"
 #: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/gui/kernel/qplatformtheme.cpp:761
 msgid "Help"
 msgstr "Palīdzība"
+
+#: /__w/calibre/calibre/src/calibre/gui2/actions/layout_actions.py:24
+msgid "Layout actions"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/actions/layout_actions.py:25
+msgid "Add/remove layout items: search bar, tag browser, etc."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/actions/layout_actions.py:33
+msgid "Hide all"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/actions/layout_actions.py:37
+#: /__w/calibre/calibre/src/calibre/gui2/widgets.py:1072
+msgid "Show {}"
+msgstr "Rādīt {}"
+
+#: /__w/calibre/calibre/src/calibre/gui2/actions/layout_actions.py:38
+#: /__w/calibre/calibre/src/calibre/gui2/widgets.py:1072
+msgid "Hide {}"
+msgstr "Slēpt {}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/manage_categories.py:13
 msgid "Manage categories"
@@ -12017,7 +12057,7 @@ msgstr "Grāmatas ar tādām pašām birkām"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:41
 #: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:57
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:711
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:730
 msgid "Sort by"
 msgstr "Kārtot pēc"
 
@@ -12131,7 +12171,7 @@ msgstr "Visi darījumi (apmaksāti vai citādi) tiek veikti starp jums un grāma
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/store.py:149
 #: /__w/calibre/calibre/src/calibre/gui2/device.py:165
-#: /__w/calibre/calibre/src/calibre/gui2/ebook_download.py:32
+#: /__w/calibre/calibre/src/calibre/gui2/ebook_download.py:33
 msgid "Show this message again"
 msgstr "Rādīt šo paziņojumu atkal"
 
@@ -12938,11 +12978,11 @@ msgid "Search the internet for this book"
 msgstr "Meklēt šo grāmatu internetā"
 
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:156
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:969
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:974
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:988
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:992
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:995
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:970
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:975
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:989
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:993
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:996
 #, python-format
 msgid "Manage %s"
 msgstr "Pārvaldīt %s"
@@ -13009,6 +13049,7 @@ msgstr "Atvērt %s ar..."
 
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:349
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/choose_format.py:68
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:285
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:215
 #, python-format
 msgid "Add other application for %s files..."
@@ -13016,6 +13057,7 @@ msgstr "Pievienot citu lietotni %s datnēm..."
 
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:350
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:604
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:286
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:216
 msgid "Edit Open with applications..."
 msgstr "Labot Atvērt ar programmu..."
@@ -13309,7 +13351,7 @@ msgstr "izvade"
 #: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:123
 #: /__w/calibre/calibre/src/calibre/gui2/convert/pdb_output_ui.py:44
 #: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_input_ui.py:39
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:171
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:174
 #: /__w/calibre/calibre/src/calibre/gui2/convert/pmlz_output_ui.py:43
 #: /__w/calibre/calibre/src/calibre/gui2/convert/rb_output_ui.py:29
 #: /__w/calibre/calibre/src/calibre/gui2/convert/rtf_input_ui.py:29
@@ -13503,12 +13545,13 @@ msgstr "Patiess"
 #: /__w/calibre/calibre/src/calibre/gui2/catalog/catalog_epub_mobi.py:1187
 #: /__w/calibre/calibre/src/calibre/gui2/catalog/catalog_epub_mobi.py:1279
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:371
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:188
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:991
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:659
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:149
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:173
 #: /__w/calibre/calibre/src/calibre/gui2/store/config/chooser/models.py:40
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:717
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:736
 #: /__w/calibre/calibre/src/calibre/gui2/tts/linux_config.py:25
 #: /__w/calibre/calibre/src/calibre/gui2/tts/macos_config.py:30
 #: /__w/calibre/calibre/src/calibre/gui2/tts/windows_config.py:22
@@ -13938,8 +13981,8 @@ msgstr "Nederīgs URL"
 
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:683
 #, python-format
-msgid "The url %r is invalid"
-msgstr "URL %r nav derīgs"
+msgid "The URL %r is invalid"
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:693
 msgid "Remote images not supported"
@@ -14034,7 +14077,7 @@ msgstr "Izvēlieties datni no Jūsu datora:"
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:889
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:62
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:95
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:394
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:359
 msgid "Fonts"
 msgstr "Fonti"
 
@@ -14266,7 +14309,7 @@ msgid "Paper si&ze:"
 msgstr "Papīra iz&mērs:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/docx_output.py:35
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:174
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:177
 msgid "&Custom size:"
 msgstr "&Pielāgots izmērs:"
 
@@ -14414,7 +14457,7 @@ msgstr "Fonta izmēra :atslēga:"
 #: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:133
 #: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:136
 #: /__w/calibre/calibre/src/calibre/gui2/convert/page_setup_ui.py:139
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:196
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:199
 msgid " pt"
 msgstr " pt"
 
@@ -15060,78 +15103,78 @@ msgstr "PDF izeja"
 msgid "Use page margins from the &document being converted"
 msgstr "Izmantot lappušu piemales no p&ārvērstā dokumentu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:172
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:175
 msgid "&Use the paper size set in output profile"
 msgstr "&Izmantojot papīra formātu iestatiet izvades profilu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:173
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:176
 msgid "&Paper size:"
 msgstr "&Papīra izmērs:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:175
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:178
 msgid "&Unit:"
 msgstr "&Vienības:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:176
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:179
 msgid "Preserve &aspect ratio of cover"
 msgstr "Saglabāt vāka izmēru &attiecību"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:177
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:180
 msgid "Add page &numbers to the bottom of every page"
 msgstr "Pievienot lappušu &numurus katras lappuses apakšā"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:178
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:181
 msgid "Add a printable &Table of Contents at the end"
 msgstr "Pievienot izdrukājamu &satura rādītāju beigās"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:179
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:182
 msgid "&Title for ToC:"
 msgstr "Sa&tura rādītāja nosaukums:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:180
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:183
 msgid "Serif famil&y:"
 msgstr "Serif saim&e:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:181
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:184
 msgid "Sans fami&ly:"
 msgstr "Sans sai&me:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:182
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:185
 msgid "&Monospace family:"
 msgstr "&Fiksēta platuma saime:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:183
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:186
 msgid "S&tandard font:"
 msgstr "S&tandarta fonts:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:184
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:187
 msgid "Default font si&ze:"
 msgstr "Noklusētais fonta iz&mērs:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:185
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:187
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:188
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:190
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:821
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:868
 msgid " px"
 msgstr " px"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:186
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:189
 msgid "Monospace &font size:"
 msgstr "Fiksēta platuma &fonta izmērs:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:188
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:191
 msgid "Page &number map:"
 msgstr "Lappuses &numura karte:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:189
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:192
 msgid "Page  margins"
 msgstr "Lapas  apmales"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:190
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:193
 msgid "Page headers and footers"
 msgstr "Lapas galvenes un kājenes"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:191
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:194
 #, python-format
 msgid ""
 "You can insert headers and footers into every page of the produced PDF file "
@@ -15139,21 +15182,25 @@ msgid ""
 "href=\"%s\">documentation</a>."
 msgstr "Jūs varat ievietot galvenes un kājenes, katrā izveidotajā PDF faila lapā, izmantojot galvenes un kājenes veidnes. Piemērus, skatiet <a href=\"%s\">dokumentācijā</a>."
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:192
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:195
 msgid "&Header template:"
 msgstr "Galvenes sagatave:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:193
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:196
 msgid "&Footer template:"
 msgstr "Kājenes sagatave:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:194
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:197
 msgid "&Break long words at the end of lines"
 msgstr "&Pārtraukt garus vārdus rindas beigās"
 
-#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:195
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:198
 msgid "Odd/even &offset:"
 msgstr "Nepāra/pāra &nobīde:"
+
+#: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:200
+msgid "Discard book &cover"
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/pml_output.py:14
 msgid "PMLZ output"
@@ -15804,6 +15851,7 @@ msgstr "Kontrasta krāsa &2 (galvenokārt tekstam):"
 
 #: /__w/calibre/calibre/src/calibre/gui2/covers.py:97
 #: /__w/calibre/calibre/src/calibre/gui2/covers.py:101
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:388
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories.py:281
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories.py:318
 #: /__w/calibre/calibre/src/calibre/gui2/search_restriction_mixin.py:281
@@ -15920,7 +15968,7 @@ msgid ""
 msgstr "Ievērojiet, ka apskats uz pusi fiksē malu attiecību, tāpēc, mainot vāka platumu iepriekš, tam nebūs nekāda efekta. Ja jūs maināt augstumu, jums vajag mainīt arī platumu, tomēr, tā, kā tas tiks izmantots vāka izveidē."
 
 #: /__w/calibre/calibre/src/calibre/gui2/covers.py:225
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:353
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:354
 msgid "&Text"
 msgstr "&Teksts"
 
@@ -16798,7 +16846,7 @@ msgstr "Jūs mēģinat nosūtīt grāmatas <b>%s</b> mapē. Skenējot ierīci, �
 #: /__w/calibre/calibre/src/calibre/gui2/device_drivers/mtp_config.py:512
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/book_info.py:258
 #: /__w/calibre/calibre/src/calibre/gui2/lrf_renderer/main_ui.py:126
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:551
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:562
 msgid "Configure"
 msgstr "Konfigurēt"
 
@@ -17392,8 +17440,8 @@ msgid "Your calibre library is currently located at {0}"
 msgstr "Jūsu Calibre bibliotēka pašreiz atrodas {0}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/choose_library_ui.py:79
-msgid "Use the previously &existing library at the new location"
-msgstr "Izmantot jau &pastāvošu bibliotēku jaunā vietā"
+msgid "Use a previously &existing library at the chosen new location"
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/choose_library_ui.py:80
 msgid "&Create an empty library at the new location"
@@ -17822,6 +17870,110 @@ msgstr "Neizdevās izveidot receptes"
 msgid "Failed to create some recipes, click \"Show details\" for details"
 msgstr "Neizdevās izveidot dažas receptes, uzklikšķiniet \"Rādīt vairāk\" plašākai informācijai."
 
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:177
+msgid "Manage data files for {}"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:186
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:656
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/bookmarks.py:138
+msgid "&Sort by:"
+msgstr "Šķirot pēc:"
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:188
+msgid "Recency"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:188
+#: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1467
+#: /__w/calibre/calibre/src/calibre/library/field_metadata.py:300
+msgid "Size"
+msgstr "Izmērs"
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:223
+msgid "&Add files"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:226
+msgid "&Remove files"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:229
+msgid "Trash bin"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:231
+msgid "Recycle bin"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:232
+#, python-brace-format
+msgid ""
+"Move all selected files to the system {trash}.\n"
+"They can be restored from there if needed"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:245
+msgid "Rename this file"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:273
+#: /__w/calibre/calibre/src/calibre/gui2/open_with.py:499
+msgid "Open with"
+msgstr "Atvērt ar"
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:278
+msgid "Open with..."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:282
+#, python-format
+msgid "Open %s file with..."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:346
+msgid "Choose files to add"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:353
+msgid ""
+"Cannot add these data files to the book because they are already in the "
+"book's data files folder"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:360
+msgid "Replace existing files?"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:361
+msgid ""
+"The following files already exist as data files in the book. Replace them?"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:372
+msgid "No files selected to remove"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:374
+msgid "Send the file \"{}\" to the Recycle Bin?"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:376
+msgid "Send the {} selected files to the Recycle Bin?"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:388
+msgid "\"{}\" is not a valid file name"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:390
+msgid "Replace existing file?"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:391
+msgid "Another data file with the name \"{}\" already exists. Replace it?"
+msgstr ""
+
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/delete_matching_from_device.py:74
 msgid ""
 "All checked books will be <b>permanently deleted</b> from your device. "
@@ -17851,13 +18003,13 @@ msgstr "%(curr)s (bija %(initial)s)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/device_category_editor.py:87
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:596
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1363
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1375
 msgid "Item is blank"
 msgstr "Vienība ir tukša"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/device_category_editor.py:88
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:597
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1364
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1376
 msgid "An item cannot be set to nothing. Delete it instead."
 msgstr "Vienumu nekādi nevar iestatīt. Izdzēst to vietu."
 
@@ -18021,7 +18173,7 @@ msgid "Copy to author"
 msgstr "Kopēt uz autoru"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:510
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1416
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1428
 msgid "Invalid author name"
 msgstr "Nederīgs autora vārds"
 
@@ -18146,7 +18298,7 @@ msgid "Duplicate value"
 msgstr "Dublēta vērtība"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/enum_values_edit.py:178
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:699
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:700
 #, python-brace-format
 msgid ""
 "The value \"{0}\" is in the list more than once, perhaps with different case"
@@ -18351,7 +18503,7 @@ msgstr "Aktīvie darbi"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:65
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:631
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:593
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:612
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/diff/main.py:268
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/text_search.py:127
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:486
@@ -18982,7 +19134,7 @@ msgstr "Izvēlieties kāds identifikatora tips darbosies pēc"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:713
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:303
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:394
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:395
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:142
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/snippets.py:490
 msgid "&Template:"
@@ -19607,7 +19759,7 @@ msgid "Alternate shortcut: "
 msgstr "Alternatīva saīsne: "
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/quickview.py:325
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:605
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:624
 msgid "Find item in the Tag browser"
 msgstr "Atrast vienumu birku pārlūkā"
 
@@ -19717,7 +19869,7 @@ msgstr "<p>Izvēlieties, lai novērstu, ka Ātrais skats maina saturu, kad\n  
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:249
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:282
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1429
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1008
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1010
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/toc.py:160
 msgid "&Refresh"
 msgstr "&Atsvaidzināt"
@@ -19834,7 +19986,7 @@ msgstr "Nederīga saglabātā meklēšana"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/saved_search_editor.py:96
 #: /__w/calibre/calibre/src/calibre/gui2/search_box.py:483
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1002
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1003
 msgid "Manage Saved searches"
 msgstr "Pārvaldīt saglabātās meklēšanas"
 
@@ -21276,39 +21428,39 @@ msgstr "Lejupielādē <b>%(fname)s</b> no %(url)s"
 msgid "Failed to download from %(url)r with error: %(err)s"
 msgstr "Neizdevās lejupielādēt no saites %(url)r ar kļūdu: %(err)s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ebook_download.py:25
+#: /__w/calibre/calibre/src/calibre/gui2/ebook_download.py:26
 msgid "Downloading book"
 msgstr "Lejupielādē grāmatu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ebook_download.py:26
+#: /__w/calibre/calibre/src/calibre/gui2/ebook_download.py:27
 #, python-brace-format
 msgid ""
 "The book {0} will be downloaded and added to your calibre library "
 "automatically."
 msgstr "Grāmata {0} tiks lejupielādēta un pievienot jūsu calibre bibliotēkai automātiski."
 
-#: /__w/calibre/calibre/src/calibre/gui2/ebook_download.py:95
+#: /__w/calibre/calibre/src/calibre/gui2/ebook_download.py:96
 msgid "No file specified to download."
 msgstr "Nav norādīta lejupielādējamā datne."
 
-#: /__w/calibre/calibre/src/calibre/gui2/ebook_download.py:106
-msgid "Not a support e-book format."
-msgstr "Neatbalstīts e-grāmatu formāts."
+#: /__w/calibre/calibre/src/calibre/gui2/ebook_download.py:114
+msgid "{} is not a supported e-book format"
+msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/ebook_download.py:128
+#: /__w/calibre/calibre/src/calibre/gui2/ebook_download.py:134
 #, python-format
 msgid "Downloading %s"
 msgstr "Lejupielādē %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ebook_download.py:145
+#: /__w/calibre/calibre/src/calibre/gui2/ebook_download.py:151
 msgid "Downloading"
 msgstr "Lejupielādē"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ebook_download.py:149
+#: /__w/calibre/calibre/src/calibre/gui2/ebook_download.py:155
 msgid "Failed to download e-book"
 msgstr "Neizdevās lejupielādēt e-grāmatu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ebook_download.py:152
+#: /__w/calibre/calibre/src/calibre/gui2/ebook_download.py:158
 msgid "finished"
 msgstr "pabeigts"
 
@@ -21832,8 +21984,8 @@ msgstr "Izvērst visu"
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:684
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:379
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:257
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:693
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1136
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:712
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1137
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:229
 msgid "Collapse all"
 msgstr "Sakļaut visu"
@@ -22217,11 +22369,6 @@ msgid ""
 "be used."
 msgstr "Tālāk izvēlieties ikonas motīvu. Tas galvenokārt tiks izmantots tumšu krāsu tēmām. Ja tiek izvēlēts noklusējuma iestatījums, tiks izmantots motīvs \"gaišs un tumšs\"."
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:656
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/bookmarks.py:138
-msgid "&Sort by:"
-msgstr "Šķirot pēc:"
-
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:659
 msgid "Number of icons"
 msgstr "Ikonu skaits"
@@ -22316,13 +22463,13 @@ msgid "Cover browser"
 msgstr "Vāku pārlūks"
 
 #: /__w/calibre/calibre/src/calibre/gui2/init.py:193
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:582
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:594
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:694
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:703
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:756
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:763
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:770
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:601
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:613
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:713
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:722
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:775
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:782
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:789
 msgid "Tag browser"
 msgstr "Birku pārlūks"
 
@@ -23032,7 +23179,7 @@ msgid "Marked without text"
 msgstr "Atzīmēts bez teksta"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1159
-#: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1852
+#: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1854
 #, python-brace-format
 msgid "This book's UUID is \"{0}\""
 msgstr "Šīs grāmatas UUID ir \"{0}\""
@@ -23051,34 +23198,29 @@ msgstr "Nevarēja iestatīt datus. Klikšķiniet uz \"Rādīt informāciju\", la
 msgid "In Library"
 msgstr "Bibliotēkā"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1467
-#: /__w/calibre/calibre/src/calibre/library/field_metadata.py:300
-msgid "Size"
-msgstr "Izmērs"
-
-#: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1722
+#: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1724
 msgid "Unhandled error"
 msgstr "Neapstrādāta kļūda"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1723
+#: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1725
 msgid ""
 "Failed to read book data from calibre library. Click \"Show details\" for "
 "more information"
 msgstr "Neizdevās nolasīt grāmatas datus no calibre bibliotēkas. Lai iegūtu papildinformāciju, klikšķiniet uz \"Rādīt informāciju\""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1822
+#: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1824
 msgid "Waiting for metadata to be updated"
 msgstr "Gaida metadatu atsvaidzināšanas pabeigšanu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1824
+#: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1826
 msgid "Marked for deletion"
 msgstr "Atzīmētas dzēšanai"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1829
+#: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1831
 msgid "Double click to <b>edit</b> me<br><br>"
 msgstr "Uzklikšķiniet divreiz, lai <b>labotu</b> mani<br><br>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1850
+#: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1852
 msgid "The lookup/search name is"
 msgstr "Uzmeklēšanas/meklēšanas nosaukums ir"
 
@@ -23235,7 +23377,7 @@ msgid "Quickview column %s"
 msgstr "Ātrā skata sleja %s"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:607
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:982
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:983
 #, python-format
 msgid "Edit permissible values for %s"
 msgstr "Rediģēt %s pieļaujamās vērtības"
@@ -23604,7 +23746,7 @@ msgid ""
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/main_window.py:169
-#: /__w/calibre/calibre/src/calibre/gui2/main_window.py:211
+#: /__w/calibre/calibre/src/calibre/gui2/main_window.py:213
 msgid "Cannot open file or folder as it is in use"
 msgstr ""
 
@@ -23631,22 +23773,19 @@ msgstr ""
 msgid "Cannot open file or folder"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/main_window.py:206
-msgid "file"
-msgstr ""
-
-#: /__w/calibre/calibre/src/calibre/gui2/main_window.py:206
-msgid "folder"
-msgstr ""
-
 #: /__w/calibre/calibre/src/calibre/gui2/main_window.py:207
-#, python-brace-format
 msgid ""
-"Could not open the {0}: \"{1}\". It is already opened in the following "
+"Could not open the folder: \"{}\". It is already opened in the following "
 "programs:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/main_window.py:236
+#: /__w/calibre/calibre/src/calibre/gui2/main_window.py:209
+msgid ""
+"Could not open the file: \"{}\". It is already opened in the following "
+"programs:"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/main_window.py:238
 msgid "Unhandled exception"
 msgstr "Neparedzēts izņēmums"
 
@@ -23673,7 +23812,7 @@ msgid "Set date to today"
 msgstr "Iestatīt šodienas datumu"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:177
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:387
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:352
 msgid "&Redo"
 msgstr "At&griezt"
 
@@ -24619,10 +24758,6 @@ msgstr "vāka attēls"
 #, python-brace-format
 msgid "Open {0} files with {1}"
 msgstr "Atvērt {0} datnes ar {1}"
-
-#: /__w/calibre/calibre/src/calibre/gui2/open_with.py:499
-msgid "Open with"
-msgstr "Atvērt ar"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/__init__.py:46
 msgid ""
@@ -25667,7 +25802,7 @@ msgid "Edit custom column"
 msgstr "Labot pielāgoto sleju"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:204
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:662
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:663
 msgid "Now"
 msgstr "Tagad"
 
@@ -25738,14 +25873,15 @@ msgstr "Parādīt &atzīmes"
 msgid ""
 "Show check marks in the GUI. Values of 'yes', 'checked', and 'true'\n"
 "will show a green check. Values of 'no', 'unchecked', and 'false' will show a red X.\n"
-"Everything else will show nothing."
-msgstr "Rādīt GUI atzīmes. Vērtības 'yes', 'checked', un 'true'\nrādīs zaļo atzīmi. Vērtības 'no', 'unchecked', un 'false' rādīs sarkano atzīmi X.\nViss pārējais nerādīs neko."
+"Everything else will show nothing. Note that the values of 'true' and 'false' don't\n"
+"follow calibre's language settings and are always in English."
+msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:328
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:329
 msgid "Contains names"
 msgstr "Satur vārdus"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:329
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:330
 msgid ""
 "Check this box if this column contains names, like the authors column. If "
 "checked, the item separator will be an ampersand (&) instead of a comma (,),"
@@ -25754,71 +25890,71 @@ msgid ""
 "Firstname\"), and item order will be preserved."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:336
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:337
 msgid "&Column type:"
 msgstr "&Slejas veids:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:340
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:341
 msgid "Optional text describing what this column is for"
 msgstr "Neobligāts teksts, kas apraksta šis slejas jēgu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:341
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:342
 msgid "D&escription:"
 msgstr "A&praksts:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:351
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:352
 msgid "&Icon"
 msgstr "&Ikona"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:354
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:355
 msgid "&Both"
 msgstr "&Abi"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:360
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:361
 msgid "Choose whether an icon, text, or both is shown in the book list"
 msgstr "Izvēlieties, vai grāmatu sarakstā tiek rādīta ikona, teksts vai abi"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:364
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:365
 msgid "&Show:"
 msgstr "&Rādīt:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:382
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:383
 msgid ""
 "Control the number of decimal digits you can enter when editing this column"
 msgstr "Kontrolēt decimālciparu skaitu, ko varat ievadīt, rediģējot šo kolonnu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:385
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:386
 msgid "Decimals when &editing:"
 msgstr "Decimāldaļas, &rediģējot:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:389
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:390
 msgid "Default: (nothing)"
 msgstr "Noklusētais: (nekas)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:390
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:391
 msgid "Field template. Uses the same syntax as save templates."
 msgstr "Lauka šablons. Izmantojiet to pašu sintaksi kā saglabātajos šablonos."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:391
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:392
 #, python-format
 msgid "Similar to save templates. For example, %s"
 msgstr "Līdzīgi, lai saglabātu šablonus. Piemēram, %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:399
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:480
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:400
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:481
 msgid "No heading"
 msgstr "Nav virsraksta"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:400
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:481
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:401
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:482
 msgid "Show heading above the text"
 msgstr "Rādīt virsrakstu virs teksta"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:401
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:402
 msgid "Show heading to the side of the text"
 msgstr "Rādīt virsrakstu blakus tekstam"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:405
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:406
 msgid ""
 "Choose whether or not the column heading is shown in the Book details panel "
 "and, if shown, where. Setting this to 'Show heading to the side of the text'"
@@ -25826,79 +25962,79 @@ msgid ""
 "the non-comments columns."
 msgstr "Izvēlieties, vai slejas virsraksts tiek rādīts grāmatas detalizētās informācijas panelī, un, ja tiek rādīts, kur. Iestatot šo vērtību uz \"Rādīt virsrakstu teksta malā\", informācija tiek pārvietota no atainotas ar citiem komentāriem uz slejām, kas nav komentāru kolonnas."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:410
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:411
 msgid "Heading position:"
 msgstr "Virsraksta pozīcija:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:415
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:416
 msgid "Short text, like a title"
 msgstr "Īss teksts, piemēram, virsraksts"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:417
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:418
 msgid "Plain text formatted using Markdown"
 msgstr "Vienkāršs teksts, kas formatēts, izmantojot Markdown"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:420
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:421
 msgid ""
 "Choose how the data in this column is interpreted.\n"
 "This controls how the data is displayed in the Book details panel\n"
 "and how it is edited."
 msgstr "Izvēlieties, kā interpretēt datus šajā slejā.\nTas pārbauda, kā dati tiek rādīti grāmatas detaļu panelī\nun kā tie tiek laboti."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:423
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:424
 msgid "Interpret this column as:"
 msgstr "Interpretēt šo sleju kā:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:428
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:429
 msgid ""
 "A comma-separated list of permitted values. The empty value is always\n"
 "included, and is the default. For example, the list 'one,two,three' has\n"
 "four values, the first of them being the empty value."
 msgstr "Ar komatu atdalīts saraksts ar atļautām vērtībām. Tukša vērtība vienmēr\niekļauta pēc noklusējuma. Tā, piemēram, sarakstam 'one,two,three' ir\nčetras vērtības, pirmais no tiem ir tukša vērtība."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:431
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:432
 msgid "&Values:"
 msgstr "&Vērtības:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:433
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:434
 msgid ""
 "A list of color names to use when displaying an item. The\n"
 "list must be empty or contain a color for each value."
 msgstr "Saraksts ar krāsu nosaukumiem, lai izmantotu, kad parādīs elementu.\nsarakstam jābūt tukšam vai jāietver krāsa katrai vērtībai."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:435
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:436
 msgid "Colors:"
 msgstr "Krāsas:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:438
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:439
 msgid "Allow half stars"
 msgstr "Atļaut pusi zvaigznes"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:439
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:440
 msgid "Allow half star ratings, for example: "
 msgstr "Atļaut pusi vērtējumiem, piemēram: "
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:444
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:445
 msgid "&Sort/search column by"
 msgstr "&Kārtot/meklēt slejā pēc"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:446
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:447
 msgid "How this column should handled in the GUI when sorting and searching"
 msgstr "Kā šai slejai būtu jāapstrādā GUI, kārtojot un meklējot"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:448
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:449
 msgid "Show in Tag browser"
 msgstr "Rādīt birku pārlūkā"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:449
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:450
 msgid "If checked, this column will appear in the Tag browser as a category"
 msgstr "Ja ir atzīmēts, šī sleja tiks parādīta birku pārlūkā, kā kategorija"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:451
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:452
 msgid "Show as HTML in Book details"
 msgstr "Parādīt kā HTML grāmatas detaļas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:453
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:454
 msgid ""
 "If checked, this column will be displayed as HTML in Book details and the "
 "Content server. This can be used to construct links with the template "
@@ -25912,11 +26048,11 @@ msgid ""
 "site."
 msgstr "Ja atzīmēts, šīs slejas tiks rādītas kā HTML grāmatu detaļas un satura serveris. To var izmantot, lai veidotu saites ar šablona valodu. Piemēram, šablons <pre>&lt;big&gt;&lt;b&gt;{title}&lt;/b&gt;&lt;/big&gt;{series:| [|}{series_index:| [|]]}</pre>tiks izveidots lauks, parādīts nosaukums treknrakstā lieliem burtiem, kopā ar sēriju, piemēram <br>\"<big><b>An Oblique Approach</b></big> [Belisarius [1]]\". Šablons <pre>&lt;a href=\"https://www.beam-ebooks.de/ebook/{identifiers:select(beam)}\"&gt;Beam book&lt;/a&gt;</pre> izveidos saiti uz grāmatu Beam e-grāmatas mājas lapu."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:469
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:470
 msgid "Show with comments in Book details"
 msgstr "Rādīt ar komentāriem sadaļu Grāmatas informācija"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:470
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:471
 msgid ""
 "If you check this box then the column contents will show in the Comments "
 "section in the Book details. You can indicate whether not to have a header "
@@ -25925,17 +26061,17 @@ msgid ""
 "template must be plain text or html."
 msgstr "Ja atzīmēsit šo izvēles rūtiņu, kolonnas saturs tiks parādīts sadaļā Komentāri sadaļā Grāmatas informācija. Varat norādīt, vai nav galvenes vai jāliek virsraksts virs kolonnas. Ja vēlaties blakus datiem pievienot galveni, neatzīmējiet šo izvēles rūtiņu. Ja šī izvēles rūtiņa ir atzīmēta, kolonnas veidnes izvadei ir jābūt vienkāršam tekstam vai html."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:486
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:487
 msgid ""
 "Choose whether or not the column heading is shown in the Book\n"
 "details panel and, if shown, where"
 msgstr "Izvēlieties, vai slejas virsraksts tiek parādīts grāmatas\ndetaļu panelī un, ja parādīts, kur"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:488
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:489
 msgid "Column heading:"
 msgstr "Kolonnas virsraksts:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:495
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:496
 msgid ""
 "Default value when a new book is added to the library. For Date columns "
 "enter the word \"Now\", or the date as yyyy-mm-dd. For Yes/No columns enter "
@@ -25943,19 +26079,19 @@ msgid ""
 "permitted values. For Rating columns enter a number between 0 and 5."
 msgstr "Noklusējuma vērtība, kad bibliotēkai tiek pievienota jauna grāmata. Kolonnās Datums ievadiet vārdu \"Tagad\" vai datumu kā yyyy-mm-dd. Kolonnās Jā/Nē ievadiet “Jā” vai “Nē”. Tekstam ar fiksētu vērtību kopu ievadiet vienu no atļautajām vērtībām. Kolonnās Vērtējums ievadiet skaitli no 0 līdz 5."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:500
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:501
 msgid "&Default value:"
 msgstr "&Noklusējuma vērtība:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:538
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:539
 msgid "&Format for dates:"
 msgstr "&Datumu formāts:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:538
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:539
 msgid "Default: dd MMM yyyy."
 msgstr "Noklusētais: dd MMM yyyy."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:540
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:541
 msgid ""
 "<p>Date format.</p><p>The formatting codes are:<ul><li>d    : the day as number without a leading zero (1 to 31)</li><li>dd   : the day as number with a leading zero (01 to 31)</li><li>ddd  : the abbreviated localized day name (e.g. \"Mon\" to \"Sun\").</li><li>dddd : the long localized day name (e.g. \"Monday\" to \"Sunday\").</li><li>M    : the <b>month</b> as number without a leading zero (1 to 12).</li><li>MM   : the <b>month</b> as number with a leading zero (01 to 12)</li><li>MMM  : the abbreviated localized <b>month</b> name (e.g. \"Jan\" to \"Dec\").</li><li>MMMM : the long localized <b>month</b> name (e.g. \"January\" to \"December\").</li><li>yy   : the year as two digit number (00 to 99).</li><li>yyyy : the year as four digit number.</li><li>h    : the hours without a leading 0 (0 to 11 or 0 to 23, depending on am/pm)</li><li>hh   : the hours with a leading 0 (00 to 11 or 00 to 23, depending on am/pm)</li><li>m    : the <b>minutes</b> without a leading 0 (0 to 59)</li><li>mm   : the <b>minutes</b> with a leading 0 (00 to 59)</li><li>s    : the seconds without a leading 0 (0 to 59)</li><li>ss   : the seconds with a leading 0 (00 to 59)</li><li>ap   : use a 12-hour clock instead of a 24-hour clock, with \"ap\" replaced by the localized string for am or pm</li><li>AP   : use a 12-hour clock instead of a 24-hour clock, with \"AP\" replaced by the localized string for AM or PM</li><li>iso  : the date with time and timezone. Must be the only format present</li></ul></p><p>For example:\n"
 "<ul>\n"
@@ -25964,18 +26100,18 @@ msgid ""
 "</ul> "
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:569
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:570
 msgid "&Format for numbers:"
 msgstr "&Ciparu formāts:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:570
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:571
 msgid ""
 "Default: Not formatted. For format language details see <a "
 "href=\"https://docs.python.org/library/string.html#format-string-"
 "syntax\">the Python documentation</a>"
 msgstr "Noklusējums: nav formatēts. Informāciju par formāta valodām skatiet <a href=\"https://docs.python.org/library/string.html#format-string-syntax\">Python dokumentācijā </a>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:574
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:575
 #, python-brace-format
 msgid ""
 "Examples: The format <code>{0:0>4d}</code> gives a 4-digit number with "
@@ -25983,7 +26119,7 @@ msgid ""
 "then the word \"days\""
 msgstr "Piemēri: Formāts <code>{0:0>4d}</code> sniedz četrciparu skaitli ar vadošajām nullēm. Formāts <code>{0:d}&nbsp;days</code> izdrukā numuru, pēc tam vārdu \"dienas\""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:579
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:580
 msgid ""
 "Examples: The format <code>{0:.1f}</code> gives a floating point number with"
 " 1 digit after the decimal point. The format "
@@ -25992,121 +26128,121 @@ msgid ""
 "separated by commas."
 msgstr "Piemēri: Formāts <code>{0:.1f}</code> piešķir peldošā komata skaitli ar 1 ciparu aiz komata. Formāts <code>Cena:&nbsp;$&nbsp;{0:,.2f}</code> izdrukā \"Price&nbsp;$&nbsp;\" tad parādās skaitlis ar 2 cipariem aiz komata un tūkstoši atdalīti ar komatu."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:615
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:616
 msgid "No lookup name was provided"
 msgstr "Meklējuma nosaukums nav ierakstīts"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:619
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:620
 msgid ""
 "The lookup name must contain only lower case letters, digits and "
 "underscores, and start with a letter"
 msgstr "Meklējuma nosaukumā jābūt tikai maziem burtiem, cipariem un pasvītrojumiem, un jāsākas ar burtu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:622
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:623
 msgid ""
 "Lookup names cannot end with _index, because these names are reserved for "
 "the index of a series column."
 msgstr "Meklējuma nosaukumi nevar beigties ar _index, jo šie vārdi ir rezervēti sēriju slejas indeksācijai."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:633
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:634
 msgid "No column heading was provided"
 msgstr "Nav norādīts slejas virsraksts"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:639
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:640
 #, python-format
 msgid "The lookup name %s is already used"
 msgstr "Meklējuma nosaukums %s jau tiek izmantots"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:649
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:650
 #, python-format
 msgid "The heading %s is already used"
 msgstr "Virsraksts %s jau tiek lietots"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:670
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:715
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:738
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:752
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:755
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:762
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:671
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:716
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:739
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:753
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:756
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:763
 msgid "Invalid default value"
 msgstr "Nederīga noklusējuma vērtība"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:671
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:672
 msgid "The default value must be \"Now\" or a date"
 msgstr "Noklusējuma vērtībai jābūt “Tagad” vai datumam"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:675
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:676
 msgid "You must enter a template for composite columns"
 msgstr "Par šablonu jāievada saliktas slejas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:693
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:694
 msgid "You must enter at least one value for enumeration columns"
 msgstr "Ir jāievada vismaz viena slejas uzskaitīšanas vērtība"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:707
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:708
 msgid ""
 "The colors box must be empty or contain the same number of items as the "
 "value box"
 msgstr "Krāsas lodziņam jābūt tukšam vai jāsatur to pašu vienību skaitu, kā vērtību lodziņā"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:711
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:712
 #, python-brace-format
 msgid "The color {0} is unknown"
 msgstr "Krāsa {0} nav zināma"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:716
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:717
 msgid "The default value must be one of the permitted values"
 msgstr "Noklusējuma vērtībai jābūt vienai no atļautajām vērtībām"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:730
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:731
 msgid "The default value must be an integer"
 msgstr "Noklusējuma vērtībai jābūt skaitlim"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:734
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:735
 msgid "The default value must be a real number"
 msgstr "Noklusējuma vērtībai jābūt reālam skaitlim"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:753
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:754
 msgid "The default value must be a real number between 0 and 5.0"
 msgstr "Noklusējuma vērtībai jābūt reālam skaitlim no 0 līdz 5.0"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:756
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:757
 msgid "The default value must be an integer between 0 and 5"
 msgstr "Noklusējuma vērtībai jābūt skaitlim no 0 līdz 5"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:763
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:764
 msgid "The default value must be \"Yes\" or \"No\""
 msgstr "Noklusējuma vērtībai jābūt “Jā” vai “Nē”"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:935
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:936
 msgid "You must restart calibre before making any more changes"
 msgstr "Pirms izmaiņu veikšanas jums ir jārestartē calibre"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:937
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:938
 msgid "The lookup name must begin with a '#'"
 msgstr "Uzmeklēšanas nosaukumam jāsākas ar #"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:941
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:942
 #, python-format
 msgid "The custom column %s already exists"
 msgstr "Pielāgotā kolonna %s jau pastāv"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:952
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:953
 #, python-format
 msgid "The column heading %s already exists"
 msgstr "Kolonnas virsraksts %s jau pastāv"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:962
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:963
 #, python-format
 msgid "The custom column type %s doesn't exist"
 msgstr "Pielāgotais kolonnas veids %s nepastāv"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:965
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:966
 #, python-format
 msgid "You cannot specify is_multiple for the datatype %s"
 msgstr "Datu tipam %s nevar norādīt is_multiple"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:968
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:969
 msgid "The display parameter must be a Python dictionary"
 msgstr "Displeja parametram ir jābūt Python vārdnīcai"
 
@@ -26479,7 +26615,7 @@ msgid "If there is enough room"
 msgstr "Ja nepietiek vieta"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:654
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1079
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1080
 msgid "By first letter"
 msgstr "Pēc pirmā burta"
 
@@ -26494,7 +26630,7 @@ msgstr "Kompakti metadati"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:665
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:668
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1199
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1201
 #: /__w/calibre/calibre/src/calibre/spell/dictionary.py:28
 msgid "Default"
 msgstr "Noklusētais"
@@ -26828,7 +26964,7 @@ msgid ""
 msgstr "Ir pieejami divu tipu kešatmiņu veidi, kurus calibre izmanto, lai uzlabotu veiktspēju, pārveidojot vākus režģa skatā. Diska kešatmiņa, kas tiek glabāta jūsu cietajā diskā, un saglabā vāka sīktēlus un atmiņas kešatmiņa, kas tiek izmantota, lai nodrošinātu vāku noņemšanu bez mirgošanas. Lai sasniegtu vislabākos rezultātus, saglabājiet atmiņas kešatmiņu mazu un diska kešatmiņu lielu, ja vien datorā nav daudz papildu RAM un neatmetat, ka tā tiek izmantota kešatmiņas atmiņai."
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:876
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1077
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1078
 msgid "Disable"
 msgstr "Atspējot"
 
@@ -29392,7 +29528,7 @@ msgstr "Ielīmēt un &meklēt"
 
 #: /__w/calibre/calibre/src/calibre/gui2/search_box.py:56
 #: /__w/calibre/calibre/src/calibre/gui2/widgets2.py:144
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:389
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:354
 msgid "&Paste"
 msgstr "Ie&līmēt"
 
@@ -30144,7 +30280,7 @@ msgid "Number of books: %s"
 msgstr "Grāmatu skaits: %s"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:323
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:142
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:143
 msgid "Rename in Virtual library"
 msgstr "Pārdēvēt virtuālajā bibliotēkā"
 
@@ -30183,31 +30319,31 @@ msgid ""
 "Changing the metadata for that many books can take a while. Are you sure?"
 msgstr "Metadatu mainīšana tik daudzām grāmatām var aizņemt kādu laiku. Vai esat pārliecināts?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1368
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1392
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1401
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1380
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1404
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1413
 msgid "Rename User category"
 msgstr "Pārdēvēt lietotāju kategoriju"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1369
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1381
 msgid "You cannot use periods in the name when renaming User categories"
 msgstr "Lietotāja kategoriju pārdēvēšanas laikā nevarat izmantot periodus"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1393
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1402
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1405
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1414
 #, python-format
 msgid "The name %s is already used"
 msgstr "Nosaukums %s jau tiek lietots"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1417
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1429
 msgid "Author names cannot contain & characters."
 msgstr "Autoru vārdi nevar saturēt & simbolus."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1424
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1436
 msgid "Duplicate search name"
 msgstr "Vaicājuma nosaukums atkārtojas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1424
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1436
 #, python-format
 msgid "The saved search name %s is already used."
 msgstr "Saglabātā vaicājuma nosaukums %s jau tiek izmantots."
@@ -30228,439 +30364,455 @@ msgstr "Nederīgs meklēšanas ierobežojums"
 msgid "The current search restriction is invalid"
 msgstr "Norādītais meklēšanas ierobežojums nav derīgs"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:138
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:135
+msgid "Cannot add subcategory to category"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:136
+msgid ""
+"The option 'Preferences -> Look & feel -> Tag browser -> Hide empty "
+"categories' is enabled, preventing the creation of new empty user "
+"subcategories because they won't be displayed. Either change the option or "
+"use the 'Manage Categories' dialog to add the subcategories."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:150
 msgid "New category"
 msgstr "Jauna kategorija"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:196
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:199
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:207
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:210
 msgid "Delete User category"
 msgstr "Dzēst lietotāja kategoriju"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:197
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:208
 #, python-format
 msgid "%s is not a User category"
 msgstr "%s nav lietotāja kategorija"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:200
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:211
 #, python-format
 msgid "%s contains items. Do you really want to delete it?"
 msgstr "%s satur vienumus. Vai tiešām vēlaties tos dzēst?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:223
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:234
 msgid "Remove category"
 msgstr "Dzēst kategoriju"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:224
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:235
 #, python-format
 msgid "User category %s does not exist"
 msgstr "Lietotāja kategorija %s nepastāv"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:245
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:256
 msgid "Add to User category"
 msgstr "Pievienot lietotāju kategorijai"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:246
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:257
 #, python-format
 msgid "A User category %s does not exist"
 msgstr "Lietotāja kategorija %s nepastāv"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:327
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:338
 msgid "Children"
 msgstr "Atvases"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:327
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:338
 msgid "Item"
 msgstr "Ieraksti"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:333
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:344
 #, python-format
 msgid ""
 "%s and its children will be deleted from books in the Virtual library. Are "
 "you sure?"
 msgstr "%s un tā atvases tiks izdzēsti no virtuālās bibliotēkas grāmatām. Vai esi pārliecināts?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:336
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:347
 #, python-format
 msgid "%s and its children will be deleted from all books. Are you sure?"
 msgstr "%s un tā atvases tiks izdzēsti no visām grāmatām. Vai esi pārliecināts?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:341
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:352
 #, python-format
 msgid "%s will be deleted from books in the Virtual library. Are you sure?"
 msgstr "%s tiks dzēsti no grāmatām virtuālajā bibliotēkā. Vai esi pārliecināts?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:343
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:354
 #, python-format
 msgid "%s will be deleted from all books. Are you sure?"
 msgstr "%s tiks izdzēsti no visām grāmatām. Vai esat pārliecināts?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:345
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:356
 msgid "Delete item"
 msgstr "Dzēst vienību"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:376
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:387
 msgid "You must select some books to apply {} to"
 msgstr "Jums jāizvēlas dažas grāmatas, kurām lietot {}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:424
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:435
 #, python-format
 msgid ""
 "The identifier %s will be deleted from books in the current virtual library."
 " Are you sure?"
 msgstr "Identifikators %s tiks dzēsts no pašreizējās virtuālās bibliotēkas grāmatām. Vai esi pārliecināts?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:427
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:438
 #, python-format
 msgid "The identifier %s will be deleted from all books. Are you sure?"
 msgstr "Identifikators %s tiks dzēsts no visām grāmatām. Vai esi pārliecināts?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:429
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:440
 msgid "Delete identifier"
 msgstr "Dzēst identifikatoru"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:502
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:513
 #, python-format
 msgid "change_tb_category_visibility: category %s does not exist"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:516
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:527
 #, python-format
 msgid "change_tb_category_visibility: invalid operation %s"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:555
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:566
 msgid ""
 "Change how the Tag browser works, such as, how it is sorted, what happens "
 "when you click items, etc."
 msgstr "Mainīt Birkas pārlūka funkciju, piemēram, kā to sakārtot, kā rīkoties, noklikšķinot uz vienumiem utt."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:570
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:580
 msgid ""
-"Search for items. If the text begins with equals (=) the search is exact "
-"match, otherwise it is \"contains\" finding items containing the text "
-"anywhere in the item name. Both exact and contains searches ignore case. You"
-" can limit the search to particular categories using syntax similar to "
-"search. For example, tags:foo will find foo in any tag, but not in authors "
-"etc. Entering *foo will collapse all categories then showing only those "
-"categories with items containing the text \"foo\""
-msgstr "Ierakstu meklēšana. Ja teksts sākas ar vienādu (=), meklēšana atbilst precīzi, pretējā gadījumā tā satur “satura” ierakstu atrašanu, kas satur tekstu jebkur ieraksta nosaukumā. Gan precīzi, gan saturiski meklējumi ignorē gadījumu. Varat ierobežot meklēšanu noteiktās kategorijās, izmantojot sintaksi, kas līdzīga meklēšanai. Piemēram, birkas: foo atradīs foo jebkurā birkā, bet ne autoros utt. Ievadot *foo, tiks sakļautas visas kategorijas, pēc tam parādot tikai tās kategorijas ar ierakstiem, kas satur tekstu “foo”"
+"<p>Search for items in the Tag browser. If the search text begins with an "
+"equals sign (=) then the search is \"equals\", otherwise it is \"contains\"."
+" Both the equals and contains searches ignore case. If the preference "
+"<em>Preferences -> Searching -> Unaccented characters match accented "
+"characters ...</em> is checked then a <em>Character variant search</em> is "
+"used, where characters match regardless of accents, and punctuation is "
+"significant. See <em>The search interface</em> in the calibre manual for "
+"more explanation.</p><p>You can limit the search to particular categories "
+"using syntax similar to calibre's <em>Search</em>. For example, tags:foo "
+"will find foo in tags but not in authors etc.</p><p>Entering *foo will "
+"collapse all categories before doing the search.</p>"
+msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:581
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:600
 msgid "Find in the Tag browser"
 msgstr "Atrast birku pārlūkā"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:589
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:608
 msgid "Find the first/next matching item"
 msgstr "Atrast pirmo/nākamo atbilstošo vienumu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:600
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:619
 msgid "Find"
 msgstr "Atrast"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:680
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:699
 msgid "No more matches.</b><p> Click Find again to go to first match"
 msgstr "Vairs nav atbilstību.</b> <p>Klikšķiniet vēlreiz Atrast, lai pārietu uz pirmo atbilstību"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:702
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:721
 msgid "Configure Tag browser"
 msgstr "Konfigurēt Birku pārlūku"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:717
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:736
 msgid "Number of books"
 msgstr "Grāmatu skaits"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:718
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:737
 msgid "Average rating"
 msgstr "Vidējais vērtējums"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:725
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:744
 msgid "Set the sort order for entries in the Tag browser"
 msgstr "Birku pārlūkā iestatīt ierakstu kārtošanas secību"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:728
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:747
 msgid "Search type when selecting multiple items"
 msgstr "Meklēšanas veids izvēloties vairākus objektus"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:734
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:753
 msgid "Match all of the items"
 msgstr "Atrast sakritības visām vienībām"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:734
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:753
 msgid "Match any of the items"
 msgstr "Atrast sakritības jebkurai no vienībām"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:741
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:760
 msgid ""
 "When selecting multiple entries in the Tag browser match any or all of them"
 msgstr "Izvēloties vairākus ierakstus Birku pārlūkā, tiem jāatbilst jebkuram vai tajos visos"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:745
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:764
 msgid "Manage authors, tags, etc."
 msgstr "Pārvaldīt autorus, birkas, utt."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:746
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:765
 msgid ""
 "All of these category managers are available by right-clicking on items in "
 "the Tag browser above"
 msgstr "Visi šie kategoriju pārvaldnieki ir pieejami, augstāk esošajā Birku pārlūkā ar peles labo pogu klikšķinot uz vienumiem"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:751
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:770
 msgid "Show only books that have visible categories"
 msgstr "Rādīt tikai grāmatas, kurām ir redzamas kategorijas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:755
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:774
 msgid "Filter book list"
 msgstr "Filtrēt grāmatu sarakstu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:762
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:781
 msgid "'Click' found item"
 msgstr "\"Klikšķiniet\" uz atrasta vienuma"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:769
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:788
 msgid "Give the Tag browser keyboard focus"
 msgstr "Fokusēt pārlūka birku tastatūru"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:779
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:798
 msgid "Hide counts"
 msgstr "Slēpt skaitu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:779
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:798
 msgid "Show counts"
 msgstr "Rādīt skaitu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:782
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:801
 msgid "Hide average rating"
 msgstr "Slēpt vidējo vērtējumu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:782
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:801
 msgid "Show average rating"
 msgstr "Rādīt vidējo vērtējumu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:143
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:144
 msgid ""
 "A Virtual library is active but you are renaming the item in all books in "
 "your library. Is this really what you want to do?"
 msgstr "Virtuālā bibliotēka ir aktīva, taču jūs pārdēvējat vienumu visās jūsu bibliotēkas grāmatās. Vai tas tiešām ir tas, ko vēlaties darīt?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:146
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:147
 msgid "Yes, apply in entire library"
 msgstr "Jā, pieteikties visā bibliotēkā"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:147
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:148
 msgid "No, apply only in Virtual library"
 msgstr "Nē, pieteikties tikai virtuālajā bibliotēkā"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:539
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:540
 #, python-format
 msgid "Change icon for: %s"
 msgstr "Mainīt ikonu uz: %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:627
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:628
 msgid "Delete Saved search"
 msgstr "Dzēst saglabāto meklēšanu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:628
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:629
 msgid "Delete the saved search: {}?"
 msgstr "Vai dzēst saglabāto meklējumu: {}?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:726
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:727
 msgid "Show category"
 msgstr "Rādīt kategoriju"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:745
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:746
 msgid "All categories"
 msgstr "Visas kategorijas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:781
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:782
 #, python-format
 msgid "Rename %s in Virtual library"
 msgstr "Pārdēvēt %s virtuālajā bibliotēkā"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:785
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:848
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:914
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:786
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:849
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:915
 #, python-format
 msgid "Rename %s"
 msgstr "Pārdēvēt %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:792
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:793
 #, python-format
 msgid "Delete %s in Virtual library"
 msgstr "Dzēst %s virtuālajā bibliotēkā"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:797
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:864
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:798
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:865
 #, python-format
 msgid "Delete %s"
 msgstr "Dzēst %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:802
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:803
 #, python-format
 msgid "Edit sort for %s"
 msgstr "Labot %s šķirošanas kārtību"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:805
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:806
 #, python-format
 msgid "Edit link for %s"
 msgstr "Labot %s saiti"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:811
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:812
 #, python-format
 msgid "Add %s to User category"
 msgstr "Pievienot %s lietotāja kategorijai"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:827
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:828
 #, python-format
 msgid "Children of %s"
 msgstr "Atvases no %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:838
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:839
 #, python-format
 msgid "Add/remove %s to selected books"
 msgstr "Pievienot/noņemt %s atlasītajām grāmatām"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:840
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:841
 #, python-format
 msgid "Add %s to selected books"
 msgstr "Pievienot %s atlasītajām grāmatām"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:843
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:844
 #, python-format
 msgid "Remove %s from selected books"
 msgstr "Noņemt %s no atlasītajām grāmatām"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:852
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:853
 #, python-format
 msgid "Delete Saved search %s"
 msgstr "Dzēst saglabāto meklēšanu %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:858
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:859
 #, python-format
 msgid "Delete %s in Virtual Library"
 msgstr "Dzēst %s virtuālajā bibliotēkā"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:871
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:872
 #, python-format
 msgid "Remove %(item)s from category %(cat)s"
 msgstr "Noņemt %(item)s no kategorijas %(cat)s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:879
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:930
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:946
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:880
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:931
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:947
 msgid "Search for"
 msgstr "Meklēt"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:890
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:891
 #, python-format
 msgid "%s and its children"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:895
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:938
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:896
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:939
 #, python-format
 msgid "Everything but %s"
 msgstr "Viss, izņemot %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:901
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:902
 #, python-format
 msgid "Everything but %s and its children"
 msgstr "Viss, izņemot %s un tā atvases"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:907
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:908
 msgid "The saved search expression"
 msgstr "Saglabātā meklēšanas izteiksme"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:918
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:919
 #, python-format
 msgid "Add sub-category to %s"
 msgstr "Pievienot %s apakškategoriju"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:922
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:923
 #, python-format
 msgid "Delete User category %s"
 msgstr "Dzēst lietotāju kategoriju %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:952
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:953
 #, python-format
 msgid "Books in category %s"
 msgstr "Grāmatas kategorijā %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:958
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:959
 #, python-format
 msgid "Books not in category %s"
 msgstr "Grāmatas, kas nav kategorijā %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1006
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1007
 msgid "Remove the {} format from selected books"
 msgstr "No atlasītajām grāmatām noņemiet formātu {}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1015
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1016
 #, python-format
 msgid "Hide category %s"
 msgstr "Slēpt kategoriju %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1024
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1025
 msgid "Change {} category icon"
 msgstr "Mainīt {} kategorijas ikonu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1028
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1029
 msgid "Restore {} category default icon"
 msgstr "Atjaunot {} kategorijas noklusējuma ikonu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1033
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1034
 msgid "Change Saved searches folder icon"
 msgstr "Mainiet mapes Saglabātie meklējumi ikonu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1035
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1039
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1036
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1040
 msgid "Saved searches folder"
 msgstr "Saglabāto meklējumu mape"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1037
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1038
 msgid "Restore Saved searches folder default icon"
 msgstr "Atjaunot saglabāto meklējumu mapes noklusējuma ikonu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1047
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1052
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1048
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1053
 msgid "Manage User categories"
 msgstr "Pārvaldīt lietotāju kategorijas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1066
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1067
 msgid "Sub-categorize {}"
 msgstr "Apakškategorija {}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1070
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1071
 msgid "Don't sub-categorize {}"
 msgstr "Neiekļaut apakškategoriju {}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1075
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1076
 msgid "Change sub-categorization scheme"
 msgstr "Mainīt apakš-kategorizēšanas shēmu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1081
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1082
 msgid "Partition"
 msgstr "Sadaļa"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1096
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1097
 msgid "First letter is usable only when sorting by name"
 msgstr "Pirmais burts ir lietojams tikai tad, ja šķiro pēc nosaukuma"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1104
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1105
 msgid "Expand or collapse"
 msgstr "Izvērst vai sakļaut"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1112
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1113
 #, python-brace-format
 msgid "Expand {0}"
 msgstr "Izvērst {0}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1115
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1116
 #, python-brace-format
 msgid "Expand {0} and its children"
 msgstr "Izvērsiet vienumu {0} un tā atvases"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1135
+#: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1136
 #, python-brace-format
 msgid "Collapse {0}"
 msgstr "Sakļaut {0}"
@@ -35567,8 +35719,8 @@ msgid "Choose a custom color"
 msgstr "Izvēlieties pielāgotu krāsu"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preferences.py:419
-#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/model.py:72
-#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/model.py:240
+#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/model.py:81
+#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/model.py:250
 msgid "Custom"
 msgstr "Pielāgots"
 
@@ -36567,7 +36719,7 @@ msgid "No dictionaries were found in %s"
 msgstr "%s nav atrasta neviena vārdnīca"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:156
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:908
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:910
 msgid "Copy selected words to clipboard"
 msgstr "Kopēt izvēlētos vārdus uz starpliktuvi"
 
@@ -36752,185 +36904,185 @@ msgstr "Kļūdains?"
 msgid "Ignored"
 msgstr "Nav ņemti vērā"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:893
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:895
 #, python-format
 msgid "Change %s to"
 msgstr "Mainīt %s uz"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:896
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:898
 msgid "Specify replacement manually"
 msgstr "Norādīt aizvietotāju pašrocīgi"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:901
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:903
 msgid "Ignore/un-ignore all selected words"
 msgstr "Ignorēt/neignorēt visus atlasītos vārdus"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:902
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:904
 msgid "Add/remove all selected words"
 msgstr "Pievienot/noņemt visus atlasītos vārdus"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:932
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:934
 msgid "Exclude files from spell check"
 msgstr "Izslēgt failus no pareizrakstības pārbaudes"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:939
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:941
 msgid ""
 "Choose the files to exclude below. In addition to this list any file can be "
 "permanently excluded by adding the comment {} just under its opening tag."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:993
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:995
 msgid "Check spelling"
 msgstr "Pārbaudīt pareizrakstību"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1009
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1011
 msgid ""
 "Re-scan the book for words, useful if you have edited the book since opening"
 " this dialog"
 msgstr "Pārskenēt grāmatas vārdus, noderīgi, ja jūs esat rediģējis grāmatu, kad bija atvērts šis dialogs"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1012
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1014
 msgid "&Undo last change"
 msgstr "&Atsaukt pēdējās izmaiņas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1013
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1015
 msgid "Undo the last spell check word replacement, if any"
 msgstr "Atsaukt pēdējo pareizrakstības pārbaudīšanas vārdu nomaiņu, ja tāda ir"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1017
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1019
 msgid "Exclude some files in the book from spell check"
 msgstr "Izslēgt dažus grāmatas failus no pareizrakstības pārbaudes"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1028
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1030
 msgid "Checking, please wait..."
 msgstr "Pārbuda, lūdzu, uzgaidiet..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1036
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1038
 msgid "Filter the list of words"
 msgstr "Filtrēt vārdu sarakstu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1065
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1067
 msgid "&Ignore"
 msgstr "&Ignorēt"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1066
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1068
 msgid "Un&ignore"
 msgstr "Ne&ignorēt"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1067
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1069
 msgid "Ignore the current word for the rest of this session"
 msgstr "Ignorēt pašreizējo vārdu atlikušās darba sesijas laikā"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1068
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1070
 msgid "Stop ignoring the current word"
 msgstr "Apturēt pašreizējā vārda ignorēšanu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1074
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1076
 msgid "Add word to &dictionary:"
 msgstr "Pievienot vārdu &vārdnīcai:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1075
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1077
 msgid "Remove from &dictionaries"
 msgstr "Dzēst no vār&dnīcām"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1076
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1078
 msgid "Add the current word to the specified user dictionary"
 msgstr "Pievienot pašreizējo vārdu norādītajai lietotāja vārdnīcai"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1077
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1079
 msgid "Remove the current word from all active user dictionaries"
 msgstr "Dzēst pašreizējo vārdu no visām lietotāja vārdnīcām"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1081
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1083
 msgid ""
 "You have no active user dictionaries. You must choose at least one active "
 "user dictionary via Preferences->Editor->Manage spelling dictionaries"
 msgstr "Jums nav aktīvas lietotāja vārdnīcas. Jums ir jāizvēlas vismaz viena aktīva lietotāja vārdnīca izmantojot Iestatījumi->Rediģēt->Pārvaldīt pareizrakstības vārdnīcas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1088
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1090
 msgid "Show &next occurrence"
 msgstr "Rādīt &nākamo atbilstību"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1090
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1092
 msgid ""
 "Show the next occurrence of the selected word in the editor, so you can edit"
 " it manually"
 msgstr "Parādiet nākamo izvēlēto gadījuma vārdu redaktorā, lai jūs varētu rediģēt manuāli"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1095
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1097
 msgid "&Change selected word to:"
 msgstr "Nomainīt izvēlēto vārdu uz:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1100
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1102
 msgid "The replacement word"
 msgstr "Aizvietojošais vārds"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1110
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1112
 msgid "Show &only misspelled words"
 msgstr "Rādīt &tikai kļūdainos vārdus"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1113
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1115
 msgid "Case &sensitive sort"
 msgstr "Reģistrjutīga šķirošana"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1115
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1117
 msgid "When sorting the list of words, be case sensitive"
 msgstr "Kad kārtojat vārdu sarakstu, tas ir reģistrjutīgs"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1117
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1119
 msgid "Case sensitive sea&rch"
 msgstr "Reģistrjutīga meklēš&ana"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1118
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1120
 msgid "When filtering the list of words, be case sensitive"
 msgstr "Kad filtrējat vārdu sarakstu, tas ir reģistrjutīgs"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1141
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1143
 msgid "Change all occurrences of this word"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1142
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1144
 msgid "Show next occurrence of this word in the book"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1172
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1174
 msgid "E&xclude files"
 msgstr "Iz&slēgt failus"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1245
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1247
 msgid "The original word"
 msgstr "Oriģinālais vārds"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1303
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1305
 msgid "No changed word"
 msgstr "Nav mainīts vārds"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1304
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1306
 msgid "There is no spelling replacement to undo"
 msgstr "Lai atsauktu, nav pareizrakstības aizstājēja"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1397
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1399
 msgid "Failed to check spelling"
 msgstr "Neizdevās pārbaudīt pareizrakstību"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1398
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1400
 msgid ""
 "Failed to check spelling, click \"Show details\" for the full error "
 "information."
 msgstr "Neizdevās pārbaudīt pareizrakstību. Uzklikšķiniet \"Rādīt vairāk\" plašākai informācijai."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1422
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1424
 msgid "Files edited"
 msgstr "Labotas datnes"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1423
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1425
 #, python-format
 msgid ""
 "The files in the editor were edited outside the spell check dialog, and the "
 "word %s no longer exists."
 msgstr "Ar redaktoru faili tika rediģēti ārpus pareizrakstības pārbaude dialoga, un vārdi %s vairs neeksistē."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1427
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:1429
 #, python-brace-format
 msgid "Misspelled words: {0} Total words: {1}"
 msgstr "Kļūdainie vārdi: {0} Kopējais vārdu skaits: {1}"
@@ -38926,14 +39078,6 @@ msgstr "Rādīt izmēru stūrī"
 msgid "Drag to resize"
 msgstr "Velciet lai mērogotu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/widgets.py:1072
-msgid "Hide {}"
-msgstr "Slēpt {}"
-
-#: /__w/calibre/calibre/src/calibre/gui2/widgets.py:1072
-msgid "Show {}"
-msgstr "Rādīt {}"
-
 #: /__w/calibre/calibre/src/calibre/gui2/widgets2.py:99
 msgid "Choose &color"
 msgstr "Izvēlēties &krāsu"
@@ -38943,17 +39087,17 @@ msgid "Choose a color"
 msgstr "Izvēlēties krāsu"
 
 #: /__w/calibre/calibre/src/calibre/gui2/widgets2.py:142
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:388
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:353
 msgid "Cu&t"
 msgstr "Izgriez&t"
 
 #: /__w/calibre/calibre/src/calibre/gui2/widgets2.py:149
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:395
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:360
 msgid "&Step up"
 msgstr "&Solis augšup"
 
 #: /__w/calibre/calibre/src/calibre/gui2/widgets2.py:150
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:396
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:361
 msgid "Step &down"
 msgstr "Solis &lejup"
 
@@ -42430,8 +42574,8 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:2487
 msgid ""
-"extra_file_modtime(file_name, format_spec) -- returns the modification time "
-"of the extra file 'file_name' in the book's '{}/' folder if it exists, "
+"extra_file_modtime(file_name, format_string) -- returns the modification "
+"time of the extra file 'file_name' in the book's '{}/' folder if it exists, "
 "otherwise -1.0. The modtime is formatted according to 'format_string' (see "
 "format_date()). If 'format_string' is empty, returns the modtime as the "
 "floating point number of seconds since the epoch. The epoch is OS dependent."
@@ -42458,277 +42602,85 @@ msgstr "Apturēts"
 msgid "Working..."
 msgstr "Apstrādā..."
 
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:314
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:328
 msgid "Brazilian Portuguese"
 msgstr "Brazīliešu Portugāļu"
 
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:315
-msgid "English (United Kingdom)"
-msgstr "Angļu (Apvienotā Karaliste)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:316
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:329
 msgid "Simplified Chinese"
 msgstr "Vienkāršotā Ķīniešu"
 
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:317
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:330
 msgid "Traditional Chinese"
 msgstr "Tradicionālā Ķīniešu"
 
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:318
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:331
 msgid "English"
 msgstr "Angļu"
 
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:319
-msgid "English (United States)"
-msgstr "Angļu (ASV)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:320
-msgid "English (Argentina)"
-msgstr "Angļu (Argentīnas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:321
-msgid "English (Australia)"
-msgstr "Angļu (Austrālijas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:322
-msgid "English (Japan)"
-msgstr "Angļu (Japānas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:323
-msgid "English (Germany)"
-msgstr "Angļu (Vācu)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:324
-msgid "English (Bulgaria)"
-msgstr "Angļu (Bulgārijas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:325
-msgid "English (Egypt)"
-msgstr "Angļu (Ēģiptes)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:326
-msgid "English (New Zealand)"
-msgstr "Angļu (Jaunzēlandes)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:327
-msgid "English (Canada)"
-msgstr "Angļu (Kanādas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:328
-msgid "English (Greece)"
-msgstr "Angļu (Grieķijas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:329
-msgid "English (India)"
-msgstr "Angļu (Indijas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:330
-msgid "English (Nepal)"
-msgstr "Angļu (Nepālas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:331
-msgid "English (Thailand)"
-msgstr "Angļu (Taizemes)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:332
-msgid "English (Turkey)"
-msgstr "Angļu (Turcijas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:333
-msgid "English (Cyprus)"
-msgstr "Angļu (Kipras)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:334
-msgid "English (Czech Republic)"
-msgstr "Angļu (Čehijas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:335
-msgid "English (Philippines)"
-msgstr "Angļu (Filipīnas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:336
-msgid "English (Pakistan)"
-msgstr "Angļu (Pakistānas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:337
-msgid "English (Poland)"
-msgstr "Angļu (Polijas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:338
-msgid "English (Croatia)"
-msgstr "Angļu (Horvātijas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:339
-msgid "English (Hungary)"
-msgstr "Angļu (Ungārijas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:340
-msgid "English (Indonesia)"
-msgstr "Angļu (Indonēzijas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:341
-msgid "English (Israel)"
-msgstr "Angļu (Izraēlas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:342
-msgid "English (Russia)"
-msgstr "Angļu (Krievijas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:343
-msgid "English (Singapore)"
-msgstr "Angļu (Singapūras)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:344
-msgid "English (Yemen)"
-msgstr "Angļu (Jemenas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:345
-msgid "English (Ireland)"
-msgstr "Angļu (Īrijas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:346
-msgid "English (China)"
-msgstr "Angļu (Ķīnas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:347
-msgid "English (Taiwan)"
-msgstr "Angļu (Taivāna)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:348
-msgid "English (South Africa)"
-msgstr "Angļu (Dienvidāfrikas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:349
-msgid "Spanish (Paraguay)"
-msgstr "Spāņu (Paragvajas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:350
-msgid "Spanish (Uruguay)"
-msgstr "Spāņu (Urugvajas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:351
-msgid "Spanish (Argentina)"
-msgstr "Spāņu (Argentīnas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:352
-msgid "Spanish (Costa Rica)"
-msgstr "Spāņu (Kosta Rikas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:353
-msgid "Spanish (Mexico)"
-msgstr "Spāņu (Meksikas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:354
-msgid "Spanish (Cuba)"
-msgstr "Spāņu (Kubas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:355
-msgid "Spanish (Chile)"
-msgstr "Spāņu (Čīles)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:356
-msgid "Spanish (Ecuador)"
-msgstr "Spāņu (Ekvadoras)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:357
-msgid "Spanish (Honduras)"
-msgstr "Spāņu (Hondurasas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:358
-msgid "Spanish (Venezuela)"
-msgstr "Spāņu (Venecuēlas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:359
-msgid "Spanish (Bolivia)"
-msgstr "Spāņu (Bolīvijas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:360
-msgid "Spanish (Nicaragua)"
-msgstr "Spāņu (Nikaragvas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:361
-msgid "Spanish (Colombia)"
-msgstr "Spāņu (Kolumbijas)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:362
-msgid "German (Austria)"
-msgstr "Vācu (Austrija)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:363
-msgid "French (Belgium)"
-msgstr "Franču (Beļģija)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:364
-msgid "French (Canadian)"
-msgstr "Franču (kanādiešu)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:365
-msgid "Dutch (Netherlands)"
-msgstr "Holandiešu (Nīderlande)"
-
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:366
-msgid "Dutch (Belgium)"
-msgstr "Holandiešu (Beļģija)"
-
 #. NOTE: Ante Meridian (i.e. like 10:00 AM)
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:374
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:339
 msgid "AM"
 msgstr "AM"
 
 #. NOTE: Post Meridian (i.e. like 10:00 PM)
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:376
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:341
 msgid "PM"
 msgstr "PM"
 
 #. NOTE: Ante Meridian (i.e. like 10:00 am)
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:378
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:343
 msgid "am"
 msgstr "am"
 
 #. NOTE: Post Meridian (i.e. like 10:00 pm)
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:380
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:345
 msgid "pm"
 msgstr "pm"
 
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:382
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:347
 msgid "Select All"
 msgstr "Atlasīt Visu"
 
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:383
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:348
 msgid "Copy Link"
 msgstr "Kopēt saiti"
 
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:384
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:349
 msgid "&Select All"
 msgstr "&Atlasīt Visu"
 
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:385
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:350
 msgid "Copy &Link Location"
 msgstr "Kopēt &saites vietu"
 
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:390
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:355
 msgid "Paste and Match Style"
 msgstr "Ielīmēt un pielāgot stilam"
 
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:391
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:356
 msgid "Directions"
 msgstr "Virzieni"
 
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:392
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:357
 msgid "Left to Right"
 msgstr "No kreisās uz labo"
 
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:393
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:358
 msgid "Right to Left"
 msgstr "No labās uz kreiso"
 
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:397
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:362
 msgid "Close without Saving"
 msgstr "Aizvērt nesaglabājot"
 
-#: /__w/calibre/calibre/src/calibre/utils/localization.py:398
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:363
 msgid "Close Tab"
 msgstr "Aizvērt cilni"
+
+#: /__w/calibre/calibre/src/calibre/utils/localization.py:364
+msgid "Ukraine"
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/utils/search_query_parser.py:223
 msgid "Extra characters at end of search"
@@ -42884,7 +42836,7 @@ msgid "%s Document"
 msgstr "%s dokuments"
 
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:128
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1577
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1589
 msgid "Unknown section"
 msgstr "Nezināma nodaļa"
 
@@ -42894,7 +42846,7 @@ msgstr "Nezināma barotne"
 
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:169
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:210
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1568
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1580
 msgid "Untitled article"
 msgstr "Raksts bez nosaukuma"
 
@@ -42902,136 +42854,141 @@ msgstr "Raksts bez nosaukuma"
 msgid "Unknown News Source"
 msgstr "Nezināms ziņu avots"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:609
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:620
 msgid "Article download aborted"
 msgstr "Raksta lejupielāde atcelta"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:835
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:846
 #, python-format
 msgid "Failed to download %s"
 msgstr "%s lejupielādēt neizdevās"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:928
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:939
 #, python-format
 msgid "The \"%s\" recipe needs a username and password."
 msgstr "Receptei \"%s\" nepieciešams lietotāja vārds un parole."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1057
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1069
 msgid "Download finished"
 msgstr "Lejupielāde pabeigta"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1059
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1071
 msgid "Failed to download the following articles:"
 msgstr "Neizdevās lejupielādēt šādus rakstus:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1065
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1077
 msgid "Failed to download parts of the following articles:"
 msgstr "Neizdevās lejupielādēt daļas no šiem rakstiem:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1067
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1079
 msgid " from "
 msgstr " no "
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1069
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1081
 msgid "\tFailed links:"
 msgstr "\tNav saites:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1173
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1185
 msgid "Could not fetch article."
 msgstr "Rakstu saņemt neizdevās."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1175
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1187
 msgid "The debug traceback is available earlier in this log"
 msgstr "Atkļūdošanas izsekojums ir pieejams agrāk šajā žurnālā"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1177
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1189
 msgid "Run with -vv to see the reason"
 msgstr "Palaidiet ar -vv, lai noskaidrotu iemeslu"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1222
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1234
 msgid "Fetching feeds..."
 msgstr "Saņem barotnes..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1228
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1240
 msgid "Got feeds from index page"
 msgstr "Saņemtas barotnes no indeksa lapas"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1241
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1253
 msgid "Trying to download cover..."
 msgstr "Mēģina lejupielādēt vāku..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1243
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1255
 msgid "Generating masthead..."
 msgstr "Veido masta galvu..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1303
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1315
 msgid "Starting download in a single thread..."
 msgid_plural "Starting download [{} threads]..."
 msgstr[0] "Notiek lejupielāde vienā pavedienā..."
 msgstr[1] "Notiek lejupielāde [{} pavedienos]..."
 msgstr[2] "Starting download [{} threads]..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1318
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1330
 #, python-format
 msgid "Feeds downloaded to %s"
 msgstr "Barotnes lejupielādētas %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1327
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1339
 #, python-format
 msgid "Could not download cover: %s"
 msgstr "Nevarēja lejupielādēt vāku: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1340
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1352
 #, python-format
 msgid "Downloading cover from %s"
 msgstr "Lejupielādē vāku no %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1392
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1404
 msgid "Masthead image downloaded"
 msgstr "Virsraksta attēls lejupielādēts"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1492
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1504
 msgid "Articles in this issue:"
 msgstr "Raksti šajā izdevumā:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1649
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1661
 #, python-format
 msgid "Article downloaded: %s"
 msgstr "Raksts lejupielādēts: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1659
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1671
 #, python-format
 msgid "Article download aborted: %s"
 msgstr "Raksta lejupielāde atcelta: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1667
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1679
 #, python-format
 msgid "Article download failed: %s"
 msgstr "Raksta lejupielāde neveiksmīga: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1689
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1701
 msgid "Fetching feed"
 msgstr "Saņem barotni"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1864
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1877
 msgid ""
 "Failed to log in, check your username and password for the calibre "
 "Periodicals service."
 msgstr "Neizdevās pieslēgties, pārbaudiet Jūsu calibre Periodikas servisa lietotāja vārdu un paroli"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1880
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1893
 msgid ""
 "You do not have permission to download this issue. Either your subscription "
 "has expired or you have exceeded the maximum allowed downloads for today."
 msgstr "Jums nav tiesību saņemt šo izdevumu. Vai nu Jūsu parakstīšanās laiks ir beidzies vai arī ir pārsniegts Jums vienā dienā atļauto lejupielāžu skaits."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:55
+#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:65
 msgid "You"
 msgstr "Tu"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/model.py:70
-#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/model.py:85
-#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/model.py:239
+#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/model.py:68
+#, python-brace-format
+msgid "{language} ({country})"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/model.py:79
+#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/model.py:95
+#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/model.py:249
 msgid "Scheduled"
 msgstr "Ieplānots"
 
@@ -43053,60 +43010,60 @@ msgstr "Sadaļas"
 msgid "Articles"
 msgstr "Raksti"
 
-#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:602
+#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:604
 msgid ""
 "%prog URL\n"
 "\n"
 "Where URL is for example https://google.com"
 msgstr "%prog URL\n\nKur URL ir, piemēram https://google.com"
 
-#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:605
+#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:607
 #, python-format
 msgid "Base folder into which URL is saved. Default is %default"
 msgstr "Bāzes mape, kurā tiek saglabāts URL. Noklusējums ir %default"
 
-#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:608
+#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:610
 #, python-format
 msgid ""
 "Timeout in seconds to wait for a response from the server. Default: %default"
 " s"
 msgstr "Noildze sekundēs servera atbildes gaidīšanai. Noklusētā: %default s"
 
-#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:611
+#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:613
 #, python-format
 msgid ""
 "Maximum number of levels to recurse i.e. depth of links to follow. Default "
 "%default"
 msgstr "Maksimālais saišu rekursivitātes dziļums (cik dziļi sekot saitēm). Noklusētais ir %default"
 
-#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:614
+#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:616
 #, python-format
 msgid ""
 "The maximum number of files to download. This only applies to files from <a "
 "href> tags. Default is %default"
 msgstr "Maksimālais lejupielādējamo datņu skaits. Tas attiecas tikai uz datnēm no <a href> birkām. Noklusētais ir %default"
 
-#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:616
+#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:618
 #, python-format
 msgid ""
 "Minimum interval in seconds between consecutive fetches. Default is %default"
 " s"
 msgstr "Minimālais laiks starp secīgām lejupielādēm. Noklusētais ir  %default s"
 
-#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:618
+#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:620
 msgid ""
 "The character encoding for the websites you are trying to download. The "
 "default is to try and guess the encoding."
 msgstr "Lejupielādējamo vietņu rakstzīmju kodējums. Noklusētais ir mēģināt noteikt automātiski."
 
-#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:620
+#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:622
 msgid ""
 "Only links that match this regular expression will be followed. This option "
 "can be specified multiple times, in which case as long as a link matches any"
 " one regexp, it will be followed. By default all links are followed."
 msgstr "Tiks ievērotas tikai saites, kas atbilst šai regulārajai izteiksmei. Šo opciju var norādīt vairākas reizes, tādā gadījumā, ja saite atbilst kādam regexp, kas tai sekos. Pēc noklusējuma visas saites tiek ievērotas."
 
-#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:625
+#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:627
 msgid ""
 "Any link that matches this regular expression will be ignored. This option "
 "can be specified multiple times, in which case as long as any regexp matches"
@@ -43115,7 +43072,7 @@ msgid ""
 "first."
 msgstr "Jebkura saite, kas atbilst šai regulārajai izteiksmei, tiks ignorēta. Šo iespēja var norādīt vairākas reizes, un šajā gadījumā tik ilgi, kamēr kāds regexp atbilst saitei, tad tas tiks ignorēts. Pēc noklusējuma neviena saite netiek ignorēta. Ja abi filter regexp un match regexp ir norādīta, tad filter regexp tiek piemērots pirmais."
 
-#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:631
+#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:633
 msgid "Do not download CSS stylesheets."
 msgstr "Izlaist CSS stilu lejupielādi."
 

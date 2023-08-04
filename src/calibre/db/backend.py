@@ -48,7 +48,7 @@ from calibre.utils.date import EPOCH, parse_date, utcfromtimestamp, utcnow
 from calibre.utils.filenames import (
     ascii_filename, atomic_rename, copyfile_using_links, copytree_using_links,
     hardlink_file, is_case_sensitive, is_fat_filesystem, make_long_path_useable,
-    remove_dir_if_empty, samefile,
+    remove_dir_if_empty, samefile, get_long_path_name
 )
 from calibre.utils.formatter_functions import (
     compile_user_template_functions, formatter_functions, load_user_template_functions,
@@ -1498,6 +1498,12 @@ class DB:
         if os.path.exists(fmt_path):
             return fmt_path
 
+    def is_path_inside_book_dir(self, path, book_relpath, sub_path):
+        book_path = os.path.abspath(os.path.join(self.library_path, book_relpath, sub_path))
+        book_path = os.path.normcase(get_long_path_name(book_path)).rstrip(os.sep)
+        path = os.path.normcase(get_long_path_name(os.path.abspath(path))).rstrip(os.sep)
+        return path.startswith(book_path + os.sep)
+
     def apply_to_format(self, book_id, path, fname, fmt, func, missing_value=None):
         path = self.format_abspath(book_id, fmt, fname, path)
         if path is None:
@@ -1926,6 +1932,22 @@ class DB:
                             src = open(path, 'rb')
                         with src:
                             yield relpath, src, stat_result
+
+    def rename_extra_file(self, relpath, newrelpath, book_path, replace=True):
+        bookdir = os.path.join(self.library_path, book_path)
+        src = os.path.abspath(os.path.join(bookdir, relpath))
+        dest = os.path.abspath(os.path.join(bookdir, newrelpath))
+        src, dest = make_long_path_useable(src), make_long_path_useable(dest)
+        if src == dest or not os.path.exists(src):
+            return False
+        if not replace and os.path.exists(dest) and not os.path.samefile(src, dest):
+            return False
+        try:
+            os.replace(src, dest)
+        except FileNotFoundError:
+            os.makedirs(os.path.dirname(dest), exist_ok=True)
+            os.replace(src, dest)
+        return True
 
     def add_extra_file(self, relpath, stream, book_path, replace=True, auto_rename=False):
         bookdir = os.path.join(self.library_path, book_path)

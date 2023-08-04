@@ -10962,7 +10962,7 @@ return this.__repr__();
                 library_data.field_names = Object.create(null);
             }
             library_data.for_library = current_library_id();
-            var ρσ_Iter0 = ρσ_Iterable("search_result sortable_fields field_metadata metadata virtual_libraries book_display_fields bools_are_tristate book_details_vertical_categories".split(" "));
+            var ρσ_Iter0 = ρσ_Iterable("search_result sortable_fields field_metadata metadata virtual_libraries book_display_fields bools_are_tristate book_details_vertical_categories fts_enabled".split(" "));
             for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
                 key = ρσ_Iter0[ρσ_Index0];
                 library_data[(typeof key === "number" && key < 0) ? library_data.length + key : key] = data[(typeof key === "number" && key < 0) ? data.length + key : key];
@@ -29135,7 +29135,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "6.23.0";
+        CALIBRE_VERSION = "6.24.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -35824,6 +35824,20 @@ return this.__repr__();
             __module__ : {value: "book_list.views"}
         });
 
+        function fts() {
+            var q;
+            q = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["restricted"] = "y";
+                ρσ_d["restriction"] = library_data.search_result.query;
+                return ρσ_d;
+            }).call(this);
+            show_panel("fts", q);
+        };
+        if (!fts.__module__) Object.defineProperties(fts, {
+            __module__ : {value: "book_list.views"}
+        });
+
         function show_top_message() {
             var container, q, c;
             container = component("top_message");
@@ -35859,6 +35873,17 @@ return this.__repr__();
                         });
                         return ρσ_anonfunc;
                     })()})]))));
+                    if (library_data.fts_enabled) {
+                        c.appendChild(E.span(_(" or "), ρσ_interpolate_kwargs.call(E, E.a, [_("Search the text of these books")].concat([ρσ_desugar_kwargs({class_: "blue-link", onclick: (function() {
+                            var ρσ_anonfunc = function () {
+                                fts();
+                            };
+                            if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                                __module__ : {value: "book_list.views"}
+                            });
+                            return ρσ_anonfunc;
+                        })()})]))));
+                    }
                 } else {
                     c.appendChild(E.span(_("No books matching:"), " ", E.i(library_data.search_result.query)));
                 }
@@ -36270,6 +36295,7 @@ return this.__repr__();
         ρσ_modules["book_list.views"].got_more_books = got_more_books;
         ρσ_modules["book_list.views"].get_more_books = get_more_books;
         ρσ_modules["book_list.views"].create_more_button = create_more_button;
+        ρσ_modules["book_list.views"].fts = fts;
         ρσ_modules["book_list.views"].show_top_message = show_top_message;
         ρσ_modules["book_list.views"].create_books_list = create_books_list;
         ρσ_modules["book_list.views"].check_for_books_loaded = check_for_books_loaded;
@@ -42250,6 +42276,12 @@ return this.__repr__();
                         current_action = "none";
                     }
                     select.value = current_action;
+                    select.dispatchEvent(new Event("change", (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["view"] = window;
+                        ρσ_d["bubbles"] = true;
+                        return ρσ_d;
+                    }).call(this)));
                 }
             }
         };
@@ -57159,6 +57191,7 @@ return this.__repr__();
 
         var current_library_id = ρσ_modules["book_list.library_data"].current_library_id;
         var download_url = ρσ_modules["book_list.library_data"].download_url;
+        var library_data = ρσ_modules["book_list.library_data"].library_data;
 
         var back = ρσ_modules["book_list.router"].back;
         var home = ρσ_modules["book_list.router"].home;
@@ -57261,6 +57294,7 @@ return this.__repr__();
                     }
                     return error_dialog(_("Failed to enable indexing"), _("Enabling indexing failed. Click \"Show details\" for more information."), xhr.error_html);
                 }
+                library_data.fts_enabled = true;
                 info_dialog(_("Indexing enabled"), _("Indexing of this library has been enabled. Depending on library size it can take a long time to index all books."));
             };
             if (!on_response.__argnames__) Object.defineProperties(on_response, {
@@ -57331,12 +57365,16 @@ return this.__repr__();
             query = component("query").querySelector("input").value;
             if (!query || query.length < 1) {
                 error_dialog(_("No search query specified"), _("A search word/phrase must be specified before attempting to search"));
+                clear_to_help();
                 return;
             }
             q = get_current_query();
             q.fts_panel = "search";
             q.fts_query = query;
             q.fts_use_stemming = (component("related_words").checked) ? "y" : "n";
+            if (q.restricted === "y") {
+                q.restriction = component("restrict").querySelector("input").value;
+            }
             current_fts_query = Object.create(null);
             ρσ_interpolate_kwargs.call(this, push_state, [q].concat([ρσ_desugar_kwargs({replace: true})]));
         };
@@ -57345,7 +57383,7 @@ return this.__repr__();
         });
 
         function build_search_page() {
-            var container, search_button, search_bar, sd, related_words;
+            var container, search_button, search_bar, sd, related_words, restrict_bar;
             container = component("search");
             clear(container);
             search_button = ρσ_interpolate_kwargs.call(this, create_button, [_("Search")].concat([ρσ_desugar_kwargs({icon: "search", tooltip: _("Do the search")})]));
@@ -57368,8 +57406,12 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })(), title: _("With this option searching for words will also match on any related words (supported in several languages). For example, in the English language: {0} matches {1} and {2} as well").format("correction", "correcting", "corrected")})]));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [related_words].concat([ρσ_desugar_kwargs({style: "padding-top: 1ex; border-bottom: solid 1px currentColor; width: 100%"})])));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({data_component: "results"})]));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [related_words].concat([ρσ_desugar_kwargs({style: "padding-top: 1ex;"})])));
+            restrict_bar = ρσ_interpolate_kwargs.call(this, create_search_bar, [execute_search_interactive, "search-books-fts-restrict"].concat([ρσ_desugar_kwargs({tooltip: _("Restrict the results to only books matching this query"), placeholder: _("Restrict to books matching...")})]));
+            ρσ_interpolate_kwargs.call(this, set_css, [restrict_bar].concat([ρσ_desugar_kwargs({flex_grow: "10", margin_right: "0.5em"})]));
+            restrict_bar.dataset.component = "restrict";
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [svgicon("search"), E.span(" "), restrict_bar].concat([ρσ_desugar_kwargs({style: "padding-top: 1ex; display: flex; width: 100%; align-items: center"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "border-top: 1px currentColor solid; margin-top: 1ex", data_component: "results"})]));
         };
         if (!build_search_page.__module__) Object.defineProperties(build_search_page, {
             __module__ : {value: "book_list.fts"}
@@ -57390,15 +57432,30 @@ return this.__repr__();
             __module__ : {value: "book_list.fts"}
         });
 
+        function toggle_restrict() {
+            var container, q;
+            container = component("restrict");
+            if (!container) {
+                return;
+            }
+            q = get_current_query();
+            q.restricted = (q.restricted === "y") ? "n" : "y";
+            ρσ_interpolate_kwargs.call(this, push_state, [q].concat([ρσ_desugar_kwargs({replace: true})]));
+        };
+        if (!toggle_restrict.__module__) Object.defineProperties(toggle_restrict, {
+            __module__ : {value: "book_list.fts"}
+        });
+
         function clear_to_help() {
-            var container, fts_url, html, a;
+            var container, restrict, fts_url, html, a;
             container = component("results");
             if (!container) {
                 return;
             }
             clear(container);
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "fts-help-display"})]));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.a, [_("Re-index all books in this library")].concat([ρσ_desugar_kwargs({class_: "blue-link", href: "javascript:void(0)", onclick: reindex_all})])), E.span("  "), ρσ_interpolate_kwargs.call(E, E.a, [_("Disable full text search")].concat([ρσ_desugar_kwargs({class_: "blue-link", href: "javascript:void(0)", onclick: disable_fts})]))].concat([ρσ_desugar_kwargs({style: "margin-top: 1ex"})])));
+            restrict = get_current_query().restricted === "y";
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.a, [_("Re-index all books in this library")].concat([ρσ_desugar_kwargs({class_: "blue-link", href: "javascript:void(0)", onclick: reindex_all})])), E.span("  "), ρσ_interpolate_kwargs.call(E, E.a, [_("Disable full text search")].concat([ρσ_desugar_kwargs({class_: "blue-link", href: "javascript:void(0)", onclick: disable_fts})])), E.span("  "), ρσ_interpolate_kwargs.call(E, E.a, [(restrict) ? _("Search all books") : _("Search a subset of books")].concat([ρσ_desugar_kwargs({class_: "blue-link", href: "javascript:void(0)", onclick: toggle_restrict})]))].concat([ρσ_desugar_kwargs({style: "margin-top: 1ex"})])));
             container = container.firstChild;
             fts_url = "https://www.sqlite.org/fts5.html#full_text_query_syntax";
             html = (ρσ_expr_temp = _("\n<div class=\"h\">Search for single words</div>\n<p>Simply type the word:</p>\n<div class=\"bq\">awesome<br>calibre</div>\n\n<div class=\"h\">Search for phrases</div>\n<p>Enclose the phrase in quotes:</p>\n<div class=\"bq\">\"early run\"<br>\"song of love\"</div>\n\n<div class=\"h\">Boolean searches</div>\n<div class=\"bq\">(calibre AND ebook) NOT gun<br>simple NOT (\"high bar\" OR hard)</div>\n\n<div class=\"h\">Phrases near each other</div>\n<div class=\"bq\">NEAR(\"people\" \"in Asia\" \"try\")<br>NEAR(\"Kovid\" \"calibre\", 30)</div>\n<p>Here, 30 is the most words allowed between near groups. Defaults to 10 when unspecified.</p>\n\n<div style=\"margin-top: 1em\"><a href=\"{fts_url}\">Full syntax reference</a></div>\n" + "</div>"), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.format, [ρσ_desugar_kwargs({fts_url: fts_url})]));
@@ -57412,21 +57469,25 @@ return this.__repr__();
         });
 
         function apply_search_panel_state() {
-            var q, ftsq;
+            var q, ftsq, r;
             q = get_current_query();
             ftsq = (function(){
                 var ρσ_d = Object.create(null);
                 ρσ_d["query"] = q.fts_query || "";
                 ρσ_d["use_stemming"] = q.fts_use_stemming || "y";
+                ρσ_d["restriction"] = (q.restricted === "y") ? q.restriction : "";
                 return ρσ_d;
             }).call(this);
             component("query").querySelector("input").value = ftsq.query;
             component("related_words").checked = ftsq.use_stemming === "y";
+            r = component("restrict");
+            r.parentNode.style.display = (ftsq.restriction !== "") ? "flex" : "none";
+            r.querySelector("input").value = q.restriction || "";
             if (!ftsq.query) {
                 clear_to_help();
                 return;
             }
-            if (current_fts_query.query !== ftsq.query || current_fts_query.use_stemming !== ftsq.use_stemming) {
+            if (current_fts_query.query !== ftsq.query || current_fts_query.use_stemming !== ftsq.use_stemming || current_fts_query.restriction !== ftsq.restriction) {
                 make_new_fts_query(ftsq);
                 clear_to_waiting_for_results(_("Searching for {}, please wait…").format(ftsq.query));
                 return;
@@ -57536,6 +57597,7 @@ return this.__repr__();
                     }
                     return error_dialog(_("Disabling FTS failed"), _("Disabling FTS failed. Click \"Show details\" for more information."), xhr.error_html);
                 }
+                library_data.fts_enabled = false;
                 ρσ_interpolate_kwargs.call(this, info_dialog, [_("Full text searching disabled"), _("Full text searching for this library has been disabled. In the future the entire library will have to be re-indexed when re-enabling full text searching.")].concat([ρσ_desugar_kwargs({on_close: (function() {
                     var ρσ_anonfunc = function () {
                         window.setTimeout(home);
@@ -57730,17 +57792,19 @@ return this.__repr__();
             for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
                 book_id = ρσ_Iter3[ρσ_Index3];
                 c = container.querySelector("[data-book-id=\"" + ρσ_str.format("{}", book_id) + "\"]");
-                delete c.dataset.snippetsNeeded;
-                s = c.querySelector(".snippets_container");
-                clear(s);
-                var ρσ_Iter4 = ρσ_Iterable(snippets[(typeof book_id === "number" && book_id < 0) ? snippets.length + book_id : book_id]);
-                for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                    x = ρσ_Iter4[ρσ_Index4];
-                    f = " ".join(x.formats);
-                    e = E.div(ρσ_interpolate_kwargs.call(E, E.code, [f].concat([ρσ_desugar_kwargs({style: "border: solid 1px currentColor; border-radius: 6px; padding: 0 4px; font-size: smaller", data_formats: f})])));
-                    e.appendChild(E.span(" "));
-                    render_text(e, x.text);
-                    s.appendChild(e);
+                if (c) {
+                    delete c.dataset.snippetsNeeded;
+                    s = c.querySelector(".snippets_container");
+                    clear(s);
+                    var ρσ_Iter4 = ρσ_Iterable(snippets[(typeof book_id === "number" && book_id < 0) ? snippets.length + book_id : book_id]);
+                    for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                        x = ρσ_Iter4[ρσ_Index4];
+                        f = " ".join(x.formats);
+                        e = E.div(ρσ_interpolate_kwargs.call(E, E.code, [f].concat([ρσ_desugar_kwargs({style: "border: solid 1px currentColor; border-radius: 6px; padding: 0 4px; font-size: smaller", data_formats: f})])));
+                        e.appendChild(E.span(" "));
+                        render_text(e, x.text);
+                        s.appendChild(e);
+                    }
                 }
             }
         };
@@ -57884,6 +57948,7 @@ return this.__repr__();
         ρσ_modules["book_list.fts"].execute_search_interactive = execute_search_interactive;
         ρσ_modules["book_list.fts"].build_search_page = build_search_page;
         ρσ_modules["book_list.fts"].clear_to_waiting_for_results = clear_to_waiting_for_results;
+        ρσ_modules["book_list.fts"].toggle_restrict = toggle_restrict;
         ρσ_modules["book_list.fts"].clear_to_help = clear_to_help;
         ρσ_modules["book_list.fts"].apply_search_panel_state = apply_search_panel_state;
         ρσ_modules["book_list.fts"].open_format = open_format;

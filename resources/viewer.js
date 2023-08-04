@@ -8118,7 +8118,7 @@ return this.__repr__();
                 library_data.field_names = Object.create(null);
             }
             library_data.for_library = current_library_id();
-            var ρσ_Iter0 = ρσ_Iterable("search_result sortable_fields field_metadata metadata virtual_libraries book_display_fields bools_are_tristate book_details_vertical_categories".split(" "));
+            var ρσ_Iter0 = ρσ_Iterable("search_result sortable_fields field_metadata metadata virtual_libraries book_display_fields bools_are_tristate book_details_vertical_categories fts_enabled".split(" "));
             for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
                 key = ρσ_Iter0[ρσ_Index0];
                 library_data[(typeof key === "number" && key < 0) ? library_data.length + key : key] = data[(typeof key === "number" && key < 0) ? data.length + key : key];
@@ -27313,7 +27313,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "6.23.0";
+        CALIBRE_VERSION = "6.24.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -34831,6 +34831,20 @@ return this.__repr__();
             __module__ : {value: "book_list.views"}
         });
 
+        function fts() {
+            var q;
+            q = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["restricted"] = "y";
+                ρσ_d["restriction"] = library_data.search_result.query;
+                return ρσ_d;
+            }).call(this);
+            show_panel("fts", q);
+        };
+        if (!fts.__module__) Object.defineProperties(fts, {
+            __module__ : {value: "book_list.views"}
+        });
+
         function show_top_message() {
             var container, q, c;
             container = component("top_message");
@@ -34866,6 +34880,17 @@ return this.__repr__();
                         });
                         return ρσ_anonfunc;
                     })()})]))));
+                    if (library_data.fts_enabled) {
+                        c.appendChild(E.span(_(" or "), ρσ_interpolate_kwargs.call(E, E.a, [_("Search the text of these books")].concat([ρσ_desugar_kwargs({class_: "blue-link", onclick: (function() {
+                            var ρσ_anonfunc = function () {
+                                fts();
+                            };
+                            if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                                __module__ : {value: "book_list.views"}
+                            });
+                            return ρσ_anonfunc;
+                        })()})]))));
+                    }
                 } else {
                     c.appendChild(E.span(_("No books matching:"), " ", E.i(library_data.search_result.query)));
                 }
@@ -35277,6 +35302,7 @@ return this.__repr__();
         ρσ_modules["book_list.views"].got_more_books = got_more_books;
         ρσ_modules["book_list.views"].get_more_books = get_more_books;
         ρσ_modules["book_list.views"].create_more_button = create_more_button;
+        ρσ_modules["book_list.views"].fts = fts;
         ρσ_modules["book_list.views"].show_top_message = show_top_message;
         ρσ_modules["book_list.views"].create_books_list = create_books_list;
         ρσ_modules["book_list.views"].check_for_books_loaded = check_for_books_loaded;
@@ -41257,6 +41283,12 @@ return this.__repr__();
                         current_action = "none";
                     }
                     select.value = current_action;
+                    select.dispatchEvent(new Event("change", (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["view"] = window;
+                        ρσ_d["bubbles"] = true;
+                        return ρσ_d;
+                    }).call(this)));
                 }
             }
         };

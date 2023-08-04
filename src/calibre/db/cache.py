@@ -3075,6 +3075,14 @@ class Cache:
     def reindex_annotations(self):
         self.backend.reindex_annotations()
 
+    @read_api
+    def are_paths_inside_book_dir(self, book_id, paths, sub_path=''):
+        try:
+            path = self._field_for('path', book_id).replace('/', os.sep)
+        except:
+            return set()
+        return {x for x in paths if self.backend.is_path_inside_book_dir(x, path, sub_path)}
+
     @write_api
     def add_extra_files(self, book_id, map_of_relpath_to_stream_or_path, replace=True, auto_rename=False):
         ' Add extra data files '
@@ -3084,6 +3092,17 @@ class Cache:
             added[relpath] = bool(self.backend.add_extra_file(relpath, stream_or_path, path, replace, auto_rename))
         self._clear_extra_files_cache(book_id)
         return added
+
+    @write_api
+    def rename_extra_files(self, book_id, map_of_relpath_to_new_relpath, replace=False):
+        ' Rename extra data files '
+        path = self._field_for('path', book_id).replace('/', os.sep)
+        renamed = set()
+        for relpath, newrelpath in map_of_relpath_to_new_relpath.items():
+            if self.backend.rename_extra_file(relpath, newrelpath, path, replace):
+                renamed.add(relpath)
+        self._clear_extra_files_cache(book_id)
+        return renamed
 
     @write_api
     def merge_extra_files(self, dest_id, src_ids, replace=False):

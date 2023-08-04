@@ -103,8 +103,9 @@ class BasicNewsRecipe(Recipe):
     #: Number of levels of links to follow on article webpages
     recursions             = 0
 
-    #: Delay between consecutive downloads in seconds. The argument may be a
-    #: floating point number to indicate a more precise time.
+    #: The default delay between consecutive downloads in seconds. The argument may be a
+    #: floating point number to indicate a more precise time. See :meth:`get_url_specific_delay`
+    #: to implement per URL delays.
     delay                  = 0
 
     #: Publication type
@@ -335,7 +336,7 @@ class BasicNewsRecipe(Recipe):
     '''
 
     #: By default, calibre will use a default image for the masthead (Kindle only).
-    #: Override this in your recipe to provide a url to use as a masthead.
+    #: Override this in your recipe to provide a URL to use as a masthead.
     masthead_url = None
 
     #: By default, the cover image returned by get_cover_url() will be used as
@@ -473,6 +474,16 @@ class BasicNewsRecipe(Recipe):
         if self.test:
             return self.feeds[:self.test[0]]
         return self.feeds
+
+    def get_url_specific_delay(self, url):
+        '''
+        Return the delay in seconds before downloading this URL. If you want to programmatically
+        determine the delay for the specified URL, override this method in your subclass, returning
+        self.delay by default for URLs you do not want to affect.
+
+        :return: A floating point number, the delay in seconds.
+        '''
+        return self.delay
 
     @classmethod
     def print_version(cls, url):
@@ -966,6 +977,7 @@ class BasicNewsRecipe(Recipe):
         self.web2disk_options.preprocess_image = self.preprocess_image
         self.web2disk_options.encoding = self.encoding
         self.web2disk_options.preprocess_raw_html = self.preprocess_raw_html_
+        self.web2disk_options.get_delay = self.get_url_specific_delay
 
         if self.delay > 0:
             self.simultaneous_downloads = 1
@@ -1711,8 +1723,9 @@ class BasicNewsRecipe(Recipe):
                 feed.description = as_unicode(err)
                 parsed_feeds.append(feed)
                 self.log.exception(msg)
-            if self.delay > 0:
-                time.sleep(self.delay)
+            delay = self.get_url_specific_delay(url)
+            if delay > 0:
+                time.sleep(delay)
 
         remove = [fl for fl in parsed_feeds if len(fl) == 0 and self.remove_empty_feeds]
         for f in remove:
