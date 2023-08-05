@@ -6,8 +6,22 @@ calibre (6.24.0-1) UNRELEASED; urgency=medium
   * Rediff patches
   * Update comments
   * Disable a test that takes too match time
+  * Add lintian override string to simler message
+  * Allow stderr output to pass a smoke test
+    python3-apsw 3.42.0.1-1 always output warning message to stdout.
+    This breaks autopkgtest.
+    ```
+    $ python3
+    Python 3.11.4 (main, Jun  7 2023, 10:13:09) [GCC 12.2.0] on linux
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>> import apsw
+    Missing sys.apsw_fault_inject_control
+    >>>
+    ```
+    This message comes from src/apsw.c:APSW_FaultInjectControl()
+    in python-apsw source code.
 
- -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sat, 05 Aug 2023 14:35:33 +0900
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sat, 05 Aug 2023 18:41:29 +0900
 
 calibre (6.23.0-2) unstable; urgency=medium
 
