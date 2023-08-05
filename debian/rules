@@ -90,7 +90,7 @@ calibre_auto_install:
 # 	# Replace "python" to "python3" in shebang
 	find debian/tmp/usr/lib/calibre debian/tmp/usr/share/calibre -name '*.py' -print | xargs --no-run-if-empty sed --separate --file=debian/fix-python-shebang.sed --in-place
 #
-#	# Remove source path name from pyuic5 outputs
+#	# Remove source path name from pyuic6 outputs
 	find debian/tmp/usr/lib/calibre/calibre/gui2 -name '*_ui.py' -print | xargs --no-run-if-empty sed --separate --file=debian/remove-ui-basepath.sed --in-place
 
 override_dh_installman:
