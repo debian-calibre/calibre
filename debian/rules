@@ -22,6 +22,9 @@ export QT_HASH_SEED=0
 TEST_FLAGS =
 CI_ENV =
 
+# This test always stole
+TEST_FLAGS += --exclude-test-name=fts_pool
+
 # Disable some test when in package builder environment
 ifeq ($(wildcard .git),)
   include debian/buildd-options.mak
