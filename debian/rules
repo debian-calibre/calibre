@@ -49,6 +49,7 @@ override_dh_auto_configure:
 override_dh_auto_build: blhc-note
 	$(SETUP) build
 	$(SETUP) liberation_fonts --system-liberation_fonts --path-to-liberation_fonts=/usr/share/fonts/truetype/liberation
+	$(SETUP) gui
 
 # Invoke "calibre_auto_test" target with automatic "HOME" and "XDG_*" variables.
 override_dh_auto_test:
@@ -97,6 +98,7 @@ override_dh_installman:
 override_dh_auto_clean:
 	$(SETUP) build --clean
 	$(SETUP) liberation_fonts --clean
+	$(SETUP) gui --clean
 	py3clean setup src
 
 override_dh_gencontrol:
