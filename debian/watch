@@ -7,7 +7,9 @@ version=4
 
 opts="pgpmode=next, \
       downloadurlmangle=s!/kovidgoyal/@PACKAGE@/releases/tag/v(\d+\.\d+\.\d+)!/kovidgoyal/@PACKAGE@/releases/download/v$1/@PACKAGE@-$1.tar.xz!, \
-      filenamemangle=s!v(\d+\.\d+\.\d+)!@PACKAGE@-$1.tar.xz!" \
+      filenamemangle=s!v(\d+\.\d+\.\d+)!@PACKAGE@-$1.tar.xz!, \
+      dversionmangle=s/\+ds//, \
+      oversionmangle=s/$/+ds/" \
   https://github.com/kovidgoyal/@PACKAGE@/releases \
   /kovidgoyal/@PACKAGE@/releases/tag/v(\d+\.\d+\.\d+)
 opts="pgpmode=previous" \
