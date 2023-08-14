@@ -1,3 +1,15 @@
+calibre (6.24.0+ds-1) UNRELEASED; urgency=medium
+
+  * Really choose oldest file modification time in target files
+  * Remove some pre-built files that older than source (Closes: #1043662)
+    This fix is for Debian Policy section 4.9 (clean target).
+  * New upstream version 6.24.0+ds
+  * Build GUI files before test.
+    Use "$(SETUP) liberation_fonts --clean" to remove files
+  * Clean compiled files before remove generated sources
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Mon, 14 Aug 2023 17:43:30 +0900
+
 calibre (6.24.0-2) unstable; urgency=medium
 
   * Drop python-zeroconf monkey patch.
