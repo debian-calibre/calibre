@@ -98,6 +98,7 @@ override_dh_installman:
 override_dh_auto_clean:
 	$(SETUP) build --clean
 	$(SETUP) liberation_fonts --clean
+	py3clean src/calibre/gui2
 	$(SETUP) gui --clean
 	py3clean setup src
 
