@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "八月 04, 2023" "6.24.0" "calibre"
+.TH "CALIBREDB" "1" "八月 18, 2023" "6.25.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -44,13 +44,13 @@ calibredb command [options] [arguments]
 \fBcalibredb\fP 是calibre数据库的命令行接口。它有
 几个子命令，记录如下。
 .sp
-\fBcalibredb\fP 可以用来操作一个calibre数据库
-由运行在上的calibre或calibre:guilabel:\fI内容服务器\(ga指定
-本地机器或通过互联网。你可以运行一个calibre
+\fBcalibredb\fP  可以用来操作一个 calibre 数据库
+由运行在上的 calibre 或 calibre:guilabel:\fI内容服务器\(ga指定
+本地机器或通过互联网。你可以运行一个 calibre
 :guilabel:\(ga内容服务器\fP 使用：命令：\fIcalibre\-server\fP
-程序或在主calibre程序中单击:guilabel:\fI连接/共享 \->
-启动内容服务器\fP\&. 因为:command:\fIcalibredb\fP 可以更改
-calibre书库，必须首先在服务器上设置身份验证。这里
+程序或在主 calibre 程序中单击 连接/共享  → 
+启动内容服务器\&. 因为 \fBcalibredb\fP  可以更改
+calibre 书库，必须首先在服务器上设置身份验证。这里
 有两种方法：
 .INDENT 0.0
 .INDENT 3.5
@@ -58,23 +58,19 @@ calibre书库，必须首先在服务器上设置身份验证。这里
 .IP \(bu 2
 如果您计划只连接到运行在同一台计算机上的服务器，
 则只需使用内容服务器的 \fB\-\-enable\-local\-write\fP 选项，
-允许本地计算机上运行的任何程序，包括calibredb，
-对calibre数据进行更改。从主calibre程序运行服务器时，
+允许本地计算机上运行的任何程序，包括 calibredb，
+对 calibre 数据进行更改。从主 calibre 程序运行服务器时，
 此选项位于：guilabel:\fI首选项\->通过网络共享\->高级\fP。
 .IP \(bu 2
-如果要启用权限通过Internet的访问，则应在服务器上
-设置用户帐户，并使用：选项：\fI\-\-用户名\fP 和：
-选项：\fI\-\-密码\fP，命令：\fIcalibredb\fP 选项授予访问权限。
-您可以为命令：\fIcalibre\-server\(ga设置用户身份验证，
-方法是使用 \(ga\fP\-\-enable\-auth\(ga\(ga选项并使用
+如果要启用通过互联网的访问，则应在服务器上
+设置用户帐户，并使用：选项：\fI\-\-username\fP 和：
+选项：\fI\-\-password\fP，命令：\fIcalibredb\fP 选项授予访问权限。
+您可以为命令：\fIcalibre\-server\fP 设置用户身份验证，
+方法是使用 \fB\-\-enable\-auth\fP 选项并使用
 .INDENT 2.0
 .INDENT 3.5
-
-.nf
-\(ga\(ga
-.fi
-\-\-manage\-users\(ga\(ga创建用户帐户。
-如果从主calibre程序运行服务器，请使用：
+\fB\-\-manage\-users\fP 创建用户帐户。
+如果从主 calibre 程序运行服务器，请使用：
 .UNINDENT
 .UNINDENT
 .sp
@@ -84,7 +80,7 @@ calibre书库，必须首先在服务器上设置身份验证。这里
 .UNINDENT
 .sp
 要连接到正在运行的内容服务器，请将服务器的URL传递给：
-选项：\fI\-\-with\-library\fP 选项，有关详细信息和示例，
+\fI\%\-\-with\-library\fP 选项，有关详细信息和示例，
 请参阅该选项的文档。
 .INDENT 0.0
 .IP \(bu 2
@@ -445,10 +441,10 @@ calibredb set_metadata [options] book_id [/path/to/metadata.opf]
 .UNINDENT
 .UNINDENT
 .sp
-根据OPF文件\-\-metadata.opf设置存储在 calibre 数据库中的以book_id标识的书籍的元数据。
-book_id是来自搜索命令的id号。您可以通过使用\-\-as\-opf切换到show_metadata命令来快速
-了解OPF格式。还可以用\-\-field选项设置各个字段的元数据。如果使用\-\-field选项则
-不需要指定OPF文件。
+根据 OPF 文件 \-\-metadata.opf 设置存储在 calibre 数据库中的以 book_id 标识的书籍的元数据。
+book_id 是来自搜索命令的 id 号。您可以通过使用 \-\-as\-opf 切换到 show_metadata 命令来快速
+了解 OPF 格式。还可以用 \-\-field 选项设置各个字段的元数据。如果使用 \-\-field 选项则
+不需要指定 OPF 文件。
 .sp
 每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -459,11 +455,7 @@ book_id是来自搜索命令的id号。您可以通过使用\-\-as\-opf切换到
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-列出可用于:option:
-.nf
-\(ga
-.fi
-\-\-field\(ga选项的元数据字段名称
+列出可用于 \fI\%\-\-field\fP 选项的元数据字段名称
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -575,7 +567,7 @@ see the different options, specify the name of the output file and then the
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
-要编目的逗号分割的数据库ID列表。 一旦声明，则忽略 \fI\%\-\-search\fP  默认值：all
+要编目的逗号分割的数据库 ID 列表。 一旦声明，则忽略 \fI\%\-\-search\fP 选项 默认值：all
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -911,11 +903,11 @@ calibredb backup_metadata [options]
 .UNINDENT
 .sp
 将存储在数据库中的元数据备份到每个书籍文件夹中的
-单个OPF文件中。这通常是自动的，但是您可以运行
-此命令来强制重新生成OPF文件，并使用\-\-all选项。
+单个 OPF 文件中。这通常是自动的，但是您可以运行
+此命令来强制重新生成 OPF 文件，并使用 \-\-all 选项。
 .sp
 请注意，通常不需要这样做，因为每次元数据更改时，
-OPF文件都会自动备份。
+OPF 文件都会自动备份。
 .sp
 每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
