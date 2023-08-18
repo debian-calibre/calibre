@@ -93,7 +93,7 @@ def mi_to_html(
         mi,
         field_list=None, default_author_link=None, use_roman_numbers=True,
         rating_font='Liberation Serif', rtl=False, comments_heading_pos='hide',
-        for_qt=False, vertical_fields=(), show_links=True,
+        for_qt=False, vertical_fields=(), show_links=True, gray='#7f7f7f',
     ):
 
     link_markup =  '↗️'
@@ -122,6 +122,7 @@ def mi_to_html(
     p = prepare_string_for_xml
     a = partial(prepare_string_for_xml, attribute=True)
     book_id = getattr(mi, 'id', 0)
+    title_sep = '\xa0'
 
     for field in (field for field, display in field_list if display):
         try:
@@ -147,7 +148,7 @@ def mi_to_html(
         name = metadata['name']
         if not name:
             name = field
-        name += ':'
+        name += title_sep
         disp = metadata['display']
         if (metadata['datatype'] == 'comments' or field == 'comments'
             or disp.get('composite_show_in_comments', '')):
@@ -224,7 +225,7 @@ def mi_to_html(
                                     num_of_folders = 2
                                     break
                         text = _('Book files')
-                        name = ngettext('Folder:', 'Folders:', num_of_folders)
+                        name = ngettext('Folder', 'Folders', num_of_folders) + title_sep
                     links = ['<a href="{}" title="{}">{}</a>{}'.format(action(scheme, book_id=book_id, loc=loc),
                         prepare_string_for_xml(path, True), text, extra)]
                     if num_of_folders > 1:
@@ -266,7 +267,7 @@ def mi_to_html(
             else:
                 links = ', '.join(mi.identifiers)
             if links:
-                ans.append((field, row % (_('Ids')+':', links)))
+                ans.append((field, row % (_('Ids')+title_sep, links)))
         elif field == 'authors':
             authors = []
             formatter = EvalFormatter()
@@ -425,7 +426,11 @@ def mi_to_html(
         classname(fieldl), html) for fieldl, html in ans]
     # print '\n'.join(ans)
     direction = 'rtl' if rtl else 'ltr'
-    rans = '<style>table.fields td { vertical-align:top}</style><table class="fields" style="direction: %s; ' % direction
+    rans = (
+        '<style>table.fields td { vertical-align:top} table.fields td.title {'
+        f'text-align: right; color: {gray}; font-style: italic; font-weight: normal '
+        '}</style>'
+        '<table class="fields" style="direction: %s; ' % direction)
     if not for_qt:
         # This causes wasted space at the edge of the table in Qt's rich text
         # engine, see https://bugs.launchpad.net/calibre/+bug/1881488
