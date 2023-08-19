@@ -1,0 +1,34 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Sat, 19 Aug 2023 10:51:53 +0900
+Subject: Add space to help break lines
+
+Forwarded: not-needed
+
+Japanese language doesn't use space as line break marker,
+but it helps groff(1) command to break lines.
+---
+ man-pages/ja/man1/calibredb.1 | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/man-pages/ja/man1/calibredb.1 b/man-pages/ja/man1/calibredb.1
+index 5034da2..03bf4de 100644
+--- a/man-pages/ja/man1/calibredb.1
++++ b/man-pages/ja/man1/calibredb.1
+@@ -139,7 +139,7 @@ calibredb を含めてローカルなコンピュータ上で実行されるす
+ .INDENT 0.0
+ .TP
+ .B \-\-library\-path, \-\-with\-library
+-calibreライブラリへのパス。デフォルトでは設定画面で指定されたpathが使用されます。リモートライブラリに対して操作を行うためにcalibreコンテンツサーバに接続することも可能です。コンテンツサーバに接続するには、\fI\%http://hostname:port/#library_id\fP の形式のURLを指定します。例えば \fI\%http://localhost:8080/#mylibrary\fP のように指定します。library_id はコンテンツサーバ上の接続したいライブラリのIDです。特殊な library_id として \- を指定すると、そのサーバ上で利用可能なライブラリの一覧を表示できます。コンテンツサーバ経由でのアクセスを設定する方法について詳しくは \fI\%https://manual.calibre\-ebook.com/ja/generated/ja/calibredb.html\fP を参照してください。
++calibreライブラリ へのパス。 デフォルトでは設定画面で指定された path が使用されます。 リモートライブラリに対して操作を行うために calibreコンテンツサーバ に接続することも可能です。 コンテンツサーバに接続するには、 \fI\%http://hostname:port/#library_id\fP の形式の URL を指定します。 例えば \fI\%http://localhost:8080/#mylibrary\fP のように指定します。 library_id はコンテンツサーバ上の接続したいライブラリの ID です。 特殊な library_id として \- を指定すると、そのサーバ上で利用可能なライブラリの一覧を表示できます。 コンテンツサーバ経由でのアクセスを設定する方法について詳しくは \fI\%https://manual.calibre\-ebook.com/ja/generated/ja/calibredb.html\fP を参照してください。
+ .UNINDENT
+ .INDENT 0.0
+ .TP
+@@ -270,7 +270,7 @@ calibredb add [options] file1 file2 file3 ...
+ .INDENT 0.0
+ .TP
+ .B \-\-duplicates, \-d
+-本がすでにデータベースに存在する場合でも追加します。本のタイトルと著者に基づいて比較します。\fI\%\-\-automerge\fP オプションが優先します。
++本がすでにデータベースに存在する場合でも追加します。 本のタイトルと著者に基づいて比較します。 \fI\%\-\-automerge\fP オプションが優先します。
+ .UNINDENT
+ .INDENT 0.0
+ .TP
