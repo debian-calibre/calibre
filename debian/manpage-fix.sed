@@ -2,11 +2,13 @@
 #
 # Typo fix in man pages
 #
-# ".ft C" => ".ft CR"
+# ".ft C" => ".ft B"
 #
-# ".ft CR" means "set font to constant-width font".
+# ".ft B" means "set font to bold font".
+# See /usr/share/groff/current/font/devutf8/* and groff_font(5) man page
+# for available fonts.
 #
 # Usage:
 # $ find man-pages -name "*.1" -type f -print | xargs --no-run-if-empty sed -f debian/manpage-fix.sed -i~
 
-/^\.ft C$/ s/C$/CR/g
+/^\.ft C$/ s/C$/B/g
