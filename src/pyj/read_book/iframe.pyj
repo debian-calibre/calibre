@@ -355,6 +355,7 @@ class IframeBoss:
     def on_scroll_to_anchor(self, data):
         frag = data.frag
         if frag:
+            self.replace_history_on_next_cfi_update = False
             self.scroll_to_anchor(frag)
         else:
             self.to_scroll_fraction(0.0, False)
@@ -401,7 +402,7 @@ class IframeBoss:
                 if cfi:
                     self.jump_to_cfi('/' + cfi)
             self.update_cfi()
-            self.update_toc_position()
+        self.update_toc_position(True)
 
     def number_of_columns_changed(self, data):
         opts.columns_per_screen = data.columns_per_screen
@@ -547,8 +548,8 @@ class IframeBoss:
                     self.send_message(
                         'update_progress_frac', progress_frac=pf, file_progress_frac=fpf, page_counts=page_counts())
 
-    def update_toc_position(self):
-        visible_anchors = update_visible_toc_anchors(self.book.manifest.toc_anchor_map, self.anchor_funcs)
+    def update_toc_position(self, recalculate_toc_anchor_positions):
+        visible_anchors = update_visible_toc_anchors(self.book.manifest.toc_anchor_map, self.anchor_funcs, bool(recalculate_toc_anchor_positions))
         self.send_message('update_toc_position', visible_anchors=visible_anchors)
 
     def onscroll(self):
@@ -831,8 +832,9 @@ class IframeBoss:
             removed_highlights = {}
             for crw in intersecting_wrappers:
                 unwrap_crw(crw)
-                if annot_id_uuid_map[crw] and annot_id_uuid_map[crw] is not uuid:
-                    removed_highlights[annot_id_uuid_map[crw]] = True
+                if annot_id_uuid_map[crw]:
+                    if annot_id_uuid_map[crw] is not uuid:
+                        removed_highlights[annot_id_uuid_map[crw]] = True
                     v'delete annot_id_uuid_map[crw]'
             removed_highlights = Object.keys(removed_highlights)
             sel.removeAllRanges()
@@ -876,8 +878,12 @@ class IframeBoss:
         elif dtype is 'drag-scroll':
             self.scroll_to_extend_annotation(data.backwards)
         elif dtype is 'edit-highlight':
-            crw_ = {v: k for k, v in Object.entries(annot_id_uuid_map)}[data.uuid]
-            if crw_ and select_crw(crw_):
+            found_highlight_to_edit = False
+            for qcrw, quuid in Object.entries(annot_id_uuid_map):
+                if quuid is data.uuid and select_crw(qcrw):
+                    found_highlight_to_edit = True
+                    break
+            if found_highlight_to_edit:
                 self.ensure_selection_visible()
                 window.setTimeout(def():
                     self.send_message('annotations', type='edit-highlight')
@@ -886,19 +892,22 @@ class IframeBoss:
                 self.send_message('annotations', type='edit-highlight-failed', uuid=data.uuid)
         elif dtype is 'notes-edited':
             cls = 'crw-has-dot'
-            crw_ = {v: k for k, v in Object.entries(annot_id_uuid_map)}[data.uuid]
-            if crw_:
-                node = last_span_for_crw(crw_)
-                if node:
-                    if data.has_notes:
-                        node.classList.add(cls)
-                    else:
-                        node.classList.remove(cls)
+            for qcrw, quuid in Object.entries(annot_id_uuid_map):
+                if quuid is data.uuid:
+                    node = last_span_for_crw(qcrw)
+                    if node:
+                        if data.has_notes:
+                            node.classList.add(cls)
+                        else:
+                            node.classList.remove(cls)
         elif dtype is 'remove-highlight':
-            crw_ = {v: k for k, v in Object.entries(annot_id_uuid_map)}[data.uuid]
-            if crw_:
-                unwrap_crw(crw_)
-                v'delete annot_id_uuid_map[crw_]'
+            found_highlight_to_remove = False
+            for qcrw, quuid in Object.entries(annot_id_uuid_map):
+                if quuid is data.uuid:
+                    found_highlight_to_remove = True
+                    unwrap_crw(qcrw)
+                    v'delete annot_id_uuid_map[qcrw]'
+            if found_highlight_to_remove:
                 # have to remove selection otherwise selection bar does
                 # not hide itself on multiline selections
                 window.getSelection().removeAllRanges()
