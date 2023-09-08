@@ -273,8 +273,12 @@ class Translations(POT):  # {{{
             f.write(h), f.write(data)
 
     def is_po_file_ok(self, x):
-        # sr@latin.po is identical to sr.po
-        return os.path.splitext(os.path.basename(x))[0] != 'sr@latin'
+        bname = os.path.splitext(os.path.basename(x))[0]
+        # sr@latin.po is identical to sr.po. And we dont support country
+        # specific variants except for a few.
+        if '_' in bname:
+            return bname.partition('_')[0] in ('pt', 'zh', 'bn')
+        return bname != 'sr@latin'
 
     def po_files(self):
         return [x for x in glob.glob(os.path.join(self.TRANSLATIONS, __appname__, '*.po')) if self.is_po_file_ok(x)]

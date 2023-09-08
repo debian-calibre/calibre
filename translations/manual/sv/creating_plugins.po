@@ -5,18 +5,18 @@
 # Translators:
 # Anders Jonsson <transifex@norsjovallen.se>, 2022
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2020
-# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2023
-# Jonatan Nyberg <jonatan@autistici.org>, 2018-2021
+# Jonatan Nyberg, 2016-2017,2021-2023
+# Jonatan Nyberg, 2018-2021
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2018
 # Merarom <merarom@yahoo.es>, 2014-2015,2017
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-02 05:59+0000\n"
+"POT-Creation-Date: 2023-09-07 04:08+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
-"Last-Translator: Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2023\n"
-"Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
+"Last-Translator: Jonatan Nyberg, 2016-2017,2021-2023\n"
+"Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -482,11 +482,17 @@ msgid ""
 "Replace ``de`` with the language code of the language you want to test."
 msgstr "Ersätt ``sv`` med språkkoden för det språk som du vill testa."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:296
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:295
+msgid ""
+"For translations with plurals, use the ``ngettext()`` function instead of "
+"``_()``. For example::"
+msgstr "För översättningar med plural, använd funktionen ``ngettext()`` istället för ``_()``. Till exempel::"
+
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:301
 msgid "The plugin API"
 msgstr "Insticksmoduls API"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:298
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:303
 msgid ""
 "As you may have noticed above, a plugin in calibre is a class. There are "
 "different classes for the different types of plugins in calibre. Details on "
@@ -494,36 +500,36 @@ msgid ""
 ":ref:`plugins`."
 msgstr "Som ni kanske har märkt ovan, en insticksmodul i calibre är en klass. Det finns olika klasser för de olika typerna av insticksmoduler i calibre. Detaljer om varje klass, inklusive basklassen för alla insticksmoduler kan hittas i :ref:`plugins`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:301
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:306
 msgid ""
 "Your plugin is almost certainly going to use code from calibre. To learn how"
 " to find various bits of functionality in the calibre code base, read the "
 "section on the calibre :ref:`code_layout`."
 msgstr "Din insticksmodul kommer nästan säkert att använda kod från calibre. För att lära dig hur man hittar olika funktioner i calibre-kodbasen, läs avsnittet om calibre :ref:`code_layout`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:306
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:311
 msgid "Debugging plugins"
 msgstr "Felsöka insticksmodul"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:308
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:313
 msgid ""
 "The first, most important step is to run calibre in debug mode. You can do "
 "this from the command line with::"
 msgstr "Den första och viktigaste steget är att köra calibre i felsökningsläge. Du kan göra det från kommandoraden med::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:312
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:317
 msgid ""
 "Or from within calibre by right-clicking the :guilabel:`Preferences` button "
 "or using the :kbd:`Ctrl+Shift+R` keyboard shortcut."
 msgstr "Eller inifrån calibre genom att högerklicka på :guilabel:`Inställningar` eller genom att använda tangentbordsgenvägen :kbd:`Ctrl+Skift+R`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:314
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:319
 msgid ""
 "When running from the command line, debug output will be printed to the "
 "console, when running from within calibre the output will go to a txt file."
 msgstr "När du kör från kommandoraden, kommer felsökningsutmatning skrivas till konsolen, när man kör inifrån calibre kommer utmatning gå till en TXT-fil."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:316
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:321
 msgid ""
 "You can insert print statements anywhere in your plugin code, they will be "
 "output in debug mode. Remember, this is Python, you really shouldn't need "
@@ -531,33 +537,33 @@ msgid ""
 "using just this debugging technique."
 msgstr "Du kan infoga utskriftssatser var som helst i din insticksmodulskod, de matas ut i felsökningsläge. Kom ihåg, det här är Python, du borde verkligen inte behöva mer än att skriva ut uttalanden för att felsöka ;) Jag utvecklade hela calibre med just den här felsökningstekniken."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:318
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:323
 msgid ""
 "You can quickly test changes to your plugin by using the following command "
 "line::"
 msgstr "Du kan snabbt testa ändringar i din insticksmodul med hjälp av följande kommandorad::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:323
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:328
 msgid ""
 "This will shutdown a running calibre, wait for the shutdown to complete, "
 "then update your plugin in calibre and relaunch calibre."
 msgstr "Detta kommer att stänga en körande calibre, vänta på avstängning är slutförd och sedan uppdatera din insticksmodul i calibre och starta om calibre."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:326
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:331
 msgid "More plugin examples"
 msgstr "Fler insticksmodul exempel"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:328
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:333
 msgid ""
 "You can find a list of many sophisticated calibre plugins `here "
 "<https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 msgstr "Du kan hitta en lista med många sofistikerade calibre-insticksmoduler `här <https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:331
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:336
 msgid "Sharing your plugins with others"
 msgstr "Dela dina insticksmodul med andra"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:333
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:338
 msgid ""
 "If you would like to share the plugins you have created with other users of "
 "calibre, post your plugin in a new thread in the `calibre plugins forum "

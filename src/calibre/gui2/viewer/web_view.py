@@ -295,7 +295,7 @@ def apply_font_settings(page_or_view):
     if fs.get('mono_family'):
         s.setFontFamily(QWebEngineSettings.FontFamily.FixedFont, fs.get('mono_family'))
     else:
-        s.resetFontFamily(QWebEngineSettings.FontFamily.SansSerifFont)
+        s.resetFontFamily(QWebEngineSettings.FontFamily.FixedFont)
     sf = fs.get('standard_font') or 'serif'
     sf = getattr(QWebEngineSettings.FontFamily, {'serif': 'SerifFont', 'sans': 'SansSerifFont', 'mono': 'FixedFont'}[sf])
     s.setFontFamily(QWebEngineSettings.FontFamily.StandardFont, s.fontFamily(sf))
@@ -709,7 +709,8 @@ class WebView(RestartingWebEngineView):
         self._page.profile().clearHttpCache()
 
     def trigger_shortcut(self, which):
-        self.execute_when_ready('trigger_shortcut', which)
+        if which:
+            self.execute_when_ready('trigger_shortcut', which)
 
     def show_search_result(self, sr):
         self.execute_when_ready('show_search_result', sr)

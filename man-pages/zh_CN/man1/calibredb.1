@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "八月 18, 2023" "6.25.0" "calibre"
+.TH "CALIBREDB" "1" "九月 08, 2023" "6.26.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -718,7 +718,7 @@ calibredb add_custom_column [options] label name datatype
 .INDENT 0.0
 .TP
 .B \-\-display
-用于自定义如何解释此栏目中的数据的选项的字典。这是一个JSON字符串。对于枚举栏目，使用 \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP 有许多选项可以进入显示变量，按栏目类型的选项是： composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations 找到适当组合的最好方法是在GUI中创建适当类型的自定义栏目，然后查看书籍的备份OPF（确保自从添加该栏目以后已经创建了新的OPF）。在OPF中的新栏目中，你将看到JSON的“显示”。
+用于自定义如何解释此栏目中的数据的选项的字典。这是一个 JSON 字符串。对于枚举栏目，使用 \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP 有许多选项可以进入显示变量，按栏目类型的选项是： composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations 找到适当组合的最好方法是在图形界面中创建适当类型的自定义栏目，然后查看书籍的备份 OPF（确保自从添加该栏目以后已经创建了新的 OPF）。在 OPF 中的新栏目中，你将看到 JSON 的“显示”。
 .UNINDENT
 .INDENT 0.0
 .TP
