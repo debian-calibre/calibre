@@ -1,0 +1,55 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Sun, 24 Sep 2023 23:07:01 +0900
+Subject: Revert "PDF Output: Fix background image + text not rendering
+ correctly if the same background image is used with different text multiple
+ times. Fixes #2035338 [conversion from epub to pdf - all chapter titles are
+ the same as the first
+ chapter](https://bugs.launchpad.net/calibre/+bug/2035338)"
+
+Forwarded: not-needed
+
+This reverts commit 2c5490a061d169145383b6e68eac6eac8650177a.
+---
+ src/calibre/utils/podofo/images.cpp | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
+
+diff --git a/src/calibre/utils/podofo/images.cpp b/src/calibre/utils/podofo/images.cpp
+index 1ee3aa6..6e9b602 100644
+--- a/src/calibre/utils/podofo/images.cpp
++++ b/src/calibre/utils/podofo/images.cpp
+@@ -13,11 +13,9 @@ class Image {
+     charbuff buf;
+     int64_t width, height;
+     PdfReference ref;
+-    PdfReference smask;
+-    bool is_valid;
+-
+     Image( const Image & ) ;
+     Image & operator=( const Image & ) ;
++    bool is_valid;
+ 
+     public:
+         Image(const PdfReference &reference, const PdfObject *o) : buf(), width(0), height(0), ref(reference) {
+@@ -32,20 +30,18 @@ class Image {
+             const PdfDictionary &dict = o->GetDictionary();
+             if (dict.HasKey("Width") && dict.GetKey("Width")->IsNumber()) width = dict.GetKey("Width")->GetNumber();
+             if (dict.HasKey("Height") && dict.GetKey("Height")->IsNumber()) height = dict.GetKey("Height")->GetNumber();
+-            if (dict.HasKey("SMask") && dict.GetKey("SMask")->IsReference()) smask = dict.GetKey("SMask")->GetReference();
+         }
+         Image(Image &&other) noexcept :
+-            buf(std::move(other.buf)), width(other.width), height(other.height), ref(other.ref), smask(other.smask) {
++            buf(std::move(other.buf)), width(other.width), height(other.height), ref(other.ref) {
+             other.buf = charbuff(); is_valid = other.is_valid;
+         }
+         Image& operator=(Image &&other) noexcept {
+             buf = std::move(other.buf); other.buf = charbuff(); ref = other.ref;
+             width = other.width; height = other.height; is_valid = other.is_valid;
+-            smask = other.smask;
+             return *this;
+         }
+         bool operator==(const Image &other) const noexcept {
+-            return other.width == width && is_valid && other.is_valid && other.height == height && other.smask == smask && other.buf == buf;
++            return other.width == width && is_valid && other.is_valid && other.height == height && other.buf == buf;
+         }
+         std::size_t hash() const noexcept { return buf.size(); }
+         const PdfReference& reference() const noexcept { return ref; }
